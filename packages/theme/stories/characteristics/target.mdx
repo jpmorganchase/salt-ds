@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import {
@@ -8,18 +8,14 @@ import {
 } from "docs/components/LineBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Target" />
+<Meta title="Theme/Characteristics/Target" />
 
 # Target
 
 Components which indicate a target area where a draggable item can be dropped (related to Draggable).
 
-## CSS Variables
-
-### All
-
 <Canvas>
-  <Story name="All">
+  <Story name="Base">
     <DocGrid>
       <ColorBlock colorVar="--salt-target-background-hover" />
       <ColorBlock colorVar="--salt-target-borderColor-hover" />
@@ -30,8 +26,3 @@ Components which indicate a target area where a draggable item can be dropped (r
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Data Grid`
-- `File Drop Zone`

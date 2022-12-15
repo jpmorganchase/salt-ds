@@ -1,10 +1,10 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { ShadowBlockCell } from "docs/components/ShadowBlock";
 import { BlankBlockCode } from "docs/components/BlankBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Overlayable" />
+<Meta title="Theme/Characteristics/Overlayable" />
 
 # Overlayable
 
@@ -25,7 +25,7 @@ Components that may form a hierarchy and stack upon or beneath other elements of
 | Modal              | Dropshadow found around modal windows (e.g. Dialog)                              |
 
 <Canvas>
-  <Story name="Overlayable">
+  <Story name="Base">
     <DocGrid>
       <ColorBlock colorVar="--salt-overlayable-background" />
       <ShadowBlockCell shadowVar="--salt-overlayable-shadow-scroll" />
@@ -45,25 +45,3 @@ Components that may form a hierarchy and stack upon or beneath other elements of
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Announcement Dialog` (inherited)
-- `App Header`
-- `Card`
-- `Cascading Menu`
-- `Context Menu` (inherited)
-- `Data Grid`
-- `Date Picker`
-- `Dialog`
-- `Drawer`
-- `ECW` (inherited)
-- `Mega Menu`
-- `Overlay`
-- `Preferences Dialog` (inherited)
-- `Scrim`
-- `Selectable Card`
-- `Skip Link`
-- `Toast`
-- `Tooltip`
-- `Wizard`

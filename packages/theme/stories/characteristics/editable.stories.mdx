@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
@@ -9,18 +9,14 @@ import {
   LineBlockCode,
 } from "docs/components/LineBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Editable" />
+<Meta title="Theme/Characteristics/Editable" />
 
 # Editable
 
 Components that hold mutable data and allow for data entry.
 
-## CSS Variables
-
-### Misc
-
 <Canvas>
-  <Story name="Misc">
+  <Story name="Base">
     <DocGrid>
       <CursorBlock cursor="--salt-editable-cursor-active" />
       <CursorBlock cursor="--salt-editable-cursor-hover" />
@@ -38,25 +34,11 @@ Components that hold mutable data and allow for data entry.
       <LineBlockCode>--salt-editable-borderStyle-readonly</LineBlockCode>
       <LineBlock lineWidth="--salt-editable-borderWidth-active" />
     </DocGrid>
-  </Story>
-</Canvas>
-
-## Help text
-
-<Canvas>
-  <Story name="Help text">
     <TextBlock fontStyle="--salt-editable-help-fontStyle" />
     <DocGrid textExample={true}>
       <BlankBlockCell />
       <BlankBlockCode>--salt-editable-help-fontStyle</BlankBlockCode>
     </DocGrid>
-  </Story>
-</Canvas>
-
-### Colors
-
-<Canvas>
-  <Story name="Colors">
     <DocGrid>
       <ColorBlock colorVar="--salt-editable-borderColor" />
       <ColorBlock colorVar="--salt-editable-borderColor-active" />
@@ -108,15 +90,3 @@ Components that hold mutable data and allow for data entry.
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Combo Box` (inherited)
-- `Date Picker` (inherited)
-- `Filterable List`(inherited)
-- `Form Field`
-- `Formatted Input` (inherited)
-- `Input`
-- `Search` (inherited)
-- `Stepper Input` (inherited)
-- `Tokenized Input` (inherited)

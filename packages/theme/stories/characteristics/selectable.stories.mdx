@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
@@ -10,19 +10,17 @@ import {
   LineBlockCode,
 } from "docs/components/LineBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Selectable" />
+<Meta title="Theme/Characteristics/Selectable" />
 
 # Selectable
 
 Group of components that allow single or multiple selection, Selection can
 trigger actions.
 
-## CSS Variables
-
-### Misc
+### Base
 
 <Canvas>
-  <Story name="Misc">
+  <Story name="Base">
     <DocGrid>
       <CursorBlock cursor="--salt-selectable-cursor-hover" />
       <CursorBlock cursor="--salt-selectable-cursor-selected" />
@@ -36,15 +34,6 @@ trigger actions.
       <LineBlockCode>--salt-selectable-borderStyle-selected</LineBlockCode>
       <LineBlockCell />
       <LineBlockCode>--salt-selectable-borderStyle-blurSelected</LineBlockCode>
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Colors
-
-<Canvas>
-  <Story name="Colors">
-    <DocGrid>
       <ColorBlock colorVar="--salt-selectable-background" />
       <ColorBlock colorVar="--salt-selectable-background-blurSelected" />
       <ColorBlock colorVar="--salt-selectable-background-disabled" />
@@ -61,7 +50,7 @@ trigger actions.
   </Story>
 </Canvas>
 
-### CTA Variant
+### CTA
 
 <Canvas>
   <Story name="CTA">
@@ -80,7 +69,7 @@ trigger actions.
   </Story>
 </Canvas>
 
-### Primary Variant
+### Primary
 
 <Canvas>
   <Story name="Primary">
@@ -117,24 +106,3 @@ trigger actions.
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Calendar`
-- `Card`
-- `Carousel`
-- `Cascading Menu`
-- `Checkbox`
-- `Combo Box` (inherited)
-- `Context Menu` (inherited)
-- `Data Grid`
-- `List`
-- `Menu Button` (inherited)
-- `Pagination`
-- `Radio Button`
-- `Reorderable List`
-- `Selectable Card`
-- `Split Button` (inherited)
-- `Switch`
-- `Toggle Button`
-- `Tree`

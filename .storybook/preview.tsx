@@ -13,6 +13,7 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/700-italic.css";
 import "@fontsource/open-sans/800.css";
 import "@fontsource/open-sans/800-italic.css";
+import "./styles.css";
 
 import { ComponentProps, ReactNode } from "react";
 import { withTheme } from "docs/decorators/withTheme";
@@ -99,20 +100,9 @@ export const parameters: Parameters = {
       method: "alphabetical",
       order: [
         "Documentation",
-        [
-          "Styles and Theming",
-          [
-            "Introduction",
-            "Foundations",
-            ["Introduction", "*"],
-            "Palette",
-            "Characteristics",
-            ["Introduction", "*"],
-          ],
-          "Icons",
-          "Core",
-          "Lab",
-        ],
+        ["Core", "Icons", "Lab"],
+        "Theme",
+        ["About the Salt Theme", "Foundations", "Palettes", "Characteristics"],
         "Icons",
         "Core",
         "Lab",

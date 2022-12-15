@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
@@ -6,18 +6,14 @@ import { FontWeightBlock } from "docs/components/FontWeightBlock";
 import { BorderBlock } from "docs/components/BorderBlock";
 import { BlankBlockCode } from "docs/components/BlankBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Navigable" />
+<Meta title="Theme/Characteristics/Navigable" />
 
 # Navigable
 
 Components that allow a user to navigate across UI sections or data sets and change view context.
 
-## CSS Variables
-
-### All
-
 <Canvas>
-  <Story name="All">
+  <Story name="Base">
     <DocGrid>
       <CursorBlock cursor="--salt-navigable-cursor-hover" />
       <CursorBlock cursor="--salt-navigable-cursor-active" />
@@ -42,10 +38,3 @@ Components that allow a user to navigate across UI sections or data sets and cha
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Announcement Dialog`
-- `Link`
-- `Tabs`
-- `Vertical Nav`

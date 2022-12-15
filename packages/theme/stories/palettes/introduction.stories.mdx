@@ -1,0 +1,41 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { ColorBlock } from "docs/components/ColorBlock";
+import { DocGrid } from "docs/components/DocGrid";
+import { OpacityBlock } from "docs/components/OpacityBlock";
+
+<Meta title="Theme/Palettes/About Palettes" />
+
+# About Palettes
+
+The palette sits in between the foundations and characteristics. The palette is a set of refined color tokens using values from the color foundation, and a few tokens with semantic meaning given to the respective opacity foundation. This set is split into subgroups guided by semantics:
+
+| Semantic | Appropriate usage                                               | Example token                               | Salt Theme value<br /> (light mode) |
+| -------- | --------------------------------------------------------------- | ------------------------------------------- | ----------------------------------- |
+| Accent   | Characteristics which use the main brand color                  | `--salt-palette-accent-background`          | `--salt-color-blue-500`             |
+| Interact | Characteristics relating to actions such as editing or clicking | `--salt-palette-interact-border`            | `--salt-color-gray-90`              |
+| Error    | Characteristics symbolising an error state                      | `--salt-palette-error-border`               | `--salt-color-red-500`              |
+| Info     | Characteristics symbolising an info state                       | `--salt-palette-info-foreground`            | `--salt-color-blue-500`             |
+| Success  | Characteristics symbolising a success state                     | `--salt-palette-success-border`             | `--salt-color-green-500`            |
+| Warning  | Characteristics symbolising a warning state                     | `--salt-palette-warning-foreground`         | `--salt-color-orange-500`           |
+| Measure  | Characteristics showing some form of progress                   | `--salt-palette-measured-fill`              | `--salt-color-blue-500`             |
+| Navigate | Characteristics allowing for navigation                         | `--salt-palette-navigate-foreground-active` | `--salt-color-blue-600`             |
+| Negative | Characteristics conveying a negative value or result            | `--salt-palette-negative-foreground`        | `--salt-color-red-700`              |
+| Neutral  | Characteristics with no specialised semantic meaning            | `--salt-palette-neutral-primary-foreground` | `--salt-color-gray-900`             |
+| Positive | Characteristics conveying a positive value or result            | `--salt-palette-positive-foreground`        | `--salt-color-green-700`            |
+| Rate     | Characteristics allowing for something to be rated              | `--salt-palette-rate-border-undo`           | `--salt-color-orange-600`           |
+
+# Usage
+
+The palette provides meaning to the colors used throughout the characteristics. For a component with a background color set to `--salt-actionable-cta-background`, rather than this token directly pointing to the foundation token `--salt-color-blue-500`, this value instead resolves to the palette token `--salt-interact-cta-background`. Similarly, selectable backgrounds resolve to the same palette token. This ensures that anything that is interactable throughout your theme is consistent. The palette sits directly in the middle.
+
+Component CSS attribute &#8594; Characteristic token &#8594; **_Palette token_** &#8594; Foundation token &#8594; Raw RGBA Value
+
+# Token structure
+
+Palette tokens are structured as follows: `--salt-palette-<sentiment>-<variant>-<usage>-<interaction>`
+
+- Always begin with `--salt-palette-`
+- Follow this by the **_semantic meaning_**, e.g. `---salt-palette-accent-`, `---salt-palette-interact-`, `--salt-palette-success-`, `--salt-palette-neutral-`
+- Append the **_variant_**, if applicable: e.g. `--salt-palette-interact-cta-`
+- Follow this by **_usage_** : e.g. `--salt-palette-accent-background`, `--salt-palette-interact-cta-background-`, `--salt-palette-success-foreground`, `--salt-palette-neutral-border-`
+- Next add the **_interaction_**, if applicable : e.g. `--salt-palette-interact-cta-background-hover`

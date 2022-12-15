@@ -1,0 +1,52 @@
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { OpacityBlock } from "docs/components/OpacityBlock";
+
+<Meta title="Theme/Palettes/Opacities" />
+
+# Opacities
+
+Opacity values to adjust different attributes.
+
+<DocGrid>
+  <OpacityBlock
+    opacity="--salt-opacity-4"
+    cssVariable="--salt-palette-opacity-background"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-3"
+    cssVariable="--salt-palette-opacity-border"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-3"
+    cssVariable="--salt-palette-opacity-primary-border"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-2"
+    cssVariable="--salt-palette-opacity-secondary-border"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-1"
+    cssVariable="--salt-palette-opacity-tertiary-border"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-2"
+    cssVariable="--salt-palette-opacity-border-readonly"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-4"
+    cssVariable="--salt-palette-opacity-foreground"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-4"
+    cssVariable="--salt-palette-opacity-backdrop"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-3"
+    cssVariable="--salt-palette-opacity-fill"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-3"
+    cssVariable="--salt-palette-opacity-stroke"
+  />
+</DocGrid>

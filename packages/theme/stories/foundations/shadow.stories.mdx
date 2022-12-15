@@ -1,8 +1,8 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta } from "@storybook/addon-docs";
 import { ShadowBlock } from "docs/components/ShadowBlock";
 import { DocGrid } from "docs/components/DocGrid";
 
-<Meta title="Documentation/Styles and Theming/Foundations/Shadow" />
+<Meta title="Theme/Foundations/Shadow" />
 
 # Shadow
 
@@ -10,15 +10,11 @@ Shadows can be used to indicate elevation or a hierarchy of components.
 
 ## Shadow
 
-<Canvas>
-  <Story name="Shadow">
-    <DocGrid>
-      <ShadowBlock shadowVar="--salt-shadow-0" />
-      <ShadowBlock shadowVar="--salt-shadow-1" />
-      <ShadowBlock shadowVar="--salt-shadow-2" />
-      <ShadowBlock shadowVar="--salt-shadow-3" />
-      <ShadowBlock shadowVar="--salt-shadow-4" />
-      <ShadowBlock shadowVar="--salt-shadow-5" />
-    </DocGrid>
-  </Story>
-</Canvas>
+<DocGrid>
+  <ShadowBlock shadowVar="--uitk-shadow-0" />
+  <ShadowBlock shadowVar="--uitk-shadow-1" />
+  <ShadowBlock shadowVar="--uitk-shadow-2" />
+  <ShadowBlock shadowVar="--uitk-shadow-3" />
+  <ShadowBlock shadowVar="--uitk-shadow-4" />
+  <ShadowBlock shadowVar="--uitk-shadow-5" />
+</DocGrid>
