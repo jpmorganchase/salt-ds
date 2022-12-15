@@ -10,17 +10,17 @@ import { Switch } from "@salt-ds/lab";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import "../../uitk-ag-theme.css";
-import "../../odyssey-ag-theme.css";
+import "../../salt-ag-theme.css";
 
 export const AddRemoveRows = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { containerProps, agGridProps, api, columnApi } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   const [columnDefs] = useState<ColDef[]>(dataGridExampleColumns);
@@ -80,9 +80,9 @@ export const AddRemoveRows = (props: AgGridReactProps) => {
     <div style={{ marginTop: 25 }}>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div

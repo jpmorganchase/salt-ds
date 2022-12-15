@@ -5,7 +5,7 @@
   "style": "uitk-ag-theme.css",
   "files": [
     "/uitk-ag-theme.css",
-    "/odyssey-ag-theme.css"
+    "/salt-ag-theme.css"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.js",

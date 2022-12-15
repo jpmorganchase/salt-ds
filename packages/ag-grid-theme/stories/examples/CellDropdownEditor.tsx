@@ -14,10 +14,10 @@ import { Switch } from "@salt-ds/lab";
  * complete with focus and keyboard navigation support
  */
 const CellDropdownEditor = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const [columnDefs] = useState<ColDef[]>([
@@ -37,7 +37,7 @@ const CellDropdownEditor = (props: AgGridReactProps) => {
   ]);
 
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   const [rowData] = useState(dataGridExampleData);
@@ -54,7 +54,11 @@ const CellDropdownEditor = (props: AgGridReactProps) => {
 
   return (
     <div>
-      <Switch checked={isNewTheme} onChange={onThemeChange} label="New theme" />
+      <Switch
+        checked={isSaltTheme}
+        onChange={onThemeChange}
+        label="Salt AG Grid theme"
+      />
       <div style={{ height: 800, width: 800 }} {...containerProps}>
         <AgGridReact
           columnDefs={columnDefs}

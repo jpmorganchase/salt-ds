@@ -8,14 +8,14 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 const RefreshGridContentExample = function RefreshGridContentExample(
   props: AgGridReactProps
 ) {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -60,9 +60,9 @@ const RefreshGridContentExample = function RefreshGridContentExample(
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div>

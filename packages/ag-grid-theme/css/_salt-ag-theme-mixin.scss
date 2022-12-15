@@ -1,17 +1,20 @@
 @import "~ag-grid-community/src/styles/ag-theme-base/sass/ag-theme-base";
-@import "./odyssey-ag-theme-default-params";
+@import "./salt-ag-theme-default-params";
 
-@mixin ag-theme-odyssey($params: ()) {
+@mixin ag-theme-salt($params: ()) {
   @include ag-allow-color-param-access-with-ag-param(false);
 
-  $params: ag-process-theme-variables(
-    $params,
-    $odyssey-ag-theme-default-params
-  );
+  $params: ag-process-theme-variables($params, $salt-ag-theme-default-params);
   @include ag-theme-base($params);
 
   .ag-root-wrapper {
     border: none;
+  }
+
+  .ag-root-wrapper *,
+  .ag-root-wrapper *::before,
+  .ag-root-wrapper *::after {
+    box-sizing: border-box;
   }
 
   .ag-ltr,
@@ -21,10 +24,15 @@
     .ag-has-focus .ag-full-width-row.ag-row-focus .ag-cell-wrapper.ag-row-group,
     .ag-cell-range-single-cell,
     .ag-cell-range-single-cell.ag-cell-range-handle {
-      border: 2px dotted var(--agGrid-color-focus);
+      border: 2px dotted var(--agGrid-color-focus) !important;
       padding-left: ag-param(cell-horizontal-padding) - 2px;
       padding-right: ag-param(cell-horizontal-padding) - 2px;
     }
+  }
+
+  .ag-cell {
+    display: flex;
+    align-items: center;
   }
 
   .ag-toggle-button-input-wrapper {
@@ -123,12 +131,94 @@
     background-color: var(--agGrid-list-item-color-hover) !important;
   }
 
+  .ag-header {
+    border-color: var(--agGrid-header-borderColor);
+  }
+
+  .ag-header-row {
+    color: var(--agGrid-header-foreground);
+    font-size: var(--agGrid-header-fontSize);
+    font-weight: var(--agGrid-header-fontWeight);
+  }
+
+  .ag-header-cell:after {
+    height: auto;
+    top: var(--agGrid-separatorGap);
+    bottom: var(--agGrid-separatorGap);
+  }
+
+  .ag-row {
+    color: var(--agGrid-foreground);
+  }
+
+  .ag-row-hover {
+    background-color: var(--agGrid-row-background-hover);
+  }
+
   .ag-row-selected {
-    //z-index: 2;
-    border: transparent;
     background-color: var(--agGrid-row-background-selected);
-    //border-bottom: 0 solid var(--agGrid-row-borderColor-selected);
-    //outline: 1px solid var(--agGrid-row-borderColor-selected);
+    border-color: var(--agGrid-row-borderColor-selected);
+  }
+
+  &.ag-theme-salt-variant-zebra
+    .ag-row-even:not(.ag-row-hover, .ag-row-selected) {
+    background-color: var(--agGrid-zebraColor);
+  }
+
+  &.ag-theme-salt-variant-secondary
+    .ag-row:not(.ag-row-hover, .ag-row-selected) {
+    background-color: var(--agGrid-row-background-secondary);
+  }
+
+  &.ag-theme-salt-variant-secondary .ag-header {
+    background-color: var(--agGrid-row-background-secondary);
+  }
+
+  .ag-row-selected::before {
+    content: "";
+    height: 1px;
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    background-color: var(--agGrid-row-borderColor-selected);
+    z-index: 1;
+  }
+
+  .ag-cell.editable-numeric-cell {
+    border: solid 1px var(--agGrid-cell-borderColor-editable);
+    text-align: right;
+    justify-content: flex-end;
+  }
+
+  .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: 0 solid transparent;
+    border-left: var(--agGrid-editableCell-cornerTag-size) solid
+      var(--agGrid-cursor-borderColor);
+    border-bottom: var(--agGrid-editableCell-cornerTag-size) solid transparent;
+    z-index: 2;
+  }
+
+  .ag-cell-inline-editing.ag-cell-focus {
+    background-color: var(--agGrid-background);
+  }
+
+  .ag-cell-inline-editing.ag-cell-focus:before {
+    opacity: 0;
+  }
+
+  .ag-cell.ag-cell-inline-editing {
+    padding: 0 !important;
+  }
+
+  .ag-input-field-input {
+    border: 0;
+    padding-left: ag-param(cell-horizontal-padding) - 2px;
+    padding-right: ag-param(cell-horizontal-padding) - 2px;
   }
 
   .ag-side-buttons {
