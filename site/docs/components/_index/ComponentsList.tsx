@@ -88,10 +88,12 @@ const ComponentStatusData = ({
     <span>{showReleaseDate ? `v${availableSince}` : null}</span>
   );
 
+  const activeStatus = status !== ComponentStatus.NOT_APPLICABLE;
+
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
-      {status !== ComponentStatus.NOT_APPLICABLE ? <StepActiveIcon /> : null}
-      {isMobileView ? (
+      {activeStatus ? <StepActiveIcon /> : null}
+      {isMobileView && activeStatus ? (
         mobileView
       ) : (
         <span>
