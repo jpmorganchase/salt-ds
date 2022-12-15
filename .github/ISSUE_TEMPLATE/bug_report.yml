@@ -8,10 +8,10 @@ body:
     attributes:
       value: |
         ### ⚠️ Warning
-        This is a public repository, so **please do not include any company-internal code or sensitive data in your bug report**.
+        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report.
   - type: dropdown
     attributes:
-      label: Affects
+      label: Package name(s)
       description: |
         Which package(s) did you observe this bug in? If you’re not sure which version your project is using, run `npm ls [package name]` or `yarn why [package name]` to find out.
 
@@ -28,13 +28,13 @@ body:
   - type: textarea
     attributes:
       label: Description
-      description: Tell us what's going wrong. Make sure that you copy and paste—as text—any code, errors or log messages. Where relevant, you can also include supporting screenshots.
+      description: Tell us what's going wrong. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
     validations:
       required: true
   - type: textarea
     attributes:
       label: Steps to reproduce
-      description: Describe the steps or code needed to reproduce this bug. Make sure that you copy and paste—as text—any code, errors or log messages. Where relevant, you can also include supporting screenshots.
+      description: Describe the steps or code needed to reproduce this bug. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
     validations:
       required: true
   - type: textarea
