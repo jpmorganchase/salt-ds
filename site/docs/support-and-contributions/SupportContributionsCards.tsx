@@ -69,11 +69,8 @@ const SupportContributionsCards = () => (
   <div className={styles.supportContributionsCards}>
     <GridLayout
       columns={{
-        lg: 3,
-        md: 2,
-        sm: 1,
-        xl: 3,
         xs: 1,
+        md: 2,
       }}
       gap={3}
       rows={2}
