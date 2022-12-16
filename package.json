@@ -15,6 +15,9 @@
   "modular": {
     "type": "root"
   },
+  "prettier": {
+    "endOfLine": "crlf"
+  },
   "scripts": {
     "start": "yarn storybook",
     "start:site": "yarn workspace @salt-ds/site start",
