@@ -1,51 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
+  Banner,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
 } from "@salt-ds/lab";
 import { FlexItem, FlexLayout } from "@salt-ds/core";
 import cn from "classnames";
-import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 // import { Switch } from "@salt-ds/lab";
-
-const dataGridExampleColumns = [
-  {
-    headerName: "",
-    field: "on",
-    checkboxSelection: true,
-    headerCheckboxSelection: true,
-    width: 38,
-    pinned: "left",
-    suppressMenu: true,
-  },
-  {
-    headerName: "Name",
-    field: "name",
-    filterParams: {
-      buttons: ["reset", "apply"],
-    },
-    editable: false,
-  },
-  {
-    headerName: "Code",
-    field: "code",
-  },
-  {
-    headerName: "Capital",
-    field: "capital",
-  },
-  {
-    headerName: "Population",
-    type: "numericColumn",
-    field: "population",
-    filter: "agNumberColumnFilter",
-    editable: true,
-    cellClass: ["editable-numeric-cell"],
-  },
-];
 
 // const [uhd, setUhd] = useState(false);
 
@@ -62,16 +28,9 @@ const Variants = (props: AgGridReactProps) => {
   ) => {
     setIndex(index);
   };
-  const { api, agGridProps, containerProps, isGridReady } =
-    useAgGridHelpers("ag-theme-salt");
+  const { agGridProps, containerProps } = useAgGridHelpers("ag-theme-salt");
 
   const { className } = containerProps;
-
-  useEffect(() => {
-    if (isGridReady) {
-      api?.sizeColumnsToFit();
-    }
-  }, [isGridReady]);
 
   // const onUhdChange = (event: ChangeEvent<HTMLInputElement>) => {
   //   setUhd(event.target.checked);
@@ -83,6 +42,7 @@ const Variants = (props: AgGridReactProps) => {
 
   return (
     <FlexLayout direction="column">
+      <Banner status="info">Variants are available in Salt theme only</Banner>
       <FlexItem>
         <FlexLayout direction="row">
           <FlexItem>
@@ -109,7 +69,7 @@ const Variants = (props: AgGridReactProps) => {
         </FlexLayout>
       </FlexItem>
       <div
-        style={{ height: 800, width: 800, marginTop: 25 }}
+        style={{ height: 500, width: 800, marginTop: 25 }}
         {...containerProps}
         className={cn(className, {
           "ag-theme-salt-variant-secondary": index === 1,

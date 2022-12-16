@@ -1,41 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import rowDragColumns from "../dependencies/rowDragColumns";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@salt-ds/lab";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const DragRowOrder = (props: AgGridReactProps) => {
-  const [isSaltTheme, setSaltTheme] = useState(false);
-
-  const onThemeChange = () => {
-    setSaltTheme(!isSaltTheme);
-  };
-
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
-    isSaltTheme ? "ag-theme-salt" : undefined
+  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { agGridProps, containerProps } = useAgGridHelpers(
+    `ag-theme-${themeName}`
   );
 
-  useEffect(() => {
-    if (isGridReady) {
-      api!.sizeColumnsToFit();
-    }
-  }, [isGridReady]);
-
   return (
-    <div>
-      <div>
-        <Switch
-          checked={isSaltTheme}
-          onChange={onThemeChange}
-          label="Salt AG Grid theme"
-        />
-      </div>
-      <div
-        style={{ marginTop: 25, height: 800, width: 800 }}
-        {...containerProps}
-      >
+    <StackLayout gap={4}>
+      {switcher}
+      <div {...containerProps}>
         <AgGridReact
           animateRows
           rowDragManaged
@@ -45,7 +24,7 @@ const DragRowOrder = (props: AgGridReactProps) => {
           rowData={dataGridExampleData}
         />
       </div>
-    </div>
+    </StackLayout>
   );
 };
 

@@ -1,8 +1,8 @@
-/**
- * This file replaces the previous index.story.js file
- * which used Storybook v4 'storiesOf' API.
- */
 import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-material.css";
+import "../uitk-ag-theme.css";
+import "../salt-ag-theme.css";
 
 export default {
   title: "Data Grid/Ag Grid Theme",
@@ -12,10 +12,6 @@ export default {
 
 export {
   Default as BasicGrid,
-  AddRemoveRows,
-  AggregateValues,
-  CellDropdownEditor,
-  ChangeDetection,
   CheckboxSelection,
   Coloration,
   ColumnGroup,
@@ -23,7 +19,6 @@ export {
   ContextMenu,
   CustomFilter,
   DragRowOrder,
-  ExcelExport,
   FloatingFilter,
   InfiniteScroll,
   LoadingOverlay,
@@ -33,8 +28,7 @@ export {
   ParentChildRows,
   RowGrouping,
   RowGroupPanel,
-  SetFilter,
-  SingleClickEdit,
+  PinnedRows,
   StatusBar,
   Variants,
 } from "./examples";

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { StackLayout } from "@salt-ds/core";
+import { Spinner } from "@salt-ds/lab";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfiniteScrollExampleColumns";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@salt-ds/lab";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const generateData = function generateData<T extends { name: string }>(
   lst: T[]
@@ -23,14 +24,9 @@ const generateData = function generateData<T extends { name: string }>(
 const dataSourceRows = generateData(dataGridExampleData);
 
 const InfiniteScroll = (props: AgGridReactProps) => {
-  const [isSaltTheme, setSaltTheme] = useState(false);
-
-  const onThemeChange = () => {
-    setSaltTheme(!isSaltTheme);
-  };
-
+  const { switcher, themeName } = useAgGridThemeSwitcher();
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers(
-    isSaltTheme ? "ag-theme-salt" : undefined
+    `ag-theme-${themeName}`
   );
 
   useEffect(() => {
@@ -51,18 +47,9 @@ const InfiniteScroll = (props: AgGridReactProps) => {
   }, [isGridReady]);
 
   return (
-    <div>
-      <div>
-        <Switch
-          checked={isSaltTheme}
-          onChange={onThemeChange}
-          label="Salt AG Grid theme"
-        />
-      </div>
-      <div
-        style={{ marginTop: 25, height: 800, width: 800 }}
-        {...containerProps}
-      >
+    <StackLayout gap={4}>
+      {switcher}
+      <div {...containerProps}>
         <AgGridReact
           {...agGridProps}
           {...props}
@@ -72,7 +59,7 @@ const InfiniteScroll = (props: AgGridReactProps) => {
           components={infiniteScrollComponents}
         />
       </div>
-    </div>
+    </StackLayout>
   );
 };
 
@@ -81,7 +68,7 @@ const infiniteScrollComponents = {
     if (params.value !== undefined) {
       return params.value;
     } else {
-      return '<div aria-label="loading" class="jpm-ui-toolkit-cssSpinner small" role="status"><div class="dot1"></div><div class="dot2"></div><div class="dot3"></div></div>';
+      return <Spinner size="small" />;
     }
   },
 };

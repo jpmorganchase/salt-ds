@@ -1,30 +1,18 @@
-import React, { useEffect, useState } from "react";
-import "../../uitk-ag-theme.css";
+import { GetContextMenuItemsParams } from "ag-grid-community";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import windows from "../dependencies/windows.png";
 import mac from "../dependencies/mac.png";
-import { GetContextMenuItemsParams } from "ag-grid-community";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@salt-ds/lab";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const ContextMenu = (props: AgGridReactProps) => {
-  const [isSaltTheme, setSaltTheme] = useState(false);
-
-  const onThemeChange = () => {
-    setSaltTheme(!isSaltTheme);
-  };
-
-  const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers(
-    isSaltTheme ? "ag-theme-salt" : undefined
+  const { themeName, switcher } = useAgGridThemeSwitcher();
+  const { containerProps, agGridProps } = useAgGridHelpers(
+    `ag-theme-${themeName}`
   );
-
-  useEffect(() => {
-    if (isGridReady) {
-      api?.sizeColumnsToFit();
-    }
-  }, [isGridReady]);
 
   const getContextMenuItems = (params: GetContextMenuItemsParams) => {
     const result = [
@@ -155,18 +143,9 @@ const ContextMenu = (props: AgGridReactProps) => {
   };
 
   return (
-    <div>
-      <div>
-        <Switch
-          checked={isSaltTheme}
-          onChange={onThemeChange}
-          label="Salt AG Grid theme"
-        />
-      </div>
-      <div
-        style={{ marginTop: 25, height: 800, width: 800 }}
-        {...containerProps}
-      >
+    <StackLayout gap={4}>
+      {switcher}
+      <div {...containerProps}>
         <AgGridReact
           allowContextMenuWithControlKey
           getContextMenuItems={getContextMenuItems}
@@ -176,7 +155,7 @@ const ContextMenu = (props: AgGridReactProps) => {
           {...props}
         />
       </div>
-    </div>
+    </StackLayout>
   );
 };
 
