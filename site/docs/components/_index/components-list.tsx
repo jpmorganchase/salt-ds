@@ -286,7 +286,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-grid-grid--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-data-grid-data-grid--page",
   },
   {
     name: "Deck Layout",
