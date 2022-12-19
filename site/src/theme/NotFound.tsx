@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "@theme/Layout";
 import styles from "./notfound.module.css";
-import Link from "@docusaurus/Link";
+import Link from "@site/src/components/link/Link";
 import { PageMetadata } from "@docusaurus/theme-common";
 
 export default function NotFound() {

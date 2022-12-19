@@ -5,7 +5,7 @@ import {
   CSSProperties,
 } from "react";
 import clsx from "clsx";
-import Link from "@docusaurus/Link";
+import Link from "@site/src/components/link/Link";
 
 import { useTheme, useViewport } from "@salt-ds/core";
 

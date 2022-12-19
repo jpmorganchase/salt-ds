@@ -3,7 +3,6 @@ import {
   DocumentIcon,
   FlagIcon,
   MessageIcon,
-  TearOutIcon,
 } from "@salt-ds/icons";
 
 import { GridLayout, GridItem } from "@salt-ds/core";
