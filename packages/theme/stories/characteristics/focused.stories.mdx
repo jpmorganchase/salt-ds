@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import {
@@ -11,20 +11,20 @@ import { BlankBlockCell, BlankBlockCode } from "docs/components/BlankBlock";
 import { OutlineBlock } from "docs/components/OutlineBlock";
 import { BorderBlock } from "docs/components/BorderBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Focused" />
+<Meta title="Theme/Characteristics/Focused" />
 
 # Focused
 
 Components which can be focused using the mouse or keyboard.
 
-## CSS Variables
-
-### Misc
-
 The following variables can be used on their own, but make up parts of the more commonly used borders and outlines below.
 
+## Tokens
+
+### Base
+
 <Canvas>
-  <Story name="Misc">
+  <Story name="Base">
     <DocGrid>
       <ColorBlock colorVar="--salt-focused-outlineColor" />
       <LineBlock lineWidth="--salt-focused-outlineWidth" />
@@ -41,41 +41,3 @@ The following variables can be used on their own, but make up parts of the more 
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Accordion`
-- `Button`
-- `Calendar`
-- `Card`
-- `Cascading Menu`
-- `Checkbox`
-- `Combo Box`
-- `Context Menu` (inherited)
-- `Data Grid`
-- `Date Picker` (inherited)
-- `Dropdown`
-- `Filterable List` (inherited)
-- `Form Field`
-- `Formatted Input` (inherited)
-- `Input`
-- `Link`
-- `List`
-- `Mega Menu`
-- `Menu Button`
-- `Pagination`
-- `Pill`
-- `Radio Button`
-- `Rating`
-- `Search` (inherited)
-- `Selectable Card`
-- `Skip Link`
-- `Slider`
-- `Split Button` (inherited)
-- `Stepper Input` (inherited)
-- `Switch`
-- `Tabs`
-- `Toggle Button`
-- `Tokenized Input` (inherited)
-- `Tree`
-- `Vertical Nav`

@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { TextAlignBlock } from "docs/components/TextAlignBlock";
@@ -9,19 +9,19 @@ import {
 } from "docs/components/LineBlock";
 import { CornerBlock } from "docs/components/CornerBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Container" />
+<Meta title="Theme/Characteristics/Container" />
 
 # Container
 
 Group of components used to contain and separate different types of content and
 allow hierarchical organization.
 
-## CSS Variables
+## Tokens
 
-### All
+### Base
 
 <Canvas>
-  <Story name="All">
+  <Story name="Base">
     <DocGrid>
       <LineBlockCell />
       <LineBlockCode>--salt-container-borderStyle</LineBlockCode>
@@ -67,26 +67,3 @@ allow hierarchical organization.
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Accordion`
-- `Announcement Dialog` (inherited)
-- `App Header`
-- `Banner`
-- `Button Bar`
-- `Content Status`
-- `Dialog`
-- `File Drop Zone`
-- `Form Field`
-- `Form Label`
-- `Formatted Input` (inherited)
-- `Input` (inherited)
-- `List Builder`
-- `Mega Menu`
-- `Stepper Input` (inherited)
-- `Toast`
-- `Tokenized Input` (inherited)
-- `Tooltip`
-- `Tree`
-- `Vertical Nav`
