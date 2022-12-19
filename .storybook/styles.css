@@ -31,6 +31,10 @@
 }
 
 .salt-theme .sbdocs code {
+  background-color: unset;
+  border: none;
+  color: var(--salt-text-secondary-foreground);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
+  padding: 0;
 }
