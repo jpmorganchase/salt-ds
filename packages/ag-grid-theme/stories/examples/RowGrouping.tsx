@@ -1,46 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { LicenseManager } from "ag-grid-enterprise";
-
+import { StackLayout } from "@salt-ds/core";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleRowGrouping from "../dependencies/dataGridExampleRowGrouping";
-
-// ideally these css files would be loaded from a link tag
-// pointing to static asset directory for caching
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-material.css";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@salt-ds/lab";
-
-LicenseManager.setLicenseKey("your license key");
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const RowGrouping = (props: AgGridReactProps) => {
-  const [isSaltTheme, setSaltTheme] = useState(false);
-
-  const onThemeChange = () => {
-    setSaltTheme(!isSaltTheme);
-  };
-
-  const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers(
-    isSaltTheme ? "ag-theme-salt" : undefined
+  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { agGridProps, containerProps } = useAgGridHelpers(
+    `ag-theme-${themeName}`
   );
 
-  useEffect(() => {
-    if (isGridReady) {
-      api!.sizeColumnsToFit();
-    }
-  }, [isGridReady]);
-
   return (
-    <div>
-      <div>
-        <Switch
-          checked={isSaltTheme}
-          onChange={onThemeChange}
-          label="Salt AG Grid theme"
-        />
-      </div>
-      <div style={{ height: 800, width: 800 }} {...containerProps}>
+    <StackLayout gap={4}>
+      {switcher}
+      <div {...containerProps}>
         <AgGridReact
           columnDefs={dataGridExampleRowGrouping}
           rowData={dataGridExampleData}
@@ -48,7 +22,7 @@ const RowGrouping = (props: AgGridReactProps) => {
           {...props}
         />
       </div>
-    </div>
+    </StackLayout>
   );
 };
 

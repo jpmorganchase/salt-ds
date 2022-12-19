@@ -62,6 +62,7 @@ export function useAgGridHelpers(agThemeName: string = "ag-theme-uitk"): {
   return {
     containerProps: {
       className,
+      style: { height: 500, width: 800 },
     },
     agGridProps: {
       onGridReady,

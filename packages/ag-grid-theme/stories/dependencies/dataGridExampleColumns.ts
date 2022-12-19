@@ -1,5 +1,14 @@
 const dataGridExampleColumns = [
   {
+    headerName: "",
+    field: "on",
+    checkboxSelection: true,
+    headerCheckboxSelection: true,
+    width: 38,
+    pinned: "left",
+    suppressMenu: true,
+  },
+  {
     headerName: "Name",
     field: "name",
     filterParams: {
@@ -24,5 +33,4 @@ const dataGridExampleColumns = [
     cellClass: ["editable-numeric-cell"],
   },
 ];
-
 export default dataGridExampleColumns;
