@@ -4,60 +4,61 @@
  */
 
 .homepageContainer {
-  background-color: var(--uitk-color-gray-900);
+  background-color: var(--salt-color-gray-900);
   background-image: url(@site/static/img/background_gradient.svg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 }
 
 .heroBanner {
-  --ifm-hero-text-color: var(--uitk-color-white);
+  --ifm-hero-text-color: var(--salt-color-white);
   --ifm-hero-background-color: none;
-  --ifm-h1-font-size: var(--uitk-text-display1-fontSize);
-  --ifm-heading-font-weight: var(--uitk-text-display1-fontWeight);
-  --ifm-heading-line-height: var(--uitk-text-display1-lineHeight);
+  --ifm-h1-font-size: var(--salt-text-display1-fontSize);
+  --ifm-heading-font-weight: var(--salt-text-display1-fontWeight);
+  --ifm-heading-line-height: var(--salt-text-display1-lineHeight);
 }
 
 .heroBanner {
   flex: 2;
-  padding: calc(var(--uitk-size-unit) * 5);
+  padding: calc(var(--salt-size-unit) * 5);
 }
 
 .heroContainer {
   display: flex;
-  padding: 0 calc(var(--uitk-size-unit) * 5);
-  max-width: var(--max-content-width);
+  padding: 0 calc(var(--salt-size-unit) * 5);
+  max-width: var(--max-container-width);
   margin: auto;
 }
 
 .heroBanner .heroLink {
-  --button-background: var(--uitk-actionable-cta-background);
-  --button-background-active: var(--uitk-actionable-cta-background-active);
-  --button-background-hover: var(--uitk-actionable-cta-background-hover);
-  --button-fontWeight: var(--uitk-actionable-cta-fontWeight);
-  --button-text-color: var(--uitk-actionable-cta-foreground);
-  --button-text-color-active: var(--uitk-actionable-cta-foreground-active);
-  --button-text-color-hover: var(--uitk-actionable-cta-foreground-hover);
+  --button-background: var(--salt-actionable-cta-background);
+  --button-background-active: var(--salt-actionable-cta-background-active);
+  --button-background-hover: var(--salt-actionable-cta-background-hover);
+  --button-fontWeight: var(--salt-actionable-cta-fontWeight);
+  --button-text-color: var(--salt-actionable-cta-foreground);
+  --button-text-color-active: var(--salt-actionable-cta-foreground-active);
+  --button-text-color-hover: var(--salt-actionable-cta-foreground-hover);
 
   align-items: center;
   background: var(--button-background);
   color: var(--button-text-color);
   display: inline-flex;
-  letter-spacing: var(--uitk-actionable-letterSpacing);
-  text-transform: var(--uitk-actionable-textTransform);
-  padding: 0 var(--uitk-size-unit);
-  height: var(--uitk-size-base);
+  letter-spacing: var(--salt-actionable-letterSpacing);
+  text-transform: var(--salt-actionable-textTransform);
+  padding: 0 var(--salt-size-unit);
+  height: var(--salt-size-base);
   text-decoration: none;
   font-weight: var(--button-fontWeight);
   white-space: pre;
 }
 
 .heroBanner .heroLink:focus-visible {
-  outline-style: var(--uitk-focused-outlineStyle);
-  outline-width: var(--uitk-focused-outlineWidth);
-  outline-color: var(--uitk-focused-outlineColor);
-  outline-offset: var(--uitk-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
   background: var(--button-background-hover);
   color: var(--button-text-color-hover);
 }
@@ -85,28 +86,28 @@
 
 .cardContainer {
   display: flex;
-  max-width: var(--max-content-width);
+  max-width: var(--max-container-width);
   margin: auto;
   flex-wrap: wrap;
-  gap: calc(var(--uitk-size-unit) * 4);
-  padding: calc(var(--uitk-size-unit) * 5) calc(var(--uitk-size-unit) * 4);
+  gap: calc(var(--salt-size-unit) * 4);
+  padding: calc(var(--salt-size-unit) * 5) calc(var(--salt-size-unit) * 4);
 }
 
 @media screen and (max-width: 1280px) {
   .heroTitle {
-    --ifm-heading-line-height: var(--uitk-text-h1-lineHeight);
-    --ifm-h1-font-size: var(--uitk-text-h1-fontSize);
+    --ifm-heading-line-height: var(--salt-text-h1-lineHeight);
+    --ifm-h1-font-size: var(--salt-text-h1-fontSize);
   }
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: var(--uitk-size-unit) 0;
+    padding: var(--salt-size-unit) 0;
     flex: 1;
   }
 
   .heroContainer {
-    padding: var(--uitk-size-unit);
+    padding: var(--salt-size-unit);
     flex-flow: column-reverse;
   }
 
@@ -116,7 +117,7 @@
 
   .cardContainer {
     flex-direction: column;
-    padding: calc(var(--uitk-size-unit) * 3) calc(var(--uitk-size-unit) * 2);
-    gap: calc(var(--uitk-size-unit) * 2);
+    padding: calc(var(--salt-size-unit) * 3) calc(var(--salt-size-unit) * 2);
+    gap: calc(var(--salt-size-unit) * 2);
   }
 }

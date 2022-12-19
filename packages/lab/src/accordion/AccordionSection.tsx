@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { useLayoutEffectSkipFirst } from "../utils";
 import { AccordionSectionContext } from "./AccordionSectionContext";
 import cn from "classnames";
@@ -14,7 +14,7 @@ import "./Accordion.css";
 import { useAccordionContext } from "./AccordionContext";
 import { isNotProduction } from "./utils";
 
-const withBaseName = makePrefixer("uitkAccordionSection");
+const withBaseName = makePrefixer("saltAccordionSection");
 
 export interface AccordionSectionProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
@@ -42,7 +42,7 @@ export const AccordionSection = forwardRef<
   ref
 ) {
   const [id, setId] = useState(() =>
-    idProp != null ? idProp : `uitk-${Math.round(Math.random() * 1e5)}`
+    idProp != null ? idProp : `salt-${Math.round(Math.random() * 1e5)}`
   );
 
   if (idProp != null && idProp != id) {

@@ -1,8 +1,5 @@
-import {
-  useDensity,
-  useFormFieldProps,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { useDensity, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { useFormFieldProps } from "../../form-field-context";
 import { MutableRefObject } from "react";
 
 const refreshButtonWidth = {
@@ -41,7 +38,7 @@ export function useActivationIndicatorPosition(
     }
     if (formFieldRef && formFieldRef.current && offset) {
       const activationIndicator = formFieldRef.current.getElementsByClassName(
-        "uitkFormActivationIndicator-icon"
+        "saltFormActivationIndicator-icon"
       ) as HTMLCollectionOf<HTMLElement>;
       if (activationIndicator.length > 0) {
         activationIndicator[0].style.transform = `translateX(-${offset}px)`;

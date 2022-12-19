@@ -1,4 +1,4 @@
-import { Breadcrumbs, Breadcrumb } from "@jpmorganchase/uitk-lab";
+import { Breadcrumbs, Breadcrumb } from "@salt-ds/lab";
 
 describe("GIVEN a Breadcrumbs component", () => {
   describe("WHEN Breadcrumbs are passed as children", () => {
@@ -207,7 +207,7 @@ describe("GIVEN a Breadcrumbs component", () => {
 
       cy.realPress("Escape");
 
-      cy.get(".uitkText").realHover();
+      cy.get(".saltText").realHover();
       cy.findByRole("tooltip").should("be.visible");
     });
   });

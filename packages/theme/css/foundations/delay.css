@@ -1,6 +1,6 @@
-.uitk-theme {
-  --uitk-delay-instant: 100;
-  --uitk-delay-perceptible: 300;
-  --uitk-delay-notable: 1000;
-  --uitk-delay-cutoff: 10000;
+.salt-theme {
+  --salt-delay-instant: 100;
+  --salt-delay-perceptible: 300;
+  --salt-delay-notable: 1000;
+  --salt-delay-cutoff: 10000;
 }

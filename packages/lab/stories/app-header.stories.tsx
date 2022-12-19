@@ -9,15 +9,15 @@ import {
   Tabstrip,
   TabstripProps,
   Tooltray /*, Toolbar */,
-} from "@jpmorganchase/uitk-lab";
-import { Button } from "@jpmorganchase/uitk-core";
+} from "@salt-ds/lab";
+import { Button } from "@salt-ds/core";
 import {
   FilterIcon,
   MessageIcon,
   SearchIcon,
   UserGroupIcon,
   UserIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 
@@ -76,7 +76,7 @@ export const DefaultAppHeader: ComponentStory<typeof AppHeader> = () => {
           data-index={0}
           data-priority={1}
           src={PlaceholderLogo as string}
-          appTitle="Toolkit"
+          appTitle="Salt"
         />
         <Tabstrip
           data-index={1}

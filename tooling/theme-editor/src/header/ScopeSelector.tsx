@@ -1,4 +1,4 @@
-import { Tab, Tabstrip } from "@jpmorganchase/uitk-lab";
+import { Tab, Tabstrip } from "@salt-ds/lab";
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useTabsWithRouting } from "../utils/useTabsWithRouting";
@@ -47,7 +47,7 @@ export const ScopeSelector = (): JSX.Element => {
   };
 
   return (
-    <div className="uitkScopeSelector">
+    <div className="saltScopeSelector">
       <Tabstrip
         centered
         onActiveChange={onChange}

@@ -1,10 +1,10 @@
 import { forwardRef, HTMLAttributes } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 
 import "./SkipLinks.css";
 
-const withBaseName = makePrefixer("uitkSkipLinks");
+const withBaseName = makePrefixer("saltSkipLinks");
 
 export const SkipLinks = forwardRef<
   HTMLUListElement,

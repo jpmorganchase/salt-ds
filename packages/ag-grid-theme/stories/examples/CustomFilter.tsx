@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Switch } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
+import { Switch } from "@salt-ds/lab";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
@@ -7,15 +8,15 @@ import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const CustomFilter = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const [hasSavedState, setHasSavedState] = useState(true);
   const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -83,9 +84,9 @@ const CustomFilter = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div style={{ marginTop: 25 }}>

@@ -1,4 +1,4 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import cn from "classnames";
 import { forwardRef, HTMLAttributes } from "react";
 import { QueryInputBody, ValueSelector } from "./internal";
@@ -7,7 +7,7 @@ import { BooleanOperator, useQueryInput } from "./useQueryInput";
 
 import "./QueryInput.css";
 
-const withBaseName = makePrefixer("uitkQueryInput");
+const withBaseName = makePrefixer("saltQueryInput");
 
 export interface QueryInputProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {

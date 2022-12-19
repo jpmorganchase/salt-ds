@@ -8,7 +8,7 @@ import {
   AccordionSectionProps,
   AccordionSummary,
   AccordionSummaryProps,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import "./accordion.stories.css";
 

@@ -1,4 +1,4 @@
-import { Portal } from "@jpmorganchase/uitk-core";
+import { Portal } from "../../portal";
 import { forwardRef } from "react";
 import { Rect } from "./dragDropTypes";
 
@@ -12,7 +12,7 @@ export const DropIndicator = forwardRef<
   return (
     <Portal>
       <div
-        className={`uitkDropIndicator`}
+        className={`saltDropIndicator`}
         ref={forwardedRef}
         style={{ left, top, width, height }}
       />

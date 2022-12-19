@@ -1,9 +1,9 @@
-.uitkTargetBlankNoIcon-Link .uitkLink-icon {
+.saltTargetBlankNoIcon-Link .saltLink-icon {
   display: none;
 }
 
 .goalsList {
-  font-size: var(--uitk-text-fontSize);
-  font-family: var(--uitk-typography-fontFamily);
-  line-height: var(--uitk-text-lineHeight);
+  font-size: var(--salt-text-fontSize);
+  font-family: var(--salt-typography-fontFamily);
+  line-height: var(--salt-text-lineHeight);
 }

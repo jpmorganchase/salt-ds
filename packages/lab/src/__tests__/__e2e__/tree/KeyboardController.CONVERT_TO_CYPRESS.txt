@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { mountWithTheme } from '@jpmuitk/test-utils';
-import CheckboxBase from '@jpmuitk/checkbox/CheckboxBase';
+import { mountWithTheme } from '@jpmsalt/test-utils';
+import CheckboxBase from '@jpmsalt/checkbox/CheckboxBase';
 
 import TreeListItem from '../internal/TreeListItem';
 import Tree from '../Tree';

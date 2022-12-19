@@ -1,11 +1,11 @@
 import { QueryInputCategory } from "../queryInputTypes";
 import { Dispatch, ReactElement, SetStateAction } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { ChevronLeftIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer } from "@salt-ds/core";
+import { ChevronLeftIcon } from "@salt-ds/icons";
 import { List, ListItem } from "../../list";
 import { SelectHandler } from "../../common-hooks";
 
-const withBaseName = makePrefixer("uitkQueryInputValueList");
+const withBaseName = makePrefixer("saltQueryInputValueList");
 
 export interface ValueListProps {
   category: QueryInputCategory | null;

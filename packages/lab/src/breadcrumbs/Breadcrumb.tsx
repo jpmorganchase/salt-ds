@@ -1,18 +1,13 @@
-import {
-  Link,
-  makePrefixer,
-  TooltipProps,
-  Text,
-} from "@jpmorganchase/uitk-core";
-import { IconProps } from "@jpmorganchase/uitk-icons";
+import { Link, makePrefixer, Text } from "@salt-ds/core";
+import { IconProps } from "@salt-ds/icons";
 import classnames from "classnames";
 import { Children, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
-import "./Breadcrumb.css";
+import { TooltipProps } from "../tooltip";
 
 import "./Breadcrumb.css";
 
-const withBaseName = makePrefixer("uitkBreadcrumb");
+const withBaseName = makePrefixer("saltBreadcrumb");
 
 export interface BreadcrumbProps {
   children?: ReactNode;

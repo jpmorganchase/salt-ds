@@ -1,4 +1,4 @@
-.uitk-density-medium {
+.salt-density-medium {
   --stepperInput-adornment-container-top: -2px;
   --stepperInput-button-height: 12px;
   --stepperInput-button-margin: 2px;
@@ -9,7 +9,7 @@
   --stepperInput-secondary-button-marginRight: 2px;
 }
 
-.uitk-density-touch {
+.salt-density-touch {
   --stepperInput-adornment-container-top: 0;
   --stepperInput-button-height: 16px;
   --stepperInput-button-margin: 4px;
@@ -19,7 +19,7 @@
   --stepperInput-secondary-button-marginRight: 4px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --stepperInput-adornment-container-top: 0;
   --stepperInput-button-height: 12px;
   --stepperInput-button-margin: 4px;
@@ -29,7 +29,7 @@
   --stepperInput-secondary-button-marginRight: 4px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --stepperInput-adornment-container-top: -2px;
   --stepperInput-button-height: 8px;
   --stepperInput-button-margin: 2px;
@@ -41,51 +41,51 @@
 }
 
 /* Styles applied to adornment container */
-.uitkStepperInput-adornmentContainer {
+.saltStepperInput-adornmentContainer {
   display: flex;
   position: relative;
-  top: var(--uitkStepperInput-adornment-container-top, var(--stepperInput-adornment-container-top));
+  top: var(--saltStepperInput-adornment-container-top, var(--stepperInput-adornment-container-top));
 }
 
 /* Styles applied to refresh button */
-.uitkStepperInput-secondaryButton {
-  --uitkButton-height: var(--stepperInput-secondary-button-height);
-  --uitkButton-margin: var(--stepperInput-button-margin) var(--stepperInput-secondary-button-marginRight) var(--stepperInput-button-margin) var(--stepperInput-button-margin);
-  --uitkButton-width: var(--stepperInput-secondary-button-width);
+.saltStepperInput-secondaryButton {
+  --saltButton-height: var(--stepperInput-secondary-button-height);
+  --saltButton-margin: var(--stepperInput-button-margin) var(--stepperInput-secondary-button-marginRight) var(--stepperInput-button-margin) var(--stepperInput-button-margin);
+  --saltButton-width: var(--stepperInput-secondary-button-width);
 }
 
-.uitkStepperInput-hideSecondaryButton {
+.saltStepperInput-hideSecondaryButton {
   visibility: hidden;
 }
 
 /* Styles applied to stepper buttons container */
-.uitkStepperInput-buttonContainer {
+.saltStepperInput-buttonContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 /* Styles applied to stepper buttons */
-.uitkStepperInput-stepperButton {
-  --uitkButton-height: var(--stepperInput-button-height);
-  --uitkButton-margin: var(--stepperInput-button-margin);
-  --uitkButton-width: var(--stepperInput-button-width);
+.saltStepperInput-stepperButton {
+  --saltButton-height: var(--stepperInput-button-height);
+  --saltButton-margin: var(--stepperInput-button-margin);
+  --saltButton-width: var(--stepperInput-button-width);
 }
 
 /* Styles applied to increment button */
-.uitkStepperInput-increment {
+.saltStepperInput-increment {
 }
 
 /* Styles applied to decrement button */
-.uitkStepperInput-decrement {
+.saltStepperInput-decrement {
   margin-top: 0;
 }
 
 /* Styles applied to stepper button icon */
-.uitkStepperInput-stepperButtonIcon {
+.saltStepperInput-stepperButtonIcon {
 }
 
 /* Styles applied to input component */
-.uitkStepperInput-input {
-  max-height: var(--uitkStepperInput-maxHeight, unset);
+.saltStepperInput-input {
+  max-height: var(--saltStepperInput-maxHeight, unset);
 }

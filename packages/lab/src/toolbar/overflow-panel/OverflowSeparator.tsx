@@ -1,9 +1,9 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import cx from "classnames";
 import { HTMLAttributes, ReactElement } from "react";
 import "./OverflowSeparator.css";
 
-const withBaseName = makePrefixer("uitkOverflowSeparator");
+const withBaseName = makePrefixer("saltOverflowSeparator");
 
 export interface OverflowSeparatorProps extends HTMLAttributes<HTMLDivElement> {
   children?: never;

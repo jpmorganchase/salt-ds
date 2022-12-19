@@ -7,5 +7,5 @@ export interface ShadowPatternProps {
   scope: string;
   shadowPattern: JSONObj;
   themeName: string;
-  uitkColorOverrides: Record<string, string>;
+  saltColorOverrides: Record<string, string>;
 }

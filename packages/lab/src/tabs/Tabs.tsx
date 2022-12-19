@@ -6,14 +6,14 @@ import {
   useRef,
 } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { useTabs } from "./useTabs";
 import { Tabstrip } from "./Tabstrip";
 import { FocusAPI, TabstripProps } from "./TabsTypes";
 
 import "./Tabs.css";
 
-const withBaseName = makePrefixer("uitkTabs");
+const withBaseName = makePrefixer("saltTabs");
 
 export type TabsProps = Omit<TabstripProps, "defaultSource">;
 

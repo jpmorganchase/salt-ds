@@ -1,8 +1,8 @@
 import { forwardRef, HTMLAttributes } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { useContactDetailsContext } from "./internal";
 
-const withBaseName = makePrefixer("uitkContactActions");
+const withBaseName = makePrefixer("saltContactActions");
 
 export interface ContactActionsProps extends HTMLAttributes<HTMLDivElement> {}
 

@@ -6,12 +6,12 @@ import {
 } from "../src";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { useState } from "react";
-import { FlexLayout } from "@jpmorganchase/uitk-core";
+import { FlexLayout } from "@salt-ds/core";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };

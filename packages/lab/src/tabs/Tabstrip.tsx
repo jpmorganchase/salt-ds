@@ -1,12 +1,10 @@
 import {
   Button,
   makePrefixer,
-  Tooltip,
   useIdMemo,
   useIsomorphicLayoutEffect,
-  // useTooltip,
-} from "@jpmorganchase/uitk-core";
-import { AddIcon, OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/core";
+import { AddIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import React, {
   ForwardedRef,
@@ -40,11 +38,12 @@ import {
   TabstripProps,
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import "./Tabstrip.css";
 import "./ThemeTabstrip.css";
 
-const withBaseName = makePrefixer("uitkTabstrip");
+const withBaseName = makePrefixer("saltTabstrip");
 
 const ADD_TAB_LABEL = "Create Tab";
 
@@ -184,7 +183,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     ]
   );
 
-  // const { getTriggerProps, getTooltipProps } = useTooltip({});
+  const { getTriggerProps, getTooltipProps } = useTooltip({});
 
   const {
     activeTabIndex,
@@ -223,7 +222,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
           const { current: tabstrip } = root;
           if (tabstrip) {
             const selectedTab = tabstrip.querySelector(
-              '.uitkTab[aria-selected="true"]'
+              '.saltTab[aria-selected="true"]'
             ) as HTMLElement;
             if (selectedTab) {
               selectedTab.focus();
@@ -384,7 +383,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     const [injectedItem] = collectionHook.data.filter((i) => i.isInjectedItem);
 
     if (overflowIndicator) {
-      // const triggerProps = getTriggerProps<typeof Button>();
+      const triggerProps = getTriggerProps<typeof Button>();
       content.push(
         <Dropdown<OverflowItem>
           className={cx(withBaseName("overflowMenu"), {
@@ -409,7 +408,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
           selected={null}
           triggerComponent={
             <Button
-              // {...triggerProps}
+              {...triggerProps}
               aria-label={`Tabs overflow menu ${overflowCount} item${
                 overflowCount === 1 ? "" : "s"
               }`}
@@ -425,11 +424,11 @@ export const Tabstrip = forwardRef(function Tabstrip(
       if (showTooltip) {
         content.push(
           <Tooltip
-            // {...getTooltipProps({
-            //   title: "Active Tab cannot be moved into overflow list",
-            //   open: true,
-            //   status: "warning",
-            // })}
+            {...getTooltipProps({
+              title: "Active Tab cannot be moved into overflow list",
+              open: true,
+              status: "warning",
+            })}
             key="tooltip"
           />
         );

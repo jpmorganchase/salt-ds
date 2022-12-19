@@ -1,4 +1,4 @@
-import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import cn from "classnames";
 import {
   CSSProperties,
@@ -20,7 +20,7 @@ import { SliderChangeHandler, SliderValue } from "./types";
 
 import "./Slider.css";
 
-const withBaseName = makePrefixer("uitkSlider");
+const withBaseName = makePrefixer("saltSlider");
 
 const defaultMin = 0;
 const defaultMax = 100;

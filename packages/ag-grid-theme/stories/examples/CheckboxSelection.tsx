@@ -4,7 +4,7 @@ import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import "../../uitk-ag-theme.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { Switch } from "@salt-ds/lab";
 
 const headerOn = {
   headerName: "On",
@@ -16,14 +16,14 @@ const headerOn = {
 const [headerName, , headerCapital] = dataGridExampleColumns;
 
 const CheckboxSelection = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -36,9 +36,9 @@ const CheckboxSelection = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div
@@ -50,6 +50,7 @@ const CheckboxSelection = (props: AgGridReactProps) => {
           {...props}
           rowData={dataGridExampleData}
           columnDefs={[headerOn, headerName, headerCapital]}
+          rowSelection="multiple"
         />
       </div>
     </div>

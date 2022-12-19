@@ -1,0 +1,16 @@
+/* Styles applied to root component */
+.saltCheckboxGroup {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: top;
+}
+
+/* Styles applied to root component if `row={true}` */
+.saltCheckboxGroup-horizontal {
+  --saltControlLabel-right-marginRight: calc(var(--salt-size-unit) * 3);
+
+  display: block;
+}

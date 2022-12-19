@@ -1,12 +1,4 @@
-import {
-  makePrefixer,
-  Portal,
-  useId,
-  useWindow,
-  ValidationStatus,
-  Scrim,
-  ScrimProps,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useId, ValidationStatus } from "@salt-ds/core";
 import classnames from "classnames";
 import {
   forwardRef,
@@ -17,6 +9,9 @@ import {
   useState,
 } from "react";
 import { DialogContext } from "./internal/DialogContext";
+import { Scrim, ScrimProps } from "../scrim";
+import { useWindow } from "../window";
+import { Portal } from "../portal";
 
 import "./Dialog.css";
 
@@ -31,7 +26,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   disablePortal?: boolean;
 }
 
-const withBaseName = makePrefixer("uitkDialog");
+const withBaseName = makePrefixer("saltDialog");
 
 /**
  * The Dialog is a window that contains text and interactive components.

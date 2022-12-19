@@ -1,8 +1,8 @@
-.uitkGridHeaderRow {
+.saltGridHeaderRow {
   height: var(--grid-row-height);
 }
 
-.uitkGridHeaderRow th {
+.saltGridHeaderRow th {
   border-style: solid;
   border-color: var(--grid-headerRowSeparator-color);
   border-width: 0 0 var(--grid-headerRowSeparator-height) 0;

@@ -1,7 +1,4 @@
-import {
-  useControlled,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
   FocusEvent,
   FocusEventHandler,
@@ -293,7 +290,7 @@ export const useKeyboardNavigation = ({
 
   const containerProps = {
     onBlur: (e: FocusEvent) => {
-      const sourceTarget = (e.target as HTMLElement).closest(".uitkTabstrip");
+      const sourceTarget = (e.target as HTMLElement).closest(".saltTabstrip");
       const destTarget = e.relatedTarget as HTMLElement;
       if (sourceTarget && !sourceTarget?.contains(destTarget)) {
         setHighlightedIdx(-1);

@@ -4,7 +4,7 @@ import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfini
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { Switch } from "@salt-ds/lab";
 
 const generateData = function generateData<T extends { name: string }>(
   lst: T[]
@@ -23,14 +23,14 @@ const generateData = function generateData<T extends { name: string }>(
 const dataSourceRows = generateData(dataGridExampleData);
 
 const InfiniteScroll = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -54,9 +54,9 @@ const InfiniteScroll = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div

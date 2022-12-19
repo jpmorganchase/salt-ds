@@ -1,9 +1,9 @@
-import { FormField, Input, makePrefixer } from "@jpmorganchase/uitk-core";
-import { capitalize } from "@jpmorganchase/uitk-lab";
+import { makePrefixer } from "@salt-ds/core";
+import { capitalize, FormField, Input } from "@salt-ds/lab";
 import cn from "classnames";
 import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { validateTokenInput } from "../../helpers/validateTokenInput";
-import { UITK_FOUNDATIONS } from "../../utils/uitkValues";
+import { SALT_FOUNDATIONS } from "../../utils/saltValues";
 import {
   ColorValueEditor,
   isColor,
@@ -12,7 +12,7 @@ import { JumpToTokenButton } from "../toggles/JumpToTokenButton";
 
 import "./ValueEditor.css";
 
-const withBaseName = makePrefixer("uitkValueEditor");
+const withBaseName = makePrefixer("saltValueEditor");
 
 interface ValueEditorProps {
   characteristicsView?: boolean;
@@ -21,7 +21,7 @@ interface ValueEditorProps {
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
   patternName: string;
   scope: string;
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   value: string;
   valueName: string;
 }
@@ -53,7 +53,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
 
   const onCommit = () => {
     let validateInput = value;
-    if (value.startsWith("uitk")) {
+    if (value.startsWith("salt")) {
       validateInput = props.extractValue(value);
     }
     if (!validateTokenInput(pathToUpdate, validateInput)) {
@@ -69,7 +69,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
       {props.isStateValue || isColor(props.extractValue(value)).length ? (
         <div className={cn(withBaseName("colorInput"))}>
           <ColorValueEditor
-            uitkColorOverrides={props.uitkColorOverrides}
+            saltColorOverrides={props.saltColorOverrides}
             characteristicsView={props.characteristicsView}
             extractValue={props.extractValue}
             isStateValue={props.isStateValue}
@@ -88,7 +88,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
           className={cn(withBaseName("input"), {
             [withBaseName("inputWithColumns")]: displayValue.length < 7,
             [withBaseName("jumpToFoundationNotColor")]:
-              props.characteristicsView && props.value.startsWith("uitk"),
+              props.characteristicsView && props.value.startsWith("salt"),
           })}
         >
           <FormField label={capitalize(valueName) as string}>
@@ -107,7 +107,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
               value={displayValue}
             />
           </FormField>
-          {props.characteristicsView && props.value.startsWith("uitk") && (
+          {props.characteristicsView && props.value.startsWith("salt") && (
             <JumpToTokenButton
               disabled={false}
               pathname={`/foundations/${props.value.split("-").slice(1)[0]}`}
@@ -116,7 +116,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
                   ? `?open=${props.value.split("-").slice(-2).join("")}`
                   : ``
               }
-              sectionToJumpTo={UITK_FOUNDATIONS}
+              sectionToJumpTo={SALT_FOUNDATIONS}
               value={props.value.split("-").slice(1)[0]}
             />
           )}

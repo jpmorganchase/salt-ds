@@ -1,38 +1,23 @@
-.uitkGridDropdownCellEditor {
-  box-sizing: border-box;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-
-  border-style: solid;
-  border-top-color: var(--grid-row-borderColor);
-  border-right-color: transparent;
-  border-width: 1px 1px 0 0;
-
-  position: relative;
+.saltGridDropdownCellEditor {
   font-size: var(--grid-fontSize);
 }
 
-.uitkGrid-columnSeparators .uitkGridDropdownCellEditor {
-  border-right-color: var(--grid-columnSeparator-color);
-}
-
-.uitkGridDropdownCellEditor-dropdownContainer {
+.saltGridDropdownCellEditor-dropdownContainer {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   box-sizing: border-box;
-
+  background: var(--grid-background);
   border-style: dotted;
   border-width: 2px;
   border-color: var(--grid-cursor-borderColor);
   padding: 0;
 }
 
-/* TODO this is currently the same as uitkGridBaseCell-valueContainer. Update when UX is available. */
-.uitkGridDropdownCellEditor-currentValue {
+/* TODO this is currently the same as saltGridBaseCell-valueContainer. Update when UX is available. */
+.saltGridDropdownCellEditor-currentValue {
   height: calc(var(--grid-row-height) - 4px);
   box-sizing: border-box;
   overflow: hidden;

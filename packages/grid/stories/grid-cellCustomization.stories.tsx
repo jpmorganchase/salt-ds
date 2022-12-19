@@ -5,12 +5,12 @@ import {
   GridColumn,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { LinearProgress } from "@jpmorganchase/uitk-lab";
+import { LinearProgress } from "@salt-ds/lab";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };

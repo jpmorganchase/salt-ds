@@ -1,36 +1,36 @@
-.uitkColorChooserPicker {
+.saltColorChooserPicker {
   display: flex;
   flex-direction: row;
 }
 
-.uitkColorChooserPicker-inputContainer {
+.saltColorChooserPicker-inputContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  border-left: 1px solid var(--uitk-separable-secondary-borderColor);
+  border-left: 1px solid var(--salt-separable-secondary-borderColor);
 }
 
-.uitkColorChooserPicker-applyButtonDiv {
-  padding: var(--uitk-size-unit) calc(2 * var(--uitk-size-unit)) 0px calc(1.5 * var(--uitk-size-unit));
+.saltColorChooserPicker-applyButtonDiv {
+  padding: var(--salt-size-unit) calc(2 * var(--salt-size-unit)) 0px calc(1.5 * var(--salt-size-unit));
   align-self: center;
 }
 
-.uitkColorChooserPicker-textDivOverrides {
-  font-size: var(--uitk-text-label-fontSize);
-  font-weight: var(--uitk-text-fontWeight-strong);
-  color: var(--uitk-text-primary-foreground);
+.saltColorChooserPicker-textDivOverrides {
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-fontWeight-strong);
+  color: var(--salt-text-primary-foreground);
   padding: 0px !important;
 }
 
-.uitkColorChooserPicker-inputDivs {
+.saltColorChooserPicker-inputDivs {
   display: flex;
   flex-direction: column;
   align-content: stretch;
-  padding: var(--uitk-size-unit) 0px 0px var(--uitk-size-unit);
+  padding: var(--salt-size-unit) 0px 0px var(--salt-size-unit);
 }
 
 /**
- Warning: Below are a lot of overridden styles from react-color 
+ Warning: Below are a lot of overridden styles from react-color
  **/
 
 /* Entire container for react-color component */
@@ -39,7 +39,7 @@
   box-shadow: none !important;
   padding: 8px 8px 0px 0px !important;
   background: transparent !important;
-  width: calc(9 * var(--uitk-size-stackable)) !important;
+  width: calc(9 * var(--salt-size-stackable)) !important;
 }
 /* Color sliders container */
 .root .flexbox-fix,
@@ -52,40 +52,40 @@
   display: none !important;
 }
 /* Height of hue and saturation boxes */
-.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div {
-  height: calc(var(--uitk-size-stackable) / 2) !important;
+.saltColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div {
+  height: calc(var(--salt-size-stackable) / 2) !important;
 }
 /* Height of saturation slider container */
-.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div {
-  height: calc(var(--uitk-size-stackable) / 2 - 2px) !important;
+.saltColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div {
+  height: calc(var(--salt-size-stackable) / 2 - 2px) !important;
 }
 /* Height of saturation slider */
-.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div > div {
-  height: calc(var(--uitk-size-stackable) / 2 - 2px) !important;
+.saltColorChooserPicker-swatchPickerStyles .flexbox-fix > div > div:nth-child(2) > div > div:nth-last-child(1) > div > div {
+  height: calc(var(--salt-size-stackable) / 2 - 2px) !important;
 }
 /* Width of color preview box */
-.uitkColorChooserPicker-swatchPickerStyles .flexbox-fix > div {
-  width: calc(var(--uitk-size-stackable) / 2) !important;
+.saltColorChooserPicker-swatchPickerStyles .flexbox-fix > div {
+  width: calc(var(--salt-size-stackable) / 2) !important;
 }
 /* Height of hue slider container */
-.uitkColorChooserPicker-swatchPickerStyles .hue-horizontal > div {
-  height: calc(var(--uitk-size-stackable) / 2 - 2px) !important;
+.saltColorChooserPicker-swatchPickerStyles .hue-horizontal > div {
+  height: calc(var(--salt-size-stackable) / 2 - 2px) !important;
 }
 /* Height of hue slider */
-.uitkColorChooserPicker-swatchPickerStyles .hue-horizontal > div > div {
-  height: calc(var(--uitk-size-stackable) / 2 - 2px) !important;
+.saltColorChooserPicker-swatchPickerStyles .hue-horizontal > div > div {
+  height: calc(var(--salt-size-stackable) / 2 - 2px) !important;
 }
 
-.uitkColorChooserPicker-swatchPickerStyles .saturation-white > div > div {
-  width: calc(var(--uitk-size-base) / 4) !important;
-  height: calc(var(--uitk-size-base) / 4) !important;
+.saltColorChooserPicker-swatchPickerStyles .saturation-white > div > div {
+  width: calc(var(--salt-size-base) / 4) !important;
+  height: calc(var(--salt-size-base) / 4) !important;
 }
 /* Cursor on hue slider */
 .rootDisabledAlpha .hue-horizontal > div > div {
   position: relative;
   margin-top: 0px !important;
   width: 4px !important;
-  height: calc(var(--uitk-size-stackable) / 2 - 2px) !important;
-  background: var(--uitk-container-primary-background) !important;
-  border-bottom: var(--uitk-size-border) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
+  height: calc(var(--salt-size-stackable) / 2 - 2px) !important;
+  background: var(--salt-container-primary-background) !important;
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
 }

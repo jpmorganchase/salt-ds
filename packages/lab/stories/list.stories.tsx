@@ -14,12 +14,10 @@ import {
   Button,
   FlexItem,
   FlexLayout,
-  FormField,
-  Input,
   StackLayout,
   useDensity,
-} from "@jpmorganchase/uitk-core";
-import { ArrowDownIcon, ArrowUpIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/core";
+import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 
 import {
   ContentStatus,
@@ -32,8 +30,10 @@ import {
   ListScrollHandles,
   VirtualizedList,
   SelectionChangeHandler,
-} from "@jpmorganchase/uitk-lab";
-import { SelectHandler } from "../src/common-hooks";
+  FormField,
+  Input,
+  SelectHandler,
+} from "@salt-ds/lab";
 
 import { usa_states } from "./list.data";
 
@@ -278,8 +278,8 @@ export const DisabledList: Story<ListProps<CustomItem>> = (props) => {
 
 export const Grouped: Story<ListProps> = (props) => (
   <>
-    <style>{`#grouped-list .uitkListItemHeader {
-      background: var(--uitk-color-gray-20);
+    <style>{`#grouped-list .saltListItemHeader {
+      background: var(--salt-color-gray-20);
       }`}</style>
     <List
       aria-label="Grouped List example"

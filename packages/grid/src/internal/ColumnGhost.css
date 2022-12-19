@@ -1,4 +1,4 @@
-.uitkGridColumnGhost {
+.saltGridColumnGhost {
   background: var(--grid-background);
   position: absolute;
   border: solid var(--grid-columnGhost-borderWidth) var(--grid-columnGhost-borderColor);
@@ -6,6 +6,6 @@
   opacity: 0.85;
 }
 
-.uitkGridColumnGhost table {
+.saltGridColumnGhost table {
   table-layout: fixed;
 }

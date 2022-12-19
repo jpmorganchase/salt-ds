@@ -1,10 +1,10 @@
 import { forwardRef, ForwardedRef, HTMLAttributes } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 
 import "./TabPanel.css";
 
-const withBaseName = makePrefixer("uitkTabPanel");
+const withBaseName = makePrefixer("saltTabPanel");
 
 export interface TabPanelProps extends HTMLAttributes<HTMLDivElement> {
   enableClose?: boolean;

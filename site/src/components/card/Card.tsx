@@ -6,25 +6,20 @@ import {
 } from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
-import { useTheme } from "@jpmorganchase/uitk-core";
-import { TearOutIcon } from "@jpmorganchase/uitk-icons";
+
+import { useTheme, useViewport } from "@salt-ds/core";
 
 import useOnScreen from "../../utils/useOnScreen";
 
 import styles from "./Card.module.css";
 
-export interface FooterProps {
-  isExternalLink?: boolean;
-  footerText: string;
-}
-
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   icon?: JSX.Element;
   inlineIcon?: JSX.Element;
-  title: string;
-  description: string;
+  title?: string;
+  description: JSX.Element;
   url: string;
-  footer: FooterProps;
+  footerText: string;
   keylineColor: CSSProperties["color"];
   keyLineAnimation?: boolean;
 }
@@ -35,7 +30,7 @@ const Card = ({
   title,
   description,
   url,
-  footer: { footerText, isExternalLink },
+  footerText,
   keylineColor,
   keyLineAnimation = true,
 }: CardProps): JSX.Element => {
@@ -59,12 +54,12 @@ const Card = ({
       )}
       <div className={styles.cardContent}>
         <span className={styles.cardTitle}>
-          <h2>{title}</h2>
+          {title && <h2>{title}</h2>}
           {inlineIcon && <div className={styles.inlineIcon}>{inlineIcon}</div>}
         </span>
-        <p className={styles.cardDescription}>{description}</p>
+        <div className={styles.cardDescription}>{description}</div>
         <div className={styles.cardFooter}>
-          <p>{footerText}</p> {isExternalLink && <TearOutIcon />}
+          <p>{footerText}</p>
         </div>
       </div>
       <div
@@ -81,3 +76,62 @@ const Card = ({
 };
 
 export default Card;
+
+export const InlineCard = ({
+  icon,
+  description,
+  url,
+  footerText,
+  keylineColor,
+}: CardProps): JSX.Element => {
+  const ref = useRef<HTMLDivElement>();
+
+  const { mode } = useTheme();
+
+  const viewport = useViewport();
+  const isTabletView = viewport <= 1070;
+
+  const useLightTheme = mode !== "dark";
+
+  if (isTabletView) {
+    return (
+      <Card
+        icon={icon}
+        description={description}
+        url={url}
+        footerText={footerText}
+        keylineColor={keylineColor}
+        keyLineAnimation={false}
+      />
+    );
+  }
+
+  return (
+    <Link
+      className={clsx(styles.inlineCard, {
+        [styles.lightTheme]: useLightTheme,
+      })}
+      to={url}
+    >
+      <div className={styles.inlineCardContent}>
+        <div className={styles.iconContainer}>
+          {cloneElement(icon, { ...icon.props, className: styles.icon })}
+        </div>
+        <div className={styles.textContainer}>
+          <div className={styles.cardText}>
+            <div className={styles.cardDescription}>{description}</div>
+            <p className={styles.cardFooter}>{footerText}</p>
+          </div>
+
+          <div
+            className={styles.keyline}
+            style={{
+              backgroundColor: keylineColor,
+            }}
+            ref={ref}
+          />
+        </div>
+      </div>
+    </Link>
+  );
+};

@@ -1,8 +1,8 @@
 import "./CellMeasure.css";
 import { useEffect, useRef } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 
-const withBaseName = makePrefixer("uitkGridCellMeasure");
+const withBaseName = makePrefixer("saltGridCellMeasure");
 
 export interface CellMeasureProps<T> {
   setRowHeight: (rowHeight: number) => void;

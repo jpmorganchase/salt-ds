@@ -8,22 +8,18 @@ import {
 } from "../src";
 import { ChangeEvent, useMemo, useState } from "react";
 import {
+  Checkbox,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-} from "@jpmorganchase/uitk-lab";
-import {
-  Button,
-  Checkbox,
-  FlexItem,
-  FlexLayout,
-} from "@jpmorganchase/uitk-core";
-import { DeleteIcon, UndoIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/lab";
+import { Button, FlexItem, FlexLayout } from "@salt-ds/core";
+import { DeleteIcon, UndoIcon } from "@salt-ds/icons";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };
@@ -45,19 +41,19 @@ const CssVariablesTemplate: Story<{}> = () => {
 
   const [cssVars, setCssVars] = useState<GridCssVar[]>([
     {
-      name: "--uitkGrid-row-height",
+      name: "--saltGrid-row-height",
       description: "Row height",
     },
     {
-      name: "--uitkGrid-padding",
+      name: "--saltGrid-padding",
       description: "Left and right padding of grid cells and headers",
     },
     {
-      name: "--uitkGrid-fontSize",
+      name: "--saltGrid-fontSize",
       description: "Font size for grid cells",
     },
     {
-      name: "--uitkGrid-header-fontSize",
+      name: "--saltGrid-header-fontSize",
       description: "Font size for column headers",
     },
     {
@@ -69,73 +65,73 @@ const CssVariablesTemplate: Story<{}> = () => {
       description: "Column group header font weight",
     },
     {
-      name: "--uitkGrid-separatorGap",
+      name: "--saltGrid-separatorGap",
       description: "Controls the size of the column header separator",
     },
     {
-      name: "--uitkGrid-background-primary",
+      name: "--saltGrid-background-primary",
       description: "Background in primary mode",
     },
     {
-      name: "--uitkGrid-background-secondary",
+      name: "--saltGrid-background-secondary",
       description: "Background in secondary mode",
     },
     {
-      name: "--uitkGrid-zebraColor",
+      name: "--saltGrid-zebraColor",
       description: "Background color of odd rows in zebra mode",
     },
     {
-      name: "--uitkGrid-row-background-hover",
+      name: "--saltGrid-row-background-hover",
       description: "Background color of the row under the mouse cursor",
     },
     {
-      name: "--uitkGrid-row-background-selected",
+      name: "--saltGrid-row-background-selected",
       description: "Background color of selected rows",
     },
     {
-      name: "--uitkGrid-row-borderColor-selected",
+      name: "--saltGrid-row-borderColor-selected",
       description: "Border color of selected rows",
     },
     {
-      name: "--uitkGrid-cell-background-selected",
+      name: "--saltGrid-cell-background-selected",
       description: "Background color of selected cells",
     },
     {
-      name: "--uitkGrid-editableCell-borderColor",
+      name: "--saltGrid-editableCell-borderColor",
       description: "Border color of editable cells",
     },
     {
-      name: "--uitkGrid-editableCell-borderColor-hover",
+      name: "--saltGrid-editableCell-borderColor-hover",
       description: "Border color of the editable cell under the mouse cursor",
     },
     {
-      name: "--uitkGrid-editableCell-background-active",
+      name: "--saltGrid-editableCell-background-active",
       description: "Background color of editable cells when in edit mode",
     },
     {
-      name: "--uitkGrid-editableCell-color-active",
+      name: "--saltGrid-editableCell-color-active",
       description: "Font color of editable cells when in edit mode",
     },
     {
-      name: "--uitkGrid-editableCell-cornerTag-size",
+      name: "--saltGrid-editableCell-cornerTag-size",
       description:
         "Size of the triangle element indicating that the focused cell is editable",
     },
     {
-      name: "--uitkGrid-header-color",
+      name: "--saltGrid-header-color",
       description: "Font color applied to column headers",
     },
     {
-      name: "--uitkGrid-headerColumnSeparator-color",
+      name: "--saltGrid-headerColumnSeparator-color",
       description: "Color of column header separators",
     },
     {
-      name: "--uitkGrid-headerRowSeparator-color",
+      name: "--saltGrid-headerRowSeparator-color",
       description:
         "Color of the separator between column headers and grid body",
     },
     {
-      name: "--uitkGrid-groupHeaderRowSeparator-color",
+      name: "--saltGrid-groupHeaderRowSeparator-color",
       description:
         "Color of the separator between column group headers and column headers",
     },
@@ -149,64 +145,64 @@ const CssVariablesTemplate: Story<{}> = () => {
       description: "Height (thickness) of the row header separator",
     },
     {
-      name: "--uitkGrid-groupHeader-color",
+      name: "--saltGrid-groupHeader-color",
       description: "Foreground color of column group headers",
     },
     {
-      name: "--uitkGrid-shadow-color",
+      name: "--saltGrid-shadow-color",
       description:
         "Color of the shadow that separates pinned and unpinned columns",
     },
     {
-      name: "--uitkGrid-columnDropTarget-color",
+      name: "--saltGrid-columnDropTarget-color",
       description: "Color of column drop targets",
     },
     {
-      name: "--uitkGrid-columnDropTarget-width",
+      name: "--saltGrid-columnDropTarget-width",
       description: "Width of column drop targets",
     },
     {
-      name: "--uitkGrid-cursor-borderColor",
+      name: "--saltGrid-cursor-borderColor",
       description: "Keyboard cursor (focused cell) border color",
     },
     {
-      name: "--uitkGrid-cursor-borderStyle",
+      name: "--saltGrid-cursor-borderStyle",
       description: "Keyboard cursor border style",
     },
     {
-      name: "--uitkGrid-cursor-borderWidth",
+      name: "--saltGrid-cursor-borderWidth",
       description: "Width of the keyboard cursor",
     },
     {
-      name: "--uitkGrid-borderColor",
+      name: "--saltGrid-borderColor",
       description: "Border color of the grid (when framed)",
     },
     {
-      name: "--uitkGrid-rowSeparator-color",
+      name: "--saltGrid-rowSeparator-color",
       description: "Color of row separators",
     },
     {
-      name: "--uitkGrid-columnSeparator-color",
+      name: "--saltGrid-columnSeparator-color",
       description: "Color of column separators (when enabled)",
     },
     {
-      name: "--uitkGrid-pinnedSeparator-color",
+      name: "--saltGrid-pinnedSeparator-color",
       description: "Color of the separator between pinned and unpinned columns",
     },
     {
-      name: "--uitkGrid-rowSeparator-color-divided",
+      name: "--saltGrid-rowSeparator-color-divided",
       description: "Color of row separators between groups or rows",
     },
     {
-      name: "--uitkGrid-columnGhost-borderColor",
+      name: "--saltGrid-columnGhost-borderColor",
       description: "Border color of the column ghost",
     },
     {
-      name: "--uitkGrid-columnGhost-borderWidth",
+      name: "--saltGrid-columnGhost-borderWidth",
       description: "Border width of the column ghost",
     },
     {
-      name: "--uitkGrid-columnGhost-boxShadow",
+      name: "--saltGrid-columnGhost-boxShadow",
       description: "Shadow of the column ghost",
     },
   ]);

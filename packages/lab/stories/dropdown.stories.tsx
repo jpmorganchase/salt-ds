@@ -1,27 +1,25 @@
 import { useCallback, useState } from "react";
 import { Story } from "@storybook/react";
 
-import {
-  Button,
-  FormField,
-  Tooltip,
-  // useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 
 import {
+  FormField,
+  Tooltip,
+  useTooltip,
   Dropdown,
   DropdownButton,
   DropdownProps,
   ListItem,
   ListItemType,
   SelectionChangeHandler,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { usa_states } from "./list.data";
 
 export default {
@@ -149,26 +147,18 @@ export const CustomRowRenderer: Story<DropdownProps> = (props) => (
   />
 );
 
-const ListItemWithTooltip: ListItemType<string> = ({
-  item = "uknown",
-  ...props
-}) => {
-  // const { getTriggerProps, getTooltipProps } = useTooltip({
-  //   placement: "right",
-  // });
-  // const { ref: triggerRef, ...triggerProps } =
-  //   getTriggerProps<typeof ListItem>(props);
+const ListItemWithTooltip: ListItemType<string> = ({ item, ...props }) => {
+  const { getTriggerProps, getTooltipProps } = useTooltip({
+    placement: "right",
+  });
+  const { ref: triggerRef, ...triggerProps } =
+    getTriggerProps<typeof ListItem>(props);
 
   return (
-    <Tooltip
-    // {...getTooltipProps({ title: `I am a tooltip for ${item}` })}
-    >
-      <ListItem
-      // ref={triggerRef} {...triggerProps}
-      >
-        <label style={{ width: "100%" }}>{item}</label>
-      </ListItem>
-    </Tooltip>
+    <ListItem ref={triggerRef} {...triggerProps}>
+      <label style={{ width: "100%" }}>{item}</label>
+      <Tooltip {...getTooltipProps({ title: `I am a tooltip for ${item}` })} />
+    </ListItem>
   );
 };
 

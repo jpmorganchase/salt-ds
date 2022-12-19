@@ -1,9 +1,4 @@
-import {
-  makePrefixer,
-  useForkRef,
-  // useTooltip,
-  useTooltipContext,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import cn from "classnames";
 import {
   ForwardedRef,
@@ -16,6 +11,7 @@ import {
 } from "react";
 import { useOverflowDetection } from "../utils";
 import { Highlighter } from "./internal/Highlighter";
+import { useTooltip, useTooltipContext } from "../tooltip";
 
 import "./ListItem.css";
 
@@ -30,7 +26,7 @@ export interface ListItemBaseProps extends HTMLAttributes<HTMLDivElement> {
   tooltipText?: string;
 }
 
-const withBaseName = makePrefixer("uitkListItemDeprecated");
+const withBaseName = makePrefixer("saltListItemDeprecated");
 
 // just to keep line number parity
 //
@@ -72,40 +68,37 @@ export const ListItemBase = memo(
       }
     }, [highlighted, enterDelay, leaveDelay, detectTruncation, isOverflowed]);
 
-    // const { getTooltipProps, getTriggerProps } = useTooltip({
-    //   placement,
-    //   open: openTooltip,
-    //   disabled: !isOverflowed,
-    // });
+    const { getTooltipProps, getTriggerProps } = useTooltip({
+      placement,
+      open: openTooltip,
+      disabled: !isOverflowed,
+    });
 
-    // const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-    //   "aria-label": typeof children === "string" ? children : undefined,
-    //   ...restProps,
-    //   className: cn(
-    //     withBaseName(),
-    //     {
-    //       [withBaseName("deselectable")]: deselectable,
-    //       [withBaseName("highlighted")]: highlighted,
-    //       [withBaseName("selected")]: selected,
-    //       [withBaseName("focusVisible")]: focusVisible,
-    //       [withBaseName("disabled")]: disabled,
-    //     },
-    //     className
-    //   ),
-    // });
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps({
+      "aria-label": typeof children === "string" ? children : undefined,
+      ...restProps,
+      className: cn(
+        withBaseName(),
+        {
+          [withBaseName("deselectable")]: deselectable,
+          [withBaseName("highlighted")]: highlighted,
+          [withBaseName("selected")]: selected,
+          [withBaseName("focusVisible")]: focusVisible,
+          [withBaseName("disabled")]: disabled,
+        },
+        className
+      ),
+    });
 
-    // const handleRef = useForkRef(
-    //   triggerRef,
-    //   detectTruncation ? ref : setItemRef
-    // );
+    const handleRef = useForkRef(
+      triggerRef,
+      detectTruncation ? ref : setItemRef
+    );
 
     return (
-      <Tooltip
-      // {...getTooltipProps({ title: tooltipText })}
-      >
-        <div
-        // ref={handleRef} {...triggerProps}
-        >
+      <>
+        <Tooltip {...getTooltipProps({ title: tooltipText })} />
+        <div ref={handleRef} {...triggerProps}>
           {detectTruncation ? (
             <span className={withBaseName("textWrapper")} ref={overflowRef}>
               {itemTextHighlightPattern == null ? (
@@ -121,7 +114,7 @@ export const ListItemBase = memo(
             children
           )}
         </div>
-      </Tooltip>
+      </>
     );
   })
 );

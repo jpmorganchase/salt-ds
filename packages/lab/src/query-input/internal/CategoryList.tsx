@@ -1,15 +1,12 @@
 import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
-import {
-  makePrefixer,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { QueryInputCategory } from "../queryInputTypes";
 import { SelectHandler } from "../../common-hooks";
 import { List } from "../../list";
 import { CategoryListItem } from "./CategoryListItem";
 import { CategoryListContext } from "./CategoryListContext";
 
-const withBaseName = makePrefixer("uitkCategoryList");
+const withBaseName = makePrefixer("saltCategoryList");
 
 export interface CategoryListProps {
   categories: QueryInputCategory[];

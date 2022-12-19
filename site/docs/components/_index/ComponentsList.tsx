@@ -11,8 +11,8 @@ import {
   StepActiveIcon,
   ArrowUpIcon,
   ArrowDownIcon,
-} from "@jpmorganchase/uitk-icons";
-import { Button } from "@jpmorganchase/uitk-core";
+} from "@salt-ds/icons";
+import { Button } from "@salt-ds/core";
 import StorybookLogo from "@site/static/img/storybook_logo.svg";
 import ReactLogo from "@site/static/img/react_logo.svg";
 import FigmaLogo from "@site/static/img/figma_logo.svg";
@@ -27,14 +27,17 @@ const statusClass = (status: ComponentStatus) => {
   if (status === ComponentStatus.IN_PROGRESS) {
     return "progress";
   }
-
-  return "backlog";
+  if (status === ComponentStatus.IN_BACKLOG) {
+    return "backlog";
+  }
+  return "none";
 };
 
 const statusSortList = [
   ComponentStatus.READY,
   ComponentStatus.IN_PROGRESS,
   ComponentStatus.IN_BACKLOG,
+  ComponentStatus.NOT_APPLICABLE,
 ];
 
 const componentsListSortedByName = (ascendingOrder: boolean = true) =>
@@ -85,10 +88,12 @@ const ComponentStatusData = ({
     <span>{showReleaseDate ? `v${availableSince}` : null}</span>
   );
 
+  const activeStatus = status !== ComponentStatus.NOT_APPLICABLE;
+
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
-      <StepActiveIcon />
-      {isMobileView ? (
+      {activeStatus ? <StepActiveIcon /> : null}
+      {isMobileView && activeStatus ? (
         mobileView
       ) : (
         <span>

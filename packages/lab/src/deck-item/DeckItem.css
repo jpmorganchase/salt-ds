@@ -1,0 +1,21 @@
+.saltDeckItem {
+  display: inline-block;
+}
+
+.saltDeckLayout-slide-vertical .saltDeckItem {
+  display: block;
+}
+
+.saltDeckItem-fade-previous,
+.saltDeckItem-fade-next,
+.saltDeckItem-static-previous,
+.saltDeckItem-static-next {
+  display: none;
+}
+
+.saltDeckItem-fade-in {
+  animation: var(--salt-animation-fade-in-center);
+}
+.saltDeckItem-fade-out {
+  animation: var(--salt-animation-fade-out-back);
+}

@@ -1,0 +1,11 @@
+.saltGridCornerTag,
+:focus .saltGridCornerTag-focusOnly {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-top: 0 solid transparent;
+  border-left: var(--grid-editableCell-cornerTag-size) solid var(--grid-cursor-borderColor);
+  border-bottom: var(--grid-editableCell-cornerTag-size) solid transparent;
+}

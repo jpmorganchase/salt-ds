@@ -30,7 +30,7 @@ export const getCharacteristicValue = (
   variant: string,
   scopeElement?: HTMLElement
 ): string | null => {
-  const cssVariableName = `--uitk-${characteristicName}-${variant}`;
+  const cssVariableName = `--salt-${characteristicName}-${variant}`;
   const scopeTarget =
     scopeElement || document.body.querySelector(`.${themeName}`);
   if (scopeTarget) {

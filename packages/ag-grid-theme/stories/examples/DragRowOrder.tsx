@@ -4,17 +4,17 @@ import rowDragColumns from "../dependencies/rowDragColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { Switch } from "@salt-ds/lab";
 
 const DragRowOrder = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -27,9 +27,9 @@ const DragRowOrder = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div

@@ -1,25 +1,25 @@
-.uitkQueryResultTable {
+.saltQueryResultTable {
   overflow-y: scroll;
 }
 
-.uitkQueryResultTable table {
+.saltQueryResultTable table {
 }
 
-.uitkQueryResultTable-col {
+.saltQueryResultTable-col {
   width: 150px;
 }
 
-.uitkQueryResultTable tr {
-  font-size: var(--uitk-text-fontSize);
+.saltQueryResultTable tr {
+  font-size: var(--salt-text-fontSize);
 }
 
-.uitkQueryResultTable td {
+.saltQueryResultTable td {
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;
 }
 
-.uitkQueryResultTable th {
+.saltQueryResultTable th {
   white-space: nowrap;
   text-overflow: ellipsis;
   text-align: left;

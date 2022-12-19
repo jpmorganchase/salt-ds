@@ -1,14 +1,14 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { ChildrenValues } from "../../ChildrenValues";
 import { JSONObj } from "../../../helpers/parseToJson";
 import "./IconPattern.css";
 
-const withBaseName = makePrefixer("uitkIconPattern");
+const withBaseName = makePrefixer("saltIconPattern");
 
 export interface IconPatternProps {
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   extractValue: (value: string) => string;
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
   patternName: string;
@@ -29,7 +29,7 @@ export const IconPattern = (props: IconPatternProps): ReactElement => {
 
           return (
             <ChildrenValues
-              uitkColorOverrides={props.uitkColorOverrides}
+              saltColorOverrides={props.saltColorOverrides}
               children={values}
               extractValue={props.extractValue}
               fieldName={fieldName}

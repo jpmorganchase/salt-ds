@@ -5,7 +5,7 @@
 import { AgGridReact } from "ag-grid-react";
 
 export default {
-  title: "Grid/Ag Grid Theme",
+  title: "Data Grid/Ag Grid Theme",
   component: AgGridReact,
   // decorators: [withFixedWidthWrapper, withRowStripsKnob]
 };
@@ -36,4 +36,5 @@ export {
   SetFilter,
   SingleClickEdit,
   StatusBar,
+  Variants,
 } from "./examples";

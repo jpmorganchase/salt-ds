@@ -1,4 +1,4 @@
-import { List, ListItem } from "@jpmorganchase/uitk-lab";
+import { List, ListItem } from "@salt-ds/lab";
 
 type ItemType = { label: string; value: string };
 const ITEMS: ItemType[] = [

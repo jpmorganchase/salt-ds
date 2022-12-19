@@ -1,11 +1,5 @@
-import {
-  makePrefixer,
-  Tooltip,
-  TooltipProps,
-  useForkRef,
-  // useTooltip,
-} from "@jpmorganchase/uitk-core";
-import { CloseIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";
@@ -13,6 +7,7 @@ import { DateValue } from "@internationalized/date";
 import { DayStatus, useCalendarDay } from "../useCalendarDay";
 import "./CalendarDay.css";
 import { formatDate } from "./utils";
+import { Tooltip, TooltipProps, useTooltip } from "../../tooltip";
 
 export type DateFormatter = (day: Date) => string | undefined;
 
@@ -26,7 +21,7 @@ export interface CalendarDayProps
   TooltipProps?: Partial<TooltipProps>;
 }
 
-const withBaseName = makePrefixer("uitkCalendarDay");
+const withBaseName = makePrefixer("saltCalendarDay");
 
 export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
   function CalendarDay(props, ref) {
@@ -43,46 +38,45 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     );
     const { outOfRange, today, unselectable, hidden } = status;
 
-    // const { getTriggerProps, getTooltipProps } = useTooltip({
-    //   disabled: !unselectableReason,
-    //   placement: "top",
-    //   enterDelay: 300,
-    // });
+    const { getTriggerProps, getTooltipProps } = useTooltip({
+      disabled: !unselectableReason,
+      placement: "top",
+      enterDelay: 300,
+    });
 
-    // const { ref: triggerRef, ...triggerProps } = getTriggerProps<"button">({
-    //   "aria-label": formatDate(day),
-    //   ...dayProps,
-    //   ...rest,
-    //   className: cx(
-    //     withBaseName(),
-    //     {
-    //       [withBaseName("hidden")]: hidden,
-    //       [withBaseName("outOfRange")]: outOfRange,
-    //       [withBaseName("today")]: today,
-    //       [withBaseName("unselectable")]: !!unselectable,
-    //       uitkEmphasisLow: unselectable === "low",
-    //       uitkEmphasisMedium: unselectable === "medium",
-    //     },
-    //     dayProps.className,
-    //     className
-    //   ),
-    // });
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps<"button">({
+      "aria-label": formatDate(day),
+      ...dayProps,
+      ...rest,
+      className: cx(
+        withBaseName(),
+        {
+          [withBaseName("hidden")]: hidden,
+          [withBaseName("outOfRange")]: outOfRange,
+          [withBaseName("today")]: today,
+          [withBaseName("unselectable")]: !!unselectable,
+          [withBaseName("unselectableLow")]: unselectable === "low",
+          [withBaseName("unselectableMedium")]: unselectable === "medium",
+        },
+        dayProps.className,
+        className
+      ),
+    });
 
-    // const handleTriggerRef = useForkRef(triggerRef, dayRef);
-    // const handleRef = useForkRef(handleTriggerRef, ref);
+    const handleTriggerRef = useForkRef(triggerRef, dayRef);
+    const handleRef = useForkRef(handleTriggerRef, ref);
 
     return (
-      <Tooltip
-      // {...getTooltipProps({
-      //   hideIcon: true,
-      //   status: "error",
-      //   title: unselectableReason,
-      //   ...TooltipProps,
-      // })}
-      >
-        <button
-        // {...triggerProps} ref={handleRef}
-        >
+      <>
+        <Tooltip
+          {...getTooltipProps({
+            hideIcon: true,
+            status: "error",
+            title: unselectableReason,
+            ...TooltipProps,
+          })}
+        />
+        <button {...triggerProps} ref={handleRef}>
           {unselectable === "medium" && (
             <CloseIcon
               aria-hidden
@@ -95,7 +89,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
             ? renderDayContents(day, status)
             : formatDate(day, { day: "numeric" })}
         </button>
-      </Tooltip>
+      </>
     );
   }
 );

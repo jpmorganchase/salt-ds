@@ -1,53 +1,53 @@
-.uitkGridTableRow {
+.saltGridTableRow {
   height: var(--grid-row-height);
   /* Row border doesn't render properly in Chrome on Windows. Applying borders to cells */
   --grid-row-borderColor: var(--grid-rowSeparator-color);
   --grid-row-background: var(--grid-background);
 }
 
-.uitkGridTableRow-first {
+.saltGridTableRow-first {
   height: calc(var(--grid-row-height) + 1px);
 }
 
-.uitkGridTableRow th {
+.saltGridTableRow th {
   border-style: solid;
   border-color: var(--grid-row-borderColor);
   border-width: var(--grid-rowSeparator-width) 0 0 0;
 }
 
-.uitkGridTableRow-divided {
+.saltGridTableRow-divided {
   --grid-row-borderColor: var(--grid-rowSeparator-color-divided);
 }
 
-.uitkGridTableRow-zebra {
+.saltGridTableRow-zebra {
   --grid-row-background: var(--grid-zebraColor);
 }
 
-.uitkGridTableRow-hover {
+.saltGridTableRow-hover {
   --grid-row-background: var(--grid-row-background-hover);
 }
 
-.uitkGridTableRow-selected {
+.saltGridTableRow-selected {
   --grid-row-borderColor: var(--grid-row-borderColor-selected);
   --grid-row-background: var(--grid-row-background-selected);
 }
 
-.uitkGridTableRow-followedBySelected {
+.saltGridTableRow-followedBySelected {
   --grid-row-borderColor: var(--grid-row-borderColor-selected);
 }
 
-.uitkGridTableRow-zebra.uitkGridTableRow-selected {
+.saltGridTableRow-zebra.saltGridTableRow-selected {
   --grid-row-background: var(--grid-row-background-selected);
 }
 
-.uitkGridTableRow-zebra.uitkGridTableRow-hover {
+.saltGridTableRow-zebra.saltGridTableRow-hover {
   --grid-row-background: var(--grid-row-background-hover);
 }
 
-.uitkGridTableRow-zebra.uitkGridTableRow-selected.uitkGridTableRow-hover {
+.saltGridTableRow-zebra.saltGridTableRow-selected.saltGridTableRow-hover {
   --grid-row-background: var(--grid-row-background-hover);
 }
 
-.uitkGridTableRow-selected.uitkGridTableRow-hover {
+.saltGridTableRow-selected.saltGridTableRow-hover {
   --grid-row-background: var(--grid-row-background-hover);
 }

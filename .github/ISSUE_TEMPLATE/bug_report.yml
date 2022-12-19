@@ -1,5 +1,5 @@
 name: Bug report 🪲
-description: Report bugs in our code
+description: Report bugs in our code.
 labels:
   - "type: bug 🪲"
   - "status: awaiting triage"
@@ -8,38 +8,33 @@ body:
     attributes:
       value: |
         ### ⚠️ Warning
-        This is a public repository, so **please do not include any company-internal code or details in your bug report**.
+        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report.
   - type: dropdown
     attributes:
-      label: Affects
+      label: Package name(s)
       description: |
-        Which package(s) did you observe this bug in? Please note that package versions not listed in the above dropdown are not supported and we therefore do not accept bug reports for them. If you are unsure which version of our package(s) your project is using, you can run `npm ls [package name]` or `yarn why [package name]` to find out.
+        Which package(s) did you observe this bug in? If you’re not sure which version your project is using, run `npm ls [package name]` or `yarn why [package name]` to find out.
+
+        We only accept bug reports for packages shown in the menu below. If a package isn’t listed, then it’s not one that we support.
       multiple: true
       options:
-        - "Core v0.8.0 (@jpmorganchase/uitk-core)"
-        - "Core v0.7.0 (@jpmorganchase/uitk-core)"
-        - "Core v0.6.0 (@jpmorganchase/uitk-core)"
-        - "Icons v0.7.0 (@jpmorganchase/uitk"
-        - "Icons v0.6.0 (@jpmorganchase/uitk-icons)"
-        - "Icons v0.5.0 (@jpmorganchase/uitk-icons)"
-        - "Theme v0.6.0 (@jpmorganchase/uitk-theme)"
-        - "Theme v0.5.0 (@jpmorganchase/uitk-theme)"
-        - "Theme v0.4.0 (@jpmorganchase/uitk-theme)"
-        - "Lab v0.8.0 (@jpmorganchase/uitk-theme)"
-        - "Lab v0.7.0 (@jpmorganchase/uitk-theme)"
-        - "Lab v0.6.0 (@jpmorganchase/uitk-theme)"
+        - "Core v1.0.0 (@salt-ds/core)"
+        - "Icons v1.0.0 (@salt-ds/icons)"
+        - "Theme v1.0.0 (@salt-ds/theme)"
+        - "Lab v1.0.0-alpha.0 (@salt-ds/lab)"
+        - "Data Grid v1.0.0 (@salt-ds/data-grid)"
     validations:
       required: true
   - type: textarea
     attributes:
       label: Description
-      description: A concise description of what's going wrong. Where relevant, please include screenshots as well. When including code, errors or log messages, please copy-paste them as text, not screenshots.
+      description: Tell us what's going wrong. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
     validations:
       required: true
   - type: textarea
     attributes:
       label: Steps to reproduce
-      description: Describe the steps or code someone needs to reproduce this bug. Where relevant, please include screenshots as well. When including code, errors or log messages, please copy-paste them as text, not screenshots.
+      description: Describe the steps or code needed to reproduce this bug. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
     validations:
       required: true
   - type: textarea
@@ -61,7 +56,7 @@ body:
   - type: checkboxes
     attributes:
       label: Browser
-      description: Where relevant, in which browser(s) have you observed the bug?
+      description: In which browser(s), if any, have you observed the bug?
       options:
         - label: Chrome
         - label: Safari
@@ -69,7 +64,7 @@ body:
         - label: Edge
   - type: checkboxes
     attributes:
-      label: Are you a JPMorgan Chase employee?
-      description: We ask this in case we need to contact you directly via company-internal systems. Leave this unticked if you are not a JPMC employee.
+      label: Are you a JPMorgan Chase & Co. employee?
+      description: We ask this in case we need to contact you directly via internal company systems. Leave the box unticked if this doesn’t apply to you.
       options:
-        - label: I am an employee of JPMorgan Chase
+        - label: I am an employee of JPMorgan Chase & Co.

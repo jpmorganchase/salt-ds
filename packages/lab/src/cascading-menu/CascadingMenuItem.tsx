@@ -1,10 +1,5 @@
-import {
-  makePrefixer,
-  Tooltip,
-  useForkRef,
-  // useTooltip,
-} from "@jpmorganchase/uitk-core";
-import { ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { ChevronRightIcon } from "@salt-ds/icons";
 import classnames from "classnames";
 import {
   forwardRef,
@@ -16,11 +11,12 @@ import {
 } from "react";
 import { ListItem, ListItemProps } from "../list-deprecated";
 import { MenuDescriptor } from "./CascadingMenuProps";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import "./CascadingMenuItem.css";
 
 const noop = () => undefined;
-const withBaseName = makePrefixer("uitkMenuItem");
+const withBaseName = makePrefixer("saltMenuItem");
 
 const getIcon = (sourceItem: MenuDescriptor, isDisabled = false) => {
   const CustomIcon = sourceItem.icon;
@@ -113,50 +109,49 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 
     const icon = hasStartAdornment ? getIcon(sourceItem, isDisabled) : null;
     const tooltipTitle = sourceItem.tooltip || menuText;
-    // const { getTooltipProps, getTriggerProps } = useTooltip({
-    //   disableFocusListener: true,
-    //   disableHoverListener: true,
-    //   enterDelay: tooltipEnterDelay,
-    //   leaveDelay: tooltipLeaveDelay,
-    //   placement: "top",
-    //   disabled: !tooltipTitle || !hasTooltip || isChildMenuOpen,
-    // });
+    const { getTooltipProps, getTriggerProps } = useTooltip({
+      disableFocusListener: true,
+      disableHoverListener: true,
+      enterDelay: tooltipEnterDelay,
+      leaveDelay: tooltipLeaveDelay,
+      placement: "top",
+      disabled: !tooltipTitle || !hasTooltip || isChildMenuOpen,
+    });
 
-    // const { ref: triggerRef, ...triggerProps } = getTriggerProps<
-    //   typeof ListItem
-    // >({
-    //   "aria-expanded": isChildMenuOpen || undefined,
-    //   className: classnames(
-    //     withBaseName(),
-    //     {
-    //       [withBaseName("menuItemDivider")]: divider,
-    //       [withBaseName("menuItemBlurSelected")]: blurSelected,
-    //       [withBaseName("menuItemSelected")]:
-    //         !isDisabled && !hasSubMenu && isInteracted,
-    //       ...interactionClasses,
-    //       [withBaseName("menuItemWithScrollbar")]: hasScrollbar,
-    //     },
-    //     className
-    //   ),
-    //   disabled: isDisabled,
-    //   role: "menuitem",
-    //   onClick: handleOnClick,
-    //   item: sourceItem,
-    //   // TODO highlightProps - see original code?
-    //   ...restProps,
-    // });
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps<
+      typeof ListItem
+    >({
+      "aria-expanded": isChildMenuOpen || undefined,
+      className: classnames(
+        withBaseName(),
+        {
+          [withBaseName("menuItemDivider")]: divider,
+          [withBaseName("menuItemBlurSelected")]: blurSelected,
+          [withBaseName("menuItemSelected")]:
+            !isDisabled && !hasSubMenu && isInteracted,
+          ...interactionClasses,
+          [withBaseName("menuItemWithScrollbar")]: hasScrollbar,
+        },
+        className
+      ),
+      disabled: isDisabled,
+      role: "menuitem",
+      onClick: handleOnClick,
+      item: sourceItem,
+      // TODO highlightProps - see original code?
+      ...restProps,
+    });
 
-    // const handleRef = useForkRef<HTMLDivElement>(triggerRef, ref);
+    const handleRef = useForkRef<HTMLDivElement>(triggerRef, ref);
 
     return (
-      <Tooltip
-        // {...getTooltipProps({
-        title={tooltipTitle}
-        // })}
-      >
-        <ListItem
-        // {...triggerProps} ref={handleRef}
-        >
+      <>
+        <Tooltip
+          {...getTooltipProps({
+            title: tooltipTitle,
+          })}
+        />
+        <ListItem {...triggerProps} ref={handleRef}>
           {hasStartAdornment && (
             <div className={withBaseName("menuItemStartAdornmentContainer")}>
               {icon}
@@ -188,7 +183,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           )}
           {divider && <div role="separator" />}
         </ListItem>
-      </Tooltip>
+      </>
     );
   }
 );

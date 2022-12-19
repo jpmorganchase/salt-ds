@@ -1,4 +1,4 @@
-import { FormField } from "@jpmorganchase/uitk-core";
+import { FormField } from "../../form-field";
 import { fireEvent, render, screen } from "@testing-library/react";
 import {
   computeAccessibleDescription,
@@ -8,8 +8,8 @@ import { StepperInput } from "../../stepper-input";
 
 const mockAnnounce = jest.fn();
 
-jest.mock("@jpmorganchase/uitk-core", () => ({
-  ...jest.requireActual("@jpmorganchase/uitk-core"),
+jest.mock("@salt-ds/core", () => ({
+  ...jest.requireActual("@salt-ds/core"),
   useAriaAnnouncer: () => ({
     announce: mockAnnounce,
   }),

@@ -1,22 +1,22 @@
-.uitkDropdownButton {
-  --uitkButton-background-hover: var(--uitk-actionable-secondary-background);
-  --uitkButton-background-active: var(--uitk-actionable-secondary-background);
-  --uitkButton-fontWeight: var(--uitk-typography-fontWeight-medium);
-  --uitkButton-textAlign: left;
-  --uitkButton-textTransform: none;
-  --uitkButton-width: 100%;
+.saltDropdownButton {
+  --saltButton-background-hover: var(--salt-actionable-secondary-background);
+  --saltButton-background-active: var(--salt-actionable-secondary-background);
+  --saltButton-fontWeight: var(--salt-typography-fontWeight-medium);
+  --saltButton-textAlign: left;
+  --saltButton-textTransform: none;
+  --saltButton-width: 100%;
 }
 
-.uitkDropdownButton:active {
-  --uitkIcon-color: var(--uitk-actionable-secondary-foreground);
-  --uitkButton-text-color-active: var(--uitk-actionable-secondary-foreground);
+.saltDropdownButton:active {
+  --saltIcon-color: var(--salt-actionable-secondary-foreground);
+  --saltButton-text-color-active: var(--salt-actionable-secondary-foreground);
 }
 
-.uitkDropdownButton-fullwidth {
+.saltDropdownButton-fullwidth {
   width: 100%;
 }
 
-.uitkDropdownButton-content {
+.saltDropdownButton-content {
   align-items: center;
   flex: 1;
   width: 100%;
@@ -24,7 +24,7 @@
   white-space: nowrap;
 }
 
-.uitkDropdownButton-buttonLabel {
+.saltDropdownButton-buttonLabel {
   display: inline-block;
   letter-spacing: 0;
   overflow: hidden;
@@ -32,7 +32,7 @@
   width: 100%;
 }
 
-.uitkDropdownButton-formField.uitkButton:focus,
-.uitkDropdownButton-formField.uitkButton:focus-visible {
+.saltDropdownButton-formField.saltButton:focus,
+.saltDropdownButton-formField.saltButton:focus-visible {
   outline: none;
 }

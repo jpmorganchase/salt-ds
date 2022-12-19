@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LicenseManager } from "ag-grid-enterprise";
-import { Button, Switch } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
+import { Switch } from "@salt-ds/lab";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
@@ -10,14 +11,14 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 LicenseManager.setLicenseKey("your license key");
 
 const ExcelExport = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { api, containerProps, agGridProps, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -36,9 +37,9 @@ const ExcelExport = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div>

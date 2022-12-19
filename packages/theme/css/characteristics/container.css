@@ -1,18 +1,18 @@
-.uitk-theme {
-  --uitk-container-borderStyle: solid;
+.salt-theme {
+  --salt-container-borderStyle: solid;
 
-  --uitk-container-primary-background: var(--uitk-palette-neutral-primary-background);
-  --uitk-container-primary-background-disabled: var(--uitk-palette-neutral-primary-background-disabled);
-  --uitk-container-primary-borderColor: var(--uitk-palette-neutral-primary-border);
-  --uitk-container-primary-borderColor-disabled: var(--uitk-palette-neutral-primary-border-disabled);
+  --salt-container-primary-background: var(--salt-palette-neutral-primary-background);
+  --salt-container-primary-background-disabled: var(--salt-palette-neutral-primary-background-disabled);
+  --salt-container-primary-borderColor: var(--salt-palette-neutral-primary-border);
+  --salt-container-primary-borderColor-disabled: var(--salt-palette-neutral-primary-border-disabled);
 
-  --uitk-container-secondary-background: var(--uitk-palette-neutral-secondary-background);
-  --uitk-container-secondary-background-disabled: var(--uitk-palette-neutral-secondary-background-disabled);
-  --uitk-container-secondary-borderColor: var(--uitk-palette-neutral-secondary-border);
-  --uitk-container-secondary-borderColor-disabled: var(--uitk-palette-neutral-secondary-border-disabled);
+  --salt-container-secondary-background: var(--salt-palette-neutral-secondary-background);
+  --salt-container-secondary-background-disabled: var(--salt-palette-neutral-secondary-background-disabled);
+  --salt-container-secondary-borderColor: var(--salt-palette-neutral-secondary-border);
+  --salt-container-secondary-borderColor-disabled: var(--salt-palette-neutral-secondary-border-disabled);
 
-  --uitk-container-tertiary-background: var(--uitk-palette-neutral-tertiary-background);
-  --uitk-container-tertiary-background-disabled: var(--uitk-palette-neutral-tertiary-background-disabled);
-  --uitk-container-tertiary-borderColor: var(--uitk-palette-neutral-tertiary-border);
-  --uitk-container-tertiary-borderColor-disabled: var(--uitk-palette-neutral-tertiary-border-disabled);
+  --salt-container-tertiary-background: var(--salt-palette-neutral-tertiary-background);
+  --salt-container-tertiary-background-disabled: var(--salt-palette-neutral-tertiary-background-disabled);
+  --salt-container-tertiary-borderColor: var(--salt-palette-neutral-tertiary-border);
+  --salt-container-tertiary-borderColor-disabled: var(--salt-palette-neutral-tertiary-border-disabled);
 }

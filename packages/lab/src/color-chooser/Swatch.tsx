@@ -1,10 +1,10 @@
 import { ChangeEvent, KeyboardEvent } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
 
-const withBaseName = makePrefixer("uitkColorChooserSwatch");
+const withBaseName = makePrefixer("saltColorChooserSwatch");
 
 interface SwatchProps {
   active: boolean;

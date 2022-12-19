@@ -6,12 +6,12 @@ import {
   useMemo,
   useState,
 } from "react";
-import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import "./Accordion.css";
 import cn from "classnames";
 import { AccordionContext } from "./AccordionContext";
 
-const withBaseName = makePrefixer("uitkAccordion");
+const withBaseName = makePrefixer("saltAccordion");
 
 export interface AccordionProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {

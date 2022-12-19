@@ -1,14 +1,10 @@
 import classnames from "classnames";
 import { memo, MutableRefObject, useRef } from "react";
-import {
-  makePrefixer,
-  Pill,
-  PillProps,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { getWidth } from "./useWidth";
+import { Pill, PillProps } from "../../pill";
 
-const withBaseName = makePrefixer("uitkInputPill");
+const withBaseName = makePrefixer("saltInputPill");
 
 export type InputPillProps = Omit<
   PillProps<"basic" | "closable">,

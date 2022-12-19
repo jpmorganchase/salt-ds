@@ -10,7 +10,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnInfo } from "./GridColumn";
 import { GridContext } from "./GridContext";
 import cx from "classnames";
@@ -57,7 +57,7 @@ import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
 import { ColumnDataContext } from "./ColumnDataContext";
 
-const withBaseName = makePrefixer("uitkGrid");
+const withBaseName = makePrefixer("saltGrid");
 
 export type ColumnSeparatorType = "regular" | "none" | "groupEdge" | "pinned";
 export type ColumnGroupRowSeparatorType = "first" | "regular" | "last";
@@ -1152,7 +1152,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                           onWheel={onWheel}
                           columns={rightCols}
                           rows={rows}
-                          leftShadow={isLeftRaised}
+                          leftShadow={isRightRaised}
                           hoverOverRowKey={hoverRowKey}
                           setHoverOverRowKey={setHoverRowKey}
                           zebra={zebra}

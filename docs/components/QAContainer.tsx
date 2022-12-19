@@ -1,4 +1,4 @@
-import { makePrefixer, Mode, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { makePrefixer, Mode, SaltProvider } from "@salt-ds/core";
 import cx from "classnames";
 import {
   Children,
@@ -11,7 +11,7 @@ import { DraggableImg } from "./DraggableSnapshot";
 
 import "./QAContainer.css";
 
-const withBaseName = makePrefixer("uitkQAContainer");
+const withBaseName = makePrefixer("saltQAContainer");
 
 export interface QAContainerProps extends HTMLAttributes<HTMLDivElement> {
   cols?: number;
@@ -54,9 +54,9 @@ const DensityBlock = ({
 }) => (
   <BackgroundBlock background={mode === "light" ? "white" : undefined}>
     {DensityValues.map((d, i) => (
-      <ToolkitProvider mode={mode} density={d} key={i}>
+      <SaltProvider mode={mode} density={d} key={i}>
         <div className="background-item-wrapper">{children}</div>
-      </ToolkitProvider>
+      </SaltProvider>
     ))}
   </BackgroundBlock>
 );
@@ -87,7 +87,7 @@ export const QAContainer = ({
     <div
       {...htmlAttributes}
       className={cx(withBaseName(), className, {
-        "uitkQAContainer-vertical": vertical,
+        "saltQAContainer-vertical": vertical,
       })}
       style={style}
     >
@@ -107,12 +107,12 @@ export const QAContainer = ({
       ) : (
         DensityValues.map((d, i) => (
           <Fragment key={i}>
-            <ToolkitProvider mode="light" density={d}>
+            <SaltProvider mode="light" density={d}>
               <BackgroundBlock background="white">{children}</BackgroundBlock>
-            </ToolkitProvider>
-            <ToolkitProvider mode="dark" density={d}>
+            </SaltProvider>
+            <SaltProvider mode="dark" density={d}>
               <BackgroundBlock>{children}</BackgroundBlock>
-            </ToolkitProvider>
+            </SaltProvider>
           </Fragment>
         ))
       )}

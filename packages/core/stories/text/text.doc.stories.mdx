@@ -1,18 +1,8 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Text } from "@salt-ds/core";
 import {
-  Text,
-  H1,
-  H2,
-  H3,
-  H4,
-  Label,
-  Display1,
-  Display2,
-  Display3,
-} from "@jpmorganchase/uitk-core";
-import {
+  CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
@@ -83,7 +73,7 @@ The styleAs prop allows you to maintain the correct HTML hierarchy (i.e. for pla
 
 <Canvas>
   <Story name="StyleAs">
-    <Text elementType="p" styleAs="h1">
+    <Text as="p" styleAs="h1">
       This is a styleAs h1 example
     </Text>
   </Story>
@@ -108,7 +98,7 @@ If you use truncated text, please ensure you are remaining ADA compliant by revi
 ### API
 
 ```
-import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmorganchase/uitk-core";
+import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@salt-ds/core";
 ```
 
 ### Props
@@ -122,17 +112,6 @@ import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmo
 ### Characteristics used
 
 <CharacteristicUsage of={Text} />
-
-### --uitkText CSS custom property API
-
-The default styling values for most Text attributes are provided by the theme variables. A smaller number of attributes
-use hard-coded values local to Text. Both of these can be overridden, see Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by Text, but not defined by Text. They can be defined via a container or
-a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
-
-<CSSVariableTable of={Text} />
 
 ## Accessibility
 

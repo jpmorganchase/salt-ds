@@ -1,5 +1,5 @@
 import { ReactElement, useMemo, useState } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   CloneIcon,
   DownloadIcon,
@@ -8,13 +8,13 @@ import {
   RefreshIcon,
   UndoIcon,
   UploadIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import {
   DropdownButton,
   Dropdown,
   SelectionChangeHandler,
   MenuDescriptor,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { handleThemeUpload } from "./handleThemeUpload";
 import { JSONByScope } from "../helpers/parseToJson";
 import "./ThemeHeader.css";
@@ -98,7 +98,7 @@ export const ThemeHeader = (props: ThemeHeaderProps): ReactElement => {
   };
 
   return (
-    <div className="uitkThemeHeader">
+    <div className="saltThemeHeader">
       <div className="ThemeTitleBar">
         <span className="ThemeTitle">Theme</span>
         <span>

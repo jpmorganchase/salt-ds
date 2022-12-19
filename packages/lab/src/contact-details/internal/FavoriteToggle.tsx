@@ -1,8 +1,4 @@
-import {
-  useControlled,
-  useForkRef,
-  useIsFocusVisible,
-} from "@jpmorganchase/uitk-core";
+import { useControlled, useForkRef, useIsFocusVisible } from "@salt-ds/core";
 import React, {
   FocusEventHandler,
   forwardRef,

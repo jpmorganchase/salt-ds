@@ -21,6 +21,12 @@ export const enum ComponentStatus {
    * has not yet started.
    */
   IN_BACKLOG = "In the backlog",
+
+  /**
+   * Can be used for situations where there is no Figma or React
+   * version of a components.
+   */
+  NOT_APPLICABLE = "N/A",
 }
 
 /**
@@ -150,8 +156,11 @@ export const componentDetails: ComponentDetails[] = [
   {
     name: "AG Grid Theme",
     // TODO: add description
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-data-grid-ag-grid-theme--page",
   },
   {
     name: "Badge",
@@ -168,6 +177,16 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
+    name: "Border Layout",
+    description:
+      "Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-borderlayout--page",
+  },
+  {
     name: "Breadcrumbs",
     description:
       "Provides a space-efficient means of allowing quick navigation to previous levels, helping the user keep track of their current location within a hierarchy.",
@@ -179,10 +198,10 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Executes an action when the user interacts with it. There are three variants: Call-to-Action (CTA), primary and secondary buttons.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
-    availableInCoreSince: "0.9.0",
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-button--button-variants",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-button--button-variants",
   },
   {
     name: "Button Bar",
@@ -263,8 +282,18 @@ export const componentDetails: ComponentDetails[] = [
   {
     name: "Data Grid",
     // TODO: add description
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-data-grid-data-grid--page",
+  },
+  {
+    name: "Deck Layout",
+    description:
+      "Defines pages of content that appear within the same specified region, one at a time.",
+    devStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
   },
   {
     name: "Dialog",
@@ -302,6 +331,26 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
+    name: "Flex Layout",
+    description:
+      "Dictates a vertical or horizontal order and direction for UI elements. Does not wrap by default.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flexlayout--page",
+  },
+  {
+    name: "Flow Layout",
+    description:
+      "Dictates a horizontal order and direction for UI elements. Wraps by default.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flowlayout--page",
+  },
+  {
     name: "Form Field",
     description: "",
     devStatus: ComponentStatus.IN_PROGRESS,
@@ -315,14 +364,24 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
+    name: "Grid Layout",
+    description:
+      "Defines an equally distributed layout system using columns and rows.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-gridlayout--page",
+  },
+  {
     name: "Icon",
     description:
       "Graphically represents an idea, concept or action. Icons visually reinforce or provide information for a specific task or context.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
-    availableInCoreSince: "0.9.0",
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-icons-icon--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-icons-icon--page",
   },
   {
     name: "Input",
@@ -332,18 +391,21 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
-    name: "Layout",
+    name: "Layer Layout",
     description:
-      "Provides a series of versatile, flexible layouts that support the design of components and application UIs and can be used in multiple contexts.",
+      "Defines a layer above the existing layout structure for UI elements to be displayed in.",
     devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
   },
   {
     name: "Link",
     description:
       "Navigates the user to a new page, and displays link text with a meaningful description.",
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-link--internal-link",
   },
   {
     name: "List",
@@ -395,6 +457,13 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
+    name: "Parent Child Layout",
+    description:
+      "Displays a hierarchical structure comprising of a main content area and an accompanying parent region, used to drive the content that is displayed.",
+    devStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
+  },
+  {
     name: "Pill",
     description:
       "Provides multiple ways to label, tag or categorize content to allow users to trigger actions, make selections or filter results.",
@@ -442,10 +511,10 @@ export const componentDetails: ComponentDetails[] = [
       </p>
     ),
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
-    availableInCoreSince: "0.9.0",
+    designStatus: ComponentStatus.NOT_APPLICABLE,
+    availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
   },
   {
     name: "Scrim",
@@ -497,14 +566,30 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
+    name: "Split Layout",
+    description:
+      "Defines left and right regions for UI elements within a span, such as a button bar.",
+    devStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
+  },
+  {
+    name: "Stack Layout",
+    description: "Dictates a vertical order and direction for UI elements.",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.NOT_APPLICABLE,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-stacklayout--page",
+  },
+  {
     name: "Status Indicator",
     description:
       "Helps to convey a message when used on its own or within another component. There are four severity levels, each with a distinctive indicator and color.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
-    availableInCoreSince: "0.9.0",
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://uitk.pages.dev/?path=/docs/documentation-core-statusindicator--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-statusindicator--page",
   },
   {
     name: "Stepped Tracker",
@@ -545,15 +630,20 @@ export const componentDetails: ComponentDetails[] = [
     name: "Text",
     description:
       "Includes attributes such as font weight, letter spacing, size, line height, paragraph spacing, case, text decoration and emphasis levels.",
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-text--primary",
   },
   {
     name: "Theme",
     // TODO: add description
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
-    availableInCoreSince: "0.9.0",
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-styles-and-theming-introduction--page",
   },
   {
     name: "Toast",

@@ -1,18 +1,18 @@
-.uitkCalendarCarousel-track {
+.saltCalendarCarousel-track {
   display: grid;
   grid-auto-flow: column;
 }
 
-.uitkCalendarCarousel-track > * {
+.saltCalendarCarousel-track > * {
   position: absolute;
   left: 0;
   width: 100%;
 }
 
-.uitkCalendarCarousel-track > :nth-child(2) {
+.saltCalendarCarousel-track > :nth-child(2) {
   position: relative;
 }
 
-.uitkCalendarCarousel-shouldAnimate {
+.saltCalendarCarousel-shouldAnimate {
   transition: transform 200ms ease-in-out;
 }

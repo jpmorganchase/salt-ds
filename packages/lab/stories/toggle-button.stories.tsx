@@ -5,13 +5,13 @@ import {
   ToggleButtonToggleEventHandler,
   ToggleButtonGroup,
   ToggleButton,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import {
   NotificationIcon,
   HomeIcon,
   SearchIcon,
   PrintIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {

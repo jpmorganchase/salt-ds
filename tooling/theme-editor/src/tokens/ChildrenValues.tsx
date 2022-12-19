@@ -1,17 +1,17 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { JSONObj } from "../helpers/parseToJson";
 import { InnerFieldLabel } from "./labels/InnerFieldLabel";
 import { ValueEditor } from "./editor/ValueEditor";
 import { TokenWithColors } from "./TokenWithColors";
 import "./ChildrenValues.css";
 
-const withBaseName = makePrefixer("uitkChildrenValues");
+const withBaseName = makePrefixer("saltChildrenValues");
 
 export const SECTIONED_BY_COLOR_STATE = ["text", "icon", "border", "outline"];
 interface ChildrenValuesProps {
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   characteristicsView?: boolean;
   children: JSONObj;
   extractValue: (value: string) => string;
@@ -22,7 +22,7 @@ interface ChildrenValuesProps {
 }
 
 export const ChildrenValuesWithinSection = ({
-  uitkColorOverrides,
+  saltColorOverrides,
   characteristicsView,
   children,
   extractValue,
@@ -59,7 +59,7 @@ export const ChildrenValuesWithinSection = ({
             />
           ) : (
             <ChildrenValues
-              uitkColorOverrides={uitkColorOverrides}
+              saltColorOverrides={saltColorOverrides}
               extractValue={extractValue}
               characteristicsView={characteristicsView}
               children={children[node]}
@@ -81,7 +81,7 @@ export const ChildrenValuesWithinSection = ({
         .map((node) =>
           node !== "value" ? (
             <ChildrenValues
-              uitkColorOverrides={uitkColorOverrides}
+              saltColorOverrides={saltColorOverrides}
               extractValue={extractValue}
               characteristicsView={characteristicsView}
               children={children[node]}
@@ -93,7 +93,7 @@ export const ChildrenValuesWithinSection = ({
             />
           ) : (
             <ValueEditor
-              uitkColorOverrides={uitkColorOverrides}
+              saltColorOverrides={saltColorOverrides}
               extractValue={extractValue}
               characteristicsView={characteristicsView}
               key={`${patternName}-${fieldName}-${node}-editor`}
@@ -121,7 +121,7 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
           <ChildrenValuesWithinSection
             characteristicsView={props.characteristicsView}
             children={props.children}
-            uitkColorOverrides={props.uitkColorOverrides}
+            saltColorOverrides={props.saltColorOverrides}
             extractValue={props.extractValue}
             fieldName={props.fieldName}
             onUpdateJSON={props.onUpdateJSON}
@@ -140,7 +140,7 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
           .map((node) =>
             node !== "value" ? (
               <ChildrenValues
-                uitkColorOverrides={props.uitkColorOverrides}
+                saltColorOverrides={props.saltColorOverrides}
                 extractValue={props.extractValue}
                 characteristicsView={props.characteristicsView}
                 children={props.children[node]}
@@ -152,7 +152,7 @@ export const ChildrenValues = (props: ChildrenValuesProps): ReactElement => {
               />
             ) : (
               <ValueEditor
-                uitkColorOverrides={props.uitkColorOverrides}
+                saltColorOverrides={props.saltColorOverrides}
                 extractValue={props.extractValue}
                 characteristicsView={props.characteristicsView}
                 key={`${props.patternName}-${props.fieldName}-${node}-editor`}

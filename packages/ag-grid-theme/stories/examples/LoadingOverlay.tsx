@@ -3,8 +3,7 @@ import "../../uitk-ag-theme.css";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Card, Switch } from "@jpmorganchase/uitk-core";
-import { Spinner } from "@jpmorganchase/uitk-lab";
+import { Card, Switch, Spinner } from "@salt-ds/lab";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const LoadingOverlay = (props: AgGridReactProps) => {
@@ -16,14 +15,14 @@ const LoadingOverlay = (props: AgGridReactProps) => {
 
   const gridRef = useRef<HTMLDivElement>(null);
 
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -74,9 +73,9 @@ const LoadingOverlay = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div style={{ marginTop: 25, position: "relative" }}>

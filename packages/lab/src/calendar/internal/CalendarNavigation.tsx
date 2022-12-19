@@ -1,12 +1,5 @@
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  Tooltip,
-  useId,
-  // useTooltip,
-} from "@jpmorganchase/uitk-core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import { Button, ButtonProps, makePrefixer, useId } from "@salt-ds/core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import {
   ComponentPropsWithRef,
@@ -16,6 +9,7 @@ import {
 } from "react";
 import { Dropdown, DropdownProps } from "../../dropdown";
 import { ListItem, ListItemType } from "../../list";
+import { Tooltip, useTooltip } from "../../tooltip";
 
 import { useCalendarContext } from "./CalendarContext";
 
@@ -41,7 +35,7 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   hideYearDropdown?: boolean;
 }
 
-const withBaseName = makePrefixer("uitkCalendarNavigation");
+const withBaseName = makePrefixer("saltCalendarNavigation");
 
 function useCalendarNavigation() {
   const {
@@ -119,26 +113,23 @@ const ListItemWithTooltip: ListItemType<DropdownItem> = ({
   label,
   ...props
 }) => {
-  // const { getTooltipProps, getTriggerProps } = useTooltip({
-  //   placement: "right",
-  //   disabled: !item?.disabled,
-  // });
+  const { getTooltipProps, getTriggerProps } = useTooltip({
+    placement: "right",
+    disabled: !item?.disabled,
+  });
 
-  // const { ref: triggerRef, ...triggerProps } =
-  //   getTriggerProps<typeof ListItem>(props);
+  const { ref: triggerRef, ...triggerProps } =
+    getTriggerProps<typeof ListItem>(props);
 
   return (
-    <Tooltip
-    // {...getTooltipProps({
-    //   title: "This month is out of range",
-    // })}
-    >
-      <ListItem
-      // ref={triggerRef} {...triggerProps}
-      >
-        {label}
-      </ListItem>
-    </Tooltip>
+    <ListItem ref={triggerRef} {...triggerProps}>
+      {label}
+      <Tooltip
+        {...getTooltipProps({
+          title: "This month is out of range",
+        })}
+      />
+    </ListItem>
   );
 };
 
@@ -219,21 +210,21 @@ export const CalendarNavigation = forwardRef<
     return formatDate(date.value, { year: "numeric" });
   };
 
-  // const {
-  //   getTriggerProps: getPreviousButtonProps,
-  //   getTooltipProps: getPreviousButtonTooltipProps,
-  // } = useTooltip({
-  //   placement: "top",
-  //   disabled: canNavigatePrevious,
-  // });
+  const {
+    getTriggerProps: getPreviousButtonProps,
+    getTooltipProps: getPreviousButtonTooltipProps,
+  } = useTooltip({
+    placement: "top",
+    disabled: canNavigatePrevious,
+  });
 
-  // const {
-  //   getTriggerProps: getNextButtonProps,
-  //   getTooltipProps: getNextButtonTooltipProps,
-  // } = useTooltip({
-  //   placement: "top",
-  //   disabled: canNavigateNext,
-  // });
+  const {
+    getTriggerProps: getNextButtonProps,
+    getTooltipProps: getNextButtonTooltipProps,
+  } = useTooltip({
+    placement: "top",
+    disabled: canNavigateNext,
+  });
 
   return (
     <div
@@ -246,15 +237,13 @@ export const CalendarNavigation = forwardRef<
       {...rest}
     >
       <Button
-        // {...getPreviousButtonProps<typeof Button>(
-        {...{
+        {...getPreviousButtonProps<typeof Button>({
           disabled: !canNavigatePrevious,
           variant: "secondary",
           onClick: handleNavigatePrevious,
           className: withBaseName("previousButton"),
           focusableWhenDisabled: true,
-        }}
-        // )}
+        })}
       >
         <ChevronLeftIcon
           aria-label={`Previous Month, ${formatDate(
@@ -263,9 +252,9 @@ export const CalendarNavigation = forwardRef<
         />
       </Button>
       <Tooltip
-        // {...getPreviousButtonTooltipProps({
-        title="Past dates are out of range"
-        // })}
+        {...getPreviousButtonTooltipProps({
+          title: "Past dates are out of range",
+        })}
       />
       <Dropdown<DropdownItem>
         source={months}
@@ -294,14 +283,13 @@ export const CalendarNavigation = forwardRef<
         />
       )}
       <Button
-        // {...getNextButtonProps<typeof Button>(
-        {...{
+        {...getNextButtonProps<typeof Button>({
           disabled: !canNavigateNext,
           variant: "secondary",
           onClick: handleNavigateNext,
           className: withBaseName("nextButton"),
           focusableWhenDisabled: true,
-        }}
+        })}
       >
         <ChevronRightIcon
           aria-label={`Next Month, ${formatDate(
@@ -310,9 +298,9 @@ export const CalendarNavigation = forwardRef<
         />
       </Button>
       <Tooltip
-        // {...getNextButtonTooltipProps({
-        title="Future dates are out of range"
-        // })}
+        {...getNextButtonTooltipProps({
+          title: "Future dates are out of range",
+        })}
       />
     </div>
   );

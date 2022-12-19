@@ -1,11 +1,11 @@
 import "./GroupHeaderRow.css";
 import { GroupHeaderCell } from "../GroupHeaderCell";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnGroupModel } from "../Grid";
 import { FakeGroupCell } from "./FakeGroupCell";
 import { GroupHeaderCellValue } from "../GroupHeaderCellValue";
 
-const withBaseName = makePrefixer("uitkGridGroupHeaderRow");
+const withBaseName = makePrefixer("saltGridGroupHeaderRow");
 
 export interface GroupHeaderRowProps<T> {
   groups: GridColumnGroupModel[];

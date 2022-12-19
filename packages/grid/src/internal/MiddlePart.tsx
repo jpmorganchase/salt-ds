@@ -2,11 +2,11 @@ import { RefObject } from "react";
 import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
 import "./MiddlePart.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnModel, GridRowModel } from "../Grid";
 import { useActiveOnWheel } from "./gridHooks";
 
-const withBaseName = makePrefixer("uitkGridMiddlePart");
+const withBaseName = makePrefixer("saltGridMiddlePart");
 
 export interface MiddlePartProps<T> {
   middleRef: RefObject<HTMLDivElement>;

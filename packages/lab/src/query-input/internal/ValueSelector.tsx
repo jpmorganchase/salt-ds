@@ -1,18 +1,18 @@
 import {
   makePrefixer,
-  Portal,
-  useFloatingUI,
   useForkRef,
   useIsomorphicLayoutEffect,
-  useWindow,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { Dispatch, Ref, SetStateAction, useMemo } from "react";
 import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import { CategoryList } from "./CategoryList";
 import { SearchList } from "./SearchList";
 import { ValueList } from "./ValueList";
+import { useWindow } from "../../window";
+import { useFloatingUI } from "../../popper";
+import { Portal } from "../../portal";
 
-const withBaseName = makePrefixer("uitkQueryInputValueSelector");
+const withBaseName = makePrefixer("saltQueryInputValueSelector");
 
 export interface ValueSelectorProps {
   isOpen: boolean;

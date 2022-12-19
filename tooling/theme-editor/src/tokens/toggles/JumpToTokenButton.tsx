@@ -1,19 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
-import { AddDocumentIcon } from "@jpmorganchase/uitk-icons";
+import { Button, makePrefixer } from "@salt-ds/core";
+import { AddDocumentIcon } from "@salt-ds/icons";
 
-import { UITK_CHARACTERISTICS, UITK_FOUNDATIONS } from "../../utils/uitkValues";
+import { SALT_CHARACTERISTICS, SALT_FOUNDATIONS } from "../../utils/saltValues";
 import "../foundations/color/ColorValueEditor.css";
 
 interface JumpToTokenButtonProps {
   disabled: boolean;
   pathname: string;
   search: string;
-  sectionToJumpTo: typeof UITK_CHARACTERISTICS | typeof UITK_FOUNDATIONS;
+  sectionToJumpTo: typeof SALT_CHARACTERISTICS | typeof SALT_FOUNDATIONS;
   value: string;
 }
 
-const withBaseName = makePrefixer("uitkColorValueEditor");
+const withBaseName = makePrefixer("saltColorValueEditor");
 
 export const JumpToTokenButton = (props: JumpToTokenButtonProps) => {
   const navigate = useNavigate();

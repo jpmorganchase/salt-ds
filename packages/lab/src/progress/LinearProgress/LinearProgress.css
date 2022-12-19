@@ -1,47 +1,47 @@
-.uitkLinearProgress {
+.saltLinearProgress {
   align-items: center;
-  color: var(--uitk-text-primary-foreground);
+  color: var(--salt-text-primary-foreground);
   display: flex;
   min-width: 200px;
   font-size: var(--linearProgress-fontSize);
 }
 
 /* TODO: Odyssey now has only 2 sizes */
-.uitkLinearProgress-large {
+.saltLinearProgress-large {
   --linearProgress-after-top: 3px;
   --linearProgress-value-paddingLeft: 12px;
   --linearProgress-height: 7px;
   --linearProgress-fontSize: 16px;
 }
 
-.uitkLinearProgress-medium {
+.saltLinearProgress-medium {
   --linearProgress-after-top: 2px;
   --linearProgress-value-paddingLeft: 8px;
   --linearProgress-height: 5px;
   --linearProgress-fontSize: 14px;
 }
 
-.uitkLinearProgress-small {
+.saltLinearProgress-small {
   --linearProgress-after-top: 1px;
   --linearProgress-value-paddingLeft: 4px;
   --linearProgress-height: 3px;
   --linearProgress-fontSize: 11px;
 }
 
-.uitkLinearProgress-disabled .uitkLinearProgress-bar {
-  background: var(--uitk-measured-fill-disabled);
+.saltLinearProgress-disabled .saltLinearProgress-bar {
+  background: var(--salt-measured-fill-disabled);
 }
 
-.uitkLinearProgress-disabled .uitkLinearProgress-barContainer :after {
-  background: var(--uitk-measured-fill-disabled);
+.saltLinearProgress-disabled .saltLinearProgress-barContainer :after {
+  background: var(--salt-measured-fill-disabled);
 }
 
-.uitkLinearProgress-disabled .uitkLinearProgress-progressValue {
-  color: var(--uitk-text-primary-foreground-disabled);
-  cursor: var(--uitk-selectable-cursor-disabled);
+.saltLinearProgress-disabled .saltLinearProgress-progressValue {
+  color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.uitkLinearProgress-barContainer {
+.saltLinearProgress-barContainer {
   background: none;
   position: relative;
   width: calc(100% - 10px);
@@ -50,9 +50,9 @@
 }
 
 /* Horizontal line under the progress indicator bar */
-.uitkLinearProgress-barContainer:after {
+.saltLinearProgress-barContainer:after {
   top: var(--linearProgress-after-top);
-  background: var(--uitk-measured-background);
+  background: var(--salt-measured-background);
   content: "";
   display: block;
   height: 1px;
@@ -61,17 +61,17 @@
   right: 0;
 }
 
-.uitkLinearProgress-determinate {
+.saltLinearProgress-determinate {
 }
 
-.uitkLinearProgress-indeterminate {
+.saltLinearProgress-indeterminate {
 }
 
-.uitkLinearProgress-query {
+.saltLinearProgress-query {
   transform: rotate(180deg);
 }
 
-.uitkLinearProgress-bar {
+.saltLinearProgress-bar {
   width: 100%;
   position: absolute;
   left: 0;
@@ -79,30 +79,30 @@
   top: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
-  background: var(--uitk-measured-fill);
+  background: var(--salt-measured-fill);
   z-index: 2;
 }
 
-.uitkLinearProgress-determinate .uitkLinearProgress-bar1 {
+.saltLinearProgress-determinate .saltLinearProgress-bar1 {
   transition: transform 0.4s linear;
 }
 
-.uitkLinearProgress-indeterminate .uitkLinearProgress-bar1 {
+.saltLinearProgress-indeterminate .saltLinearProgress-bar1 {
   width: auto;
   animation: Indeterminate1 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
 }
 
-.uitkLinearProgress-query .uitkLinearProgress-bar1 {
+.saltLinearProgress-query .saltLinearProgress-bar1 {
   width: auto;
   animation: Indeterminate1 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
 }
 
-.uitkLinearProgress-bar2 {
+.saltLinearProgress-bar2 {
   width: auto;
   animation: Indeterminate2 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite;
 }
 
-.uitkLinearProgress-progressValue {
+.saltLinearProgress-progressValue {
   color: inherit;
   margin: 0;
   white-space: nowrap;

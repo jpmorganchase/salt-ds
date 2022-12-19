@@ -5,9 +5,9 @@ import {
   Carousel,
   CarouselSlide,
   OrderedButton,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { FlexLayout } from "@jpmorganchase/uitk-core";
+import { FlexLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/Carousel",

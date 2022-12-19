@@ -10,6 +10,8 @@ import {
   useState,
 } from "react";
 import { useEditorContext } from "./EditorContext";
+import { CornerTag } from "./CornerTag";
+import { Cell } from "./internal";
 
 export interface NumericColumnProps<T> extends GridColumnProps<T> {
   precision: number;
@@ -24,7 +26,7 @@ export function NumericCellValue<T>(props: GridCellValueProps<T>) {
   const columnProps = column.info.props as NumericColumnProps<T>;
   const { precision } = columnProps;
   const text = isNumber(value) ? value.toFixed(precision) : "";
-  return <div className="uitkGridNumericCellValue">{text}</div>;
+  return <div className="saltGridNumericCellValue">{text}</div>;
 }
 
 export interface NumericEditorProps<T> {
@@ -74,8 +76,8 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   }, [inputRef.current]);
 
   return (
-    <td className="uitkGridNumericCellEditor">
-      <div className="uitkGridNumericCellEditor-inputContainer">
+    <Cell separator={column?.separator} className="saltGridNumericCellEditor">
+      <div className="saltGridNumericCellEditor-inputContainer">
         <input
           ref={inputRef}
           data-testid="grid-cell-editor-input"
@@ -85,7 +87,8 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
           onKeyDown={onKeyDown}
         />
       </div>
-    </td>
+      <CornerTag />
+    </Cell>
   );
 }
 

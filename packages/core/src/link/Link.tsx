@@ -1,12 +1,12 @@
 import { ComponentType, forwardRef, ReactElement } from "react";
 import cx from "classnames";
-import { IconProps, TearOutIcon } from "@jpmorganchase/uitk-icons";
+import { IconProps, TearOutIcon } from "@salt-ds/icons";
 import { makePrefixer } from "../utils";
 import { Text, TextProps } from "../text";
 
 import "./Link.css";
 
-const withBaseName = makePrefixer("uitkLink");
+const withBaseName = makePrefixer("saltLink");
 
 /**
  * Links are a fundamental navigation element. When clicked, they take the user to an entirely different page.

@@ -1,14 +1,14 @@
 import { RefObject } from "react";
 import { TableColGroup } from "./TableColGroup";
 import "./TopPart.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnGroupModel, GridColumnModel } from "../Grid";
 import { HeaderRow } from "./HeaderRow";
 import { GroupHeaderRow } from "./GroupHeaderRow";
 import { useActiveOnWheel } from "./gridHooks";
 import cx from "classnames";
 
-const withBaseName = makePrefixer("uitkGridTopPart");
+const withBaseName = makePrefixer("saltGridTopPart");
 
 export interface TopPartProps<T> {
   topRef: RefObject<HTMLDivElement>;

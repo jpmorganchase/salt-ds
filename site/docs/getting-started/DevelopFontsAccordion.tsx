@@ -1,4 +1,4 @@
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { SaltProvider } from "@salt-ds/core";
 import Accordion, {
   AccordionBaseProps,
 } from "../../src/components/accordion/Accordion";
@@ -151,9 +151,9 @@ const DevelopFontsAccordion = (): JSX.Element => {
   return (
     <div className={styles.accordionWrapper}>
       <Accordion accordionInfo={fontFileTable} />
-      <ToolkitProvider mode="dark">
+      <SaltProvider mode="dark">
         <hr />
-      </ToolkitProvider>
+      </SaltProvider>
     </div>
   );
 };

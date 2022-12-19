@@ -1,4 +1,4 @@
-import { Dropdown } from "@jpmorganchase/uitk-lab";
+import { Dropdown } from "@salt-ds/lab";
 
 const longSource = new Array(5000)
   .fill(null)

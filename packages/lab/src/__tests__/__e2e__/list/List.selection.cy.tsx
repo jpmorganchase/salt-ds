@@ -1,4 +1,4 @@
-import { List, ListItem } from "@jpmorganchase/uitk-lab";
+import { List, ListItem } from "@salt-ds/lab";
 import { version } from "react";
 
 type ItemWithLabel = { label: string };

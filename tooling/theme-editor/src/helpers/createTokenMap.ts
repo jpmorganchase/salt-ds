@@ -32,7 +32,7 @@ export function createTokenMap(toCreate: any): TokenMap[] {
         }
       }
       for (const [selectorIndex, s] of rule.selectors.entries()) {
-        if (!s.startsWith(".uitk-")) {
+        if (!s.startsWith(".salt-")) {
           break;
         }
 

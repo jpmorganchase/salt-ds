@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LicenseManager } from "ag-grid-enterprise";
 
-/**
- * Example data can be found here
- * https://bitbucketdc.jpmchase.net/projects/JPMUITK/repos/jpm-ui-toolkit/browse/packages/data-grid/examples/dependencies
- */
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 
@@ -15,7 +11,7 @@ import "ag-grid-community/dist/styles/ag-theme-material.css";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { Switch } from "@salt-ds/lab";
 
 LicenseManager.setLicenseKey("your license key");
 
@@ -37,14 +33,14 @@ const applyExampleConfig = (columnDefs: ColDef[]) => {
 };
 
 const SetFilter = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { containerProps, agGridProps, isGridReady, api } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -59,9 +55,9 @@ const SetFilter = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div style={{ height: 800, width: 800 }} {...containerProps}>

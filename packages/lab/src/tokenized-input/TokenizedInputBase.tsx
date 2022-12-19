@@ -20,15 +20,13 @@ import {
 import {
   Button,
   ButtonProps,
-  Input,
-  InputProps,
   makePrefixer,
   useDensity,
   useForkRef,
   useId,
   useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
-import { CloseIcon, OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/core";
+import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { InputPill } from "./internal/InputPill";
@@ -39,6 +37,7 @@ import {
   TokenizedInputHelpers,
   TokenizedInputState,
 } from "./useTokenizedInput";
+import { Input, InputProps } from "../input";
 
 export type RemoveItemHandler = (itemIndex: number) => void;
 export type ItemToString<Item> = (item: Item) => string;
@@ -75,7 +74,7 @@ export interface TokenizedInputBaseProps<Item>
 }
 
 const INITIAL_INPUT_WIDTH = 5;
-const withBaseName = makePrefixer("uitkTokenizedInput");
+const withBaseName = makePrefixer("saltTokenizedInput");
 
 const getItemsAriaLabel = (itemCount: number) =>
   itemCount === 0

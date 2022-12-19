@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 import { GridCellValueProps } from "../GridColumn";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import cn from "classnames";
 import "./DefaultCellValue.css";
 
-const withBaseName = makePrefixer("uitkGridDefaultCellValue");
+const withBaseName = makePrefixer("saltGridDefaultCellValue");
 
 // Default component for cell value wrappers. Rendered as a child of cell
 // components (<td>s)

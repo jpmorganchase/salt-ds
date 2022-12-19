@@ -3,6 +3,11 @@
   width: 958px;
 }
 
+.grid-uhd {
+  --saltGrid-row-height: 21px;
+  --saltGrid-separatorGap: 6px;
+}
+
 .grid-small {
   height: 200px;
   width: 300px;
@@ -18,12 +23,12 @@
 }
 
 .bid {
-  color: var(--uitk-color-green-800);
+  color: var(--salt-color-green-800);
   padding-right: 4px;
 }
 
 .ask {
-  color: var(--uitk-color-red-800);
+  color: var(--salt-color-red-800);
   padding-left: 4px;
 }
 
@@ -31,7 +36,7 @@
   margin: 0 10px 0 10px;
 }
 
-.percentage .uitkLinearProgress {
+.percentage .saltLinearProgress {
   min-width: calc(100% - 20px);
 }
 
@@ -61,7 +66,7 @@
 
 .miniChartBar {
   width: 7%;
-  background-color: var(--uitk-palette-accent-background);
+  background-color: var(--salt-palette-accent-background);
 }
 
 .paginatedGrid {
@@ -82,7 +87,7 @@
 }
 
 .customHeaderText {
-  padding-left: var(--uitk-size-unit);
+  padding-left: var(--salt-size-unit);
   flex-grow: 1;
 }
 
@@ -95,7 +100,7 @@
 }
 
 .treeNodeName {
-  padding-left: var(--uitk-size-unit);
+  padding-left: var(--salt-size-unit);
 }
 
 .paginatedStory {

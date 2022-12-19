@@ -1,12 +1,12 @@
 import "./HeaderRow.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnModel } from "../Grid";
 import { HeaderCell } from "../HeaderCell";
 import { HeaderCellValue } from "../HeaderCellValue";
 import { FakeHeaderCell } from "./FakeHeaderCell";
 import { useCursorContext } from "../CursorContext";
 
-const withBaseName = makePrefixer("uitkGridHeaderRow");
+const withBaseName = makePrefixer("saltGridHeaderRow");
 
 export interface HeaderRowProps<T> {
   columns: GridColumnModel<T>[];

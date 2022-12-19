@@ -4,7 +4,8 @@
   /* 468px is height of hatching in illustration */
   grid-template-rows: 468px auto;
   overflow: hidden;
-
+  max-width: var(--max-container-width);
+  margin: auto;
   --keyline-height: 3px;
 }
 
@@ -14,8 +15,8 @@
 
 .accordionWrapper {
   background-color: var(--card-background);
-  width: min(55vw, var(--max-content-width));
-  padding: calc(var(--uitk-size-unit) * 10);
+  width: min(55vw, var(--max-container-width));
+  padding: calc(var(--salt-size-unit) * 10);
   grid-area: 2 / 1 / 3 / 3;
   min-height: 70vh;
 }
@@ -26,11 +27,11 @@
 
 .keyline {
   height: var(--keyline-height);
-  width: calc(100% + calc(var(--uitk-size-unit) * 20));
+  width: calc(100% + calc(var(--salt-size-unit) * 20));
   position: relative;
-  left: calc(-1 * var(--uitk-size-unit) * 10);
-  top: calc(var(--uitk-size-unit) * 10);
-  background-color: var(--uitk-color-teal-50);
+  left: calc(-1 * var(--salt-size-unit) * 10);
+  top: calc(var(--salt-size-unit) * 10);
+  background-color: var(--salt-color-teal-50);
 }
 
 @keyframes swing-in-left-bck {
@@ -46,8 +47,15 @@
   }
 }
 @media screen and (min-width: 1920px) {
-  .accordionWrapper {
+  .accordionContainer {
     margin: auto;
+    overflow: visible;
+  }
+  .accordionWrapper {
+    min-height: unset;
+  }
+  .accordionIllustration {
+    margin-right: -20rem;
   }
 }
 @media screen and (max-width: 1280px) {
@@ -66,25 +74,25 @@
     /* creates a new stacking context and ensures this sits above the illustration */
     position: relative;
     width: 100%;
-    padding: calc(var(--uitk-size-unit) * 2);
+    padding: calc(var(--salt-size-unit) * 2);
     min-height: unset;
   }
 
   .keyline {
-    width: calc(100% + calc(var(--uitk-size-unit) * 4));
-    left: calc(-1 * var(--uitk-size-unit) * 2);
-    top: calc(var(--uitk-size-unit) * 2);
+    width: calc(100% + calc(var(--salt-size-unit) * 4));
+    left: calc(-1 * var(--salt-size-unit) * 2);
+    top: calc(var(--salt-size-unit) * 2);
   }
 }
 
 @media screen and (max-width: 996px) {
   .accordionWrapper {
-    padding: var(--uitk-size-unit) var(--uitk-size-unit) calc(var(--uitk-size-unit) * 3) var(--uitk-size-unit);
+    padding: var(--salt-size-unit) var(--salt-size-unit) calc(var(--salt-size-unit) * 3) var(--salt-size-unit);
   }
 
   .keyline {
-    left: calc(-1 * var(--uitk-size-unit));
-    top: calc(var(--uitk-size-unit) * 3);
+    left: calc(-1 * var(--salt-size-unit));
+    top: calc(var(--salt-size-unit) * 3);
   }
 
   .accordionIllustration {

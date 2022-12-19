@@ -1,6 +1,6 @@
 {
-  "name": "@jpmorganchase/uitk-lab",
-  "version": "0.9.0",
+  "name": "@salt-ds/lab",
+  "version": "1.0.0-alpha.0",
   "license": "Apache-2.0",
   "main": "src/index.ts",
   "sideEffects": [
@@ -18,6 +18,6 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/jpmorganchase-uitk-lab"
+    "directory": "../../dist/salt-ds-lab"
   }
 }

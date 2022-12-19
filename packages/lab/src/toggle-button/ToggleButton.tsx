@@ -1,11 +1,4 @@
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  Tooltip,
-  useForkRef,
-  // useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { Button, ButtonProps, makePrefixer, useForkRef } from "@salt-ds/core";
 import cx from "classnames";
 import {
   forwardRef,
@@ -17,10 +10,11 @@ import {
   useState,
 } from "react";
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import "./ToggleButton.css";
 
-const withBaseName = makePrefixer("uitkToggleButton");
+const withBaseName = makePrefixer("saltToggleButton");
 
 export type ToggleButtonToggleEventHandler = (
   event: SyntheticEvent<HTMLButtonElement>,
@@ -59,7 +53,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     const handleIconOnlyButton = useCallback(
       (button: HTMLButtonElement | null) => {
         setIconOnly(
-          button?.querySelector(".uitkIcon") != null &&
+          button?.querySelector(".saltIcon") != null &&
             button?.childElementCount === 1
         );
       },
@@ -99,54 +93,51 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
 
     const tabIndex = toggled && !disabled ? 0 : -1;
 
-    // const { getTooltipProps, getTriggerProps } = useTooltip({
-    //   disabled: disableTooltip,
-    //   placement: orientation === "horizontal" ? "bottom" : "right",
-    // });
+    const { getTooltipProps, getTriggerProps } = useTooltip({
+      disabled: disableTooltip,
+      placement: orientation === "horizontal" ? "bottom" : "right",
+    });
 
-    // const { ref: triggerRef, ...triggerProps } = getTriggerProps<typeof Button>(
-    //   {
-    //     "aria-checked": toggled,
-    //     "aria-label": ariaLabel,
-    //     "aria-posinset": index !== undefined ? index + 1 : undefined,
-    //     className: cx(
-    //       withBaseName(),
-    //       withBaseName(orientation),
-    //       {
-    //         [withBaseName("primary")]: variant === "primary",
-    //         [withBaseName("cta")]: variant === "cta",
-    //         [withBaseName("secondary")]: variant === "secondary",
-    //         [withBaseName("toggled")]: toggled,
-    //         [withBaseName("disabled")]: disabled,
-    //         [withBaseName("iconOnly")]: iconOnly,
-    //       },
-    //       className
-    //     ),
-    //     onClick: handleToggle,
-    //     disabled,
-    //     focusableWhenDisabled,
-    //     role: groupContext ? "radio" : "checkbox",
-    //     tabIndex: groupContext ? tabIndex : undefined,
-    //     variant,
-    //     ...restProps,
-    //   }
-    // );
+    const { ref: triggerRef, ...triggerProps } = getTriggerProps<typeof Button>(
+      {
+        "aria-checked": toggled,
+        "aria-label": ariaLabel,
+        "aria-posinset": index !== undefined ? index + 1 : undefined,
+        className: cx(
+          withBaseName(),
+          withBaseName(orientation),
+          {
+            [withBaseName("primary")]: variant === "primary",
+            [withBaseName("cta")]: variant === "cta",
+            [withBaseName("secondary")]: variant === "secondary",
+            [withBaseName("toggled")]: toggled,
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("iconOnly")]: iconOnly,
+          },
+          className
+        ),
+        onClick: handleToggle,
+        disabled,
+        focusableWhenDisabled,
+        role: groupContext ? "radio" : "checkbox",
+        tabIndex: groupContext ? tabIndex : undefined,
+        variant,
+        ...restProps,
+      }
+    );
 
-    // const handleButtonRef = useForkRef(ref, buttonRef);
-    // const handleIconOnlyButtonRef = useForkRef(
-    //   handleIconOnlyButton,
-    //   handleButtonRef
-    // );
-    // const handleRef = useForkRef(triggerRef, handleIconOnlyButtonRef);
+    const handleButtonRef = useForkRef(ref, buttonRef);
+    const handleIconOnlyButtonRef = useForkRef(
+      handleIconOnlyButton,
+      handleButtonRef
+    );
+    const handleRef = useForkRef(triggerRef, handleIconOnlyButtonRef);
 
     return (
-      <Tooltip
-      // {...getTooltipProps({ title: tooltipText })}
-      >
-        <Button
-        // {...triggerProps} ref={handleRef}
-        />
-      </Tooltip>
+      <>
+        <Tooltip {...getTooltipProps({ title: tooltipText })} />
+        <Button {...triggerProps} ref={handleRef} />
+      </>
     );
   }
 );

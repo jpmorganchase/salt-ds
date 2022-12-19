@@ -1,10 +1,10 @@
-import { useControlled } from "@jpmorganchase/uitk-core";
+import { useControlled } from "@salt-ds/core";
 import { KeyboardEvent, MouseEvent, useCallback } from "react";
 
 const defaultSelectionKeys = ["Enter", " "];
 
 export const isTabElement = (el: HTMLElement): boolean =>
-  el && el.matches('[class*="uitkTab "]');
+  el && el.matches('[class*="saltTab "]');
 
 // TODO use SelectionProps
 export const useSelection = ({

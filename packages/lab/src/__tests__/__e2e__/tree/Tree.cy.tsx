@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { Tree } from "@jpmorganchase/uitk-lab";
+import { Tree } from "@salt-ds/lab";
 
 function createNodes(count: number, factory: (index: number) => any) {
   const nodes = [];
@@ -99,18 +99,18 @@ describe("GIVEN a Tree", () => {
     });
 
     it("THEN should render an expander", () => {
-      cy.get(".uitkTree-toggle").should("have.length", 1);
+      cy.get(".saltTree-toggle").should("have.length", 1);
     });
 
     it("THEN should render 1 node", () => {
-      cy.get(".uitkTreeNode-item").should("have.length", 1);
+      cy.get(".saltTreeNode-item").should("have.length", 1);
     });
   });
 
   describe("AND when the component renders with no data", () => {
     it("THEN should render with an empty tree", () => {
       cy.mount(<Tree />);
-      cy.get(".uitkTreeNode-item").should("have.length", 0);
+      cy.get(".saltTreeNode-item").should("have.length", 0);
     });
 
     describe("AND when the component re-renders with a valid source", () => {
@@ -129,7 +129,7 @@ describe("GIVEN a Tree", () => {
           );
         }
         cy.mount(<ChangingTree />);
-        cy.get(".uitkTreeNode-item").should("have.length", 1);
+        cy.get(".saltTreeNode-item").should("have.length", 1);
       });
     });
   });
@@ -140,11 +140,11 @@ describe("GIVEN a Tree", () => {
     });
 
     it("THEN should render no expanders", () => {
-      cy.get(".uitkTree-toggle").should("have.length", 0);
+      cy.get(".saltTree-toggle").should("have.length", 0);
     });
 
     it("THEN should render 1 node", () => {
-      cy.get(".uitkTreeNode-item").should("have.length", 1);
+      cy.get(".saltTreeNode-item").should("have.length", 1);
     });
   });
 
@@ -172,7 +172,7 @@ describe("GIVEN a Tree", () => {
 
     it("THEN should respect the second source", () => {
       cy.mount(<ChangingTree />);
-      cy.get(".uitkTreeNode-item").should("have.length", 9);
+      cy.get(".saltTreeNode-item").should("have.length", 9);
     });
   });
 
@@ -206,7 +206,7 @@ describe("GIVEN a Tree", () => {
 
     it("THEN should ignore the second initialSource", () => {
       cy.mount(<ChangingTree />);
-      cy.get(".uitkTreeNode-item").should("have.length", 2);
+      cy.get(".saltTreeNode-item").should("have.length", 2);
     });
   });
 
@@ -217,7 +217,7 @@ describe("GIVEN a Tree", () => {
       );
       cy.findByText("1").realClick();
       cy.findByText("2").realClick();
-      cy.get('.uitkTreeNode-item[aria-selected="true"]').should(
+      cy.get('.saltTreeNode-item[aria-selected="true"]').should(
         "have.length",
         1
       );
@@ -243,7 +243,7 @@ describe("GIVEN a Tree", () => {
     });
 
     it("THEN should render the `Tree` without checkboxes", () => {
-      cy.get(".uitkCheckbox").should("have.length", 0);
+      cy.get(".saltCheckbox").should("have.length", 0);
     });
 
     describe("AND when a node is clicked", () => {
@@ -297,7 +297,7 @@ describe("GIVEN a Tree", () => {
   //         .find({
   //           id: "collapsed-node-1",
   //         })
-  //         .find(".jpmuitk-icon-document")
+  //         .find(".jpmsalt-icon-document")
   //     ).toHaveLength(1);
   //   });
 
@@ -316,7 +316,7 @@ describe("GIVEN a Tree", () => {
   //         .find({
   //           id: "child1",
   //         })
-  //         .find(".jpmuitk-icon-folder")
+  //         .find(".jpmsalt-icon-folder")
   //     ).toHaveLength(1);
   //   });
   // });
@@ -356,9 +356,9 @@ describe("GIVEN a Tree", () => {
 
     describe("AND 2 nodes are expanded", () => {
       it("THEN should expand 2 nodes", () => {
-        cy.get(".uitkTreeNode-toggle").eq(0).realClick();
-        cy.get(".uitkTreeNode-toggle").eq(1).realClick();
-        cy.get('.uitkTreeNode[aria-expanded="true"]').should("have.length", 2);
+        cy.get(".saltTreeNode-toggle").eq(0).realClick();
+        cy.get(".saltTreeNode-toggle").eq(1).realClick();
+        cy.get('.saltTreeNode[aria-expanded="true"]').should("have.length", 2);
       });
     });
   });
@@ -389,12 +389,12 @@ describe("GIVEN a Tree", () => {
 
     describe("AND a new node is clicked", () => {
       it("THEN the last selected node alone should remain selected", () => {
-        cy.get(".uitkTreeNode-item").eq(2).realClick();
-        cy.get('.uitkTreeNode-item[aria-selected="true"]').should(
+        cy.get(".saltTreeNode-item").eq(2).realClick();
+        cy.get('.saltTreeNode-item[aria-selected="true"]').should(
           "have.length",
           1
         );
-        cy.get(".uitkTreeNode-item")
+        cy.get(".saltTreeNode-item")
           .eq(2)
           .should("have.attr", "aria-selected", "true");
       });
@@ -1371,7 +1371,6 @@ describe("GIVEN a Tree", () => {
   //   });
   // });
 
-  // Reproduction of https://jiradc-other.jpmchase.net/browse/UITK-1775
   // describe("AND a controlled node is expanded then the source changes and it is clicked again", () => {
   //   let wrapper;
   //   let onItemClickSpy;

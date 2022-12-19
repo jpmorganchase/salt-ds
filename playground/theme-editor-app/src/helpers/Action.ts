@@ -1,4 +1,4 @@
-import { JSONByScope } from "@jpmorganchase/theme-editor";
+import { JSONByScope } from "@salt-ds/theme-editor";
 
 export enum ActionType {
   UPDATE = "UPDATE",

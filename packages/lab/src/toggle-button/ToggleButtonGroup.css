@@ -1,26 +1,26 @@
-.uitk-density-high {
-  --toggleButton-group-height: calc(var(--uitk-size-base) - var(--uitk-size-unit) + 2px);
+.salt-density-high {
+  --toggleButton-group-height: calc(var(--salt-size-base) - var(--salt-size-unit) + 2px);
 }
-.uitk-density-medium {
-  --toggleButton-group-height: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 0.5) + 2px);
+.salt-density-medium {
+  --toggleButton-group-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 0.5) + 2px);
 }
-.uitk-density-low {
-  --toggleButton-group-height: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 2 / 3) + 2px);
+.salt-density-low {
+  --toggleButton-group-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 2 / 3) + 2px);
 }
-.uitk-density-touch {
-  --toggleButton-group-height: calc(var(--uitk-size-base) - (var(--uitk-size-unit) * 0.5) + 2px);
-}
-
-.uitkToggleButtonGroup.uitkToggleButtonGroup-cta {
-  --toggleButton-group-borderColor: var(--uitkToggleButton-group-cta-borderColor, var(--uitk-container-secondary-borderColor));
-}
-.uitkToggleButtonGroup.uitkToggleButtonGroup-primary {
-  --toggleButton-group-borderColor: var(--uitkToggleButton-group-primary-borderColor, var(--uitk-container-primary-borderColor));
+.salt-density-touch {
+  --toggleButton-group-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 0.5) + 2px);
 }
 
-.uitkToggleButtonGroup {
-  --toggleButton-group-borderWidth: var(--uitkToggleButton-group-borderWidth, var(--uitk-size-border));
-  --toggleButton-group-borderStyle: var(--uitkToggleButton-group-borderWidth, var(--uitk-container-borderStyle));
+.saltToggleButtonGroup.saltToggleButtonGroup-cta {
+  --toggleButton-group-borderColor: var(--saltToggleButton-group-cta-borderColor, var(--salt-container-secondary-borderColor));
+}
+.saltToggleButtonGroup.saltToggleButtonGroup-primary {
+  --toggleButton-group-borderColor: var(--saltToggleButton-group-primary-borderColor, var(--salt-container-primary-borderColor));
+}
+
+.saltToggleButtonGroup {
+  --toggleButton-group-borderWidth: var(--saltToggleButton-group-borderWidth, var(--salt-size-border));
+  --toggleButton-group-borderStyle: var(--saltToggleButton-group-borderWidth, var(--salt-container-borderStyle));
 
   display: inline-flex;
   overflow: hidden;
@@ -28,22 +28,22 @@
   border: var(--toggleButton-group-borderWidth) var(--toggleButton-group-borderStyle) var(--toggleButton-group-borderColor);
 }
 
-.uitkToggleButtonGroup.uitkToggleButtonGroup-secondary {
-  --toggleButton-group-borderColor: var(--uitkToggleButton-group-secondary-borderColor, var(--uitk-container-tertiary-borderColor));
+.saltToggleButtonGroup.saltToggleButtonGroup-secondary {
+  --toggleButton-group-borderColor: var(--saltToggleButton-group-secondary-borderColor, var(--salt-container-tertiary-borderColor));
 }
 
-.uitkToggleButtonGroup-horizontal .uitkToggleButton {
+.saltToggleButtonGroup-horizontal .saltToggleButton {
   height: var(--toggleButton-group-height);
 }
 
-.uitkToggleButtonGroup-horizontal .uitkToggleButton:not(:first-child) {
+.saltToggleButtonGroup-horizontal .saltToggleButton:not(:first-child) {
   margin-left: 2px;
 }
 
-.uitkToggleButtonGroup-vertical {
+.saltToggleButtonGroup-vertical {
   flex-direction: column;
 }
 
-.uitkToggleButtonGroup-vertical .uitkToggleButton:not(:first-child) {
+.saltToggleButtonGroup-vertical .saltToggleButton:not(:first-child) {
   margin-top: 2px;
 }

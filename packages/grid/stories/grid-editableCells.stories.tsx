@@ -12,7 +12,7 @@ import { randomInt, randomNumber, randomText } from "./utils";
 import { useCallback, useState } from "react";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };
@@ -106,6 +106,7 @@ const EditableCellsTemplate: Story<{}> = () => {
       rowKeyGetter={(row) => row.id}
       className="grid"
       zebra={true}
+      // columnSeparators={true}
     >
       <GridColumn
         id="name"

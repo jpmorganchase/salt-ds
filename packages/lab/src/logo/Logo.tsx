@@ -1,6 +1,6 @@
 import { ComponentType, forwardRef, ComponentPropsWithoutRef } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 
 import { LogoTitle, LogoTitleProps } from "./internal/LogoTitle";
 import "./Logo.css";
@@ -34,7 +34,7 @@ export interface LogoProps extends ComponentPropsWithoutRef<"span"> {
   TitleProps?: Omit<Partial<LogoTitleProps>, "label">;
 }
 
-const withBaseName = makePrefixer("uitkLogo");
+const withBaseName = makePrefixer("saltLogo");
 
 export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
   props,

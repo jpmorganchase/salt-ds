@@ -13,7 +13,7 @@ function buildStyles(entry) {
   const outputFileName = sourceFileName.replace(/\.scss$/, ".css");
   const outputFolder = path.join(
     __dirname,
-    "../../../dist/jpmorganchase-uitk-ag-grid-theme"
+    "../../../dist/salt-ds-ag-grid-theme"
   );
   const outputName = path.join(outputFolder, sourceFileName);
   del.sync([outputName], { force: true });

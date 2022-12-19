@@ -1,30 +1,30 @@
-.uitkGridTopRightPart {
+.saltGridTopRightPart {
   position: absolute;
   top: 0;
   right: var(--grid-scrollBar-width);
   z-index: var(--grid-right-header-zIndex);
 }
 
-.uitkGridTopRightPart-leftShadow {
+.saltGridTopRightPart-leftShadow {
   box-shadow: -2px 0 4px 0 var(--grid-shadow-color);
   clip-path: inset(1px 0 0 -10px);
 }
 
-.uitkGrid-pinnedSeparators .uitkGridTopRightPart-leftShadow {
+.saltGrid-pinnedSeparators .saltGridTopRightPart-leftShadow {
   border-left: solid 1px var(--grid-pinnedSeparator-color);
 }
 
-.uitkGridTopRightPart-bottomShadow {
+.saltGridTopRightPart-bottomShadow {
   box-shadow: 0 2px 4px 0 var(--grid-shadow-color);
   clip-path: inset(1px 0 -10px 0);
 }
 
-.uitkGridTopRightPart-leftShadow.uitkGridTopRightPart-bottomShadow {
+.saltGridTopRightPart-leftShadow.saltGridTopRightPart-bottomShadow {
   box-shadow: -2px 2px 4px 0 var(--grid-shadow-color);
   clip-path: inset(1px 0 -10px -10px);
 }
 
-.uitkGridTopRightPart table {
+.saltGridTopRightPart table {
   table-layout: fixed;
 
   width: var(--grid-rightPart-width);

@@ -1,4 +1,4 @@
-import { LinkProps, Link, makePrefixer, Text } from "@jpmorganchase/uitk-core";
+import { LinkProps, Link, makePrefixer, Text } from "@salt-ds/core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { useMetricContext } from "./internal";
@@ -21,7 +21,7 @@ export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
 }
 
-const withBaseName = makePrefixer("uitkMetricHeader");
+const withBaseName = makePrefixer("saltMetricHeader");
 
 export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
   function MetricHeader(

@@ -3,8 +3,8 @@ import {
   makePrefixer,
   useControlled,
   useIdMemo as useId,
-} from "@jpmorganchase/uitk-core";
-import { OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/core";
+import { OverflowMenuIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import React, {
   ForwardedRef,
@@ -26,7 +26,7 @@ import { DropdownBase, DropdownBaseProps } from "../../dropdown";
 
 import "./OverflowPanel.css";
 
-const withBaseName = makePrefixer("uitkOverflowPanel");
+const withBaseName = makePrefixer("saltOverflowPanel");
 
 export interface DropdownPanelProps extends DropdownBaseProps {
   /**

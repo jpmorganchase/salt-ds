@@ -36,7 +36,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-no-foundations";
+const ruleName = "salt/custom-property-no-foundations";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>
@@ -45,18 +45,18 @@ const messages = ruleMessages(ruleName, {
 
 const meta = {
   // Point to style documentation
-  url: "https://uitk.pages.dev/?path=/story/documentation-styles-and-theming-characteristics-introduction--page",
+  url: "https://saltdesignsystem-storybook.pages.dev/?path=/story/documentation-styles-and-theming-characteristics-introduction--page",
 };
 
 /**
  * Test whether a property value is from theme.
  *
- * We have 2 type of `--uitk` prefixes
- * - `--uitk-xyz` from theme
- * - `--uitkAbc` from a component
+ * We have 2 type of `--salt` prefixes
+ * - `--salt-xyz` from theme
+ * - `--saltAbc` from a component
  */
-const isUitkThemeCustomProperty = function (property) {
-  return property.startsWith("--uitk-");
+const isSaltThemeCustomProperty = function (property) {
+  return property.startsWith("--salt-");
 };
 
 /**
@@ -93,7 +93,7 @@ const allAllowedKeys = [
 ];
 
 const regexpPattern = new RegExp(
-  `--uitk(w+)?-(${allAllowedKeys.join("|")})-.+`
+  `--salt(w+)?-(${allAllowedKeys.join("|")})-.+`
 );
 
 module.exports = stylelint.createPlugin(
@@ -104,7 +104,7 @@ module.exports = stylelint.createPlugin(
 
       function check(property) {
         const checkResult =
-          !isUitkThemeCustomProperty(property) ||
+          !isSaltThemeCustomProperty(property) ||
           regexpPattern.test(property) ||
           !isBackwardsCompatToken(property);
         verboseLog && console.log("Checking", checkResult, property);

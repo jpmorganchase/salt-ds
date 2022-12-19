@@ -5,7 +5,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { FormField, FormFieldProps, Input } from "@jpmorganchase/uitk-core";
+import { FormField, FormFieldProps } from "../form-field";
+import { Input } from "../input";
 import { withBaseName } from "./utils";
 
 export interface CompactInputProps {

@@ -1,0 +1,11 @@
+.saltFormGroup {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.saltFormGroup-row {
+  flex-direction: row;
+  float: left;
+}

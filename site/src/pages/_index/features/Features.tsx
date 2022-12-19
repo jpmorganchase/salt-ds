@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, useMemo } from "react";
-import { SuccessIcon } from "@jpmorganchase/uitk-icons";
+import { SuccessIcon } from "@salt-ds/icons";
 import styles from "./Features.module.css";
 
 export interface FeaturesProps extends ComponentPropsWithoutRef<"div"> {

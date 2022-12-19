@@ -1,4 +1,4 @@
-import { useForkRef, useIdMemo } from "@jpmorganchase/uitk-core";
+import { useForkRef, useIdMemo } from "@salt-ds/core";
 import cx from "classnames";
 import {
   Children,
@@ -23,7 +23,7 @@ import { TooltrayProps } from "./TooltrayProps";
 
 import "./Toolbar.css";
 
-const classBase = "uitkToolbar";
+const classBase = "saltToolbar";
 
 /**
  * The core Toolbar implementation, without the external wrapper provided by Toolbar.js
@@ -103,7 +103,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
 
     const overflowPanel = overflowIndicator ? (
       <OverflowPanel
-        className={cx("uitkToolbarField")}
+        className={cx("saltToolbarField")}
         data-index={collectionHook.data.length}
         data-overflow-indicator
         data-priority={1}

@@ -1,30 +1,30 @@
-.uitk-density-touch {
+.salt-density-touch {
   --dialog-title-fontSize: 26px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --dialog-title-fontSize: 24px;
 }
 
-.uitk-density-medium {
+.salt-density-medium {
   --dialog-title-fontSize: 22px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --dialog-title-fontSize: 20px;
 }
 
-.uitkDialogTitle {
-  --dialog-closeButton-padding: var(--uitkDialog-closeButton-padding, var(--uitk-size-unit));
-  --dialog-closeButton-offset: var(--uitkDialog-closeButton-offset, calc(var(--dialog-padding) * -1));
+.saltDialogTitle {
+  --dialog-closeButton-padding: var(--saltDialog-closeButton-padding, var(--salt-size-unit));
+  --dialog-closeButton-offset: var(--saltDialog-closeButton-offset, calc(var(--dialog-padding) * -1));
 
-  --dialog-title-lineHeight: var(--uitkDialog-title-lineHeight, var(--uitk-text-lineHeight));
-  --dialog-title-fontWeight: var(--uitkDialog-title-fontWeight, var(--uitk-text-fontWeight-strong));
-  --dialog-title-icon-marginRight: var(--uitkDialog-title-icon-marginRight, 8px);
-  --dialog-title-color: var(--uitkDialog-title-color, var(--uitk-text-primary-foreground));
+  --dialog-title-lineHeight: var(--saltDialog-title-lineHeight, var(--salt-text-lineHeight));
+  --dialog-title-fontWeight: var(--saltDialog-title-fontWeight, var(--salt-text-fontWeight-strong));
+  --dialog-title-icon-marginRight: var(--saltDialog-title-icon-marginRight, 8px);
+  --dialog-title-color: var(--saltDialog-title-color, var(--salt-text-primary-foreground));
 }
 
-.uitkDialogTitle {
+.saltDialogTitle {
   display: flex;
   flex: 0 0 auto;
   font-size: var(--dialog-title-fontSize);
@@ -34,7 +34,7 @@
   color: var(--dialog-title-color);
 }
 
-.uitkDialogTitle-close {
+.saltDialogTitle-close {
   position: absolute;
   padding-top: var(--dialog-closeButton-padding);
   padding-bottom: var(--dialog-closeButton-padding);
@@ -42,6 +42,6 @@
   top: var(--dialog-closeButton-offset);
 }
 
-.uitkDialogTitle-statusIndicator {
+.saltDialogTitle-statusIndicator {
   margin-right: var(--dialog-title-icon-marginRight);
 }

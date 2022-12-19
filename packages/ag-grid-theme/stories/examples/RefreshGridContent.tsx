@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "../../uitk-ag-theme.css";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Button, Switch } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
+import { Switch } from "@salt-ds/lab";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const RefreshGridContentExample = function RefreshGridContentExample(
   props: AgGridReactProps
 ) {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -59,9 +60,9 @@ const RefreshGridContentExample = function RefreshGridContentExample(
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div>

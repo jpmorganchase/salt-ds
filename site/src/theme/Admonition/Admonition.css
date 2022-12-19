@@ -1,31 +1,31 @@
-.uitkAdmonition {
-  background: var(--uitk-container-tertiary-background);
+.saltAdmonition {
+  background: var(--salt-container-tertiary-background);
 }
-.uitkAdmonition hr {
-  margin-bottom: var(--uitk-size-unit);
-  margin-top: calc(3 * var(--uitk-size-unit));
+.saltAdmonition hr {
+  margin-bottom: var(--salt-size-unit);
+  margin-top: calc(3 * var(--salt-size-unit));
 }
 
-.uitkAdmonition-info {
+.saltAdmonition-info {
   background-color: var(--site-tertiary-accent-teal);
   height: 3px;
 }
 
-.uitkAdmonition .theme-admonition {
-  --ifm-alert-foreground-color: var(--uitk-color-gray-900);
-  --ifm-alert-background-color: var(--uitk-color-white);
+.saltAdmonition .theme-admonition {
+  --ifm-alert-foreground-color: var(--salt-color-gray-900);
+  --ifm-alert-background-color: var(--salt-color-white);
   --ifm-alert-shadow: none;
   --ifm-alert-padding-horizontal: 0;
   --ifm-alert-padding-vertical: 0;
   border: none;
 }
 
-.uitkAdmonition .theme-admonition a {
-  text-decoration-color: var(--uitk-color-gray-900);
-  --ifm-link-hover-color: var(--uitk-text-link-foreground-hover);
+.saltAdmonition .theme-admonition a {
+  text-decoration-color: var(--salt-color-gray-900);
+  --ifm-link-hover-color: var(--salt-text-link-foreground-hover);
 }
 
-.uitkAdmonition .theme-admonition a:hover {
+.saltAdmonition .theme-admonition a:hover {
   text-decoration-thickness: 1px;
 }
 
@@ -33,7 +33,7 @@
   display: none;
 }
 
-.uitkAdmonition h4 {
+.saltAdmonition h4 {
   --ifm-heading-color: var(--site-tertiary-accent-teal);
   margin-top: 0;
 }

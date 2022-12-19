@@ -1,50 +1,50 @@
 /* TODO: Should the outer most container being 'wrapper'? */
-.uitkListDeprecated-wrapper {
+.saltListDeprecated-wrapper {
   /* Color */
-  --list-background: var(--uitk-container-primary-background);
+  --list-background: var(--salt-container-primary-background);
   /* Border */
-  --list-borderColor: var(--uitk-container-primary-borderColor);
-  --list-borderStyle: var(--uitk-container-borderStyle);
-  --list-borderWidth: var(--uitk-size-border);
+  --list-borderColor: var(--salt-container-primary-borderColor);
+  --list-borderStyle: var(--salt-container-borderStyle);
+  --list-borderWidth: var(--salt-size-border);
   --list-borderRadius: 0;
 
   /* Text, Font */
   /* TODO: Do we necessary want to set this? Should rely on inheritance? */
-  /* --list-fontFamily: var(--uitk-typography-fontFamily); */
+  /* --list-fontFamily: var(--salt-typography-fontFamily); */
 
   /* Misc. */
   --list-boxShadow: none;
-  --list-disabled-cursor: var(--uitk-actionable-cursor-disabled);
+  --list-disabled-cursor: var(--salt-actionable-cursor-disabled);
 }
 
-.uitkListDeprecated-wrapper {
+.saltListDeprecated-wrapper {
   position: relative;
 }
 
-.uitkListDeprecated {
+.saltListDeprecated {
   /* font-family: var(--list-fontFamily); */
   overflow-y: auto;
 }
-.uitkListDeprecated:focus {
+.saltListDeprecated:focus {
   outline: none;
 }
 
-.uitkListDeprecated-wrapper:not(.uitkListDeprecated-borderless) {
+.saltListDeprecated-wrapper:not(.saltListDeprecated-borderless) {
   border-color: var(--list-borderColor);
   border-style: var(--list-borderStyle);
   border-width: var(--list-borderWidth);
   border-radius: var(--list-borderRadius);
 }
-.uitkListDeprecated-wrapper {
+.saltListDeprecated-wrapper {
   background: var(--list-background);
   box-shadow: var(--list-boxShadow);
   position: relative;
 }
 
-.uitkListDeprecated-borderless {
+.saltListDeprecated-borderless {
   border: none;
 }
-.uitkListDeprecated-disabled {
+.saltListDeprecated-disabled {
   cursor: var(--list-disabled-cursor);
   /* TODO: Design: Check whether we want things behind the list to actually show through opacity */
   /* Or instead of using `opacity` in favor of dedicated color setting, on background, border-color, etc. */

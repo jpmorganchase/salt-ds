@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from "@storybook/react";
 
-import { Metric, MetricContent, MetricHeader } from "@jpmorganchase/uitk-lab";
+import { Metric, MetricContent, MetricHeader } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
@@ -15,7 +15,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       vertical
       transposeDensity
       height={1400}
-      className="uitkMetricQA"
+      className="saltMetricQA"
       imgSrc={props.imgSrc}
     >
       <Metric

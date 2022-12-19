@@ -1,6 +1,6 @@
-.uitkFoundationNoScope {
+.saltFoundationNoScope {
   padding: 20px;
 }
-.uitkFoundationTabs {
-  background-color: var(--uitk-container-primary-background);
+.saltFoundationTabs {
+  background-color: var(--salt-container-primary-background);
 }

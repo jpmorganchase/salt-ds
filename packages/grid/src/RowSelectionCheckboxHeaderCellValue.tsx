@@ -1,6 +1,6 @@
 import { useSelectionContext } from "./SelectionContext";
 import { KeyboardEventHandler, MouseEventHandler } from "react";
-import { CheckboxBase } from "@jpmorganchase/uitk-core";
+import { CheckboxBase } from "@salt-ds/lab";
 import "./CheckboxCell.css";
 import { GridHeaderValueProps } from "./GridColumn";
 
@@ -35,7 +35,7 @@ export function RowSelectionCheckboxHeaderCellValue<T>(
   return (
     <div
       onMouseDown={onMousedown}
-      className="uitkGridCheckboxContainer"
+      className="saltGridCheckboxContainer"
       onKeyDown={onKeyDown}
     >
       <CheckboxBase

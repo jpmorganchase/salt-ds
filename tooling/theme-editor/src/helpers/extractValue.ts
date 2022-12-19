@@ -47,25 +47,25 @@ export const extractValueFromJSON = (
   value: string,
   jsonInCurrentScope: JSONByScope[]
 ): string => {
-  const mergedJSON = merge(jsonInCurrentScope.map((js) => js.jsonObj.uitk));
+  const mergedJSON = merge(jsonInCurrentScope.map((js) => js.jsonObj.salt));
 
   function recursePath(v: string): string {
     let path = mergedJSON;
 
     const original = v;
-    if (v.startsWith("uitk-")) v = v.substring(5);
+    if (v.startsWith("salt-")) v = v.substring(5);
 
     for (const p of v.split("-")) {
       path = path[p];
       if (!path) return original;
     }
     if (path.value && typeof path.value === "string") {
-      if (path.value.startsWith("uitk")) return recursePath(path.value);
+      if (path.value.startsWith("salt")) return recursePath(path.value);
       else return path.value;
     } else return original;
   }
 
-  // edge cases containing inner uitk- values
+  // edge cases containing inner salt- values
   if (isRGBAColor(value) && value.split("*").length > 1) {
     const foundAlpha = recursePath(value.split("*")[1].replace(")", ""));
     if (foundAlpha) return value.split("*")[0] + foundAlpha + ")";
@@ -74,7 +74,7 @@ export const extractValueFromJSON = (
     let toReturn = "";
 
     for (const cssPart of value.split("*")) {
-      if (cssPart.startsWith("uitk")) {
+      if (cssPart.startsWith("salt")) {
         const foundPart = recursePath(cssPart);
         if (!cssPart.includes(foundPart)) toReturn += foundPart;
         else toReturn += "*" + cssPart + "*";
@@ -86,7 +86,7 @@ export const extractValueFromJSON = (
   if (value.startsWith("*")) {
     let toReturn = "";
     for (const cssPart of value.split("*")) {
-      if (cssPart.startsWith("uitk")) {
+      if (cssPart.startsWith("salt")) {
         const foundPart = recursePath(cssPart);
         if (foundPart) toReturn += foundPart + " ";
         else toReturn += cssPart;

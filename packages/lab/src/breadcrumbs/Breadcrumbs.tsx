@@ -1,5 +1,5 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { IconProps } from "@jpmorganchase/uitk-icons";
+import { makePrefixer } from "@salt-ds/core";
+import { IconProps } from "@salt-ds/icons";
 import classnames from "classnames";
 import React, {
   HTMLAttributes,
@@ -16,7 +16,7 @@ import "./Breadcrumbs.css";
 
 const iconWidth = 12;
 
-const withBaseName = makePrefixer("uitkBreadcrumbs");
+const withBaseName = makePrefixer("saltBreadcrumbs");
 
 function insertSeparators(
   items: ReactNode[],

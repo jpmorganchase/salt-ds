@@ -4,7 +4,7 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { Switch } from "@salt-ds/lab";
 
 const sumReducer = (acc: number, n: number) => acc + n;
 const minReducer = (acc: number, n: number) => (n < acc ? n : acc);
@@ -49,14 +49,14 @@ const PinnedRowsExample = function PinnedRowsExample({
   showHeader = true,
   ...rest
 }: PinnedRowsExampleProps) {
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -95,9 +95,9 @@ const PinnedRowsExample = function PinnedRowsExample({
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div

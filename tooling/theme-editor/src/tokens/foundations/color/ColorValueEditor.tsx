@@ -1,15 +1,12 @@
-import {
-  makePrefixer,
-  ToolkitProvider,
-  Tooltip,
-  // useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, SaltProvider } from "@salt-ds/core";
 import {
   capitalize,
   Color,
   ColorChooser,
   getColorNameByHexValue,
-} from "@jpmorganchase/uitk-lab";
+  Tooltip,
+  useTooltip,
+} from "@salt-ds/lab";
 import cn from "classnames";
 import { useEffect, useMemo, useState } from "react";
 
@@ -19,12 +16,12 @@ import { ErrorIcon } from "../../../icons/components/ErrorIcon";
 import { HoverIcon } from "../../../icons/components/HoverIcon";
 import { RegularIcon } from "../../../icons/components/RegularIcon";
 import { WarningIcon } from "../../../icons/components/WarningIcon";
-import { UITK_FOUNDATIONS } from "../../../utils/uitkValues";
+import { SALT_FOUNDATIONS } from "../../../utils/saltValues";
 import { JumpToTokenButton } from "../../toggles/JumpToTokenButton";
 
 import "./ColorValueEditor.css";
 
-const withBaseName = makePrefixer("uitkColorValueEditor");
+const withBaseName = makePrefixer("saltColorValueEditor");
 
 const rgbRegex = new RegExp(
   "^rgb\\((25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?|[0-9]), ?(25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?|[0-9]), ?(25[0-5]|2[0-4][0-9]|1[0-9]?[0-9]?|[1-9][0-9]?|[0-9])\\)$"
@@ -50,7 +47,7 @@ type ColorValueEditorProps = {
   pathToUpdate: string;
   scope: string;
   setValue: (value: string) => void;
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   value: string;
 };
 
@@ -62,7 +59,7 @@ export function isLinearGradient(value: string): boolean {
 }
 
 export function isRGBAColor(value: string): boolean {
-  // separated for now so we can find uitk alpha value
+  // separated for now so we can find salt alpha value
   if (value.startsWith("rgba")) {
     return true;
   }
@@ -139,7 +136,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
       ) {
         const colorParts = colorName.match(/[a-z]+|[^a-z]+/gi);
         if (colorParts?.length === 2) {
-          const token = `uitk-${colorParts[0].toLowerCase()}-${colorParts[1]}`;
+          const token = `salt-${colorParts[0].toLowerCase()}-${colorParts[1]}`;
           props.onUpdateJSON(token, props.pathToUpdate, props.scope);
         }
       } else {
@@ -162,9 +159,9 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
     setSelectedColor(Color.makeColorFromHex(defaultColor));
   };
 
-  // const { getTriggerProps, getTooltipProps } = useTooltip({
-  //   placement: "top-start",
-  // });
+  const { getTriggerProps, getTooltipProps } = useTooltip({
+    placement: "top-start",
+  });
 
   return (
     <div
@@ -190,27 +187,28 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
             })}
           >
             {!props.isStateValue && (
-              <div className={cn(withBaseName("field"), "uitkFormLabel")}>
+              <div className={cn(withBaseName("field"), "saltFormLabel")}>
                 {formFieldLabel}
               </div>
             )}
             {props.isStateValue && (
-              <Tooltip
-              // {...getTooltipProps({
-              //   title:
-              //     formFieldLabel === "Color" ||
-              //     formFieldLabel === "Background"
-              //       ? "Regular"
-              //       : formFieldLabel,
-              // })}
-              >
+              <>
+                <Tooltip
+                  {...getTooltipProps({
+                    title:
+                      formFieldLabel === "Color" ||
+                      formFieldLabel === "Background"
+                        ? "Regular"
+                        : formFieldLabel,
+                  })}
+                />
                 <div
-                // {...getTriggerProps({
-                //   className: cn(
-                //     "uitkFormLabel",
-                //     withBaseName("colorStatesField")
-                //   ),
-                // })}
+                  {...getTriggerProps({
+                    className: cn(
+                      "saltFormLabel",
+                      withBaseName("colorStatesField")
+                    ),
+                  })}
                 >
                   {formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "background" &&
@@ -223,7 +221,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                     <RegularIcon />
                   )}
                 </div>
-              </Tooltip>
+              </>
             )}
             <div
               className={cn({
@@ -231,7 +229,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                   formFieldLabel.includes("Background"),
               })}
             >
-              <ToolkitProvider density="high">
+              <SaltProvider density="high">
                 <ColorChooser
                   color={selectedColor}
                   displayHexOnly={!props.characteristicsView}
@@ -240,16 +238,16 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                   showColorPicker={props.characteristicsView ? false : true}
                   onSelect={onSelect}
                   onClear={onClear}
-                  UITKColorOverrides={props.uitkColorOverrides}
+                  saltColorOverrides={props.saltColorOverrides}
                 />
-              </ToolkitProvider>
+              </SaltProvider>
             </div>
           </div>
           {props.characteristicsView && !props.isStateValue && (
             <JumpToTokenButton
               disabled={props.value.split("-").length < 2}
               value={props.value.split("-").slice(1)[0]}
-              sectionToJumpTo={UITK_FOUNDATIONS}
+              sectionToJumpTo={SALT_FOUNDATIONS}
               pathname={"/foundations/color"}
               search={`?open=${props.value.split("-").slice(1)[0]}`}
             />

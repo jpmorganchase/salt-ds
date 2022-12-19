@@ -1,0 +1,120 @@
+/* Styles applied to root component (RadioButton) */
+.salt-density-high {
+  --radioButton-group-vertical-label-marginBottom: 4px;
+  --radioButton-group-legend-minHeight: 14px;
+  --radioButton-group-legend-paddingRight: 16px;
+  --radioButton-group-horizontal-legend-marginTop: 2px;
+  --radioButton-group-horizontal-legend-marginRight: 12px;
+  --radioButton-group-horizontal-legend-paddingRight: 4px;
+  --radioButton-group-horizontal-legend-marginBottom: 0px;
+  --radioButton-group-vertical-formLabel-paddingRight: 4px;
+  --radioButton-group-vertical-formLabel-marginBottom: 4px;
+  --radioButton-group-vertical-formLabel-transform: translate(0px, 3px);
+  --radioButton-group-formLabel-transform: translate(0px, 3px);
+}
+
+.salt-density-medium {
+  --radioButton-group-vertical-label-marginBottom: 6px;
+  --radioButton-group-legend-minHeight: 14px;
+  --radioButton-group-legend-paddingRight: 16px;
+  --radioButton-group-horizontal-legend-marginTop: 1px;
+  --radioButton-group-horizontal-legend-marginRight: 24px;
+  --radioButton-group-horizontal-legend-paddingRight: 8px;
+  --radioButton-group-horizontal-legend-marginBottom: 0px;
+  --radioButton-group-vertical-formLabel-paddingRight: 8px;
+  --radioButton-group-vertical-formLabel-marginBottom: 6px;
+  --radioButton-group-vertical-formLabel-transform: translate(0px, 5px);
+  --radioButton-group-formLabel-transform: translate(0px, 5px);
+}
+
+.salt-density-low {
+  --radioButton-group-vertical-label-marginBottom: 9px;
+  --radioButton-group-legend-minHeight: 14px;
+  --radioButton-group-legend-paddingRight: 16px;
+  --radioButton-group-horizontal-legend-marginTop: 4px;
+  --radioButton-group-horizontal-legend-marginRight: 36px;
+  --radioButton-group-horizontal-legend-paddingRight: 12px;
+  --radioButton-group-horizontal-legend-marginBottom: 0px;
+  --radioButton-group-vertical-formLabel-paddingRight: 12px;
+  --radioButton-group-vertical-formLabel-marginBottom: 9px;
+  --radioButton-group-vertical-formLabel-transform: translate(0px, 7px);
+  --radioButton-group-formLabel-transform: translate(0px, 7px);
+}
+
+.salt-density-touch {
+  --radioButton-group-vertical-label-marginBottom: 12px;
+  --radioButton-group-legend-minHeight: 16px;
+  --radioButton-group-legend-paddingRight: 16px;
+  --radioButton-group-horizontal-legend-marginTop: 4px;
+  --radioButton-group-horizontal-legend-marginRight: 48px;
+  --radioButton-group-horizontal-legend-paddingRight: 16px;
+  --radioButton-group-horizontal-legend-marginBottom: 0px;
+  --radioButton-group-vertical-formLabel-paddingRight: 16px;
+  --radioButton-group-vertical-formLabel-marginBottom: 12px;
+  --radioButton-group-vertical-formLabel-transform: translate(0px, 11px);
+  --radioButton-group-formLabel-transform: translate(0px, 11px);
+}
+
+/* Styles applied to root element */
+.saltRadioButtonGroup {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: top;
+}
+
+/* Styles applied when `row=false OR undefined` */
+.saltRadioButtonGroup-vertical .saltRadioButtonGroup-legend.saltFormLabel {
+  margin-bottom: var(--saltRadioButton-group-vertical-label-marginBottom, var(--radioButton-group-vertical-label-marginBottom));
+  margin-top: var(--saltRadioButton-group-vertical-label-marginTop, 0px);
+
+  --saltFormField-label-paddingRight: var(--radioButton-group-vertical-formLabel-paddingRight);
+  --saltFormField-label-marginBottom: var(--radioButton-group-vertical-formLabel-marginBottom);
+  --saltFormField-label-transform: var(--radioButton-group-vertical-formLabel-transform);
+}
+
+/* Styles applied to the FormField FormLabel component */
+.saltRadioButtonGroup-legend.saltFormLabel {
+  --saltFormField-label-transform: var(--radioButton-group-formLabel-transform);
+}
+
+/* Styles applied to the Form Field FormLabel component if `row={true}` */
+.saltRadioButtonGroup-horizontal .saltRadioButtonGroup-legend.saltFormLabel {
+  --formField-label-width: auto;
+  float: left;
+}
+
+/* Styles applied to the Form Field FormLabel component */
+.saltRadioButtonGroup-legend.saltFormLabel {
+  padding-left: var(--saltRadioButton-group-formLabel-paddingLeft, 0px);
+}
+
+/* Styles applied  to legend if `row={true}` */
+.saltRadioButtonGroup-horizontal .saltRadioButtonGroup-legend {
+  margin-bottom: var(--saltRadioButton-group-horizontal-legend-marginBottom, var(--radioButton-group-horizontal-legend-marginBottom));
+  margin-right: var(--saltRadioButton-group-horizontal-legend-marginRight, var(--radioButton-group-horizontal-legend-marginRight));
+  margin-top: var(--saltRadioButton-group-horizontal-legend-marginTop, var(--radioButton-group-horizontal-legend-marginTop));
+  padding-right: var(--saltRadioButton-group-horizontal-legend-paddingRight, var(--radioButton-group-horizontal-legend-paddingRight));
+}
+
+/* Styles applied to legend */
+.saltRadioButtonGroup-legend {
+  margin-bottom: var(--saltRadioButton-group-legend-marginBottom, 4px);
+  min-height: var(--saltRadioButton-group-legend-minHeight, var(--radioButton-group-legend-minHeight));
+  padding-right: var(--saltRadioButton-group-legend-paddingRight, var(--radioButton-group-legend-paddingRight));
+  transition: none;
+  width: auto;
+}
+
+/* fieldset specific styles */
+fieldset.saltRadioButtonGroup.saltRadioButtonGroup-vertical {
+  line-height: 1;
+}
+
+fieldset.saltRadioButtonGroup.saltRadioButtonGroup-horizontal {
+  display: block;
+  padding-left: 0px;
+  min-inline-size: max-content;
+}

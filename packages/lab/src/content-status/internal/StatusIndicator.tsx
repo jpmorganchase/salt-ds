@@ -2,7 +2,7 @@ import {
   makePrefixer,
   StatusIndicator as BaseStatusIndicator,
   StatusIndicatorProps as BaseStatusIndicatorProps,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import { ReactElement } from "react";
 import cx from "classnames";
 
@@ -20,7 +20,7 @@ export interface StatusIndicatorProps
   status?: BaseStatusIndicatorProps["status"] | "loading";
 }
 
-const withBaseName = makePrefixer("uitkContentStatus");
+const withBaseName = makePrefixer("saltContentStatus");
 
 export function StatusIndicator({
   status = "info",

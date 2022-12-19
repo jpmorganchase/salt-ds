@@ -1,8 +1,9 @@
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Button, Card, Switch } from "@jpmorganchase/uitk-core";
-import { WarningIcon } from "@jpmorganchase/uitk-icons";
+import { Button } from "@salt-ds/core";
+import { Card, Switch } from "@salt-ds/lab";
+import { WarningIcon } from "@salt-ds/icons";
 import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
@@ -17,14 +18,14 @@ const NoDataOverlay = (props: AgGridReactProps) => {
     height: "100%",
   });
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isNewTheme, setNewTheme] = useState(false);
+  const [isSaltTheme, setSaltTheme] = useState(false);
 
   const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
+    setSaltTheme(!isSaltTheme);
   };
 
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    isSaltTheme ? "ag-theme-salt" : undefined
   );
 
   useEffect(() => {
@@ -126,9 +127,9 @@ const NoDataOverlay = (props: AgGridReactProps) => {
     <div>
       <div>
         <Switch
-          checked={isNewTheme}
+          checked={isSaltTheme}
           onChange={onThemeChange}
-          label="New theme"
+          label="Salt AG Grid theme"
         />
       </div>
       <div

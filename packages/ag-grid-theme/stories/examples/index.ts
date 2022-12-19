@@ -27,3 +27,4 @@ export { default as RowGroupPanel } from "./RowGroupPanel";
 export { default as SetFilter } from "./SetFilter";
 export { default as StatusBar } from "./StatusBar";
 export { default as SingleClickEdit } from "./SingleClickEdit";
+export { default as Variants } from "./Variants";

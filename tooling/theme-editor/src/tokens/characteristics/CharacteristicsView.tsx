@@ -1,14 +1,14 @@
 import { ReactElement, useMemo, useCallback } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { LightDarkToggle } from "../toggles/LightDarkToggle";
 import { ThemeMode } from "../../header/ScopeSelector";
-import { UITK_CHARACTERISTICS } from "../../utils/uitkValues";
+import { SALT_CHARACTERISTICS } from "../../utils/saltValues";
 import { CharacteristicPatternsList } from "./CharacteristicsPatternsList";
 import "./Characteristics.css";
 
-const withBaseName = makePrefixer("uitkCharacteristicsView");
+const withBaseName = makePrefixer("saltCharacteristicsView");
 interface CharacteristicsViewProps {
   extractValue: (value: string) => string;
   jsonInCurrentScope: JSONByScope[];
@@ -38,9 +38,9 @@ export const CharacteristicsView = (
         extractValue={props.extractValue}
         jsonInCurrentScope={props.jsonInCurrentScope}
         onUpdateJSON={props.onUpdateJSON}
-        patternsInScope={UITK_CHARACTERISTICS}
+        patternsInScope={SALT_CHARACTERISTICS}
         scope={props.mode === ThemeMode.LIGHT ? "light" : "dark"}
-        themeName={"uitk"}
+        themeName={"salt"}
       />
     </div>
   );
