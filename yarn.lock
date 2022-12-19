@@ -3949,7 +3949,7 @@ __metadata:
     ci-info: ^3.3.1
     classnames: ^2.2.6
     clipboard-copy: ^4.0.1
-    compute-scroll-into-view: ^1.0.16
+    compute-scroll-into-view: ^2.0.0
     csstree-validator: ^3.0.0
     cypress: ^12.0.0
     cypress-axe: ^1.1.0
@@ -9786,10 +9786,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"compute-scroll-into-view@npm:^1.0.16":
-  version: 1.0.17
-  resolution: "compute-scroll-into-view@npm:1.0.17"
-  checksum: b20c05a10c37813c5a6e4bf053c00f65c88d23afed7a6bd7a2a69e05e2ffc2df3483ecfe407d36bf16b8cec8be21ae1966c9c523093a03117e567156cd79a51e
+"compute-scroll-into-view@npm:^2.0.0":
+  version: 2.0.3
+  resolution: "compute-scroll-into-view@npm:2.0.3"
+  checksum: ada53eb52758d203ee021616b54680bab3d8d9b9e00477c8e3dc4984dfa492379ec8acf747a74acb0f17292c8b71f1262021d476e40d5e772ae20fb9049f9e9e
   languageName: node
   linkType: hard
 
