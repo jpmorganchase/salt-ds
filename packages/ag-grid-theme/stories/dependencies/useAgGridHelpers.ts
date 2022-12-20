@@ -2,6 +2,9 @@ import { HTMLAttributes, useEffect, useMemo, useRef, useState } from "react";
 import { AgGridReactProps } from "ag-grid-react";
 import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { useDensity, useTheme } from "@salt-ds/core";
+import { LicenseManager } from "ag-grid-enterprise";
+
+LicenseManager.setLicenseKey("your license key");
 
 // Helps to set className, rowHeight and headerHeight depending on the current density
 export function useAgGridHelpers(agThemeName: string = "ag-theme-uitk"): {
