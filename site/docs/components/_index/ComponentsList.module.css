@@ -6,14 +6,6 @@
   table-layout: fixed;
 }
 
-.componentList a svg {
-  --saltIcon-color: currentColor;
-}
-
-.componentList a span {
-  text-decoration: underline;
-}
-
 .componentList td :first-child {
   display: flex;
   align-items: baseline;

@@ -5,13 +5,8 @@ import {
   ComponentDetails,
 } from "./components-list";
 import clsx from "clsx";
-import Link from "@docusaurus/Link";
-import {
-  TearOutIcon,
-  StepActiveIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-} from "@salt-ds/icons";
+import Link from "@site/src/components/link/Link";
+import { StepActiveIcon, ArrowUpIcon, ArrowDownIcon } from "@salt-ds/icons";
 import { Button } from "@salt-ds/core";
 import StorybookLogo from "@site/static/img/storybook_logo.svg";
 import ReactLogo from "@site/static/img/react_logo.svg";
@@ -68,7 +63,7 @@ const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
 
   return devStatus === ComponentStatus.READY ? (
     <Link to={storybookUrl}>
-      <span>{name}</span> <TearOutIcon />
+      <span>{name}</span>
     </Link>
   ) : (
     <span>{name}</span>

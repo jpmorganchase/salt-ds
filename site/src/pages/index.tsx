@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import Link from "@docusaurus/Link";
+import Link from "@site/src/components/link/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import HeroImage from "@site/static/img/hero_image.svg";

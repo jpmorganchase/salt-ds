@@ -1,10 +1,9 @@
 import React from "react";
-import Link from "@docusaurus/Link";
+import Link from "@site/src/components/link/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { useThemeConfig } from "@docusaurus/theme-common";
 import ThemedImage from "@theme/ThemedImage";
-import useIsMobileView from "../../utils/useIsMobileView";
 import { useViewport } from "@salt-ds/core";
 
 function LogoThemedImage({ logo, alt, imageClassName }) {

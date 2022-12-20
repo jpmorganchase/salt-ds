@@ -102,6 +102,7 @@ const config = {
             position: "right",
             className: "header-github-link",
             label: "Github",
+            target: "_self",
           },
         ],
       },
@@ -113,10 +114,12 @@ const config = {
               {
                 label: "Terms of use",
                 to: "https://www.jpmorgan.com/terms",
+                target: "_self",
               },
               {
                 label: "Privacy policy",
                 to: "https://www.jpmorgan.com/privacy",
+                target: "_self",
               },
               {
                 label: "Contact us",
