@@ -2,8 +2,10 @@ export type characteristic =
   | "accent"
   | "actionable"
   | "container"
-  | "differential"
+  | "delay"
+  | "disabled"
   | "draggable"
+  | "target"
   | "editable"
   | "focused"
   | "measured"
@@ -12,9 +14,13 @@ export type characteristic =
   | "selectable"
   | "separable"
   | "taggable"
-  | "target"
   | "text"
-  | "status";
+  | "status"
+  // The next 4 are foundations, should they really be here?
+  | "icon"
+  | "shadow"
+  | "size"
+  | "spacing";
 
 export type ThemeName = string;
 
