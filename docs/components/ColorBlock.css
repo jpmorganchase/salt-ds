@@ -1,21 +1,7 @@
 .ColorBlock-cell {
-  --color-block-cell-size: var(--salt-size-base);
-
-  --color-block-cell-borderColor: var(--salt-container-primary-borderColor);
-  --color-block-cell-borderStyle: var(--salt-container-borderStyle);
-  --color-block-cell-borderWidth: var(--salt-size-border);
-  --color-block-cell-borderRadius: 0;
-}
-
-.ColorBlock-cell {
-  width: var(--color-block-cell-size);
-  height: var(--color-block-cell-size);
+  width: 50px;
+  height: 50px;
   justify-self: end;
-
-  border-color: var(--color-block-cell-borderColor);
-  border-style: var(--color-block-cell-borderStyle);
-  border-width: var(--color-block-cell-borderWidth);
-  border-radius: var(--color-block-cell-borderRadius);
 
   /* Chessboard background to show opacity effects */
   background-image: linear-gradient(45deg, #e7e7e7 25%, transparent 25%, transparent 75%, #e7e7e7 75%), linear-gradient(45deg, #e7e7e7 25%, #fff 25%, #fff 75%, #e7e7e7 75%);
@@ -26,6 +12,12 @@
 .ColorBlock-cellInner {
   width: 100%;
   height: 100%;
+  border-radius: 4px;
 
   /* background to be provided by css variables */
+}
+
+.ColorBlock-whiteCell {
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
+  border-radius: 4px;
 }
