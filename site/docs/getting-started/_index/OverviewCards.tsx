@@ -2,12 +2,12 @@ import Card, { CardProps } from "@site/src/components/card/Card";
 import styles from "./OverviewCards.module.css";
 
 export const OverviewCard = ({
-  description,
   keylineColor,
+  children,
   ...rest
 }: CardProps) => (
   <Card
-    description={<p>{description}</p>}
+    description={children}
     keyLineAnimation={false}
     keylineColor={`var(--site-tertiary-accent-${keylineColor})`}
     {...rest}

@@ -5,10 +5,15 @@ hide_table_of_contents: true
 
 import JPMLogo from "@site/static/img/design-getting-started/jpmIcon.svg";
 import Globe from "@site/static/img/design-getting-started/globe.svg";
+import Assets1 from "@site/static/img/design-getting-started/assets1.png";
+import Assets2 from "@site/static/img/design-getting-started/assets2.png";
+import Assets3 from "@site/static/img/design-getting-started/assets3.png";
+import Assets4 from "@site/static/img/design-getting-started/assets4.png";
+import SelectIconImg from "@site/static/img/design-getting-started/SelectIconImg.png";
 import { InlineCard, CardProps } from "@site/src/components/card/Card";
 import Content from "@site/src/components/content/Content.tsx";
 
-import DesignCards, { SoloImgCard } from "./DesignCards";
+import DesignCards, { DesignCard } from "./_designing/DesignCards.tsx";
 import IconsTable from "./IconsTable";
 
 import styles from "./designing.module.css";
@@ -96,7 +101,49 @@ For more guidance on migrating files, [watch this video from Figma](https://www.
 
 To start using our components, follow the instructions below.
 
-<DesignCards />
+<DesignCards>
+
+<DesignCard
+  img={Assets1}
+  altText="Screenshot of Figma's assets panel displaying the 'Salt: Components Light' library"
+>
+
+Access the components in the left-hand panel using the “Assets” tab. Click on
+the book icon and search for “Salt” in Libraries.
+
+</DesignCard>
+
+<DesignCard
+  img={Assets2}
+  altText="Screenshot of a light mode Button component being dragged out of Figma's assets panel"
+>
+
+Switch on the library you need, for example, Components (Light or Dark), Mode,
+Theme Palette, Typography, Icons, Layout Grid, etc.
+
+</DesignCard>
+
+<DesignCard
+  img={Assets3}
+  altText="Screenshot of the word 'button' being searched for in the Figma assets panel and Salt components with matching names being displayed"
+>
+
+Use the search function to find the component you need and then drag it to
+your canvas to use it.
+
+</DesignCard>
+
+<DesignCard
+  img={Assets4}
+  altText="Screenshot of the Figma's contextual panel for Salt's Button component"
+>
+
+To change density and further manipulate the setup, use the contextual panel
+on the right-hand side.
+
+</DesignCard>
+
+</DesignCards>
 
 #### Swapping from light to dark mode and vice versa
 
@@ -121,7 +168,14 @@ Icons are available in SVG format, in three sizes (large, medium and small) and 
 
 Although icons are embedded within all of our components, you can change an icon to one that’s more suitable to your specific use case. To do this directly from the icon library, swap the instance using the variants panel on the right-hand side.
 
-<SoloImgCard />
+<DesignCard
+  img={SelectIconImg}
+  altText="Screenshot of Figma's swap instance menu displaying a list of Salt icons"
+>
+
+Swapping an icon in Figma
+
+</DesignCard>
 
 #### Understanding our icon sizes
 
