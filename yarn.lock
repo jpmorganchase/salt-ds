@@ -3951,7 +3951,7 @@ __metadata:
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^2.0.0
     csstree-validator: ^3.0.0
-    cypress: ^12.0.0
+    cypress: "https://cdn.cypress.io/beta/npm/12.2.0/linux-x64/fix/correct-sweep-interval-eb50d14b825e334cb41d82b10bfa26d9dc103cc3/cypress.tgz"
     cypress-axe: ^1.1.0
     cypress-real-events: ^1.7.2
     deepmerge: ^4.2.2
@@ -10698,9 +10698,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^12.0.0":
-  version: 12.1.0
-  resolution: "cypress@npm:12.1.0"
+"cypress@https://cdn.cypress.io/beta/npm/12.2.0/linux-x64/fix/correct-sweep-interval-eb50d14b825e334cb41d82b10bfa26d9dc103cc3/cypress.tgz":
+  version: 12.2.0
+  resolution: "cypress@https://cdn.cypress.io/beta/npm/12.2.0/linux-x64/fix/correct-sweep-interval-eb50d14b825e334cb41d82b10bfa26d9dc103cc3/cypress.tgz"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -10746,7 +10746,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 238ea125f396594a84ba096e0eaebe6f0d6b60b3b232a3f6e36420f9fa7a9218211df8dc6ad2a4f6cc0cc2fd77d4e0eb0932b409a73ff8434e78e880a36f59a7
+  checksum: bba907bb28b59f6fefb10fc8e12e8336c9059d2892e760a2e68db18bda52fa50dfe0b8be95ab8c5c24941a87d76d7f129a52acef67b3cff6e9a126411f3ca16a
   languageName: node
   linkType: hard
 
