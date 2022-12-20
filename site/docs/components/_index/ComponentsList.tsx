@@ -118,13 +118,13 @@ const ComponentHeader = ({
   const arrowIcon = ascendingOrder ? <ArrowUpIcon /> : <ArrowDownIcon />;
   return (
     <Button onClick={handleClick}>
-      <div className={styles.headerContainer}>
-        <div>
+      <span className={styles.headerContainer}>
+        <span>
           {logo}
           {!isMobileView && <span>{label}</span>}
-        </div>
+        </span>
         {isSorted && arrowIcon}
-      </div>
+      </span>
     </Button>
   );
 };

@@ -36,29 +36,29 @@
   padding: var(--ifm-table-cell-padding);
 }
 
-.componentList th .headerContainer {
+.headerContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.componentList th .headerContainer div {
+.headerContainer span {
   display: flex;
   gap: calc(var(--salt-size-unit) / 2);
 }
 
-.componentList .status svg {
+.status svg {
   --icon-size: 12px;
 }
 
-.componentList .status.ready {
+.status.ready {
   --saltIcon-color: var(--salt-status-success-foreground);
 }
 
-.componentList .status.progress {
+.status.progress {
   --saltIcon-color: var(--salt-status-warning-foreground);
 }
 
-.componentList .status.backlog {
+.status.backlog {
   --saltIcon-color: var(--salt-status-error-foreground);
 }
