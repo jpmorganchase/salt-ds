@@ -4,8 +4,10 @@ sidebar_label: Overview
 hide_table_of_contents: true
 ---
 
-import OverviewCards from "./OverviewCards";
+import DesignIcon from "@site/static/img/design.svg";
+import DevelopIcon from "@site/static/img/develop.svg";
 import Content from "../../src/components/content/Content.tsx";
+import OverviewCards, { OverviewCard } from "./_index/OverviewCards.tsx";
 
 # Getting started
 
@@ -13,6 +15,25 @@ import Content from "../../src/components/content/Content.tsx";
 
 Follow our step-by-step guides to design and develop accessible, responsive, best-in-class user experiences with Salt.
 
-<OverviewCards />
+<OverviewCards>
+  <OverviewCard
+    icon={<DesignIcon />}
+    title="Designing"
+    description="Find out how to access Salt’s comprehensive libraries in Figma, add
+            components and apply styling to your designs."
+    url="/getting-started/designing"
+    footerText="Start designing"
+    keylineColor="purple"
+  />
+  <OverviewCard
+    icon={<DevelopIcon />}
+    title="Developing"
+    description="Learn how to install the Salt packages, integrate them into your React
+        project, add the web fonts you need and import components."
+    url="/getting-started/developing"
+    footerText="Start developing"
+    keylineColor="orange"
+  />
+</OverviewCards>
 
 </Content>
