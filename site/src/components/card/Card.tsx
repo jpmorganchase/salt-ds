@@ -53,10 +53,10 @@ const Card = ({
         </div>
       )}
       <div className={styles.cardContent}>
-        <span className={styles.cardTitle}>
+        <div className={styles.cardTitle}>
           {title && <h2>{title}</h2>}
           {inlineIcon && <div className={styles.inlineIcon}>{inlineIcon}</div>}
-        </span>
+        </div>
         <div className={styles.cardDescription}>{description}</div>
         <div className={styles.cardFooter}>
           <p>{footerText}</p>
