@@ -1,4 +1,4 @@
-import Link from "@docusaurus/Link";
+import Link from "@site/src/components/link/Link";
 import { AccordionBaseProps } from "../Accordion";
 
 export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
