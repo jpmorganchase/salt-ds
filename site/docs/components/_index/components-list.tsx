@@ -643,7 +643,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-styles-and-theming-introduction--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/theme-about-the-salt-theme--page",
   },
   {
     name: "Toast",

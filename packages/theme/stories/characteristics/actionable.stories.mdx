@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
@@ -8,19 +8,19 @@ import { BlankBlockCell, BlankBlockCode } from "docs/components/BlankBlock";
 
 import { TextAlignBlock } from "docs/components/TextAlignBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Actionable" />
+<Meta title="Theme/Characteristics/Actionable" />
 
 # Actionable
 
 Components with the ability to action something, action is performed
 immediately (the component doesn’t stay selected).
 
-## CSS Variables
+## Tokens
 
-### Misc
+### Base
 
 <Canvas>
-  <Story name="Misc">
+  <Story name="Base">
     <DocGrid>
       <CursorBlock cursor="--salt-actionable-cursor-hover" />
       <CursorBlock cursor="--salt-actionable-cursor-active" />
@@ -36,7 +36,7 @@ immediately (the component doesn’t stay selected).
 ### CTA
 
 <Canvas>
-  <Story name="CTA Variant">
+  <Story name="CTA">
     <DocGrid>
       <ColorBlock colorVar="--salt-actionable-cta-foreground" />
       <ColorBlock colorVar="--salt-actionable-cta-foreground-hover" />
@@ -54,7 +54,7 @@ immediately (the component doesn’t stay selected).
 ### Primary
 
 <Canvas>
-  <Story name="Primary Variant">
+  <Story name="Primary">
     <DocGrid>
       <ColorBlock colorVar="--salt-actionable-primary-foreground" />
       <ColorBlock colorVar="--salt-actionable-primary-foreground-hover" />
@@ -72,7 +72,7 @@ immediately (the component doesn’t stay selected).
 ### Secondary
 
 <Canvas>
-  <Story name="Secondary Variant">
+  <Story name="Secondary">
     <DocGrid>
       <ColorBlock colorVar="--salt-actionable-secondary-foreground" />
       <ColorBlock colorVar="--salt-actionable-secondary-foreground-hover" />
@@ -85,9 +85,3 @@ immediately (the component doesn’t stay selected).
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Button`
-- `MenuButton` (inherited)
-- `SplitButton` (inherited)

@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import {
@@ -8,7 +8,7 @@ import {
   LineBlockDotted,
 } from "docs/components/LineBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Status" />
+<Meta title="Theme/Characteristics/Status" />
 
 # Status
 
@@ -16,10 +16,12 @@ Components which have attributes that denote status and the severity of that sta
 
 ## CSS Variables
 
-### Status colors
+## Tokens
+
+### Base
 
 <Canvas>
-  <Story name="Status">
+  <Story name="Base">
     <DocGrid>
       <ColorBlock colorVar="--salt-status-info-foreground" />
       <ColorBlock colorVar="--salt-status-error-foreground" />
@@ -36,7 +38,7 @@ Components which have attributes that denote status and the severity of that sta
 ### Emphasized styling
 
 <Canvas>
-  <Story name="Emphasized styling">
+  <Story name="Emphasized">
     <DocGrid>
       <ColorBlock colorVar="--salt-status-info-background-emphasize" />
       <ColorBlock colorVar="--salt-status-error-background-emphasize" />
@@ -45,25 +47,3 @@ Components which have attributes that denote status and the severity of that sta
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Badge`
-- `Banner`
-- `Calendar`
-- `Content Status`
-- `Dialog`
-- `File Drop Zone`
-- `Filterable List` (inherited)
-- `Form Field`
-- `Form Label`
-- `Formatted Input` (inherited)
-- `Input` (inherited)
-- `List Builder`
-- `Mega Menu`
-- `Stepper Input` (inherited)
-- `Toast`
-- `Tokenized Input` (inherited)
-- `Tooltip`
-- `Tree`
-- `Vertical Nav`

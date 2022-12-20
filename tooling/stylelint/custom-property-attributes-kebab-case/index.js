@@ -45,7 +45,7 @@ const messages = ruleMessages(ruleName, {
 
 const meta = {
   // Point to style documentation
-  url: "https://saltdesignsystem-storybook.pages.dev/?path=/story/documentation-styles-and-theming-characteristics-introduction--page",
+  url: "https://saltdesignsystem-storybook.pages.dev/?path=/story/theme-about-the-salt-theme--page",
 };
 
 const cssAttributes = properties

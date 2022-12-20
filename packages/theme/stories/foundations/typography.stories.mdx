@@ -1,10 +1,10 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { BlankBlockCode, BlankBlockCell } from "docs/components/BlankBlock";
 import { FontWeightBlock } from "docs/components/FontWeightBlock";
 import { TextBlock } from "docs/components/TextBlock";
 
-<Meta title="Documentation/Styles and Theming/Foundations/Typography" />
+<Meta title="Theme/Foundations/Typography" />
 
 # Typography
 
@@ -29,41 +29,27 @@ import "@fontsource/open-sans/800.css";
 import "@fontsource/open-sans/800-italic.css";
 ```
 
-## Typography
+## Tokens
 
-<Canvas>
-  <Story name="Typography">
-    <TextBlock
-      lineHeight="--salt-text-lineHeight"
-      fontFamily="--salt-typography-fontFamily"
-    />
-    <DocGrid textExample={true}>
-      <BlankBlockCell />
-      <BlankBlockCode>--salt-typography-fontFamily</BlankBlockCode>
-    </DocGrid>
-    <div style={{ padding: "20px" }} />
-    <TextBlock
-      lineHeight="--salt-text-lineHeight"
-      fontFamily="--salt-typography-fontFamily-code"
-    />
-    <DocGrid textExample={true}>
-      <BlankBlockCell />
-      <BlankBlockCode>--salt-typography-fontFamily-code</BlankBlockCode>
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Weights
-
-<Canvas>
-  <Story name="Weights">
-    <DocGrid>
-      <FontWeightBlock fontWeight="--salt-typography-fontWeight-light" />
-      <FontWeightBlock fontWeight="--salt-typography-fontWeight-regular" />
-      <FontWeightBlock fontWeight="--salt-typography-fontWeight-medium" />
-      <FontWeightBlock fontWeight="--salt-typography-fontWeight-semiBold" />
-      <FontWeightBlock fontWeight="--salt-typography-fontWeight-bold" />
-      <FontWeightBlock fontWeight="--salt-typography-fontWeight-extraBold" />
-    </DocGrid>
-  </Story>
-</Canvas>
+<DocGrid textExample={true}>
+  <TextBlock
+    lineHeight="--salt-text-lineHeight"
+    fontFamily="--salt-typography-fontFamily"
+  />
+  <BlankBlockCode>--salt-typography-fontFamily</BlankBlockCode>
+</DocGrid>
+<DocGrid textExample={true}>
+  <TextBlock
+    lineHeight="--salt-text-lineHeight"
+    fontFamily="--salt-typography-fontFamily-code"
+  />
+  <BlankBlockCode>--salt-typography-fontFamily-code</BlankBlockCode>
+</DocGrid>
+<DocGrid>
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-light" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-regular" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-medium" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-semiBold" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-bold" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-extraBold" />
+</DocGrid>
