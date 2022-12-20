@@ -11,10 +11,10 @@ export type characteristic =
   | "overlayable"
   | "selectable"
   | "separable"
+  | "status"
   | "taggable"
   | "target"
-  | "text"
-  | "status";
+  | "text";
 
 export type ThemeName = string;
 
