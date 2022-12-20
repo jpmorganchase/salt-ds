@@ -1,8 +1,8 @@
-import { Children } from "react";
+import { Children, ReactNode } from "react";
 import useSplitArray from "@site/src/utils/useSplitArray";
 import styles from "./DesignCards.module.css";
 
-type CardInfoType = { img: string; altText: string; content?: string };
+type DesignCardProps = { img: string; altText: string; children: ReactNode };
 
 const DesignCards = ({ children }) => {
   const childrenArray = Children.toArray(children);
@@ -16,7 +16,7 @@ const DesignCards = ({ children }) => {
   );
 };
 
-export const DesignCard = ({ img, altText, children }: CardInfoType) => (
+export const DesignCard = ({ img, altText, children }: DesignCardProps) => (
   <div className={styles.card}>
     <img src={img} alt={altText} />
     <div className={styles.textContainer}>{children}</div>
