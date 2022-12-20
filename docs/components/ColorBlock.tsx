@@ -1,7 +1,6 @@
 
-import { characteristic, getCharacteristicValue, useTheme } from "@salt-ds/core";
-import { Tooltip, useTooltip } from "@salt-ds/lab";
 import cx from "classnames";
+import { characteristic, getCharacteristicValue, useTheme } from "@salt-ds/core";
 
 import "./ColorBlock.css";
 
@@ -13,7 +12,6 @@ export const ColorBlock = ({
   className?: string;
 }) => {
   const { theme } = useTheme();
-  const { getTriggerProps, getTooltipProps } = useTooltip({ placement: "left"});
   
   let whiteCell = false;
   let value;
@@ -36,13 +34,10 @@ export const ColorBlock = ({
        "ColorBlock-whiteCell": whiteCell
       })}>
         <div
-          {...getTriggerProps({ 
-            className: cx("ColorBlock-cellInner", className), 
-          })}
+            className={cx("ColorBlock-cellInner", className)}
           style={{ background: `var(${colorVar})` }}
         />
       </div>
-      {value && <Tooltip {...getTooltipProps({ title: value })} />}
       <code className="DocGrid-code">{colorVar}</code>
     </>
   );
