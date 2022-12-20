@@ -162,7 +162,7 @@ const ComponentsList = () => {
           <tr>
             <th aria-sort={isSortedBy === "name" ? ariaSort : null}>
               <ComponentHeader
-                logo={<StorybookLogo />}
+                logo={<StorybookLogo role="presentation" />}
                 label="Component"
                 isSorted={isSortedBy === "name"}
                 ascendingOrder={hasAscendingOrder}
@@ -171,7 +171,7 @@ const ComponentsList = () => {
             </th>
             <th aria-sort={isSortedBy === "devStatus" ? ariaSort : null}>
               <ComponentHeader
-                logo={<ReactLogo />}
+                logo={<ReactLogo role="presentation" />}
                 label="React"
                 isSorted={isSortedBy === "devStatus"}
                 ascendingOrder={hasAscendingOrder}
@@ -180,7 +180,7 @@ const ComponentsList = () => {
             </th>
             <th aria-sort={isSortedBy === "designStatus" ? ariaSort : null}>
               <ComponentHeader
-                logo={<FigmaLogo />}
+                logo={<FigmaLogo role="presentation" />}
                 label="Figma"
                 isSorted={isSortedBy === "designStatus"}
                 ascendingOrder={hasAscendingOrder}
