@@ -1,15 +1,2 @@
-.uitkGridFakeCell {
-  box-sizing: border-box;
-
-  border-style: solid;
-  border-color: var(--grid-row-borderColor);
-  border-width: 0 0 1px 0;
-
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-  white-space: nowrap;
-  position: relative;
-  font-size: var(--grid-fontSize);
-  font-weight: normal;
+.saltGridFakeCell {
 }

@@ -1,0 +1,9 @@
+.saltColumnLayout-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.saltColumnLayout-item {
+  flex-grow: 1;
+  margin: calc(var(--salt-size-basis-unit) * 2);
+}

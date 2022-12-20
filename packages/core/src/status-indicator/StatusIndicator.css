@@ -1,22 +1,22 @@
-.uitkStatusIndicator {
-  --statusIndicator-warning-color: var(--uitk-status-warning-foreground);
-  --statusIndicator-info-color: var(--uitk-status-info-foreground);
-  --statusIndicator-success-color: var(--uitk-status-success-foreground);
-  --statusIndicator-error-color: var(--uitk-status-error-foreground);
+.saltStatusIndicator {
+  --statusIndicator-warning-color: var(--salt-status-warning-foreground);
+  --statusIndicator-info-color: var(--salt-status-info-foreground);
+  --statusIndicator-success-color: var(--salt-status-success-foreground);
+  --statusIndicator-error-color: var(--salt-status-error-foreground);
 }
 
-.uitkStatusIndicator-error {
-  --uitkIcon-color: var(--uitkStatusIndicator-color, var(--statusIndicator-error-color));
+.saltStatusIndicator-error {
+  --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-error-color));
 }
 
-.uitkStatusIndicator-warning {
-  --uitkIcon-color: var(--uitkStatusIndicator-color, var(--statusIndicator-warning-color));
+.saltStatusIndicator-warning {
+  --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-warning-color));
 }
 
-.uitkStatusIndicator-success {
-  --uitkIcon-color: var(--uitkStatusIndicator-color, var(--statusIndicator-success-color));
+.saltStatusIndicator-success {
+  --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-success-color));
 }
 
-.uitkStatusIndicator-info {
-  --uitkIcon-color: var(--uitkStatusIndicator-color, var(--statusIndicator-info-color));
+.saltStatusIndicator-info {
+  --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-info-color));
 }

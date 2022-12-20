@@ -1,4 +1,4 @@
-.uitkGridLeftPart {
+.saltGridLeftPart {
   position: absolute;
   top: 0;
   left: 0;
@@ -6,19 +6,20 @@
   overflow-x: hidden;
   overflow-y: hidden;
   clip-path: inset(var(--grid-topPart-height) -10px 0 0);
+  z-index: var(--grid-left-body-zIndex);
 }
 
-.uitkGridLeftPart-rightShadow {
+.saltGridLeftPart-rightShadow {
   box-shadow: 2px 0 4px 0 var(--grid-shadow-color);
 }
 
-.uitkGridLeftPart-space {
+.saltGridLeftPart-space {
   position: relative;
   height: var(--grid-total-height);
   width: var(--grid-leftPart-width);
 }
 
-.uitkGridLeftPart table {
+.saltGridLeftPart table {
   table-layout: fixed;
   position: absolute;
   top: var(--grid-bodyVisibleArea-top);

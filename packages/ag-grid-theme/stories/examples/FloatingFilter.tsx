@@ -1,41 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const FloatingFilter = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
-
-  const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
-  };
-
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { agGridProps, containerProps } = useAgGridHelpers(
+    `ag-theme-${themeName}`
   );
 
-  useEffect(() => {
-    if (isGridReady) {
-      api!.sizeColumnsToFit();
-    }
-  }, [isGridReady]);
-
   return (
-    <div>
-      <div>
-        <Switch
-          checked={isNewTheme}
-          onChange={onThemeChange}
-          label="New theme"
-        />
-      </div>
-      <div
-        style={{ marginTop: 25, height: 800, width: 800 }}
-        {...containerProps}
-      >
+    <StackLayout gap={4}>
+      {switcher}
+      <div {...containerProps}>
         <AgGridReact
           defaultColDef={{ floatingFilter: true }}
           columnDefs={customFilterExampleColumns}
@@ -44,7 +23,7 @@ const FloatingFilter = (props: AgGridReactProps) => {
           {...props}
         />
       </div>
-    </div>
+    </StackLayout>
   );
 };
 

@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -39,9 +40,9 @@ jobs:
         uses: cloudflare/pages-action@1
         id: publish
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: "uitk-site"
+          apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
+          projectName: "saltdesignsystem"
           directory: ./site/build
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref || github.ref_name }}

@@ -1,4 +1,4 @@
-import { BorderLayout } from "@jpmorganchase/uitk-core";
+import { BorderLayout } from "@salt-ds/core";
 
 /*
  * Important: These tests are meant for testing TypeScript type errors only

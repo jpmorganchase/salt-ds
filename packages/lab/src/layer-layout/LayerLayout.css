@@ -1,0 +1,106 @@
+.saltLayerLayout {
+  --layerLayout-boxShadow: var(--saltLayerLayout-boxShadow, var(--salt-overlayable-shadow-modal));
+  --layerLayout-background: var(--saltLayerLayout-background, var(--salt-container-primary-background));
+  --layerLayout-padding: var(--saltLayerLayout-padding, calc(3 * var(--salt-size-unit)));
+  --layerLayout-margin: var(--saltLayerLayout-margin, calc(3 * var(--salt-size-unit)));
+}
+
+.saltLayerLayout {
+  background: var(--layerLayout-background);
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: auto;
+  padding: var(--layerLayout-padding);
+  box-shadow: var(--saltLayerLayout-boxShadow, var(--layerLayout-boxShadow));
+  z-index: calc(var(--salt-zIndex-appHeader) - 1);
+}
+
+.saltLayerLayout-fullScreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.saltLayerLayout-center {
+  margin: var(--saltLayerLayout-margin, var(--layerLayout-margin));
+}
+
+.saltLayerLayout-center.saltLayerLayout-enter-animation,
+.saltLayerLayout-fullScreen.saltLayerLayout-enter-animation,
+.saltScrim.saltLayerLayout-enter-animation {
+  animation: var(--salt-animation-fade-in-center);
+}
+
+.saltLayerLayout-center.saltLayerLayout-exit-animation,
+.saltLayerLayout-fullScreen.saltLayerLayout-exit-animation,
+.saltScrim.saltLayerLayout-exit-animation {
+  animation: var(--salt-animation-fade-out-back);
+}
+
+.saltLayerLayout-anchor {
+  position: fixed;
+  max-height: 100%;
+  top: 0;
+}
+
+.saltLayerLayout-top {
+  left: 0;
+  right: 0;
+  bottom: auto;
+}
+
+.saltLayerLayout-top.saltLayerLayout-enter-animation {
+  animation: var(--salt-animation-slide-in-bottom);
+}
+
+.saltLayerLayout-top.saltLayerLayout-exit-animation {
+  animation: var(--salt-animation-slide-out-bottom);
+}
+
+.saltLayerLayout-right {
+  left: auto;
+  right: 0;
+  height: 100%;
+}
+
+.saltLayerLayout-right.saltLayerLayout-enter-animation {
+  animation: var(--salt-animation-slide-in-right);
+}
+
+.saltLayerLayout-right.saltLayerLayout-exit-animation {
+  animation: var(--salt-animation-slide-out-right);
+}
+
+.saltLayerLayout-left {
+  left: 0;
+  right: auto;
+  height: 100%;
+}
+
+.saltLayerLayout-left.saltLayerLayout-enter-animation {
+  animation: var(--salt-animation-slide-in-left);
+}
+
+.saltLayerLayout-left.saltLayerLayout-exit-animation {
+  animation: var(--salt-animation-slide-out-left);
+}
+
+.saltLayerLayout-bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+}
+
+.saltLayerLayout-bottom.saltLayerLayout-enter-animation {
+  animation: var(--salt-animation-slide-in-top);
+}
+
+.saltLayerLayout-bottom.saltLayerLayout-exit-animation {
+  animation: var(--salt-animation-slide-out-top);
+}

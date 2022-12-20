@@ -8,7 +8,7 @@ import {
   startOfYear,
   today,
 } from "@internationalized/date";
-import { useControlled } from "@jpmorganchase/uitk-core";
+import { useControlled } from "@salt-ds/core";
 import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
   UseMultiSelectionCalendarProps,

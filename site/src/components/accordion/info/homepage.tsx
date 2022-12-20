@@ -1,4 +1,4 @@
-import Link from "@docusaurus/Link";
+import Link from "@site/src/components/link/Link";
 import { AccordionBaseProps } from "../Accordion";
 
 export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
@@ -7,7 +7,7 @@ export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
     summary: <h2>Why trust us?</h2>,
     details: (
       <>
-        <p>In a nutshell, we’re not newbies.</p>
+        <p>In a nutshell, we’ve done this before.</p>
         <p>
           The team behind Salt created the J.P Morgan UI Toolkit, a design
           system that’s used and trusted by internal product owners, visual and
@@ -30,19 +30,21 @@ export const homePageInfo: AccordionBaseProps["accordionInfo"] = [
   },
   {
     id: "future-of-finance",
-    summary: <h2>The future of finance</h2>,
+    summary: <h2>The future of financial user experiences</h2>,
     details: (
       <>
         <p>
-          Finance and design are sometimes uncomfortable bedfellows. Beautiful,
-          responsive designs don’t always lend themselves to tickets, blotters
-          and data-heavy tables.
+          We believe that beautiful, responsive designs belong in financial
+          applications. Complex interfaces, such as trading screens and
+          data-heavy tables, are often challenging to design and development
+          teams.
         </p>
         <p>We hope to bridge that gap.</p>
         <p>
           Salt components are tried and tested in the investment banking arena.
           Underpinned by beautiful and functional design, they support the
-          creation of great user experiences across all devices.
+          creation of great user experiences across all devices—even in the
+          financial sector.
         </p>
       </>
     ),

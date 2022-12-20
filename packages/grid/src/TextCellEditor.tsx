@@ -6,11 +6,13 @@ import {
   useState,
 } from "react";
 import "./TextCellEditor.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { useEditorContext } from "./EditorContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
+import { CornerTag } from "./CornerTag";
+import { Cell } from "./internal";
 
-const withBaseName = makePrefixer("uitkGridTextCellEditor");
+const withBaseName = makePrefixer("saltGridTextCellEditor");
 
 export interface TextCellEditorProps<T> {
   row?: GridRowModel<T>;
@@ -58,7 +60,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   }, [inputRef.current]);
 
   return (
-    <td className={withBaseName()}>
+    <Cell separator={column?.separator} className={withBaseName()}>
       <div className={withBaseName("inputContainer")}>
         <input
           data-testid="grid-cell-editor-input"
@@ -69,6 +71,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
           onKeyDown={onKeyDown}
         />
       </div>
-    </td>
+      <CornerTag />
+    </Cell>
   );
 }

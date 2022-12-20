@@ -1,4 +1,4 @@
-import { ViewportProvider, useViewport } from "@jpmorganchase/uitk-core";
+import { ViewportProvider, useViewport } from "@salt-ds/core";
 import { mount } from "cypress/react18";
 
 const TestComponent = () => {

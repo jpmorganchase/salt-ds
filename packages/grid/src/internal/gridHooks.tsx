@@ -1,5 +1,6 @@
 import React, {
   Children,
+  FocusEventHandler,
   isValidElement,
   MouseEventHandler,
   ReactNode,
@@ -30,7 +31,8 @@ import {
 } from "./utils";
 import { GridContext } from "../GridContext";
 import { CellEditorInfo } from "../CellEditor";
-import { useControlled } from "@jpmorganchase/uitk-core";
+import { useControlled } from "@salt-ds/core";
+import { FocusedPart } from "../CursorContext";
 
 // Attaches active onWheel event to a table element
 // Grid needs to prevent default onWheel event handling for situations when a
@@ -82,11 +84,6 @@ export function useSumRangeWidth<T>(
   range: NumberRange
 ) {
   return useMemo(() => sumRangeWidth(columns, range), [columns, range]);
-}
-
-// Product of the given numbers.
-export function useProd(source: number[]) {
-  return useMemo(() => source.reduce((p, x) => p * x, 1), source);
 }
 
 // Range memoization using Rng.equals comparator.
@@ -167,10 +164,13 @@ export function useBodyVisibleAreaTop<T>(
   visibleRowRange: NumberRange,
   topHeight: number
 ) {
-  return useMemo(
-    () => topHeight + visibleRowRange.start * rowHeight,
-    [rowHeight, visibleRowRange, topHeight]
-  );
+  return useMemo(() => {
+    let top = topHeight + visibleRowRange.start * rowHeight;
+    if (visibleRowRange.start > 0) {
+      top += 1; // First row (row #0) has an extra border
+    }
+    return top;
+  }, [rowHeight, visibleRowRange, topHeight]);
 }
 
 // Visible range of rows.
@@ -184,14 +184,19 @@ export function useVisibleRowRange(
     if (rowHeight < 1) {
       return NumberRange.empty;
     }
-    const start = Math.floor(scrollTop / rowHeight);
-    let end = Math.max(
-      start,
-      Math.ceil((scrollTop + clientMidHeight) / rowHeight)
-    );
-    if (end > rowCount) {
-      end = rowCount;
+    const firstRowHeight = rowHeight + 1; // First row has an extra 1px
+    const start =
+      scrollTop > firstRowHeight
+        ? 1 + Math.floor((scrollTop - firstRowHeight) / rowHeight)
+        : 0;
+    let endPos = scrollTop + clientMidHeight;
+    if (start === 0) {
+      endPos -= 1;
     }
+    const end = Math.min(
+      rowCount,
+      Math.max(start, Math.ceil(endPos / rowHeight))
+    );
     return new NumberRange(start, end);
   }, [scrollTop, clientMidHeight, rowHeight, rowCount]);
 }
@@ -354,20 +359,28 @@ export function useCols<T>(
 export function useScrollToCell<T>(
   visRowRng: NumberRange,
   rowHeight: number,
-  clientMidHt: number,
+  clientMidHeight: number,
   midCols: GridColumnModel<T>[],
   bodyVisColRng: NumberRange,
   clientMidWidth: number,
   scroll: (left?: number, top?: number, source?: "user" | "table") => void
 ) {
   return useCallback(
-    (rowIdx: number, colIdx: number) => {
+    (part: FocusedPart, rowIdx: number, colIdx: number) => {
+      if (part !== "body") {
+        return; // TODO
+      }
       let x: number | undefined = undefined;
       let y: number | undefined = undefined;
       if (rowIdx <= visRowRng.start) {
-        y = rowHeight * rowIdx;
+        // First row is 1px wider than other rows (additional top border)
+        y = rowIdx === 0 ? 0 : 1 + rowHeight * rowIdx;
       } else if (rowIdx >= visRowRng.end - 1) {
-        y = Math.max(0, rowHeight * rowIdx - clientMidHt + rowHeight);
+        const extraBorder = rowIdx > 0 ? 1 : 0;
+        y = Math.max(
+          0,
+          rowHeight * rowIdx + extraBorder - clientMidHeight + rowHeight
+        );
       }
       const isMidCol =
         midCols.length > 0 &&
@@ -386,7 +399,7 @@ export function useScrollToCell<T>(
           for (let i = 0; i <= midColIdx; ++i) {
             w += midCols[i].info.width;
           }
-          x = w - clientMidWidth;
+          x = Math.max(0, w - clientMidWidth);
         }
       }
       if (x !== undefined || y !== undefined) {
@@ -396,7 +409,7 @@ export function useScrollToCell<T>(
     [
       visRowRng,
       rowHeight,
-      clientMidHt,
+      clientMidHeight,
       midCols,
       bodyVisColRng,
       clientMidWidth,
@@ -410,6 +423,7 @@ const MIN_COLUMN_WIDTH = 10;
 // Returns onMouseDown handler to be attached to column resize handlers.
 // TODO There might be some problems if column is removed while it is being resized
 export function useColumnResize<T>(
+  cols: GridColumnModel<T>[],
   resizeColumn: (columnIndex: number, width: number) => void
 ) {
   const columnResizeDataRef = useRef<{
@@ -418,6 +432,7 @@ export function useColumnResize<T>(
     eventsUnsubscription: () => void;
     columnIndex: number;
     initialColumnWidth: number;
+    minWidth: number;
     resizeColumn: (columnIndex: number, width: number) => void;
   }>();
 
@@ -428,13 +443,10 @@ export function useColumnResize<T>(
 
   const onMouseMove = useCallback((event: MouseEvent) => {
     const x = event.screenX;
-    const { startX, columnIndex, initialColumnWidth } =
+    const { startX, columnIndex, initialColumnWidth, minWidth } =
       columnResizeDataRef.current!;
     const shift = x - startX;
-    let width = initialColumnWidth + shift;
-    if (width < MIN_COLUMN_WIDTH) {
-      width = MIN_COLUMN_WIDTH;
-    }
+    let width = Math.max(minWidth, initialColumnWidth + shift);
     columnResizeDataRef.current!.resizeColumn(columnIndex, Math.round(width));
   }, []);
 
@@ -463,6 +475,7 @@ export function useColumnResize<T>(
         columnIndex,
         initialColumnWidth,
         resizeColumn,
+        minWidth: cols[columnIndex].info.props.minWidth || MIN_COLUMN_WIDTH,
       };
 
       event.preventDefault();
@@ -678,6 +691,19 @@ export function useColumnRegistry<T>(children: ReactNode) {
   };
 }
 
+export type SelectRowsOptions = {
+  rowIndex: number;
+  isRange?: boolean;
+  // Update selection incrementally based on previous state.
+  // If rowIndex is selected then unselect it, otherwise select it.
+  // This is what happens when the user clicks a row selection checkbox.
+  // Shift + Space is another case when this behaviour is used.
+  incremental?: boolean;
+  // Unusual behaviour, applied on space keypress on a non-checkbox cell
+  // The row is toggled, other rows unselected.
+  unselectOtherRows?: boolean;
+};
+
 // Returns functions related to row selection.
 // TODO test use case when selection mode changes
 export function useRowSelection<T>(
@@ -725,15 +751,12 @@ export function useRowSelection<T>(
   const selectRows = useCallback(
     ({
       rowIndex,
-      shift = false,
-      meta = false,
-    }: {
-      rowIndex: number;
-      shift?: boolean;
-      meta?: boolean;
-    }) => {
+      isRange = false,
+      incremental = false,
+      unselectOtherRows = false,
+    }: SelectRowsOptions) => {
       const idxFrom =
-        rowSelectionMode === "multi" && lastSelRowIdx !== undefined && shift
+        rowSelectionMode === "multi" && lastSelRowIdx !== undefined && isRange
           ? lastSelRowIdx
           : undefined;
 
@@ -741,22 +764,31 @@ export function useRowSelection<T>(
       let nextLastSelRowIdx: number | undefined = undefined;
 
       if (idxFrom === undefined) {
-        if (rowSelectionMode !== "multi" || !meta) {
-          nextSelRowIdxs = new Set([rowIndex]);
-          nextLastSelRowIdx = rowIndex;
-        } else {
-          const n = new Set<number>(selRowIdxs);
-          if (n.has(rowIndex)) {
-            n.delete(rowIndex);
+        if (unselectOtherRows) {
+          if (incremental && selRowIdxs.has(rowIndex)) {
+            nextSelRowIdxs = new Set<number>([]);
             nextLastSelRowIdx = undefined;
           } else {
-            n.add(rowIndex);
+            nextSelRowIdxs = new Set<number>([rowIndex]);
             nextLastSelRowIdx = rowIndex;
           }
-          nextSelRowIdxs = n;
+        } else {
+          if (incremental && rowSelectionMode === "multi") {
+            nextSelRowIdxs = new Set<number>(selRowIdxs);
+            if (nextSelRowIdxs.has(rowIndex)) {
+              nextSelRowIdxs.delete(rowIndex);
+              nextLastSelRowIdx = undefined;
+            } else {
+              nextSelRowIdxs.add(rowIndex);
+              nextLastSelRowIdx = rowIndex;
+            }
+          } else {
+            nextSelRowIdxs = new Set([rowIndex]);
+            nextLastSelRowIdx = rowIndex;
+          }
         }
       } else {
-        const s = meta ? new Set<number>(selRowIdxs) : new Set<number>();
+        const s = incremental ? new Set<number>(selRowIdxs) : new Set<number>();
         const idxs = [rowIndex, idxFrom];
         idxs.sort((a, b) => a - b);
         const rowIdxs: number[] = [];
@@ -817,8 +849,8 @@ export function useRowSelection<T>(
         const [rowIndex] = getCellPosition(target);
         selectRows({
           rowIndex,
-          shift: event.shiftKey,
-          meta: event.metaKey || event.ctrlKey,
+          isRange: event.shiftKey,
+          incremental: event.metaKey || event.ctrlKey,
         });
       } catch (e) {}
     },
@@ -1208,4 +1240,21 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
     onCursorMove,
     selectRange,
   };
+}
+
+export function useFocusableContent<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [isFocusableContent, setFocusableContent] = useState<boolean>(false);
+
+  const onFocus: FocusEventHandler<T> = (event) => {
+    if (event.target === ref.current) {
+      const nestedInteractive = ref.current.querySelector(`[tabindex="0"]`);
+      if (nestedInteractive) {
+        (nestedInteractive as HTMLElement).focus();
+        setFocusableContent(true);
+      }
+    }
+  };
+
+  return { ref, isFocusableContent, onFocus };
 }

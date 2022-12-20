@@ -7,7 +7,7 @@ import {
   useEffect,
 } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { Info as DefaultInfo } from "../Info";
 import { Circle, LinearGradient, SIZE, ViewBox } from "./CircularProgressParts";
 import { InfoRendererProps } from "../LinearProgress/LinearProgress";
@@ -16,7 +16,7 @@ import "./CircularProgress.css";
 const MAX = 100;
 const MIN = 0;
 
-const withBaseName = makePrefixer("uitkCircularProgress");
+const withBaseName = makePrefixer("saltCircularProgress");
 
 export const SIZE_OPTIONS = {
   small: {
@@ -146,7 +146,7 @@ export const CircularProgress = forwardRef<
     if (process.env.NODE_ENV !== "production" && !ariaLabel) {
       // eslint-disable-next-line no-console
       console.error(
-        "UI-Toolkit: aria-label value not supplied to CircularProgress. This may affect the ADA compliance level of the component and owning application, and may generate errors in automated accessibility testing software"
+        "Salt: aria-label value not supplied to CircularProgress. This may affect the ADA compliance level of the component and owning application, and may generate errors in automated accessibility testing software"
       );
     }
   }, [ariaLabel]);
@@ -178,7 +178,7 @@ export const CircularProgress = forwardRef<
 
   return (
     <div
-      className={classnames(className, "uitkCircularProgress", {
+      className={classnames(className, "saltCircularProgress", {
         [withBaseName("small")]: size === "small",
         [withBaseName("medium")]: size === "medium",
         [withBaseName("large")]: size === "large",

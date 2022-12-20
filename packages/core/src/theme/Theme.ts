@@ -2,10 +2,8 @@ export type characteristic =
   | "accent"
   | "actionable"
   | "container"
-  | "delay"
-  | "disabled"
+  | "differential"
   | "draggable"
-  | "target"
   | "editable"
   | "focused"
   | "measured"
@@ -13,14 +11,10 @@ export type characteristic =
   | "overlayable"
   | "selectable"
   | "separable"
-  | "taggable"
-  | "text"
   | "status"
-  // The next 4 are foundations, should they really be here?
-  | "icon"
-  | "shadow"
-  | "size"
-  | "spacing";
+  | "taggable"
+  | "target"
+  | "text";
 
 export type ThemeName = string;
 
@@ -30,7 +24,7 @@ export const getCharacteristicValue = (
   variant: string,
   scopeElement?: HTMLElement
 ): string | null => {
-  const cssVariableName = `--uitk-${characteristicName}-${variant}`;
+  const cssVariableName = `--salt-${characteristicName}-${variant}`;
   const scopeTarget =
     scopeElement || document.body.querySelector(`.${themeName}`);
   if (scopeTarget) {

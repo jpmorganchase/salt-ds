@@ -1,4 +1,4 @@
-import { useAriaAnnouncer, useId } from "@jpmorganchase/uitk-core";
+import { useAriaAnnouncer, useId } from "@salt-ds/core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { getSvgSpinner } from "./svgSpinners";
@@ -17,7 +17,7 @@ import "./Spinner.css";
 
 export const SpinnerSizeValues = ["small", "medium", "large"] as const;
 export type SpinnerSize = typeof SpinnerSizeValues[number];
-const baseName = "uitkSvgSpinner";
+const baseName = "saltSvgSpinner";
 
 export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
   /**

@@ -6,12 +6,12 @@ import {
 } from "../src";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { useState } from "react";
-import { FlexLayout } from "@jpmorganchase/uitk-core";
+import { FlexLayout } from "@salt-ds/core";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };
@@ -35,6 +35,7 @@ const RowSelectionControlledTemplate: Story<{}> = () => {
         rowSelectionMode="multi"
         selectedRowIdxs={selection}
         onRowSelected={onRowSelected}
+        headerIsFocusable={true}
       >
         <RowSelectionCheckboxColumn id="checkbox" />
         <GridColumn name="A" id="a" defaultWidth={50} getValue={(r) => r.a} />
@@ -49,6 +50,7 @@ const RowSelectionControlledTemplate: Story<{}> = () => {
         rowSelectionMode="multi"
         selectedRowIdxs={selection}
         onRowSelected={onRowSelected}
+        headerIsFocusable={true}
       >
         <RowSelectionCheckboxColumn id="checkbox" />
         <GridColumn name="A" id="a" defaultWidth={50} getValue={(r) => r.a} />

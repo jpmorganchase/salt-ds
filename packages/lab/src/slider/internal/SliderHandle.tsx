@@ -1,11 +1,12 @@
-import { makePrefixer, Tooltip, useTooltip } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import cn from "classnames";
 import { CSSProperties } from "react";
 import { getSliderAriaLabel } from "./utils";
+import { Tooltip, useTooltip } from "../../tooltip";
 
 import "../Slider.css";
 
-const withBaseName = makePrefixer("uitkSliderHandle");
+const withBaseName = makePrefixer("saltSliderHandle");
 
 export interface SliderHandleProps {
   min: number;

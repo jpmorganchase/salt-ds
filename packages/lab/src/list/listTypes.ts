@@ -123,7 +123,7 @@ export interface ListProps<
   itemGapSize?: number;
   /**
    * Height of an item. I can be a number or a string if item height is in percentage. If omitted
-   * default height values from Toolkit theme will be used.
+   * default height values from Salt theme will be used.
    *
    * Note that when using a percentage value, the list must have a height.
    */

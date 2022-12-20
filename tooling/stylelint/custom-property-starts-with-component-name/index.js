@@ -38,16 +38,16 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "uitk/custom-property-starts-with-component-name";
+const ruleName = "salt/custom-property-starts-with-component-name";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>
-    `Local tokens should start with --componentName, CSS API variables should start with --uitkComponentName`, // Can encode option in error message if needed
+    `Local tokens should start with --componentName, CSS API variables should start with --saltComponentName`, // Can encode option in error message if needed
 });
 
 const meta = {
   // Point to style documentation
-  url: "https://uitk.pages.dev/?path=/story/documentation-styles-and-theming-characteristics-introduction--page",
+  url: "https://saltdesignsystem-storybook.pages.dev/?path=/story/theme-characteristics-about-characteristics--page",
 };
 
 function capitalize(folderName) {
@@ -115,11 +115,11 @@ const isComponentCustomProperty = function (property) {
 /**
  * Test whether a property value is CSS API variables
  *
- * Starts with `--uitkComponentName-`
+ * Starts with `--saltComponentName-`
  */
 const isCssApi = function (property) {
   return allowedNames.some((component) =>
-    property.startsWith(`--uitk${component}-`)
+    property.startsWith(`--salt${component}-`)
   );
 };
 
@@ -165,7 +165,7 @@ module.exports = stylelint.createPlugin(
 
           if (
             !firstNode ||
-            firstNode.value.startsWith("--uitk-") ||
+            firstNode.value.startsWith("--salt-") ||
             !firstNode.value.startsWith("--") ||
             check(firstNode.value)
           )
@@ -180,7 +180,7 @@ module.exports = stylelint.createPlugin(
 
         verboseLog && console.log({ prop });
 
-        if (!prop.startsWith("--") || prop.startsWith("--uitk-") || check(prop))
+        if (!prop.startsWith("--") || prop.startsWith("--salt-") || check(prop))
           return;
 
         complain(0, prop.length, decl);

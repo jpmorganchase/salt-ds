@@ -1,0 +1,51 @@
+/* Styles applied to the root element dependent on density */
+.salt-density-high {
+  --formField-helperText-marginTop-default: 2px;
+  --formField-helperText-marginTop-fullWidth: 3px;
+
+  --formField-helperText-background-offset-height: 17px;
+}
+.salt-density-medium {
+  --formField-helperText-marginTop-default: 2px;
+  --formField-helperText-marginTop-fullWidth: 3px;
+  --formField-helperText-transform: translate(0, 2px);
+
+  --formField-helperText-background-offset-height: 19px;
+}
+.salt-density-touch {
+  --formField-helperText-marginTop-default: 8px;
+  --formField-helperText-marginTop-fullWidth: 5px;
+  --formField-helperText-transform: translate(0, -3px);
+
+  --formField-helperText-background-offset-height: 21px;
+}
+.salt-density-low {
+  --formField-helperText-marginTop-default: 4px;
+  --formField-helperText-marginTop-fullWidth: 5px;
+  --formField-helperText-transform: translate(0, 1px);
+
+  --formField-helperText-background-offset-height: 21px;
+}
+
+/* Class applied if `fullWidth={true}` */
+.saltFormField-fullWidth {
+  --formField-helperText-transform: none;
+}
+
+/* Class applied to the helper text container */
+.saltFormFieldHelperText {
+  --formField-helperText-opacity: 1;
+
+  color: var(--saltFormField-helperText-color, var(--salt-text-secondary-foreground));
+  font-size: var(--formField-helperText-fontSize);
+  font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
+  letter-spacing: var(--saltFormField-helperText-letterSpacing, 0);
+  line-height: var(--saltFormField-helperText-lineHeight, var(--salt-text-lineHeight));
+  min-height: var(--saltFormField-helperText-minHeight, var(--salt-text-label-minHeight));
+  margin-bottom: var(--saltFormField-helperText-marginBottom, 0);
+  margin-top: var(--saltFormField-helperText-marginTop, var(--formField-helperText-marginTop));
+  opacity: var(--saltFormField-helperText-opacity, var(--formField-helperText-opacity));
+  padding-left: var(--saltFormField-helperText-paddingLeft, var(--salt-size-unit));
+  padding-right: var(--saltFormField-helperText-paddingRight, var(--salt-size-unit));
+  transform: var(--saltFormField-helperText-transform, var(--formField-helperText-transform, none));
+}

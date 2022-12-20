@@ -4,16 +4,16 @@ import {
   AccordionSection,
   AccordionSummary,
   AccordionDetails,
-} from "@jpmorganchase/uitk-lab";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+} from "@salt-ds/lab";
+import { makePrefixer } from "@salt-ds/core";
 import { ChildrenValues } from "../../ChildrenValues";
 import { JSONObj } from "../../../helpers/parseToJson";
 import "../Foundations.css";
 
-const withBaseName = makePrefixer("uitkFoundationPattern");
+const withBaseName = makePrefixer("saltFoundationPattern");
 
 export interface FoundationPatternByDensityProps {
-  uitkColorOverrides?: Record<string, string>;
+  saltColorOverrides?: Record<string, string>;
   extractValue: (value: string) => string;
   onUpdateJSON: (value: string, pathToUpdate: string, scope: string) => void;
   patternName: string;
@@ -60,7 +60,7 @@ export const FoundationPatternByDensity = (
 
               return (
                 <ChildrenValues
-                  uitkColorOverrides={props.uitkColorOverrides}
+                  saltColorOverrides={props.saltColorOverrides}
                   children={values}
                   extractValue={props.extractValue}
                   fieldName={fieldName}

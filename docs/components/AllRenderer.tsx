@@ -1,5 +1,5 @@
 import { cloneElement, Fragment, ReactElement } from "react";
-import { DensityValues, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { DensityValues, SaltProvider } from "@salt-ds/core";
 import { DocGrid } from "./DocGrid";
 import { BackgroundBlock } from "./BackgroundBlock";
 
@@ -28,22 +28,22 @@ export const AllRenderer = ({
       {DensityValues.map((d, i) => {
         return (
           <Fragment key={i}>
-            <ToolkitProvider
+            <SaltProvider
               density={d}
               mode="light"
               key={"theme-light-" + d}
               applyClassesTo={"child"}
             >
               <BackgroundBlock>{cloneElement(children)}</BackgroundBlock>
-            </ToolkitProvider>
-            <ToolkitProvider
+            </SaltProvider>
+            <SaltProvider
               applyClassesTo={"child"}
               density={d}
               mode="dark"
               key={"theme-dark-" + d}
             >
               <BackgroundBlock>{cloneElement(children)}</BackgroundBlock>
-            </ToolkitProvider>
+            </SaltProvider>
           </Fragment>
         );
       })}

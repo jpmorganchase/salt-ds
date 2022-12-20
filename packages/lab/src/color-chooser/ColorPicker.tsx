@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { SketchPicker, ColorResult } from "react-color";
 import cn from "classnames";
-import { Button, makePrefixer } from "@jpmorganchase/uitk-core";
+import { Button, makePrefixer } from "@salt-ds/core";
 import { Color, RGBAValue } from "./Color";
 import { hexValueWithoutAlpha } from "./ColorHelpers";
 import { HexInput } from "./HexInput";
@@ -9,7 +9,7 @@ import { RGBAInput } from "./RGBAInput";
 
 import "./ColorPicker.css";
 
-const withBaseName = makePrefixer("uitkColorChooserPicker");
+const withBaseName = makePrefixer("saltColorChooserPicker");
 
 export interface ColorPickerProps {
   disableAlphaChooser: boolean;

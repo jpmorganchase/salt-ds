@@ -1,12 +1,13 @@
-import { AutoSizeHeaderCell, HeaderCellProps } from "./HeaderCell";
-import { makePrefixer, RadioButtonIcon } from "@jpmorganchase/uitk-core";
+import { AutoSizeHeaderCell } from "./HeaderCell";
+import { RadioButtonIcon } from "@salt-ds/lab";
 import "./CheckboxCell.css";
 import cx from "classnames";
+import { HeaderCellProps } from "./GridColumn";
 
 export function RowSelectionRadioHeaderCell<T>(props: HeaderCellProps<T>) {
   return (
     <AutoSizeHeaderCell {...props}>
-      <div className={cx("uitkGridCheckboxContainer", "uitkGrid-hidden")}>
+      <div className={cx("saltGridCheckboxContainer", "saltGrid-hidden")}>
         <RadioButtonIcon />
       </div>
     </AutoSizeHeaderCell>

@@ -1,34 +1,30 @@
-import { Meta } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 
-<Meta title="Documentation/Styles and Theming/Introduction" />
+<Meta title="Theme/About the Salt Theme" />
 
-## UI Toolkit styling
+# About the Salt Theme
 
-You can use styling attributes from the UITK theme to style many elements of your application - native HTML used for structural and layout purposes, your own custom components, etc.
+## Our approach
 
-### Explaining our approach
+The Salt design system is built using Vanilla CSS, which enables us to provide a custom and consistent set of styles. There are several benefits to using Vanilla CSS:
 
-For the Toolkit, our design system is built simply from vanilla CSS. There are a number of factors for this decision, including the following:
+- Salt has no third-party style dependencies, which means we are free to take our own approach to styling.
+- The Salt theme is built entirely using CSS custom properties.
+- Vanilla CSS provides performance improvements by removing the runtime overhead common in CSS-in-JS solutions.
+- Vanilla CSS allows the Salt theme to be published and consumed independent of the component library–it can be used in contexts where Salt components are not able to be used, for example, static code deployment within a CMS.
+- Separation of styles into CSS files reduces the tie-in with React, which opens up the possibility of sharing style assets with non-react components.
 
-- Since we don't rely on any third party styling dependencies, we have been completely free in our approach to styling.
-- There has been a lot of innovation in the CSS world over the last few years and CSS custom properties are one of the most powerful of the new features. Our theming mechanism is built 100% on CSS custom properties.
-- While CSS-in-JS solutions have improved in terms of performance most still involve some runtime overhead, embracing vanilla CSS removes this overhead.
-- With vanilla CSS making up the foundation of a Toolkit theme, the theme itself can be published and consumed independently from the component libraries. It can be used in contexts where Toolkit components are not even used, e.g. static code deployment in CMS type systems.
-- Separation of styling into CSS files also reduces the tie-in with React, which might not be important in the short term, but longer term opens up the possibility that we could share styling assets with non-react components.
-  The pattern adopted by the UI Toolkit for styling provides not only the mechanism by which Toolkit components
-  themselves are styled, it also provides a consistent approach for styling all elements of your application. Most
-  applications will probably contain some mix of Toolkit components, plain HTML infrastructure, often for layout purposes,
-  custom components you build yourself, and maybe some third party components. You should be able to make use of the
-  styling primitives offered by the Toolkit theme to help style all of these. The goal is to make it as easy as possible to
-  achieve consistency of styling across your entire application.
+Our approach provides not only the mechanism by which our components are styled, but also a consistent approach for styling all elements of your project. An application may contain a mix of Salt components, plain HTML—often for layout purposes, custom components, and possibly some third party components. You should be able to use the Salt theme to style all of these. The goal is to make it as easy as possible to achieve a consistent experience across your entire application.
 
-The CSS comprises the following two kinds of declarations:
+### CSS declarations
 
-- CSS Custom Properties declarations, also known as CSS Variables which is the phrase we will use in this document.
+The CSS comprises two kinds of declarations:
+
+- CSS Custom Properties declarations, also known as _CSS Variables_.
 - Traditional CSS selector rules with values assigned to CSS attributes.
 
-CSS Variables allow us to declare CSS attribute values in a way that allows them to be re-used across multiple selector rules. This
-is just one feature of CSS Variables which makes them very useful. There are many powerful features, described in more detail below.
+CSS Variables enables us to declare CSS attribute values in a way that allows them to be re-used across multiple selector rules. This
+is just one feature of CSS Variables which makes them useful. There are many powerful features, described in more detail below.
 A simple example will help to illustrate some of the key concepts:
 
 ```css
@@ -41,105 +37,104 @@ A simple example will help to illustrate some of the key concepts:
 }
 ```
 
-### Theme CSS + Component CSS
+## CSS levels
 
-The styling of our UI Toolkit componentry is defined in the following two places, which operate together at runtime:
+Salt styles are defined at two different levels, which operate together at runtime:
 
-- Theme styles - a Toolkit theme consists of CSS Variables plus a small number of reusable _utility_ classes.
-- Component styles - each component contributes its own stylesheet. Many of the CSS declarations in here will reference CSS variables defined in the theme i.e. the variables will be defined at the theme level and used at the component level.
+- **Theme styles** - consisting of CSS Variables \*
+- **Component styles** - each component contributes its own stylesheet. Many of the CSS declarations reference CSS variables defined in the theme i.e. the variables will be defined at the theme level and used at the component level.
 
-#### Theme styles
+## Theme styles
 
-A UI Toolkit theme is a collection of design tokens. These tokens are defined in Figma and have exact equivalents in code. In Figma, they are used to apply styling to all Figma components. In code, they are deployed as CSS Variables. The tokens fall into the following three categories:
+The Salt theme is a collection of design tokens split into a three-tier hierarchy. The token tiers are:
 
-- Foundations - Foundation tokens are the primitive values for attributes like color, size, shadow etc. Characteristic tokens represent a slightly higher level abstraction - they are groupings of related attributes typically used together, that represent common aspects of a UI component or application.
-- An in-between palette - The palette is a carefully selected group of color tokens from the foundations which are aliased to give semantic meaning, as well as aliases for the foundations opacity tokens; allowing for a more consistent look-and-feel when used by characteristics, rather than the foundation tokens directly. For example, actionable, selectable, and editable tokens all use 'interact' palette tokens, which Odyssey has defined to be blue, instead of using the color token itself. If the theme updated and interactable components needed to be red; this would only have to be updated in one place, the palette, instead of within each characteristic.
-- Characteristics - Characteristics fall between the simple foundational tokens and component-specific tokens defined at the component level (described below). They represent general groupings of related style attributes that typically apply across multiple components.
+- **Foundation** - Foundation tokens are the primitive values for attributes like color, size, shadow and opacity.
+- **Palette** - Palette tokens are semantically grouped foundational colors which allow a consistent look-and-feel when used by characteristics, rather than referencing the foundational tokens directly. For example, actionable, selectable, and editable characteristic tokens all use the 'interact' palette. If the theme needed to change the background color of interactive elements it would only have to be updated in one place, the palette, instead of within each characteristic.
+- **Characteristic** – Semantic groupings of all visual attributes (not just color) that are applied to a set of components, depending on their shared functionality or behavior–a characteristic may include typography, cursor behaviors, border styles and widths, as well as attributes such as background and foreground colors.
 
-Foundational tokens can be broken into the following groups:
+#### Design considerations:
 
-| Foundation name | Description                                            | Example token                          | Defined value                     |
-| --------------- | ------------------------------------------------------ | -------------------------------------- | --------------------------------- |
-| Color           | The core set of colors                                 | `--uitk-color-gray-800`                | `rgb(36, 37, 38)`                 |
-| Delay           | Durations between user actions and system feedback     | `--uitk-delay-cutoff`                  | `10000`                           |
-| Icon\*          | Iconography                                            | `--uitk-icon-size-base`                | `12px`                            |
-| Opacity         | Opacity percentages for different attributes           | `--uitk-opacity-background`            | `0.7`                             |
-| Shadow          | Shadows conveying elevation or hierarchy of components | `--uitk-shadow-black-4`                | `0 6px 10px 0 rgba(0, 0, 0, 0.2)` |
-| Size            | Sizes in px to be used for general styling             | `--uitk-size-basis-unit`               | `4px`                             |
-| Typography      | General tokens relating to typography styles           | `--uitk-typography-fontWeight-regular` | `400`                             |
-| Z-index\*\*     | Number indicating appropriate z-index of components    | `--uitk-zIndex-flyover`                | `1500`                            |
+Theme libraries are provided within Figma which are aligned as closely as possible to the Characteristic tokens. All styles are included, but the token structure in Figma may differ slightly from code.
 
-\* In design, the Icon foundation is regarded as the collection of Icon components alongside their styling. The defined value of the example token here varies by density.
+### Foundations
 
-\*\* Z-index makes a direct reference to a component (Tooltip). Most theme tokens do not do this. It's easiest to define the z-index layers in terms of the components that typically use those values.
+Foundational tokens are divided into the following groups:
 
-Similarly, for the palette:
+| Foundation | Description                                              | Example token                          | Example value                     |
+| ---------- | -------------------------------------------------------- | -------------------------------------- | --------------------------------- |
+| Color      | The core set of colors that make up the Salt theme       | `--salt-color-gray-800`                | `rgb(36, 37, 38)`                 |
+| Delay      | Durations between a user action and system feedback      | `--salt-delay-cutoff`                  | `10000`                           |
+| Icon       | Core set of icons available within the Salt theme        | `--salt-icon-size-base`                | `12px`                            |
+| Opacity    | Opacity percentages for different attributes             | `--salt-opacity-background`            | `0.7`                             |
+| Shadow     | Shadows used to convey elevation or hierarchy            | `--salt-shadow-black-4`                | `0 6px 10px 0 rgba(0, 0, 0, 0.2)` |
+| Size       | Sizes in px used for padding, height, border width, etc. | `--salt-size-basis-unit`               | `4px`                             |
+| Typography | Fonts and font weights provided by the theme             | `--salt-typography-fontWeight-regular` | `400`                             |
+| Z-index    | Number indicating appropriate z-index of components      | `--salt-zIndex-flyover`                | `1500`                            |
 
-| Palette sentiment | Appropriate usage                                               | Example token                               | Defined value (light mode) |
-| ----------------- | --------------------------------------------------------------- | ------------------------------------------- | -------------------------- |
-| Accent            | Characteristics which use a consistent tone throughout the UI   | `--uitk-palette-accent-background`          | --uitk-color-blue-500      |
-| Error             | Characteristics symbolising an error state                      | `--uitk-palette-error-border`               | --uitk-color-red-500       |
-| Info              | Characteristics symbolising an info state                       | `--uitk-palette-info-foreground`            | --uitk-color-blue-500      |
-| Interact          | Characteristics relating to actions such as editing or clicking | `--uitk-palette-interact-border`            | --uitk-color-gray-90       |
-| Measure           | Characteristics showing some form of progress                   | `--uitk-palette-measured-fill`              | --uitk-color-blue-500      |
-| Navigate          | Characteristics allowing for navigation                         | `--uitk-palette-navigate-foreground`        | --uitk-color-gray-400      |
-| Negative          | Characteristics conveying a negative value or result            | `--uitk-palette-negative-foreground`        | --uitk-color-red-700       |
-| Neutral           | Characteristics with no specialised semantic meaning            | `--uitk-palette-neutral-primary-foreground` | --uitk-color-gray-900      |
-| Positive          | Characteristics conveying a positive value or result            | `--uitk-palette-positive-foreground`        | --uitk-color-green-700     |
-| Success           | Characteristics symbolising a success state                     | `--uitk-palette-success-border`             | --uitk-color-green-500     |
-| Warning           | Characteristics symbolising a warning state                     | `--uitk-palette-warning-foreground`         | --uitk-color-orange-500    |
+### Palettes
 
-And it's opacities:
+| Semantic Palette | Appropriate usage                                                            | Example token                               | Example value             |
+| ---------------- | ---------------------------------------------------------------------------- | ------------------------------------------- | ------------------------- |
+| Accent           | Colors used to provide brand detail                                          | `--salt-palette-accent-background`          | `--salt-color-blue-500`   |
+| Error            | Colors used to symbolize an error state                                      | `--salt-palette-error-border`               | `--salt-color-red-500`    |
+| Info             | Colors used to represent informational content or messaging                  | `--salt-palette-info-foreground`            | `--salt-color-blue-500`   |
+| Interact         | Colors representing actions, such as editing or selecting                    | `--salt-palette-interact-border`            | `--salt-color-gray-90`    |
+| Measure          | Colors used to represent a measurement, value, or progression                | `--salt-palette-measured-fill`              | `--salt-color-blue-500`   |
+| Navigate         | Colors used to signify navigation or navigable items                         | `--salt-palette-navigate-foreground-hover`  | `--salt-color-blue-600`   |
+| Negative         | Colors conveying a negative value or result                                  | `--salt-palette-negative-foreground`        | `--salt-color-red-700`    |
+| Neutral          | Colors used to define regions or blocks of content without inferring meaning | `--salt-palette-neutral-primary-foreground` | `--salt-color-gray-900`   |
+| Positive         | Colors conveying a positive value or result                                  | `--salt-palette-positive-foreground`        | `--salt-color-green-700`  |
+| Success          | Colors symbolizing a success state or indication of process completion       | `--salt-palette-success-border`             | `--salt-color-green-500`  |
+| Warning          | Colors symbolizing a warning state                                           | `--salt-palette-warning-foreground`         | `--salt-color-orange-500` |
 
-| Opacity sentiment                        | Defined value        |
-| ---------------------------------------- | -------------------- |
-| --uitk-palette-opacity-background        | `--uitk-opacity-3`   |
-| --uitk-palette-opacity-border`           | `--uitk-opacity-3`   |
-| --uitk-palette-opacity-border-readonly`  | `--uitk-opacity-2`   |
-| --uitk-palette-opacity-fill`             | `--uitk-opacity-3`   |
-| --uitk-palette-opacity-foreground`       | `--uitk-opacity-4`   |
-| --uitk-palette-opacity-scrim-low`        | `--uitk-opacity-5`   |
-| --uitk-palette-opacity-stroke`           | `--uitk-opacity-3`   |
-| --uitk-palette-opacity-scrim-medium`     | `--uitk-opacity-5`   |
-| --uitk-palette-opacity-primary-border`   | `--uitk-opacity-3`   |
-| --uitk-palette-opacity-secondary-border` | `--uitk-opacity-2`   |
-| --uitk-palette-opacity-tertiary-border`  | `--uitk-opacity-1`   |
-| --uitk-palette-opacity-primary-scrim`    | `--uitk-opacity-5`\* |
-| --uitk-palette-opacity-secondary-scrim`  | `--uitk-opacity-5`   |
+#### Palette opacities
 
-- 4 in dark mode
+| Opacity                                   | Defined value      |
+| ----------------------------------------- | ------------------ |
+| `--salt-palette-opacity-background`       | `--salt-opacity-3` |
+| `--salt-palette-opacity-border`           | `--salt-opacity-3` |
+| `--salt-palette-opacity-border-readonly`  | `--salt-opacity-2` |
+| `--salt-palette-opacity-fill`             | `--salt-opacity-3` |
+| `--salt-palette-opacity-foreground`       | `--salt-opacity-4` |
+| `--salt-palette-opacity-stroke`           | `--salt-opacity-3` |
+| `--salt-palette-opacity-backdrop`         | `--salt-opacity-4` |
+| `--salt-palette-opacity-primary-border`   | `--salt-opacity-3` |
+| `--salt-palette-opacity-secondary-border` | `--salt-opacity-2` |
+| `--salt-palette-opacity-tertiary-border`  | `--salt-opacity-1` |
 
-The full set of characteristics currently defined is as follows. Note how the values of characteristics can be foundation tokens, palette tokens or hardcoded values, depending on what's most suitable:
+### Characteristics
 
-| Characteristic name | Appropriate usage                                                                 | Example token                                | Defined value                                      |
-| ------------------- | --------------------------------------------------------------------------------- | -------------------------------------------- | -------------------------------------------------- |
-| Accent              | Components that need to be emphasized                                             | `--uitk-accent-background`                   | `--uitk-palette-accent-background`                 |
-| Actionable          | Components on which the user can perform an action                                | `--uitk-actionable-primary-background-hover` | `--uitk-palette-interact-primary-background-hover` |
-| Container           | Components that may encapsulate others                                            | `--uitk-container-borderStyle`               | `solid`                                            |
-| Differential        | Components indicating a positive or negative change                               | `--uitk-differential-positive-foreground`    | `--uitk-palette-positive-foreground`               |
-| Draggable           | Components that can be dragged                                                    | `--uitk-draggable-grab-cursor-hover`         | `grab`                                             |
-| Target              | Components that form a target for draggable components                            | `--uitk-target-borderStyle`                  | `dashed`                                           |
-| Editable            | Components that have mutable input                                                | `--uitk-editable-borderStyle`                | `solid`                                            |
-| Focused             | Components that have a focused state                                              | `--uitk-focused-outlineStyle`                | `dotted`                                           |
-| Measured            | Components which have some form of scale or progress                              | `--uitk-measured-borderColor`                | `--uitk-palette-measured-border`                   |
-| Navigable           | Components that change data sets or view contexts                                 | `--uitk-navigable-cursor-hover`              | `pointer`                                          |
-| Overlayable         | Components that form hierarchies in layout                                        | `--uitk-overlayable-shadow-scroll`           | `--uitk-shadow-1`                                  |
-| Selectable          | Components that have a selected state                                             | `--uitk-selectable-cursor-hover`             | `pointer`                                          |
-| Separable           | Components containing elements which should be separated into different divisions | `--uitk-separable-primary-borderColor`       | `--uitk-palette-neutral-primary-border`            |
-| Status              | Components indicating an informational, warning, error or success state           | `--uitk-status-info-borderColor`             | `--uitk-palette-info-border`                       |
-| Taggable            | Components which allow data to be organized                                       | `--uitk-taggable-background`                 | `--uitk-palette-interact-primary-background`       |
-| Text                | All text components or HTML elements                                              | `--uitk-text-primary-foreground`             | `--uitk-palette-neutral-primary-foreground`        |
+Characteristics semantically group both palette and foundational tokens to provide a complete set of attributes for component styling. Because of the semantic nature of the groups there are some direct relationships between the color palettes and characteristics such as accent.
 
-#### Token naming conventions
+| Characteristic | Appropriate usage                                                                    | Example token                                | Example value                                      |
+| -------------- | ------------------------------------------------------------------------------------ | -------------------------------------------- | -------------------------------------------------- |
+| Accent         | Provides a non-functional brand detail to a component or element                     | `--salt-accent-background`                   | `--salt-palette-accent-background`                 |
+| Actionable     | Components that enable an action to be performed                                     | `--salt-actionable-primary-background-hover` | `--salt-palette-interact-primary-background-hover` |
+| Container      | Defines an area that can encapsulate multiple elements or items of content           | `--salt-container-borderStyle`               | `solid`                                            |
+| Differential   | Components indicating a positive or negative change                                  | `--salt-differential-positive-foreground`    | `--salt-palette-positive-foreground`               |
+| Draggable      | Components that can be dragged                                                       | `--salt-draggable-grab-cursor-hover`         | `grab`                                             |
+| Editable       | Components that have mutable input                                                   | `--salt-editable-borderStyle`                | `solid`                                            |
+| Focused        | Components that have a focused state                                                 | `--salt-focused-outlineStyle`                | `dotted`                                           |
+| Measured       | Components that indicate a changeable value or progression                           | `--salt-measured-borderColor`                | `--salt-palette-measured-border`                   |
+| Navigable      | Components that change data sets or view contexts                                    | `--salt-navigable-cursor-hover`              | `pointer`                                          |
+| Overlayable    | Components that form hierarchies in layout                                           | `--salt-overlayable-shadow-scroll`           | `--salt-shadow-1`                                  |
+| Selectable     | Components that have a selected state or contain elements that can be selected       | `--salt-selectable-cursor-hover`             | `pointer`                                          |
+| Separable      | Components, or elements within a component that divide content, functions or regions | `--salt-separable-primary-borderColor`       | `--salt-palette-neutral-primary-border`            |
+| Status         | Components indicating an informational, warning, error or success state              | `--salt-status-info-borderColor`             | `--salt-palette-info-border`                       |
+| Taggable       | Components that allow data to be organized                                           | `--salt-taggable-background`                 | `--salt-palette-interact-primary-background`       |
+| Target         | Components that form a target for draggable elements                                 | `--salt-target-borderStyle`                  | `dashed`                                           |
+| Text           | All text components or HTML elements                                                 | `--salt-text-primary-foreground`             | `--salt-palette-neutral-primary-foreground`        |
 
-Comparing the tokens above, you may have noticed the following conventions we have applied to token naming:
+### Token naming conventions
 
-- CSS variables in the UI Toolkit theme are prefixed `--uitk-`. This is a rule with no exceptions.
+Salt tokens are made up of different elements. Depending on the tier, different elements are combined to form the token name.
+
+- CSS variables in Salt are prefixed `--salt-`. This is a rule with no exceptions.
 - Foundation tokens all use CSS constant values.
-- Characteristic tokens use a mixture of CSS values and references to foundation tokens. It is possible for characteristic tokens to also reference other characteristic tokens.
-- Foundation and characteristic token names all begin `--uitk-<foundation/characteristic name>-`. This again is a rule with no exceptions.
+- Foundation and characteristic token names all begin `--salt-<foundation/characteristic name>-`. This again is a rule with no exceptions.
+- Palette tokens are differentiated by the inclusion of the tier before the palette name `--salt-palette-<palette name>-`.
 
-#### Theme scoping - how CSS variables work
+### Theme scoping - how CSS variables work
 
 CSS variables have a concept of scoping - they may be global to an entire HTML page or constrained to a subset of that page.
 Consider the example given above:
@@ -157,37 +152,44 @@ Consider the example given above:
 In this case, the scope is `:root`. This is equivalent to `html` so variables declared in this way are global. They can be referenced in any CSS that is applied to the page. We constrain the scope of a variable using a CSS selector, exactly as we declare regular CSS rules:
 
 ```css
-.uitk-theme[data-mode="light"] {
+.salt-theme[data-mode="light"] {
   --property-my-color: red;
 }
 ```
 
-In this case, the CSS selector `.uitk-theme[data-mode="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `.uitk-theme` and the data attribute `data-mode="light"` or are descendants of such an element. This is exactly how a UI Toolkit theme is applied to an application or website. All of the CSS variables that constitute the UI Toolkit theme are scoped to either `.uitk-theme[data-mode="light"]` or `.uitk-theme[data-mode="dark"]` (more on the distinction between these later). If, at the top level of your application, you have a structure something like this:
+In this case, the CSS selector `.salt-theme[data-mode="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `.salt-theme` and the data attribute `data-mode="light"` or are descendants of such an element. This is how the Salt theme is applied to an application or website. All of the CSS variables that constitute the Salt theme are scoped to either `.salt-theme[data-mode="light"]` or `.salt-theme[data-mode="dark"]`. If, at the top level of your project, you have a structure like this:
 
 ```html
-<div class="MyApplication uitk-theme" data-mode="light">
+<div class="MyApplication salt-theme" data-mode="light">
   <rest-of-my-application />
 </div>
 ```
 
-In this case the UI Toolkit theme variables will be available throughout the app, and components that consume theme variables (all the UI Toolkit Odyssey components) will be styled appropriately.
+In this case the Salt theme variables will be available throughout the app, and components that consume theme variables will be styled appropriately.
 
-The UI Toolkit provides a component `ToolkitProvider` for React users that takes care of injecting the appropriate CSS class names into the HTML. Usage would be something like the following:
+Salt provides the `SaltProvider` component for React users that takes care of injecting the appropriate CSS class names into the HTML, for example:
 
 ```jsx
-<ToolkitProvider density="high" mode="light">
+<SaltProvider density="high" mode="light">
   <RestOfMyApplication />
-</ToolkitProvider>
+</SaltProvider>
 ```
 
-Refer to the ToolkitProvider docs for more detail.
+Refer to the `SaltProvider` documentation for more detail.
 
-#### Theme variants - Light/Dark, Density
+### Theme variants
 
-The combination of CSS variables with CSS selector scoping is very flexible. It allows us to offer multiple variants of the same sets of characteristics, between which we can alternate by switching scopes. By default, the UI Toolkit theme offers light and dark variants in addition to four density variants - 'high', 'medium', 'low' and 'touch'. What this means is that we repeat subsets of the theme variables, each scoped to different selectors. The application owner then opts into one of the available options from each of these variants by using the appropriate scope selector class. In the example above, using the `ToolkitProvider` the application is using the light and high density variants. The HTML for this app will look like this:
+Salt provides two types of theme variant:
+
+- Mode; light or dark
+- Density; high, medium, low, and touch
+
+The combination of CSS variables with CSS selector scoping is very flexible. It allows us to offer multiple variants of the same sets of characteristics, between which we can alternate by switching scopes.
+
+The Salt theme offers light and dark variants in addition to four densities. This means we’re able to repeat subsets of the theme variables, each scoped to different selectors. The application owner then opts into one of the available options from each of these variants by using the appropriate scope selector class. In the example above, using the `SaltProvider` the application is using the light and high density variants. The HTML for this app will look like this:
 
 ```html
-<div class="uitk-provider uitk-theme uitk-density-high" data-mode="light">
+<div class="salt-provider salt-theme salt-density-high" data-mode="light">
   <rest-of-my-application />
 </div>
 ```
@@ -195,9 +197,9 @@ The combination of CSS variables with CSS selector scoping is very flexible. It 
 In the CSS where the theme variables are declared, there are sections declared as follows:
 
 ```css
-.uitk-theme {
-  --uitk-actionable-primary-foreground: var(
-    --uitk-palette-interact-primary-foreground
+.salt-theme {
+  --salt-actionable-primary-foreground: var(
+    --salt-palette-interact-primary-foreground
   );
 }
 ```
@@ -205,34 +207,35 @@ In the CSS where the theme variables are declared, there are sections declared a
 The palette token then resolves down to:
 
 ```css
-.uitk-theme[data-mode="light"] {
-  --uitk-palette-interact-primary-foreground: var(--uitk-color-gray-900);
+.salt-theme[data-mode="light"] {
+  --salt-palette-interact-primary-foreground: var(--salt-color-gray-900);
 }
-.uitk-theme[data-mode="dark"] {
-  --uitk-palette-interact-primary-foreground: var(--uitk-color-white);
+.salt-theme[data-mode="dark"] {
+  --salt-palette-interact-primary-foreground: var(--salt-color-white);
 }
 ```
 
-Note that the CSS variable is the same - the values associated with it differ between the light and dark `scopes`. When this variable is used by a Button to style the button text, the color applied will be appropriate to the theme variant applied to the page. Because CSS variable scopes can be nested, there is great flexibility for combining regions with different styling variants within the same app. If a page with a light theme requires that a smaller region of that page be styled with a dark or even custom theme, that is straightforward.
+Note that the CSS variable is the same—the values associated with it differ between the light and dark `scopes`. When this variable is used by a Button to style the button text, the color applied will be appropriate to the theme variant applied to the page. Because CSS variable scopes can be nested, there is great flexibility for combining regions with different styling variants within the same app. If a page with a light theme requires that a smaller region of that page be styled with a dark or even custom theme, that is straightforward.
 
-#### Component styles
+## Component styles
 
-Component styles work with theme styles to give a complete theme-based styling solution. At the component level, we specify exactly which HTML elements have particular styles applied to them. By generalising these styles across the application, which is what the theme variables allow us to do, we achieve consistency of design across the our application and across applications. This is the Design System concept in operation.
+Component styles work with theme styles to give a complete theme-based styling solution. At the component level, we specify exactly which HTML elements have particular styles applied to them. By generalizing these styles across the application, which is what the theme variables allow us to do, we achieve consistency of design not only across an application but across all applications using the design system.
+
 We have already mentioned that components will reference Theme variables, the example below is from Button. It shows a single style declaration but illustrates some important concepts:
 
 ```css
-.uitkButton {
-  font-size: var(--uitkButton-fontSize, var(--uitk-text-fontSize));
+.saltButton {
+  font-size: var(--saltButton-fontSize, var(--salt-text-fontSize));
 }
 ```
 
-- All UI Toolkit components have a CSS class on the root element, of the form `uitk<ComponentName>`. This is a rule with no exceptions.
+- All Salt components have a CSS class on the root element, of the form `salt<ComponentName>`. This is a rule with no exceptions.
 - The value from a CSS API variable (more on this below) is assigned as a style by using `var(--<variableName>-<...>);`.
 - A CSS variable reference can define a fallback value to be used if the primary variable does not have a value:
   `var(--primary-variable-value, var(--fallback-value))`.
 - The fallback value can equally be a simple constant CSS value
   `var(--primary-variable-value, 12px);`.
 
-In the Button example above, font-size is being set to whatever value has been assigned to the variable `--uitkButton-fontSize`. If this variable has not been defined, or is not in scope at the point where this Button element is rendered, then the fallback value will be taken from `--uitk-text-fontSize`. Providing that a UI Toolkit theme is in scope at this point, this will have a value. If neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
+In the Button example above, font-size is being set to whatever value has been assigned to the variable `--saltButton-fontSize`. If this variable has not been defined, or is not in scope at the point where this Button element is rendered, then the fallback value will be taken from `--salt-text-fontSize`. Providing that a Salt theme is in scope at this point, this will have a value. If neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
 
-Note the naming convention for the first variable `--uitkButton-fontSize`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a _CSS API variable_. These are not actually assigned any value anywhere in the UI Toolkit code. They are a customization mechanism intended for use by consumers of Toolkit components. A default (i.e. fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the docs for each component (as are the CSS class names).
+Note the naming convention for the first variable `--saltButton-fontSize`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a _CSS API variable_. These are not actually assigned any value anywhere in Salt code. They are a customization mechanism intended for use by consumers of Salt components. A default (or fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the documentation for each component (as are the CSS class names).

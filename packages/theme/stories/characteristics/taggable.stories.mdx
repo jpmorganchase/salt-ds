@@ -3,43 +3,30 @@ import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Taggable" />
+<Meta title="Theme/Characteristics/Taggable" />
 
 # Taggable
 
 Components allowing for individual items or data to be organized.
 
-## CSS Variables
+## Tokens
 
-### Misc
+### Base
 
 <Canvas>
-  <Story name="Misc">
+  <Story name="Base">
     <DocGrid>
-      <CursorBlock cursor="--uitk-taggable-cursor-hover" />
-      <CursorBlock cursor="--uitk-taggable-cursor-active" />
-      <CursorBlock cursor="--uitk-taggable-cursor-disabled" />
+      <CursorBlock cursor="--salt-taggable-cursor-hover" />
+      <CursorBlock cursor="--salt-taggable-cursor-active" />
+      <CursorBlock cursor="--salt-taggable-cursor-disabled" />
+      <ColorBlock colorVar="--salt-taggable-background" />
+      <ColorBlock colorVar="--salt-taggable-background-hosver" />
+      <ColorBlock colorVar="--salt-taggable-background-active" />
+      <ColorBlock colorVar="--salt-taggable-background-disabled" />
+      <ColorBlock colorVar="--salt-taggable-foreground" />
+      <ColorBlock colorVar="--salt-taggable-foreground-hover" />
+      <ColorBlock colorVar="--salt-taggable-foreground-active" />
+      <ColorBlock colorVar="--salt-taggable-foreground-disabled" />
     </DocGrid>
   </Story>
 </Canvas>
-
-### Colors
-
-<Canvas>
-  <Story name="Colors">
-    <DocGrid>
-      <ColorBlock colorVar="--uitk-taggable-background" />
-      <ColorBlock colorVar="--uitk-taggable-background-hosver" />
-      <ColorBlock colorVar="--uitk-taggable-background-active" />
-      <ColorBlock colorVar="--uitk-taggable-background-disabled" />
-      <ColorBlock colorVar="--uitk-taggable-foreground" />
-      <ColorBlock colorVar="--uitk-taggable-foreground-hover" />
-      <ColorBlock colorVar="--uitk-taggable-foreground-active" />
-      <ColorBlock colorVar="--uitk-taggable-foreground-disabled" />
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Usages
-
-- `Pill`

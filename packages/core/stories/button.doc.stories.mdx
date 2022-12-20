@@ -1,16 +1,15 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   DownloadIcon,
   SearchIcon,
   SendIcon,
   SettingsSolidIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
@@ -37,7 +36,7 @@ A Button executes an action when clicked. Button labels should use only one or t
 
 ##### Don't use when
 
-The use case requires the user to navigate to a new page or window rather than trigger a function, use a `Link` component instead.
+The Button navigates the user to a new page or window rather than triggering a function, in that case a `Link` component is more appropriate.
 
 ## Features
 
@@ -55,7 +54,13 @@ Button contains three variants `cta`, `primary` and `secondary`. If not specifie
 
 ### Button with icon and label
 
-Icons can be put before or after text, or used alone.
+Icons can be put before or after text, or used alone. Check the [Accessibility](#Accessibility) section for guidance on ensuring your Button remains acessible to all.
+
+#### Design considerations
+
+- An icon should be put before the text if it is further describing the button's action, such as 'Upload', 'Submit', 'Play', or 'Done'. This can be useful in busy environments where an additional description can improve speed in locating actions.
+- When you put an icon after the button label, it typically suggests direction or movement, such as opening a menu overlay, expanding a panel or opening a document. In this case, when the button is pressed there is typically an immediate visual change.
+- A button with only an icon and no text should be self-explanatory, ideally using well-known metaphors which are easily related to. If the purpose of the button isn’t clear, a label should be added. If space is a consideration, add a tooltip to the button set to display on hover after a short delay (typically 300ms, `--salt-delay-perceptible`). The tooltip should add context to the action such as 'Edit this form', 'Print this document', or 'Lock document state'.
 
 <Canvas>
   <Story name="Button with icon and label" decorators={[withFlexGap]}>
@@ -76,7 +81,7 @@ Icons can be put before or after text, or used alone.
 
 ### Disabled Button
 
-A button with prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need Button to be focusable, you also need to pass `focusableWhenDisabled="true"`.
+A Button with the prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need a disabled Button to be focusable, you also need to pass `focusableWhenDisabled="true"`.
 
 <Canvas>
   <Story name="Disabled buttons" decorators={[withFlexGap]}>
@@ -94,7 +99,7 @@ A button with prop `disabled="true"` will suppress all functionality along with 
 ### API
 
 ```
-import { Button } from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 ```
 
 ### Props
@@ -115,17 +120,6 @@ The button component can contain the following components:
 ### Characteristics used
 
 <CharacteristicUsage of={Button} />
-
-### --uitkButton CSS custom property API
-
-The default styling values for most Button attributes are provided by the theme variables. A smaller number of attributes
-use hard-coded values local to Button. Both of these can be overridden, see Theme documentation for detailed usage guidance.
-
-The CSS custom properties below are consumed by Button, but not defined by Button. They can be defined via a container or
-a custom class name to override button styling. They will always take precedence over default styles, whether from theme variable
-or declared locally. Again, see Theme documentation for guidance on when to use variables from the custom property API.
-
-<CSSVariableTable of={Button} />
 
 ## Accessibility
 

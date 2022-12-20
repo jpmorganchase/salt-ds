@@ -1,4 +1,4 @@
-import { makePrefixer, useControlled } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import classnames from "classnames";
 import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
 import { isPlainObject } from "../utils";
@@ -90,7 +90,7 @@ function isRangeOrOffsetSelectionValue(
   return selectionValue != null && isPlainObject(selectionValue);
 }
 
-const withBaseName = makePrefixer("uitkCalendarDay");
+const withBaseName = makePrefixer("saltCalendarDay");
 
 export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const {

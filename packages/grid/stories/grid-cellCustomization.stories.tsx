@@ -5,12 +5,12 @@ import {
   GridColumn,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { LinearProgress } from "@jpmorganchase/uitk-lab";
+import { LinearProgress } from "@salt-ds/lab";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };
@@ -87,6 +87,7 @@ const CellCustomizationTemplate: Story<{}> = () => {
       className="grid"
       zebra={true}
       columnSeparators={true}
+      headerIsFocusable={true}
     >
       <RowSelectionCheckboxColumn id="s" />
       <GridColumn
@@ -107,6 +108,7 @@ const CellCustomizationTemplate: Story<{}> = () => {
         id="percentage"
         cellValueComponent={PercentageCellValue}
         defaultWidth={200}
+        minWidth={120}
       />
     </Grid>
   );

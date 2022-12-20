@@ -1,60 +1,51 @@
-.uitk-theme {
-  --uitk-color-blue-100-fade-foreground: rgba(100, 177, 228, var(--uitk-palette-opacity-foreground));
-  --uitk-color-blue-600-fade-foreground: rgba(21, 92, 147, var(--uitk-palette-opacity-foreground));
-  --uitk-color-gray-60-fade-foreground: rgba(197, 201, 208, var(--uitk-palette-opacity-foreground));
-  --uitk-color-gray-70-fade-foreground: rgba(180, 183, 190, var(--uitk-palette-opacity-foreground));
-  --uitk-color-gray-200-fade-foreground: rgba(97, 101, 110, var(--uitk-palette-opacity-foreground));
-  --uitk-color-gray-800-fade-foreground: rgba(36, 37, 38, var(--uitk-palette-opacity-foreground));
-  --uitk-color-gray-90-fade-foreground: rgba(132, 135, 142, var(--uitk-palette-opacity-foreground));
-  --uitk-color-gray-900-fade-foreground: rgba(22, 22, 22, var(--uitk-palette-opacity-foreground));
-  --uitk-color-white-fade-foreground: rgba(255, 255, 255, var(--uitk-palette-opacity-foreground));
+.salt-theme {
+  --salt-color-blue-100-fade-foreground: rgba(100, 177, 228, var(--salt-palette-opacity-foreground));
+  --salt-color-blue-600-fade-foreground: rgba(21, 92, 147, var(--salt-palette-opacity-foreground));
+  --salt-color-gray-70-fade-foreground: rgba(180, 183, 190, var(--salt-palette-opacity-foreground));
+  --salt-color-gray-200-fade-foreground: rgba(97, 101, 110, var(--salt-palette-opacity-foreground));
+  --salt-color-gray-90-fade-foreground: rgba(132, 135, 142, var(--salt-palette-opacity-foreground));
+  --salt-color-gray-900-fade-foreground: rgba(22, 22, 22, var(--salt-palette-opacity-foreground));
+  --salt-color-white-fade-foreground: rgba(255, 255, 255, var(--salt-palette-opacity-foreground));
 
-  --uitk-color-gray-30-fade-border: rgba(224, 228, 233, var(--uitk-palette-opacity-border));
-  --uitk-color-gray-60-fade-border: rgba(197, 201, 208, var(--uitk-palette-opacity-border));
-  --uitk-color-gray-90-fade-border: rgba(132, 135, 142, var(--uitk-palette-opacity-border));
-  --uitk-color-gray-200-fade-border: rgba(97, 101, 110, var(--uitk-palette-opacity-border));
-  --uitk-color-gray-300-fade-border: rgba(76, 80, 91, var(--uitk-palette-opacity-border));
-  --uitk-color-gray-600-fade-border: rgba(47, 49, 54, var(--uitk-palette-opacity-border));
-  --uitk-color-orange-400-fade-border: rgba(238, 133, 43, var(--uitk-palette-opacity-border));
-  --uitk-color-orange-600-fade-border: rgba(224, 101, 25, var(--uitk-palette-opacity-border));
+  --salt-color-gray-60-fade-border: rgba(197, 201, 208, var(--salt-palette-opacity-border));
+  --salt-color-gray-90-fade-border: rgba(132, 135, 142, var(--salt-palette-opacity-border));
+  --salt-color-gray-200-fade-border: rgba(97, 101, 110, var(--salt-palette-opacity-border));
+  --salt-color-gray-300-fade-border: rgba(76, 80, 91, var(--salt-palette-opacity-border));
+  --salt-color-orange-400-fade-border: rgba(238, 133, 43, var(--salt-palette-opacity-border));
+  --salt-color-orange-600-fade-border: rgba(224, 101, 25, var(--salt-palette-opacity-border));
 
-  --uitk-color-gray-90-fade-border-readonly: rgba(132, 135, 142, var(--uitk-palette-opacity-border-readonly));
-  --uitk-color-gray-200-fade-border-readonly: rgba(97, 101, 110, var(--uitk-palette-opacity-border-readonly));
+  --salt-color-gray-90-fade-border-readonly: rgba(132, 135, 142, var(--salt-palette-opacity-border-readonly));
+  --salt-color-gray-200-fade-border-readonly: rgba(97, 101, 110, var(--salt-palette-opacity-border-readonly));
 
-  --uitk-color-blue-600-fade-background: rgba(21, 92, 147, var(--uitk-palette-opacity-background));
-  --uitk-color-blue-700-fade-background: rgba(0, 71, 123, var(--uitk-palette-opacity-background));
-  --uitk-color-gray-20-fade-background: rgba(234, 237, 239, var(--uitk-palette-opacity-background));
-  --uitk-color-gray-60-fade-background: rgba(197, 201, 208, var(--uitk-palette-opacity-background));
-  --uitk-color-gray-70-fade-background: rgba(180, 183, 190, var(--uitk-palette-opacity-background));
-  --uitk-color-gray-200-fade-background: rgba(97, 101, 110, var(--uitk-palette-opacity-background));
-  --uitk-color-gray-300-fade-background: rgba(76, 80, 91, var(--uitk-palette-opacity-background));
-  --uitk-color-gray-700-fade-background: rgba(42, 44, 47, var(--uitk-palette-opacity-background));
-  --uitk-color-gray-800-fade-background: rgba(36, 37, 38, var(--uitk-palette-opacity-background));
-  --uitk-color-orange-400-fade-background: rgba(238, 133, 43, var(--uitk-palette-opacity-background));
-  --uitk-color-orange-600-fade-background: rgba(224, 101, 25, var(--uitk-palette-opacity-background));
-  --uitk-color-white-fade-background: rgba(255, 255, 255, var(--uitk-palette-opacity-background));
+  --salt-color-blue-600-fade-background: rgba(21, 92, 147, var(--salt-palette-opacity-background));
+  --salt-color-blue-700-fade-background: rgba(0, 71, 123, var(--salt-palette-opacity-background));
+  --salt-color-gray-20-fade-background: rgba(234, 237, 239, var(--salt-palette-opacity-background));
+  --salt-color-gray-60-fade-background: rgba(197, 201, 208, var(--salt-palette-opacity-background));
+  --salt-color-gray-70-fade-background: rgba(180, 183, 190, var(--salt-palette-opacity-background));
+  --salt-color-gray-200-fade-background: rgba(97, 101, 110, var(--salt-palette-opacity-background));
+  --salt-color-gray-300-fade-background: rgba(76, 80, 91, var(--salt-palette-opacity-background));
+  --salt-color-gray-600-fade-background: rgba(47, 49, 54, var(--salt-palette-opacity-background));
+  --salt-color-gray-800-fade-background: rgba(36, 37, 38, var(--salt-palette-opacity-background));
+  --salt-color-orange-400-fade-background: rgba(238, 133, 43, var(--salt-palette-opacity-background));
+  --salt-color-orange-600-fade-background: rgba(224, 101, 25, var(--salt-palette-opacity-background));
+  --salt-color-white-fade-background: rgba(255, 255, 255, var(--salt-palette-opacity-background));
 
-  --uitk-color-white-fade-background-readonly: rgba(255, 255, 255, var(--uitk-palette-opacity-readonly));
-  --uitk-color-gray-20-fade-background-readonly: rgba(234, 237, 239, var(--uitk-palette-opacity-readonly));
-  --uitk-color-gray-700-fade-background-readonly: rgba(42, 44, 47, var(--uitk-palette-opacity-readonly));
-  --uitk-color-gray-800-fade-background-readonly: rgba(36, 37, 38, var(--uitk-palette-opacity-readonly));
+  --salt-color-white-fade-background-readonly: rgba(255, 255, 255, var(--salt-palette-opacity-readonly));
+  --salt-color-gray-20-fade-background-readonly: rgba(234, 237, 239, var(--salt-palette-opacity-readonly));
+  --salt-color-gray-600-fade-background-readonly: rgba(47, 49, 54, var(--salt-palette-opacity-readonly));
+  --salt-color-gray-800-fade-background-readonly: rgba(36, 37, 38, var(--salt-palette-opacity-readonly));
 
-  --uitk-color-gray-800-fade-scrim-primary: rgba(36, 37, 38, var(--uitk-palette-opacity-primary-scrim));
-  --uitk-color-black-fade-scrim-primary: rgba(36, 37, 38, var(--uitk-palette-opacity-primary-scrim));
-  --uitk-color-black-fade-scrim-secondary: rgba(0, 0, 0, var(--uitk-palette-opacity-secondary-scrim));
-  --uitk-color-white-fade-scrim-secondary: rgba(255, 255, 255, var(--uitk-palette-opacity-primary-scrim));
+  --salt-color-black-fade-backdrop: rgba(36, 37, 38, var(--salt-palette-opacity-backdrop));
 
-  --uitk-color-gray-90-fade-stroke: rgba(132, 135, 142, var(--uitk-palette-opacity-stroke));
+  --salt-color-blue-100-fade-fill: rgba(100, 177, 228, var(--salt-palette-opacity-fill));
+  --salt-color-blue-300-fade-fill: rgba(51, 141, 205, var(--salt-palette-opacity-fill));
+  --salt-color-blue-500-fade-fill: rgba(38, 112, 169, var(--salt-palette-opacity-fill));
+  --salt-color-blue-600-fade-fill: rgba(21, 92, 147, var(--salt-palette-opacity-fill));
 
-  --uitk-color-blue-100-fade-fill: rgba(100, 177, 228, var(--uitk-palette-opacity-fill));
-  --uitk-color-blue-300-fade-fill: rgba(51, 141, 205, var(--uitk-palette-opacity-fill));
-  --uitk-color-blue-500-fade-fill: rgba(38, 112, 169, var(--uitk-palette-opacity-fill));
-  --uitk-color-blue-600-fade-fill: rgba(21, 92, 147, var(--uitk-palette-opacity-fill));
-
-  --uitk-color-white-fade-separatorOpacity-primary: rgba(255, 255, 255, var(--uitk-palette-opacity-primary-border));
-  --uitk-color-white-fade-separatorOpacity-secondary: rgba(255, 255, 255, var(--uitk-palette-opacity-secondary-border));
-  --uitk-color-white-fade-separatorOpacity-tertiary: rgba(255, 255, 255, var(--uitk-palette-opacity-tertiary-border));
-  --uitk-color-black-fade-separatorOpacity-primary: rgba(0, 0, 0, var(--uitk-palette-opacity-primary-border));
-  --uitk-color-black-fade-separatorOpacity-secondary: rgba(0, 0, 0, var(--uitk-palette-opacity-secondary-border));
-  --uitk-color-black-fade-separatorOpacity-tertiary: rgba(0, 0, 0, var(--uitk-palette-opacity-tertiary-border));
+  --salt-color-white-fade-separatorOpacity-primary: rgba(255, 255, 255, var(--salt-palette-opacity-primary-border));
+  --salt-color-white-fade-separatorOpacity-secondary: rgba(255, 255, 255, var(--salt-palette-opacity-secondary-border));
+  --salt-color-white-fade-separatorOpacity-tertiary: rgba(255, 255, 255, var(--salt-palette-opacity-tertiary-border));
+  --salt-color-black-fade-separatorOpacity-primary: rgba(0, 0, 0, var(--salt-palette-opacity-primary-border));
+  --salt-color-black-fade-separatorOpacity-secondary: rgba(0, 0, 0, var(--salt-palette-opacity-secondary-border));
+  --salt-color-black-fade-separatorOpacity-tertiary: rgba(0, 0, 0, var(--salt-palette-opacity-tertiary-border));
 }

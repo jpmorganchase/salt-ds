@@ -1,5 +1,5 @@
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
-import { ColorChooser, Color } from "@jpmorganchase/uitk-lab";
+import { SaltProvider } from "@salt-ds/core";
+import { ColorChooser, Color } from "@salt-ds/lab";
 import { useState, useCallback } from "react";
 import { customColorMap } from "./custom-color-map";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
@@ -32,7 +32,7 @@ export const JustSwatches: ComponentStory<typeof ColorChooser> = () => {
     setSelectedColor(defaultColor);
   };
   return (
-    <ToolkitProvider density="high">
+    <SaltProvider density="high">
       <ColorChooser
         color={selectedColor}
         showSwatches={true}
@@ -40,7 +40,7 @@ export const JustSwatches: ComponentStory<typeof ColorChooser> = () => {
         onSelect={onSelect}
         onClear={onClear}
       />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -61,14 +61,14 @@ export const JustColorPicker: ComponentStory<typeof ColorChooser> = () => {
     setSelectedColor(defaultColor);
   };
   return (
-    <ToolkitProvider density="high">
+    <SaltProvider density="high">
       <ColorChooser
         color={selectedColor}
         showSwatches={false}
         onSelect={onSelect}
         onClear={onClear}
       />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -87,13 +87,13 @@ export const DefaultColorChooser: ComponentStory<typeof ColorChooser> = () => {
     setSelectedColor(defaultColor);
   };
   return (
-    <ToolkitProvider density="high">
+    <SaltProvider density="high">
       <ColorChooser
         color={selectedColor}
         onSelect={onSelect}
         onClear={onClear}
       />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -114,14 +114,14 @@ export const ColorChooserWithAlphaDisabled: ComponentStory<
     setSelectedColor(defaultColor);
   };
   return (
-    <ToolkitProvider density="high">
+    <SaltProvider density="high">
       <ColorChooser
         color={selectedColor}
         disableAlphaChooser={true}
         onSelect={onSelect}
         onClear={onClear}
       />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -142,13 +142,13 @@ export const ColorPickerAsDefaultTabIfSelectedColorIsNotInTheSwatchesLibrary: Co
     setSelectedColor(defaultColor);
   };
   return (
-    <ToolkitProvider density="high">
+    <SaltProvider density="high">
       <ColorChooser
         color={selectedColor}
         onSelect={onSelect}
         onClear={onClear}
       />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -169,7 +169,7 @@ export const ColorChooserWithDefaultAlpha: ComponentStory<
     setSelectedColor(undefined);
   };
   return (
-    <ToolkitProvider density="high">
+    <SaltProvider density="high">
       <ColorChooser
         color={selectedColor}
         disableAlphaChooser={false}
@@ -177,7 +177,7 @@ export const ColorChooserWithDefaultAlpha: ComponentStory<
         onSelect={onSelect}
         onClear={onClear}
       />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -218,14 +218,14 @@ export const ColorChooserWithCustomColors: ComponentStory<
     setSelectedColor(undefined);
   };
   return (
-    <ToolkitProvider density="high">
+    <SaltProvider density="high">
       <ColorChooser
         color={selectedColor}
-        UITKColorOverrides={customColorMap}
+        saltColorOverrides={customColorMap}
         onSelect={onSelect}
         onClear={onClear}
       />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };
 
@@ -244,13 +244,13 @@ export const ColorChooserReadOnly: ComponentStory<typeof ColorChooser> = () => {
     setSelectedColor(undefined);
   };
   return (
-    <ToolkitProvider density="high">
+    <SaltProvider density="high">
       <ColorChooser
         color={selectedColor}
         onSelect={onSelect}
         onClear={onClear}
         readOnly={true}
       />
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };

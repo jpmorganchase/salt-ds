@@ -1,7 +1,7 @@
-.uitk-theme {
-  --uitk-separable-borderStyle: solid;
+.salt-theme {
+  --salt-separable-borderStyle: solid;
 
-  --uitk-separable-primary-borderColor: var(--uitk-palette-neutral-primary-separator);
-  --uitk-separable-secondary-borderColor: var(--uitk-palette-neutral-secondary-separator);
-  --uitk-separable-tertiary-borderColor: var(--uitk-palette-neutral-tertiary-separator);
+  --salt-separable-primary-borderColor: var(--salt-palette-neutral-primary-separator);
+  --salt-separable-secondary-borderColor: var(--salt-palette-neutral-secondary-separator);
+  --salt-separable-tertiary-borderColor: var(--salt-palette-neutral-tertiary-separator);
 }

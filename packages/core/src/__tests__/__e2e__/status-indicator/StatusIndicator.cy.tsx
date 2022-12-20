@@ -11,20 +11,20 @@ describe("Given a Status Indicator", () => {
   describe("WHEN a status value is provided", () => {
     it("should render an error indicator", () => {
       cy.mount(<DefaultStatusIndicator status="error" />);
-      cy.get(".uitkStatusIndicator").should(
+      cy.get(".saltStatusIndicator").should(
         "have.class",
-        "uitkStatusIndicator-error"
+        "saltStatusIndicator-error"
       );
-      cy.get(".uitkStatusIndicator").should("have.attr", "aria-label", "error");
+      cy.get(".saltStatusIndicator").should("have.attr", "aria-label", "error");
     });
 
     it("should render a success indicator", () => {
       cy.mount(<DefaultStatusIndicator status="success" />);
-      cy.get(".uitkStatusIndicator").should(
+      cy.get(".saltStatusIndicator").should(
         "have.class",
-        "uitkStatusIndicator-success"
+        "saltStatusIndicator-success"
       );
-      cy.get(".uitkStatusIndicator").should(
+      cy.get(".saltStatusIndicator").should(
         "have.attr",
         "aria-label",
         "success"
@@ -33,11 +33,11 @@ describe("Given a Status Indicator", () => {
 
     it("should render a warning indicator", () => {
       cy.mount(<DefaultStatusIndicator status="warning" />);
-      cy.get(".uitkStatusIndicator").should(
+      cy.get(".saltStatusIndicator").should(
         "have.class",
-        "uitkStatusIndicator-warning"
+        "saltStatusIndicator-warning"
       );
-      cy.get(".uitkStatusIndicator").should(
+      cy.get(".saltStatusIndicator").should(
         "have.attr",
         "aria-label",
         "warning"
@@ -46,11 +46,11 @@ describe("Given a Status Indicator", () => {
 
     it("should render an info indicator", () => {
       cy.mount(<DefaultStatusIndicator status="info" />);
-      cy.get(".uitkStatusIndicator").should(
+      cy.get(".saltStatusIndicator").should(
         "have.class",
-        "uitkStatusIndicator-info"
+        "saltStatusIndicator-info"
       );
-      cy.get(".uitkStatusIndicator").should("have.attr", "aria-label", "info");
+      cy.get(".saltStatusIndicator").should("have.attr", "aria-label", "info");
     });
   });
 });

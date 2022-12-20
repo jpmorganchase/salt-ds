@@ -1,19 +1,19 @@
 import React from "react";
-import Link from "@docusaurus/Link";
+import Link from "@site/src/components/link/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { useThemeConfig } from "@docusaurus/theme-common";
 import ThemedImage from "@theme/ThemedImage";
-import { useViewport } from "@jpmorganchase/uitk-core";
+import { useViewport } from "@salt-ds/core";
 
 function LogoThemedImage({ logo, alt, imageClassName }) {
   const viewport = useViewport();
 
-  const isMobileView = viewport <= 996;
+  const isTabletView = viewport <= 1070;
 
   const sources = {
     light: useBaseUrl(logo.src),
-    dark: isMobileView
+    dark: isTabletView
       ? useBaseUrl("/img/logo_mobile.svg")
       : useBaseUrl(logo.srcDark || logo.src),
   };

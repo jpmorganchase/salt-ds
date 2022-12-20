@@ -12,8 +12,8 @@ import {
   ContactSecondaryInfo,
   ContactTertiaryInfo,
   MailLinkComponent,
-} from "@jpmorganchase/uitk-lab";
-import { CallIcon, ChatIcon, MessageIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/lab";
+import { CallIcon, ChatIcon, MessageIcon } from "@salt-ds/icons";
 import { QAContainer, QAContainerProps } from "docs/components";
 import avatar1 from "./assets/avatar1.png";
 
@@ -130,7 +130,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       cols={4}
       vertical
       transposeDensity
-      className="uitkContactDetailsQA"
+      className="saltContactDetailsQA"
       imgSrc={imgSrc}
       height={1150}
     >

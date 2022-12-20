@@ -1,4 +1,4 @@
-import { CheckboxBase } from "@jpmorganchase/uitk-core";
+import { CheckboxBase } from "@salt-ds/lab";
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
 import "./CheckboxCell.css";
@@ -13,14 +13,14 @@ export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
   const isSelected = selRowIdxs.has(row.index);
 
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
-    selectRows({ rowIndex: row.index, meta: true });
-    moveCursor(row.index, column.index);
+    selectRows({ rowIndex: row.index, incremental: true });
+    moveCursor("body", row.index, column.index);
     event.preventDefault();
     event.stopPropagation();
   };
 
   return (
-    <div className="uitkGridCheckboxContainer" onMouseDown={onMouseDown}>
+    <div className="saltGridCheckboxContainer" onMouseDown={onMouseDown}>
       <CheckboxBase
         data-testid="grid-row-selection-checkbox"
         inputProps={{

@@ -1,17 +1,11 @@
-import {
-  Button,
-  Card,
-  FormField,
-  Tooltip,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
+import { Button } from "@salt-ds/core";
 import {
   CallIcon,
   ChatIcon,
   CopyIcon,
   ExportIcon,
   MessageIcon,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import {
   ComboBox,
   ContactAction,
@@ -30,7 +24,11 @@ import {
   SelectionChangeHandler,
   useOverlay,
   ValueComponentProps,
-} from "@jpmorganchase/uitk-lab";
+  Card,
+  FormField,
+  Tooltip,
+  useTooltip,
+} from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { forwardRef, Fragment, ReactNode } from "react";
 

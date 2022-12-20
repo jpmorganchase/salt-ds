@@ -1,6 +1,6 @@
 import { forwardRef, useCallback } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import {
   CalendarNavigation,
   CalendarNavigationProps,
@@ -23,7 +23,7 @@ export type CalendarProps = useCalendarProps & {
   hideOutOfRangeDates?: CalendarCarouselProps["hideOutOfRangeDates"];
 };
 
-const withBaseName = makePrefixer("uitkCalendar");
+const withBaseName = makePrefixer("saltCalendar");
 
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
   function Calendar(props, ref) {

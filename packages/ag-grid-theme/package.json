@@ -1,18 +1,18 @@
 {
-  "name": "@jpmorganchase/uitk-ag-grid-theme",
-  "version": "0.2.1",
+  "name": "@salt-ds/ag-grid-theme",
+  "version": "1.0.0",
   "license": "Apache-2.0",
   "style": "uitk-ag-theme.css",
   "files": [
     "/uitk-ag-theme.css",
-    "/odyssey-ag-theme.css"
+    "/salt-ag-theme.css"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.js",
     "build-watch": "yarn node ./scripts/build.js --watch"
   },
   "publishConfig": {
-    "directory": "../../dist/jpmorganchase-uitk-ag-grid-theme"
+    "directory": "../../dist/salt-ds-ag-grid-theme"
   },
   "devDependencies": {
     "cssnano": "^5.1.13",

@@ -1,4 +1,4 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import {
   createSliderMarkLabelsStyle,
   createSliderMarkLabelStyles,
@@ -8,7 +8,7 @@ import { SliderMark } from "./SliderRailMarks";
 import { useMemo } from "react";
 import "../Slider.css";
 
-const withBaseName = makePrefixer("uitkSliderMarkLabels");
+const withBaseName = makePrefixer("saltSliderMarkLabels");
 
 export interface SliderMarkLabelsProps {
   min: number;

@@ -1,41 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { StackLayout } from "@salt-ds/core";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import parentChildExampleColumns from "../dependencies/parentChildExampleColumns";
 import parentChildExampleData from "../dependencies/parentChildExampleData";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const ParentChildRows = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
-
-  const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
-  };
-
-  const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { agGridProps, containerProps } = useAgGridHelpers(
+    `ag-theme-${themeName}`
   );
 
-  useEffect(() => {
-    if (isGridReady) {
-      api!.sizeColumnsToFit();
-    }
-  }, [isGridReady]);
-
   return (
-    <div>
-      <div>
-        <Switch
-          checked={isNewTheme}
-          onChange={onThemeChange}
-          label="New theme"
-        />
-      </div>
-      <div
-        style={{ marginTop: 25, height: 800, width: 800 }}
-        {...containerProps}
-      >
+    <StackLayout gap={4}>
+      {switcher}
+      <div {...containerProps}>
         <AgGridReact
           animateRows
           treeData
@@ -49,7 +28,7 @@ const ParentChildRows = (props: AgGridReactProps) => {
           rowData={parentChildExampleData}
         />
       </div>
-    </div>
+    </StackLayout>
   );
 };
 

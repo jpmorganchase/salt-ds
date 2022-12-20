@@ -1,0 +1,64 @@
+.componentList {
+  margin: calc(var(--salt-size-unit) * 3) 0;
+}
+
+.componentList table {
+  table-layout: fixed;
+}
+
+.componentList td :first-child {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--salt-size-unit) / 2);
+}
+
+.componentList th {
+  padding: 0;
+}
+
+.componentList th button {
+  /* Remove button default styles so it's not visible but we retain its functionality for ADA purposes */
+  --saltButton-background-hover: transparent;
+  --saltButton-background: transparent;
+  --saltButton-background-active: transparent;
+  --button-text-color-active: var(--button-text-color-hover);
+  --saltButton-width: 100%;
+  --saltButton-padding: 0;
+  --saltButton-text-color: none;
+  --saltButton-textTransform: none;
+  --saltButton-fontWeight: none;
+  --saltButton-letterSpacing: normal;
+  --saltButton-height: auto;
+  --saltIcon-color: inherit;
+  --salt-actionable-primary-foreground-active: var(--button-text-color-hover);
+
+  display: inline;
+  padding: var(--ifm-table-cell-padding);
+}
+
+.componentList th .headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.componentList th .headerContainer div {
+  display: flex;
+  gap: calc(var(--salt-size-unit) / 2);
+}
+
+.componentList .status svg {
+  --icon-size: 12px;
+}
+
+.componentList .status.ready {
+  --saltIcon-color: var(--salt-status-success-foreground);
+}
+
+.componentList .status.progress {
+  --saltIcon-color: var(--salt-status-warning-foreground);
+}
+
+.componentList .status.backlog {
+  --saltIcon-color: var(--salt-status-error-foreground);
+}

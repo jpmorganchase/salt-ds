@@ -1,10 +1,10 @@
-import { makePrefixer, Tooltip, useTooltip } from "@jpmorganchase/uitk-core";
-import { capitalize } from "@jpmorganchase/uitk-lab";
+import { makePrefixer } from "@salt-ds/core";
+import { capitalize, Tooltip, useTooltip } from "@salt-ds/lab";
 import { ReactElement } from "react";
 
 import "./ScopeLabel.css";
 
-const withBaseName = makePrefixer("uitkThemeScopeLabel");
+const withBaseName = makePrefixer("saltThemeScopeLabel");
 
 interface ScopeLabelProps {
   scope: string;

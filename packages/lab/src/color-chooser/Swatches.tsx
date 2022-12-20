@@ -1,11 +1,11 @@
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { AlphaInput } from "./AlphaInputField";
 import { Color } from "./Color";
 import { SwatchesPicker } from "./SwatchesPicker";
 import "./Swatches.css";
 
-const withBaseName = makePrefixer("uitkColorChooserSwatches");
+const withBaseName = makePrefixer("saltColorChooserSwatches");
 
 export interface SwatchesTabProps {
   allColors: string[][];

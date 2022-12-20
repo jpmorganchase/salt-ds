@@ -123,7 +123,7 @@ describe("SwatchesPicker", () => {
       );
       const swatch = element.getByTestId("swatch-#333");
       expect(swatch).toHaveClass(
-        "uitkColorChooserSwatch-active uitkColorChooserSwatch-swatch"
+        "saltColorChooserSwatch-active saltColorChooserSwatch-swatch"
       );
     });
   });

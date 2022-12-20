@@ -1,4 +1,4 @@
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import React, { useRef } from "react";
 
 import { useActivationIndicator } from "./useActivationIndicator";
@@ -12,7 +12,7 @@ interface TabActivationIndicatorProps {
   tabId?: string;
 }
 
-const withBaseName = makePrefixer("uitkTabActivationIndicator");
+const withBaseName = makePrefixer("saltTabActivationIndicator");
 
 export const TabActivationIndicator = ({
   hideThumb = false,

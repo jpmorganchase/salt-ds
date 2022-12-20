@@ -6,11 +6,8 @@ import {
   today,
 } from "@internationalized/date";
 import { CalendarMonth, CalendarMonthProps } from "./CalendarMonth";
-import {
-  makePrefixer,
-  useIsomorphicLayoutEffect,
-} from "@jpmorganchase/uitk-core";
-import { usePrevious } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { usePrevious } from "@salt-ds/core";
 import { useCalendarContext } from "./CalendarContext";
 
 import "./CalendarCarousel.css";
@@ -28,7 +25,7 @@ function usePreviousMonth(visibleMonth: DateValue) {
   return previous ?? today(getLocalTimeZone());
 }
 
-const withBaseName = makePrefixer("uitkCalendarCarousel");
+const withBaseName = makePrefixer("saltCalendarCarousel");
 
 export const CalendarCarousel = forwardRef<
   HTMLDivElement,

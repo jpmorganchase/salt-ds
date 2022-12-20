@@ -1,11 +1,12 @@
 import cn from "classnames";
 import "./BaseCell.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridCellProps } from "./GridColumn";
 import { GridColumnModel } from "./Grid";
-import { FocusEventHandler, useRef, useState } from "react";
+import { Cell, Cursor, useFocusableContent } from "./internal";
+import { CornerTag } from "./CornerTag";
 
-const withBaseName = makePrefixer("uitkGridBaseCell");
+const withBaseName = makePrefixer("saltGridBaseCell");
 
 export function getCellId<T>(rowKey: string, column: GridColumnModel<T>) {
   return `R${rowKey}C${column.info.props.id}`;
@@ -25,53 +26,30 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     children,
   } = props;
 
-  const tdRef = useRef<HTMLTableCellElement>(null);
-  const [isFocusableContent, setFocusableContent] = useState<boolean>(false);
-
-  const onFocus: FocusEventHandler<HTMLTableCellElement> = (event) => {
-    if (event.target === tdRef.current) {
-      const nestedInteractive = tdRef.current.querySelector(`[tabindex="0"]`);
-      if (nestedInteractive) {
-        (nestedInteractive as HTMLElement).focus();
-        setFocusableContent(true);
-      }
-    }
-  };
+  const { ref, isFocusableContent, onFocus } =
+    useFocusableContent<HTMLTableCellElement>();
 
   return (
-    <td
-      ref={tdRef}
+    <Cell
+      ref={ref}
       id={getCellId(row.key, column)}
       data-row-index={row.index}
       data-column-index={column.index}
       data-testid={isFocused ? "grid-cell-focused" : undefined}
       // aria-colindex uses one-based array indexing
       aria-colindex={column.index + 1}
-      // aria-rowindex uses one-based array indexing
-      aria-rowindex={row.index + 1}
       role="gridcell"
-      className={cn(
-        withBaseName(),
-        {
-          [withBaseName("regularSeparator")]:
-            column.separator === "regular" || column.separator === "groupEdge",
-          [withBaseName("pinnedSeparator")]: column.separator === "pinned",
-        },
-        className
-      )}
+      separator={column.separator}
+      isSelected={isSelected}
+      isEditable={isEditable}
+      className={className}
       style={style}
       tabIndex={isFocused && !isFocusableContent ? 0 : -1}
       onFocus={onFocus}
     >
-      <div
-        className={cn(withBaseName("valueContainer"), {
-          [withBaseName("editable")]: isEditable,
-          [withBaseName("selected")]: isSelected,
-        })}
-      >
-        {children}
-      </div>
-      {isFocused && isEditable && <div className={withBaseName("cornerTag")} />}
-    </td>
+      <div className={cn(withBaseName("valueContainer"))}>{children}</div>
+      {isFocused && isEditable && <CornerTag focusOnly={true} />}
+      {isFocused && !isFocusableContent && <Cursor />}
+    </Cell>
   );
 }

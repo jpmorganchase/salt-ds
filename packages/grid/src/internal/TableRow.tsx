@@ -6,14 +6,14 @@ import {
 } from "react";
 import "./TableRow.css";
 import { BaseCell } from "../BaseCell";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import cn from "classnames";
 import { GridColumnModel, GridRowModel } from "../Grid";
 import { FakeCell } from "./FakeCell";
 import { DefaultCellValue } from "./DefaultCellValue";
 import { useGridContext } from "../GridContext";
 
-const withBaseName = makePrefixer("uitkGridTableRow");
+const withBaseName = makePrefixer("saltGridTableRow");
 
 export interface TableRowProps<T> {
   row: GridRowModel<T>;
@@ -28,6 +28,7 @@ export interface TableRowProps<T> {
   gap?: number;
   editorColIdx?: number;
   isCellSelected?: (rowIdx: number, colIdx: number) => boolean;
+  headerIsFocusable?: boolean;
 }
 
 export function TableRow<T>(props: TableRowProps<T>) {
@@ -44,6 +45,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
     gap,
     editorColIdx,
     isCellSelected,
+    headerIsFocusable,
   } = props;
 
   const grid = useGridContext();
@@ -52,14 +54,18 @@ export function TableRow<T>(props: TableRowProps<T>) {
     throw new Error(`Invalid row`);
   }
 
+  const ariaRowIndex = headerIsFocusable ? row.index + 2 : row.index + 1;
+
   return (
     <tr
+      aria-rowindex={ariaRowIndex}
       className={cn(withBaseName(), {
         [withBaseName("zebra")]: zebra,
         [withBaseName("hover")]: isHoverOver,
         [withBaseName("selected")]: isSelected,
         [withBaseName("followedBySelected")]:
           isFollowedBySelected && !isSelected,
+        [withBaseName("first")]: row.index === 0,
       })}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

@@ -1,0 +1,13 @@
+/* Styles applied to the root element */
+.saltPanel {
+  background: var(--saltPanel-background, var(--salt-container-primary-background));
+  color: var(--saltPanel-color, var(--salt-text-primary-foreground));
+  height: var(--saltPanel-height, auto);
+  overflow: auto;
+  padding: var(--saltPanel-padding, calc(var(--salt-size-unit) * 3));
+  width: var(--saltPanel-width, 100%);
+}
+
+.saltPanel-secondary.saltPanel {
+  background: var(--saltPanel-background, var(--salt-container-secondary-background));
+}

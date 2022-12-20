@@ -1,12 +1,13 @@
 import { forwardRef, ForwardedRef, HTMLAttributes, memo } from "react";
 import cx from "classnames";
-import { CheckboxIcon, makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
+import { CheckboxIcon } from "../checkbox";
 import { ListItemType, ListItemProps } from "./listTypes";
 import { Highlighter } from "./Highlighter";
 
 import "./ListItem.css";
 
-const withBaseName = makePrefixer("uitkListItem");
+const withBaseName = makePrefixer("saltListItem");
 
 // A dummy ListItem rendered once and not visible. We measure this to
 // determine height of ListItem and monitor it for size changes (in
@@ -48,7 +49,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     forwardedRef
   ) {
     const className = cx(withBaseName(), classNameProp, {
-      uitkDisabled: disabled,
+      saltDisabled: disabled,
       [withBaseName("checkbox")]: showCheckbox,
     });
     const style =

@@ -1,15 +1,15 @@
 import { ReactElement, useCallback, useState } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import {
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ThemeMode } from "../../header/ScopeSelector";
 import "./LightDarkToggle.css";
 
-const withBaseName = makePrefixer("uitkThemeEditorModeSelector");
+const withBaseName = makePrefixer("saltThemeEditorModeSelector");
 
 export const LightDarkToggle = (props: {
   mode: ThemeMode;

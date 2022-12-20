@@ -11,7 +11,7 @@ import {
   ContactMetadataItem,
   ContactFavoriteToggle,
   ContactAvatar,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 
 const variants: ContactDetailsVariant[] = ["default", "compact", "mini"];
 
@@ -117,7 +117,7 @@ variants.forEach((variant) => {
 
       cy.get("svg").should(
         "have.class",
-        "uitkContactFavoriteToggle-deselected"
+        "saltContactFavoriteToggle-deselected"
       );
 
       cy.mount(
@@ -127,7 +127,7 @@ variants.forEach((variant) => {
         </ContactDetails>
       );
 
-      cy.get("svg").should("have.class", "uitkContactFavoriteToggle-selected");
+      cy.get("svg").should("have.class", "saltContactFavoriteToggle-selected");
     });
 
     it("should toggle favorite on click", () => {
@@ -140,13 +140,13 @@ variants.forEach((variant) => {
 
       cy.get("svg").should(
         "have.class",
-        "uitkContactFavoriteToggle-deselected"
+        "saltContactFavoriteToggle-deselected"
       );
 
       cy.findByLabelText("Favorite").click();
       cy.get("svg").should(
         "have.class",
-        "uitkContactFavoriteToggle-deselecting"
+        "saltContactFavoriteToggle-deselecting"
       );
     });
 
@@ -160,13 +160,13 @@ variants.forEach((variant) => {
 
       cy.get("svg").should(
         "have.class",
-        "uitkContactFavoriteToggle-deselected"
+        "saltContactFavoriteToggle-deselected"
       );
 
       cy.realPress("Tab");
       cy.realPress("Enter");
 
-      cy.get("svg").should("have.class", "uitkContactFavoriteToggle-selected");
+      cy.get("svg").should("have.class", "saltContactFavoriteToggle-selected");
     });
   });
 });

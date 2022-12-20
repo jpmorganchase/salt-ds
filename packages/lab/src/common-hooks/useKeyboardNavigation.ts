@@ -1,4 +1,4 @@
-import { useControlled } from "@jpmorganchase/uitk-core";
+import { useControlled } from "@salt-ds/core";
 import {
   FocusEvent,
   KeyboardEvent,
@@ -344,7 +344,7 @@ export const useKeyboardNavigation = <
     return {
       onBlur: (e: FocusEvent) => {
         //TODO no direct ref to List
-        const sourceTarget = (e.target as HTMLElement).closest(".uitkList");
+        const sourceTarget = (e.target as HTMLElement).closest(".saltList");
         const destTarget = e.relatedTarget as HTMLElement;
         if (sourceTarget && !sourceTarget?.contains(destTarget)) {
           keyboardNavigation.current = false;

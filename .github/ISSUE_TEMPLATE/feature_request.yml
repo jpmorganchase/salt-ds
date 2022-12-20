@@ -1,5 +1,5 @@
 name: Feature request 💡
-description: Suggest new functionality, components or ideas for this project
+description: Suggest new functionality, components or ideas for the Salt Design System.
 labels:
   - "type: enhancement 💡"
   - "status: awaiting triage"
@@ -8,43 +8,44 @@ body:
     attributes:
       value: |
         ### ⚠️ Warning
-        This is a public repository, so **please do not include any company-internal code or details in your bug report**.
+        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report.
   - type: dropdown
     attributes:
       label: Area
       description: |
-        Which aspect(s) of the Salt design system does your proposed feature relate to? Select all that apply.
+        Which aspect(s) of the Salt Design System does your proposed feature relate to? Select all that apply.
       multiple: true
       options:
         - UI Components
-        - Website & documentation
-        - Tools
+        - Documentation
         - Process
+        - Tools
+        - Website
     validations:
       required: true
   - type: textarea
     attributes:
       label: The problem
       description: |
-        A clear and concise description of what the problem is (For example: I'm always frustrated when...). Where relevant, please include screenshots as well. When including code, errors or log messages, please copy-paste them as text, not screenshots.
+        Provide a clear and concise description of what the problem is. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
     validations:
       required: true
   - type: textarea
     attributes:
       label: The solution
-      description: A clear and concise description of what you want to happen instead. Where relevant, please consider attaching design mockups or specs.
+      description: Tell us what functionality or behavior, for example, you would prefer instead. Feel free to attach  design mock ups or specifications you may have.
     validations:
       required: true
   - type: textarea
     attributes:
       label: Alternatives and examples
       description: |
-        A clear and concise description of any alternative solutions or features you've considered or examples of similar solutions you've seen elsewhere. Where relevant, please include screenshots as well. When including code, errors or log messages, please copy-paste them as text, not screenshots.
+        Describe or share alternative solutions or features you've considered that you may have seen elsewhere. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
     validations:
       required: true
   - type: checkboxes
     attributes:
-      label: Are you a JPMorgan Chase employee?
-      description: We ask this in case we need to contact you directly via company-internal systems. Leave this unticked if you are a not a JPMC employee.
+      label: Are you a JPMorgan Chase & Co. employee?
+      description: We ask this in case we need to contact you directly via internal company systems. Leave the box unticked if this doesn’t apply to you.
       options:
-        - label: I am an employee of JPMorgan Chase
+        - label: I am an employee of JPMorgan Chase & Co.

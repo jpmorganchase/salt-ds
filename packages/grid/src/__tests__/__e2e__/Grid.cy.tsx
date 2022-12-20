@@ -5,14 +5,18 @@ import { GridVariants } from "@stories/grid-variants.stories";
 import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
 import { RowSelectionControlled } from "@stories/grid-rowSelectionControlled.stories";
 import { CellCustomization } from "@stories/grid-cellCustomization.stories";
-import { LotsOfColumnGroups } from "@stories/grid.stories";
 import * as groupedStories from "@stories/grid-columnGroups.stories";
-import { Grid, GridColumn, ColumnGroup } from "src";
+import { Grid, GridColumn, ColumnGroup } from "@salt-ds/data-grid";
 
 const composedStories = composeStories(gridStories);
 const composedEditableStories = composeStories(gridEditableStories);
-const { GridExample, LotsOfColumns, SingleRowSelect, SmallGrid } =
-  composedStories;
+const {
+  GridExample,
+  LotsOfColumns,
+  SingleRowSelect,
+  SmallGrid,
+  LotsOfColumnGroups,
+} = composedStories;
 const { EditableCells } = composedEditableStories;
 const { ColumnGroups } = composeStories(groupedStories);
 const findCell = (row: number, col: number) => {
@@ -20,7 +24,9 @@ const findCell = (row: number, col: number) => {
 };
 
 const assertGridReady = () =>
-  findCell(0, 0).should("have.attr", "tabindex", "0");
+  cy
+    .get(`[aria-rowindex="1"] [aria-colindex="1"]`)
+    .should("have.attr", "tabindex", "0");
 
 const clickCell = (row: number, col: number) => {
   findCell(row, col).click({ force: true });
@@ -29,7 +35,7 @@ const clickCell = (row: number, col: number) => {
 const checkRowSelected = (row: number, expectedSelected: boolean) => {
   cy.get(`tr[data-row-index="${row}"]`).should(
     expectedSelected ? "have.class" : "not.have.class",
-    "uitkGridTableRow-selected"
+    "saltGridTableRow-selected"
   );
 };
 
@@ -48,6 +54,16 @@ const expectFakeColumnWidth = (w: number) => {
   cy.findByTestId(`grid-fake-column-header`).should(($el) => {
     expect($el[0].getBoundingClientRect().width).equal(w);
   });
+};
+
+const checkCursorPos = (row: number, col: number) => {
+  cy.focused()
+    .closest("[aria-colindex]")
+    .should("have.attr", "aria-colindex", String(col + 1));
+
+  cy.focused()
+    .closest("[aria-rowindex]")
+    .should("have.attr", "aria-rowindex", String(row + 1));
 };
 
 describe("Grid", () => {
@@ -77,25 +93,25 @@ describe("Grid", () => {
 
     assertGridReady();
 
-    cy.get(".uitkGridTopPart thead tr")
+    cy.get(".saltGridTopPart thead tr")
       .eq(0)
       .find("th")
       .eq(0)
       .should("have.attr", "aria-colindex", "1")
       .should("have.attr", "aria-colspan", "2");
-    cy.get(".uitkGridTopPart thead tr")
+    cy.get(".saltGridTopPart thead tr")
       .eq(1)
       .find("th")
       .eq(0)
       .should("have.attr", "aria-colindex", "1");
 
-    cy.get(".uitkGridTopPart thead tr")
+    cy.get(".saltGridTopPart thead tr")
       .eq(0)
       .find("th")
       .eq(1)
       .should("have.attr", "aria-colindex", "3")
       .should("have.attr", "aria-colspan", "1");
-    cy.get(".uitkGridTopPart thead tr")
+    cy.get(".saltGridTopPart thead tr")
       .eq(1)
       .find("th")
       .eq(2)
@@ -105,7 +121,7 @@ describe("Grid", () => {
   it("Column virtualization", () => {
     cy.mount(<LotsOfColumns />);
     cy.findByTestId("grid-middle-part")
-      .find(".uitkGridTableRow")
+      .find(".saltGridTableRow")
       .should("exist")
       .findAllByRole("gridcell")
       .should("have.length", 16);
@@ -117,7 +133,7 @@ describe("Grid", () => {
         const getCol = (n: number) =>
           cy
             .findByTestId("grid-middle-part")
-            .find(".uitkGridTableRow")
+            .find(".saltGridTableRow")
             .find(`[aria-colindex="${n + 1}"]`);
 
         // Columns A and B have widths of 60, they should be scrolled out
@@ -152,11 +168,11 @@ describe("Grid", () => {
 
   it("Header virtualization in grouped mode", () => {
     cy.mount(<LotsOfColumnGroups />);
-    cy.get(".uitkGridGroupHeaderCell").should("have.length", 4);
+    cy.get(".saltGridGroupHeaderCell").should("have.length", 4);
 
-    cy.get(".uitkGridGroupHeaderCell").eq(0).should("have.text", "Group A");
-    cy.get(".uitkGridGroupHeaderCell").eq(3).should("have.text", "Group D");
-    cy.get(".uitkGridGroupHeaderCell").eq(4).should("not.exist");
+    cy.get(".saltGridGroupHeaderCell").eq(0).should("have.text", "Group A");
+    cy.get(".saltGridGroupHeaderCell").eq(3).should("have.text", "Group D");
+    cy.get(".saltGridGroupHeaderCell").eq(4).should("not.exist");
 
     cy.findByTestId("grid-scrollable")
       .scrollTo(650, 0, { easing: "linear", duration: 300 })
@@ -164,7 +180,7 @@ describe("Grid", () => {
         const getGroup = (n: number) =>
           cy
             .findByTestId("grid-top-part")
-            .find(".uitkGridGroupHeaderRow")
+            .find(".saltGridGroupHeaderRow")
             .find(`[data-group-index="${n}"]`);
 
         getGroup(0).should("not.exist");
@@ -182,37 +198,30 @@ describe("Grid", () => {
   it("Keyboard navigation", () => {
     cy.mount(<GridExample />);
 
-    const checkCursorPos = (row: number, col: number) => {
-      cy.focused()
-        .closest("td")
-        .should("have.attr", "aria-rowindex", String(row + 1))
-        .should("have.attr", "aria-colindex", String(col + 1));
-    };
-
     // we cannot test tabbing in cypress for now
     clickCell(0, 1);
-    checkCursorPos(0, 1);
+    checkCursorPos(1, 1);
 
     cy.focused().realType("{rightarrow}");
-    checkCursorPos(0, 2);
-    cy.focused().realType("{downarrow}");
     checkCursorPos(1, 2);
+    cy.focused().realType("{downarrow}");
+    checkCursorPos(2, 2);
     cy.focused().realType("{leftarrow}");
-    checkCursorPos(1, 1);
+    checkCursorPos(2, 1);
     cy.focused().realType("{uparrow}");
-    checkCursorPos(0, 1);
+    checkCursorPos(1, 1);
     cy.focused().realPress(["End"]);
-    checkCursorPos(0, 5);
+    checkCursorPos(1, 5);
     cy.focused().realPress(["Home"]);
-    checkCursorPos(0, 0);
+    checkCursorPos(1, 0);
     cy.focused().realPress(["ControlLeft", "End"]);
-    checkCursorPos(41, 5);
+    checkCursorPos(42, 5);
     cy.focused().realPress(["ControlLeft", "Home"]);
-    checkCursorPos(0, 0);
+    checkCursorPos(1, 0);
     cy.focused().realPress(["PageDown"]);
     checkCursorPos(14, 0);
     cy.focused().realPress(["PageUp"]);
-    checkCursorPos(0, 0);
+    checkCursorPos(1, 0);
     // TODO other hotkeys
   });
 
@@ -279,20 +288,15 @@ describe("Grid", () => {
 
     assertGridReady();
 
-    cy.findByText("button 1").focus().realPress("Tab");
-    cy.focused()
-      .parents("td")
-      .should("have.attr", "aria-colindex", "1")
-      .should("have.attr", "aria-rowindex", "1");
+    cy.findByText("button 1").focus();
+    cy.realPress("Tab");
+    checkCursorPos(0, 0);
 
     cy.focused().realPress("Tab");
     cy.focused().should("have.text", "button 2");
     cy.focused().realPress(["Shift", "Tab"]);
 
-    cy.focused()
-      .parents("td")
-      .should("have.attr", "aria-colindex", "1")
-      .should("have.attr", "aria-rowindex", "1");
+    checkCursorPos(0, 0);
 
     cy.focused().realPress(["Shift", "Tab"]);
     cy.focused().should("have.text", "button 1");
@@ -321,9 +325,7 @@ describe("Grid", () => {
     cy.findByTestId("grid-cell-editor-input").should("exist").type("{Enter}");
 
     // enter moves focus one cell down
-    cy.focused()
-      .should("have.attr", "aria-colindex", "1")
-      .should("have.attr", "aria-rowindex", "2");
+    checkCursorPos(1, 0);
   });
 
   it("in edit mode Tab moves focus one column to the right", () => {
@@ -336,9 +338,7 @@ describe("Grid", () => {
     cy.findByTestId("grid-cell-editor-input").should("exist").realPress("Tab");
 
     // enter moves focus one cell down
-    cy.focused()
-      .should("have.attr", "aria-colindex", "2")
-      .should("have.attr", "aria-rowindex", "1");
+    checkCursorPos(0, 1);
   });
 
   it("Numeric cell editor", () => {
@@ -359,8 +359,8 @@ describe("Grid", () => {
     it("displays 'Primary' variant by default", () => {
       cy.mount(<GridVariants />);
       cy.findByRole("grid")
-        .should("have.class", "uitkGrid-primaryBackground")
-        .and("not.have.class", "uitkGrid-secondaryBackground");
+        .should("have.class", "saltGrid-primaryBackground")
+        .and("not.have.class", "saltGrid-secondaryBackground");
     });
 
     it("displays 'Secondary' variant", () => {
@@ -368,7 +368,7 @@ describe("Grid", () => {
       cy.findByLabelText("secondary").click();
       cy.findByRole("grid").should(
         "have.class",
-        "uitkGrid-secondaryBackground"
+        "saltGrid-secondaryBackground"
       );
     });
 
@@ -376,19 +376,19 @@ describe("Grid", () => {
       cy.mount(<GridVariants />);
       cy.findByLabelText("zebra").click();
       cy.findByRole("grid")
-        .should("have.class", "uitkGrid-primaryBackground")
-        .and("have.class", "uitkGrid-zebra");
+        .should("have.class", "saltGrid-primaryBackground")
+        .and("have.class", "saltGrid-zebra");
     });
   });
 
   describe("Column Groups", () => {
     it("Shows correct groups", () => {
       cy.mount(<ColumnGroups />);
-      cy.get(".uitkGridGroupHeaderCell")
+      cy.get(".saltGridGroupHeaderCell")
         .eq(0)
         .should("have.attr", "colspan", 2)
         .and("have.text", "Group One");
-      cy.get(".uitkGridGroupHeaderCell")
+      cy.get(".saltGridGroupHeaderCell")
         .eq(1)
         .should("have.attr", "colspan", 1)
         .and("have.text", "Group Two");
@@ -454,7 +454,7 @@ describe("Grid", () => {
           cy.findAllByRole("grid").should("have.length", 2);
           cy.findAllByRole("grid")
             .findAllByTestId("grid-row-selection-checkbox")
-            .should("not.have.class", "uitkGridTableRow-selected");
+            .should("not.have.class", "saltGridTableRow-selected");
 
           // select two rows on the first grid
           cy.findAllByRole("grid")
@@ -473,12 +473,12 @@ describe("Grid", () => {
           cy.findAllByRole("grid")
             .eq(1)
             .get(`tr[data-row-index="2"]`)
-            .should("have.class", "uitkGridTableRow-selected");
+            .should("have.class", "saltGridTableRow-selected");
 
           cy.findAllByRole("grid")
             .eq(1)
             .get(`tr[data-row-index="3"]`)
-            .should("have.class", "uitkGridTableRow-selected");
+            .should("have.class", "saltGridTableRow-selected");
         });
       });
     });
@@ -487,8 +487,8 @@ describe("Grid", () => {
   describe("Cell Customisation", () => {
     it("Renders customised cell values", () => {
       cy.mount(<CellCustomization />);
-      cy.get(".bidAskCellValue").should("have.length", 16);
-      cy.get(".uitkLinearProgress").should("have.length", 16);
+      cy.get(".bidAskCellValue").should("have.length", 15);
+      cy.get(".saltLinearProgress").should("have.length", 15);
     });
   });
 

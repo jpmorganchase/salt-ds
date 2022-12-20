@@ -29,17 +29,18 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   FavoriteIcon,
-} from "../../icons";
+} from "@salt-ds/icons";
+import { FlexLayout } from "@salt-ds/core";
+import { Card, Checkbox } from "@salt-ds/lab";
 import {
   allLocations,
   createDummyInvestors,
   Investor,
   investorKeyGetter,
 } from "./dummyData";
-import { Card, Checkbox, FlexLayout } from "../../core";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };
@@ -62,6 +63,7 @@ const GridStoryTemplate: Story<{}> = (props) => {
       className="grid"
       zebra={true}
       columnSeparators={true}
+      headerIsFocusable={true}
     >
       <ColumnGroup id="groupOne" name="Group One" pinned="left">
         <RowSelectionCheckboxColumn id="rowSelection" />

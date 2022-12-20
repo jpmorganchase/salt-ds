@@ -1,24 +1,15 @@
 import classnames from "classnames";
 import React, { forwardRef, ReactNode, useRef } from "react";
-import {
-  makePrefixer,
-  Button,
-  ButtonProps,
-  Input,
-  InputProps,
-} from "@jpmorganchase/uitk-core";
-import {
-  RefreshIcon,
-  TriangleDownIcon,
-  TriangleUpIcon,
-} from "@jpmorganchase/uitk-icons";
+import { makePrefixer, Button, ButtonProps } from "@salt-ds/core";
+import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
+import { Input, InputProps } from "../input";
 import { useStepperInput } from "./useStepperInput";
 
 import "./StepperInput.css";
 
 import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
 
-const withBaseName = makePrefixer("uitkStepperInput");
+const withBaseName = makePrefixer("saltStepperInput");
 
 export interface StepperInputProps {
   ButtonProps?: Partial<ButtonProps>;

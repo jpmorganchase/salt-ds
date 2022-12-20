@@ -1,49 +1,49 @@
-.uitkList {
-  --list-background: var(--uitk-container-primary-background);
-  --list-borderStyle: var(--uitk-container-borderStyle);
-  --list-borderWidth: var(--uitk-size-border);
+.saltList {
+  --list-background: var(--salt-container-primary-background);
+  --list-borderStyle: var(--salt-container-borderStyle);
+  --list-borderWidth: var(--salt-size-border);
   --list-height: auto;
-  --list-item-height: var(--uitk-size-stackable);
+  --list-item-height: var(--salt-size-stackable);
   --list-item-gap: 0px;
   --list-maxHeight: 100%;
 
   background: var(--list-background);
-  border-color: var(--uitk-container-primary-borderColor);
+  border-color: var(--salt-container-primary-borderColor);
   border-style: var(--list-borderStyle);
   border-width: var(--list-borderWidth);
-  height: var(--uitkList-height, var(--list-height));
+  height: var(--saltList-height, var(--list-height));
   max-height: var(--list-maxHeight);
   outline: none;
   overflow-y: auto;
   position: relative;
   user-select: none;
-  width: var(--uitkList-width, auto);
+  width: var(--saltList-width, auto);
 }
 
-.uitkList-borderless {
+.saltList-borderless {
   --list-borderStyle: none;
 }
 
 /* virtualised list */
-.uitkList-viewport {
+.saltList-viewport {
   --list-item-height: 30px;
   max-height: calc(var(--list-maxHeight) - 2 * var(--list-borderWidth));
   overflow: auto;
 }
 
-.uitkListItemHeader {
-  --uitkList-item-background: var(--list-item-header-background);
+.saltListItemHeader {
+  --saltList-item-background: var(--list-item-header-background);
   color: var(--list-item-header-color);
 }
 
-.uitkListItemHeader[data-sticky="true"] {
-  --uitkList-item-background: var(--list-background);
+.saltListItemHeader[data-sticky="true"] {
+  --saltList-item-background: var(--list-background);
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-.uitkList-collapsible .uitkListItemHeader:after {
+.saltList-collapsible .saltListItemHeader:after {
   border-width: var(--checkbox-borderWidth);
   border-color: var(--checkbox-borderColor);
   content: var(--list-item-header-twisty-content);
@@ -59,18 +59,18 @@
   transition: transform 0.3s;
   width: 12px;
 }
-.uitkListItemHeader[aria-expanded="false"]:after {
+.saltListItemHeader[aria-expanded="false"]:after {
   transform: rotate(-90deg);
 }
 
 /* Selection */
 
-.uitkList-scrollingContentContainer {
+.saltList-scrollingContentContainer {
   box-sizing: inherit;
   position: relative;
 }
 
-.uitkList-virtualized .uitkListItem {
+.saltList-virtualized .saltListItem {
   line-height: 30px;
   position: absolute;
   top: 0;
@@ -78,6 +78,6 @@
   right: 0;
   will-change: transform;
 }
-.uitkList.uitkFocusVisible:after {
+.saltList.saltFocusVisible:after {
   inset: 2px;
 }

@@ -11,16 +11,17 @@ import {
 import {
   Button,
   ButtonProps,
+  Link,
+  LinkProps,
   makePrefixer,
   StatusIndicator,
   useAriaAnnouncer,
   useForkRef,
   ValidationStatus,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 
-import { Link, LinkProps } from "../link";
 import getInnerText from "./internal/getInnerText";
-import { CloseIcon, IconProps } from "@jpmorganchase/uitk-icons";
+import { CloseIcon, IconProps } from "@salt-ds/icons";
 import cx from "classnames";
 
 import "./Banner.css";
@@ -80,7 +81,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   status?: BannerStatus;
 }
 
-const withBaseName = makePrefixer("uitkBanner");
+const withBaseName = makePrefixer("saltBanner");
 
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   {

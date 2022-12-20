@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from "react";
-
-/**
- * Example data can be found here
- * https://bitbucketdc.jpmchase.net/projects/JPMUITK/repos/jpm-ui-toolkit/browse/packages/data-grid/examples/dependencies
- */
+import { StackLayout } from "@salt-ds/core";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
-
-// ideally these css files would be loaded from a link tag
-// pointing to static asset directory for caching
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-material.css";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { Switch } from "@jpmorganchase/uitk-core";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const statusBar = {
   statusPanels: [
@@ -28,37 +18,20 @@ const statusBar = {
 };
 
 const StatusBar = (props: AgGridReactProps) => {
-  const [isNewTheme, setNewTheme] = useState(false);
-
-  const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
-  };
-
-  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { agGridProps, containerProps } = useAgGridHelpers(
+    `ag-theme-${themeName}`
   );
 
-  useEffect(() => {
-    if (isGridReady) {
-      api!.sizeColumnsToFit();
-    }
-  }, [isGridReady]);
-
   return (
-    <div>
-      <div>
-        <Switch
-          checked={isNewTheme}
-          onChange={onThemeChange}
-          label="New theme"
-        />
-      </div>
-      <div style={{ marginTop: 25 }}>
+    <StackLayout gap={4}>
+      {switcher}
+      <StackLayout gap={2}>
         <p>Select rows to enable status bar display</p>
-        <div style={{ height: 800, width: 800 }} {...containerProps}>
+        <div {...containerProps}>
           <AgGridReact
             enableRangeSelection
-            // TODO enableStatusBar
+            rowSelection="multiple"
             statusBar={statusBar}
             columnDefs={dataGridExampleColumns}
             rowData={dataGridExampleData}
@@ -66,8 +39,8 @@ const StatusBar = (props: AgGridReactProps) => {
             {...props}
           />
         </div>
-      </div>
-    </div>
+      </StackLayout>
+    </StackLayout>
   );
 };
 

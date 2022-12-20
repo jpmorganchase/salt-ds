@@ -1,43 +1,23 @@
-import React, { CSSProperties, useEffect, useRef, useState } from "react";
-import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Button, Card, Switch } from "@jpmorganchase/uitk-core";
-import { WarningIcon } from "@jpmorganchase/uitk-icons";
-import "../../uitk-ag-theme.css";
+import { Button } from "@salt-ds/core";
+import { Card } from "@salt-ds/lab";
+import { WarningIcon } from "@salt-ds/icons";
+import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const NoDataOverlay = (props: AgGridReactProps) => {
   const [showModal, setShowModal] = useState(true);
-  const [position, setPosition] = useState<
-    Pick<CSSProperties, "top" | "left" | "width" | "height">
-  >({
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-  });
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isNewTheme, setNewTheme] = useState(false);
-
-  const onThemeChange = () => {
-    setNewTheme(!isNewTheme);
-  };
-
+  const { switcher, themeName } = useAgGridThemeSwitcher();
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers(
-    isNewTheme ? "ag-theme-odyssey" : undefined
+    `ag-theme-${themeName}`
   );
 
   useEffect(() => {
     if (isGridReady) {
       api!.sizeColumnsToFit();
-      const container = containerRef.current!;
-      const {
-        offsetTop: top,
-        clientWidth: width,
-        offsetLeft: left,
-        clientHeight: height,
-      } = container;
-      setPosition({ top, left, width, height });
     }
   }, [isGridReady]);
 
@@ -45,15 +25,11 @@ const NoDataOverlay = (props: AgGridReactProps) => {
     setShowModal(false);
   };
 
-  const handleHide = () => {
-    setShowModal(false);
-  };
-
   const getModalStyle: CSSProperties = {
     position: "absolute",
-    top: position.top,
+    top: "50%",
     width: "100%",
-    left: position.left,
+    left: "50%",
     height: "100%",
     display: "flex",
     justifyContent: "center",
@@ -61,6 +37,7 @@ const NoDataOverlay = (props: AgGridReactProps) => {
     backgroundColor: "rgba(255, 255, 255, 0.6)",
     zIndex: "3",
     textAlign: "center",
+    transform: "translate(-50%, -50%)",
   };
 
   const modal = showModal && (
@@ -124,13 +101,7 @@ const NoDataOverlay = (props: AgGridReactProps) => {
 
   return (
     <div>
-      <div>
-        <Switch
-          checked={isNewTheme}
-          onChange={onThemeChange}
-          label="New theme"
-        />
-      </div>
+      {switcher}
       <div
         style={{ marginTop: 25, position: "relative" }}
         ref={containerRef}

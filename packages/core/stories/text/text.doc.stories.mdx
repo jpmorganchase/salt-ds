@@ -1,19 +1,8 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import {
-  Text,
-  H1,
-  H2,
-  H3,
-  H4,
-  Label,
-  Display1,
-  Display2,
-  Display3,
-} from "@jpmorganchase/uitk-core";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Text } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
-  CSSVariableTable,
 } from "css-variable-docgen-components";
 
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
@@ -84,8 +73,8 @@ The styleAs prop allows you to maintain the correct HTML hierarchy (i.e. for pla
 
 <Canvas>
   <Story name="StyleAs">
-    <Text elementType="p" styleAs="display3">
-      This is a styleAs Display3 example
+    <Text as="p" styleAs="h1">
+      This is a styleAs h1 example
     </Text>
   </Story>
 </Canvas>
@@ -94,12 +83,12 @@ The styleAs prop allows you to maintain the correct HTML hierarchy (i.e. for pla
 
 By using the `maxRows` prop your text component will be truncated and will display the chosen number of rows. An ellipsis will be shown at the end to indicate the text has been truncated. If a value is not set for `maxRows`, the text will wrap.
 
-If you use truncated text, please ensure you are remaining ADA compliant by following our [Accessibility](#Accessibility) guidance.
+If you use truncated text, please ensure you are remaining ADA compliant by reviewing our Accessibility guidance below.
 
 <Canvas>
   <Story name="Truncation">
     <div style={{ width: 150 }}>
-      <Text maxRows={1}>This is a maxRows=1 example</Text>
+      <Text maxRows={1}>This is a truncation example</Text>
     </div>
   </Story>
 </Canvas>
@@ -109,7 +98,7 @@ If you use truncated text, please ensure you are remaining ADA compliant by foll
 ### API
 
 ```
-import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmorganchase/uitk-core";
+import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@salt-ds/core";
 ```
 
 ### Props
@@ -119,6 +108,10 @@ import { Text, H1, H2, H3, H4, Label, Display1, Display2, Display3 } from "@jpmo
 ### CSS Classes
 
 <CSSClassTable of={Text} />
+
+### Characteristics used
+
+<CharacteristicUsage of={Text} />
 
 ## Accessibility
 

@@ -1,12 +1,12 @@
 import { forwardRef, HTMLAttributes } from "react";
 import classnames from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 
 import "./DialogActions.css";
 
 export interface DialogActionsProps extends HTMLAttributes<HTMLDivElement> {}
 
-const withBaseName = makePrefixer("uitkDialogActions");
+const withBaseName = makePrefixer("saltDialogActions");
 
 export const DialogActions = forwardRef<HTMLDivElement, DialogActionsProps>(
   function DialogActions(props, ref) {

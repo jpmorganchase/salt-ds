@@ -1,4 +1,4 @@
-import { List, ListItem } from "@jpmorganchase/uitk-lab";
+import { List, ListItem } from "@salt-ds/lab";
 
 type ItemWithLabel = { label: string };
 const ITEMS: ItemWithLabel[] = [
@@ -160,8 +160,8 @@ const ITEMS_PER_PAGE = 2;
           cy.findByRole("listbox").focus();
           cy.realPress("Tab");
 
-          cy.get("#list .uitkHighlighted").should("not.exist");
-          cy.get("#list .uitkFocusVisible").should("not.exist");
+          cy.get("#list .saltHighlighted").should("not.exist");
+          cy.get("#list .saltFocusVisible").should("not.exist");
         });
       });
     });
@@ -222,8 +222,8 @@ const ITEMS_PER_PAGE = 2;
           cy.get("#list-item-2").realHover();
           cy.get("#list-item-1").realHover();
           cy.get("#test-div").realHover();
-          cy.get("#list .uitkHighlighted").should("not.exist");
-          cy.get("#list .uitkFocusVisible").should("not.exist");
+          cy.get("#list .saltHighlighted").should("not.exist");
+          cy.get("#list .saltFocusVisible").should("not.exist");
 
           cy.findByRole("listbox").focus();
           cy.get("#list-item-2")

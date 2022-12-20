@@ -1,4 +1,4 @@
-.uitkQAContainer {
+.saltQAContainer {
   --qaContainer-cols: 3;
   --qaContainer-height: 900px;
   --qaContainer-width: 1600px;
@@ -8,8 +8,8 @@
   --qaContainer-mode-cols: 2;
   --qaContainer-inner-width: calc(var(--qaContainer-width) - (2px + (2 * var(--qaContainer-padding))));
 
-  --uitkDraggableSnapshot-img-height: var(--qaContainer-height);
-  --uitkDraggableSnapshot-img-width: var(--qaContainer-width);
+  --saltDraggableSnapshot-img-height: var(--qaContainer-height);
+  --saltDraggableSnapshot-img-width: var(--qaContainer-width);
 
   border: solid 1px #ccc;
   height: var(--qaContainer-height);
@@ -22,7 +22,7 @@
   width: var(--qaContainer-width);
 }
 
-.uitkQAContainer-vertical {
+.saltQAContainer-vertical {
   --qaContainer-mode-cols: 1;
 }
 
@@ -36,7 +36,7 @@
   width: var(--bgBlock-outer-width);
 }
 
-.uitkQAContainer-vertical {
+.saltQAContainer-vertical {
   --qaContainer-mode-cols: 1;
 }
 
@@ -48,6 +48,6 @@
   vertical-align: top;
   width: var(--qaContainer-item-width, var(--itemWrapper-calculated-item-width));
 }
-.uitkFormFieldQA.uitkQAContainer {
+.saltFormFieldQA.saltQAContainer {
   height: unset !important;
 }

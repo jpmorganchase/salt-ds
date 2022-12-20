@@ -13,7 +13,7 @@ import {
   Calendar,
   CalendarProps,
   UseRangeSelectionCalendarProps,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { getHolidays } from "nyse-holidays";
 import { useState } from "react";

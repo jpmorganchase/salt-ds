@@ -1,25 +1,26 @@
-.uitkGridGroupHeaderCell {
+.saltGridGroupHeaderCell {
   text-align: left;
   padding: var(--grid-cell-padding);
   position: relative;
   color: var(--grid-groupHeader-color);
   overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 
   font-size: var(--grid-groupHeader-fontSize);
   font-weight: var(--grid-groupHeader-fontWeight);
 }
 
-.uitkGridGroupHeaderCell-rowSeparator {
+.saltGridGroupHeaderCell-rowSeparator {
   position: absolute;
   left: var(--grid-headerRowSeparator-gap);
-  right: var(--grid-headerRowSeparator-gap);
+  right: calc(1px + var(--grid-headerRowSeparator-gap));
   bottom: 0;
   height: var(--grid-headerRowSeparator-height);
   background: var(--grid-groupHeaderRowSeparator-color);
 }
 
-.uitkGridGroupHeaderCell-firstGroupRowSeparator {
+.saltGridGroupHeaderCell-firstGroupRowSeparator {
   position: absolute;
   left: 0;
   right: 4px;
@@ -28,7 +29,7 @@
   background: var(--grid-groupHeaderRowSeparator-color);
 }
 
-.uitkGridGroupHeaderCell-lastGroupRowSeparator {
+.saltGridGroupHeaderCell-lastGroupRowSeparator {
   position: absolute;
   left: 4px;
   right: 0;
@@ -37,8 +38,8 @@
   background: var(--grid-groupHeaderRowSeparator-color);
 }
 
-.uitkGridGroupHeaderCell-columnSeparator,
-.uitkGridGroupHeaderCell-pinnedSeparator {
+.saltGridGroupHeaderCell-columnSeparator,
+.saltGridGroupHeaderCell-pinnedSeparator {
   position: absolute;
   right: 0;
   top: 4px;
@@ -47,7 +48,7 @@
   background: var(--grid-headerColumnSeparator-color);
 }
 
-.uitkGrid-pinnedSeparators .uitkGridGroupHeaderCell-pinnedSeparator {
+.saltGrid-pinnedSeparators .saltGridGroupHeaderCell-pinnedSeparator {
   position: absolute;
   right: 0;
   top: 0;

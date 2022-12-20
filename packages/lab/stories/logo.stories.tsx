@@ -1,4 +1,4 @@
-import { Logo } from "@jpmorganchase/uitk-lab";
+import { Logo } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
@@ -15,7 +15,7 @@ const Template: ComponentStory<typeof Logo> = (args) => {
 export const FeatureLogo = Template.bind({});
 
 FeatureLogo.args = {
-  appTitle: "Toolkit",
+  appTitle: "Salt",
   src: PlaceholderLogo as string,
 };
 

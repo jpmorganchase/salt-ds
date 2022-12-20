@@ -3,7 +3,7 @@ import {
   QueryInput,
   QueryInputCategory,
   QueryInputItem,
-} from "@jpmorganchase/uitk-lab";
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { useMemo, useState } from "react";
 import {

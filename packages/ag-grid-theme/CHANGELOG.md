@@ -1,20 +1,26 @@
-# @jpmorganchase/uitk-ag-grid-theme
+# @salt-ds/ag-grid-theme
 
-## 0.2.1
+## 1.0.0
 
-### Patch Changes
+### Major Changes
 
-- 1f2fc236: Remove import directly from `src` so consumers won't encounter
-  TS error if `skipLibCheck` is set to false.
+- c1bc7479: Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. It offers you well-documented, accessible components as well as comprehensive design templates, style libraries and assets.
 
-## 0.2.0
+  With this initial release we're providing:
 
-### Minor Changes
+  - AG Grid Theme
+  - Border Layout
+  - Button
+  - Data Grid
+  - Flex Layout
+  - Flow Layout
+  - Grid Layout
+  - Icon
+  - Link
+  - Salt Provider
+  - Stack Layout
+  - Status Indicator
+  - Text
+  - Theme
 
-- dd8c7646: Add global css box-sizing as border-box, and remove from components
-
-## 0.1.1
-
-### Patch Changes
-
-- 05f3d98d: Ag grid theme
+  And a number of other lab components.

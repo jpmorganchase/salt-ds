@@ -1,0 +1,19 @@
+.saltDeckLayout {
+  overflow: hidden;
+}
+
+.saltDeckLayout-animate {
+  white-space: nowrap;
+}
+
+.saltDeckLayout-slide-horizontal {
+  width: var(--deckLayout-width);
+  transition: transform var(--salt-animation-duration);
+  transform: translateX(var(--deckLayout-transform-value));
+}
+
+.saltDeckLayout-slide-vertical {
+  height: var(--deckLayout-height);
+  transition: transform var(--salt-animation-duration);
+  transform: translateY(var(--deckLayout-transform-value));
+}

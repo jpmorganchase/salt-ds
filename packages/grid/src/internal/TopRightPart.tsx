@@ -1,13 +1,13 @@
 import { TableColGroup } from "./TableColGroup";
 import { HeaderRow } from "./HeaderRow";
 import "./TopRightPart.css";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { GridColumnGroupModel, GridColumnModel } from "../Grid";
 import { GroupHeaderRow } from "./GroupHeaderRow";
 import cx from "classnames";
 import { useActiveOnWheel } from "./gridHooks";
 
-const withBaseName = makePrefixer("uitkGridTopRightPart");
+const withBaseName = makePrefixer("saltGridTopRightPart");
 
 export interface TopRightPartProps<T> {
   onWheel: EventListener;

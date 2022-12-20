@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { NumberBlock } from "docs/components/NumberBlock";
@@ -9,7 +9,7 @@ import {
   LineBlockDotted,
 } from "docs/components/LineBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Separable" />
+<Meta title="Theme/Characteristics/Separable" />
 
 # Separable
 
@@ -20,80 +20,57 @@ Connected to Container
 - Level 2 - used to divide related areas e.g. heading and body text
 - Level 3 - used to separate areas of content that are not closely related e.g. app header from main content
 
-## CSS Variables
+## Tokens
 
-### Misc
+### Base
 
 <Canvas>
-  <Story name="Misc">
+  <Story name="Base">
     <DocGrid>
       <LineBlockCell />
-      <LineBlockCode>--uitk-separable-borderStyle</LineBlockCode>
+      <LineBlockCode>--salt-separable-borderStyle</LineBlockCode>
     </DocGrid>
   </Story>
 </Canvas>
 
-### Primary variant
+### Primary
 
 <Canvas>
   <Story name="Primary">
     <DocGrid>
       <NumberBlock
         number="0.35"
-        cssVariable="--uitk-separable-primary-borderOpacity"
+        cssVariable="--salt-separable-primary-borderOpacity"
       />
-      <ColorBlock colorVar="--uitk-separable-primary-borderColor" />
+      <ColorBlock colorVar="--salt-separable-primary-borderColor" />
     </DocGrid>
   </Story>
 </Canvas>
 
-### Secondary variant
+### Secondary
 
 <Canvas>
   <Story name="Secondary">
     <DocGrid>
       <NumberBlock
         number="0.25"
-        cssVariable="--uitk-separable-secondary-borderOpacity"
+        cssVariable="--salt-separable-secondary-borderOpacity"
       />
-      <ColorBlock colorVar="--uitk-separable-secondary-borderColor" />
+      <ColorBlock colorVar="--salt-separable-secondary-borderColor" />
     </DocGrid>
   </Story>
 </Canvas>
 
-### Tertiary variant
+### Tertiary
 
 <Canvas>
   <Story name="Tertiary">
     <DocGrid>
       <NumberBlock
         number="0.15"
-        cssVariable="--uitk-separable-tertiary-borderOpacity"
+        cssVariable="--salt-separable-tertiary-borderOpacity"
       />
-      <ColorBlock colorVar="--uitk-separable-tertiary-borderColor" />
+      <ColorBlock colorVar="--salt-separable-tertiary-borderColor" />
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Accordion`
-- `Announcement Dialog`
-- `App Header`
-- `Calendar`
-- `Cascading Menu`
-- `Comments`
-- `Contact Details`
-- `Context Menu` (inherited)
-- `Date Picker`
-- `Drawer`
-- `ECW`
-- `List Builder`
-- `Logo`
-- `Mega Menu`
-- `Preferences Dialog`
-- `Reorderable List`
-- `Selectable Card`
-- `Split Button`
-- `Toolbar (Next)`
-- `Wizard`

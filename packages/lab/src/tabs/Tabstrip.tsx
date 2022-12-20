@@ -1,12 +1,10 @@
 import {
   Button,
   makePrefixer,
-  Tooltip,
   useIdMemo,
   useIsomorphicLayoutEffect,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
-import { AddIcon, OverflowMenuIcon } from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/core";
+import { AddIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import React, {
   ForwardedRef,
@@ -40,11 +38,12 @@ import {
   TabstripProps,
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
+import { Tooltip, useTooltip } from "../tooltip";
 
 import "./Tabstrip.css";
 import "./ThemeTabstrip.css";
 
-const withBaseName = makePrefixer("uitkTabstrip");
+const withBaseName = makePrefixer("saltTabstrip");
 
 const ADD_TAB_LABEL = "Create Tab";
 
@@ -223,7 +222,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
           const { current: tabstrip } = root;
           if (tabstrip) {
             const selectedTab = tabstrip.querySelector(
-              '.uitkTab[aria-selected="true"]'
+              '.saltTab[aria-selected="true"]'
             ) as HTMLElement;
             if (selectedTab) {
               selectedTab.focus();

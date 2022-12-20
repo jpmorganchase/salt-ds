@@ -1,9 +1,8 @@
 import { forwardRef, RefObject } from "react";
-import { Link, LinkProps } from "../link";
+import { LinkProps, Link, makePrefixer } from "@salt-ds/core";
 import "./SkipLink.css";
 import cx from "classnames";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
 
 interface SkipLinkProps extends LinkProps {
   /**
@@ -17,7 +16,7 @@ interface SkipLinkProps extends LinkProps {
   targetRef?: RefObject<HTMLElement>;
 }
 
-const withBaseName = makePrefixer("uitkSkipLink");
+const withBaseName = makePrefixer("saltSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
   function SkipLink({ className, targetRef, ...rest }, ref) {

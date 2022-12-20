@@ -1,4 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
@@ -6,46 +6,39 @@ import { FontWeightBlock } from "docs/components/FontWeightBlock";
 import { BorderBlock } from "docs/components/BorderBlock";
 import { BlankBlockCode } from "docs/components/BlankBlock";
 
-<Meta title="Documentation/Styles and Theming/Characteristics/Navigable" />
+<Meta title="Theme/Characteristics/Navigable" />
 
 # Navigable
 
 Components that allow a user to navigate across UI sections or data sets and change view context.
 
-## CSS Variables
+## Tokens
 
-### All
+### Base
 
 <Canvas>
-  <Story name="All">
+  <Story name="Base">
     <DocGrid>
-      <CursorBlock cursor="--uitk-navigable-cursor-hover" />
-      <CursorBlock cursor="--uitk-navigable-cursor-active" />
-      <CursorBlock cursor="--uitk-navigable-cursor-disabled" />
-      <CursorBlock cursor="--uitk-navigable-cursor-edit" />
-      <FontWeightBlock fontWeight="--uitk-navigable-fontWeight" />
-      <FontWeightBlock fontWeight="--uitk-navigable-fontWeight-hover" />
-      <FontWeightBlock fontWeight="--uitk-navigable-fontWeight-active" />
-      <FontWeightBlock fontWeight="--uitk-navigable-fontWeight-edit" />
-      <ColorBlock colorVar="--uitk-navigable-indicator-active" />
-      <ColorBlock colorVar="--uitk-navigable-indicator-hover" />
-      <ColorBlock colorVar="--uitk-navigable-indicator-activeDisabled" />
-      <ColorBlock colorVar="--uitk-navigable-primary-background" />
-      <ColorBlock colorVar="--uitk-navigable-primary-background-active" />
-      <ColorBlock colorVar="--uitk-navigable-primary-background-hover" />
-      <ColorBlock colorVar="--uitk-navigable-tertiary-background" />
-      <ColorBlock colorVar="--uitk-navigable-tertiary-background-active" />
-      <ColorBlock colorVar="--uitk-navigable-tertiary-background-hover" />
-      <ColorBlock colorVar="--uitk-navigable-secondary-background" />
-      <ColorBlock colorVar="--uitk-navigable-secondary-background-active" />
-      <ColorBlock colorVar="--uitk-navigable-secondary-background-hover" />
+      <CursorBlock cursor="--salt-navigable-cursor-hover" />
+      <CursorBlock cursor="--salt-navigable-cursor-active" />
+      <CursorBlock cursor="--salt-navigable-cursor-disabled" />
+      <CursorBlock cursor="--salt-navigable-cursor-edit" />
+      <FontWeightBlock fontWeight="--salt-navigable-fontWeight" />
+      <FontWeightBlock fontWeight="--salt-navigable-fontWeight-hover" />
+      <FontWeightBlock fontWeight="--salt-navigable-fontWeight-active" />
+      <FontWeightBlock fontWeight="--salt-navigable-fontWeight-edit" />
+      <ColorBlock colorVar="--salt-navigable-indicator-active" />
+      <ColorBlock colorVar="--salt-navigable-indicator-hover" />
+      <ColorBlock colorVar="--salt-navigable-indicator-activeDisabled" />
+      <ColorBlock colorVar="--salt-navigable-primary-background" />
+      <ColorBlock colorVar="--salt-navigable-primary-background-active" />
+      <ColorBlock colorVar="--salt-navigable-primary-background-hover" />
+      <ColorBlock colorVar="--salt-navigable-tertiary-background" />
+      <ColorBlock colorVar="--salt-navigable-tertiary-background-active" />
+      <ColorBlock colorVar="--salt-navigable-tertiary-background-hover" />
+      <ColorBlock colorVar="--salt-navigable-secondary-background" />
+      <ColorBlock colorVar="--salt-navigable-secondary-background-active" />
+      <ColorBlock colorVar="--salt-navigable-secondary-background-hover" />
     </DocGrid>
   </Story>
 </Canvas>
-
-## Usages
-
-- `Announcement Dialog`
-- `Link`
-- `Tabs`
-- `Vertical Nav`

@@ -1,12 +1,5 @@
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  Tooltip,
-  useId,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@jpmorganchase/uitk-icons";
+import { Button, ButtonProps, makePrefixer, useId } from "@salt-ds/core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import {
   ComponentPropsWithRef,
@@ -16,6 +9,7 @@ import {
 } from "react";
 import { Dropdown, DropdownProps } from "../../dropdown";
 import { ListItem, ListItemType } from "../../list";
+import { Tooltip, useTooltip } from "../../tooltip";
 
 import { useCalendarContext } from "./CalendarContext";
 
@@ -41,7 +35,7 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   hideYearDropdown?: boolean;
 }
 
-const withBaseName = makePrefixer("uitkCalendarNavigation");
+const withBaseName = makePrefixer("saltCalendarNavigation");
 
 function useCalendarNavigation() {
   const {

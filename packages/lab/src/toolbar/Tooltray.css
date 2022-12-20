@@ -1,8 +1,8 @@
-.uitkTooltray {
+.saltTooltray {
   --toolbar-tooltray-height: var(--toolbar-size);
 }
 
-.uitkTooltray {
+.saltTooltray {
   background: inherit;
   flex-shrink: 0;
   flex-grow: 0;
@@ -12,15 +12,15 @@
   justify-content: flex-start;
 }
 
-.uitkTooltray-horizontal {
+.saltTooltray-horizontal {
   height: var(--toolbar-tooltray-height);
 }
 
-.uitkTooltray > .Responsive-inner > .uitkToolbarField {
+.saltTooltray > .Responsive-inner > .saltToolbarField {
   flex-shrink: 0;
   flex-grow: 0;
 }
-.uitkTooltray > .Responsive-inner {
+.saltTooltray > .Responsive-inner {
   align-items: center;
   display: flex;
   flex: 1;
@@ -29,24 +29,24 @@
   justify-content: inherit;
 }
 
-/* .uitkTooltray-horizontal > .Responsive-inner > :not(:last-child) { */
-.uitkTooltray-horizontal > .Responsive-inner > * {
-  margin-top: var(--uitk-size-unit);
-  margin-right: var(--uitk-size-unit);
+/* .saltTooltray-horizontal > .Responsive-inner > :not(:last-child) { */
+.saltTooltray-horizontal > .Responsive-inner > * {
+  margin-top: var(--salt-size-unit);
+  margin-right: var(--salt-size-unit);
 }
 
-/* .uitkTooltray-horizontal:first-child {
-  padding-left: var(--uitk-size-unit);
+/* .saltTooltray-horizontal:first-child {
+  padding-left: var(--salt-size-unit);
 } */
-/* .uitkTooltray-horizontal:last-child {
-  padding-right: var(--uitk-size-unit);
+/* .saltTooltray-horizontal:last-child {
+  padding-right: var(--salt-size-unit);
 } */
 
-.uitkTooltray-horizontal:not(:first-child) {
-  margin-left: var(--uitk-size-unit);
-  padding-left: calc(var(--uitk-size-unit) * 2);
+.saltTooltray-horizontal:not(:first-child) {
+  margin-left: var(--salt-size-unit);
+  padding-left: calc(var(--salt-size-unit) * 2);
 }
-.uitkTooltray-horizontal:not(:first-child):before {
+.saltTooltray-horizontal:not(:first-child):before {
   content: "";
   position: absolute;
   background: #c5c9d0;
@@ -56,28 +56,28 @@
   height: 28px;
 }
 
-.uitkTooltray > .Responsive-inner > .uitkToolbarField {
+.saltTooltray > .Responsive-inner > .saltToolbarField {
   flex: 0 0 auto;
 }
 
-.uitkTooltray > .Responsive-inner > *[data-pad-start="true"] {
+.saltTooltray > .Responsive-inner > *[data-pad-start="true"] {
   margin-left: auto;
 }
 
-.uitkTooltray[data-collapsible="dynamic"] {
+.saltTooltray[data-collapsible="dynamic"] {
   flex-shrink: 0;
 }
-.uitkTooltray[data-collapsible="dynamic"] > .Responsive-inner {
+.saltTooltray[data-collapsible="dynamic"] > .Responsive-inner {
   flex-wrap: wrap;
 }
-.uitkTooltray[data-collapsing="true"] {
+.saltTooltray[data-collapsing="true"] {
   flex-shrink: 1;
 }
 
-.uitkTooltray[data-collapsed="true"] {
+.saltTooltray[data-collapsed="true"] {
   flex-shrink: 1;
 }
 
-.uitkTooltray[data-collapsible="dynamic"][data-collapsed="true"] {
+.saltTooltray[data-collapsible="dynamic"][data-collapsed="true"] {
   flex-basis: 0;
 }

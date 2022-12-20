@@ -1,9 +1,0 @@
-.uitkColumnLayout-container {
-  display: flex;
-  flex-direction: row;
-}
-
-.uitkColumnLayout-item {
-  flex-grow: 1;
-  margin: calc(var(--uitk-size-basis-unit) * 2);
-}

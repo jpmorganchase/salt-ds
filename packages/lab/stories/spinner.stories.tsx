@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
-import { Spinner } from "@jpmorganchase/uitk-lab";
+import { Button } from "@salt-ds/core";
+import { Spinner } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 
 export default {

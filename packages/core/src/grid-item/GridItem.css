@@ -1,0 +1,13 @@
+/* Style applied to the root element */
+.saltGridItem {
+  justify-self: var(--gridItem-justifySelf);
+  align-self: var(--gridItem-alignSelf);
+  grid-row-start: var(--gridItem-gridRowStart);
+  grid-column-start: var(--gridItem-gridColumnStart);
+  grid-row-end: var(--gridItem-gridRowEnd);
+  grid-column-end: var(--gridItem-gridColumnEnd);
+}
+
+.saltGridItem-area {
+  grid-area: var(--gridItem-gridArea);
+}

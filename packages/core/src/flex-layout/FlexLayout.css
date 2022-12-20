@@ -1,0 +1,75 @@
+.salt-density-touch {
+  --flexLayout-gap-density-multiplier: 2;
+}
+
+/* Default variables applied to the root element */
+.saltFlexLayout {
+  --flexLayout-gap-multiplier: var(--flexLayout-gap-density-multiplier, 3);
+  --flexLayout-layout-display: flex;
+  --flexLayout-direction: row;
+  --flexLayout-wrap: nowrap;
+  --flexLayout-justify: flex-start;
+  --flexLayout-align: stretch;
+  --flexLayout-separator: var(--salt-size-border);
+  --flexLayout-gap: calc(var(--salt-size-unit) * var(--flexLayout-gap-multiplier));
+}
+
+/* Style applied to the root element */
+.saltFlexLayout {
+  gap: var(--flexLayout-gap);
+  display: var(--flexLayout-layout-display);
+  flex-direction: var(--flexLayout-direction);
+  flex-wrap: var(--flexLayout-wrap);
+  justify-content: var(--flexLayout-justify);
+  align-items: var(--flexLayout-align);
+}
+
+.saltFlexLayout-separator-wrapper {
+  display: contents;
+}
+.saltFlexLayout-separator > *:not(:last-child)::after {
+  position: relative;
+  display: block;
+  content: "";
+  background-color: var(--salt-separable-secondary-borderColor);
+}
+
+/* Row separator */
+
+.saltFlexLayout-separator-row > .saltFlexLayout-separator-wrapper {
+  height: 100%;
+}
+
+.saltFlexLayout-separator-row > *:not(:last-child)::after {
+  width: var(--flexLayout-separator);
+  top: 0;
+}
+.saltFlexLayout-separator-row-start > *:not(:last-child)::after {
+  right: calc(var(--flexLayout-gap) * 1);
+}
+.saltFlexLayout-separator-row-center > *:not(:last-child)::after {
+  right: 0;
+}
+.saltFlexLayout-separator-row-end > *:not(:last-child)::after {
+  right: calc(var(--flexLayout-gap) * -1);
+}
+
+/* Column separator */
+.saltFlexLayout-separator-column > .saltFlexLayout-separator-wrapper {
+  width: 100%;
+}
+
+.saltFlexLayout-separator-column > *:not(:last-child)::after {
+  height: var(--flexLayout-separator);
+  left: 0;
+  width: 100%;
+}
+.saltFlexLayout-separator-column-start > *:not(:last-child)::after {
+  bottom: calc(var(--flexLayout-gap) * 1);
+}
+.saltFlexLayout-separator-column-center > *:not(:last-child)::after {
+  bottom: 0;
+}
+.saltFlexLayout-separator-column-end > *:not(:last-child)::after {
+  bottom: calc(var(--flexLayout-gap) * -1);
+}

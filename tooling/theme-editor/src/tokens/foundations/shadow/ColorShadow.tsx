@@ -4,8 +4,8 @@ import {
   AccordionDetails,
   AccordionSummary,
   capitalize,
-} from "@jpmorganchase/uitk-lab";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+} from "@salt-ds/lab";
+import { makePrefixer } from "@salt-ds/core";
 import { ReactElement } from "react";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { ShadowInnerPattern } from "./ShadowInnerPattern";
@@ -14,7 +14,7 @@ import { ShadowPatternProps } from "./ShadowPatternProps";
 import { URLSearchParamsInit } from "react-router-dom";
 import "./ColorShadow.css";
 
-const withBaseName = makePrefixer("uitkColorShadow");
+const withBaseName = makePrefixer("saltColorShadow");
 interface ColorShadowProps extends ShadowPatternProps {
   innerPattern: string;
   searchParams: URLSearchParams;
@@ -88,7 +88,7 @@ export const ColorShadow = (props: ColorShadowProps): ReactElement => {
                   }
                   return (
                     <ShadowInnerPattern
-                      uitkColorOverrides={props.uitkColorOverrides}
+                      saltColorOverrides={props.saltColorOverrides}
                       entireValue={
                         props.shadowPattern[shadowKey]["value"] ?? ""
                       }

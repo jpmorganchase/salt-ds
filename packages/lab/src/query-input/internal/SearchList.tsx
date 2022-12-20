@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useCallback } from "react";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { List, ListItem, ListItemGroup } from "../../list";
 
 import { SelectionChangeHandler } from "../../common-hooks";
@@ -7,7 +7,7 @@ import { SelectionChangeHandler } from "../../common-hooks";
 import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import "../QueryInput.css";
 
-const withBaseName = makePrefixer("uitkQueryInputSearchList");
+const withBaseName = makePrefixer("saltQueryInputSearchList");
 
 export interface SearchListProps {
   inputValue?: string;

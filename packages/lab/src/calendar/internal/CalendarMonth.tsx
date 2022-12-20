@@ -5,7 +5,7 @@ import {
   SyntheticEvent,
 } from "react";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
+import { makePrefixer } from "@salt-ds/core";
 import { DateValue } from "@internationalized/date";
 import { CalendarDay, CalendarDayProps } from "./CalendarDay";
 import { formatDate, generateVisibleDays } from "./utils";
@@ -21,7 +21,7 @@ export interface CalendarMonthProps extends ComponentPropsWithRef<"div"> {
   TooltipProps?: CalendarDayProps["TooltipProps"];
 }
 
-const withBaseName = makePrefixer("uitkCalendarMonth");
+const withBaseName = makePrefixer("saltCalendarMonth");
 
 export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
   function CalendarMonth(props, ref) {

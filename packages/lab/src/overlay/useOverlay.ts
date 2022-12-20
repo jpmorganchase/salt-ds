@@ -9,13 +9,7 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react-dom-interactions";
-import {
-  isDesktop,
-  margin,
-  useControlled,
-  useFloatingUI,
-  UseFloatingUIProps,
-} from "@jpmorganchase/uitk-core";
+import { margin, useControlled } from "@salt-ds/core";
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,
@@ -24,6 +18,8 @@ import {
   useRef,
 } from "react";
 import { OverlayProps } from "./Overlay";
+import { useFloatingUI, UseFloatingUIProps } from "../popper";
+import { isDesktop } from "../window";
 
 export type UseOverlayProps = Partial<
   Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">

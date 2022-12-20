@@ -1,8 +1,8 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta } from "@storybook/addon-docs";
 import { NumberBlock } from "docs/components/NumberBlock";
 import { DocGrid } from "docs/components/DocGrid";
 
-<Meta title="Documentation/Styles and Theming/Foundations/Opacity" />
+<Meta title="Theme/Foundations/Opacity" />
 
 # Opacity
 
@@ -10,16 +10,11 @@ Opacity values to adjust different attributes.
 
 Opacity is usually used to style components in disabled states, but can also be used in situations where translucency of a component is appropriate e.g. a modal scrim.
 
-## Opacities
+## Tokens
 
-<Canvas>
-  <Story name="Opacity">
-    <DocGrid>
-      <NumberBlock number="0.15" cssVariable="--uitk-opacity-1" />
-      <NumberBlock number="0.25" cssVariable="--uitk-opacity-2" />
-      <NumberBlock number="0.4" cssVariable="--uitk-opacity-3" />
-      <NumberBlock number="0.7" cssVariable="--uitk-opacity-4" />
-      <NumberBlock number="0.8" cssVariable="--uitk-opacity-5" />
-    </DocGrid>
-  </Story>
-</Canvas>
+<DocGrid>
+  <NumberBlock number="0.15" cssVariable="--salt-opacity-1" />
+  <NumberBlock number="0.25" cssVariable="--salt-opacity-2" />
+  <NumberBlock number="0.4" cssVariable="--salt-opacity-3" />
+  <NumberBlock number="0.7" cssVariable="--salt-opacity-4" />
+</DocGrid>

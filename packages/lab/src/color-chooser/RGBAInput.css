@@ -1,45 +1,45 @@
-.uitkColorChooser-rgbaInput {
-  width: var(--uitk-size-unit);
-  border-bottom: var(--uitk-size-border) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
-  padding-top: var(--uitk-size-unit);
+.saltColorChooser-rgbaInput {
+  width: var(--salt-size-unit);
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+  padding-top: var(--salt-size-unit);
 }
 
-.uitkColorChooser-opacityInput {
+.saltColorChooser-opacityInput {
   min-width: 40px !important;
   width: 40px !important;
   min-height: unset !important;
-  border-bottom: var(--uitk-size-border) var(--uitk-editable-borderStyle) var(--uitk-editable-borderColor);
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
 }
 
-.uitkColorChooser-rgbaText {
+.saltColorChooser-rgbaText {
   margin-top: 5px;
-  font-size: var(--uitk-text-label-fontSize);
-  color: var(--uitk-text-secondary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  color: var(--salt-text-secondary-foreground);
   padding-top: 4px;
   padding-right: 6px;
   padding-left: 6px;
 }
 
-.uitkColorChooser-rgbaInputDiv {
+.saltColorChooser-rgbaInputDiv {
   display: flex;
   flex-direction: row;
-  padding: 0px 0px var(--uitk-size-unit) 0px;
+  padding: 0px 0px var(--salt-size-unit) 0px;
 }
 
-.uitkColorChooser-overrideInput {
+.saltColorChooser-overrideInput {
   min-width: 0em;
   background: transparent !important;
-  color: var(--uitk-text-primary-foreground);
-  border-bottom: 1px solid var(--uitk-text-primary-foreground);
+  color: var(--salt-text-primary-foreground);
+  border-bottom: 1px solid var(--salt-text-primary-foreground);
 }
 
-.uitkColorChooser-alphaSpacerDiv {
+.saltColorChooser-alphaSpacerDiv {
   height: 24px;
 }
 
-.uitkColorChooser-textDivOverrides {
-  font-size: var(--uitk-text-label-fontSize);
-  font-weight: var(--uitk-text-fontWeight-strong);
-  color: var(--uitk-text-primary-foreground);
+.saltColorChooser-textDivOverrides {
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-fontWeight-strong);
+  color: var(--salt-text-primary-foreground);
   padding: 0px !important;
 }

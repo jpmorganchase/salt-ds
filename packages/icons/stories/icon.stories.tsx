@@ -4,9 +4,10 @@ import {
   AddDocumentSolidIcon,
   Icon,
   IconProps,
-} from "@jpmorganchase/uitk-icons";
+} from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FlexLayout, FormField, Input, StackLayout } from "../../core";
+import { FlexLayout, StackLayout } from "@salt-ds/core";
+import { FormField, Input } from "@salt-ds/lab";
 import { allIcons } from "./icon.all";
 
 const formatIconName = (icon: string) => {
@@ -47,14 +48,14 @@ const IconGrid = ({
   );
 };
 
-export const ToolkitIcon: ComponentStory<typeof Icon> = (props) => (
+export const SaltIcon: ComponentStory<typeof Icon> = (props) => (
   <AddDocumentIcon {...props} />
 );
-export const ToolkitIconMultipleSizes: ComponentStory<typeof Icon> = () => (
+export const SaltIconMultipleSizes: ComponentStory<typeof Icon> = () => (
   <IconGrid Icon={AddDocumentIcon} />
 );
 
-export const ToolkitTypes: ComponentStory<typeof Icon> = () => (
+export const SaltTypes: ComponentStory<typeof Icon> = () => (
   <FlexLayout wrap gap={2}>
     <AddDocumentIcon size={4} />
     <AddDocumentSolidIcon size={4} />
@@ -65,7 +66,7 @@ export const CustomSVGIcon: ComponentStory<typeof Icon> = () => {
   const CustomIcon = useMemo(
     () => (props: IconProps) => {
       return (
-        <Icon aria-label="custom icon" {...props}>
+        <Icon aria-label="custom icon" viewBox="0 0 18 18" {...props}>
           <path d="M16,2V16H2V2Zm.5-1H1.5a.5.5,0,0,0-.5.5v15a.5.5,0,0,0,.5.5h15a.5.5,0,0,0,.5-.5V1.5A.5.5,0,0,0,16.5,1Z" />
           <rect height="4" rx="0.25" width="12" x="3" y="11" />
         </Icon>
@@ -116,17 +117,17 @@ export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
       >
         <Input value={inputText} onChange={(_, value) => setInputText(value)} />
       </FormField>
-      <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
+      <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
         {allIconNames
           .filter(({ name, icon }) => new RegExp(inputText, "i").test(name))
           .map(({ name, icon }, i) => {
             return (
-              <StackLayout style={{ width: "150px" }} align="center">
+              <StackLayout style={{ width: "150px" }} gap={1} align="center">
                 {createElement(icon, {
                   key: i,
                   size: 2,
                 })}
-                <p>{name}</p>
+                <p style={{ margin: 0 }}>{name}</p>
               </StackLayout>
             );
           })}

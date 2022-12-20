@@ -7,21 +7,22 @@ import {
   useState,
 } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { isDesktop, ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { SaltProvider } from "@salt-ds/core";
 import {
   AppHeader,
   SearchInput,
   Spinner,
   useLayoutEffectSkipFirst,
-} from "@jpmorganchase/uitk-lab";
+  isDesktop,
+} from "@salt-ds/lab";
 import {
   CSSByPattern,
   JSONByScope,
   parseJSONtoCSS,
   ThemeEditor,
-  uitkTheme,
-} from "@jpmorganchase/theme-editor";
-import { ThemeMode } from "@jpmorganchase/theme-editor/src/header/ScopeSelector";
+  saltTheme,
+} from "@salt-ds/theme-editor";
+import { ThemeMode } from "@salt-ds/theme-editor/src/header/ScopeSelector";
 import { ActionType } from "./helpers/Action";
 import { jsonReducer } from "./helpers/jsonReducer";
 import { useTheme } from "./helpers/useTheme";
@@ -29,7 +30,7 @@ import { DefaultView } from "./views/DefaultView";
 import { CSSView } from "./views/CSSView";
 import { saveToDirectory } from "./views/FileHandler";
 
-import "@jpmorganchase/uitk-theme/index.css";
+import "@salt-ds/theme/index.css";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/300-italic.css";
 import "@fontsource/open-sans/400.css";
@@ -63,13 +64,13 @@ export const ThemeEditorApp = (props: {
     props.initialTheme ?? ThemeMode.LIGHT
   );
   const [currentTheme, setThemeWithCallback] = useTheme({
-    themeName: "UITK (Default)",
-    jsonByScope: uitkTheme,
+    themeName: "Salt (Default)",
+    jsonByScope: saltTheme,
   });
   const [directoryName, saveDirectoryName] = useState<string>();
   const [themes, setThemes] = useState<
     { themeName: string; jsonByScope: JSONByScope[] }[]
-  >([{ themeName: "UITK (Default)", jsonByScope: uitkTheme }]);
+  >([{ themeName: "Salt (Default)", jsonByScope: saltTheme }]);
 
   const [jsonByScope, dispatch] = useReducer(jsonReducer, []);
 
@@ -93,7 +94,7 @@ export const ThemeEditorApp = (props: {
 
   const onUseToolkitTheme = useCallback(() => {
     setThemeWithCallback(
-      { themeName: "UITK (Default)", jsonByScope: uitkTheme },
+      { themeName: "Salt (Default)", jsonByScope: saltTheme },
       dispatch
     );
   }, [dispatch, setThemeWithCallback]);
@@ -230,11 +231,11 @@ export const ThemeEditorApp = (props: {
   }, []);
 
   return (
-    <ToolkitProvider>
-      <div className="uitkThemeEditorApp">
-        <div className="uitkThemeEditorApp-leftPane">
+    <SaltProvider>
+      <div className="saltThemeEditorApp">
+        <div className="saltThemeEditorApp-leftPane">
           {props.isLoading ? (
-            <Spinner className="uitkThemeEditorApp-Spinner" />
+            <Spinner className="saltThemeEditorApp-Spinner" />
           ) : (
             <Routes>
               <Route
@@ -278,7 +279,7 @@ export const ThemeEditorApp = (props: {
             </Routes>
           )}
         </div>
-        <div className="uitkThemeEditorAppOutputHeader">
+        <div className="saltThemeEditorAppOutputHeader">
           {isDesktop && (
             <AppHeader>
               <SearchInput
@@ -295,6 +296,6 @@ export const ThemeEditorApp = (props: {
           )}
         </div>
       </div>
-    </ToolkitProvider>
+    </SaltProvider>
   );
 };

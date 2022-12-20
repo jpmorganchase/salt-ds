@@ -1,4 +1,4 @@
-.uitk-density-touch {
+.salt-density-touch {
   --contactDetails-default-primary-fontSize: 30px;
   --contactDetails-default-secondary-fontSize: 16px;
   --contactDetails-compact-primary-fontSize: 16px;
@@ -7,7 +7,7 @@
   --contactDetails-label-width: 80px;
 }
 
-.uitk-density-low {
+.salt-density-low {
   --contactDetails-compact-primary-fontSize: 14px;
   --contactDetails-default-primary-fontSize: 24px;
   --contactDetails-compact-secondary-fontSize: 14px;
@@ -16,7 +16,7 @@
   --contactDetails-icon-size: 16px;
 }
 
-.uitk-density-medium {
+.salt-density-medium {
   --contactDetails-compact-primary-fontSize: 12px;
   --contactDetails-default-primary-fontSize: 18px;
   --contactDetails-compact-secondary-fontSize: 12px;
@@ -25,7 +25,7 @@
   --contactDetails-icon-size: 14px;
 }
 
-.uitk-density-high {
+.salt-density-high {
   --contactDetails-compact-primary-fontSize: 11px;
   --contactDetails-default-primary-fontSize: 14px;
   --contactDetails-compact-secondary-fontSize: 11px;
@@ -34,54 +34,54 @@
   --contactDetails-icon-size: 12px;
 }
 
-.uitkContactDetails {
-  --contactDetails-color: var(--uitk-text-primary-foreground);
-  --contactDetails-label-color: var(--uitk-text-secondary-foreground);
-  --contactDetails-noAvatar-color: var(--uitk-accent-background);
+.saltContactDetails {
+  --contactDetails-color: var(--salt-text-primary-foreground);
+  --contactDetails-label-color: var(--salt-text-secondary-foreground);
+  --contactDetails-noAvatar-color: var(--salt-accent-background);
   --contactDetails-noAvatar-indicator-width: 4px;
   --contactDetails-favoriteToggle-fill: var(--contactDetails-deselected-icon-color);
   --contactDetails-favoriteToggle-marginRight: 0px;
   --contactDetails-favoriteToggle-marginTop: 0px;
-  --contactDetails-mini-secondaryInfo-marginLeft: var(--uitk-size-unit);
-  --contactDetails-mini-stacked-secondaryInfo-marginLeft: calc(var(--uitk-size-unit) * 2);
-  --contactDetails-compact-tertiaryInfo-marginLeft: var(--uitk-size-unit);
+  --contactDetails-mini-secondaryInfo-marginLeft: var(--salt-size-unit);
+  --contactDetails-mini-stacked-secondaryInfo-marginLeft: calc(var(--salt-size-unit) * 2);
+  --contactDetails-compact-tertiaryInfo-marginLeft: var(--salt-size-unit);
 
   /* TODO: Check below tokens with design */
-  --contactDetails-separator-color: var(--uitk-separable-secondary-borderColor);
+  --contactDetails-separator-color: var(--salt-separable-secondary-borderColor);
 }
 
-.uitkContactDetails {
+.saltContactDetails {
   display: grid;
-  padding: var(--uitk-size-unit);
+  padding: var(--salt-size-unit);
 }
 
-.uitkContactDetails.uitkContactDetails-noAvatar {
+.saltContactDetails.saltContactDetails-noAvatar {
   padding-left: 0;
 }
 
-.uitkContactDetails.uitkContactDetails-embedded {
+.saltContactDetails.saltContactDetails-embedded {
   padding: 0;
 }
 
-.uitkContactDetails-default,
-.uitkContactDetails-default-stacked {
+.saltContactDetails-default,
+.saltContactDetails-default-stacked {
   --contactDetails-primary-fontSize: var(--contactDetails-default-primary-fontSize);
   --contactDetails-secondary-fontSize: var(--contactDetails-default-secondary-fontSize);
 }
 
-.uitkContactDetails-compact,
-.uitkContactDetails-compact-stacked {
+.saltContactDetails-compact,
+.saltContactDetails-compact-stacked {
   --contactDetails-primary-fontSize: var(--contactDetails-compact-primary-fontSize);
   --contactDetails-secondary-fontSize: var(--contactDetails-compact-secondary-fontSize);
 }
 
-.uitkContactDetails-mini,
-.uitkContactDetails-mini-stacked {
+.saltContactDetails-mini,
+.saltContactDetails-mini-stacked {
   --contactDetails-primary-fontSize: var(--contactDetails-compact-primary-fontSize);
   --contactDetails-secondary-fontSize: var(--contactDetails-compact-secondary-fontSize);
 }
 
-.uitkContactDetails-default {
+.saltContactDetails-default {
   color: var(--contactDetails-color);
   grid-template-columns: auto auto 1fr auto;
   grid-template-rows: auto auto auto auto auto;
@@ -93,7 +93,7 @@
     ". . metadata metadata";
 }
 
-.uitkContactDetails-default-stacked {
+.saltContactDetails-default-stacked {
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto auto auto auto auto auto;
   grid-template-areas:
@@ -105,7 +105,7 @@
     ". metadata metadata";
 }
 
-.uitkContactDetails-compact {
+.saltContactDetails-compact {
   grid-template-columns: auto auto auto 1fr auto;
   grid-template-rows: auto auto auto;
   grid-template-areas:
@@ -114,7 +114,7 @@
     ". . actions actions actions";
 }
 
-.uitkContactDetails-compact-stacked {
+.saltContactDetails-compact-stacked {
   grid-template-columns: auto auto 1fr auto;
   grid-template-rows: auto auto auto auto;
   grid-template-areas:
@@ -124,122 +124,122 @@
     ". . actions actions";
 }
 
-.uitkContactDetails-mini,
-.uitkContactDetails-mini-stacked {
+.saltContactDetails-mini,
+.saltContactDetails-mini-stacked {
   grid-template-columns: auto minmax(60px, 1fr) auto;
   grid-template-rows: auto;
   grid-template-areas: "primary secondary favorite";
 }
 
-.uitkContactDetails-noAvatar-indicator {
+.saltContactDetails-noAvatar-indicator {
   grid-area: noAvatar;
   width: var(--contactDetails-noAvatar-indicator-width);
   background: var(--contactDetails-noAvatar-color);
-  margin-right: var(--uitk-size-unit);
+  margin-right: var(--salt-size-unit);
 }
 
-.uitkContactAvatar {
+.saltContactAvatar {
   grid-area: avatar;
-  margin-right: var(--uitk-size-unit);
+  margin-right: var(--salt-size-unit);
 }
 
-.uitkContactAvatar-stacked {
-  margin-bottom: var(--uitk-size-unit);
+.saltContactAvatar-stacked {
+  margin-bottom: var(--salt-size-unit);
 }
 
-.uitkContactActions {
+.saltContactActions {
   grid-area: actions;
   display: flex;
-  margin-top: var(--uitk-size-unit);
-  margin-left: calc(var(--uitk-size-unit) * -1);
+  margin-top: var(--salt-size-unit);
+  margin-left: calc(var(--salt-size-unit) * -1);
 }
 
-.uitkContactPrimaryInfo {
+.saltContactPrimaryInfo {
   grid-area: primary;
 }
 
-.uitkContactDetails-default .uitkContactPrimaryInfo {
-  margin-bottom: calc(var(--uitk-size-unit) * 0.5);
+.saltContactDetails-default .saltContactPrimaryInfo {
+  margin-bottom: calc(var(--salt-size-unit) * 0.5);
 }
 
-.uitkContactSecondaryInfo {
+.saltContactSecondaryInfo {
   grid-area: secondary;
 }
 
-.uitkContactDetails-mini .uitkContactSecondaryInfo {
+.saltContactDetails-mini .saltContactSecondaryInfo {
   margin-left: var(--contactDetails-mini-secondaryInfo-marginLeft);
 }
 
 /* TODO Mini-stacked does not really look "stacked". Is it a bug? */
-.uitkContactDetails-mini-stacked .uitkContactSecondaryInfo {
+.saltContactDetails-mini-stacked .saltContactSecondaryInfo {
   margin-left: var(--contactDetails-mini-stacked-secondaryInfo-marginLeft);
 }
 
-.uitkContactSecondaryInfo-icon {
-  margin-right: calc(var(--uitk-size-unit) * 0.5);
+.saltContactSecondaryInfo-icon {
+  margin-right: calc(var(--salt-size-unit) * 0.5);
 }
 
-.uitkContactTertiaryInfo {
+.saltContactTertiaryInfo {
   grid-area: tertiary;
 }
 
-.uitkContactDetails-compact .uitkContactTertiaryInfo {
+.saltContactDetails-compact .saltContactTertiaryInfo {
   margin-left: var(--contactDetails-compact-tertiaryInfo-marginLeft);
 }
 
-.uitkContactTertiaryInfo-icon {
-  margin-right: calc(var(--uitk-size-unit) * 0.5);
+.saltContactTertiaryInfo-icon {
+  margin-right: calc(var(--salt-size-unit) * 0.5);
 }
 
-.uitkContactMetadata {
+.saltContactMetadata {
   grid-area: metadata;
   display: flex;
   flex-direction: column;
-  padding-top: var(--uitk-size-unit);
-  padding-bottom: var(--uitk-size-unit);
+  padding-top: var(--salt-size-unit);
+  padding-bottom: var(--salt-size-unit);
 }
 
-.uitkContactMetadata-expander {
+.saltContactMetadata-expander {
   grid-area: metadataExpander;
-  margin-top: var(--uitk-size-unit);
+  margin-top: var(--salt-size-unit);
 }
 
-.uitkContactMetadata-separator {
+.saltContactMetadata-separator {
   width: 100%;
   height: 1px;
   background: var(--contactDetails-separator-color);
-  margin-bottom: var(--uitk-size-unit);
+  margin-bottom: var(--salt-size-unit);
 }
 
-.uitkContactMetadataItem {
+.saltContactMetadataItem {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: calc(var(--uitk-size-unit) * 0.5);
+  margin-bottom: calc(var(--salt-size-unit) * 0.5);
 }
 
-.uitkContactMetadataItem:last-child {
+.saltContactMetadataItem:last-child {
   margin-bottom: unset;
 }
 
-.uitkContactMetadata-stacked .uitkContactMetadataItem {
+.saltContactMetadata-stacked .saltContactMetadataItem {
   flex-direction: column;
   align-items: flex-start;
 }
 
-.uitkContactMetadataItem-icon {
-  margin-right: calc(var(--uitk-size-unit) * 2);
+.saltContactMetadataItem-icon {
+  margin-right: calc(var(--salt-size-unit) * 2);
   padding-left: 1px;
 }
 
-.uitkContactMetadataItem-label {
+.saltContactMetadataItem-label {
   flex-shrink: 0;
   color: var(--contactDetails-label-color);
-  margin-right: calc(var(--uitk-size-unit) * 2);
+  margin-right: calc(var(--salt-size-unit) * 2);
   width: var(--contactDetails-label-width);
 }
 
-.uitkContactFavoriteToggle {
+.saltContactFavoriteToggle {
   align-self: start;
   grid-area: favorite;
   justify-self: center;
@@ -248,35 +248,35 @@
   margin-top: var(--contactDetails-favoriteToggle-marginTop);
 }
 
-.uitkContactFavoriteToggle-svg {
+.saltContactFavoriteToggle-svg {
   fill: var(--contactDetails-favoriteToggle-fill);
 }
 
-.uitkContactFavoriteToggle-focusVisible {
+.saltContactFavoriteToggle-focusVisible {
   outline: none;
 }
 
-.uitkContactFavoriteToggle-focused {
-  outline: var(--uitk-focused-outline);
+.saltContactFavoriteToggle-focused {
+  outline: var(--salt-focused-outline);
 }
 
-.uitkContactFavoriteToggle-deselected {
-  --contactDetails-favoriteToggle-fill: var(--uitk-measured-borderColor);
+.saltContactFavoriteToggle-deselected {
+  --contactDetails-favoriteToggle-fill: var(--salt-measured-borderColor);
 }
 
-.uitkContactFavoriteToggle-selecting {
-  --contactDetails-favoriteToggle-fill: var(--uitk-measured-fill);
+.saltContactFavoriteToggle-selecting {
+  --contactDetails-favoriteToggle-fill: var(--salt-measured-fill);
 }
 
-.uitkContactFavoriteToggle-selected {
-  --contactDetails-favoriteToggle-fill: var(--uitk-measured-fill);
+.saltContactFavoriteToggle-selected {
+  --contactDetails-favoriteToggle-fill: var(--salt-measured-fill);
 }
 
-.uitkContactFavoriteToggle-deselecting {
-  --contactDetails-favoriteToggle-fill: var(--uitk-measured-borderColor);
+.saltContactFavoriteToggle-deselecting {
+  --contactDetails-favoriteToggle-fill: var(--salt-measured-borderColor);
 }
 
-.uitkContactFavoriteToggle-svg {
+.saltContactFavoriteToggle-svg {
   height: var(--contactDetails-icon-size);
   width: var(--contactDetails-icon-size);
 }

@@ -1,4 +1,4 @@
-import { GridItem } from "@jpmorganchase/uitk-core";
+import { GridItem } from "@salt-ds/core";
 
 /*
  * Important: These tests are meant for testing TypeScript type errors only

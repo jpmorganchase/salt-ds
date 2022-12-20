@@ -1,15 +1,15 @@
 import { ReactElement } from "react";
 import { Route, Routes } from "react-router-dom";
 import cx from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { Tab, Tabstrip, capitalize } from "@jpmorganchase/uitk-lab";
+import { makePrefixer } from "@salt-ds/core";
+import { Tab, Tabstrip, capitalize } from "@salt-ds/lab";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { ThemeMode } from "../../header/ScopeSelector";
-import { UITK_FOUNDATIONS } from "../../utils/uitkValues";
+import { SALT_FOUNDATIONS } from "../../utils/saltValues";
 import { FoundationPatternsList } from "./FoundationsPatternsList";
 import "./Foundations.css";
 
-const withBaseName = makePrefixer("uitkFoundationsView");
+const withBaseName = makePrefixer("saltFoundationsView");
 interface FoundationsViewProps {
   extractValue: (value: string) => string;
   jsonInCurrentScope: JSONByScope[];
@@ -44,7 +44,7 @@ export const FoundationsView = (props: FoundationsViewProps): ReactElement => {
           overflowMenu={true}
           activeTabIndex={props.selectedTabIndex}
         >
-          {UITK_FOUNDATIONS.filter((f) => f !== "fade").map((label, i) => (
+          {SALT_FOUNDATIONS.filter((f) => f !== "fade").map((label, i) => (
             <Tab aria-label={label} label={capitalize(label)} key={i} />
           ))}
         </Tabstrip>
@@ -60,7 +60,7 @@ export const FoundationsView = (props: FoundationsViewProps): ReactElement => {
               patternsInScope={patternsInScope}
               onUpdateJSON={props.onUpdateJSON}
               onModeChange={props.onModeChange}
-              themeName={"uitk"}
+              themeName={"salt"}
             />
           }
         />

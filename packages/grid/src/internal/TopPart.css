@@ -1,4 +1,4 @@
-.uitkGridTopPart {
+.saltGridTopPart {
   position: absolute;
   top: 0;
   left: 0;
@@ -6,19 +6,20 @@
   overflow-x: hidden;
   overflow-y: hidden;
   clip-path: inset(0 var(--grid-rightPart-width) 0 var(--grid-leftPart-width));
+  z-index: var(--grid-middle-header-zIndex);
 }
 
-.uitkGridTopPart-bottomShadow {
+.saltGridTopPart-bottomShadow {
   box-shadow: 0 2px 4px 0 var(--grid-shadow-color);
   clip-path: inset(0 var(--grid-rightPart-width) -10px var(--grid-leftPart-width));
 }
 
-.uitkGridTopPart-space {
+.saltGridTopPart-space {
   height: var(--grid-topPart-height);
   width: var(--grid-total-width);
 }
 
-.uitkGridTopPart table {
+.saltGridTopPart table {
   table-layout: fixed;
   position: absolute;
   top: 0;

@@ -14,12 +14,12 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
-} from "@jpmorganchase/uitk-lab";
-import { FlexItem, FlexLayout } from "@jpmorganchase/uitk-core";
+} from "@salt-ds/lab";
+import { FlexItem, FlexLayout } from "@salt-ds/core";
 import "./grid.stories.css";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };
@@ -61,6 +61,8 @@ const RowSelectionModesTemplate: Story<{}> = () => {
         columnSeparators={true}
         zebra={true}
         rowSelectionMode={rowSelectionMode}
+        headerIsFocusable={rowSelectionMode === "multi"}
+        key={rowSelectionMode}
       >
         {rowSelectionMode === "multi" && (
           <RowSelectionCheckboxColumn id="checkbox" />

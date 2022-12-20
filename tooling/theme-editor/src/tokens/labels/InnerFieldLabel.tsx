@@ -1,12 +1,12 @@
 import { ReactElement } from "react";
 import cn from "classnames";
-import { makePrefixer } from "@jpmorganchase/uitk-core";
-import { capitalize } from "@jpmorganchase/uitk-lab";
+import { makePrefixer } from "@salt-ds/core";
+import { capitalize } from "@salt-ds/lab";
 import { JSONObj } from "../../helpers/parseToJson";
 import "./InnerFieldLabel.css";
 import { SECTIONED_BY_COLOR_STATE } from "../ChildrenValues";
 
-const withBaseName = makePrefixer("uitkInnerFieldLabel");
+const withBaseName = makePrefixer("saltInnerFieldLabel");
 
 interface InnerFieldLabelProps {
   fieldName: string;

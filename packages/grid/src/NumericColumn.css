@@ -1,24 +1,20 @@
-.uitkGridNumericCellValue {
+.saltGridNumericCellValue {
   overflow: hidden;
   text-overflow: ellipsis;
   padding: var(--grid-cell-padding);
   text-align: right;
 }
 
-.uitkGridNumericCellEditor {
-  margin: 0;
-  padding: 0;
-  height: var(--grid-row-height);
-  overflow: hidden;
-  position: relative;
+.saltGridNumericCellEditor {
 }
 
-.uitkGridNumericCellEditor-inputContainer {
+.saltGridNumericCellEditor-inputContainer {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  background: var(--grid-background);
   box-sizing: border-box;
   border-style: dotted;
   border-width: 2px;
@@ -26,7 +22,7 @@
   padding: 0;
 }
 
-.uitkGridNumericCellEditor input {
+.saltGridNumericCellEditor input {
   position: absolute;
   top: 0;
   left: 0;

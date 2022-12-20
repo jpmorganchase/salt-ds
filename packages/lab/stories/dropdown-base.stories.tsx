@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { Button } from "@jpmorganchase/uitk-core";
-import {
-  DropdownBase,
-  DropdownBaseProps,
-  DropdownButton,
-} from "@jpmorganchase/uitk-lab";
+import { Button } from "@salt-ds/core";
+import { DropdownBase, DropdownBaseProps, DropdownButton } from "@salt-ds/lab";
 
 import { Story } from "@storybook/react";
 

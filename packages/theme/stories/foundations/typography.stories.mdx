@@ -1,10 +1,10 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { Meta } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { BlankBlockCode, BlankBlockCell } from "docs/components/BlankBlock";
 import { FontWeightBlock } from "docs/components/FontWeightBlock";
 import { TextBlock } from "docs/components/TextBlock";
 
-<Meta title="Documentation/Styles and Theming/Foundations/Typography" />
+<Meta title="Theme/Foundations/Typography" />
 
 # Typography
 
@@ -12,7 +12,7 @@ The default font set within our foundations is a sans-serif font named Open Sans
 
 You may add it to your project with a npm package e.g. [Fontsource](https://fontsource.org/), or with the [Google Fonts CDN](https://fonts.google.com/).
 
-UITK's default font set would be installed using:
+Salt's default font set would be installed using:
 
 ```js
 import "@fontsource/open-sans/300.css";
@@ -29,41 +29,27 @@ import "@fontsource/open-sans/800.css";
 import "@fontsource/open-sans/800-italic.css";
 ```
 
-## Typography
+## Tokens
 
-<Canvas>
-  <Story name="Typography">
-    <TextBlock
-      lineHeight="--uitk-text-lineHeight"
-      fontFamily="--uitk-typography-fontFamily"
-    />
-    <DocGrid textExample={true}>
-      <BlankBlockCell />
-      <BlankBlockCode>--uitk-typography-fontFamily</BlankBlockCode>
-    </DocGrid>
-    <div style={{ padding: "20px" }} />
-    <TextBlock
-      lineHeight="--uitk-text-lineHeight"
-      fontFamily="--uitk-typography-fontFamily-code"
-    />
-    <DocGrid textExample={true}>
-      <BlankBlockCell />
-      <BlankBlockCode>--uitk-typography-fontFamily-code</BlankBlockCode>
-    </DocGrid>
-  </Story>
-</Canvas>
-
-## Weights
-
-<Canvas>
-  <Story name="Weights">
-    <DocGrid>
-      <FontWeightBlock fontWeight="--uitk-typography-fontWeight-light" />
-      <FontWeightBlock fontWeight="--uitk-typography-fontWeight-regular" />
-      <FontWeightBlock fontWeight="--uitk-typography-fontWeight-medium" />
-      <FontWeightBlock fontWeight="--uitk-typography-fontWeight-semiBold" />
-      <FontWeightBlock fontWeight="--uitk-typography-fontWeight-bold" />
-      <FontWeightBlock fontWeight="--uitk-typography-fontWeight-extraBold" />
-    </DocGrid>
-  </Story>
-</Canvas>
+<DocGrid textExample={true}>
+  <TextBlock
+    lineHeight="--salt-text-lineHeight"
+    fontFamily="--salt-typography-fontFamily"
+  />
+  <BlankBlockCode>--salt-typography-fontFamily</BlankBlockCode>
+</DocGrid>
+<DocGrid textExample={true}>
+  <TextBlock
+    lineHeight="--salt-text-lineHeight"
+    fontFamily="--salt-typography-fontFamily-code"
+  />
+  <BlankBlockCode>--salt-typography-fontFamily-code</BlankBlockCode>
+</DocGrid>
+<DocGrid>
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-light" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-regular" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-medium" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-semiBold" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-bold" />
+  <FontWeightBlock fontWeight="--salt-typography-fontWeight-extraBold" />
+</DocGrid>

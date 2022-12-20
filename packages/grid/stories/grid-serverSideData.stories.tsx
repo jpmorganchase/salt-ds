@@ -10,7 +10,7 @@ import {
 } from "../src";
 
 export default {
-  title: "Grid/New Grid",
+  title: "Data Grid/Data Grid",
   component: Grid,
   argTypes: {},
 };
@@ -57,6 +57,7 @@ const ServerSideDataTemplate: Story<{}> = (props) => {
       zebra={true}
       columnSeparators={true}
       onVisibleRowRangeChange={onVisibleRowRangeChange}
+      headerIsFocusable={true}
     >
       <RowSelectionCheckboxColumn id="rowSelection" />
       <GridColumn

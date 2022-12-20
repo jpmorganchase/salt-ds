@@ -1,11 +1,5 @@
-import {
-  makePrefixer,
-  Tooltip,
-  TooltipProps,
-  useForkRef,
-  useTooltip,
-} from "@jpmorganchase/uitk-core";
-import { CloseIcon } from "@jpmorganchase/uitk-icons";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import cx from "classnames";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";
@@ -13,6 +7,7 @@ import { DateValue } from "@internationalized/date";
 import { DayStatus, useCalendarDay } from "../useCalendarDay";
 import "./CalendarDay.css";
 import { formatDate } from "./utils";
+import { Tooltip, TooltipProps, useTooltip } from "../../tooltip";
 
 export type DateFormatter = (day: Date) => string | undefined;
 
@@ -26,7 +21,7 @@ export interface CalendarDayProps
   TooltipProps?: Partial<TooltipProps>;
 }
 
-const withBaseName = makePrefixer("uitkCalendarDay");
+const withBaseName = makePrefixer("saltCalendarDay");
 
 export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
   function CalendarDay(props, ref) {

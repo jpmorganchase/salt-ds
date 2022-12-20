@@ -1,9 +1,4 @@
-import {
-  makePrefixer,
-  useForkRef,
-  useTooltip,
-  useTooltipContext,
-} from "@jpmorganchase/uitk-core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import cn from "classnames";
 import {
   ForwardedRef,
@@ -16,6 +11,7 @@ import {
 } from "react";
 import { useOverflowDetection } from "../utils";
 import { Highlighter } from "./internal/Highlighter";
+import { useTooltip, useTooltipContext } from "../tooltip";
 
 import "./ListItem.css";
 
@@ -30,7 +26,7 @@ export interface ListItemBaseProps extends HTMLAttributes<HTMLDivElement> {
   tooltipText?: string;
 }
 
-const withBaseName = makePrefixer("uitkListItemDeprecated");
+const withBaseName = makePrefixer("saltListItemDeprecated");
 
 // just to keep line number parity
 //

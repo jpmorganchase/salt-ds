@@ -4,7 +4,7 @@ import {
   useAriaAnnouncer,
   useId,
   Text,
-} from "@jpmorganchase/uitk-core";
+} from "@salt-ds/core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, MouseEvent, Ref, useEffect } from "react";
 
@@ -15,7 +15,7 @@ import {
 
 import "./ContentStatus.css";
 
-const withBaseName = makePrefixer("uitkContentStatus");
+const withBaseName = makePrefixer("saltContentStatus");
 
 export interface ContentStatusProps
   extends HTMLAttributes<HTMLDivElement>,

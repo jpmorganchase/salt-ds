@@ -1,11 +1,11 @@
-import { makePrefixer, useId } from "@jpmorganchase/uitk-core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import cx from "classnames";
 import { forwardRef, HTMLAttributes, useMemo } from "react";
 import { MetricContextProvider, MetricContextValue } from "./internal";
 
 import "./Metric.css";
 
-const withBaseName = makePrefixer("uitkMetric");
+const withBaseName = makePrefixer("saltMetric");
 
 export interface MetricProps
   extends MetricContextValue,

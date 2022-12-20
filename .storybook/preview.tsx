@@ -1,6 +1,6 @@
 import type { Parameters } from "@storybook/react";
 import type { GlobalTypes } from "@storybook/csf";
-import "@jpmorganchase/uitk-theme/index.css";
+import "@salt-ds/theme/index.css";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/300-italic.css";
 import "@fontsource/open-sans/400.css";
@@ -13,6 +13,7 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/700-italic.css";
 import "@fontsource/open-sans/800.css";
 import "@fontsource/open-sans/800-italic.css";
+import "./styles.css";
 
 import { ComponentProps, ReactNode } from "react";
 import { withTheme } from "docs/decorators/withTheme";
@@ -20,7 +21,7 @@ import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
-import { ToolkitProvider } from "@jpmorganchase/uitk-core";
+import { SaltProvider } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
 
 const densities = ["touch", "low", "medium", "high"];
@@ -99,19 +100,14 @@ export const parameters: Parameters = {
       method: "alphabetical",
       order: [
         "Documentation",
+        ["Core", "Icons", "Lab"],
+        "Theme",
         [
-          "Styles and Theming",
-          [
-            "Introduction",
-            "Foundations",
-            ["Introduction", "*"],
-            "Palette",
-            "Characteristics",
-            ["Introduction", "*"],
-          ],
-          "Icons",
-          "Core",
-          "Lab",
+          "About the Salt Theme",
+          "Foundations",
+          "Palettes",
+          ["*", "Opacities"],
+          "Characteristics",
         ],
         "Icons",
         "Core",
@@ -126,9 +122,7 @@ export const parameters: Parameters = {
     }: ComponentProps<typeof DocsContainer> & { children?: ReactNode }) => (
       // @ts-ignore DocsContainer does not support React18 types
       <DocsContainer context={context}>
-        <ToolkitProvider mode={context.globals?.mode}>
-          {children}
-        </ToolkitProvider>
+        <SaltProvider mode={context.globals?.mode}>{children}</SaltProvider>
       </DocsContainer>
     ),
   },
@@ -138,7 +132,7 @@ export const parameters: Parameters = {
 
 // Bottom most is outermost
 export const decorators = [
-  // When theme provider alone is outside of density provider, some variables can't be resolved. Use withToolkitProvider
+  // When theme provider alone is outside of density provider, some variables can't be resolved. Use withSaltProvider
   withResponsiveWrapper,
   withTestIdWrapper,
   withTheme,

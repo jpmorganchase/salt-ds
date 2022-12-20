@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as skipLinkStories from "@stories/skip-link.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { SkipLink, SkipLinks } from "@jpmorganchase/uitk-lab";
+import { SkipLink, SkipLinks } from "@salt-ds/lab";
 
 const composedStories = composeStories(skipLinkStories);
 const { Default, MultipleLinks } = composedStories;
@@ -31,9 +31,9 @@ export const NoTargetRef = () => {
 
           <article id="main">
             <section>
-              <h1>UI Toolkit</h1>
+              <h1>Salt</h1>
               <p>
-                UITK provides you with a suite of UI components and a flexible
+                Salt provides you with a suite of UI components and a flexible
                 theming system. With no customisation, the default theme offers
                 an attractive and modern look-and-feel, with both light and dark
                 variants and support for a range of UI densities. We have
@@ -43,9 +43,7 @@ export const NoTargetRef = () => {
             </section>
             <section>
               <h1>Goals</h1>
-              <p>
-                The UITK has been developed with the following design goals:
-              </p>
+              <p>Salt has been developed with the following design goals:</p>
               <ul>
                 <li>
                   Providing a comprehensive set of commonly-used UI controls
