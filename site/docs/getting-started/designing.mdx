@@ -12,9 +12,10 @@ import Assets4 from "@site/static/img/design-getting-started/assets4.png";
 import SelectIconImg from "@site/static/img/design-getting-started/SelectIconImg.png";
 import { InlineCard, CardProps } from "@site/src/components/card/Card";
 import Content from "@site/src/components/content/Content.tsx";
-
+import { PrintIcon } from "@salt-ds/icons";
+import { SaltProvider } from "@salt-ds/core";
 import DesignCards, { DesignCard } from "./_designing/DesignCards.tsx";
-import IconsTable from "./_designing/IconsTable.tsx";
+import IconsTable, { DensityIcon } from "./_designing/IconsTable.tsx";
 
 import styles from "./designing.module.css";
 
@@ -185,7 +186,15 @@ Our base size for HD/default is 10px. However, for accessibility and visual desi
 
 The default icon set is 12px for both high and medium density, 14px for low density and 16px for touch density. If necessary, you can adjust your icon size according to your UI designs in multiples of 2X, 3X, 4X, etc.
 
-<IconsTable />
+<IconsTable caption="Example of an icon (print) in different densities and sizes">
+
+| Size                                                 | High Density (HD)                                                           | Medium Density (MD)                                                           | Low Density (LD)                                                           | Touch Density (TD)                                                           |
+| ---------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| 1X <span className={styles.colored}>(default)</span> | <DensityIcon density="high" icon={<PrintIcon />}>12px</DensityIcon>         | <DensityIcon density="medium" icon={<PrintIcon />}>12px</DensityIcon>         | <DensityIcon density="low" icon={<PrintIcon />}>14px</DensityIcon>         | <DensityIcon density="touch" icon={<PrintIcon />}>16px</DensityIcon>         |
+| 2X                                                   | <DensityIcon density="high" icon={<PrintIcon size={2}/>}>20px</DensityIcon> | <DensityIcon density="medium" icon={<PrintIcon size={2}/>}>24px</DensityIcon> | <DensityIcon density="low" icon={<PrintIcon size={2}/>}>28px</DensityIcon> | <DensityIcon density="touch" icon={<PrintIcon size={2}/>}>32px</DensityIcon> |
+| 3X                                                   | <DensityIcon density="high" icon={<PrintIcon size={3}/>}>30px</DensityIcon> | <DensityIcon density="medium" icon={<PrintIcon size={3}/>}>36px</DensityIcon> | <DensityIcon density="low" icon={<PrintIcon size={3}/>}>42px</DensityIcon> | <DensityIcon density="touch" icon={<PrintIcon size={3}/>}>48px</DensityIcon> |
+
+</IconsTable>
 
 :::info Need support?
 

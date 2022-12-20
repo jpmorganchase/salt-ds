@@ -9,3 +9,7 @@
 .strong {
   font-weight: bold;
 }
+
+.colored {
+  color: var(--site-tertiary-accent-purple);
+}
