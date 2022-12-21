@@ -16,7 +16,7 @@ export const TriangleDownIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="m6 8.5 5-5H1l5 5z" />
+      <path d="m6 8.5 5-5H1l5 5Z" />
     </Icon>
   );
 });

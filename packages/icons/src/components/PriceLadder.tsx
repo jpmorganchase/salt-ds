@@ -14,7 +14,11 @@ export const PriceLadderIcon = forwardRef<SVGSVGElement, PriceLadderIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M3 2h6V0h1v12H9V9H3v3H2V0h1v2zm6 3V3H3v2h6zM3 6v2h6V6H3z" />
+        <path
+          fillRule="evenodd"
+          d="M3 2V0H2v12h1V9h6v3h1V0H9v2H3Zm6 3V3H3v2h6ZM3 6v2h6V6H3Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

@@ -16,7 +16,11 @@ export const MessageSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M12 1v10H0V1h12zM2.1 3.354l-.611.791 4.512 3.486 4.512-3.486-.611-.791-3.9 3.014-3.9-3.014z" />
+      <path
+        fillRule="evenodd"
+        d="M12 1H0v10h12V1ZM2.1 3.354l-.612.792L6 7.632l4.512-3.486-.612-.792L6 6.368 2.1 3.354Z"
+        clipRule="evenodd"
+      />
     </Icon>
   );
 });

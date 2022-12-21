@@ -14,8 +14,12 @@ export const AddDocumentIcon = forwardRef<SVGSVGElement, AddDocumentIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5 5h1v2h2v1H6v2H5V8H3V7h2V5z" />
-        <path d="M8.707 0 11 2.293V12H1V0h7.707zM1.5.5V0v.5zM2 1v10h8V4H7V1H2zm8 1.707L8.293 1H8v2h2v-.293z" />
+        <path d="M6 5H5v2H3v1h2v2h1V8h2V7H6V5Z" />
+        <path
+          fillRule="evenodd"
+          d="M1 12V0h8l2 2v10H1Zm9-1V4H7V1H2v10h8Zm0-8.586V3H8V1h.586L10 2.414Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

@@ -16,7 +16,11 @@ export const RemoveDocumentSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M9.207 0H1v12h10V1.793L9.207 0zM8 1v2h2.25v1H7V1h1zm0 6v1H3V7h5z" />
+      <path
+        fillRule="evenodd"
+        d="M1 12V0h8l2 2v10H1ZM7 1h1v2h2v1H7V1Zm1 6H3v1h5V7Z"
+        clipRule="evenodd"
+      />
     </Icon>
   );
 });

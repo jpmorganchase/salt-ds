@@ -14,8 +14,12 @@ export const StorageIcon = forwardRef<SVGSVGElement, StorageIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M8 6H4v1h4V6z" />
-        <path d="M0 1h12v3h-1v8H1V4H0V1zm11 1H1v1h10V2zm-1 3H2v6h8V5z" />
+        <path d="M8 6H4v1h4V6Z" />
+        <path
+          fillRule="evenodd"
+          d="M0 1v3h1v8h10V4h1V1H0Zm11 1H1v1h10V2Zm-1 3H2v6h8V5Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }
