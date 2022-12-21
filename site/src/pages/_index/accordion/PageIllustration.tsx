@@ -11,7 +11,7 @@ export default (props) => (
   >
     <path fill="#00314C" d="M0 0h1055v934H0z" />
     <mask
-      id="a"
+      id="a1"
       width={279}
       height={279}
       x={473}
@@ -27,7 +27,7 @@ export default (props) => (
         d="M750.38 744.39 612.2 882.55 474.05 744.39l138.16-138.16z"
       />
     </mask>
-    <g stroke="#fff" mask="url(#a)">
+    <g stroke="#fff" mask="url(#a1)">
       <path d="M598.52 896.94H320.78m284.12-6.37H327.14m284.12-6.37H333.52m284.11-6.37H339.9m284.1-6.37H346.26m284.11-6.36H352.63m284.12-6.38H359m284.11-6.37H365.37m284.12-6.37H371.74m284.11-6.37H378.11m284.12-6.37H384.48m284.12-6.37H390.85m284.11-6.37H397.22m284.12-6.37H403.59m284.11-6.37H409.97m284.11-6.37H416.33m284.12-6.37H422.7m284.12-6.37H429.07m284.12-6.37H435.44m284.12-6.38H441.82m284.11-6.36H448.19m284.11-6.37H454.55m284.12-6.37H460.93m284.11-6.37H467.29m284.12-6.38H473.67m284.11-6.37H480.04m284.11-6.36H486.4m284.12-6.37H492.78m284.11-6.37H499.15m284.11-6.38H505.52m284.11-6.37H511.89M796 699.46H518.26m284.11-6.36H524.63m284.04-6.31H530.93m284.05-6.31H537.24m284.05-6.3H543.55m284.05-6.31H549.85m284.05-6.31H556.16m284.04-6.3H562.48m284.03-6.31H568.77m284.05-6.3H575.07m284.06-6.31H581.38m284.05-6.31H587.7m284.04-6.3H593.99m284.05-6.31H600.3m284.05-6.3H606.61" />
     </g>
     <path stroke="#FED68E" strokeWidth={2} d="M472 600h559.02" />
@@ -111,18 +111,18 @@ export default (props) => (
     <path
       fill="#fff"
       fillOpacity={0.15}
-      stroke="url(#b)"
+      stroke="url(#b1)"
       strokeWidth={5}
       d="M746.52 64.8a10.13 10.13 0 1 0-20.25-.01 10.14 10.14 0 1 0 20.25 0Z"
     />
     <path
-      stroke="url(#c)"
+      stroke="url(#c1)"
       strokeLinecap="round"
       strokeWidth={2}
       d="M766.36 63.99h117.56"
     />
     <mask
-      id="d"
+      id="d1"
       width={378}
       height={378}
       x={491}
@@ -138,10 +138,10 @@ export default (props) => (
         d="M868.3 468.05H492.22V91.97H868.3z"
       />
     </mask>
-    <g mask="url(#d)">
-      <path stroke="url(#e)" d="M506.44 468.55 129.35 91.47" />
-      <path stroke="url(#f)" d="M523.74 468.55 146.65 91.47" />
-      <path stroke="url(#g)" d="M541.04 468.55 163.95 91.47" />
+    <g mask="url(#d1)">
+      <path stroke="url(#e1)" d="M506.44 468.55 129.35 91.47" />
+      <path stroke="url(#f1)" d="M523.74 468.55 146.65 91.47" />
+      <path stroke="url(#g1)" d="M541.04 468.55 163.95 91.47" />
       <path stroke="url(#h)" d="M558.33 468.55 181.25 91.47" />
       <path stroke="url(#i)" d="M575.63 468.55 198.54 91.47" />
       <path stroke="url(#j)" d="M592.93 468.55 215.84 91.47" />
@@ -381,7 +381,7 @@ export default (props) => (
     />
     <defs>
       <linearGradient
-        id="b"
+        id="b1"
         x1={726.5}
         x2={747.11}
         y1={74.94}
@@ -392,7 +392,7 @@ export default (props) => (
         <stop offset={1} stopColor="#A2D9DA" />
       </linearGradient>
       <linearGradient
-        id="c"
+        id="c1"
         x1={766.73}
         x2={888.39}
         y1={65.99}
@@ -403,7 +403,7 @@ export default (props) => (
         <stop offset={1} stopColor="#A2D9DA" />
       </linearGradient>
       <linearGradient
-        id="e"
+        id="e1"
         x1={506.44}
         x2={129.35}
         y1={468.55}
@@ -415,7 +415,7 @@ export default (props) => (
         <stop offset={1} stopColor="#00314C" />
       </linearGradient>
       <linearGradient
-        id="f"
+        id="f1"
         x1={523.74}
         x2={146.65}
         y1={468.55}
@@ -427,7 +427,7 @@ export default (props) => (
         <stop offset={1} stopColor="#00314C" />
       </linearGradient>
       <linearGradient
-        id="g"
+        id="g1"
         x1={541.04}
         x2={163.95}
         y1={468.55}
