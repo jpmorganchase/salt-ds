@@ -1,4 +1,4 @@
-.salt-theme .sbdocs {    
+.salt-theme .sbdocs {
   background: var(--salt-container-primary-background);
   color: var(--salt-text-primary-foreground);
   font-family: var(--salt-typography-fontFamily);
@@ -45,7 +45,8 @@
   padding: 0;
 }
 
-.salt-theme .sbdocs th, .salt-theme .sbdocs td {
+.salt-theme .sbdocs th,
+.salt-theme .sbdocs td {
   color: var(--salt-text-primary-foreground);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
