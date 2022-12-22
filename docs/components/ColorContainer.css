@@ -11,3 +11,7 @@
 .docblock-colorpalette div > span {
   display: none;
 }
+
+.docblock-colorpalette div * {
+  color: var(--salt-text-primary-foreground);
+}
