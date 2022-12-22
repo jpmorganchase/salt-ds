@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Positive" />
@@ -8,6 +14,15 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors conveying a positive value or result.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-positive-foreground" />
-</DocGrid>
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-positive-foreground"
+      colors={{
+        "--salt-palette-positive-foreground":
+          "var(--salt-palette-positive-foreground)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>

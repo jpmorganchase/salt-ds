@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Negative" />
@@ -8,6 +14,15 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors conveying a negative value or result.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-negative-foreground" />
-</DocGrid>
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-negative-foreground"
+      colors={{
+        "--salt-palette-negative-foreground":
+          "var(--salt-palette-negative-foreground)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
