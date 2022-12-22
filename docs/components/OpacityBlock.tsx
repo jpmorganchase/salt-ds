@@ -12,15 +12,16 @@ export const OpacityBlock = ({
   className?: string;
   cssVariable: string;
 }) => {
-
-  const { getTriggerProps, getTooltipProps } = useTooltip({ placement: "left"});
+  const { getTriggerProps, getTooltipProps } = useTooltip({
+    placement: "left",
+  });
 
   return (
     <>
       <div className={cx("OpacityBlock-cell")}>
         <div
-          {...getTriggerProps({ 
-            className: cx("OpacityBlock-cellInner", className), 
+          {...getTriggerProps({
+            className: cx("OpacityBlock-cellInner", className),
           })}
           style={{ background: `rgba(36, 37, 38, var(${opacity}))` }}
         />

@@ -16,6 +16,5 @@
   border: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
   border-radius: 4px;
 
-
   /* background to be provided by css variables */
 }
