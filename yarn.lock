@@ -4019,7 +4019,7 @@ __metadata:
   resolution: "@salt-ds/theme-editor@workspace:tooling/theme-editor"
   dependencies:
     js-beautify: 1.14.7
-    tinycolor2: 1.4.2
+    tinycolor2: 1.5.1
   languageName: unknown
   linkType: soft
 
@@ -25349,10 +25349,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinycolor2@npm:1.4.2, tinycolor2@npm:^1.4.1, tinycolor2@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "tinycolor2@npm:1.4.2"
-  checksum: 57ed262e08815a4ab0ed933edafdbc6555a17081781766149813b44a080ecbe58b3ee281e81c0e75b42e4d41679f138cfa98eabf043f829e0683c04adb12c031
+"tinycolor2@npm:1.5.1, tinycolor2@npm:^1.4.1, tinycolor2@npm:^1.4.2":
+  version: 1.5.1
+  resolution: "tinycolor2@npm:1.5.1"
+  checksum: 0fffbe217217f819e0ef79524fda8813c20dac89b647bfc0f1bc0c7d5a80884dad0d74a414b865d2ce867d76d2303f251f7527eaebfe2838251e195fc4b0287c
   languageName: node
   linkType: hard
 
