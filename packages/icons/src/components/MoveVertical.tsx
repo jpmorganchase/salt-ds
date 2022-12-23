@@ -16,7 +16,7 @@ export const MoveVerticalIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M5.25 7v2H3l3 3 3-3H6.75V7h-1.5zm0-2V3H3l3-3 3 3H6.75v2h-1.5z" />
+      <path d="M5.25 7v2H3l3 3 3-3H6.75V7h-1.5Zm0-2V3H3l3-3 3 3H6.75v2h-1.5Z" />
     </Icon>
   );
 });

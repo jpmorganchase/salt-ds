@@ -14,7 +14,7 @@ export const ChatSolidIcon = forwardRef<SVGSVGElement, ChatSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5.625.25a5.624 5.624 0 1 0 0 11.25 5.602 5.602 0 0 0 2.942-.829l3.366 1.262-1.306-3.482A5.624 5.624 0 0 0 5.625.25z" />
+        <path d="M5.625.25a5.625 5.625 0 1 0 2.942 10.42L12 12l-1.373-3.55A5.625 5.625 0 0 0 5.625.25Z" />
       </Icon>
     );
   }

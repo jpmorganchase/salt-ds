@@ -14,7 +14,11 @@ export const MessageIcon = forwardRef<SVGSVGElement, MessageIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M12 1v10H0V1h12zM1 2.504l5 3.864 5-3.864V2H1v.504zm0 1.264V10h10V3.768L6 7.632 1 3.768z" />
+        <path
+          fillRule="evenodd"
+          d="M12 1H0v10h12V1ZM1 2.504V2h10v.504L6 6.368 1 2.504Zm0 1.264V10h10V3.768L6 7.632 1 3.768Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

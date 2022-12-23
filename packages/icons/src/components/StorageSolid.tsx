@@ -16,7 +16,12 @@ export const StorageSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M0 1v3h12V1H0zm11 4H1v7h10V5zM4 6h4v1H4V6z" />
+      <path d="M0 1v3h12V1H0Z" />
+      <path
+        fillRule="evenodd"
+        d="M11 5H1v7h10V5ZM4 6h4v1H4V6Z"
+        clipRule="evenodd"
+      />
     </Icon>
   );
 });

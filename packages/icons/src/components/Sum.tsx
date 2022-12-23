@@ -16,7 +16,11 @@ export const SumIcon = forwardRef<SVGSVGElement, SumIconProps>(function SumIcon(
       ref={ref}
       {...props}
     >
-      <path d="M8 6 6 9h3V7.5h3V12H0l4.125-6L0 0h12v4.625H9V3H6l2 3zm2 2.5V10H4.131l2.667-4-2.667-4H10v1.625h1V1H1.901l3.437 5-3.437 5H11V8.5h-1z" />
+      <path
+        fillRule="evenodd"
+        d="M8 6 6 3h3v1.625h3V0H0l4.125 6L0 12h12V7.5H9V9H6l2-3Zm2 2.5V10H4.131l2.667-4-2.667-4H10v1.625h1V1H1.901l3.438 5L1.9 11H11V8.5h-1Z"
+        clipRule="evenodd"
+      />
     </Icon>
   );
 });

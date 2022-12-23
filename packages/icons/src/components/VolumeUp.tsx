@@ -14,8 +14,12 @@ export const VolumeUpIcon = forwardRef<SVGSVGElement, VolumeUpIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M3 4H0v4h3l3 3V1L3 4zm9 2C12 2.985 9.838.483 7 0v1.55c2.004.461 3.5 2.278 3.5 4.45S9.004 9.989 7 10.45V12c2.838-.483 5-2.985 5-6z" />
-        <path d="M7 8.829a3.001 3.001 0 0 0 0-5.658V8.83z" />
+        <path d="M3 4H0v4h3l3 3V1L3 4Zm4 4.83a3.001 3.001 0 0 0 0-5.66v5.66Z" />
+        <path
+          fillRule="evenodd"
+          d="M7 10.389a4.502 4.502 0 0 0 0-8.777V.083a6.002 6.002 0 0 1 0 11.834v-1.528Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

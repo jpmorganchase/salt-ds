@@ -16,7 +16,11 @@ export const AddDocumentSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M9.207 0 11 1.793V12H1V0h8.207zM8 1H7v3h3.25V3H8V1zM6 5H5v2H3v1h2v2h1V8h2V7H6V5z" />
+      <path
+        fillRule="evenodd"
+        d="M1 12V0h8l2 2v10H1Zm4-7h1v2h2v1H6v2H5V8H3V7h2V5Zm3-4H7v3h3V3H8V1Z"
+        clipRule="evenodd"
+      />
     </Icon>
   );
 });
