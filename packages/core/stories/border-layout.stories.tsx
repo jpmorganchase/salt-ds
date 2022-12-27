@@ -1,5 +1,5 @@
 import { BorderItem, BorderLayout } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
@@ -17,9 +17,9 @@ export default {
       type: "number",
     },
   },
-} as ComponentMeta<typeof BorderLayout>;
+} as Meta<typeof BorderLayout>;
 
-const Template: ComponentStory<typeof BorderLayout> = (args) => {
+const Template: StoryFn<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
       <BorderItem position="north">
@@ -59,7 +59,7 @@ const Template: ComponentStory<typeof BorderLayout> = (args) => {
 export const AllPanels = Template.bind({});
 AllPanels.args = {};
 
-const NoRightPanelTemplate: ComponentStory<typeof BorderLayout> = (args) => {
+const NoRightPanelTemplate: StoryFn<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
       <BorderItem position="north">
@@ -94,7 +94,7 @@ const NoRightPanelTemplate: ComponentStory<typeof BorderLayout> = (args) => {
 export const NoRightPanel = NoRightPanelTemplate.bind({});
 NoRightPanel.args = {};
 
-const NoLeftPanelTemplate: ComponentStory<typeof BorderLayout> = (args) => {
+const NoLeftPanelTemplate: StoryFn<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
       <BorderItem position="north">
@@ -129,7 +129,7 @@ const NoLeftPanelTemplate: ComponentStory<typeof BorderLayout> = (args) => {
 export const NoLeftPanel = NoLeftPanelTemplate.bind({});
 NoLeftPanel.args = {};
 
-const NoHeaderTemplate: ComponentStory<typeof BorderLayout> = (args) => {
+const NoHeaderTemplate: StoryFn<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
       <BorderItem position="west">
@@ -164,7 +164,7 @@ const NoHeaderTemplate: ComponentStory<typeof BorderLayout> = (args) => {
 export const NoHeader = NoHeaderTemplate.bind({});
 NoHeader.args = {};
 
-const FixedPanelsTemplate: ComponentStory<typeof BorderLayout> = (args) => {
+const FixedPanelsTemplate: StoryFn<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args} style={{ width: "60vw" }}>
       <BorderItem position="north">

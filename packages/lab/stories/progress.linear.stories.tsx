@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Button, Panel, SaltProvider } from "@salt-ds/core";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
@@ -8,7 +8,7 @@ import "./progress.stories.css";
 export default {
   title: "Lab/Progress/Linear",
   component: LinearProgress,
-} as ComponentMeta<typeof LinearProgress>;
+} as Meta<typeof LinearProgress>;
 
 interface ProgressWithControlsProps {
   ProgressComponent: typeof CircularProgress | typeof LinearProgress;
@@ -67,7 +67,7 @@ const LinearExamples = () => (
   </Panel>
 );
 
-export const All: ComponentStory<typeof LinearProgress> = () => (
+export const All: StoryFn<typeof LinearProgress> = () => (
   <div
     style={{
       height: "100%",
@@ -88,7 +88,7 @@ export const All: ComponentStory<typeof LinearProgress> = () => (
   </div>
 );
 
-export const Default: ComponentStory<typeof LinearProgress> = () => (
+export const Default: StoryFn<typeof LinearProgress> = () => (
   <div>
     <div>
       <h3>size=small</h3>
@@ -105,7 +105,7 @@ export const Default: ComponentStory<typeof LinearProgress> = () => (
   </div>
 );
 
-export const Disabled: ComponentStory<typeof LinearProgress> = () => (
+export const Disabled: StoryFn<typeof LinearProgress> = () => (
   <div>
     <div>
       <h3>size=small</h3>
@@ -122,7 +122,7 @@ export const Disabled: ComponentStory<typeof LinearProgress> = () => (
   </div>
 );
 
-export const Indeterminate: ComponentStory<typeof LinearProgress> = () => (
+export const Indeterminate: StoryFn<typeof LinearProgress> = () => (
   <div>
     <div>
       <h3>size=small</h3>
@@ -139,11 +139,11 @@ export const Indeterminate: ComponentStory<typeof LinearProgress> = () => (
   </div>
 );
 
-export const ProgressingValue: ComponentStory<typeof LinearProgress> = () => (
+export const ProgressingValue: StoryFn<typeof LinearProgress> = () => (
   <ProgressWithControls ProgressComponent={LinearProgress} />
 );
 
-export const LinearQuery: ComponentStory<typeof LinearProgress> = () => (
+export const LinearQuery: StoryFn<typeof LinearProgress> = () => (
   <div>
     <div>
       <h3>size=small</h3>
@@ -160,10 +160,10 @@ export const LinearQuery: ComponentStory<typeof LinearProgress> = () => (
   </div>
 );
 
-export const ShowNoInfo: ComponentStory<typeof LinearProgress> = () => (
+export const ShowNoInfo: StoryFn<typeof LinearProgress> = () => (
   <LinearProgress showInfo={false} value={38} />
 );
 
-export const Unit: ComponentStory<typeof LinearProgress> = () => (
+export const Unit: StoryFn<typeof LinearProgress> = () => (
   <LinearProgress unit="px" value={38} />
 );

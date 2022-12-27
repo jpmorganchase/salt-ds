@@ -4,16 +4,16 @@ import {
   getColorPalettes,
   SwatchesPicker,
 } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 export default {
   title: "Lab/Color Chooser/QA",
   component: ColorChooser,
-} as ComponentMeta<typeof ColorChooser>;
+} as Meta<typeof ColorChooser>;
 
 const allColors = getColorPalettes();
-export const SwatchesPickerQA: ComponentStory<typeof SwatchesPicker> = () => {
+export const SwatchesPickerQA: StoryFn<typeof SwatchesPicker> = () => {
   const [color, setColor] = useState(Color.makeColorFromHex(allColors[7][4]));
   return (
     <SwatchesPicker

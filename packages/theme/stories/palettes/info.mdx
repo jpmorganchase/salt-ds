@@ -1,0 +1,41 @@
+import {
+  Meta,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/blocks";
+import { ColorContainer } from "docs/components/ColorContainer";
+
+<Meta title="Theme/Palettes/Info" />
+
+# Info
+
+Colors used to represent informational content or messaging.
+
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-info-border"
+      colors={{
+        "--salt-palette-info-border": "var(--salt-palette-info-border)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-info-foreground"
+      colors={{
+        "--salt-palette-info-foreground": "var(--salt-palette-info-foreground)",
+      }}
+    />
+    <ColorItem
+      title="Background (emphasized)"
+      subtitle="--salt-palette-info-background-emphasize"
+      colors={{
+        "--salt-palette-info-background-emphasize":
+          "var(--salt-palette-info-background-emphasize)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>

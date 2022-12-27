@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@salt-ds/core";
 import { Spinner } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Spinner",
@@ -10,9 +10,9 @@ export default {
     "aria-label": "loading",
     role: "status",
   },
-} as ComponentMeta<typeof Spinner>;
+} as Meta<typeof Spinner>;
 
-const Template: ComponentStory<typeof Spinner> = (args) => {
+const Template: StoryFn<typeof Spinner> = (args) => {
   return <Spinner {...args} />;
 };
 
@@ -33,7 +33,7 @@ Large.args = {
   size: "large",
 };
 
-export const WithButton: Story = () => {
+export const WithButton: StoryFn = () => {
   const [exampleOneIsLoading, setExampleOneIsLoading] = useState(false);
   const [exampleTwoIsLoading, setExampleTwoIsLoading] = useState(false);
 

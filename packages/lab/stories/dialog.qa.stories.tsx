@@ -8,13 +8,13 @@ import {
   DialogTitle,
   OrderedButton,
 } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "./dialog.qa.stories.css";
 
 export default {
   title: "Lab/Dialog/QA",
   component: Dialog,
-} as ComponentMeta<typeof Dialog>;
+} as Meta<typeof Dialog>;
 
 const densityDialogWidths = {
   touch: 640,
@@ -61,7 +61,7 @@ const ErrorDialog = () => <BasicDialogExample status={"error"} />;
 const WarningDialog = () => <BasicDialogExample status={"warning"} />;
 const SuccessDialog = () => <BasicDialogExample status={"success"} />;
 
-export const ExamplesGrid: Story = () => (
+export const ExamplesGrid: StoryFn = () => (
   <div className={"examples-container"}>
     <SaltProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
       <div>

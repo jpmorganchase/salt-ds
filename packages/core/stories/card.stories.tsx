@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Card, Link, SaltProvider, Panel } from "@salt-ds/core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 
 export default {
   title: "Core/Card",
   component: Card,
-} as ComponentMeta<typeof Card>;
+} as Meta<typeof Card>;
 
 interface ExampleRowProps {
   children: ReactNode;
@@ -52,7 +52,7 @@ const Examples = () => (
   </>
 );
 
-export const All: ComponentStory<typeof Card> = () => (
+export const All: StoryFn<typeof Card> = () => (
   <div style={{ marginTop: -200 }}>
     <SaltProvider mode="light">
       <Examples />
@@ -63,7 +63,7 @@ export const All: ComponentStory<typeof Card> = () => (
   </div>
 );
 
-export const Default: ComponentStory<typeof Card> = () => (
+export const Default: StoryFn<typeof Card> = () => (
   <Card>
     <div>
       <h1>This is Card</h1>
@@ -72,7 +72,7 @@ export const Default: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const Disabled: ComponentStory<typeof Card> = () => (
+export const Disabled: StoryFn<typeof Card> = () => (
   <Card data-testid="card-disabled-example" disabled>
     <div>
       <h1>Disabled Card</h1>
@@ -81,7 +81,7 @@ export const Disabled: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const Interactable: ComponentStory<typeof Card> = () => (
+export const Interactable: StoryFn<typeof Card> = () => (
   <Link
     href="https://google.com"
     style={{ display: "inline-block", textDecoration: "none" }}

@@ -1,19 +1,19 @@
-import { FC, ReactNode, RefAttributes, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Link, StackLayout, SaltProvider, Panel } from "@salt-ds/core";
 import { Banner, BannerProps } from "@salt-ds/lab";
+import { Meta, StoryFn } from "@storybook/react";
+import { ReactNode, RefAttributes, useState } from "react";
+import { Link, SaltProvider, StackLayout, Panel } from "@salt-ds/core";
 
 export default {
   title: "Lab/Banner",
   component: Banner,
-} as ComponentMeta<typeof Banner>;
+} as Meta<typeof Banner>;
 
 interface ExampleRowProps {
   children: ReactNode;
   name: string;
 }
 
-const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
+const ExampleRow = ({ name, children }: ExampleRowProps) => (
   <Panel style={{ height: "unset" }}>
     <h1>{name} - ( Touch, Low, Medium, High )</h1>
     <StackLayout gap={2}>
@@ -46,7 +46,7 @@ const Examples = () => (
   </>
 );
 
-export const All: ComponentStory<typeof Banner> = () => (
+export const All: StoryFn<typeof Banner> = () => (
   <div
     style={{
       height: "100%",
@@ -61,48 +61,55 @@ export const All: ComponentStory<typeof Banner> = () => (
   </div>
 );
 
-const ExampleBanner = ({ status, emphasize }: BannerProps) => {
-  const [showBanner, setShowBanner] = useState(true);
+All.parameters = {
+  axe: {
+    skip: true,
+  },
+};
 
-  const handleClose = () => {
-    setShowBanner(false);
-  };
-
+const ExampleBanner: StoryFn<typeof Banner> = (args) => {
   return (
     <div style={{ width: "95%", minWidth: "60vw" }}>
-      {showBanner && (
-        <Banner
-          //eslint-disable-next-line no-script-url
-          LinkProps={{ href: "javascript:void(0)" }}
-          onClose={handleClose}
-          status={status}
-          emphasize={emphasize}
-        >
-          Banners appear inline on the page
-        </Banner>
-      )}
+      <Banner {...args}>Banners appear inline on the page</Banner>
     </div>
   );
 };
 
-export const Info: ComponentStory<typeof Banner> = () => {
+export const Info: StoryFn<typeof Banner> = () => {
   return <ExampleBanner status={"info"} />;
 };
 
-export const Error: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"error"} />;
+export const Error: StoryFn<typeof Banner> = () => {
+  return <ExampleBanner status={"error"}>Action failed</ExampleBanner>;
 };
 
-export const Warning: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"warning"} />;
+export const Warning: StoryFn<typeof Banner> = () => {
+  return (
+    <ExampleBanner status={"warning"}>
+      System is under increased load
+    </ExampleBanner>
+  );
 };
 
-export const Success: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"success"} />;
+export const Success: StoryFn<typeof Banner> = () => {
+  return <ExampleBanner status={"success"}>Database updated</ExampleBanner>;
 };
 
-export const Emphasize: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner emphasize={true} status={"success"} />;
+export const Emphasize: StoryFn<typeof Banner> = () => {
+  return (
+    <StackLayout gap={2}>
+      <Banner emphasize={true}>Emphasized</Banner>
+      <Banner emphasize={true} status="warning">
+        Emphasized
+      </Banner>
+      <Banner emphasize={true} status="error">
+        Emphasized
+      </Banner>
+      <Banner emphasize={true} status="success">
+        Emphasized
+      </Banner>
+    </StackLayout>
+  );
 };
 
 export const Render = (
@@ -133,5 +140,36 @@ export const Render = (
         />
       )}
     </div>
+  );
+};
+
+export const Banners = () => {
+  return (
+    <StackLayout gap={2}>
+      <Banner>Banners appear inline on the page</Banner>
+      <Banner status="warning">Banners appear inline on the page</Banner>
+      <Banner status="error">Banners appear inline on the page</Banner>
+      <Banner status="success">Banners appear inline on the page</Banner>
+    </StackLayout>
+  );
+};
+
+export const Dismissible = () => {
+  return (
+    <Banner
+      onClose={() => {
+        console.log("Dismissed");
+      }}
+    >
+      Dismissible
+    </Banner>
+  );
+};
+
+export const LinkBanner = () => {
+  return (
+    <Banner LinkProps={{ href: "javascript:void(0)" }}>
+      There has been an update to the terms and conditions
+    </Banner>
   );
 };

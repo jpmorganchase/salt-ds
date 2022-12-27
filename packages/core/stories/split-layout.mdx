@@ -1,0 +1,53 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/blocks";
+import { SplitLayout } from "@salt-ds/core";
+import { CSSClassTable } from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import * as SplitLayoutStories from './split-layout.stories';
+
+<Meta of={SplitLayoutStories} />
+
+# Split Layout
+
+Defines regions in opposite horizontal/vertical ends for UI elements separated within a span, such as a button bar.
+The horizontal `SplitLayout` can be controlled to break into another row based on the viewport size by the responsive prop `direction`.
+
+<Canvas>
+  <Story of={SplitLayoutStories.Default} />
+</Canvas>
+
+## Use Split Layout when...
+
+There are 2 defined areas required to be in the opposite horizontal ends of a container,
+for example if 2 `ButtonBar` components need to be in a header.
+
+### Don't use Split Layout when...
+
+Your layout requires more than 2 regions. In this case we recommend you having a look at [Flow layout](?path=/docs/documentation-core-layout-flow-layout--page).
+
+### Examples
+
+#### Simple usage
+
+The simple usage examples shows 2 groups of buttons inside a Split Layout.
+
+<Canvas>
+  <Story of={SplitLayoutStories.SimpleUsage} />
+</Canvas>
+
+## Configuring Split Layout
+
+### API
+
+```
+import { SplitLayout } from "@salt-ds/core";
+```
+
+### Props
+
+<ArgsTable of={SplitLayout} />
+
+### Classes
+
+<CSSClassTable of={SplitLayout} />
+
+<HelpAndSupport />

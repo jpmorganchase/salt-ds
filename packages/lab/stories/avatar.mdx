@@ -1,0 +1,53 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/blocks";
+import { Avatar } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import * as AvatarStories from "./avatar.stories";
+
+<Meta of={AvatarStories} />
+
+# Avatar
+
+An Avatar is a small circular graphical representation of a person through a personal profile picture or name initials.
+
+## Default Avatar
+
+<Canvas>
+  <Story of={AvatarStories.Default} />
+</Canvas>
+
+## Image Avatar
+
+Reference your image in the `src` prop
+
+<Canvas>
+  <Story of={AvatarStories.Image} />
+</Canvas>
+
+## Initials Avatar
+
+You can pass the initials as children
+
+<Canvas>
+  <Story of={AvatarStories.Initials} />
+</Canvas>
+
+# API
+
+```
+import { Avatar } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={Avatar} />
+
+## CSS Class
+
+<CSSClassTable of={Avatar} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Avatar} />

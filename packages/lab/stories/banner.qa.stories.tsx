@@ -1,14 +1,13 @@
-import { FC } from "react";
 import { Link, StackLayout, SaltProvider } from "@salt-ds/core";
 import { Banner, BannerProps } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Banner/QA",
   component: Banner,
-} as ComponentMeta<typeof Banner>;
+} as Meta<typeof Banner>;
 
-const BasicBannerExample: FC<BannerProps> = ({ status }) => {
+const BasicBannerExample = ({ status }: BannerProps) => {
   return (
     <div style={{ width: "95%", minWidth: "60vw" }}>
       {
@@ -35,7 +34,7 @@ const ErrorBanner = () => <BasicBannerExample status={"error"} />;
 const WarningBanner = () => <BasicBannerExample status={"warning"} />;
 const SuccessBanner = () => <BasicBannerExample status={"success"} />;
 
-export const ExamplesGrid: Story = () => (
+export const ExamplesGrid: StoryFn = () => (
   <StackLayout gap={2}>
     <SaltProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
       <div className="saltBannerContainerExample">

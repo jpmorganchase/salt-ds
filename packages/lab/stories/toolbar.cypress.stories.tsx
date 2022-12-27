@@ -15,7 +15,7 @@ import {
   UserIcon,
 } from "@salt-ds/icons";
 import { Toolbar, ToolbarButton, ToolbarProps, Tooltray } from "@salt-ds/lab";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 
 import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";
 import "./toolbar.stories.css";
@@ -25,7 +25,7 @@ export default {
   component: Toolbar,
 };
 
-type ToolbarStory = Story<AdjustableFlexboxProps & ToolbarProps>;
+type ToolbarStory = StoryFn<AdjustableFlexboxProps & ToolbarProps>;
 
 export const SimpleToolbar: ToolbarStory = ({
   width = 400,

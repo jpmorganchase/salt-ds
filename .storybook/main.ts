@@ -1,23 +1,11 @@
-import type { StorybookConfig } from "@storybook/react/types";
-import type { UserConfig } from "vite";
+import type { StorybookConfig } from "@storybook/react-vite";
 import { mergeConfig } from "vite";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
-
-type ViteFinalOptions = {
-  configType: "DEVELOPMENT" | "PRODUCTION";
-};
-
-interface ExtendedConfig extends StorybookConfig {
-  viteFinal?: (
-    config: UserConfig,
-    options: ViteFinalOptions
-  ) => Promise<UserConfig>;
-}
-
-const config: ExtendedConfig = {
-  framework: "@storybook/react",
-  stories: ["../packages/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
+import remarkGfm from "remark-gfm";
+const config: StorybookConfig = {
+  framework: "@storybook/react-vite",
+  stories: ["../packages/*/stories/**/*.@(mdx|stories.@(js|jsx|ts|tsx|mdx))"],
   staticDirs: ["../docs/public"],
   addons: [
     {
@@ -25,6 +13,15 @@ const config: ExtendedConfig = {
       options: {
         // We don't want the backgrounds addon as our own withThemeBackground works with theme switch to apply background
         backgrounds: false,
+        docs: false,
+      },
+    },
+    {
+      name: "@storybook/addon-docs",
+      options: {
+        mdxCompileOptions: {
+          remarkPlugins: [remarkGfm],
+        },
       },
     },
     "@storybook/addon-links",
@@ -34,31 +31,21 @@ const config: ExtendedConfig = {
     // Temporarily disable this due to run time error "Cannot read property 'context' of undefined" from Topbar
     // 'storybook-addon-performance/register',
   ],
-  core: {
-    builder: "@storybook/builder-vite",
-  },
-  features: {
-    postcss: false,
-    // modernInlineRender: true,
-    storyStoreV7: true,
-    buildStoriesJson: true,
-    // babelModeV7: true,
-  },
+
   async viteFinal(config, { configType }) {
     // customize the Vite config here
 
-    const customConfig: UserConfig = {
+    const customConfig = {
       plugins: [cssVariableDocgen()],
     };
-
     if (configType === "PRODUCTION") {
       customConfig.plugins!.push(
-        typescriptTurbosnap({ rootDir: config.root! })
+        typescriptTurbosnap({
+          rootDir: config.root!,
+        })
       );
     }
-
     return mergeConfig(customConfig, config);
   },
 };
-
-module.exports = config;
+export default config;

@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, Story } from "@storybook/react";
 
 import {
   ContactAction,
@@ -20,7 +20,7 @@ import avatar1 from "./assets/avatar1.png";
 export default {
   title: "Lab/Contact Details/QA",
   component: ContactDetails,
-} as ComponentMeta<typeof ContactDetails>;
+} as Meta<typeof ContactDetails>;
 
 const actions = [
   { icon: CallIcon, action: () => console.log("Custom Action: Phone") },

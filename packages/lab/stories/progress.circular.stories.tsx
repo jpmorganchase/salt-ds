@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Button, Panel, SaltProvider } from "@salt-ds/core";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
@@ -8,7 +8,7 @@ import "./progress.stories.css";
 export default {
   title: "Lab/Progress/Circular",
   component: LinearProgress,
-} as ComponentMeta<typeof LinearProgress>;
+} as Meta<typeof LinearProgress>;
 
 interface ProgressWithControlsProps {
   ProgressComponent: typeof CircularProgress | typeof LinearProgress;
@@ -67,7 +67,7 @@ const CircularExamples = () => (
   </Panel>
 );
 
-export const All: ComponentStory<typeof CircularProgress> = () => (
+export const All: StoryFn<typeof CircularProgress> = () => (
   <div
     style={{
       height: "100%",
@@ -88,7 +88,7 @@ export const All: ComponentStory<typeof CircularProgress> = () => (
   </div>
 );
 
-export const Default: ComponentStory<typeof CircularProgress> = () => (
+export const Default: StoryFn<typeof CircularProgress> = () => (
   <div style={{ display: "flex" }}>
     <div>
       <h3>size=small</h3>
@@ -105,7 +105,7 @@ export const Default: ComponentStory<typeof CircularProgress> = () => (
   </div>
 );
 
-export const Disabled: ComponentStory<typeof CircularProgress> = () => (
+export const Disabled: StoryFn<typeof CircularProgress> = () => (
   <div style={{ display: "flex" }}>
     <div>
       <h3>size=small</h3>
@@ -137,7 +137,7 @@ export const Disabled: ComponentStory<typeof CircularProgress> = () => (
   </div>
 );
 
-export const Indeterminate: ComponentStory<typeof CircularProgress> = () => (
+export const Indeterminate: StoryFn<typeof CircularProgress> = () => (
   <div style={{ display: "flex" }}>
     <div>
       <h3>size=small</h3>
@@ -169,14 +169,14 @@ export const Indeterminate: ComponentStory<typeof CircularProgress> = () => (
   </div>
 );
 
-export const ProgressingValue: ComponentStory<typeof CircularProgress> = () => (
+export const ProgressingValue: StoryFn<typeof CircularProgress> = () => (
   <ProgressWithControls ProgressComponent={CircularProgress} />
 );
 
-export const ShowNoInfo: ComponentStory<typeof CircularProgress> = () => (
+export const ShowNoInfo: StoryFn<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" showInfo={false} value={38} />
 );
 
-export const Unit: ComponentStory<typeof CircularProgress> = () => (
+export const Unit: StoryFn<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" unit="px" value={38} />
 );

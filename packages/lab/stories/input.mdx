@@ -1,0 +1,69 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/blocks";
+import { Input } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import * as InputStories from "./input.stories";
+
+<Meta of={InputStories} />
+
+# Input
+
+The Input component provides an editable field in which users can enter arbitrary text and numeric values—with no specific format defined.
+
+## Basic Input Component
+
+<Canvas>
+  <Story of={InputStories.FeatureInput} />
+</Canvas>
+
+## Read Only Input
+
+Read only mode switched on by providing the `readOnly` prop.
+
+<Canvas>
+  <Story of={InputStories.ReadOnly} />
+</Canvas>
+
+## Input with spellcheck
+
+Automatic spellchecking can be turned on by using `inputProps`.
+
+<Canvas>
+  <Story of={InputStories.Spellcheck} />
+</Canvas>
+
+## Input with adornments
+
+Icons and text can be used as adornments at the start or end of the component.
+
+<Canvas>
+  <Story of={InputStories.Adornments} />
+</Canvas>
+
+## Used in FormField
+
+Input is a component that would commonly be nested inside a FormField.
+
+<Canvas>
+  <Story of={InputStories.WithFormField} />
+</Canvas>
+
+# API
+
+```
+import { Input } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={Input} />
+
+## CSS Class
+
+<CSSClassTable of={Input} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Input} />

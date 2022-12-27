@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import { Text } from "@salt-ds/core";
 
@@ -48,9 +48,9 @@ export default {
     },
     maxRows: { control: { type: "number" } },
   },
-} as ComponentMeta<typeof Text>;
+} as Meta<typeof Text>;
 
-const BaseComponent: ComponentStory<typeof Text> = (args) => {
+const BaseComponent: StoryFn<typeof Text> = (args) => {
   const { children, ...rest } = args;
 
   return (

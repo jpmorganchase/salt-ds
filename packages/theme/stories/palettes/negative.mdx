@@ -1,0 +1,27 @@
+import {
+  Meta,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/blocks";
+import { ColorContainer } from "docs/components/ColorContainer";
+
+<Meta title="Theme/Palettes/Negative" />
+
+# Negative
+
+Colors conveying a negative value or result.
+
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-negative-foreground"
+      colors={{
+        "--salt-palette-negative-foreground":
+          "var(--salt-palette-negative-foreground)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>

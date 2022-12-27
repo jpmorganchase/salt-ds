@@ -1,0 +1,55 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/blocks";
+import { Card } from "@salt-ds/core";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import * as CardStories from "./card.stories";
+
+<Meta of={CardStories} />
+
+# Card
+
+A Card is a sheet of material that serves as an entry point to more detailed information. It is a convenient means of displaying content composed of different elements whose size or supported actions vary.
+
+## Card Component
+
+This default example is intended to show the way the Card component’s content can be implemented.
+
+<Canvas>
+  <Story of={CardStories.Default} />
+</Canvas>
+
+## Interactable
+
+Cards can have interactable styling by setting `interactable={true}`. These cards could be wrapped in Link, for example, for interactivity.
+
+<Canvas>
+  <Story of={CardStories.Interactable} />
+</Canvas>
+
+## Disabled
+
+Cards can have disabled styling applied by setting `disabled={true}`.
+
+<Canvas>
+  <Story of={CardStories.Disabled} />
+</Canvas>
+
+# API
+
+```
+import { Card } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={Card} />
+
+## CSS Class
+
+<CSSClassTable of={Card} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Card} />

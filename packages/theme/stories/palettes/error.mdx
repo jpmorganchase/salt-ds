@@ -1,0 +1,42 @@
+import {
+  Meta,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/blocks";
+import { ColorContainer } from "docs/components/ColorContainer";
+
+<Meta title="Theme/Palettes/Error" />
+
+# Error
+
+Colors used to symbolise an error state.
+
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-error-border"
+      colors={{
+        "--salt-palette-error-border": "var(--salt-palette-error-border)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-error-foreground"
+      colors={{
+        "--salt-palette-error-foreground":
+          "var(--salt-palette-error-foreground)",
+      }}
+    />
+    <ColorItem
+      title="Background (emphasized)"
+      subtitle="--salt-palette-error-background-emphasize"
+      colors={{
+        "--salt-palette-error-background-emphasize":
+          "var(--salt-palette-error-background-emphasize)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>

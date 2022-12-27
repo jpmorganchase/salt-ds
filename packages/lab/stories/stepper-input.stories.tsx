@@ -1,13 +1,13 @@
 import { ReactNode, useEffect, useState } from "react";
 import { SaltProvider, Panel } from "@salt-ds/core";
 import { StepperInput, FormField } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 
 export default {
   title: "Lab/Stepper Input",
   component: StepperInput,
-} as ComponentMeta<typeof StepperInput>;
+} as Meta<typeof StepperInput>;
 
 interface ExampleRowProps {
   children: ReactNode;
@@ -58,7 +58,7 @@ const Examples = () => (
   </>
 );
 
-export const All: Story = () => (
+export const All: StoryFn = () => (
   <div style={{ marginTop: -200 }}>
     <SaltProvider mode="light">
       <Examples />
@@ -69,7 +69,7 @@ export const All: Story = () => (
   </div>
 );
 
-export const Default: Story = () => {
+export const Default: StoryFn = () => {
   const max = 10;
   const min = -5;
 
@@ -97,7 +97,7 @@ export const Default: Story = () => {
   );
 };
 
-export const Alignment: Story = () => (
+export const Alignment: StoryFn = () => (
   <SaltProvider>
     <FormField
       helperText="Please enter a number"
@@ -123,7 +123,7 @@ export const Alignment: Story = () => (
   </SaltProvider>
 );
 
-export const Controlled: Story = () => {
+export const Controlled: StoryFn = () => {
   const max = 100;
   const min = -100;
   const step = 0.01;
@@ -169,7 +169,7 @@ export const Controlled: Story = () => {
   );
 };
 
-export const CustomValues: Story = () => (
+export const CustomValues: StoryFn = () => (
   <SaltProvider>
     <FormField
       helperText="Please enter a number"
@@ -181,7 +181,7 @@ export const CustomValues: Story = () => (
   </SaltProvider>
 );
 
-export const Decimals: Story = () => (
+export const Decimals: StoryFn = () => (
   <SaltProvider>
     <FormField
       helperText="Please enter a currency value"
@@ -193,7 +193,7 @@ export const Decimals: Story = () => (
   </SaltProvider>
 );
 
-export const Error: Story = () => {
+export const Error: StoryFn = () => {
   const defaultValue = 15.775;
   const max = 10;
   const min = -10;
@@ -239,7 +239,7 @@ export const Error: Story = () => {
   );
 };
 
-export const LiveDefaultValue: Story = () => {
+export const LiveDefaultValue: StoryFn = () => {
   const decimalPlaces = 2;
   const defaultValue = 0.0;
   const max = 100.0;
@@ -287,7 +287,7 @@ export const LiveDefaultValue: Story = () => {
   );
 };
 
-export const NumericLimits: Story = () => (
+export const NumericLimits: StoryFn = () => (
   <SaltProvider>
     <FormField
       helperText="Must be below 1000"
@@ -315,7 +315,7 @@ export const NumericLimits: Story = () => (
   </SaltProvider>
 );
 
-export const RefreshButton: Story = () => (
+export const RefreshButton: StoryFn = () => (
   <SaltProvider>
     <FormField
       helperText="Please enter a number"

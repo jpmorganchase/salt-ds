@@ -7,13 +7,13 @@ import {
   RadioButtonGroup,
 } from "@salt-ds/lab";
 import { SuccessTickIcon } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 
 export default {
   title: "Lab/Radio Button",
   component: RadioButton,
-} as ComponentMeta<typeof RadioButton>;
+} as Meta<typeof RadioButton>;
 
 type ExampleWithTitleProps = {
   title: string;
@@ -45,7 +45,7 @@ const Radios = ({ title, density, name }: ExampleWithTitleProps) => (
   </ColumnLayoutItem>
 );
 
-export const All: Story = () => (
+export const All: StoryFn = () => (
   <StoryScroller>
     <SaltProvider mode="light">
       <DensityExample name="light" />
@@ -147,9 +147,9 @@ const radioData = [
   },
 ];
 
-export const ControlledRadioButtonGroup: ComponentStory<
-  typeof RadioButtonGroup
-> = ({ onChange }) => {
+export const ControlledRadioButtonGroup: StoryFn<typeof RadioButtonGroup> = ({
+  onChange,
+}) => {
   const [controlledValue, setControlledValue] = useState("forward");
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -179,7 +179,7 @@ const uncheckedIcon = (
 );
 const CustomIcon = makeRadioIcon(checkedIcon, uncheckedIcon);
 
-export const CustomIcons: ComponentStory<typeof RadioButtonGroup> = () => (
+export const CustomIcons: StoryFn<typeof RadioButtonGroup> = () => (
   <div>
     <RadioButtonGroup
       aria-label="Custom Icons"
@@ -265,7 +265,7 @@ const VariantExample = ({ name, mode }: { name: string; mode: Mode }) => (
   </SaltProvider>
 );
 
-export const FormFieldVariants: Story = () => (
+export const FormFieldVariants: StoryFn = () => (
   <StoryScroller>
     <VariantExample name="fx1" mode="light" />
     <VariantExample name="fx2" mode="dark" />
@@ -398,7 +398,7 @@ const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
   </SaltProvider>
 );
 
-export const GroupFormFieldRow: Story = () => (
+export const GroupFormFieldRow: StoryFn = () => (
   <StoryScroller>
     <GroupFormFieldExamples mode="light" />
     <GroupFormFieldExamples mode="dark" />
@@ -526,7 +526,7 @@ const GroupFormFieldVerticalExamples = () => (
   </>
 );
 
-export const GroupFormFieldVertical: Story = () => (
+export const GroupFormFieldVertical: StoryFn = () => (
   <StoryScroller>
     <SaltProvider mode="light">
       <GroupFormFieldVerticalExamples />
@@ -539,9 +539,9 @@ export const GroupFormFieldVertical: Story = () => (
 
 /* Horizontal Radio Button Group */
 
-export const HorizontalRadioButtonGroup: ComponentStory<
-  typeof RadioButtonGroup
-> = ({ onChange }) => (
+export const HorizontalRadioButtonGroup: StoryFn<typeof RadioButtonGroup> = ({
+  onChange,
+}) => (
   <div>
     <RadioButtonGroup
       aria-label="Uncontrolled Example"
@@ -565,9 +565,9 @@ export const HorizontalRadioButtonGroup: ComponentStory<
 
 /* Long Text Radio Button Group */
 
-export const LongTextRadioButtonGroup: ComponentStory<
-  typeof RadioButtonGroup
-> = ({ onChange }) => (
+export const LongTextRadioButtonGroup: StoryFn<typeof RadioButtonGroup> = ({
+  onChange,
+}) => (
   <div style={{ width: "500px" }}>
     <RadioButtonGroup
       aria-label="Long Text Example"
@@ -597,9 +597,9 @@ export const LongTextRadioButtonGroup: ComponentStory<
 
 /* Uncontrolled Radio Button Group */
 
-export const UncontrolledRadioButtonGroup: ComponentStory<
-  typeof RadioButtonGroup
-> = ({ onChange }) => (
+export const UncontrolledRadioButtonGroup: StoryFn<typeof RadioButtonGroup> = ({
+  onChange,
+}) => (
   <div style={{ width: "200px" }}>
     <RadioButtonGroup
       aria-label="Uncontrolled Example"

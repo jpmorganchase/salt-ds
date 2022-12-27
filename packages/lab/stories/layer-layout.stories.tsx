@@ -8,7 +8,7 @@ import {
   FlexLayout,
 } from "@salt-ds/core";
 import { FormField, Input, LayerLayout, LAYER_POSITIONS } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
@@ -25,7 +25,7 @@ export default {
     disableAnimations: false,
     fullScreenAtBreakpoint: "sm",
   },
-} as ComponentMeta<typeof LayerLayout>;
+} as Meta<typeof LayerLayout>;
 
 type LayerContentExampleProps = {
   onClick: (evt: MouseEvent) => void;
@@ -57,7 +57,7 @@ const LayerContentExample = ({ onClick }: LayerContentExampleProps) => (
   </StackLayout>
 );
 
-const DefaultLayerLayoutStory: ComponentStory<typeof LayerLayout> = (args) => {
+const DefaultLayerLayoutStory: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -84,7 +84,7 @@ Default.args = {
   position: "center",
 };
 
-const TopTemplate: ComponentStory<typeof LayerLayout> = (args) => {
+const TopTemplate: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -106,7 +106,7 @@ Top.args = {
   position: "top",
 };
 
-const RightTemplate: ComponentStory<typeof LayerLayout> = (args) => {
+const RightTemplate: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -128,7 +128,7 @@ Right.args = {
   position: "right",
 };
 
-const LeftTemplate: ComponentStory<typeof LayerLayout> = (args) => {
+const LeftTemplate: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -150,7 +150,7 @@ Left.args = {
   position: "left",
 };
 
-const BottomTemplate: ComponentStory<typeof LayerLayout> = (args) => {
+const BottomTemplate: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -172,9 +172,7 @@ Bottom.args = {
   position: "bottom",
 };
 
-const CustomFullScreenAnimationTemplate: ComponentStory<typeof LayerLayout> = (
-  args
-) => {
+const CustomFullScreenAnimationTemplate: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -230,7 +228,7 @@ CustomFullScreenAnimation.parameters = {
   },
 };
 
-const ReducedMotionTemplate: ComponentStory<typeof LayerLayout> = (args) => {
+const ReducedMotionTemplate: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -256,7 +254,7 @@ const ReducedMotionTemplate: ComponentStory<typeof LayerLayout> = (args) => {
 
 export const ReducedMotion = ReducedMotionTemplate.bind({});
 
-const LayerLayoutCenterExample: ComponentStory<typeof LayerLayout> = (args) => {
+const LayerLayoutCenterExample: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);
@@ -299,7 +297,7 @@ const FormFieldExample = () => (
   </FormField>
 );
 
-const LayerLayoutLeftExample: ComponentStory<typeof LayerLayout> = (args) => {
+const LayerLayoutLeftExample: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);
@@ -340,7 +338,7 @@ LeftSimpleUsage.args = {
   position: "left",
 };
 
-const LayerLayoutTopExample: ComponentStory<typeof LayerLayout> = (args) => {
+const LayerLayoutTopExample: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);
@@ -378,7 +376,7 @@ TopSimpleUsage.args = {
   position: "top",
 };
 
-const LayerLayoutRightExample: ComponentStory<typeof LayerLayout> = (args) => {
+const LayerLayoutRightExample: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);
@@ -432,7 +430,7 @@ const ArticleExample = () => (
   </StackLayout>
 );
 
-const LayerLayoutBottomExample: ComponentStory<typeof LayerLayout> = (args) => {
+const LayerLayoutBottomExample: StoryFn<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(true);
 
   const show = () => setOpen(true);

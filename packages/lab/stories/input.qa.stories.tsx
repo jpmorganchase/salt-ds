@@ -7,13 +7,13 @@ import {
   UserIcon,
 } from "@salt-ds/icons";
 import { Dropdown, Input, StaticInputAdornment } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Input/QA",
   component: Input,
-} as ComponentMeta<typeof Input>;
+} as Meta<typeof Input>;
 
 const data = [
   "Alabama",
@@ -54,7 +54,7 @@ const ReadOnly = () => {
   );
 };
 
-export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={2} height={1300} itemPadding={6} width={1400} {...props}>
       <Default />

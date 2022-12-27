@@ -1,11 +1,11 @@
-import { Button, ButtonProps } from "@salt-ds/core";
+import { Button, ButtonProps, FlexLayout } from "@salt-ds/core";
 import {
   DownloadIcon,
   SearchIcon,
   SendIcon,
   SettingsSolidIcon,
 } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Button",
@@ -14,9 +14,9 @@ export default {
   // react-docgen-typescript-loader doesn't support detecting interface extension
   // https://github.com/strothj/react-docgen-typescript-loader/issues/47
   argTypes: { onClick: { action: "clicked" } },
-} as ComponentMeta<typeof Button>;
+} as Meta<typeof Button>;
 
-const SingleButtonTemplate: ComponentStory<typeof Button> = (props) => {
+const SingleButtonTemplate: StoryFn<typeof Button> = (props) => {
   return <Button {...props} />;
 };
 
@@ -66,13 +66,13 @@ const ButtonGrid = ({
   );
 };
 
-export const All: ComponentStory<typeof Button> = () => {
+export const All: StoryFn<typeof Button> = () => {
   const handleClick = () => {
     console.log("clicked");
   };
 
   return (
-    <div style={{ display: "flex", gap: "8px" }}>
+    <FlexLayout gap={1}>
       <Button variant={"cta"} onClick={handleClick}>
         CTA
       </Button>
@@ -82,19 +82,19 @@ export const All: ComponentStory<typeof Button> = () => {
       <Button variant={"secondary"} onClick={handleClick}>
         Secondary
       </Button>
-    </div>
+    </FlexLayout>
   );
 };
 
-export const CTA: ComponentStory<typeof Button> = () => {
+export const CTA: StoryFn<typeof Button> = () => {
   return <ButtonGrid variant="cta" label="CTA" />;
 };
 
-export const Primary: ComponentStory<typeof Button> = () => {
+export const Primary: StoryFn<typeof Button> = () => {
   return <ButtonGrid variant="primary" label="Primary" />;
 };
 
-export const Secondary: ComponentStory<typeof Button> = () => {
+export const Secondary: StoryFn<typeof Button> = () => {
   return <ButtonGrid variant="secondary" label="Secondary" />;
 };
 
@@ -116,7 +116,7 @@ FocusableWhenDisabled.args = {
   children: "Focusable When Disabled",
 };
 
-export const WithIcon: ComponentStory<typeof Button> = () => {
+export const WithIcon: StoryFn<typeof Button> = () => {
   return (
     <div style={{ display: "flex", gap: "8px" }}>
       <Button variant="cta">

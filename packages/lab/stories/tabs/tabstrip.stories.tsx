@@ -1,18 +1,19 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Button, Link, SaltProvider, Text } from "@salt-ds/core";
 import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   EditableLabel,
+  ParentChildLayout,
   Tab,
   TabDescriptor,
   Tabstrip,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  ParentChildLayout,
 } from "@salt-ds/lab";
 
 import { AdjustableFlexbox } from "../story-components";
+import { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Tabs/Standalone Tabstrip",
@@ -110,6 +111,15 @@ const tabsAsStringsLong = tabsAsStrings.concat([
   "Virtual Branch",
   "More Services",
 ]);
+
+export const SimpleTabstrip: StoryFn<typeof Tabstrip> = (args) => {
+  return (
+    <Tabstrip
+      source={["Home", "Transactions", "Loans", "Checks", "Liquidity"]}
+      {...args}
+    />
+  );
+};
 
 export const Default = () => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);

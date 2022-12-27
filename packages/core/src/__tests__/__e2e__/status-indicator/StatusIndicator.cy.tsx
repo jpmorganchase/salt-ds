@@ -2,7 +2,10 @@ import { composeStories } from "@storybook/testing-react";
 import * as statusIndicatorStories from "@stories/status-indicator.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
+// TODO investigate Storybook 7 issue
+// @ts-ignore
 const composedStories = composeStories(statusIndicatorStories);
+// @ts-ignore
 const { Default } = composedStories;
 
 describe("Given a Status Indicator", () => {

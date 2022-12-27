@@ -1,4 +1,4 @@
-import { DecoratorFn } from "@storybook/react";
+import { Decorator } from "@storybook/react";
 import {
   getCharacteristicValue,
   ModeValues,
@@ -57,7 +57,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
   return null;
 }
 
-export const withTheme: DecoratorFn = (StoryFn, context) => {
+export const withTheme: Decorator = (StoryFn, context) => {
   const { density, mode } = context.globals;
 
   if (mode === "side-by-side" || mode === "stacked") {

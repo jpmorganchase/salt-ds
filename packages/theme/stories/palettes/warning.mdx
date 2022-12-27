@@ -1,0 +1,42 @@
+import {
+  Meta,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/blocks";
+import { ColorContainer } from "docs/components/ColorContainer";
+
+<Meta title="Theme/Palettes/Warning" />
+
+# Warning
+
+Colors symbolising a warning state.
+
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-warning-border"
+      colors={{
+        "--salt-palette-warning-border": "var(--salt-palette-warning-border)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-warning-foreground"
+      colors={{
+        "--salt-palette-warning-foreground":
+          "var(--salt-palette-warning-foreground)",
+      }}
+    />
+    <ColorItem
+      title="Background (emphasized)"
+      subtitle="--salt-palette-warning-background-emphasize"
+      colors={{
+        "--salt-palette-warning-background-emphasize":
+          "var(--salt-palette-warning-background-emphasize)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>

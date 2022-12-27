@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Button } from "@salt-ds/core";
 import { DropdownBase, DropdownBaseProps, DropdownButton } from "@salt-ds/lab";
 
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Dropdown Base",
   component: DropdownBase,
 };
 
-export const Default: Story<DropdownBaseProps> = () => {
+export const Default: StoryFn<DropdownBaseProps> = () => {
   const handleChange = (isOpen: boolean) => {
     console.log("isOpen changed", isOpen);
   };
@@ -35,7 +35,7 @@ export const Default: Story<DropdownBaseProps> = () => {
   );
 };
 
-export const Controlled: Story<DropdownBaseProps> = () => {
+export const Controlled: StoryFn<DropdownBaseProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const handleChange: DropdownBaseProps["onOpenChange"] = (open: boolean) => {
     setIsOpen(open);

@@ -9,13 +9,13 @@ import {
   AccordionSummary,
   AccordionSummaryProps,
 } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "./accordion.stories.css";
 
 export default {
   title: "Lab/Accordion",
   component: Accordion,
-} as ComponentMeta<typeof Accordion>;
+} as Meta<typeof Accordion>;
 
 const DetailsContent = ({ children }: { children?: ReactNode }) => {
   return <div className={"accordion-story-details"}>{children}</div>;
@@ -94,7 +94,7 @@ interface AccordionStoryProps {
   disabled?: boolean;
 }
 
-const AccordionTemplate: Story<AccordionStoryProps> = (props) => {
+const AccordionTemplate: StoryFn<AccordionStoryProps> = (props) => {
   return (
     <div className="story-root">
       <Accordion maxExpandedItems={1} disabled={props.disabled}>
@@ -104,7 +104,7 @@ const AccordionTemplate: Story<AccordionStoryProps> = (props) => {
   );
 };
 
-const ControlledAccordionTemplate: Story<AccordionStoryProps> = (props) => {
+const ControlledAccordionTemplate: StoryFn<AccordionStoryProps> = (props) => {
   const [expandedSectionIds, setExpandedSectionIds] = useState<string[]>([]);
 
   const onChange = (newValue: string[] | null) => {
@@ -120,7 +120,7 @@ const ControlledAccordionTemplate: Story<AccordionStoryProps> = (props) => {
   );
 };
 
-const MultiAccordionTemplate: Story<AccordionProps> = (props) => {
+const MultiAccordionTemplate: StoryFn<AccordionProps> = (props) => {
   return (
     <div className="story-root">
       <Accordion {...props}>{renderDummySections()}</Accordion>
@@ -128,7 +128,7 @@ const MultiAccordionTemplate: Story<AccordionProps> = (props) => {
   );
 };
 
-const AccordionInAccordionTemplate: Story<AccordionProps> = () => {
+const AccordionInAccordionTemplate: StoryFn<AccordionProps> = () => {
   return (
     <div className="story-root">
       <Accordion>

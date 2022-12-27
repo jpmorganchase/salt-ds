@@ -1,13 +1,13 @@
 import { Card, H1, Text } from "@salt-ds/core";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Card/QA",
   component: Card,
-} as ComponentMeta<typeof Card>;
+} as Meta<typeof Card>;
 
-export const AllExamplesUsingText: Story<
+export const AllExamplesUsingText: StoryFn<
   QAContainerProps & { className?: string }
 > = (props) => {
   return (

@@ -1,6 +1,6 @@
 // TODO revisit when:
 //  - multiline is implemented for Input
-import { Button, SaltProvider } from "@salt-ds/core";
+import { Button, SaltProvider, StackLayout } from "@salt-ds/core";
 import {
   CalendarIcon,
   CallIcon,
@@ -9,14 +9,14 @@ import {
   UserIcon,
 } from "@salt-ds/icons";
 import { Dropdown, FormField, Input, StaticInputAdornment } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Input",
   component: Input,
-} as ComponentMeta<typeof Input>;
+} as Meta<typeof Input>;
 
-const Template: ComponentStory<typeof Input> = (args) => {
+const Template: StoryFn<typeof Input> = (args) => {
   // let text;
   // @ts-ignore
   // if (args.multiline) {
@@ -62,21 +62,20 @@ FeatureInput.args = {
   textAlign: "left",
 };
 
-export const ReadOnly: ComponentStory<typeof Input> = () => {
+export const ReadOnly: StoryFn<typeof Input> = () => {
   return (
-    <>
+    <StackLayout gap={1}>
       <Input
         defaultValue={"Read Only Input"} // Read Only isn't currently a prop
         readOnly
         style={{ width: "292px" }}
       />
-      <div style={{ height: "15px" }} />
       <Input readOnly style={{ width: "292px" }} />
-    </>
+    </StackLayout>
   );
 };
 
-export const WithFormField: ComponentStory<typeof Input> = () => {
+export const WithFormField: StoryFn<typeof Input> = () => {
   return (
     <FormField label="ADA compliant label" style={{ width: 292 }}>
       <Input defaultValue="Value" />
@@ -84,7 +83,7 @@ export const WithFormField: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const WithFormFieldNoInitialValue: ComponentStory<typeof Input> = () => {
+export const WithFormFieldNoInitialValue: StoryFn<typeof Input> = () => {
   return (
     <FormField label="ADA compliant label" style={{ width: 292 }}>
       <Input />
@@ -92,7 +91,7 @@ export const WithFormFieldNoInitialValue: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const Spellcheck: ComponentStory<typeof Input> = () => {
+export const Spellcheck: StoryFn<typeof Input> = () => {
   return (
     <Input
       defaultValue="This is a comment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
@@ -102,7 +101,7 @@ export const Spellcheck: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const TouchDensityInput: ComponentStory<typeof Input> = () => {
+export const TouchDensityInput: StoryFn<typeof Input> = () => {
   return (
     <SaltProvider density="touch">
       <Input defaultValue="Touch Density Input" style={{ width: "292px" }} />
@@ -110,7 +109,7 @@ export const TouchDensityInput: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const LowDensityInput: ComponentStory<typeof Input> = () => {
+export const LowDensityInput: StoryFn<typeof Input> = () => {
   return (
     <SaltProvider density="low">
       <Input defaultValue="Low Density Input" style={{ width: "292px" }} />
@@ -118,7 +117,7 @@ export const LowDensityInput: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const HighDensityInput: ComponentStory<typeof Input> = () => {
+export const HighDensityInput: StoryFn<typeof Input> = () => {
   return (
     <SaltProvider density="high">
       <Input defaultValue="High Density Input" style={{ width: "292px" }} />
@@ -126,7 +125,7 @@ export const HighDensityInput: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const Adornments: ComponentStory<typeof Input> = (args) => {
+export const Adornments: StoryFn<typeof Input> = (args) => {
   const styles = {
     input: {
       width: 292,
@@ -146,7 +145,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
   const suffixData = ["KG", "lbs", "g"];
 
   return (
-    <>
+    <StackLayout gap={1}>
       <Input
         defaultValue="Prefix: Icon"
         style={styles.input}
@@ -279,6 +278,6 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
           </StaticInputAdornment>
         }
       />
-    </>
+    </StackLayout>
   );
 };

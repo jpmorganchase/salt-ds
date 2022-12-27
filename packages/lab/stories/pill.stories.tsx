@@ -1,23 +1,15 @@
-/**
- * **NOTE**
- *
- * This file has same title with the .mdx companion file.
- * Stories defined in this/that file may not be shown in the navigation tree after hot reloading.
- * Refresh of a page is needed.
- */
-
 import { SyntheticEvent, useState } from "react";
 import { SaltProvider } from "@salt-ds/core";
 import { Pill } from "@salt-ds/lab";
 import { FavoriteIcon } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Pill",
   component: Pill,
-} as ComponentMeta<typeof Pill>;
+} as Meta<typeof Pill>;
 
-const Template: ComponentStory<typeof Pill> = (args) => {
+const Template: StoryFn<typeof Pill> = (args) => {
   const handleClick = (e: SyntheticEvent<HTMLDivElement>) => {
     console.log("clicked");
     args.onClick?.(e);
@@ -29,7 +21,7 @@ export const FeaturePill = Template.bind({});
 
 // This story is referenced in stories/salt/pill.stories.mdx
 // named function syntax is used to show the same in code block
-export const Controlled: ComponentStory<typeof Pill> = () => {
+export const Controlled: StoryFn<typeof Pill> = () => {
   const [checked, setChecked] = useState(true);
 
   const handleChange = () => {
@@ -46,7 +38,7 @@ export const Controlled: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const Disabled: ComponentStory<typeof Pill> = () => {
+export const Disabled: StoryFn<typeof Pill> = () => {
   return (
     <Pill
       disabled
@@ -56,7 +48,7 @@ export const Disabled: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const Closable: ComponentStory<typeof Pill> = () => {
+export const Closable: StoryFn<typeof Pill> = () => {
   return (
     <Pill
       label="Closable Pill"
@@ -66,7 +58,7 @@ export const Closable: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const DisabledClosable: ComponentStory<typeof Pill> = () => {
+export const DisabledClosable: StoryFn<typeof Pill> = () => {
   return (
     <Pill
       disabled
@@ -77,7 +69,7 @@ export const DisabledClosable: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const Icon: ComponentStory<typeof Pill> = () => {
+export const Icon: StoryFn<typeof Pill> = () => {
   return (
     <Pill
       icon={<FavoriteIcon />}
@@ -87,7 +79,7 @@ export const Icon: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const Selectable: ComponentStory<typeof Pill> = () => {
+export const Selectable: StoryFn<typeof Pill> = () => {
   return (
     <Pill
       label="Selectable Pill"
@@ -97,7 +89,7 @@ export const Selectable: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const DisabledSelectable: ComponentStory<typeof Pill> = () => {
+export const DisabledSelectable: StoryFn<typeof Pill> = () => {
   return (
     <Pill
       label="Selectable Pill"
@@ -109,7 +101,7 @@ export const DisabledSelectable: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const MaxWidth: ComponentStory<typeof Pill> = () => {
+export const MaxWidth: StoryFn<typeof Pill> = () => {
   return (
     <>
       <Pill
@@ -120,7 +112,7 @@ export const MaxWidth: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const CustomTooltipText: ComponentStory<typeof Pill> = () => {
+export const CustomTooltipText: StoryFn<typeof Pill> = () => {
   return (
     <Pill
       label="Pill"
@@ -129,7 +121,7 @@ export const CustomTooltipText: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const AllDensities: ComponentStory<typeof Pill> = () => {
+export const AllDensities: StoryFn<typeof Pill> = () => {
   return (
     <div
       style={{

@@ -1,14 +1,14 @@
 import { Logo } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 
 export default {
   title: "Lab/Logo",
   component: Logo,
-} as ComponentMeta<typeof Logo>;
+} as Meta<typeof Logo>;
 
-const Template: ComponentStory<typeof Logo> = (args) => {
+const Template: StoryFn<typeof Logo> = (args) => {
   return <Logo {...args} />;
 };
 

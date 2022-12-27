@@ -1,0 +1,79 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/blocks";
+import { Checkbox } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import * as CheckboxStories from "./checkbox.stories";
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+A Checkbox allows the user to turn a specific value on or off. The value can be an independent value or a selection of one or more values from a given set of choices (structured as a Checkbox Group).
+
+## Default
+
+<Canvas>
+  <Story of={CheckboxStories.Default} />
+</Canvas>
+
+## Disabled
+
+<Canvas>
+  <Story of={CheckboxStories.Disabled} />
+</Canvas>
+
+## Without Label
+
+<Canvas>
+  <Story of={CheckboxStories.WithoutLabel} />
+</Canvas>
+
+## Indeterminate
+
+<Canvas>
+  <Story of={CheckboxStories.Indeterminate} />
+</Canvas>
+
+## Horizontal Group
+
+<Canvas>
+  <Story of={CheckboxStories.HorizontalGroup} />
+</Canvas>
+
+## Controlled Group
+
+<Canvas>
+  <Story of={CheckboxStories.ControlledGroup} />
+</Canvas>
+
+## Uncontrolled Group
+
+<Canvas>
+  <Story of={CheckboxStories.UncontrolledGroup} />
+</Canvas>
+
+## Long Text Group
+
+<Canvas>
+  <Story of={CheckboxStories.LongTextGroup} />
+</Canvas>
+
+# API
+
+```
+import { Checkbox } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={Checkbox} />
+
+## CSS Class
+
+<CSSClassTable of={Checkbox} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Checkbox} />

@@ -14,7 +14,7 @@ import {
   CalendarProps,
   UseRangeSelectionCalendarProps,
 } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { getHolidays } from "nyse-holidays";
 import { useState } from "react";
 
@@ -26,12 +26,12 @@ export default {
   args: {
     selectionVariant: "default",
   },
-} as ComponentMeta<typeof Calendar>;
+} as Meta<typeof Calendar>;
 
 const currentLocale = navigator.languages[0];
 const localTimeZone = getLocalTimeZone();
 
-const Template: ComponentStory<typeof Calendar> = (args) => {
+const Template: StoryFn<typeof Calendar> = (args) => {
   return <Calendar {...args} />;
 };
 
@@ -71,8 +71,6 @@ CustomDayRender.args = {
   renderDayContents,
 };
 
-console.log(today(localTimeZone));
-
 export const FadeMonthAnimation = Template.bind({});
 FadeMonthAnimation.args = {
   className: "FadeMonthAnimation",
@@ -106,7 +104,7 @@ HideOutOfRangeDays.args = {
   hideOutOfRangeDates: true,
 };
 
-export const TwinCalendars: ComponentStory<typeof Calendar> = () => {
+export const TwinCalendars: StoryFn<typeof Calendar> = () => {
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
   const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
     event,

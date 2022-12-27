@@ -1,5 +1,5 @@
 import { SALT_CHARACTERISTICS } from "@salt-ds/theme-editor/src/utils/saltValues";
-import { Component } from "@storybook/addon-docs";
+import { Component } from "@storybook/blocks";
 
 export function hasDocgen(component: Component): boolean {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

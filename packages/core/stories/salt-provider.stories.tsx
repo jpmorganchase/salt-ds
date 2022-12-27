@@ -183,3 +183,16 @@ export const NestedProviders = () => {
     </SaltProvider>
   );
 };
+
+export const SimpleSaltProviderHighDensity = () => {
+  return (
+    <SaltProvider density="high" mode="light">
+      <Card>
+        <div>
+          <h1>This is Card</h1>
+          <span>Using Nested DOM Elements</span>
+        </div>
+      </Card>
+    </SaltProvider>
+  );
+};

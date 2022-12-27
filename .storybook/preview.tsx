@@ -15,13 +15,13 @@ import "@fontsource/open-sans/800.css";
 import "@fontsource/open-sans/800-italic.css";
 import "./styles.css";
 
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps } from "react";
 import { withTheme } from "docs/decorators/withTheme";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
 import { SaltProvider } from "@salt-ds/core";
-import { DocsContainer } from "@storybook/addon-docs";
+import { DocsContainer } from "@storybook/blocks";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
@@ -118,12 +118,15 @@ export const parameters: Parameters = {
     container: ({
       children,
       context,
-    }: ComponentProps<typeof DocsContainer> & { children?: ReactNode }) => (
-      // @ts-ignore DocsContainer does not support React18 types
-      <DocsContainer context={context}>
-        <SaltProvider mode={context.globals?.mode}>{children}</SaltProvider>
-      </DocsContainer>
-    ),
+    }: ComponentProps<typeof DocsContainer>) => {
+      // @ts-expect-error Storybook 7 issue
+      const mode = context.store.globals.globals?.mode;
+      return (
+        <DocsContainer context={context}>
+          <SaltProvider mode={mode}>{children}</SaltProvider>
+        </DocsContainer>
+      );
+    },
   },
   // disables snapshotting on a global level
   chromatic: { disableSnapshot: true },

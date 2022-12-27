@@ -1,6 +1,6 @@
 import { FLEX_ALIGNMENT_BASE, FlowLayout } from "@salt-ds/core";
 
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
@@ -18,9 +18,9 @@ export default {
   args: {
     gap: 3,
   },
-} as ComponentMeta<typeof FlowLayout>;
+} as Meta<typeof FlowLayout>;
 
-const DefaultStory: ComponentStory<typeof FlowLayout> = (args) => {
+const DefaultStory: StoryFn<typeof FlowLayout> = (args) => {
   return (
     <FlowLayout className="layout-container" {...args}>
       {Array.from({ length: 12 }, (_, index) => (

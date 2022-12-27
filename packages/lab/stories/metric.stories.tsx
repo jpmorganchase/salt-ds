@@ -1,20 +1,20 @@
 import { DoubleChevronDownIcon, FavoriteIcon } from "@salt-ds/icons";
 import { Metric, MetricContent, MetricHeader } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Metric",
   component: Metric,
-} as ComponentMeta<typeof Metric>;
+} as Meta<typeof Metric>;
 
-export const FeatureMetric: ComponentStory<typeof Metric> = (props) => (
+export const FeatureMetric: StoryFn<typeof Metric> = (props) => (
   <Metric {...props}>
     <MetricHeader subtitle="Total Value" title="Revenue YTD" />
     <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
   </Metric>
 );
 
-export const DefaultHorizontal: ComponentStory<typeof Metric> = (props) => (
+export const DefaultHorizontal: StoryFn<typeof Metric> = (props) => (
   <Metric {...props}>
     <MetricHeader title="Revenue YTD" />
     <MetricContent value="$801.9B" />
@@ -24,7 +24,7 @@ DefaultHorizontal.args = {
   orientation: "horizontal",
 };
 
-export const DefaultVertical: ComponentStory<typeof Metric> = (props) => (
+export const DefaultVertical: StoryFn<typeof Metric> = (props) => (
   <Metric {...props}>
     <MetricHeader title="Revenue YTD" />
     <MetricContent value="$801.9B" />
@@ -34,9 +34,7 @@ DefaultVertical.args = {
   orientation: "vertical",
 };
 
-export const AdditionalContextHorizontal: ComponentStory<typeof Metric> = (
-  props
-) => (
+export const AdditionalContextHorizontal: StoryFn<typeof Metric> = (props) => (
   <Metric {...props}>
     <MetricHeader subtitle="Total Value" title="Revenue YTD" />
     <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
@@ -47,9 +45,7 @@ AdditionalContextHorizontal.args = {
   direction: "up",
 };
 
-export const AdditionalContextVertical: ComponentStory<typeof Metric> = (
-  props
-) => (
+export const AdditionalContextVertical: StoryFn<typeof Metric> = (props) => (
   <Metric {...props}>
     <MetricHeader subtitle="Total Value" title="Revenue YTD" />
     <MetricContent subvalue="+10.1 (+1.23%)" value="$801.9B" />
@@ -69,7 +65,7 @@ const cellStyles = {
   width: "50%",
 };
 
-export const Layout: ComponentStory<typeof Metric> = () => (
+export const Layout: StoryFn<typeof Metric> = () => (
   <div style={rowStyles}>
     <Metric direction="up" style={cellStyles}>
       <MetricHeader subtitle="Total Value" title="Revenue YTD" />
@@ -82,7 +78,7 @@ export const Layout: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const WithAlignmentHorizontal: ComponentStory<typeof Metric> = () => (
+export const WithAlignmentHorizontal: StoryFn<typeof Metric> = () => (
   <div
     style={{
       display: "flex",
@@ -106,7 +102,7 @@ export const WithAlignmentHorizontal: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const WithAlignmentVertical: ComponentStory<typeof Metric> = () => (
+export const WithAlignmentVertical: StoryFn<typeof Metric> = () => (
   <div
     style={{
       display: "flex",
@@ -129,7 +125,7 @@ export const WithAlignmentVertical: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const Horizontal: ComponentStory<typeof Metric> = () => (
+export const Horizontal: StoryFn<typeof Metric> = () => (
   <div
     style={{
       display: "flex",
@@ -153,7 +149,7 @@ export const Horizontal: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const Vertical: ComponentStory<typeof Metric> = () => (
+export const Vertical: StoryFn<typeof Metric> = () => (
   <div
     style={{
       display: "flex",
@@ -176,7 +172,7 @@ export const Vertical: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const WithIndicator: ComponentStory<typeof Metric> = () => (
+export const WithIndicator: StoryFn<typeof Metric> = () => (
   <div
     style={{
       display: "flex",
@@ -195,7 +191,7 @@ export const WithIndicator: ComponentStory<typeof Metric> = () => (
   </div>
 );
 
-export const WithLink: ComponentStory<typeof Metric> = () => (
+export const WithLink: StoryFn<typeof Metric> = () => (
   <Metric>
     <MetricHeader
       SubtitleLinkProps={{
@@ -208,7 +204,7 @@ export const WithLink: ComponentStory<typeof Metric> = () => (
   </Metric>
 );
 
-export const WithCustomIndicator: ComponentStory<typeof Metric> = () => (
+export const WithCustomIndicator: StoryFn<typeof Metric> = () => (
   <div
     style={{
       display: "flex",

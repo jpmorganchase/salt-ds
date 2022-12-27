@@ -1,7 +1,7 @@
-import { DecoratorFn } from "@storybook/react";
+import { Decorator } from "@storybook/react";
 import { StrictMode } from "react";
 
-export const withStrictMode: DecoratorFn = (Story, context) => {
+export const withStrictMode: Decorator = (Story, context) => {
   const { strictMode } = context.globals;
 
   if (strictMode === "disable") {

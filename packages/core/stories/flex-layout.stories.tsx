@@ -1,6 +1,6 @@
 import { FlexItem, FlexLayout } from "@salt-ds/core";
 
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
@@ -42,9 +42,9 @@ export default {
     gap: 3,
   },
   excludeStories: ["NestedExample"],
-} as ComponentMeta<typeof FlexLayout>;
+} as Meta<typeof FlexLayout>;
 
-const DefaultStory: ComponentStory<typeof FlexLayout> = (args) => {
+const DefaultStory: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 5 }, (_, index) => (
@@ -59,7 +59,7 @@ export const Default = DefaultStory.bind({});
 Default.args = {
   wrap: true,
 };
-const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
+const SeparatedItemsStory: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 3 }, (_, index) => (
@@ -77,7 +77,7 @@ WithSeparators.args = {
   direction: { sm: "row", xs: "column" },
 };
 
-const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
+const Responsive: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout direction="column">
       <div className="layout-content">Item </div>
@@ -109,7 +109,7 @@ UsingResponsiveProps.args = {
   },
 };
 
-const NestedExample: ComponentStory<typeof FlexLayout> = (args) => {
+const NestedExample: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       <div className="layout-content">Item 1</div>
@@ -136,7 +136,7 @@ const flagsList: string[] = [
   "Antigua and Barbuda",
   "Argentina",
 ];
-export const PolymorphicList: ComponentStory<typeof FlexLayout> = (args) => {
+export const PolymorphicList: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args} as="ol" direction="column">
       {Array.from({ length: flagsList.length }, (_, index) => (

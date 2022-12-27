@@ -1,15 +1,15 @@
 import { Panel } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
   title: "Core/Panel",
   component: Panel,
-} as ComponentMeta<typeof Panel>;
+} as Meta<typeof Panel>;
 
-const Template: ComponentStory<typeof Panel> = (args) => <Panel {...args} />;
+const Template: StoryFn<typeof Panel> = (args) => <Panel {...args} />;
 
-export const All: ComponentStory<typeof Panel> = (props) => {
+export const All: StoryFn<typeof Panel> = (props) => {
   return (
     <>
       <h1>Primary</h1>

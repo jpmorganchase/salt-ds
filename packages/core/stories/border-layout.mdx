@@ -1,0 +1,64 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/blocks";
+import { BorderItem, BorderLayout } from "@salt-ds/core";
+import { CSSClassTable } from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import * as BorderLayoutStories from "./border-layout.stories";
+import * as BorderItemStories from "./border-item.stories";
+
+<Meta of={BorderLayoutStories} />
+
+# Border Layout
+
+Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.
+The Border Layout is built using [Grid layout](?path=/docs/documentation-core-layout-grid-layout--page) and it is intended for laying out large sections of content, such as pages, where there is at least a main area with a header and footer.
+
+<Canvas>
+  <Story of={BorderLayoutStories.AllPanels} />
+</Canvas>
+
+## Use Border Layout when...
+
+You want a fixed layout with a flexible main region.
+
+### Don't use Border Layout when...
+
+You want a customized layout that you can control in both row and column dimensions. In this case we recommend you having a look at [Grid layout](?path=/docs/documentation-core-layout-grid-layout--page).
+
+### Examples
+
+#### Border Item inside default Border Layout
+
+The border item wrapper allows you to select the right position for your content to be displayed at - `north`, `west`, `center`, `east` or `south`.  
+It also provides access to other properties such as alignment and sticky behavior.
+
+<Canvas>
+  <Story of={BorderItemStories.BorderItemWrapper} meta={BorderItemStories} />
+</Canvas>
+
+#### Fixed panels
+
+You can have a responsive `center` region while the `west` and `east` panels remain with a fixed width as the content changes.
+
+<Canvas>
+  <Story of={BorderLayoutStories.FixedPanels} />
+</Canvas>
+
+## Configuring Border Layout
+
+### API
+
+```
+import { BorderLayout, BorderItem } from "@salt-ds/core";
+```
+
+### Props
+
+<ArgsTable of={BorderLayout} />
+
+### Classes
+
+#### Item
+
+<CSSClassTable of={BorderItem} />
+
+<HelpAndSupport />

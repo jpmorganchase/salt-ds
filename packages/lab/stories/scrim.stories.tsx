@@ -1,14 +1,14 @@
 import { useRef, useState } from "react";
 import { Button } from "@salt-ds/core";
 import { ContentStatus, Scrim } from "@salt-ds/lab";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { StoryFn, Meta } from "@storybook/react";
 
 export default {
   title: "Lab/Scrim",
   component: Scrim,
-} as ComponentMeta<typeof Scrim>;
+} as Meta<typeof Scrim>;
 
-export const Default: ComponentStory<typeof Scrim> = () => {
+export const Default: StoryFn<typeof Scrim> = () => {
   const [open, setOpen] = useState(false);
   const handleRequestOpen = () => {
     setOpen(true);
@@ -26,7 +26,7 @@ export const Default: ComponentStory<typeof Scrim> = () => {
   );
 };
 
-export const Closable: ComponentStory<typeof Scrim> = () => {
+export const Closable: StoryFn<typeof Scrim> = () => {
   const [open, setOpen] = useState(false);
   const handleRequestOpen = () => {
     setOpen(true);
@@ -52,7 +52,7 @@ export const Closable: ComponentStory<typeof Scrim> = () => {
   );
 };
 
-export const WithContentStatus: ComponentStory<typeof Scrim> = () => {
+export const WithContentStatus: StoryFn<typeof Scrim> = () => {
   return (
     <Scrim aria-label="Example Scrim" open>
       <ContentStatus status="loading" />
@@ -60,7 +60,7 @@ export const WithContentStatus: ComponentStory<typeof Scrim> = () => {
   );
 };
 
-export const WithContainer: ComponentStory<typeof Scrim> = () => {
+export const WithContainer: StoryFn<typeof Scrim> = () => {
   const [open, setOpen] = useState(false);
   const parentRef = useRef(null);
 

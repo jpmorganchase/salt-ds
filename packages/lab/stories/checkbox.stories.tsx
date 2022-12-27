@@ -1,17 +1,17 @@
 import { ChangeEvent, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
 
 export default {
   title: "Lab/Checkbox",
   component: Checkbox,
-} as ComponentMeta<typeof Checkbox>;
+} as Meta<typeof Checkbox>;
 
-const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => {
+const CheckboxTemplate: StoryFn<typeof Checkbox> = (args) => {
   return <Checkbox {...args} />;
 };
 
-export const Default: ComponentStory<typeof Checkbox> = () => {
+export const Default: StoryFn<typeof Checkbox> = () => {
   return (
     <>
       <Checkbox label="I understand ADA required Labels on unchecked checkboxes" />
@@ -34,7 +34,7 @@ FeatureInput.args = {
   label: "Checkbox",
 };
 
-export const Disabled: ComponentStory<typeof Checkbox> = () => {
+export const Disabled: StoryFn<typeof Checkbox> = () => {
   return (
     <>
       <Checkbox disabled label="disabled checkbox" />
@@ -52,7 +52,7 @@ export const WithoutLabel = CheckboxTemplate.bind({});
 
 WithoutLabel.args = { defaultChecked: true };
 
-export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
+export const Indeterminate: StoryFn<typeof Checkbox> = () => {
   const [checkboxState, setCheckboxState] = useState({
     checked: false,
     indeterminate: false,
@@ -77,7 +77,7 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
-export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
+export const HorizontalGroup: StoryFn<typeof Checkbox> = () => {
   return (
     <CheckboxGroup row>
       <Checkbox defaultChecked label="option 1" value="option-1" />
@@ -87,9 +87,7 @@ export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
-export const UncontrolledGroup: ComponentStory<typeof CheckboxGroup> = (
-  args
-) => {
+export const UncontrolledGroup: StoryFn<typeof CheckboxGroup> = (args) => {
   return (
     <CheckboxGroup {...args}>
       <Checkbox defaultChecked label="option 1" value="option-1" />
@@ -103,7 +101,7 @@ UncontrolledGroup.args = {
   legend: "Uncontrolled CheckboxGroup",
 };
 
-export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
+export const ControlledGroup: StoryFn<typeof CheckboxGroup> = (args) => {
   const checkboxesData = [
     {
       label: "Spot",
@@ -151,7 +149,7 @@ export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
   );
 };
 
-export const LongTextGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
+export const LongTextGroup: StoryFn<typeof CheckboxGroup> = (args) => {
   const checkboxesData = [
     {
       label:

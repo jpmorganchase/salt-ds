@@ -1,0 +1,61 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/blocks";
+import { Badge } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import * as BadgeStories from "./badge.stories";
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+A Badge is a numeric annotation that indicates the number of outstanding items that need to be addressed. It appears on the top-right of an element, usually an icon. The badge can accommodate values of up to four digits in length.
+
+## Icon Badge
+
+The default element is `MessageIcon`
+
+<Canvas>
+  <Story of={BadgeStories.Default} />
+</Canvas>
+
+## Words Badge
+
+<Canvas>
+  <Story of={BadgeStories.Words} />
+</Canvas>
+
+## Badge with text
+
+`badgeContent` can accept both number and string
+
+<Canvas>
+  <Story of={BadgeStories.Text} />
+</Canvas>
+
+## Badge with maximum number
+
+Specify the maximum number to be displayed with `max`. If `badgeContent` exceeds `max`, suffix `+` will be appended.
+
+<Canvas>
+  <Story of={BadgeStories.MaxNumber} />
+</Canvas>
+
+# API
+
+```
+import { Badge } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={Badge} />
+
+## CSS Class
+
+<CSSClassTable of={Badge} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Badge} />

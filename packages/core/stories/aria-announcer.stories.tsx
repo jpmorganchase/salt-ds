@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useState, CSSProperties } from "react";
 import { AriaAnnouncerProvider, useAriaAnnouncer } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Aria Announcer Provider",
@@ -9,7 +9,7 @@ export default {
   // react-docgen-typescript-loader doesn't support detecting interface extension
   // https://github.com/strothj/react-docgen-typescript-loader/issues/47
   argTypes: { onClick: { action: "clicked" } },
-} as ComponentMeta<typeof AriaAnnouncerProvider>;
+} as Meta<typeof AriaAnnouncerProvider>;
 
 type changeEvt = ChangeEvent<HTMLInputElement>;
 type interval = "delay" | "debounce";
@@ -106,7 +106,7 @@ const Content = () => {
   );
 };
 
-export const AriaAnnounceDebounceAndDelay: ComponentStory<
+export const AriaAnnounceDebounceAndDelay: StoryFn<
   typeof AriaAnnouncerProvider
 > = () => (
   <AriaAnnouncerProvider style={visibleStyle}>

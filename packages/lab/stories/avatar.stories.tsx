@@ -1,15 +1,15 @@
 import { Avatar } from "@salt-ds/lab";
 
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 
 export default {
   title: "Lab/Avatar",
   component: Avatar,
-} as ComponentMeta<typeof Avatar>;
+} as Meta<typeof Avatar>;
 
-const Template: ComponentStory<typeof Avatar> = (props) => {
+const Template: StoryFn<typeof Avatar> = (props) => {
   return (
     <div>
       <h3>Size = small</h3>

@@ -1,5 +1,5 @@
 import { FormField, FormattedInput, FormattedInputProps } from "@salt-ds/lab";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 const parseDigits = (string: string) => (string.match(/(\d+)/g) || []).join("");
@@ -33,11 +33,11 @@ export default {
   component: FormattedInput,
 };
 
-export const Default: Story<FormattedInputProps> = (props) => (
+export const Default: StoryFn<FormattedInputProps> = (props) => (
   <FormattedInput defaultValue="Value" style={{ width: 292 }} {...props} />
 );
 
-export const Controlled: Story<FormattedInputProps> = ({ onChange }) => {
+export const Controlled: StoryFn<FormattedInputProps> = ({ onChange }) => {
   const [valueState, setValueState] = useState("");
 
   const handleChange = (value: string) => {
@@ -60,7 +60,7 @@ export const Controlled: Story<FormattedInputProps> = ({ onChange }) => {
   );
 };
 
-export const WithMask: Story<FormattedInputProps> = (props) => (
+export const WithMask: StoryFn<FormattedInputProps> = (props) => (
   <FormattedInput
     mask="XXX-XXX-XXX"
     rifmOptions={{
@@ -74,7 +74,7 @@ export const WithMask: Story<FormattedInputProps> = (props) => (
   />
 );
 
-export const FormattingOnly: Story<FormattedInputProps> = (props) => (
+export const FormattingOnly: StoryFn<FormattedInputProps> = (props) => (
   <FormattedInput
     defaultValue="123456789"
     rifmOptions={{
@@ -88,7 +88,7 @@ export const FormattingOnly: Story<FormattedInputProps> = (props) => (
   />
 );
 
-export const ReadOnly: Story<FormattedInputProps> = (props) => (
+export const ReadOnly: StoryFn<FormattedInputProps> = (props) => (
   <FormattedInput
     defaultValue="12"
     mask="XXX-XXX-XXX"
@@ -104,7 +104,7 @@ export const ReadOnly: Story<FormattedInputProps> = (props) => (
   />
 );
 
-export const Disabled: Story<FormattedInputProps> = (props) => (
+export const Disabled: StoryFn<FormattedInputProps> = (props) => (
   <FormattedInput
     defaultValue="123"
     mask="XXX-XXX-XXX"
@@ -120,7 +120,7 @@ export const Disabled: Story<FormattedInputProps> = (props) => (
   />
 );
 
-export const DefaultValue: Story<FormattedInputProps> = (props) => (
+export const DefaultValue: StoryFn<FormattedInputProps> = (props) => (
   <FormattedInput
     defaultValue="Default Value"
     style={{ width: 292 }}
@@ -128,13 +128,13 @@ export const DefaultValue: Story<FormattedInputProps> = (props) => (
   />
 );
 
-export const WithFormField: Story<FormattedInputProps> = (props) => (
+export const WithFormField: StoryFn<FormattedInputProps> = (props) => (
   <FormField label="ADA compliant label" style={{ width: 292 }}>
     <FormattedInput defaultValue="Value" {...props} />
   </FormField>
 );
 
-export const WithFormFieldAndMask: Story<FormattedInputProps> = (props) => (
+export const WithFormFieldAndMask: StoryFn<FormattedInputProps> = (props) => (
   <FormField label="ADA compliant label" style={{ width: 292 }}>
     <FormattedInput
       defaultValue="123"

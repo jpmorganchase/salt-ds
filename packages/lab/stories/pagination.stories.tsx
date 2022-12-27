@@ -5,7 +5,7 @@ import {
   Paginator,
   PaginatorProps,
 } from "@salt-ds/lab";
-import { Meta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 export default {
@@ -17,7 +17,7 @@ interface StoryProps {
   goToPosition: "left" | "right" | "none";
 }
 
-const Template: Story<PaginationProps & PaginatorProps & StoryProps> = (
+const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
   args
 ) => {
   const {

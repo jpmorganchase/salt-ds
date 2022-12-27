@@ -1,7 +1,7 @@
-import { DecoratorFn } from "@storybook/react";
+import { Decorator } from "@storybook/react";
 import { ResponsiveContainer } from "docs/components/ResponsiveContainer";
 
-export const withResponsiveWrapper: DecoratorFn = (Story, context) => {
+export const withResponsiveWrapper: Decorator = (Story, context) => {
   const { responsive } = context.globals;
 
   return responsive === "wrap" ? (

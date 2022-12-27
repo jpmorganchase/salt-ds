@@ -1,0 +1,27 @@
+import {
+  Meta,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/blocks";
+import { ColorContainer } from "docs/components/ColorContainer";
+
+<Meta title="Theme/Palettes/Positive" />
+
+# Positive
+
+Colors conveying a positive value or result.
+
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-positive-foreground"
+      colors={{
+        "--salt-palette-positive-foreground":
+          "var(--salt-palette-positive-foreground)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>

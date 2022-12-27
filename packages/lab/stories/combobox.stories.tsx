@@ -9,12 +9,12 @@ import {
   ListItemProps,
   ListItemType,
 } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Combo Box",
   component: ComboBox,
-} as ComponentMeta<typeof ComboBox>;
+} as Meta<typeof ComboBox>;
 
 const shortColorData = [
   "Baby blue",
@@ -141,11 +141,11 @@ const CityListItem: ListItemType<LargeCity> = (props) => {
 
 const cityItemToString = ({ name }: LargeCity) => name;
 
-const ComboBoxTemplate: Story<ComboBoxProps> = (args) => {
+const ComboBoxTemplate: StoryFn<ComboBoxProps> = (args) => {
   return <ComboBox {...args} />;
 };
 
-const FormFieldComboBoxTemplate: Story<
+const FormFieldComboBoxTemplate: StoryFn<
   ComponentProps<typeof ComboBox> &
     Pick<
       ComponentProps<typeof FormField>,
@@ -192,7 +192,7 @@ WithCustomizedFilter.args = {
   getFilterRegex,
 };
 
-export const ItemRenderer: Story<ComboBoxProps<LargeCity>> = (args) => {
+export const ItemRenderer: StoryFn<ComboBoxProps<LargeCity>> = (args) => {
   return (
     <FormField label="Select a large city" style={{ maxWidth: 292 }}>
       <ComboBox {...args} />

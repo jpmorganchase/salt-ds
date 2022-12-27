@@ -1,8 +1,8 @@
-import { DecoratorFn } from "@storybook/react";
+import { Decorator } from "@storybook/react";
 import "./text-spacing.css";
 import { useEffect } from "react";
 
-export const WithTextSpacingWrapper: DecoratorFn = (Story, context) => {
+export const WithTextSpacingWrapper: Decorator = (Story, context) => {
   const isActive = context.globals.textSpacing === "enable";
 
   useEffect(() => {

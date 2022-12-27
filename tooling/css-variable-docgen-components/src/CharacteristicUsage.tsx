@@ -1,11 +1,9 @@
-import { DocsContext, getComponent } from "@storybook/addon-docs";
-import { resetComponents, TableWrapper } from "@storybook/components";
+import { DocsContext, getComponent } from "@storybook/blocks";
+import { ResetWrapper, Table } from "@storybook/components";
 import { useContext } from "react";
 import { CharacteristicUsageRow } from "./CharacteristicUsageRow";
 import { EmptyBlock } from "./EmptyBlock";
 import { getCharacteristics, getDocgenSection } from "./utils";
-
-const ResetWrapper = resetComponents.resetwrapper;
 
 interface CSSVariable {
   name: string;
@@ -42,7 +40,7 @@ export function CharacteristicUsage(
 
   return (
     <ResetWrapper>
-      <TableWrapper className="docsblock-argstable">
+      <Table className="docsblock-argstable">
         <thead className="docblock-argstable-head">
           <tr>
             <th>
@@ -60,7 +58,7 @@ export function CharacteristicUsage(
               <CharacteristicUsageRow key={name} name={name} tokens={tokens} />
             ))}
         </tbody>
-      </TableWrapper>
+      </Table>
     </ResetWrapper>
   );
 }

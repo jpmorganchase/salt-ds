@@ -1,13 +1,13 @@
 import { TokenizedInput } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
   title: "Lab/Tokenized Input/QA",
   component: TokenizedInput,
-} as ComponentMeta<typeof TokenizedInput>;
+} as Meta<typeof TokenizedInput>;
 
-export const ExamplesGrid: ComponentStory<typeof TokenizedInput> = (props) => {
+export const ExamplesGrid: StoryFn<typeof TokenizedInput> = (props) => {
   return (
     <AllRenderer>
       <div

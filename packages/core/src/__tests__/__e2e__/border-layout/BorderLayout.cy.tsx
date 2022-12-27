@@ -3,7 +3,10 @@ import * as borderStories from "@stories/border-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { BORDER_POSITION as borderAreas } from "@salt-ds/core";
 
+// TODO investigate Storybook 7 issue
+// @ts-ignore
 const composedStories = composeStories(borderStories);
+// @ts-ignore
 const { AllPanels } = composedStories;
 
 describe("GIVEN a Border", () => {

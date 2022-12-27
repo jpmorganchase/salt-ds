@@ -12,7 +12,7 @@ import {
   SearchIcon,
   PrintIcon,
 } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Toggle Button",
@@ -21,9 +21,9 @@ export default {
     onChange: { action: "changed" },
     onToggle: { action: "toggled" },
   },
-} as ComponentMeta<typeof ToggleButton>;
+} as Meta<typeof ToggleButton>;
 
-const ToggleButtonTemplate: ComponentStory<typeof ToggleButton> = ({
+const ToggleButtonTemplate: StoryFn<typeof ToggleButton> = ({
   onToggle,
   ...args
 }) => {
@@ -66,7 +66,7 @@ Disabled.args = {
   disabled: true,
 };
 
-export const WithIconAndText: ComponentStory<typeof ToggleButtonGroup> = ({
+export const WithIconAndText: StoryFn<typeof ToggleButtonGroup> = ({
   onChange,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
@@ -98,7 +98,7 @@ export const WithIconAndText: ComponentStory<typeof ToggleButtonGroup> = ({
   );
 };
 
-export const WithIconOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+export const WithIconOnly: StoryFn<typeof ToggleButtonGroup> = ({
   onChange,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
@@ -196,7 +196,7 @@ export const WithIconOnly: ComponentStory<typeof ToggleButtonGroup> = ({
   );
 };
 
-export const WithTextOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+export const WithTextOnly: StoryFn<typeof ToggleButtonGroup> = ({
   onChange,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
@@ -226,7 +226,7 @@ export const WithTextOnly: ComponentStory<typeof ToggleButtonGroup> = ({
   );
 };
 
-export const DisabledWithFocus: ComponentStory<
+export const DisabledWithFocus: StoryFn<
   typeof ToggleButtonGroup
 > = () => {
   return (
@@ -247,7 +247,7 @@ export const DisabledWithFocus: ComponentStory<
   );
 };
 
-export const VerticalWithIconAndText: ComponentStory<
+export const VerticalWithIconAndText: StoryFn<
   typeof ToggleButtonGroup
 > = ({ onChange }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
@@ -284,7 +284,7 @@ export const VerticalWithIconAndText: ComponentStory<
   );
 };
 
-export const VerticalWithIconOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+export const VerticalWithIconOnly: StoryFn<typeof ToggleButtonGroup> = ({
   onChange,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
@@ -387,7 +387,7 @@ export const VerticalWithIconOnly: ComponentStory<typeof ToggleButtonGroup> = ({
   );
 };
 
-export const VerticalWithTextOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+export const VerticalWithTextOnly: StoryFn<typeof ToggleButtonGroup> = ({
   onChange,
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
@@ -421,7 +421,7 @@ export const VerticalWithTextOnly: ComponentStory<typeof ToggleButtonGroup> = ({
   );
 };
 
-export const VerticalDisabledWithFocus: ComponentStory<
+export const VerticalDisabledWithFocus: StoryFn<
   typeof ToggleButtonGroup
 > = () => {
   return (

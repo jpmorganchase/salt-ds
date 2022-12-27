@@ -2,14 +2,14 @@ import { Badge } from "@salt-ds/lab";
 
 import { ClockIcon, SettingsSolidIcon, UserBadgeIcon } from "@salt-ds/icons";
 
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Badge",
   component: Badge,
-} as ComponentMeta<typeof Badge>;
+} as Meta<typeof Badge>;
 
-export const All: ComponentStory<typeof Badge> = () => {
+export const All: StoryFn<typeof Badge> = () => {
   return (
     <div style={{ display: "inline-block" }}>
       <div>
@@ -37,7 +37,7 @@ export const All: ComponentStory<typeof Badge> = () => {
   );
 };
 
-const Template: ComponentStory<typeof Badge> = (args) => {
+const Template: StoryFn<typeof Badge> = (args) => {
   return <Badge {...args} />;
 };
 
@@ -52,18 +52,18 @@ export const Words = Template.bind({});
 Words.args = {
   max: 1000,
   badgeContent: 1,
-  children: "Lorem Ipsum",
+  children: "Words Badge",
 };
 
 export const Text = Template.bind({});
 Text.args = {
   badgeContent: "Text",
-  children: "Lorem Ipsum",
+  children: "Text Badge",
 };
 
 export const MaxNumber = Template.bind({});
 MaxNumber.args = {
   max: 99,
   badgeContent: 150,
-  children: "Lorem Ipsum",
+  children: <UserBadgeIcon />,
 };

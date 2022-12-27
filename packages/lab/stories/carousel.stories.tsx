@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import {
   ButtonBar,
@@ -12,9 +12,9 @@ import { FlexLayout } from "@salt-ds/core";
 export default {
   title: "Lab/Carousel",
   component: Carousel,
-} as ComponentMeta<typeof Carousel>;
+} as Meta<typeof Carousel>;
 
-const CarouselExample: ComponentStory<typeof Carousel> = (args) => {
+const CarouselExample: StoryFn<typeof Carousel> = (args) => {
   const renderButtonBar = () => (
     <ButtonBar>
       <OrderedButton variant="cta">Learn more</OrderedButton>

@@ -1,0 +1,26 @@
+import { Meta } from "@storybook/blocks";
+import { SpacingBlock } from "docs/components/SpacingBlock";
+import { DocGrid } from "docs/components/DocGrid";
+
+<Meta title="Theme/Foundations/Size" />
+
+# Size
+
+All size values are based on 4px, `--salt-size-basis-unit`. If you need to change this, use `--salt-size-unit` (see density aware values below) which will adjust this base value according to density.
+
+## Tokens
+
+<DocGrid>
+  <SpacingBlock spacingVar="--salt-size-basis-unit" />
+  <SpacingBlock spacingVar="--salt-size-border" />
+  <SpacingBlock spacingVar="--salt-size-brandBar" />
+  <SpacingBlock spacingVar="--salt-size-divider-strokeWidth" />
+  <SpacingBlock spacingVar="--salt-size-sharktooth-height" />
+  <SpacingBlock spacingVar="--salt-size-sharktooth-width" />
+  <SpacingBlock spacingVar="--salt-size-unit" />
+  <SpacingBlock spacingVar="--salt-size-detail" />
+  <SpacingBlock spacingVar="--salt-size-base" />
+  <SpacingBlock spacingVar="--salt-size-divider-height" />
+  <SpacingBlock spacingVar="--salt-size-selection" />
+  <SpacingBlock spacingVar="--salt-size-stackable" />
+</DocGrid>

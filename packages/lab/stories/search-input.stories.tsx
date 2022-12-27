@@ -3,15 +3,15 @@
 
 import { NotificationIcon } from "@salt-ds/icons";
 import { FormField, SearchInput } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { SyntheticEvent, useState } from "react";
 
 export default {
   title: "Lab/SearchInput",
   component: SearchInput,
-} as ComponentMeta<typeof SearchInput>;
+} as Meta<typeof SearchInput>;
 
-const Template: ComponentStory<typeof SearchInput> = (args) => {
+const Template: StoryFn<typeof SearchInput> = (args) => {
   return <SearchInput style={{ width: "292px" }} {...args} />;
 };
 
@@ -37,7 +37,7 @@ DefaultValueNoIcon.args = {
   IconComponent: undefined,
 };
 
-export const Controlled: ComponentStory<typeof SearchInput> = ({
+export const Controlled: StoryFn<typeof SearchInput> = ({
   onChange,
   onClear,
   ...args
@@ -64,7 +64,7 @@ export const Controlled: ComponentStory<typeof SearchInput> = ({
   );
 };
 
-export const WithFormField: ComponentStory<typeof SearchInput> = (args) => {
+export const WithFormField: StoryFn<typeof SearchInput> = (args) => {
   return (
     <FormField label="ADA compliant label" style={{ width: "292px" }}>
       <SearchInput inputProps={{ autoComplete: "off" }} {...args} />
@@ -72,9 +72,7 @@ export const WithFormField: ComponentStory<typeof SearchInput> = (args) => {
   );
 };
 
-export const WithFormFieldNoIcon: ComponentStory<typeof SearchInput> = (
-  args
-) => {
+export const WithFormFieldNoIcon: StoryFn<typeof SearchInput> = (args) => {
   return (
     <FormField label="ADA compliant label" style={{ width: "292px" }}>
       <SearchInput

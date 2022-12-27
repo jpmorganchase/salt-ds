@@ -5,15 +5,15 @@ import {
   useTooltip,
   UseTooltipProps,
 } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { useCallback } from "react";
 
 export default {
   title: "Lab/Tooltip",
   component: Tooltip,
-} as ComponentMeta<typeof Tooltip>;
+} as Meta<typeof Tooltip>;
 
-export const Default: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Default: StoryFn<TooltipProps & UseTooltipProps> = (props) => {
   const { getTriggerProps, getTooltipProps } = useTooltip(props);
 
   const defaultProps = getTooltipProps({
@@ -29,7 +29,7 @@ export const Default: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const Open: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Open: StoryFn<TooltipProps & UseTooltipProps> = (props) => {
   const { getTriggerProps, getTooltipProps } = useTooltip(props);
 
   const openProps = getTooltipProps({
@@ -46,7 +46,7 @@ export const Open: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const Scroll: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Scroll: StoryFn<TooltipProps & UseTooltipProps> = (props) => {
   const handleScrollButton = useCallback((node: HTMLButtonElement | null) => {
     node?.scrollIntoView({ block: "center", inline: "center" });
   }, []);
@@ -82,7 +82,7 @@ Scroll.args = {
   placement: "top",
 };
 
-export const Error: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Error: StoryFn<TooltipProps & UseTooltipProps> = (props) => {
   const { status = "error", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
@@ -94,7 +94,7 @@ export const Error: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const Warning: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Warning: StoryFn<TooltipProps & UseTooltipProps> = (props) => {
   const { status = "warning", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
@@ -106,7 +106,7 @@ export const Warning: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const Success: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Success: StoryFn<TooltipProps & UseTooltipProps> = (props) => {
   const { status = "success", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 

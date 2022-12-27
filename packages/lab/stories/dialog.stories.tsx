@@ -10,12 +10,12 @@ import {
 } from "@salt-ds/lab";
 
 import "./dialog.stories.css";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { StoryFn, Meta } from "@storybook/react";
 
 export default {
   title: "Lab/Dialog",
   component: Dialog,
-} as ComponentMeta<typeof Dialog>;
+} as Meta<typeof Dialog>;
 
 const densityDialogWidths = {
   touch: 640,
@@ -24,7 +24,7 @@ const densityDialogWidths = {
   high: 500,
 };
 
-const DialogTemplate: ComponentStory<typeof Dialog> = (args) => {
+const DialogTemplate: StoryFn<typeof Dialog> = (args) => {
   const [open, setOpen] = useState(false);
 
   const handleRequestOpen = () => {
@@ -90,7 +90,7 @@ Warning.args = {
   status: "warning",
 };
 
-export const Close: ComponentStory<typeof Dialog> = () => {
+export const Close: StoryFn<typeof Dialog> = () => {
   const [open, setOpen] = useState(false);
   const headerRef = useRef(null);
   const handleOpen = () => {
@@ -143,7 +143,7 @@ export const Close: ComponentStory<typeof Dialog> = () => {
     </>
   );
 };
-export const AlignTop: ComponentStory<typeof Dialog> = () => {
+export const AlignTop: StoryFn<typeof Dialog> = () => {
   const [open, setOpen] = useState(false);
   const headerRef = useRef(null);
   const handleOpen = () => {

@@ -1,4 +1,4 @@
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { Breadcrumb, Breadcrumbs } from "@salt-ds/lab";
 import { HomeIcon, TreeIcon } from "@salt-ds/icons";
 
@@ -9,7 +9,9 @@ export default {
 
 interface BasicBreadcrumbsStoryProps {}
 
-const BasicBreadcrumbsTemplate: Story<BasicBreadcrumbsStoryProps> = (props) => {
+const BasicBreadcrumbsTemplate: StoryFn<BasicBreadcrumbsStoryProps> = (
+  props
+) => {
   return (
     <Breadcrumbs>
       <Breadcrumb href="#">Root Level Entity</Breadcrumb>
@@ -23,7 +25,7 @@ export const Basic = BasicBreadcrumbsTemplate.bind({});
 
 interface BreadcrumbsWrappingStoryProps {}
 
-const BreadcrumbsWrappingTemplate: Story<BreadcrumbsWrappingStoryProps> = (
+const BreadcrumbsWrappingTemplate: StoryFn<BreadcrumbsWrappingStoryProps> = (
   props
 ) => {
   return (
@@ -39,7 +41,7 @@ export const WithWrap = BreadcrumbsWrappingTemplate.bind({});
 
 interface IconDescriptorsStoryProps {}
 
-const IconDescriptorsStory: Story<IconDescriptorsStoryProps> = (props) => (
+const IconDescriptorsStory: StoryFn<IconDescriptorsStoryProps> = (props) => (
   <Breadcrumbs data-testid="breadcrumbs-example">
     <Breadcrumb href="#" overflowLabel="Home" Icon={HomeIcon} />
     <Breadcrumb href="#" overflowLabel="Level 2 Entity" Icon={TreeIcon}>
@@ -55,7 +57,7 @@ export const IconDescriptors = IconDescriptorsStory.bind({});
 
 interface MaximumItemWidthAndTruncationStoryProps {}
 
-const MaximumItemWidthAndTruncationStory: Story<
+const MaximumItemWidthAndTruncationStory: StoryFn<
   MaximumItemWidthAndTruncationStoryProps
 > = (props) => {
   return (
@@ -72,7 +74,7 @@ export const MaximumItemWidthAndTruncation =
 
 interface WithoutCurrentLevelStoryProps {}
 
-const WithoutCurrentLevelStory: Story<WithoutCurrentLevelStoryProps> = (
+const WithoutCurrentLevelStory: StoryFn<WithoutCurrentLevelStoryProps> = (
   props
 ) => {
   return (
@@ -88,7 +90,7 @@ export const WithoutCurrentLevel = WithoutCurrentLevelStory.bind({});
 
 interface WithOverflowMenuStoryProps {}
 
-const WithOverflowMenuStory: Story<WithOverflowMenuStoryProps> = (props) => {
+const WithOverflowMenuStory: StoryFn<WithOverflowMenuStoryProps> = (props) => {
   return (
     <Breadcrumbs data-testid="breadcrumbs-example" maxItems={2}>
       <Breadcrumb
@@ -131,9 +133,9 @@ export const WithOverflowMenu = WithOverflowMenuStory.bind({});
 
 interface OverflowAtFirstPositionStoryProps {}
 
-const OverflowAtFirstPositionStory: Story<OverflowAtFirstPositionStoryProps> = (
-  props
-) => {
+const OverflowAtFirstPositionStory: StoryFn<
+  OverflowAtFirstPositionStoryProps
+> = (props) => {
   return (
     <Breadcrumbs
       data-testid="breadcrumbs-example"
