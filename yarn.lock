@@ -3962,7 +3962,7 @@ __metadata:
     csstree-validator: ^3.0.0
     cypress: ^12.0.0
     cypress-axe: ^1.1.0
-    cypress-real-events: ^1.7.2
+    cypress-real-events: ^1.7.6
     deepmerge: ^4.2.2
     del: ^6.0.0
     dom-accessibility-api: ^0.5.10
@@ -10975,12 +10975,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-real-events@npm:^1.7.2":
-  version: 1.7.2
-  resolution: "cypress-real-events@npm:1.7.2"
+"cypress-real-events@npm:^1.7.6":
+  version: 1.7.6
+  resolution: "cypress-real-events@npm:1.7.6"
   peerDependencies:
-    cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x
-  checksum: d5b21592c14a2554a050fcc733d0a848382cb3d77360194312c91b8de52d4c356e2dbbfbca5ad9f36ad2619c08b61c86f847e25f35385003dec021f0202a0847
+    cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x
+  checksum: 715ead42990e5464a2613dea2ebbcdfd093b47beee38f7afdff817e5dd701753e103103b2806864771a55aee700580253534497ca6802c88ef9688c6b095917c
   languageName: node
   linkType: hard
 
