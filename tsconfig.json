@@ -2,7 +2,18 @@
   "extends": "modular-scripts/tsconfig.json",
   "compilerOptions": {
     "noImplicitAny": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@stories/*": [
+        "packages/ag-grid-theme/stories/*",
+        "packages/core/stories/*",
+        "packages/grid/stories/*",
+        "packages/icons/stories/*",
+        "packages/lab/stories/*",
+        "packages/theme/stories/*"
+      ]
+    }
   },
   "include": [
     "modular",
