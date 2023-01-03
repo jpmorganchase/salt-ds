@@ -14,7 +14,11 @@ export const ImportSolidIcon = forwardRef<SVGSVGElement, ImportSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M12 0H0v5h5V3l4 3-4 3V7H0v5h12V0zM7 1h4v10H7v-1h3V2H7V1z" />
+        <path
+          fillRule="evenodd"
+          d="M12 0H0v5h5V3l4 3-4 3V7H0v5h12V0ZM7 1h4v10H7v-1h3V2H7V1Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

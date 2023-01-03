@@ -14,7 +14,7 @@ export const UndoIcon = forwardRef<SVGSVGElement, UndoIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M8 11a4 4 0 0 0 0-8H4.063V1l-4 2.5 4 2.5V4H8a3.001 3.001 0 0 1 0 6H.063v1H8z" />
+        <path d="M8 11a4 4 0 1 0 0-8H4.063V1l-4 2.5 4 2.5V4H8a3 3 0 1 1 0 6H.063v1H8Z" />
       </Icon>
     );
   }

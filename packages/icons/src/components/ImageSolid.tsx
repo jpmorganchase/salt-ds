@@ -16,7 +16,7 @@ export const ImageSolidIcon = forwardRef<SVGSVGElement, ImageSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M1 0h8.207L11 1.793V12H1V0Zm7 1H7v3h3V3H8V1ZM4 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm5 1L8 7 6 9 5 8l-2 2h6V8Z"
+          d="M1 12V0h8l2 2v10H1ZM7 1h1v2h2v1H7V1ZM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm3 1 1 1v2H3l2-2 1 1 2-2Z"
           clipRule="evenodd"
         />
       </Icon>

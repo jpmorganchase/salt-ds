@@ -14,7 +14,7 @@ export const ArrowRightIcon = forwardRef<SVGSVGElement, ArrowRightIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M8 5H0v2h8v3l4-4-4-4v3z" />
+        <path d="M8 5H0v2h8v3l4-4-4-4v3Z" />
       </Icon>
     );
   }

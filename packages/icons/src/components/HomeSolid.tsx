@@ -14,7 +14,7 @@ export const HomeSolidIcon = forwardRef<SVGSVGElement, HomeSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M0 4.875 6 0l6 4.875L11 6l-1-.825V12H7V9H5v3H2V5.095L.875 6 0 4.875z" />
+        <path d="M0 4.875 6 0l6 4.875L11 6l-1-.825V12H7V9H5v3H2V5.095L.875 6 0 4.875Z" />
       </Icon>
     );
   }
