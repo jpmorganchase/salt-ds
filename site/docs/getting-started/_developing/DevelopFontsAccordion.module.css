@@ -1,8 +1,3 @@
-.accordionWrapper hr {
-  --ifm-hr-margin-vertical: 0;
-  --ifm-hr-background-color: var(--salt-separable-secondary-borderColor);
-}
-
 .accordionWrapper table thead {
   position: inherit;
 }
@@ -20,5 +15,5 @@
 }
 
 .summary {
-  font-weight: 600;
+  font-weight: var(--salt-typography-fontWeight-semiBold);
 }
