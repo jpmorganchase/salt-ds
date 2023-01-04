@@ -68,7 +68,7 @@ const config = {
     ({
       navbar: {
         logo: {
-          alt: "Salt Site Logo",
+          alt: "Salt Design System by J.P. Morgan",
           src: "img/logo.svg",
         },
         items: [

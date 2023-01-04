@@ -20,3 +20,7 @@ max_line_length = 0
 [*.css]
 # We don't want css variables to wrap to break Chrome dev tool
 max_line_length = 200
+
+[*.svg]
+# We don't want optimized SVGs to be messed with
+insert_final_newline = false
