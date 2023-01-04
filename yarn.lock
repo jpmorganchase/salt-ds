@@ -3965,6 +3965,7 @@ __metadata:
     cypress-real-events: ^1.7.2
     deepmerge: ^4.2.2
     del: ^6.0.0
+    docusaurus-plugin-react-docgen-typescript: ^1.0.2
     dom-accessibility-api: ^0.5.10
     eslint: ^7.32.0
     eslint-config-modular-app: 3.0.2
@@ -3977,6 +3978,7 @@ __metadata:
     prettier: ^2.6.2
     react: ^18.0.0
     react-color: ^2.19.3
+    react-docgen-typescript: 2
     react-dom: ^18.0.0
     react-router-dom: ^6.2.1
     react-window: ^1.8.6
@@ -11503,6 +11505,18 @@ __metadata:
   dependencies:
     esutils: ^2.0.2
   checksum: fd7673ca77fe26cd5cba38d816bc72d641f500f1f9b25b83e8ce28827fe2da7ad583a8da26ab6af85f834138cf8dae9f69b0cd6ab925f52ddab1754db44d99ce
+  languageName: node
+  linkType: hard
+
+"docusaurus-plugin-react-docgen-typescript@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "docusaurus-plugin-react-docgen-typescript@npm:1.0.2"
+  dependencies:
+    glob: ^8.0.3
+  peerDependencies:
+    react: ">=16.8.0"
+    react-docgen-typescript: ^2.0.0
+  checksum: dcb55c6edca9ead702cd319aa5081aaf9f23fad08ed5ed6a87e9469754c43cf7412a597cd72d570dbadb9022d86da3c63e8bbdda3001098ef34201e8db507ad8
   languageName: node
   linkType: hard
 
@@ -22187,7 +22201,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-docgen-typescript@npm:^2.1.1":
+"react-docgen-typescript@npm:2, react-docgen-typescript@npm:^2.1.1":
   version: 2.2.2
   resolution: "react-docgen-typescript@npm:2.2.2"
   peerDependencies:
