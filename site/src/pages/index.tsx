@@ -31,7 +31,7 @@ function HomepageHeader() {
         </div>
       </header>
 
-      <HeroImage className={styles.heroImage} />
+      <HeroImage className={styles.heroImage} role="presentation" />
     </div>
   );
 }
@@ -49,7 +49,7 @@ const features = [
 
 const cards: CardProps[] = [
   {
-    icon: <PencilIcon />,
+    icon: <PencilIcon role="presentation" />,
     title: "Design and develop",
     description: (
       <p>
@@ -63,7 +63,7 @@ const cards: CardProps[] = [
     keylineColor: "var(--site-tertiary-accent-purple)",
   },
   {
-    icon: <CodeIcon />,
+    icon: <CodeIcon role="presentation" />,
     title: "Browse our components",
     description: (
       <p>
@@ -77,7 +77,7 @@ const cards: CardProps[] = [
     keylineColor: "var(--site-tertiary-accent-teal)",
   },
   {
-    icon: <ArrowsIcon />,
+    icon: <ArrowsIcon role="presentation" />,
     title: "Get involved",
     description: (
       <p>
