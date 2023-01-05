@@ -7,10 +7,6 @@ export type FlowLayoutProps<T extends ElementType> =
     T,
     {
       /**
-       * The HTML element used for the root node.
-       */
-      as?: FlexLayoutProps<ElementType>["as"];
-      /**
        * Defines the default behavior for how flex items are laid out along the cross axis on the current line, default is "stretch".
        */
       align?: FlexLayoutProps<ElementType>["align"];
