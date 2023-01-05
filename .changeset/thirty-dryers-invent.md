@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Remove styles from base Text component
+Remove overriding styles from base Text component
