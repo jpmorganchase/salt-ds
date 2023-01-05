@@ -32,12 +32,21 @@ if (isCI) {
     resolve: {
       alias: {
         "@salt-ds/core": path.resolve(__dirname, "./dist/salt-ds-core"),
+        "@salt-ds/data-grid": path.resolve(
+          __dirname,
+          "./dist/salt-ds-data-grid"
+        ),
         "@salt-ds/lab": path.resolve(__dirname, "./dist/salt-ds-lab"),
         "@salt-ds/icons": path.resolve(__dirname, "./dist/salt-ds-icons"),
       },
     },
     optimizeDeps: {
-      include: ["@salt-ds/core", "@salt-ds/lab", "@salt-ds/icons"],
+      include: [
+        "@salt-ds/core",
+        "@salt-ds/data-grid",
+        "@salt-ds/lab",
+        "@salt-ds/icons",
+      ],
     },
   } as UserConfig);
 }
