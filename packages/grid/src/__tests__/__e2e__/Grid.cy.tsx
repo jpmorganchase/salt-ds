@@ -1,24 +1,29 @@
 import { composeStories } from "@storybook/testing-react";
 import * as gridStories from "@stories/grid.stories";
 import * as gridEditableStories from "@stories/grid-editableCells.stories";
-import { GridVariants } from "@stories/grid-variants.stories";
-import { RowSelectionModes } from "@stories/grid-rowSelectionModes.stories";
-import { RowSelectionControlled } from "@stories/grid-rowSelectionControlled.stories";
-import { CellCustomization } from "@stories/grid-cellCustomization.stories";
-import * as groupedStories from "@stories/grid-columnGroups.stories";
+import * as variantsStories from "@stories/grid-variants.stories";
+import * as rowSelectionModesStories from "@stories/grid-rowSelectionModes.stories";
+import * as rowSelectionControlledStories from "@stories/grid-rowSelectionControlled.stories";
+import * as cellCustomizationStories from "@stories/grid-cellCustomization.stories";
+import * as columnGroupsStories from "@stories/grid-columnGroups.stories";
 import { Grid, GridColumn, ColumnGroup } from "@salt-ds/data-grid";
 
-const composedStories = composeStories(gridStories);
-const composedEditableStories = composeStories(gridEditableStories);
+const { GridVariants } = composeStories(variantsStories);
+const { CellCustomization } = composeStories(cellCustomizationStories);
+const { RowSelectionControlled } = composeStories(
+  rowSelectionControlledStories
+);
+const { RowSelectionModes } = composeStories(rowSelectionModesStories);
 const {
   GridExample,
   LotsOfColumns,
   SingleRowSelect,
   SmallGrid,
   LotsOfColumnGroups,
-} = composedStories;
-const { EditableCells } = composedEditableStories;
-const { ColumnGroups } = composeStories(groupedStories);
+} = composeStories(gridStories);
+const { EditableCells } = composeStories(gridEditableStories);
+const { ColumnGroups } = composeStories(columnGroupsStories);
+
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
 };
@@ -148,22 +153,27 @@ describe("Grid", () => {
       });
   });
 
-  it.skip("Row virtualization", () => {
+  it("Row virtualization", () => {
     cy.mount(<LotsOfColumns />);
-
+    assertGridReady();
     cy.findByTestId("grid-scrollable")
       .scrollTo(0, 40, { easing: "linear", duration: 100 })
       .then(() => {
-        const getRow = (n: number) =>
-          cy
-            .get("[data-testid='grid-middle-part']")
-            .find(`[aria-rowindex="${n + 1}"]`);
-
-        // Rows 1 to 15 should be rendered, everything above and below - not
-        getRow(0).should("not.exist");
-        getRow(1).should("exist");
-        getRow(16).should("not.exist");
+        return;
       });
+    cy.findByTestId("grid-scrollable");
+
+    const getRow = (n: number) =>
+      cy
+        .get("[data-testid='grid-middle-part']")
+        .find(`[aria-rowindex="${n + 1}"]`);
+
+    // Rows 1 to 15 should be rendered, everything above and below - not
+    getRow(0).should("not.exist");
+    getRow(1).should("exist");
+    getRow(15).should("exist");
+    getRow(16).should("exist");
+    getRow(17).should("not.exist");
   });
 
   it("Header virtualization in grouped mode", () => {
@@ -397,13 +407,13 @@ describe("Grid", () => {
 
   describe("Row Selection", () => {
     describe("Uncontrolled & switching selection modes", () => {
-      it.skip("Shows correct columns", () => {
+      it("Shows correct columns", () => {
         cy.mount(<RowSelectionModes />);
 
         cy.findByLabelText("multi").click();
         cy.findAllByTestId("grid-row-selection-checkbox").should(
           "have.length",
-          16
+          15
         );
         cy.findAllByTestId("grid-row-selection-radiobox").should(
           "have.length",
@@ -413,22 +423,20 @@ describe("Grid", () => {
         cy.findAllByTestId("column-header").eq(1).should("have.text", "A");
         cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
         cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
-        cy.findAllByTestId("column-header").eq(4).should("have.text", "");
 
         cy.findByLabelText("single").click();
         cy.findAllByTestId("grid-row-selection-radiobox").should(
           "have.length",
-          16
+          15
         );
         cy.findAllByTestId("grid-row-selection-checkbox").should(
           "have.length",
           0
         );
         cy.findAllByTestId("column-header").should("have.length", 4);
-        cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
-        cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
-        cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
-        cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+        cy.findAllByTestId("column-header").eq(1).should("have.text", "A");
+        cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
+        cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
 
         cy.findByLabelText("none").click();
         cy.findAllByTestId("grid-row-selection-checkbox").should(
@@ -493,13 +501,13 @@ describe("Grid", () => {
   });
 
   describe("Switching selection modes", () => {
-    it.skip("Shows correct columns", () => {
+    it("Shows correct columns", () => {
       cy.mount(<RowSelectionModes />);
 
       cy.findByLabelText("multi").click();
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
-        16
+        15
       );
       cy.findAllByTestId("grid-row-selection-radiobox").should(
         "have.length",
@@ -509,22 +517,20 @@ describe("Grid", () => {
       cy.findAllByTestId("column-header").eq(1).should("have.text", "A");
       cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
       cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
-      cy.findAllByTestId("column-header").eq(4).should("have.text", "");
 
       cy.findByLabelText("single").click();
       cy.findAllByTestId("grid-row-selection-radiobox").should(
         "have.length",
-        16
+        15
       );
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
         0
       );
       cy.findAllByTestId("column-header").should("have.length", 4);
-      cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
-      cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
-      cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
-      cy.findAllByTestId("column-header").eq(3).should("have.text", "");
+      cy.findAllByTestId("column-header").eq(1).should("have.text", "A");
+      cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
+      cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
 
       cy.findByLabelText("none").click();
       cy.findAllByTestId("grid-row-selection-checkbox").should(
