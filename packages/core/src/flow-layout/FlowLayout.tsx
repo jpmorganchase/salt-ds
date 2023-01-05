@@ -27,9 +27,13 @@ type FlowLayoutComponent = <T extends ElementType = "div">(
 
 export const FlowLayout: FlowLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
-    { ...props }: FlexLayoutProps<T>,
+    { children, ...rest }: FlowLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    return <FlexLayout direction="row" ref={ref} wrap {...props} />;
+    return (
+      <FlexLayout direction="row" ref={ref} wrap {...rest}>
+        {children}
+      </FlexLayout>
+    );
   }
 );

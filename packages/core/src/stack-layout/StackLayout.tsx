@@ -27,9 +27,13 @@ type StackLayoutComponent = <T extends ElementType = "div">(
 
 export const StackLayout: StackLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
-    { ...props }: FlexLayoutProps<T>,
+    { children, ...rest }: StackLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    return <FlexLayout direction="column" ref={ref} {...props} />;
+    return (
+      <FlexLayout direction="column" ref={ref} {...rest}>
+        {children}
+      </FlexLayout>
+    );
   }
 );
