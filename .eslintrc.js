@@ -4,7 +4,11 @@ module.exports = {
     {
       files: ["*.ts", "*.tsx"],
       parserOptions: {
-        project: ["./tsconfig.json", "./packages/**/tsconfig.json"],
+        project: [
+          "./tsconfig.json",
+          "./packages/**/tsconfig.json",
+          "./site/tsconfig.json",
+        ],
       },
       rules: {
         "react-hooks/exhaustive-deps": [

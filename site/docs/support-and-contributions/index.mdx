@@ -2,8 +2,16 @@
 hide_table_of_contents: true
 ---
 
-import SupportContributionsCards from "./SupportContributionsCards";
-import Content from "../../src/components/content/Content.tsx";
+import SupportContributionsCards, {
+  SupportContributionsCard,
+} from "./SupportContributionsCards";
+import Content from "@site/src/layouts/content/Content.tsx";
+import {
+  DiamondIcon,
+  DocumentIcon,
+  FlagIcon,
+  MessageIcon,
+} from "@salt-ds/icons";
 
 # Support and contributions
 
@@ -11,6 +19,56 @@ import Content from "../../src/components/content/Content.tsx";
 
 Help us shape the future of Salt by contributing not just code—but also your thoughts, requests, frustrations and successes.
 
-<SupportContributionsCards />
+<SupportContributionsCards>
+  <SupportContributionsCard
+    inlineIcon={<DocumentIcon size={1.7} />}
+    title="Provide feedback"
+    url="https://github.com/jpmorganchase/salt-ds/discussions/categories/feedback"
+    footerText="Share your thoughts on GitHub"
+    keylineColor="orange"
+>
+
+Join the Salt community on GitHub to give us feedback and help improve the design
+system.
+
+  </SupportContributionsCard>
+
+  <SupportContributionsCard
+    inlineIcon={<FlagIcon size={1.7} />}
+    title="Raise a bug"
+    url="https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+bug+%F0%9F%AA%B2%2Cstatus%3A+awaiting+triage&template=bug_report.yml"
+    footerText="Report a bug on GitHub"
+    keylineColor="purple"
+>
+
+Let us know if you spot any issues with our components and we'll add them to our backlog.
+
+  </SupportContributionsCard>
+
+<SupportContributionsCard
+    inlineIcon={<DiamondIcon size={1.7} />}
+    title="Request a feature"
+    url="https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+enhancement+%F0%9F%92%A1%2Cstatus%3A+awaiting+triage&template=feature_request.yml"
+    footerText="Ask on GitHub"
+    keylineColor="teal"
+>
+
+If your team needs a feature or functionality that’s not currently provided, we may be able to assist.
+
+  </SupportContributionsCard>
+
+  <SupportContributionsCard
+    inlineIcon={<MessageIcon size={1.7} />}
+    title="Contact us directly"
+    url="mailto:salt.design.system@jpmorgan.com"
+    footerText="Send us an email"
+    keylineColor="green"
+>
+
+Email us if you have a complex product or design-related query and we’ll do our best to help.
+
+  </SupportContributionsCard>
+
+</SupportContributionsCards>
 
 </Content>
