@@ -157,7 +157,7 @@ describe("Grid", () => {
     cy.mount(<LotsOfColumns />);
     assertGridReady();
     cy.findByTestId("grid-scrollable")
-      .scrollTo(0, 40, { easing: "linear", duration: 100 })
+      .scrollTo(0, 45, { easing: "linear", duration: 100 })
       .then(() => {
         return;
       });
