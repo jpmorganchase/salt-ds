@@ -157,7 +157,7 @@ describe("Grid", () => {
     cy.mount(<LotsOfColumns />);
     assertGridReady();
     cy.findByTestId("grid-scrollable")
-      .scrollTo(0, 50)
+      .scrollTo(0, 50, { easing: "linear", duration: 300 })
       .then(() => {
         return;
       });
@@ -173,6 +173,10 @@ describe("Grid", () => {
     getRow(1).should("exist");
     getRow(15).should("exist");
     getRow(16).should("exist");
+    cy.get("[data-testid='display-values']").should(
+      "have.text",
+      "1 17 38 606 37 50 556"
+    );
     getRow(17).should("not.exist");
   });
 

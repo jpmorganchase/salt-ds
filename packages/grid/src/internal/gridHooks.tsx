@@ -180,7 +180,7 @@ export function useVisibleRowRange(
   rowHeight: number,
   rowCount: number
 ) {
-  return useMemoRng(() => {
+  return useMemo(() => {
     if (rowHeight < 1) {
       return NumberRange.empty;
     }

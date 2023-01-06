@@ -56,6 +56,7 @@ import { ColumnDragContext } from "./ColumnDragContext";
 import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
 import { ColumnDataContext } from "./ColumnDataContext";
+import { NumberRange } from "./NumberRange";
 
 const withBaseName = makePrefixer("saltGrid");
 
@@ -333,6 +334,35 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     rowHeight,
     rowCount
   );
+
+  const displayValues = useMemo(() => {
+    if (rowHeight < 1) {
+      return {};
+    }
+    const firstRowHeight = rowHeight + 1; // First row has an extra 1px
+    const start =
+      scrollTop > firstRowHeight
+        ? 1 + Math.floor((scrollTop - firstRowHeight) / rowHeight)
+        : 0;
+    let endPos = scrollTop + clientMidHeight;
+    if (start === 0) {
+      endPos -= 1;
+    }
+    const end = Math.min(
+      rowCount,
+      Math.max(start, Math.ceil(endPos / rowHeight))
+    );
+    return {
+      start,
+      end,
+      firstRowHeight,
+      endPos,
+      rowHeight,
+      scrollTop,
+      clientMidHeight,
+      range: new NumberRange(start, end),
+    };
+  }, [scrollTop, clientMidHeight, rowHeight, rowCount]);
 
   const bodyVisAreaTop = useBodyVisibleAreaTop(rowHeight, visRowRng, topHeight);
 
@@ -1165,6 +1195,12 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                         dragState={dragState}
                         zebra={zebra}
                       />
+                    </div>
+                    <div data-testid="display-values">
+                      {displayValues.start} {displayValues.end}{" "}
+                      {displayValues.firstRowHeight} {displayValues.endPos}{" "}
+                      {displayValues.rowHeight} {displayValues.scrollTop}{" "}
+                      {displayValues.clientMidHeight}
                     </div>
                   </ColumnDataContext.Provider>
                 </EditorContext.Provider>
