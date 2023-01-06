@@ -177,6 +177,8 @@ describe("Grid", () => {
       "have.text",
       "1 17 38 606 37 50 556"
     );
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(300);
     getRow(17).should("not.exist");
   });
 
