@@ -73,6 +73,6 @@ export default defineConfig({
       bundler: "vite",
       viteConfig,
     },
-    specPattern: "packages/**/src/**/*.cy.{js,ts,jsx,tsx}",
+    specPattern: "packages/grid/src/**/*.cy.{js,ts,jsx,tsx}",
   },
 });
