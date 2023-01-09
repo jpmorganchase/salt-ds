@@ -157,6 +157,13 @@ const config = {
         },
       },
     ],
+    [
+      "../tooling/docusaurus-css-variable-docgen-plugin/src/index.js",
+      {
+        // pass in a single string or an array of strings
+        src: "../packages/core/src/**/*.css",
+      },
+    ],
   ],
 };
 
