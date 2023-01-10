@@ -1,8 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 const util = require("util");
-
 const Glob = require("glob");
+
+const parseCSS = require("../parseCSS");
 
 const asyncMap = (array, cb) => {
   const promises = new Array(array.length);
@@ -18,7 +19,7 @@ const { promisify } = util;
 const glob = promisify(Glob);
 const readFile = promisify(fs.readFile);
 
-function plugin(context, { src, route }) {
+function plugin(_, { src }) {
   return {
     name: "docusaurus-css-variable-docgen-plugin",
     async loadContent() {
@@ -28,11 +29,14 @@ function plugin(context, { src, route }) {
       return (
         await asyncMap(files, async (file) => {
           try {
-            const x = await readFile(file, fileOpts);
+            const rawCSSData = await readFile(file, fileOpts);
+
+            const parsedCSS = parseCSS(rawCSSData, file);
+
             // parse css file here
             // walk css file and convert to an object
             return {
-              cssData: x,
+              cssData: parsedCSS,
               file,
             };
           } catch (e) {
@@ -41,21 +45,13 @@ function plugin(context, { src, route }) {
         })
       ).filter(Boolean);
     },
-    async contentLoaded({ content, actions }) {
+    async contentLoaded({ content, actions: { createData } }) {
       const re = /\.css?/gi;
-      const { createData, addRoute } = actions;
-
-      const data = content.reduce((acc, { file, cssData }) => {
-        acc[path.basename(file).toLowerCase().replace(re, "")] = cssData;
-
-        return acc;
-      }, {});
-
-      addRoute({
-        ...route,
-        modules: {
-          cssData: await createData("foo.json", JSON.stringify(data)),
-        },
+      content.forEach(async ({ file, cssData }) => {
+        await createData(
+          `${path.basename(file).replace(re, "")}.json`,
+          JSON.stringify(cssData)
+        );
       });
     },
   };
