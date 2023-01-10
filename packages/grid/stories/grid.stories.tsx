@@ -323,7 +323,6 @@ const LotsOfColumnsTemplate: Story<{}> = (props) => {
       className="grid"
       columnSeparators={true}
     >
-      <GridColumn name="id" id="id" defaultWidth={60} getValue={(x) => x.id} />
       {dummyColumnNames.map((name) => (
         <GridColumn
           key={name}

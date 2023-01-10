@@ -156,11 +156,11 @@ describe("Grid", () => {
   it.only("Row virtualization", () => {
     cy.mount(<LotsOfColumns />);
     assertGridReady();
-    cy.findByTestId("grid-scrollable")
-      .scrollTo(0, 50, { easing: "linear", duration: 300 })
-      .then(() => {
-        return;
-      });
+    cy.findByTestId("grid-scrollable").scrollTo(0, 50, {
+      easing: "linear",
+      duration: 100,
+    });
+
     cy.findByTestId("grid-scrollable");
 
     const getRow = (n: number) =>
@@ -168,18 +168,12 @@ describe("Grid", () => {
         .get("[data-testid='grid-middle-part']")
         .find(`[aria-rowindex="${n + 1}"]`);
 
-    // Rows 1 to 15 should be rendered, everything above and below - not
+    // Rows 1 to 14 should be rendered, everything above and below - not
     getRow(0).should("not.exist");
     getRow(1).should("exist");
     getRow(15).should("exist");
-    getRow(16).should("exist");
-    cy.get("[data-testid='display-values']").should(
-      "have.text",
-      "1 17 38 606 37 50 556"
-    );
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(300);
-    getRow(17).should("not.exist");
+    // this will fail locally on a mac because macs don't render scrollbars and therefore render an extra row
+    getRow(16).should("not.exist");
   });
 
   it("Header virtualization in grouped mode", () => {
