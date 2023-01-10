@@ -7,89 +7,89 @@ on:
   pull_request:
 
 jobs:
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: "16"
-  #         cache: "yarn"
-  #     - name: Install dependencies
-  #       run: yarn
-  #     # Enable lint when all errors are fixed
-  #     # - run: yarn run lint
-  #     # Slowly enabling linting back. Start small for now.
-  #     - run: yarn run lint:core
-  #     - run: yarn run prettier:ci
-  #     - run: yarn run lint:style
-  #     - name: Check no import from src
-  #       run: |
-  #         if find ./packages -type f \( -iname \*.ts -o -iname \*.tsx \) -exec grep "@salt-ds/.*/src" {} +; then
-  #           echo "Should not import from src in any typescript file"
-  #           exit 1;
-  #         fi
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      # Enable lint when all errors are fixed
+      # - run: yarn run lint
+      # Slowly enabling linting back. Start small for now.
+      - run: yarn run lint:core
+      - run: yarn run prettier:ci
+      - run: yarn run lint:style
+      - name: Check no import from src
+        run: |
+          if find ./packages -type f \( -iname \*.ts -o -iname \*.tsx \) -exec grep "@salt-ds/.*/src" {} +; then
+            echo "Should not import from src in any typescript file"
+            exit 1;
+          fi
 
-  # dependency-check:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: "16"
-  #         cache: "yarn"
-  #     - name: Install dependencies
-  #       run: yarn
-  #     - name: Build
-  #       run: yarn build
-  #     - name: Check build core package.json dependencies
-  #       run: |
-  #         if grep -q "@salt-ds\/\(core\|lab\)\":" dist/salt-ds-core/package.json; then
-  #             echo "Core package can not reference itself or lab package"
-  #             exit 1;
-  #         fi
-  #     - name: Check build icon package.json dependencies
-  #       run: |
-  #         if grep -q "@salt-ds\/\(icon\|core\|lab\)\":" dist/salt-ds-icon/package.json; then
-  #             echo "Icon package can not reference itself or core or lab package"
-  #             exit 1;
-  #         fi
-  #     - name: Check build lab package.json dependencies
-  #       run: |
-  #         if grep -q "@salt-ds\/lab\":" dist/salt-ds-lab/package.json; then
-  #             echo "Lab package can not reference itself"
-  #             exit 1;
-  #         fi
-  # type-checks:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: "16"
-  #         cache: "yarn"
-  #     - name: Install dependencies
-  #       run: yarn
-  #     - run: yarn run typecheck
-  # jest-tests:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: "16"
-  #         cache: "yarn"
-  #     - name: Install dependencies
-  #       run: yarn
-  #     - run: yarn run test --watchAll=false
+  dependency-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build
+        run: yarn build
+      - name: Check build core package.json dependencies
+        run: |
+          if grep -q "@salt-ds\/\(core\|lab\)\":" dist/salt-ds-core/package.json; then
+              echo "Core package can not reference itself or lab package"
+              exit 1;
+          fi
+      - name: Check build icon package.json dependencies
+        run: |
+          if grep -q "@salt-ds\/\(icon\|core\|lab\)\":" dist/salt-ds-icon/package.json; then
+              echo "Icon package can not reference itself or core or lab package"
+              exit 1;
+          fi
+      - name: Check build lab package.json dependencies
+        run: |
+          if grep -q "@salt-ds\/lab\":" dist/salt-ds-lab/package.json; then
+              echo "Lab package can not reference itself"
+              exit 1;
+          fi
+  type-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - run: yarn run typecheck
+  jest-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - run: yarn run test --watchAll=false
   cypress-tests:
     strategy:
       fail-fast: false
@@ -115,25 +115,19 @@ jobs:
         with:
           install: false
           command: yarn run test:components
-      - uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-
 
   # We need this to ensure apps build in playground folder doesn't break, mostly due to modular patches
-  # playground-build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: "16"
-  #         cache: "yarn"
-  #     - name: Install dependencies
-  #       run: yarn
-  #     - name: Build theme editor
-  #       run: yarn modular build @salt-ds/theme-editor-app
+  playground-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build theme editor
+        run: yarn modular build @salt-ds/theme-editor-app
