@@ -153,7 +153,7 @@ describe("Grid", () => {
       });
   });
 
-  it.only("Row virtualization", () => {
+  it("Row virtualization", () => {
     cy.mount(<LotsOfColumns />);
     assertGridReady();
     cy.findByTestId("grid-scrollable").scrollTo(0, 50, {
