@@ -28,8 +28,17 @@ const ColumnGroup = (props: AgGridReactProps) => {
 
 const columnsWithGrouping = (groupName: string) => [
   {
+    headerName: "",
+    field: "on",
+    checkboxSelection: true,
+    headerCheckboxSelection: true,
+    width: 38,
+    pinned: "left",
+    suppressMenu: true,
+  },
+  {
     headerName: groupName,
-    children: dataGridExampleColumns,
+    children: dataGridExampleColumns.slice(1),
   },
 ];
 
