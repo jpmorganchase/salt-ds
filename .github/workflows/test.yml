@@ -115,6 +115,11 @@ jobs:
         with:
           install: false
           command: yarn run test:components
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
 
   # We need this to ensure apps build in playground folder doesn't break, mostly due to modular patches
   playground-build:

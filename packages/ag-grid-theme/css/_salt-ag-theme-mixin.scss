@@ -142,9 +142,18 @@
   }
 
   .ag-header-cell:after {
-    height: auto;
     top: var(--agGrid-separatorGap);
     bottom: var(--agGrid-separatorGap);
+  }
+
+  .ag-keyboard-focus .ag-header-cell:focus:after {
+    height: auto;
+    width: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    border: 2px dotted var(--agGrid-color-focus);
   }
 
   .ag-row {

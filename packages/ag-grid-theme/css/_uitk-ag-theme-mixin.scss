@@ -339,6 +339,21 @@
     margin-left: 2px;
   }
 
+  .ag-keyboard-focus .ag-header-cell:focus:after {
+    height: auto;
+    width: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    border: 2px dotted var(--agGrid-color-focus);
+  }
+
+  .ag-header-cell:after {
+    top: var(--agGrid-separatorGap);
+    bottom: var(--agGrid-separatorGap);
+  }
+
   .ag-header-cell.ag-floating-filter::after {
     display: none;
   }
