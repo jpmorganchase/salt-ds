@@ -27,6 +27,7 @@
   flex-direction: column;
   gap: calc(var(--salt-size-unit) * 3);
   flex: 1;
+  text-decoration: none;
 }
 
 .inlineCard {
@@ -69,6 +70,7 @@
   transition: 0.5s all ease-in-out;
   max-width: 160px;
   max-height: 160px;
+  overflow: visible;
 }
 
 .cardContent {
