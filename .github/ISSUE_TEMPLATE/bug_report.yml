@@ -23,6 +23,7 @@ body:
         - "Theme v1.0.0 (@salt-ds/theme)"
         - "Lab v1.0.0-alpha.0 (@salt-ds/lab)"
         - "Data Grid v1.0.0 (@salt-ds/data-grid)"
+        - "AG Grid Theme v1.0.0 (@salt-ds/ag-grid-theme)"
     validations:
       required: true
   - type: textarea
