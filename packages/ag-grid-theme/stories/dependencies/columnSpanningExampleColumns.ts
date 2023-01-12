@@ -29,6 +29,7 @@ const columnSpanningExampleColumns = [
     headerName: "Population",
     field: "population",
     pinned: "left",
+    cellClass: ["numeric-cell"],
   },
 ];
 
