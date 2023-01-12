@@ -1,7 +1,35 @@
 import { useDynamicImport } from "docusaurus-plugin-react-docgen-typescript/dist/esm/hooks";
 
-export const PropTable = ({ name }) => {
-  const props = useDynamicImport(name);
+export interface StringIndexedObject<T> {
+  [key: string]: T;
+}
+
+export interface Props extends StringIndexedObject<PropItem> {}
+
+export interface PropItemType {
+  name: string;
+  value?: any;
+  raw?: string;
+}
+
+export interface ParentType {
+  name: string;
+  fileName: string;
+}
+
+export interface PropItem {
+  name: string;
+  required: boolean;
+  type: PropItemType;
+  description: string;
+  defaultValue: any;
+  parent?: ParentType;
+  declarations?: ParentType[];
+  tags?: {};
+}
+
+export const PropTable = ({ name }: { name: string }): JSX.Element => {
+  const props: Props = useDynamicImport(name);
 
   if (!props) {
     return null;

@@ -54,6 +54,19 @@ function plugin(_, { src }) {
         );
       });
     },
+    configureWebpack(config) {
+      return {
+        resolve: {
+          alias: {
+            "@css-docgen": path.join(
+              config.resolve.alias["@generated"],
+              "docusaurus-css-variable-docgen-plugin",
+              "default"
+            ),
+          },
+        },
+      };
+    },
   };
 }
 
