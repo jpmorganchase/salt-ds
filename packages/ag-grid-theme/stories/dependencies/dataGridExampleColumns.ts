@@ -1,4 +1,6 @@
-const dataGridExampleColumns = [
+import { ColDef } from "ag-grid-community";
+
+const dataGridExampleColumns: ColDef[] = [
   {
     headerName: "",
     field: "on",

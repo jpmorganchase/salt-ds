@@ -4,6 +4,7 @@ import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
+import { ColDef, ColGroupDef } from "ag-grid-community";
 
 const ColumnGroup = (props: AgGridReactProps) => {
   const { themeName, switcher } = useAgGridThemeSwitcher();
@@ -26,7 +27,9 @@ const ColumnGroup = (props: AgGridReactProps) => {
   );
 };
 
-const columnsWithGrouping = (groupName: string) => [
+const columnsWithGrouping = (
+  groupName: string
+): Array<ColGroupDef | ColDef> => [
   {
     headerName: "",
     field: "on",

@@ -1,6 +1,6 @@
-import { ColSpanParams } from "ag-grid-community";
+import { ColDef, ColSpanParams } from "ag-grid-community";
 
-const columnSpanningExampleColumns = [
+const columnSpanningExampleColumns: ColDef[] = [
   {
     headerName: "Name",
     field: "name",
