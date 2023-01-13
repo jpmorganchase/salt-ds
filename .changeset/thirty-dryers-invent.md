@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Remove overriding styles from base Text component
+Fixed an issue where Text styles would leak into nested text. 
