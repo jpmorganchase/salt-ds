@@ -1,4 +1,6 @@
-const dataGridExampleColumns = [
+import { ColDef } from "ag-grid-community";
+
+const dataGridExampleColumns: ColDef[] = [
   {
     headerName: "",
     field: "on",
@@ -30,7 +32,7 @@ const dataGridExampleColumns = [
     field: "population",
     filter: "agNumberColumnFilter",
     editable: true,
-    cellClass: ["editable-numeric-cell"],
+    cellClass: ["numeric-cell", "editable-cell"],
   },
 ];
 export default dataGridExampleColumns;
