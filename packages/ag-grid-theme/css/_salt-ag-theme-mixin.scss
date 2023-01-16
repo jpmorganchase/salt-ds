@@ -183,6 +183,7 @@
     background-color: var(--agGrid-row-background-secondary);
   }
 
+  .ag-row-selected.ag-row-hover::before,
   .ag-row-selected::before {
     content: "";
     height: 1px;
@@ -191,6 +192,7 @@
     left: 0;
     right: 0;
     background-color: var(--agGrid-row-borderColor-selected);
+    background-image: none;
     z-index: 1;
   }
 
