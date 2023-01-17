@@ -79,13 +79,15 @@ Use the `variant` prop when you want to change the link color.
 
 <Canvas>
   <Story name="Primary">
-    <Link>This is a primary link example</Link>
+    <Link href="#root">This is a primary link example</Link>
   </Story>
 </Canvas>
 
 <Canvas>
   <Story name="Secondary">
-    <Link variant="secondary">This is a secondary link example</Link>
+    <Link variant="secondary" href="#root">
+      This is a secondary link example
+    </Link>
   </Story>
 </Canvas>
 
@@ -107,7 +109,7 @@ Use `<strong>` or `<small>` tags inside your link components to wrap the chunks 
 
 <Canvas>
   <Story name="Small">
-    <Link>
+    <Link href="#root">
       This is a <small>small</small> link example
     </Link>
   </Story>
@@ -136,7 +138,9 @@ If you use truncated text, please ensure you are remaining ADA compliant by revi
 <Canvas>
   <Story name="Truncation">
     <div style={{ width: 150 }}>
-      <Link maxRows={1}>This is a truncation example</Link>
+      <Link href="#root" maxRows={1}>
+        This is a truncation example
+      </Link>
     </div>
   </Story>
 </Canvas>
