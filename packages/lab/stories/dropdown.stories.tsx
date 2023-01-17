@@ -155,10 +155,11 @@ const ListItemWithTooltip: ListItemType<string> = ({ item, ...props }) => {
     getTriggerProps<typeof ListItem>(props);
 
   return (
-    <ListItem ref={triggerRef} {...triggerProps}>
-      <label style={{ width: "100%" }}>{item}</label>
-      <Tooltip {...getTooltipProps({ title: `I am a tooltip for ${item}` })} />
-    </ListItem>
+    <Tooltip {...getTooltipProps({ text: `I am a tooltip for ${item}` })} >
+      <ListItem ref={triggerRef} {...triggerProps}>
+        <label style={{ width: "100%" }}>{item}</label>
+      </ListItem>
+    </Tooltip>
   );
 };
 

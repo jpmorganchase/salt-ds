@@ -67,15 +67,14 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     const handleRef = useForkRef(handleTriggerRef, ref);
 
     return (
-      <>
-        <Tooltip
-          {...getTooltipProps({
-            hideIcon: true,
-            status: "error",
-            title: unselectableReason,
-            ...TooltipProps,
-          })}
-        />
+      <Tooltip
+        {...getTooltipProps({
+          hideIcon: true,
+          status: "error",
+          text: unselectableReason,
+          ...TooltipProps,
+        })}
+      >
         <button {...triggerProps} ref={handleRef}>
           {unselectable === "medium" && (
             <CloseIcon
@@ -89,7 +88,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
             ? renderDayContents(day, status)
             : formatDate(day, { day: "numeric" })}
         </button>
-      </>
+      </Tooltip>
     );
   }
 );

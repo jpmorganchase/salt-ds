@@ -98,14 +98,14 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     };
     const interactionClasses = isNavigatingWithKeyboard
       ? {
-          [withBaseName(`menuItemKeyboardActive`)]:
-            !isDisabled && isInteracted && !blurSelected,
-          [withBaseName(`menuItemKeyboardDisabled`)]:
-            isDisabled && isInteracted,
-        }
+        [withBaseName(`menuItemKeyboardActive`)]:
+          !isDisabled && isInteracted && !blurSelected,
+        [withBaseName(`menuItemKeyboardDisabled`)]:
+          isDisabled && isInteracted,
+      }
       : {
-          [withBaseName(`menuItemHover`)]: !isDisabled && !blurSelected,
-        };
+        [withBaseName(`menuItemHover`)]: !isDisabled && !blurSelected,
+      };
 
     const icon = hasStartAdornment ? getIcon(sourceItem, isDisabled) : null;
     const tooltipTitle = sourceItem.tooltip || menuText;
@@ -148,7 +148,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       <>
         <Tooltip
           {...getTooltipProps({
-            title: tooltipTitle,
+            text: tooltipTitle,
           })}
         />
         <ListItem {...triggerProps} ref={handleRef}>

@@ -24,7 +24,9 @@ export function SliderHandle(props: SliderHandleProps): JSX.Element {
   const { getTriggerProps, getTooltipProps } = useTooltip({ placement: "top" });
 
   return (
-    <>
+    <Tooltip
+      {...getTooltipProps({ text: `${value}`, disablePortal: true })}
+    >
       <div
         {...getTriggerProps<"div">({
           className: cn(withBaseName(), {
@@ -42,9 +44,6 @@ export function SliderHandle(props: SliderHandleProps): JSX.Element {
         })}
         data-handle-index={index}
       />
-      <Tooltip
-        {...getTooltipProps({ title: `${value}`, disablePortal: true })}
-      />
-    </>
+    </Tooltip>
   );
 }

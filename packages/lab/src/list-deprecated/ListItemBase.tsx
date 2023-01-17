@@ -96,8 +96,7 @@ export const ListItemBase = memo(
     );
 
     return (
-      <>
-        <Tooltip {...getTooltipProps({ title: tooltipText })} />
+      <Tooltip {...getTooltipProps({ text: tooltipText })} >
         <div ref={handleRef} {...triggerProps}>
           {detectTruncation ? (
             <span className={withBaseName("textWrapper")} ref={overflowRef}>
@@ -114,7 +113,7 @@ export const ListItemBase = memo(
             children
           )}
         </div>
-      </>
+      </Tooltip>
     );
   })
 );

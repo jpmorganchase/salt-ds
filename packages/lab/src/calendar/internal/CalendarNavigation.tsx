@@ -67,7 +67,7 @@ function useCalendarNavigation() {
         );
         newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
           Math.abs(monthDiff(currentMonth, newMonth)) <
-          Math.abs(monthDiff(closestMonth, newMonth))
+            Math.abs(monthDiff(closestMonth, newMonth))
             ? currentMonth
             : closestMonth
         );
@@ -126,7 +126,7 @@ const ListItemWithTooltip: ListItemType<DropdownItem> = ({
       {label}
       <Tooltip
         {...getTooltipProps({
-          title: "This month is out of range",
+          text: "This month is out of range",
         })}
       />
     </ListItem>
@@ -253,7 +253,7 @@ export const CalendarNavigation = forwardRef<
       </Button>
       <Tooltip
         {...getPreviousButtonTooltipProps({
-          title: "Past dates are out of range",
+          text: "Past dates are out of range",
         })}
       />
       <Dropdown<DropdownItem>
@@ -299,7 +299,7 @@ export const CalendarNavigation = forwardRef<
       </Button>
       <Tooltip
         {...getNextButtonTooltipProps({
-          title: "Future dates are out of range",
+          text: "Future dates are out of range",
         })}
       />
     </div>

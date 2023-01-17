@@ -192,16 +192,15 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
               </div>
             )}
             {props.isStateValue && (
-              <>
-                <Tooltip
-                  {...getTooltipProps({
-                    title:
-                      formFieldLabel === "Color" ||
+              <Tooltip
+                {...getTooltipProps({
+                  text:
+                    formFieldLabel === "Color" ||
                       formFieldLabel === "Background"
-                        ? "Regular"
-                        : formFieldLabel,
-                  })}
-                />
+                      ? "Regular"
+                      : formFieldLabel,
+                })}
+              >
                 <div
                   {...getTriggerProps({
                     className: cn(
@@ -212,7 +211,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                 >
                   {formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "background" &&
-                  formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
+                    formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "color" ? (
                     StateIcon(
                       formFieldLabel.split(" ").slice(-1)[0][0].toUpperCase()
@@ -221,7 +220,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                     <RegularIcon />
                   )}
                 </div>
-              </>
+              </Tooltip>
             )}
             <div
               className={cn({
