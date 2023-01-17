@@ -35,7 +35,7 @@ const dataGridExampleColumnsColoration = [
     filter: "agNumberColumnFilter",
     type: "numericColumn",
     editable: true,
-    cellClass: ["editable-cell"],
+    cellClass: ["editable-cell", "numeric-cell"],
   },
 ];
 

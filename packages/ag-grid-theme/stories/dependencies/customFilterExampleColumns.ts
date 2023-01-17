@@ -29,6 +29,7 @@ const customFilterExampleColumns: ColDef[] = [
     filter: "agNumberColumnFilter",
     suppressMenu: true,
     floatingFilter: true,
+    cellClass: ["numeric-cell"],
   },
 ];
 
