@@ -119,7 +119,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
       )
     );
     setSelectedColor(updatedColor);
-  }, [props.extractValue, props.value]);
+  }, [props]);
 
   const onSelect = (color: Color | undefined, finalSelection: boolean) => {
     finalSelection ? onColorClose(color) : setSelectedColor(color);
@@ -196,7 +196,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                 {...getTooltipProps({
                   text:
                     formFieldLabel === "Color" ||
-                      formFieldLabel === "Background"
+                    formFieldLabel === "Background"
                       ? "Regular"
                       : formFieldLabel,
                 })}
@@ -211,7 +211,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                 >
                   {formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "background" &&
-                    formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
+                  formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "color" ? (
                     StateIcon(
                       formFieldLabel.split(" ").slice(-1)[0][0].toUpperCase()

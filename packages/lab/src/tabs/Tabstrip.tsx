@@ -107,10 +107,10 @@ export const Tabstrip = forwardRef(function Tabstrip(
 
   const injectedItems = enableAddTab
     ? [
-      {
-        source: { label: "Add Tab", position: -1, priority: 1 },
-      } as InjectedSourceItem,
-    ]
+        {
+          source: { label: "Add Tab", position: -1, priority: 1 },
+        } as InjectedSourceItem,
+      ]
     : undefined;
 
   const collectionHook = useOverflowCollectionItems({
@@ -217,19 +217,19 @@ export const Tabstrip = forwardRef(function Tabstrip(
   useImperativeHandle(
     forwardedRef,
     () =>
-    ({
-      focus: () => {
-        const { current: tabstrip } = root;
-        if (tabstrip) {
-          const selectedTab = tabstrip.querySelector(
-            '.saltTab[aria-selected="true"]'
-          ) as HTMLElement;
-          if (selectedTab) {
-            selectedTab.focus();
+      ({
+        focus: () => {
+          const { current: tabstrip } = root;
+          if (tabstrip) {
+            const selectedTab = tabstrip.querySelector(
+              '.saltTab[aria-selected="true"]'
+            ) as HTMLElement;
+            if (selectedTab) {
+              selectedTab.focus();
+            }
           }
-        }
-      },
-    } as FocusAPI),
+        },
+      } as FocusAPI),
     []
   );
 
@@ -324,8 +324,8 @@ export const Tabstrip = forwardRef(function Tabstrip(
         const tabIndex = tabIsBeingEdited
           ? undefined
           : selected && !tabstripHook.focusIsWithinComponent
-            ? 0
-            : -1;
+          ? 0
+          : -1;
 
         const baseProps: Partial<TabProps> &
           responsiveDataAttributes & {
@@ -409,8 +409,9 @@ export const Tabstrip = forwardRef(function Tabstrip(
           triggerComponent={
             <Button
               {...triggerProps}
-              aria-label={`Tabs overflow menu ${overflowCount} item${overflowCount === 1 ? "" : "s"
-                }`}
+              aria-label={`Tabs overflow menu ${overflowCount} item${
+                overflowCount === 1 ? "" : "s"
+              }`}
               variant="secondary"
               tabIndex={-1}
             >

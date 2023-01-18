@@ -147,7 +147,10 @@ export const CustomRowRenderer: Story<DropdownProps> = (props) => (
   />
 );
 
-const ListItemWithTooltip: ListItemType<string> = ({ item, ...props }) => {
+const ListItemWithTooltip: ListItemType<string> = ({
+  item = "item",
+  ...props
+}) => {
   const { getTriggerProps, getTooltipProps } = useTooltip({
     placement: "right",
   });
@@ -155,7 +158,7 @@ const ListItemWithTooltip: ListItemType<string> = ({ item, ...props }) => {
     getTriggerProps<typeof ListItem>(props);
 
   return (
-    <Tooltip {...getTooltipProps({ text: `I am a tooltip for ${item}` })} >
+    <Tooltip {...getTooltipProps({ text: `I am a tooltip for ${item}` })}>
       <ListItem ref={triggerRef} {...triggerProps}>
         <label style={{ width: "100%" }}>{item}</label>
       </ListItem>
@@ -242,13 +245,13 @@ export const DisabledDropdownList: Story<DropdownProps> = (props) => {
 
 export const ControlledOpenDropdown: Story<DropdownProps> = (props) => {
   const [isOpen, setIsOpen] = useState(true);
-  const handleChange: any = (open: boolean) => {
+  const handleChange = (open: boolean) => {
     console.log({ openChanged: open });
     setIsOpen(open);
     props.onOpenChange?.(open);
   };
   const toggleDropdown = useCallback(() => {
-    console.log(`toggleDropdoen isOpen = ${isOpen}`);
+    console.log("toggleDropdoen isOpen ", isOpen);
     setIsOpen((x) => !x);
   }, [isOpen]);
   return (

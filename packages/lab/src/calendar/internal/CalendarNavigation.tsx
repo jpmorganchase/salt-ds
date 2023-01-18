@@ -67,7 +67,7 @@ function useCalendarNavigation() {
         );
         newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
           Math.abs(monthDiff(currentMonth, newMonth)) <
-            Math.abs(monthDiff(closestMonth, newMonth))
+          Math.abs(monthDiff(closestMonth, newMonth))
             ? currentMonth
             : closestMonth
         );
@@ -186,14 +186,14 @@ export const CalendarNavigation = forwardRef<
     }
   };
 
-  const monthDropdownId = useId(MonthDropdownProps?.id);
+  const monthDropdownId = useId(MonthDropdownProps?.id) || "";
   const monthDropdownLabelledBy = cx(
     MonthDropdownProps?.["aria-labelledby"],
     // TODO need a prop on Dropdown to allow buttonId to be passed, should not make assumptions about internal
     // id assignment like this
     `${monthDropdownId}-control`
   );
-  const yearDropdownId = useId(YearDropdownProps?.id);
+  const yearDropdownId = useId(YearDropdownProps?.id) || "";
   const yearDropdownLabelledBy = cx(
     YearDropdownProps?.["aria-labelledby"],
     `${yearDropdownId}-control`

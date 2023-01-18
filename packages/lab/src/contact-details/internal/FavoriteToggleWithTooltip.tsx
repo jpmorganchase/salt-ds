@@ -29,7 +29,7 @@ export const FavoriteToggleWithTooltip = forwardRef<
   const handleRef = useForkRef(triggerRef, ref);
 
   return (
-    <Tooltip {...getTooltipProps({ text: tooltipTitle, ...tooltipProps })} >
+    <Tooltip {...getTooltipProps({ text: tooltipTitle, ...tooltipProps })}>
       <FavoriteToggle {...triggerProps} ref={handleRef} />
     </Tooltip>
   );

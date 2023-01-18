@@ -53,7 +53,7 @@ export interface A11yValueProps
 
 export interface FormFieldProps
   extends HTMLAttributes<HTMLDivElement>,
-  A11yValueProps {
+    A11yValueProps {
   /**
    * The component used for activation indicator. Default to `FormActivationIndicator`.
    */
@@ -156,13 +156,13 @@ export const useFormField = ({
   onBlur?: FocusEventHandler<HTMLDivElement>;
   onFocus?: FocusEventHandler<HTMLDivElement>;
 }): [
-    { focused: boolean },
-    { setFocused: Dispatch<SetStateAction<boolean>> },
-    {
-      onBlur: FocusEventHandler<HTMLDivElement>;
-      onFocus: FocusEventHandler<HTMLDivElement>;
-    }
-  ] => {
+  { focused: boolean },
+  { setFocused: Dispatch<SetStateAction<boolean>> },
+  {
+    onBlur: FocusEventHandler<HTMLDivElement>;
+    onFocus: FocusEventHandler<HTMLDivElement>;
+  }
+] => {
   const [focused, setFocused] = useState(false);
   const handleBlur: FocusEventHandler<HTMLDivElement> = (event) => {
     setFocused(false);

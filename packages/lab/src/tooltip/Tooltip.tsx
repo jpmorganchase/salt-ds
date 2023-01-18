@@ -8,14 +8,11 @@ import {
   ReactNode,
   ReactElement,
   JSXElementConstructor,
-  useCallback,
   cloneElement,
 } from "react";
-import { Placement } from "@floating-ui/react-dom-interactions";
 import { Portal, PortalProps } from "../portal";
-import { } from "../utils";
+import {} from "../utils";
 import { useWindow } from "../window";
-import { useTooltip } from "./useTooltip";
 import "./Tooltip.css";
 
 // Keep in order of preference. First items are used as default
@@ -33,7 +30,7 @@ interface TooltipRenderProp {
 
 export interface TooltipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
-  Pick<PortalProps, "disablePortal" | "container"> {
+    Pick<PortalProps, "disablePortal" | "container"> {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
   // placement?: Placement;
   arrowProps?: ComponentProps<"div">;
@@ -85,28 +82,27 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     },
     ref
   ) {
-    const getIcon = useCallback(
-      (iconProps: IconProps) => {
-        if (hideIcon) {
-          return null;
-        }
-        return status !== "info" ? (
-          <StatusIndicator
-            status={status}
-            {...iconProps}
-            className={withBaseName("icon")}
-          />
-        ) : null;
-      },
-      [status, hideIcon]
-    );
+    // const getIcon = useCallback(
+    //   (iconProps: IconProps) => {
+    //     if (hideIcon) {
+    //       return null;
+    //     }
+    //     return status !== "info" ? (
+    //       <StatusIndicator
+    //         status={status}
+    //         {...iconProps}
+    //         className={withBaseName("icon")}
+    //       />
+    //     ) : null;
+    //   },
+    //   [status, hideIcon]
+    // );
 
     const Window = useWindow();
 
     // const tooltipProps = getTooltipProps(props);
     // console.log('tooltipProps', tooltipProps);
     // console.log('getTriggerProps', getTriggerProps(props));
-
 
     return (
       <>

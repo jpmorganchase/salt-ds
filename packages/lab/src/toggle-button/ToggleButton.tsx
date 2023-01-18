@@ -54,7 +54,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       (button: HTMLButtonElement | null) => {
         setIconOnly(
           button?.querySelector(".saltIcon") != null &&
-          button?.childElementCount === 1
+            button?.childElementCount === 1
         );
       },
       [setIconOnly]
@@ -134,7 +134,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     const handleRef = useForkRef(triggerRef, handleIconOnlyButtonRef);
 
     return (
-      <Tooltip {...getTooltipProps({ text: tooltipText })} >
+      <Tooltip {...getTooltipProps({ text: tooltipText })}>
         <Button {...triggerProps} ref={handleRef} />
       </Tooltip>
     );

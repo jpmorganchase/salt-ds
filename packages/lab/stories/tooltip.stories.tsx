@@ -23,7 +23,7 @@ export const Default: Story<TooltipProps & UseTooltipProps> = (props) => {
 
   return (
     <>
-      <Tooltip {...defaultProps} >
+      <Tooltip {...defaultProps}>
         <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
       </Tooltip>
     </>
@@ -41,7 +41,7 @@ export const OpenTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
 
   return (
     <>
-      <Tooltip {...openProps} >
+      <Tooltip {...openProps}>
         <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
       </Tooltip>
     </>
@@ -71,7 +71,7 @@ export const ScrollTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
         width: "300vw",
       }}
     >
-      <Tooltip {...getTooltipProps({ text })} >
+      <Tooltip {...getTooltipProps({ text })}>
         <Button ref={handleButtonRef} {...triggerProps}>
           Hover
         </Button>
@@ -91,7 +91,7 @@ export const ErrorTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
 
   return (
     <>
-      <Tooltip {...getTooltipProps({ text: "We found an issue", status })} >
+      <Tooltip {...getTooltipProps({ text: "We found an issue", status })}>
         <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
       </Tooltip>
     </>
@@ -106,7 +106,7 @@ export const WarningTooltip: Story<TooltipProps & UseTooltipProps> = (
 
   return (
     <>
-      <Tooltip {...getTooltipProps({ text: "Are you sure?", status })} >
+      <Tooltip {...getTooltipProps({ text: "Are you sure?", status })}>
         <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
       </Tooltip>
     </>
@@ -121,7 +121,7 @@ export const SuccessTooltip: Story<TooltipProps & UseTooltipProps> = (
 
   return (
     <>
-      <Tooltip {...getTooltipProps({ text: "Well done", status })} >
+      <Tooltip {...getTooltipProps({ text: "Well done", status })}>
         <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
       </Tooltip>
     </>

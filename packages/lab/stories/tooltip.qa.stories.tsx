@@ -1,4 +1,4 @@
-import { ValidationStatus } from "@salt-ds/core"
+import { ValidationStatus } from "@salt-ds/core";
 import { Tooltip, TooltipProps, useTooltip } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { ComponentMeta, Story } from "@storybook/react";
@@ -18,7 +18,7 @@ const IconWithTooltip = (props: {
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
   return (
-    <Tooltip {...getTooltipProps({ render, text, status })} open >
+    <Tooltip {...getTooltipProps({ render, text, status })} open>
       <InfoSolidIcon {...getTriggerProps<typeof InfoSolidIcon>()} />
     </Tooltip>
   );

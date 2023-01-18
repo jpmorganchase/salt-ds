@@ -133,11 +133,11 @@ export const PillBase = forwardRef(function PillBase(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon && isValidElement<any>(icon)
       ? cloneElement(icon, {
-        ...icon.props,
-        // FIXME: icon.props is any
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        className: cn(withBaseName("icon"), icon.props.className),
-      })
+          ...icon.props,
+          // FIXME: icon.props is any
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          className: cn(withBaseName("icon"), icon.props.className),
+        })
       : icon;
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -213,7 +213,7 @@ export const PillBase = forwardRef(function PillBase(
   const handleRef = useForkRef(triggerRef, ref);
 
   return (
-    <Tooltip {...getTooltipProps({ text: label, ...TooltipProps })} >
+    <Tooltip {...getTooltipProps({ text: label, ...TooltipProps })}>
       <Component ref={handleRef} {...triggerProps}>
         {pillIcon || null}
         <div className={withBaseName("label")} ref={labelRef}>

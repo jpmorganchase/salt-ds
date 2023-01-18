@@ -26,7 +26,7 @@ import { TooltipProps } from "./Tooltip";
 
 export interface UseTooltipProps
   extends Partial<
-  Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
+    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   disabled?: boolean;
   /**
@@ -77,19 +77,19 @@ export function useTooltip(props?: UseTooltipProps) {
   const middleware = isDesktop
     ? [margin(8), arrow({ element: arrowRef })]
     : [
-      offset(8),
-      flip(),
-      shift({
-        limiter: limitShift({
-          offset: () =>
-            Math.max(
-              arrowRef.current?.offsetWidth ?? 0,
-              arrowRef.current?.offsetHeight ?? 0
-            ),
+        offset(8),
+        flip(),
+        shift({
+          limiter: limitShift({
+            offset: () =>
+              Math.max(
+                arrowRef.current?.offsetWidth ?? 0,
+                arrowRef.current?.offsetHeight ?? 0
+              ),
+          }),
         }),
-      }),
-      arrow({ element: arrowRef }),
-    ];
+        arrow({ element: arrowRef }),
+      ];
   const {
     floating,
     reference,
@@ -164,10 +164,10 @@ export function useTooltip(props?: UseTooltipProps) {
 
   const getTriggerProps = <
     Element extends
-    | keyof JSX.IntrinsicElements
-    // TODO: whether restrict `any`
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | JSXElementConstructor<any> = "div"
+      | keyof JSX.IntrinsicElements
+      // TODO: whether restrict `any`
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      | JSXElementConstructor<any> = "div"
   >(
     userProps?: ComponentPropsWithoutRef<Element>
   ) => {
@@ -184,10 +184,10 @@ export function useTooltip(props?: UseTooltipProps) {
       getTooltipProps: (args?: TooltipProps) => args,
       getTriggerProps: <
         Element extends
-        | keyof JSX.IntrinsicElements
-        // TODO: whether restrict `any`
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        | JSXElementConstructor<any> = "div"
+          | keyof JSX.IntrinsicElements
+          // TODO: whether restrict `any`
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          | JSXElementConstructor<any> = "div"
       >(
         args?: ComponentPropsWithRef<Element>
         // FIXME: types from useInteractions

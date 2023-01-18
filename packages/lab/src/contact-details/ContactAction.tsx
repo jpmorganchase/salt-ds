@@ -8,13 +8,13 @@ export type ContactActionProps = ButtonProps & {
   tooltipProps?: TooltipProps;
 } & (
     | {
-      label: string;
-      icon?: ComponentType<IconProps>;
-    }
+        label: string;
+        icon?: ComponentType<IconProps>;
+      }
     | {
-      label?: string;
-      icon: ComponentType<IconProps>;
-    }
+        label?: string;
+        icon: ComponentType<IconProps>;
+      }
   );
 
 export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
@@ -38,9 +38,7 @@ export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
     const handleRef = useForkRef(triggerRef, ref);
 
     return (
-      <Tooltip
-        {...getTooltipProps({ text: accessibleText, ...tooltipProps })}
-      >
+      <Tooltip {...getTooltipProps({ text: accessibleText, ...tooltipProps })}>
         <Button {...triggerProps} ref={handleRef}>
           {label ? label : <Icon />}
         </Button>
