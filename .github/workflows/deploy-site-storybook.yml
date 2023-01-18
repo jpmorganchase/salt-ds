@@ -42,7 +42,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
-          projectName: "saltdesignsystem-site-storybook"
+          projectName: "saltdesignsystem-storybook"
           directory: ./site/storybook-static
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref || github.ref_name }}
