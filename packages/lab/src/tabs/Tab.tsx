@@ -1,7 +1,7 @@
 // TODO close button needs to be a button. Hence tab needs to include 2 buttons
 import { Button, ButtonProps, makePrefixer, useForkRef } from "@salt-ds/core";
 import { CloseIcon, CloseSmallIcon } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   forwardRef,
   FocusEvent,
@@ -165,7 +165,7 @@ export const Tab = forwardRef(function Tab(
       {...props}
       aria-controls={ariaControls}
       aria-selected={selected}
-      className={cx(withBaseName(), {
+      className={clsx(withBaseName(), {
         [withBaseName("closeable")]: closeable,
         [withBaseName("closeHover")]: closeHover,
         [withBaseName("dragAway")]: dragging,

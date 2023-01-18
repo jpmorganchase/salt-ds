@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import {
   ChangeEventHandler,
   ComponentType,
@@ -100,7 +100,7 @@ export const RadioButtonGroup = forwardRef<
 
   return (
     <fieldset
-      className={classnames(
+      className={clsx(
         withBaseName(),
         row ? withBaseName("horizontal") : withBaseName("vertical"),
         className
@@ -111,10 +111,7 @@ export const RadioButtonGroup = forwardRef<
       {...a11yProps}
     >
       {!inFormField && (
-        <FormLabel
-          className={classnames(withBaseName("legend"))}
-          label={legend}
-        />
+        <FormLabel className={clsx(withBaseName("legend"))} label={legend} />
       )}
 
       <RadioGroupContext.Provider

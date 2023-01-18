@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import {
   cloneElement,
   ForwardedRef,
@@ -136,7 +136,7 @@ export const PillBase = forwardRef(function PillBase(
           ...icon.props,
           // FIXME: icon.props is any
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          className: cn(withBaseName("icon"), icon.props.className),
+          className: clsx(withBaseName("icon"), icon.props.className),
         })
       : icon;
 
@@ -164,7 +164,7 @@ export const PillBase = forwardRef(function PillBase(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (deleteIconProp && isValidElement<any>(deleteIconProp)) {
       return cloneElement(deleteIconProp, {
-        className: cn(
+        className: clsx(
           withBaseName(`deleteButton`),
           // FIXME: deleteIconProp.props is any
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -190,7 +190,7 @@ export const PillBase = forwardRef(function PillBase(
   >({
     "aria-disabled": disabled || undefined,
     "aria-roledescription": ariaRoledescription,
-    className: cn(
+    className: clsx(
       withBaseName(),
       {
         [withBaseName("clickable")]: clickable,

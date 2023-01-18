@@ -1,5 +1,5 @@
 import { useAriaAnnouncer, useControlled } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import {
   forwardRef,
   HTMLAttributes,
@@ -107,7 +107,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     return (
       <Provider value={contextValue}>
         <nav
-          className={cn(withBaseName(), className)}
+          className={clsx(withBaseName(), className)}
           onKeyDown={onKeyDown}
           ref={ref}
           {...restProps}

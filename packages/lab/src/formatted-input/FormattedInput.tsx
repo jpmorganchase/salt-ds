@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { useRifm } from "rifm";
 import { useControlled } from "@salt-ds/core";
@@ -79,7 +79,7 @@ export const FormattedInput = forwardRef<HTMLInputElement, FormattedInputProps>(
 
     return (
       <Input
-        className={cx(baseName, className)}
+        className={clsx(baseName, className)}
         inputComponent={InputWithMask}
         inputProps={{ mask, textAlign, ...inputProps } as InputWithMaskProps}
         onChange={rifm.onChange}

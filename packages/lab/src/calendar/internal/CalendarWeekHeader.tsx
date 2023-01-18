@@ -1,5 +1,5 @@
 import { forwardRef, ComponentPropsWithRef } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { daysForLocale } from "./utils";
 
@@ -19,7 +19,7 @@ export const CalendarWeekHeader = forwardRef<
   return (
     <div
       data-testid="CalendarWeekHeader"
-      className={cx(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       ref={ref}
       {...rest}
     >

@@ -1,5 +1,5 @@
 import { IconProps } from "@salt-ds/icons";
-import cn from "classnames";
+import { clsx } from "clsx";
 import {
   ComponentProps,
   forwardRef,
@@ -101,7 +101,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     return (
       <Portal disablePortal={disablePortal} container={container}>
         <Window
-          className={cn(withBaseName(), withBaseName(status))}
+          className={clsx(withBaseName(), withBaseName(status))}
           ref={ref}
           {...rest}
         >

@@ -1,5 +1,5 @@
 import { makePrefixer, useId } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ImgHTMLAttributes } from "react";
 import { classBase } from "./internal/constants";
 import { DefaultAvatar } from "./internal/DefaultAvatar";
@@ -65,7 +65,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   return (
     <div
       ref={ref}
-      className={cn(withBaseName(), withBaseName(size), className)}
+      className={clsx(withBaseName(), withBaseName(size), className)}
       {...rest}
     >
       {children}

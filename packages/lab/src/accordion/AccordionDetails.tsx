@@ -3,7 +3,7 @@ import {
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useRef, useState } from "react";
 import { useAccordionSectionContext } from "./AccordionSectionContext";
 
@@ -94,7 +94,7 @@ export const AccordionDetails = forwardRef<
     <div
       {...restProps}
       ref={forkedRef}
-      className={cn(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("disabled")]: isDisabled,
@@ -104,7 +104,7 @@ export const AccordionDetails = forwardRef<
     >
       <div
         ref={contentRef}
-        className={cn({
+        className={clsx({
           [withBaseName("dummy")]: state === "measuring",
         })}
       >

@@ -1,5 +1,5 @@
 import { forwardRef, ElementType, ReactElement } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import {
   makePrefixer,
@@ -96,7 +96,7 @@ export const GridItem: GridItemComponent = forwardRef(
 
     return (
       <Component
-        className={cx(withBaseName(), className)}
+        className={clsx(withBaseName(), className)}
         style={gridStyles}
         ref={ref}
         {...rest}

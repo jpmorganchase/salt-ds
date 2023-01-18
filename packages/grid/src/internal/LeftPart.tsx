@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
 import { RefObject } from "react";
@@ -41,7 +41,7 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
   return (
     <div
       ref={leftRef}
-      className={cn(withBaseName(), {
+      className={clsx(withBaseName(), {
         [withBaseName("rightShadow")]: rightShadow,
       })}
     >

@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { memo, MutableRefObject, useRef } from "react";
 import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { getWidth } from "./useWidth";
@@ -75,7 +75,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
 
   return (
     <Pill
-      className={classnames(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("pillActive")]: active || highlighted,

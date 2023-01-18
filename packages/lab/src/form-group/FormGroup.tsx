@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./FormGroup.css";
 
@@ -16,7 +16,7 @@ export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>(
   function FormGroup({ className, row, ...other }, ref) {
     return (
       <div
-        className={cx(baseName, { [`${baseName}-row`]: row }, className)}
+        className={clsx(baseName, { [`${baseName}-row`]: row }, className)}
         ref={ref}
         {...other}
       />

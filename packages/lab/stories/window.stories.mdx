@@ -103,7 +103,7 @@ return (
   <Portal disablePortal={disablePortal} container={container}>
     {open && (
       <Window
-        className={cn(withBaseName(), withBaseName(state))}
+        className={clsx(withBaseName(), withBaseName(state))}
         ref={ref}
         {...rest}
       >
@@ -158,7 +158,7 @@ return (
   <Portal disablePortal={disablePortal} container={container}>
     {open && (
       <Window
-        className={cn(withBaseName(), withBaseName(state))}
+        className={clsx(withBaseName(), withBaseName(state))}
         ref={ref}
         {...rest}
       >
@@ -201,7 +201,7 @@ return (
   <Portal disablePortal={disablePortal} container={container}>
     {open && (
       <Window
-        className={cn(withBaseName(), withBaseName(state))}
+        className={clsx(withBaseName(), withBaseName(state))}
         ref={ref}
         cssInject={style}
         {...rest}

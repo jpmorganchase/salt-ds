@@ -1,7 +1,7 @@
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { ChevronDownIcon, IconProps, DEFAULT_ICON_SIZE } from "@salt-ds/icons";
 import { useFormFieldProps } from "../form-field-context";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 
 import "./DropdownButton.css";
@@ -78,7 +78,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
   // tool's false alarm on role of 'listbox'
   return (
     <Button
-      className={classnames(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("fullwidth")]: fullWidth,

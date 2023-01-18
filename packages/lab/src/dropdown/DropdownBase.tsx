@@ -5,7 +5,7 @@ import {
   size,
 } from "@floating-ui/react-dom-interactions";
 import { makePrefixer, useForkRef, useIdMemo as useId } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { forwardCallbackProps } from "../utils";
 import { DropdownBaseProps } from "./dropdownTypes";
@@ -52,7 +52,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
     forwardedRef
   ) {
     const rootRef = useRef<HTMLDivElement>(null);
-    const className = cx(withBaseName(), classNameProp, {
+    const className = clsx(withBaseName(), classNameProp, {
       [withBaseName("fullWidth")]: fullWidth,
       [withBaseName("disabled")]: disabled,
     });
@@ -144,7 +144,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
       return cloneElement(popupComponent, {
         ...ownProps,
         ...restComponentProps,
-        className: cx(className, withBaseName("popup-component")),
+        className: clsx(className, withBaseName("popup-component")),
         id,
         width: ownWidth ?? width,
       });
@@ -162,7 +162,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
         {isOpen && (
           <Portal disablePortal={disablePortal} container={container}>
             <Window
-              className={cx(withBaseName("popup"), classNameProp)}
+              className={clsx(withBaseName("popup"), classNameProp)}
               id={`${id}-popup`}
               style={{
                 top: y ?? "",

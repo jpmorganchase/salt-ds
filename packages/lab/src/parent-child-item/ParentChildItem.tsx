@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   FlexItem,
   flexItemAlignment,
@@ -53,7 +53,7 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
   ) {
     return (
       <FlexItem
-        className={cx(className, withBaseName(), {
+        className={clsx(className, withBaseName(), {
           ...(direction && {
             [withBaseName(`slide-${direction}`)]: !disableAnimations,
           }),

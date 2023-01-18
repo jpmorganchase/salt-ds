@@ -1,7 +1,7 @@
 import { KeyboardEventHandler, MouseEventHandler } from "react";
 import { withBaseName } from "./utils";
 import { Button } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 
 export interface PageButtonProps {
   page: number;
@@ -34,7 +34,7 @@ export const PageButton = ({
       name={name}
       aria-current={isSelected ? "page" : undefined}
       variant="secondary"
-      className={cn(withBaseName("pageButton"), {
+      className={clsx(withBaseName("pageButton"), {
         [withBaseName("pageButtonSelected")]: isSelected,
         [withBaseName("pageButtonFixed")]: page < 100,
       })}

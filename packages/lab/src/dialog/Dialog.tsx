@@ -1,5 +1,5 @@
 import { makePrefixer, useId, ValidationStatus } from "@salt-ds/core";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import {
   forwardRef,
   HTMLAttributes,
@@ -97,7 +97,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
           <Window id={id}>
             <div
               {...rest}
-              className={classnames(withBaseName(), className, {
+              className={clsx(withBaseName(), className, {
                 [withBaseName("infoShadow")]: status === "info",
               })}
               style={{ width }}

@@ -1,5 +1,5 @@
 import { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { TriangleRightIcon } from "@salt-ds/icons";
 
 import { makePrefixer } from "@salt-ds/core";
@@ -32,7 +32,7 @@ export const TreeNode = ({
   selected,
   ...props
 }: TreeNodeProps) => {
-  const className = cx(withBaseName(), classNameProp, {
+  const className = clsx(withBaseName(), classNameProp, {
     [withBaseName("highlighted")]: highlighted,
   });
 

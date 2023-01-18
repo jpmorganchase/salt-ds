@@ -5,7 +5,7 @@ import {
   useImperativeHandle,
   useRef,
 } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { useTabs } from "./useTabs";
 import { Tabstrip } from "./Tabstrip";
@@ -87,7 +87,7 @@ export const Tabs = forwardRef(function Tabs(
   return (
     <div
       {...htmlAttributes}
-      className={cx(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       id={`${id}-tabs`}
     >
       <Tabstrip

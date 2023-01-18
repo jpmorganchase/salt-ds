@@ -1,6 +1,6 @@
 import { Button, makePrefixer, useId } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
 import { useWindow } from "../window";
 import { UseFloatingUIProps } from "../popper";
@@ -57,7 +57,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     return (
       <Portal>
         <Window
-          className={cx(withBaseName(), className, {
+          className={clsx(withBaseName(), className, {
             [withBaseName(variant)]: variant === "secondary",
           })}
           id={id}
@@ -65,7 +65,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
           {...rest}
         >
           <div
-            className={cx(withBaseName("content"))}
+            className={clsx(withBaseName("content"))}
             data-testid="overlay-content"
           >
             {showClose && (

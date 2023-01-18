@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import {
   ChangeEvent,
   FocusEvent,
@@ -101,7 +101,7 @@ export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
       [onBlur]
     );
 
-    const className = classnames(withBaseName(), classNameProp, {
+    const className = clsx(withBaseName(), classNameProp, {
       saltFocusVisible: focusVisible,
     });
     return (

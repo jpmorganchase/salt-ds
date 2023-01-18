@@ -1,6 +1,6 @@
 import { Link, makePrefixer, Text } from "@salt-ds/core";
 import { IconProps } from "@salt-ds/icons";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { Children, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import { TooltipProps } from "../tooltip";
@@ -51,7 +51,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
       isCurrentLevel ? (
         <Text
           maxRows={1}
-          className={classnames(
+          className={clsx(
             withBaseName(),
             className,
             withBaseName("currentLevel")
@@ -62,7 +62,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
         </Text>
       ) : (
         <div
-          className={classnames(
+          className={clsx(
             withBaseName(),
             className,
             {
@@ -96,7 +96,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
           minWidth: minWidth ?? itemsMinWidth,
           maxWidth: maxWidth ?? itemsMaxWidth,
         }}
-        className={classnames(liClass, containerClassName)}
+        className={clsx(liClass, containerClassName)}
         {...containerPropsRest}
       >
         {content}

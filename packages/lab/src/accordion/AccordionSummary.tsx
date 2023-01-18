@@ -5,7 +5,7 @@ import {
   ReactNode,
   useCallback,
 } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { useAccordionSectionContext } from "./AccordionSectionContext";
@@ -39,7 +39,7 @@ export const AccordionSummary = forwardRef<
   return (
     <div
       {...restProps}
-      className={cn(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("disabled")]: isDisabled,

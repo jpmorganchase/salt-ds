@@ -1,5 +1,5 @@
 import { forwardRef, ReactNode } from "react";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer, Button, ButtonProps } from "@salt-ds/core";
 import { ChevronDownIcon } from "@salt-ds/icons";
 import "./MenuButtonTrigger.css";
@@ -23,7 +23,7 @@ export const MenuButtonTrigger = forwardRef<
   return (
     <Button
       ref={ref}
-      className={classnames(withBaseName(), className, {
+      className={clsx(withBaseName(), className, {
         [withBaseName("buttonOpen")]: isMenuOpen,
       })}
       data-testid="menu-button-trigger"

@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import {
   ChangeEventHandler,
   forwardRef,
@@ -49,7 +49,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
 
     return (
       <div
-        className={classnames(
+        className={clsx(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
@@ -60,7 +60,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       >
         <ControlLabel
           {...LabelProps}
-          className={classnames(
+          className={clsx(
             withBaseName("labelContainer"),
             {
               [withBaseName("disabled")]: disabled,
