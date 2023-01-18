@@ -10,21 +10,21 @@
   top: 0;
 }
 
-.iconsTable {
+.iconsTableContainer table {
   caption-side: bottom;
   margin-bottom: 0;
 }
 
-.iconsTable > tbody tr td:not(:first-child) {
+.iconsTableContainer table > tbody tr td:not(:first-child) {
   text-align: center;
 }
 
-.iconsTable > tbody tr td p {
+.iconsTableContainer table > tbody tr td p {
   margin-top: var(--salt-size-unit);
   margin-bottom: 0;
 }
 
-.iconsTable > caption {
+.iconsTableContainer table > caption {
   text-align: left;
   margin-top: var(--salt-size-unit);
   font-style: var(--salt-editable-help-fontStyle);

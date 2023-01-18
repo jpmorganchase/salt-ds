@@ -16,7 +16,7 @@ export const MoveHorizontalIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M5 5.25H3V3L0 6l3 3V6.75h2v-1.5zm2 0h2V3l3 3-3 3V6.75H7v-1.5z" />
+      <path d="M5 5.25H3V3L0 6l3 3V6.75h2v-1.5Zm2 0h2V3l3 3-3 3V6.75H7v-1.5Z" />
     </Icon>
   );
 });

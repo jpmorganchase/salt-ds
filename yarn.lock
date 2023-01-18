@@ -3947,9 +3947,9 @@ __metadata:
     "@types/tinycolor2": ^1.4.3
     "@types/warning": ^3.0.0
     "@vitejs/plugin-react": ^2.1.0
-    ag-grid-community: ^27.3.0
-    ag-grid-enterprise: ^27.3.0
-    ag-grid-react: ^27.3.0
+    ag-grid-community: ^28.2.1
+    ag-grid-enterprise: ^28.2.1
+    ag-grid-react: ^28.2.1
     aria-hidden: ^1.1.1
     attr-accept: ^2.0.0
     axe-core: ^4.4.3
@@ -3960,9 +3960,9 @@ __metadata:
     clipboard-copy: ^4.0.1
     compute-scroll-into-view: ^2.0.0
     csstree-validator: ^3.0.0
-    cypress: ^12.0.0
-    cypress-axe: ^1.1.0
-    cypress-real-events: ^1.7.2
+    cypress: ^12.3.0
+    cypress-axe: ^1.2.0
+    cypress-real-events: ^1.7.6
     deepmerge: ^4.2.2
     del: ^6.0.0
     dom-accessibility-api: ^0.5.10
@@ -4019,7 +4019,7 @@ __metadata:
   resolution: "@salt-ds/theme-editor@workspace:tooling/theme-editor"
   dependencies:
     js-beautify: 1.14.7
-    tinycolor2: 1.4.2
+    tinycolor2: 1.5.2
   languageName: unknown
   linkType: soft
 
@@ -7522,30 +7522,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:^27.3.0":
-  version: 27.3.0
-  resolution: "ag-grid-community@npm:27.3.0"
-  checksum: 3041c188239c50b875d45f82e4de1adfc7170c7338d0c18e504bc4d57bf71906bf291aaee0c59149ad65900e7308268ed5db32ad7f5f2368ef8e9e6b2c156a02
+"ag-grid-community@npm:^28.2.1":
+  version: 28.2.1
+  resolution: "ag-grid-community@npm:28.2.1"
+  checksum: f94acfd8f4f815e4f5028c8bc40f6cd06463f81eee9ea5a3450e9e580f5b682adbee86a1cec466aaa1e8c780e2606b1f1ab06455d38b62a83e768d4e479fcb38
   languageName: node
   linkType: hard
 
-"ag-grid-enterprise@npm:^27.3.0":
-  version: 27.3.0
-  resolution: "ag-grid-enterprise@npm:27.3.0"
-  checksum: 4b85ca1d5dbd6bc652d373fc076824ada49d15d592ce061ee40aea880294db65516415eeb61d66bb61c437174fab2a71146abae94e299c5504e3d6d877a50d9a
+"ag-grid-enterprise@npm:^28.2.1":
+  version: 28.2.1
+  resolution: "ag-grid-enterprise@npm:28.2.1"
+  checksum: 5f4b0bfd02c639a504b55de61b31fa62088fcc3776bedb9fd97e43a0613556a669d648431d6d8a5de59c290f2ddee044ff495bf59f431a691898d0edcee5bb81
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:^27.3.0":
-  version: 27.3.0
-  resolution: "ag-grid-react@npm:27.3.0"
+"ag-grid-react@npm:^28.2.1":
+  version: 28.2.1
+  resolution: "ag-grid-react@npm:28.2.1"
   dependencies:
     prop-types: ^15.8.1
   peerDependencies:
-    ag-grid-community: ~27.3.0
+    ag-grid-community: ~28.2.1
     react: ^16.3.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-  checksum: 9e4b7dd3649fb9ff2e4f0c63d273c7e76b076c5329812e775e43a0bf367b315e34968874d041001f0f29976160aa4dc62626c60ce4e6fd4f6d4d00f468a54810
+  checksum: 75b6cfd891a0fd6dcd065fc69e80c9b7b20c6efee4f659714b5748f28b9d646868602770401cf840efd866b65e9e0683850842c70a95924aa6209c09bf849c15
   languageName: node
   linkType: hard
 
@@ -10965,28 +10965,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-axe@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "cypress-axe@npm:1.1.0"
+"cypress-axe@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "cypress-axe@npm:1.2.0"
   peerDependencies:
     axe-core: ^3 || ^4
-    cypress: ^10 || ^11
-  checksum: a86b4ff0d35eab82ac5cfd40bbe4077aaf5e7f075b40a49efa949e2c40c60d0f78c1b43d65f98e255c1675d8492b674933da12e11ff71b1f670bd6cfa03b363c
+    cypress: ^10 || ^11 || ^12
+  checksum: 25930a8d4a1161e2f812a3bd34a6d6a79661612c544ef68363843df806832b3c10696bd0dc7d3d15dc17644f61dd59545c17906615ab5505089f83ac0c86656a
   languageName: node
   linkType: hard
 
-"cypress-real-events@npm:^1.7.2":
-  version: 1.7.2
-  resolution: "cypress-real-events@npm:1.7.2"
+"cypress-real-events@npm:^1.7.6":
+  version: 1.7.6
+  resolution: "cypress-real-events@npm:1.7.6"
   peerDependencies:
-    cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x
-  checksum: d5b21592c14a2554a050fcc733d0a848382cb3d77360194312c91b8de52d4c356e2dbbfbca5ad9f36ad2619c08b61c86f847e25f35385003dec021f0202a0847
+    cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x
+  checksum: 715ead42990e5464a2613dea2ebbcdfd093b47beee38f7afdff817e5dd701753e103103b2806864771a55aee700580253534497ca6802c88ef9688c6b095917c
   languageName: node
   linkType: hard
 
-"cypress@npm:^12.0.0":
-  version: 12.1.0
-  resolution: "cypress@npm:12.1.0"
+"cypress@npm:^12.3.0":
+  version: 12.3.0
+  resolution: "cypress@npm:12.3.0"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -11032,7 +11032,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 238ea125f396594a84ba096e0eaebe6f0d6b60b3b232a3f6e36420f9fa7a9218211df8dc6ad2a4f6cc0cc2fd77d4e0eb0932b409a73ff8434e78e880a36f59a7
+  checksum: 00658996bcca918254348eb42bc03079ccf2d583e5c9c04190267edcbc542d4a22835d7399711c99f7aa7334412104b23cc5a1aa7f02b8b541c12298bf3f63f0
   languageName: node
   linkType: hard
 
@@ -17110,13 +17110,13 @@ __metadata:
   linkType: hard
 
 "json5@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "json5@npm:1.0.1"
+  version: 1.0.2
+  resolution: "json5@npm:1.0.2"
   dependencies:
     minimist: ^1.2.0
   bin:
     json5: lib/cli.js
-  checksum: e76ea23dbb8fc1348c143da628134a98adf4c5a4e8ea2adaa74a80c455fc2cdf0e2e13e6398ef819bfe92306b610ebb2002668ed9fc1af386d593691ef346fc3
+  checksum: 866458a8c58a95a49bef3adba929c625e82532bcff1fe93f01d29cb02cac7c3fe1f4b79951b7792c2da9de0b32871a8401a6e3c5b36778ad852bf5b8a61165d7
   languageName: node
   linkType: hard
 
@@ -25349,10 +25349,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinycolor2@npm:1.4.2, tinycolor2@npm:^1.4.1, tinycolor2@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "tinycolor2@npm:1.4.2"
-  checksum: 57ed262e08815a4ab0ed933edafdbc6555a17081781766149813b44a080ecbe58b3ee281e81c0e75b42e4d41679f138cfa98eabf043f829e0683c04adb12c031
+"tinycolor2@npm:1.5.2, tinycolor2@npm:^1.4.1, tinycolor2@npm:^1.4.2":
+  version: 1.5.2
+  resolution: "tinycolor2@npm:1.5.2"
+  checksum: 9df1ea9a986b03f1aebb1c1ac17fc561e358493f61b56d73ef2d7207fe7bd74eb71cf745b70487b2b5bb1ce33c9e8af7101088bb0b5fc532eaa1f9d1eda4ef31
   languageName: node
   linkType: hard
 

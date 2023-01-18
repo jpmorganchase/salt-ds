@@ -16,7 +16,11 @@ export const DocumentSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M9.207 0H1v12h10V1.793L9.207 0zM7 1h1v2h2.25v1H7V1z" />
+      <path
+        fillRule="evenodd"
+        d="M1 0v12h10V2L9 0H1Zm7 1H7v3h3V3H8V1Z"
+        clipRule="evenodd"
+      />
     </Icon>
   );
 });

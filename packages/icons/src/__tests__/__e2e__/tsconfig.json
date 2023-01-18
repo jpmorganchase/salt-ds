@@ -9,10 +9,6 @@
       "@testing-library/cypress",
       "cypress-real-events",
       "cypress-axe"
-    ],
-    "baseUrl": "../../../",
-    "paths": {
-      "@stories/*": ["stories/*"]
-    }
+    ]
   }
 }

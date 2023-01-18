@@ -3,8 +3,8 @@ sidebar_label: Developing
 hide_table_of_contents: true
 ---
 
-import DevelopFontsAccordion from "./DevelopFontsAccordion.tsx";
-import Content from "../../src/components/content/Content.tsx";
+import DevelopFontsAccordion from "./_developing/DevelopFontsAccordion.tsx";
+import Content from "@site/src/layouts/content/Content.tsx";
 
 # Developing with Salt
 
@@ -50,7 +50,7 @@ To load the fonts directly from Google Fonts, add the following into your applic
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2 family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=PT+Mono&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=PT+Mono&display=swap"
   rel="stylesheet"
 />
 ```
@@ -91,7 +91,25 @@ Learn more about [Fontsource](https://fontsource.org/).
 
 If you prefer not to use Google Fonts or Fontsource, you can use any other method to incorporate the web fonts. Make sure the CSS `@font-face` declarations associate the correct `font-family`, `font-weight`and`font-style` with the corresponding web fonts.
 
-<DevelopFontsAccordion />
+<DevelopFontsAccordion id="font-file-table" summary="View the web fonts, widths and styles">
+
+| Font family | Weight           | Style    |
+| ----------- | ---------------- | -------- |
+| Open Sans   | `300`            | `normal` |
+| Open Sans   | `300`            | `italic` |
+| Open Sans   | `400` / `normal` | `normal` |
+| Open Sans   | `400` / `normal` | `italic` |
+| Open Sans   | `500`            | `normal` |
+| Open Sans   | `500`            | `italic` |
+| Open Sans   | `600`            | `normal` |
+| Open Sans   | `600`            | `italic` |
+| Open Sans   | `700` / `bold`   | `normal` |
+| Open Sans   | `700` / `bold`   | `italic` |
+| Open Sans   | `800`            | `normal` |
+| Open Sans   | `800`            | `italic` |
+| PT Sans     | `400` / `normal` | `normal` |
+
+</DevelopFontsAccordion>
 
 ### 3. Integrate Salt into your app
 

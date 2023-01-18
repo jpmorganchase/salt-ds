@@ -14,7 +14,7 @@ export const TreeSolidIcon = forwardRef<SVGSVGElement, TreeSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M4 1v4h1.5v1H1v2H0v4h4V8H2V7h8v1H8v4h4V8h-1V6H6.5V5H8V1H4z" />
+        <path d="M4 1v4h1.5v1H1v2H0v4h4V8H2V7h8v1H8v4h4V8h-1V6H6.5V5H8V1H4Z" />
       </Icon>
     );
   }

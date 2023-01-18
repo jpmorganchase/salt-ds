@@ -79,7 +79,7 @@ import '@salt-ds/ag-grid-theme/salt-ag-theme.css';
 
 #### CSS class names for Salt AG Grid theme
 
-For light mode,
+For light mode, add one the following class names to the element wrapping ag-grid:
 
 ```
 .ag-theme-salt-high-light
@@ -88,7 +88,7 @@ For light mode,
 .ag-theme-salt-touch-light
 ```
 
-For dark mode,
+For dark mode, add one the following class names to the element wrapping ag-grid:
 
 ```
 .ag-theme-salt-high-dark
@@ -97,11 +97,23 @@ For dark mode,
 .ag-theme-salt-touch-dark
 ```
 
-For variants,
+For variants, add one the following class names to the element wrapping ag-grid:
 
 ```
 .ag-theme-salt-variant-secondary
 .ag-theme-salt-variant-zebra
+```
+
+For editable fields, add this class name to the `cellClass` array in your column definition:
+
+```
+.editable-cell
+```
+
+For fields displaying numeric values add this class name to the `cellClass` array in your column definition:
+
+```
+.editable-cell
 ```
 
 ## Examples

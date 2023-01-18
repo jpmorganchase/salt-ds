@@ -14,7 +14,11 @@ export const TreeIcon = forwardRef<SVGSVGElement, TreeIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M4 5V1h4v4H6.5v1H11v2h1v4H8V8h2V7H2v1h2v4H0V8h1V6h4.5V5H4zm3-3H5v2h2V2zm2 7v2h2V9H9zM1 9v2h2V9H1z" />
+        <path
+          fillRule="evenodd"
+          d="M4 5h1.5v1H1v2H0v4h4V8H2V7h8v1H8v4h4V8h-1V6H6.5V5H8V1H4v4Zm3-3H5v2h2V2Zm2 7v2h2V9H9ZM1 9v2h2V9H1Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

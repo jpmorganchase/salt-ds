@@ -1,7 +1,5 @@
 /* Main css class. Style for body text */
 .saltText {
-  font-size: var(--salt-text-fontSize);
-  line-height: var(--salt-text-lineHeight);
   color: var(--saltText-color, var(--text-color));
 }
 

@@ -14,7 +14,7 @@ export const MinimizeIcon = forwardRef<SVGSVGElement, MinimizeIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M0 8h12v2H0V8z" />
+        <path d="M0 8h12v2H0V8Z" />
       </Icon>
     );
   }

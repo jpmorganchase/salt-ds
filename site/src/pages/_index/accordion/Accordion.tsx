@@ -3,11 +3,18 @@ import clsx from "clsx";
 
 import PageIllustration from "./PageIllustration";
 import useOnScreen from "../../../utils/useOnScreen";
-import Accordion from "../../../components/accordion/Accordion";
-import { homePageInfo } from "../../../components/accordion/info/homepage";
+import Accordion, {
+  AccordionBaseProps,
+} from "../../../components/accordion/Accordion";
 import styles from "./Accordion.module.css";
 
-const HomepageAccordion = (): JSX.Element => {
+type HomepageAccordionProps = {
+  homePageInfo: AccordionBaseProps["accordionInfo"];
+};
+
+const HomepageAccordion = ({
+  homePageInfo,
+}: HomepageAccordionProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>();
 
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-50px");

@@ -16,7 +16,11 @@ export const PresentationSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M0 4v6h4.493L3.25 11.243l.707.707 1.893-1.893 1.893 1.893.707-.707L7.207 10H12V4H0zm3 1h6v1H3V5zm0 2h6v1H3V7zM0 0v3h12V0H0z" />
+      <path
+        fillRule="evenodd"
+        d="M0 4v6h4.493L3.25 11.243l.707.707 1.893-1.893 1.893 1.893.707-.707L7.207 10H12V4H0Zm3 1h6v1H3V5Zm0 2h6v1H3V7ZM0 0v3h12V0H0Z"
+        clipRule="evenodd"
+      />
     </Icon>
   );
 });

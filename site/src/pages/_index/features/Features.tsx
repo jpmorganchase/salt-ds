@@ -1,20 +1,12 @@
-import { ComponentPropsWithoutRef, useMemo } from "react";
+import { ComponentPropsWithoutRef } from "react";
 import { SuccessIcon } from "@salt-ds/icons";
+import useSplitArray from "@site/src/utils/useSplitArray";
 import styles from "./Features.module.css";
 
 export interface FeaturesProps extends ComponentPropsWithoutRef<"div"> {
   heading: string;
   listItems: string[];
 }
-
-const splitListItems = (listItems: string[]) => {
-  const listItemsHalf = Math.ceil(listItems.length / 2);
-
-  const firstHalf = listItems.slice(0, listItemsHalf);
-  const secondHalf = listItems.slice(listItemsHalf);
-
-  return [firstHalf, secondHalf];
-};
 
 type ListItemProps = { item: string };
 
@@ -26,10 +18,7 @@ const ListItem = ({ item }: ListItemProps) => (
 );
 
 const Features = ({ heading, listItems }: FeaturesProps): JSX.Element => {
-  const [firstHalf, secondHalf] = useMemo(
-    () => splitListItems(listItems),
-    [listItems]
-  );
+  const [firstHalf, secondHalf] = useSplitArray(listItems);
 
   return (
     <div className={styles.featuresContainerWrapper}>

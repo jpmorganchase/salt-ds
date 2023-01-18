@@ -34,7 +34,7 @@ const dataGridInfiniteScrollExampleColumns = [
     sortable: true,
     resizable: true,
     editable: true,
-    cellClass: ["editable-cell"],
+    cellClass: ["editable-cell", "numeric-cell"],
   },
 ];
 
