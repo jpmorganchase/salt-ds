@@ -20,6 +20,7 @@ const dataGridExampleRowGrouping = [
     headerName: "Population",
     field: "population",
     filter: "agNumberColumnFilter",
+    cellClass: ["numeric-cell"],
   },
 ];
 

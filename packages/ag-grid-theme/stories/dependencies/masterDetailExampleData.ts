@@ -5,7 +5,7 @@ export const masterDetailExampleData = [
   },
   { field: "code" },
   { field: "capital" },
-  { field: "population" },
-  { field: "rating" },
+  { field: "population", cellClass: ["numeric-cell"] },
+  { field: "rating", cellClass: ["numeric-cell"] },
 ];
 export default masterDetailExampleData;

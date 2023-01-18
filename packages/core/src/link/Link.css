@@ -4,9 +4,9 @@
   --link-color-visited: var(--saltLink-color-visited, var(--salt-text-link-foreground-visited));
   /* When focused, we also want hover style */
   --link-color-focus: var(--saltLink-color-focus, var(--link-color-hover));
-  --link-color-disabled: var(--saltLink-color-disabled, var(--salt-text-link-foreground-disabled));
 
   --link-textDecoration: var(--salt-text-link-textDecoration);
+  --link-textDecoration-hover: var(--salt-text-link-textDecoration-hover);
 
   --link-fontFamily: var(--salt-text-fontFamily);
   --link-focus-outline: var(--salt-focused-outline);
@@ -46,6 +46,7 @@
 .saltLink:hover {
   --saltIcon-color: var(--link-color-hover);
   color: var(--link-color-hover);
+  text-decoration: var(--link-textDecoration-hover);
 }
 
 /* Set color for active link */
@@ -59,6 +60,7 @@
   --saltIcon-color: var(--link-color-focus);
   outline: var(--link-focus-outline);
   color: var(--link-color-focus);
+  text-decoration: var(--link-textDecoration-hover);
 }
 
 /* Class for ADA content */
