@@ -277,7 +277,7 @@ describe("Grid", () => {
     expectFakeColumnWidth(240);
   });
 
-  it.only("Dropdown editor", () => {
+  it("Dropdown editor", () => {
     cy.mount(<GridExample />);
     assertGridReady();
     findCell(0, 2).click({ force: true }).type("{Enter}");
