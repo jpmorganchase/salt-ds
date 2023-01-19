@@ -63,7 +63,7 @@ You can use the `useDensity` hook to access the currently active density of your
 
 ```tsx
 import { useDensity } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 function MyComponent() {
   const [override, setDensityOverride] = useState();
@@ -71,7 +71,7 @@ function MyComponent() {
   return (
     <>
       <div
-        className={cx("myComponent", {
+        className={clsx("myComponent", {
           "myComponent--touch": density === "touch",
         })}
       >

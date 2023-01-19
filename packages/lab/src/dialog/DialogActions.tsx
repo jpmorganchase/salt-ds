@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from "react";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
 import "./DialogActions.css";
@@ -13,11 +13,7 @@ export const DialogActions = forwardRef<HTMLDivElement, DialogActionsProps>(
     const { className, children, ...rest } = props;
 
     return (
-      <div
-        {...rest}
-        className={classnames(withBaseName(), className)}
-        ref={ref}
-      >
+      <div {...rest} className={clsx(withBaseName(), className)} ref={ref}>
         {children}
       </div>
     );

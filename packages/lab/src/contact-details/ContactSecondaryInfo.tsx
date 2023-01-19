@@ -1,6 +1,6 @@
 import { makePrefixer, useId, Text } from "@salt-ds/core";
 import { IconProps } from "@salt-ds/icons";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { ComponentType, forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";
 import { ValueComponentProps } from "./types";
@@ -45,7 +45,7 @@ export const ContactSecondaryInfo = forwardRef<
       {...restProps}
       id={id}
       ref={ref}
-      className={cn(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       data-testid="secondary"
     >
       {Icon ? <Icon className={withBaseName("icon")} /> : null}

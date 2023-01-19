@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import { FormField, Input } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
@@ -13,27 +13,27 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
     <QAContainer imgSrc={imgSrc}>
       <FormField
-        className={cx(className)}
+        className={clsx(className)}
         label="Default Form Field description label"
       >
         <Input value="Value" />
       </FormField>
 
       <FormField
-        className={cx("saltFormField-secondary", className)}
+        className={clsx("saltFormField-secondary", className)}
         label="Default Form Field description label"
       >
         <Input value="Value" />
       </FormField>
       <FormField
-        className={cx(className)}
+        className={clsx(className)}
         label="Label aligned left"
         labelPlacement="left"
       >
         <Input value="Value" />
       </FormField>
       <FormField
-        className={cx(className)}
+        className={clsx(className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -41,7 +41,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("saltFormField-secondary", className)}
+        className={clsx("saltFormField-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -49,7 +49,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("saltFormField-tertiary", className)}
+        className={clsx("saltFormField-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -58,7 +58,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx(className)}
+        className={clsx(className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -66,7 +66,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("saltFormField-secondary", className)}
+        className={clsx("saltFormField-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -74,7 +74,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={cx("saltFormField-tertiary", className)}
+        className={clsx("saltFormField-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"

@@ -1,5 +1,5 @@
 import { ReactElement, useCallback, useState } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import {
   ToggleButton,
@@ -29,7 +29,7 @@ export const LightDarkToggle = (props: {
   );
 
   return (
-    <div className={cn(withBaseName())}>
+    <div className={clsx(withBaseName())}>
       <ToggleButtonGroup onChange={onModeChanged} selectedIndex={selectedIndex}>
         <ToggleButton>Light</ToggleButton>
         <ToggleButton>Dark</ToggleButton>

@@ -4,7 +4,7 @@ import {
   useId,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import {
   Children,
   ComponentType,
@@ -105,7 +105,7 @@ const Listbox: ComponentType<ListboxProps> = forwardRef(function Listbox(
 
   return (
     <div
-      className={classnames(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("disabled")]: disabled,
@@ -362,7 +362,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
   // THat means if client passes style, with margin, for example, it will break;
   return (
     <div
-      className={classnames(withBaseName("wrapper"), {
+      className={clsx(withBaseName("wrapper"), {
         [withBaseName("borderless")]: borderless,
       })}
       ref={containerRef}

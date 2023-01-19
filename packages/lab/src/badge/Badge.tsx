@@ -1,6 +1,6 @@
 import { makePrefixer, useId } from "@salt-ds/core";
 import { MessageIcon } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   cloneElement,
   forwardRef,
@@ -65,16 +65,16 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
 
   return (
     <span
-      className={cx(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       ref={ref}
       role="img"
-      aria-labelledby={cx(childId, badgeId)}
+      aria-labelledby={clsx(childId, badgeId)}
       {...rest}
     >
       {children && isValidElement<HTMLAttributes<HTMLElement>>(children)
         ? cloneElement(children, { id: childId })
         : children}
-      <span id={badgeId} className={cx(withBaseName("badge"))}>
+      <span id={badgeId} className={clsx(withBaseName("badge"))}>
         {badgeContentValue}
       </span>
     </span>

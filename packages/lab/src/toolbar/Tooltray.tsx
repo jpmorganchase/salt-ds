@@ -1,5 +1,5 @@
 import { useIdMemo } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { cloneElement } from "react";
 import { OverflowPanel } from "./overflow-panel/OverflowPanel";
 
@@ -35,7 +35,7 @@ export const Tooltray = (props: TooltrayProps) => {
 
   const tooltrayId = useIdMemo(idProp);
 
-  const className = cx(
+  const className = clsx(
     "saltTooltray",
     classNameProp,
     `saltTooltray-${orientation}`,
@@ -81,7 +81,7 @@ export const Tooltray = (props: TooltrayProps) => {
 
   return (
     <div {...rest} {...tooltrayProps} id={tooltrayId}>
-      <div className={cx("Responsive-inner")} ref={innerContainerRef}>
+      <div className={clsx("Responsive-inner")} ref={innerContainerRef}>
         {renderTrayTools(
           collectionHook,
           overflowedItems,
@@ -90,7 +90,7 @@ export const Tooltray = (props: TooltrayProps) => {
         )}
         {overflowIndicator || collapsed ? (
           <OverflowPanel
-            className={cx("saltToolbarField")}
+            className={clsx("saltToolbarField")}
             data-index={collectionHook.data.length}
             data-overflow-indicator
             data-priority={1}

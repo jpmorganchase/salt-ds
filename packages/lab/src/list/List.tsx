@@ -1,5 +1,5 @@
 import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   cloneElement,
   ForwardedRef,
@@ -169,7 +169,7 @@ export const List = forwardRef(function List<
     const header = (
       <ListItem
         {...listItemHeaderHandlers}
-        className={cx("saltListItemHeader", {
+        className={clsx("saltListItemHeader", {
           focusVisible: collapsibleHeaders && appliedFocusVisible === idx.value,
         })}
         aria-expanded={expanded}
@@ -204,7 +204,7 @@ export const List = forwardRef(function List<
       key: string;
       "data-idx": number;
     } = {
-      className: cx({
+      className: clsx({
         saltHighlighted: idx.value === highlightedIndex,
         saltFocusVisible: appliedFocusVisible === idx.value,
       }),
@@ -318,7 +318,7 @@ export const List = forwardRef(function List<
       {...htmlAttributes}
       {...listHandlers}
       {...listControlProps}
-      className={cx(withBaseName(), className, {
+      className={clsx(withBaseName(), className, {
         // TODO low-emphasis
         [withBaseName("borderless")]: borderless,
         saltDisabled: listDisabled,

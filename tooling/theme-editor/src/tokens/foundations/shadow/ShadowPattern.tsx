@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { ColorShadow } from "./ColorShadow";
 import { FlatShadow } from "./FlatShadow";
@@ -17,7 +17,7 @@ export const ShadowPattern = (props: ShadowPatternProps): ReactElement => {
   }, [searchParams]);
 
   return (
-    <div className={cn(withBaseName())}>
+    <div className={clsx(withBaseName())}>
       {Object.keys(props.shadowPattern)
         .filter((innerPattern) =>
           Object.keys(props.shadowPattern[innerPattern]).includes("value")

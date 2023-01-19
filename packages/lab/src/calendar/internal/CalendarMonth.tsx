@@ -4,7 +4,7 @@ import {
   MouseEvent,
   SyntheticEvent,
 } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { DateValue } from "@internationalized/date";
 import { CalendarDay, CalendarDayProps } from "./CalendarDay";
@@ -48,7 +48,7 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
 
     return (
       <div
-        className={cx(withBaseName(), className)}
+        className={clsx(withBaseName(), className)}
         ref={ref}
         onMouseLeave={handleMouseLeave}
         {...rest}

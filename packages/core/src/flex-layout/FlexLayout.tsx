@@ -1,5 +1,5 @@
 import { Children, ElementType, forwardRef, ReactElement } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import {
   makePrefixer,
@@ -99,7 +99,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
 
     return (
       <Component
-        className={cx(className, withBaseName(), {
+        className={clsx(className, withBaseName(), {
           [withBaseName("separator")]: separatorAlignment && !wrap,
           [withBaseName(
             `separator-${flexDirection || "row"}-${

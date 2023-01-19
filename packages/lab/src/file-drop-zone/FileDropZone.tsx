@@ -1,6 +1,6 @@
 import { Button, makePrefixer, useId } from "@salt-ds/core";
 import { ErrorIcon, UploadIcon } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   ChangeEventHandler,
   DragEvent,
@@ -238,7 +238,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
     return (
       <div
         {...restProps}
-        className={cx(
+        className={clsx(
           withBaseName(),
           {
             [withBaseName("error")]: isRejected,

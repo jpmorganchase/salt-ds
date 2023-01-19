@@ -1,6 +1,6 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";
 
@@ -48,7 +48,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       "aria-label": formatDate(day),
       ...dayProps,
       ...rest,
-      className: cx(
+      className: clsx(
         withBaseName(),
         {
           [withBaseName("hidden")]: hidden,

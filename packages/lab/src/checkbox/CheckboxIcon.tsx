@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import {
   CheckboxUncheckedIcon,
@@ -23,15 +23,15 @@ export const CheckboxIcon = ({
   disabled,
   indeterminate,
 }: CheckboxIconProps): JSX.Element => {
-  const className = cx(withBaseName(), classNameProp, {
+  const className = clsx(withBaseName(), classNameProp, {
     [withBaseName("disabled")]: disabled,
   });
   return indeterminate ? (
     <CheckboxIndeterminateIcon
-      className={cx(className, withBaseName("indeterminate"))}
+      className={clsx(className, withBaseName("indeterminate"))}
     />
   ) : checked ? (
-    <CheckboxCheckedIcon className={cx(className, withBaseName("checked"))} />
+    <CheckboxCheckedIcon className={clsx(className, withBaseName("checked"))} />
   ) : (
     <CheckboxUncheckedIcon className={className} />
   );

@@ -1,5 +1,5 @@
 import { forwardRef, useCallback } from "react";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import {
   CalendarNavigation,
@@ -55,7 +55,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
         }}
       >
         <div
-          className={classnames(withBaseName(), className)}
+          className={clsx(withBaseName(), className)}
           role="application"
           ref={ref}
         >

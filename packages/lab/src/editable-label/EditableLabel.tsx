@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import React, {
   ChangeEvent,
   KeyboardEvent,
@@ -121,7 +121,7 @@ export const EditableLabel = forwardRef(function EditableLabel(
     }
   };
 
-  const className = classnames(classBase, classNameProp, {
+  const className = clsx(classBase, classNameProp, {
     [`${classBase}-editing`]: editing,
   });
   return (

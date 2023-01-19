@@ -7,7 +7,7 @@ import {
 import "./TableRow.css";
 import { BaseCell } from "../BaseCell";
 import { makePrefixer } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { GridColumnModel, GridRowModel } from "../Grid";
 import { FakeCell } from "./FakeCell";
 import { DefaultCellValue } from "./DefaultCellValue";
@@ -59,7 +59,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
   return (
     <tr
       aria-rowindex={ariaRowIndex}
-      className={cn(withBaseName(), {
+      className={clsx(withBaseName(), {
         [withBaseName("zebra")]: zebra,
         [withBaseName("hover")]: isHoverOver,
         [withBaseName("selected")]: isSelected,

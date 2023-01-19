@@ -1,5 +1,5 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useState } from "react";
 import { ContactDetailsContext, useComponentSize } from "./internal";
 
@@ -77,7 +77,7 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
         <div
           {...restProps}
           ref={ref}
-          className={cn(
+          className={clsx(
             withBaseName(),
             getClassName(variant, isStacked),
             {

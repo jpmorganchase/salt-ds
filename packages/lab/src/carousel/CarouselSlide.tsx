@@ -7,7 +7,7 @@ import {
 } from "react";
 import { makePrefixer } from "@salt-ds/core";
 
-import cx from "classnames";
+import { clsx } from "clsx";
 import { ButtonBarProps } from "../button-bar";
 
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
@@ -32,7 +32,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         {Media && <div className={withBaseName("mediaContainer")}>{Media}</div>}
         <div className={withBaseName("fixedContainer")} ref={buttonBarRef}>
           <div
-            className={cx({
+            className={clsx({
               [withBaseName("textContainer")]: contentAlignment === "center",
               [withBaseName("textContainerLeft")]: contentAlignment === "left",
             })}
@@ -54,7 +54,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           </div>
           {ButtonBar && (
             <div
-              className={cx({
+              className={clsx({
                 [withBaseName("buttonBarOverride")]:
                   contentAlignment === "center",
                 [withBaseName("buttonBarOverrideLeft")]:
@@ -62,7 +62,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
               })}
             >
               <ButtonBar
-                className={cx({
+                className={clsx({
                   [withBaseName("buttonBarContainer")]:
                     contentAlignment === "center",
                   [withBaseName("buttonBarContainerLeft")]:

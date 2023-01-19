@@ -1,5 +1,5 @@
 import { ReactElement, useMemo, useState, useEffect } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Accordion } from "@salt-ds/lab";
 import { CharacteristicPattern } from "./CharacteristicPattern";
@@ -64,7 +64,7 @@ export const CharacteristicPatternsList = (
 
   return (
     <Accordion>
-      <div className={cn(withBaseName())}>
+      <div className={clsx(withBaseName())}>
         {Object.keys(patternValuesInScope).map(function (pattern) {
           return (
             <CharacteristicPattern

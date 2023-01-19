@@ -5,7 +5,7 @@ import {
   useEffect,
   ElementType,
 } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import { GridLayout, GridLayoutProps } from "../grid-layout";
 import {
@@ -91,7 +91,7 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
 
     return (
       <GridLayout
-        className={cx(withBaseName(), className, "saltGridLayout-area")}
+        className={clsx(withBaseName(), className, "saltGridLayout-area")}
         columns={numberOfColumns}
         gap={gap || 0}
         style={borderLayoutStyles}

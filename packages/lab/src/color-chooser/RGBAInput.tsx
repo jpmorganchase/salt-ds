@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { AlphaInput } from "./AlphaInputField";
 import { RGBAValue } from "./Color";
@@ -29,7 +29,7 @@ export const RGBAInput = ({
 }: RGBAInputProps): JSX.Element => {
   return (
     <>
-      <span className={cn(withBaseName("textDivOverrides"))}>{rgbaText}</span>
+      <span className={clsx(withBaseName("textDivOverrides"))}>{rgbaText}</span>
       {["r", "g", "b"].map((value) => (
         <div className={withBaseName("rgbaInputDiv")}>
           <span className={withBaseName("rgbaText")}>
@@ -43,15 +43,15 @@ export const RGBAInput = ({
         </div>
       ))}
       {!disableAlphaChooser ? (
-        <div className={cn(withBaseName("rgbaInputDiv"))}>
-          <span className={cn(withBaseName("rgbaText"))}>A</span>
+        <div className={clsx(withBaseName("rgbaInputDiv"))}>
+          <span className={clsx(withBaseName("rgbaText"))}>A</span>
           <AlphaInput
             alphaValue={parseFloat(rgbaValue.a.toFixed(2))}
             onSubmit={onSubmitAlpha}
           />
         </div>
       ) : (
-        <div className={cn(withBaseName("alphaSpacerDiv"))}></div>
+        <div className={clsx(withBaseName("alphaSpacerDiv"))}></div>
       )}
     </>
   );

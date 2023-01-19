@@ -1,6 +1,6 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import {
   forwardRef,
   KeyboardEvent,
@@ -23,7 +23,7 @@ const getIcon = (sourceItem: MenuDescriptor, isDisabled = false) => {
   if (CustomIcon) {
     return (
       <CustomIcon
-        className={classnames(withBaseName("menuItemStartAdornment"), {
+        className={clsx(withBaseName("menuItemStartAdornment"), {
           [withBaseName("menuItemDisabled")]: isDisabled,
         })}
       />
@@ -122,7 +122,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       typeof ListItem
     >({
       "aria-expanded": isChildMenuOpen || undefined,
-      className: classnames(
+      className: clsx(
         withBaseName(),
         {
           [withBaseName("menuItemDivider")]: divider,
@@ -158,7 +158,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
             </div>
           )}
           <div
-            className={classnames(withBaseName("menuItemText"), {
+            className={clsx(withBaseName("menuItemText"), {
               [withBaseName("menuItemDisabled")]: isDisabled,
             })}
             ref={menuTextRef}
@@ -167,15 +167,12 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           </div>
           {hasEndAdornment && (
             <div
-              className={classnames(
-                withBaseName("menuItemEndAdornmentContainer"),
-                {
-                  [withBaseName("menuItemAdornmentHidden")]: !hasSubMenu,
-                }
-              )}
+              className={clsx(withBaseName("menuItemEndAdornmentContainer"), {
+                [withBaseName("menuItemAdornmentHidden")]: !hasSubMenu,
+              })}
             >
               <ChevronRightIcon
-                className={classnames(withBaseName("menuItemEndAdornment"), {
+                className={clsx(withBaseName("menuItemEndAdornment"), {
                   [withBaseName("menuItemDisabled")]: isDisabled,
                 })}
               />

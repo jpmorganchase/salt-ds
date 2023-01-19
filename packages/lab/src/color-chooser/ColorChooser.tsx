@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { Overlay, useOverlay } from "../overlay";
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
@@ -138,7 +138,7 @@ export const ColorChooser = ({
     <>
       <Button
         {...getTriggerProps<typeof Button>({
-          className: cn(withBaseName("overlayButton"), {
+          className: clsx(withBaseName("overlayButton"), {
             [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
           }),
           // @ts-ignore
@@ -149,7 +149,7 @@ export const ColorChooser = ({
       >
         {color && (
           <div
-            className={cn(withBaseName("overlayButtonSwatch"), {
+            className={clsx(withBaseName("overlayButtonSwatch"), {
               [withBaseName("overlayButtonSwatchWithBorder")]:
                 color?.hex.startsWith("#ffffff"),
               [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
@@ -174,20 +174,20 @@ export const ColorChooser = ({
           },
           // @ts-ignore
           "data-testid": "color-chooser-overlay",
-          className: cn(withBaseName("overlayButtonClose")),
+          className: clsx(withBaseName("overlayButtonClose")),
         })}
       >
         <div
-          className={cn(withBaseName("overlayContent"))}
+          className={clsx(withBaseName("overlayContent"))}
           data-testid="overlay-content"
         >
           <Button
             data-testid="default-button"
             variant="secondary"
-            className={cn(withBaseName("defaultButton"))}
+            className={clsx(withBaseName("defaultButton"))}
             onClick={onDefaultSelected}
           >
-            <RefreshIcon className={cn(withBaseName("refreshIcon"))} />
+            <RefreshIcon className={clsx(withBaseName("refreshIcon"))} />
             Default
           </Button>
           <DictTabs

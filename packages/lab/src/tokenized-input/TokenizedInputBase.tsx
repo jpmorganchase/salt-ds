@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import deepmerge from "deepmerge";
 import {
   ChangeEventHandler,
@@ -297,7 +297,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   return (
     <div
       {...restProps}
-      className={classnames(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("focused")]: focused,
@@ -341,7 +341,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
           aria-labelledby={[ariaLabelledBy, inputId, expandButtonId]
             .filter(Boolean)
             .join(" ")}
-          className={classnames(withBaseName("expandButton"), {
+          className={clsx(withBaseName("expandButton"), {
             [withBaseName("hidden")]: !showExpandButton,
           })}
           disabled={disabled}
@@ -364,13 +364,9 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
         </Button>
         <Input
           {...mergedInputProps}
-          className={classnames(
-            withBaseName("input"),
-            withBaseName("inputField"),
-            {
-              [withBaseName("hidden")]: showExpandButton,
-            }
-          )}
+          className={clsx(withBaseName("input"), withBaseName("inputField"), {
+            [withBaseName("hidden")]: showExpandButton,
+          })}
           disabled={disabled}
           id={inputId}
           // TODO: Use multi line input when available
@@ -387,7 +383,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
         />
       </div>
       <Button
-        className={classnames(withBaseName("clearButton"), {
+        className={clsx(withBaseName("clearButton"), {
           [withBaseName("hidden")]: !expanded || selectedItems.length === 0,
         })}
         disabled={disabled}

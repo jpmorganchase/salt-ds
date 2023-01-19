@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import "./BorderBlock.css";
 
 export const BorderBlock = ({
@@ -10,7 +10,7 @@ export const BorderBlock = ({
 }) => {
   return (
     <div
-      className={cx("BorderBlock-cell", className)}
+      className={clsx("BorderBlock-cell", className)}
       style={{
         borderBottom: `var(${borderBottom})`,
       }}

@@ -1,5 +1,5 @@
 import { useForkRef } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, MutableRefObject, useCallback } from "react";
 import { Rect } from "./dragDropTypes";
 import { Portal } from "../../portal";
@@ -34,7 +34,7 @@ export const Draggable = forwardRef<
   return (
     <Portal>
       <div
-        className={cx("saltDraggable", ...makeClassNames(wrapperClassName))}
+        className={clsx("saltDraggable", ...makeClassNames(wrapperClassName))}
         ref={forkedRef}
         style={{ left, top, width, height }}
       />

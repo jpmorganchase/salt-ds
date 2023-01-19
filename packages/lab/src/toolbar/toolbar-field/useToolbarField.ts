@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   isValidElement,
   MouseEvent,
@@ -58,7 +58,7 @@ export const getToolbarFormFieldProps = (
   }
   return {
     ActivationIndicatorComponent: activationIndicator,
-    className: cx({
+    className: clsx({
       "saltFormField-toolbarButton":
         isOverflowPanel && isToolbarButton(element),
       [`saltFormField-${variant}`]: variant,
@@ -102,7 +102,7 @@ export const useToolbarField = (
   return {
     ActivationIndicatorComponent:
       ActivationIndicatorComponentProp ?? ActivationIndicatorComponent,
-    className: cx("saltToolbarField", classNameProp, className),
+    className: clsx("saltToolbarField", classNameProp, className),
     labelPlacement,
     onClick: handleClick,
     ...rest,

@@ -1,7 +1,7 @@
 import "./HeaderCell.css";
 import { useLayoutEffect, useRef } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { ColumnSeparatorType } from "./Grid";
 import { useSizingContext } from "./SizingContext";
 import { useColumnDragContext } from "./ColumnDragContext";
@@ -35,14 +35,14 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       ref={ref}
       aria-colindex={column.index + 1}
       data-column-index={column.index}
-      className={cn(withBaseName(), column.info.props.headerClassName)}
+      className={clsx(withBaseName(), column.info.props.headerClassName)}
       role="columnheader"
       data-testid="column-header"
       tabIndex={isFocused && !isFocusableContent ? 0 : -1}
       onFocus={onFocus}
     >
       <div
-        className={cn(withBaseName("valueContainer"), {
+        className={clsx(withBaseName("valueContainer"), {
           [withBaseName("alignRight")]: column.info.props.align === "right",
         })}
         onMouseDown={onMouseDown}

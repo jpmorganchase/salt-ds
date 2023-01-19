@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, useCallback, SyntheticEvent } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { pillBaseName } from "./constants";
@@ -58,7 +58,7 @@ export const SelectablePill = forwardRef(function SelectablePill(
       aria-roledescription="Selectable Pill"
       clickable
       disabled={disabled}
-      className={classnames(withBaseName(`selectable`), className, {
+      className={clsx(withBaseName(`selectable`), className, {
         [withBaseName(`checked`)]: checked,
       })}
       icon={<PillCheckbox checked={checked} />}

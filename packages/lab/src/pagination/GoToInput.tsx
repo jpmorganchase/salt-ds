@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   ChangeEventHandler,
   forwardRef,
@@ -95,7 +95,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
 
     return (
       <span
-        className={cx(
+        className={clsx(
           withBaseName("goToInputWrapper"),
           { [withBaseName(`${position!}GoToInput`)]: position },
           className
@@ -110,7 +110,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
           {...restFormFieldProps}
         >
           <Input
-            className={cx(withBaseName("goToInput"), {
+            className={clsx(withBaseName("goToInput"), {
               [withBaseName("goToInputFixed")]: count < 100,
             })}
             id={id}

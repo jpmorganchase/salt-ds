@@ -4,7 +4,7 @@ import "./TopRightPart.css";
 import { makePrefixer } from "@salt-ds/core";
 import { GridColumnGroupModel, GridColumnModel } from "../Grid";
 import { GroupHeaderRow } from "./GroupHeaderRow";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { useActiveOnWheel } from "./gridHooks";
 
 const withBaseName = makePrefixer("saltGridTopRightPart");
@@ -28,7 +28,7 @@ export function TopRightPart<T>(props: TopRightPartProps<T>) {
 
   return (
     <div
-      className={cx(withBaseName(), {
+      className={clsx(withBaseName(), {
         [withBaseName("leftShadow")]: leftShadow,
         [withBaseName("bottomShadow")]: bottomShadow,
       })}
