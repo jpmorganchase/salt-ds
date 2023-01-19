@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import React, { forwardRef, ReactNode, useRef } from "react";
 import { makePrefixer, Button, ButtonProps } from "@salt-ds/core";
 import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
@@ -65,7 +65,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       <div className={withBaseName("adornmentContainer")} ref={adornmentRef}>
         <Button
           aria-label="Refresh default value"
-          className={classnames(withBaseName("secondaryButton"), {
+          className={clsx(withBaseName("secondaryButton"), {
             // Refresh button is always rendered and has its visibility toggled to
             // avoid component width changing.
             [withBaseName("hideSecondaryButton")]: !(
@@ -79,7 +79,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
         </Button>
         <div className={withBaseName("buttonContainer")}>
           <Button
-            className={classnames(
+            className={clsx(
               withBaseName("stepperButton"),
               withBaseName("increment"),
               {
@@ -95,7 +95,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
             />
           </Button>
           <Button
-            className={classnames(
+            className={clsx(
               withBaseName("stepperButton"),
               withBaseName("decrement"),
               {
@@ -116,7 +116,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
 
     return (
       <div
-        className={classnames(withBaseName(), className)}
+        className={clsx(withBaseName(), className)}
         onBlur={props.onBlur}
         onFocus={props.onFocus}
         ref={ref}

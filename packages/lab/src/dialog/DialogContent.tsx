@@ -1,5 +1,5 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useContext } from "react";
 import { DialogContext } from "./internal/DialogContext";
 
@@ -19,7 +19,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     return (
       <div
         {...rest}
-        className={classnames(
+        className={clsx(
           withBaseName(),
           className,
           {

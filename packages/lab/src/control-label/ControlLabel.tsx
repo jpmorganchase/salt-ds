@@ -1,6 +1,6 @@
 // TODO Label positioning
 import React, { forwardRef, LabelHTMLAttributes, ReactNode } from "react";
-import classnames from "classnames";
+import { clsx } from "clsx";
 
 import "./ControlLabel.css";
 
@@ -20,7 +20,7 @@ export const ControlLabel = forwardRef<HTMLLabelElement, ControlLabelProps>(
   ) => {
     return (
       <label
-        className={classnames(
+        className={clsx(
           baseName,
           {
             [`${baseName}-disabled`]: disabled,

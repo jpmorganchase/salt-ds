@@ -1,5 +1,5 @@
 import React, { forwardRef, HTMLAttributes } from "react";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { StarIcon } from "./StarIcon";
 
@@ -29,7 +29,7 @@ export const StarIconContainer = forwardRef<
 
   return (
     <span
-      className={classnames(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("focusVisible")]: isFocusVisible,
@@ -40,7 +40,7 @@ export const StarIconContainer = forwardRef<
       ref={ref}
     >
       <StarIcon
-        className={classnames(withBaseName("svg"), {
+        className={clsx(withBaseName("svg"), {
           [withBaseName("focused")]: isFocusVisible && isFocused,
           [withBaseName("selected")]: isSelected && !isHighlighted,
           [withBaseName("selecting")]: !isSelected && isHighlighted,

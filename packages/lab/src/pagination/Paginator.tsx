@@ -1,6 +1,6 @@
 import { useForkRef } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { ArrowButton } from "./ArrowButton";
 import { CompactControls } from "./CompactControls";
@@ -47,7 +47,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
     const isOnLastPage = page === count;
 
     return (
-      <div className={cn(withBaseName(), className)} {...restProps} ref={ref}>
+      <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
         {showPreviousNext && (
           <ArrowButton
             arrowButtonType="previous"

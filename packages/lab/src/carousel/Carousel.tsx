@@ -10,7 +10,7 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { RadioButtonGroup } from "../radio-button";
 import { DeckLayout } from "../deck-layout";
-import cx from "classnames";
+import { clsx } from "clsx";
 import "./Carousel.css";
 import { useSlideSelection } from "../utils";
 import { CarouselSlideProps } from "./CarouselSlide";
@@ -106,7 +106,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         ref={ref}
         gap={0}
         columns={3}
-        className={cx(
+        className={clsx(
           withBaseName(),
           compact && withBaseName("compact"),
           className

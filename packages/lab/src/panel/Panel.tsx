@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
 
@@ -31,7 +31,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
 ) {
   return (
     <div
-      className={cx(withBaseName(), className, {
+      className={clsx(withBaseName(), className, {
         [withBaseName(variant)]: variant === "secondary",
       })}
       ref={ref}

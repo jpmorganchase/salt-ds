@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./ColorBlock.css";
 
@@ -11,9 +11,9 @@ export const ColorBlock = ({
 }) => {
   return (
     <>
-      <div className={cx("ColorBlock-cell")}>
+      <div className={clsx("ColorBlock-cell")}>
         <div
-          className={cx("ColorBlock-cellInner", className)}
+          className={clsx("ColorBlock-cellInner", className)}
           style={{ background: `var(${colorVar})` }}
         />
       </div>

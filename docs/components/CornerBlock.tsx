@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./CornerBlock.css";
 
 export const CornerBlockCell = ({ cornerRadius }: { cornerRadius: string }) => {
   return (
-    <div className={cx("CornerBlock-cell")}>
+    <div className={clsx("CornerBlock-cell")}>
       <div
         className="CornerBlock-inner"
         style={{ borderTopRightRadius: `var(${cornerRadius})` }}

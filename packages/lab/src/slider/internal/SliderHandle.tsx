@@ -1,5 +1,5 @@
 import { makePrefixer } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { CSSProperties } from "react";
 import { getSliderAriaLabel } from "./utils";
 import { Tooltip, useTooltip } from "../../tooltip";
@@ -27,7 +27,7 @@ export function SliderHandle(props: SliderHandleProps): JSX.Element {
     <>
       <div
         {...getTriggerProps<"div">({
-          className: cn(withBaseName(), {
+          className: clsx(withBaseName(), {
             [withBaseName("min")]: value === min,
             [withBaseName("max")]: value === max,
           }),

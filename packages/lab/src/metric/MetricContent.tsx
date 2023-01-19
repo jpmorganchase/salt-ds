@@ -6,7 +6,7 @@ import {
   Display3,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon, IconProps } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import { useMetricContext } from "./internal";
 
@@ -91,7 +91,7 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     return (
       <div
         {...restProps}
-        className={cx(withBaseName(), className)}
+        className={clsx(withBaseName(), className)}
         aria-labelledby={`${titleId || ""} ${subtitleId || ""}`}
         ref={ref}
       >

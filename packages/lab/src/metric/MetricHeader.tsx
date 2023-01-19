@@ -1,5 +1,5 @@
 import { LinkProps, Link, makePrefixer, Text } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { useMetricContext } from "./internal";
 import "./MetricHeader.css";
@@ -57,7 +57,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
     }, [subtitle, subtitleId, SubtitleLinkProps]);
 
     return (
-      <div {...restProps} className={cx(withBaseName(), className)} ref={ref}>
+      <div {...restProps} className={clsx(withBaseName(), className)} ref={ref}>
         <Text
           styleAs="h4"
           className={withBaseName("title")}

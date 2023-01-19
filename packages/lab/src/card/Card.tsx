@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import "./Card.css";
 
@@ -29,7 +29,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
 
   return (
     <div
-      className={cx(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("disabled")]: disabled,

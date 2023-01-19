@@ -9,7 +9,7 @@ import {
 import { makePrefixer } from "@salt-ds/core";
 import { useLayoutEffectSkipFirst } from "../utils";
 import { AccordionSectionContext } from "./AccordionSectionContext";
-import cn from "classnames";
+import { clsx } from "clsx";
 import "./Accordion.css";
 import { useAccordionContext } from "./AccordionContext";
 import { isNotProduction } from "./utils";
@@ -111,7 +111,7 @@ export const AccordionSection = forwardRef<
   return (
     <div
       {...restProps}
-      className={cn(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("expanded")]: expanded,

@@ -1,5 +1,5 @@
 import { useId } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, InputHTMLAttributes } from "react";
 import { FormattedInputProps } from "../FormattedInput";
 
@@ -67,7 +67,7 @@ export const InputWithMask = forwardRef<HTMLInputElement, InputWithMaskProps>(
         />
         <span
           aria-hidden="true"
-          className={cx(`${baseName}-mask`, className)}
+          className={clsx(`${baseName}-mask`, className)}
           style={style}
         >
           {textAlign !== "right" ? spacerAndMask : spacerAndMask.reverse()}

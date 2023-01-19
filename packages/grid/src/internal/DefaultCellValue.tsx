@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { GridCellValueProps } from "../GridColumn";
 import { makePrefixer } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import "./DefaultCellValue.css";
 
 const withBaseName = makePrefixer("saltGridDefaultCellValue");
@@ -12,7 +12,7 @@ export function DefaultCellValue<T>(props: GridCellValueProps<T>) {
   const { value } = props;
   return (
     <div
-      className={cn(withBaseName(), {
+      className={clsx(withBaseName(), {
         [withBaseName("alignRight")]: props.column.info.props.align === "right",
       })}
     >

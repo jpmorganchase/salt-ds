@@ -1,5 +1,5 @@
 import { ReactElement, useMemo, useCallback } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { LightDarkToggle } from "../toggles/LightDarkToggle";
@@ -32,7 +32,7 @@ export const CharacteristicsView = (
   );
 
   return (
-    <div className={cn(withBaseName())}>
+    <div className={clsx(withBaseName())}>
       <LightDarkToggle mode={props.mode} onModeChanged={onModeChanged} />
       <CharacteristicPatternsList
         extractValue={props.extractValue}
