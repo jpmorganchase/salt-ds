@@ -1,6 +1,6 @@
 import { Button, ButtonProps, makePrefixer, useId } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   ComponentPropsWithRef,
   forwardRef,
@@ -187,14 +187,14 @@ export const CalendarNavigation = forwardRef<
   };
 
   const monthDropdownId = useId(MonthDropdownProps?.id);
-  const monthDropdownLabelledBy = cx(
+  const monthDropdownLabelledBy = clsx(
     MonthDropdownProps?.["aria-labelledby"],
     // TODO need a prop on Dropdown to allow buttonId to be passed, should not make assumptions about internal
     // id assignment like this
     `${monthDropdownId}-control`
   );
   const yearDropdownId = useId(YearDropdownProps?.id);
-  const yearDropdownLabelledBy = cx(
+  const yearDropdownLabelledBy = clsx(
     YearDropdownProps?.["aria-labelledby"],
     `${yearDropdownId}-control`
   );
@@ -228,7 +228,7 @@ export const CalendarNavigation = forwardRef<
 
   return (
     <div
-      className={cx(
+      className={clsx(
         withBaseName(),
         { [withBaseName("hideYearDropdown")]: hideYearDropdown },
         className

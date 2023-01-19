@@ -6,7 +6,7 @@ import {
   ToggleButtonGroupChangeEventHandler,
 } from "@salt-ds/lab";
 import { FlexItem, FlexLayout } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -71,7 +71,7 @@ const Variants = (props: AgGridReactProps) => {
       <div
         style={{ height: 500, width: 800, marginTop: 25 }}
         {...containerProps}
-        className={cn(className, {
+        className={clsx(className, {
           "ag-theme-salt-variant-secondary": index === 1,
           "ag-theme-salt-variant-zebra": index === 2,
         })}

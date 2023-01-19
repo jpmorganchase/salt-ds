@@ -5,7 +5,7 @@ import {
   HTMLAttributes,
   ReactNode,
 } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 
 import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { DescendantProvider } from "./internal/DescendantContext";
@@ -256,7 +256,7 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
         <DescendantProvider items={childrenData} setItems={setChildrenData}>
           <div
             aria-label="button bar"
-            className={cn(
+            className={clsx(
               withBaseName(),
               {
                 [withBaseName("stacked")]: matches,

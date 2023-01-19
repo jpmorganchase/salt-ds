@@ -6,7 +6,7 @@ import {
   SuccessTickIcon,
   WarningSolidIcon,
 } from "@salt-ds/icons";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { makePrefixer } from "../utils";
 import { ValidationStatus } from "./ValidationStatus";
@@ -46,7 +46,7 @@ export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
 
     return (
       <IconComponent
-        className={classnames(withBaseName(), withBaseName(status), className)}
+        className={clsx(withBaseName(), withBaseName(status), className)}
         size={size}
         aria-label={ariaLabel}
         {...restProps}

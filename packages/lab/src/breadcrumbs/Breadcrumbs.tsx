@@ -1,6 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import { IconProps } from "@salt-ds/icons";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import React, {
   HTMLAttributes,
   isValidElement,
@@ -150,13 +150,13 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
       <BreadcrumbsContext.Provider value={breadcrumbsContext}>
         <nav
           aria-label="Breadcrumb"
-          className={classnames(withBaseName(), className)}
+          className={clsx(withBaseName(), className)}
           data-testid="breadcrumbs"
           ref={ref}
           {...other}
         >
           <ol
-            className={classnames(withBaseName("ol"), {
+            className={clsx(withBaseName("ol"), {
               [withBaseName("ol-wrap")]: wrap,
             })}
           >

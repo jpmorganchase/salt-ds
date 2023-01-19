@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import {
   AccordionSection,
   AccordionSummary,
@@ -50,7 +50,7 @@ export const FoundationPatternByDensity = (
     <AccordionSection key={`${props.themeName}-${props.patternName}-accordion`}>
       <AccordionSummary>{getScopeName(props.scope)}</AccordionSummary>
       <AccordionDetails>
-        <div className={cn(withBaseName())}>
+        <div className={clsx(withBaseName())}>
           {props.values &&
             Object.keys(props.values).map(function (node) {
               const [values, fieldName] =

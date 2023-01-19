@@ -1,6 +1,6 @@
 import { Button, makePrefixer, useId } from "@salt-ds/core";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useState } from "react";
 import { useContactDetailsContext } from "./internal";
 
@@ -50,7 +50,7 @@ export const ContactMetadata = forwardRef<HTMLDivElement, ContactMetadataProps>(
           <div
             {...restProps}
             ref={ref}
-            className={cn(withBaseName(), variantClassName, className)}
+            className={clsx(withBaseName(), variantClassName, className)}
           >
             {collapsible ? <div className={withBaseName("separator")} /> : null}
             {children}

@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import { ElementType, HTMLAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { FormFieldValidationStatus } from "./FormField";
@@ -64,7 +64,7 @@ export const FormLabel = ({
   ...restProps
 }: FormLabelProps) => (
   <label
-    className={cx(withBaseName(), className, {
+    className={clsx(withBaseName(), className, {
       [withBaseName("disabled")]: disabled,
     })}
     {...restProps}

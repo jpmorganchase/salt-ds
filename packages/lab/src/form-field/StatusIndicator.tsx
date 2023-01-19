@@ -1,5 +1,5 @@
 import { IconProps } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { ElementType } from "react";
 import {
   StatusIndicator as BaseStatusIndicator,
@@ -52,7 +52,7 @@ export const StatusIndicator = (props: StatusIndicatorProps) => {
           status,
           ...restProps,
           ...IconProps,
-          className: cx(
+          className: clsx(
             withBaseName("statusIndicator"),
             className,
             IconProps?.className

@@ -1,6 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import { forwardRef, HTMLAttributes } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import "./Cell.css";
 import { ColumnSeparatorType } from "../Grid";
 
@@ -25,7 +25,7 @@ export const Cell = forwardRef<HTMLTableCellElement, CellProps>(
     return (
       <td
         ref={ref}
-        className={cn(
+        className={clsx(
           withBaseName(),
           {
             [withBaseName("selected")]: isSelected,

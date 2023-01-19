@@ -1,5 +1,5 @@
 import { useForkRef, useIsomorphicLayoutEffect } from "@salt-ds/core";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { List, ListProps } from "../list-deprecated";
 
@@ -196,7 +196,7 @@ export const CascadingMenuList = forwardRef<
         ref={floating}
       >
         <List
-          className={classnames(baseClass, className)}
+          className={clsx(baseClass, className)}
           height={menuContainerHeight}
           highlightedIndex={
             highlightedItemIndex === null ? -1 : highlightedItemIndex

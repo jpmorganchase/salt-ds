@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, forwardRef, ReactElement } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "../utils";
 
 import "./Button.css";
@@ -57,7 +57,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         {...restButtonProps}
-        className={cx(withBaseName(), className, withBaseName(variant), {
+        className={clsx(withBaseName(), className, withBaseName(variant), {
           [withBaseName("disabled")]: disabled,
           [withBaseName("active")]: active,
         })}

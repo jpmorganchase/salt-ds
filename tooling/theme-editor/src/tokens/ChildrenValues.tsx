@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { JSONObj } from "../helpers/parseToJson";
 import { InnerFieldLabel } from "./labels/InnerFieldLabel";
@@ -32,7 +32,7 @@ export const ChildrenValuesWithinSection = ({
   scope,
 }: ChildrenValuesProps) => {
   return (
-    <div className={cn(withBaseName())}>
+    <div className={clsx(withBaseName())}>
       <InnerFieldLabel
         isEmphasis={Object.keys(children).includes("emphasis")}
         fieldName={fieldName}

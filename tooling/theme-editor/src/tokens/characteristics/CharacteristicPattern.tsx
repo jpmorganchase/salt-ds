@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { useSearchParams } from "react-router-dom";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import {
   AccordionDetails,
@@ -63,7 +63,7 @@ export const CharacteristicPattern = (
             return (
               <div
                 key={`${props.patternName}-${scope}`}
-                className={cn("saltEmphasisHigh", withBaseName())}
+                className={clsx("saltEmphasisHigh", withBaseName())}
               >
                 <ScopeLabel scope={scope} />
                 {Object.keys(props.values[scope])

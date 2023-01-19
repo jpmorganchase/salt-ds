@@ -17,7 +17,7 @@ import { FlexItem, FlexLayout, useDensity } from "@salt-ds/core";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
-import cn from "classnames";
+import { clsx } from "clsx";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -85,7 +85,7 @@ const GridVariantsTemplate: Story<{}> = () => {
       <Grid
         rowData={rowData}
         rowKeyGetter={dummyRowKeyGetter}
-        className={cn("grid", { ["grid-uhd"]: uhd })}
+        className={clsx("grid", { ["grid-uhd"]: uhd })}
         variant={index === 1 ? "secondary" : "primary"}
         zebra={index === 2 ? true : false}
         columnSeparators={separators}

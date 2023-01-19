@@ -1,5 +1,5 @@
 import { makePrefixer } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes } from "react";
 import { QueryInputBody, ValueSelector } from "./internal";
 import { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
@@ -51,7 +51,7 @@ export const QueryInput = forwardRef<HTMLDivElement, QueryInputProps>(
 
     return (
       <div
-        className={cn(withBaseName(), className)}
+        className={clsx(withBaseName(), className)}
         onBlur={queryInputProps.onBlur}
         onFocus={queryInputProps.onFocus}
         data-testid="query-input"

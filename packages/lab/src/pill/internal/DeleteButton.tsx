@@ -1,6 +1,6 @@
 import { CloseSmallIcon } from "@salt-ds/icons";
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { MouseEvent } from "react";
 import { pillBaseName } from "../constants";
 
@@ -18,7 +18,7 @@ export const DeleteButton = (props: DeleteButtonProps) => {
   return (
     <Button
       aria-hidden="true"
-      className={cn(
+      className={clsx(
         withBaseName("deleteButton"),
         {
           [withBaseName("deleteButton-disabled")]: disabled,

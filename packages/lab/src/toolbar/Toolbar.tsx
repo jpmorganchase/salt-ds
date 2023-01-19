@@ -1,5 +1,5 @@
 import { useForkRef, useIdMemo } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   Children,
   cloneElement,
@@ -103,7 +103,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
 
     const overflowPanel = overflowIndicator ? (
       <OverflowPanel
-        className={cx("saltToolbarField")}
+        className={clsx("saltToolbarField")}
         data-index={collectionHook.data.length}
         data-overflow-indicator
         data-priority={1}
@@ -123,9 +123,9 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         // Using `classnames` to join string together. User may want to provide
         // custom ids (e.g. id from counter label), so the element is labelled by
         // multiple items
-        aria-labelledby={cx(toolbarId, ariaLabelledBy)}
+        aria-labelledby={clsx(toolbarId, ariaLabelledBy)}
         aria-orientation={orientation}
-        className={cx(classBase, className, {
+        className={clsx(classBase, className, {
           [`${classBase}-disabled`]: disabled,
           // TODO whats this for ?
           [`${classBase}-nonResponsive`]: !responsive,

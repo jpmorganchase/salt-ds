@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
 import "./SkipLinks.css";
@@ -13,7 +13,7 @@ export const SkipLinks = forwardRef<
   const { className, children, ...restProps } = props;
 
   return (
-    <ul {...restProps} className={cx(withBaseName(), className)} ref={ref}>
+    <ul {...restProps} className={clsx(withBaseName(), className)} ref={ref}>
       {children}
     </ul>
   );

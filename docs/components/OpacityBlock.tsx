@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./OpacityBlock.css";
 
@@ -13,9 +13,9 @@ export const OpacityBlock = ({
 }) => {
   return (
     <>
-      <div className={cx("OpacityBlock-cell")}>
+      <div className={clsx("OpacityBlock-cell")}>
         <div
-          className={cx("OpacityBlock-cellInner", className)}
+          className={clsx("OpacityBlock-cellInner", className)}
           style={{ background: `rgba(36, 37, 38, var(${opacity}))` }}
         />
       </div>

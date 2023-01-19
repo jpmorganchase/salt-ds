@@ -1,6 +1,6 @@
 import { Button, makePrefixer, StatusIndicator } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, SyntheticEvent, useContext } from "react";
 import { DialogContext } from "./internal/DialogContext";
 
@@ -21,11 +21,7 @@ export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(
     const { status, dialogId } = useContext(DialogContext);
 
     return (
-      <div
-        className={classnames(withBaseName(), className)}
-        ref={ref}
-        {...rest}
-      >
+      <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
         {onClose && (
           <Button
             className={withBaseName("close")}

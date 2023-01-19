@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import {
   AccordionSection,
@@ -58,7 +58,7 @@ export const FlatShadow = (props: FlatShadowProps): ReactElement => {
         {capitalize(props.innerPattern) as string}
       </AccordionSummary>
       <AccordionDetails>
-        <div className={cn(withBaseName("ValueSection"))}>
+        <div className={clsx(withBaseName("ValueSection"))}>
           {patternParts.map((shadowPart: string, index) => {
             const jsonObj: JSONObj = {};
             jsonObj["value"] = shadowPart;

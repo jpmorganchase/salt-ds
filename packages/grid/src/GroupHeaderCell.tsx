@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import "./GroupHeaderCell.css";
 import { makePrefixer } from "@salt-ds/core";
 import { GridColumnGroupModel } from "./Grid";
@@ -30,7 +30,7 @@ export function GroupHeaderCell(props: GroupHeaderCellProps) {
     >
       {props.children}
       <div
-        className={cn({
+        className={clsx({
           [withBaseName("rowSeparator")]: rowSeparator === "regular",
           [withBaseName("firstGroupRowSeparator")]: rowSeparator === "first",
           [withBaseName("lastGroupRowSeparator")]: rowSeparator === "last",

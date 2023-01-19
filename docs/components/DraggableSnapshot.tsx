@@ -6,7 +6,7 @@ import {
   MouseEvent as ReactMouseEvent,
   KeyboardEvent,
 } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { Button } from "@salt-ds/core";
 
 import "./DraggableSnapshot.css";
@@ -120,7 +120,7 @@ export const DraggableImg = ({
 
   return (
     <div
-      className={cx(classBase, {
+      className={clsx(classBase, {
         [`${classBase}-sliding`]: isAnimating,
       })}
       onKeyDown={handleKeyDown}

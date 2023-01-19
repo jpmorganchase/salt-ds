@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import React, {
   createContext,
   HTMLAttributes,
@@ -52,7 +52,7 @@ const createThemedChildren = (
   } else if (applyClassesTo === "child") {
     if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
       return React.cloneElement(children, {
-        className: cx(
+        className: clsx(
           children.props?.className,
           ...themeNames,
           `salt-density-${density}`
@@ -71,7 +71,7 @@ const createThemedChildren = (
   } else {
     return (
       <div
-        className={cx(
+        className={clsx(
           `salt-provider`,
           ...themeNames,
           `salt-density-${density}`

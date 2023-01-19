@@ -1,5 +1,5 @@
 import { hideOthers } from "aria-hidden";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import noScroll from "no-scroll";
 import {
   forwardRef,
@@ -219,7 +219,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   return (
     <div
       aria-modal={!enableContainerMode}
-      className={classnames(className, withBaseName(), {
+      className={clsx(className, withBaseName(), {
         [withBaseName("containerFix")]: enableContainerMode,
       })}
       data-testid="scrim"
