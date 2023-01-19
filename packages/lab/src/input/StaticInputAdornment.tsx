@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
 
@@ -15,7 +15,7 @@ export const StaticInputAdornment = forwardRef<
   const { children, className, ...other } = props;
 
   return (
-    <div className={cx(withBaseName(), className)} ref={ref} {...other}>
+    <div className={clsx(withBaseName(), className)} ref={ref} {...other}>
       {children}
     </div>
   );

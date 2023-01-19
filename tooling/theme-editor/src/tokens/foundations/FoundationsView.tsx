@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { Route, Routes } from "react-router-dom";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Tab, Tabstrip, capitalize } from "@salt-ds/lab";
 import { JSONByScope } from "../../helpers/parseToJson";
@@ -36,8 +36,8 @@ export const FoundationsView = (props: FoundationsViewProps): ReactElement => {
   ];
 
   return (
-    <div className={cx(withBaseName())}>
-      <div className={cx(withBaseName("tabs"))}>
+    <div className={clsx(withBaseName())}>
+      <div className={clsx(withBaseName("tabs"))}>
         <Tabstrip
           centered
           onActiveChange={props.handleTabSelection}

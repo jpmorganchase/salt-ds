@@ -7,7 +7,7 @@ import {
   Tooltip,
   useTooltip,
 } from "@salt-ds/lab";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { useEffect, useMemo, useState } from "react";
 
 import { ActiveIcon } from "../../../icons/components/ActiveIcon";
@@ -165,14 +165,14 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
 
   return (
     <div
-      className={cn(withBaseName("input"), {
+      className={clsx(withBaseName("input"), {
         [withBaseName("foundationColor")]: !props.characteristicsView,
         [withBaseName("colorByState")]: props.isStateValue,
       })}
     >
       {!props.pathToUpdate.includes("fade") && (
         <div
-          className={cn({
+          className={clsx({
             [withBaseName("jumpToFoundation")]:
               props.characteristicsView &&
               !props.pathToUpdate.includes("fade") &&
@@ -182,12 +182,12 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
           })}
         >
           <div
-            className={cn(withBaseName("colorInput"), {
+            className={clsx(withBaseName("colorInput"), {
               [withBaseName("colorStates")]: props.isStateValue,
             })}
           >
             {!props.isStateValue && (
-              <div className={cn(withBaseName("field"), "saltFormLabel")}>
+              <div className={clsx(withBaseName("field"), "saltFormLabel")}>
                 {formFieldLabel}
               </div>
             )}
@@ -203,7 +203,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
               >
                 <div
                   {...getTriggerProps({
-                    className: cn(
+                    className: clsx(
                       "saltFormLabel",
                       withBaseName("colorStatesField")
                     ),
@@ -223,7 +223,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
               </Tooltip>
             )}
             <div
-              className={cn({
+              className={clsx({
                 [withBaseName("backgroundColorInput")]:
                   formFieldLabel.includes("Background"),
               })}

@@ -1,5 +1,5 @@
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { ComponentType, forwardRef, Ref, useRef } from "react";
 
 import {
@@ -97,7 +97,7 @@ export const ComboBoxDeprecated = forwardRef<
 
   return (
     <div
-      className={classnames(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("disabled")]: disabled,
@@ -122,7 +122,7 @@ export const ComboBoxDeprecated = forwardRef<
           listWidth,
           initialSelectedItem,
           selectedItem,
-          "aria-label": classnames(ariaLabel),
+          "aria-label": clsx(ariaLabel),
           "aria-labelledby": ariaLabelledBy,
           "aria-required": ariaRequired,
         }}

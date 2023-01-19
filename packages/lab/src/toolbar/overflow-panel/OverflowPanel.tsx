@@ -5,7 +5,7 @@ import {
   useIdMemo as useId,
 } from "@salt-ds/core";
 import { OverflowMenuIcon } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import React, {
   ForwardedRef,
   forwardRef,
@@ -100,7 +100,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
   return (
     <DropdownBase
       {...props}
-      className={cx(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       isOpen={isOpen}
       onOpenChange={handleOpenChange}
       placement="bottom-end"

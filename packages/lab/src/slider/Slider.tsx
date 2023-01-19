@@ -1,5 +1,5 @@
 import { makePrefixer, useControlled } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import {
   CSSProperties,
   forwardRef,
@@ -112,7 +112,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
 
   return (
     <div
-      className={cn(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("disabled")]: disabled,

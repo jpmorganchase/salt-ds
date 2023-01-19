@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon, IconProps } from "@salt-ds/icons";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { ComponentType, KeyboardEventHandler, MouseEventHandler } from "react";
 import { withBaseName } from "./utils";
 
@@ -62,7 +62,7 @@ export const ArrowButton = ({
     <Button
       {...restProps}
       variant="secondary"
-      className={cn(withBaseName("arrowButton"), className)}
+      className={clsx(withBaseName("arrowButton"), className)}
       role="link"
       name={name}
       aria-label={name}

@@ -1,10 +1,10 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./BlankBlock.css";
 
 export const BlankBlockCell = (props: ComponentPropsWithoutRef<"div">) => {
-  return <div className={cx("BlankBlock-cell")} {...props} />;
+  return <div className={clsx("BlankBlock-cell")} {...props} />;
 };
 
 export const BlankBlockCode = ({ children }: { children: ReactNode }) => {

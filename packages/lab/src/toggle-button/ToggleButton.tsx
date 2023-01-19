@@ -1,5 +1,5 @@
 import { Button, ButtonProps, makePrefixer, useForkRef } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   forwardRef,
   SyntheticEvent,
@@ -103,7 +103,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
         "aria-checked": toggled,
         "aria-label": ariaLabel,
         "aria-posinset": index !== undefined ? index + 1 : undefined,
-        className: cx(
+        className: clsx(
           withBaseName(),
           withBaseName(orientation),
           {

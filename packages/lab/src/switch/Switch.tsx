@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   ChangeEvent,
   FocusEvent,
@@ -90,7 +90,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   return (
     <ControlLabel
       {...LabelProps}
-      className={cx(
+      className={clsx(
         withBaseName("label"),
         { [withBaseName("disabled")]: disabled },
         className
@@ -99,9 +99,9 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
       label={label}
       ref={ref}
     >
-      <span className={cx(withBaseName(), className)}>
+      <span className={clsx(withBaseName(), className)}>
         <span
-          className={cx(withBaseName("base"), {
+          className={clsx(withBaseName("base"), {
             [withBaseName("checked")]: checked,
             [withBaseName("focusVisible")]: focusVisible,
           })}

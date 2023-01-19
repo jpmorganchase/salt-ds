@@ -1,7 +1,7 @@
 import { forwardRef, RefObject } from "react";
 import { LinkProps, Link, makePrefixer } from "@salt-ds/core";
 import "./SkipLink.css";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
 
 interface SkipLinkProps extends LinkProps {
@@ -20,7 +20,7 @@ const withBaseName = makePrefixer("saltSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
   function SkipLink({ className, targetRef, ...rest }, ref) {
-    const targetClass = cx(withBaseName("target"), className);
+    const targetClass = clsx(withBaseName("target"), className);
 
     const eventHandlers = useManageFocusOnTarget({ targetRef, targetClass });
 
@@ -29,7 +29,7 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
         <Link
           {...eventHandlers}
           {...rest}
-          className={cx(withBaseName(), className)}
+          className={clsx(withBaseName(), className)}
           ref={ref}
         />
       </li>

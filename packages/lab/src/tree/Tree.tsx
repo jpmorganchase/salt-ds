@@ -1,5 +1,5 @@
 import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   forwardRef,
   ForwardedRef,
@@ -237,7 +237,7 @@ export const Tree = forwardRef(function Tree<
       key: item.id,
       highlighted: idx.value === highlightedIdx || undefined,
       selected: isSelected<Item>(selected, item),
-      className: cx({
+      className: clsx({
         focusVisible: focusVisible === idx.value,
       }),
     };
@@ -271,7 +271,7 @@ export const Tree = forwardRef(function Tree<
         aria-disabled={disabled || item.disabled}
         aria-expanded={item.expanded}
         aria-level={item.level}
-        className={cx({
+        className={clsx({
           focusVisible: focusVisible === i,
           [withBaseName("toggle")]: !allowGroupSelect,
         })}
@@ -340,7 +340,7 @@ export const Tree = forwardRef(function Tree<
       {...htmlAttributes}
       {...listHandlers}
       {...listProps}
-      className={cx(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       id={`Tree-${id}`}
       ref={useForkRef(rootRef, forwardedRef)}
       style={{ ...styleProp, ...autoSize }}

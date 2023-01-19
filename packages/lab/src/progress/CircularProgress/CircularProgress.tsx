@@ -6,7 +6,7 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Info as DefaultInfo } from "../Info";
 import { Circle, LinearGradient, SIZE, ViewBox } from "./CircularProgressParts";
@@ -178,7 +178,7 @@ export const CircularProgress = forwardRef<
 
   return (
     <div
-      className={classnames(className, "saltCircularProgress", {
+      className={clsx(className, "saltCircularProgress", {
         [withBaseName("small")]: size === "small",
         [withBaseName("medium")]: size === "medium",
         [withBaseName("large")]: size === "large",
@@ -194,7 +194,7 @@ export const CircularProgress = forwardRef<
       {...rest}
     >
       <div
-        className={classnames(withBaseName("container"), {
+        className={clsx(withBaseName("container"), {
           [withBaseName("indeterminate")]: variant === "indeterminate",
           [withBaseName("static")]: variant === "static",
         })}
@@ -206,7 +206,7 @@ export const CircularProgress = forwardRef<
           <Circle
             strokeWidth={2}
             style={circleStyle}
-            className={classnames(withBaseName("circle"), {
+            className={clsx(withBaseName("circle"), {
               [withBaseName("circleIndeterminate")]:
                 variant === "indeterminate",
               [withBaseName("circleStatic")]: variant === "static",

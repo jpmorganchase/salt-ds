@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { createHandleStyles, createSliderRailMarksStyle } from "./styles";
 import { isMarkAtMax } from "./utils";
 import "../Slider.css";
@@ -38,7 +38,7 @@ export function SliderRailMarks(props: SliderRailMarksProps) {
         return (
           <div
             key={`Mark${i}`}
-            className={cn(withBaseName("mark"), {
+            className={clsx(withBaseName("mark"), {
               [withBaseName("max")]: isMarkAtMax(max, mark),
             })}
             style={markStyles[i]}

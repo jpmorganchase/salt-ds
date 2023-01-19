@@ -6,7 +6,7 @@ import { GridColumnGroupModel, GridColumnModel } from "../Grid";
 import { HeaderRow } from "./HeaderRow";
 import { GroupHeaderRow } from "./GroupHeaderRow";
 import { useActiveOnWheel } from "./gridHooks";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 const withBaseName = makePrefixer("saltGridTopPart");
 
@@ -27,7 +27,7 @@ export function TopPart<T>(props: TopPartProps<T>) {
 
   return (
     <div
-      className={cx(withBaseName(), {
+      className={clsx(withBaseName(), {
         [withBaseName("bottomShadow")]: bottomShadow,
       })}
       ref={topRef}

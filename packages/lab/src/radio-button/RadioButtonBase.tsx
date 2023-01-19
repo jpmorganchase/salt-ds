@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import {
   ChangeEventHandler,
   ComponentType,
@@ -150,7 +150,7 @@ export const RadioButtonBase = forwardRef<
 
   return (
     <span
-      className={classnames(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName("disabled")]: disabled,

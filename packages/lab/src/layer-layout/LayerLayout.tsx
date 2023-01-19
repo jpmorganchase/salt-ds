@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes, useState, useEffect } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { Breakpoints, makePrefixer, usePrevious } from "@salt-ds/core";
 
 import { useIsViewportLargerThanBreakpoint } from "../utils";
@@ -96,7 +96,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
     const layerLayout = showComponent ? (
       <div
         ref={ref}
-        className={cx(withBaseName(), className, {
+        className={clsx(withBaseName(), className, {
           [withBaseName("anchor")]: anchored,
           [withBaseName("fullScreen")]: fullScreen,
           [withBaseName(position)]: !fullScreen,
@@ -121,7 +121,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
     ) : (
       <Scrim
         open={showComponent}
-        className={cx({
+        className={clsx({
           [withBaseName("enter-animation")]: enterAnimation,
           [withBaseName("exit-animation")]: exitAnimation,
         })}

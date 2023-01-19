@@ -1,5 +1,5 @@
 import { forwardRef, useContext } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { ButtonBarContext } from "./internal/ButtonBarContext";
@@ -65,7 +65,7 @@ export const OrderedButton = forwardRef<HTMLButtonElement, OrderedButtonProps>(
 
     return (
       <Button
-        className={cn(
+        className={clsx(
           withBasename(),
           {
             [withBasename(`align${align ? capitalize(align) : ""}`)]:

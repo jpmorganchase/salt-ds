@@ -1,5 +1,5 @@
 import { forwardRef, ForwardedRef, HTMLAttributes, memo } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { CheckboxIcon } from "../checkbox";
 import { ListItemType, ListItemProps } from "./listTypes";
@@ -20,7 +20,7 @@ export const ListItemProxy = forwardRef(function ListItemNextProxy(
   return (
     <div
       aria-hidden
-      className={cx(withBaseName(), withBaseName("proxy"))}
+      className={clsx(withBaseName(), withBaseName("proxy"))}
       ref={forwardedRef}
     />
   );
@@ -48,7 +48,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     },
     forwardedRef
   ) {
-    const className = cx(withBaseName(), classNameProp, {
+    const className = clsx(withBaseName(), classNameProp, {
       saltDisabled: disabled,
       [withBaseName("checkbox")]: showCheckbox,
     });

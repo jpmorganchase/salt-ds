@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import { CSSProperties } from "react";
 
 import "./FontBlock.css";
@@ -13,7 +13,7 @@ export const FontSizeBlock = ({
   return (
     <>
       <div
-        className={cx("FontBlock-cell", className)}
+        className={clsx("FontBlock-cell", className)}
         style={{ fontSize: `var(${fontSize})` } as CSSProperties}
       >
         T
