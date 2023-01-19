@@ -1,6 +1,5 @@
 import { Icon, IconProps } from "@salt-ds/icons";
 import { StatusIndicator, ValidationStatus, makePrefixer } from "@salt-ds/core";
-import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   ComponentProps,
@@ -12,7 +11,7 @@ import {
   cloneElement,
 } from "react";
 import { Portal, PortalProps } from "../portal";
-import {} from "../utils";
+import { } from "../utils";
 import { useWindow } from "../window";
 import "./Tooltip.css";
 
@@ -31,7 +30,7 @@ interface TooltipRenderProp {
 
 export interface TooltipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
-    Pick<PortalProps, "disablePortal" | "container"> {
+  Pick<PortalProps, "disablePortal" | "container"> {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
   // placement?: Placement;
   arrowProps?: ComponentProps<"div">;
