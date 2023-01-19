@@ -32,6 +32,7 @@ jobs:
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
           projectToken: ${{ secrets.CHROMATIC_SITE_TOKEN }}
+          workingDir: ./site
           exitOnceUploaded: true
           # Turbosnap if this is not the main branch
           onlyChanged: true
