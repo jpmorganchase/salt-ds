@@ -1248,7 +1248,9 @@ export function useFocusableContent<T extends HTMLElement>() {
 
   const onFocus: FocusEventHandler<T> = (event) => {
     if (event.target === ref.current) {
-      const nestedInteractive = ref.current.querySelector(`[tabindex="0"]`);
+      const nestedInteractive = ref.current.querySelector(
+        `[tabindex="0"],button,input,select,textarea,a`
+      );
       if (nestedInteractive) {
         (nestedInteractive as HTMLElement).focus();
         setFocusableContent(true);

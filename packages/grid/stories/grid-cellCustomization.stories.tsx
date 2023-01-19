@@ -5,9 +5,11 @@ import {
   GridColumn,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { LinearProgress } from "@salt-ds/lab";
+import { LinearProgress, Tooltip, useTooltip } from "@salt-ds/lab";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
+import { FavoriteIcon } from "@salt-ds/icons";
+import { Button, FlexLayout } from "@salt-ds/core";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -52,6 +54,30 @@ const PercentageCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
     <div className="percentage">
       <LinearProgress value={percentage} />
     </div>
+  );
+};
+
+const ButtonsCellValue = () => {
+  const { getTriggerProps, getTooltipProps } = useTooltip();
+
+  const openProps = getTooltipProps({
+    title: "Favorite",
+    status: "info",
+  });
+
+  return (
+    <FlexLayout
+      className="buttons"
+      align="center"
+      justify="center"
+      direction="row"
+      gap={1}
+    >
+      <Tooltip {...openProps} />
+      <Button {...getTriggerProps<typeof Button>()}>
+        <FavoriteIcon />
+      </Button>
+    </FlexLayout>
   );
 };
 
@@ -109,6 +135,12 @@ const CellCustomizationTemplate: Story<{}> = () => {
         cellValueComponent={PercentageCellValue}
         defaultWidth={200}
         minWidth={120}
+      />
+      <GridColumn
+        defaultWidth={50}
+        name="Action"
+        id="button"
+        cellValueComponent={ButtonsCellValue}
       />
     </Grid>
   );
