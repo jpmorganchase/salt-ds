@@ -1,6 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import { capitalize, FormField, Input } from "@salt-ds/lab";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { validateTokenInput } from "../../helpers/validateTokenInput";
 import { SALT_FOUNDATIONS } from "../../utils/saltValues";
@@ -65,9 +65,9 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
     }
   };
   return (
-    <div className={cn(withBaseName())}>
+    <div className={clsx(withBaseName())}>
       {props.isStateValue || isColor(props.extractValue(value)).length ? (
-        <div className={cn(withBaseName("colorInput"))}>
+        <div className={clsx(withBaseName("colorInput"))}>
           <ColorValueEditor
             saltColorOverrides={props.saltColorOverrides}
             characteristicsView={props.characteristicsView}
@@ -85,7 +85,7 @@ export const ValueEditor = (props: ValueEditorProps): ReactElement => {
         </div>
       ) : (
         <div
-          className={cn(withBaseName("input"), {
+          className={clsx(withBaseName("input"), {
             [withBaseName("inputWithColumns")]: displayValue.length < 7,
             [withBaseName("jumpToFoundationNotColor")]:
               props.characteristicsView && props.value.startsWith("salt"),

@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Tabstrip, TabstripProps, Tab } from "../tabs";
 import { ColorPicker, ColorPickerProps } from "./ColorPicker";
@@ -37,12 +37,12 @@ export const DictTabs = ({
       <Tabstrip
         {...props}
         data-testid="color-chooser-tabstrip"
-        className={cn(withBaseName("wrapper"))}
+        className={clsx(withBaseName("wrapper"))}
         activeTabIndex={activeTab}
         onActiveChange={(tabIndex: number) => onTabClick(tabIndex)}
       >
         {[...Object.keys(tabs)].map((label, i) => (
-          <Tab className={cn(withBaseName("text"))} label={label} key={i} />
+          <Tab className={clsx(withBaseName("text"))} label={label} key={i} />
         ))}
       </Tabstrip>
       {[...Object.values(tabs)].map((tab, idx) => {

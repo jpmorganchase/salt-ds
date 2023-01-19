@@ -1,5 +1,5 @@
 import { makePrefixer, useId } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useMemo } from "react";
 import { MetricContextProvider, MetricContextValue } from "./internal";
 
@@ -76,7 +76,7 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
     <MetricContextProvider value={value}>
       <div
         {...restProps}
-        className={cx(
+        className={clsx(
           withBaseName(),
           withBaseName(`size-${size}`),
           {

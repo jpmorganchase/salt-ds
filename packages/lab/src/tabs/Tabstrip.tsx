@@ -5,7 +5,7 @@ import {
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { AddIcon, OverflowMenuIcon } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 import React, {
   ForwardedRef,
   forwardRef,
@@ -386,11 +386,11 @@ export const Tabstrip = forwardRef(function Tabstrip(
       const triggerProps = getTriggerProps<typeof Button>();
       content.push(
         <Dropdown<OverflowItem>
-          className={cx(withBaseName("overflowMenu"), {
+          className={clsx(withBaseName("overflowMenu"), {
             [withBaseName("overflowMenu-open")]: showOverflow,
           })}
           ListProps={{
-            className: cx({
+            className: clsx({
               [withBaseName("overflowMenu-dropTarget")]:
                 tabstripHook.revealOverflowedItems,
             }),
@@ -459,7 +459,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   const selectedTabOverflowed = overflowedItems.some(
     (item: OverflowItem) => item.index === activeTabIndex
   );
-  const className = cx(
+  const className = clsx(
     withBaseName(),
     withBaseName(orientation),
     classNameProp,

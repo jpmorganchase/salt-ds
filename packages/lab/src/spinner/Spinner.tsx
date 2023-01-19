@@ -1,5 +1,5 @@
 import { useAriaAnnouncer, useId } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { getSvgSpinner } from "./svgSpinners";
 
@@ -117,7 +117,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
     return (
       <div
         aria-label={ariaLabel}
-        className={cx(`${baseName}-${size}`, className, baseName)}
+        className={clsx(`${baseName}-${size}`, className, baseName)}
         ref={ref}
         role={role}
         {...rest}

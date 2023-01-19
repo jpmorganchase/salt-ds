@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
 import "./QueryResultTable.css";
 import { makePrefixer } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 
 const withBaseName = makePrefixer("saltQueryResultTable");
 
@@ -19,7 +19,7 @@ export interface QueryResultTableProps extends HTMLAttributes<HTMLDivElement> {
 export const QueryResultTable = (props: QueryResultTableProps) => {
   const { rows, className, ...restProps } = props;
   return (
-    <div className={cn(withBaseName(), className)} {...restProps}>
+    <div className={clsx(withBaseName(), className)} {...restProps}>
       <table>
         <colgroup>
           <col className={withBaseName("col")} />

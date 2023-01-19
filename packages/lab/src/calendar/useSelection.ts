@@ -1,5 +1,5 @@
 import { makePrefixer, useControlled } from "@salt-ds/core";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
 import { isPlainObject } from "../utils";
 import { useCalendarContext } from "./internal/CalendarContext";
@@ -355,7 +355,7 @@ export function useSelectionDay({ date }: { date: DateValue }) {
       hoveredOffset,
     },
     dayProps: {
-      className: classnames({
+      className: clsx({
         [withBaseName("selected")]: selected,
         [withBaseName("selectedSpan")]: selectedSpan,
         [withBaseName("hoveredSpan")]: hoveredSpan,

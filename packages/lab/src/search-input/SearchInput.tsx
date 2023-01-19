@@ -6,7 +6,7 @@ import {
   SyntheticEvent,
   useRef,
 } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { Button, useControlled, useForkRef } from "@salt-ds/core";
 import { Input, InputProps, StaticInputAdornment } from "../input";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
@@ -90,12 +90,12 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 
     return (
       <Input
-        className={cx(baseName, className)}
+        className={clsx(baseName, className)}
         ref={handleRef}
         endAdornment={
           !!value && (
             <Button
-              className={cx(`${baseName}-clearButton`)}
+              className={clsx(`${baseName}-clearButton`)}
               onClick={handleClear}
               variant="secondary"
             >

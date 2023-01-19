@@ -1,5 +1,5 @@
 import { makePrefixer } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { HTMLAttributes, ReactElement } from "react";
 import "./OverflowSeparator.css";
 
@@ -14,7 +14,7 @@ export const OverflowSeparator = (
   props: OverflowSeparatorProps
 ): ReactElement => {
   const { className, focusable, ...rest } = props;
-  return <div className={cx(withBaseName(), className)} {...rest} />;
+  return <div className={clsx(withBaseName(), className)} {...rest} />;
 };
 
 OverflowSeparator.defaultProps = {

@@ -5,7 +5,7 @@ import {
   FlexLayoutProps,
 } from "@salt-ds/core";
 
-import cx from "classnames";
+import { clsx } from "clsx";
 import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { ParentChildItem, SlideDirection } from "../parent-child-item";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
@@ -114,7 +114,7 @@ export const ParentChildLayout = forwardRef<
   };
 
   return (
-    <FlexLayout className={cx(className, withBaseName())} ref={ref} {...rest}>
+    <FlexLayout className={clsx(className, withBaseName())} ref={ref} {...rest}>
       {stackedView ? (
         stackedViewChildren[stackedViewElement]
       ) : (

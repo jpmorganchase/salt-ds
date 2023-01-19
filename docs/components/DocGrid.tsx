@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./DocGrid.css";
 
@@ -14,7 +14,7 @@ export const DocGrid = ({
 }) => {
   return (
     <div
-      className={cx("saltDocGrid", className, {
+      className={clsx("saltDocGrid", className, {
         ["saltDocGrid-textExample"]: textExample,
       })}
     >

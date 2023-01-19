@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   AriaAttributes,
   ChangeEvent,
@@ -106,7 +106,7 @@ function mergeA11yProps(
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {
-  const ariaLabelledBy = cx(
+  const ariaLabelledBy = clsx(
     a11yProps["aria-labelledby"],
     inputProps["aria-labelledby"]
   );
@@ -238,7 +238,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 
   return (
     <div
-      className={cx(
+      className={clsx(
         withBaseName(),
         {
           [withBaseName(`${textAlign}TextAlign`)]: textAlign,
@@ -260,7 +260,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         type={type}
         id={id}
         {...inputProps}
-        className={cx(withBaseName("input"), inputProps?.className)}
+        className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
         ref={handleRef}
         value={value}

@@ -1,5 +1,5 @@
 import { ComponentType, forwardRef, ComponentPropsWithoutRef } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
 import { LogoTitle, LogoTitleProps } from "./internal/LogoTitle";
@@ -54,7 +54,7 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
   // TODO check if we need ImageProps and TitleProps classNames interface.
   return (
     <span
-      className={cx(withBaseName(), className, {
+      className={clsx(withBaseName(), className, {
         [withBaseName("compact")]: compact,
       })}
       ref={ref}
@@ -63,16 +63,16 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
       <span className={withBaseName("wrapper")}>
         <LogoImageComponent
           {...ImageProps}
-          className={cx(withBaseName("logo"), ImageProps?.className)}
+          className={clsx(withBaseName("logo"), ImageProps?.className)}
           src={src}
           alt={ImageProps?.alt || "Logo"}
         />
       </span>
       <LogoTitle
         {...TitleProps}
-        className={cx(withBaseName("appTitle"), TitleProps?.className)}
+        className={clsx(withBaseName("appTitle"), TitleProps?.className)}
         label={appTitle}
-        separatorClassname={cx(
+        separatorClassname={clsx(
           withBaseName("titlePipe"),
           TitleProps?.separatorClassname
         )}

@@ -1,5 +1,5 @@
 import { makePrefixer, Mode, SaltProvider } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   Children,
   CSSProperties,
@@ -86,7 +86,7 @@ export const QAContainer = ({
   return (
     <div
       {...htmlAttributes}
-      className={cx(withBaseName(), className, {
+      className={clsx(withBaseName(), className, {
         "saltQAContainer-vertical": vertical,
       })}
       style={style}

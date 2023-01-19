@@ -1,5 +1,5 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import {
   ForwardedRef,
   forwardRef,
@@ -77,7 +77,7 @@ export const ListItemBase = memo(
     const { ref: triggerRef, ...triggerProps } = getTriggerProps({
       "aria-label": typeof children === "string" ? children : undefined,
       ...restProps,
-      className: cn(
+      className: clsx(
         withBaseName(),
         {
           [withBaseName("deselectable")]: deselectable,

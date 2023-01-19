@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { ChildrenValues } from "../../ChildrenValues";
 import { JSONObj } from "../../../helpers/parseToJson";
@@ -19,7 +19,7 @@ export interface IconPatternProps {
 
 export const IconPattern = (props: IconPatternProps): ReactElement => {
   return (
-    <div className={cn(withBaseName())}>
+    <div className={clsx(withBaseName())}>
       {props.values &&
         Object.keys(props.values).map(function (node) {
           const [values, fieldName] =

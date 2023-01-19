@@ -1,5 +1,5 @@
 import { ComponentType, forwardRef, ReactElement } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { IconProps, TearOutIcon } from "@salt-ds/icons";
 import { makePrefixer } from "../utils";
 import { Text, TextProps } from "../text";
@@ -33,7 +33,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   return (
     <Text
       as="a"
-      className={cx(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       href={href}
       ref={ref}
       target={target}

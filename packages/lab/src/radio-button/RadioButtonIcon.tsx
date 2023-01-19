@@ -1,6 +1,6 @@
 import { ComponentType, ReactElement } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import "./RadioButtonIcon.css";
 
 const withBaseName = makePrefixer("saltRadioButtonIcon");
@@ -15,7 +15,7 @@ export interface RadioButtonIconProps {
 export const RadioButtonIcon = ({ checked }: RadioButtonIconProps) => {
   return (
     <svg
-      className={classnames(withBaseName(), {
+      className={clsx(withBaseName(), {
         [withBaseName("checked")]: checked,
       })}
       height="14"

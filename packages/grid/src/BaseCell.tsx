@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import "./BaseCell.css";
 import { makePrefixer } from "@salt-ds/core";
 import { GridCellProps } from "./GridColumn";
@@ -47,7 +47,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       tabIndex={isFocused && !isFocusableContent ? 0 : -1}
       onFocus={onFocus}
     >
-      <div className={cn(withBaseName("valueContainer"))}>{children}</div>
+      <div className={clsx(withBaseName("valueContainer"))}>{children}</div>
       {isFocused && isEditable && <CornerTag focusOnly={true} />}
       {isFocused && !isFocusableContent && <Cursor />}
     </Cell>

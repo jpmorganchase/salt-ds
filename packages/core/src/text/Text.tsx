@@ -3,7 +3,7 @@ import {
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
 } from "../utils";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { ElementType, forwardRef, ReactElement } from "react";
 
 import "./Text.css";
@@ -60,7 +60,7 @@ export const Text: TextComponent = forwardRef(
 
     return (
       <Component
-        className={cx(withBaseName(), className, {
+        className={clsx(withBaseName(), className, {
           [withBaseName("lineClamp")]: maxRows,
           [withBaseName(styleAs || "")]: styleAs,
           [withBaseName(variant)]: variant,

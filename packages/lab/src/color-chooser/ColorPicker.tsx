@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 import { SketchPicker, ColorResult } from "react-color";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { Button, makePrefixer } from "@salt-ds/core";
 import { Color, RGBAValue } from "./Color";
 import { hexValueWithoutAlpha } from "./ColorHelpers";
@@ -73,10 +73,10 @@ export const ColorPicker = ({
   };
 
   return (
-    <div data-testid="color-picker" className={cn(withBaseName())}>
+    <div data-testid="color-picker" className={clsx(withBaseName())}>
       {/** @ts-ignore react-color has incorrect types **/}
       <SketchPicker
-        className={cn(withBaseName("swatchPickerStyles"), {
+        className={clsx(withBaseName("swatchPickerStyles"), {
           ["rootDisabledAlpha"]: disableAlphaChooser,
           ["root"]: !disableAlphaChooser,
         })}
@@ -85,9 +85,9 @@ export const ColorPicker = ({
         presetColors={[]}
         disableAlpha={disableAlphaChooser}
       />
-      <div className={cn(withBaseName("inputContainer"))}>
-        <div className={cn(withBaseName("inputDivs"))}>
-          <span className={cn(withBaseName("textDivOverrides"))}>HEX</span>
+      <div className={clsx(withBaseName("inputContainer"))}>
+        <div className={clsx(withBaseName("inputDivs"))}>
+          <span className={clsx(withBaseName("textDivOverrides"))}>HEX</span>
           <HexInput
             hexValue={
               disableAlphaChooser
@@ -105,7 +105,7 @@ export const ColorPicker = ({
             onSubmitRgb={onSubmitRgb}
           />
         </div>
-        <div className={cn(withBaseName("applyButtonDiv"))}>
+        <div className={clsx(withBaseName("applyButtonDiv"))}>
           <Button data-testid="apply-button" variant="cta" onClick={onApply}>
             Apply
           </Button>

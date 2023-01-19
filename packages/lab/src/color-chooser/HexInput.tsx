@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import { useState, useEffect } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { isValidHex } from "./ColorHelpers";
@@ -50,11 +50,11 @@ export const HexInput = ({
   };
 
   return (
-    <div className={cn(withBaseName())}>
-      <span className={cn(withBaseName("hashSign"))}>#</span>
+    <div className={clsx(withBaseName())}>
+      <span className={clsx(withBaseName("hashSign"))}>#</span>
       <Input
         data-testid="hex-input"
-        className={cn(withBaseName("input"))}
+        className={clsx(withBaseName("input"))}
         value={hexInputValue?.toString().replace("#", "").toUpperCase() ?? ""}
         onChange={handleHexInputChange}
         onKeyDown={handleKeyDownHex}

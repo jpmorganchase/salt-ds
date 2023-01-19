@@ -1,4 +1,4 @@
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, useContext } from "react";
 import { createChainedFunction } from "@salt-ds/core";
 import { ControlLabel, ControlLabelProps } from "../control-label";
@@ -51,7 +51,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
     return (
       <div
         {...rest}
-        className={classnames(classBase, className, {
+        className={clsx(classBase, className, {
           [`${classBase}-disabled`]: disabled,
         })}
         data-testid="checkbox"

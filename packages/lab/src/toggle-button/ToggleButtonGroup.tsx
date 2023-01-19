@@ -1,5 +1,5 @@
 import { ButtonVariant, makePrefixer, useControlled } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   Children,
   cloneElement,
@@ -191,7 +191,7 @@ export const ToggleButtonGroup = forwardRef<
     <div
       {...restProps}
       aria-label={ariaLabel}
-      className={cx(
+      className={clsx(
         withBaseName(),
         withBaseName(orientation),
         {

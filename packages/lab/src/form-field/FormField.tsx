@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   Dispatch,
   ElementType,
@@ -257,7 +257,7 @@ export const FormField = forwardRef(
     });
 
     const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-      className: cx(
+      className: clsx(
         withBaseName(),
         {
           [withBaseName("disabled")]: disabled,

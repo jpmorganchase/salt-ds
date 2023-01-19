@@ -1,5 +1,5 @@
 import { forwardRef, SVGAttributes } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./Icon.css";
 
@@ -31,7 +31,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
 
   return (
     <svg
-      className={cx(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       style={style}
       role="img"
       {...rest}

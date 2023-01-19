@@ -8,7 +8,7 @@ import {
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import "./Accordion.css";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { AccordionContext } from "./AccordionContext";
 
 const withBaseName = makePrefixer("saltAccordion");
@@ -148,7 +148,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     }, [registerSection, unregisterSection, onChange, isExpanded, disabled]);
 
     return (
-      <div className={cn(withBaseName(), className)} {...restProps} ref={ref}>
+      <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
         <AccordionContext.Provider value={contextValue}>
           {children}
         </AccordionContext.Provider>

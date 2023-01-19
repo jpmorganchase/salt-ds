@@ -1,6 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import { FormField } from "@salt-ds/lab";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { ReactElement } from "react";
 import {
   SALT_CHARACTERISTICS,
@@ -23,7 +23,7 @@ interface OpacityFieldProps {
 
 export const OpacityField = (props: OpacityFieldProps): ReactElement => {
   return (
-    <div className={cn(withBaseName("jumpToFoundationNotColor"))}>
+    <div className={clsx(withBaseName("jumpToFoundationNotColor"))}>
       <FormField label={`Opacity`}>
         <OpacityInput
           alphaValue={props.alphaValue ?? ""}

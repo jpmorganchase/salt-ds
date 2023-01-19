@@ -1,5 +1,5 @@
 import { forwardRef, ForwardedRef, HTMLAttributes } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
 import "./TabPanel.css";
@@ -18,7 +18,7 @@ export const TabPanel = forwardRef(function TabPanel(
   return (
     <div
       {...htmlAttributes}
-      className={cx(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       ref={forwardedRef}
       role="tabpanel"
       tabIndex={0}

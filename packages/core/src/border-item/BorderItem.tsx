@@ -1,5 +1,5 @@
 import { forwardRef, ElementType, ReactElement } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { GridItem, GridItemProps } from "../grid-item";
 import "./BorderItem.css";
 import {
@@ -67,7 +67,7 @@ export const BorderItem: BorderItemComponent = forwardRef(
     return (
       <GridItem
         ref={ref}
-        className={cx(withBaseName(), className, "saltGridItem-area", {
+        className={clsx(withBaseName(), className, "saltGridItem-area", {
           [withBaseName("sticky")]: sticky,
         })}
         style={gridItemStyles}

@@ -5,7 +5,7 @@ import {
   KeyboardEvent,
 } from "react";
 import { useButton, makePrefixer } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 const withBaseName = makePrefixer("saltButton");
 
@@ -75,7 +75,7 @@ export const DivButton = forwardRef<HTMLDivElement, DivButtonProps>(
     return (
       <div
         aria-disabled={ariaDisabled}
-        className={cx(withBaseName(), className, withBaseName("primary"), {
+        className={clsx(withBaseName(), className, withBaseName("primary"), {
           [withBaseName("disabled")]: disabled,
           [withBaseName("active")]: active,
         })}

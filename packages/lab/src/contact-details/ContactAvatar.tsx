@@ -2,7 +2,7 @@ import { forwardRef, useEffect } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { Avatar, AvatarProps } from "../avatar";
 import { useContactDetailsContext } from "./internal";
-import cn from "classnames";
+import { clsx } from "clsx";
 
 const withBaseName = makePrefixer("saltContactAvatar");
 
@@ -31,7 +31,7 @@ export const ContactAvatar = forwardRef<HTMLDivElement, ContactAvatarProps>(
         {...restProps}
         ref={ref}
         aria-hidden={true}
-        className={cn(
+        className={clsx(
           withBaseName(),
           {
             [withBaseName("stacked")]: isStacked,

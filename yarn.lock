@@ -3956,8 +3956,8 @@ __metadata:
     chokidar: ^3.5.3
     chromatic: ^6.14.0
     ci-info: ^3.3.1
-    classnames: ^2.2.6
     clipboard-copy: ^4.0.1
+    clsx: ^1.2.1
     compute-scroll-into-view: ^2.0.0
     csstree-validator: ^3.0.0
     cypress: ^12.3.0
@@ -9682,13 +9682,6 @@ __metadata:
     isobject: ^3.0.0
     static-extend: ^0.1.1
   checksum: be108900801e639e50f96a7e4bfa8867c753a7750a7603879f3981f8b0a89cba657497a2d5f40cd4ea557ff15d535a100818bb486baf6e26fe5d7872e75f1078
-  languageName: node
-  linkType: hard
-
-"classnames@npm:^2.2.6":
-  version: 2.3.1
-  resolution: "classnames@npm:2.3.1"
-  checksum: 14db8889d56c267a591f08b0834989fe542d47fac659af5a539e110cc4266694e8de86e4e3bbd271157dbd831361310a8293e0167141e80b0f03a0f175c80960
   languageName: node
   linkType: hard
 
