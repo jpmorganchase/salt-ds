@@ -1,10 +1,14 @@
-import { Button, FLEX_ALIGNMENT_BASE, FlowLayout } from "@salt-ds/core";
-import { SplitLayout } from "@salt-ds/lab";
+import {
+  Button,
+  FLEX_ALIGNMENT_BASE,
+  FlowLayout,
+  SplitLayout,
+} from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Lab/Layout/SplitLayout",
+  title: "Core/Layout/SplitLayout",
   component: SplitLayout,
   argTypes: {
     align: {
@@ -28,7 +32,7 @@ export default {
 } as ComponentMeta<typeof SplitLayout>;
 
 const leftItem = (
-  <FlowLayout className="layout-container">
+  <FlowLayout className="layout-container" align="baseline">
     {Array.from({ length: 3 }, (_, index) => (
       <div key={index}>
         <p>Item {index + 1}</p>

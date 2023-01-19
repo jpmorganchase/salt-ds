@@ -1,12 +1,10 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { FlexItem } from "@salt-ds/core";
-import { SplitLayout } from "@salt-ds/lab";
+import { SplitLayout } from "@salt-ds/core";
 import { CSSClassTable } from "css-variable-docgen-components";
-import { DefaultSplitLayout } from "./split-layout.stories";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Layout/SplitLayout"
+  title="Documentation/Core/Layout/SplitLayout"
   component={SplitLayout}
   parameters={{
     viewMode: "docs",
@@ -19,7 +17,7 @@ Defines left and right regions for UI elements within a span, such as a button b
 By default the Split layout will break into a second row with the elements on the right hand side as soon as it finds limited space.
 
 <Canvas>
-  <Story id="lab-layout-splitlayout--default-split-layout" />
+  <Story id="core-layout-splitlayout--default-split-layout" />
 </Canvas>
 
 ## Use Split layout when...
@@ -38,7 +36,7 @@ Your layout requires more than 2 regions. In this case we recommend you having a
 The simple usage examples shows 2 groups of buttons inside a Split layout.
 
 <Canvas>
-  <Story id="lab-layout-splitlayout--split-layout-simple-usage" />
+  <Story id="core-layout-splitlayout--split-layout-simple-usage" />
 </Canvas>
 
 ## Configuring Split layout
@@ -46,7 +44,7 @@ The simple usage examples shows 2 groups of buttons inside a Split layout.
 ### API
 
 ```
-import { SplitLayout } from "@salt-ds/lab";
+import { SplitLayout } from "@salt-ds/core";
 ```
 
 ### Props

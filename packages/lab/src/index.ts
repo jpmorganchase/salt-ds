@@ -65,7 +65,6 @@ export * from "./search-input";
 export * from "./skip-link";
 export * from "./slider";
 export * from "./spinner";
-export * from "./split-layout";
 export * from "./stepper-input";
 export * from "./switch";
 export * from "./tabs";
