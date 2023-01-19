@@ -1,10 +1,6 @@
 import { ElementType, forwardRef, ReactElement, ReactNode } from "react";
-import {
-  FlexLayout,
-  FlexLayoutProps,
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
-} from "@salt-ds/core";
+import { FlexLayout, FlexLayoutProps } from "../flex-layout";
+import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
 
 export type SplitLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
