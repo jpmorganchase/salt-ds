@@ -2,8 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const util = require("util");
 const Glob = require("glob");
-
-const parseCSS = require("../parseCSS");
+const parseCSS = require("./parseCSS");
 
 const asyncMap = (array, cb) => {
   const promises = new Array(array.length);
