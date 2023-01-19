@@ -67,7 +67,7 @@ function useCalendarNavigation() {
         );
         newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
           Math.abs(monthDiff(currentMonth, newMonth)) <
-          Math.abs(monthDiff(closestMonth, newMonth))
+            Math.abs(monthDiff(closestMonth, newMonth))
             ? currentMonth
             : closestMonth
         );
