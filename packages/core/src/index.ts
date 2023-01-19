@@ -8,6 +8,7 @@ export * from "./flex-layout";
 export * from "./flow-layout";
 export * from "./grid-item";
 export * from "./grid-layout";
+export * from "./inline-layout";
 export * from "./link";
 export * from "./stack-layout";
 export * from "./status-indicator";
