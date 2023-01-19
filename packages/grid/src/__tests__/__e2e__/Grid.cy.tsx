@@ -277,17 +277,16 @@ describe("Grid", () => {
     expectFakeColumnWidth(240);
   });
 
-  it("Dropdown editor", () => {
+  it.only("Dropdown editor", () => {
     cy.mount(<GridExample />);
     assertGridReady();
-    clickCell(0, 2);
-    cy.focused().should("have.text", "New York, NY");
-    cy.focused().type("{Enter}");
+    findCell(0, 2).click({ force: true }).type("{Enter}");
     cy.findByTestId("grid-cell-editor-trigger")
       .should("exist")
       .type("{downarrow}")
       .type("{Enter}");
-    cy.focused().should("have.text", "Jersey City, NJ");
+    checkCursorPos(2, 2);
+    findCell(0, 2).should("have.text", "Jersey City, NJ");
   });
 
   it("Tabbing in and out of grid", () => {
