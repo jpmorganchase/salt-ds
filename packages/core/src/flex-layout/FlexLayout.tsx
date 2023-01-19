@@ -1,4 +1,4 @@
-import { Children, ElementType, forwardRef, ReactElement } from "react";
+import { ElementType, forwardRef, ReactElement } from "react";
 import { clsx } from "clsx";
 
 import {
@@ -113,11 +113,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
         style={flexLayoutStyles}
         {...rest}
       >
-        {separators
-          ? Children.map(children, (child) => (
-              <div className={withBaseName("separator-wrapper")}>{child}</div>
-            ))
-          : children}
+        {children}
       </Component>
     );
   }
