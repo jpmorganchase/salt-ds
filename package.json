@@ -45,7 +45,8 @@
     "typecheck:modular": "modular typecheck",
     "typecheck:toolkit:test": "tsc --noEmit --project packages/core/src/__tests__/tsconfig.json",
     "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json",
-    "chromatic": "chromatic"
+    "chromatic": "chromatic",
+    "chromatic:site": "yarn workspace @salt-ds/site chromatic"
   },
   "dependencies": {
     "@changesets/cli": "^2.25.2",
