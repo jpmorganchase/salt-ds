@@ -50,7 +50,10 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
 
   return (
     <Cell separator={column?.separator} className={withBaseName()}>
-      <div className={withBaseName("dropdownContainer")}>
+      <div
+        className={withBaseName("dropdownContainer")}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
         <Dropdown
           isOpen={true}
           source={options}
