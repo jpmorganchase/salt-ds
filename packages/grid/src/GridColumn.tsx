@@ -24,6 +24,7 @@ export interface GridCellProps<T, U = any> {
   isSelected?: boolean;
   isEditable?: boolean;
   children?: ReactNode;
+  align?: GridColumnProps["align"];
   value?: U;
   getValidationStatus?: (
     value: GridCellValueProps<T>

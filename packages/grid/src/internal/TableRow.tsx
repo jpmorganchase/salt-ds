@@ -112,6 +112,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
             isEditable={isEditable}
             getValidationStatus={column.info.props.getValidationStatus}
             value={value}
+            align={column.info.props.align}
           >
             <CellValue
               column={column}

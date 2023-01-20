@@ -28,6 +28,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     getValidationStatus = noop,
     getValidationMessage = noop,
     value,
+    align,
   } = props;
 
   const { ref, isFocusableContent, onFocus } =
@@ -69,6 +70,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
           id={validationMessageId}
           className="salt-visuallyHidden"
           aria-hidden
+          role="status"
         >
           {validationMessage
             ? validationMessage
@@ -76,10 +78,10 @@ export function BaseCell<T>(props: GridCellProps<T>) {
         </div>
       ) : null}
       <div
-        role="status"
         className={clsx(withBaseName("valueContainer"), {
           [withBaseName(`valueContainer-status-${validationStatus as string}`)]:
             validationStatus,
+          [withBaseName(`valueContainer-align-${align as string}`)]: align,
         })}
       >
         {children}
