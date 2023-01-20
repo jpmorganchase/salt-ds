@@ -45,7 +45,7 @@ const useExampleDataSource = () => {
           amount: randomInt(0, 100),
           price: randomNumber(10, 100, 2),
           discount: "-",
-        } as RowExample;
+        };
       }) as RowExample[]
   );
 
@@ -96,7 +96,7 @@ const useExampleDataSource = () => {
   return { rows, setAmount, setName, setDiscount, setPrice };
 };
 
-const EditableCellsTemplate: Story<{}> = () => {
+const CellValidationTemplate: Story<{}> = () => {
   const { setPrice, setDiscount, rows, setAmount, setName } =
     useExampleDataSource();
 
@@ -124,6 +124,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         getValue={(r: RowExample) => r.amount}
         precision={0}
         onChange={setAmount}
+        getValidationStatus={() => "warning"}
       >
         <CellEditor>
           <NumericCellEditor />
@@ -135,6 +136,8 @@ const EditableCellsTemplate: Story<{}> = () => {
         precision={2}
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
+        getValidationMessage={() => "This is a custom validation error message"}
+        getValidationStatus={() => "error"}
       >
         <CellEditor>
           <NumericCellEditor />
@@ -160,4 +163,4 @@ const EditableCellsTemplate: Story<{}> = () => {
   );
 };
 
-export const EditableCells = EditableCellsTemplate.bind({});
+export const CellValidation = CellValidationTemplate.bind({});
