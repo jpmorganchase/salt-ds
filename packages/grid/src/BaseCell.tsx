@@ -12,6 +12,33 @@ export function getCellId<T>(rowKey: string, column: GridColumnModel<T>) {
   return `R${rowKey}C${column.info.props.id}`;
 }
 
+const icons = {
+  warning: (
+    <svg
+      aria-hidden
+      width="1em"
+      height="1em"
+      viewBox="0 0 10 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M4.6188 0L9.2376 8H0L4.6188 0Z" />
+    </svg>
+  ),
+  error: (
+    <svg
+      aria-hidden
+      width=".75em"
+      height=".75em"
+      viewBox="0 0 8 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="4" cy="4" r="4" />
+    </svg>
+  ),
+};
+
 const noop = () => undefined;
 // Default component for grid cells. Provides selection, on-hover highlighting,
 // cursor etc.
@@ -42,8 +69,8 @@ export function BaseCell<T>(props: GridCellProps<T>) {
   const validationStatus = getValidationStatus(validationFnArg);
   const validationMessage = getValidationMessage(validationFnArg);
   const cellId = getCellId(row.key, column);
-  const hasValidationMessage =
-    validationMessage || (validationStatus && validationStatus !== "none");
+  const hasValidation = validationStatus && validationStatus !== "none";
+  const hasValidationMessage = validationMessage || hasValidation;
   const validationMessageId = `${cellId}-statusMessage`;
   return (
     <Cell
@@ -81,11 +108,22 @@ export function BaseCell<T>(props: GridCellProps<T>) {
         className={clsx(withBaseName("valueContainer"), {
           [withBaseName(`valueContainer-status-${validationStatus as string}`)]:
             validationStatus,
-          [withBaseName(`valueContainer-align-${align as string}`)]: align,
         })}
       >
         {children}
       </div>
+      {hasValidation ? (
+        <div
+          className={clsx(withBaseName("statusContainer"), {
+            [withBaseName(`statusContainer-align-${align as string}`)]: align,
+            [withBaseName(
+              `statusContainer-status-${validationStatus as string}`
+            )]: validationStatus,
+          })}
+        >
+          {icons[validationStatus]}
+        </div>
+      ) : null}
       {isFocused && isEditable && <CornerTag focusOnly={true} />}
       {isFocused && !isFocusableContent && <Cursor />}
     </Cell>
