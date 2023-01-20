@@ -23,6 +23,7 @@ const discountValues = [1, 0.95, 0.9, 0.8, 0.5];
 interface RowExample {
   id: string;
   name: string;
+  description: string;
   amount: number;
   price: number;
   discount: string;
