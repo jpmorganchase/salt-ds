@@ -135,6 +135,10 @@ const EditableCellsTemplate: Story<{}> = () => {
         precision={2}
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
+        getValidationMessage={({ value }) =>
+          isNaN(value) ? "The value is not a number" : undefined
+        }
+        getValidationStatus={({ value }) => (isNaN(value) ? "error" : "none")}
       >
         <CellEditor>
           <NumericCellEditor />
@@ -155,6 +159,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         name="Total"
         getValue={getTotal}
         precision={4}
+        getValidationStatus={({ value }) => (isNaN(value) ? "error" : "none")}
       />
     </Grid>
   );

@@ -110,6 +110,8 @@ export function TableRow<T>(props: TableRowProps<T>) {
             isFocused={isFocused}
             isSelected={isSelected}
             isEditable={isEditable}
+            getValidationStatus={column.info.props.getValidationStatus}
+            value={value}
           >
             <CellValue
               column={column}

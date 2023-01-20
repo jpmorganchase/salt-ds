@@ -27,3 +27,10 @@
 .saltGridCell-editable:focus .saltGridBaseCell-valueContainer {
   border-color: transparent;
 }
+
+.saltGridCell-editable .saltGridBaseCell-valueContainer-status-error {
+  border-color: red;
+}
+.saltGridBaseCell-valueContainer-status-error {
+  color: red;
+}

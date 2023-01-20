@@ -12,6 +12,7 @@ export function getCellId<T>(rowKey: string, column: GridColumnModel<T>) {
   return `R${rowKey}C${column.info.props.id}`;
 }
 
+const noop = () => undefined;
 // Default component for grid cells. Provides selection, on-hover highlighting,
 // cursor etc.
 export function BaseCell<T>(props: GridCellProps<T>) {
@@ -24,15 +25,29 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     isSelected,
     isEditable,
     children,
+    getValidationStatus = noop,
+    getValidationMessage = noop,
+    value,
   } = props;
 
   const { ref, isFocusableContent, onFocus } =
     useFocusableContent<HTMLTableCellElement>();
-
+  const validationFnArg = {
+    row,
+    column,
+    isFocused,
+    value,
+  };
+  const validationStatus = getValidationStatus(validationFnArg);
+  const validationMessage = getValidationMessage(validationFnArg);
+  const cellId = getCellId(row.key, column);
+  const hasValidationMessage =
+    validationMessage || (validationStatus && validationStatus !== "none");
+  const validationMessageId = `${cellId}-statusMessage`;
   return (
     <Cell
       ref={ref}
-      id={getCellId(row.key, column)}
+      id={cellId}
       data-row-index={row.index}
       data-column-index={column.index}
       data-testid={isFocused ? "grid-cell-focused" : undefined}
@@ -46,8 +61,29 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       style={style}
       tabIndex={isFocused && !isFocusableContent ? 0 : -1}
       onFocus={onFocus}
+      aria-invalid={validationStatus === "error" || undefined}
+      aria-describedby={hasValidationMessage ? validationMessageId : undefined}
     >
-      <div className={clsx(withBaseName("valueContainer"))}>{children}</div>
+      {hasValidationMessage ? (
+        <div
+          id={validationMessageId}
+          className="salt-visuallyHidden"
+          aria-hidden
+        >
+          {validationMessage
+            ? validationMessage
+            : `Cell validation state is ${validationStatus as string}`}
+        </div>
+      ) : null}
+      <div
+        role="status"
+        className={clsx(withBaseName("valueContainer"), {
+          [withBaseName(`valueContainer-status-${validationStatus as string}`)]:
+            validationStatus,
+        })}
+      >
+        {children}
+      </div>
       {isFocused && isEditable && <CornerTag focusOnly={true} />}
       {isFocused && !isFocusableContent && <Cursor />}
     </Cell>

@@ -15,7 +15,7 @@ import { GridColumnModel, GridRowModel } from "./Grid";
 
 export type GridColumnPin = "left" | "right" | null;
 
-export interface GridCellProps<T> {
+export interface GridCellProps<T, U = any> {
   row: GridRowModel<T>;
   column: GridColumnModel<T>;
   className?: string;
@@ -24,6 +24,11 @@ export interface GridCellProps<T> {
   isSelected?: boolean;
   isEditable?: boolean;
   children?: ReactNode;
+  value?: U;
+  getValidationStatus?: (
+    value: GridCellValueProps<T>
+  ) => "none" | "error" | "info" | "warning";
+  getValidationMessage?: (value: GridCellValueProps<T>) => string | undefined;
 }
 
 export interface GridCellValueProps<T, U = any> {
@@ -96,6 +101,16 @@ export interface GridColumnProps<T = any> {
    * for the given row data item.
    * */
   getValue?: (rowData: T) => any;
+  /**
+   * Cell validation status getter. Should return one of the known validation status names.
+   * If you require a custom validation status, you can achieve that by providing a custom cell component.
+   * */
+  getValidationStatus?: GridCellProps<T>["getValidationStatus"];
+  /**
+   * Cell validation status message getter. Should return a string description of the validation state that can be used for the screen reader.
+   * This prop is optional but if you don't provide a function a default message will be used.
+   * */
+  getValidationMessage?: GridCellProps<T>["getValidationMessage"];
   /**
    * CSS class to be applied to the column header.
    * Useful for minor customizations
