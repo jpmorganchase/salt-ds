@@ -28,14 +28,20 @@
   border-color: transparent;
 }
 
-.saltGridCell-editable .saltGridBaseCell-valueContainer-status-error,
-.saltGridBaseCell-valueContainer-status-error {
+.saltGridCell-editable .saltGridBaseCell-valueContainer-status-error {
   border-color: var(--salt-status-error-borderColor);
 }
 
-.saltGridCell-editable .saltGridBaseCell-valueContainer-status-warning,
-.saltGridBaseCell-valueContainer-status-warning {
+.saltGridBaseCell-valueContainer-status-error {
+  background-color: var(--salt-palette-error-background-emphasize);
+}
+
+.saltGridCell-editable .saltGridBaseCell-valueContainer-status-warning {
   border-color: var(--salt-status-warning-borderColor);
+}
+
+.saltGridBaseCell-valueContainer-status-warning {
+  background-color: var(--salt-palette-warning-background-emphasize);
 }
 
 .salt-density-touch {

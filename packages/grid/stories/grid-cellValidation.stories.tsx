@@ -42,6 +42,7 @@ const useExampleDataSource = () => {
         return {
           id: `Row${i + 1}`,
           name: randomText(1, 5, 10),
+          description: randomText(1, 5, 10),
           amount: randomInt(0, 100),
           price: randomNumber(10, 100, 2),
           discount: "-",
@@ -106,25 +107,33 @@ const CellValidationTemplate: Story<{}> = () => {
       rowKeyGetter={(row) => row.id}
       className="grid"
       zebra={true}
-      // columnSeparators={true}
+      columnSeparators
     >
       <GridColumn
         id="name"
         name="Name"
         getValue={(r) => r.name}
         onChange={setName}
+        getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
       >
         <CellEditor>
           <TextCellEditor />
         </CellEditor>
       </GridColumn>
+      <GridColumn
+        id="description"
+        name="Description"
+        getValue={(r) => r.description}
+        onChange={setName}
+      />
+
       <NumericColumn
         id="amount"
         name="Amount"
         getValue={(r: RowExample) => r.amount}
         precision={0}
         onChange={setAmount}
-        getValidationStatus={() => "warning"}
+        getValidationStatus={({ row }) => (row.index > 4 ? "warning" : "none")}
       >
         <CellEditor>
           <NumericCellEditor />
@@ -137,7 +146,7 @@ const CellValidationTemplate: Story<{}> = () => {
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
         getValidationMessage={() => "This is a custom validation error message"}
-        getValidationStatus={() => "error"}
+        getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
       >
         <CellEditor>
           <NumericCellEditor />
@@ -158,6 +167,7 @@ const CellValidationTemplate: Story<{}> = () => {
         name="Total"
         getValue={getTotal}
         precision={4}
+        getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
       />
     </Grid>
   );
