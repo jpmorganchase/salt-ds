@@ -15,6 +15,8 @@ import { GridColumnModel, GridRowModel } from "./Grid";
 
 export type GridColumnPin = "left" | "right" | null;
 
+type CellValidationState = "none" | "error" | "warning";
+
 export interface GridCellProps<T, U = any> {
   row: GridRowModel<T>;
   column: GridColumnModel<T>;
@@ -26,9 +28,7 @@ export interface GridCellProps<T, U = any> {
   children?: ReactNode;
   align?: GridColumnProps["align"];
   value?: U;
-  getValidationStatus?: (
-    value: GridCellValueProps<T>
-  ) => "none" | "error" | "info" | "warning";
+  getValidationStatus?: (value: GridCellValueProps<T>) => CellValidationState;
   getValidationMessage?: (value: GridCellValueProps<T>) => string | undefined;
 }
 
