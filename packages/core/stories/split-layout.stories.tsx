@@ -15,6 +15,9 @@ export default {
       options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
       control: { type: "select" },
     },
+    as: {
+      type: "string",
+    },
     gap: {
       type: "number",
     },

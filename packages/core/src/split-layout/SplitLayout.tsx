@@ -1,6 +1,14 @@
-import { ElementType, forwardRef, ReactElement, ReactNode } from "react";
+import { forwardRef, ReactNode, ElementType, ReactElement } from "react";
 import { FlexLayout, FlexLayoutProps } from "../flex-layout";
+import { FlexItem, FlexItemProps } from "../flex-item";
 import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
+
+export interface SplitItemProps extends FlexItemProps<ElementType> {
+  /**
+   * A list of items. Required to have some children.
+   */
+  children: ReactNode;
+}
 
 export type SplitLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -15,19 +23,35 @@ export type SplitLayoutProps<T extends ElementType> =
        */
       wrap?: FlexLayoutProps<ElementType>["wrap"];
       /**
-       * The minimum gap between the 2 sides of the layout.
+       * Controls the space between items.
        */
       gap?: FlexLayoutProps<ElementType>["gap"];
       /**
-       * Parent component to be rendered
+       * Content to be rendered inside left split item.
        */
       leftSplitItem: ReactNode;
       /**
-       * Child component to be rendered
+       * The props to be passed to the left split wrapper.
+       */
+      leftSplitItemProps?: Partial<FlexItemProps<ElementType>>;
+      /**
+       * Content to be rendered inside right split item.
        */
       rightSplitItem: ReactNode;
+      rightSplitItemProps?: Partial<FlexItemProps<ElementType>>;
     }
   >;
+
+const SplitItem = forwardRef<HTMLDivElement, SplitItemProps>(function SplitItem(
+  { children, ...rest },
+  ref
+) {
+  return (
+    <FlexItem {...rest} ref={ref}>
+      {children}
+    </FlexItem>
+  );
+});
 
 type SplitLayoutComponent = <T extends ElementType = "div">(
   props: SplitLayoutProps<T>
@@ -38,7 +62,9 @@ export const SplitLayout: SplitLayoutComponent = forwardRef(
     {
       align,
       leftSplitItem,
+      leftSplitItemProps,
       rightSplitItem,
+      rightSplitItemProps,
       wrap = true,
       gap,
       ...rest
@@ -55,8 +81,8 @@ export const SplitLayout: SplitLayoutComponent = forwardRef(
         justify="space-between"
         {...rest}
       >
-        {leftSplitItem}
-        {rightSplitItem}
+        <SplitItem {...leftSplitItemProps}>{leftSplitItem}</SplitItem>
+        <SplitItem {...rightSplitItemProps}>{rightSplitItem}</SplitItem>
       </FlexLayout>
     );
   }
