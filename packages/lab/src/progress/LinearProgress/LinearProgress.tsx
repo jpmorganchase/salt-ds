@@ -5,7 +5,7 @@ import {
   ReactElement,
   ReactNode,
 } from "react";
-import classnames from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import "./LinearProgress.css";
 
@@ -150,7 +150,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
 
     return (
       <div
-        className={classnames(
+        className={clsx(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
@@ -167,20 +167,18 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         {...rest}
       >
         <div
-          className={classnames(withBaseName("barContainer"), {
+          className={clsx(withBaseName("barContainer"), {
             [withBaseName("determinate")]: variant === "determinate",
             [withBaseName("indeterminate")]: variant === "indeterminate",
             [withBaseName("query")]: variant === "query",
           })}
         >
           <div
-            className={classnames(withBaseName("bar"), withBaseName("bar1"))}
+            className={clsx(withBaseName("bar"), withBaseName("bar1"))}
             style={barStyle}
           />
           {variant === "determinate" ? null : (
-            <div
-              className={classnames(withBaseName("bar"), withBaseName("bar2"))}
-            />
+            <div className={clsx(withBaseName("bar"), withBaseName("bar2"))} />
           )}
         </div>
         {progressInfo}

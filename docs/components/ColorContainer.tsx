@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./ColorContainer.css";
 
@@ -10,5 +10,5 @@ export const ColorContainer = ({
   children: ReactNode;
   className?: string;
 }) => {
-  return <div className={cx("ColorContainer", className)}>{children}</div>;
+  return <div className={clsx("ColorContainer", className)}>{children}</div>;
 };

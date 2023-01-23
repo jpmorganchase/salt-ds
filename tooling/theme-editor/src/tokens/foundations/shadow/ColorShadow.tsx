@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import {
   AccordionSection,
   AccordionDetails,
@@ -27,7 +27,7 @@ interface ColorShadowProps extends ShadowPatternProps {
 
 export const ColorShadow = (props: ColorShadowProps): ReactElement => {
   return (
-    <div className={cn(withBaseName())}>
+    <div className={clsx(withBaseName())}>
       {Object.keys(props.shadowPattern).map(function (shadowKey) {
         const patternParts = getShadowParts(props.shadowPattern[shadowKey]);
 
@@ -64,7 +64,7 @@ export const ColorShadow = (props: ColorShadowProps): ReactElement => {
               {capitalize(props.innerPattern) as string}-{shadowKey}
             </AccordionSummary>
             <AccordionDetails>
-              <div className={cn(withBaseName("ValueSection"))}>
+              <div className={clsx(withBaseName("ValueSection"))}>
                 {patternParts.map((shadowPart: string, index) => {
                   const jsonObj: JSONObj = {};
                   jsonObj["value"] = shadowPart;

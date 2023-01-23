@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { capitalize } from "@salt-ds/lab";
 import { JSONObj } from "../../helpers/parseToJson";
@@ -52,7 +52,7 @@ export const InnerFieldLabel = ({
 
   return (
     <div
-      className={cn(withBaseName(), variantClassName, {
+      className={clsx(withBaseName(), variantClassName, {
         [withBaseName("large")]: !size && tokenPositionInPath === 1,
         [withBaseName("medium")]: !size && tokenPositionInPath === 2,
         [withBaseName("small")]: !size && tokenPositionInPath > 2,

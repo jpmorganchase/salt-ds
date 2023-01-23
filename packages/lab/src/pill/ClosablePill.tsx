@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import {
   ForwardedRef,
   forwardRef,
@@ -53,7 +53,7 @@ export const ClosablePill = forwardRef(function ClosablePill(
   return (
     <PillBase
       aria-roledescription="Closable Pill"
-      className={cn(
+      className={clsx(
         {
           [withBaseName("active")]: active,
         },

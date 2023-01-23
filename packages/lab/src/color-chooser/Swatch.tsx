@@ -1,5 +1,5 @@
 import { ChangeEvent, KeyboardEvent } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
@@ -64,7 +64,7 @@ export const Swatch = ({
       style={{
         background: getBackgroundColor(),
       }}
-      className={cn({
+      className={clsx({
         [withBaseName("active")]: active,
         [withBaseName("transparent")]: transparent,
         [withBaseName("graySwatch")]: isBlackOrgray(color),

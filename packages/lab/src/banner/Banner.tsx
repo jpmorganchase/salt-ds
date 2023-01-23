@@ -22,7 +22,7 @@ import {
 
 import getInnerText from "./internal/getInnerText";
 import { CloseIcon, IconProps } from "@salt-ds/icons";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./Banner.css";
 
@@ -117,19 +117,19 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
 
   const getIconProps = ({ className, ...restProps }: IconProps = {}) => {
     return {
-      className: cx(withBaseName("icon"), status, className),
+      className: clsx(withBaseName("icon"), status, className),
       ...restProps,
     };
   };
 
   const getLabelProps = ({ className, ...restProps }: LabelProps = {}) => ({
-    className: cx(withBaseName("label"), status, className),
+    className: clsx(withBaseName("label"), status, className),
     ...restProps,
   });
 
   const getLinkProps = ({ className, href, ...restProps }: LinkProps = {}) => ({
     children: "Link",
-    className: cx(withBaseName("link"), status, className),
+    className: clsx(withBaseName("link"), status, className),
     href,
     ...restProps,
   });
@@ -157,7 +157,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
 
   return (
     <div
-      className={cx(withBaseName(), withBaseName(status), className, {
+      className={clsx(withBaseName(), withBaseName(status), className, {
         [withBaseName("emphasize")]: emphasize,
       })}
       ref={handleRef}

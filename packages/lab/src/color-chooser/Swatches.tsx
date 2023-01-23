@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { AlphaInput } from "./AlphaInputField";
 import { Color } from "./Color";
@@ -30,7 +30,7 @@ export const Swatches = ({
   placeholder,
   onDialogClosed,
 }: SwatchesTabProps): JSX.Element => (
-  <div data-testid="swatches" className={cn(withBaseName("pickerDiv"))}>
+  <div data-testid="swatches" className={clsx(withBaseName("pickerDiv"))}>
     <SwatchesPicker
       allColors={allColors}
       color={color}
@@ -38,15 +38,15 @@ export const Swatches = ({
       alpha={alpha}
       onDialogClosed={onDialogClosed}
     />
-    <div className={cn(withBaseName("textDiv"))}>
+    <div className={clsx(withBaseName("textDiv"))}>
       <div>
-        <span className={cn(withBaseName("colorTextDiv"))}>Color:</span>
-        <span className={cn(withBaseName("colorNameTextDiv"))}>
+        <span className={clsx(withBaseName("colorTextDiv"))}>Color:</span>
+        <span className={clsx(withBaseName("colorNameTextDiv"))}>
           {displayColorName ?? placeholder}
         </span>
       </div>
       <div>
-        <span className={cn(withBaseName("alphaTextDiv"))}>Opacity:</span>
+        <span className={clsx(withBaseName("alphaTextDiv"))}>Opacity:</span>
         <AlphaInput
           alphaValue={color?.rgba.a === 0 ? 0 : alpha}
           showAsOpacity={true}

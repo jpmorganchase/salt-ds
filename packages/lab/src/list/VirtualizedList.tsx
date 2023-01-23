@@ -1,5 +1,5 @@
 import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, ReactElement, useRef } from "react";
 import {
   CollectionIndexer,
@@ -159,7 +159,7 @@ export const VirtualizedList = forwardRef(function List<
       <ListItem
         aria-setsize={collectionHook.data.length}
         aria-posinset={pos}
-        className={cx(className, {
+        className={clsx(className, {
           saltHighlighted: index === highlightedIndex,
           saltFocusVisible: focusVisible === index,
         })}
@@ -226,7 +226,7 @@ export const VirtualizedList = forwardRef(function List<
       {...htmlAttributes}
       {...listHandlers}
       {...listControlProps}
-      className={cx(withBaseName(), className, withBaseName("virtualized"))}
+      className={clsx(withBaseName(), className, withBaseName("virtualized"))}
       id={`${id}`}
       ref={useForkRef<HTMLDivElement>(rootRef, forwardedRef)}
       role="listbox"

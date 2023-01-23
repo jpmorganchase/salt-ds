@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { LayoutAnimation } from "../deck-layout";
@@ -46,7 +46,7 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
 
     return (
       <div
-        className={cx(
+        className={clsx(
           withBaseName(),
           withBaseName(`${animation ? animation : "static"}-${position}`),
           {

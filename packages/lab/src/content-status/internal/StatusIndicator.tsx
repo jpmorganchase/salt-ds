@@ -4,7 +4,7 @@ import {
   StatusIndicatorProps as BaseStatusIndicatorProps,
 } from "@salt-ds/core";
 import { ReactElement } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import { CircularProgress, CircularProgressProps } from "../../progress";
 import { Spinner, SpinnerProps } from "../../spinner";
@@ -41,7 +41,7 @@ export function StatusIndicator({
       return (
         <CircularProgress
           aria-label={title || message}
-          className={cx(
+          className={clsx(
             withBaseName("determinateLoading"),
             circularProgressClassName
           )}
@@ -54,7 +54,7 @@ export function StatusIndicator({
     }
     return (
       <Spinner
-        className={cx(withBaseName("indeterminateLoading"), spinnerClassName)}
+        className={clsx(withBaseName("indeterminateLoading"), spinnerClassName)}
         // Announcement of the content status is more useful than completion announcement from spinner
         completionAnnouncement={null}
         data-testid={`spinner-${id!}`}

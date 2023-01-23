@@ -1,5 +1,5 @@
 import { makePrefixer, useId, Text } from "@salt-ds/core";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";
 
@@ -41,7 +41,7 @@ export const ContactPrimaryInfo = forwardRef<
       id={id}
       ref={ref}
       styleAs={variant === "default" ? "h2" : "h4"}
-      className={cn(withBaseName(), className)}
+      className={clsx(withBaseName(), className)}
       role="heading"
       aria-labelledby={`${id} ${secondaryId != null ? secondaryId : null} ${
         tertiaryId != null ? tertiaryId : null

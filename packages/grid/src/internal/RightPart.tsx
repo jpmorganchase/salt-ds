@@ -1,5 +1,5 @@
 import { RefObject } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
 import "./RightPart.css";
@@ -41,7 +41,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
   return (
     <div
       ref={rightRef}
-      className={cn(withBaseName(), {
+      className={clsx(withBaseName(), {
         [withBaseName("leftShadow")]: leftShadow,
       })}
       data-testid="grid-right-part"

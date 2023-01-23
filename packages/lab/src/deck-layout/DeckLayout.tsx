@@ -11,7 +11,7 @@ import { DeckItem, DeckItemProps } from "../deck-item";
 import { useWidth } from "../responsive";
 import "./DeckLayout.css";
 
-import cx from "classnames";
+import { clsx } from "clsx";
 
 export type LayoutAnimation = "slide" | "fade";
 export type LayoutAnimationDirection = "horizontal" | "vertical";
@@ -94,13 +94,13 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
 
     return (
       <div
-        className={cx(withBaseName(), className)}
+        className={clsx(withBaseName(), className)}
         style={deckLayoutStyles}
         ref={ref}
         {...rest}
       >
         <div
-          className={cx(
+          className={clsx(
             {
               [withBaseName("animate")]: animation,
             },

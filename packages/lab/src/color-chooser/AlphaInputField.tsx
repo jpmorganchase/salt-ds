@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import { useState, useEffect } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { Input } from "../input";
@@ -78,7 +78,7 @@ export const AlphaInput = ({
         // @ts-ignore
         "data-testid": "a-input",
       }}
-      className={cn({
+      className={clsx({
         [withBaseName("rgbaInput")]: !showAsOpacity,
         [withBaseName("opacityInput")]: showAsOpacity,
       })}

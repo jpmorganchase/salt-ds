@@ -1,5 +1,5 @@
 import { useMemo, useCallback, ReactElement } from "react";
-import cn from "classnames";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Accordion } from "@salt-ds/lab";
 import { createColorMap } from "../../helpers/createColorMap";
@@ -53,7 +53,7 @@ export const FoundationPatternsList = (
   );
 
   return (
-    <div className={cn(withBaseName())}>
+    <div className={clsx(withBaseName())}>
       {!!jsonByScopeInView.filter((s) => ["light", "dark"].includes(s.scope))
         .length && (
         <LightDarkToggle mode={props.mode} onModeChanged={onModeChanged} />
@@ -78,7 +78,7 @@ export const FoundationPatternsList = (
                   saltColorOverrides={saltColorOverrides}
                 />
               ) : pattern === "shadow" ? (
-                <div className={cn(withBaseName("ColorsAndShadows"))}>
+                <div className={clsx(withBaseName("ColorsAndShadows"))}>
                   <ShadowPattern
                     saltColorOverrides={saltColorOverrides}
                     themeName={props.themeName}

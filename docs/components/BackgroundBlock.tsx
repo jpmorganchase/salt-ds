@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import "./BackgroundBlock.css";
 
@@ -8,5 +8,5 @@ export const BackgroundBlock = ({
   className,
   ...restProps
 }: ComponentPropsWithoutRef<"div">) => {
-  return <div className={cx("BackgroundBlock", className)} {...restProps} />;
+  return <div className={clsx("BackgroundBlock", className)} {...restProps} />;
 };

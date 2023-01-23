@@ -13,7 +13,7 @@ import React, {
 import { makePrefixer } from "@salt-ds/core";
 import { GridColumnInfo } from "./GridColumn";
 import { GridContext } from "./GridContext";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   CellMeasure,
   clamp,
@@ -1056,7 +1056,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                   <ColumnDataContext.Provider value={columnDataContext}>
                     {props.children}
                     <div
-                      className={cx(
+                      className={clsx(
                         withBaseName(),
                         {
                           [withBaseName("zebra")]: zebra,

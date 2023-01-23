@@ -7,7 +7,7 @@ import {
   PolymorphicRef,
 } from "../utils";
 import "./FlexItem.css";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 const withBaseName = makePrefixer("saltFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = [
@@ -69,7 +69,7 @@ export const FlexItem: FlexItemComponent = forwardRef(
     };
     return (
       <Component
-        className={cx(className, withBaseName())}
+        className={clsx(className, withBaseName())}
         ref={ref}
         style={itemStyle}
         {...rest}

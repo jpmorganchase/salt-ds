@@ -5,7 +5,7 @@ import {
   useId,
   Text,
 } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, MouseEvent, Ref, useEffect } from "react";
 
 import {
@@ -73,7 +73,7 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
     }, [announce, disableAnnouncer, message, status, title]);
 
     return (
-      <div className={cx(withBaseName(), className)} ref={ref} {...rest}>
+      <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
         <StatusIndicator
           CircularProgressProps={CircularProgressProps}
           SpinnerProps={SpinnerProps}
@@ -90,18 +90,18 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
           <div
             // `aria-labelledby` to itself so that children of this div will show up in screen reader, and we don't need to join to aria-label
             aria-labelledby={id}
-            className={cx(withBaseName("content"))}
+            className={clsx(withBaseName("content"))}
             id={id}
             role="region"
           >
             {title && (
-              <Text className={cx(withBaseName("title"))}>{title}</Text>
+              <Text className={clsx(withBaseName("title"))}>{title}</Text>
             )}
             {message && (
-              <Text className={cx(withBaseName("message"))}>{message}</Text>
+              <Text className={clsx(withBaseName("message"))}>{message}</Text>
             )}
             {hasActions && (
-              <div className={cx(withBaseName("actions"))}>
+              <div className={clsx(withBaseName("actions"))}>
                 {children || (
                   <Button onClick={onActionClick} ref={buttonRef}>
                     {actionLabel}

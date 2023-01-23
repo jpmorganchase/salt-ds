@@ -1,4 +1,4 @@
-import cn from "classnames";
+import { clsx } from "clsx";
 import {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -50,12 +50,12 @@ export const CompactInput = ({
   return (
     <span>
       <FormField
-        className={cn(withBaseName("compactInputField"), className)}
+        className={clsx(withBaseName("compactInputField"), className)}
         fullWidth={false}
         {...restFormFieldProps}
       >
         <Input
-          className={cn(withBaseName("compactInput"), {
+          className={clsx(withBaseName("compactInput"), {
             [withBaseName("compactInputFixed")]: count < 100,
           })}
           highlightOnFocus

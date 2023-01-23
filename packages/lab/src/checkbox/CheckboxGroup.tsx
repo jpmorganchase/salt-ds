@@ -1,4 +1,4 @@
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   ChangeEvent,
   ChangeEventHandler,
@@ -88,7 +88,7 @@ export const CheckboxGroup = forwardRef<
       value={{ name, onChange: handleChange, checkedValues }}
     >
       <fieldset
-        className={cx(classBase, {
+        className={clsx(classBase, {
           [`${classBase}-horizontal`]: row,
         })}
         ref={ref}

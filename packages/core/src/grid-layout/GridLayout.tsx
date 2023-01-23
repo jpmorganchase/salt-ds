@@ -1,5 +1,5 @@
 import { forwardRef, ReactElement, ElementType } from "react";
-import cx from "classnames";
+import { clsx } from "clsx";
 
 import {
   makePrefixer,
@@ -82,7 +82,7 @@ export const GridLayout: GridLayoutComponent = forwardRef(
 
     return (
       <Component
-        className={cx(withBaseName(), className)}
+        className={clsx(withBaseName(), className)}
         style={gridLayoutStyles}
         ref={ref}
         {...rest}
