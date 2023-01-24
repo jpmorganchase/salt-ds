@@ -1,44 +1,44 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { FlowLayout } from "@salt-ds/core";
+import { InlineLayout } from "@salt-ds/core";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Core/Layout/FlowLayout"
-  component={FlowLayout}
+  title="Documentation/Core/Layout/InlineLayout"
+  component={InlineLayout}
   parameters={{
     viewMode: "docs",
   }}
 />
 
-# Flow layout
+# Inline layout
 
-Flow layout dictates a horizontal order and direction for UI elements.
-It builds from flex layout, the height is driven by the child elements.
+Inline layout dictates a horizontal order and direction for UI elements.
+It builds from flex layout, the width is driven by the child elements, and there are visual separators that can be turned on/off (default) between items.
 
-It can be used for cases in which the direction needs to be consistently horizontal, for example a interdependent group of buttons.
+It can be used to layout static components or information in a horizontal orientation, such as metric data displays, contact information or page filters.
 
 <Canvas>
-  <Story id="core-layout-flowlayout--default-flow-layout" />
+  <Story id="core-layout-inlinelayout--default-inline-layout" />
 </Canvas>
 
-## Use Flow layout when...
+## Use Inline layout when...
 
-You want to build responsive layouts that will wrap into two rows as soon as there is not enough space on the viewport.
+You need a layout that is consistently horizontal and either scrollable or you want to use breakpoints for responsiveness.
 
-### Don't use Flow layout when...
+### Don't use Inline layout when...
 
 You want the direction to have more complex customization. In this case we recommend you having a look at [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
 
-## Configuring Flow layout
+## Configuring Inline layout
 
 ### API
 
 ```
-import { FlowLayout } from "@salt-ds/core";
+import { InlineLayout } from "@salt-ds/core";
 ```
 
 ### Props
 
-<ArgsTable of={FlowLayout} />
+<ArgsTable of={InlineLayout} />
 
 <HelpAndSupport />
