@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Error" />
@@ -8,8 +14,32 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors used to symbolise an error state.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-error-background-emphasize" />
-  <ColorBlock colorVar="--salt-palette-error-border" />
-  <ColorBlock colorVar="--salt-palette-error-foreground" />
-</DocGrid>
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-error-border"
+      colors={{
+        "--salt-palette-error-border": "var(--salt-palette-error-border)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-error-foreground"
+      colors={{
+        "--salt-palette-error-foreground":
+          "var(--salt-palette-error-foreground)",
+      }}
+    />
+    <ColorItem
+      title="Background (emphasized)"
+      subtitle="--salt-palette-error-background-emphasize"
+      colors={{
+        "--salt-palette-error-background-emphasize":
+          "var(--salt-palette-error-background-emphasize)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
