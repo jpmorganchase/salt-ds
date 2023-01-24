@@ -163,6 +163,8 @@
 
 .docs-wrapper .container .col {
   padding: 0;
+  display: flex;
+  flex-direction: column;
   align-self: flex-start;
   height: 100%;
 }
@@ -223,12 +225,13 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex: 1;
 }
 
 .docs-toc-container {
   --ifm-link-color: var(--salt-text-secondary-foreground);
   --ifm-link-decoration: none;
-  height: 100%;
+  height: 100vh;
   position: sticky;
   padding-left: calc(5 * var(--salt-size-unit));
   padding-top: calc(3 * var(--salt-size-unit));
@@ -323,6 +326,12 @@ ul.table-of-contents li > ul li {
   margin-top: calc(var(--salt-size-unit) * 2);
 }
 
+.theme-doc-markdown.markdown {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .theme-doc-markdown.markdown > h1:first-child {
   --ifm-h1-font-size: var(--salt-text-display2-fontSize);
   --ifm-heading-font-weight: var(--salt-text-display2-fontWeight);
@@ -335,6 +344,22 @@ ul.table-of-contents li > ul li {
 
 .theme-code-block {
   --ifm-leading: var(--ifm-paragraph-margin-bottom);
+}
+
+main .container > div > div > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.container article {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.container .row {
+  height: 100%;
 }
 
 .footer {
