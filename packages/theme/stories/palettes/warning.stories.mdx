@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Warning" />
@@ -8,8 +14,32 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors symbolising a warning state.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-warning-background-emphasize" />
-  <ColorBlock colorVar="--salt-palette-warning-border" />
-  <ColorBlock colorVar="--salt-palette-warning-foreground" />
-</DocGrid>
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-warning-border"
+      colors={{
+        "--salt-palette-warning-border": "var(--salt-palette-warning-border)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-warning-foreground"
+      colors={{
+        "--salt-palette-warning-foreground":
+          "var(--salt-palette-warning-foreground)",
+      }}
+    />
+    <ColorItem
+      title="Background (emphasized)"
+      subtitle="--salt-palette-warning-background-emphasize"
+      colors={{
+        "--salt-palette-warning-background-emphasize":
+          "var(--salt-palette-warning-background-emphasize)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
