@@ -28,16 +28,26 @@
   border-color: transparent;
 }
 
-.saltGridCell-editable .saltGridBaseCell-valueContainer-status-error {
+.saltGridCell-editable .saltGridBaseCell-valueContainer-status-error,
+.saltGridBaseCell-status-error:focus .saltGridCursor {
   border-color: var(--salt-status-error-borderColor);
+}
+
+.saltGridBaseCell-status-error:focus .saltGridCornerTag-focusOnly {
+  border-left-color: var(--salt-status-error-borderColor);
 }
 
 .saltGridBaseCell-valueContainer-status-error {
   background-color: var(--salt-palette-error-background-emphasize);
 }
 
-.saltGridCell-editable .saltGridBaseCell-valueContainer-status-warning {
+.saltGridCell-editable .saltGridBaseCell-valueContainer-status-warning,
+.saltGridBaseCell-status-warning:focus .saltGridCursor {
   border-color: var(--salt-status-warning-borderColor);
+}
+
+.saltGridBaseCell-status-warning:focus .saltGridCornerTag-focusOnly {
+  border-left-color: var(--salt-status-warning-borderColor);
 }
 
 .saltGridBaseCell-valueContainer-status-warning {

@@ -85,7 +85,10 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       separator={column.separator}
       isSelected={isSelected}
       isEditable={isEditable}
-      className={className}
+      className={clsx(className, {
+        [withBaseName(`status-${validationStatus as string}`)]:
+          validationStatus,
+      })}
       style={style}
       tabIndex={isFocused && !isFocusableContent ? 0 : -1}
       onFocus={onFocus}
