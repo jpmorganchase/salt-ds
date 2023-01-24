@@ -10,6 +10,7 @@ import {
 import { Story } from "@storybook/react";
 import { randomInt, randomNumber, randomText } from "./utils";
 import { useCallback, useState } from "react";
+import "./grid.stories.css";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -98,7 +99,7 @@ const useExampleDataSource = () => {
   return { rows, setAmount, setName, setDiscount, setPrice };
 };
 
-const CellValidationTemplate: Story<{}> = () => {
+export const CellValidation: Story = () => {
   const { setPrice, setDiscount, rows, setAmount, setName } =
     useExampleDataSource();
 
@@ -173,5 +174,3 @@ const CellValidationTemplate: Story<{}> = () => {
     </Grid>
   );
 };
-
-export const CellValidation = CellValidationTemplate.bind({});
