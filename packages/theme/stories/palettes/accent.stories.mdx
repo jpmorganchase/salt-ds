@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Accent" />
@@ -8,8 +14,32 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors used to provide a consistent brand detail throughout the component library.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-accent-background" />
-  <ColorBlock colorVar="--salt-palette-accent-border" />
-  <ColorBlock colorVar="--salt-palette-accent-foreground" />
-</DocGrid>
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-accent-background"
+      colors={{
+        "--salt-palette-accent-background":
+          "var(--salt-palette-accent-background)",
+      }}
+    />
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-accent-border"
+      colors={{
+        "--salt-palette-accent-border": "var(--salt-palette-accent-border)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-accent-foreground"
+      colors={{
+        "--salt-palette-accent-foreground":
+          "var(--salt-palette-accent-foreground)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
