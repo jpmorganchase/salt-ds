@@ -13,17 +13,14 @@ import {
   useFloating,
 } from "@floating-ui/react";
 import { margin, useControlled } from "@salt-ds/core";
-import {
-  useRef,
-  HTMLProps,
-} from "react";
+import { useRef, HTMLProps } from "react";
 import { UseFloatingUIProps } from "../popper";
 import { isDesktop } from "../window";
 import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps
   extends Partial<
-  Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
+    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   /**
    * Do not respond to focus events.
@@ -75,12 +72,7 @@ export function useTooltip(props?: UseTooltipProps) {
 
   const middleware = isDesktop
     ? [margin(8), arrow({ element: arrowRef })]
-    : [
-      offset(8),
-      flip(),
-      shift(),
-      arrow({ element: arrowRef }),
-    ];
+    : [offset(8), flip(), shift(), arrow({ element: arrowRef })];
   const {
     floating,
     reference,

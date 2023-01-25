@@ -13,10 +13,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  makePrefixer,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { TooltipProps, useTooltipContext } from "../tooltip";
 import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
@@ -132,11 +129,11 @@ export const PillBase = forwardRef(function PillBase(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon && isValidElement<any>(icon)
       ? cloneElement(icon, {
-        ...icon.props,
-        // FIXME: icon.props is any
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        className: clsx(withBaseName("icon"), icon.props.className),
-      })
+          ...icon.props,
+          // FIXME: icon.props is any
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          className: clsx(withBaseName("icon"), icon.props.className),
+        })
       : icon;
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {

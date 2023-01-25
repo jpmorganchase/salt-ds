@@ -68,36 +68,29 @@ export const ListItemBase = memo(
       }
     }, [highlighted, enterDelay, leaveDelay, detectTruncation, isOverflowed]);
 
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      placement,
-      open: openTooltip,
-      disabled: !isOverflowed,
-    });
-
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-      "aria-label": typeof children === "string" ? children : undefined,
-      ...restProps,
-      className: clsx(
-        withBaseName(),
-        {
-          [withBaseName("deselectable")]: deselectable,
-          [withBaseName("highlighted")]: highlighted,
-          [withBaseName("selected")]: selected,
-          [withBaseName("focusVisible")]: focusVisible,
-          [withBaseName("disabled")]: disabled,
-        },
-        className
-      ),
-    });
-
-    const handleRef = useForkRef(
-      triggerRef,
-      detectTruncation ? ref : setItemRef
-    );
-
     return (
-      <Tooltip {...getTooltipProps({ text: tooltipText })}>
-        <div ref={handleRef} {...triggerProps}>
+      <Tooltip
+        placement={placement}
+        open={openTooltip}
+        disabled={!isOverflowed}
+        content={tooltipText}
+      >
+        <div
+          ref={detectTruncation ? ref : setItemRef}
+          aria-label={typeof children === "string" ? children : undefined}
+          {...restProps}
+          className={clsx(
+            withBaseName(),
+            {
+              [withBaseName("deselectable")]: deselectable,
+              [withBaseName("highlighted")]: highlighted,
+              [withBaseName("selected")]: selected,
+              [withBaseName("focusVisible")]: focusVisible,
+              [withBaseName("disabled")]: disabled,
+            },
+            className
+          )}
+        >
           {detectTruncation ? (
             <span className={withBaseName("textWrapper")} ref={overflowRef}>
               {itemTextHighlightPattern == null ? (

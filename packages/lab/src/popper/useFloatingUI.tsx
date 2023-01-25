@@ -1,9 +1,5 @@
 // import type { Props } from "@floating-ui/react-dom-interactions";
-import type {
-  Middleware,
-  Placement,
-  Strategy,
-} from "@floating-ui/react";
+import type { Middleware, Placement, Strategy } from "@floating-ui/react";
 import {
   autoUpdate,
   flip,
@@ -21,7 +17,6 @@ export type UseFloatingUIProps = {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 };
-
 
 export const DEFAULT_FLOATING_UI_MIDDLEWARE = isDesktop
   ? []
