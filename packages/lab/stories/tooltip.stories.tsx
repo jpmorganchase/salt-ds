@@ -1,4 +1,4 @@
-import {Button} from "@salt-ds/core";
+import { Button } from "@salt-ds/core";
 import { Tooltip, TooltipProps } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { useCallback } from "react";
@@ -9,9 +9,9 @@ export default {
 } as ComponentMeta<typeof Tooltip>;
 
 export const Default: Story<TooltipProps> = (props) => {
-  const defaultProps : TooltipProps = {
+  const defaultProps: TooltipProps = {
     content: "I am a tooltip",
-    status: "error"
+    status: "error",
   };
 
   return (
