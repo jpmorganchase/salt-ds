@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Interact" />
@@ -8,51 +14,181 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors representing actions such as editing or selecting an item.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-interact-background" />
-  <ColorBlock colorVar="--salt-palette-interact-background-disabled" />
-  <ColorBlock colorVar="--salt-palette-interact-background-hover" />
-  <ColorBlock colorVar="--salt-palette-interact-background-active" />
-  <ColorBlock colorVar="--salt-palette-interact-background-blurSelected" />
-  <ColorBlock colorVar="--salt-palette-interact-border" />
-  <ColorBlock colorVar="--salt-palette-interact-border-hover" />
-  <ColorBlock colorVar="--salt-palette-interact-border-active" />
-  <ColorBlock colorVar="--salt-palette-interact-border-activeDisabled" />
-  <ColorBlock colorVar="--salt-palette-interact-border-disabled" />
-  <ColorBlock colorVar="--salt-palette-interact-border-readonly" />
-  <ColorBlock colorVar="--salt-palette-interact-foreground" />
-  <ColorBlock colorVar="--salt-palette-interact-foreground-disabled" />
-  <ColorBlock colorVar="--salt-palette-interact-foreground-partial" />
-  <ColorBlock colorVar="--salt-palette-interact-foreground-partialDisabled" />
-  <ColorBlock colorVar="--salt-palette-interact-outline" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-background" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-background-hover" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-background-active" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-background-activeDisabled" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-background-disabled" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-foreground" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-foreground-active" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-foreground-activeDisabled" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-foreground-disabled" />
-  <ColorBlock colorVar="--salt-palette-interact-cta-foreground-hover" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-background" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-background-hover" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-background-active" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-background-activeDisabled" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-background-disabled" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-foreground" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-foreground-hover" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-foreground-active" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-foreground-activeDisabled" />
-  <ColorBlock colorVar="--salt-palette-interact-primary-foreground-disabled" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-background" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-background-hover" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-background-active" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-background-activeDisabled" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-background-disabled" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-foreground" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-foreground-hover" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-foreground-active" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-foreground-activeDisabled" />
-  <ColorBlock colorVar="--salt-palette-interact-secondary-foreground-disabled" />
-</DocGrid>
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-interact-background"
+      colors={{
+        "--salt-palette-interact-background":
+          "var(--salt-palette-interact-background)",
+        "--salt-palette-interact-background-disabled":
+          "var(--salt-palette-interact-background-disabled)",
+        "--salt-palette-interact-background-hover":
+          "var(--salt-palette-interact-background-hover)",
+        "--salt-palette-interact-background-active":
+          "var(--salt-palette-interact-background-active)",
+        "--salt-palette-interact-background-blurSelected":
+          "var(--salt-palette-interact-background-blurSelected)",
+      }}
+    />
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-interact-border"
+      colors={{
+        "--salt-palette-interact-border": "var(--salt-palette-interact-border)",
+        "--salt-palette-interact-border-hover":
+          "var(--salt-palette-interact-border-hover)",
+        "--salt-palette-interact-border-active":
+          "var(--salt-palette-interact-border-active)",
+        "--salt-palette-interact-border-activeDisabled":
+          "var(--salt-palette-interact-border-activeDisabled)",
+        "--salt-palette-interact-border-disabled":
+          "var(--salt-palette-interact-border-disabled)",
+        "--salt-palette-interact-border-readonly":
+          "var(--salt-palette-interact-border-readonly)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-interact-foreground"
+      colors={{
+        "--salt-palette-interact-foreground":
+          "var(--salt-palette-interact-foreground)",
+        "--salt-palette-interact-foreground-disabled":
+          "var(--salt-palette-interact-foreground-disabled)",
+        "--salt-palette-interact-foreground-partial":
+          "var(--salt-palette-interact-foreground-partial)",
+        "--salt-palette-interact-foreground-partialDisabled":
+          "var(--salt-palette-interact-foreground-partialDisabled)",
+      }}
+    />
+    <ColorItem
+      title="Outline"
+      subtitle="--salt-palette-interact-outline"
+      colors={{
+        "--salt-palette-interact-outline":
+          "var(--salt-palette-interact-outline)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
+
+## Primary
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-interact-primary-background"
+      colors={{
+        "--salt-palette-interact-primary-background":
+          "var(--salt-palette-interact-primary-background)",
+        "--salt-palette-interact-primary-background-hover":
+          "var(--salt-palette-interact-primary-background-hover)",
+        "--salt-palette-interact-primary-background-active":
+          "var(--salt-palette-interact-primary-background-active)",
+        "--salt-palette-interact-primary-background-activeDisabled":
+          "var(--salt-palette-interact-primary-background-activeDisabled)",
+        "--salt-palette-interact-primary-background-disabled":
+          "var(--salt-palette-interact-primary-background-disabled)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-interact-primary-foreground"
+      colors={{
+        "--salt-palette-interact-primary-foreground":
+          "var(--salt-palette-interact-primary-foreground)",
+        "--salt-palette-interact-primary-foreground-hover":
+          "var(--salt-palette-interact-primary-foreground-hover)",
+        "--salt-palette-interact-primary-foreground-active":
+          "var(--salt-palette-interact-primary-foreground-active)",
+        "--salt-palette-interact-primary-foreground-activeDisabled":
+          "var(--salt-palette-interact-primary-foreground-activeDisabled)",
+        "--salt-palette-interact-primary-foreground-disabled":
+          "var(--salt-palette-interact-primary-foreground-disabled)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
+
+## Secondary
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-interact-secondary-background"
+      colors={{
+        "--salt-palette-interact-secondary-background":
+          "var(--salt-palette-interact-secondary-background)",
+        "--salt-palette-interact-secondary-background-hover":
+          "var(--salt-palette-interact-secondary-background-hover)",
+        "--salt-palette-interact-secondary-background-active":
+          "var(--salt-palette-interact-secondary-background-active)",
+        "--salt-palette-interact-secondary-background-activeDisabled":
+          "var(--salt-palette-interact-secondary-background-activeDisabled)",
+        "--salt-palette-interact-secondary-background-disabled":
+          "var(--salt-palette-interact-secondary-background-disabled)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-interact-secondary-foreground"
+      colors={{
+        "--salt-palette-interact-secondary-foreground":
+          "var(--salt-palette-interact-secondary-foreground)",
+        "--salt-palette-interact-secondary-foreground-hover":
+          "var(--salt-palette-interact-secondary-foreground-hover)",
+        "--salt-palette-interact-secondary-foreground-active":
+          "var(--salt-palette-interact-secondary-foreground-active)",
+        "--salt-palette-interact-secondary-foreground-activeDisabled":
+          "var(--salt-palette-interact-secondary-foreground-activeDisabled)",
+        "--salt-palette-interact-secondary-foreground-disabled":
+          "var(--salt-palette-interact-secondary-foreground-disabled)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
+
+## CTA
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-interact-cta-background"
+      colors={{
+        "--salt-palette-interact-cta-background":
+          "var(--salt-palette-interact-cta-background)",
+        "--salt-palette-interact-cta-background-hover":
+          "var(--salt-palette-interact-cta-background-hover)",
+        "--salt-palette-interact-cta-background-active":
+          "var(--salt-palette-interact-cta-background-active)",
+        "--salt-palette-interact-cta-background-activeDisabled":
+          "var(--salt-palette-interact-cta-background-activeDisabled)",
+        "--salt-palette-interact-cta-background-disabled":
+          "var(--salt-palette-interact-cta-background-disabled)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-interact-cta-foreground"
+      colors={{
+        "--salt-palette-interact-cta-foreground":
+          "var(--salt-palette-interact-cta-foreground)",
+        "--salt-palette-interact-cta-foreground-hover":
+          "var(--salt-palette-interact-cta-foreground-hover)",
+        "--salt-palette-interact-cta-foreground-active":
+          "var(--salt-palette-interact-cta-foreground-active)",
+        "--salt-palette-interact-cta-foreground-activeDisabled":
+          "var(--salt-palette-interact-cta-foreground-activeDisabled)",
+        "--salt-palette-interact-cta-foreground-disabled":
+          "var(--salt-palette-interact-cta-foreground-disabled)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
