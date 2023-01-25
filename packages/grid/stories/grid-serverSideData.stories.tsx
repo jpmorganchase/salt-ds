@@ -8,6 +8,7 @@ import {
   RowKeyGetter,
   RowSelectionCheckboxColumn,
 } from "../src";
+import "./grid.stories.css";
 
 export default {
   title: "Data Grid/Data Grid",
