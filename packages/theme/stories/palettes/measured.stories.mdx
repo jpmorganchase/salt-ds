@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Measured" />
@@ -8,15 +14,51 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors used to represent a measurement, value or progression.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-measured-background" />
-  <ColorBlock colorVar="--salt-palette-measured-background-disabled" />
-  <ColorBlock colorVar="--salt-palette-measured-foreground" />
-  <ColorBlock colorVar="--salt-palette-measured-foreground-active" />
-  <ColorBlock colorVar="--salt-palette-measured-foreground-activeDisabled" />
-  <ColorBlock colorVar="--salt-palette-measured-foreground-disabled" />
-  <ColorBlock colorVar="--salt-palette-measured-border" />
-  <ColorBlock colorVar="--salt-palette-measured-border-disabled" />
-  <ColorBlock colorVar="--salt-palette-measured-fill" />
-  <ColorBlock colorVar="--salt-palette-measured-fill-disabled" />
-</DocGrid>
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-measured-background"
+      colors={{
+        "--salt-palette-measured-background":
+          "var(--salt-palette-measured-background)",
+        "--salt-palette-measured-border-background":
+          "var(--salt-palette-measured-border-background)",
+      }}
+    />
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-measured-border"
+      colors={{
+        "--salt-palette-measured-border": "var(--salt-palette-measured-border)",
+        "--salt-palette-measured-border-disabled":
+          "var(--salt-palette-measured-border-disabled)",
+      }}
+    />
+    <ColorItem
+      title="Fill"
+      subtitle="--salt-palette-measured-fill"
+      colors={{
+        "--salt-palette-measured-fill": "var(--salt-palette-measured-fill)",
+        "--salt-palette-measured-fill-disabled":
+          "var(--salt-palette-measured-fill-disabled)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-measured-foreground"
+      colors={{
+        "--salt-palette-measured-foreground":
+          "var(--salt-palette-measured-foreground)",
+        "--salt-palette-measured-foreground-disabled":
+          "var(--salt-palette-measured-foreground-disabled)",
+        "--salt-palette-measured-foreground-active":
+          "var(--salt-palette-measured-foreground-active)",
+        "--salt-palette-measured-foreground-activeDisabled":
+          "var(--salt-palette-measured-foreground-activeDisabled)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
