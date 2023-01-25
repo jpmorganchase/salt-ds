@@ -4,7 +4,6 @@ import { FlexLayout } from "@salt-ds/core";
 import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
 import { Pagination, Paginator } from "@salt-ds/lab";
 import { createDummyInvestors, investorKeyGetter } from "./dummyData";
-import "./grid.stories.css";
 
 export default {
   title: "Data Grid/Data Grid",

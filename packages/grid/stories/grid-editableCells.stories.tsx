@@ -10,7 +10,6 @@ import {
 import { Story } from "@storybook/react";
 import { randomInt, randomNumber, randomText } from "./utils";
 import { useCallback, useState } from "react";
-import "./grid.stories.css";
 
 export default {
   title: "Data Grid/Data Grid",
