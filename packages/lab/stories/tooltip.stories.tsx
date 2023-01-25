@@ -1,10 +1,5 @@
-import { Button, useForkRef } from "@salt-ds/core";
-import {
-  Tooltip,
-  TooltipProps,
-  useTooltip,
-  UseTooltipProps,
-} from "@salt-ds/lab";
+import { Button } from "@salt-ds/core";
+import { Tooltip, TooltipProps } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { useCallback } from "react";
 
@@ -13,54 +8,38 @@ export default {
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 
-export const Default: Story<TooltipProps & UseTooltipProps> = (props) => {
-  const { getTriggerProps, getTooltipProps } = useTooltip(props);
-
-  const defaultProps = getTooltipProps({
-    text: "I am a tooltip",
+export const Default: Story<TooltipProps> = (props) => {
+  const defaultProps = {
+    content: "I am a tooltip",
     status: "info",
-  });
+  };
 
   return (
-    <>
-      <Tooltip {...defaultProps}>
-        <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
-      </Tooltip>
-    </>
+    <Tooltip {...defaultProps}>
+      <Button>Hover</Button>
+    </Tooltip>
   );
 };
 
-export const OpenTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
-  const { getTriggerProps, getTooltipProps } = useTooltip(props);
-
-  const openProps = getTooltipProps({
-    text: "I am a tooltip",
+export const OpenTooltip: Story<TooltipProps> = (props) => {
+  const userProps: TooltipProps = {
+    content: "I am a tooltip",
     status: "info",
     open: true,
-  });
+    ...props,
+  };
 
   return (
-    <>
-      <Tooltip {...openProps}>
-        <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
-      </Tooltip>
-    </>
+    <Tooltip {...userProps}>
+      <Button>Hover</Button>
+    </Tooltip>
   );
 };
 
-export const ScrollTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const ScrollTooltip: Story<TooltipProps> = (props) => {
   const handleScrollButton = useCallback((node: HTMLButtonElement | null) => {
     node?.scrollIntoView({ block: "center", inline: "center" });
   }, []);
-
-  const { text, ...rest } = props;
-  const { getTriggerProps, getTooltipProps } = useTooltip(rest);
-
-  const { ref, ...triggerProps } = getTriggerProps<typeof Button>({
-    style: { marginTop: "100vh", marginLeft: "100vw" },
-  });
-
-  const handleButtonRef = useForkRef(handleScrollButton, ref);
 
   return (
     <div
@@ -71,8 +50,11 @@ export const ScrollTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
         width: "300vw",
       }}
     >
-      <Tooltip {...getTooltipProps({ text })}>
-        <Button ref={handleButtonRef} {...triggerProps}>
+      <Tooltip {...props}>
+        <Button
+          style={{ marginTop: "100vh", marginLeft: "100vw" }}
+          ref={handleScrollButton}
+        >
           Hover
         </Button>
       </Tooltip>
@@ -80,50 +62,37 @@ export const ScrollTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 ScrollTooltip.args = {
-  text: "I am a tooltip",
+  content: "I am a tooltip",
   open: true,
   placement: "top",
 };
 
-export const ErrorTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
-  const { status = "error", ...rest } = props;
-  const { getTriggerProps, getTooltipProps } = useTooltip(rest);
+export const ErrorTooltip: Story<TooltipProps> = (props) => {
+  const { status = "error" } = props;
 
   return (
-    <>
-      <Tooltip {...getTooltipProps({ text: "We found an issue", status })}>
-        <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
-      </Tooltip>
-    </>
+    <Tooltip content="We found an issue" status={status}>
+      <Button>Hover</Button>
+    </Tooltip>
   );
 };
 
-export const WarningTooltip: Story<TooltipProps & UseTooltipProps> = (
-  props
-) => {
-  const { status = "warning", ...rest } = props;
-  const { getTriggerProps, getTooltipProps } = useTooltip(rest);
+export const WarningTooltip: Story<TooltipProps> = (props) => {
+  const { status = "warning" } = props;
 
   return (
-    <>
-      <Tooltip {...getTooltipProps({ text: "Are you sure?", status })}>
-        <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
-      </Tooltip>
-    </>
+    <Tooltip content="Are you sure?" status={status}>
+      <Button>Hover</Button>
+    </Tooltip>
   );
 };
 
-export const SuccessTooltip: Story<TooltipProps & UseTooltipProps> = (
-  props
-) => {
-  const { status = "success", ...rest } = props;
-  const { getTriggerProps, getTooltipProps } = useTooltip(rest);
+export const SuccessTooltip: Story<TooltipProps> = (props) => {
+  const { status = "success" } = props;
 
   return (
-    <>
-      <Tooltip {...getTooltipProps({ text: "Well done", status })}>
-        <Button {...getTriggerProps<typeof Button>()}>Hover</Button>
-      </Tooltip>
-    </>
+    <Tooltip content="Well done" status={status}>
+      <Button> Hover</Button>
+    </Tooltip>
   );
 };

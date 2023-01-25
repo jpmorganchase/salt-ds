@@ -1,7 +1,7 @@
-import { Button, ButtonProps, useForkRef } from "@salt-ds/core";
+import { Button, ButtonProps } from "@salt-ds/core";
 import { IconProps } from "@salt-ds/icons";
 import { ComponentType, forwardRef } from "react";
-import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
+import { Tooltip, TooltipProps } from "../tooltip";
 
 export type ContactActionProps = ButtonProps & {
   accessibleText?: string;
@@ -23,23 +23,13 @@ export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
 
     const Icon = icon!;
 
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      placement: "top",
-      disabled: !accessibleText,
-    });
-
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps<typeof Button>(
-      {
-        variant: "secondary",
-        ...restProps,
-      }
-    );
-
-    const handleRef = useForkRef(triggerRef, ref);
-
     return (
-      <Tooltip {...getTooltipProps({ text: accessibleText, ...tooltipProps })}>
-        <Button {...triggerProps} ref={handleRef}>
+      <Tooltip
+        placement="top"
+        disabled={!accessibleText}
+        content={accessibleText}
+      >
+        <Button variant="secondary" ref={ref} {...restProps}>
           {label ? label : <Icon />}
         </Button>
       </Tooltip>

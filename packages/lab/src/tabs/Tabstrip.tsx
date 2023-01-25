@@ -38,7 +38,7 @@ import {
   TabstripProps,
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
-import { Tooltip, useTooltip } from "../tooltip";
+import { Tooltip } from "../tooltip";
 
 import "./Tabstrip.css";
 import "./ThemeTabstrip.css";
@@ -107,10 +107,10 @@ export const Tabstrip = forwardRef(function Tabstrip(
 
   const injectedItems = enableAddTab
     ? [
-        {
-          source: { label: "Add Tab", position: -1, priority: 1 },
-        } as InjectedSourceItem,
-      ]
+      {
+        source: { label: "Add Tab", position: -1, priority: 1 },
+      } as InjectedSourceItem,
+    ]
     : undefined;
 
   const collectionHook = useOverflowCollectionItems({
@@ -183,8 +183,6 @@ export const Tabstrip = forwardRef(function Tabstrip(
     ]
   );
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({});
-
   const {
     activeTabIndex,
     activateTab,
@@ -217,19 +215,19 @@ export const Tabstrip = forwardRef(function Tabstrip(
   useImperativeHandle(
     forwardedRef,
     () =>
-      ({
-        focus: () => {
-          const { current: tabstrip } = root;
-          if (tabstrip) {
-            const selectedTab = tabstrip.querySelector(
-              '.saltTab[aria-selected="true"]'
-            ) as HTMLElement;
-            if (selectedTab) {
-              selectedTab.focus();
-            }
+    ({
+      focus: () => {
+        const { current: tabstrip } = root;
+        if (tabstrip) {
+          const selectedTab = tabstrip.querySelector(
+            '.saltTab[aria-selected="true"]'
+          ) as HTMLElement;
+          if (selectedTab) {
+            selectedTab.focus();
           }
-        },
-      } as FocusAPI),
+        }
+      },
+    } as FocusAPI),
     []
   );
 
@@ -324,8 +322,8 @@ export const Tabstrip = forwardRef(function Tabstrip(
         const tabIndex = tabIsBeingEdited
           ? undefined
           : selected && !tabstripHook.focusIsWithinComponent
-          ? 0
-          : -1;
+            ? 0
+            : -1;
 
         const baseProps: Partial<TabProps> &
           responsiveDataAttributes & {
@@ -383,56 +381,51 @@ export const Tabstrip = forwardRef(function Tabstrip(
     const [injectedItem] = collectionHook.data.filter((i) => i.isInjectedItem);
 
     if (overflowIndicator) {
-      const triggerProps = getTriggerProps<typeof Button>();
       content.push(
-        <Dropdown<OverflowItem>
-          className={clsx(withBaseName("overflowMenu"), {
-            [withBaseName("overflowMenu-open")]: showOverflow,
-          })}
-          ListProps={{
-            className: clsx({
-              [withBaseName("overflowMenu-dropTarget")]:
-                tabstripHook.revealOverflowedItems,
-            }),
-          }}
-          data-overflow-indicator
-          data-priority={0}
-          id={overflowIndicator.id}
-          isOpen={showOverflow}
-          key="overflow"
-          onOpenChange={handleOverflowMenuOpen}
-          onKeyDown={handleKeydownOverflowMenu}
-          onSelectionChange={handleOverflowSelectionChange}
-          placement="bottom-end"
-          source={overflowedItems}
-          selected={null}
-          triggerComponent={
-            <Button
-              {...triggerProps}
-              aria-label={`Tabs overflow menu ${overflowCount} item${
-                overflowCount === 1 ? "" : "s"
-              }`}
-              variant="secondary"
-              tabIndex={-1}
-            >
-              <OverflowMenuIcon />
-            </Button>
-          }
-          width="auto"
-        />
-      );
-      if (showTooltip) {
-        content.push(
-          <Tooltip
-            {...getTooltipProps({
-              text: "Active Tab cannot be moved into overflow list",
-              open: true,
-              status: "warning",
+        <Tooltip
+          content="Active Tab cannot be moved into overflow list"
+          open={true}
+          disabled={!showTooltip}
+          status="warning"
+          key="tooltip"
+          disablePortal={false}
+          hideArrow
+        >
+          <Dropdown<OverflowItem>
+            className={clsx(withBaseName("overflowMenu"), {
+              [withBaseName("overflowMenu-open")]: showOverflow,
             })}
-            key="tooltip"
+            ListProps={{
+              className: clsx({
+                [withBaseName("overflowMenu-dropTarget")]:
+                  tabstripHook.revealOverflowedItems,
+              }),
+            }}
+            data-overflow-indicator
+            data-priority={0}
+            id={overflowIndicator.id}
+            isOpen={showOverflow}
+            key="overflow"
+            onOpenChange={handleOverflowMenuOpen}
+            onKeyDown={handleKeydownOverflowMenu}
+            onSelectionChange={handleOverflowSelectionChange}
+            placement="bottom-end"
+            source={overflowedItems}
+            selected={null}
+            triggerComponent={
+              <Button
+                aria-label={`Tabs overflow menu ${overflowCount} item${overflowCount === 1 ? "" : "s"
+                  }`}
+                variant="secondary"
+                tabIndex={-1}
+              >
+                <OverflowMenuIcon />
+              </Button>
+            }
+            width="auto"
           />
-        );
-      }
+        </Tooltip>
+      );
     }
 
     if (injectedItem) {

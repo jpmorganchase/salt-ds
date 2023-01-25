@@ -135,10 +135,11 @@ export const MaximumWidthCascadingMenu: ComponentStory<
     <CascadingMenu
       initialSource={initialSource}
       itemToString={(item) => item?.title}
-      maxWidth={255}
+      maxWidth={100}
       onItemClick={(sourceItem) => {
         console.log(`You clicked: ${sourceItem.title}`);
       }}
+      open
     >
       <Button data-testid="cascading-menu-trigger">
         Open/Close Cascading Menu

@@ -11,9 +11,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { FormFieldContext } from "../form-field-context";
-import { Tooltip, useTooltip } from "../tooltip";
+import { Tooltip } from "../tooltip";
 import { classBase } from "./constant";
 import {
   FormActivationIndicator,
@@ -252,37 +252,28 @@ export const FormField = forwardRef(
       helperTextPlacement === "tooltip" &&
       !hasStatusIndicator;
 
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      disabled: !tooltipHelperText,
-    });
-
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps({
-      className: clsx(
-        withBaseName(),
-        {
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("readOnly")]: readOnly,
-          [withBaseName("warning")]: isWarning,
-          [withBaseName("error")]: isError,
-          [withBaseName("fullWidth")]: fullWidth,
-          [withBaseName(focusClass)]: states.focused,
-          [withBaseName("labelTop")]: labelTop,
-          [withBaseName("labelLeft")]: labelLeft,
-          [withBaseName(`withHelperText`)]: inlineHelperText,
-          [withBaseName(variant)]: variant,
-        },
-        className
-      ),
-      ...eventHandlers,
-      ...restProps,
-    });
-
-    const handleTriggerRef = useForkRef(triggerRef, rootRef);
-    const handleRef = useForkRef(handleTriggerRef, ref);
-
     return (
-      <>
-        <div ref={handleRef} {...triggerProps}>
+      <Tooltip disabled={!tooltipHelperText} content={helperText}>
+        <div
+          className={clsx(
+            withBaseName(),
+            {
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("readOnly")]: readOnly,
+              [withBaseName("warning")]: isWarning,
+              [withBaseName("error")]: isError,
+              [withBaseName("fullWidth")]: fullWidth,
+              [withBaseName(focusClass)]: states.focused,
+              [withBaseName("labelTop")]: labelTop,
+              [withBaseName("labelLeft")]: labelLeft,
+              [withBaseName(`withHelperText`)]: inlineHelperText,
+              [withBaseName(variant)]: variant,
+            },
+            className
+          )}
+          // {...eventHandlers}
+          // {...restProps}
+        >
           <FormFieldContext.Provider
             value={{
               ...states,
@@ -323,8 +314,7 @@ export const FormField = forwardRef(
             )}
           </FormFieldContext.Provider>
         </div>
-        <Tooltip {...getTooltipProps({ text: helperText })} />
-      </>
+      </Tooltip>
     );
   }
 );

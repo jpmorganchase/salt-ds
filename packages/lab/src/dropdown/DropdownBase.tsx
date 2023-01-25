@@ -1,9 +1,4 @@
-import {
-  flip,
-  limitShift,
-  shift,
-  size,
-} from "@floating-ui/react-dom-interactions";
+import { flip, limitShift, shift, size } from "@floating-ui/react";
 import { makePrefixer, useForkRef, useIdMemo as useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { Children, cloneElement, forwardRef, useRef, useState } from "react";

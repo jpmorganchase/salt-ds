@@ -15,10 +15,9 @@ import {
 } from "react";
 import {
   makePrefixer,
-  useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { TooltipProps, useTooltip, useTooltipContext } from "../tooltip";
+import { TooltipProps, useTooltipContext } from "../tooltip";
 import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
 
@@ -133,11 +132,11 @@ export const PillBase = forwardRef(function PillBase(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon && isValidElement<any>(icon)
       ? cloneElement(icon, {
-          ...icon.props,
-          // FIXME: icon.props is any
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          className: clsx(withBaseName("icon"), icon.props.className),
-        })
+        ...icon.props,
+        // FIXME: icon.props is any
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        className: clsx(withBaseName("icon"), icon.props.className),
+      })
       : icon;
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -178,43 +177,36 @@ export const PillBase = forwardRef(function PillBase(
     }
   };
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    disabled: !ellipsis && disabled,
-    enterDelay,
-    placement,
-    leaveDelay,
-  });
-
-  const { ref: triggerRef, ...triggerProps } = getTriggerProps<
-    typeof Component
-  >({
-    "aria-disabled": disabled || undefined,
-    "aria-roledescription": ariaRoledescription,
-    className: clsx(
-      withBaseName(),
-      {
-        [withBaseName("clickable")]: clickable,
-        [withBaseName("deletable")]: deletable && !disabled,
-        [withBaseName("disabled")]: disabled,
-        [withBaseName("active")]: active,
-      },
-      className
-    ),
-    // @ts-ignore
-    "data-testid": "pill",
-    onKeyDown: disabled ? undefined : handleKeyDown,
-    onKeyUp: disabled ? undefined : handleKeyUp,
-    onClick: disabled ? undefined : handleClick,
-    role: "button",
-    tabIndex: disabled ? -1 : 0,
-    ...rest,
-  });
-
-  const handleRef = useForkRef(triggerRef, ref);
-
   return (
-    <Tooltip {...getTooltipProps({ text: label, ...TooltipProps })}>
-      <Component ref={handleRef} {...triggerProps}>
+    <Tooltip
+      content={label}
+      disabled={!ellipsis && disabled}
+      enterDelay={enterDelay}
+      placement={placement}
+      leaveDelay={leaveDelay}
+      {...TooltipProps}
+    >
+      <Component
+        aria-disabled={disabled || undefined}
+        aria-roledescription={ariaRoledescription}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("clickable")]: clickable,
+            [withBaseName("deletable")]: deletable && !disabled,
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("active")]: active,
+          },
+          className
+        )}
+        data-testid="pill"
+        onKeyDown={disabled ? undefined : handleKeyDown}
+        onKeyUp={disabled ? undefined : handleKeyUp}
+        onClick={disabled ? undefined : handleClick}
+        role="button"
+        tabIndex={disabled ? -1 : 0}
+        {...rest}
+      >
         {pillIcon || null}
         <div className={withBaseName("label")} ref={labelRef}>
           <span className={withBaseName("innerLabel")}>{label}</span>

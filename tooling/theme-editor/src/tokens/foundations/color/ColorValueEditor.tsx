@@ -5,7 +5,6 @@ import {
   ColorChooser,
   getColorNameByHexValue,
   Tooltip,
-  useTooltip,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import { useEffect, useMemo, useState } from "react";
@@ -159,10 +158,6 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
     setSelectedColor(Color.makeColorFromHex(defaultColor));
   };
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    placement: "top-start",
-  });
-
   return (
     <div
       className={clsx(withBaseName("input"), {
@@ -193,25 +188,22 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
             )}
             {props.isStateValue && (
               <Tooltip
-                {...getTooltipProps({
-                  text:
-                    formFieldLabel === "Color" ||
-                    formFieldLabel === "Background"
-                      ? "Regular"
-                      : formFieldLabel,
-                })}
+                placement="top-start"
+                content={
+                  formFieldLabel === "Color" || formFieldLabel === "Background"
+                    ? "Regular"
+                    : formFieldLabel
+                }
               >
                 <div
-                  {...getTriggerProps({
-                    className: clsx(
-                      "saltFormLabel",
-                      withBaseName("colorStatesField")
-                    ),
-                  })}
+                  className={clsx(
+                    "saltFormLabel",
+                    withBaseName("colorStatesField")
+                  )}
                 >
                   {formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "background" &&
-                  formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
+                    formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "color" ? (
                     StateIcon(
                       formFieldLabel.split(" ").slice(-1)[0][0].toUpperCase()

@@ -27,7 +27,6 @@ import {
   Card,
   FormField,
   Tooltip,
-  useTooltip,
 } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { forwardRef, Fragment, ReactNode } from "react";
@@ -536,39 +535,32 @@ const ItemWithContactDetailsTooltip: ListItemType<NameEmail> = ({
   ...props
 }) => {
   const itemLabel = item ? contactToString(item) : "";
-  const { getTriggerProps, getTooltipProps } = useTooltip({ enterDelay: 500 });
 
   return (
     <Tooltip
-      {...getTooltipProps({
-        id: "tooltip-right",
-        className: "withinComboboxTooltip",
-        render: () => (
-          <ContactDetails
-            className="withinComboBoxTooltip-contactDetails"
-            embedded
-            stackAtBreakpoint={250}
-          >
-            <ContactPrimaryInfo text={item?.name ?? ""} />
-            <ContactSecondaryInfo text={item?.email ?? ""} />
-            <ContactMetadata>
-              <ContactMetadataItem value="Position" label="Role" />
-              <ContactMetadataItem value="City, Country" label="Location" />
-              <ContactMetadataItem value="+44 2012 123456" label="Office" />
-              <ContactMetadataItem
-                value="NAME@bloomberg.net"
-                label="Bloomberg"
-              />
-              <ContactMetadataItem
-                value="first.last@domain.com"
-                label="Email"
-              />
-            </ContactMetadata>
-          </ContactDetails>
-        ),
-      })}
+      enterDelay={500}
+      disablePortal={false}
+      hideIcon
+      content={
+        <ContactDetails
+          className="withinComboBoxTooltip-contactDetails"
+          embedded
+          stackAtBreakpoint={250}
+        >
+          <ContactPrimaryInfo text={item?.name ?? ""} />
+          <ContactSecondaryInfo text={item?.email ?? ""} />
+          <ContactMetadata>
+            <ContactMetadataItem value="Position" label="Role" />
+            <ContactMetadataItem value="City, Country" label="Location" />
+            <ContactMetadataItem value="+44 2012 123456" label="Office" />
+            <ContactMetadataItem value="NAME@bloomberg.net" label="Bloomberg" />
+            <ContactMetadataItem value="first.last@domain.com" label="Email" />
+          </ContactMetadata>
+        </ContactDetails>
+      }
+      className="withinComboboxTooltip"
     >
-      <ListItem {...getTriggerProps<ListItemType>(props)}>
+      <ListItem>
         <label>{itemLabel}</label>
       </ListItem>
     </Tooltip>

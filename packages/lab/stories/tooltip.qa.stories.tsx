@@ -1,5 +1,5 @@
 import { ValidationStatus } from "@salt-ds/core";
-import { Tooltip, TooltipProps, useTooltip } from "@salt-ds/lab";
+import { Tooltip, TooltipProps } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { ComponentMeta, Story } from "@storybook/react";
 import { InfoSolidIcon } from "@salt-ds/icons";
@@ -11,15 +11,13 @@ export default {
 
 const IconWithTooltip = (props: {
   status?: ValidationStatus;
-  text?: string;
-  render?: TooltipProps["render"];
+  content?: TooltipProps["content"];
 }) => {
-  const { text = "hello", status, render, ...rest } = props;
-  const { getTriggerProps, getTooltipProps } = useTooltip(rest);
+  const { content = "hello", status, ...rest } = props;
 
   return (
-    <Tooltip {...getTooltipProps({ render, text, status })} open>
-      <InfoSolidIcon {...getTriggerProps<typeof InfoSolidIcon>()} />
+    <Tooltip content={content} status={status} {...rest} open>
+      <InfoSolidIcon />
     </Tooltip>
   );
 };
@@ -27,12 +25,10 @@ const IconWithTooltip = (props: {
 export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
     <QAContainer height={500} itemPadding={45} width={1200} {...props}>
-      <IconWithTooltip text="Hello, World" />
-      <IconWithTooltip status="error" text="Uh oh, world" />
+      <IconWithTooltip content="Hello, World" />
+      <IconWithTooltip status="error" content="Uh oh, world" />
       <IconWithTooltip
-        render={() => (
-          <div style={{ background: "#ccc", width: 60, height: 20 }} />
-        )}
+        content={<div style={{ background: "#ccc", width: 60, height: 20 }} />}
       />
     </QAContainer>
   );

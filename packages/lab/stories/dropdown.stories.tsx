@@ -12,7 +12,6 @@ import {
 import {
   FormField,
   Tooltip,
-  useTooltip,
   Dropdown,
   DropdownButton,
   DropdownProps,
@@ -151,15 +150,9 @@ const ListItemWithTooltip: ListItemType<string> = ({
   item = "item",
   ...props
 }) => {
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    placement: "right",
-  });
-  const { ref: triggerRef, ...triggerProps } =
-    getTriggerProps<typeof ListItem>(props);
-
   return (
-    <Tooltip {...getTooltipProps({ text: `I am a tooltip for ${item}` })}>
-      <ListItem ref={triggerRef} {...triggerProps}>
+    <Tooltip content={`I am a tooltip for ${item}`} {...props}>
+      <ListItem>
         <label style={{ width: "100%" }}>{item}</label>
       </ListItem>
     </Tooltip>

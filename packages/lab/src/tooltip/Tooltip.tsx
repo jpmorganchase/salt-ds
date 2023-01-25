@@ -1,18 +1,18 @@
-import { Icon, IconProps } from "@salt-ds/icons";
 import { StatusIndicator, ValidationStatus, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
-  ComponentProps,
   forwardRef,
   HTMLAttributes,
   ReactNode,
   ReactElement,
   JSXElementConstructor,
   cloneElement,
+  RefObject,
 } from "react";
 import { Portal, PortalProps } from "../portal";
-import { } from "../utils";
-import { useWindow } from "../window";
+import { UseFloatingUIProps } from "../popper";
+import { Window } from "../window";
+import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 
 // Keep in order of preference. First items are used as default
@@ -20,21 +20,11 @@ import "./Tooltip.css";
 const withBaseName = makePrefixer("saltTooltip");
 const defaultIconProps = { size: 1, className: withBaseName("icon") };
 
-// FIXME: Fix types
-interface TooltipRenderProp {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Icon: any; // typeof Icon;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getIconProps?: any; // StateAndPropGetterFunction<IconProps>;
-}
-
 export interface TooltipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
-  Pick<PortalProps, "disablePortal" | "container"> {
+    PortalProps,
+    UseFloatingUIProps {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
-  // placement?: Placement;
-  arrowProps?: ComponentProps<"div">;
-  // disabled?: boolean;
   /**
    * Removes the tooltip arrow.
    */
@@ -43,96 +33,74 @@ export interface TooltipProps
    * Whether to hide a state icon within the tooltip
    */
   hideIcon?: boolean;
-  /**
-   * A callback function to render the tooltip content
-   * @param {function} getIcon getter for the icon based on the state
-   * @param {function} getIconProps getter for the icon properties
-   */
-  render?: (props: TooltipRenderProp) => ReactNode;
+  content?: string | ReactNode;
   /**
    * A string to determine the current status of the tooltip
    */
   status?: ValidationStatus;
-  text?: string;
-  title?: string;
   /**
    * This prop is used to help implement the accessibility logic.
    * If you don't provide this prop. It falls back to a randomly generated id.
    */
   id?: string;
-  open?: boolean;
+  enterDelay?: number;
+  leaveDelay?: number;
+  disabled?: boolean;
+  disableHoverListener?: boolean;
+  disableFocusListener?: boolean;
+  arrowProps?: HTMLAttributes<HTMLDivElement>;
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  function Tooltip(
-    {
-      arrowProps,
+  function Tooltip(props, ref) {
+    const {
+      id,
       children,
       className: classNameProp,
       container,
-      disablePortal,
+      disabled,
+      disablePortal = true,
       hideArrow,
       hideIcon,
-      open,
-      render,
+      open: openProp,
+      content,
       status = "info",
-      text,
-      title,
       ...rest
-    },
-    ref
-  ) {
-    // const getIcon = useCallback(
-    //   (iconProps: IconProps) => {
-    //     if (hideIcon) {
-    //       return null;
-    //     }
-    //     return status !== "info" ? (
-    //       <StatusIndicator
-    //         status={status}
-    //         {...iconProps}
-    //         className={withBaseName("icon")}
-    //       />
-    //     ) : null;
-    //   },
-    //   [status, hideIcon]
-    // );
+    } = props;
 
-    const Window = useWindow();
+    const hookProps: UseTooltipProps = {
+      open: openProp,
+      ...rest,
+    };
 
-    // const tooltipProps = getTooltipProps(props);
-    // console.log('tooltipProps', tooltipProps);
-    // console.log('getTriggerProps', getTriggerProps(props));
+    const { arrowProps, open, getTriggerProps, getTooltipProps } =
+      useTooltip(hookProps);
+
+    const { ref: tooltipRef, ...restTooltipProps } = getTooltipProps();
 
     return (
       <>
-        {open && (
-          <Portal disablePortal={disablePortal} container={container}>
+        {open && !disabled && (
+          <Portal
+            disablePortal={disablePortal}
+            container={container}
+            ref={ref}
+            id={id}
+          >
             <Window
               className={clsx(
                 withBaseName(),
                 withBaseName(status),
                 classNameProp
               )}
-              ref={ref}
-              {...rest}
+              ref={tooltipRef as RefObject<HTMLDivElement>}
+              {...restTooltipProps}
             >
               <div className={withBaseName("content")}>
-                {render ? (
-                  render({
-                    Icon: (passedProps: IconProps) => (
-                      <Icon {...passedProps} {...defaultIconProps} />
-                    ),
-                    getIconProps: () => defaultIconProps,
-                  })
-                ) : (
-                  <>
-                    {!hideIcon && (
-                      <StatusIndicator status={status} {...defaultIconProps} />
-                    )}
-                    <span className={withBaseName("body")}>{text}</span>
-                  </>
+                {!hideIcon && (
+                  <StatusIndicator status={status} {...defaultIconProps} />
                 )}
+                <span className={withBaseName("body")}>{content}</span>
               </div>
               {!hideArrow && (
                 <div className={withBaseName("arrow")} {...arrowProps} />
@@ -141,7 +109,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           </Portal>
         )}
 
-        {children && cloneElement(children)}
+        {children && cloneElement(children, { ...getTriggerProps() })}
       </>
     );
   }

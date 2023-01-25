@@ -1,4 +1,4 @@
-import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
@@ -11,7 +11,7 @@ import {
 } from "react";
 import { ListItem, ListItemProps } from "../list-deprecated";
 import { MenuDescriptor } from "./CascadingMenuProps";
-import { Tooltip, useTooltip } from "../tooltip";
+import { Tooltip } from "../tooltip";
 
 import "./CascadingMenuItem.css";
 
@@ -109,49 +109,39 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 
     const icon = hasStartAdornment ? getIcon(sourceItem, isDisabled) : null;
     const tooltipTitle = sourceItem.tooltip || menuText;
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      disableFocusListener: true,
-      disableHoverListener: true,
-      enterDelay: tooltipEnterDelay,
-      leaveDelay: tooltipLeaveDelay,
-      placement: "top",
-      disabled: !tooltipTitle || !hasTooltip || isChildMenuOpen,
-    });
-
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps<
-      typeof ListItem
-    >({
-      "aria-expanded": isChildMenuOpen || undefined,
-      className: clsx(
-        withBaseName(),
-        {
-          [withBaseName("menuItemDivider")]: divider,
-          [withBaseName("menuItemBlurSelected")]: blurSelected,
-          [withBaseName("menuItemSelected")]:
-            !isDisabled && !hasSubMenu && isInteracted,
-          ...interactionClasses,
-          [withBaseName("menuItemWithScrollbar")]: hasScrollbar,
-        },
-        className
-      ),
-      disabled: isDisabled,
-      role: "menuitem",
-      onClick: handleOnClick,
-      item: sourceItem,
-      // TODO highlightProps - see original code?
-      ...restProps,
-    });
-
-    const handleRef = useForkRef<HTMLDivElement>(triggerRef, ref);
 
     return (
-      <>
-        <Tooltip
-          {...getTooltipProps({
-            text: tooltipTitle,
-          })}
-        />
-        <ListItem {...triggerProps} ref={handleRef}>
+      <Tooltip
+        disableFocusListener={true}
+        disableHoverListener={true}
+        enterDelay={tooltipEnterDelay}
+        leaveDelay={tooltipLeaveDelay}
+        placement="top"
+        disabled={!tooltipTitle || !hasTooltip || isChildMenuOpen}
+        content={tooltipTitle}
+        disablePortal={false}
+      >
+        <ListItem
+          aria-expanded={isChildMenuOpen || undefined}
+          className={clsx(
+            withBaseName(),
+            {
+              [withBaseName("menuItemDivider")]: divider,
+              [withBaseName("menuItemBlurSelected")]: blurSelected,
+              [withBaseName("menuItemSelected")]:
+                !isDisabled && !hasSubMenu && isInteracted,
+              ...interactionClasses,
+              [withBaseName("menuItemWithScrollbar")]: hasScrollbar,
+            },
+            className
+          )}
+          disabled={isDisabled}
+          role="menuitem"
+          onClick={handleOnClick}
+          item={sourceItem}
+          // TODO highlightProps - see original code?
+          {...restProps}
+        >
           {hasStartAdornment && (
             <div className={withBaseName("menuItemStartAdornmentContainer")}>
               {icon}
@@ -180,7 +170,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           )}
           {divider && <div role="separator" />}
         </ListItem>
-      </>
+      </Tooltip>
     );
   }
 );

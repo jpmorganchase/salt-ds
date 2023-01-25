@@ -1,4 +1,4 @@
-import { Button, ButtonProps, makePrefixer, useForkRef } from "@salt-ds/core";
+import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   forwardRef,
@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
-import { Tooltip, useTooltip } from "../tooltip";
+import { Tooltip } from "../tooltip";
 
 import "./ToggleButton.css";
 
@@ -54,7 +54,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       (button: HTMLButtonElement | null) => {
         setIconOnly(
           button?.querySelector(".saltIcon") != null &&
-            button?.childElementCount === 1
+          button?.childElementCount === 1
         );
       },
       [setIconOnly]
@@ -93,49 +93,38 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
 
     const tabIndex = toggled && !disabled ? 0 : -1;
 
-    const { getTooltipProps, getTriggerProps } = useTooltip({
-      disabled: disableTooltip,
-      placement: orientation === "horizontal" ? "bottom" : "right",
-    });
-
-    const { ref: triggerRef, ...triggerProps } = getTriggerProps<typeof Button>(
-      {
-        "aria-checked": toggled,
-        "aria-label": ariaLabel,
-        "aria-posinset": index !== undefined ? index + 1 : undefined,
-        className: clsx(
-          withBaseName(),
-          withBaseName(orientation),
-          {
-            [withBaseName("primary")]: variant === "primary",
-            [withBaseName("cta")]: variant === "cta",
-            [withBaseName("secondary")]: variant === "secondary",
-            [withBaseName("toggled")]: toggled,
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("iconOnly")]: iconOnly,
-          },
-          className
-        ),
-        onClick: handleToggle,
-        disabled,
-        focusableWhenDisabled,
-        role: groupContext ? "radio" : "checkbox",
-        tabIndex: groupContext ? tabIndex : undefined,
-        variant,
-        ...restProps,
-      }
-    );
-
-    const handleButtonRef = useForkRef(ref, buttonRef);
-    const handleIconOnlyButtonRef = useForkRef(
-      handleIconOnlyButton,
-      handleButtonRef
-    );
-    const handleRef = useForkRef(triggerRef, handleIconOnlyButtonRef);
-
     return (
-      <Tooltip {...getTooltipProps({ text: tooltipText })}>
-        <Button {...triggerProps} ref={handleRef} />
+      <Tooltip
+        content={tooltipText}
+        disabled={disableTooltip}
+        placement={orientation === "horizontal" ? "bottom" : "right"}
+      >
+        <Button
+          ref={handleIconOnlyButton}
+          aria-checked={toggled}
+          aria-label={ariaLabel}
+          aria-posinset={index !== undefined ? index + 1 : undefined}
+          className={clsx(
+            withBaseName(),
+            withBaseName(orientation),
+            {
+              [withBaseName("primary")]: variant === "primary",
+              [withBaseName("cta")]: variant === "cta",
+              [withBaseName("secondary")]: variant === "secondary",
+              [withBaseName("toggled")]: toggled,
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("iconOnly")]: iconOnly,
+            },
+            className
+          )}
+          onClick={handleToggle}
+          disabled={disabled}
+          focusableWhenDisabled={focusableWhenDisabled}
+          role={groupContext ? "radio" : "checkbox"}
+          tabIndex={groupContext ? tabIndex : undefined}
+          variant={variant}
+          {...restProps}
+        />
       </Tooltip>
     );
   }
