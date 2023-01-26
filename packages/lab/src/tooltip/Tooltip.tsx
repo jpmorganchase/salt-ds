@@ -1,12 +1,18 @@
-import { StatusIndicator, ValidationStatus, makePrefixer } from "@salt-ds/core";
+import {
+  makePrefixer,
+  StatusIndicator,
+  useForkRef,
+  ValidationStatus,
+} from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
+  cloneElement,
   forwardRef,
   HTMLAttributes,
-  ReactNode,
-  ReactElement,
   JSXElementConstructor,
-  cloneElement,
+  ReactElement,
+  ReactNode,
+  Ref,
   RefObject,
 } from "react";
 import { Portal, PortalProps } from "../portal";
@@ -49,6 +55,7 @@ export interface TooltipProps
   disableHoverListener?: boolean;
   disableFocusListener?: boolean;
   arrowProps?: HTMLAttributes<HTMLDivElement>;
+  triggerRef?: Ref<HTMLElement>;
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
@@ -65,6 +72,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       open: openProp,
       content,
       status = "info",
+      triggerRef,
       ...rest
     } = props;
 
@@ -77,6 +85,13 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       useTooltip(hookProps);
 
     const { ref: tooltipRef, ...restTooltipProps } = getTooltipProps();
+
+    const { ref: triggerRefHook, ...restTrigger } = getTriggerProps();
+
+    const triggerRefMerged = useForkRef(
+      triggerRef,
+      triggerRefHook as Ref<HTMLElement>
+    );
 
     return (
       <>
@@ -109,7 +124,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           </Portal>
         )}
 
-        {children && cloneElement(children, { ...getTriggerProps() })}
+        {children &&
+          cloneElement(children, { ref: triggerRefMerged, ...restTrigger })}
       </>
     );
   }

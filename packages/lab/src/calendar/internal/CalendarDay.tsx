@@ -46,6 +46,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         disabled={!unselectableReason}
         placement="top"
         enterDelay={300}
+        triggerRef={dayRef}
         {...TooltipProps}
       >
         <button

@@ -18,8 +18,13 @@ export const FavoriteToggleWithTooltip = forwardRef<
   } = props;
 
   return (
-    <Tooltip enterDelay={1500} placement="bottom" content={tooltipTitle}>
-      <FavoriteToggle {...restProps} ref={ref} />
+    <Tooltip
+      enterDelay={1500}
+      placement="bottom"
+      content={tooltipTitle}
+      triggerRef={ref}
+    >
+      <FavoriteToggle {...restProps} />
     </Tooltip>
   );
 });

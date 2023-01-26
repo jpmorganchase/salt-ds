@@ -28,8 +28,9 @@ export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
         placement="top"
         disabled={!accessibleText}
         content={accessibleText}
+        triggerRef={ref}
       >
-        <Button variant="secondary" ref={ref} {...restProps}>
+        <Button variant="secondary" {...restProps}>
           {label ? label : <Icon />}
         </Button>
       </Tooltip>

@@ -11,7 +11,7 @@ import {
 } from "react";
 import { useOverflowDetection } from "../utils";
 import { Highlighter } from "./internal/Highlighter";
-import { useTooltip, useTooltipContext } from "../tooltip";
+import { useTooltipContext } from "../tooltip";
 
 import "./ListItem.css";
 
@@ -74,9 +74,9 @@ export const ListItemBase = memo(
         open={openTooltip}
         disabled={!isOverflowed}
         content={tooltipText}
+        triggerRef={detectTruncation ? ref : setItemRef}
       >
         <div
-          ref={detectTruncation ? ref : setItemRef}
           aria-label={typeof children === "string" ? children : undefined}
           {...restProps}
           className={clsx(

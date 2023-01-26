@@ -120,6 +120,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         disabled={!tooltipTitle || !hasTooltip || isChildMenuOpen}
         content={tooltipTitle}
         disablePortal={false}
+        triggerRef={ref}
       >
         <ListItem
           aria-expanded={isChildMenuOpen || undefined}

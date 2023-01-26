@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { FormFieldContext } from "../form-field-context";
 import { Tooltip } from "../tooltip";
 import { classBase } from "./constant";
@@ -252,8 +252,14 @@ export const FormField = forwardRef(
       helperTextPlacement === "tooltip" &&
       !hasStatusIndicator;
 
+    const handleTriggerRef = useForkRef(rootRef, ref);
+
     return (
-      <Tooltip disabled={!tooltipHelperText} content={helperText}>
+      <Tooltip
+        disabled={!tooltipHelperText}
+        content={helperText}
+        triggerRef={handleTriggerRef}
+      >
         <div
           className={clsx(
             withBaseName(),
