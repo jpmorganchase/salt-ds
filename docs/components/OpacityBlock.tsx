@@ -1,3 +1,4 @@
+import { Tooltip, useTooltip } from "@salt-ds/lab";
 import { clsx } from "clsx";
 
 import "./OpacityBlock.css";
@@ -11,13 +12,20 @@ export const OpacityBlock = ({
   className?: string;
   cssVariable: string;
 }) => {
+  const { getTriggerProps, getTooltipProps } = useTooltip({
+    placement: "left",
+  });
+
   return (
     <>
       <div className={clsx("OpacityBlock-cell")}>
         <div
-          className={clsx("OpacityBlock-cellInner", className)}
+          {...getTriggerProps({
+            className: clsx("OpacityBlock-cellInner", className),
+          })}
           style={{ background: `rgba(36, 37, 38, var(${opacity}))` }}
         />
+        <Tooltip {...getTooltipProps({ title: opacity })} />
       </div>
       <code className="DocGrid-code">{cssVariable}</code>
     </>

@@ -9,7 +9,6 @@
 
 .saltDocGrid {
   align-items: center;
-  background: var(--salt-container-primary-background);
   display: grid;
   height: var(--saltDocGrid-height, unset);
   gap: var(--saltDocGrid-gap, var(--doc-grid-gap));
@@ -18,6 +17,11 @@
   padding-block-end: var(--saltDocGrid-paddingBlockEnd, var(--doc-grid-paddingBlockEnd));
   line-height: 1;
   width: var(--saltDocGrid-width, auto);
+}
+
+.saltDocGrid.lighterGrid {
+  background: var(--salt-container-secondary-background);
+  border-radius: 20px;
 }
 
 .saltDocGrid-textExample {

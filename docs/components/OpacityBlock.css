@@ -1,24 +1,17 @@
 .OpacityBlock-cell {
-  --opacity-block-cell-size: var(--salt-size-base);
-
-  --opacity-block-cell-borderColor: var(--salt-container-primary-borderColor);
-  --opacity-block-cell-borderStyle: var(--salt-container-borderStyle);
-  --opacity-block-cell-borderWidth: var(--salt-size-border);
-  --opacity-block-cell-borderRadius: 0;
-}
-
-.OpacityBlock-cell {
-  width: var(--opacity-block-cell-size);
-  height: var(--opacity-block-cell-size);
+  width: 50px;
+  height: 50px;
   justify-self: end;
 
-  border-color: var(--opacity-block-cell-borderColor);
-  border-style: var(--opacity-block-cell-borderStyle);
-  border-width: var(--opacity-block-cell-borderWidth);
-  border-radius: var(--opacity-block-cell-borderRadius);
-
   /* Chessboard background to show opacity effects */
-  background-image: linear-gradient(45deg, #e7e7e7 25%, transparent 25%, transparent 75%, #e7e7e7 75%), linear-gradient(45deg, #e7e7e7 25%, #fff 25%, #fff 75%, #e7e7e7 75%);
+  background-image: linear-gradient(45deg, var(--salt-container-secondary-background) 25%, transparent 25%, transparent 75%, var(--salt-container-secondary-background) 75%),
+    linear-gradient(
+      45deg,
+      var(--salt-container-secondary-background) 25%,
+      var(--salt-container-primary-background) 25%,
+      var(--salt-container-primary-background) 75%,
+      var(--salt-container-secondary-background) 75%
+    );
   background-size: 8px 8px;
   background-position: -4px 4px, 16px 16px;
 }
@@ -26,6 +19,9 @@
 .OpacityBlock-cellInner {
   width: 100%;
   height: 100%;
+
+  border: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
+  border-radius: 4px;
 
   /* background to be provided by css variables */
 }

@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Info" />
@@ -8,8 +14,31 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors used to represent informational content or messaging.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-info-background-emphasize" />
-  <ColorBlock colorVar="--salt-palette-info-border" />
-  <ColorBlock colorVar="--salt-palette-info-foreground" />
-</DocGrid>
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-info-border"
+      colors={{
+        "--salt-palette-info-border": "var(--salt-palette-info-border)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-info-foreground"
+      colors={{
+        "--salt-palette-info-foreground": "var(--salt-palette-info-foreground)",
+      }}
+    />
+    <ColorItem
+      title="Background (emphasized)"
+      subtitle="--salt-palette-info-background-emphasize"
+      colors={{
+        "--salt-palette-info-background-emphasize":
+          "var(--salt-palette-info-background-emphasize)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
