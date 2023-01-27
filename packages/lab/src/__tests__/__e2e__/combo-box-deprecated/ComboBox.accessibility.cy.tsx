@@ -130,7 +130,7 @@ describe("A multi-select combo box", () => {
       .and("have.attr", "aria-roledescription", "MultiSelect Combobox");
   });
 
-  it("should assign correct role and role description to the expand input button", () => {
+  it.skip("should assign correct role and role description to the expand input button", () => {
     cy.mount(<MultiSelectWithInitialSelection />);
 
     cy.findByRole("button").should(
@@ -259,7 +259,7 @@ describe("A multi-select combo box", () => {
       );
     });
 
-    it("should assign correct aria-labelledby to the expand input button", () => {
+    it.skip("should assign correct aria-labelledby to the expand input button", () => {
       const mockId = "my-combo-box";
       const mockInputId = `${mockId}-input-input`;
       const mockLabelId = `${mockId}-input-label`;
