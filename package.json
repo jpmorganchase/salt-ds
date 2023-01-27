@@ -126,7 +126,7 @@
     "webpack": "5.74.0"
   },
   "resolutions": {
-    "esbuild": "0.14.51",
+    "esbuild": "0.17.4",
     "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
     "storybook-addon-docusaurus@^0.2.1": "patch:storybook-addon-docusaurus@npm%3A0.2.1#./.yarn/patches/storybook-addon-docusaurus-npm-0.2.1-ed15d70641.patch"
