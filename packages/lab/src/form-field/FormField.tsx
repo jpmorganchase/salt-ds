@@ -277,8 +277,8 @@ export const FormField = forwardRef(
             },
             className
           )}
-          // {...eventHandlers}
-          // {...restProps}
+          {...eventHandlers}
+          {...restProps}
         >
           <FormFieldContext.Provider
             value={{
