@@ -13,8 +13,8 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Split layout
 
-Defines left and right regions for UI elements within a span, such as a button bar.
-By default the Split layout will break into a second row with the elements on the right hand side as soon as it finds limited space.
+Defines regions in opposite horizontal ends for UI elements separated within a span, such as a button bar.
+The Split layout is intended to work with 2 areas, and it will break into another row with the elements on the second children as soon as it finds limited space.
 
 <Canvas>
   <Story id="core-layout-splitlayout--default-split-layout" />
@@ -22,7 +22,7 @@ By default the Split layout will break into a second row with the elements on th
 
 ## Use Split layout when...
 
-There are 2 defined areas that are required to be in the opposite horizontal ends of a container,
+There are 2 defined areas required to be in the opposite horizontal ends of a container,
 for example if 2 `ButtonBar` components need to be in a header.
 
 ### Don't use Split layout when...

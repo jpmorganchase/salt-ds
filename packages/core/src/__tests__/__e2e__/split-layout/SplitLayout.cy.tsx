@@ -24,30 +24,30 @@ describe("GIVEN a Split", () => {
     });
   });
 
-  describe("WHEN left and right content is provided", () => {
+  describe("WHEN 2 children, left and right are provided", () => {
     const leftItemContent = ["Item 1", "Item 2"];
     const rightItemContent = ["Item 3", "Item 4"];
 
-    const leftItem = (
-      <>
+    const LeftItem = () => (
+      <div>
         <div>{leftItemContent[0]}</div>
         <div>{leftItemContent[1]}</div>
-      </>
+      </div>
     );
 
-    const rightItem = (
-      <>
+    const RightItem = () => (
+      <div>
         <div>{rightItemContent[0]}</div>
         <div>{rightItemContent[1]}</div>
-      </>
+      </div>
     );
 
     it("THEN it should render as expected", () => {
       cy.mount(
-        <DefaultSplitLayout
-          leftSplitItem={leftItem}
-          rightSplitItem={rightItem}
-        />
+        <DefaultSplitLayout>
+          <LeftItem />
+          <RightItem />
+        </DefaultSplitLayout>
       );
 
       cy.get(".saltFlexLayout")
@@ -62,29 +62,33 @@ describe("GIVEN a Split", () => {
     });
   });
 
-  describe("WHEN passing an array as the left item", () => {
-    const leftItem = ["Item 1", "Item 2"];
+  describe("WHEN passing an array as children", () => {
+    const leftItemContent = ["Item 1", "Item 2"];
+    const rightItemContent = ["Item 3", "Item 4"];
+
+    const LeftItem = () => (
+      <div>
+        <div>{leftItemContent[0]}</div>
+        <div>{leftItemContent[1]}</div>
+      </div>
+    );
+
+    const RightItem = () => (
+      <div>
+        <div>{rightItemContent[0]}</div>
+        <div>{rightItemContent[1]}</div>
+      </div>
+    );
 
     it("THEN it should render as expected", () => {
-      cy.mount(<DefaultSplitLayout leftSplitItem={leftItem} />);
+      cy.mount(<DefaultSplitLayout children={[<LeftItem />, <RightItem />]} />);
 
       cy.get(".saltFlexLayout")
         .children()
-        .eq(0)
-        .should("have.text", leftItem.join(""));
-    });
-  });
-
-  describe("WHEN passing an array as the right item", () => {
-    const rightItem = ["Item 3", "Item 4"];
-
-    it("THEN it should render as expected", () => {
-      cy.mount(<DefaultSplitLayout rightSplitItem={rightItem} />);
-
-      cy.get(".saltFlexLayout")
-        .children()
-        .eq(1)
-        .should("have.text", rightItem.join(""));
+        .should(
+          "have.text",
+          [...leftItemContent, ...rightItemContent].join("")
+        );
     });
   });
 

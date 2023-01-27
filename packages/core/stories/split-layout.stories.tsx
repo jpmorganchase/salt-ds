@@ -34,7 +34,7 @@ export default {
   ],
 } as ComponentMeta<typeof SplitLayout>;
 
-const leftItem = (
+const LeftSide = () => (
   <FlowLayout className="layout-container" align="baseline">
     {Array.from({ length: 3 }, (_, index) => (
       <div key={index}>
@@ -43,8 +43,7 @@ const leftItem = (
     ))}
   </FlowLayout>
 );
-
-const rightItem = (
+const RightSide = () => (
   <FlowLayout>
     <div className="layout-content-right">
       <p>Item 4</p>
@@ -54,7 +53,6 @@ const rightItem = (
     </div>
   </FlowLayout>
 );
-
 const DefaultSplitLayoutStory: ComponentStory<typeof SplitLayout> = (args) => (
   <SplitLayout {...args} />
 );
@@ -62,31 +60,21 @@ const DefaultSplitLayoutStory: ComponentStory<typeof SplitLayout> = (args) => (
 export const DefaultSplitLayout = DefaultSplitLayoutStory.bind({});
 
 DefaultSplitLayout.args = {
-  leftSplitItem: leftItem,
-  rightSplitItem: rightItem,
+  children: [<LeftSide />, <RightSide />],
 };
 
-const leftButtons = (
-  <FlowLayout gap={1}>
-    <Button variant="cta">Button 1</Button>
-    <Button variant="primary">Button 2</Button>
-    <Button variant="secondary">Button 3</Button>
-  </FlowLayout>
-);
-
-const rightButtons = (
-  <FlowLayout gap={1}>
-    <Button variant="cta">Button 4</Button>
-    <Button variant="primary">Button 5</Button>
-  </FlowLayout>
-);
-
 const FormButtonBar: ComponentStory<typeof SplitLayout> = (args) => (
-  <SplitLayout
-    {...args}
-    leftSplitItem={leftButtons}
-    rightSplitItem={rightButtons}
-  />
+  <SplitLayout {...args}>
+    <FlowLayout gap={1}>
+      <Button variant="cta">Button 1</Button>
+      <Button variant="primary">Button 2</Button>
+      <Button variant="secondary">Button 3</Button>
+    </FlowLayout>
+    <FlowLayout gap={1}>
+      <Button variant="cta">Button 4</Button>
+      <Button variant="primary">Button 5</Button>
+    </FlowLayout>
+  </SplitLayout>
 );
 
 export const SplitLayoutSimpleUsage = FormButtonBar.bind({});
