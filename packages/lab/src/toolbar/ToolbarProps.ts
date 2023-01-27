@@ -1,5 +1,4 @@
-import { TooltipProps } from "../tooltip";
-import { ComponentType, HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 export type OrientationShape = "vertical" | "horizontal";
 
@@ -10,10 +9,6 @@ export interface ToolbarAlignmentProps {
 }
 
 export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Used by custom elements to render a custom tooltip
-   */
-  TooltipComponent?: ComponentType<Partial<TooltipProps>>;
   /**
    * The content of the component.
    */

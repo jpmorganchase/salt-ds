@@ -5,8 +5,7 @@ import { OverflowPanel } from "./overflow-panel/OverflowPanel";
 
 import { TooltrayProps } from "./TooltrayProps";
 
-import { useOverflowCollectionItems } from "../responsive/useOverflowCollectionItems";
-import { useOverflowLayout } from "../responsive/useOverflowLayout";
+import { useOverflowCollectionItems, useOverflowLayout } from "../responsive";
 
 import { renderTrayTools } from "./internal/renderTrayTools";
 

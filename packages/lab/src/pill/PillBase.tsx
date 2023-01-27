@@ -202,6 +202,7 @@ export const PillBase = forwardRef(function PillBase(
         onClick={disabled ? undefined : handleClick}
         role="button"
         tabIndex={disabled ? -1 : 0}
+        ref={ref}
         {...rest}
       >
         {pillIcon || null}

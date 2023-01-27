@@ -94,7 +94,7 @@ export const renderToolbarItems = (
               ...toolbarItemProps,
               children: React.cloneElement(props.children as ReactElement, {
                 // Inject an id that nested Control can use to query status via context
-                id: `toolbar-control-${item.id}`,
+                id: item.id,
               }),
             } as ToolbarFieldProps);
           default:
@@ -106,7 +106,7 @@ export const renderToolbarItems = (
                 {React.cloneElement(item.element, {
                   ...componentProps,
                   // Inject an id that nested Control can use to query status via context
-                  id: `toolbar-control-${item.id}`,
+                  id: item.id,
                 })}
               </ToolbarField>
             );

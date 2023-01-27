@@ -124,6 +124,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
           ...restTriggerProps,
           id,
           role,
+          ref: handleRootRef,
         })
       );
     };

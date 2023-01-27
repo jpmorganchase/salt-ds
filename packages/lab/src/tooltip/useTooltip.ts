@@ -13,7 +13,7 @@ import {
   useFloating,
 } from "@floating-ui/react";
 import { margin, useControlled } from "@salt-ds/core";
-import { useRef, HTMLProps } from "react";
+import { useRef, HTMLProps, useMemo } from "react";
 import { UseFloatingUIProps } from "../popper";
 import { isDesktop } from "../window";
 import { useAriaAnnounce } from "./useAriaAnnounce";
@@ -136,10 +136,13 @@ export function useTooltip(props?: UseTooltipProps) {
       ref: reference,
     });
 
-  return {
-    arrowProps,
-    open,
-    getTooltipProps,
-    getTriggerProps,
-  };
+  return useMemo(
+    () => ({
+      arrowProps,
+      open,
+      getTooltipProps,
+      getTriggerProps,
+    }),
+    [arrowProps, open, getTooltipProps, getTriggerProps]
+  );
 }

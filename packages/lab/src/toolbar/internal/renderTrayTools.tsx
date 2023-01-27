@@ -78,7 +78,7 @@ export const renderTrayTools = (
             data-orientation={orientation}
           >
             {React.cloneElement(item.element, {
-              id: `tooltray-control-${item.id}`,
+              id: item.id,
             })}
           </ToolbarField>
         );

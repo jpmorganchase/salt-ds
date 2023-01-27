@@ -1,10 +1,8 @@
-// import type { Props } from "@floating-ui/react-dom-interactions";
 import type { Middleware, Placement, Strategy } from "@floating-ui/react";
 import {
   autoUpdate,
   flip,
   limitShift,
-  offset,
   shift,
   useFloating,
 } from "@floating-ui/react";
@@ -26,16 +24,16 @@ export function useFloatingUI(
   props: UseFloatingUIProps
 ): ReturnType<typeof useFloating> {
   const {
-    placement: placementProp,
-    strategy: strategyProp,
+    placement,
+    strategy,
     middleware = DEFAULT_FLOATING_UI_MIDDLEWARE,
     open,
     onOpenChange,
   } = props;
 
   const { reference, floating, refs, update, ...rest } = useFloating({
-    placement: placementProp,
-    strategy: strategyProp,
+    placement,
+    strategy,
     middleware,
     open,
     onOpenChange,

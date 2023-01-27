@@ -1,12 +1,6 @@
-import { useForkRef, useIdMemo } from "@salt-ds/core";
+import { useIdMemo } from "@salt-ds/core";
 import { clsx } from "clsx";
-import {
-  Children,
-  cloneElement,
-  forwardRef,
-  ReactElement,
-  useRef,
-} from "react";
+import { Children, cloneElement, forwardRef, ReactElement } from "react";
 
 import { OverflowPanel } from "./overflow-panel/OverflowPanel";
 import { OverflowSeparator } from "./overflow-panel/OverflowSeparator";
@@ -31,7 +25,6 @@ const classBase = "saltToolbar";
 export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   function Toolbar(props, ref) {
     const {
-      TooltipComponent,
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       children,
@@ -47,22 +40,17 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
     } = props;
 
     const toolbarId = useIdMemo(idProp);
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    const setContainerRef = useForkRef(ref, containerRef);
 
     const collectionHook = useOverflowCollectionItems({
       children,
       id: toolbarId,
       orientation,
-      label: "Toolbar",
     });
 
     const [innerContainerRef] = useOverflowLayout({
       collectionHook,
       id: toolbarId,
       orientation,
-      label: "Toolbar",
     });
 
     const overflowedItems = collectionHook.data.filter(isOverflowed);
@@ -113,7 +101,9 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       >
         {overflowMenuItems}
       </OverflowPanel>
-    ) : null;
+    ) : (
+      <></>
+    );
 
     //TODO when we drive this from the overflowItems, the overflowIndicator will
     // be an overflowItem
@@ -131,7 +121,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
           [`${classBase}-nonResponsive`]: !responsive,
         })}
         id={toolbarId}
-        ref={setContainerRef}
+        ref={ref}
         role="toolbar"
         {...restProp}
       >

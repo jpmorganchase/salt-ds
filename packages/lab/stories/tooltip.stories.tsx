@@ -8,18 +8,11 @@ export default {
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 
-export const Default: Story<TooltipProps> = (props) => {
-  const defaultProps: TooltipProps = {
-    content: "I am a tooltip",
-    status: "error",
-  };
-
-  return (
-    <Tooltip {...defaultProps}>
-      <Button>Hover</Button>
-    </Tooltip>
-  );
-};
+export const Default: Story<TooltipProps> = () => (
+  <Tooltip content="I am a tooltip">
+    <Button>Hover</Button>
+  </Tooltip>
+);
 
 export const OpenTooltip: Story<TooltipProps> = (props) => {
   const userProps: TooltipProps = {
