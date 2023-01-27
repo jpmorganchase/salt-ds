@@ -55,19 +55,19 @@
 }
 
 .salt-density-touch {
-  --grid-statusIndicator-size: 8px;
+  --grid-statusIndicator-size: 6px;
 }
 
 .salt-density-low {
-  --grid-statusIndicator-size: 10px;
+  --grid-statusIndicator-size: 8px;
 }
 
 .salt-density-medium {
-  --grid-statusIndicator-size: 12px;
+  --grid-statusIndicator-size: 10px;
 }
 
 .salt-density-high {
-  --grid-statusIndicator-size: 14px;
+  --grid-statusIndicator-size: 12px;
 }
 
 .saltGridBaseCell-statusContainer {
