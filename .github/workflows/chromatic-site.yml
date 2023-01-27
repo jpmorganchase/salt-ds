@@ -1,0 +1,44 @@
+name: "Site Chromatic"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches:
+      - main
+
+jobs:
+  chromatic-deployment:
+    if: github.event.pull_request.draft == false
+    # Operating System
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Run build
+        run: yarn build:site:storybook
+        # 👇 Adds Chromatic as a step in the workflow
+      - name: Publish to Chromatic
+        uses: chromaui/action-next@v1
+        # Chromatic GitHub Action options
+        with:
+          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+          projectToken: ${{ secrets.CHROMATIC_SITE_TOKEN }}
+          workingDir: ./site
+          exitOnceUploaded: true
+          # Turbosnap if this is not the main branch
+          onlyChanged: true
+          skip: "changeset-release/*"
+          autoAcceptChanges: "main"
+          ignoreLastBuildOnBranch: "!(main)**"
+          traceChanged: "expanded"
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
