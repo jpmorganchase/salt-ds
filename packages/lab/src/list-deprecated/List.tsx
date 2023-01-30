@@ -100,7 +100,6 @@ export const List = forwardRef(function List<
   ref?: ForwardedRef<ListScrollHandles<Item>>
 ) {
   const {
-    Tooltip,
     tooltipEnterDelay,
     tooltipLeaveDelay,
     tooltipPlacement,

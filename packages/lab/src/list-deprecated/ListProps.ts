@@ -1,5 +1,5 @@
 import { HTMLAttributes, Ref, SyntheticEvent } from "react";
-// import { TooltipContextProps } from "@salt-ds/core";
+import { TooltipProps } from "@salt-ds/core";
 
 export type ListSingleSelectionVariant = "default" | "deselectable";
 export type ListMultiSelectionVariant = "multiple" | "extended";
@@ -174,7 +174,6 @@ export interface ListProps<
   Item = string,
   Variant extends ListSelectionVariant = "default"
   > extends ListBaseProps<Item> {
-  // Tooltip?: TooltipContextProps["Tooltip"];
   disableTypeToSelect?: boolean;
   getItemIndex?: (item: Item) => number;
   highlightedIndex?: number;
@@ -193,7 +192,7 @@ export interface ListProps<
    * @default false
    */
   tabToSelect?: boolean;
-  // tooltipEnterDelay?: TooltipContextProps["enterDelay"];
-  // tooltipLeaveDelay?: TooltipContextProps["leaveDelay"];
-  // tooltipPlacement?: TooltipContextProps["placement"];
+  tooltipEnterDelay?: TooltipProps["enterDelay"];
+  tooltipLeaveDelay?: TooltipProps["leaveDelay"];
+  tooltipPlacement?: TooltipProps["placement"];
 }
