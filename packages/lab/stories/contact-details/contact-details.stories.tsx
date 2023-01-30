@@ -538,7 +538,6 @@ const ItemWithContactDetailsTooltip: ListItemType<NameEmail> = ({
   return (
     <Tooltip
       enterDelay={500}
-      disablePortal={false}
       hideIcon
       content={
         <ContactDetails

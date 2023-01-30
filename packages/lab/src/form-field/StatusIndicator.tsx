@@ -40,7 +40,6 @@ export const StatusIndicator = (props: StatusIndicatorProps) => {
       content={tooltipText}
       placement="top"
       disabled={!hasTooltip}
-      disablePortal={false}
       {...TooltipProps}
     >
       <BaseStatusIndicator

@@ -122,7 +122,6 @@ const ListItemWithTooltip: ListItemType<DropdownItem> = ({
     placement="right"
     disabled={!item?.disabled}
     content="This month is out of range"
-    disablePortal={false}
   >
     <ListItem {...props}>{label}</ListItem>
   </Tooltip>

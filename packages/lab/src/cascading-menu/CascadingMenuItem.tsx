@@ -118,7 +118,6 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         placement="top"
         disabled={!tooltipTitle || !hasTooltip || isChildMenuOpen}
         content={tooltipTitle}
-        disablePortal={false}
         triggerRef={ref}
       >
         <ListItem

@@ -61,7 +61,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       className: classNameProp,
       container,
       disabled,
-      disablePortal = true,
+      disablePortal,
       hideArrow,
       hideIcon,
       open: openProp,

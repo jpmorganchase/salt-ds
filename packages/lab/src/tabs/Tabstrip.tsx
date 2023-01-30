@@ -388,7 +388,6 @@ export const Tabstrip = forwardRef(function Tabstrip(
           disabled={!showTooltip}
           status="warning"
           key="tooltip"
-          disablePortal={false}
           hideArrow
         >
           <Dropdown<OverflowItem>
