@@ -1,12 +1,10 @@
 import {
   arrow,
-  autoUpdate,
   flip,
   offset,
   safePolygon,
   shift,
   useDismiss,
-  useFloating,
   useFocus,
   useHover,
   useInteractions,
@@ -15,11 +13,11 @@ import {
 import { useControlled } from "../utils";
 import { HTMLProps, useRef } from "react";
 import { useAriaAnnounce } from "./useAriaAnnounce";
-import { UseFloatingUIProps } from "../popper";
+import { UseFloatingUIProps, useFloatingUI } from "../popper";
 
 export interface UseTooltipProps
   extends Partial<
-    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
+  Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   /**
    * Do not respond to focus events.
@@ -79,12 +77,11 @@ export function useTooltip(props?: UseTooltipProps) {
     middlewareData,
     placement,
     context,
-  } = useFloating({
+  } = useFloatingUI({
     open,
     onOpenChange: handleOpenChange,
     placement: placementProp,
     middleware,
-    whileElementsMounted: autoUpdate,
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
