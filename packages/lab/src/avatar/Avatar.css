@@ -2,10 +2,13 @@
 .saltAvatar {
   --avatar-background: var(--saltAvatar-background, var(--salt-accent-background));
   --avatar-foreground: var(--saltAvatar-foreground, var(--salt-accent-foreground));
+  --avatar-size-multiplier: var(--saltAvatar-size-multiplier, 1);
+  --avatar-base-size: var(--salt-size-base, 12px);
 }
 
 /* Style applied to the root element */
 .saltAvatar {
+  --avatar-container-size: calc(var(--avatar-base-size) * var(--avatar-size-multiplier));
   background: var(--avatar-background);
   color: var(--avatar-foreground);
   font-size: var(--avatar-fontSize);
@@ -45,22 +48,4 @@
 
 .saltAvatar-svgHead {
   fill: var(--avatar-foreground);
-}
-
-/* Style applied when size is small */
-.saltAvatar-small {
-  --avatar-fontSize: 8px;
-  --avatar-container-size: var(--salt-size-graphic-small);
-}
-
-/* Style applied when size is medium */
-.saltAvatar-medium {
-  --avatar-fontSize: 11px;
-  --avatar-container-size: var(--salt-size-graphic-medium);
-}
-
-/* Style applied when size is large */
-.saltAvatar-large {
-  --avatar-fontSize: 14px;
-  --avatar-container-size: var(--salt-size-graphic-large);
 }
