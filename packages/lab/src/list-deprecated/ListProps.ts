@@ -10,10 +10,10 @@ export type ListSelectionVariant =
 export type ListChangeHandler<
   Item = string,
   Variant extends ListSelectionVariant = "default"
-  > = (
-    event: SyntheticEvent,
-    item: null | (Variant extends ListMultiSelectionVariant ? Array<Item> : Item)
-  ) => void;
+> = (
+  event: SyntheticEvent,
+  item: null | (Variant extends ListMultiSelectionVariant ? Array<Item> : Item)
+) => void;
 
 export type ListSelectHandler<Item = string> = (
   event: SyntheticEvent,
@@ -173,13 +173,13 @@ export interface ListBaseProps<Item = string>
 export interface ListProps<
   Item = string,
   Variant extends ListSelectionVariant = "default"
-  > extends ListBaseProps<Item> {
+> extends ListBaseProps<Item> {
   disableTypeToSelect?: boolean;
   getItemIndex?: (item: Item) => number;
   highlightedIndex?: number;
   initialSelectedItem?: Variant extends ListMultiSelectionVariant
-  ? Array<Item>
-  : Item;
+    ? Array<Item>
+    : Item;
   onChange?: ListChangeHandler<Item, Variant>;
   onSelect?: ListSelectHandler<Item>;
   selectedItem?: Variant extends ListMultiSelectionVariant ? Array<Item> : Item;
