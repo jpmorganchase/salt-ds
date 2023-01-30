@@ -14,12 +14,12 @@ import {
   useRole,
 } from "@floating-ui/react";
 import { useControlled } from "../utils";
-import { HTMLProps, useMemo, useRef } from "react";
+import { HTMLProps, useRef } from "react";
 import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps
   extends Partial<
-  Pick<UseFloatingProps, "onOpenChange" | "open" | "placement">
+    Pick<UseFloatingProps, "onOpenChange" | "open" | "placement">
   > {
   /**
    * Do not respond to focus events.
@@ -133,11 +133,10 @@ export function useTooltip(props?: UseTooltipProps) {
       ref: reference,
     });
 
-
-  return ({
+  return {
     arrowProps,
     open,
     getTooltipProps,
     getTriggerProps,
-  })
+  };
 }
