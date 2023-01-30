@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useState } from "react";
 import {
   Grid,
   GridCellValueProps,
@@ -7,7 +7,6 @@ import {
 } from "../src";
 import { LinearProgress, Tooltip, useTooltip } from "@salt-ds/lab";
 import "./grid.stories.css";
-import { Story } from "@storybook/react";
 import { FavoriteIcon } from "@salt-ds/icons";
 import { Button, FlexLayout } from "@salt-ds/core";
 
@@ -57,11 +56,15 @@ const PercentageCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   );
 };
 
-const ButtonsCellValue = () => {
+const ButtonsCellValue = ({
+  value,
+}: GridCellValueProps<CurrencyPairRow, string>) => {
   const { getTriggerProps, getTooltipProps } = useTooltip();
 
+  if (!value) return null;
+
   const openProps = getTooltipProps({
-    title: "Favorite",
+    title: `Favorite ${value}`,
     status: "info",
   });
 
@@ -81,8 +84,10 @@ const ButtonsCellValue = () => {
   );
 };
 
-const CellCustomizationTemplate: Story<{}> = () => {
-  const rowData: CurrencyPairRow[] = useMemo(() => {
+const rowKeyGetter = (row: CurrencyPairRow) => row.currencyPair;
+
+export const CellCustomization = () => {
+  const [rowData] = useState<CurrencyPairRow[]>(() => {
     const currencies = ["AUD", "USD", "SGD", "GBP", "HKD", "NZD", "EUR"];
     const result: CurrencyPairRow[] = [];
     for (let i = 0; i < currencies.length - 1; ++i) {
@@ -99,28 +104,23 @@ const CellCustomizationTemplate: Story<{}> = () => {
       }
     }
     return result;
-  }, []);
-
-  const rowKeyGetter = useCallback(
-    (row: CurrencyPairRow) => row.currencyPair,
-    []
-  );
+  });
 
   return (
     <Grid
       rowData={rowData}
       rowKeyGetter={rowKeyGetter}
       className="grid"
-      zebra={true}
-      columnSeparators={true}
-      headerIsFocusable={true}
+      zebra
+      columnSeparators
+      headerIsFocusable
     >
       <RowSelectionCheckboxColumn id="s" />
       <GridColumn
         name="Currency Pair"
         id="ccyPair"
         defaultWidth={100}
-        getValue={(r) => r.currencyPair}
+        getValue={(r: CurrencyPairRow) => r.currencyPair}
       />
       <GridColumn
         name="Bid/Ask"
@@ -140,10 +140,9 @@ const CellCustomizationTemplate: Story<{}> = () => {
         defaultWidth={50}
         name="Action"
         id="button"
+        getValue={(r) => r.currencyPair}
         cellValueComponent={ButtonsCellValue}
       />
     </Grid>
   );
 };
-
-export const CellCustomization = CellCustomizationTemplate.bind({});
