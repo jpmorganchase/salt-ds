@@ -1,11 +1,11 @@
 import {
-  useState,
-  useCallback,
-  useRef,
-  useMemo,
-  useEffect,
   CSSProperties,
   ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from "react";
 
 import { AriaAnnouncerContext } from "./AriaAnnouncerContext";
@@ -37,19 +37,19 @@ export function AriaAnnouncerProvider({
   // announceAll will get called recursively until all the announcements are rendered and cleared from the queue
   const announceAll = useCallback(() => {
     isAnnouncingRef.current = true;
-    if (announcementsRef.current.length && mountedRef.current) {
+    if (mountedRef.current) {
       setCurrentAnnouncement("");
       requestAnimationFrame(() => {
-        if (mountedRef.current) {
+        if (mountedRef.current && announcementsRef.current.length) {
           const announcement = announcementsRef.current.shift() as string;
           setCurrentAnnouncement(announcement);
           setTimeout(() => {
             announceAll();
           }, ARIA_ANNOUNCE_DELAY);
+        } else {
+          isAnnouncingRef.current = false;
         }
       });
-    } else {
-      isAnnouncingRef.current = false;
     }
   }, []);
 
@@ -63,12 +63,12 @@ export function AriaAnnouncerProvider({
     [announceAll]
   );
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
       mountedRef.current = false;
-    },
-    []
-  );
+    };
+  }, []);
 
   const value = useMemo(() => ({ announce }), [announce]);
   return (
