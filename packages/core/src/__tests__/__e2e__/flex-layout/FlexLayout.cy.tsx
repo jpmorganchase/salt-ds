@@ -47,6 +47,17 @@ describe("GIVEN a Flex", () => {
     });
   });
 
+  describe("WHEN a separator value is provided", () => {
+    it("THEN it should render a separator", () => {
+      cy.mount(<DefaultFlexLayout separators wrap={false} />);
+
+      cy.get(".saltFlexLayout").should(
+        "have.class",
+        "saltFlexLayout-separator"
+      );
+    });
+  });
+
   describe("WHEN wrap is set to false", () => {
     it("THEN it should render with no flex wrap", () => {
       cy.mount(<DefaultFlexLayout wrap={false} />);

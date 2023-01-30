@@ -55,6 +55,23 @@ export const DefaultFlexLayout = DefaultFlexLayoutStory.bind({});
 DefaultFlexLayout.args = {
   wrap: true,
 };
+const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
+  return (
+    <FlexLayout {...args}>
+      {Array.from({ length: 3 }, (_, index) => (
+        <div key={index} className="layout-content">
+          <p>Item {index + 1}</p>
+        </div>
+      ))}
+    </FlexLayout>
+  );
+};
+export const FlexLayoutWithSeparators = SeparatedItemsStory.bind({});
+FlexLayoutWithSeparators.args = {
+  separators: "center",
+  wrap: false,
+  direction: { sm: "row", xs: "column" },
+};
 
 const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
   return (
