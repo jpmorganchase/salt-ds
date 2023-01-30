@@ -39,8 +39,8 @@ const clickCell = (row: number, col: number) => {
 
 const checkRowSelected = (row: number, expectedSelected: boolean) => {
   cy.get(`tr[data-row-index="${row}"]`).should(
-    expectedSelected ? "have.class" : "not.have.class",
-    "saltGridTableRow-selected"
+    expectedSelected ? "have.attr" : "not.have.attr",
+    "aria-selected"
   );
 };
 
