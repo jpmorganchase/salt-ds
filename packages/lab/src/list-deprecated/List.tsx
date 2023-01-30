@@ -1,4 +1,4 @@
-import { TooltipContext, useForkRef } from "@salt-ds/core";
+import { Tooltip, useForkRef } from "@salt-ds/core";
 
 import {
   ForwardedRef,
@@ -110,8 +110,8 @@ export const List = forwardRef(function List<
   const itemsRef = useRef([]);
 
   return (
-    <TooltipContext.Provider
-      value={{
+    <Tooltip
+      {...{
         Tooltip,
         enterDelay: tooltipEnterDelay,
         leaveDelay: tooltipLeaveDelay,
@@ -121,7 +121,7 @@ export const List = forwardRef(function List<
       <DescendantProvider items={itemsRef}>
         <ListWithDescendants<Item, Variant> ref={ref} {...restProps} />
       </DescendantProvider>
-    </TooltipContext.Provider>
+    </Tooltip>
   );
 }) as <Item = string, Variant extends ListSelectionVariant = "default">(
   props: ListProps<Item, Variant> & {

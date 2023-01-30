@@ -17,7 +17,7 @@ import { UseFloatingUIProps, useFloatingUI } from "../popper";
 
 export interface UseTooltipProps
   extends Partial<
-  Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
+    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   /**
    * Do not respond to focus events.

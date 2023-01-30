@@ -1,7 +1,7 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
 import {
   Portal,
-  TooltipContext,
+  Tooltip,
   useAriaAnnouncer,
   useFloatingUI,
   useForkRef,
@@ -40,7 +40,6 @@ export function MultiSelectComboBox<Item>(
 ) {
   const {
     ListItem,
-    Tooltip,
     WindowProps,
     tooltipEnterDelay,
     tooltipLeaveDelay,
@@ -124,7 +123,7 @@ export function MultiSelectComboBox<Item>(
 
   return (
     <>
-      <TooltipContext.Provider value={tooltipContext}>
+      <Tooltip {...tooltipContext}>
         <TokenizedInputBase
           disabled={disabled}
           expandButtonRef={expandButtonRef}
@@ -133,7 +132,7 @@ export function MultiSelectComboBox<Item>(
           helpers={inputHelpers}
           {...restInputProps}
         />
-      </TooltipContext.Provider>
+      </Tooltip>
       {rootRef.current && isListOpen && (
         <Portal>
           <Window
@@ -146,7 +145,7 @@ export function MultiSelectComboBox<Item>(
             {...WindowProps}
             ref={floating}
           >
-            <TooltipContext.Provider value={tooltipContext}>
+            <Tooltip {...tooltipContext}>
               <ListStateContext.Provider value={listContext}>
                 <ListBase
                   {...{
@@ -162,7 +161,7 @@ export function MultiSelectComboBox<Item>(
                   maxHeight={maxListHeight || listProps.maxHeight}
                 />
               </ListStateContext.Provider>
-            </TooltipContext.Provider>
+            </Tooltip>
           </Window>
         </Portal>
       )}

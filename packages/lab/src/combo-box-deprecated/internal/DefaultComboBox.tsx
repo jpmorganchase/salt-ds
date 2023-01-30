@@ -1,8 +1,7 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
 import {
   Portal,
-  TooltipContext,
-  TooltipContextProps,
+  Tooltip,
   useAriaAnnouncer,
   useFloatingUI,
   useForkRef,
@@ -54,7 +53,7 @@ export type BaseComboBoxProps<
   > & {
     ListItem?: ComponentType<IndexedListItemProps<Item>>;
     ListProps?: Partial<ListProps<Item, Variant>>;
-    Tooltip?: TooltipContextProps["Tooltip"];
+    // Tooltip?: TooltipContextProps["Tooltip"];
     WindowProps?: Partial<WindowProps>;
     allowFreeText?: boolean;
     disabled?: boolean;
@@ -89,7 +88,7 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
 ): ReactNode {
   const {
     ListItem,
-    Tooltip,
+    // Tooltip,
     WindowProps = {},
     tooltipEnterDelay,
     tooltipLeaveDelay,
@@ -113,12 +112,11 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
 
   const tooltipContext = useMemo(
     () => ({
-      Tooltip,
       enterDelay: tooltipEnterDelay,
       leaveDelay: tooltipLeaveDelay,
       placement: tooltipPlacement,
     }),
-    [Tooltip, tooltipEnterDelay, tooltipLeaveDelay, tooltipPlacement]
+    [tooltipEnterDelay, tooltipLeaveDelay, tooltipPlacement]
   );
 
   const {
@@ -192,7 +190,7 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
             {...WindowProps}
             ref={floating}
           >
-            <TooltipContext.Provider value={tooltipContext}>
+            <Tooltip {...tooltipContext}>
               <ListStateContext.Provider value={listContext}>
                 <ListBase
                   {...{
@@ -208,7 +206,7 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
                   maxHeight={maxListHeight || listProps.maxHeight}
                 />
               </ListStateContext.Provider>
-            </TooltipContext.Provider>
+            </Tooltip>
           </Window>
         </Portal>
       )}

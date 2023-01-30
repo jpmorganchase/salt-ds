@@ -17,7 +17,7 @@ import {
   makePrefixer,
   TooltipProps,
   useIsomorphicLayoutEffect,
-  useTooltipContext,
+  Tooltip,
 } from "@salt-ds/core";
 import { pillBaseName } from "./constants";
 import { DeleteButton } from "./internal/DeleteButton";
@@ -122,7 +122,7 @@ export const PillBase = forwardRef(function PillBase(
   }: PillBaseProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
-  const { Tooltip, enterDelay, leaveDelay, placement } = useTooltipContext();
+  // const { Tooltip, enterDelay, leaveDelay, placement } = useTooltipContext();
 
   const [active, setActive] = useState(false);
   const [labelRef, ellipsis] = useEllipsisIsActive();
@@ -182,9 +182,9 @@ export const PillBase = forwardRef(function PillBase(
     <Tooltip
       content={label}
       disabled={!ellipsis && disabled}
-      enterDelay={enterDelay}
-      placement={placement}
-      leaveDelay={leaveDelay}
+      // enterDelay={enterDelay}
+      // placement={placement}
+      // leaveDelay={leaveDelay}
       {...TooltipProps}
     >
       <Component

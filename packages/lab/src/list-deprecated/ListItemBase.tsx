@@ -1,11 +1,10 @@
-import { makePrefixer, useForkRef, useTooltipContext } from "@salt-ds/core";
+import { makePrefixer, useForkRef, Tooltip } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
   memo,
-  useEffect,
   useRef,
   useState,
 } from "react";
@@ -47,30 +46,30 @@ export const ListItemBase = memo(
       ...restProps
     } = props;
 
-    const [openTooltip, setOpenTooltip] = useState(false);
-    const { Tooltip, enterDelay, leaveDelay, placement } = useTooltipContext();
+    // const [openTooltip, setOpenTooltip] = useState(false);
+    // const { Tooltip, enterDelay, leaveDelay, placement } = useTooltipContext();
     const { current: detectTruncation } = useRef(typeof children === "string");
 
     const [overflowRef, isOverflowed] = useOverflowDetection<HTMLDivElement>();
     const setItemRef = useForkRef(overflowRef, ref);
 
-    useEffect(() => {
-      if (detectTruncation && isOverflowed) {
-        const timeout = setTimeout(
-          () => setOpenTooltip(highlighted),
-          highlighted ? enterDelay : leaveDelay
-        );
+    // useEffect(() => {
+    //   if (detectTruncation && isOverflowed) {
+    //     const timeout = setTimeout(
+    //       () => setOpenTooltip(highlighted),
+    //       highlighted ? enterDelay : leaveDelay
+    //     );
 
-        return () => {
-          clearTimeout(timeout);
-        };
-      }
-    }, [highlighted, enterDelay, leaveDelay, detectTruncation, isOverflowed]);
+    //     return () => {
+    //       clearTimeout(timeout);
+    //     };
+    //   }
+    // }, [highlighted, enterDelay, leaveDelay, detectTruncation, isOverflowed]);
 
     return (
       <Tooltip
-        placement={placement}
-        open={openTooltip}
+        // placement={placement}
+        // open={openTooltip}
         disabled={!isOverflowed}
         content={tooltipText}
         triggerRef={detectTruncation ? ref : setItemRef}
