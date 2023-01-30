@@ -6,7 +6,6 @@ import {
   shift,
   useFloating,
 } from "@floating-ui/react";
-import { isDesktop } from "@salt-ds/lab/src/window";
 
 export type UseFloatingUIProps = {
   placement?: Placement;
@@ -16,9 +15,10 @@ export type UseFloatingUIProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
-export const DEFAULT_FLOATING_UI_MIDDLEWARE = isDesktop
-  ? []
-  : [flip(), shift({ limiter: limitShift() })];
+export const DEFAULT_FLOATING_UI_MIDDLEWARE = [
+  flip(),
+  shift({ limiter: limitShift() }),
+];
 
 export function useFloatingUI(
   props: UseFloatingUIProps
