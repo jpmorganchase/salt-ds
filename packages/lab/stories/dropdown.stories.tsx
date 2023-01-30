@@ -10,10 +10,10 @@ import {
 } from "@salt-ds/icons";
 
 import {
+  FormField,
   Dropdown,
   DropdownButton,
   DropdownProps,
-  FormField,
   ListItem,
   ListItemType,
   SelectionChangeHandler,

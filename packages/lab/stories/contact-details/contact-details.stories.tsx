@@ -7,7 +7,6 @@ import {
   MessageIcon,
 } from "@salt-ds/icons";
 import {
-  Card,
   ComboBox,
   ContactAction,
   ContactActions,
@@ -19,13 +18,14 @@ import {
   ContactPrimaryInfo,
   ContactSecondaryInfo,
   ContactTertiaryInfo,
-  FormField,
   ListItem,
   ListItemType,
   Overlay,
   SelectionChangeHandler,
   useOverlay,
   ValueComponentProps,
+  Card,
+  FormField,
 } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { forwardRef, Fragment, ReactNode } from "react";
