@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Navigate" />
@@ -8,20 +14,90 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors used to signify navigation or navigable items.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-navigate-primary-background" />
-  <ColorBlock colorVar="--salt-palette-navigate-primary-background-active" />
-  <ColorBlock colorVar="--salt-palette-navigate-primary-background-hover" />
-  <ColorBlock colorVar="--salt-palette-navigate-secondary-background" />
-  <ColorBlock colorVar="--salt-palette-navigate-secondary-background-active" />
-  <ColorBlock colorVar="--salt-palette-navigate-secondary-background-hover" />
-  <ColorBlock colorVar="--salt-palette-navigate-tertiary-background-hover" />
-  <ColorBlock colorVar="--salt-palette-navigate-tertiary-background-active" />
-  <ColorBlock colorVar="--salt-palette-navigate-tertiary-background" />
-  <ColorBlock colorVar="--salt-palette-navigate-foreground-hover" />
-  <ColorBlock colorVar="--salt-palette-navigate-foreground-active" />
-  <ColorBlock colorVar="--salt-palette-navigate-foreground-visited" />
-  <ColorBlock colorVar="--salt-palette-navigate-indicator-active" />
-  <ColorBlock colorVar="--salt-palette-navigate-indicator-hover" />
-  <ColorBlock colorVar="--salt-palette-navigate-indicator-activeDisabled" />
-</DocGrid>
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-navigate-foreground"
+      colors={{
+        "--salt-palette-navigate-foreground-hover":
+          "var(--salt-palette-navigate-foreground-hover)",
+        "--salt-palette-navigate-foreground-active":
+          "var(--salt-palette-navigate-foreground-active)",
+        "--salt-palette-navigate-foreground-visited":
+          "var(--salt-palette-navigate-foreground-visited)",
+      }}
+    />
+    <ColorItem
+      title="Indicator"
+      subtitle="--salt-palette-navigate-indicator"
+      colors={{
+        "--salt-palette-navigate-indicator-hover":
+          "var(--salt-palette-navigate-indicator-hover)",
+        "--salt-palette-navigate-indicator-active":
+          "var(--salt-palette-navigate-indicator-active)",
+        "--salt-palette-navigate-indicator-activeDisabled":
+          "var(--salt-palette-navigate-indicator-activeDisabled)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
+
+## Primary
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-navigate-primary-background"
+      colors={{
+        "--salt-palette-navigate-primary-background":
+          "var(--salt-palette-navigate-primary-background)",
+        "--salt-palette-navigate-primary-background-hover":
+          "var(--salt-palette-navigate-primary-background-hover)",
+        "--salt-palette-navigate-primary-background-active":
+          "var(--salt-palette-navigate-primary-background-active)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
+
+## Secondary
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-navigate-secondary-background"
+      colors={{
+        "--salt-palette-navigate-secondary-background":
+          "var(--salt-palette-navigate-secondary-background)",
+        "--salt-palette-navigate-secondary-background-hover":
+          "var(--salt-palette-navigate-secondary-background-hover)",
+        "--salt-palette-navigate-secondary-background-active":
+          "var(--salt-palette-navigate-secondary-background-active)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
+
+## Tertiary
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-navigate-tertiary-background"
+      colors={{
+        "--salt-palette-navigate-tertiary-background":
+          "var(--salt-palette-navigate-tertiary-background)",
+        "--salt-palette-navigate-tertiary-background-hover":
+          "var(--salt-palette-navigate-tertiary-background-hover)",
+        "--salt-palette-navigate-tertiary-background-active":
+          "var(--salt-palette-navigate-tertiary-background-active)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>

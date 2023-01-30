@@ -1,0 +1,297 @@
+diff --git a/dist/index.cjs b/dist/index.cjs
+index 201ecd58da42fcbdf8c2fedef39c606ce97e7c93..e762095afac960d549934c4d39c76f9bd1c142e4 100644
+--- a/dist/index.cjs
++++ b/dist/index.cjs
+@@ -1,76 +1,109 @@
+-'use strict';
++"use strict";
+ 
+-Object.defineProperty(exports, '__esModule', { value: true });
++Object.defineProperty(exports, "__esModule", { value: true });
+ 
+-const server = require('@docusaurus/core/lib/server');
+-const createClientConfig = require('@docusaurus/core/lib/webpack/client');
+-const utils = require('@docusaurus/core/lib/webpack/utils');
+-const clientModules = require('@docusaurus/core/lib/server/clientModules');
+-const nodeLogger = require('@storybook/node-logger');
++const server = require("@docusaurus/core/lib/server");
++const createClientConfig = require("@docusaurus/core/lib/webpack/client");
++const utils = require("@docusaurus/core/lib/webpack/utils");
++const clientModules = require("@docusaurus/core/lib/server/clientModules");
++const nodeLogger = require("@storybook/node-logger");
+ 
+-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
++function _interopDefaultLegacy(e) {
++  return e && typeof e === "object" && "default" in e ? e : { default: e };
++}
+ 
+-const createClientConfig__default = /*#__PURE__*/_interopDefaultLegacy(createClientConfig);
++const createClientConfig__default =
++  /*#__PURE__*/ _interopDefaultLegacy(createClientConfig);
+ 
+ nodeLogger.logger.info("Configuring Storybook for Docusaurus...");
+-const ruleMatches = (rule, ...inputs) => inputs.some((input) => rule.test.test(input));
+-const loadDocusaurus = async () => await server.load({
+-  siteDir: process.cwd()
+-});
++const ruleMatches = (rule, ...inputs) =>
++  inputs.some((input) => rule.test.test(input));
++const loadDocusaurus = async () =>
++  await server.load({
++    siteDir: process.cwd(),
++  });
+ const config = async (entry = []) => {
+   const { plugins } = await loadDocusaurus();
+   const clientModules$1 = clientModules.loadClientModules(plugins);
+-  nodeLogger.logger.info(`Adding ${clientModules$1.length} Docusaurus client modules to preview frame`);
++  nodeLogger.logger.info(
++    `Adding ${clientModules$1.length} Docusaurus client modules to preview frame`
++  );
+   return [...entry, ...clientModules$1];
+ };
+ const webpackFinal = async (config2) => {
+   const props = await loadDocusaurus();
+-  const hasPlugin = (name) => props.plugins.map((plugin) => plugin.name).includes(name);
++  const hasPlugin = (name) =>
++    props.plugins.map((plugin) => plugin.name).includes(name);
+   const docusaurusConfig = await createClientConfig__default["default"](props);
+   const alias = {
+     ...config2.resolve.alias,
+-    ...docusaurusConfig.resolve.alias
++    ...docusaurusConfig.resolve.alias,
+   };
+-  const rules = config2.module.rules.map((rule) => {
+-    if (ruleMatches(rule, ".svg")) {
+-      nodeLogger.logger.info("Disabling SVG loader in favor of Docusaurus core loader");
+-      return {
+-        ...rule,
+-        exclude: /\.svg$/
+-      };
+-    }
+-    if (ruleMatches(rule, ".mdx")) {
+-      nodeLogger.logger.info("Disabling MDX loader in favor of Docusaurus core loader");
+-      return null;
+-    }
+-    if (hasPlugin("docusaurus-plugin-sass") && ruleMatches(rule, ".module.scss")) {
+-      nodeLogger.logger.info("Disabling SASS loader in favor of docusaurus-plugin-sass");
+-      return null;
+-    }
+-    return rule;
+-  }).filter(Boolean);
+-  rules.push(...docusaurusConfig.module.rules.filter((rule) => ruleMatches(rule, ".svg", ".js", ".woff")));
++  const rules = config2.module.rules
++    .map((rule) => {
++      if (ruleMatches(rule, ".svg")) {
++        nodeLogger.logger.info(
++          "Disabling SVG loader in favor of Docusaurus core loader"
++        );
++        return {
++          ...rule,
++          exclude: /\.svg$/,
++        };
++      }
++      if (ruleMatches(rule, ".mdx")) {
++        nodeLogger.logger.info(
++          "Disabling MDX loader in favor of Docusaurus core loader"
++        );
++        return null;
++      }
++      if (
++        hasPlugin("docusaurus-plugin-sass") &&
++        ruleMatches(rule, ".module.scss")
++      ) {
++        nodeLogger.logger.info(
++          "Disabling SASS loader in favor of docusaurus-plugin-sass"
++        );
++        return null;
++      }
++      return rule;
++    })
++    .filter(Boolean);
++  rules.push(
++    ...docusaurusConfig.module.rules.filter((rule) =>
++      ruleMatches(rule, ".svg", ".js")
++    )
++  );
+   let finalConfig = {
+     ...config2,
+     resolve: {
+       ...config2.resolve,
+       roots: [
+-        ...config2.resolve.roots || [],
+-        ...docusaurusConfig.resolve.roots
++        ...(config2.resolve.roots || []),
++        ...docusaurusConfig.resolve.roots,
+       ],
+-      alias
++      alias,
+     },
+     module: {
+       ...config2.module,
+-      rules
++      rules,
+     },
+-    plugins: [...config2.plugins, ...docusaurusConfig.plugins]
++    plugins: [...config2.plugins, ...docusaurusConfig.plugins],
+   };
+-  props.plugins.filter((plugin) => "configureWebpack" in plugin).forEach((plugin) => {
+-    var _a;
+-    nodeLogger.logger.info(`Applying Webpack config from Docusaurus "${plugin.name}" plugin`);
+-    finalConfig = utils.applyConfigureWebpack(plugin.configureWebpack.bind(plugin), finalConfig, false, (_a = props.siteConfig.webpack) == null ? void 0 : _a.jsLoader, plugin.content);
+-  });
++  props.plugins
++    .filter((plugin) => "configureWebpack" in plugin)
++    .forEach((plugin) => {
++      var _a;
++      nodeLogger.logger.info(
++        `Applying Webpack config from Docusaurus "${plugin.name}" plugin`
++      );
++      finalConfig = utils.applyConfigureWebpack(
++        plugin.configureWebpack.bind(plugin),
++        finalConfig,
++        false,
++        (_a = props.siteConfig.webpack) == null ? void 0 : _a.jsLoader,
++        plugin.content
++      );
++    });
+   finalConfig.module.rules = finalConfig.module.rules.map((rule) => {
+     if (rule.exclude && Array.isArray(rule.exclude)) {
+       rule.exclude = rule.exclude.filter(Boolean);
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 615c3225a8cd71c721aed011261f5b4ee444953e..d1587bbd60063a6f6b4f58106705c2db296162b0 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -1,68 +1,92 @@
+-import { load } from '@docusaurus/core/lib/server';
+-import createClientConfig from '@docusaurus/core/lib/webpack/client';
+-import { applyConfigureWebpack } from '@docusaurus/core/lib/webpack/utils';
+-import { loadClientModules } from '@docusaurus/core/lib/server/clientModules';
+-import { logger } from '@storybook/node-logger';
++import { load } from "@docusaurus/core/lib/server";
++import createClientConfig from "@docusaurus/core/lib/webpack/client";
++import { applyConfigureWebpack } from "@docusaurus/core/lib/webpack/utils";
++import { loadClientModules } from "@docusaurus/core/lib/server/clientModules";
++import { logger } from "@storybook/node-logger";
+ 
+ logger.info("Configuring Storybook for Docusaurus...");
+-const ruleMatches = (rule, ...inputs) => inputs.some((input) => rule.test.test(input));
+-const loadDocusaurus = async () => await load({
+-  siteDir: process.cwd()
+-});
++const ruleMatches = (rule, ...inputs) =>
++  inputs.some((input) => rule.test.test(input));
++const loadDocusaurus = async () =>
++  await load({
++    siteDir: process.cwd(),
++  });
+ const config = async (entry = []) => {
+   const { plugins } = await loadDocusaurus();
+   const clientModules = loadClientModules(plugins);
+-  logger.info(`Adding ${clientModules.length} Docusaurus client modules to preview frame`);
++  logger.info(
++    `Adding ${clientModules.length} Docusaurus client modules to preview frame`
++  );
+   return [...entry, ...clientModules];
+ };
+ const webpackFinal = async (config2) => {
+   const props = await loadDocusaurus();
+-  const hasPlugin = (name) => props.plugins.map((plugin) => plugin.name).includes(name);
++  const hasPlugin = (name) =>
++    props.plugins.map((plugin) => plugin.name).includes(name);
+   const docusaurusConfig = await createClientConfig(props);
+   const alias = {
+     ...config2.resolve.alias,
+-    ...docusaurusConfig.resolve.alias
++    ...docusaurusConfig.resolve.alias,
+   };
+-  const rules = config2.module.rules.map((rule) => {
+-    if (ruleMatches(rule, ".svg")) {
+-      logger.info("Disabling SVG loader in favor of Docusaurus core loader");
+-      return {
+-        ...rule,
+-        exclude: /\.svg$/
+-      };
+-    }
+-    if (ruleMatches(rule, ".mdx")) {
+-      logger.info("Disabling MDX loader in favor of Docusaurus core loader");
+-      return null;
+-    }
+-    if (hasPlugin("docusaurus-plugin-sass") && ruleMatches(rule, ".module.scss")) {
+-      logger.info("Disabling SASS loader in favor of docusaurus-plugin-sass");
+-      return null;
+-    }
+-    return rule;
+-  }).filter(Boolean);
+-  rules.push(...docusaurusConfig.module.rules.filter((rule) => ruleMatches(rule, ".svg", ".js", ".woff")));
++  const rules = config2.module.rules
++    .map((rule) => {
++      if (ruleMatches(rule, ".svg")) {
++        logger.info("Disabling SVG loader in favor of Docusaurus core loader");
++        return {
++          ...rule,
++          exclude: /\.svg$/,
++        };
++      }
++      if (ruleMatches(rule, ".mdx")) {
++        logger.info("Disabling MDX loader in favor of Docusaurus core loader");
++        return null;
++      }
++      if (
++        hasPlugin("docusaurus-plugin-sass") &&
++        ruleMatches(rule, ".module.scss")
++      ) {
++        logger.info("Disabling SASS loader in favor of docusaurus-plugin-sass");
++        return null;
++      }
++      return rule;
++    })
++    .filter(Boolean);
++  rules.push(
++    ...docusaurusConfig.module.rules.filter((rule) =>
++      ruleMatches(rule, ".svg", ".js")
++    )
++  );
+   let finalConfig = {
+     ...config2,
+     resolve: {
+       ...config2.resolve,
+       roots: [
+-        ...config2.resolve.roots || [],
+-        ...docusaurusConfig.resolve.roots
++        ...(config2.resolve.roots || []),
++        ...docusaurusConfig.resolve.roots,
+       ],
+-      alias
++      alias,
+     },
+     module: {
+       ...config2.module,
+-      rules
++      rules,
+     },
+-    plugins: [...config2.plugins, ...docusaurusConfig.plugins]
++    plugins: [...config2.plugins, ...docusaurusConfig.plugins],
+   };
+-  props.plugins.filter((plugin) => "configureWebpack" in plugin).forEach((plugin) => {
+-    var _a;
+-    logger.info(`Applying Webpack config from Docusaurus "${plugin.name}" plugin`);
+-    finalConfig = applyConfigureWebpack(plugin.configureWebpack.bind(plugin), finalConfig, false, (_a = props.siteConfig.webpack) == null ? void 0 : _a.jsLoader, plugin.content);
+-  });
++  props.plugins
++    .filter((plugin) => "configureWebpack" in plugin)
++    .forEach((plugin) => {
++      var _a;
++      logger.info(
++        `Applying Webpack config from Docusaurus "${plugin.name}" plugin`
++      );
++      finalConfig = applyConfigureWebpack(
++        plugin.configureWebpack.bind(plugin),
++        finalConfig,
++        false,
++        (_a = props.siteConfig.webpack) == null ? void 0 : _a.jsLoader,
++        plugin.content
++      );
++    });
+   finalConfig.module.rules = finalConfig.module.rules.map((rule) => {
+     if (rule.exclude && Array.isArray(rule.exclude)) {
+       rule.exclude = rule.exclude.filter(Boolean);
