@@ -1,4 +1,10 @@
-import { Button, ButtonProps, makePrefixer, useId } from "@salt-ds/core";
+import {
+  Button,
+  ButtonProps,
+  makePrefixer,
+  Tooltip,
+  useId,
+} from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
@@ -9,7 +15,6 @@ import {
 } from "react";
 import { Dropdown, DropdownProps } from "../../dropdown";
 import { ListItem, ListItemType } from "../../list";
-import { Tooltip } from "../../tooltip";
 
 import { useCalendarContext } from "./CalendarContext";
 

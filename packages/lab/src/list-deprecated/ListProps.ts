@@ -1,5 +1,5 @@
 import { HTMLAttributes, Ref, SyntheticEvent } from "react";
-import { TooltipContextProps } from "../tooltip";
+import { TooltipContextProps } from "@salt-ds/core";
 
 export type ListSingleSelectionVariant = "default" | "deselectable";
 export type ListMultiSelectionVariant = "multiple" | "extended";

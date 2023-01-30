@@ -71,7 +71,6 @@ export * from "./tabs";
 export * from "./toggle-button";
 export * from "./tokenized-input";
 export * from "./toolbar";
-export * from "./tooltip";
 export * from "./tree";
 export * from "./utils";
 export * from "./window";

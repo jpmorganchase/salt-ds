@@ -1,5 +1,10 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
-import { Portal, useAriaAnnouncer, useForkRef } from "@salt-ds/core";
+import {
+  Portal,
+  TooltipContext,
+  useAriaAnnouncer,
+  useForkRef,
+} from "@salt-ds/core";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ListBase, ListStateContext } from "../../list-deprecated";
 import { TokenizedInputBase, TokenizedInputProps } from "../../tokenized-input";
@@ -8,7 +13,6 @@ import { getAnnouncement } from "./getAnnouncement";
 import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
 import { isDesktop, useWindow } from "../../window";
 import { useFloatingUI } from "../../popper";
-import { TooltipContext } from "../../tooltip";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   Item,

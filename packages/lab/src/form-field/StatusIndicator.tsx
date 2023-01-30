@@ -2,10 +2,11 @@ import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ElementType } from "react";
 import {
-  StatusIndicator as BaseStatusIndicator,
   makePrefixer,
+  StatusIndicator as BaseStatusIndicator,
+  Tooltip,
+  TooltipProps,
 } from "@salt-ds/core";
-import { Tooltip, TooltipProps } from "../tooltip";
 
 const withBaseName = makePrefixer("saltFormField");
 

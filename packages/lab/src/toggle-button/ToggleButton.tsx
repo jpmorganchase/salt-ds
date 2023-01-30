@@ -1,4 +1,4 @@
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { Button, ButtonProps, makePrefixer, Tooltip } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   forwardRef,
@@ -10,7 +10,6 @@ import {
   useState,
 } from "react";
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
-import { Tooltip } from "../tooltip";
 
 import "./ToggleButton.css";
 

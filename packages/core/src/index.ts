@@ -13,6 +13,7 @@ export * from "./portal";
 export * from "./stack-layout";
 export * from "./status-indicator";
 export * from "./text";
+export * from "./tooltip";
 export * from "./theme";
 export * from "./salt-provider";
 export * from "./utils";

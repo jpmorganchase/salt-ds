@@ -5,7 +5,7 @@ import {
   StatusIndicator,
   useForkRef,
   ValidationStatus,
-} from "@salt-ds/core";
+} from "packages/core/src/index";
 import { clsx } from "clsx";
 import {
   cloneElement,
@@ -17,7 +17,7 @@ import {
   Ref,
   RefObject,
 } from "react";
-import { UseFloatingUIProps } from "../popper";
+import { UseFloatingUIProps } from "@salt-ds/lab/src/popper";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 

@@ -1,6 +1,7 @@
 import {
   Button,
   makePrefixer,
+  Tooltip,
   useIdMemo,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
@@ -38,7 +39,6 @@ import {
   TabstripProps,
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
-import { Tooltip } from "../tooltip";
 
 import "./Tabstrip.css";
 import "./ThemeTabstrip.css";

@@ -1,21 +1,21 @@
 import {
   arrow,
+  autoUpdate,
   flip,
   offset,
-  autoUpdate,
   safePolygon,
   shift,
   useDismiss,
+  useFloating,
   useFocus,
   useHover,
   useInteractions,
   useRole,
-  useFloating,
 } from "@floating-ui/react";
-import { margin, useControlled } from "@salt-ds/core";
-import { useRef, HTMLProps, useMemo } from "react";
-import { UseFloatingUIProps } from "../popper";
-import { isDesktop } from "../window";
+import { margin, useControlled } from "packages/core/src/index";
+import { HTMLProps, useMemo, useRef } from "react";
+import { UseFloatingUIProps } from "@salt-ds/lab/src/popper";
+import { isDesktop } from "@salt-ds/lab/src/window";
 import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps

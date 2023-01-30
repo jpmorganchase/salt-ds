@@ -1,12 +1,12 @@
-import { useForkRef } from "@salt-ds/core";
+import { TooltipContext, useForkRef } from "@salt-ds/core";
 
 import {
-  forwardRef,
-  useRef,
-  useContext,
-  KeyboardEvent,
   ForwardedRef,
+  forwardRef,
+  KeyboardEvent,
   ReactElement,
+  useContext,
+  useRef,
 } from "react";
 
 import { ListBase, ListScrollHandles } from "./ListBase";
@@ -14,7 +14,6 @@ import { ListProps, ListSelectionVariant } from "./ListProps";
 import { ListStateContext } from "./ListStateContext";
 import { useList } from "./useList";
 import { useTypeSelect } from "./useTypeSelect";
-import { TooltipContext } from "../tooltip";
 
 import {
   DescendantContext,

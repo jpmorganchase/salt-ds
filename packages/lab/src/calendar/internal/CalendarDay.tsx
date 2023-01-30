@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, Tooltip, TooltipProps } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
@@ -7,7 +7,6 @@ import { DateValue } from "@internationalized/date";
 import { DayStatus, useCalendarDay } from "../useCalendarDay";
 import "./CalendarDay.css";
 import { formatDate } from "./utils";
-import { Tooltip, TooltipProps } from "../../tooltip";
 
 export type DateFormatter = (day: Date) => string | undefined;
 
