@@ -12353,6 +12353,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"docusaurus-css-variable-docgen-plugin@workspace:tooling/docusaurus-css-variable-docgen-plugin":
+  version: 0.0.0-use.local
+  resolution: "docusaurus-css-variable-docgen-plugin@workspace:tooling/docusaurus-css-variable-docgen-plugin"
+  dependencies:
+    glob: ^8.0.0
+  languageName: unknown
+  linkType: soft
+
 "docusaurus-plugin-react-docgen-typescript@npm:^1.0.2":
   version: 1.0.2
   resolution: "docusaurus-plugin-react-docgen-typescript@npm:1.0.2"
