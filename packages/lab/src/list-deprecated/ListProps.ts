@@ -1,5 +1,5 @@
 import { HTMLAttributes, Ref, SyntheticEvent } from "react";
-import { TooltipContextProps } from "@salt-ds/core";
+// import { TooltipContextProps } from "@salt-ds/core";
 
 export type ListSingleSelectionVariant = "default" | "deselectable";
 export type ListMultiSelectionVariant = "multiple" | "extended";
@@ -10,10 +10,10 @@ export type ListSelectionVariant =
 export type ListChangeHandler<
   Item = string,
   Variant extends ListSelectionVariant = "default"
-> = (
-  event: SyntheticEvent,
-  item: null | (Variant extends ListMultiSelectionVariant ? Array<Item> : Item)
-) => void;
+  > = (
+    event: SyntheticEvent,
+    item: null | (Variant extends ListMultiSelectionVariant ? Array<Item> : Item)
+  ) => void;
 
 export type ListSelectHandler<Item = string> = (
   event: SyntheticEvent,
@@ -173,14 +173,14 @@ export interface ListBaseProps<Item = string>
 export interface ListProps<
   Item = string,
   Variant extends ListSelectionVariant = "default"
-> extends ListBaseProps<Item> {
-  Tooltip?: TooltipContextProps["Tooltip"];
+  > extends ListBaseProps<Item> {
+  // Tooltip?: TooltipContextProps["Tooltip"];
   disableTypeToSelect?: boolean;
   getItemIndex?: (item: Item) => number;
   highlightedIndex?: number;
   initialSelectedItem?: Variant extends ListMultiSelectionVariant
-    ? Array<Item>
-    : Item;
+  ? Array<Item>
+  : Item;
   onChange?: ListChangeHandler<Item, Variant>;
   onSelect?: ListSelectHandler<Item>;
   selectedItem?: Variant extends ListMultiSelectionVariant ? Array<Item> : Item;
@@ -193,7 +193,7 @@ export interface ListProps<
    * @default false
    */
   tabToSelect?: boolean;
-  tooltipEnterDelay?: TooltipContextProps["enterDelay"];
-  tooltipLeaveDelay?: TooltipContextProps["leaveDelay"];
-  tooltipPlacement?: TooltipContextProps["placement"];
+  // tooltipEnterDelay?: TooltipContextProps["enterDelay"];
+  // tooltipLeaveDelay?: TooltipContextProps["leaveDelay"];
+  // tooltipPlacement?: TooltipContextProps["placement"];
 }
