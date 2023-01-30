@@ -1,5 +1,4 @@
-import { Button } from "@salt-ds/core";
-import { Tooltip, TooltipProps } from "@salt-ds/lab";
+import { Button, Tooltip, TooltipProps } from "packages/core/src";
 import { ComponentMeta, Story } from "@storybook/react";
 import { useCallback } from "react";
 
