@@ -11,7 +11,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   alt?: string;
   id?: string;
   imgProps?: ImgHTMLAttributes<HTMLImageElement>;
-  size?: "small" | "medium" | "large";
+  size?: number;
   sizes?: string;
   src?: string;
   srcSet?: string;
@@ -19,6 +19,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const withBaseName = makePrefixer(classBase);
+const DEFAULT_AVATAR_SIZE = 2; // medium
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   {
@@ -26,12 +27,13 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     className,
     children: childrenProp,
     id: idProp,
-    size = "medium",
+    size = DEFAULT_AVATAR_SIZE,
     src,
     srcSet,
     title = "user",
     imgProps,
     sizes,
+    style: styleProp,
     ...rest
   },
   ref
@@ -42,6 +44,11 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const loaded = useLoaded({ ...imgProps, src, srcSet });
   const hasImg = src || srcSet;
   const hasImgNotFailing = hasImg && loaded !== "error";
+
+  const style = {
+    ...styleProp,
+    "--saltAvatar-size-multiplier": `${size}`,
+  };
 
   if (hasImgNotFailing) {
     children = (
@@ -65,7 +72,8 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   return (
     <div
       ref={ref}
-      className={clsx(withBaseName(), withBaseName(size), className)}
+      style={style}
+      className={clsx(withBaseName(), className)}
       {...rest}
     >
       {children}
