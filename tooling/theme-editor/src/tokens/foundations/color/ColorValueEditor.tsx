@@ -1,10 +1,9 @@
-import { makePrefixer, SaltProvider } from "@salt-ds/core";
+import { makePrefixer, SaltProvider, Tooltip } from "@salt-ds/core";
 import {
   capitalize,
   Color,
   ColorChooser,
   getColorNameByHexValue,
-  Tooltip,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import { useEffect, useMemo, useState } from "react";
@@ -203,7 +202,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                 >
                   {formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "background" &&
-                  formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
+                    formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "color" ? (
                     StateIcon(
                       formFieldLabel.split(" ").slice(-1)[0][0].toUpperCase()
