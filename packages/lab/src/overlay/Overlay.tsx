@@ -1,10 +1,9 @@
-import { Button, makePrefixer, useId } from "@salt-ds/core";
+import { Button, makePrefixer, Portal, useId } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
 import { useWindow } from "../window";
 import { UseFloatingUIProps } from "../popper";
-import { Portal } from "../portal";
 
 import "./Overlay.css";
 

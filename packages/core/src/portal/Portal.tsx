@@ -8,11 +8,11 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import {
-  SaltProvider,
   ownerDocument,
+  SaltProvider,
   useForkRef,
   useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
+} from "packages/core/src/index";
 
 export interface PortalProps {
   /**

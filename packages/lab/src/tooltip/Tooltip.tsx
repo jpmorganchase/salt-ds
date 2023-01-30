@@ -1,5 +1,7 @@
 import {
   makePrefixer,
+  Portal,
+  PortalProps,
   StatusIndicator,
   useForkRef,
   ValidationStatus,
@@ -15,9 +17,7 @@ import {
   Ref,
   RefObject,
 } from "react";
-import { Portal, PortalProps } from "../portal";
 import { UseFloatingUIProps } from "../popper";
-import { Window } from "../window";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 
@@ -102,7 +102,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             ref={ref}
             id={id}
           >
-            <Window
+            <div
               className={clsx(
                 withBaseName(),
                 withBaseName(status),
@@ -120,7 +120,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
               {!hideArrow && (
                 <div className={withBaseName("arrow")} {...arrowProps} />
               )}
-            </Window>
+            </div>
           </Portal>
         )}
 

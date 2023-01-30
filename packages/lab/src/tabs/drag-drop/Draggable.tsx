@@ -1,8 +1,7 @@
-import { useForkRef } from "@salt-ds/core";
+import { Portal, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, MutableRefObject, useCallback } from "react";
 import { Rect } from "./dragDropTypes";
-import { Portal } from "../../portal";
 
 import "./Draggable.css";
 

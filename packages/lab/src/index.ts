@@ -55,7 +55,6 @@ export * from "./parent-child-item";
 export * from "./parent-child-layout";
 export * from "./pill";
 export * from "./popper";
-export * from "./portal";
 export * from "./progress";
 export * from "./query-input";
 export * from "./radio-button";

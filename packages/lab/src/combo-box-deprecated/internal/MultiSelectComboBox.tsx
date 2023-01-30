@@ -1,13 +1,12 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
-import { useAriaAnnouncer, useForkRef } from "@salt-ds/core";
+import { Portal, useAriaAnnouncer, useForkRef } from "@salt-ds/core";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ListBase, ListStateContext } from "../../list-deprecated";
 import { TokenizedInputBase, TokenizedInputProps } from "../../tokenized-input";
 import { BaseComboBoxProps } from "./DefaultComboBox";
 import { getAnnouncement } from "./getAnnouncement";
 import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
-import { useWindow, isDesktop } from "../../window";
-import { Portal } from "../../portal";
+import { isDesktop, useWindow } from "../../window";
 import { useFloatingUI } from "../../popper";
 import { TooltipContext } from "../../tooltip";
 
