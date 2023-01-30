@@ -1,11 +1,3 @@
-import {
-  makePrefixer,
-  Portal,
-  PortalProps,
-  StatusIndicator,
-  useForkRef,
-  ValidationStatus,
-} from "packages/core/src/index";
 import { clsx } from "clsx";
 import {
   cloneElement,
@@ -20,6 +12,9 @@ import {
 import { UseFloatingUIProps } from "@salt-ds/lab/src/popper";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
+import { makePrefixer, useForkRef } from "../utils";
+import { Portal, PortalProps } from "../portal";
+import { StatusIndicator, ValidationStatus } from "../status-indicator";
 
 // Keep in order of preference. First items are used as default
 

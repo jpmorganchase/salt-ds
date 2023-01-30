@@ -7,20 +7,19 @@ import {
   shift,
   useDismiss,
   useFloating,
+  UseFloatingProps,
   useFocus,
   useHover,
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { margin, useControlled } from "packages/core/src/index";
+import { useControlled } from "../utils";
 import { HTMLProps, useMemo, useRef } from "react";
-import { UseFloatingUIProps } from "@salt-ds/lab/src/popper";
-import { isDesktop } from "@salt-ds/lab/src/window";
 import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps
   extends Partial<
-    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
+    Pick<UseFloatingProps, "onOpenChange" | "open" | "placement">
   > {
   /**
    * Do not respond to focus events.
@@ -70,9 +69,7 @@ export function useTooltip(props?: UseTooltipProps) {
     onOpenChange?.(open);
   };
 
-  const middleware = isDesktop
-    ? [margin(8), arrow({ element: arrowRef })]
-    : [offset(8), flip(), shift(), arrow({ element: arrowRef })];
+  const middleware = [offset(8), flip(), shift(), arrow({ element: arrowRef })];
   const {
     floating,
     reference,
@@ -97,7 +94,7 @@ export function useTooltip(props?: UseTooltipProps) {
         close: leaveDelay,
       },
       enabled: !disableHoverListener,
-      handleClose: isDesktop ? null : safePolygon(),
+      handleClose: safePolygon(),
     }),
     useFocus(context, { enabled: !disableFocusListener }),
     useRole(context, { role: "tooltip" }),

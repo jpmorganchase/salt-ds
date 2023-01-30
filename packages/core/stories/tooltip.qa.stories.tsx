@@ -1,10 +1,10 @@
-import { Tooltip, TooltipProps, ValidationStatus } from "packages/core/src";
+import { Tooltip, TooltipProps, ValidationStatus } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { ComponentMeta, Story } from "@storybook/react";
 import { InfoSolidIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/Tooltip/QA",
+  title: "Core/Tooltip/QA",
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 
