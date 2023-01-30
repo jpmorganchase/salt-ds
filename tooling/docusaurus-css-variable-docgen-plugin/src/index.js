@@ -29,11 +29,8 @@ function plugin(_, { src }) {
         await asyncMap(files, async (file) => {
           try {
             const rawCSSData = await readFile(file, fileOpts);
+            const parsedCSS = await parseCSS(rawCSSData, file);
 
-            const parsedCSS = parseCSS(rawCSSData, file);
-
-            // parse css file here
-            // walk css file and convert to an object
             return {
               cssData: parsedCSS,
               file,

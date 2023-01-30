@@ -3,7 +3,7 @@ const cssTree = require("css-tree");
 const { findLast, generate, parse, walk } = cssTree;
 const valueTypes = ["Identifier", "Dimension", "Number", "Percentage"];
 
-const parseCSS = (contents, path) => {
+const parseCSS = async (contents, path) => {
   const classNames = {};
   const privateVariableMap = {};
   const identifierMap = {};
@@ -24,7 +24,6 @@ const parseCSS = (contents, path) => {
     visit: "Selector",
 
     enter(node) {
-      // console.log("Selector", node);
       if (
         this.selector?.loc?.start.line &&
         comments[this.selector.loc.start.line - 1]
@@ -43,7 +42,6 @@ const parseCSS = (contents, path) => {
   walk(ast, {
     visit: "Declaration",
     enter(node) {
-      // console.log("Declaration", node);
       if (node.type === "Declaration") {
         if (node.property.startsWith("--")) {
           try {
@@ -69,7 +67,6 @@ const parseCSS = (contents, path) => {
   walk(ast, {
     visit: "Identifier",
     enter(node) {
-      // console.log("identifier", node);
       const name = node.name;
       if (name.startsWith("--")) {
         try {
@@ -93,9 +90,7 @@ const parseCSS = (contents, path) => {
     },
   });
 
-  console.log({ privateVariableMap, identifierMap });
-
-  return { classNames };
+  return { classNames, identifierMap };
 };
 
 module.exports = parseCSS;
