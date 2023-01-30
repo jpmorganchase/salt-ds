@@ -39,7 +39,6 @@ export const CharacteristicsTable = ({
           .map(([name, tokens]) => (
             <tr key={name}>
               <td>{name}</td>
-
               <td>
                 {tokens &&
                   tokens.map((token) => <div key={token}>{token}</div>)}

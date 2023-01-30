@@ -6,6 +6,7 @@ import {
   SettingsSolidIcon,
 } from "@salt-ds/icons";
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
+// TODO: Remove react-live package if component pages don't end up using it
 
 const ButtonVariants = () => {
   const code = `
