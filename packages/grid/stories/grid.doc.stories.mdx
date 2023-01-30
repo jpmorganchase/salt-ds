@@ -1,6 +1,7 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Grid, GridColumn } from "@salt-ds/data-grid";
 import { withFlexGap } from "docs/decorators/withFlexGap";
+import { Banner } from "@salt-ds/lab";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -40,13 +41,18 @@ yarn add @salt-ds/data-grid;
 npm install @salt-ds/data-grid;
 ```
 
-To import the grid into your application, run the following call:
+To import the grid into your application, use the following import:
 
-```
-import { Grid } from "@salt-ds/data-grid";
+```js
+import { Grid, GridColumn } from "@salt-ds/data-grid";
 ```
 
-Note: ensure the CSS `height` property for `.saltGrid` has been set appropriately to see grid on screen.
+<Banner disableAnnouncer>
+  Note: ensure the CSS `height` property for the grid element has been set
+  appropriately to see grid on screen. You can do so by passing a custom class
+  name, using a style prop, or by targeting the default `.saltGrid` class name.
+</Banner>
+
 
 ### Props
 
