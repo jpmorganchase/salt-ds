@@ -9,7 +9,7 @@ import {
   Ref,
   RefObject,
 } from "react";
-import { UseFloatingUIProps } from "@salt-ds/lab/src/popper";
+import { UseFloatingUIProps } from "../popper";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 import { makePrefixer, useForkRef } from "../utils";

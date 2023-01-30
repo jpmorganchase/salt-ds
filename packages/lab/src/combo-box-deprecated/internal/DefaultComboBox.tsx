@@ -4,6 +4,7 @@ import {
   TooltipContext,
   TooltipContextProps,
   useAriaAnnouncer,
+  useFloatingUI,
   useForkRef,
 } from "@salt-ds/core";
 import {
@@ -29,7 +30,6 @@ import { getAnnouncement } from "./getAnnouncement";
 import { useComboBox } from "./useComboBox";
 import { isDesktop, Window, WindowProps } from "../../window";
 import { Input, InputProps } from "../../input";
-import { useFloatingUI } from "../../popper";
 
 export type BaseComboBoxProps<
   Item,

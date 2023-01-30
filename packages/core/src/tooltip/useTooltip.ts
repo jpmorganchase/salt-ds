@@ -7,7 +7,6 @@ import {
   shift,
   useDismiss,
   useFloating,
-  UseFloatingProps,
   useFocus,
   useHover,
   useInteractions,
@@ -16,10 +15,11 @@ import {
 import { useControlled } from "../utils";
 import { HTMLProps, useRef } from "react";
 import { useAriaAnnounce } from "./useAriaAnnounce";
+import { UseFloatingUIProps } from "../popper";
 
 export interface UseTooltipProps
   extends Partial<
-    Pick<UseFloatingProps, "onOpenChange" | "open" | "placement">
+    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   /**
    * Do not respond to focus events.

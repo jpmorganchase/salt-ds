@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { Story } from "@storybook/react";
 
-import { Button } from "@salt-ds/core";
+import { Button, Tooltip } from "@salt-ds/core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -10,11 +10,10 @@ import {
 } from "@salt-ds/icons";
 
 import {
-  FormField,
-  Tooltip,
   Dropdown,
   DropdownButton,
   DropdownProps,
+  FormField,
   ListItem,
   ListItemType,
   SelectionChangeHandler,

@@ -6,7 +6,7 @@ import {
   shift,
   useFloating,
 } from "@floating-ui/react";
-import { isDesktop } from "../window";
+import { isDesktop } from "@salt-ds/lab/src/window";
 
 export type UseFloatingUIProps = {
   placement?: Placement;

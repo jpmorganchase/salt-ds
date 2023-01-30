@@ -3,6 +3,7 @@ import {
   Portal,
   TooltipContext,
   useAriaAnnouncer,
+  useFloatingUI,
   useForkRef,
 } from "@salt-ds/core";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -12,7 +13,6 @@ import { BaseComboBoxProps } from "./DefaultComboBox";
 import { getAnnouncement } from "./getAnnouncement";
 import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
 import { isDesktop, useWindow } from "../../window";
-import { useFloatingUI } from "../../popper";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   Item,
