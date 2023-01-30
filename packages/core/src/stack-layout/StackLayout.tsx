@@ -1,5 +1,10 @@
 import { ElementType, forwardRef, ReactElement } from "react";
-import { FlexLayout, FlexLayoutProps, LayoutDirection } from "../flex-layout";
+import {
+  FlexLayout,
+  FlexLayoutProps,
+  LayoutDirection,
+  LayoutSeparator,
+} from "../flex-layout";
 import {
   makePrefixer,
   PolymorphicComponentPropWithRef,
@@ -11,8 +16,6 @@ import { clsx } from "clsx";
 import "./StackLayout.css";
 
 const withBaseName = makePrefixer("saltStackLayout");
-
-export type LayoutSeparator = "start" | "center" | "end";
 
 export type StackLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
