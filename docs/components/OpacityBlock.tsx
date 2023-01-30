@@ -1,4 +1,4 @@
-import { Tooltip } from "@salt-ds/lab";
+import { Tooltip } from "@salt-ds/core";
 import { clsx } from "clsx";
 
 import "./OpacityBlock.css";
