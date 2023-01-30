@@ -11,6 +11,7 @@
   --saltCard-color: var(--salt-accent-foreground);
 }
 
-.salt-theme .sbdocs {
+.salt-theme .saltCard .sbdocs {
+  background: unset;
   color: unset;
 }

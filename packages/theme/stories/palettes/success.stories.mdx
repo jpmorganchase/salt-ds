@@ -1,5 +1,11 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Success" />
@@ -8,8 +14,32 @@ import { DocGrid } from "docs/components/DocGrid";
 
 Colors symbolising a success state or indication of process completion.
 
-<DocGrid>
-  <ColorBlock colorVar="--salt-palette-success-background-emphasize" />
-  <ColorBlock colorVar="--salt-palette-success-border" />
-  <ColorBlock colorVar="--salt-palette-success-foreground" />
-</DocGrid>
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-success-border"
+      colors={{
+        "--salt-palette-success-border": "var(--salt-palette-success-border)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-success-foreground"
+      colors={{
+        "--salt-palette-success-foreground":
+          "var(--salt-palette-success-foreground)",
+      }}
+    />
+    <ColorItem
+      title="Background (emphasized)"
+      subtitle="--salt-palette-success-background-emphasize"
+      colors={{
+        "--salt-palette-success-background-emphasize":
+          "var(--salt-palette-success-background-emphasize)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>

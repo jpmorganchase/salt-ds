@@ -3,3 +3,15 @@
   width: 160px;
   -webkit-flex: none;
 }
+
+.paletteContainer .docblock-colorpalette > div > div > div:nth-child(2) {
+  display: none;
+}
+
+.docblock-colorpalette div > span {
+  display: none;
+}
+
+.docblock-colorpalette div * {
+  color: var(--salt-text-primary-foreground);
+}
