@@ -1,4 +1,4 @@
-import { FLEX_ALIGNMENT_BASE, StackLayout } from "@salt-ds/core";
+import { FLEX_ALIGNMENT_BASE, FlexLayout, StackLayout } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
@@ -8,6 +8,10 @@ export default {
   argTypes: {
     align: {
       options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
+      control: { type: "select" },
+    },
+    direction: {
+      options: ["row", "column"],
       control: { type: "select" },
     },
     separators: {
@@ -36,3 +40,21 @@ const DefaultStackLayoutStory: ComponentStory<typeof StackLayout> = (args) => {
 };
 export const DefaultStackLayout = DefaultStackLayoutStory.bind({});
 DefaultStackLayout.args = {};
+
+const SeparatorsStory: ComponentStory<typeof FlexLayout> = (args) => {
+  return (
+    <StackLayout {...args} className="layout-container">
+      {Array.from({ length: 3 }, (_, index) => (
+        <div key={index}>
+          <p>Item {index + 1}</p>
+        </div>
+      ))}
+    </StackLayout>
+  );
+};
+export const StackLayoutWithSeparators = SeparatorsStory.bind({});
+StackLayoutWithSeparators.args = {
+  separators: "center",
+  wrap: false,
+  direction: { sm: "row", xs: "column" },
+};

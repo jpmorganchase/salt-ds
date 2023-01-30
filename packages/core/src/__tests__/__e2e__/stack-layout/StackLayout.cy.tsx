@@ -22,6 +22,20 @@ describe("GIVEN a Stack", () => {
 
       cy.get(".saltFlexLayout").should("have.css", "row-gap", "24px");
     });
+
+    it("THEN it should render as a column by default", () => {
+      cy.mount(<DefaultStackLayout />);
+
+      cy.get(".saltFlexLayout").should("have.css", "flex-direction", "column");
+    });
+  });
+
+  describe("WHEN row direction is provided", () => {
+    it("THEN it should render in a row", () => {
+      cy.mount(<DefaultStackLayout direction="row" />);
+
+      cy.get(".saltFlexLayout").should("have.css", "flex-direction", "row");
+    });
   });
 
   describe("WHEN a separator value is provided", () => {
@@ -30,7 +44,7 @@ describe("GIVEN a Stack", () => {
 
       cy.get(".saltFlexLayout").should(
         "have.class",
-        "saltFlexLayout-separator"
+        "saltStackLayout-separator"
       );
     });
   });

@@ -1,4 +1,4 @@
-import { Children, ElementType, forwardRef, ReactElement } from "react";
+import { ElementType, forwardRef, ReactElement } from "react";
 import { clsx } from "clsx";
 
 import {
@@ -13,7 +13,6 @@ import "./FlexLayout.css";
 
 const withBaseName = makePrefixer("saltFlexLayout");
 
-export type LayoutSeparator = "start" | "center" | "end";
 export type LayoutDirection = "row" | "column";
 
 export const FLEX_ALIGNMENT_BASE = ["start", "end", "center"] as const;
@@ -48,10 +47,6 @@ export type FlexLayoutProps<T extends ElementType> =
        */
       justify?: FlexContentAlignment;
       /**
-       * Adds a separator between elements if wrap is not active, default is false.
-       */
-      separators?: LayoutSeparator | true;
-      /**
        * Allow the items to wrap as needed, default is false.
        */
       wrap?: ResponsiveProp<boolean>;
@@ -72,7 +67,6 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
       direction,
       gap,
       justify,
-      separators,
       style,
       wrap,
       ...rest
@@ -80,7 +74,6 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
     ref?: PolymorphicRef<T>
   ) => {
     const Component = as || "div";
-    const separatorAlignment = separators === true ? "center" : separators;
     const addPrefix = (style: string) => {
       return style === "start" || style === "end" ? `flex-${style}` : style;
     };
@@ -99,25 +92,12 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
 
     return (
       <Component
-        className={clsx(className, withBaseName(), {
-          [withBaseName("separator")]: separatorAlignment && !wrap,
-          [withBaseName(
-            `separator-${flexDirection || "row"}-${
-              separatorAlignment || "center"
-            }`
-          )]: separatorAlignment && !wrap,
-          [withBaseName(`separator-${flexDirection || "row"}`)]:
-            separatorAlignment && !wrap,
-        })}
+        className={clsx(className, withBaseName())}
         ref={ref}
         style={flexLayoutStyles}
         {...rest}
       >
-        {separators
-          ? Children.map(children, (child) => (
-              <div className={withBaseName("separator-wrapper")}>{child}</div>
-            ))
-          : children}
+        {children}
       </Component>
     );
   }

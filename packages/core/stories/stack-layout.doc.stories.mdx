@@ -12,10 +12,11 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Stack layout
 
-Stack layout dictates a vertical order and direction for UI elements.
+Stack layout dictates a vertical or horizontal order and direction for UI elements.
 It builds from flex layout, the height is driven by the child elements, and there are visual separators that can be turned on/off (default) between items.
 
-It can be used for cases in which the direction needs to be consistently vertical, for example a list.
+It can be used with `column` direction for cases in which the direction needs to be consistently vertical, for example a list.
+It can be used with `row` direction to layout static components or information in a horizontal orientation, such as metric data displays, contact information or page filters.
 
 <Canvas>
   <Story id="core-layout-stacklayout--default-stack-layout" />
@@ -23,11 +24,25 @@ It can be used for cases in which the direction needs to be consistently vertica
 
 ## Use Stack layout when...
 
-You need a layout that is responsive by default and will break into two columns as soon as there is not enough space.
+- You need a layout that is consistently horizontal or vertical.
+- You need your items to be either scrollable or you want to use breakpoints for responsiveness.
 
 ### Don't use Stack layout when...
 
-You want the direction to have more complex customization. In this case we recommend you having a look at [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
+- You want the direction to have more complex customization. In this case we recommend you having a look at [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
+
+### Examples
+
+
+#### Stack layout with separators
+
+Stack layout allows for separators between items that will by default display centered `separators={true}` but can be customized to sit on the left or right of a children.
+The separators span across the width of the layout component if the direction is row and the height if the direction is columns.
+The Stack layout gap will apply to both sides of the separator line.
+
+<Canvas>
+  <Story id="core-layout-stacklayout--stack-layout-with-separators" />
+</Canvas>
 
 ## Configuring Stack layout
 

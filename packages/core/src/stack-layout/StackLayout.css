@@ -1,0 +1,64 @@
+.salt-density-touch {
+  --stackLayout-gap-density-multiplier: 2;
+}
+
+/* Default variables applied to the root element */
+.saltStackLayout {
+  --stackLayout-gap-multiplier: var(--stackLayout-gap-density-multiplier, 3);
+  --stackLayout-separator: var(--salt-size-border);
+  --stackLayout-gap: calc(var(--salt-size-unit) * var(--stackLayout-gap-multiplier));
+}
+
+.saltStackLayout-separator {
+  gap: calc(var(--stackLayout-gap) * 2);
+}
+
+.saltStackLayout-separator > * {
+  position: relative;
+}
+.saltStackLayout-separator > *:not(:last-child)::after {
+  position: absolute;
+  display: block;
+  content: "";
+  background-color: var(--salt-separable-secondary-borderColor);
+}
+
+/* Row separator */
+
+.saltStackLayout-separator-row > *:not(:last-child)::after {
+  height: 100%;
+}
+
+.saltStackLayout-separator-row > *:not(:last-child)::after {
+  width: var(--stackLayout-separator);
+  top: 0;
+}
+.saltStackLayout-separator-row-start > *:not(:last-child)::after {
+  right: 0;
+}
+.saltStackLayout-separator-row-center > *:not(:last-child)::after {
+  right: calc(var(--stackLayout-gap) * -1);
+}
+.saltStackLayout-separator-row-end > *:not(:last-child)::after {
+  right: calc(var(--stackLayout-gap) * -2);
+}
+
+/* Column separator */
+.saltStackLayout-separator-column > *:not(:last-child)::after {
+  width: 100%;
+}
+
+.saltStackLayout-separator-column > *:not(:last-child)::after {
+  height: var(--stackLayout-separator);
+  left: 0;
+  width: 100%;
+}
+.saltStackLayout-separator-column-start > *:not(:last-child)::after {
+  bottom: 0;
+}
+.saltStackLayout-separator-column-center > *:not(:last-child)::after {
+  bottom: calc(var(--stackLayout-gap) * -1);
+}
+.saltStackLayout-separator-column-end > *:not(:last-child)::after {
+  bottom: calc(var(--stackLayout-gap) * -2);
+}
