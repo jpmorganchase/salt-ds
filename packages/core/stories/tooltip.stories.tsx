@@ -8,17 +8,17 @@ export default {
 } as ComponentMeta<typeof Tooltip>;
 
 export const Default: Story<TooltipProps> = (props: TooltipProps) => (
-  <Tooltip content="I am a tooltip" {...props}>
+  <Tooltip {...props} content="I am a tooltip">
     <Button>Hover</Button>
   </Tooltip>
 );
 
 export const OpenTooltip: Story<TooltipProps> = (props: TooltipProps) => {
   const userProps: TooltipProps = {
-    content: props.content || "I am a tooltip",
     status: "info",
     open: true,
     ...props,
+    content: props.content || "I am a tooltip",
   };
 
   return (

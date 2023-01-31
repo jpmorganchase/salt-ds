@@ -23,8 +23,8 @@ const defaultIconProps = { size: 1, className: withBaseName("icon") };
 
 export interface TooltipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
-  PortalProps,
-  UseFloatingUIProps {
+    PortalProps,
+    UseFloatingUIProps {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
   /**
    * Removes the tooltip arrow.
@@ -34,7 +34,10 @@ export interface TooltipProps
    * Whether to hide a state icon within the tooltip
    */
   hideIcon?: boolean;
-  content?: string | ReactNode;
+  /**
+   * Content displayed inside the tooltip. Can be a string or a React component
+   */
+  content: string | ReactNode;
   /**
    * A string to determine the current status of the tooltip
    */
