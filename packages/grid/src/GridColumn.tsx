@@ -30,6 +30,7 @@ export interface GridCellProps<T, U = any> {
   value?: U;
   getValidationStatus?: (value: GridCellValueProps<T>) => CellValidationState;
   getValidationMessage?: (value: GridCellValueProps<T>) => string | undefined;
+  getValidationType?: (value: GridCellValueProps<T>) => "strong" | "light";
 }
 
 export interface GridCellValueProps<T, U = any> {
@@ -112,6 +113,13 @@ export interface GridColumnProps<T = any> {
    * This prop is optional but if you don't provide a function a default message will be used.
    * */
   getValidationMessage?: GridCellProps<T>["getValidationMessage"];
+  /**
+   * Cell validation type. Determines the visual style of the validation. The available values are "strong" and "light". Strong will display the icon
+   * along side the background and border. Light will only affect border and background. Use light if you are validation the whole row, and optionally
+   * strong on one of the columns, and strong if you are validating user input on a particular cell.
+   * The default value is "strong".
+   * */
+  getValidationType?: GridCellProps<T>["getValidationType"];
   /**
    * CSS class to be applied to the column header.
    * Useful for minor customizations

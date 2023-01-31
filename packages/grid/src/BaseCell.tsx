@@ -54,6 +54,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     children,
     getValidationStatus = noop,
     getValidationMessage = noop,
+    getValidationType = noop,
     value,
     align,
   } = props;
@@ -67,7 +68,8 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     value,
   };
   const validationStatus = getValidationStatus(validationFnArg);
-  const validationMessage = getValidationMessage(validationFnArg);
+  const validationMessage =
+    validationStatus && getValidationMessage(validationFnArg);
   const cellId = getCellId(row.key, column);
   const hasValidation = validationStatus && validationStatus !== "none";
   const hasValidationMessage = validationMessage || hasValidation;
@@ -115,7 +117,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       >
         {children}
       </div>
-      {hasValidation ? (
+      {hasValidation && getValidationType(validationFnArg) === "strong" ? (
         <div
           className={clsx(withBaseName("statusContainer"), {
             [withBaseName(`statusContainer-align-${align as string}`)]: align,

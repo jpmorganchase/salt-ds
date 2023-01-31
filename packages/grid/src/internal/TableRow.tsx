@@ -112,6 +112,8 @@ export function TableRow<T>(props: TableRowProps<T>) {
             isSelected={isSelected}
             isEditable={isEditable}
             getValidationStatus={column.info.props.getValidationStatus}
+            getValidationMessage={column.info.props.getValidationMessage}
+            getValidationType={column.info.props.getValidationType}
             value={value}
             align={column.info.props.align}
           >

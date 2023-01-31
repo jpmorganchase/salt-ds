@@ -174,3 +174,109 @@ export const CellValidation: Story = () => {
     </Grid>
   );
 };
+
+export const RowValidation: Story = () => {
+  const { setPrice, setDiscount, rows, setAmount, setName } =
+    useExampleDataSource();
+
+  return (
+    <Grid
+      rowData={rows}
+      rowKeyGetter={(row) => row.id}
+      className="grid"
+      columnSeparators
+    >
+      <GridColumn
+        id="name"
+        name="Name"
+        getValue={(r) => r.name}
+        onChange={setName}
+        getValidationType={({ row }) =>
+          row.index === 3 || row.index === 7 ? "strong" : "light"
+        }
+        getValidationStatus={({ row }) =>
+          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
+        }
+      >
+        <CellEditor>
+          <TextCellEditor />
+        </CellEditor>
+      </GridColumn>
+      <GridColumn
+        id="description"
+        name="Description"
+        getValue={(r) => r.description}
+        onChange={setName}
+        getValidationType={({ row }) =>
+          row.index === 3 || row.index === 7 ? "strong" : "light"
+        }
+        getValidationStatus={({ row }) =>
+          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
+        }
+      />
+
+      <NumericColumn
+        id="amount"
+        name="Amount"
+        getValue={(r: RowExample) => r.amount}
+        precision={0}
+        onChange={setAmount}
+        getValidationType={({ row }) =>
+          row.index === 3 || row.index === 7 ? "strong" : "light"
+        }
+        getValidationStatus={({ row }) =>
+          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
+        }
+      >
+        <CellEditor>
+          <NumericCellEditor />
+        </CellEditor>
+      </NumericColumn>
+      <NumericColumn
+        id="price"
+        name="Price"
+        precision={2}
+        getValue={(r: RowExample) => r.price}
+        onChange={setPrice}
+        getValidationType={({ row }) =>
+          row.index === 3 || row.index === 7 ? "strong" : "light"
+        }
+        getValidationStatus={({ row }) =>
+          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
+        }
+      >
+        <CellEditor>
+          <NumericCellEditor />
+        </CellEditor>
+      </NumericColumn>
+      <GridColumn
+        id="discount"
+        name="Discount"
+        getValue={(r) => r.discount}
+        onChange={setDiscount}
+        getValidationType={({ row }) =>
+          row.index === 3 || row.index === 7 ? "strong" : "light"
+        }
+        getValidationStatus={({ row }) =>
+          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
+        }
+      >
+        <CellEditor>
+          <DropdownCellEditor options={discountOptions} />
+        </CellEditor>
+      </GridColumn>
+      <NumericColumn
+        id="total"
+        name="Total"
+        getValue={getTotal}
+        precision={4}
+        getValidationType={({ row }) =>
+          row.index === 3 || row.index === 7 ? "strong" : "light"
+        }
+        getValidationStatus={({ row }) =>
+          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
+        }
+      />
+    </Grid>
+  );
+};
