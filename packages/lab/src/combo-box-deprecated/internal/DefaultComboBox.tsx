@@ -115,6 +115,7 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
       enterDelay: tooltipEnterDelay,
       leaveDelay: tooltipLeaveDelay,
       placement: tooltipPlacement,
+      content: "",
     }),
     [tooltipEnterDelay, tooltipLeaveDelay, tooltipPlacement]
   );

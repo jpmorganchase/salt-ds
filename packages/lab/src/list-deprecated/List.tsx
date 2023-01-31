@@ -111,10 +111,10 @@ export const List = forwardRef(function List<
   return (
     <Tooltip
       {...{
-        Tooltip,
         enterDelay: tooltipEnterDelay,
         leaveDelay: tooltipLeaveDelay,
         placement: tooltipPlacement,
+        content: "",
       }}
     >
       <DescendantProvider items={itemsRef}>

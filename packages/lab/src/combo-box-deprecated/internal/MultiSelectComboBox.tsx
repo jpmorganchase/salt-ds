@@ -75,6 +75,7 @@ export function MultiSelectComboBox<Item>(
       enterDelay: tooltipEnterDelay,
       leaveDelay: tooltipLeaveDelay,
       placement: tooltipPlacement,
+      content: "",
     }),
     [Tooltip, tooltipEnterDelay, tooltipLeaveDelay, tooltipPlacement]
   );
