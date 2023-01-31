@@ -59,6 +59,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
   return (
     <tr
       aria-rowindex={ariaRowIndex}
+      aria-selected={isSelected ? true : undefined}
       className={clsx(withBaseName(), {
         [withBaseName("zebra")]: zebra,
         [withBaseName("hover")]: isHoverOver,
