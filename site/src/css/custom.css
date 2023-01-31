@@ -231,7 +231,7 @@
 .docs-toc-container {
   --ifm-link-color: var(--salt-text-secondary-foreground);
   --ifm-link-decoration: none;
-  height: 100%;
+  height: 100vh;
   position: sticky;
   padding-left: calc(5 * var(--salt-size-unit));
   padding-top: calc(3 * var(--salt-size-unit));
