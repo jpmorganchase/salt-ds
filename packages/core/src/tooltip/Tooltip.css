@@ -13,29 +13,11 @@
   border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
   box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));
   color: var(--saltTooltip-text-color, var(--salt-text-primary-foreground));
-  font-size: var(--tooltip-fontSize);
-  line-height: var(--tooltip-lineHeight);
   max-width: var(--saltTooltip-maxWidth, 230px);
   padding: var(--saltTooltip-padding, var(--salt-size-unit));
   position: relative;
   text-align: var(--saltTooltip-textAlign, left);
   z-index: var(--tooltip-zIndex);
-}
-
-.saltTooltip[data-placement^="top"] {
-  transform-origin: bottom;
-}
-
-.saltTooltip[data-placement^="bottom"] {
-  transform-origin: top;
-}
-
-.saltTooltip[data-placement^="left"] {
-  transform-origin: right;
-}
-
-.saltTooltip[data-placement^="right"] {
-  transform-origin: left;
 }
 
 /* Styles applied to inner tooltip */
@@ -56,7 +38,7 @@
   vertical-align: top;
 }
 
-/* Styles applied to Tooltip arrow */
+/* Styles applied to arrow tip */
 .saltTooltip-arrow,
 .saltTooltip-arrow::after {
   border: var(--salt-size-sharktooth-height) solid transparent;

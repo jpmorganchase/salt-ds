@@ -32,6 +32,10 @@ import { Tooltip } from "@salt-ds/core";
 
 # Features
 
+## Status
+
+Use the `status` prop to choose between `error`, `warning`, `success` and `info`. Defaults to `info`.
+
 <Canvas>
   <Story name="Tooltip Status" decorators={[withFlexGap]}>
     <Tooltip content="I am a tooltip" status="info">
@@ -49,14 +53,36 @@ import { Tooltip } from "@salt-ds/core";
   </Story>
 </Canvas>
 
+## Hide arrow
+
+Use `hideArrow` prop if you'd like to display the tooltip without arrow tip. Defaults to false
+
 <Canvas>
-  <Story name="Tooltip Props" decorators={[withFlexGap]}>
+  <Story name="Tooltip hideArrow" decorators={[withFlexGap]}>
     <Tooltip content="I am a tooltip" hideArrow status="info">
       <Button>Without Arrow</Button>
     </Tooltip>
+  </Story>
+</Canvas>
+
+## Hide icon
+
+Use `hideIcon` prop if you'd like to display the tooltip without state icon. Defaults to false
+
+<Canvas>
+  <Story name="Tooltip hideIcon" decorators={[withFlexGap]}>
     <Tooltip content="I am a tooltip" hideIcon status="info">
       <Button>Without StatusIcon</Button>
     </Tooltip>
+  </Story>
+</Canvas>
+
+## Custom content
+
+Use the `content` prop to pass either a simple string or a react component.
+
+<Canvas>
+  <Story name="Tooltip Custom" decorators={[withFlexGap]}>
     <Tooltip
       content={
         <>
@@ -81,6 +107,10 @@ import { Tooltip } from "@salt-ds/core";
     </Tooltip>
   </Story>
 </Canvas>
+
+## Placement
+
+Use the `placement` prop to position the tooltip. Defaults to `right`. The tooltip will flip and shift if there isn't enough space for it to be visible.
 
 <Canvas>
   <Story name="Tooltip Placement" decorators={[withFlexGap]}>

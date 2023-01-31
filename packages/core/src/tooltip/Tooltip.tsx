@@ -27,15 +27,15 @@ export interface TooltipProps
     UseFloatingUIProps {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
   /**
-   * Removes the tooltip arrow.
+   * Whether to hide the tooltip arrow tip. Defaults to `false`.
    */
   hideArrow?: boolean;
   /**
-   * Whether to hide a state icon within the tooltip
+   * Whether to hide the state icon within the tooltip. Defaults to `false`.
    */
   hideIcon?: boolean;
   /**
-   * Content displayed inside the tooltip. Can be a string or a React component
+   * Content displayed inside the tooltip. Can be a string or a React component.
    */
   content: string | ReactNode;
   /**
@@ -47,12 +47,27 @@ export interface TooltipProps
    * If you don't provide this prop. It falls back to a randomly generated id.
    */
   id?: string;
+  /**
+   * Delay in miliseconds before the tooltip is shown
+   */
   enterDelay?: number;
+  /**
+   * Delay in miliseconds before the tooltip is hidden
+   */
   leaveDelay?: number;
+  /**
+   * Option to not display the tooltip. Can be used in conditional situations like text truncation.
+   */
   disabled?: boolean;
+  /**
+   * Option to remove the hover listener
+   */
   disableHoverListener?: boolean;
+  /**
+   * Option to remove the focus listener
+   */
   disableFocusListener?: boolean;
-  arrowProps?: HTMLAttributes<HTMLDivElement>;
+  // arrowProps?: HTMLAttributes<HTMLDivElement>;
   triggerRef?: Ref<HTMLElement>;
 }
 
@@ -65,8 +80,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       container,
       disabled,
       disablePortal,
-      hideArrow,
-      hideIcon,
+      hideArrow = false,
+      hideIcon = false,
       open: openProp,
       content,
       status = "info",
