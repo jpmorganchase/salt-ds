@@ -2,6 +2,7 @@ import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Grid, GridColumn } from "@salt-ds/data-grid";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import { Banner } from "@salt-ds/lab";
+import { LazyStoryCanvas } from "./LazyStoryCanvas";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -53,6 +54,11 @@ import { Grid, GridColumn } from "@salt-ds/data-grid";
   name, using a style prop, or by targeting the default `.saltGrid` class name.
 </Banner>
 
+<LazyStoryCanvas>
+  <Canvas>
+    <Story id="data-grid-data-grid--simple-grid" decorators={[withFlexGap]} />
+  </Canvas>
+</LazyStoryCanvas>
 
 ### Props
 
@@ -67,9 +73,11 @@ The grid contains two variants:
 
 Column separators can be enabled using the `columnSeparators` property.
 
-<Canvas>
-  <Story id="data-grid-data-grid--grid-variants" decorators={[withFlexGap]} />
-</Canvas>
+<LazyStoryCanvas>
+  <Canvas>
+    <Story id="data-grid-data-grid--grid-variants" decorators={[withFlexGap]} />
+  </Canvas>
+</LazyStoryCanvas>
 
 ### Columns
 
@@ -86,7 +94,7 @@ You can easily create any project-specific column types tailored to your needs u
 
 #### GridColumn props
 
-<ArgsTable of={GridColumn} />{" "}
+<ArgsTable of={GridColumn} />
 
 ### Column groups
 
@@ -94,9 +102,11 @@ Columns can be grouped using the `ColumnGroup` component.
 
 Note: whenever a `ColumnGroup` component is present, all other grids' children will also need to be wrapped within a `ColumnGroup` component.
 
-<Canvas>
-  <Story id="data-grid-data-grid--column-groups" decorators={[withFlexGap]} />
-</Canvas>
+<LazyStoryCanvas>
+  <Canvas>
+    <Story id="data-grid-data-grid--column-groups" decorators={[withFlexGap]} />
+  </Canvas>
+</LazyStoryCanvas>
 
 ### Rows
 
@@ -106,9 +116,11 @@ When used in combination with the `onVisibleRowRangeChange` callback this allows
 
 [Here's an example](https://saltdesignsystem-storybook.pages.dev/?path=/story/data-grid-data-grid--server-side-data) that details using sparse array and `onVisibleRowRangeChange` callback.
 
-<Canvas>
-  <Story id="data-grid-data-grid--server-side-data" />
-</Canvas>
+<LazyStoryCanvas>
+  <Canvas>
+    <Story id="data-grid-data-grid--server-side-data" />
+  </Canvas>
+</LazyStoryCanvas>
 
 ### Row selection
 
@@ -125,24 +137,28 @@ Both are optional.
 
 In [uncontrolled mode](https://reactjs.org/docs/uncontrolled-components.html) you can provide `defaultSelectedRowIdxs` and the grid maintains the selection state. It accepts `number[]`, and works only when `rowSelectionMode` is `single` or `multi`.
 
-<Canvas>
-  <Story
-    id="data-grid-data-grid--row-selection-modes"
-    decorators={[withFlexGap]}
-  />
-</Canvas>
+<LazyStoryCanvas>
+  <Canvas>
+    <Story
+      id="data-grid-data-grid--row-selection-modes"
+      decorators={[withFlexGap]}
+    />
+  </Canvas>
+</LazyStoryCanvas>
 
 #### Controlled mode
 
 In [controlled mode](https://reactjs.org/docs/forms.html#controlled-components) you can provide `selectedRowIdxs` and update it when the `onRowsSelected` callback is invoked.
 Below is an example of how to use controlled selection mode to synchronize selection in two grids.
 
-<Canvas>
-  <Story
-    id="data-grid-data-grid--row-selection-controlled"
-    decorators={[withFlexGap]}
-  />
-</Canvas>
+<LazyStoryCanvas>
+  <Canvas>
+    <Story
+      id="data-grid-data-grid--row-selection-controlled"
+      decorators={[withFlexGap]}
+    />
+  </Canvas>
+</LazyStoryCanvas>
 
 ### Cell customization
 
@@ -154,17 +170,21 @@ The grid allows the use of any renderable react components for cell customizatio
 The `cellValueComponent` property of `GridColumn` component is the most convenient extension point. It handles cell values and functionalities like on-hover highlighting, selection, cursor and focus.
 Below is an example of custom components applied to `cellValueComponent` of "Bid/Ask", "Percentage" and "Buttons" columns, [more details here](https://saltdesignsystem-storybook.pages.dev/?path=/story/data-grid-data-grid--cell-customization).
 
-<Canvas>
-  <Story
-    id="data-grid-data-grid--cell-customization"
-    decorators={[withFlexGap]}
-  />
-</Canvas>
+<LazyStoryCanvas>
+  <Canvas>
+    <Story
+      id="data-grid-data-grid--cell-customization"
+      decorators={[withFlexGap]}
+    />
+  </Canvas>
+</LazyStoryCanvas>
 
-The second way to customize cell appearance is the `cellComponent` property.
-Unlike `cellValueComponent` it replaces the entire cell element rather than its content and allows you to implement more radical customization scenarios.
-Please note that if you override `cellComponent` you will need to handle all basic functionality typically provided by the default cell implementation,
-therefore it is recommended that you only use `cellComponent` if `cellValueComponent` does not provide enough flexibility.
+The second way to customize cell appearance is the `cellComponent` property. Unlike
+`cellValueComponent` it replaces the entire cell element rather than its content
+and allows you to implement more radical customization scenarios. Please note that
+if you override `cellComponent` you will need to handle all basic functionality typically
+provided by the default cell implementation, therefore it is recommended that you
+only use `cellComponent` if `cellValueComponent` does not provide enough flexibility.
 
 ### Header customization
 
@@ -176,12 +196,14 @@ Column headers and column group headers can be customized using the `headerValue
 
 This grid also shows an example of a custom cell displaying a basic chart. Switch the "Items sold" column to "summary" mode to see it.
 
-<Canvas>
-  <Story
-    id="data-grid-data-grid--header-customization"
-    decorators={[withFlexGap]}
-  />
-</Canvas>
+<LazyStoryCanvas>
+  <Canvas>
+    <Story
+      id="data-grid-data-grid--header-customization"
+      decorators={[withFlexGap]}
+    />
+  </Canvas>
+</LazyStoryCanvas>
 
 ### Editable cells
 
@@ -197,9 +219,14 @@ We have [two sample components](https://saltdesignsystem-storybook.pages.dev/?pa
 i.e. `TextCellEditor` and `NumericCellEditor`.
 You can easily create any components tailored to your needs using the same approach.
 
-<Canvas>
-  <Story id="data-grid-data-grid--editable-cells" decorators={[withFlexGap]} />
-</Canvas>
+<LazyStoryCanvas>
+  <Canvas>
+    <Story
+      id="data-grid-data-grid--editable-cells"
+      decorators={[withFlexGap]}
+    />
+  </Canvas>
+</LazyStoryCanvas>
 
 To trigger edit mode on cells on your:
 
@@ -231,9 +258,14 @@ interface PaginatorProps {
 }
 ```
 
-<Canvas>
-  <Story id="data-grid-data-grid--grid-pagination" decorators={[withFlexGap]} />
-</Canvas>
+<LazyStoryCanvas>
+  <Canvas>
+    <Story
+      id="data-grid-data-grid--grid-pagination"
+      decorators={[withFlexGap]}
+    />
+  </Canvas>
+</LazyStoryCanvas>
 
 ### Writing tests for Grid component
 
