@@ -1,6 +1,5 @@
-.sb-show-main.sb-main-centered > #root {
-  width: 100%;
-  max-width: 960px;
+.saltGrid {
+  width: 800px;
 }
 
 .grid {
