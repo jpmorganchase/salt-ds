@@ -1,9 +1,10 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Tooltip } from "@salt-ds/core";
+import { Button, Text, Tooltip } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
+import { withFlexGap } from "docs/decorators/withFlexGap";
 
 <Meta
   title="Documentation/Core/Tooltip"
@@ -28,6 +29,75 @@ A Tooltip provides guidance to the user when something requires more explanation
 ```
 import { Tooltip } from "@salt-ds/core";
 ```
+
+# Features
+
+<Canvas>
+  <Story name="Tooltip Status" decorators={[withFlexGap]}>
+    <Tooltip content="I am a tooltip" status="info">
+      <Button>Info</Button>
+    </Tooltip>
+    <Tooltip content="We found an issue" status="error">
+      <Button>Error</Button>
+    </Tooltip>
+    <Tooltip content="Are you sure" status="warning">
+      <Button>Warning</Button>
+    </Tooltip>
+    <Tooltip content="Well done" status="success">
+      <Button>Success</Button>
+    </Tooltip>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Tooltip Props" decorators={[withFlexGap]}>
+    <Tooltip content="I am a tooltip" hideArrow status="info">
+      <Button>Without Arrow</Button>
+    </Tooltip>
+    <Tooltip content="I am a tooltip" hideIcon status="info">
+      <Button>Without StatusIcon</Button>
+    </Tooltip>
+    <Tooltip
+      content={
+        <>
+          <Text>
+            <strong>Persona B</strong>
+          </Text>
+          <Text>
+            <strong>personab@example.com</strong>
+          </Text>
+          <Text as="ul">
+            <Text as="li">Role</Text>
+            <Text as="li">Position</Text>
+            <Text as="li">Location</Text>
+            <Text as="li">City, Country</Text>
+          </Text>
+        </>
+      }
+      hideIcon
+      status="info"
+    >
+      <Button>Complex content</Button>
+    </Tooltip>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Tooltip Placement" decorators={[withFlexGap]}>
+    <Tooltip content="I am a tooltip" status="info" placement={"top"}>
+      <Button>Top</Button>
+    </Tooltip>
+    <Tooltip content="I am a tooltip" status="info" placement={"bottom"}>
+      <Button>Bottom</Button>
+    </Tooltip>
+    <Tooltip content="I am a tooltip" status="info" placement={"left"}>
+      <Button>Left</Button>
+    </Tooltip>
+    <Tooltip content="I am a tooltip" status="info" placement={"right"}>
+      <Button>Right</Button>
+    </Tooltip>
+  </Story>
+</Canvas>
 
 ## Props
 
