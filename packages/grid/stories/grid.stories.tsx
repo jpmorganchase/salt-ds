@@ -8,6 +8,7 @@ import {
   GridCellValueProps,
   GridColumn,
   GridHeaderValueProps,
+  GridProps,
   NumericCellEditor,
   NumericColumn,
   RowSelectionCheckboxColumn,
@@ -170,36 +171,62 @@ const SingleRowSelectionTemplate: Story<{}> = (props) => {
   );
 };
 
-const dummyInvestors5 = dummyInvestors.slice(0, 5);
-
-const SmallTemplate: Story<{}> = (props) => {
+export const SimpleGrid = () => {
   return (
-    <Grid
-      rowData={dummyInvestors5}
-      rowKeyGetter={investorKeyGetter}
-      className="smallGrid"
-      zebra={true}
-      columnSeparators={true}
-    >
-      <RowSelectionRadioColumn id="rowSelection" />
+    <Grid rowData={dummyInvestors.slice(0, 5)} style={{ height: 223 }}>
       <GridColumn
         name="Name"
         id="name"
         defaultWidth={200}
-        getValue={(x) => x.name}
+        getValue={(rowData: Investor) => rowData.name}
       />
-
       <GridColumn
         name="Location"
         id="location"
         defaultWidth={150}
-        getValue={(x) => x.location}
+        getValue={(rowData: Investor) => rowData.location}
       />
       <GridColumn
         name="Cohort"
         id="cohort"
         defaultWidth={200}
-        getValue={(x) => x.cohort}
+        getValue={(rowData: Investor) => rowData.cohort}
+      />
+    </Grid>
+  );
+};
+
+const SmallTemplate: Story<GridProps> = ({ rowSelectionMode, ...args }) => {
+  return (
+    <Grid
+      rowKeyGetter={investorKeyGetter}
+      style={{ height: 223 }}
+      headerIsFocusable={rowSelectionMode === "multi"}
+      {...args}
+    >
+      {rowSelectionMode === "single" ? (
+        <RowSelectionRadioColumn id="rowSelection" />
+      ) : undefined}
+      {rowSelectionMode === "multi" ? (
+        <RowSelectionCheckboxColumn id="rowSelection" />
+      ) : undefined}
+      <GridColumn
+        name="Name"
+        id="name"
+        defaultWidth={200}
+        getValue={(rowData: Investor) => rowData.name}
+      />
+      <GridColumn
+        name="Location"
+        id="location"
+        defaultWidth={150}
+        getValue={(rowData: Investor) => rowData.location}
+      />
+      <GridColumn
+        name="Cohort"
+        id="cohort"
+        defaultWidth={200}
+        getValue={(rowData: Investor) => rowData.cohort}
       />
     </Grid>
   );
@@ -724,7 +751,7 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
     <Grid
       rowData={dummyInvestors}
       rowKeyGetter={investorKeyGetter}
-      className="smallGrid"
+      style={{ height: 600 }}
       zebra={true}
       columnSeparators={true}
       columnMove={true}
@@ -735,12 +762,19 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
   );
 };
 
+export const SmallGrid = SmallTemplate.bind({});
+SmallGrid.args = {
+  rowData: dummyInvestors.slice(0, 5),
+  rowSelectionMode: "single",
+  zebra: true,
+  columnSeparators: true,
+  variant: "primary",
+};
 export const GridExample = GridStoryTemplate.bind({});
 export const SingleRowSelect = SingleRowSelectionTemplate.bind({});
-export const SmallGrid = SmallTemplate.bind({});
-// export const PinnedColumns = PinnedColumnsTemplate.bind({});
 export const LotsOfColumns = LotsOfColumnsTemplate.bind({});
 export const LotsOfColumnGroups = LotsOfColumnGroupsTemplate.bind({});
+// export const PinnedColumns = PinnedColumnsTemplate.bind({});
 // export const CustomHeaders = CustomHeadersTemplate.bind({});
 // export const CustomCells = CustomCellsTemplate.bind({});
 // export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});
