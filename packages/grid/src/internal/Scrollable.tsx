@@ -5,12 +5,12 @@ import { makePrefixer } from "@salt-ds/core";
 const withBaseName = makePrefixer("saltGridScrollable");
 
 export interface ScrollableProps<T> {
-  resizeClient: (
-    clientWidth: number,
-    clientHeight: number,
-    scrollBarWidth: number,
-    scrollBarHeight: number
-  ) => void;
+  resizeClient: (params: {
+    clientWidth: number;
+    clientHeight: number;
+    scrollBarWidth: number;
+    scrollBarHeight: number;
+  }) => void;
 
   scrollLeft: number;
   scrollTop: number;
@@ -36,6 +36,9 @@ export function Scrollable<T>(props: ScrollableProps<T>) {
     rightRef,
     bottomRef,
     resizeClient,
+    scrollLeft,
+    scrollTop,
+    scrollSource,
   } = props;
 
   const onScroll: UIEventHandler<HTMLDivElement> = (event) => {
@@ -71,18 +74,27 @@ export function Scrollable<T>(props: ScrollableProps<T>) {
     if (!scrollerRef.current) {
       return;
     }
-    const { offsetWidth, offsetHeight, clientWidth, clientHeight } =
-      scrollerRef.current;
-    const scrollBarWidth = offsetWidth - clientWidth;
-    const scrollBarHeight = offsetHeight - clientHeight;
-    resizeClient(clientWidth, clientHeight, scrollBarWidth, scrollBarHeight);
-  });
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      const { offsetWidth, offsetHeight, clientWidth, clientHeight } =
+        entry.target as HTMLDivElement;
+      const scrollBarWidth = offsetWidth - clientWidth;
+      const scrollBarHeight = offsetHeight - clientHeight;
+      resizeClient({
+        clientWidth,
+        clientHeight,
+        scrollBarWidth,
+        scrollBarHeight,
+      });
+    });
+
+    resizeObserver.observe(scrollerRef.current);
+    return () => resizeObserver.disconnect();
+  }, [resizeClient, scrollerRef]);
 
   useEffect(() => {
     if (!scrollerRef.current) {
       return;
     }
-    const { scrollLeft, scrollTop, scrollSource } = props;
     if (scrollSource === "table") {
       if (scrollLeft !== scrollerRef.current.scrollLeft) {
         scrollerRef.current.scrollLeft = scrollLeft;
@@ -91,12 +103,7 @@ export function Scrollable<T>(props: ScrollableProps<T>) {
         scrollerRef.current.scrollTop = scrollTop;
       }
     }
-  }, [
-    props.scrollLeft,
-    props.scrollTop,
-    props.scrollSource,
-    scrollerRef.current,
-  ]);
+  }, [scrollLeft, scrollTop, scrollSource, scrollerRef]);
 
   return (
     <div
