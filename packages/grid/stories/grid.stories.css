@@ -1,6 +1,10 @@
+.sb-show-main.sb-main-centered > #root {
+  width: 100%;
+  max-width: 960px;
+}
+
 .grid {
   height: 593px;
-  width: 958px;
 }
 
 .grid-uhd {
@@ -15,7 +19,6 @@
 
 .grid-column-groups {
   height: 200px;
-  width: 958px;
 }
 
 .bidAskCellValue {
@@ -46,7 +49,6 @@
 
 .grid-css-customization {
   height: 800px;
-  width: 958px;
 }
 
 .summaryCellValue {
@@ -71,12 +73,7 @@
 
 .paginatedGrid {
   height: 200px;
-  width: 800px;
-}
-
-.smallGrid {
-  height: 600px;
-  width: 800px;
+  width: 100%;
 }
 
 .customHeader {
@@ -101,7 +98,4 @@
 
 .treeNodeName {
   padding-left: var(--salt-size-unit);
-}
-
-.paginatedStory {
 }
