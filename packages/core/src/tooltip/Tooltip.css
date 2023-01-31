@@ -1,8 +1,6 @@
 /* Styles applied to root component */
 .saltTooltip {
   --tooltip-background: var(--saltTooltip-background, var(--salt-container-primary-background));
-  --tooltip-fontSize: var(--saltTooltip-fontSize, var(--salt-text-fontSize));
-  --tooltip-lineHeight: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
   --tooltip-zIndex: var(--saltTooltip-zIndex, var(--salt-zIndex-flyover));
 }
 
