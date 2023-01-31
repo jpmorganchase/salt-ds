@@ -2,4 +2,4 @@
 "@salt-ds/data-grid": patch
 ---
 
-Add aria-selected to selected grid rows
+Fixed row selection not being announced by screenreaders
