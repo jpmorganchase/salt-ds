@@ -49,7 +49,7 @@ export function useTooltip(props?: UseTooltipProps) {
     leaveDelay = 0,
     open: openProp,
     onOpenChange,
-    placement: placementProp = "right",
+    placement: placementProp,
     disableHoverListener,
     disableFocusListener,
   } = props || {};
@@ -74,7 +74,7 @@ export function useTooltip(props?: UseTooltipProps) {
     x,
     y,
     strategy,
-    middlewareData,
+    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
     placement,
     context,
   } = useFloatingUI({
@@ -107,8 +107,8 @@ export function useTooltip(props?: UseTooltipProps) {
   const arrowProps = {
     ref: arrowRef,
     style: {
-      left: middlewareData.arrow?.x ?? "",
-      top: middlewareData.arrow?.y ?? "",
+      left: arrowX ? `${arrowX}px` : "",
+      top: arrowY ? `${arrowY}px` : "",
     },
   };
 

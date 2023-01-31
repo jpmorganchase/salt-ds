@@ -38,15 +38,15 @@
   transform-origin: left;
 }
 
-/* Styles applied to inner content */
-.saltTooltip-content {
+/* Styles applied to inner tooltip */
+.saltTooltip-inner {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   position: relative;
 }
 
-/* Styles applied to body */
-.saltTooltip-body {
+/* Styles applied to content */
+.saltTooltip-content {
   overflow: hidden;
 }
 

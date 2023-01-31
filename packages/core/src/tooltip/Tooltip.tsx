@@ -23,8 +23,8 @@ const defaultIconProps = { size: 1, className: withBaseName("icon") };
 
 export interface TooltipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
-    PortalProps,
-    UseFloatingUIProps {
+  PortalProps,
+  UseFloatingUIProps {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
   /**
    * Removes the tooltip arrow.
@@ -67,12 +67,14 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       open: openProp,
       content,
       status = "info",
+      placement = "right",
       triggerRef,
       ...rest
     } = props;
 
     const hookProps: UseTooltipProps = {
       open: openProp,
+      placement,
       ...rest,
     };
 
@@ -106,11 +108,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
               ref={tooltipRef as RefObject<HTMLDivElement>}
               {...restTooltipProps}
             >
-              <div className={withBaseName("content")}>
+              <div className={withBaseName("inner")}>
                 {!hideIcon && (
                   <StatusIndicator status={status} {...defaultIconProps} />
                 )}
-                <span className={withBaseName("body")}>{content}</span>
+                <span className={withBaseName("content")}>{content}</span>
               </div>
               {!hideArrow && (
                 <div className={withBaseName("arrow")} {...arrowProps} />

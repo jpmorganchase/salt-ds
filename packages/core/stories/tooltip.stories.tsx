@@ -7,15 +7,15 @@ export default {
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 
-export const Default: Story<TooltipProps> = () => (
-  <Tooltip content="I am a tooltip">
+export const Default: Story<TooltipProps> = (props: TooltipProps) => (
+  <Tooltip content="I am a tooltip" {...props}>
     <Button>Hover</Button>
   </Tooltip>
 );
 
-export const OpenTooltip: Story<TooltipProps> = (props) => {
+export const OpenTooltip: Story<TooltipProps> = (props: TooltipProps) => {
   const userProps: TooltipProps = {
-    content: "I am a tooltip",
+    content: props.content || "I am a tooltip",
     status: "info",
     open: true,
     ...props,
@@ -85,6 +85,21 @@ export const SuccessTooltip: Story<TooltipProps> = (props) => {
   return (
     <Tooltip content="Well done" status={status}>
       <Button> Hover</Button>
+    </Tooltip>
+  );
+};
+
+export const ComponentAsContent: Story<TooltipProps> = (props) => {
+  const Component = (
+    <div>
+      <h3>Title</h3>
+      <p>Some description</p>
+    </div>
+  );
+
+  return (
+    <Tooltip open content={Component}>
+      <Button>Hover</Button>
     </Tooltip>
   );
 };
