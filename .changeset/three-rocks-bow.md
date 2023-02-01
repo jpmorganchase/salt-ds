@@ -7,5 +7,7 @@ Move `SplitLayout` from lab to core
 Changes in `SplitLayout`
 
 - Removed `FlexItem` wraps around `SplitLayout` children.
-- `SplitLayout` uses children instead of left and right props.
-- A console warning will be shown if more than 2 children are passed to the component.
+- `SplitLayout` uses `startItem` and `endItem` props as children to allow for direction.
+- Added `direction` prop to `SplitLayout`.
+- Changed `wrap` property for `wrapAtBreakpoint` to control wrap by breakpoints.
+- End Aligned `endItem` so the element is always at the end of the layout.

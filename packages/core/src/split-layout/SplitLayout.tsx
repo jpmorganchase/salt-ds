@@ -1,12 +1,8 @@
-import {
-  ElementType,
-  forwardRef,
-  ReactElement,
-  Children,
-  useEffect,
-} from "react";
+import { ElementType, forwardRef, ReactElement, ReactNode } from "react";
 import { FlexLayout, FlexLayoutProps } from "../flex-layout";
 import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
+import { Breakpoints } from "../breakpoints";
+import { useIsViewportLargerThanBreakpoint } from "@salt-ds/lab";
 
 export type SplitLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -17,45 +13,54 @@ export type SplitLayoutProps<T extends ElementType> =
        */
       align?: FlexLayoutProps<ElementType>["align"];
       /**
-       * Allow the items to wrap as needed, default is true.
+       * Establishes the main-axis, defining the direction children are placed. Default is "row".
        */
-      wrap?: FlexLayoutProps<ElementType>["wrap"];
+      direction?: FlexLayoutProps<ElementType>["direction"];
+      /**
+       * End component to be rendered.
+       */
+      endItem?: ReactNode;
       /**
        * Controls the space between left and right items.
        */
       gap?: FlexLayoutProps<ElementType>["gap"];
+      /**
+       * Start component to be rendered.
+       */
+      startItem?: ReactNode;
+      /**
+       * Breakpoint at which the horizontal split wraps.
+       */
+      wrapAtBreakpoint?: keyof Breakpoints;
     }
   >;
-
 type SplitLayoutComponent = <T extends ElementType = "div">(
   props: SplitLayoutProps<T>
 ) => ReactElement | null;
 
 export const SplitLayout: SplitLayoutComponent = forwardRef(
-  <T extends ElementType>(
-    { children, wrap = true, ...rest }: SplitLayoutProps<T>,
+  <T extends ElementType = "div">(
+    {
+      direction,
+      endItem,
+      startItem,
+      wrapAtBreakpoint = "sm",
+      ...rest
+    }: SplitLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    const warnChildren = Children.toArray(children).length > 2;
+    const justify = endItem && !startItem ? "end" : "space-between";
+    const wrapSplit = useIsViewportLargerThanBreakpoint(wrapAtBreakpoint);
 
-    useEffect(() => {
-      if (process.env.NODE_ENV !== "production") {
-        if (warnChildren) {
-          console.warn(
-            "SplitLayout is recommended to work with no more than 2 children.\n"
-          );
-        }
-      }
-    }, [warnChildren]);
     return (
       <FlexLayout
-        direction="row"
         ref={ref}
-        wrap={wrap}
-        justify="space-between"
+        justify={justify}
+        direction={wrapSplit ? "column" : direction}
         {...rest}
       >
-        {children}
+        {startItem}
+        {endItem}
       </FlexLayout>
     );
   }

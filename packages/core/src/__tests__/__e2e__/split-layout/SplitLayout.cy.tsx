@@ -9,11 +9,25 @@ describe("GIVEN a Split", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN no props are provided", () => {
-    it("THEN it should wrap by default", () => {
+    it("THEN it should not wrap before the default small breakpoint", () => {
       cy.mount(<DefaultSplitLayout />);
 
-      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
+      cy.get(".saltFlexLayout").should("have.css", "flex-direction", "row");
     });
+
+    it(
+      "THEN it should wrap at the default small breakpoint",
+      { viewportWidth: 599 },
+      () => {
+        cy.mount(<DefaultSplitLayout />);
+        cy.get(".saltFlexLayout").should(
+          "have.css",
+          "flex-direction",
+          "column"
+        );
+      }
+    );
 
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultSplitLayout />);
@@ -44,10 +58,7 @@ describe("GIVEN a Split", () => {
 
     it("THEN it should render as expected", () => {
       cy.mount(
-        <DefaultSplitLayout>
-          <LeftItem />
-          <RightItem />
-        </DefaultSplitLayout>
+        <DefaultSplitLayout startItem={<LeftItem />} endItem={<RightItem />} />
       );
 
       cy.get(".saltFlexLayout")
@@ -59,36 +70,6 @@ describe("GIVEN a Split", () => {
         .children()
         .last()
         .should("have.text", rightItemContent.join(""));
-    });
-  });
-
-  describe("WHEN passing an array as children", () => {
-    const leftItemContent = ["Item 1", "Item 2"];
-    const rightItemContent = ["Item 3", "Item 4"];
-
-    const LeftItem = () => (
-      <div>
-        <div>{leftItemContent[0]}</div>
-        <div>{leftItemContent[1]}</div>
-      </div>
-    );
-
-    const RightItem = () => (
-      <div>
-        <div>{rightItemContent[0]}</div>
-        <div>{rightItemContent[1]}</div>
-      </div>
-    );
-
-    it("THEN it should render as expected", () => {
-      cy.mount(<DefaultSplitLayout children={[<LeftItem />, <RightItem />]} />);
-
-      cy.get(".saltFlexLayout")
-        .children()
-        .should(
-          "have.text",
-          [...leftItemContent, ...rightItemContent].join("")
-        );
     });
   });
 
