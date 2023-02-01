@@ -3,4 +3,4 @@
 "@salt-ds/lab": minor
 ---
 
-Move Panel to core package
+Move `Panel` from lab to core
