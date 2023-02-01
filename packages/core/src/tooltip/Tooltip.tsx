@@ -23,8 +23,8 @@ const defaultIconProps = { size: 1, className: withBaseName("icon") };
 
 export interface TooltipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
-  PortalProps,
-  Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
+    PortalProps,
+    Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
   /**
    * Whether to hide the tooltip arrow tip. Defaults to `false`.
