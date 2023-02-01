@@ -173,7 +173,6 @@ export const CellValidation: Story = () => {
         getValue={getTotal}
         precision={4}
         getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
-        validationType="strong"
       />
     </Grid>
   );
