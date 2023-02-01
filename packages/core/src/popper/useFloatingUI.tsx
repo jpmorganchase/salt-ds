@@ -8,10 +8,19 @@ import {
 } from "@floating-ui/react";
 
 export type UseFloatingUIProps = {
+  /**
+   * Set position relative to trigger
+   */
   placement?: Placement;
   strategy?: Strategy;
   middleware?: Middleware[];
+  /**
+   * Set visible state. Defaults to false
+   */
   open?: boolean;
+  /**
+   * Callback function triggered when open state changes
+   */
   onOpenChange?: (open: boolean) => void;
 };
 
@@ -27,7 +36,7 @@ export function useFloatingUI(
     placement,
     strategy,
     middleware = DEFAULT_FLOATING_UI_MIDDLEWARE,
-    open,
+    open = false,
     onOpenChange,
   } = props;
 
