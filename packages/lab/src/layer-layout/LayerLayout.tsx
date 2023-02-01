@@ -1,11 +1,14 @@
-import { forwardRef, HTMLAttributes, useState, useEffect } from "react";
+import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
 import { clsx } from "clsx";
-import { Breakpoints, makePrefixer, usePrevious } from "@salt-ds/core";
-
-import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 import { Scrim, ScrimProps } from "../scrim";
 import "./LayerLayout.css";
+import {
+  Breakpoints,
+  useIsViewportLargerThanBreakpoint,
+  makePrefixer,
+  usePrevious,
+} from "@salt-ds/core";
 
 export const LAYER_POSITIONS = [
   "center",

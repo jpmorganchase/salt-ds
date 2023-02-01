@@ -1,8 +1,11 @@
 import { ElementType, forwardRef, ReactElement, ReactNode } from "react";
 import { FlexLayout, FlexLayoutProps } from "../flex-layout";
-import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
+import {
+  PolymorphicComponentPropWithRef,
+  PolymorphicRef,
+  useIsViewportLargerThanBreakpoint,
+} from "../utils";
 import { Breakpoints } from "../breakpoints";
-import { useIsViewportLargerThanBreakpoint } from "@salt-ds/lab";
 
 export type SplitLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<

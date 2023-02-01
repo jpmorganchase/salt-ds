@@ -14,7 +14,5 @@ export const useIsViewportLargerThanBreakpoint = (
 
   const currentBreakpoint = useCurrentBreakpoint();
 
-  const view = allPreviousBreakpoints.includes(currentBreakpoint);
-
-  return view;
+  return allPreviousBreakpoints.includes(currentBreakpoint);
 };

@@ -1,6 +1,6 @@
 ---
-"@salt-ds/core": major
-"@salt-ds/lab": major
+"@salt-ds/core": minor
+"@salt-ds/lab": minor
 ---
 
 Move `SplitLayout` from lab to core
