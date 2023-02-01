@@ -86,22 +86,22 @@ Use the `content` prop to pass either a simple string or a react component.
     <Tooltip
       content={
         <>
-          <Text>
-            <strong>Persona B</strong>
-          </Text>
-          <Text>
-            <strong>personab@example.com</strong>
-          </Text>
-          <Text as="ul">
-            <Text as="li">Role</Text>
-            <Text as="li">Position</Text>
-            <Text as="li">Location</Text>
-            <Text as="li">City, Country</Text>
-          </Text>
+          <Text styleAs="h3">Tooltip</Text>
+          <Text>Props:</Text>
+          <ul>
+            <li>
+              <strong>hideIcon:</strong> true
+            </li>
+            <li>
+              <strong>open:</strong> true
+            </li>
+            <li>
+              <strong>status:</strong> info
+            </li>
+          </ul>
         </>
       }
       hideIcon
-      status="info"
     >
       <Button>Complex content</Button>
     </Tooltip>
