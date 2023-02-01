@@ -113,7 +113,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
             isEditable={isEditable}
             getValidationStatus={column.info.props.getValidationStatus}
             getValidationMessage={column.info.props.getValidationMessage}
-            getValidationType={column.info.props.getValidationType}
+            validationType={column.info.props.validationType}
             value={value}
             align={column.info.props.align}
           >
