@@ -24,15 +24,15 @@ A Tooltip provides guidance to the user when something requires more explanation
   <Story id="core-tooltip--default" />
 </Canvas>
 
-# API
+## API
 
 ```
 import { Tooltip } from "@salt-ds/core";
 ```
 
-# Features
+## Features
 
-## Status
+### Status
 
 Use the `status` prop to choose between `error`, `warning`, `success` and `info`. Defaults to `info`.
 
@@ -53,31 +53,31 @@ Use the `status` prop to choose between `error`, `warning`, `success` and `info`
   </Story>
 </Canvas>
 
-## Hide arrow
+### Hide arrow
 
 Use `hideArrow` prop if you'd like to display the tooltip without arrow tip. Defaults to false
 
 <Canvas>
   <Story name="Tooltip hideArrow" decorators={[withFlexGap]}>
-    <Tooltip content="I am a tooltip" hideArrow status="info">
+    <Tooltip content="I am a tooltip" hideArrow>
       <Button>Without Arrow</Button>
     </Tooltip>
   </Story>
 </Canvas>
 
-## Hide icon
+### Hide icon
 
 Use `hideIcon` prop if you'd like to display the tooltip without state icon. Defaults to false
 
 <Canvas>
   <Story name="Tooltip hideIcon" decorators={[withFlexGap]}>
-    <Tooltip content="I am a tooltip" hideIcon status="info">
+    <Tooltip content="I am a tooltip" hideIcon>
       <Button>Without StatusIcon</Button>
     </Tooltip>
   </Story>
 </Canvas>
 
-## Custom content
+### Custom content
 
 Use the `content` prop to pass either a simple string or a react component.
 
@@ -108,23 +108,41 @@ Use the `content` prop to pass either a simple string or a react component.
   </Story>
 </Canvas>
 
-## Placement
+### Placement
 
 Use the `placement` prop to position the tooltip. Defaults to `right`. The tooltip will flip and shift if there isn't enough space for it to be visible.
 
 <Canvas>
   <Story name="Tooltip Placement" decorators={[withFlexGap]}>
-    <Tooltip content="I am a tooltip" status="info" placement={"top"}>
+    <Tooltip content="I am a tooltip" placement={"top"}>
       <Button>Top</Button>
     </Tooltip>
-    <Tooltip content="I am a tooltip" status="info" placement={"bottom"}>
+    <Tooltip content="I am a tooltip" placement={"bottom"}>
       <Button>Bottom</Button>
     </Tooltip>
-    <Tooltip content="I am a tooltip" status="info" placement={"left"}>
+    <Tooltip content="I am a tooltip" placement={"left"}>
       <Button>Left</Button>
     </Tooltip>
-    <Tooltip content="I am a tooltip" status="info" placement={"right"}>
+    <Tooltip content="I am a tooltip" placement={"right"}>
       <Button>Right</Button>
+    </Tooltip>
+  </Story>
+</Canvas>
+
+### Delay before shown
+
+Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults to 100ms
+
+<Canvas>
+  <Story name="Tooltip enterDelay" decorators={[withFlexGap]}>
+    <Tooltip content="I am a tooltip">
+      <Button>100ms</Button>
+    </Tooltip>
+    <Tooltip content="I am a tooltip" enterDelay={300}>
+      <Button>300ms</Button>
+    </Tooltip>
+    <Tooltip content="I am a tooltip" enterDelay={500}>
+      <Button>500ms</Button>
     </Tooltip>
   </Story>
 </Canvas>
