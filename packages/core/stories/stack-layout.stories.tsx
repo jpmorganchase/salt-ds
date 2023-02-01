@@ -22,9 +22,6 @@ export default {
       type: "number",
     },
   },
-  args: {
-    gap: 3,
-  },
 } as ComponentMeta<typeof StackLayout>;
 
 const DefaultStackLayoutStory: ComponentStory<typeof StackLayout> = (args) => {
@@ -55,6 +52,5 @@ const SeparatorsStory: ComponentStory<typeof FlexLayout> = (args) => {
 export const StackLayoutWithSeparators = SeparatorsStory.bind({});
 StackLayoutWithSeparators.args = {
   separators: "center",
-  wrap: false,
   direction: { sm: "row", xs: "column" },
 };

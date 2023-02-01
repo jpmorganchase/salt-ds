@@ -48,6 +48,8 @@ export type FlexLayoutProps<T extends ElementType> =
        */
       justify?: FlexContentAlignment;
       /**
+       * **Deprecated:** For separators see `StackLayout` component instead.
+       *
        * Adds a separator between elements if wrap is not active, default is false.
        */
       separators?: LayoutSeparator | true;

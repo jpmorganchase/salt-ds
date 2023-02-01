@@ -30,6 +30,10 @@ export default {
       ],
       control: { type: "select" },
     },
+    separators: {
+      options: ["start", "center", "end", true],
+      control: { type: "select" },
+    },
     wrap: {
       control: "boolean",
     },

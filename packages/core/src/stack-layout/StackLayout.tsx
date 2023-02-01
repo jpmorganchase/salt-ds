@@ -36,7 +36,7 @@ export type StackLayoutProps<T extends ElementType> =
       /**
        * Adds a separator between elements, default is false.
        */
-      separators?: LayoutSeparator | true;
+      separators?: LayoutSeparator | true | false;
     }
   >;
 
@@ -50,14 +50,20 @@ export const StackLayout: StackLayoutComponent = forwardRef(
       children,
       className,
       direction = "column",
+      gap,
       separators,
+      style,
       ...rest
     }: StackLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const flexGap = useResponsiveProp(gap, 3);
     const separatorAlignment = separators === true ? "center" : separators;
-    const flexDirection = useResponsiveProp(direction, "row");
-
+    const flexDirection = useResponsiveProp(direction, "column");
+    const stackLayoutStyles = {
+      ...style,
+      "--stackLayout-gap-multiplier": flexGap,
+    };
     return (
       <FlexLayout
         className={clsx(className, withBaseName(), {
@@ -72,6 +78,8 @@ export const StackLayout: StackLayoutComponent = forwardRef(
         })}
         ref={ref}
         direction={direction}
+        style={stackLayoutStyles}
+        wrap={false}
         {...rest}
       >
         {children}
