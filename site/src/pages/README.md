@@ -1,6 +1,6 @@
 # Pages
 
-JSX pages should go in this folder.
+Self contained pages should go in this folder.
 
 ## Implementation
 
