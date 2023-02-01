@@ -38,10 +38,14 @@ const clickCell = (row: number, col: number) => {
 };
 
 const checkRowSelected = (row: number, expectedSelected: boolean) => {
-  cy.get(`tr[data-row-index="${row}"]`).should(
-    expectedSelected ? "have.class" : "not.have.class",
-    "saltGridTableRow-selected"
-  );
+  if (expectedSelected) {
+    return cy
+      .get(`tr[data-row-index="${row}"]`)
+      .should("have.attr", "aria-selected", "true");
+  }
+  return cy
+    .get(`tr[data-row-index="${row}"]`)
+    .should("not.have.attr", "aria-selected");
 };
 
 const resizeColumn = (col: number, dx: number) => {
