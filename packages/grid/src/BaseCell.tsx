@@ -16,7 +16,7 @@ const icons = {
   warning: (
     <svg
       aria-hidden
-      width="1em"
+      // width="1em"
       height="1em"
       viewBox="0 0 10 8"
       fill="none"
@@ -117,7 +117,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       >
         {children}
       </div>
-      {hasValidation && getValidationType(validationFnArg) === "strong" ? (
+      {hasValidation && getValidationType(validationFnArg) !== "light" ? (
         <div
           className={clsx(withBaseName("statusContainer"), {
             [withBaseName(`statusContainer-align-${align as string}`)]: align,

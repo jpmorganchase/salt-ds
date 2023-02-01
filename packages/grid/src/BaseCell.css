@@ -54,19 +54,19 @@
   background-color: var(--salt-palette-warning-background-emphasize);
 }
 
-.salt-density-touch {
+.salt-density-high {
   --grid-statusIndicator-size: 6px;
 }
 
-.salt-density-low {
+.salt-density-medium {
   --grid-statusIndicator-size: 8px;
 }
 
-.salt-density-medium {
+.salt-density-low {
   --grid-statusIndicator-size: 10px;
 }
 
-.salt-density-high {
+.salt-density-touch {
   --grid-statusIndicator-size: 12px;
 }
 
