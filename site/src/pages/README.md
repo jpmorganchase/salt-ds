@@ -17,7 +17,7 @@ site/
 └── src/
     └── pages/
         ├── [PageName].tsx
-        ├── [PageName].module.css
         └── _[page_name]/
-            └── PageSpecificComponent.tsx
+            ├── PageSpecificComponent.tsx
+            └── PageSpecificComponent.module.css
 ```
