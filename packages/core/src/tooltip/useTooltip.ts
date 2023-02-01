@@ -45,8 +45,8 @@ export interface UseTooltipProps
 
 export function useTooltip(props?: UseTooltipProps) {
   const {
-    enterDelay = 100,
-    leaveDelay = 0,
+    enterDelay,
+    leaveDelay,
     open: openProp,
     onOpenChange,
     placement: placementProp,

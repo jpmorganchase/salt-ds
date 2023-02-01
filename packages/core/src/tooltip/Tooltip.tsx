@@ -87,12 +87,16 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       status = "info",
       placement = "right",
       triggerRef,
+      enterDelay = 300,
+      leaveDelay = 0,
       ...rest
     } = props;
 
     const hookProps: UseTooltipProps = {
       open: openProp,
       placement,
+      enterDelay,
+      leaveDelay,
       ...rest,
     };
 
