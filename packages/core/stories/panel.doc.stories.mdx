@@ -5,6 +5,7 @@ import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Panel"
@@ -20,7 +21,7 @@ A panel is a way to organize content areas in an application (both web and deskt
 
 ## Panel Component
 
-Panel components have two variants: primary (default) and secondary.
+Panel has two variants: `primary` and `secondary`. If not specified, the default value is `primary`.
 
 <Canvas>
   <Story name="Panel" decorators={[withFlexGap]}>
@@ -31,20 +32,24 @@ Panel components have two variants: primary (default) and secondary.
   </Story>
 </Canvas>
 
-# API
+## Configuring Panel
+
+### API
 
 ```
 import { Panel } from "@salt-ds/core";
 ```
 
-## Props
+### Props
 
 <ArgsTable of={Panel} />
 
-## CSS Class
+### Classes
 
 <CSSClassTable of={Panel} />
 
-## Characteristics Used
+### Characteristics used
 
 <CharacteristicUsage of={Panel} />
+
+<HelpAndSupport />
