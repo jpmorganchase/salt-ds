@@ -22,6 +22,7 @@ import {
   MiddlePart,
   RightPart,
   Scrollable,
+  ScrollableProps,
   TopLeftPart,
   TopPart,
   TopRightPart,
@@ -207,10 +208,15 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const [hoverRowKey, setHoverRowKey] = useState<string | undefined>(undefined);
 
-  const [clientWidth, setClientWidth] = useState(0);
-  const [clientHeight, setClientHeight] = useState(0);
-  const [scrollBarHeight, setScrollBarHeight] = useState(0);
-  const [scrollBarWidth, setScrollBarWidth] = useState(0);
+  const [
+    { clientWidth, clientHeight, scrollBarHeight, scrollBarWidth },
+    setDimensions,
+  ] = useState({
+    clientWidth: 0,
+    clientHeight: 0,
+    scrollBarHeight: 0,
+    scrollBarWidth: 0,
+  });
 
   const [rowHeight, setRowHeight] = useState<number>(0);
 
@@ -223,14 +229,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [initialText, setInitialText] = useState<string | undefined>(undefined);
 
-  const resizeClient = useCallback(
-    (clW: number, clH: number, sbW: number, sbH: number) => {
-      setClientHeight(clH);
-      setClientWidth(clW);
-      setScrollBarHeight(sbH);
-      setScrollBarWidth(sbW);
+  const resizeClient: ScrollableProps<T>["resizeClient"] = useCallback(
+    (dimensions) => {
+      setDimensions(dimensions);
     },
-    [setClientHeight, setClientWidth, setScrollBarHeight, setScrollBarWidth]
+    []
   );
 
   const {
