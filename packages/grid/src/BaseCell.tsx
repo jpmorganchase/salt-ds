@@ -54,7 +54,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     children,
     getValidationStatus = noop,
     getValidationMessage = noop,
-    getValidationType = noop,
+    validationType = "light",
     value,
     align,
   } = props;
@@ -106,7 +106,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
         >
           {validationMessage
             ? validationMessage
-            : `Cell validation state is ${validationStatus as string}`}
+            : `Cell validation state is ${validationStatus}`}
         </div>
       ) : null}
       <div
@@ -117,7 +117,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       >
         {children}
       </div>
-      {hasValidation && getValidationType(validationFnArg) !== "light" ? (
+      {hasValidation && validationType === "strong" ? (
         <div
           className={clsx(withBaseName("statusContainer"), {
             [withBaseName(`statusContainer-align-${align as string}`)]: align,

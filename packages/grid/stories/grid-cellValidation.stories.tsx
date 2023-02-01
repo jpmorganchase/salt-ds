@@ -14,7 +14,7 @@ import "./grid.stories.css";
 
 export default {
   title: "Data Grid/Data Grid",
-  component: Grid,
+  component: GridColumn,
   argTypes: {},
 };
 
@@ -117,6 +117,7 @@ export const CellValidation: Story = () => {
         getValue={(r) => r.name}
         onChange={setName}
         getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
+        validationType="strong"
       >
         <CellEditor>
           <TextCellEditor />
@@ -136,6 +137,7 @@ export const CellValidation: Story = () => {
         precision={0}
         onChange={setAmount}
         getValidationStatus={({ row }) => (row.index > 4 ? "warning" : "none")}
+        validationType="strong"
       >
         <CellEditor>
           <NumericCellEditor />
@@ -149,6 +151,7 @@ export const CellValidation: Story = () => {
         onChange={setPrice}
         getValidationMessage={() => "This is a custom validation error message"}
         getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
+        validationType="strong"
       >
         <CellEditor>
           <NumericCellEditor />
@@ -170,6 +173,7 @@ export const CellValidation: Story = () => {
         getValue={getTotal}
         precision={4}
         getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
+        validationType="strong"
       />
     </Grid>
   );
@@ -191,9 +195,6 @@ export const RowValidation: Story = () => {
         name="Name"
         getValue={(r) => r.name}
         onChange={setName}
-        getValidationType={({ row }) =>
-          row.index === 3 || row.index === 7 ? "strong" : "light"
-        }
         getValidationStatus={({ row }) =>
           row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
         }
@@ -207,9 +208,6 @@ export const RowValidation: Story = () => {
         name="Description"
         getValue={(r) => r.description}
         onChange={setName}
-        getValidationType={({ row }) =>
-          row.index === 3 || row.index === 7 ? "strong" : "light"
-        }
         getValidationStatus={({ row }) =>
           row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
         }
@@ -221,9 +219,6 @@ export const RowValidation: Story = () => {
         getValue={(r: RowExample) => r.amount}
         precision={0}
         onChange={setAmount}
-        getValidationType={({ row }) =>
-          row.index === 3 || row.index === 7 ? "strong" : "light"
-        }
         getValidationStatus={({ row }) =>
           row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
         }
@@ -238,9 +233,6 @@ export const RowValidation: Story = () => {
         precision={2}
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
-        getValidationType={({ row }) =>
-          row.index === 3 || row.index === 7 ? "strong" : "light"
-        }
         getValidationStatus={({ row }) =>
           row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
         }
@@ -254,9 +246,6 @@ export const RowValidation: Story = () => {
         name="Discount"
         getValue={(r) => r.discount}
         onChange={setDiscount}
-        getValidationType={({ row }) =>
-          row.index === 3 || row.index === 7 ? "strong" : "light"
-        }
         getValidationStatus={({ row }) =>
           row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
         }
@@ -270,9 +259,6 @@ export const RowValidation: Story = () => {
         name="Total"
         getValue={getTotal}
         precision={4}
-        getValidationType={({ row }) =>
-          row.index === 3 || row.index === 7 ? "strong" : "light"
-        }
         getValidationStatus={({ row }) =>
           row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
         }
