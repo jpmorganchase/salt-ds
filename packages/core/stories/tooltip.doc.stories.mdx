@@ -135,10 +135,10 @@ Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults 
 
 <Canvas>
   <Story name="Tooltip enterDelay" decorators={[withFlexGap]}>
-    <Tooltip content="I am a tooltip">
+    <Tooltip content="I am a tooltip" enterDelay={100}>
       <Button>100ms</Button>
     </Tooltip>
-    <Tooltip content="I am a tooltip" enterDelay={300}>
+    <Tooltip content="I am a tooltip">
       <Button>300ms</Button>
     </Tooltip>
     <Tooltip content="I am a tooltip" enterDelay={500}>
