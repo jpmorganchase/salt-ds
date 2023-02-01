@@ -80,6 +80,7 @@ export const StackLayout: StackLayoutComponent = forwardRef(
         direction={direction}
         style={stackLayoutStyles}
         wrap={false}
+        gap={gap}
         {...rest}
       >
         {children}
