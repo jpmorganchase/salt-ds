@@ -1,0 +1,45 @@
+.docs-toc-container {
+  --ifm-link-color: var(--salt-text-secondary-foreground);
+  --ifm-link-decoration: none;
+  height: 100vh;
+  position: sticky;
+  padding-left: calc(5 * var(--salt-size-unit));
+  padding-top: calc(3 * var(--salt-size-unit));
+  top: calc(var(--ifm-navbar-height) + var(--salt-size-unit));
+  width: 282px;
+}
+
+.docs-toc-intro {
+  font-size: var(--salt-text-h4-fontSize);
+  font-weight: var(--salt-text-h4-fontWeight);
+  position: relative;
+  right: 1.85em;
+}
+
+.table-of-contents ul {
+  padding-left: 0;
+}
+
+.table-of-contents li {
+  padding: var(--salt-size-unit) 0;
+  height: 36px;
+}
+
+.table-of-contents li > ul li {
+  width: 70%;
+}
+
+.table-of-contents li {
+  margin: 0;
+  text-indent: -1em;
+}
+
+.table-of-contents li li {
+  margin: var(--ifm-toc-padding-vertical) var(--ifm-toc-padding-horizontal);
+}
+
+@media screen and (max-width: 768px) {
+  .docs-toc-container {
+    display: none;
+  }
+}
