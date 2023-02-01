@@ -46,7 +46,41 @@ const Radios = ({ title, density, name }: ExampleWithTitleProps) => (
   </ColumnLayoutItem>
 );
 
-const RowGroup = ({ title, density, name }: ExampleWithTitleProps) => (
+export const All: Story = () => (
+  <StoryScroller>
+    <SaltProvider mode="light">
+      <DensityExample name="light" />
+    </SaltProvider>
+    <SaltProvider mode="dark">
+      <DensityExample name="dark" />
+    </SaltProvider>
+  </StoryScroller>
+);
+
+
+export const VerticalGroup = ({ title, density, name }: ExampleWithTitleProps) => (
+  <Panel>
+    <SaltProvider density={density}>
+      <RadioButtonGroup
+        aria-label="Uncontrolled Example"
+        defaultValue="forward"
+        legend={"Legend"}
+        name={"Name"}
+      >
+        <RadioButton key="spot" label="Spot" value="spot" />
+        <RadioButton key="forward" label="Forward" value="forward" />
+        <RadioButton
+          disabled
+          key="option"
+          label="Option (disabled)"
+          value="option"
+        />
+      </RadioButtonGroup>
+    </SaltProvider>
+  </Panel>
+);
+
+export const RowGroup = ({ title, density, name }: ExampleWithTitleProps) => (
   <Panel>
     <SaltProvider density={density}>
       <RadioButtonGroup legend={title} name={name} row>
@@ -91,17 +125,6 @@ const StoryScroller = (props: { children?: ReactNode }) => (
   >
     {props.children}
   </div>
-);
-
-export const All: Story = () => (
-  <StoryScroller>
-    <SaltProvider mode="light">
-      <DensityExample name="light" />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <DensityExample name="dark" />
-    </SaltProvider>
-  </StoryScroller>
 );
 
 /* Controlled Radio Button Group */

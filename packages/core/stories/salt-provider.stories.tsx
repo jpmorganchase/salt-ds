@@ -23,6 +23,19 @@ const NO_DENSITY = 4;
 
 const DENSITIES: Density[] = ["high", "medium", "low", "touch"];
 
+export const Default = () => {
+  return (
+    <SaltProvider density="high" mode="light">
+    <Card>
+      <div>
+        <h1>This is Card</h1>
+        <span>Using Nested DOM Elements</span>
+      </div>
+    </Card>
+    </SaltProvider>
+  );
+};
+
 export const ToggleTheme = () => {
   const [mode, setMode] = useState(LIGHT);
 

@@ -5,7 +5,7 @@ import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
-import { DefaultCard, Disabled, Interactable } from "./card.stories";
+import { Default, Disabled, Interactable } from "./card.stories";
 
 <Meta
   title="Documentation/Lab/Card"
@@ -22,14 +22,7 @@ A Card is a sheet of material that serves as an entry point to more detailed inf
 ## Card Component
 
 <Canvas>
-  <Story name="Card" decorators={[withFlexGap]}>
-    <Card>
-      <div>
-        <h1>This is Card</h1>
-        <span>Using Nested DOM Elements</span>
-      </div>
-    </Card>
-  </Story>
+  <Story id="lab-card--default" />
 </Canvas>
 
 # API

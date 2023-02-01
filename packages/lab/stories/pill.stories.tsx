@@ -29,7 +29,7 @@ export const FeaturePill = Template.bind({});
 
 // This story is referenced in stories/salt/pill.stories.mdx
 // named function syntax is used to show the same in code block
-export const ControlledPill: ComponentStory<typeof Pill> = () => {
+export const Controlled: ComponentStory<typeof Pill> = () => {
   const [checked, setChecked] = useState(true);
 
   const handleChange = () => {
@@ -46,7 +46,7 @@ export const ControlledPill: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const DisabledPill: ComponentStory<typeof Pill> = () => {
+export const Disabled: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       disabled
@@ -56,7 +56,7 @@ export const DisabledPill: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const ClosablePill: ComponentStory<typeof Pill> = () => {
+export const Closable: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       label="Closable Pill"
@@ -66,7 +66,7 @@ export const ClosablePill: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const DisabledClosablePill: ComponentStory<typeof Pill> = () => {
+export const DisabledClosable: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       disabled
@@ -77,7 +77,7 @@ export const DisabledClosablePill: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const IconPill: ComponentStory<typeof Pill> = () => {
+export const Icon: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       icon={<FavoriteIcon />}
@@ -87,7 +87,7 @@ export const IconPill: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const SelectablePill: ComponentStory<typeof Pill> = () => {
+export const Selectable: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       label="Selectable Pill"
@@ -97,7 +97,7 @@ export const SelectablePill: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const DisabledSelectablePill: ComponentStory<typeof Pill> = () => {
+export const DisabledSelectable: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       label="Selectable Pill"
@@ -109,7 +109,7 @@ export const DisabledSelectablePill: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const MaxWidthPill: ComponentStory<typeof Pill> = () => {
+export const MaxWidth: ComponentStory<typeof Pill> = () => {
   return (
     <>
       <Pill
@@ -120,7 +120,7 @@ export const MaxWidthPill: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const CustomTooltipTextPill: ComponentStory<typeof Pill> = () => {
+export const CustomTooltipText: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       label="Pill"

@@ -150,18 +150,18 @@ const AccordionInAccordionTemplate: Story<AccordionProps> = () => {
   );
 };
 
-export const DefaultAccordion = AccordionTemplate.bind({});
+export const Default = AccordionTemplate.bind({});
 
-export const ControlledAccordion = ControlledAccordionTemplate.bind({});
+export const Controlled = ControlledAccordionTemplate.bind({});
 
-export const DefaultMultiAccordion = MultiAccordionTemplate.bind({});
+export const DefaultMulti = MultiAccordionTemplate.bind({});
 
 export const AccordionInAccordion = AccordionInAccordionTemplate.bind({});
 
-DefaultAccordion.args = {
+Default.args = {
   disabled: false,
 };
 
-DefaultMultiAccordion.args = {
+DefaultMulti.args = {
   maxExpandedItems: 2,
 };

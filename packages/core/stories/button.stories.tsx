@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from "@salt-ds/core";
-import { SearchIcon } from "@salt-ds/icons";
+import { DownloadIcon, SearchIcon, SendIcon, SettingsSolidIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -61,6 +61,26 @@ const ButtonGrid = ({
   );
 };
 
+export const All: ComponentStory<typeof Button> = () => {
+  const handleClick = () => {
+    console.log("clicked");
+  };
+
+  return (
+  <div style={{ display: "flex", gap: "8px" }}>
+    <Button variant={"cta"} onClick={handleClick}>
+      CTA
+    </Button>
+    <Button variant={"primary"} onClick={handleClick}>
+      Primary
+    </Button>
+    <Button variant={"secondary"} onClick={handleClick}>
+      Secondary
+    </Button>
+  </div>
+  );
+};
+
 export const CTA: ComponentStory<typeof Button> = () => {
   return <ButtonGrid variant="cta" label="CTA" />;
 };
@@ -78,9 +98,34 @@ FeatureButton.args = {
   children: "Feature Button",
 };
 
+export const Disabled = SingleButtonTemplate.bind({});
+Disabled.args = {
+  disabled: true,
+  children: "Disabled",
+};
+
 export const FocusableWhenDisabled = SingleButtonTemplate.bind({});
 FocusableWhenDisabled.args = {
   focusableWhenDisabled: true,
   disabled: true,
   children: "Focusable When Disabled",
+};
+
+export const WithIcon: ComponentStory<typeof Button> = () => {
+  return (
+    <div style={{ display: "flex", gap: "8px" }}>
+      <Button variant="cta">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button variant="primary">
+        <SearchIcon aria-hidden /> Search
+      </Button>
+      <Button variant="secondary">
+        Setting <SettingsSolidIcon aria-hidden />
+      </Button>
+      <Button aria-label="download">
+        <DownloadIcon aria-hidden />
+      </Button>
+    </div>
+  );
 };

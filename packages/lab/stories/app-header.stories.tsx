@@ -63,7 +63,7 @@ const CollapsibleLogo = (props: LogoProps & ResponsiveItem) => (
   <Logo {...props} compact={props["data-collapsed"]} />
 );
 
-export const DefaultAppHeader: ComponentStory<typeof AppHeader> = () => {
+export const Default: ComponentStory<typeof AppHeader> = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
 
   const tabs = ["Home", "Transactions", "FX", "Checks", "Loans"];

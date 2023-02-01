@@ -53,7 +53,18 @@ const Examples = () => (
   </>
 );
 
-export const DefaultCard: ComponentStory<typeof Card> = () => (
+export const All: ComponentStory<typeof Card> = () => (
+  <div style={{ marginTop: -200 }}>
+    <SaltProvider mode="light">
+      <Examples />
+    </SaltProvider>
+    <SaltProvider mode="dark">
+      <Examples />
+    </SaltProvider>
+  </div>
+);
+
+export const Default: ComponentStory<typeof Card> = () => (
   <Card>
     <div>
       <h1>This is Card</h1>
@@ -84,15 +95,4 @@ export const Interactable: ComponentStory<typeof Card> = () => (
       </div>
     </Card>
   </Link>
-);
-
-export const All: ComponentStory<typeof Card> = () => (
-  <div style={{ marginTop: -200 }}>
-    <SaltProvider mode="light">
-      <Examples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <Examples />
-    </SaltProvider>
-  </div>
 );

@@ -58,7 +58,7 @@ export default {
   component: CascadingMenu,
 } as ComponentMeta<typeof CascadingMenu>;
 
-export const DefaultCascadingMenu: ComponentStory<
+export const Default: ComponentStory<
   typeof CascadingMenu
 > = () => {
   return (
@@ -76,7 +76,7 @@ export const DefaultCascadingMenu: ComponentStory<
   );
 };
 
-export const MaximumWidthCascadingMenu: ComponentStory<
+export const MaximumWidth: ComponentStory<
   typeof CascadingMenu
 > = () => {
   const initialSource = useMemo(
@@ -147,7 +147,7 @@ export const MaximumWidthCascadingMenu: ComponentStory<
   );
 };
 
-export const CascadingMenuWithSeparators: ComponentStory<
+export const WithSeparators: ComponentStory<
   typeof CascadingMenu
 > = () => {
   const initialSource = useMemo(
@@ -208,7 +208,7 @@ export const CascadingMenuWithSeparators: ComponentStory<
   );
 };
 
-export const CascadingMenuWithDisabledItems: ComponentStory<
+export const WithDisabledItems: ComponentStory<
   typeof CascadingMenu
 > = () => {
   const initialSource = useMemo(
@@ -271,7 +271,7 @@ export const CascadingMenuWithDisabledItems: ComponentStory<
 const user: MenuDescriptor["icon"] = UserIcon;
 const phone: MenuDescriptor["icon"] = CallIcon;
 
-export const CascadingMenuWithIcons: ComponentStory<
+export const WithIcons: ComponentStory<
   typeof CascadingMenu
 > = () => {
   const initialSource = useMemo(
@@ -345,7 +345,7 @@ export const CascadingMenuWithIcons: ComponentStory<
   );
 };
 
-export const CascadingMenuControlledOpenClose: ComponentStory<
+export const ControlledOpenClose: ComponentStory<
   typeof CascadingMenu
 > = () => {
   const initialSource = useMemo(
@@ -423,7 +423,7 @@ export const CascadingMenuControlledOpenClose: ComponentStory<
   );
 };
 
-export const CascadingMenuControlledSource: ComponentStory<
+export const ControlledSource: ComponentStory<
   typeof CascadingMenu
 > = () => {
   const sourceA: MenuDescriptor = {

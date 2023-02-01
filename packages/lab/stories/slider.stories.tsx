@@ -30,20 +30,20 @@ const SliderOnACardTemplate: Story<SliderProps> = (props) => {
   );
 };
 
-export const SimpleSlider = SliderTemplate.bind({});
+export const Simple = SliderTemplate.bind({});
 
-export const RangeSlider = SliderTemplate.bind({});
+export const Range = SliderTemplate.bind({});
 
-export const SliderStacked = SliderOnACardTemplate.bind({});
+export const Stacked = SliderOnACardTemplate.bind({});
 
-SimpleSlider.args = {
+Simple.args = {
   defaultValue: 30,
   min: 0,
   max: 60,
   label: "Simple slider",
 };
 
-RangeSlider.args = {
+Range.args = {
   defaultValue: [-30, 0, 30],
   pushable: true,
   pushDistance: 10,
@@ -54,7 +54,7 @@ RangeSlider.args = {
   label: "Range slider",
 };
 
-SliderStacked.args = {
+Stacked.args = {
   hideMarks: false,
   hideMarkLabels: false,
 };

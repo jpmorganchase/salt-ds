@@ -23,21 +23,13 @@ A Badge is a numeric annotation that indicates the number of outstanding items t
 The default element is `MessageIcon`
 
 <Canvas>
-  <Story name="Default Badge">
-    <Badge badgeContent={1} max={1000}>
-      <MessageIcon />
-    </Badge>
-  </Story>
+  <Story id="lab-badge--default" />
 </Canvas>
 
 ## Words Badge
 
 <Canvas>
-  <Story name="Words Badge">
-    <Badge badgeContent={10} max={1000}>
-      Words Badge
-    </Badge>
-  </Story>
+  <Story id="lab-badge--words" />
 </Canvas>
 
 ## Badge with text
@@ -45,9 +37,7 @@ The default element is `MessageIcon`
 `badgeContent` can accept both number and string
 
 <Canvas>
-  <Story name="Text Badge">
-    <Badge badgeContent="Text">Text Badge</Badge>
-  </Story>
+  <Story id="lab-badge--text" />
 </Canvas>
 
 ## Badge with maximum number
@@ -55,11 +45,7 @@ The default element is `MessageIcon`
 Specify the maximum number to be displayed with `max`. If `badgeContent` exceeds `max`, suffix `+` will be appended.
 
 <Canvas>
-  <Story name="Badge with max number">
-    <Badge badgeContent={150} max={99}>
-      <UserBadgeIcon />
-    </Badge>
-  </Story>
+  <Story id="lab-badge--max-number" />
 </Canvas>
 
 # API

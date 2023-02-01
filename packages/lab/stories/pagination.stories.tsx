@@ -51,9 +51,9 @@ const Template: Story<PaginationProps & PaginatorProps & StoryProps> = (
   );
 };
 
-export const DefaultPagination = Template.bind({});
+export const Default = Template.bind({});
 
-DefaultPagination.args = {
+Default.args = {
   compact: false,
   count: 25,
   siblingCount: 2,
@@ -62,7 +62,7 @@ DefaultPagination.args = {
   goToPosition: "left",
 };
 
-DefaultPagination.argTypes = {
+Default.argTypes = {
   goToPosition: {
     options: ["none", "left", "right"],
     control: { type: "radio" },

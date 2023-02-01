@@ -19,7 +19,7 @@ const BasicBreadcrumbsTemplate: Story<BasicBreadcrumbsStoryProps> = (props) => {
   );
 };
 
-export const BasicBreadcrumbs = BasicBreadcrumbsTemplate.bind({});
+export const Basic = BasicBreadcrumbsTemplate.bind({});
 
 interface BreadcrumbsWrappingStoryProps {}
 
@@ -35,7 +35,7 @@ const BreadcrumbsWrappingTemplate: Story<BreadcrumbsWrappingStoryProps> = (
   );
 };
 
-export const BreadcrumbsWrapping = BreadcrumbsWrappingTemplate.bind({});
+export const WithWrap = BreadcrumbsWrappingTemplate.bind({});
 
 interface IconDescriptorsStoryProps {}
 

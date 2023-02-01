@@ -48,9 +48,7 @@ Skip Links are visible only on focus. When a Skip Link is activated, focus moves
 The Skip link component is displayed above the application layout on a single line, as a link element. It receives focus when the user navigates to it using the Tab key. When activated, the Skip Link enables user to skip to the target content you've defined.
 
 <Canvas>
-  <Story name="Default" parameters={{ layout: "centered" }}>
-    <Default />
-  </Story>
+  <Story id="lab-skip-link--default" />
 </Canvas>
 
 ## With multiple links
@@ -62,9 +60,7 @@ The Skip Link component can provide multiple links. Links are displayed in seque
 Multiple links should be used sparingly. In order to avoid polluting the page-tab order it is recommended not to use more than two links per Skip Link.
 
 <Canvas>
-  <Story name="Multiple Links" parameters={{ layout: "centered" }}>
-    <MultipleLinks />
-  </Story>
+  <Story id="lab-skip-link--multiple-links" />
 </Canvas>
 
 ## Props

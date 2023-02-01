@@ -74,7 +74,7 @@ export const Default: Story<ListProps> = (props) => {
   );
 };
 
-export const BorderlessList: Story<ListProps> = (props) => (
+export const Borderless: Story<ListProps> = (props) => (
   <List
     aria-label="Borderless List example"
     maxWidth={292}
@@ -84,7 +84,7 @@ export const BorderlessList: Story<ListProps> = (props) => (
   />
 );
 
-export const DeclarativeList: Story<ListProps> = (props) => {
+export const Declarative: Story<ListProps> = (props) => {
   return (
     <List
       {...props}
@@ -117,7 +117,7 @@ export const VirtualizedListExample: Story<ListProps> = (props) => {
   );
 };
 
-export const DeselectableList: Story<ListProps> = (props) => {
+export const Deselectable: Story<ListProps> = (props) => {
   return (
     <List
       aria-label="Deselectable List example"
@@ -141,7 +141,7 @@ export const DisplayedItemCount: Story<ListProps> = (props) => {
   );
 };
 
-export const ControlledList: Story<ListProps> = (props) => {
+export const Controlled: Story<ListProps> = (props) => {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -215,7 +215,7 @@ export const ControlledList: Story<ListProps> = (props) => {
   );
 };
 
-export const DisabledList: Story<ListProps<CustomItem>> = (props) => {
+export const Disabled: Story<ListProps<CustomItem>> = (props) => {
   const source = useMemo(
     () =>
       usa_states.map(
@@ -330,7 +330,7 @@ export const Grouped: Story<ListProps> = (props) => (
   </>
 );
 
-export const MultiSelectionList: Story<ListProps> = (props) => {
+export const MultiSelection: Story<ListProps> = (props) => {
   return (
     <FlexLayout>
       <FlexItem>
@@ -364,7 +364,7 @@ const randomizedData = usa_states
   .sort((a, b) => a.substring(1).localeCompare(b.substring(1)));
 
 // We need an example of list not following alphabetical order to test certain feature, e.g. type to select
-export const RandomOrderList: Story<ListProps> = (props) => (
+export const RandomOrder: Story<ListProps> = (props) => (
   <List width={292} source={randomizedData} {...props} />
 );
 
@@ -713,7 +713,7 @@ export const DisableTypeToSelect: Story<ListProps> = () => {
   );
 };
 
-export const ExtendedSelectionList: Story<ListProps> = () => {
+export const ExtendedSelection: Story<ListProps> = () => {
   const handleSelectionChange: SelectionChangeHandler = (evt, selected) => {
     console.log({ selected });
   };
@@ -781,7 +781,7 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
   );
 };
 
-export const EmptyList: Story<ListProps> = (props) => {
+export const Empty: Story<ListProps> = (props) => {
   const buttonsRef = useRef<HTMLDivElement>(null);
   const NO_DATA = useMemo<string[]>(() => [], []);
   const [data, setData] = useState<string[]>(NO_DATA);

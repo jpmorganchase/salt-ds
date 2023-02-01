@@ -17,6 +17,18 @@ export default {
   component: FileDropZone,
 } as ComponentMeta<typeof FileDropZone>;
 
+
+export const All: ComponentStory<typeof FileDropZone> = ({
+  onFilesAccepted,
+  ...args
+}) => {
+  return (
+    <AllRenderer>
+      <FileDropZone {...args} />
+    </AllRenderer>
+  );
+};
+
 export const Default: ComponentStory<typeof FileDropZone> = ({
   onFilesAccepted,
   ...args
@@ -319,17 +331,6 @@ export const StretchSize: ComponentStory<typeof FileDropZone> = (props) => {
       description="Some custom description."
       {...props}
     />
-  );
-};
-
-export const All: ComponentStory<typeof FileDropZone> = ({
-  onFilesAccepted,
-  ...args
-}) => {
-  return (
-    <AllRenderer>
-      <FileDropZone {...args} />
-    </AllRenderer>
   );
 };
 

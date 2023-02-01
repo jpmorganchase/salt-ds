@@ -9,7 +9,7 @@ export default {
   component: DropdownBase,
 };
 
-export const DefaultDropdown: Story<DropdownBaseProps> = () => {
+export const Default: Story<DropdownBaseProps> = () => {
   const handleChange = (isOpen: boolean) => {
     console.log("isOpen changed", isOpen);
   };
@@ -35,7 +35,7 @@ export const DefaultDropdown: Story<DropdownBaseProps> = () => {
   );
 };
 
-export const ControlledDropdown: Story<DropdownBaseProps> = () => {
+export const Controlled: Story<DropdownBaseProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const handleChange: DropdownBaseProps["onOpenChange"] = (open: boolean) => {
     setIsOpen(open);

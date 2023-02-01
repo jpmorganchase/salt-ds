@@ -7,7 +7,7 @@ export default {
   component: ButtonBar,
 } as ComponentMeta<typeof ButtonBar>;
 
-export const BasicButtonBar: ComponentStory<typeof ButtonBar> = () => {
+export const Basic: ComponentStory<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
       <ButtonBar data-testid="button-bar" stackAtBreakpoint={0}>
@@ -18,7 +18,7 @@ export const BasicButtonBar: ComponentStory<typeof ButtonBar> = () => {
   );
 };
 
-export const ButtonBarWithSecondaryActions: ComponentStory<
+export const WithSecondaryActions: ComponentStory<
   typeof ButtonBar
 > = () => {
   return (
@@ -42,7 +42,7 @@ export const ButtonBarWithSecondaryActions: ComponentStory<
 /*
  * We pass the stackAtBreakpoint prop of 0 to disable the stacking behaviour for the purposes of the example.
  */
-export const FullPageButtonBar: ComponentStory<typeof ButtonBar> = () => {
+export const FullPage: ComponentStory<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
       <ButtonBar alignLeft data-testid="button-bar" stackAtBreakpoint={0}>
@@ -66,7 +66,7 @@ export const DestructiveActions: ComponentStory<typeof ButtonBar> = () => {
   );
 };
 
-export const StackedButtonBar: ComponentStory<typeof ButtonBar> = () => {
+export const Stacked: ComponentStory<typeof ButtonBar> = () => {
   return (
     <div style={{ width: 320 }}>
       <ButtonBar data-testid="button-bar" stackAtBreakpoint="xl">

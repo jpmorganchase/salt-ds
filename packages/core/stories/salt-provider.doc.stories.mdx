@@ -139,24 +139,13 @@ Read [AriaAnnouncer documentation](/docs/documentation-core-aria-announcer--page
 Here is a `Card` including some very simple content and wrapped with a `SaltProvider`. We set the `SaltProvider` to use the light mode and high density.
 
 <Canvas>
-  <Story name="Simple SaltProvider - Touch Density">
-    <SaltProvider density="high" mode="light">
-      <Card>
-        <div>
-          <h1>This is Card</h1>
-          <span>Using Nested DOM Elements</span>
-        </div>
-      </Card>
-    </SaltProvider>
-  </Story>
+  <Story id="core-salt-provider--default" />
 </Canvas>
 
 Here is another example of a `Card` containing an additional nested `Card`. The nested `Card` is also wrapped with a `SaltProvider`, this time configured to use dark mode. Density is not specified on the inner `SaltProvider`, so is inherited from the outer instance.
 
 <Canvas>
-  <Story name="Nested SaltProvider">
-    <NestedProviders />
-  </Story>
+  <Story id="core-salt-provider--nested-providers" />
 </Canvas>
 
 By default, the `SaltProvider` wraps nested content with a `div` element to which the theme and density CSS classes are added.

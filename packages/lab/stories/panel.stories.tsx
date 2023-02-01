@@ -9,17 +9,6 @@ export default {
 
 const Template: ComponentStory<typeof Panel> = (args) => <Panel {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
-  children: "Lorem Ipsum",
-};
-
-export const Secondary = Template.bind({});
-Secondary.args = {
-  children: "Lorem Ipsum",
-  variant: "secondary",
-};
-
 export const All: ComponentStory<typeof Panel> = (props) => {
   return (
     <>
@@ -36,4 +25,15 @@ export const All: ComponentStory<typeof Panel> = (props) => {
 };
 All.args = {
   children: <p>Lorem Ipsum</p>,
+};
+
+export const Default = Template.bind({});
+Default.args = {
+  children: "Lorem Ipsum",
+};
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+  children: "Lorem Ipsum",
+  variant: "secondary",
 };

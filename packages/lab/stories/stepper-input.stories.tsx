@@ -58,6 +58,17 @@ const Examples = () => (
   </>
 );
 
+export const All: Story = () => (
+  <div style={{ marginTop: -200 }}>
+    <SaltProvider mode="light">
+      <Examples />
+    </SaltProvider>
+    <SaltProvider mode="dark">
+      <Examples />
+    </SaltProvider>
+  </div>
+);
+
 export const Alignment: Story = () => (
   <SaltProvider>
     <FormField
@@ -82,17 +93,6 @@ export const Alignment: Story = () => (
       <StepperInput textAlign="right" />
     </FormField>
   </SaltProvider>
-);
-
-export const All: Story = () => (
-  <div style={{ marginTop: -200 }}>
-    <SaltProvider mode="light">
-      <Examples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <Examples />
-    </SaltProvider>
-  </div>
 );
 
 export const Controlled: Story = () => {
