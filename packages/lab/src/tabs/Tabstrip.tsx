@@ -1,6 +1,7 @@
 import {
   Button,
   makePrefixer,
+  Tooltip,
   useIdMemo,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
@@ -26,7 +27,6 @@ import {
   useOverflowLayout,
 } from "../responsive";
 import { useOverflowCollectionItems } from "../responsive/useOverflowCollectionItems";
-import { Tooltip } from "../tooltip";
 import { Tab } from "./Tab";
 import { TabActivationIndicator } from "./TabActivationIndicator";
 import {

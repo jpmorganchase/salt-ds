@@ -12,7 +12,7 @@ import {
   limitShift,
 } from "@floating-ui/react";
 import { HTMLProps, useRef } from "react";
-import { useControlled } from "@salt-ds/core";
+import { useControlled } from "../utils";
 import { UseFloatingUIProps, useFloatingUI } from "../popper";
 import { useAriaAnnounce } from "./useAriaAnnounce";
 

@@ -1,4 +1,4 @@
-import * as tooltipStories from "@stories/tooltip.stories";
+import * as tooltipStories from "@stories/tooltip/tooltip.stories";
 import { composeStories } from "@storybook/testing-react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 

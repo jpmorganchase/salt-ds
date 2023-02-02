@@ -1,10 +1,9 @@
-import { Button, Text } from "@salt-ds/core";
-import { Tooltip, TooltipProps } from "@salt-ds/lab";
+import { Button, Text, Tooltip, TooltipProps } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { useCallback } from "react";
 
 export default {
-  title: "Lab/Tooltip",
+  title: "Core/Tooltip",
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 

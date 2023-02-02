@@ -1,5 +1,11 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
-import { useAriaAnnouncer, useForkRef } from "@salt-ds/core";
+import {
+  Portal,
+  Tooltip,
+  useAriaAnnouncer,
+  useFloatingUI,
+  useForkRef,
+} from "@salt-ds/core";
 import {
   ComponentType,
   HTMLAttributes,
@@ -23,8 +29,6 @@ import { getAnnouncement } from "./getAnnouncement";
 import { useComboBox } from "./useComboBox";
 import { isDesktop, Window, WindowProps } from "../../window";
 import { Input, InputProps } from "../../input";
-import { useFloatingUI } from "../../popper";
-import { Portal } from "../../portal";
 
 export type BaseComboBoxProps<
   Item,

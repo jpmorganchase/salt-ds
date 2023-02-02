@@ -10,9 +10,9 @@ import {
   makePrefixer,
   useForkRef,
   StatusIndicator,
+  UseFloatingUIProps,
   ValidationStatus,
 } from "@salt-ds/core";
-import { UseFloatingUIProps } from "../popper";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 
@@ -20,7 +20,7 @@ const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
-    Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
+  Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
    * The children will be the tooltip's trigger.
    */

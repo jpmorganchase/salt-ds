@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, Tooltip } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
@@ -10,7 +10,6 @@ import {
   useState,
 } from "react";
 import { ListItem, ListItemProps } from "../list-deprecated";
-import { Tooltip } from "../tooltip";
 import { MenuDescriptor } from "./CascadingMenuProps";
 
 import "./CascadingMenuItem.css";
