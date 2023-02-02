@@ -137,6 +137,31 @@ const config = {
         respectPrefersColorScheme: false,
       },
     }),
+  plugins: [
+    [
+      "docusaurus-plugin-react-docgen-typescript",
+      {
+        // pass in a single string or an array of strings
+        src: "../packages/core/src/**/*.tsx",
+        parserOptions: {
+          // pass parserOptions to react-docgen-typescript
+          propFilter: (prop) => {
+            if (prop.parent) {
+              return !prop.parent.fileName.includes("@types/react");
+            }
+
+            return true;
+          },
+        },
+      },
+    ],
+    [
+      "../tooling/docusaurus-css-variable-docgen-plugin/src/index.js",
+      {
+        src: "../packages/core/src/**/*.css",
+      },
+    ],
+  ],
 };
 
 async function createConfig() {
