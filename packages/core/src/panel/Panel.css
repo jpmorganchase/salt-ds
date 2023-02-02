@@ -1,0 +1,19 @@
+/* Styles applied to the root element when variant="primary" */
+.saltPanel-primary.saltPanel {
+  --panel-background: var(--salt-container-secondary-background);
+}
+
+/* Styles applied to the root element when variant="secondary" */
+.saltPanel-secondary.saltPanel {
+  --panel-background: var(--salt-container-secondary-background);
+}
+
+/* Styles applied to the root element */
+.saltPanel {
+  background: var(--saltPanel-background, var(--panel-background));
+  color: var(--saltPanel-color, inherit);
+  height: var(--saltPanel-height, 100%);
+  overflow: auto;
+  padding: var(--saltPanel-padding, calc(var(--salt-size-unit) * 3));
+  width: var(--saltPanel-width, 100%);
+}
