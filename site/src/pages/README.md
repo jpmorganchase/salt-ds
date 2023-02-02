@@ -16,7 +16,7 @@ The folder must have the same name as the corresponding page but with an undersc
 site/
 └── src/
     └── pages/
-        ├── [PageName].tsx
+        ├── [page_name].tsx
         └── _[page_name]/
             ├── PageSpecificComponent.tsx
             └── PageSpecificComponent.module.css
