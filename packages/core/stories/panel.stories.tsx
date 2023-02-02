@@ -1,22 +1,22 @@
-import { Panel } from "@salt-ds/lab";
+import { Panel } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
-  title: "Lab/Panel",
+  title: "Core/Panel",
   component: Panel,
 } as ComponentMeta<typeof Panel>;
 
 const Template: ComponentStory<typeof Panel> = (args) => <Panel {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
-  children: "Lorem Ipsum",
+export const Primary = Template.bind({});
+Primary.args = {
+  children: <p>Lorem Ipsum</p>,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
-  children: "Lorem Ipsum",
+  children: <p>Lorem Ipsum</p>,
   variant: "secondary",
 };
 

@@ -1,15 +1,14 @@
-import { Density, Mode, SaltProvider } from "@salt-ds/core";
+import { ChangeEventHandler, ReactNode, useState } from "react";
+import { Density, Mode, SaltProvider, Panel } from "@salt-ds/core";
 import {
   FormField,
   makeRadioIcon,
-  Panel,
   RadioButton,
   RadioButtonGroup,
 } from "@salt-ds/lab";
-import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
 import { SuccessTickIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
-import { ChangeEventHandler, ReactNode, useState } from "react";
+import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
 
 export default {
   title: "Lab/Radio Button",

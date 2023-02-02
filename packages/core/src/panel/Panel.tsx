@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes } from "react";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../utils";
 
 import "./Panel.css";
 
@@ -31,9 +31,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
 ) {
   return (
     <div
-      className={clsx(withBaseName(), className, {
-        [withBaseName(variant)]: variant === "secondary",
-      })}
+      className={clsx(withBaseName(), withBaseName(variant), className)}
       ref={ref}
       {...restProps}
     >
