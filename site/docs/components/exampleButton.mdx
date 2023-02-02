@@ -1,0 +1,88 @@
+---
+hide_table_of_contents: true
+---
+
+import { Button } from "@salt-ds/core";
+
+import ButtonVariants, {
+  ButtonIconLabel,
+  DisabledButtons,
+} from "./ExampleButtonExamples.tsx";
+import Content from "@site/src/layouts/content/Content.tsx";
+import PropTable from "@site/src/components/propTable/PropTable.tsx";
+import ClassTable from "@site/src/components/classTable/ClassTable.tsx";
+import CharacteristicsTable from "@site/src/components/characteristicsTable/CharacteristicsTable.tsx";
+
+# Button
+
+<Content>
+
+A Button executes an action when clicked. Button labels should use only one or two words and begin with an active verb. There are three Button variants:
+
+- **Call-To-Action** (a.k.a. CTA) performs a critical action on the screen.
+- **Primary** is the most commonly-used button.
+- **Secondary** performs an action less likely to be triggered.
+
+#### Use when
+
+- You want to indicate actions that the user can take.
+- The navigation is the core action on the page. In this case, a CTA Button should be used to trigger the navigation.
+
+#### Don't use when
+
+The Button navigates the user to a new page or window rather than triggering a function, in that case a `Link` component is more appropriate.
+
+## Features
+
+### Button variants
+
+Button contains three variants `cta`, `primary` and `secondary`. If not specified, the default value is `primary`.
+
+<ButtonVariants />
+
+### Button with icon and label
+
+Icons can be put before or after text, or used alone. Check the [Accessibility](#Accessibility) section for guidance on ensuring your Button remains acessible to all.
+
+#### Design considerations
+
+- An icon should be put before the text if it is further describing the button's action, such as 'Upload', 'Submit', 'Play', or 'Done'. This can be useful in busy environments where an additional description can improve speed in locating actions.
+- When you put an icon after the button label, it typically suggests direction or movement, such as opening a menu overlay, expanding a panel or opening a document. In this case, when the button is pressed there is typically an immediate visual change.
+- A button with only an icon and no text should be self-explanatory, ideally using well-known metaphors which are easily related to. If the purpose of the button isn’t clear, a label should be added. If space is a consideration, add a tooltip to the button set to display on hover after a short delay (typically 300ms, `--salt-delay-perceptible`). The tooltip should add context to the action such as 'Edit this form', 'Print this document', or 'Lock document state'.
+
+<ButtonIconLabel />
+
+### Disabled Button
+
+A Button with the prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need a disabled Button to be focusable, you also need to pass `focusableWhenDisabled="true"`.
+
+<DisabledButtons />
+
+## Configuring Button
+
+### API
+
+```
+import { Button } from "@salt-ds/core";
+```
+
+### Props
+
+<PropTable name="Button" />
+
+## Related components
+
+The button component can contain the following components:
+
+- [Icon](?path=/docs/documentation-icons-icon--page)
+- [Status Indicator](?path=/docs/documentation-core-statusindicator--page)
+
+### Classes
+
+<ClassTable name="Button" />
+
+### Characteristics
+
+<CharacteristicsTable name="Button" />
+
+</Content>
