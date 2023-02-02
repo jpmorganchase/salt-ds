@@ -17,9 +17,9 @@ import {
   useCallback,
   useRef,
 } from "react";
+import { OverlayProps } from "./Overlay";
 import { useFloatingUI, UseFloatingUIProps } from "../popper";
 import { isDesktop } from "../window";
-import { OverlayProps } from "./Overlay";
 
 export type UseOverlayProps = Partial<
   Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">

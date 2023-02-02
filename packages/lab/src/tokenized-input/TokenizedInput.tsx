@@ -1,11 +1,11 @@
 import { useForkRef } from "@salt-ds/core";
 import { ComponentType, ForwardedRef, forwardRef } from "react";
-import { UseTooltipProps } from "../tooltip";
 import {
   TokenizedInputBase,
   TokenizedInputBaseProps,
 } from "./TokenizedInputBase";
 import { useTokenizedInput } from "./useTokenizedInput";
+import { UseTooltipProps } from "../tooltip";
 
 import "./TokenizedInput.css";
 

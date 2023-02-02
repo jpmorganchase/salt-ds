@@ -18,14 +18,14 @@ import {
   ListSelectionVariant,
   ListStateContext,
 } from "../../list-deprecated";
-import { Portal } from "../../portal";
-import { Tooltip } from "../../tooltip";
 import { GetFilterRegex } from "../filterHelpers";
 import { getAnnouncement } from "./getAnnouncement";
 import { useComboBox } from "./useComboBox";
-import { useFloatingUI } from "../../popper";
 import { isDesktop, Window, WindowProps } from "../../window";
+import { Tooltip } from "../../tooltip";
 import { Input, InputProps } from "../../input";
+import { useFloatingUI } from "../../popper";
+import { Portal } from "../../portal";
 
 export type BaseComboBoxProps<
   Item,

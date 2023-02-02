@@ -33,6 +33,7 @@ const popNextOverflowedItem = (items: OverflowItem[]) => {
 export const useOverflow = ({
   collectionHook: { dispatch },
   id: idProp,
+  label = "Toolbar",
   overflowItemsRef,
   overflowContainerRef,
   orientation,

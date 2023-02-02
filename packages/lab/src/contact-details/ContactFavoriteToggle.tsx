@@ -1,10 +1,10 @@
 import { useControlled, useId } from "@salt-ds/core";
 import { forwardRef } from "react";
-import { TooltipProps } from "../tooltip";
 import {
   FavoriteToggleWithTooltip,
   FavoriteToggleWithTooltipProps,
 } from "./internal";
+import { TooltipProps } from "../tooltip";
 
 export interface ContactFavoriteToggleProps
   extends FavoriteToggleWithTooltipProps {

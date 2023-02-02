@@ -2,13 +2,13 @@ import { IconProps } from "@salt-ds/icons";
 import {
   ComponentType,
   HTMLAttributes,
-  KeyboardEvent,
   MouseEvent,
   ReactNode,
+  KeyboardEvent,
 } from "react";
 import { ItemToStringFunction } from "../list-deprecated";
-import { UseFloatingUIProps } from "../popper";
 import { CascadingMenuListProps } from "./CascadingMenuList";
+import { UseFloatingUIProps } from "../popper";
 
 export interface ScreenBounds {
   clientHeight: number;

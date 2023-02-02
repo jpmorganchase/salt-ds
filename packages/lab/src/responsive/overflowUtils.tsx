@@ -1,4 +1,9 @@
-import { ElementRef, OverflowItem, orientationType } from "./overflowTypes";
+import {
+  collapsibleType,
+  ElementRef,
+  OverflowItem,
+  orientationType,
+} from "./overflowTypes";
 
 export const DropdownPlaceholder = () => null;
 export const getDropdownPlaceholder = () => <DropdownPlaceholder />;
@@ -200,10 +205,7 @@ export const measureOverflowItems = (
 ): OverflowItem[] => {
   const measurements = items.map(({ id }) => {
     const childElement = document.getElementById(id);
-
-    const size = childElement
-      ? measureElementSize(childElement, dimension, true)
-      : 0;
+    const size = childElement ? measureElementSize(childElement, dimension) : 0;
     return size;
   });
 
