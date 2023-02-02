@@ -5,7 +5,7 @@ import { DropdownBase, DropdownBaseProps, DropdownButton } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 
 export default {
-  title: "Lab/DropdownBase",
+  title: "Lab/Dropdown Base",
   component: DropdownBase,
 };
 

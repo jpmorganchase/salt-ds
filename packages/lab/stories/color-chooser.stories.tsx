@@ -5,7 +5,7 @@ import { customColorMap } from "./custom-color-map";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 export default {
-  title: "Lab/ColorChooser",
+  title: "Lab/Color Chooser",
   component: ColorChooser,
 } as ComponentMeta<typeof ColorChooser>;
 

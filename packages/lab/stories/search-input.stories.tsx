@@ -7,7 +7,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { SyntheticEvent, useState } from "react";
 
 export default {
-  title: "Lab/SearchInput",
+  title: "Lab/Search Input",
   component: SearchInput,
 } as ComponentMeta<typeof SearchInput>;
 

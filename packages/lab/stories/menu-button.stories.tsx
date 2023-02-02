@@ -3,7 +3,7 @@ import { MicroMenuIcon, UserSolidIcon } from "@salt-ds/icons";
 import { Story } from "@storybook/react";
 
 export default {
-  title: "Lab/MenuButton",
+  title: "Lab/Menu Button",
   component: MenuButton,
 };
 

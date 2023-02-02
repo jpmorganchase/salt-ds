@@ -10,7 +10,7 @@ import { NestedProviders } from "./salt-provider.stories";
 
 The `SaltProvider` is a multi-purpose React Context provider. It allows values for cross-cutting concerns like `Theme` and `Density`
 to be injected into an application. This will commonly be done at the root level of an application, making these values available throughout the
-application. SaltProviders can also be nested to effect local overrides. Note that because almost all styling effects related to theme and density
+application. Salt Providers can also be nested to effect local overrides. Note that because almost all styling effects related to theme and density
 are managed using CSS variables, it will very rarely be necessary for React components to access the theme or density directly. The main purpose of
 these providers is to inject the appropriate CSS classes into the page so that the CSS variables which apply theme and density values are scoped correctly.
 
@@ -19,7 +19,7 @@ these providers is to inject the appropriate CSS classes into the page so that t
 - Theme
 - Density
 - Breakpoints
-- AriaAnnouncer
+- Aria Announcer
 
 ## API
 
@@ -127,14 +127,14 @@ function MyComponent() {
 }
 ```
 
-## AriaAnnouncer
+## Aria Announcer
 
 `AriaAnnouncer` will be injected automatically inside the root element when `SaltProvider` is wrapping the app. If you use
-nested SaltProviders, these will not inject further instances of `AriaAnnouncer`.
+nested Salt Providers, these will not inject further instances of `AriaAnnouncer`.
 
 Read [AriaAnnouncer documentation](/docs/documentation-core-aria-announcer--page) for more details.
 
-## Examples of SaltProvider use
+## Examples of Salt Provider use
 
 Here is a `Card` including some very simple content and wrapped with a `SaltProvider`. We set the `SaltProvider` to use the light mode and high density.
 

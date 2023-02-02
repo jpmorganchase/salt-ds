@@ -26,7 +26,7 @@ import "./Flexbox.css";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Lab/AppHeader",
+  title: "Lab/App Header",
   component: AppHeader,
 } as ComponentMeta<typeof AppHeader>;
 

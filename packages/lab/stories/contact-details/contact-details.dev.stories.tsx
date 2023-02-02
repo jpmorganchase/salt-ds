@@ -26,7 +26,7 @@ import { Story } from "@storybook/react";
 import { useState } from "react";
 
 export default {
-  title: "Lab/ContactDetails/Development",
+  title: "Lab/Contact Details/Development",
   component: ContactDetails,
 };
 
