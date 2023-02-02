@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes } from "react";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../utils";
 
 import "./Panel.css";
 
