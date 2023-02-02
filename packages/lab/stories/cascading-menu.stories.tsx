@@ -135,7 +135,7 @@ export const MaximumWidthCascadingMenu: ComponentStory<
     <CascadingMenu
       initialSource={initialSource}
       itemToString={(item) => item?.title}
-      maxWidth={100}
+      maxWidth={255}
       onItemClick={(sourceItem) => {
         console.log(`You clicked: ${sourceItem.title}`);
       }}

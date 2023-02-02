@@ -1,5 +1,5 @@
-import { Portal } from "@salt-ds/core";
 import { forwardRef } from "react";
+import { Portal } from "../../portal";
 import { Rect } from "./dragDropTypes";
 
 import "./DropIndicator.css";

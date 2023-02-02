@@ -1,4 +1,4 @@
-import { makePrefixer, Portal, useId, ValidationStatus } from "@salt-ds/core";
+import { makePrefixer, useId, ValidationStatus } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   forwardRef,
@@ -9,6 +9,8 @@ import {
   useState,
 } from "react";
 import { DialogContext } from "./internal/DialogContext";
+
+import { Portal } from '../portal'
 import { Scrim, ScrimProps } from "../scrim";
 import { useWindow } from "../window";
 

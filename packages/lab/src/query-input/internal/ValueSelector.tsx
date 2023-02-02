@@ -1,7 +1,5 @@
 import {
   makePrefixer,
-  Portal,
-  useFloatingUI,
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
@@ -10,6 +8,8 @@ import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import { CategoryList } from "./CategoryList";
 import { SearchList } from "./SearchList";
 import { ValueList } from "./ValueList";
+import { Portal } from '../../portal'
+import { useFloatingUI } from '../../popper'
 import { useWindow } from "../../window";
 
 const withBaseName = makePrefixer("saltQueryInputValueSelector");

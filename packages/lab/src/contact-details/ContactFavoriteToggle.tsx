@@ -1,5 +1,6 @@
-import { TooltipProps, useControlled, useId } from "@salt-ds/core";
+import { useControlled, useId } from "@salt-ds/core";
 import { forwardRef } from "react";
+import { TooltipProps } from '../tooltip'
 import {
   FavoriteToggleWithTooltip,
   FavoriteToggleWithTooltipProps,

@@ -1,9 +1,10 @@
-import { makePrefixer, Tooltip, TooltipProps } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";
 
+import { Tooltip, TooltipProps } from '../../tooltip';
 import { DayStatus, useCalendarDay } from "../useCalendarDay";
 import "./CalendarDay.css";
 import { formatDate } from "./utils";

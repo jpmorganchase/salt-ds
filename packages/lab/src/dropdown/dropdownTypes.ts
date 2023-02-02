@@ -1,5 +1,5 @@
-import { PortalProps } from "@salt-ds/core";
 import { HTMLAttributes, KeyboardEvent, ReactElement, RefObject } from "react";
+import { PortalProps } from "../portal";
 
 export type DropdownPlacement =
   | "bottom-start"
@@ -9,7 +9,7 @@ export type DropdownPlacement =
 
 export interface DropdownBaseProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onSelect">,
-    Pick<PortalProps, "disablePortal" | "container"> {
+  Pick<PortalProps, "disablePortal" | "container"> {
   defaultIsOpen?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
@@ -25,16 +25,16 @@ export interface DropdownBaseProps
 
 export interface DropdownHookProps
   extends Pick<
-    DropdownBaseProps,
-    | "defaultIsOpen"
-    | "disabled"
-    | "fullWidth"
-    | "isOpen"
-    | "onOpenChange"
-    | "onKeyDown"
-    | "openOnFocus"
-    | "popupWidth"
-    | "width"
+  DropdownBaseProps,
+  | "defaultIsOpen"
+  | "disabled"
+  | "fullWidth"
+  | "isOpen"
+  | "onOpenChange"
+  | "onKeyDown"
+  | "openOnFocus"
+  | "popupWidth"
+  | "width"
   > {
   ariaLabelledBy?: string;
   id: string;

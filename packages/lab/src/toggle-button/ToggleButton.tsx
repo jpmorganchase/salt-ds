@@ -1,4 +1,4 @@
-import { Button, ButtonProps, makePrefixer, Tooltip } from "@salt-ds/core";
+import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   forwardRef,
@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { Tooltip } from '../tooltip'
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
 
 import "./ToggleButton.css";
@@ -53,7 +54,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       (button: HTMLButtonElement | null) => {
         setIconOnly(
           button?.querySelector(".saltIcon") != null &&
-            button?.childElementCount === 1
+          button?.childElementCount === 1
         );
       },
       [setIconOnly]

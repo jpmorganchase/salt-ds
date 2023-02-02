@@ -1,7 +1,8 @@
-import { Link, makePrefixer, Text, TooltipProps } from "@salt-ds/core";
+import { Link, makePrefixer, Text } from "@salt-ds/core";
 import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { Children, forwardRef, HTMLAttributes, ReactNode } from "react";
+import { TooltipProps } from '../tooltip';
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 
 import "./Breadcrumb.css";

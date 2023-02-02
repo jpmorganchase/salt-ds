@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { FavoriteToggle, FavoriteToggleProps } from "./FavoriteToggle";
-import { Tooltip, TooltipProps } from "@salt-ds/core";
+import { Tooltip, TooltipProps } from '../../tooltip';
 
 export interface FavoriteToggleWithTooltipProps extends FavoriteToggleProps {
   tooltipProps?: TooltipProps;

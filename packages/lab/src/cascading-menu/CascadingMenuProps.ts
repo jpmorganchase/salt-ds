@@ -7,8 +7,8 @@ import {
   ReactNode,
 } from "react";
 import { ItemToStringFunction } from "../list-deprecated";
+import { UseFloatingUIProps } from '../popper'
 import { CascadingMenuListProps } from "./CascadingMenuList";
-import { UseFloatingUIProps } from "@salt-ds/core";
 
 export interface ScreenBounds {
   clientHeight: number;

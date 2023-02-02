@@ -1,4 +1,4 @@
-import { makePrefixer, Tooltip } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import { ListItem, ListItemProps } from "../list-deprecated";
+import { Tooltip } from '../tooltip';
 import { MenuDescriptor } from "./CascadingMenuProps";
 
 import "./CascadingMenuItem.css";
@@ -97,14 +98,14 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     };
     const interactionClasses = isNavigatingWithKeyboard
       ? {
-          [withBaseName(`menuItemKeyboardActive`)]:
-            !isDisabled && isInteracted && !blurSelected,
-          [withBaseName(`menuItemKeyboardDisabled`)]:
-            isDisabled && isInteracted,
-        }
+        [withBaseName(`menuItemKeyboardActive`)]:
+          !isDisabled && isInteracted && !blurSelected,
+        [withBaseName(`menuItemKeyboardDisabled`)]:
+          isDisabled && isInteracted,
+      }
       : {
-          [withBaseName(`menuItemHover`)]: !isDisabled && !blurSelected,
-        };
+        [withBaseName(`menuItemHover`)]: !isDisabled && !blurSelected,
+      };
 
     const icon = hasStartAdornment ? getIcon(sourceItem, isDisabled) : null;
     const tooltipTitle = sourceItem.tooltip || menuText;

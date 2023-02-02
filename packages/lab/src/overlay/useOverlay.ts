@@ -12,8 +12,6 @@ import {
 import {
   margin,
   useControlled,
-  useFloatingUI,
-  UseFloatingUIProps,
 } from "@salt-ds/core";
 import {
   ComponentPropsWithoutRef,
@@ -22,8 +20,9 @@ import {
   useCallback,
   useRef,
 } from "react";
-import { OverlayProps } from "./Overlay";
+import { useFloatingUI, UseFloatingUIProps } from '../popper'
 import { isDesktop } from "../window";
+import { OverlayProps } from "./Overlay";
 
 export type UseOverlayProps = Partial<
   Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
@@ -47,11 +46,11 @@ export function useOverlay(props: UseOverlayProps) {
   const middleware = isDesktop
     ? [margin(24), arrow({ element: arrowRef })]
     : [
-        offset(24),
-        flip(),
-        shift({ limiter: limitShift() }),
-        arrow({ element: arrowRef }),
-      ];
+      offset(24),
+      flip(),
+      shift({ limiter: limitShift() }),
+      arrow({ element: arrowRef }),
+    ];
   const {
     reference,
     floating,
@@ -84,8 +83,8 @@ export function useOverlay(props: UseOverlayProps) {
 
   const getTriggerProps = <
     Element extends
-      | keyof JSX.IntrinsicElements
-      | JSXElementConstructor<any> = "div"
+    | keyof JSX.IntrinsicElements
+    | JSXElementConstructor<any> = "div"
   >(
     userProps?: ComponentPropsWithoutRef<Element>
   ) => {

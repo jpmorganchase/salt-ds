@@ -9,12 +9,11 @@ import {
   Ref,
   RefObject,
 } from "react";
+import { makePrefixer, useForkRef, StatusIndicator, ValidationStatus } from "@salt-ds/core";
 import { UseFloatingUIProps } from "../popper";
+import { Portal, PortalProps } from "../portal";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
-import { makePrefixer, useForkRef } from "../utils";
-import { Portal, PortalProps } from "../portal";
-import { StatusIndicator, ValidationStatus } from "../status-indicator";
 
 // Keep in order of preference. First items are used as default
 
@@ -23,8 +22,8 @@ const defaultIconProps = { size: 1, className: withBaseName("icon") };
 
 export interface TooltipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
-    PortalProps,
-    Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
+  PortalProps,
+  Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
   /**
    * Whether to hide the tooltip arrow tip. Defaults to `false`.

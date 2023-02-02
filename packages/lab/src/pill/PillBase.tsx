@@ -15,15 +15,15 @@ import {
 } from "react";
 import {
   makePrefixer,
-  TooltipProps,
   useIsomorphicLayoutEffect,
-  Tooltip,
 } from "@salt-ds/core";
-import { pillBaseName } from "./constants";
+import { Tooltip, TooltipProps } from '../tooltip'
+
 import { DeleteButton } from "./internal/DeleteButton";
+import { DivButton } from "./internal/DivButton";
+import { pillBaseName } from "./constants";
 
 import "./Pill.css";
-import { DivButton } from "./internal/DivButton";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,
@@ -133,11 +133,11 @@ export const PillBase = forwardRef(function PillBase(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     icon && isValidElement<any>(icon)
       ? cloneElement(icon, {
-          ...icon.props,
-          // FIXME: icon.props is any
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          className: clsx(withBaseName("icon"), icon.props.className),
-        })
+        ...icon.props,
+        // FIXME: icon.props is any
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        className: clsx(withBaseName("icon"), icon.props.className),
+      })
       : icon;
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {

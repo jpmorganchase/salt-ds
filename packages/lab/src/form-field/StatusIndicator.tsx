@@ -4,9 +4,9 @@ import { ElementType } from "react";
 import {
   makePrefixer,
   StatusIndicator as BaseStatusIndicator,
-  Tooltip,
-  TooltipProps,
 } from "@salt-ds/core";
+import { Tooltip, TooltipProps } from '../tooltip'
+
 
 const withBaseName = makePrefixer("saltFormField");
 

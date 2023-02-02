@@ -11,8 +11,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, Tooltip, useForkRef, useId } from "@salt-ds/core";
+import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { FormFieldContext } from "../form-field-context";
+import { Tooltip } from "../tooltip";
 import { classBase } from "./constant";
 import {
   FormActivationIndicator,
@@ -52,7 +53,7 @@ export interface A11yValueProps
 
 export interface FormFieldProps
   extends HTMLAttributes<HTMLDivElement>,
-    A11yValueProps {
+  A11yValueProps {
   /**
    * The component used for activation indicator. Default to `FormActivationIndicator`.
    */
@@ -155,13 +156,13 @@ export const useFormField = ({
   onBlur?: FocusEventHandler<HTMLDivElement>;
   onFocus?: FocusEventHandler<HTMLDivElement>;
 }): [
-  { focused: boolean },
-  { setFocused: Dispatch<SetStateAction<boolean>> },
-  {
-    onBlur: FocusEventHandler<HTMLDivElement>;
-    onFocus: FocusEventHandler<HTMLDivElement>;
-  }
-] => {
+    { focused: boolean },
+    { setFocused: Dispatch<SetStateAction<boolean>> },
+    {
+      onBlur: FocusEventHandler<HTMLDivElement>;
+      onFocus: FocusEventHandler<HTMLDivElement>;
+    }
+  ] => {
   const [focused, setFocused] = useState(false);
   const handleBlur: FocusEventHandler<HTMLDivElement> = (event) => {
     setFocused(false);

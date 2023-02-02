@@ -10,14 +10,14 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { useControlled } from "../utils";
 import { HTMLProps, useRef } from "react";
-import { useAriaAnnounce } from "./useAriaAnnounce";
+import { useControlled } from "@salt-ds/core";
 import { UseFloatingUIProps, useFloatingUI } from "../popper";
+import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps
   extends Partial<
-    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
+  Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   /**
    * Do not respond to focus events.

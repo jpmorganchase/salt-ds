@@ -1,4 +1,4 @@
-import { forwardRef, ForwardedRef, HTMLAttributes, memo } from "react";
+import { forwardRef, ForwardedRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { CheckboxIcon } from "../checkbox";
@@ -55,9 +55,9 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     const style =
       itemHeight !== undefined
         ? {
-            ...styleProp,
-            height: itemHeight,
-          }
+          ...styleProp,
+          height: itemHeight,
+        }
         : styleProp;
 
     return (

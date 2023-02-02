@@ -1,5 +1,5 @@
-import { makePrefixer, Tooltip } from "@salt-ds/core";
-import { capitalize } from "@salt-ds/lab";
+import { makePrefixer } from "@salt-ds/core";
+import { capitalize, Tooltip } from "@salt-ds/lab";
 import { ReactElement } from "react";
 
 import "./ScopeLabel.css";
@@ -29,10 +29,9 @@ export const ScopeLabel = (props: ScopeLabelProps): ReactElement => {
         label === "All modes"
           ? "The below tokens apply to light and dark mode."
           : label.includes("emphasis")
-          ? `The below tokens apply to ${props.scope.split("-")[2]} mode in ${
-              props.scope.split("-")[1]
+            ? `The below tokens apply to ${props.scope.split("-")[2]} mode in ${props.scope.split("-")[1]
             } emphasis only.`
-          : `The below tokens apply to ${props.scope.toLowerCase()} mode only.`
+            : `The below tokens apply to ${props.scope.toLowerCase()} mode only.`
       }
     >
       <div className={withBaseName()}>{capitalize(label)}</div>

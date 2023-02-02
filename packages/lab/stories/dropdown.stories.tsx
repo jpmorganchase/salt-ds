@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { Story } from "@storybook/react";
 
-import { Button, Tooltip } from "@salt-ds/core";
+import { Button } from "@salt-ds/core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -17,6 +17,7 @@ import {
   ListItem,
   ListItemType,
   SelectionChangeHandler,
+  Tooltip
 } from "@salt-ds/lab";
 import { usa_states } from "./list.data";
 

@@ -1,7 +1,6 @@
 import type { ElementProps, FloatingContext } from "@floating-ui/react";
 import { PointerEvent, useEffect, useRef } from "react";
-import { useAriaAnnouncer } from "../aria-announcer";
-import { useIsomorphicLayoutEffect } from "../utils";
+import { useAriaAnnouncer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 
 function getDocument(floating: HTMLElement | null) {
   return floating?.ownerDocument ?? document;
