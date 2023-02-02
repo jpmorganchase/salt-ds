@@ -26,7 +26,7 @@ import {
   ValueComponentProps,
   Card,
   FormField,
-  Tooltip
+  Tooltip,
 } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { forwardRef, Fragment, ReactNode } from "react";

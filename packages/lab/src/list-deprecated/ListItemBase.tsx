@@ -1,15 +1,9 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
-import {
-  ForwardedRef,
-  forwardRef,
-  HTMLAttributes,
-  memo,
-  useRef,
-} from "react";
+import { ForwardedRef, forwardRef, HTMLAttributes, memo, useRef } from "react";
 
 import { useOverflowDetection } from "../utils";
-import { Tooltip } from '../tooltip'
+import { Tooltip } from "../tooltip";
 import { Highlighter } from "./internal/Highlighter";
 
 import "./ListItem.css";

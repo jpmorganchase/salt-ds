@@ -55,9 +55,9 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     const style =
       itemHeight !== undefined
         ? {
-          ...styleProp,
-          height: itemHeight,
-        }
+            ...styleProp,
+            height: itemHeight,
+          }
         : styleProp;
 
     return (

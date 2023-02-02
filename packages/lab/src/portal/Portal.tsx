@@ -7,7 +7,12 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { ownerDocument, useForkRef, useIsomorphicLayoutEffect, SaltProvider } from "@salt-ds/core";
+import {
+  ownerDocument,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+  SaltProvider,
+} from "@salt-ds/core";
 
 export interface PortalProps {
   /**

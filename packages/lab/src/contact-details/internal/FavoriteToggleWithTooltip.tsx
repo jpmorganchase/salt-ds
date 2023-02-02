@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { FavoriteToggle, FavoriteToggleProps } from "./FavoriteToggle";
-import { Tooltip, TooltipProps } from '../../tooltip';
+import { Tooltip, TooltipProps } from "../../tooltip";
 
 export interface FavoriteToggleWithTooltipProps extends FavoriteToggleProps {
   tooltipProps?: TooltipProps;

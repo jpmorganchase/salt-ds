@@ -5,8 +5,7 @@ import {
   makePrefixer,
   StatusIndicator as BaseStatusIndicator,
 } from "@salt-ds/core";
-import { Tooltip, TooltipProps } from '../tooltip'
-
+import { Tooltip, TooltipProps } from "../tooltip";
 
 const withBaseName = makePrefixer("saltFormField");
 

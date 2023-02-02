@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Tooltip } from '../tooltip'
+import { Tooltip } from "../tooltip";
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
 
 import "./ToggleButton.css";
@@ -54,7 +54,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       (button: HTMLButtonElement | null) => {
         setIconOnly(
           button?.querySelector(".saltIcon") != null &&
-          button?.childElementCount === 1
+            button?.childElementCount === 1
         );
       },
       [setIconOnly]

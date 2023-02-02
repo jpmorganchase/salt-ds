@@ -1,7 +1,7 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { CSSProperties } from "react";
-import { Tooltip } from '../../tooltip'
+import { Tooltip } from "../../tooltip";
 import { getSliderAriaLabel } from "./utils";
 
 import "../Slider.css";

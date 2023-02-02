@@ -10,7 +10,7 @@ import {
 } from "react";
 import { DialogContext } from "./internal/DialogContext";
 
-import { Portal } from '../portal'
+import { Portal } from "../portal";
 import { Scrim, ScrimProps } from "../scrim";
 import { useWindow } from "../window";
 

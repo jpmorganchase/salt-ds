@@ -7,7 +7,7 @@ import {
   ReactNode,
 } from "react";
 import { ItemToStringFunction } from "../list-deprecated";
-import { UseFloatingUIProps } from '../popper'
+import { UseFloatingUIProps } from "../popper";
 import { CascadingMenuListProps } from "./CascadingMenuList";
 
 export interface ScreenBounds {

@@ -17,7 +17,7 @@ import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps
   extends Partial<
-  Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
+    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   /**
    * Do not respond to focus events.

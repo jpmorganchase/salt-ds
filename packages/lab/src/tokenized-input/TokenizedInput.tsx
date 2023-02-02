@@ -1,6 +1,6 @@
 import { useForkRef } from "@salt-ds/core";
 import { ComponentType, ForwardedRef, forwardRef } from "react";
-import { UseTooltipProps } from '../tooltip'
+import { UseTooltipProps } from "../tooltip";
 import {
   TokenizedInputBase,
   TokenizedInputBaseProps,
@@ -18,12 +18,12 @@ export type ChangeHandler<Item> = (selectedItems: Item[] | undefined) => void;
 
 export interface TokenizedInputProps<Item>
   extends Omit<
-  TokenizedInputBaseProps<Item>,
-  | "activeIndices"
-  | "focused"
-  | "highlightedIndex"
-  | "helpers"
-  | "onRemoveItem"
+    TokenizedInputBaseProps<Item>,
+    | "activeIndices"
+    | "focused"
+    | "highlightedIndex"
+    | "helpers"
+    | "onRemoveItem"
   > {
   Tooltip?: ComponentType;
   delimiter?: string | Array<string>;

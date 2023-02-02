@@ -8,13 +8,13 @@ export type ContactActionProps = ButtonProps & {
   tooltipProps?: TooltipProps;
 } & (
     | {
-      label: string;
-      icon?: ComponentType<IconProps>;
-    }
+        label: string;
+        icon?: ComponentType<IconProps>;
+      }
     | {
-      label?: string;
-      icon: ComponentType<IconProps>;
-    }
+        label?: string;
+        icon: ComponentType<IconProps>;
+      }
   );
 
 export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(

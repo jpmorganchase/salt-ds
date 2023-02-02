@@ -1,9 +1,4 @@
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  useId,
-} from "@salt-ds/core";
+import { Button, ButtonProps, makePrefixer, useId } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
@@ -14,7 +9,7 @@ import {
 } from "react";
 import { Dropdown, DropdownProps } from "../../dropdown";
 import { ListItem, ListItemType } from "../../list";
-import { Tooltip } from '../../tooltip';
+import { Tooltip } from "../../tooltip";
 
 import { useCalendarContext } from "./CalendarContext";
 
@@ -72,7 +67,7 @@ function useCalendarNavigation() {
         );
         newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
           Math.abs(monthDiff(currentMonth, newMonth)) <
-            Math.abs(monthDiff(closestMonth, newMonth))
+          Math.abs(monthDiff(closestMonth, newMonth))
             ? currentMonth
             : closestMonth
         );
