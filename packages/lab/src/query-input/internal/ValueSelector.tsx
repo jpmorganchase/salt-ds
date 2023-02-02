@@ -8,8 +8,8 @@ import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import { CategoryList } from "./CategoryList";
 import { SearchList } from "./SearchList";
 import { ValueList } from "./ValueList";
-import { useFloatingUI } from "../../popper";
 import { useWindow } from "../../window";
+import { useFloatingUI } from "../../popper";
 import { Portal } from "../../portal";
 
 const withBaseName = makePrefixer("saltQueryInputValueSelector");

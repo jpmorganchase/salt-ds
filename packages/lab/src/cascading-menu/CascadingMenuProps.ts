@@ -2,8 +2,8 @@ import { IconProps } from "@salt-ds/icons";
 import {
   ComponentType,
   HTMLAttributes,
-  MouseEvent,
   ReactNode,
+  MouseEvent,
   KeyboardEvent,
 } from "react";
 import { ItemToStringFunction } from "../list-deprecated";

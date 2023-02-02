@@ -1,6 +1,6 @@
-import { Rect } from "./dragDropTypes";
-import { forwardRef } from "react";
 import { Portal } from "../../portal";
+import { forwardRef } from "react";
+import { Rect } from "./dragDropTypes";
 
 import "./DropIndicator.css";
 

@@ -1,4 +1,3 @@
-import { ValidationStatus } from "@salt-ds/core";
 import { Tooltip, TooltipProps } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { ComponentMeta, Story } from "@storybook/react";
@@ -10,7 +9,7 @@ export default {
 } as ComponentMeta<typeof Tooltip>;
 
 const IconWithTooltip = (props: {
-  status?: ValidationStatus;
+  status?: TooltipProps["status"];
   content?: TooltipProps["content"];
 }) => {
   const { content = "hello", status, ...rest } = props;
