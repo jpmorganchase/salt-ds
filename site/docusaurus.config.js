@@ -161,6 +161,7 @@ const config = {
         src: "../packages/core/src/**/*.css",
       },
     ],
+    require.resolve("docusaurus-lunr-search"),
   ],
 };
 
