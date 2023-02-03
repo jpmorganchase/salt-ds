@@ -67,7 +67,6 @@ export function useTooltip(props?: UseTooltipProps) {
     onOpenChange?.(open);
   };
 
-  const middleware = [offset(8), flip(), shift(), arrow({ element: arrowRef })];
   const {
     floating,
     reference,
@@ -81,7 +80,7 @@ export function useTooltip(props?: UseTooltipProps) {
     open,
     onOpenChange: handleOpenChange,
     placement: placementProp,
-    middleware,
+    middleware: [offset(8), flip(), shift(), arrow({ element: arrowRef })],
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([

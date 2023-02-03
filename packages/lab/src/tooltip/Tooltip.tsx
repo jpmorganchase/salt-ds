@@ -20,10 +20,7 @@ import { Portal, PortalProps } from "../portal";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 
-// Keep in order of preference. First items are used as default
-
 const withBaseName = makePrefixer("saltTooltip");
-const defaultIconProps = { size: 1, className: withBaseName("icon") };
 
 export interface TooltipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
@@ -80,7 +77,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const {
       id,
       children,
-      className: classNameProp,
+      className,
       container,
       disabled,
       disablePortal,
@@ -109,7 +106,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     const { ref: tooltipRef, ...restTooltipProps } = getTooltipProps();
 
-    const { ref: triggerRefHook, ...restTrigger } = getTriggerProps();
+    const { ref: triggerRefHook, ...restTriggerProps } = getTriggerProps();
 
     const triggerRefMerged = useForkRef(
       triggerRef,
@@ -126,17 +123,17 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             id={id}
           >
             <div
-              className={clsx(
-                withBaseName(),
-                withBaseName(status),
-                classNameProp
-              )}
+              className={clsx(withBaseName(), withBaseName(status), className)}
               ref={tooltipRef as RefObject<HTMLDivElement>}
               {...restTooltipProps}
             >
               <div className={withBaseName("inner")}>
                 {!hideIcon && (
-                  <StatusIndicator status={status} {...defaultIconProps} />
+                  <StatusIndicator
+                    status={status}
+                    size={1}
+                    className={withBaseName("icon")}
+                  />
                 )}
                 <span className={withBaseName("content")}>{content}</span>
               </div>
@@ -148,7 +145,10 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         )}
 
         {children &&
-          cloneElement(children, { ref: triggerRefMerged, ...restTrigger })}
+          cloneElement(children, {
+            ref: triggerRefMerged,
+            ...restTriggerProps,
+          })}
       </>
     );
   }
