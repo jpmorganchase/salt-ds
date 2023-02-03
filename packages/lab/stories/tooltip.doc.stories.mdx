@@ -25,12 +25,6 @@ A Tooltip provides guidance to the user when something requires more explanation
   <Story id="lab-tooltip--default" />
 </Canvas>
 
-## API
-
-```
-import { Tooltip } from "@salt-ds/lab";
-```
-
 ## Features
 
 ### Status
@@ -56,7 +50,7 @@ Use the `status` prop to choose between `error`, `warning`, `success` and `info`
 
 ### Hide arrow
 
-Use `hideArrow` prop if you'd like to display the tooltip without arrow tip. Defaults to false
+Use `hideArrow` prop if you'd like to display the tooltip without arrow tip. Defaults to `false`.
 
 <Canvas>
   <Story name="Tooltip hideArrow" decorators={[withFlexGap]}>
@@ -68,7 +62,7 @@ Use `hideArrow` prop if you'd like to display the tooltip without arrow tip. Def
 
 ### Hide icon
 
-Use `hideIcon` prop if you'd like to display the tooltip without state icon. Defaults to false
+Use `hideIcon` prop if you'd like to display the tooltip without state icon. Defaults to `false`.
 
 <Canvas>
   <Story name="Tooltip hideIcon" decorators={[withFlexGap]}>
@@ -132,7 +126,7 @@ Use the `placement` prop to position the tooltip. Defaults to `right`. The toolt
 
 ### Delay before shown
 
-Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults to 300ms
+Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults to 300ms.
 
 <Canvas>
   <Story name="Tooltip enterDelay" decorators={[withFlexGap]}>
@@ -148,14 +142,26 @@ Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults 
   </Story>
 </Canvas>
 
-## Props
+## Configuring Tooltip
+
+### API
+
+```
+import { Tooltip } from "@salt-ds/lab";
+```
+
+### Props
 
 <ArgsTable of={Tooltip} />
 
-## CSS Class
+### CSS Class
 
 <CSSClassTable of={Tooltip} />
 
-## Characteristics Used
+### Characteristics Used
 
 <CharacteristicUsage of={Tooltip} />
+
+## Accessibility
+
+We do not recommend that you include interactive elements within a tooltip as this is inaccessible since tooltips do not receive focus. If you need to include focusable content like buttons or links, consider using the overlay component.
