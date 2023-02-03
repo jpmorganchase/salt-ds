@@ -48,7 +48,6 @@ const ProgressWithControls = ({
   );
 };
 
-
 const LinearExamples = () => (
   <Panel style={{ height: "unset", marginLeft: 20 }}>
     <div style={{ display: "flex" }}>
@@ -123,9 +122,7 @@ export const Disabled: ComponentStory<typeof LinearProgress> = () => (
   </div>
 );
 
-export const Indeterminate: ComponentStory<
-  typeof LinearProgress
-> = () => (
+export const Indeterminate: ComponentStory<typeof LinearProgress> = () => (
   <div>
     <div>
       <h3>size=small</h3>
@@ -142,9 +139,9 @@ export const Indeterminate: ComponentStory<
   </div>
 );
 
-export const ProgressingValue: ComponentStory<
-  typeof LinearProgress
-> = () => <ProgressWithControls ProgressComponent={LinearProgress} />;
+export const ProgressingValue: ComponentStory<typeof LinearProgress> = () => (
+  <ProgressWithControls ProgressComponent={LinearProgress} />
+);
 
 export const LinearQuery: ComponentStory<typeof LinearProgress> = () => (
   <div>

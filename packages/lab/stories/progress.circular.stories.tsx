@@ -137,9 +137,7 @@ export const Disabled: ComponentStory<typeof CircularProgress> = () => (
   </div>
 );
 
-export const Indeterminate: ComponentStory<
-  typeof CircularProgress
-> = () => (
+export const Indeterminate: ComponentStory<typeof CircularProgress> = () => (
   <div style={{ display: "flex" }}>
     <div>
       <h3>size=small</h3>
@@ -171,13 +169,11 @@ export const Indeterminate: ComponentStory<
   </div>
 );
 
-export const ProgressingValue: ComponentStory<
-  typeof CircularProgress
-> = () => <ProgressWithControls ProgressComponent={CircularProgress} />;
+export const ProgressingValue: ComponentStory<typeof CircularProgress> = () => (
+  <ProgressWithControls ProgressComponent={CircularProgress} />
+);
 
-export const ShowNoInfo: ComponentStory<
-  typeof CircularProgress
-> = () => (
+export const ShowNoInfo: ComponentStory<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" showInfo={false} value={38} />
 );
 
