@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import clsx from "clsx";
 import { useThemeConfig } from "@docusaurus/theme-common";
 import {
@@ -45,8 +45,6 @@ export default function NavbarContent() {
   const items = useNavbarItems();
   const [leftItems, rightItems] = splitNavbarItems(items);
 
-  const searchBarItem = items.find((item) => item.type === "search");
-
   const isMobileView = useIsMobileView();
 
   const rightItemsNoLabel = useMemo(
@@ -71,11 +69,9 @@ export default function NavbarContent() {
         <>
           <NavbarItems items={responsiveRightItems} />
           <NavbarColorModeToggle className={styles.colorModeToggle} />
-          {searchBarItem && (
-            <NavbarSearch>
-              <SearchBar />
-            </NavbarSearch>
-          )}
+          <NavbarSearch>
+            <SearchBar />
+          </NavbarSearch>
         </>
       }
     />
