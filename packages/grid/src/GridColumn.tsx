@@ -105,7 +105,7 @@ export interface GridColumnProps<T = any> {
    * */
   getValue?: (rowData: T) => any;
   /**
-   * Cell validation status getter. Should return one of the known validation status names.
+   * Cell validation status getter. Should return one of the known validation status names: "none" | "error" | "warning"
    * If you require a custom validation status, you can achieve that by providing a custom cell component.
    * */
   getValidationStatus?: GridCellProps<T>["getValidationStatus"];
