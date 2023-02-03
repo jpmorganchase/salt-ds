@@ -9,7 +9,7 @@ export default {
   component: Badge,
 } as ComponentMeta<typeof Badge>;
 
-export const AllBadges: ComponentStory<typeof Badge> = () => {
+export const All: ComponentStory<typeof Badge> = () => {
   return (
     <div style={{ display: "inline-block" }}>
       <div>
@@ -41,18 +41,30 @@ const Template: ComponentStory<typeof Badge> = (args) => {
   return <Badge {...args} />;
 };
 
-export const DefaultBadge = Template.bind({});
-
-DefaultBadge.args = {
+export const Default = Template.bind({});
+Default.args = {
   max: 1000,
   badgeContent: 1,
   children: <SettingsSolidIcon />,
 };
 
-export const WordsBadge = Template.bind({});
-
-WordsBadge.args = {
+export const Words = Template.bind({});
+Words.args = {
   max: 1000,
   badgeContent: 1,
+  children: "Lorem Ipsum",
+};
+
+
+export const Text = Template.bind({});
+Text.args = {
+  badgeContent: "Text",
+  children: "Lorem Ipsum",
+};
+
+export const MaxNumber = Template.bind({});
+MaxNumber.args = {
+  max: 99,
+  badgeContent: 150,
   children: "Lorem Ipsum",
 };

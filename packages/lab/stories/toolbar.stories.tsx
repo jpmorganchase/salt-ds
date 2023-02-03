@@ -51,7 +51,7 @@ export default {
 
 const statusData = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 
-export const DefaultToolbar: Story = () => {
+export const Default: Story = () => {
   const typeData = ["Open", "Close", "Discarded", "Resolved"];
   const rangeData = [
     "Today",

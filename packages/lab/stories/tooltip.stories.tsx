@@ -29,7 +29,7 @@ export const Default: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const OpenTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Open: Story<TooltipProps & UseTooltipProps> = (props) => {
   const { getTriggerProps, getTooltipProps } = useTooltip(props);
 
   const openProps = getTooltipProps({
@@ -46,7 +46,7 @@ export const OpenTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const ScrollTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Scroll: Story<TooltipProps & UseTooltipProps> = (props) => {
   const handleScrollButton = useCallback((node: HTMLButtonElement | null) => {
     node?.scrollIntoView({ block: "center", inline: "center" });
   }, []);
@@ -82,7 +82,7 @@ ScrollTooltip.args = {
   placement: "top",
 };
 
-export const ErrorTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Error: Story<TooltipProps & UseTooltipProps> = (props) => {
   const { status = "error", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
@@ -94,7 +94,7 @@ export const ErrorTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const WarningTooltip: Story<TooltipProps & UseTooltipProps> = (
+export const Warning: Story<TooltipProps & UseTooltipProps> = (
   props
 ) => {
   const { status = "warning", ...rest } = props;
@@ -108,7 +108,7 @@ export const WarningTooltip: Story<TooltipProps & UseTooltipProps> = (
   );
 };
 
-export const SuccessTooltip: Story<TooltipProps & UseTooltipProps> = (
+export const Success: Story<TooltipProps & UseTooltipProps> = (
   props
 ) => {
   const { status = "success", ...rest } = props;

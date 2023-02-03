@@ -8,7 +8,7 @@ export default {
   component: Scrim,
 } as ComponentMeta<typeof Scrim>;
 
-export const DefaultScrim: ComponentStory<typeof Scrim> = () => {
+export const Default: ComponentStory<typeof Scrim> = () => {
   const [open, setOpen] = useState(false);
   const handleRequestOpen = () => {
     setOpen(true);
@@ -26,7 +26,7 @@ export const DefaultScrim: ComponentStory<typeof Scrim> = () => {
   );
 };
 
-export const ClosableScrim: ComponentStory<typeof Scrim> = () => {
+export const Closable: ComponentStory<typeof Scrim> = () => {
   const [open, setOpen] = useState(false);
   const handleRequestOpen = () => {
     setOpen(true);
@@ -52,7 +52,7 @@ export const ClosableScrim: ComponentStory<typeof Scrim> = () => {
   );
 };
 
-export const ScrimWithContentStatus: ComponentStory<typeof Scrim> = () => {
+export const WithContentStatus: ComponentStory<typeof Scrim> = () => {
   return (
     <Scrim aria-label="Example Scrim" open>
       <ContentStatus status="loading" />
@@ -60,7 +60,7 @@ export const ScrimWithContentStatus: ComponentStory<typeof Scrim> = () => {
   );
 };
 
-export const ScrimContainer: ComponentStory<typeof Scrim> = () => {
+export const WithContainer: ComponentStory<typeof Scrim> = () => {
   const [open, setOpen] = useState(false);
   const parentRef = useRef(null);
 

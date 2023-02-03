@@ -12,6 +12,11 @@ const Template: ComponentStory<typeof Logo> = (args) => {
   return <Logo {...args} />;
 };
 
+export const Default = Template.bind({});
+DefaultLogo.args = {
+  src: PlaceholderLogo as string,
+};
+
 export const FeatureLogo = Template.bind({});
 
 FeatureLogo.args = {
@@ -24,9 +29,4 @@ FeatureLogo.argTypes = {
   appTitle: { control: { type: "text" } },
   ImageProps: { table: { disable: true } },
   TitleProps: { table: { disable: true } },
-};
-
-export const DefaultLogo = Template.bind({});
-DefaultLogo.args = {
-  src: PlaceholderLogo as string,
 };

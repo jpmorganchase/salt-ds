@@ -27,7 +27,7 @@ export default {
   component: Dropdown,
 };
 
-export const DefaultDropdown: Story<DropdownProps> = (props) => {
+export const Default: Story<DropdownProps> = (props) => {
   const handleChange: SelectionChangeHandler = (event, selectedItem) => {
     console.log("selection changed", selectedItem);
     props.onSelectionChange?.(event, selectedItem);
@@ -41,7 +41,7 @@ export const DefaultDropdown: Story<DropdownProps> = (props) => {
   );
 };
 
-export const MultiSelectDropdownExample: Story<
+export const MultiSelect: Story<
   DropdownProps<string, "multiple">
 > = (props) => {
   const handleChange: SelectionChangeHandler<string, "multiple"> = (
@@ -222,7 +222,7 @@ export const ConstReadonlySource: Story<DropdownProps> = (props) => (
   <Dropdown {...props} defaultSelected={constArray[0]} source={constArray} />
 );
 
-export const DisabledDropdownList: Story<DropdownProps> = (props) => {
+export const DisabledList: Story<DropdownProps> = (props) => {
   const handleChange: SelectionChangeHandler = (event, selectedItem) => {
     console.log("selection changed", selectedItem);
     props.onSelectionChange?.(event, selectedItem);
@@ -239,7 +239,7 @@ export const DisabledDropdownList: Story<DropdownProps> = (props) => {
   );
 };
 
-export const ControlledOpenDropdown: Story<DropdownProps> = (props) => {
+export const ControlledOpen: Story<DropdownProps> = (props) => {
   const [isOpen, setIsOpen] = useState(true);
   const handleChange: any = (open: boolean) => {
     console.log({ openChanged: open });
@@ -267,7 +267,7 @@ export const ControlledOpenDropdown: Story<DropdownProps> = (props) => {
   );
 };
 
-export const FullyControlledDropdown: Story<DropdownProps> = (props) => {
+export const FullyControlled: Story<DropdownProps> = (props) => {
   const [open, setOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);

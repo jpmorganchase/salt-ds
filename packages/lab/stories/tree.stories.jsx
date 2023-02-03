@@ -106,7 +106,22 @@ const source = [
   },
 ];
 
-export const CypressTree = () => {
+export const Default = () => {
+  const handleChange = (e, selected) => {
+    console.log(`selected ${selected}`);
+  };
+  return (
+    <Tree
+      height={800}
+      onSelectionChange={handleChange}
+      selection="checkbox"
+      source={groupByInitialLetter(usa_states_cities, "groups-only")}
+      width={350}
+    />
+  );
+};
+
+export const Cypress = () => {
   const handleSelectionChange = (evt, selected) => {
     console.log(`selectionChange`, { selected });
   };
@@ -123,21 +138,6 @@ export const CypressTree = () => {
   );
 };
 
-export const DefaultTree = () => {
-  const handleChange = (e, selected) => {
-    console.log(`selected ${selected}`);
-  };
-  return (
-    <Tree
-      height={800}
-      onSelectionChange={handleChange}
-      selection="checkbox"
-      source={groupByInitialLetter(usa_states_cities, "groups-only")}
-      width={350}
-    />
-  );
-};
-
 const iconTreeStyle = `
   .arrow-toggle {
     --saltTree-toggle-collapse: var(--svg-triangle-right);
@@ -145,6 +145,33 @@ const iconTreeStyle = `
     --saltTree-node-expanded-transform: rotate(45deg) translate(1px, 1px);
    }
 `;
+
+export const SimpleTree = () => {
+  const source = [
+    {
+      label: "Fruits",
+      childNodes: [
+        { label: "Oranges" },
+        { label: "Pineapple" },
+        {
+          label: "Apples",
+          childNodes: [
+            { label: "Macintosh" },
+            { label: "Granny Smith" },
+            { label: "Fuji" },
+          ],
+        },
+        { label: "Bananas" },
+        { label: "Pears" },
+      ],
+    },
+    { label: "Vegatables" },
+    { label: "Grain" },
+  ];
+
+  return <Tree groupSelection="single" source={source} />;
+};
+
 
 export const SimpleTreeIcons = () => {
   const handleChange = (e, selected) => {
@@ -199,29 +226,3 @@ export const SimpleTreeIcons = () => {
 //     </div>
 //   );
 // };
-
-export const SimpleTree = () => {
-  const source = [
-    {
-      label: "Fruits",
-      childNodes: [
-        { label: "Oranges" },
-        { label: "Pineapple" },
-        {
-          label: "Apples",
-          childNodes: [
-            { label: "Macintosh" },
-            { label: "Granny Smith" },
-            { label: "Fuji" },
-          ],
-        },
-        { label: "Bananas" },
-        { label: "Pears" },
-      ],
-    },
-    { label: "Vegatables" },
-    { label: "Grain" },
-  ];
-
-  return <Tree groupSelection="single" source={source} />;
-};
