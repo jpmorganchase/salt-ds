@@ -47,4 +47,4 @@ const CarouselExample: ComponentStory<typeof Carousel> = (args) => {
   );
 };
 export const Basic = CarouselExample.bind({});
-BasicCarousel.args = {};
+Basic.args = {};
