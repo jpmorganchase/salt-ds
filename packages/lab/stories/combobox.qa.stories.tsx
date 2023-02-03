@@ -5,7 +5,7 @@ import { ComboBox, FormField } from "@salt-ds/lab";
 import { usa_states } from "./list.data";
 
 export default {
-  title: "Lab/Combobox/QA",
+  title: "Lab/Combo Box/QA",
   component: ComboBox,
 } as ComponentMeta<typeof ComboBox>;
 

@@ -15,7 +15,7 @@ import {
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Lab/ToggleButton",
+  title: "Lab/Toggle Button",
   component: ToggleButton,
   argTypes: {
     onChange: { action: "changed" },
