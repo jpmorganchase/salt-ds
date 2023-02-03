@@ -1,0 +1,61 @@
+.docs-wrapper .main-wrapper {
+  background-image: url(@site/static/img/background_gradient.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+
+.docs-wrapper .container .col {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  height: 100%;
+}
+
+.docs-wrapper main .container {
+  max-width: none;
+  /* using !important here is not ideal but this is required to override docusauros own !important style */
+  padding-bottom: 0 !important;
+}
+
+.docs-page-container {
+  background-color: var(--salt-color-white);
+  color: var(--salt-text-primary-foreground);
+  font-size: var(--salt-text-fontSize);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.docs-page-content {
+  --ifm-list-margin: calc(var(--salt-size-unit) * 2);
+  padding: calc(var(--salt-size-unit) * 3);
+  max-width: var(--max-content-width);
+}
+
+.docs-page-content.withToc {
+  width: calc(100% - 282px);
+}
+
+main .container > div > div > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.container .row {
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .docs-page-content,
+  .docs-page-content.withToc {
+    width: 100%;
+  }
+
+  .docs-page-content {
+    padding: calc(var(--salt-size-unit) * 2);
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "docusaurus-css-variable-docgen-plugin",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "glob": "^8.0.0"
+  }
+}

@@ -1,0 +1,25 @@
+:root {
+  --ifm-color-primary: var(--salt-text-primary-foreground);
+  --ifm-font-family-base: var(--salt-typography-fontFamily);
+  --ifm-link-decoration: underline;
+  --card-background: #10212b;
+  --max-container-width: 1920px;
+  --max-content-width: min(var(--max-container-width), 120ch);
+  --site-navigable-fontWeight-active: var(--salt-typography-fontWeight-bold);
+}
+
+::selection {
+  background: var(--salt-text-background-selected);
+}
+
+.main-wrapper {
+  --doc-sidebar-hidden-width: 0;
+  background-color: var(--salt-color-gray-900);
+  font-size: var(--salt-text-fontSize);
+}
+
+@media screen and (max-width: 1280px) {
+  :root {
+    --ifm-navbar-height: 76px;
+  }
+}
