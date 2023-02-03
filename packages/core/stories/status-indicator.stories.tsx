@@ -34,9 +34,7 @@ const AllStatusIndicatorsStory: ComponentStory<typeof StatusIndicator> = (
 export const All = AllStatusIndicatorsStory.bind({});
 All.argTypes = { status: { control: false } };
 
-const Template: ComponentStory<typeof StatusIndicator> = (
-  args
-) => {
+const Template: ComponentStory<typeof StatusIndicator> = (args) => {
   return <StatusIndicator {...args} />;
 };
 
