@@ -15,7 +15,7 @@ export default {
       control: { type: "select" },
     },
     separators: {
-      options: ["start", "center", "end", true],
+      options: ["start", "center", "end", true, false, undefined],
       control: { type: "select" },
     },
     gap: {

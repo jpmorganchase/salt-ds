@@ -36,7 +36,7 @@ export type StackLayoutProps<T extends ElementType> =
       /**
        * Adds a separator between elements, default is false.
        */
-      separators?: LayoutSeparator | true | false;
+      separators?: LayoutSeparator | boolean;
     }
   >;
 
@@ -66,21 +66,22 @@ export const StackLayout: StackLayoutComponent = forwardRef(
     };
     return (
       <FlexLayout
-        className={clsx(className, withBaseName(), {
-          [withBaseName("separator")]: separatorAlignment,
-          [withBaseName(
-            `separator-${flexDirection || "row"}-${
-              separatorAlignment || "center"
-            }`
-          )]: separatorAlignment,
-          [withBaseName(`separator-${flexDirection || "row"}`)]:
-            separatorAlignment,
-        })}
+        className={clsx(
+          className,
+          withBaseName(),
+          withBaseName(flexDirection),
+          {
+            [withBaseName("separator")]: !!separatorAlignment,
+            [separatorAlignment
+              ? withBaseName(`separator-${separatorAlignment}`)
+              : ""]: separatorAlignment,
+          }
+        )}
         ref={ref}
         direction={direction}
         style={stackLayoutStyles}
         wrap={false}
-        gap={gap}
+        gap={flexGap}
         {...rest}
       >
         {children}
