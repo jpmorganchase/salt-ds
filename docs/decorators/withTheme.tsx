@@ -2,10 +2,10 @@ import { DecoratorFn } from "@storybook/react";
 import {
   getCharacteristicValue,
   ModeValues,
+  Panel,
   SaltProvider,
   useTheme,
 } from "@salt-ds/core";
-import { Panel } from "@salt-ds/lab";
 import { useEffect } from "react";
 
 // Modified from storybook background addon

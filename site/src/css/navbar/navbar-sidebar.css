@@ -1,0 +1,40 @@
+.navbar-sidebar .navbar-sidebar__item {
+  --sidebar-border-left-width: 4px;
+  --sidebar-border-left: var(--sidebar-border-left-width) solid var(--salt-navigable-indicator-active);
+
+  padding: 0;
+}
+
+.navbar-sidebar .navbar-sidebar__item .menu__list {
+  background-color: var(--salt-color-gray-800);
+}
+
+.navbar-sidebar .navbar-sidebar__item .menu__list .menu__link {
+  --ifm-menu-link-padding-vertical: var(--salt-size-unit);
+  --ifm-menu-link-padding-horizontal: calc((var(--salt-size-unit) * 3) - var(--sidebar-border-left-width));
+
+  border-radius: 0;
+}
+
+.navbar-sidebar .navbar-sidebar__item .menu__link--active:not(.menu__link--sublist) {
+  border-left: var(--sidebar-border-left);
+}
+
+.navbar-sidebar .header-github-link svg {
+  display: none;
+}
+
+.navbar-sidebar .header-github-link {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: var(--salt-size-unit);
+}
+
+.navbar-sidebar .navbar-sidebar__back {
+  font-size: var(--salt-text-fontSize);
+  padding: var(--salt-size-unit);
+  margin: 0;
+  position: unset;
+  width: 100%;
+}

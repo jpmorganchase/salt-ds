@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, SaltProvider } from "@salt-ds/core";
-import { CircularProgress, LinearProgress, Panel } from "@salt-ds/lab";
+import { Button, SaltProvider, Panel } from "@salt-ds/core";
+import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";
