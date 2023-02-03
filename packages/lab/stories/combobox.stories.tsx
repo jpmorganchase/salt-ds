@@ -12,7 +12,7 @@ import {
 import { ComponentMeta, Story } from "@storybook/react";
 
 export default {
-  title: "Lab/Combobox",
+  title: "Lab/Combo Box",
   component: ComboBox,
 } as ComponentMeta<typeof ComboBox>;
 

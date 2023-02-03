@@ -18,7 +18,7 @@ import { IndexedListItemProps } from "../src/list-deprecated";
 import { CloseIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/ComboBox Deprecated",
+  title: "Lab/Combo Box Deprecated",
   component: ComboBoxDeprecated,
 } as ComponentMeta<typeof ComboBoxDeprecated>;
 
