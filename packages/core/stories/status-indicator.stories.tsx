@@ -18,15 +18,6 @@ export default {
   },
 } as ComponentMeta<typeof StatusIndicator>;
 
-const DefaultStatusIndicatorStory: ComponentStory<typeof StatusIndicator> = (
-  args
-) => {
-  return <StatusIndicator {...args} />;
-};
-
-export const DefaultStatusIndicator = DefaultStatusIndicatorStory.bind({});
-DefaultStatusIndicator.args = { status: status[3] };
-
 const AllStatusIndicatorsStory: ComponentStory<typeof StatusIndicator> = (
   args
 ) => {
@@ -40,5 +31,14 @@ const AllStatusIndicatorsStory: ComponentStory<typeof StatusIndicator> = (
     </FlowLayout>
   );
 };
-export const AllStatusIndicators = AllStatusIndicatorsStory.bind({});
-AllStatusIndicators.argTypes = { status: { control: false } };
+export const All = AllStatusIndicatorsStory.bind({});
+All.argTypes = { status: { control: false } };
+
+const Template: ComponentStory<typeof StatusIndicator> = (
+  args
+) => {
+  return <StatusIndicator {...args} />;
+};
+
+export const Default = Template.bind({});
+Default.args = { status: status[3] };

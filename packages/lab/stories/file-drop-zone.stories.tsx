@@ -17,7 +17,6 @@ export default {
   component: FileDropZone,
 } as ComponentMeta<typeof FileDropZone>;
 
-
 export const All: ComponentStory<typeof FileDropZone> = ({
   onFilesAccepted,
   ...args

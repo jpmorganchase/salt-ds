@@ -13,7 +13,11 @@ export const Primary: ComponentStory<typeof Link> = () => {
 };
 
 export const Secondary: ComponentStory<typeof Link> = () => {
-  return <Link variant="secondary" href="https://www.google.com">Link to URL</Link>;
+  return (
+    <Link variant="secondary" href="https://www.google.com">
+      Link to URL
+    </Link>
+  );
 };
 
 export const TargetBlank: ComponentStory<typeof Link> = () => {
@@ -54,19 +58,19 @@ export const Small: ComponentStory<typeof Link> = () => {
 
 export const StyleAs: ComponentStory<typeof Link> = () => {
   return (
-<Link href="#root" styleAs="label">
-This is a styleAs label example
-</Link>
+    <Link href="#root" styleAs="label">
+      This is a styleAs label example
+    </Link>
   );
 };
 
 export const Truncation: ComponentStory<typeof Link> = () => {
   return (
-<div style={{ width: 150 }}>
-<Link href="#root" maxRows={1}>
-  This is a truncation example
-</Link>
-</div>
+    <div style={{ width: 150 }}>
+      <Link href="#root" maxRows={1}>
+        This is a truncation example
+      </Link>
+    </div>
   );
 };
 

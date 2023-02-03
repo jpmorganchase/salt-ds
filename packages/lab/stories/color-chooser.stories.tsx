@@ -42,9 +42,7 @@ export const Default: ComponentStory<typeof ColorChooser> = () => {
 
 // ## Color Chooser With Alpha Disabled
 
-export const WithAlphaDisabled: ComponentStory<
-  typeof ColorChooser
-> = () => {
+export const WithAlphaDisabled: ComponentStory<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#D1F4C9");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
@@ -68,12 +66,9 @@ export const WithAlphaDisabled: ComponentStory<
   );
 };
 
-
 // ## Color Picker With Default Alpha
 
-export const WithDefaultAlpha: ComponentStory<
-  typeof ColorChooser
-> = () => {
+export const WithDefaultAlpha: ComponentStory<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#8224B1");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
@@ -100,9 +95,7 @@ export const WithDefaultAlpha: ComponentStory<
 
 // ## Color Chooser With Null Default Color
 
-export const WithNullDefaultColor: ComponentStory<
-  typeof ColorChooser
-> = () => {
+export const WithNullDefaultColor: ComponentStory<typeof ColorChooser> = () => {
   const [selectedColor, setSelectedColor] = useState<Color | undefined>();
   const onSelect = useCallback(
     (color?: Color) => {
@@ -120,9 +113,7 @@ export const WithNullDefaultColor: ComponentStory<
 
 // ## Color Chooser With Custom Colors
 
-export const WithCustomColors: ComponentStory<
-  typeof ColorChooser
-> = () => {
+export const WithCustomColors: ComponentStory<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#C9AAF0");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(

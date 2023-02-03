@@ -95,14 +95,3 @@ export const Interactable: ComponentStory<typeof Card> = () => (
     </Card>
   </Link>
 );
-
-export const All: ComponentStory<typeof Card> = () => (
-  <div style={{ marginTop: -200 }}>
-    <SaltProvider mode="light">
-      <Examples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <Examples />
-    </SaltProvider>
-  </div>
-);

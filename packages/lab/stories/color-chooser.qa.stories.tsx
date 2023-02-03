@@ -8,7 +8,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { useState } from "react";
 
 export default {
-  title: "Lab/ColorChooser/QA",
+  title: "Lab/Color Chooser/QA",
   component: ColorChooser,
 } as ComponentMeta<typeof ColorChooser>;
 

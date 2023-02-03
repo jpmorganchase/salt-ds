@@ -13,7 +13,7 @@ const Template: ComponentStory<typeof Logo> = (args) => {
 };
 
 export const Default = Template.bind({});
-DefaultLogo.args = {
+Default.args = {
   src: PlaceholderLogo as string,
 };
 

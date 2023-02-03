@@ -76,7 +76,7 @@ export const Scroll: Story<TooltipProps & UseTooltipProps> = (props) => {
     </div>
   );
 };
-ScrollTooltip.args = {
+Scroll.args = {
   title: "I am a tooltip",
   open: true,
   placement: "top",
@@ -94,9 +94,7 @@ export const Error: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const Warning: Story<TooltipProps & UseTooltipProps> = (
-  props
-) => {
+export const Warning: Story<TooltipProps & UseTooltipProps> = (props) => {
   const { status = "warning", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
@@ -108,9 +106,7 @@ export const Warning: Story<TooltipProps & UseTooltipProps> = (
   );
 };
 
-export const Success: Story<TooltipProps & UseTooltipProps> = (
-  props
-) => {
+export const Success: Story<TooltipProps & UseTooltipProps> = (props) => {
   const { status = "success", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 

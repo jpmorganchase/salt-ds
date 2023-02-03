@@ -18,9 +18,7 @@ export const Basic: ComponentStory<typeof ButtonBar> = () => {
   );
 };
 
-export const WithSecondaryActions: ComponentStory<
-  typeof ButtonBar
-> = () => {
+export const WithSecondaryActions: ComponentStory<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
       <ButtonBar data-testid="button-bar" stackAtBreakpoint={0}>

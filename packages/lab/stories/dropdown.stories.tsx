@@ -41,9 +41,9 @@ export const Default: Story<DropdownProps> = (props) => {
   );
 };
 
-export const MultiSelect: Story<
-  DropdownProps<string, "multiple">
-> = (props) => {
+export const MultiSelect: Story<DropdownProps<string, "multiple">> = (
+  props
+) => {
   const handleChange: SelectionChangeHandler<string, "multiple"> = (
     _e,
     items

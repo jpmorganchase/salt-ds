@@ -24,15 +24,11 @@ export default {
 } as ComponentMeta<typeof Text>;
 
 export const Primary: ComponentStory<typeof Text> = () => {
-  return (
-    <Text>This is a primary text example</Text>
-  );
+  return <Text>This is a primary text example</Text>;
 };
 
 export const Secondary: ComponentStory<typeof Text> = () => {
-  return (
-    <Text variant="secondary">This is a secondary text example</Text>
-  );
+  return <Text variant="secondary">This is a secondary text example</Text>;
 };
 
 export const Strong: ComponentStory<typeof Text> = () => {
@@ -61,9 +57,9 @@ export const StyleAs: ComponentStory<typeof Text> = () => {
 
 export const Truncation: ComponentStory<typeof Text> = () => {
   return (
-<div style={{ width: 150 }}>
-<Text maxRows={1}>This is a truncation example</Text>
-</div>
+    <div style={{ width: 150 }}>
+      <Text maxRows={1}>This is a truncation example</Text>
+    </div>
   );
 };
 

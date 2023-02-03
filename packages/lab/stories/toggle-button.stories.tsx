@@ -66,9 +66,9 @@ Disabled.args = {
   disabled: true,
 };
 
-export const WithIconAndText: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const WithIconAndText: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
 
   const handleChange: ToggleButtonGroupChangeEventHandler = (
@@ -98,9 +98,9 @@ export const WithIconAndText: ComponentStory<
   );
 };
 
-export const WithIconOnly: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const WithIconOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
   const [selectedIndexCta, setSelectedIndexCta] = useState<number>(1);
   const [selectedIndexSecondary, setSelectedIndexSecondary] =
@@ -196,9 +196,9 @@ export const WithIconOnly: ComponentStory<
   );
 };
 
-export const WithTextOnly: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const WithTextOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
 
   const handleChange: ToggleButtonGroupChangeEventHandler = (
@@ -284,9 +284,9 @@ export const VerticalWithIconAndText: ComponentStory<
   );
 };
 
-export const VerticalWithIconOnly: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const VerticalWithIconOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
   const [selectedIndexCta, setSelectedIndexCta] = useState<number>(1);
   const [selectedIndexSecondary, setSelectedIndexSecondary] =
@@ -387,9 +387,9 @@ export const VerticalWithIconOnly: ComponentStory<
   );
 };
 
-export const VerticalWithTextOnly: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const VerticalWithTextOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
 
   const handleChange: ToggleButtonGroupChangeEventHandler = (

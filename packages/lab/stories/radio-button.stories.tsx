@@ -56,8 +56,11 @@ export const All: Story = () => (
   </StoryScroller>
 );
 
-
-export const VerticalGroup = ({ title, density, name }: ExampleWithTitleProps) => (
+export const VerticalGroup = ({
+  title,
+  density,
+  name,
+}: ExampleWithTitleProps) => (
   <Panel>
     <SaltProvider density={density}>
       <RadioButtonGroup

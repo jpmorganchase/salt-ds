@@ -1,5 +1,10 @@
 import { Button, ButtonProps } from "@salt-ds/core";
-import { DownloadIcon, SearchIcon, SendIcon, SettingsSolidIcon } from "@salt-ds/icons";
+import {
+  DownloadIcon,
+  SearchIcon,
+  SendIcon,
+  SettingsSolidIcon,
+} from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -67,17 +72,17 @@ export const All: ComponentStory<typeof Button> = () => {
   };
 
   return (
-  <div style={{ display: "flex", gap: "8px" }}>
-    <Button variant={"cta"} onClick={handleClick}>
-      CTA
-    </Button>
-    <Button variant={"primary"} onClick={handleClick}>
-      Primary
-    </Button>
-    <Button variant={"secondary"} onClick={handleClick}>
-      Secondary
-    </Button>
-  </div>
+    <div style={{ display: "flex", gap: "8px" }}>
+      <Button variant={"cta"} onClick={handleClick}>
+        CTA
+      </Button>
+      <Button variant={"primary"} onClick={handleClick}>
+        Primary
+      </Button>
+      <Button variant={"secondary"} onClick={handleClick}>
+        Secondary
+      </Button>
+    </div>
   );
 };
 

@@ -172,7 +172,6 @@ export const SimpleTree = () => {
   return <Tree groupSelection="single" source={source} />;
 };
 
-
 export const SimpleTreeIcons = () => {
   const handleChange = (e, selected) => {
     console.log(`selected ${selected.join(",")}`);

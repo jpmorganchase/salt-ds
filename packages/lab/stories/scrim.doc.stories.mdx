@@ -4,7 +4,7 @@ import {
   CSSClassTable,
   CharacteristicUsage,
 } from "css-variable-docgen-components";
-import { DefaultScrim, ClosableScrim, ScrimContainer } from "./scrim.stories";
+import { Default, Closable, WithContainer } from "./scrim.stories";
 
 <Meta
   title="Documentation/Lab/Scrim"
@@ -37,7 +37,7 @@ The Scrim provides a modal experience by obscuring the underlying content. It al
 When triggered, the basic Scrim fills the application window and blocks user interaction with the underlying content, until it’s closed. It is often displayed as the backdrop to another component, as demonstrated in this example.
 
 <Canvas>
-  <Story id="lab-scrim--default-scrim" />
+  <Story id="lab-scrim--default" />
 </Canvas>
 
 ## Closable Scrim
@@ -45,7 +45,7 @@ When triggered, the basic Scrim fills the application window and blocks user int
 If required for your particular use case, you can configure the Scrim to be closable on mouse click or keyboard interaction.
 
 <Canvas>
-  <Story id="lab-scrim--closable-scrim" />
+  <Story id="lab-scrim--closable" />
 </Canvas>
 
 ## Scrim in a container
@@ -53,7 +53,7 @@ If required for your particular use case, you can configure the Scrim to be clos
 You can display a Scrim within a container such as a [Card](/docs/documentation-core-card--card) or to temporarily block interaction while the container content is loading or unavailable.
 
 <Canvas>
-  <Story id="lab-scrim--scrim-container" />
+  <Story id="lab-scrim--with-container" />
 </Canvas>
 
 # API

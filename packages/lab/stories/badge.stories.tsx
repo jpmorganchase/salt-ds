@@ -55,7 +55,6 @@ Words.args = {
   children: "Lorem Ipsum",
 };
 
-
 export const Text = Template.bind({});
 Text.args = {
   badgeContent: "Text",
