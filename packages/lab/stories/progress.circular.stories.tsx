@@ -1,12 +1,12 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, SaltProvider, Panel } from "@salt-ds/core";
+import { Button, Panel, SaltProvider } from "@salt-ds/core";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";
 
 export default {
-  title: "Lab/Progress",
+  title: "Lab/Progress/Circular",
   component: LinearProgress,
 } as ComponentMeta<typeof LinearProgress>;
 
@@ -67,7 +67,7 @@ const CircularExamples = () => (
   </Panel>
 );
 
-export const CircularAll: ComponentStory<typeof CircularProgress> = () => (
+export const All: ComponentStory<typeof CircularProgress> = () => (
   <div
     style={{
       height: "100%",
@@ -88,7 +88,7 @@ export const CircularAll: ComponentStory<typeof CircularProgress> = () => (
   </div>
 );
 
-export const CircularDefault: ComponentStory<typeof CircularProgress> = () => (
+export const Default: ComponentStory<typeof CircularProgress> = () => (
   <div style={{ display: "flex" }}>
     <div>
       <h3>size=small</h3>
@@ -105,7 +105,7 @@ export const CircularDefault: ComponentStory<typeof CircularProgress> = () => (
   </div>
 );
 
-export const CircularDisabled: ComponentStory<typeof CircularProgress> = () => (
+export const Disabled: ComponentStory<typeof CircularProgress> = () => (
   <div style={{ display: "flex" }}>
     <div>
       <h3>size=small</h3>
@@ -137,7 +137,7 @@ export const CircularDisabled: ComponentStory<typeof CircularProgress> = () => (
   </div>
 );
 
-export const CircularIndeterminate: ComponentStory<
+export const Indeterminate: ComponentStory<
   typeof CircularProgress
 > = () => (
   <div style={{ display: "flex" }}>
@@ -171,138 +171,16 @@ export const CircularIndeterminate: ComponentStory<
   </div>
 );
 
-export const CircularProgressingValue: ComponentStory<
+export const ProgressingValue: ComponentStory<
   typeof CircularProgress
 > = () => <ProgressWithControls ProgressComponent={CircularProgress} />;
 
-export const CircularShowNoInfo: ComponentStory<
+export const ShowNoInfo: ComponentStory<
   typeof CircularProgress
 > = () => (
   <CircularProgress aria-label="Download" showInfo={false} value={38} />
 );
 
-export const CircularUnit: ComponentStory<typeof CircularProgress> = () => (
+export const Unit: ComponentStory<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" unit="px" value={38} />
-);
-
-const LinearExamples = () => (
-  <Panel style={{ height: "unset", marginLeft: 20 }}>
-    <div style={{ display: "flex" }}>
-      <div>
-        <h3>size=small</h3>
-        <LinearProgress aria-label="Download" size="small" value={38} />
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>size=medium</h3>
-        <LinearProgress aria-label="Download" size="medium" value={38} />
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>size=large</h3>
-        <LinearProgress aria-label="Download" size="large" value={38} />
-      </div>
-    </div>
-  </Panel>
-);
-
-export const LinearAll: ComponentStory<typeof LinearProgress> = () => (
-  <div
-    style={{
-      height: "100%",
-      overflowY: "scroll",
-      position: "absolute",
-      width: 1200,
-      top: 0,
-      left: 0,
-      right: 0,
-    }}
-  >
-    <SaltProvider mode="light">
-      <LinearExamples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <LinearExamples />
-    </SaltProvider>
-  </div>
-);
-
-export const LinearDefault: ComponentStory<typeof LinearProgress> = () => (
-  <div>
-    <div>
-      <h3>size=small</h3>
-      <LinearProgress size="small" value={38} />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=medium</h3>
-      <LinearProgress size="medium" value={38} />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=large</h3>
-      <LinearProgress size="large" value={38} />
-    </div>
-  </div>
-);
-
-export const LinearDisabled: ComponentStory<typeof LinearProgress> = () => (
-  <div>
-    <div>
-      <h3>size=small</h3>
-      <LinearProgress disabled size="small" value={38} />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=medium</h3>
-      <LinearProgress disabled size="medium" value={38} />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=large</h3>
-      <LinearProgress disabled size="large" value={38} />
-    </div>
-  </div>
-);
-
-export const LinearIndeterminate: ComponentStory<
-  typeof LinearProgress
-> = () => (
-  <div>
-    <div>
-      <h3>size=small</h3>
-      <LinearProgress size="small" value={38} variant="indeterminate" />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=medium</h3>
-      <LinearProgress size="medium" value={38} variant="indeterminate" />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=large</h3>
-      <LinearProgress size="large" value={38} variant="indeterminate" />
-    </div>
-  </div>
-);
-
-export const LinearProgressingValue: ComponentStory<
-  typeof LinearProgress
-> = () => <ProgressWithControls ProgressComponent={LinearProgress} />;
-
-export const LinearQuery: ComponentStory<typeof LinearProgress> = () => (
-  <div>
-    <div>
-      <h3>size=small</h3>
-      <LinearProgress size="small" value={38} variant="query" />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=medium</h3>
-      <LinearProgress size="medium" value={38} variant="query" />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=large</h3>
-      <LinearProgress size="large" value={38} variant="query" />
-    </div>
-  </div>
-);
-
-export const LinearShowNoInfo: ComponentStory<typeof LinearProgress> = () => (
-  <LinearProgress showInfo={false} value={38} />
-);
-
-export const LinearUnit: ComponentStory<typeof LinearProgress> = () => (
-  <LinearProgress unit="px" value={38} />
 );
