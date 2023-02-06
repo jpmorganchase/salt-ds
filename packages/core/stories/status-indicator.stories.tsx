@@ -6,7 +6,7 @@ import {
 } from "@salt-ds/core";
 
 export default {
-  title: "Core/StatusIndicator",
+  title: "Core/Status Indicator",
   component: StatusIndicator,
   argTypes: {
     size: {

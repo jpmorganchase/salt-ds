@@ -1,23 +1,82 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
 import { useRef, useState } from "react";
-import { Link } from "@salt-ds/core";
-import { EditableLabel, Tab, Tabstrip } from "@salt-ds/lab";
-
-import { Default as DefaultTabstripStrings } from "./tabs.stories";
+import { Link, SaltProvider, Text } from "@salt-ds/core";
+import { EditableLabel, TabPanel, Tabs, Tab, Tabstrip } from "@salt-ds/lab";
 
 import {
+  Default as DefaultTabstrip,
   TabstripControlledAddNew,
   TabstripCloseDeclarative,
   TabstripLink,
   TabstripUncontrolledStringTabsAddNewWithRename,
 } from "./tabstrip.stories";
 
-<Meta title="Documentation/Lab/Tabstrip" />
+<Meta title="Documentation/Lab/Tabs" />
 
-# Tabstrip
+# Tabs and Tabstrip
 
-Tabs are defined either declaratively, by nesting `Tab` elements or via
-configuration - use of the `tabs` or `defaultTabs` props.
+There are 4 components that can be combined together to create Tabbed interfaces - `Tabs`, `TabPanel`, `Tab` and `Tabstrip`. The diagram below illustrates the relationship each of these components plays.
+
+The `Tabs` component is the recommended (and easiest) way to employ a tabbed interface in your application. It is a container that encloses the tabbed content items and associates a label with each individual item. A `Tabstrip` will be created automatically, building `Tab` items from the labels. `Tabs` will take care of layout and ensure that the appropriate `aria` attributes are populated to make the components accessible to screen readers.
+
+```jsx
+<Tabs
+  defaultTabs={["Home", "Transactions", "Loans", "Checks", "Liquidity"]}
+  enableAddTab
+  enableRenameTab
+/>
+```
+
+The simplest possible `Tabstrip` can be created by passing an array of string labels to the `Tabstrip` component.
+
+<Canvas withSource="open">
+  <SaltProvider>
+    <Tabstrip
+      source={["Home", "Transactions", "Loans", "Checks", "Liquidity"]}
+    />
+  </SaltProvider>
+</Canvas>
+
+However, you will almost certainly never do this, as the resulting code will fail to meet accessibility guidelines. Typically, a `Tabstrip` will be linked to other UI elements on a page and changing the `active` tab will also affect those linked elements. Normally, we will make visible only the element associated with the `active` tab and hide elements associated with remaining tabs. A `Tabstrip` effectively labels a number of alternative views and allows users to switch between those views. In order to make the relationships between these components clear to assistive technology software (screen readers) `id` values are used. Each `Tab` is assigned an `id` value and the target element with which each `Tab` is associated should also carry an `id` value. `aria` attributes are employed to establish a controls/labelled-by relationship between the `Tab` and target element.
+
+The easiest way to create a Tabbed view with all the appropriate `aria` relationships in place, is to use the `Tabs` component with `TabPanel`, rather than create a `Tabstrip` directly.
+
+<Canvas withSource="open">
+  <SaltProvider>
+    <Tabs>
+      <TabPanel label="Home">
+        <Text>Home Page</Text>
+      </TabPanel>
+      <TabPanel label="Transactions">
+        <Text>Transaction Page</Text>
+      </TabPanel>
+      <TabPanel label="Loans">
+        <Text>Loans Page</Text>
+      </TabPanel>
+      <TabPanel label="Checks">
+        <Text>Checks Page</Text>
+      </TabPanel>
+      <TabPanel label="Liquidity">
+        <Text>Liquidity Page</Text>
+      </TabPanel>
+    </Tabs>
+  </SaltProvider>
+</Canvas>
+
+This not only ensures that the correct `aria` attributes are applied, but also takes
+care of the display switching between active and non-active `TabPanel` elements.
+
+<br />
+
+Use of the `Tabs` component is recommended, but it isn't always possible. Sometimes the `Tabstrip` and associated elements will be in separate locations on the page. The Tabstrip may be housed within an `AppHeader` or Sidebar or other layout structure. In such cases, it is even more important that the correct `aria` attributes are applied to make the relationships between the various UI elements clear to screen readers. This requires a little more effort than when `Tabs` are employed. The example below illustrates how this can be done.
+
+<Canvas withSource="open">
+  <Story id="lab-tabstrip--default" />
+</Canvas>
+
+By creating `Tab` components, we are able to assign an id value to the `ariaControls` prop. We then assign that same id value to the active `tabpanel`. We can also establish the reverse relationship - the `aria-labelledby` attribute lives on the `tabpanel`. We can assign to this the id of the corresponding `Tab` because the id values of tabs are derived from the id value we pass to the `Tabstrip` itself. In this case, we pass the value 'ts' as the `Tabstrip` id. Our tabs will have default id values of 'ts-0', 'ts-1', 'ts-2' etc.
+
+Tabs are defined either declaratively, by nesting `Tab` elements or via configuration - use of the `tabs` or `defaultTabs` props.
 
 <br />
 

@@ -35,7 +35,7 @@ import { forwardRef, Fragment, ReactNode } from "react";
 import "./contact-details.stories.css";
 
 export default {
-  title: "Lab/ContactDetails",
+  title: "Lab/Contact Details",
   component: ContactDetails,
 };
 

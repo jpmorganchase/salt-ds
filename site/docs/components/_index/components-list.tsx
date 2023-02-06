@@ -453,7 +453,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Panel",
     description:
       'Organizes content areas in an application by providing expand/collapse behavior, its own scroll bar, and "floating" and "docked" states.',
-    devStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
@@ -589,7 +589,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-statusindicator--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-status-indicator--page",
   },
   {
     name: "Stepped Tracker",
