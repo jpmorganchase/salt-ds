@@ -1,11 +1,10 @@
 import { ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Link, SaltProvider, Panel } from "@salt-ds/core";
-import { Card } from "@salt-ds/lab";
-import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
+import { Card, Link, SaltProvider, Panel } from "@salt-ds/core";
+import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 
 export default {
-  title: "Lab/Card",
+  title: "Core/Card",
   component: Card,
 } as ComponentMeta<typeof Card>;
 
@@ -53,7 +52,18 @@ const Examples = () => (
   </>
 );
 
-export const DefaultCard: ComponentStory<typeof Card> = () => (
+export const All: ComponentStory<typeof Card> = () => (
+  <div style={{ marginTop: -200 }}>
+    <SaltProvider mode="light">
+      <Examples />
+    </SaltProvider>
+    <SaltProvider mode="dark">
+      <Examples />
+    </SaltProvider>
+  </div>
+);
+
+export const Default: ComponentStory<typeof Card> = () => (
   <Card>
     <div>
       <h1>This is Card</h1>
@@ -84,15 +94,4 @@ export const Interactable: ComponentStory<typeof Card> = () => (
       </div>
     </Card>
   </Link>
-);
-
-export const All: ComponentStory<typeof Card> = () => (
-  <div style={{ marginTop: -200 }}>
-    <SaltProvider mode="light">
-      <Examples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <Examples />
-    </SaltProvider>
-  </div>
 );

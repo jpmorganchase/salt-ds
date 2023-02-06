@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/lab";
 import { SuccessTickIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
-import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
+import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 
 export default {
   title: "Lab/Radio Button",

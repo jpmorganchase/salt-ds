@@ -1,7 +1,6 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Button } from "@salt-ds/core";
-import { Card } from "@salt-ds/lab";
+import { Button, Card } from "@salt-ds/core";
 import { WarningIcon } from "@salt-ds/icons";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";

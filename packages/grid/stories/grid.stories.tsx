@@ -1,5 +1,21 @@
 import { Story } from "@storybook/react";
-import "./grid.stories.css";
+import {
+  createContext,
+  CSSProperties,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
+import { Card, FlexLayout } from "@salt-ds/core";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  FavoriteIcon,
+} from "@salt-ds/icons";
+import { Checkbox } from "@salt-ds/lab";
 import {
   CellEditor,
   ColumnGroup,
@@ -14,30 +30,13 @@ import {
   RowSelectionRadioColumn,
 } from "../src";
 import { randomString, randomText } from "./utils";
-
-import {
-  createContext,
-  CSSProperties,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  FavoriteIcon,
-} from "@salt-ds/icons";
-import { FlexLayout } from "@salt-ds/core";
-import { Card, Checkbox } from "@salt-ds/lab";
 import {
   allLocations,
   createDummyInvestors,
   Investor,
   investorKeyGetter,
 } from "./dummyData";
+import "./grid.stories.css";
 
 export default {
   title: "Data Grid/Data Grid",
