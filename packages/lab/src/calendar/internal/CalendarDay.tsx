@@ -40,7 +40,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
 
     return (
       <Tooltip
-        hideIcon={true}
+        hideIcon
         status="error"
         content={unselectableReason}
         disabled={!unselectableReason}
