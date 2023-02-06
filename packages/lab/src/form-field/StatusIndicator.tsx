@@ -34,7 +34,7 @@ export const StatusIndicator = (props: StatusIndicatorProps) => {
 
   return (
     <TooltipComponent
-      hideIcon={true}
+      hideIcon
       status={status}
       content={tooltipText}
       placement="top"
