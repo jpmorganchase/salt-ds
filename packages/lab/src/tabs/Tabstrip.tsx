@@ -384,7 +384,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
       content.push(
         <Tooltip
           content="Active Tab cannot be moved into overflow list"
-          open={true}
+          open
           disabled={!showTooltip}
           status="warning"
           key="tooltip"
