@@ -112,8 +112,8 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 
     return (
       <Tooltip
-        disableFocusListener={true}
-        disableHoverListener={true}
+        disableFocusListener
+        disableHoverListener
         enterDelay={tooltipEnterDelay}
         leaveDelay={tooltipLeaveDelay}
         placement="top"
