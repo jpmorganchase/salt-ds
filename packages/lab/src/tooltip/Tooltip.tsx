@@ -23,7 +23,7 @@ import "./Tooltip.css";
 const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
+  extends HTMLAttributes<HTMLDivElement>,
     PortalProps,
     Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -38,7 +38,7 @@ export interface TooltipProps
   /**
    * Content displayed inside the tooltip. Can be a string or a React component.
    */
-  content: string | ReactNode;
+  content: ReactNode;
   /**
    * A string to determine the current status of the tooltip
    */
@@ -68,8 +68,10 @@ export interface TooltipProps
    * Option to remove the focus listener
    */
   disableFocusListener?: boolean;
-  // arrowProps?: HTMLAttributes<HTMLDivElement>;
-  triggerRef?: Ref<HTMLElement>;
+  /**
+   * Add triggerRef when using merged refs
+   */
+  triggerRef?: Ref<HTMLDivElement>;
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
@@ -110,7 +112,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     const triggerRefMerged = useForkRef(
       triggerRef,
-      triggerRefHook as Ref<HTMLElement>
+      triggerRefHook as Ref<HTMLDivElement>
     );
 
     return (
@@ -124,7 +126,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           >
             <div
               className={clsx(withBaseName(), withBaseName(status), className)}
-              ref={tooltipRef as RefObject<HTMLDivElement>}
+              ref={tooltipRef}
               {...restTooltipProps}
             >
               <div className={withBaseName("inner")}>

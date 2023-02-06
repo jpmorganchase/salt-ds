@@ -37,10 +37,6 @@ export interface UseTooltipProps
    * This prop won't impact the leave touch delay (`leaveTouchDelay`).
    */
   leaveDelay?: number;
-  /**
-   * to be removed
-   */
-  disabled?: boolean;
 }
 
 export function useTooltip(props?: UseTooltipProps) {
@@ -111,7 +107,7 @@ export function useTooltip(props?: UseTooltipProps) {
     },
   };
 
-  const getTooltipProps = (): HTMLProps<HTMLElement> => {
+  const getTooltipProps = (): HTMLProps<HTMLDivElement> => {
     return getFloatingProps({
       // @ts-ignore
       "data-placement": placement,
