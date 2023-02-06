@@ -1,5 +1,4 @@
 import { HTMLAttributes, Ref, SyntheticEvent } from "react";
-import { TooltipProps } from "../tooltip";
 
 export type ListSingleSelectionVariant = "default" | "deselectable";
 export type ListMultiSelectionVariant = "multiple" | "extended";
@@ -192,7 +191,4 @@ export interface ListProps<
    * @default false
    */
   tabToSelect?: boolean;
-  tooltipEnterDelay?: TooltipProps["enterDelay"];
-  tooltipLeaveDelay?: TooltipProps["leaveDelay"];
-  tooltipPlacement?: TooltipProps["placement"];
 }

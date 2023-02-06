@@ -81,16 +81,16 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
     const middleware = isDesktop
       ? []
       : [
-        flip({
-          fallbackPlacements: ["bottom-start", "top-start"],
-        }),
-        shift({ limiter: limitShift() }),
-        size({
-          apply({ availableHeight }) {
-            setMaxPopupHeight(availableHeight);
-          },
-        }),
-      ];
+          flip({
+            fallbackPlacements: ["bottom-start", "top-start"],
+          }),
+          shift({ limiter: limitShift() }),
+          size({
+            apply({ availableHeight }) {
+              setMaxPopupHeight(availableHeight);
+            },
+          }),
+        ];
 
     const { reference, floating, x, y, strategy } = useFloatingUI({
       placement,

@@ -29,10 +29,10 @@ import { Portal } from "../../portal";
 export type BaseComboBoxProps<
   Item,
   Variant extends ListSelectionVariant = "default"
-  > = Omit<
-    HTMLAttributes<HTMLDivElement>,
-    "children" | "onChange" | "onSelect" | "onFocus" | "onBlur" | "onClick"
-  > &
+> = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "children" | "onChange" | "onSelect" | "onFocus" | "onBlur" | "onClick"
+> &
   Pick<
     ListProps<Item, Variant>,
     | "displayedItemCount"
@@ -63,7 +63,7 @@ export type BaseComboBoxProps<
 
 export interface DefaultComboBoxProps<Item>
   extends BaseComboBoxProps<Item>,
-  Pick<InputProps, "onFocus" | "onBlur"> {
+    Pick<InputProps, "onFocus" | "onBlur"> {
   InputProps?: InputProps;
   initialSelectedItem?: Item;
   selectedItem?: Item;
@@ -128,16 +128,16 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
   const middleware = isDesktop
     ? []
     : [
-      flip({
-        fallbackPlacements: ["bottom-start", "top-start"],
-      }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ availableHeight }) {
-          setMaxListHeight(availableHeight);
-        },
-      }),
-    ];
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
+          },
+        }),
+      ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
     middleware,

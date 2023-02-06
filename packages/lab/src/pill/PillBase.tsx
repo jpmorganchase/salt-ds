@@ -119,8 +119,6 @@ export const PillBase = forwardRef(function PillBase(
   }: PillBaseProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
-  // const { Tooltip, enterDelay, leaveDelay, placement } = useTooltipContext();
-
   const [active, setActive] = useState(false);
   const [labelRef, ellipsis] = useEllipsisIsActive();
   const clickKeys = ["Enter", " "];
@@ -176,14 +174,7 @@ export const PillBase = forwardRef(function PillBase(
   };
 
   return (
-    <Tooltip
-      content={label}
-      disabled={!ellipsis && disabled}
-      // enterDelay={enterDelay}
-      // placement={placement}
-      // leaveDelay={leaveDelay}
-      {...TooltipProps}
-    >
+    <Tooltip content={label} disabled={!ellipsis && disabled} {...TooltipProps}>
       <Component
         aria-disabled={disabled || undefined}
         aria-roledescription={ariaRoledescription}

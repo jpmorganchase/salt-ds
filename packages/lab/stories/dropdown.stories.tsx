@@ -146,10 +146,7 @@ export const CustomRowRenderer: Story<DropdownProps> = (props) => (
   />
 );
 
-const ListItemWithTooltip: ListItemType<string> = ({
-  item = "item",
-  ...props
-}) => {
+const ListItemWithTooltip: ListItemType<string> = ({ item, ...props }) => {
   return (
     <Tooltip content={`I am a tooltip for ${item}`} {...props}>
       <ListItem>
@@ -244,7 +241,7 @@ export const ControlledOpenDropdown: Story<DropdownProps> = (props) => {
     props.onOpenChange?.(open);
   };
   const toggleDropdown = useCallback(() => {
-    console.log("toggleDropdoen isOpen ", isOpen);
+    console.log(`toggleDropdoen isOpen = ${isOpen}`);
     setIsOpen((x) => !x);
   }, [isOpen]);
   return (

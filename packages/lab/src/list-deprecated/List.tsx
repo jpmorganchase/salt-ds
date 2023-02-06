@@ -100,28 +100,12 @@ export const List = forwardRef(function List<
   props: ListProps<Item, Variant>,
   ref?: ForwardedRef<ListScrollHandles<Item>>
 ) {
-  const {
-    tooltipEnterDelay,
-    tooltipLeaveDelay,
-    tooltipPlacement,
-    ...restProps
-  } = props;
-
   const itemsRef = useRef([]);
 
   return (
-    <Tooltip
-      {...{
-        enterDelay: tooltipEnterDelay,
-        leaveDelay: tooltipLeaveDelay,
-        placement: tooltipPlacement,
-        content: "",
-      }}
-    >
-      <DescendantProvider items={itemsRef}>
-        <ListWithDescendants<Item, Variant> ref={ref} {...restProps} />
-      </DescendantProvider>
-    </Tooltip>
+    <DescendantProvider items={itemsRef}>
+      <ListWithDescendants<Item, Variant> ref={ref} {...props} />
+    </DescendantProvider>
   );
 }) as <Item = string, Variant extends ListSelectionVariant = "default">(
   props: ListProps<Item, Variant> & {
