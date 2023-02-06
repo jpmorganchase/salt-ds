@@ -3,10 +3,10 @@ import { makePrefixer, useForkRef, useIdMemo as useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { forwardCallbackProps } from "../utils";
-import { useFloatingUI } from "../popper";
-import { Portal } from "../portal";
 import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdownBase } from "./useDropdownBase";
+import { useFloatingUI } from "../popper";
+import { Portal } from "../portal";
 import { isDesktop, useWindow } from "../window";
 
 import "./Dropdown.css";
@@ -124,7 +124,6 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
           ...restTriggerProps,
           id,
           role,
-          ref: handleRootRef,
         })
       );
     };
@@ -152,7 +151,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
         className={className}
         data-testid="dropdown"
         id={idProp}
-        ref={handleFloatingRef}
+        ref={handleRootRef}
       >
         {getTriggerComponent()}
         {isOpen && (
@@ -166,6 +165,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
                 position: strategy,
                 maxHeight: maxPopupHeight ?? undefined,
               }}
+              ref={handleFloatingRef}
             >
               {getPopupComponent()}
             </Window>
