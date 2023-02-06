@@ -25,7 +25,7 @@ describe("GIVEN a Tooltip", () => {
     it("should be dismissible with Escape", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button").realPress("Tab");
+      cy.realPress("Tab");
       cy.findByRole("tooltip").should("be.visible");
 
       cy.realPress("Escape");
