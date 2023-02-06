@@ -1,8 +1,7 @@
-import { Banner, BannerProps, Panel } from "@salt-ds/lab";
-
-import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FC, ReactNode, RefAttributes, useState } from "react";
-import { Link, StackLayout, SaltProvider } from "@salt-ds/core";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Link, StackLayout, SaltProvider, Panel } from "@salt-ds/core";
+import { Banner, BannerProps } from "@salt-ds/lab";
 
 export default {
   title: "Lab/Banner",

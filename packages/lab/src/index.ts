@@ -50,7 +50,6 @@ export * from "./menu-button";
 export * from "./metric";
 export * from "./overlay";
 export * from "./pagination";
-export * from "./panel";
 export * from "./parent-child-item";
 export * from "./parent-child-layout";
 export * from "./pill";

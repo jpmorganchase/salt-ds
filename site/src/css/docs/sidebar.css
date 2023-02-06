@@ -1,0 +1,49 @@
+.theme-doc-sidebar-container {
+  --ifm-menu-color: var(--salt-color-gray-200); /* TODO: see if we can wrap sidebar with SaltProvider */
+  --ifm-menu-color-active: var(--salt-color-gray-900); /* TODO: see if we can wrap sidebar with SaltProvider */
+  background-color: var(--salt-color-white); /* TODO: see if we can wrap sidebar with SaltProvider */
+}
+.theme-doc-sidebar-container > div:first-child {
+  height: unset;
+}
+.theme-doc-sidebar-container *::selection {
+  background: var(--salt-color-blue-30); /* TODO: see if we can wrap sidebar with SaltProvider */
+}
+
+.menu {
+  --ifm-link-decoration: none;
+}
+
+.theme-doc-sidebar-container .menu {
+  padding: 0;
+  width: calc(100% + 5px);
+}
+
+.theme-doc-sidebar-container .menu__link {
+  border-radius: 0;
+}
+
+.menu__link--active {
+  font-weight: var(--site-navigable-fontWeight-active);
+}
+
+.theme-doc-sidebar-container li {
+  display: flex;
+  height: calc(var(--salt-text-h4-fontSize) + 3 * var(--salt-size-unit));
+}
+
+.menu__list-item:not(:first-child) {
+  margin: 0;
+}
+
+.theme-doc-sidebar-container li:has(> .menu__link--active)::after {
+  border-left: 4px solid var(--salt-navigable-indicator-active);
+  content: "";
+  position: relative;
+  right: calc(var(--doc-sidebar-width) - 6px);
+  font-weight: bold;
+}
+
+.theme-doc-sidebar-container .menu__link:hover {
+  background-color: var(--salt-color-gray-20);
+}
