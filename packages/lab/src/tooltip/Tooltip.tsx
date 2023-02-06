@@ -118,7 +118,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
               ref={tooltipRef}
               {...restTooltipProps}
             >
-              <div className={withBaseName("inner")}>
+              <div className={withBaseName("container")}>
                 {!hideIcon && (
                   <StatusIndicator
                     status={status}

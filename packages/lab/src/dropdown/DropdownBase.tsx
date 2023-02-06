@@ -152,6 +152,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
         className={className}
         data-testid="dropdown"
         id={idProp}
+        ref={handleFloatingRef}
       >
         {getTriggerComponent()}
         {isOpen && (
@@ -165,7 +166,6 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
                 position: strategy,
                 maxHeight: maxPopupHeight ?? undefined,
               }}
-              ref={handleFloatingRef}
             >
               {getPopupComponent()}
             </Window>

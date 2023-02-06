@@ -31,6 +31,7 @@ const classBase = "saltToolbar";
 export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   function Toolbar(props, ref) {
     const {
+      TooltipComponent,
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       children,
@@ -46,7 +47,6 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
     } = props;
 
     const toolbarId = useIdMemo(idProp);
-
     const containerRef = useRef<HTMLDivElement>(null);
 
     const setContainerRef = useForkRef(ref, containerRef);
@@ -113,9 +113,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       >
         {overflowMenuItems}
       </OverflowPanel>
-    ) : (
-      <></>
-    );
+    ) : null;
 
     //TODO when we drive this from the overflowItems, the overflowIndicator will
     // be an overflowItem

@@ -64,6 +64,7 @@ export const useCombobox = <
   collectionHook,
   defaultIsOpen,
   defaultValue,
+  disabled,
   onBlur,
   onFocus,
   onChange,

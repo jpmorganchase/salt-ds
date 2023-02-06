@@ -18,7 +18,7 @@
   z-index: var(--tooltip-zIndex);
 }
 
-/* Styles applied to inner tooltip */
+/* Styles applied to container */
 .saltTooltip-inner {
   display: flex;
   align-items: baseline;
@@ -36,7 +36,7 @@
   vertical-align: top;
 }
 
-/* Styles applied to arrow tip */
+/* Styles applied to arrow */
 .saltTooltip-arrow,
 .saltTooltip-arrow::after {
   border: var(--salt-size-sharktooth-height) solid transparent;
