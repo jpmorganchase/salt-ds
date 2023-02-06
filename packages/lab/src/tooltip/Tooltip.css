@@ -19,7 +19,7 @@
 }
 
 /* Styles applied to container */
-.saltTooltip-inner {
+.saltTooltip-container {
   display: flex;
   align-items: baseline;
   position: relative;
