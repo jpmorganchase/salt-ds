@@ -1,9 +1,9 @@
 import { ComponentMeta, Story } from "@storybook/react";
-import { Panel } from "@salt-ds/lab";
+import { Panel } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Panel/QA",
+  title: "Core/Panel/QA",
   component: Panel,
 } as ComponentMeta<typeof Panel>;
 

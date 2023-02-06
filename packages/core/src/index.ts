@@ -9,6 +9,7 @@ export * from "./flow-layout";
 export * from "./grid-item";
 export * from "./grid-layout";
 export * from "./link";
+export * from "./panel";
 export * from "./stack-layout";
 export * from "./status-indicator";
 export * from "./text";
