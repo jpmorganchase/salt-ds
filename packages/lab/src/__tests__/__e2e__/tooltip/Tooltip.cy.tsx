@@ -18,7 +18,7 @@ describe("GIVEN a Tooltip", () => {
     it("should show tooltip when button is focused", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button").realPress("Tab");
+      cy.realPress("Tab");
       cy.findByRole("tooltip").should("be.visible");
     });
 
