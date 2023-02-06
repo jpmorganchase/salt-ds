@@ -24,11 +24,11 @@ const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "text">,
-    PortalProps,
-    Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
+  PortalProps,
+  Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   children?: ReactElement<any, string | JSXElementConstructor<any>>;
   /**
-   * Whether to hide the tooltip arrow tip. Defaults to `false`.
+   * Whether to hide the tooltip arrow. Defaults to `false`.
    */
   hideArrow?: boolean;
   /**
