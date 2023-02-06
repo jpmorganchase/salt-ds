@@ -1,16 +1,8 @@
-.salt-density-touch {
-  --stackLayout-gap-density-multiplier: 2;
-}
-
 /* Default variables applied to the root element */
 .saltStackLayout {
   --stackLayout-gap-multiplier: var(--stackLayout-gap-density-multiplier, 3);
-  --stackLayout-separator: var(--salt-size-border);
+  --stackLayout-separator-weight: var(--salt-size-border, 1);
   --stackLayout-gap: calc(var(--salt-size-unit) * var(--stackLayout-gap-multiplier));
-}
-
-.saltStackLayout-separator {
-  gap: calc(var(--stackLayout-gap) * 2);
 }
 
 .saltStackLayout-separator > * {
@@ -23,42 +15,32 @@
   background-color: var(--salt-separable-secondary-borderColor);
 }
 
-/* Row separator */
-
-.saltStackLayout-separator-row > *:not(:last-child)::after {
-  height: 100%;
+/* 
+ * Seperator offset based on seperator alignment
+ * var(--stackLayout-separator-weight) is used to take into account the thickness of the seperator,so even at higher weights it will be at the start/center/end
+*/
+.saltStackLayout-separator-start {
+  --stackLayout-seperator-offset: calc(var(--stackLayout-separator-weight) * -1);
+}
+.saltStackLayout-separator-center {
+  --stackLayout-seperator-offset: calc((var(--stackLayout-gap) * -0.5) + (var(--stackLayout-separator-weight) * -0.5));
+}
+.saltStackLayout-separator-end {
+  --stackLayout-seperator-offset: calc(var(--stackLayout-gap) * -1);
 }
 
-.saltStackLayout-separator-row > *:not(:last-child)::after {
-  width: var(--stackLayout-separator);
+/* When alignment is 'row' and we have seperators (last child doesn't need a seperator) */
+.saltStackLayout-row.saltStackLayout-separator > *:not(:last-child)::after {
+  height: 100%;
+  width: var(--stackLayout-separator-weight);
+  right: var(--stackLayout-seperator-offset);
   top: 0;
 }
-.saltStackLayout-separator-row-start > *:not(:last-child)::after {
-  right: 0;
-}
-.saltStackLayout-separator-row-center > *:not(:last-child)::after {
-  right: calc(var(--stackLayout-gap) * -1);
-}
-.saltStackLayout-separator-row-end > *:not(:last-child)::after {
-  right: calc(var(--stackLayout-gap) * -2);
-}
 
-/* Column separator */
-.saltStackLayout-separator-column > *:not(:last-child)::after {
+/* When alignment is 'row' and we have seperators (last child doesn't need a seperator) */
+.saltStackLayout-column.saltStackLayout-separator > *:not(:last-child)::after {
   width: 100%;
-}
-
-.saltStackLayout-separator-column > *:not(:last-child)::after {
-  height: var(--stackLayout-separator);
+  height: var(--stackLayout-separator-weight);
+  bottom: var(--stackLayout-seperator-offset);
   left: 0;
-  width: 100%;
-}
-.saltStackLayout-separator-column-start > *:not(:last-child)::after {
-  bottom: 0;
-}
-.saltStackLayout-separator-column-center > *:not(:last-child)::after {
-  bottom: calc(var(--stackLayout-gap) * -1);
-}
-.saltStackLayout-separator-column-end > *:not(:last-child)::after {
-  bottom: calc(var(--stackLayout-gap) * -2);
 }
