@@ -589,7 +589,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-statusindicator--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-status-indicator--page",
   },
   {
     name: "Stepped Tracker",
