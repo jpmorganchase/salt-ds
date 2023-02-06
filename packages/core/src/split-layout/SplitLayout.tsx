@@ -1,11 +1,6 @@
 import { ElementType, forwardRef, ReactElement, ReactNode } from "react";
 import { FlexLayout, FlexLayoutProps } from "../flex-layout";
-import {
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
-  useIsViewportLargerThanBreakpoint,
-} from "../utils";
-import { Breakpoints } from "../breakpoints";
+import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
 
 export type SplitLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -31,37 +26,21 @@ export type SplitLayoutProps<T extends ElementType> =
        * Start component to be rendered.
        */
       startItem?: ReactNode;
-      /**
-       * Breakpoint at which the horizontal split wraps.
-       */
-      wrapAtBreakpoint?: keyof Breakpoints;
     }
   >;
+
 type SplitLayoutComponent = <T extends ElementType = "div">(
   props: SplitLayoutProps<T>
 ) => ReactElement | null;
 
 export const SplitLayout: SplitLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
-    {
-      direction,
-      endItem,
-      startItem,
-      wrapAtBreakpoint = "sm",
-      ...rest
-    }: SplitLayoutProps<T>,
+    { endItem, startItem, ...rest }: SplitLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
     const justify = endItem && !startItem ? "end" : "space-between";
-    const wrapSplit = useIsViewportLargerThanBreakpoint(wrapAtBreakpoint);
-
     return (
-      <FlexLayout
-        ref={ref}
-        justify={justify}
-        direction={wrapSplit ? "column" : direction}
-        {...rest}
-      >
+      <FlexLayout ref={ref} justify={justify} {...rest}>
         {startItem}
         {endItem}
       </FlexLayout>

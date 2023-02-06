@@ -26,11 +26,12 @@ export default {
     as: {
       type: "string",
     },
+    direction: {
+      options: ["row", "column"],
+      control: { type: "select" },
+    },
     gap: {
       type: "number",
-    },
-    wrap: {
-      type: "boolean",
     },
   },
   decorators: [
@@ -107,18 +108,19 @@ export const DefaultSplitLayout = DefaultSplitLayoutStory.bind({});
 DefaultSplitLayout.args = {
   startItem: startItem,
   endItem: endItem,
+  direction: { xs: "column", sm: "row" },
 };
 
 export const EndOnlySplitLayout = DefaultSplitLayoutStory.bind({});
 EndOnlySplitLayout.args = {
   endItem: endItem,
-  wrapAtBreakpoint: "xs",
 };
 
 export const SplitLayoutSimpleUsage = DefaultSplitLayoutStory.bind({});
 SplitLayoutSimpleUsage.args = {
   startItem: startButtonsItem,
   endItem: endButtonsItem,
+  direction: { xs: "column", sm: "row" },
 };
 
 export const VerticalSplitLayout = DefaultSplitLayoutStory.bind({});
