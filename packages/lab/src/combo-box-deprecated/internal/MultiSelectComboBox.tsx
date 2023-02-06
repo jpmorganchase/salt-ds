@@ -9,7 +9,6 @@ import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
 import { isDesktop, useWindow } from "../../window";
 import { Portal } from "../../portal";
 import { useFloatingUI } from "../../popper";
-import { Tooltip } from "../../tooltip";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   Item,
@@ -38,9 +37,6 @@ export function MultiSelectComboBox<Item>(
   const {
     ListItem,
     WindowProps,
-    tooltipEnterDelay,
-    tooltipLeaveDelay,
-    tooltipPlacement,
     rootRef,
     listRef: listRefProp,
     rootWidth,
@@ -66,17 +62,6 @@ export function MultiSelectComboBox<Item>(
   const { isListOpen, itemCount, itemToString, source, ...restListProps } =
     listProps;
 
-  const tooltipContext = useMemo(
-    () => ({
-      Tooltip,
-      enterDelay: tooltipEnterDelay,
-      leaveDelay: tooltipLeaveDelay,
-      placement: tooltipPlacement,
-      content: "",
-    }),
-    [Tooltip, tooltipEnterDelay, tooltipLeaveDelay, tooltipPlacement]
-  );
-
   const firstItem = null;
 
   const allowAnnouncementRef = useRef(allowAnnouncement);
@@ -96,16 +81,16 @@ export function MultiSelectComboBox<Item>(
   const middleware = isDesktop
     ? []
     : [
-        flip({
-          fallbackPlacements: ["bottom-start", "top-start"],
-        }),
-        shift({ limiter: limitShift() }),
-        size({
-          apply({ availableHeight }) {
-            setMaxListHeight(availableHeight);
-          },
-        }),
-      ];
+      flip({
+        fallbackPlacements: ["bottom-start", "top-start"],
+      }),
+      shift({ limiter: limitShift() }),
+      size({
+        apply({ availableHeight }) {
+          setMaxListHeight(availableHeight);
+        },
+      }),
+    ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
     middleware,
@@ -121,16 +106,14 @@ export function MultiSelectComboBox<Item>(
 
   return (
     <>
-      <Tooltip {...tooltipContext}>
-        <TokenizedInputBase
-          disabled={disabled}
-          expandButtonRef={expandButtonRef}
-          inputRef={useForkRef(inputRef, inputRefProp)}
-          value={value}
-          helpers={inputHelpers}
-          {...restInputProps}
-        />
-      </Tooltip>
+      <TokenizedInputBase
+        disabled={disabled}
+        expandButtonRef={expandButtonRef}
+        inputRef={useForkRef(inputRef, inputRefProp)}
+        value={value}
+        helpers={inputHelpers}
+        {...restInputProps}
+      />
       {rootRef.current && isListOpen && (
         <Portal>
           <Window
@@ -143,23 +126,21 @@ export function MultiSelectComboBox<Item>(
             {...WindowProps}
             ref={floating}
           >
-            <Tooltip {...tooltipContext}>
-              <ListStateContext.Provider value={listContext}>
-                <ListBase
-                  {...{
-                    ListItem,
-                    disabled,
-                    itemCount,
-                    itemToString,
-                    width: listWidth || rootWidth,
-                    source,
-                    ...restListProps,
-                    listRef: setListRef,
-                  }}
-                  maxHeight={maxListHeight || listProps.maxHeight}
-                />
-              </ListStateContext.Provider>
-            </Tooltip>
+            <ListStateContext.Provider value={listContext}>
+              <ListBase
+                {...{
+                  ListItem,
+                  disabled,
+                  itemCount,
+                  itemToString,
+                  width: listWidth || rootWidth,
+                  source,
+                  ...restListProps,
+                  listRef: setListRef,
+                }}
+                maxHeight={maxListHeight || listProps.maxHeight}
+              />
+            </ListStateContext.Provider>
           </Window>
         </Portal>
       )}

@@ -22,7 +22,6 @@ import { GetFilterRegex } from "../filterHelpers";
 import { getAnnouncement } from "./getAnnouncement";
 import { useComboBox } from "./useComboBox";
 import { isDesktop, Window, WindowProps } from "../../window";
-import { Tooltip } from "../../tooltip";
 import { Input, InputProps } from "../../input";
 import { useFloatingUI } from "../../popper";
 import { Portal } from "../../portal";
@@ -30,10 +29,10 @@ import { Portal } from "../../portal";
 export type BaseComboBoxProps<
   Item,
   Variant extends ListSelectionVariant = "default"
-> = Omit<
-  HTMLAttributes<HTMLDivElement>,
-  "children" | "onChange" | "onSelect" | "onFocus" | "onBlur" | "onClick"
-> &
+  > = Omit<
+    HTMLAttributes<HTMLDivElement>,
+    "children" | "onChange" | "onSelect" | "onFocus" | "onBlur" | "onClick"
+  > &
   Pick<
     ListProps<Item, Variant>,
     | "displayedItemCount"
@@ -42,15 +41,11 @@ export type BaseComboBoxProps<
     | "onChange"
     | "onSelect"
     | "overscanCount"
-    | "tooltipEnterDelay"
-    | "tooltipLeaveDelay"
-    | "tooltipPlacement"
     | "virtualized"
     | "width"
   > & {
     ListItem?: ComponentType<IndexedListItemProps<Item>>;
     ListProps?: Partial<ListProps<Item, Variant>>;
-    // Tooltip?: TooltipContextProps["Tooltip"];
     WindowProps?: Partial<WindowProps>;
     allowFreeText?: boolean;
     disabled?: boolean;
@@ -68,7 +63,7 @@ export type BaseComboBoxProps<
 
 export interface DefaultComboBoxProps<Item>
   extends BaseComboBoxProps<Item>,
-    Pick<InputProps, "onFocus" | "onBlur"> {
+  Pick<InputProps, "onFocus" | "onBlur"> {
   InputProps?: InputProps;
   initialSelectedItem?: Item;
   selectedItem?: Item;
@@ -85,11 +80,7 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
 ): ReactNode {
   const {
     ListItem,
-    // Tooltip,
     WindowProps = {},
-    tooltipEnterDelay,
-    tooltipLeaveDelay,
-    tooltipPlacement,
     rootRef,
     listRef: listRefProp,
     inputRef: inputRefProp,
@@ -106,16 +97,6 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
   const setListRef = useForkRef(listRef, listRefProp);
 
   const { announce } = useAriaAnnouncer({ debounce: 1000 });
-
-  const tooltipContext = useMemo(
-    () => ({
-      enterDelay: tooltipEnterDelay,
-      leaveDelay: tooltipLeaveDelay,
-      placement: tooltipPlacement,
-      content: "",
-    }),
-    [tooltipEnterDelay, tooltipLeaveDelay, tooltipPlacement]
-  );
 
   const {
     inputRef: setHookInputRef,
@@ -147,16 +128,16 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
   const middleware = isDesktop
     ? []
     : [
-        flip({
-          fallbackPlacements: ["bottom-start", "top-start"],
-        }),
-        shift({ limiter: limitShift() }),
-        size({
-          apply({ availableHeight }) {
-            setMaxListHeight(availableHeight);
-          },
-        }),
-      ];
+      flip({
+        fallbackPlacements: ["bottom-start", "top-start"],
+      }),
+      shift({ limiter: limitShift() }),
+      size({
+        apply({ availableHeight }) {
+          setMaxListHeight(availableHeight);
+        },
+      }),
+    ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
     middleware,
@@ -188,23 +169,21 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
             {...WindowProps}
             ref={floating}
           >
-            <Tooltip {...tooltipContext}>
-              <ListStateContext.Provider value={listContext}>
-                <ListBase
-                  {...{
-                    ListItem,
-                    disabled,
-                    itemCount,
-                    itemToString,
-                    width: listWidth || rootWidth,
-                    source,
-                    ...restListProps,
-                    listRef: setListRef,
-                  }}
-                  maxHeight={maxListHeight || listProps.maxHeight}
-                />
-              </ListStateContext.Provider>
-            </Tooltip>
+            <ListStateContext.Provider value={listContext}>
+              <ListBase
+                {...{
+                  ListItem,
+                  disabled,
+                  itemCount,
+                  itemToString,
+                  width: listWidth || rootWidth,
+                  source,
+                  ...restListProps,
+                  listRef: setListRef,
+                }}
+                maxHeight={maxListHeight || listProps.maxHeight}
+              />
+            </ListStateContext.Provider>
           </Window>
         </Portal>
       )}
