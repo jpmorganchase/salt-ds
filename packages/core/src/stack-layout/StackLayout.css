@@ -37,7 +37,7 @@
   top: 0;
 }
 
-/* When alignment is 'row' and we have seperators (last child doesn't need a seperator) */
+/* When alignment is 'column' and we have seperators (last child doesn't need a seperator) */
 .saltStackLayout-column.saltStackLayout-separator > *:not(:last-child)::after {
   width: 100%;
   height: var(--stackLayout-separator-weight);
