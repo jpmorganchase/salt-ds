@@ -1,4 +1,4 @@
-import { TooltipProps } from "../tooltip";
+import { TooltipProps } from "@salt-ds/core";
 import { ComponentType, HTMLAttributes, ReactNode } from "react";
 
 export type OrientationShape = "vertical" | "horizontal";
