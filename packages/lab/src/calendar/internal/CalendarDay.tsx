@@ -46,12 +46,12 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         disabled={!unselectableReason}
         placement="top"
         enterDelay={300}
-        triggerRef={dayRef}
         {...TooltipProps}
       >
         <button
           aria-label={formatDate(day)}
           {...dayProps}
+          ref={dayRef}
           {...rest}
           className={clsx(
             withBaseName(),

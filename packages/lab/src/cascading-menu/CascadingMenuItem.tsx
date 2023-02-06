@@ -119,9 +119,9 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         placement="top"
         disabled={!tooltipTitle || !hasTooltip || isChildMenuOpen}
         content={tooltipTitle}
-        triggerRef={ref}
       >
         <ListItem
+          ref={ref}
           aria-expanded={isChildMenuOpen || undefined}
           className={clsx(
             withBaseName(),

@@ -255,12 +255,9 @@ export const FormField = forwardRef(
     const handleTriggerRef = useForkRef(rootRef, ref);
 
     return (
-      <Tooltip
-        disabled={!tooltipHelperText}
-        content={helperText}
-        triggerRef={handleTriggerRef}
-      >
+      <Tooltip disabled={!tooltipHelperText} content={helperText}>
         <div
+          ref={handleTriggerRef}
           className={clsx(
             withBaseName(),
             {

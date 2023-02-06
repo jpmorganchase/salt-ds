@@ -7,7 +7,6 @@ import {
   ReactElement,
   ReactNode,
   Ref,
-  RefObject,
 } from "react";
 import {
   makePrefixer,
@@ -68,16 +67,11 @@ export interface TooltipProps
    * Option to remove the focus listener
    */
   disableFocusListener?: boolean;
-  /**
-   * Add triggerRef when using merged refs
-   */
-  triggerRef?: Ref<HTMLDivElement>;
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   function Tooltip(props, ref) {
     const {
-      id,
       children,
       className,
       container,
@@ -89,7 +83,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       content,
       status = "info",
       placement = "right",
-      triggerRef,
       enterDelay = 300,
       leaveDelay = 0,
       ...rest
@@ -110,20 +103,16 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     const { ref: triggerRefHook, ...restTriggerProps } = getTriggerProps();
 
+    const childrenRef = (children as any).ref;
     const triggerRefMerged = useForkRef(
-      triggerRef,
+      childrenRef,
       triggerRefHook as Ref<HTMLDivElement>
     );
 
     return (
       <>
         {open && !disabled && (
-          <Portal
-            disablePortal={disablePortal}
-            container={container}
-            ref={ref}
-            id={id}
-          >
+          <Portal disablePortal={disablePortal} container={container} ref={ref}>
             <div
               className={clsx(withBaseName(), withBaseName(status), className)}
               ref={tooltipRef}

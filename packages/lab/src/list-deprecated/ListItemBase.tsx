@@ -67,10 +67,10 @@ export const ListItemBase = memo(
         // open={openTooltip}
         disabled={!isOverflowed}
         content={tooltipText}
-        triggerRef={detectTruncation ? ref : setItemRef}
       >
         <div
           aria-label={typeof children === "string" ? children : undefined}
+          ref={detectTruncation ? ref : setItemRef}
           {...restProps}
           className={clsx(
             withBaseName(),
