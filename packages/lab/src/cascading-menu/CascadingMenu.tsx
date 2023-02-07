@@ -61,7 +61,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
       getScreenBounds = defaultGetScreenBounds,
       disableMouseOutInteractions,
       disableClickAway,
-      containingDocument = document,
+      containingDocument = globalThis.document,
       source: sourceProp,
     } = props;
     const density = useDensity();
