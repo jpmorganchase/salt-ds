@@ -1256,7 +1256,6 @@ export function useFocusableContent<T extends HTMLElement>({
       `button,input,select,textarea,a`
     );
     if (nestedInteractive) {
-      (nestedInteractive as HTMLElement).tabIndex = -1;
       (nestedInteractive as HTMLElement).tabIndex = !isFocused ? -1 : 0;
     }
   }, [isFocused]);
