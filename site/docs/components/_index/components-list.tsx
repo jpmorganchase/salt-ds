@@ -221,7 +221,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Card",
     description:
       "Conveniently displays content that’s composed of different elements that have varied sizes or supported actions.",
-    devStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {

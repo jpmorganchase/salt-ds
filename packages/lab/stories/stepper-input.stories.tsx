@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { SaltProvider, Panel } from "@salt-ds/core";
 import { StepperInput, FormField } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
-import { ColumnLayoutContainer, ColumnLayoutItem } from "./story-layout";
+import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 
 export default {
   title: "Lab/Stepper Input",
