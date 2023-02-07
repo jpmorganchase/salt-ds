@@ -38,18 +38,8 @@ jobs:
 
       - name: Publish updates to Storybook
         if: steps.changesets.outputs.published == 'true'
-        uses: actions/checkout@v3
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16"
-          cache: "yarn"
-
-      - name: Install dependencies
-        run: yarn
-
-      - name: Run build
+      - name: Run Storybook build
         run: yarn build-storybook
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
@@ -67,18 +57,8 @@ jobs:
 
       - name: Publish updates to Storybook
         if: steps.changesets.outputs.published == 'true'
-        uses: actions/checkout@v3
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16"
-          cache: "yarn"
-
-      - name: Install dependencies
-        run: yarn
-
-      - name: Run build
+      - name: Run site build
         run: yarn build:site
 
       - name: Publish
