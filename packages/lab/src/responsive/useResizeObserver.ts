@@ -40,30 +40,33 @@ const getTargetSize = (
   }
 };
 
-const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
-  for (const entry of entries) {
-    const { target, contentRect } = entry;
-    const observedTarget = observedMap.get(target as HTMLElement);
-    if (observedTarget) {
-      const { onResize, measurements } = observedTarget;
-      let sizeChanged = false;
-      for (const [dimension, size] of Object.entries(measurements)) {
-        const newSize = getTargetSize(
-          target as HTMLElement,
-          contentRect,
-          dimension as measuredDimension
-        );
-        if (newSize !== size) {
-          sizeChanged = true;
-          measurements[dimension as measuredDimension] = newSize;
+const resizeObserver =
+  typeof ResizeObserver !== "undefined"
+    ? new ResizeObserver((entries: ResizeObserverEntry[]) => {
+        for (const entry of entries) {
+          const { target, contentRect } = entry;
+          const observedTarget = observedMap.get(target as HTMLElement);
+          if (observedTarget) {
+            const { onResize, measurements } = observedTarget;
+            let sizeChanged = false;
+            for (const [dimension, size] of Object.entries(measurements)) {
+              const newSize = getTargetSize(
+                target as HTMLElement,
+                contentRect,
+                dimension as measuredDimension
+              );
+              if (newSize !== size) {
+                sizeChanged = true;
+                measurements[dimension as measuredDimension] = newSize;
+              }
+            }
+            if (sizeChanged) {
+              onResize && onResize(measurements);
+            }
+          }
         }
-      }
-      if (sizeChanged) {
-        onResize && onResize(measurements);
-      }
-    }
-  }
-});
+      })
+    : null;
 
 // TODO use an optional lag (default to false) to ask to fire onResize
 // with initial size
@@ -96,6 +99,10 @@ export function useResizeObserver(
   // dimensions or callback instance each time - we only ever want to
   // initiate new observation when ref changes.
   useIsomorphicLayoutEffect(() => {
+    if (!resizeObserver) {
+      return undefined;
+    }
+
     const target = ref.current as HTMLElement;
     let cleanedUp = false;
 
@@ -110,7 +117,7 @@ export function useResizeObserver(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         await fonts.ready;
       }
-      if (!cleanedUp) {
+      if (!cleanedUp && resizeObserver) {
         const observedTarget = observedMap.get(target);
         if (observedTarget) {
           const measurements = measure(target);
