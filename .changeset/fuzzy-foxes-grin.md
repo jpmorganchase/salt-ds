@@ -1,14 +1,8 @@
 ---
-"@salt-ds/ag-grid-theme": major
+"@salt-ds/ag-grid-theme": minor
 ---
 
-Separate static numeric and editable cell class names in salt ag-grid theme,
+Add two new cell class names in salt ag-grid theme. These can be used instead of `.editable-numeric-cell`
 
-Before:
-
-- `.editable-numeric-cell`
-
-After:
-
-- `.numeric-cell`
-- `.editable-cell`
+- `.numeric-cell` used on static cells that contain numeric values
+- `.editable-cell` used on editable cells
