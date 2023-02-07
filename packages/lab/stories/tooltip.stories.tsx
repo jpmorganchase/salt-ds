@@ -9,24 +9,21 @@ export default {
 } as ComponentMeta<typeof Tooltip>;
 
 export const Default: Story<TooltipProps> = (props: TooltipProps) => (
-  <Tooltip {...props} content="I am a tooltip">
+  <Tooltip {...props}>
     <Button>Hover</Button>
   </Tooltip>
 );
+Default.args = {
+  content: "I am a tooltip",
+};
 
-export const OpenTooltip: Story<TooltipProps> = (props: TooltipProps) => {
-  const userProps: TooltipProps = {
-    status: "info",
-    open: true,
-    ...props,
-    content: props.content || "I am a tooltip",
-  };
-
-  return (
-    <Tooltip {...userProps}>
-      <Button>Hover</Button>
-    </Tooltip>
-  );
+export const OpenTooltip: Story<TooltipProps> = (props: TooltipProps) => (
+  <Tooltip open {...props}>
+    <Button>Hover</Button>
+  </Tooltip>
+);
+OpenTooltip.args = {
+  content: "I am a tooltip",
 };
 
 export const ScrollTooltip: Story<TooltipProps> = (props) => {
@@ -43,7 +40,7 @@ export const ScrollTooltip: Story<TooltipProps> = (props) => {
         width: "300vw",
       }}
     >
-      <Tooltip {...props}>
+      <Tooltip open {...props}>
         <Button
           style={{ marginTop: "100vh", marginLeft: "100vw" }}
           ref={handleScrollButton}
@@ -56,38 +53,37 @@ export const ScrollTooltip: Story<TooltipProps> = (props) => {
 };
 ScrollTooltip.args = {
   content: "I am a tooltip",
-  open: true,
   placement: "top",
 };
 
-export const ErrorTooltip: Story<TooltipProps> = (props) => {
-  const { status = "error" } = props;
-
-  return (
-    <Tooltip content="We found an issue" status={status}>
-      <Button>Hover</Button>
-    </Tooltip>
-  );
+export const ErrorTooltip: Story<TooltipProps> = (props) => (
+  <Tooltip {...props}>
+    <Button>Hover</Button>
+  </Tooltip>
+);
+ErrorTooltip.args = {
+  content: "We found an issue",
+  status: "error",
 };
 
-export const WarningTooltip: Story<TooltipProps> = (props) => {
-  const { status = "warning" } = props;
-
-  return (
-    <Tooltip content="Are you sure?" status={status}>
-      <Button>Hover</Button>
-    </Tooltip>
-  );
+export const WarningTooltip: Story<TooltipProps> = (props) => (
+  <Tooltip {...props}>
+    <Button>Hover</Button>
+  </Tooltip>
+);
+WarningTooltip.args = {
+  content: "Are you sure?",
+  status: "warning",
 };
 
-export const SuccessTooltip: Story<TooltipProps> = (props) => {
-  const { status = "success" } = props;
-
-  return (
-    <Tooltip content="Well done" status={status}>
-      <Button> Hover</Button>
-    </Tooltip>
-  );
+export const SuccessTooltip: Story<TooltipProps> = (props) => (
+  <Tooltip {...props}>
+    <Button>Hover</Button>
+  </Tooltip>
+);
+SuccessTooltip.args = {
+  content: "Well done",
+  status: "success",
 };
 
 export const ComponentAsContent: Story<TooltipProps> = (props) => {
@@ -99,7 +95,7 @@ export const ComponentAsContent: Story<TooltipProps> = (props) => {
   );
 
   return (
-    <Tooltip open content={Component}>
+    <Tooltip open {...props} content={Component}>
       <Button>Hover</Button>
     </Tooltip>
   );

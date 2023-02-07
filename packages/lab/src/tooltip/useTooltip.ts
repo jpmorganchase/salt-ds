@@ -9,6 +9,7 @@ import {
   useHover,
   useInteractions,
   useRole,
+  limitShift,
 } from "@floating-ui/react";
 import { HTMLProps, useRef } from "react";
 import { useControlled } from "@salt-ds/core";
@@ -76,7 +77,12 @@ export function useTooltip(props?: UseTooltipProps) {
     open,
     onOpenChange: handleOpenChange,
     placement: placementProp,
-    middleware: [offset(8), flip(), shift(), arrow({ element: arrowRef })],
+    middleware: [
+      offset(8),
+      flip(),
+      shift({ limiter: limitShift() }),
+      arrow({ element: arrowRef }),
+    ],
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
