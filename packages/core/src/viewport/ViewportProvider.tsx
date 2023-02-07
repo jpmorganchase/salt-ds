@@ -1,10 +1,5 @@
-import {
-  createContext,
-  useLayoutEffect,
-  useState,
-  useContext,
-  ReactNode,
-} from "react";
+import { createContext, useState, useContext, ReactNode } from "react";
+import { useIsomorphicLayoutEffect } from "../utils";
 
 const ViewportContext = createContext<number | null>(null);
 
@@ -20,7 +15,7 @@ const ViewportProvider = ({ children }: ViewportProviderProps) => {
   const noExistingViewport = existingViewport === null;
   const viewportValue = existingViewport || viewport || 0;
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     let observer: ResizeObserver | null = null;
 
     if (noExistingViewport) {
