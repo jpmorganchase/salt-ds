@@ -1,4 +1,4 @@
-import { Children, ElementType, forwardRef, ReactElement } from "react";
+import { ElementType, forwardRef, ReactElement } from "react";
 import { clsx } from "clsx";
 
 import {
@@ -48,6 +48,8 @@ export type FlexLayoutProps<T extends ElementType> =
        */
       justify?: FlexContentAlignment;
       /**
+       * **Deprecated:** For separators see `StackLayout` component instead.
+       *
        * Adds a separator between elements if wrap is not active, default is false.
        */
       separators?: LayoutSeparator | true;
@@ -113,11 +115,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
         style={flexLayoutStyles}
         {...rest}
       >
-        {separators
-          ? Children.map(children, (child) => (
-              <div className={withBaseName("separator-wrapper")}>{child}</div>
-            ))
-          : children}
+        {children}
       </Component>
     );
   }
