@@ -15,7 +15,7 @@ import {
 } from "@internationalized/date";
 
 const {
-  DefaultCalendar,
+  Default,
   MultiSelection,
   OffsetSelection,
   RangeSelection,
@@ -37,7 +37,7 @@ const formatDate = (date: DateValue, options?: Intl.DateTimeFormatOptions) => {
 describe("GIVEN a Calendar component", () => {
   describe("Today's Date", () => {
     it("SHOULD set `aria-current=date` on today's date", () => {
-      cy.mount(<DefaultCalendar />);
+      cy.mount(<Default />);
       cy.findByRole("button", {
         name: formatDate(today(localTimeZone)),
       }).should("have.attr", "aria-current", "date");
@@ -47,7 +47,7 @@ describe("GIVEN a Calendar component", () => {
   describe("Navigation", () => {
     describe("Buttons", () => {
       it("SHOULD navigate to the previous month when the previous month button is clicked", () => {
-        cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+        cy.mount(<Default defaultVisibleMonth={testDate} />);
         cy.findByRole("button", {
           name: `Previous Month, ${formatDate(
             testDate.subtract({ months: 1 })
@@ -60,7 +60,7 @@ describe("GIVEN a Calendar component", () => {
       });
 
       it("SHOULD navigate to the next month when the next month button is clicked", () => {
-        cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+        cy.mount(<Default defaultVisibleMonth={testDate} />);
         cy.findByRole("button", {
           name: `Next Month, ${formatDate(testDate.add({ months: 1 }))}`,
         }).realClick();
@@ -73,7 +73,7 @@ describe("GIVEN a Calendar component", () => {
 
     describe("Dropdowns", () => {
       it("SHOULD navigate to the selected month when using the month dropdown", () => {
-        cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+        cy.mount(<Default defaultVisibleMonth={testDate} />);
         cy.findByRole("option", {
           name: formatDate(testDate, { month: "short" }),
         }).should("be.visible");
@@ -94,7 +94,7 @@ describe("GIVEN a Calendar component", () => {
       });
 
       it("SHOULD navigate to the selected year when using the year dropdown", () => {
-        cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+        cy.mount(<Default defaultVisibleMonth={testDate} />);
         cy.findByRole("option", {
           name: formatDate(testDate, { year: "numeric" }),
         }).should("be.visible");
@@ -117,7 +117,7 @@ describe("GIVEN a Calendar component", () => {
 
     describe("Clicking", () => {
       it("SHOULD navigate to the next month when clicking out of range dates", () => {
-        cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+        cy.mount(<Default defaultVisibleMonth={testDate} />);
         cy.findByRole("option", {
           name: formatDate(testDate, { month: "short" }),
         }).should("be.visible");
@@ -132,7 +132,7 @@ describe("GIVEN a Calendar component", () => {
 
     describe("Keyboard", () => {
       it("SHOULD move the focus when the arrow keys are pressed", () => {
-        cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+        cy.mount(<Default defaultVisibleMonth={testDate} />);
 
         cy.findByRole("button", {
           name: formatDate(testDate),
@@ -164,7 +164,7 @@ describe("GIVEN a Calendar component", () => {
 
       describe("SHOULD move the focus when the shortcut keys are pressed", () => {
         beforeEach(() => {
-          cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+          cy.mount(<Default defaultVisibleMonth={testDate} />);
 
           cy.findByRole("button", {
             name: formatDate(testDate),
@@ -228,7 +228,7 @@ describe("GIVEN a Calendar component", () => {
 
   describe("Single Selection", () => {
     it("SHOULD hover one day when a day is hovered", () => {
-      cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+      cy.mount(<Default defaultVisibleMonth={testDate} />);
       cy.findByRole("button", {
         name: formatDate(testDate),
       }).realHover({ position: "bottom" });
@@ -240,7 +240,7 @@ describe("GIVEN a Calendar component", () => {
       cy.get(".saltCalendarDay-hovered").should("not.exist");
     });
     it("SHOULD only allow one date to be selected at a time", () => {
-      cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+      cy.mount(<Default defaultVisibleMonth={testDate} />);
       cy.findByRole("button", { name: formatDate(testDate) }).realClick();
       cy.findByRole("button", { name: formatDate(testDate) }).should(
         "have.attr",
@@ -266,7 +266,7 @@ describe("GIVEN a Calendar component", () => {
     });
 
     it("SHOULD not allow deselection", () => {
-      cy.mount(<DefaultCalendar defaultVisibleMonth={testDate} />);
+      cy.mount(<Default defaultVisibleMonth={testDate} />);
       cy.findByRole("button", { name: formatDate(testDate) }).realClick();
       cy.findByRole("button", { name: formatDate(testDate) }).realClick();
       cy.findByRole("button", { name: formatDate(testDate) }).should(
@@ -640,7 +640,7 @@ describe("GIVEN a Calendar component", () => {
   describe("Navigation Wrapping", () => {
     it("SHOULD wrap to the previous year", () => {
       const date = startOfYear(today(localTimeZone));
-      cy.mount(<DefaultCalendar defaultVisibleMonth={date} />);
+      cy.mount(<Default defaultVisibleMonth={date} />);
       cy.findByRole("button", {
         name: `Previous Month, ${formatDate(date.subtract({ months: 1 }))}`,
       }).realClick();
@@ -652,7 +652,7 @@ describe("GIVEN a Calendar component", () => {
 
     it("SHOULD wrap to the next year", () => {
       const date = endOfYear(today(localTimeZone));
-      cy.mount(<DefaultCalendar defaultVisibleMonth={date} />);
+      cy.mount(<Default defaultVisibleMonth={date} />);
       cy.findByRole("button", {
         name: `Next Month, ${formatDate(
           startOfMonth(date.add({ months: 1 }))
@@ -668,7 +668,7 @@ describe("GIVEN a Calendar component", () => {
       it("SHOULD not wrap to the previous year", () => {
         const date = startOfYear(today(localTimeZone));
         cy.mount(
-          <DefaultCalendar defaultVisibleMonth={date} hideYearDropdown />
+          <Default defaultVisibleMonth={date} hideYearDropdown />
         );
         cy.findByRole("button", {
           name: `Previous Month, ${formatDate(date.subtract({ months: 1 }))}`,
@@ -692,7 +692,7 @@ describe("GIVEN a Calendar component", () => {
       it("SHOULD not wrap to the next year", () => {
         const date = endOfYear(today(localTimeZone));
         cy.mount(
-          <DefaultCalendar defaultVisibleMonth={date} hideYearDropdown />
+          <Default defaultVisibleMonth={date} hideYearDropdown />
         );
         cy.findByRole("button", {
           name: `Next Month, ${formatDate(

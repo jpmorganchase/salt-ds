@@ -4,7 +4,7 @@ import { composeStories } from "@storybook/testing-react";
 import * as pillStories from "@stories/pill.stories";
 
 const composedStories = composeStories(pillStories);
-const { CustomTooltipTextPill } = composedStories;
+const { CustomTooltipText } = composedStories;
 
 /**
  * Changes applied to the tests after copy over
@@ -133,7 +133,7 @@ describe("GIVEN a Pill", () => {
   });
 
   it("SHOULD have overridden tooltip title with TooltipProps", () => {
-    cy.mount(<CustomTooltipTextPill />);
+    cy.mount(<CustomTooltipText />);
 
     cy.findByRole("button", { name: "Pill" }).realHover();
     cy.findByRole("tooltip")
