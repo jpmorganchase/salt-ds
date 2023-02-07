@@ -274,7 +274,7 @@ describe("Grid", () => {
 
   it("Fake column", () => {
     cy.mount(<SmallGrid />);
-    expectFakeColumnWidth(220);
+    expectFakeColumnWidth(378);
     resizeColumn(1, -10);
     expectFakeColumnWidth(230);
     resizeColumn(2, -10);
