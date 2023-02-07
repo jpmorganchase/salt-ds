@@ -677,8 +677,8 @@ export const componentDetails: ComponentDetails[] = [
     name: "Tooltip",
     description:
       "Displays an explanation or provides more information about an error or warning condition, when the user’s  mouse hovers over a target element.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Tree",
