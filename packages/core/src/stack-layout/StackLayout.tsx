@@ -1,6 +1,21 @@
 import { ElementType, forwardRef, ReactElement } from "react";
-import { FlexLayout, FlexLayoutProps } from "../flex-layout";
-import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
+import {
+  FlexLayout,
+  FlexLayoutProps,
+  LayoutDirection,
+  LayoutSeparator,
+} from "../flex-layout";
+import {
+  makePrefixer,
+  PolymorphicComponentPropWithRef,
+  PolymorphicRef,
+  ResponsiveProp,
+  useResponsiveProp,
+} from "../utils";
+import { clsx } from "clsx";
+import "./StackLayout.css";
+
+const withBaseName = makePrefixer("saltStackLayout");
 
 export type StackLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -11,13 +26,17 @@ export type StackLayoutProps<T extends ElementType> =
        */
       align?: FlexLayoutProps<ElementType>["align"];
       /**
+       * Establishes the main-axis, defining the direction children are placed. Default is "column".
+       */
+      direction?: ResponsiveProp<LayoutDirection>;
+      /**
        * Controls the space between items, default is 3.
        */
       gap?: FlexLayoutProps<ElementType>["gap"];
       /**
        * Adds a separator between elements, default is false.
        */
-      separators?: FlexLayoutProps<ElementType>["separators"];
+      separators?: LayoutSeparator | boolean;
     }
   >;
 
@@ -27,11 +46,44 @@ type StackLayoutComponent = <T extends ElementType = "div">(
 
 export const StackLayout: StackLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
-    { children, ...rest }: StackLayoutProps<T>,
+    {
+      children,
+      className,
+      direction = "column",
+      gap,
+      separators,
+      style,
+      ...rest
+    }: StackLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const flexGap = useResponsiveProp(gap, 3);
+    const separatorAlignment = separators === true ? "center" : separators;
+    const flexDirection = useResponsiveProp(direction, "column");
+    const stackLayoutStyles = {
+      ...style,
+      "--stackLayout-gap-multiplier": flexGap,
+    };
     return (
-      <FlexLayout direction="column" ref={ref} {...rest}>
+      <FlexLayout
+        className={clsx(
+          className,
+          withBaseName(),
+          withBaseName(flexDirection),
+          {
+            [withBaseName("separator")]: !!separatorAlignment,
+            [separatorAlignment
+              ? withBaseName(`separator-${separatorAlignment}`)
+              : ""]: separatorAlignment,
+          }
+        )}
+        ref={ref}
+        direction={direction}
+        style={stackLayoutStyles}
+        wrap={false}
+        gap={flexGap}
+        {...rest}
+      >
         {children}
       </FlexLayout>
     );
