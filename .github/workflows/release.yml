@@ -38,15 +38,12 @@ jobs:
 
       - name: Publish updates to Storybook
         if: steps.changesets.outputs.published == 'true'
-
       - name: Run Storybook build
         run: yarn build-storybook
         env:
           NODE_OPTIONS: "--max_old_space_size=4096"
-
-      - name: Publish
+      - name: Publish Storybook
         uses: cloudflare/pages-action@1
-        id: publish
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
@@ -57,13 +54,10 @@ jobs:
 
       - name: Publish updates to Storybook
         if: steps.changesets.outputs.published == 'true'
-
       - name: Run site build
         run: yarn build:site
-
-      - name: Publish
+      - name: Publish Site
         uses: cloudflare/pages-action@1
-        id: publish
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
