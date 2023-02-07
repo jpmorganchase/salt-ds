@@ -3,10 +3,9 @@ import {
   cloneElement,
   forwardRef,
   HTMLAttributes,
-  JSXElementConstructor,
-  ReactElement,
   ReactNode,
   Ref,
+  isValidElement,
 } from "react";
 import {
   makePrefixer,
@@ -25,7 +24,6 @@ export interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
     PortalProps,
     Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
-  children?: ReactElement<any, string | JSXElementConstructor<any>>;
   /**
    * Whether to hide the tooltip arrow. Defaults to `false`.
    */
@@ -103,9 +101,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     const { ref: triggerRefHook, ...restTriggerProps } = getTriggerProps();
 
-    const childrenRef = (children as any).ref;
     const triggerRefMerged = useForkRef(
-      childrenRef,
+      isValidElement(children) ? children.ref : null,
       triggerRefHook as Ref<HTMLDivElement>
     );
 
@@ -135,7 +132,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           </Portal>
         )}
 
-        {children &&
+        {isValidElement(children) &&
           cloneElement(children, {
             ref: triggerRefMerged,
             ...restTriggerProps,
