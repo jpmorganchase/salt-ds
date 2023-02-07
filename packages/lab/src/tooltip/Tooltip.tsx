@@ -25,6 +25,10 @@ export interface TooltipProps
     PortalProps,
     Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
+   * The children will be the tooltip's trigger.
+   */
+  children: ReactNode;
+  /**
    * Whether to hide the tooltip arrow. Defaults to `false`.
    */
   hideArrow?: boolean;
@@ -102,6 +106,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const { ref: triggerRefHook, ...restTriggerProps } = getTriggerProps();
 
     const triggerRefMerged = useForkRef(
+      // @ts-ignore
       isValidElement(children) ? children.ref : null,
       triggerRefHook as Ref<HTMLDivElement>
     );
