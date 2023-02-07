@@ -4,9 +4,6 @@ on:
   pull_request:
     paths:
       - "site/**"
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:

@@ -35,3 +35,59 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish updates to Storybook
+        if: steps.changesets.outputs.published == 'true'
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run build
+        run: yarn build-storybook
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+
+      - name: Publish
+        uses: cloudflare/pages-action@1
+        id: publish
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
+          projectName: "saltdesignsystem-storybook"
+          directory: ./storybook-static
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.head_ref || github.ref_name }}
+
+      - name: Publish updates to Storybook
+        if: steps.changesets.outputs.published == 'true'
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run build
+        run: yarn build:site
+
+      - name: Publish
+        uses: cloudflare/pages-action@1
+        id: publish
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
+          projectName: "saltdesignsystem"
+          directory: ./site/build
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.head_ref || github.ref_name }}

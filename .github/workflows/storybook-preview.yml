@@ -1,9 +1,6 @@
-name: Storybook Publish
+name: Storybook Preview Publish
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
   pull_request:
 
