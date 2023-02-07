@@ -1242,9 +1242,24 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
   };
 }
 
-export function useFocusableContent<T extends HTMLElement>() {
+export function useFocusableContent<T extends HTMLElement>({
+  isFocused,
+}: {
+  isFocused?: boolean;
+} = {}) {
   const ref = useRef<T>(null);
   const [isFocusableContent, setFocusableContent] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const nestedInteractive = ref.current.querySelector(
+      `button,input,select,textarea,a`
+    );
+    if (nestedInteractive) {
+      (nestedInteractive as HTMLElement).tabIndex = -1;
+      (nestedInteractive as HTMLElement).tabIndex = !isFocused ? -1 : 0;
+    }
+  }, [isFocused]);
 
   const onFocus: FocusEventHandler<T> = (event) => {
     if (event.target === ref.current) {

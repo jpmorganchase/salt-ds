@@ -27,7 +27,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
   } = props;
 
   const { ref, isFocusableContent, onFocus } =
-    useFocusableContent<HTMLTableCellElement>();
+    useFocusableContent<HTMLTableCellElement>({ isFocused });
 
   return (
     <Cell
