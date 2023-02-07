@@ -667,9 +667,7 @@ describe("GIVEN a Calendar component", () => {
     describe("WHEN `hideYearDropdown=true`", () => {
       it("SHOULD not wrap to the previous year", () => {
         const date = startOfYear(today(localTimeZone));
-        cy.mount(
-          <Default defaultVisibleMonth={date} hideYearDropdown />
-        );
+        cy.mount(<Default defaultVisibleMonth={date} hideYearDropdown />);
         cy.findByRole("button", {
           name: `Previous Month, ${formatDate(date.subtract({ months: 1 }))}`,
         }).realClick();
@@ -691,9 +689,7 @@ describe("GIVEN a Calendar component", () => {
 
       it("SHOULD not wrap to the next year", () => {
         const date = endOfYear(today(localTimeZone));
-        cy.mount(
-          <Default defaultVisibleMonth={date} hideYearDropdown />
-        );
+        cy.mount(<Default defaultVisibleMonth={date} hideYearDropdown />);
         cy.findByRole("button", {
           name: `Next Month, ${formatDate(
             startOfMonth(date.add({ months: 1 }))
