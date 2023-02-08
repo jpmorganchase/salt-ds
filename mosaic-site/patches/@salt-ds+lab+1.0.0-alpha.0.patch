@@ -1,0 +1,109 @@
+diff --git a/node_modules/@salt-ds/lab/dist-cjs/node_modules/style-inject/dist/style-inject.es.js b/node_modules/@salt-ds/lab/dist-cjs/node_modules/style-inject/dist/style-inject.es.js
+index fac049a..5663033 100644
+--- a/node_modules/@salt-ds/lab/dist-cjs/node_modules/style-inject/dist/style-inject.es.js
++++ b/node_modules/@salt-ds/lab/dist-cjs/node_modules/style-inject/dist/style-inject.es.js
+@@ -2,7 +2,7 @@
+ 
+ function styleInject(css, ref) {
+   if ( ref === void 0 ) ref = {};
+-  var insertAt = ref.insertAt;
++  var insertAt = ref.insertAt || 'top';
+ 
+   if (!css || typeof document === 'undefined') { return; }
+ 
+diff --git a/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/cascading-menu/CascadingMenu.js b/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/cascading-menu/CascadingMenu.js
+index 989ee90..71d83bf 100644
+--- a/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/cascading-menu/CascadingMenu.js
++++ b/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/cascading-menu/CascadingMenu.js
+@@ -42,7 +42,7 @@ const CascadingMenu = React.forwardRef(
+       getScreenBounds = menuPositioning.defaultGetScreenBounds,
+       disableMouseOutInteractions,
+       disableClickAway,
+-      containingDocument = document,
++      containingDocument = typeof window !== 'undefined' ? window.document : undefined,
+       source: sourceProp
+     } = props;
+     const density = core.useDensity();
+diff --git a/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/deck-layout/DeckLayout.js b/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/deck-layout/DeckLayout.js
+index 318520a..0cf82b1 100644
+--- a/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/deck-layout/DeckLayout.js
++++ b/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/deck-layout/DeckLayout.js
+@@ -36,7 +36,7 @@ const DeckLayout = React.forwardRef(
+       []
+     );
+     core.useIsomorphicLayoutEffect(() => {
+-      if (!deckItemRef.current) {
++      if (!deckItemRef.current || typeof window === undefined) {
+         return void 0;
+       }
+       handleResize(deckItemRef.current.getBoundingClientRect());
+diff --git a/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/responsive/useResizeObserver.js b/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/responsive/useResizeObserver.js
+index 2dcf1e0..6765d6d 100644
+--- a/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/responsive/useResizeObserver.js
++++ b/node_modules/@salt-ds/lab/dist-cjs/packages/lab/src/responsive/useResizeObserver.js
+@@ -23,7 +23,7 @@ const getTargetSize = (element, contentRect, dimension) => {
+       return 0;
+   }
+ };
+-const resizeObserver = new ResizeObserver((entries) => {
++const resizeObserver = typeof window !== 'undefined' ? new ResizeObserver((entries) => {
+   for (const entry of entries) {
+     const { target, contentRect } = entry;
+     const observedTarget = observedMap.get(target);
+@@ -46,7 +46,8 @@ const resizeObserver = new ResizeObserver((entries) => {
+       }
+     }
+   }
+-});
++}) : { observe: () => undefined, unobserve: () => undefined };
++
+ function useResizeObserver(ref, dimensions, onResize, reportInitialSize = false) {
+   const dimensionsRef = React.useRef(dimensions);
+   const measure = React.useCallback((target) => {
+diff --git a/node_modules/@salt-ds/lab/dist-es/node_modules/style-inject/dist/style-inject.es.js b/node_modules/@salt-ds/lab/dist-es/node_modules/style-inject/dist/style-inject.es.js
+index 69a6f1b..8268fdc 100644
+--- a/node_modules/@salt-ds/lab/dist-es/node_modules/style-inject/dist/style-inject.es.js
++++ b/node_modules/@salt-ds/lab/dist-es/node_modules/style-inject/dist/style-inject.es.js
+@@ -1,6 +1,6 @@
+ function styleInject(css, ref) {
+   if ( ref === void 0 ) ref = {};
+-  var insertAt = ref.insertAt;
++  var insertAt = ref.insertAt || 'top';
+ 
+   if (!css || typeof document === 'undefined') { return; }
+ 
+diff --git a/node_modules/@salt-ds/lab/dist-es/packages/lab/src/deck-layout/DeckLayout.js b/node_modules/@salt-ds/lab/dist-es/packages/lab/src/deck-layout/DeckLayout.js
+index 2ee47ba..e6ca12b 100644
+--- a/node_modules/@salt-ds/lab/dist-es/packages/lab/src/deck-layout/DeckLayout.js
++++ b/node_modules/@salt-ds/lab/dist-es/packages/lab/src/deck-layout/DeckLayout.js
+@@ -28,7 +28,7 @@ const DeckLayout = forwardRef(
+       []
+     );
+     useIsomorphicLayoutEffect(() => {
+-      if (!deckItemRef.current) {
++      if (!deckItemRef.current || typeof window === 'undefined') {
+         return void 0;
+       }
+       handleResize(deckItemRef.current.getBoundingClientRect());
+diff --git a/node_modules/@salt-ds/lab/dist-es/packages/lab/src/responsive/useResizeObserver.js b/node_modules/@salt-ds/lab/dist-es/packages/lab/src/responsive/useResizeObserver.js
+index 4967da7..935e8a0 100644
+--- a/node_modules/@salt-ds/lab/dist-es/packages/lab/src/responsive/useResizeObserver.js
++++ b/node_modules/@salt-ds/lab/dist-es/packages/lab/src/responsive/useResizeObserver.js
+@@ -19,7 +19,7 @@ const getTargetSize = (element, contentRect, dimension) => {
+       return 0;
+   }
+ };
+-const resizeObserver = new ResizeObserver((entries) => {
++const resizeObserver = typeof window !== 'undefined' ? new ResizeObserver((entries) => {
+   for (const entry of entries) {
+     const { target, contentRect } = entry;
+     const observedTarget = observedMap.get(target);
+@@ -42,7 +42,7 @@ const resizeObserver = new ResizeObserver((entries) => {
+       }
+     }
+   }
+-});
++}) :  { observe: () => undefined, unobserve: () => undefined };
+ function useResizeObserver(ref, dimensions, onResize, reportInitialSize = false) {
+   const dimensionsRef = useRef(dimensions);
+   const measure = useCallback((target) => {

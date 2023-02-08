@@ -1,0 +1,68 @@
+---
+title: Mosaic
+layout: Landing
+frameOverrides:
+  header:
+    homeLink: /local/index
+    title: Mosaic (BETA)
+    logo: /img/favicon.png
+    menu:
+      - title: Sample Section
+        link: /local/sample/index
+  footer:
+    description: Coming soon
+    title: Mosaic BETA
+    href: /local
+---
+
+<Hero
+  description="Build powerful documentation sites using our NEW scalable solution, watch this space for more developments"
+  eyebrow="Mosaic is currently in BETA"
+  image="/img/hero.png"
+  title="Mosaic"
+  variant="fullWidth"
+/>
+
+# Local page example
+
+Local pages can be used to
+
+- experiment with the Design language by creating local page content
+- edit docs within this repo before pushing them to GIT to create a remote source
+- edit docs from another repo before pushing them to GIT to create a remote source
+
+## Editing docs from the current repo
+
+To edit these docs in the current repo, your `mosaic.config.js` would look like this
+
+```
+{
+    modulePath: '@jpmorganchase/mosaic-source-local-folder',
+    namespace: 'local',
+    options: {
+        rootDir: './docs',
+        prefixDir: 'local',
+        extensions: [
+            '.mdx'
+        ]
+    }
+}
+```
+
+## Editing docs from another repo
+
+To edit another repo's docs, your `mosaic.config.js` would look like this
+
+```
+{
+    modulePath: '@jpmorganchase/mosaic-source-local-folder',
+    namespace: 'sample',
+    options: {
+        rootDir: '../../my-sample-repo/docs',
+        prefixDir: 'sample',
+        extensions: [
+            '.mdx'
+        ]
+    }
+}
+```
