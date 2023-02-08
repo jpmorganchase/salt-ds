@@ -18,6 +18,37 @@ const NUMBER_REGEX = /^(|[1-9][0-9]*)$/;
 
 const getRandomNumber = () => Math.floor(Math.random() * 99 + 1);
 
+export const Default: ComponentStory<typeof TokenizedInput> = () => {
+  const handleChange = (selectedItems: unknown) => {
+    console.log("selection changed", selectedItems);
+  };
+  return (
+    // Background color for debug purposes only
+    <div
+      style={{
+        background: "aliceblue",
+        width: "calc(100vw - 40px)",
+        height: "50vh",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <TokenizedInput
+        onChange={handleChange}
+        style={{ maxWidth: 292 }}
+        initialSelectedItems={[
+          "abc",
+          "defghi",
+          "jklm",
+          "nopqrstu",
+          "vwexyz",
+          "very looooooooooong looooooooooong long pill",
+        ]}
+      />
+    </div>
+  );
+};
+
 export const Controlled: ComponentStory<typeof TokenizedInput> = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
@@ -98,37 +129,6 @@ export const Controlled: ComponentStory<typeof TokenizedInput> = () => {
           </FormField>
         </div>
       </div>
-    </div>
-  );
-};
-
-export const Default: ComponentStory<typeof TokenizedInput> = () => {
-  const handleChange = (selectedItems: unknown) => {
-    console.log("selection changed", selectedItems);
-  };
-  return (
-    // Background color for debug purposes only
-    <div
-      style={{
-        background: "aliceblue",
-        width: "calc(100vw - 40px)",
-        height: "50vh",
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <TokenizedInput
-        onChange={handleChange}
-        style={{ maxWidth: 292 }}
-        initialSelectedItems={[
-          "abc",
-          "defghi",
-          "jklm",
-          "nopqrstu",
-          "vwexyz",
-          "very looooooooooong looooooooooong long pill",
-        ]}
-      />
     </div>
   );
 };

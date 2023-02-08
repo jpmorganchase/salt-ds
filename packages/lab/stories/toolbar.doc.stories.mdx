@@ -17,47 +17,11 @@ Toolbar is a flexible container for controls.
 
 <br />
 
-Simple `Toolbar` with 4 `Buttons`. Note that Button text is not displayed if Button
+Simple `Toolbar` with 10 `Buttons`. Note that Button text is not displayed if Button
 contains an Icon.
 
-```jsx
-<Toolbar>
-  <Button variant="secondary">
-    <ExportIcon /> Export
-  </Button>
-  <Button variant="secondary">
-    <ShareIcon /> Share
-  </Button>
-  <Button variant="secondary">
-    <NotificationIcon /> Set Alerts
-  </Button>
-  <Button variant="secondary">
-    <TearOutIcon /> Expand
-  </Button>
-  <Button variant="secondary">More</Button>
-</Toolbar>
-```
-
 <Canvas>
-  <Story name="Simple Toolbar Example">
-    <SaltProvider>
-      <Toolbar>
-        <Button variant="secondary">
-          <ExportIcon /> Export
-        </Button>
-        <Button variant="secondary">
-          <ShareIcon /> Share
-        </Button>
-        <Button variant="secondary">
-          <NotificationIcon /> Set Alerts
-        </Button>
-        <Button variant="secondary">
-          <TearOutIcon /> Expand
-        </Button>
-        <Button variant="secondary">More</Button>
-      </Toolbar>
-    </SaltProvider>
-  </Story>
+  <Story id="lab-toolbar--simple" />
 </Canvas>
 
 <br />
@@ -67,28 +31,5 @@ contains an Icon.
 Example 1, use CSS alone to style compact state
 
 <Canvas>
-  <Story name="Toolbar with instant collapse items CSS">
-    <SaltProvider>
-      {/* <Toolbar style={{ width: 440 }}>
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 1" />
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 2" />
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 3" />
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 4" />
-      </Toolbar>
-      <p>With Toolbar size reduced</p>
-      <Toolbar style={{ width: 400 }}>
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 1" />
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 2" />
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 3" />
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 4" />
-      </Toolbar>
-      <p>and reduced further</p> */}
-      <Toolbar style={{ width: 300 }}>
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 1" />
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 2" />
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 3" />
-        <CollapsibleToolbarItem data-collapsible="instant" label="Item 4" />
-      </Toolbar>
-    </SaltProvider>
-  </Story>
+  <Story id="lab-toolbar--simple-with-collapsible-items" />
 </Canvas>

@@ -58,6 +58,45 @@ const Examples = () => (
   </>
 );
 
+export const All: Story = () => (
+  <div style={{ marginTop: -200 }}>
+    <SaltProvider mode="light">
+      <Examples />
+    </SaltProvider>
+    <SaltProvider mode="dark">
+      <Examples />
+    </SaltProvider>
+  </div>
+);
+
+export const Default: Story = () => {
+  const max = 10;
+  const min = -5;
+
+  const [isOutOfRange, setIsOutOfRange] = useState(false);
+
+  const handleChange = (value: number | string) =>
+    value > max || value < min ? setIsOutOfRange(true) : setIsOutOfRange(false);
+
+  return (
+    <SaltProvider>
+      <FormField
+        helperText={`Please enter a number between ${min} and ${max}`}
+        label="Default Stepper Input"
+        style={{ width: 292 }}
+        validationStatus={isOutOfRange ? "error" : undefined}
+      >
+        <StepperInput
+          defaultValue={0}
+          max={max}
+          min={min}
+          onChange={handleChange}
+        />
+      </FormField>
+    </SaltProvider>
+  );
+};
+
 export const Alignment: Story = () => (
   <SaltProvider>
     <FormField
@@ -82,17 +121,6 @@ export const Alignment: Story = () => (
       <StepperInput textAlign="right" />
     </FormField>
   </SaltProvider>
-);
-
-export const All: Story = () => (
-  <div style={{ marginTop: -200 }}>
-    <SaltProvider mode="light">
-      <Examples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <Examples />
-    </SaltProvider>
-  </div>
 );
 
 export const Controlled: Story = () => {
@@ -164,34 +192,6 @@ export const Decimals: Story = () => (
     </FormField>
   </SaltProvider>
 );
-
-export const Default: Story = () => {
-  const max = 10;
-  const min = -5;
-
-  const [isOutOfRange, setIsOutOfRange] = useState(false);
-
-  const handleChange = (value: number | string) =>
-    value > max || value < min ? setIsOutOfRange(true) : setIsOutOfRange(false);
-
-  return (
-    <SaltProvider>
-      <FormField
-        helperText={`Please enter a number between ${min} and ${max}`}
-        label="Default Stepper Input"
-        style={{ width: 292 }}
-        validationStatus={isOutOfRange ? "error" : undefined}
-      >
-        <StepperInput
-          defaultValue={0}
-          max={max}
-          min={min}
-          onChange={handleChange}
-        />
-      </FormField>
-    </SaltProvider>
-  );
-};
 
 export const Error: Story = () => {
   const defaultValue = 15.775;

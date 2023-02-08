@@ -1,5 +1,5 @@
 import type { ComponentMeta, Story } from "@storybook/react";
-import { Button } from "@salt-ds/core";
+import { Button, SaltProvider } from "@salt-ds/core";
 import {
   AddIcon,
   ChatIcon,
@@ -51,7 +51,7 @@ export default {
 
 const statusData = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 
-export const DefaultToolbar: Story = () => {
+export const Default: Story = () => {
   const typeData = ["Open", "Close", "Discarded", "Resolved"];
   const rangeData = [
     "Today",
@@ -101,7 +101,7 @@ export const DefaultAdjustable: Story<AdjustableFlexboxProps> = ({
 }) => {
   return (
     <AdjustableFlexbox height={420} width={width}>
-      <DefaultToolbar />
+      <Default />
     </AdjustableFlexbox>
   );
 };
@@ -534,7 +534,7 @@ export const TooltrayCollapseComparison = () => {
   );
 };
 
-export const SimpleToolbar: Story<AdjustableFlexboxProps & ToolbarProps> = ({
+export const Simple: Story<AdjustableFlexboxProps & ToolbarProps> = ({
   width = 320,
   ...toolbarProps
 }) => {
@@ -579,11 +579,11 @@ export const SimpleToolbar: Story<AdjustableFlexboxProps & ToolbarProps> = ({
   );
 };
 
-export const SimpleToolbarOverflowLabel = ({ overflowLabel = "more ..." }) => (
-  <SimpleToolbar overflowButtonLabel={overflowLabel} />
+export const SimpleWithOverflowLabel = ({ overflowLabel = "more ..." }) => (
+  <Simple overflowButtonLabel={overflowLabel} />
 );
 
-export const SimpleToolbarCollapsibleItems: Story<AdjustableFlexboxProps> = ({
+export const SimpleWithCollapsibleItems: Story<AdjustableFlexboxProps> = ({
   width = 500,
 }) => {
   return (
