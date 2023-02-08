@@ -46,29 +46,29 @@ const ToggleButtonTemplate: ComponentStory<typeof ToggleButton> = ({
   );
 };
 
-export const PrimaryButton = ToggleButtonTemplate.bind({});
-PrimaryButton.args = {
+export const Primary = ToggleButtonTemplate.bind({});
+Primary.args = {
   variant: "primary",
 };
 
-export const CTAButton = ToggleButtonTemplate.bind({});
-CTAButton.args = {
+export const CTA = ToggleButtonTemplate.bind({});
+CTA.args = {
   variant: "cta",
 };
 
-export const SecondaryButton = ToggleButtonTemplate.bind({});
-SecondaryButton.args = {
+export const Secondary = ToggleButtonTemplate.bind({});
+Secondary.args = {
   variant: "secondary",
 };
 
-export const DisabledButton = ToggleButtonTemplate.bind({});
-DisabledButton.args = {
+export const Disabled = ToggleButtonTemplate.bind({});
+Disabled.args = {
   disabled: true,
 };
 
-export const ButtonGroupWithIconAndText: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const WithIconAndText: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
 
   const handleChange: ToggleButtonGroupChangeEventHandler = (
@@ -98,9 +98,9 @@ export const ButtonGroupWithIconAndText: ComponentStory<
   );
 };
 
-export const ButtonGroupWithIconOnly: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const WithIconOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
   const [selectedIndexCta, setSelectedIndexCta] = useState<number>(1);
   const [selectedIndexSecondary, setSelectedIndexSecondary] =
@@ -196,9 +196,9 @@ export const ButtonGroupWithIconOnly: ComponentStory<
   );
 };
 
-export const ButtonGroupWithTextOnly: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const WithTextOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
 
   const handleChange: ToggleButtonGroupChangeEventHandler = (
@@ -226,7 +226,7 @@ export const ButtonGroupWithTextOnly: ComponentStory<
   );
 };
 
-export const ButtonGroupDisabledWithFocus: ComponentStory<
+export const DisabledWithFocus: ComponentStory<
   typeof ToggleButtonGroup
 > = () => {
   return (
@@ -247,7 +247,7 @@ export const ButtonGroupDisabledWithFocus: ComponentStory<
   );
 };
 
-export const VerticalButtonGroupWithIconAndText: ComponentStory<
+export const VerticalWithIconAndText: ComponentStory<
   typeof ToggleButtonGroup
 > = ({ onChange }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
@@ -284,9 +284,9 @@ export const VerticalButtonGroupWithIconAndText: ComponentStory<
   );
 };
 
-export const VerticalButtonGroupWithIconOnly: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const VerticalWithIconOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
   const [selectedIndexCta, setSelectedIndexCta] = useState<number>(1);
   const [selectedIndexSecondary, setSelectedIndexSecondary] =
@@ -387,9 +387,9 @@ export const VerticalButtonGroupWithIconOnly: ComponentStory<
   );
 };
 
-export const VerticalButtonGroupWithTextOnly: ComponentStory<
-  typeof ToggleButtonGroup
-> = ({ onChange }) => {
+export const VerticalWithTextOnly: ComponentStory<typeof ToggleButtonGroup> = ({
+  onChange,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(1);
 
   const handleChange: ToggleButtonGroupChangeEventHandler = (
@@ -421,7 +421,7 @@ export const VerticalButtonGroupWithTextOnly: ComponentStory<
   );
 };
 
-export const VerticalButtonGroupDisabledWithFocus: ComponentStory<
+export const VerticalDisabledWithFocus: ComponentStory<
   typeof ToggleButtonGroup
 > = () => {
   return (

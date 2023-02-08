@@ -18,22 +18,22 @@ const Template: ComponentStory<typeof Spinner> = (args) => {
 
 export const FeatureSpinner = Template.bind({});
 
-export const SmallSpinner = Template.bind({});
-SmallSpinner.args = {
+export const Small = Template.bind({});
+Small.args = {
   size: "small",
 };
 
-export const MediumSpinner = Template.bind({});
-MediumSpinner.args = {
+export const Medium = Template.bind({});
+Medium.args = {
   size: "medium",
 };
 
-export const LargeSpinner = Template.bind({});
-LargeSpinner.args = {
+export const Large = Template.bind({});
+Large.args = {
   size: "large",
 };
 
-export const SpinnerWithButton: Story = () => {
+export const WithButton: Story = () => {
   const [exampleOneIsLoading, setExampleOneIsLoading] = useState(false);
   const [exampleTwoIsLoading, setExampleTwoIsLoading] = useState(false);
 
