@@ -3,12 +3,8 @@ import { clsx } from "clsx";
 
 import { Scrim, ScrimProps } from "../scrim";
 import "./LayerLayout.css";
-import {
-  Breakpoints,
-  useIsViewportLargerThanBreakpoint,
-  makePrefixer,
-  usePrevious,
-} from "@salt-ds/core";
+import { Breakpoints, makePrefixer, usePrevious } from "@salt-ds/core";
+import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 export const LAYER_POSITIONS = [
   "center",

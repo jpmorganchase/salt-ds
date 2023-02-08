@@ -3,12 +3,12 @@ import {
   FlexLayout,
   FlexLayoutProps,
   makePrefixer,
-  useIsViewportLargerThanBreakpoint,
 } from "@salt-ds/core";
 
 import { clsx } from "clsx";
 import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { ParentChildItem, SlideDirection } from "../parent-child-item";
+import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 import "./ParentChildLayout.css";
 

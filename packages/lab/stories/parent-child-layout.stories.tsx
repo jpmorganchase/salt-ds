@@ -7,6 +7,7 @@ import {
   Tabstrip,
   ParentChildLayout,
   StackedViewElement,
+  useIsViewportLargerThanBreakpoint,
 } from "@salt-ds/lab";
 import {
   Button,
@@ -14,7 +15,6 @@ import {
   FlexLayout,
   FlowLayout,
   StackLayout,
-  useIsViewportLargerThanBreakpoint,
 } from "@salt-ds/core";
 
 import "./layout-stories.css";
