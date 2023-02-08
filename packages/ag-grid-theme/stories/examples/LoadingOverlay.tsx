@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Card, Spinner } from "@salt-ds/lab";
-import { StackLayout } from "@salt-ds/core";
+import { Card, StackLayout } from "@salt-ds/core";
+import { Spinner } from "@salt-ds/lab";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";

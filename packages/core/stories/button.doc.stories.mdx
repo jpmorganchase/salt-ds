@@ -40,16 +40,10 @@ The Button navigates the user to a new page or window rather than triggering a f
 
 ## Features
 
-### Button variants
-
 Button contains three variants `cta`, `primary` and `secondary`. If not specified, the default value is `primary`.
 
 <Canvas>
-  <Story name="Button Variants" decorators={[withFlexGap]}>
-    <Button variant="cta">CTA</Button>
-    <Button variant="primary">Primary</Button>
-    <Button variant="secondary">Secondary</Button>
-  </Story>
+  <Story id="core-button--all" />
 </Canvas>
 
 ### Button with icon and label
@@ -63,20 +57,7 @@ Icons can be put before or after text, or used alone. Check the [Accessibility](
 - A button with only an icon and no text should be self-explanatory, ideally using well-known metaphors which are easily related to. If the purpose of the button isn’t clear, a label should be added. If space is a consideration, add a tooltip to the button set to display on hover after a short delay (typically 300ms, `--salt-delay-perceptible`). The tooltip should add context to the action such as 'Edit this form', 'Print this document', or 'Lock document state'.
 
 <Canvas>
-  <Story name="Button with icon and label" decorators={[withFlexGap]}>
-    <Button variant="cta">
-      Send <SendIcon aria-hidden />
-    </Button>
-    <Button variant="primary">
-      <SearchIcon aria-hidden /> Search
-    </Button>
-    <Button variant="secondary">
-      Setting <SettingsSolidIcon aria-hidden />
-    </Button>
-    <Button aria-label="download">
-      <DownloadIcon aria-hidden />
-    </Button>
-  </Story>
+  <Story id="core-button--with-icon" />
 </Canvas>
 
 ### Disabled Button
@@ -84,14 +65,8 @@ Icons can be put before or after text, or used alone. Check the [Accessibility](
 A Button with the prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need a disabled Button to be focusable, you also need to pass `focusableWhenDisabled="true"`.
 
 <Canvas>
-  <Story name="Disabled buttons" decorators={[withFlexGap]}>
-    <Button disabled>
-      Disabled <SendIcon aria-hidden />
-    </Button>
-    <Button disabled focusableWhenDisabled>
-      Focusable When Disabled
-    </Button>
-  </Story>
+  <Story id="core-button--disabled" />
+  <Story id="core-button--focusable-when-disabled" />
 </Canvas>
 
 ## Configuring Button

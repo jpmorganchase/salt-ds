@@ -58,9 +58,7 @@ export default {
   component: CascadingMenu,
 } as ComponentMeta<typeof CascadingMenu>;
 
-export const DefaultCascadingMenu: ComponentStory<
-  typeof CascadingMenu
-> = () => {
+export const Default: ComponentStory<typeof CascadingMenu> = () => {
   return (
     <CascadingMenu
       initialSource={initialSource}
@@ -76,9 +74,7 @@ export const DefaultCascadingMenu: ComponentStory<
   );
 };
 
-export const MaximumWidthCascadingMenu: ComponentStory<
-  typeof CascadingMenu
-> = () => {
+export const MaximumWidth: ComponentStory<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -147,9 +143,7 @@ export const MaximumWidthCascadingMenu: ComponentStory<
   );
 };
 
-export const CascadingMenuWithSeparators: ComponentStory<
-  typeof CascadingMenu
-> = () => {
+export const WithSeparators: ComponentStory<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -208,9 +202,7 @@ export const CascadingMenuWithSeparators: ComponentStory<
   );
 };
 
-export const CascadingMenuWithDisabledItems: ComponentStory<
-  typeof CascadingMenu
-> = () => {
+export const WithDisabledItems: ComponentStory<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -271,9 +263,7 @@ export const CascadingMenuWithDisabledItems: ComponentStory<
 const user: MenuDescriptor["icon"] = UserIcon;
 const phone: MenuDescriptor["icon"] = CallIcon;
 
-export const CascadingMenuWithIcons: ComponentStory<
-  typeof CascadingMenu
-> = () => {
+export const WithIcons: ComponentStory<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -345,9 +335,7 @@ export const CascadingMenuWithIcons: ComponentStory<
   );
 };
 
-export const CascadingMenuControlledOpenClose: ComponentStory<
-  typeof CascadingMenu
-> = () => {
+export const ControlledOpenClose: ComponentStory<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -423,9 +411,7 @@ export const CascadingMenuControlledOpenClose: ComponentStory<
   );
 };
 
-export const CascadingMenuControlledSource: ComponentStory<
-  typeof CascadingMenu
-> = () => {
+export const ControlledSource: ComponentStory<typeof CascadingMenu> = () => {
   const sourceA: MenuDescriptor = {
     menuItems: [
       {

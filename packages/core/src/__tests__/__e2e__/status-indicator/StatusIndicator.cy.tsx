@@ -3,14 +3,14 @@ import * as statusIndicatorStories from "@stories/status-indicator.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(statusIndicatorStories);
-const { DefaultStatusIndicator } = composedStories;
+const { Default } = composedStories;
 
 describe("Given a Status Indicator", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN a status value is provided", () => {
     it("should render an error indicator", () => {
-      cy.mount(<DefaultStatusIndicator status="error" />);
+      cy.mount(<Default status="error" />);
       cy.get(".saltStatusIndicator").should(
         "have.class",
         "saltStatusIndicator-error"
@@ -19,7 +19,7 @@ describe("Given a Status Indicator", () => {
     });
 
     it("should render a success indicator", () => {
-      cy.mount(<DefaultStatusIndicator status="success" />);
+      cy.mount(<Default status="success" />);
       cy.get(".saltStatusIndicator").should(
         "have.class",
         "saltStatusIndicator-success"
@@ -32,7 +32,7 @@ describe("Given a Status Indicator", () => {
     });
 
     it("should render a warning indicator", () => {
-      cy.mount(<DefaultStatusIndicator status="warning" />);
+      cy.mount(<Default status="warning" />);
       cy.get(".saltStatusIndicator").should(
         "have.class",
         "saltStatusIndicator-warning"
@@ -45,7 +45,7 @@ describe("Given a Status Indicator", () => {
     });
 
     it("should render an info indicator", () => {
-      cy.mount(<DefaultStatusIndicator status="info" />);
+      cy.mount(<Default status="info" />);
       cy.get(".saltStatusIndicator").should(
         "have.class",
         "saltStatusIndicator-info"

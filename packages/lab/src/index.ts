@@ -22,7 +22,6 @@ export * from "./banner";
 export * from "./breadcrumbs";
 export * from "./button-bar";
 export * from "./calendar";
-export * from "./card";
 export * from "./carousel";
 export * from "./cascading-menu";
 export * from "./checkbox";

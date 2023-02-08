@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, Card } from "@salt-ds/core";
 import {
   CallIcon,
   ChatIcon,
@@ -24,7 +24,6 @@ import {
   SelectionChangeHandler,
   useOverlay,
   ValueComponentProps,
-  Card,
   FormField,
   Tooltip,
 } from "@salt-ds/lab";
