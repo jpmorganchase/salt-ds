@@ -34,6 +34,7 @@
 .saltTooltip-icon {
   --saltIcon-margin: 0 var(--saltTooltip-icon-marginRight, 6px) 0 0;
   vertical-align: top;
+  align-self: center;
 }
 
 /* Styles applied to arrow */

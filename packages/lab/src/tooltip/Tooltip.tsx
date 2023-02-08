@@ -45,11 +45,6 @@ export interface TooltipProps
    */
   status?: ValidationStatus;
   /**
-   * This prop is used to help implement the accessibility logic.
-   * If you don't provide this prop. It falls back to a randomly generated id.
-   */
-  id?: string;
-  /**
    * Delay in miliseconds before the tooltip is shown
    */
   enterDelay?: number;
