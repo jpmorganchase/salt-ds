@@ -12,7 +12,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Lab/Layout/LayerLayout",
+  title: "Lab/Layout/Layer Layout",
   component: LayerLayout,
   argTypes: {
     position: {
@@ -79,12 +79,12 @@ const DefaultLayerLayoutStory: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const DefaultLayerLayout = DefaultLayerLayoutStory.bind({});
-DefaultLayerLayout.args = {
+export const Default = DefaultLayerLayoutStory.bind({});
+Default.args = {
   position: "center",
 };
 
-const Top: ComponentStory<typeof LayerLayout> = (args) => {
+const TopTemplate: ComponentStory<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -101,12 +101,12 @@ const Top: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerLayoutTop = Top.bind({});
-LayerLayoutTop.args = {
+export const Top = TopTemplate.bind({});
+Top.args = {
   position: "top",
 };
 
-const Right: ComponentStory<typeof LayerLayout> = (args) => {
+const RightTemplate: ComponentStory<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -123,12 +123,12 @@ const Right: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerLayoutRight = Right.bind({});
-LayerLayoutRight.args = {
+export const Right = RightTemplate.bind({});
+Right.args = {
   position: "right",
 };
 
-const Left: ComponentStory<typeof LayerLayout> = (args) => {
+const LeftTemplate: ComponentStory<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -145,12 +145,12 @@ const Left: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerLayoutLeft = Left.bind({});
-LayerLayoutLeft.args = {
+export const Left = LeftTemplate.bind({});
+Left.args = {
   position: "left",
 };
 
-const Bottom: ComponentStory<typeof LayerLayout> = (args) => {
+const BottomTemplate: ComponentStory<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -167,12 +167,12 @@ const Bottom: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerLayoutBottom = Bottom.bind({});
-LayerLayoutBottom.args = {
+export const Bottom = BottomTemplate.bind({});
+Bottom.args = {
   position: "bottom",
 };
 
-const CustomFullScreenAnimation: ComponentStory<typeof LayerLayout> = (
+const CustomFullScreenAnimationTemplate: ComponentStory<typeof LayerLayout> = (
   args
 ) => {
   const [open, setOpen] = useState(false);
@@ -216,21 +216,21 @@ const CustomFullScreenAnimation: ComponentStory<typeof LayerLayout> = (
   );
 };
 
-export const LayerCustomFullScreenAnimation = CustomFullScreenAnimation.bind(
+export const CustomFullScreenAnimation = CustomFullScreenAnimationTemplate.bind(
   {}
 );
 
-LayerCustomFullScreenAnimation.args = {
+CustomFullScreenAnimation.args = {
   position: "bottom",
 };
 
-LayerCustomFullScreenAnimation.parameters = {
+CustomFullScreenAnimation.parameters = {
   viewport: {
     defaultViewport: "mobile1",
   },
 };
 
-const ReducedMotion: ComponentStory<typeof LayerLayout> = (args) => {
+const ReducedMotionTemplate: ComponentStory<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(false);
 
   const show = () => setOpen(true);
@@ -254,7 +254,7 @@ const ReducedMotion: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerReducedMotion = ReducedMotion.bind({});
+export const ReducedMotion = ReducedMotionTemplate.bind({});
 
 const LayerLayoutCenterExample: ComponentStory<typeof LayerLayout> = (args) => {
   const [open, setOpen] = useState(true);
@@ -288,8 +288,8 @@ const LayerLayoutCenterExample: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerLayoutCenterSimpleUsage = LayerLayoutCenterExample.bind({});
-LayerLayoutCenterSimpleUsage.args = {
+export const CenterSimpleUsage = LayerLayoutCenterExample.bind({});
+CenterSimpleUsage.args = {
   position: "center",
 };
 
@@ -335,8 +335,8 @@ const LayerLayoutLeftExample: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerLayoutLeftSimpleUsage = LayerLayoutLeftExample.bind({});
-LayerLayoutLeftSimpleUsage.args = {
+export const LeftSimpleUsage = LayerLayoutLeftExample.bind({});
+LeftSimpleUsage.args = {
   position: "left",
 };
 
@@ -373,8 +373,8 @@ const LayerLayoutTopExample: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerLayoutTopSimpleUsage = LayerLayoutTopExample.bind({});
-LayerLayoutTopSimpleUsage.args = {
+export const TopSimpleUsage = LayerLayoutTopExample.bind({});
+TopSimpleUsage.args = {
   position: "top",
 };
 
@@ -414,8 +414,8 @@ const LayerLayoutRightExample: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerLayoutRightSimpleUsage = LayerLayoutRightExample.bind({});
-LayerLayoutRightSimpleUsage.args = {
+export const RightSimpleUsage = LayerLayoutRightExample.bind({});
+RightSimpleUsage.args = {
   position: "right",
 };
 
@@ -461,7 +461,7 @@ const LayerLayoutBottomExample: ComponentStory<typeof LayerLayout> = (args) => {
   );
 };
 
-export const LayerLayoutBottomSimpleUsage = LayerLayoutBottomExample.bind({});
-LayerLayoutBottomSimpleUsage.args = {
+export const BottomSimpleUsage = LayerLayoutBottomExample.bind({});
+BottomSimpleUsage.args = {
   position: "bottom",
 };

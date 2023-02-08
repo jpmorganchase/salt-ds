@@ -3,14 +3,14 @@ import * as splitStories from "@stories/split-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(splitStories);
-const { DefaultSplitLayout } = composedStories;
+const { Default } = composedStories;
 
 describe("GIVEN a Split", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN no props are provided", () => {
     it("THEN it should not wrap before the default small breakpoint", () => {
-      cy.mount(<DefaultSplitLayout />);
+      cy.mount(<Default />);
 
       cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
       cy.get(".saltFlexLayout").should("have.css", "flex-direction", "row");
@@ -20,7 +20,7 @@ describe("GIVEN a Split", () => {
       "THEN it should wrap at the default small breakpoint",
       { viewportWidth: 599 },
       () => {
-        cy.mount(<DefaultSplitLayout />);
+        cy.mount(<Default />);
         cy.get(".saltFlexLayout").should(
           "have.css",
           "flex-direction",
@@ -30,7 +30,7 @@ describe("GIVEN a Split", () => {
     );
 
     it("THEN it should render with a default gap", () => {
-      cy.mount(<DefaultSplitLayout />);
+      cy.mount(<Default />);
 
       cy.get(".saltFlexLayout").should("have.css", "column-gap", "24px");
 
@@ -58,7 +58,7 @@ describe("GIVEN a Split", () => {
 
     it("THEN it should render as expected", () => {
       cy.mount(
-        <DefaultSplitLayout startItem={<LeftItem />} endItem={<RightItem />} />
+        <Default startItem={<LeftItem />} endItem={<RightItem />} />
       );
 
       cy.get(".saltFlexLayout")
@@ -75,7 +75,7 @@ describe("GIVEN a Split", () => {
 
   describe("WHEN passing the gap prop", () => {
     it("THEN it should render with a new gap value", () => {
-      cy.mount(<DefaultSplitLayout gap={2} />);
+      cy.mount(<Default gap={2} />);
 
       cy.get(".saltFlexLayout").should("have.css", "column-gap", "16px");
 

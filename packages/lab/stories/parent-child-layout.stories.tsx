@@ -20,7 +20,7 @@ import {
 import "./layout-stories.css";
 
 export default {
-  title: "Lab/Layout/ParentChildLayout",
+  title: "Lab/Layout/Parent Child Layout",
   component: ParentChildLayout,
   argTypes: {
     stackedAtBreakpoint: {
@@ -61,8 +61,8 @@ const DefaultParentChildLayoutStory: ComponentStory<
   );
 };
 
-export const DefaultParentChildLayout = DefaultParentChildLayoutStory.bind({});
-DefaultParentChildLayout.args = { parent, child };
+export const Default = DefaultParentChildLayoutStory.bind({});
+Default.args = { parent, child };
 
 const Stacked: ComponentStory<typeof ParentChildLayout> = (args) => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
@@ -94,8 +94,8 @@ const Stacked: ComponentStory<typeof ParentChildLayout> = (args) => {
   );
 };
 
-export const SaltParentChildLayoutStacked = Stacked.bind({});
-SaltParentChildLayoutStacked.args = {
+export const SaltStacked = Stacked.bind({});
+SaltStacked.args = {
   stackedAtBreakpoint: "xl",
 };
 
@@ -135,8 +135,8 @@ const ReducedMotion: ComponentStory<typeof ParentChildLayout> = (args) => {
   );
 };
 
-export const SaltParentChildLayoutReducedMotion = ReducedMotion.bind({});
-SaltParentChildLayoutReducedMotion.args = {
+export const SaltReducedMotion = ReducedMotion.bind({});
+SaltReducedMotion.args = {
   stackedAtBreakpoint: "xl",
 };
 
@@ -296,7 +296,7 @@ const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
   );
 };
 
-export const ParentChildLayoutComposite = Dashboard.bind({});
-ParentChildLayoutComposite.args = {
+export const Composite = Dashboard.bind({});
+Composite.args = {
   stackedAtBreakpoint,
 };

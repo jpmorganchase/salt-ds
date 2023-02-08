@@ -4,7 +4,7 @@ import { CSSClassTable } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Core/Layout/FlexLayout"
+  title="Documentation/Core/Layout/Flex Layout"
   component={FlexLayout}
   subcomponents={{ FlexItem }}
   parameters={{
@@ -12,58 +12,58 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
   }}
 />
 
-# Flex layout
+# Flex Layout
 
-Flex layout dictates a horizontal or vertical order and direction for UI elements.
+Flex Layout dictates a horizontal or vertical order and direction for UI elements.
 The height is driven by the child elements.
 
 It can be used for cases in which the direction needs complex customization that can't be achieved by stack or flow layouts.
 For example, in layouts where the direction needs to change depending on the viewport.
 
-For layouts where you need to control the two dimensions, see [Grid layout](?path=/docs/documentation-core-layout-gridlayout--page).
+For layouts where you need to control the two dimensions, see [Grid layout](?path=/docs/documentation-core-layout-grid-layout--page).
 
 <Canvas>
-  <Story id="core-layout-flexlayout--default-flex-layout" />
+  <Story id="core-layout-flex-layout--default" />
 </Canvas>
 
-## Use Flex layout when...
+## Use Flex Layout when...
 
 You want a layout that flows in a single dimension, where the dimension changes depending on something external like viewport size.
 
-### Don't use Flex layout when...
+### Don't use Flex Layout when...
 
-You want your layout to have a constant direction. In this case we recommend you having a look at [Stack layout](?path=/docs/documentation-core-layout-stacklayout--page) or [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page).
+You want your layout to have a constant direction. In this case we recommend you having a look at [Stack layout](?path=/docs/documentation-core-layout-stack-layout--page) or [Flow layout](?path=/docs/documentation-core-layout-flow-layout--page).
 
 ### Examples
 
-#### Flex Item inside default flex layout
+#### Flex Item inside default Flex Layout
 
 A flex item allows more complex controls to the default behavior of a flex child, like defining the priority with which an element grows/shrink and its alignment.
 
 <Canvas>
-  <Story id="core-layout-flexlayout-flexitem--flex-item-wrapper" />
+  <Story id="core-layout-flex-layout-flex-item--flex-item-wrapper" />
 </Canvas>
 
-#### Flex layout with separators
+#### Flex Layout with separators
 
-Flex layout allows for separators between items that will by default display centered `separators={true}` but can be customized to sit on the left or right of a children.
+Flex Layout allows for separators between items that will by default display centered `separators={true}` but can be customized to sit on the left or right of a children.
 The separators span across the width of the layout component if the direction is row and the height if the direction is columns.
-The Flex layout gap will apply to both sides of the separator line.
+The Flex Layout gap will apply to both sides of the separator line.
 
 <Canvas>
-  <Story id="core-layout-flexlayout--flex-layout-with-separators" />
+  <Story id="core-layout-flex-layout--with-separators" />
 </Canvas>
 
 #### Responsive
 
-Flex layout supports the use of responsive props, so you can define different behaviors based on viewport size.
+Flex Layout supports the use of responsive props, so you can define different behaviors based on viewport size.
 You can use the default breakpoints or pass in your own to the `SaltProvider`.
 
 <Canvas>
-  <Story id="core-layout-flexlayout--flex-layout-using-responsive-props" />
+  <Story id="core-layout-flex-layout--using-responsive-props" />
 </Canvas>
 
-## Configuring Flex layout
+## Configuring Flex Layout
 
 ### API
 
@@ -84,11 +84,11 @@ direction={{ xs: "row", sm: "column", lg: "row", md: "column", xl: "row" }}
 
 ## Related components
 
-The flex layout is used in the following components:
+The Flex Layout is used in the following components:
 
-- [Stack layout](?path=/docs/documentation-core-layout-stacklayout--page)
-- [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page)
-- [Split layout](?path=/docs/documentation-core-layout-splitlayout--page)
+- [Stack layout](?path=/docs/documentation-core-layout-stack-layout--page)
+- [Flow layout](?path=/docs/documentation-core-layout-flow-layout--page)
+- [Split layout](?path=/docs/documentation-core-layout-split-layout--page)
 
 ### Classes
 
