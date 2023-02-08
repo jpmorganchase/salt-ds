@@ -77,20 +77,20 @@ const DialogTemplate: ComponentStory<typeof Dialog> = (args) => {
   );
 };
 
-export const BasicDialog = DialogTemplate.bind({});
+export const Basic = DialogTemplate.bind({});
 
-export const InfoDialog = DialogTemplate.bind({});
+export const Info = DialogTemplate.bind({});
 
-InfoDialog.args = {
+Info.args = {
   status: "info",
 };
 
-export const WarningDialog = DialogTemplate.bind({});
-WarningDialog.args = {
+export const Warning = DialogTemplate.bind({});
+Warning.args = {
   status: "warning",
 };
 
-export const CloseDialog: ComponentStory<typeof Dialog> = () => {
+export const Close: ComponentStory<typeof Dialog> = () => {
   const [open, setOpen] = useState(false);
   const headerRef = useRef(null);
   const handleOpen = () => {
@@ -143,7 +143,7 @@ export const CloseDialog: ComponentStory<typeof Dialog> = () => {
     </>
   );
 };
-export const DialogAlignTop: ComponentStory<typeof Dialog> = () => {
+export const AlignTop: ComponentStory<typeof Dialog> = () => {
   const [open, setOpen] = useState(false);
   const headerRef = useRef(null);
   const handleOpen = () => {
