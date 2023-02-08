@@ -2,12 +2,12 @@ import { composeStories } from "@storybook/testing-react";
 import * as cascadingMenuStories from "@stories/cascading-menu.stories";
 import { version } from "react";
 
-const { DefaultCascadingMenu } = composeStories(cascadingMenuStories);
+const { Default } = composeStories(cascadingMenuStories);
 
 describe("GIVEN a CascadingMenu component", () => {
   describe("WHEN it initially renders", () => {
     it("THEN the content alone will render", () => {
-      cy.mount(<DefaultCascadingMenu />);
+      cy.mount(<Default />);
       cy.findByTestId("cascading-menu-trigger").should(
         "have.class",
         "saltButton"
@@ -18,7 +18,7 @@ describe("GIVEN a CascadingMenu component", () => {
 
   describe("WHEN trigger element is clicked", () => {
     it("THEN the menu will be displayed", () => {
-      cy.mount(<DefaultCascadingMenu />);
+      cy.mount(<Default />);
       cy.findByTestId("cascading-menu-trigger").click();
       cy.findAllByRole("menu").should("have.length", 1);
     });
@@ -26,21 +26,21 @@ describe("GIVEN a CascadingMenu component", () => {
 
   describe("WHEN trigger element is focussed", () => {
     it("THEN the menu will not be displayed", () => {
-      cy.mount(<DefaultCascadingMenu />);
+      cy.mount(<Default />);
       cy.findByTestId("cascading-menu-trigger").focus();
       cy.findAllByRole("menu").should("have.length", 0);
     });
 
     describe("AND arrow down is pressed", () => {
       it("THEN the menu will be displayed", () => {
-        cy.mount(<DefaultCascadingMenu />);
+        cy.mount(<Default />);
         cy.findByTestId("cascading-menu-trigger").focus();
         cy.realPress("{downarrow}");
         cy.findAllByRole("menu").should("have.length", 1);
       });
       describe("AND ENTER is pressed on MenuItem with sub-items", () => {
         it("THEN thesub  menu will be displayed", () => {
-          cy.mount(<DefaultCascadingMenu />);
+          cy.mount(<Default />);
           cy.findByTestId("cascading-menu-trigger").focus();
           cy.realPress("{downarrow}");
           cy.realPress("{enter}");
@@ -56,7 +56,7 @@ describe("GIVEN a CascadingMenu component", () => {
       // Unstable in React 18
       !version.startsWith("18")
         ? () => {
-            cy.mount(<DefaultCascadingMenu />);
+            cy.mount(<Default />);
             cy.findByTestId("cascading-menu-trigger").focus();
             cy.realPress("{downarrow}");
             cy.realPress("{enter}");
@@ -72,7 +72,7 @@ describe("GIVEN a CascadingMenu component", () => {
       // Unstable in React 18
       !version.startsWith("18")
         ? () => {
-            cy.mount(<DefaultCascadingMenu />);
+            cy.mount(<Default />);
             cy.findByTestId("cascading-menu-trigger").focus();
             cy.realPress("{downarrow}");
             cy.realPress("{rightarrow}");
@@ -88,7 +88,7 @@ describe("GIVEN a CascadingMenu component", () => {
       // Unstable in React 18
       !version.startsWith("18")
         ? () => {
-            cy.mount(<DefaultCascadingMenu />);
+            cy.mount(<Default />);
             cy.findByTestId("cascading-menu-trigger").focus();
             cy.realPress("{downarrow}");
             cy.realPress("{rightarrow}");
@@ -106,7 +106,7 @@ describe("GIVEN a CascadingMenu component", () => {
     );
 
     specify("Click-away closes all menus", () => {
-      cy.mount(<DefaultCascadingMenu />);
+      cy.mount(<Default />);
       cy.findByTestId("cascading-menu-trigger").focus();
       cy.realPress("{downarrow}");
       cy.realPress("{rightarrow}");
@@ -119,7 +119,7 @@ describe("GIVEN a CascadingMenu component", () => {
 
   describe("Focus management", () => {
     specify("Focus shifts from trigger to 'topmost' menu", () => {
-      cy.mount(<DefaultCascadingMenu />);
+      cy.mount(<Default />);
       cy.findByTestId("cascading-menu-trigger").focus();
       cy.focused().should("have.class", "saltButton");
       cy.realPress("{downarrow}");

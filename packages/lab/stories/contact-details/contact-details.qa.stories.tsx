@@ -18,7 +18,7 @@ import { QAContainer, QAContainerProps } from "docs/components";
 import avatar1 from "./assets/avatar1.png";
 
 export default {
-  title: "Lab/ContactDetails/QA",
+  title: "Lab/Contact Details/QA",
   component: ContactDetails,
 } as ComponentMeta<typeof ContactDetails>;
 

@@ -29,16 +29,16 @@ Text variants are the background/foreground colors assigned to text styles for v
 
 Use the `variant` prop when you want to change the text color.
 
-<Canvas>
-  <Story name="Primary">
-    <Text>This is a primary text example</Text>
-  </Story>
-</Canvas>
+#### Primary
 
 <Canvas>
-  <Story name="Secondary">
-    <Text variant="secondary">This is a secondary text example</Text>
-  </Story>
+  <Story id="core-text--primary" />
+</Canvas>
+
+#### Secondary
+
+<Canvas>
+  <Story id="core-text--secondary" />
 </Canvas>
 
 ### Emphasis
@@ -50,19 +50,11 @@ The text component allows flexibility for you to apply different emphasis levels
 Use `<strong>` or `<small>` tags inside your text components to wrap the chunks of text you wish to modify.
 
 <Canvas>
-  <Story name="Strong">
-    <Text>
-      This is a <strong>strong</strong> text example
-    </Text>
-  </Story>
+  <Story id="core-text--strong" />
 </Canvas>
 
 <Canvas>
-  <Story name="Small">
-    <Text>
-      This is a <small>small</small> text example
-    </Text>
-  </Story>
+  <Story id="core-text--small" />
 </Canvas>
 
 ### StyleAs
@@ -72,11 +64,7 @@ Although we do not encourage it, you may find it necessary to need to match one 
 The styleAs prop allows you to maintain the correct HTML hierarchy (i.e. for placement of text that supports assistive technologies such as screen readers) whilst maintaining the appropriate visual priority.
 
 <Canvas>
-  <Story name="StyleAs">
-    <Text as="p" styleAs="h1">
-      This is a styleAs h1 example
-    </Text>
-  </Story>
+  <Story id="core-text--style-as" />
 </Canvas>
 
 ### Truncation
@@ -86,11 +74,7 @@ By using the `maxRows` prop your text component will be truncated and will displ
 If you use truncated text, please ensure you are remaining ADA compliant by reviewing our Accessibility guidance below.
 
 <Canvas>
-  <Story name="Truncation">
-    <div style={{ width: 150 }}>
-      <Text maxRows={1}>This is a truncation example</Text>
-    </div>
-  </Story>
+  <Story id="core-text--truncation" />
 </Canvas>
 
 ## Configuring Text

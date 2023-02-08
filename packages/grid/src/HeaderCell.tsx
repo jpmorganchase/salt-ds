@@ -1,6 +1,6 @@
 import "./HeaderCell.css";
-import { useLayoutEffect, useRef } from "react";
-import { makePrefixer } from "@salt-ds/core";
+import { useRef } from "react";
+import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { ColumnSeparatorType } from "./Grid";
 import { useSizingContext } from "./SizingContext";
@@ -69,7 +69,7 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
   const { ref, isFocusableContent, onFocus } =
     useFocusableContent<HTMLTableHeaderCellElement>();
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const width = valueContainerRef.current
       ? valueContainerRef.current.offsetWidth
       : undefined;
