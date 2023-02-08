@@ -4,14 +4,14 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 
 const composedStories = composeStories(tooltipStories);
 
-const { Default, OpenTooltip, ComponentAsContent } = composedStories;
+const { Default, Open, CustomContent } = composedStories;
 
 describe("GIVEN a Tooltip", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN rendered", () => {
     it('should have the aria role "tooltip"', () => {
-      cy.mount(<OpenTooltip />);
+      cy.mount(<Open />);
       cy.findByRole("tooltip").should("exist");
     });
 
@@ -55,7 +55,7 @@ describe("GIVEN a Tooltip", () => {
 
   describe("WHEN tooltip placement is", () => {
     it("TOP - tooltip should be positioned above the trigger", () => {
-      cy.mount(<OpenTooltip placement="top" />);
+      cy.mount(<Open placement="top" />);
 
       cy.findByRole("button")
         .then(($el) => $el.position().top)
@@ -69,7 +69,7 @@ describe("GIVEN a Tooltip", () => {
     });
 
     it("BOTTOM - tooltip should be positioned bellow the trigger", () => {
-      cy.mount(<OpenTooltip placement="bottom" />);
+      cy.mount(<Open placement="bottom" />);
 
       cy.findByRole("button")
         .then(($el) => $el.position().top)
@@ -83,7 +83,7 @@ describe("GIVEN a Tooltip", () => {
     });
 
     it("LEFT - tooltip should be positioned to the left of the trigger", () => {
-      cy.mount(<OpenTooltip placement="left" />);
+      cy.mount(<Open placement="left" />);
 
       cy.findByRole("button")
         .then(($el) => $el.position().left)
@@ -97,7 +97,7 @@ describe("GIVEN a Tooltip", () => {
     });
 
     it("RIGHT - tooltip should be positioned to the right of the trigger", () => {
-      cy.mount(<OpenTooltip placement="right" />);
+      cy.mount(<Open placement="right" />);
 
       cy.findByRole("button")
         .then(($el) => $el.position().left)
@@ -113,13 +113,13 @@ describe("GIVEN a Tooltip", () => {
 
   describe("WHEN hideArrow", () => {
     it("shows arrow by default", () => {
-      cy.mount(<OpenTooltip />);
+      cy.mount(<Open />);
 
       cy.get(".saltTooltip-arrow").should("be.visible");
     });
 
     it('arrow is not displayed when "hideArrow=true"', () => {
-      cy.mount(<OpenTooltip hideArrow />);
+      cy.mount(<Open hideArrow />);
 
       cy.get(".saltTooltip-arrow").should("not.exist");
     });
@@ -127,13 +127,13 @@ describe("GIVEN a Tooltip", () => {
 
   describe("WHEN hideIcon", () => {
     it("shows icon by default", () => {
-      cy.mount(<OpenTooltip />);
+      cy.mount(<Open />);
 
       cy.get(".saltIcon").should("be.visible");
     });
 
     it('icon is not displayed when "hideIcon=true"', () => {
-      cy.mount(<OpenTooltip hideIcon />);
+      cy.mount(<Open hideIcon />);
 
       cy.get(".saltIcon").should("not.exist");
     });
@@ -141,7 +141,7 @@ describe("GIVEN a Tooltip", () => {
 
   describe("WHEN content = string", () => {
     it("then tooltip displays the string", () => {
-      cy.mount(<OpenTooltip content="tooltip" />);
+      cy.mount(<Open content="tooltip" />);
 
       cy.findByText("tooltip").should("be.visible");
     });
@@ -149,10 +149,11 @@ describe("GIVEN a Tooltip", () => {
 
   describe("WHEN content = component", () => {
     it("then tooltip displays the component", () => {
-      cy.mount(<ComponentAsContent />);
+      cy.mount(<CustomContent open />);
 
       cy.get("h3").should("be.visible");
-      cy.get("p").should("be.visible");
+      cy.get("ul").should("be.visible");
+      cy.get("li").should("be.visible");
     });
   });
 });

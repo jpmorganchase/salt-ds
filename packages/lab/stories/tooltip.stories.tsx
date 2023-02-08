@@ -65,6 +65,9 @@ export const Default: Story<TooltipProps> = (props: TooltipProps) => (
 );
 Default.args = defaultArgs;
 
+export const Open: Story<TooltipProps> = Default.bind({});
+Open.args = { ...defaultArgs, open: true };
+
 export const Status: ComponentStory<typeof Tooltip> = (props: TooltipProps) => (
   <>
     <Tooltip {...props} content="I am a tooltip" status="info">
@@ -133,7 +136,7 @@ export const CustomContent: Story<TooltipProps> = (props) => (
     {...props}
     content={
       <>
-        <Text styleAs="h3">Tooltip</Text>
+        <Text as="h3">Tooltip</Text>
         <Text>Props:</Text>
         <ul>
           <li>
