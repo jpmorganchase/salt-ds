@@ -9,11 +9,25 @@ describe("GIVEN a Split", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN no props are provided", () => {
-    it("THEN it should wrap by default", () => {
+    it("THEN it should not wrap before the default small breakpoint", () => {
       cy.mount(<DefaultSplitLayout />);
 
-      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
+      cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
+      cy.get(".saltFlexLayout").should("have.css", "flex-direction", "row");
     });
+
+    it(
+      "THEN it should wrap at the default small breakpoint",
+      { viewportWidth: 599 },
+      () => {
+        cy.mount(<DefaultSplitLayout />);
+        cy.get(".saltFlexLayout").should(
+          "have.css",
+          "flex-direction",
+          "column"
+        );
+      }
+    );
 
     it("THEN it should render with a default gap", () => {
       cy.mount(<DefaultSplitLayout />);
@@ -24,30 +38,27 @@ describe("GIVEN a Split", () => {
     });
   });
 
-  describe("WHEN left and right content is provided", () => {
+  describe("WHEN 2 children, left and right are provided", () => {
     const leftItemContent = ["Item 1", "Item 2"];
     const rightItemContent = ["Item 3", "Item 4"];
 
-    const leftItem = (
-      <>
+    const LeftItem = () => (
+      <div>
         <div>{leftItemContent[0]}</div>
         <div>{leftItemContent[1]}</div>
-      </>
+      </div>
     );
 
-    const rightItem = (
-      <>
+    const RightItem = () => (
+      <div>
         <div>{rightItemContent[0]}</div>
         <div>{rightItemContent[1]}</div>
-      </>
+      </div>
     );
 
     it("THEN it should render as expected", () => {
       cy.mount(
-        <DefaultSplitLayout
-          leftSplitItem={leftItem}
-          rightSplitItem={rightItem}
-        />
+        <DefaultSplitLayout startItem={<LeftItem />} endItem={<RightItem />} />
       );
 
       cy.get(".saltFlexLayout")
@@ -59,32 +70,6 @@ describe("GIVEN a Split", () => {
         .children()
         .last()
         .should("have.text", rightItemContent.join(""));
-    });
-  });
-
-  describe("WHEN passing an array as the left item", () => {
-    const leftItem = ["Item 1", "Item 2"];
-
-    it("THEN it should render as expected", () => {
-      cy.mount(<DefaultSplitLayout leftSplitItem={leftItem} />);
-
-      cy.get(".saltFlexLayout")
-        .children()
-        .eq(0)
-        .should("have.text", leftItem.join(""));
-    });
-  });
-
-  describe("WHEN passing an array as the right item", () => {
-    const rightItem = ["Item 3", "Item 4"];
-
-    it("THEN it should render as expected", () => {
-      cy.mount(<DefaultSplitLayout rightSplitItem={rightItem} />);
-
-      cy.get(".saltFlexLayout")
-        .children()
-        .eq(1)
-        .should("have.text", rightItem.join(""));
     });
   });
 
