@@ -57,9 +57,7 @@ describe("GIVEN a Split", () => {
     );
 
     it("THEN it should render as expected", () => {
-      cy.mount(
-        <Default startItem={<LeftItem />} endItem={<RightItem />} />
-      );
+      cy.mount(<Default startItem={<LeftItem />} endItem={<RightItem />} />);
 
       cy.get(".saltFlexLayout")
         .children()
