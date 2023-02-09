@@ -18,7 +18,6 @@ import "./styles.css";
 import { ComponentProps, ReactNode } from "react";
 import { withTheme } from "docs/decorators/withTheme";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
-import { withTestIdWrapper } from "docs/decorators/withTestIdWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
 import { SaltProvider } from "@salt-ds/core";
@@ -134,7 +133,6 @@ export const parameters: Parameters = {
 export const decorators = [
   // When theme provider alone is outside of density provider, some variables can't be resolved. Use withSaltProvider
   withResponsiveWrapper,
-  withTestIdWrapper,
   withTheme,
   WithTextSpacingWrapper,
   withStrictMode,
