@@ -45,11 +45,11 @@ export interface TooltipProps
    */
   status?: ValidationStatus;
   /**
-   * Delay in miliseconds before the tooltip is shown
+   * Delay in milliseconds before the tooltip is shown
    */
   enterDelay?: number;
   /**
-   * Delay in miliseconds before the tooltip is hidden
+   * Delay in milliseconds before the tooltip is hidden
    */
   leaveDelay?: number;
   /**
