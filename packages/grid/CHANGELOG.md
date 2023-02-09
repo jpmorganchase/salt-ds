@@ -1,5 +1,13 @@
 # @salt-ds/data-grid
 
+## 1.0.1
+
+### Patch Changes
+
+- a0724642: Fix SSR support
+- 03a5d0e1: Made Grid dimension measurements more reliable
+- 00b53661: Fixed row selection not being announced by screenreaders
+
 ## 1.0.0
 
 ### Major Changes

@@ -52,6 +52,6 @@
   line-height: var(--salt-text-lineHeight);
 }
 
-.salt-theme .sbdocs tr:nth-of-type(2n) {
+.salt-theme .sbdocs-table tr:nth-of-type(2n) {
   background: var(--salt-container-secondary-background);
 }
