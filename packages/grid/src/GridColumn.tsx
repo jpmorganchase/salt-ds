@@ -151,6 +151,10 @@ export interface GridColumnProps<T = any> {
    * Children is optional, and accepts non-rendered elements i.e. `CellEditor`
    */
   children?: ReactNode;
+  /**
+   * aria-label is optional, and accepts any string value
+   */
+  "aria-label"?: string;
 }
 
 export interface GridColumnInfo<T> {

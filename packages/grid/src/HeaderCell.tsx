@@ -40,6 +40,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       data-testid="column-header"
       tabIndex={isFocused && !isFocusableContent ? 0 : -1}
       onFocus={onFocus}
+      aria-label={column.info.props["aria-label"]}
     >
       <div
         className={clsx(withBaseName("valueContainer"), {
