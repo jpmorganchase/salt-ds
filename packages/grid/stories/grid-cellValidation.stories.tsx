@@ -192,7 +192,9 @@ export const CellValidation: Story = () => {
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
         getValidationMessage={() => "This is a custom validation error message"}
-        getValidationStatus={({ row }) => (row.index > 2 ? "error" : undefined)}
+        getValidationStatus={({ row }) =>
+          row.index > 2 ? "success" : undefined
+        }
         validationType="strong"
       >
         <CellEditor>
