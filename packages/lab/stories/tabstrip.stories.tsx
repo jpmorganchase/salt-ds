@@ -1,18 +1,13 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Button, Link, SaltProvider, Text } from "@salt-ds/core";
+import { Link, SaltProvider, Text } from "@salt-ds/core";
 import {
   EditableLabel,
   Tab,
   TabDescriptor,
   Tabstrip,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   ParentChildLayout,
 } from "@salt-ds/lab";
-
-import { AdjustableFlexbox } from "../story-components";
+import { AdjustableFlexbox, CloseTabWarningDialog } from "./components";
 
 export default {
   title: "Lab/Tabs/Standalone Tabstrip",
@@ -45,34 +40,6 @@ const getTabColours = (tabs: string[] | TabDescriptor[]): colourMap => {
     {} as colourMap
   );
 };
-
-const CloseTabWarningDialog = ({
-  closedTab,
-  onCancel,
-  onClose,
-  onConfirm,
-  open = false,
-}: {
-  closedTab: TabDescriptor;
-  onCancel: () => void;
-  onClose: () => void;
-  onConfirm: () => void;
-  open?: boolean;
-}) => (
-  <Dialog open={open} status="warning" onClose={onClose}>
-    <DialogTitle onClose={onClose}>Do you want to close this tab?</DialogTitle>
-    <DialogContent>
-      {`Closing the tab will cause any changes made to
-                '${closedTab.label}' to be lost.`}
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={onCancel}>Cancel</Button>
-      <Button onClick={onConfirm} variant="cta">
-        Close Tab
-      </Button>
-    </DialogActions>
-  </Dialog>
-);
 
 const useTabSelection = (initialValue?: number) => {
   const [selectedTab, setSelectedTab] = useState(initialValue ?? 0);
@@ -474,7 +441,7 @@ export const TabstripControlledAddNew = () => {
     newTabCount.current += 1;
     setTabs((state) =>
       state.concat([
-        `New Tab${newTabCount.current > 1 ? " " + newTabCount.current : ""}`,
+        `New Tab${newTabCount.current > 1 ? ` ${newTabCount.current}` : ""}`,
       ])
     );
     setSelectedTabIndex(tabCount);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AdjustableFlexbox as Flexbox } from "./story-components";
+import { AdjustableFlexbox as Flexbox } from "./components";
 import {
   AppHeader,
   Badge,

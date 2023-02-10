@@ -1,5 +1,5 @@
 import type { ComponentMeta, Story } from "@storybook/react";
-import { Button, SaltProvider } from "@salt-ds/core";
+import { Button } from "@salt-ds/core";
 import {
   AddIcon,
   ChatIcon,
@@ -40,7 +40,7 @@ import {
 } from "@salt-ds/lab";
 import { CSSProperties, MouseEvent, useState } from "react";
 
-import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";
+import { AdjustableFlexbox, AdjustableFlexboxProps } from "./components";
 
 import "./toolbar.stories.css";
 

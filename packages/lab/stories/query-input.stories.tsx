@@ -1,15 +1,7 @@
-import {
-  BooleanOperator,
-  QueryInput,
-  QueryInputCategory,
-  QueryInputItem,
-} from "@salt-ds/lab";
+import { BooleanOperator, QueryInput, QueryInputItem } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { useMemo, useState } from "react";
-import {
-  QueryResultRow,
-  QueryResultTable,
-} from "./query-input/QueryResultTable";
+import { QueryResultRow, QueryResultTable } from "./components";
 
 import "./query-input.stories.css";
 
@@ -18,21 +10,6 @@ export default {
   component: QueryInput,
   argTypes: {},
 } as ComponentMeta<typeof QueryInput>;
-
-const categories: QueryInputCategory[] = [
-  {
-    name: "Project",
-    values: ["Project A", "Project B"],
-  },
-  {
-    name: "Location",
-    values: ["London", "New York", "Chicago", "Tokyo", "Singapore"],
-  },
-  {
-    name: "Role",
-    values: ["Project Manager", "Developer", "QA", "Analyst"],
-  },
-];
 
 const selectedItems: QueryInputItem[] = [
   {

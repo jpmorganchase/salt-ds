@@ -1,10 +1,10 @@
 import { Button } from "@salt-ds/core";
 import {
-  TabDescriptor,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
+  TabDescriptor,
 } from "@salt-ds/lab";
 
 export const CloseTabWarningDialog = ({
@@ -14,7 +14,7 @@ export const CloseTabWarningDialog = ({
   onConfirm,
   open = false,
 }: {
-  closedTab: string;
+  closedTab: TabDescriptor;
   onCancel: () => void;
   onClose: () => void;
   onConfirm: () => void;
@@ -24,7 +24,7 @@ export const CloseTabWarningDialog = ({
     <DialogTitle onClose={onClose}>Do you want to close this tab?</DialogTitle>
     <DialogContent>
       {`Closing the tab will cause any changes made to
-                  '${closedTab}' to be lost.`}
+                  '${closedTab.label}' to be lost.`}
     </DialogContent>
     <DialogActions>
       <Button onClick={onCancel}>Cancel</Button>

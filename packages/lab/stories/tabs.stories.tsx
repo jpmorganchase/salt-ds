@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { ComponentStory } from "@storybook/react";
-
 import { Button, SaltProvider, Text } from "@salt-ds/core";
 import { TabPanel, Tabs } from "@salt-ds/lab";
-import { CloseTabWarningDialog } from "./CloseTabWarningDialog";
+import { CloseTabWarningDialog } from "./components";
+
 export default {
   title: "Lab/Tabs",
   component: Tabs,
@@ -151,11 +151,11 @@ export const Controlled: TabsStory = () => {
     undefined
   );
   const [tabs, setTabs] = useState([
-    "Home",
-    "Transactions",
-    "Loans",
-    "Checks",
-    "Liquidity",
+    { label: "Home", closeable: false },
+    { label: "Transactions" },
+    { label: "Loans" },
+    { label: "Checks" },
+    { label: "Liquidity" },
   ]);
   const tabsRef = useRef<HTMLDivElement>(null);
 
@@ -201,7 +201,7 @@ export const Controlled: TabsStory = () => {
   const handleAddTab = () => {
     console.log(`handleAddTab`);
     const count = tabs.length;
-    setTabs((state) => state.concat([`Tab ${state.length + 1}`]));
+    setTabs((state) => state.concat([{ label: `Tab ${state.length + 1}` }]));
     setActiveTabIndex(count);
   };
 
@@ -216,9 +216,9 @@ export const Controlled: TabsStory = () => {
         ref={tabsRef}
         style={{ width: 600, height: 300 }}
       >
-        {tabs.map((label) => (
-          <TabPanel enableClose key={label} label={label} {...style}>
-            <Text>{`Content for ${label} tab`}</Text>
+        {tabs.map((tab) => (
+          <TabPanel enableClose key={tab.label} label={tab.label} {...style}>
+            <Text>{`Content for ${tab.label} tab`}</Text>
           </TabPanel>
         ))}
       </Tabs>
@@ -280,7 +280,11 @@ export const AddNewNoFocus: TabsStory = () => {
   const [closingTabIndex, setClosingTabIndex] = useState<number | undefined>(
     undefined
   );
-  const [tabs, setTabs] = useState(["Home", "Checks", "Liquidity"]);
+  const [tabs, setTabs] = useState([
+    { label: "Home" },
+    { label: "Checks" },
+    { label: "Liquidity" },
+  ]);
   const tabsRef = useRef<HTMLDivElement>(null);
 
   const onTabShouldClose = useCallback(
@@ -322,7 +326,7 @@ export const AddNewNoFocus: TabsStory = () => {
   };
 
   const handleAddTab = () => {
-    setTabs((state) => state.concat([`My Tab`]));
+    setTabs((state) => state.concat([{ label: `My Tab` }]));
   };
 
   return (
@@ -333,9 +337,9 @@ export const AddNewNoFocus: TabsStory = () => {
         ref={tabsRef}
         style={{ width: 600, height: 300 }}
       >
-        {tabs.map((label) => (
-          <TabPanel enableClose key={label} label={label} {...style}>
-            <Text>{`Content for ${label} tab`}</Text>
+        {tabs.map((tab) => (
+          <TabPanel enableClose key={tab.label} label={tab.label} {...style}>
+            <Text>{`Content for ${tab.label} tab`}</Text>
           </TabPanel>
         ))}
       </Tabs>

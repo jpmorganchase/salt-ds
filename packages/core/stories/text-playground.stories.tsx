@@ -1,5 +1,4 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-
 import { Text } from "@salt-ds/core";
 
 export default {

@@ -16,8 +16,7 @@ import {
 } from "@salt-ds/icons";
 import { Toolbar, ToolbarButton, ToolbarProps, Tooltray } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
-
-import { AdjustableFlexbox, AdjustableFlexboxProps } from "./story-components";
+import { AdjustableFlexbox, AdjustableFlexboxProps } from "./components";
 import "./toolbar.stories.css";
 
 export default {
