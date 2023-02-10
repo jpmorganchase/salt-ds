@@ -1,4 +1,5 @@
 export * from "./aria-announcer";
+export * from "./avatar";
 export * from "./border-item";
 export * from "./border-layout";
 export * from "./breakpoints";
