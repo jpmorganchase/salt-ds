@@ -15,7 +15,7 @@ import { GridColumnModel, GridRowModel } from "./Grid";
 
 export type GridColumnPin = "left" | "right" | null;
 
-type CellValidationState = "none" | "error" | "warning";
+type CellValidationState = "error" | "warning" | "success" | undefined;
 type CellValidationType = "strong" | "light";
 
 export interface GridCellProps<T, U = any> {

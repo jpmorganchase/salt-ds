@@ -41,6 +41,19 @@
   background-color: var(--salt-palette-error-background-emphasize);
 }
 
+.saltGridCell-editable .saltGridBaseCell-valueContainer-status-success,
+.saltGridBaseCell-status-success:focus .saltGridCursor {
+  border-color: var(--salt-status-success-borderColor);
+}
+
+.saltGridBaseCell-status-success:focus .saltGridCornerTag-focusOnly {
+  border-left-color: var(--salt-status-success-borderColor);
+}
+
+.saltGridBaseCell-valueContainer-status-success {
+  background-color: var(--salt-palette-success-background-emphasize);
+}
+
 .saltGridCell-editable .saltGridBaseCell-valueContainer-status-warning,
 .saltGridBaseCell-status-warning:focus .saltGridCursor {
   border-color: var(--salt-status-warning-borderColor);
@@ -87,6 +100,10 @@
 
 .saltGridBaseCell-statusContainer-status-error svg {
   fill: var(--salt-status-error-borderColor);
+}
+
+.saltGridBaseCell-statusContainer-status-success svg {
+  fill: var(--salt-status-success-borderColor);
 }
 
 .saltGridBaseCell-statusContainer.saltGridBaseCell-statusContainer-align-right {

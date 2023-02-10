@@ -37,9 +37,24 @@ const icons = {
       <circle cx="4" cy="4" r="4" />
     </svg>
   ),
+  success: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1em"
+      // height="1em"
+      viewBox="0 0 8 8"
+      fill="none"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M13.7668 2.63645L5.06034 12.0309L0.277532 7.56074L1.47248 6.28223L4.97136 9.55242L12.4832 1.4469L13.7668 2.63645Z"
+        fill="#24874B"
+      />
+    </svg>
+  ),
 };
 
-const noop = () => undefined;
 // Default component for grid cells. Provides selection, on-hover highlighting,
 // cursor etc.
 export function BaseCell<T>(props: GridCellProps<T>) {
@@ -52,27 +67,17 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     isSelected,
     isEditable,
     children,
-    getValidationStatus = noop,
-    getValidationMessage = noop,
+    validationStatus,
+    validationMessage,
     validationType = "light",
-    value,
     align,
   } = props;
 
   const { ref, isFocusableContent, onFocus } =
     useFocusableContent<HTMLTableCellElement>();
-  const validationFnArg = {
-    row,
-    column,
-    isFocused,
-    value,
-  };
-  const validationStatus = getValidationStatus(validationFnArg);
-  const validationMessage =
-    validationStatus && getValidationMessage(validationFnArg);
   const cellId = getCellId(row.key, column);
-  const hasValidation = validationStatus && validationStatus !== "none";
-  const hasValidationMessage = validationMessage || hasValidation;
+  const hasValidation = !!validationStatus;
+  const hasValidationMessage = !!validationMessage || hasValidation;
   const validationMessageId = `${cellId}-statusMessage`;
   return (
     <Cell
@@ -106,7 +111,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
         >
           {validationMessage
             ? validationMessage
-            : `Cell validation state is ${validationStatus}`}
+            : `Cell validation state is ${validationStatus as string}`}
         </div>
       ) : null}
       <div
