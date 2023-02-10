@@ -1,6 +1,6 @@
 import { forwardRef, useEffect } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { Avatar, AvatarProps } from "../avatar";
+import { Avatar, AvatarProps } from "@salt-ds/core";
 import { useContactDetailsContext } from "./internal";
 import { clsx } from "clsx";
 
@@ -25,7 +25,7 @@ export const ContactAvatar = forwardRef<HTMLDivElement, ContactAvatarProps>(
       return null;
     }
 
-    const avatarSize = variant === "default" ? "large" : "medium";
+    const avatarSize = variant === "default" ? 3 : 2;
     return (
       <Avatar
         {...restProps}
