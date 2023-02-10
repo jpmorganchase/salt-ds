@@ -12,32 +12,32 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
   }}
 />
 
-# Grid layout
+# Grid Layout
 
 Defines an equally distributed layout system using columns and rows which provides consistent and responsive layouts for building both components and application pages.
-The grid layout defaults to a 12 column grid with one row, but you can customize it using the `columns` and `rows` props.
+The Grid Layout defaults to a 12 column grid with one row, but you can customize it using the `columns` and `rows` props.
 For more complex layouts, it supports spanning across columns and rows.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--default-grid-layout" />
+  <Story id="core-layout-grid-layout--default" />
 </Canvas>
 
-## Use Grid layout when...
+## Use Grid Layout when...
 
 Your content is best displayed using a configurable number of columns and rows.
 
-Grid layout can take any number of children, and will by default display them in a 12 column grid (items after the 12th one will wrap).
+Grid Layout can take any number of children, and will by default display them in a 12 column grid (items after the 12th one will wrap).
 In order to change the number of columns displayed in the grid, you can reduce or increase the value of the `columns` prop.
 
-Grid layout is useful when you want to control the layout in both row and column dimensions, and it can achieve more complex forms when used in combination with `GridItems`.
+Grid Layout is useful when you want to control the layout in both row and column dimensions, and it can achieve more complex forms when used in combination with `GridItems`.
 
-### Don't use Grid layout when...
+### Don't use Grid Layout when...
 
-You want your layout to flow in a single dimension. In this case we recommend you having a look at [Stack layout](?path=/docs/documentation-core-layout-stacklayout--page), [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page) or [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
+You want your layout to flow in a single dimension. In this case we recommend you having a look at [Stack layout](?path=/docs/documentation-core-layout-stack-layout--page), [Flow layout](?path=/docs/documentation-core-layout-flow-layout--page) or [Flex layout](?path=/docs/documentation-core-layout-flex-layout--page).
 
 ### Examples
 
-#### Grid Item inside default grid layout
+#### Grid Item inside default Grid Layout
 
 A grid item allows more complex controls to the default behavior of a grid child, like defining how many rows or columns it will span, and its alignment.
 
@@ -46,7 +46,7 @@ A grid item allows more complex controls to the default behavior of a grid child
 You have an item that needs to take the space of more than one row/column or when you have an item that requires a different alignment to the component's default.
 
 <Canvas>
-  <Story id="core-layout-gridlayout-griditem--grid-item-wrapper" />
+  <Story id="core-layout-grid-layout-grid-item--grid-item-wrapper" />
 </Canvas>
 
 #### Responsive
@@ -60,7 +60,7 @@ You can use the default breakpoints or pass in your own to the `SaltProvider`.
 The flow of the grid is dependent on the viewport size.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--grid-layout-responsive-view-with-custom-breakpoints" />
+  <Story id="core-layout-grid-layout--responsive-view-with-custom-breakpoints" />
 </Canvas>
 
 #### Simple usage
@@ -68,7 +68,7 @@ The flow of the grid is dependent on the viewport size.
 The simple usage example shows `GridLayout` and `GridItems` being used to build a page footer where the first column takes up the most amount of space.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--grid-layout-footer" />
+  <Story id="core-layout-grid-layout--footer" />
 </Canvas>
 
 #### Composite usage
@@ -76,10 +76,10 @@ The simple usage example shows `GridLayout` and `GridItems` being used to build 
 The composite usage example shows a responsive blog built using `ResponsiveProps`.
 
 <Canvas>
-  <Story id="core-layout-gridlayout--grid-layout-composite" />
+  <Story id="core-layout-grid-layout--composite" />
 </Canvas>
 
-## Configuring Grid layout
+## Configuring Grid Layout
 
 ### API
 
@@ -100,9 +100,9 @@ columns={{ xs: 1, sm: 2, lg: 12, md: 12, xl: 12 }}
 
 ## Related components
 
-The grid layout is used in the following components
+The Grid Layout is used in the following components
 
-- [Border layout](?path=/docs/documentation-core-layout-borderlayout--page)
+- [Border Layout](?path=/docs/documentation-core-layout-border-layout--page)
 
 ### Classes
 
