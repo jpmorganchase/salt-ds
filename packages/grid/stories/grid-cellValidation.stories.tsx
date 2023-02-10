@@ -2,15 +2,17 @@ import {
   CellEditor,
   DropdownCellEditor,
   Grid,
+  GridCellValueProps,
   GridColumn,
   NumericCellEditor,
   NumericColumn,
   TextCellEditor,
 } from "../src";
 import { Story } from "@storybook/react";
-import { randomInt, randomNumber, randomText } from "./utils";
+import { faker } from "@faker-js/faker";
 import { useCallback, useState } from "react";
 import "./grid.stories.css";
+import { StatusIndicator } from "@salt-ds/core";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -28,29 +30,65 @@ interface RowExample {
   amount: number;
   price: number;
   discount: string;
+  status?: "error" | "warning" | "success";
 }
 
 const discountMap: Map<string, number> = new Map(
   discountOptions.map((n, i) => [n, discountValues[i]])
 );
-
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
 const getTotal = (r: RowExample) =>
-  r.amount * r.price * discountMap.get(r.discount)!;
+  formatter.format(r.amount * r.price * discountMap.get(r.discount)!);
 
 const useExampleDataSource = () => {
-  const [rows, setRows] = useState<RowExample[]>(
-    () =>
-      [...new Array(10).keys()].map((i) => {
-        return {
-          id: `Row${i + 1}`,
-          name: randomText(1, 5, 10),
-          description: randomText(1, 5, 10),
-          amount: randomInt(0, 100),
-          price: randomNumber(10, 100, 2),
-          discount: "-",
-        };
-      }) as RowExample[]
-  );
+  const [rows, setRows] = useState<RowExample[]>([
+    {
+      id: "Row1",
+      name: faker.commerce.productName(),
+      description: faker.commerce.productDescription(),
+      amount: faker.datatype.number({ min: 1, max: 100 }),
+      price: faker.datatype.number({ min: 10, max: 2000 }),
+      discount: "-",
+      status: "error",
+    },
+    {
+      id: "Row2",
+      name: faker.commerce.productName(),
+      description: faker.commerce.productDescription(),
+      amount: faker.datatype.number({ min: 1, max: 100 }),
+      price: faker.datatype.number({ min: 10, max: 2000 }),
+      discount: "-",
+    },
+    {
+      id: "Row3",
+      name: faker.commerce.productName(),
+      description: faker.commerce.productDescription(),
+      amount: faker.datatype.number({ min: 1, max: 100 }),
+      price: faker.datatype.number({ min: 10, max: 2000 }),
+      discount: "-",
+      status: "warning",
+    },
+    {
+      id: "Row4",
+      name: faker.commerce.productName(),
+      description: faker.commerce.productDescription(),
+      amount: faker.datatype.number({ min: 1, max: 100 }),
+      price: faker.datatype.number({ min: 10, max: 2000 }),
+      discount: "-",
+    },
+    {
+      id: "Row5",
+      name: faker.commerce.productName(),
+      description: faker.commerce.productDescription(),
+      amount: faker.datatype.number({ min: 1, max: 100 }),
+      price: faker.datatype.number({ min: 10, max: 2000 }),
+      discount: "-",
+      status: "success",
+    },
+  ]);
 
   const setName = useCallback(
     (row: RowExample, rowIndex: number, value: string) => {
@@ -114,9 +152,10 @@ export const CellValidation: Story = () => {
       <GridColumn
         id="name"
         name="Name"
+        defaultWidth={180}
         getValue={(r) => r.name}
         onChange={setName}
-        getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
+        getValidationStatus={({ row }) => (row.index > 2 ? "error" : undefined)}
         validationType="strong"
       >
         <CellEditor>
@@ -124,6 +163,7 @@ export const CellValidation: Story = () => {
         </CellEditor>
       </GridColumn>
       <GridColumn
+        defaultWidth={200}
         id="description"
         name="Description"
         getValue={(r) => r.description}
@@ -136,7 +176,9 @@ export const CellValidation: Story = () => {
         getValue={(r: RowExample) => r.amount}
         precision={0}
         onChange={setAmount}
-        getValidationStatus={({ row }) => (row.index > 4 ? "warning" : "none")}
+        getValidationStatus={({ row }) =>
+          row.index > 2 ? "warning" : undefined
+        }
         validationType="strong"
       >
         <CellEditor>
@@ -150,7 +192,7 @@ export const CellValidation: Story = () => {
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
         getValidationMessage={() => "This is a custom validation error message"}
-        getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
+        getValidationStatus={({ row }) => (row.index > 2 ? "error" : undefined)}
         validationType="strong"
       >
         <CellEditor>
@@ -167,16 +209,40 @@ export const CellValidation: Story = () => {
           <DropdownCellEditor options={discountOptions} />
         </CellEditor>
       </GridColumn>
-      <NumericColumn
+      <GridColumn
         id="total"
         name="Total"
         getValue={getTotal}
-        precision={4}
-        getValidationStatus={({ row }) => (row.index > 4 ? "error" : "none")}
+        align="left"
+        getValidationStatus={({ row }) => (row.index > 2 ? "error" : undefined)}
       />
     </Grid>
   );
 };
+
+const knownStatus = ["error", "warning", "success"];
+function RowValidationCell({
+  validationStatus,
+}: GridCellValueProps<RowExample>) {
+  if (!validationStatus || !knownStatus.includes(validationStatus)) return null;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%",
+        width: "100%",
+      }}
+    >
+      <StatusIndicator
+        aria-label={`Row ${validationStatus}`}
+        status={validationStatus}
+      />
+    </div>
+  );
+}
 
 export const RowValidation: Story = () => {
   const { setPrice, setDiscount, rows, setAmount, setName } =
@@ -190,13 +256,19 @@ export const RowValidation: Story = () => {
       columnSeparators
     >
       <GridColumn
+        id="status"
+        aria-label="Row status"
+        defaultWidth={30}
+        getValidationStatus={({ row }) => row.data.status}
+        cellValueComponent={RowValidationCell}
+      />
+      <GridColumn
         id="name"
         name="Name"
+        defaultWidth={180}
         getValue={(r) => r.name}
         onChange={setName}
-        getValidationStatus={({ row }) =>
-          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
-        }
+        getValidationStatus={({ row }) => row.data.status}
       >
         <CellEditor>
           <TextCellEditor />
@@ -205,11 +277,10 @@ export const RowValidation: Story = () => {
       <GridColumn
         id="description"
         name="Description"
+        defaultWidth={200}
         getValue={(r) => r.description}
         onChange={setName}
-        getValidationStatus={({ row }) =>
-          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
-        }
+        getValidationStatus={({ row }) => row.data.status}
       />
 
       <NumericColumn
@@ -218,9 +289,7 @@ export const RowValidation: Story = () => {
         getValue={(r: RowExample) => r.amount}
         precision={0}
         onChange={setAmount}
-        getValidationStatus={({ row }) =>
-          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
-        }
+        getValidationStatus={({ row }) => row.data.status}
       >
         <CellEditor>
           <NumericCellEditor />
@@ -232,9 +301,7 @@ export const RowValidation: Story = () => {
         precision={2}
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
-        getValidationStatus={({ row }) =>
-          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
-        }
+        getValidationStatus={({ row }) => row.data.status}
       >
         <CellEditor>
           <NumericCellEditor />
@@ -245,22 +312,18 @@ export const RowValidation: Story = () => {
         name="Discount"
         getValue={(r) => r.discount}
         onChange={setDiscount}
-        getValidationStatus={({ row }) =>
-          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
-        }
+        getValidationStatus={({ row }) => row.data.status}
       >
         <CellEditor>
           <DropdownCellEditor options={discountOptions} />
         </CellEditor>
       </GridColumn>
-      <NumericColumn
+      <GridColumn
         id="total"
         name="Total"
         getValue={getTotal}
-        precision={4}
-        getValidationStatus={({ row }) =>
-          row.index % 2 ? (row.index > 4 ? "error" : "warning") : "none"
-        }
+        align="left"
+        getValidationStatus={({ row }) => row.data.status}
       />
     </Grid>
   );

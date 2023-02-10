@@ -153,5 +153,8 @@
       "<rootDir>/node_modules/csstree-validator"
     ]
   },
-  "packageManager": "yarn@3.4.1"
+  "packageManager": "yarn@3.4.1",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0"
+  }
 }

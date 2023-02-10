@@ -3013,6 +3013,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@faker-js/faker@npm:^7.6.0":
+  version: 7.6.0
+  resolution: "@faker-js/faker@npm:7.6.0"
+  checksum: 942af6221774e8c98a0eb6bc75265e05fb81a941170377666c3439aab9495dd321d6beedc5406f07e6ad44262b3e43c20961f666d116ad150b78e7437dd1bb2b
+  languageName: node
+  linkType: hard
+
 "@floating-ui/core@npm:^0.7.0":
   version: 0.7.0
   resolution: "@floating-ui/core@npm:0.7.0"
@@ -4020,6 +4027,7 @@ __metadata:
   dependencies:
     "@changesets/cli": ^2.25.2
     "@cypress/code-coverage": ^3.10.0
+    "@faker-js/faker": ^7.6.0
     "@floating-ui/react-dom-interactions": ^0.5.0
     "@fontsource/open-sans": ^4.5.13
     "@internationalized/date": ^3.0.0
