@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/StackLayout",
+  title: "Core/Layout/Stack Layout",
   component: StackLayout,
   argTypes: {
     align: {
@@ -35,8 +35,8 @@ const DefaultStackLayoutStory: ComponentStory<typeof StackLayout> = (args) => {
     </StackLayout>
   );
 };
-export const DefaultStackLayout = DefaultStackLayoutStory.bind({});
-DefaultStackLayout.args = {};
+export const Default = DefaultStackLayoutStory.bind({});
+Default.args = {};
 
 const SeparatorsStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
@@ -49,8 +49,8 @@ const SeparatorsStory: ComponentStory<typeof FlexLayout> = (args) => {
     </StackLayout>
   );
 };
-export const StackLayoutWithSeparators = SeparatorsStory.bind({});
-StackLayoutWithSeparators.args = {
+export const WithSeparators = SeparatorsStory.bind({});
+WithSeparators.args = {
   separators: "center",
   direction: { sm: "row", xs: "column" },
 };

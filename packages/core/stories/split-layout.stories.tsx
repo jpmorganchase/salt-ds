@@ -104,27 +104,27 @@ const DefaultSplitLayoutStory: ComponentStory<typeof SplitLayout> = (args) => (
   <SplitLayout {...args} />
 );
 
-export const DefaultSplitLayout = DefaultSplitLayoutStory.bind({});
-DefaultSplitLayout.args = {
+export const Default = DefaultSplitLayoutStory.bind({});
+Default.args = {
   startItem: startItem,
   endItem: endItem,
   direction: { xs: "column", sm: "row" },
 };
 
-export const EndOnlySplitLayout = DefaultSplitLayoutStory.bind({});
-EndOnlySplitLayout.args = {
+export const EndOnly = DefaultSplitLayoutStory.bind({});
+EndOnly.args = {
   endItem: endItem,
 };
 
-export const SplitLayoutSimpleUsage = DefaultSplitLayoutStory.bind({});
-SplitLayoutSimpleUsage.args = {
+export const SimpleUsage = DefaultSplitLayoutStory.bind({});
+SimpleUsage.args = {
   startItem: startButtonsItem,
   endItem: endButtonsItem,
   direction: { xs: "column", sm: "row" },
 };
 
-export const VerticalSplitLayout = DefaultSplitLayoutStory.bind({});
-VerticalSplitLayout.args = {
+export const Vertical = DefaultSplitLayoutStory.bind({});
+Vertical.args = {
   align: "center",
   startItem: topItem,
   endItem: bottomItem,
