@@ -102,6 +102,17 @@ export function TableRow<T>(props: TableRowProps<T>) {
         const isFocused = cursorColIdx === column.index;
         const isSelected =
           isCellSelected && isCellSelected(row.index, column.index);
+        const validationFnArg = {
+          row,
+          column,
+          isFocused,
+          value,
+        };
+        const validationStatus =
+          column.info.props.getValidationStatus?.(validationFnArg);
+        const validationMessage =
+          validationStatus &&
+          column.info.props.getValidationMessage?.(validationFnArg);
 
         return (
           <Cell
@@ -111,8 +122,8 @@ export function TableRow<T>(props: TableRowProps<T>) {
             isFocused={isFocused}
             isSelected={isSelected}
             isEditable={isEditable}
-            getValidationStatus={column.info.props.getValidationStatus}
-            getValidationMessage={column.info.props.getValidationMessage}
+            validationStatus={validationStatus}
+            validationMessage={validationMessage}
             validationType={column.info.props.validationType}
             value={value}
             align={column.info.props.align}
@@ -122,6 +133,9 @@ export function TableRow<T>(props: TableRowProps<T>) {
               row={row}
               value={value}
               isFocused={isFocused}
+              validationStatus={validationStatus}
+              validationMessage={validationMessage}
+              validationType={column.info.props.validationType}
             />
           </Cell>
         );
