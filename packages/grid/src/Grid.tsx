@@ -440,34 +440,41 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
     if (customSortingFn) {
       return customSortingFn({ rowData, sortByColumnId, sortOrder });
-    } else {
-      const valueGetter =
-        getColById(sortByColumnId)?.info.props.getValue ||
-        ((r: T) => {
-          return r[sortByColumnId];
-        });
-
-      let sortedData = [...rowData].sort((a, b) =>
-        valueGetter(a) < valueGetter(b) ? -1 : 1
-      );
-
-      if (sortOrder === "desc") {
-        sortedData = sortedData.reverse();
-      }
-      return sortedData;
     }
-  }, [rowData, sortByColumnId, sortOrder]);
+
+    const valueGetter =
+      getColById(sortByColumnId)?.info.props.getValue ||
+      ((r: T) => {
+        return r[sortByColumnId];
+      });
+
+    const sortedData = [...rowData].sort((a, b) =>
+      valueGetter(a) < valueGetter(b) ? -1 : 1
+    );
+
+    if (sortOrder === "desc") {
+      return sortedData.reverse();
+    }
+
+    return sortedData;
+  }, [getColById, isSortMode, rowData, sortByColumnId, sortOrder]);
 
   const onClickSortColumn = useCallback(
     (colHeaderId: GridColumnProps["id"]) => {
       if (sortByColumnId === colHeaderId) {
-        setSortOrder(
-          sortOrder === "asc" ? "desc" : sortOrder === "desc" ? "none" : "asc"
-        );
+        switch (sortOrder) {
+          case "asc":
+            setSortOrder("desc");
+            break;
+          case "desc":
+            setSortOrder("none");
+            break;
+          default:
+            setSortOrder("asc");
+        }
       } else {
         setSortByColumnId(colHeaderId);
         setSortOrder("asc");
-        console.log(`first click: set sortOrder to asc`);
       }
     },
     [sortByColumnId, sortOrder]

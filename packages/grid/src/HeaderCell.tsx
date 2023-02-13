@@ -51,11 +51,8 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
     const className = withBaseName("sortable");
     const icon = (
       <FlexLayout className={className} justify={justify} aria-hidden>
-        {sortOrder === "asc" ? (
-          <ArrowUpIcon />
-        ) : sortOrder === "desc" ? (
-          <ArrowDownIcon />
-        ) : null}
+        {sortOrder === "asc" && <ArrowUpIcon />}
+        {sortOrder === "desc" && <ArrowDownIcon />}
       </FlexLayout>
     );
 
