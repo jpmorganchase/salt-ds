@@ -11,7 +11,7 @@ import {
   useState,
 } from "react";
 import { useGridContext } from "./GridContext";
-import { GridColumnModel, GridRowModel } from "./Grid";
+import { GridColumnModel, GridRowModel, SortOrder } from "./Grid";
 
 export type GridColumnPin = "left" | "right" | null;
 
@@ -54,6 +54,21 @@ export interface GridColumnProps<T = any> {
    * Unique identifier of the column.
    * */
   id: string; // TODO make optional
+  /**
+   * Enables sorting (by sort order: `asc | desc | none`) for the column.
+   * To enable column header's keyboard navigation on sort,
+   * users need to set `headerIsFocusable` prop to `true` in Grid component.
+   * To customise how GridColumn data sorts, use also  `customSort` or `onSortOrderChanged`.
+   * */
+  sortable?: boolean;
+  /**
+   * Custom sorting function. Use for client side sorting.
+   * */
+  customSort?: (args: { rowData: T[]; sortOrder: SortOrder }) => T[];
+  /**
+   * Exposes GridColumn sort order. Use for server side sorting.
+   * */
+  onSortOrderChange?: (args: { sortOrder: SortOrder }) => void;
   /**
    * Name is displayed on the column header by default.
    * */
