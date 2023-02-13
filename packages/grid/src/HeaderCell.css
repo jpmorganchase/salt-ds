@@ -88,3 +88,7 @@
   cursor: col-resize;
   z-index: 2;
 }
+
+[aria-label="sort column"] {
+  cursor: pointer;
+}

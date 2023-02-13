@@ -100,7 +100,8 @@ const CellCustomizationTemplate: Story<{}> = () => {
         name="Bid/Ask"
         id="bidAsk"
         defaultWidth={120}
-        getValue={(r) => r.currencyPair}
+        getValue={(r) => r.bidAskPrice.bid}
+        isSortable
         cellValueComponent={BidAskCellValue}
       />
       <GridColumn

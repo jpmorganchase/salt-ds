@@ -55,6 +55,20 @@ export interface GridColumnProps<T = any> {
    * */
   id: string; // TODO make optional
   /**
+   * Enables sorting for the column.
+   * To enable column header's keyboard navigation on sort,
+   * users need to set `headerIsFocusable` prop to `true` in Grid component.
+   * */
+  isSortable?: boolean;
+  /**
+   * Custom sorting function.
+   * */
+  customSort?: (args: {
+    rowData: T[];
+    sortByColumnId: string;
+    sortOrder: string;
+  }) => T[];
+  /**
    * Name is displayed on the column header by default.
    * */
   name?: string;

@@ -11,7 +11,7 @@ import React, {
   useState,
 } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { GridColumnInfo } from "./GridColumn";
+import { GridColumnInfo, GridColumnProps } from "./GridColumn";
 import { GridContext } from "./GridContext";
 import { clsx } from "clsx";
 import {
@@ -57,6 +57,7 @@ import { ColumnDragContext } from "./ColumnDragContext";
 import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
 import { ColumnDataContext } from "./ColumnDataContext";
+import { ColumnSortContext } from "./ColumnSortContext";
 
 const withBaseName = makePrefixer("saltGrid");
 
@@ -65,6 +66,7 @@ export type ColumnGroupRowSeparatorType = "first" | "regular" | "last";
 export type ColumnGroupColumnSeparatorType = "regular" | "none" | "pinned";
 export type GridRowSelectionMode = "single" | "multi" | "none";
 export type GridCellSelectionMode = "range" | "none";
+export type SortOrder = "none" | "asc" | "desc";
 
 export type RowKeyGetter<T> = (row: T, index: number) => string;
 
@@ -226,6 +228,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     headerIsFocusable ? "header" : "body"
   );
 
+  const [sortByColumnId, setSortByColumnId] =
+    useState<GridColumnProps["id"]>("");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("none");
+
   const [editMode, setEditMode] = useState<boolean>(false);
   const [initialText, setInitialText] = useState<string | undefined>(undefined);
 
@@ -293,8 +299,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const midGrpByColId = useMemo(() => {
     const m = new Map<string, GridColumnGroupModel>();
-    for (let g of midGroups) {
-      for (let c of g.childrenIds) {
+    for (const g of midGroups) {
+      for (const c of g.childrenIds) {
         m.set(c, g);
       }
     }
@@ -425,6 +431,65 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [getColById]
   );
 
+  const isSortMode = sortByColumnId && sortOrder !== "none";
+
+  const sortedRowData = useMemo(() => {
+    if (!isSortMode) return rowData;
+
+    const customSortingFn = getColById(sortByColumnId)?.info.props.customSort;
+
+    if (customSortingFn) {
+      return customSortingFn({ rowData, sortByColumnId, sortOrder });
+    } else {
+      const valueGetter =
+        getColById(sortByColumnId)?.info.props.getValue ||
+        ((r: T) => {
+          return r[sortByColumnId];
+        });
+
+      let sortedData = [...rowData].sort((a, b) =>
+        valueGetter(a) < valueGetter(b) ? -1 : 1
+      );
+
+      if (sortOrder === "desc") {
+        sortedData = sortedData.reverse();
+      }
+      return sortedData;
+    }
+  }, [rowData, sortByColumnId, sortOrder]);
+
+  const onClickSortColumn = useCallback(
+    (colHeaderId: GridColumnProps["id"]) => {
+      if (sortByColumnId === colHeaderId) {
+        setSortOrder(
+          sortOrder === "asc" ? "desc" : sortOrder === "desc" ? "none" : "asc"
+        );
+      } else {
+        setSortByColumnId(colHeaderId);
+        setSortOrder("asc");
+        console.log(`first click: set sortOrder to asc`);
+      }
+    },
+    [sortByColumnId, sortOrder]
+  );
+
+  const columnSortContext: ColumnSortContext = useMemo(
+    () => ({
+      sortByColumnId,
+      setSortByColumnId,
+      sortOrder,
+      setSortOrder,
+      onClickSortColumn,
+    }),
+    [
+      sortByColumnId,
+      setSortByColumnId,
+      sortOrder,
+      setSortOrder,
+      onClickSortColumn,
+    ]
+  );
+
   const scroll = useCallback(
     (left?: number, top?: number, source?: "user" | "table") => {
       setScrollSource(source || "user");
@@ -471,7 +536,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     if (editMode || cursorRowIdx == undefined || cursorColIdx == undefined) {
       return;
     }
-    const r = rowData[cursorRowIdx];
+    const r = sortedRowData[cursorRowIdx];
     const c = cols[cursorColIdx];
     const isEditable = !!contextValue.getEditor(c.info.props.id);
     if (isEditable) {
@@ -499,7 +564,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         `onChange is not specified for editable column "${c.info.props.id}".`
       );
     } else {
-      handler(rowData[cursorRowIdx], cursorRowIdx, value);
+      handler(sortedRowData[cursorRowIdx], cursorRowIdx, value);
     }
     setEditMode(false);
     focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
@@ -525,7 +590,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     onMouseDown: onRowSelectionMouseDown,
   } = useRowSelection(
     rowKeyGetter,
-    rowData,
+    sortedRowData,
     defaultSelectedRowIdxs,
     selectedRowIdxs,
     rowSelectionMode,
@@ -546,10 +611,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       setFocusedPart(part);
       colIdx = clamp(colIdx, 0, cols.length - 1);
       if (part === "body") {
-        if (rowData.length < 1 || cols.length < 1) {
+        if (sortedRowData.length < 1 || cols.length < 1) {
           return;
         }
-        rowIdx = clamp(rowIdx, 0, rowData.length - 1);
+        rowIdx = clamp(rowIdx, 0, sortedRowData.length - 1);
       } else if (part === "header") {
         rowIdx = 0; // There is only one row in the header currently
       }
@@ -564,7 +629,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [
       setCursorRowIdx,
       setCursorColIdx,
-      rowData,
+      sortedRowData,
       rowKeyGetter,
       cols,
       rootRef.current,
@@ -576,7 +641,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     ]
   );
 
-  const rows = useRowModels(rowKeyGetter, rowData, visRowRng);
+  const rows = useRowModels(rowKeyGetter, sortedRowData, visRowRng);
 
   const isLeftRaised = scrollLeft > 0;
   const isRightRaised = scrollLeft + clientMidWidth < midWidth;
@@ -772,7 +837,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
               if (cursorColIdx != undefined) {
                 rangeSelection.selectRange({
                   start: { rowIdx: 0, colIdx: cursorColIdx },
-                  end: { rowIdx: rowData.length, colIdx: cursorColIdx },
+                  end: { rowIdx: sortedRowData.length, colIdx: cursorColIdx },
                 });
               }
             } else {
@@ -793,7 +858,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           if (event.ctrlKey || event.metaKey) {
             rangeSelection.selectRange({
               start: { rowIdx: 0, colIdx: 0 },
-              end: { rowIdx: rowData.length, colIdx: cols.length },
+              end: { rowIdx: sortedRowData.length, colIdx: cols.length },
             });
             selectAll();
           }
@@ -812,7 +877,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       selectAll,
       cursorColIdx,
       cursorRowIdx,
-      rowData.length,
+      sortedRowData.length,
       cols.length,
       focusedPart,
     ]
@@ -832,7 +897,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         const [minCol, maxCol] = [start.colIdx, end.colIdx].sort(c);
         const text: string[] = [];
         for (let r = minRow; r <= maxRow; ++r) {
-          const row = rowData[r];
+          const row = sortedRowData[r];
           const rowText: string[] = [];
           for (let c = minCol; c <= maxCol; ++c) {
             const col = cols[c]!;
@@ -910,7 +975,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           if (!event.ctrlKey) {
             moveCursor(focusedPart, cursorRowIdx, cols.length - 1);
           } else {
-            moveCursor(focusedPart, rowData.length - 1, cols.length - 1);
+            moveCursor(focusedPart, sortedRowData.length - 1, cols.length - 1);
           }
           break;
         case "Tab":
@@ -926,7 +991,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
               if (cursorColIdx < cols.length - 1) {
                 moveCursor(focusedPart, cursorRowIdx, cursorColIdx + 1);
               } else {
-                if (cursorRowIdx < rowData.length - 1) {
+                if (cursorRowIdx < sortedRowData.length - 1) {
                   moveCursor(focusedPart, cursorRowIdx + 1, 0);
                 }
               }
@@ -972,7 +1037,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       cursorRowIdx,
       cursorRowIdx,
       cols.length,
-      rowData.length,
+      sortedRowData.length,
       headerIsFocusable,
       pageSize,
     ]
@@ -1057,118 +1122,122 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
               <SizingContext.Provider value={sizingContext}>
                 <EditorContext.Provider value={editorContext}>
                   <ColumnDataContext.Provider value={columnDataContext}>
-                    {props.children}
-                    <div
-                      className={clsx(
-                        withBaseName(),
-                        {
-                          [withBaseName("zebra")]: zebra,
-                          [withBaseName("columnSeparators")]: columnSeparators,
-                          [withBaseName("pinnedSeparators")]: pinnedSeparators,
-                          [withBaseName("primaryBackground")]:
-                            variant === "primary",
-                          [withBaseName("secondaryBackground")]:
-                            variant === "secondary",
-                        },
-                        className
-                      )}
-                      style={rootStyle}
-                      ref={rootRef}
-                      onKeyDown={onKeyDown}
-                      onKeyUp={onKeyUp}
-                      onMouseDown={onMouseDown}
-                      onFocus={onFocus}
-                      onBlur={onBlur}
-                      data-name="grid-root"
-                      role="grid"
-                      aria-colcount={cols.length}
-                      aria-rowcount={rowCount + headRowCount}
-                      aria-multiselectable={rowSelectionMode === "multi"}
-                    >
-                      <CellMeasure setRowHeight={setRowHeight} />
-                      <Scrollable
-                        resizeClient={resizeClient}
-                        scrollLeft={scrollLeft}
-                        scrollTop={scrollTop}
-                        scrollSource={scrollSource}
-                        scroll={scroll}
-                        scrollerRef={scrollableRef}
-                        topRef={topRef}
-                        rightRef={rightRef}
-                        bottomRef={bottomRef}
-                        leftRef={leftRef}
-                        middleRef={middleRef}
-                      />
-                      {!hideHeader && leftCols.length > 0 && (
-                        <TopLeftPart
-                          onWheel={onWheel}
-                          columns={leftCols}
-                          columnGroups={leftGroups}
-                          rightShadow={isLeftRaised}
-                          bottomShadow={isHeaderRaised}
-                        />
-                      )}
-                      {!hideHeader && (
-                        <TopPart
-                          columns={headVisibleColumns}
-                          columnGroups={visColGrps}
+                    <ColumnSortContext.Provider value={columnSortContext}>
+                      {props.children}
+                      <div
+                        className={clsx(
+                          withBaseName(),
+                          {
+                            [withBaseName("zebra")]: zebra,
+                            [withBaseName("columnSeparators")]:
+                              columnSeparators,
+                            [withBaseName("pinnedSeparators")]:
+                              pinnedSeparators,
+                            [withBaseName("primaryBackground")]:
+                              variant === "primary",
+                            [withBaseName("secondaryBackground")]:
+                              variant === "secondary",
+                          },
+                          className
+                        )}
+                        style={rootStyle}
+                        ref={rootRef}
+                        onKeyDown={onKeyDown}
+                        onKeyUp={onKeyUp}
+                        onMouseDown={onMouseDown}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
+                        data-name="grid-root"
+                        role="grid"
+                        aria-colcount={cols.length}
+                        aria-rowcount={rowCount + headRowCount}
+                        aria-multiselectable={rowSelectionMode === "multi"}
+                      >
+                        <CellMeasure setRowHeight={setRowHeight} />
+                        <Scrollable
+                          resizeClient={resizeClient}
+                          scrollLeft={scrollLeft}
+                          scrollTop={scrollTop}
+                          scrollSource={scrollSource}
+                          scroll={scroll}
+                          scrollerRef={scrollableRef}
                           topRef={topRef}
-                          onWheel={onWheel}
-                          midGap={midGap}
-                          bottomShadow={isHeaderRaised}
-                        />
-                      )}
-                      {!hideHeader && rightCols.length > 0 && (
-                        <TopRightPart
-                          onWheel={onWheel}
-                          columns={rightCols}
-                          columnGroups={rightGroups}
-                          leftShadow={isRightRaised}
-                          bottomShadow={isHeaderRaised}
-                        />
-                      )}
-                      {leftCols.length > 0 && (
-                        <LeftPart
-                          leftRef={leftRef}
-                          onWheel={onWheel}
-                          columns={leftCols}
-                          rows={rows}
-                          rightShadow={isLeftRaised}
-                          hoverOverRowKey={hoverRowKey}
-                          setHoverOverRowKey={setHoverRowKey}
-                          zebra={zebra}
-                        />
-                      )}
-                      <MiddlePart
-                        middleRef={middleRef}
-                        onWheel={onWheel}
-                        columns={bodyVisibleColumns}
-                        rows={rows}
-                        hoverOverRowKey={hoverRowKey}
-                        setHoverOverRowKey={setHoverRowKey}
-                        midGap={midGap}
-                        zebra={zebra}
-                      />
-                      {rightCols.length > 0 && (
-                        <RightPart
                           rightRef={rightRef}
+                          bottomRef={bottomRef}
+                          leftRef={leftRef}
+                          middleRef={middleRef}
+                        />
+                        {!hideHeader && leftCols.length > 0 && (
+                          <TopLeftPart
+                            onWheel={onWheel}
+                            columns={leftCols}
+                            columnGroups={leftGroups}
+                            rightShadow={isLeftRaised}
+                            bottomShadow={isHeaderRaised}
+                          />
+                        )}
+                        {!hideHeader && (
+                          <TopPart
+                            columns={headVisibleColumns}
+                            columnGroups={visColGrps}
+                            topRef={topRef}
+                            onWheel={onWheel}
+                            midGap={midGap}
+                            bottomShadow={isHeaderRaised}
+                          />
+                        )}
+                        {!hideHeader && rightCols.length > 0 && (
+                          <TopRightPart
+                            onWheel={onWheel}
+                            columns={rightCols}
+                            columnGroups={rightGroups}
+                            leftShadow={isRightRaised}
+                            bottomShadow={isHeaderRaised}
+                          />
+                        )}
+                        {leftCols.length > 0 && (
+                          <LeftPart
+                            leftRef={leftRef}
+                            onWheel={onWheel}
+                            columns={leftCols}
+                            rows={rows}
+                            rightShadow={isLeftRaised}
+                            hoverOverRowKey={hoverRowKey}
+                            setHoverOverRowKey={setHoverRowKey}
+                            zebra={zebra}
+                          />
+                        )}
+                        <MiddlePart
+                          middleRef={middleRef}
                           onWheel={onWheel}
-                          columns={rightCols}
+                          columns={bodyVisibleColumns}
                           rows={rows}
-                          leftShadow={isRightRaised}
                           hoverOverRowKey={hoverRowKey}
                           setHoverOverRowKey={setHoverRowKey}
+                          midGap={midGap}
                           zebra={zebra}
                         />
-                      )}
-                      <ColumnDropTarget x={activeTarget?.x} />
-                      <ColumnGhost
-                        columns={cols}
-                        rows={rows}
-                        dragState={dragState}
-                        zebra={zebra}
-                      />
-                    </div>
+                        {rightCols.length > 0 && (
+                          <RightPart
+                            rightRef={rightRef}
+                            onWheel={onWheel}
+                            columns={rightCols}
+                            rows={rows}
+                            leftShadow={isRightRaised}
+                            hoverOverRowKey={hoverRowKey}
+                            setHoverOverRowKey={setHoverRowKey}
+                            zebra={zebra}
+                          />
+                        )}
+                        <ColumnDropTarget x={activeTarget?.x} />
+                        <ColumnGhost
+                          columns={cols}
+                          rows={rows}
+                          dragState={dragState}
+                          zebra={zebra}
+                        />
+                      </div>
+                    </ColumnSortContext.Provider>
                   </ColumnDataContext.Provider>
                 </EditorContext.Provider>
               </SizingContext.Provider>

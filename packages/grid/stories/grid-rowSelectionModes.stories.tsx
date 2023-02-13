@@ -2,7 +2,6 @@ import { Story } from "@storybook/react";
 import {
   Grid,
   GridColumn,
-  GridProps,
   GridRowSelectionMode,
   NumericColumn,
   RowSelectionCheckboxColumn,
@@ -78,6 +77,19 @@ const RowSelectionModesTemplate: Story<{}> = () => {
           precision={2}
           getValue={(r: DummyRow) => r.b}
           align={"right"}
+          isSortable
+          customSort={({ rowData, sortByColumnId, sortOrder }) => {
+            let sortedData = [...rowData].sort((a, b) =>
+              a[sortByColumnId] < b[sortByColumnId] ? -1 : 1
+            );
+
+            if (sortOrder === "desc") {
+              sortedData = sortedData.reverse();
+            }
+
+            console.log("inside customSort function");
+            return sortedData;
+          }}
         />
         <GridColumn name="C" id="c" defaultWidth={50} getValue={(r) => r.c} />
       </Grid>
