@@ -2,13 +2,13 @@ import {
   RefObject,
   UIEvent,
   useCallback,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
 import { KeySet } from "./keyset";
 import { CollectionItem } from "../common-hooks";
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 
 /**
  * [ item key, total height before the item, next row index, CollectionItem<Item>]
@@ -71,7 +71,7 @@ export const useVirtualization = <Item>({
     [data, itemGapSize, keys]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const viewport = viewportMeasures.current;
     const viewportEl = viewportRef.current;
     if (viewportEl) {

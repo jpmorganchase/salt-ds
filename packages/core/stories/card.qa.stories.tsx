@@ -1,10 +1,9 @@
-import { H1, Text } from "@salt-ds/core";
-import { Card } from "@salt-ds/lab";
+import { Card, H1, Text } from "@salt-ds/core";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Card/QA",
+  title: "Core/Card/QA",
   component: Card,
 } as ComponentMeta<typeof Card>;
 

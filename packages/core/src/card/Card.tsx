@@ -1,6 +1,6 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { makePrefixer } from "../utils";
 import "./Card.css";
 
 const withBaseName = makePrefixer("saltCard");

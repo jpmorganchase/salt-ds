@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Button, Density, ModeValues, SaltProvider } from "@salt-ds/core";
+import { Button, Card, Density, ModeValues, SaltProvider } from "@salt-ds/core";
 import {
-  Card,
   Checkbox,
   ToggleButton,
   ToggleButtonGroup,
@@ -22,6 +21,19 @@ const HIGH = 0;
 const NO_DENSITY = 4;
 
 const DENSITIES: Density[] = ["high", "medium", "low", "touch"];
+
+export const Default = () => {
+  return (
+    <SaltProvider density="high" mode="light">
+      <Card>
+        <div>
+          <h1>This is Card</h1>
+          <span>Using Nested DOM Elements</span>
+        </div>
+      </Card>
+    </SaltProvider>
+  );
+};
 
 export const ToggleTheme = () => {
   const [mode, setMode] = useState(LIGHT);

@@ -1,5 +1,16 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.1
+
+### Minor Changes
+
+- 7e660a8d: More Card from lab to core
+- b39e51b3: Move `Panel` from lab to core
+
+### Patch Changes
+
+- a0724642: Fix SSR support
+
 ## 1.0.0-alpha.0
 
 ### Major Changes

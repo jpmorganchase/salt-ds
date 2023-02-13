@@ -1,12 +1,7 @@
-import {
-  MutableRefObject,
-  RefObject,
-  useCallback,
-  useLayoutEffect,
-  useRef,
-} from "react";
+import { MutableRefObject, RefObject, useCallback, useRef } from "react";
 import { CollectionItem } from "./collectionTypes";
 import { ResizeHandler, useResizeObserver } from "../responsive";
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 
 const HeightOnly = ["height"];
 const HeightWithScroll = ["height", "scrollHeight"];
@@ -120,7 +115,7 @@ export const useViewportTracking = <Item>({
     [containerRef, contentRef, scrollTo, stickyHeaders]
   );
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const { height, contentHeight } = viewport.current;
     const item = indexPositions[highlightedIdx];
     if (contentHeight > height && item) {

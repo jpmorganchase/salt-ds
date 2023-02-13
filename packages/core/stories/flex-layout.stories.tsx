@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/FlexLayout",
+  title: "Core/Layout/Flex Layout",
   component: FlexLayout,
   subcomponents: { FlexItem },
   argTypes: {
@@ -41,10 +41,10 @@ export default {
   args: {
     gap: 3,
   },
-  excludeStories: ["FlexLayoutNestedExample"],
+  excludeStories: ["NestedExample"],
 } as ComponentMeta<typeof FlexLayout>;
 
-const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
+const DefaultStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 5 }, (_, index) => (
@@ -55,8 +55,8 @@ const DefaultFlexLayoutStory: ComponentStory<typeof FlexLayout> = (args) => {
     </FlexLayout>
   );
 };
-export const DefaultFlexLayout = DefaultFlexLayoutStory.bind({});
-DefaultFlexLayout.args = {
+export const Default = DefaultStory.bind({});
+Default.args = {
   wrap: true,
 };
 const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
@@ -70,8 +70,8 @@ const SeparatedItemsStory: ComponentStory<typeof FlexLayout> = (args) => {
     </FlexLayout>
   );
 };
-export const FlexLayoutWithSeparators = SeparatedItemsStory.bind({});
-FlexLayoutWithSeparators.args = {
+export const WithSeparators = SeparatedItemsStory.bind({});
+WithSeparators.args = {
   separators: "center",
   wrap: false,
   direction: { sm: "row", xs: "column" },
@@ -95,8 +95,8 @@ const Responsive: ComponentStory<typeof FlexLayout> = (args) => {
     </FlexLayout>
   );
 };
-export const FlexLayoutUsingResponsiveProps = Responsive.bind({});
-FlexLayoutUsingResponsiveProps.args = {
+export const UsingResponsiveProps = Responsive.bind({});
+UsingResponsiveProps.args = {
   justify: "start",
   direction: {
     xs: "column",
@@ -109,7 +109,7 @@ FlexLayoutUsingResponsiveProps.args = {
   },
 };
 
-const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
+const NestedExample: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       <div className="layout-content">Item 1</div>
@@ -120,8 +120,8 @@ const FlexLayoutNestedExample: ComponentStory<typeof FlexLayout> = (args) => {
     </FlexLayout>
   );
 };
-export const FlexLayoutNested = FlexLayoutNestedExample.bind({});
-FlexLayoutNested.args = {
+export const Nested = NestedExample.bind({});
+Nested.args = {
   justify: "space-between",
   wrap: true,
   gap: 6,
@@ -136,9 +136,7 @@ const flagsList: string[] = [
   "Antigua and Barbuda",
   "Argentina",
 ];
-export const FlexLayoutPolymorphicList: ComponentStory<typeof FlexLayout> = (
-  args
-) => {
+export const PolymorphicList: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args} as="ol" direction="column">
       {Array.from({ length: flagsList.length }, (_, index) => (

@@ -22,9 +22,7 @@ The Input component provides an editable field in which users can enter arbitrar
 ## Basic Input Component
 
 <Canvas>
-  <Story name="Basic Input" decorators={[withFlexGap]}>
-    <Input defaultValue={"Value"} style={{ width: "292px" }} />
-  </Story>
+  <Story id="lab-input--feature-input" />
 </Canvas>
 
 ## Read Only Input
@@ -32,13 +30,7 @@ The Input component provides an editable field in which users can enter arbitrar
 Read only mode switched on by providing the `readOnly` prop.
 
 <Canvas>
-  <Story name="Read Only" decorators={[withFlexGap]}>
-    <Input
-      defaultValue={"Read Only Input"}
-      readOnly
-      style={{ width: "292px" }}
-    />
-  </Story>
+  <Story id="lab-input--read-only" />
 </Canvas>
 
 ## Input with spellcheck
@@ -46,13 +38,7 @@ Read only mode switched on by providing the `readOnly` prop.
 Automatic spellchecking can be turned on by using `inputProps`.
 
 <Canvas>
-  <Story name="Input with spellcheck" decorators={[withFlexGap]}>
-    <Input
-      defaultValue="This is a comment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
-      style={{ width: "292px" }}
-      inputProps={{ spellCheck: true }}
-    />
-  </Story>
+  <Story id="lab-input--spellcheck" />
 </Canvas>
 
 ## Input with adornments
@@ -60,32 +46,7 @@ Automatic spellchecking can be turned on by using `inputProps`.
 Icons and text can be used as adornments at the start or end of the component.
 
 <Canvas>
-  <Story name="Input with adornments" decorators={[withFlexGap]}>
-    <div>
-      <Input
-        defaultValue="Prefix: Icon"
-        startAdornment={
-          <StaticInputAdornment>
-            <CallIcon />
-          </StaticInputAdornment>
-        }
-      />
-      <div style={{ height: "15px" }} />
-      <Input
-        defaultValue="Suffix: Icon"
-        endAdornment={
-          <StaticInputAdornment>
-            <CalendarIcon />
-          </StaticInputAdornment>
-        }
-      />
-      <div style={{ height: "15px" }} />
-      <Input
-        defaultValue="Suffix: Text"
-        endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
-      />
-    </div>
-  </Story>
+  <Story id="lab-input--adornments" />
 </Canvas>
 
 ## Used in FormField
@@ -93,11 +54,7 @@ Icons and text can be used as adornments at the start or end of the component.
 Input is a component that would commonly be nested inside a FormField.
 
 <Canvas>
-  <Story name="Used in FormField" decorators={[withFlexGap]}>
-    <FormField label="ADA compliant label" style={{ width: 292 }}>
-      <Input defaultValue="Value" />
-    </FormField>
-  </Story>
+  <Story id="lab-input--with-form-field" />
 </Canvas>
 
 # API
