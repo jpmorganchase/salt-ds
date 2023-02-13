@@ -134,7 +134,8 @@ export function useTooltip(props?: UseTooltipProps) {
   return {
     arrowProps,
     open,
-    triggerRef: reference,
+    floating,
+    reference,
     getTooltipProps,
     getTriggerProps,
   };

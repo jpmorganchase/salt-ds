@@ -93,15 +93,19 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       ...rest,
     };
 
-    const { arrowProps, open, triggerRef, getTriggerProps, getTooltipProps } =
-      useTooltip(hookProps);
+    const {
+      arrowProps,
+      open,
+      floating,
+      reference,
+      getTriggerProps,
+      getTooltipProps,
+    } = useTooltip(hookProps);
 
-    const { ref: tooltipRef, ...restTooltipProps } = getTooltipProps();
-
-    const triggerRefMerged = useForkRef(
+    const triggerRef = useForkRef(
       // @ts-ignore
       isValidElement(children) ? children.ref : null,
-      triggerRef
+      reference
     );
 
     return (
@@ -110,8 +114,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           <Portal disablePortal={disablePortal} container={container} ref={ref}>
             <div
               className={clsx(withBaseName(), withBaseName(status), className)}
-              ref={tooltipRef}
-              {...restTooltipProps}
+              ref={floating}
+              {...getTooltipProps()}
             >
               <div className={withBaseName("container")}>
                 {!hideIcon && (
@@ -132,8 +136,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
         {isValidElement(children) &&
           cloneElement(children, {
-            ref: triggerRefMerged,
             ...getTriggerProps(),
+            ref: triggerRef,
           })}
       </>
     );
