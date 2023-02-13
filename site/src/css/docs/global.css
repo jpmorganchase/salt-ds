@@ -1,0 +1,46 @@
+.docs-page-content h2 {
+  margin-top: calc(var(--salt-size-unit) * 3);
+  margin-bottom: calc(var(--salt-size-unit) * 2);
+}
+
+.docs-page-content h3 {
+  --ifm-h3-font-size: var(--salt-text-h3-fontSize);
+  --ifm-heading-font-weight: var(--salt-text-h3-fontWeight-strong);
+  --ifm-heading-line-height: var(--salt-text-h3-lineHeight);
+  --ifm-heading-color: var(--salt-text-primary-foreground);
+  margin-top: calc(var(--salt-size-unit) * 3);
+}
+
+.docs-page-content h2 + h3 {
+  margin-top: 0;
+}
+
+.docs-page-content h4 {
+  --ifm-h4-font-size: var(--salt-text-h4-fontSize);
+  --ifm-heading-font-weight: var(--salt-text-h4-fontWeight-strong);
+  --ifm-heading-line-height: var(--salt-text-h4-lineHeight);
+  margin-top: calc(var(--salt-size-unit) * 2);
+  margin-bottom: var(--salt-size-unit);
+}
+
+.docs-page-content h3 + h4 {
+  margin-top: 0;
+}
+
+.docs-page-content code {
+  --ifm-code-font-size: var(--salt-text-fontSize);
+  border: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  vertical-align: text-bottom;
+}
+
+.docs-page-content table + table {
+  margin-top: calc(var(--salt-size-unit) * 2);
+}
+
+.container article {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

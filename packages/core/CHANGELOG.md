@@ -1,5 +1,34 @@
 # @salt-ds/core
 
+## 1.1.0
+
+### Minor Changes
+
+- dfecfc12: extending `as` property from `FlexLayout` to `StackLayout` and `FlowLayout` so they can use polymorphic behaviour
+- 380bbb91: Remove foundations from 'characteristic' type and add missing characteristic 'differential'
+
+  ```diff
+  -  "delay"
+  -  "disabled"
+  -  "icon"
+  -  "shadow"
+  -  "size"
+  -  "spacing"
+  +  "differential"
+  ```
+
+- 7e660a8d: More Card from lab to core
+- 4a282d10: - Removed `div` wrapper with `display:content` from `FlexLayout` childrens with separators. This allows styles like `.classname > div` to be passed.
+  - Add separators to `StackLayout`.
+  - Add direction to `StackLayout` to allow horizontal stacks.
+- b39e51b3: Move `Panel` from lab to core
+
+### Patch Changes
+
+- 7a0effdb: Fix Link not removing underline on hover or focus.
+- a0724642: Fix SSR support
+- ed76bb21: Fixed an issue where Text styles would leak into nested text.
+
 ## 1.0.0
 
 ### Major Changes

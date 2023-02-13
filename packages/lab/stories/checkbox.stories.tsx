@@ -11,12 +11,6 @@ const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => {
   return <Checkbox {...args} />;
 };
 
-export const FeatureInput = CheckboxTemplate.bind({});
-
-FeatureInput.args = {
-  label: "Checkbox",
-};
-
 export const Default: ComponentStory<typeof Checkbox> = () => {
   return (
     <>
@@ -32,6 +26,12 @@ export const Default: ComponentStory<typeof Checkbox> = () => {
       />
     </>
   );
+};
+
+export const FeatureInput = CheckboxTemplate.bind({});
+
+FeatureInput.args = {
+  label: "Checkbox",
 };
 
 export const Disabled: ComponentStory<typeof Checkbox> = () => {

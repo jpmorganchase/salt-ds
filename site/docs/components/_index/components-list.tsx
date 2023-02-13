@@ -184,7 +184,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-borderlayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-border-layout--page",
   },
   {
     name: "Breadcrumbs",
@@ -201,7 +201,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-button--button-variants",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-button--page",
   },
   {
     name: "Button Bar",
@@ -221,8 +221,11 @@ export const componentDetails: ComponentDetails[] = [
     name: "Card",
     description:
       "Conveniently displays content that’s composed of different elements that have varied sizes or supported actions.",
-    devStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
+    availableInCoreSince: "1.1.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-card--page",
   },
   {
     name: "Carousel",
@@ -338,7 +341,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flexlayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flex-layout--page",
   },
   {
     name: "Flow Layout",
@@ -348,7 +351,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flowlayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flow-layout--page",
   },
   {
     name: "Form Field",
@@ -371,7 +374,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-gridlayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-grid-layout--page",
   },
   {
     name: "Icon",
@@ -405,7 +408,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-link--internal-link",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-link--page",
   },
   {
     name: "List",
@@ -453,8 +456,11 @@ export const componentDetails: ComponentDetails[] = [
     name: "Panel",
     description:
       'Organizes content areas in an application by providing expand/collapse behavior, its own scroll bar, and "floating" and "docked" states.',
-    devStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
+    availableInCoreSince: "1.1.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-panel--page",
   },
   {
     name: "Parent Child Layout",
@@ -514,7 +520,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-toolkit-provider--simple-toolkit-provider-touch-density",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-salt-provider--page",
   },
   {
     name: "Scrim",
@@ -579,7 +585,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-stacklayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-stack-layout--page",
   },
   {
     name: "Status Indicator",
@@ -589,7 +595,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-statusindicator--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-status-indicator--page",
   },
   {
     name: "Stepped Tracker",
@@ -634,7 +640,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-text--primary",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-text--page",
   },
   {
     name: "Theme",

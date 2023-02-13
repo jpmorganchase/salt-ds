@@ -5,10 +5,10 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 import { Scrim } from "../../../scrim";
 
 const composedStories = composeStories(scrimStories);
-const { ScrimWithContentStatus } = composedStories;
+const { WithContentStatus } = composedStories;
 
 describe("Given a Scrim", () => {
-  checkAccessibility({ ScrimWithContentStatus });
+  checkAccessibility({ WithContentStatus });
 
   describe("WHEN autoFocusRef is set", () => {
     it("THEN it should autofocus that element after mount", () => {

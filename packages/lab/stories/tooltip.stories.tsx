@@ -29,7 +29,7 @@ export const Default: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const OpenTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Open: Story<TooltipProps & UseTooltipProps> = (props) => {
   const { getTriggerProps, getTooltipProps } = useTooltip(props);
 
   const openProps = getTooltipProps({
@@ -46,7 +46,7 @@ export const OpenTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const ScrollTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Scroll: Story<TooltipProps & UseTooltipProps> = (props) => {
   const handleScrollButton = useCallback((node: HTMLButtonElement | null) => {
     node?.scrollIntoView({ block: "center", inline: "center" });
   }, []);
@@ -76,13 +76,13 @@ export const ScrollTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
     </div>
   );
 };
-ScrollTooltip.args = {
+Scroll.args = {
   title: "I am a tooltip",
   open: true,
   placement: "top",
 };
 
-export const ErrorTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
+export const Error: Story<TooltipProps & UseTooltipProps> = (props) => {
   const { status = "error", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
@@ -94,9 +94,7 @@ export const ErrorTooltip: Story<TooltipProps & UseTooltipProps> = (props) => {
   );
 };
 
-export const WarningTooltip: Story<TooltipProps & UseTooltipProps> = (
-  props
-) => {
+export const Warning: Story<TooltipProps & UseTooltipProps> = (props) => {
   const { status = "warning", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 
@@ -108,9 +106,7 @@ export const WarningTooltip: Story<TooltipProps & UseTooltipProps> = (
   );
 };
 
-export const SuccessTooltip: Story<TooltipProps & UseTooltipProps> = (
-  props
-) => {
+export const Success: Story<TooltipProps & UseTooltipProps> = (props) => {
   const { status = "success", ...rest } = props;
   const { getTriggerProps, getTooltipProps } = useTooltip(rest);
 

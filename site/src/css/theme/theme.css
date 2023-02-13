@@ -1,0 +1,40 @@
+.salt-theme[data-mode="light"] {
+  --site-tertiary-accent-green: var(--salt-color-green-500);
+  --site-tertiary-accent-teal: var(--salt-color-teal-500);
+  --site-tertiary-accent-blue: var(--salt-color-blue-900);
+  --site-tertiary-accent-purple: var(--salt-color-purple-500);
+  --site-tertiary-accent-red: var(--salt-color-red-700);
+  --site-tertiary-accent-orange: var(--salt-color-orange-600);
+}
+
+.salt-theme[data-mode="dark"] {
+  --site-tertiary-accent-green: var(--salt-color-green-20);
+  --site-tertiary-accent-teal: var(--salt-color-teal-50);
+  --site-tertiary-accent-blue: var(--salt-color-blue-50);
+  --site-tertiary-accent-purple: var(--salt-color-purple-50);
+  --site-tertiary-accent-red: var(--salt-color-red-50);
+  --site-tertiary-accent-orange: var(--salt-color-orange-30);
+}
+
+.salt-theme {
+  --ifm-heading-color: var(--salt-text-primary-foreground);
+  --ifm-h2-font-size: var(--salt-text-h2-fontSize);
+  --ifm-heading-font-weight: var(--salt-text-h2-fontWeight);
+  --ifm-heading-line-height: var(--salt-text-h2-lineHeight);
+  --ifm-link-hover-color: var(--salt-text-link-foreground-hover);
+  --ifm-footer-link-hover-color: var(--salt-text-link-foreground-hover);
+  --ifm-menu-link-padding-horizontal: calc(var(--salt-size-unit) * 2);
+  --ifm-menu-link-padding-vertical: var(--salt-size-unit);
+  --ifm-paragraph-margin-bottom: calc(var(--salt-size-unit) * 2);
+  --ifm-toc-border-color: var(--salt-color-gray-30); /* TODO: see if we can wrap sidebar with SaltProvider - use separable-tertiary-borderColor */
+  --image-border: var(--salt-palette-neutral-primary-border);
+  --ifm-menu-color-background-hover: none;
+}
+
+@media screen and (max-width: 768px) {
+  .salt-theme {
+    --ifm-h2-font-size: var(--salt-text-h3-fontSize);
+    --ifm-heading-font-weight: var(--salt-text-h3-fontWeight);
+    --ifm-heading-line-height: var(--salt-text-h3-lineHeight);
+  }
+}

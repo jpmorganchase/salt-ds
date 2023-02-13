@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Card, DeckLayout, Tab, Tabstrip } from "@salt-ds/lab";
+import { Card } from "@salt-ds/core";
+import { DeckLayout, Tab, Tabstrip } from "@salt-ds/lab";
 import "./layout-stories.css";
 
 export default {
@@ -58,8 +59,8 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
     </>
   );
 };
-export const DefaultDeckLayout = DefaultDeckLayoutStory.bind({});
-DefaultDeckLayout.args = {};
+export const Default = DefaultDeckLayoutStory.bind({});
+Default.args = {};
 
 const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);

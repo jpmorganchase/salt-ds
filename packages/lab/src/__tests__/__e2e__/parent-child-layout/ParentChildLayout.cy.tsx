@@ -3,13 +3,12 @@ import * as parentChildStories from "@stories/parent-child-layout.stories";
 
 const composedStories = composeStories(parentChildStories);
 
-const { DefaultParentChildLayout, SaltParentChildLayoutStacked } =
-  composedStories;
+const { Default, SaltStacked } = composedStories;
 
 describe("GIVEN a Parent and Child", () => {
   describe("WHEN no gap values are provided", () => {
     it("THEN it should display a gap by default", () => {
-      cy.mount(<DefaultParentChildLayout />);
+      cy.mount(<Default />);
 
       cy.get(".saltParentChildLayout").should("have.css", "column-gap", "24px");
 
@@ -21,7 +20,7 @@ describe("GIVEN a Parent and Child", () => {
     const parent = ["a", "b", "c", "d", "e"];
 
     it("THEN it should render as expected", () => {
-      cy.mount(<DefaultParentChildLayout parent={parent} />);
+      cy.mount(<Default parent={parent} />);
 
       cy.get(".saltParentChildItem")
         .first()
@@ -33,7 +32,7 @@ describe("GIVEN a Parent and Child", () => {
     const child = ["a", "b", "c", "d", "e"];
 
     it("THEN it should render as expected", () => {
-      cy.mount(<DefaultParentChildLayout child={child} />);
+      cy.mount(<Default child={child} />);
 
       // Make sure both child and parent are rendered before running next test `eq`
       cy.get(".saltParentChildItem").should("have.length", 2);
@@ -49,7 +48,7 @@ describe("GIVEN a Parent and Child", () => {
         viewportWidth: 1921,
       },
       () => {
-        cy.mount(<DefaultParentChildLayout />);
+        cy.mount(<Default />);
         cy.get(".saltParentChildItem").should("have.length", 2);
       }
     );
@@ -61,7 +60,7 @@ describe("GIVEN a Parent and Child", () => {
         viewportWidth: 700,
       },
       () => {
-        cy.mount(<DefaultParentChildLayout />);
+        cy.mount(<Default />);
         cy.get(".saltParentChildItem").should("have.length", 1);
       }
     );
@@ -69,7 +68,7 @@ describe("GIVEN a Parent and Child", () => {
 
   describe("WHEN in stacked view", () => {
     it("THEN it should only display the parent by default", () => {
-      cy.mount(<SaltParentChildLayoutStacked />);
+      cy.mount(<SaltStacked />);
 
       cy.get(".saltParentChildItem").should("have.length", 1);
 
@@ -79,7 +78,7 @@ describe("GIVEN a Parent and Child", () => {
     });
 
     it("THEN it should change to the child view when the button is clicked", () => {
-      cy.mount(<SaltParentChildLayoutStacked />);
+      cy.mount(<SaltStacked />);
 
       cy.findByRole("button", { name: /Show child/i }).click();
 
@@ -91,14 +90,14 @@ describe("GIVEN a Parent and Child", () => {
     });
 
     it("THEN it should change the direction of animations", () => {
-      cy.mount(<SaltParentChildLayoutStacked orientation="vertical" />);
+      cy.mount(<SaltStacked orientation="vertical" />);
 
       cy.get(".saltParentChildItem").should(
         "have.class",
         "saltParentChildItem-slide-bottom"
       );
 
-      cy.mount(<SaltParentChildLayoutStacked orientation="horizontal" />);
+      cy.mount(<SaltStacked orientation="horizontal" />);
 
       cy.get(".saltParentChildItem").should(
         "have.class",

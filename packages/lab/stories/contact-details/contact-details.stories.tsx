@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, Card } from "@salt-ds/core";
 import {
   CallIcon,
   ChatIcon,
@@ -24,7 +24,6 @@ import {
   SelectionChangeHandler,
   useOverlay,
   ValueComponentProps,
-  Card,
   FormField,
   Tooltip,
   useTooltip,
@@ -35,7 +34,7 @@ import { forwardRef, Fragment, ReactNode } from "react";
 import "./contact-details.stories.css";
 
 export default {
-  title: "Lab/ContactDetails",
+  title: "Lab/Contact Details",
   component: ContactDetails,
 };
 

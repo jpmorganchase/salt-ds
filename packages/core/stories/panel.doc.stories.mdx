@@ -1,0 +1,50 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import { Panel } from "@salt-ds/core";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Core/Panel"
+  component={Panel}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Panel
+
+A panel is a way to organize content areas in an application (both web and desktop). It provides expand/collapse behavior, it can have it's own scroll bar, and has "floating" and "docked" states. When a panel is removed from the application window it becomes a child window.
+
+## Panel Component
+
+Panel has two variants: `primary` and `secondary`. If not specified, the default value is `primary`.
+
+<Canvas>
+  <Story id="core-panel--primary" />
+</Canvas>
+
+## Configuring Panel
+
+### API
+
+```
+import { Panel } from "@salt-ds/core";
+```
+
+### Props
+
+<ArgsTable of={Panel} />
+
+### Classes
+
+<CSSClassTable of={Panel} />
+
+### Characteristics used
+
+<CharacteristicUsage of={Panel} />
+
+<HelpAndSupport />

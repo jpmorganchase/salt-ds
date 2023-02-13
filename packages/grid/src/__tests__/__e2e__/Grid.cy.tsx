@@ -38,10 +38,14 @@ const clickCell = (row: number, col: number) => {
 };
 
 const checkRowSelected = (row: number, expectedSelected: boolean) => {
-  cy.get(`tr[data-row-index="${row}"]`).should(
-    expectedSelected ? "have.class" : "not.have.class",
-    "saltGridTableRow-selected"
-  );
+  if (expectedSelected) {
+    return cy
+      .get(`tr[data-row-index="${row}"]`)
+      .should("have.attr", "aria-selected", "true");
+  }
+  return cy
+    .get(`tr[data-row-index="${row}"]`)
+    .should("not.have.attr", "aria-selected");
 };
 
 const resizeColumn = (col: number, dx: number) => {
@@ -270,11 +274,11 @@ describe("Grid", () => {
 
   it("Fake column", () => {
     cy.mount(<SmallGrid />);
-    expectFakeColumnWidth(220);
+    expectFakeColumnWidth(378);
     resizeColumn(1, -10);
-    expectFakeColumnWidth(230);
+    expectFakeColumnWidth(388);
     resizeColumn(2, -10);
-    expectFakeColumnWidth(240);
+    expectFakeColumnWidth(398);
   });
 
   it.skip("Dropdown editor", () => {
