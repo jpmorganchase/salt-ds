@@ -41,30 +41,13 @@ export const ListItemBase = memo(
       ...restProps
     } = props;
 
-    // const [openTooltip, setOpenTooltip] = useState(false);
-    // const { Tooltip, enterDelay, leaveDelay, placement } = useTooltipContext();
     const { current: detectTruncation } = useRef(typeof children === "string");
 
     const [overflowRef, isOverflowed] = useOverflowDetection<HTMLDivElement>();
     const setItemRef = useForkRef(overflowRef, ref);
 
-    // useEffect(() => {
-    //   if (detectTruncation && isOverflowed) {
-    //     const timeout = setTimeout(
-    //       () => setOpenTooltip(highlighted),
-    //       highlighted ? enterDelay : leaveDelay
-    //     );
-
-    //     return () => {
-    //       clearTimeout(timeout);
-    //     };
-    //   }
-    // }, [highlighted, enterDelay, leaveDelay, detectTruncation, isOverflowed]);
-
     return (
       <Tooltip
-        // placement={placement}
-        // open={openTooltip}
         disabled={!isOverflowed}
         content={tooltipText}
       >
