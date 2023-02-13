@@ -42,7 +42,7 @@ const Examples = () => (
     <ExampleRow name="Default">
       <Card>
         <div>
-          <H1 style={{ margin: "0", lineHeight: "1.3em" }}>
+          <H1>
             Card with Density
           </H1>
           <span>Here is some content</span>
