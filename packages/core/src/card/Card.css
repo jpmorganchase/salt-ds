@@ -1,9 +1,7 @@
 /* Styles applied to the root element */
 .saltCard {
   --card-borderColor: var(--salt-container-primary-borderColor);
-  --card-color: inherit;
   --card-shadow: var(--salt-overlayable-shadow);
-  --saltText-color: var(--card-color);
 
   background: var(--saltCard-background, var(--salt-container-primary-background));
   border-width: var(--saltCard-borderWidth, var(--salt-size-border));
@@ -11,13 +9,13 @@
   border-color: var(--saltCard-borderColor, var(--card-borderColor));
   border-radius: var(--saltCard-borderRadius, 0);
   box-shadow: var(--saltCard-boxShadow, var(--card-shadow));
-  color: var(--saltCard-color, var(--card-color));
   overflow: hidden;
   transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* TODO: this should possibly be moved to animation.css? */
 }
 
 /* Styles applied to Card content */
 .saltCard-content {
+  color: var(--saltCard-color, inherit);
   font-size: var(--saltCard-fontSize, inherit);
   letter-spacing: var(--saltCard-letterSpacing, inherit);
   line-height: var(--saltCard-lineHeight, inherit);
@@ -62,7 +60,6 @@ a:focus .saltCard-interactable.saltCard-disabled,
 .saltCard-disabled.saltCard-interactable,
 a:focus .saltCard-interactable.saltCard-disabled {
   --card-borderColor: var(--salt-container-primary-borderColor-disabled);
-  --card-color: var(--salt-text-primary-foreground-disabled);
 
   cursor: var(--saltCard-cursor-disabled, var(--salt-selectable-cursor-disabled));
   outline: none;
