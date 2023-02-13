@@ -4983,40 +4983,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-site@workspace:mosaic-site":
-  version: 0.0.0-use.local
-  resolution: "@jpmorganchase/mosaic-site@workspace:mosaic-site"
-  dependencies:
-    "@jpmorganchase/mosaic-cli": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-components": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-core": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-layouts": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-plugins": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-serialisers": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-site-preset-styles": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-store": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.19
-    "@jpmorganchase/mosaic-types": ^0.1.0-beta.19
-    "@next/eslint-plugin-next": 12.3.1
-    "@philpl/buble": ^0.19.7
-    "@types/node": ^16.0.0
-    "@types/react": ^18.0.26
-    concurrently: ^7.1.0
-    cross-env: ^7.0.3
-    eslint-config-next: ^12.3.1
-    next: ^13.1.1
-    patch-package: ^6.2.2
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
 "@jpmorganchase/mosaic-source-git-repo@npm:^0.1.0-beta.19":
   version: 0.1.0-beta.19
   resolution: "@jpmorganchase/mosaic-source-git-repo@npm:0.1.0-beta.19"
@@ -6136,6 +6102,40 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
+  languageName: unknown
+  linkType: soft
+
+"@salt-ds/mosaic-site@workspace:mosaic-site":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/mosaic-site@workspace:mosaic-site"
+  dependencies:
+    "@jpmorganchase/mosaic-cli": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-components": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-core": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-layouts": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-plugins": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-serialisers": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-site-preset-styles": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-store": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.19
+    "@jpmorganchase/mosaic-types": ^0.1.0-beta.19
+    "@next/eslint-plugin-next": 12.3.1
+    "@philpl/buble": ^0.19.7
+    "@types/node": ^16.0.0
+    "@types/react": ^18.0.26
+    concurrently: ^7.1.0
+    cross-env: ^7.0.3
+    eslint-config-next: ^12.3.1
+    next: ^13.1.1
+    patch-package: ^6.2.2
+    react: ^18.2.0
+    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -31238,8 +31238,8 @@ __metadata:
   linkType: hard
 
 "snyk-nodejs-lockfile-parser@npm:^1.43.1":
-  version: 1.46.0
-  resolution: "snyk-nodejs-lockfile-parser@npm:1.46.0"
+  version: 1.47.0
+  resolution: "snyk-nodejs-lockfile-parser@npm:1.47.0"
   dependencies:
     "@snyk/dep-graph": ^2.3.0
     "@snyk/graphlib": 2.1.9-patch.3
@@ -31257,7 +31257,7 @@ __metadata:
     uuid: ^8.3.0
   bin:
     parse-nodejs-lockfile: bin/index.js
-  checksum: cc6c1d2c920c398e7cc6f9d3d6fb6a1ff9aa99fa531eb34ede59acacd736c99fa6c6448ade8d5326e8fc6ecf27346c3728a89d6a6e3b63642536a2463a65f572
+  checksum: ccee8efe2bb2a6b305ed7b2f3a8c0fe108d10693de162fb1e944db7ccc2265ea61ccd5334025f996612a2272f3d60b47eb0f17a8c7a8afc8c9be5664b055f65b
   languageName: node
   linkType: hard
 
