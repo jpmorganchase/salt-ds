@@ -14,7 +14,7 @@ const withBaseName = makePrefixer("saltLink");
  * @example
  * <LinkExample to="#link">Action</LinkExample>
  */
-export interface LinkProps extends Omit<TextProps<"a">, "as"> {
+export interface LinkProps extends Omit<TextProps<"a">, "as" | "disabled"> {
   IconComponent?: ComponentType<IconProps>;
 }
 

@@ -57,6 +57,14 @@ Use `<strong>` or `<small>` tags inside your text components to wrap the chunks 
   <Story id="core-text--small" />
 </Canvas>
 
+### Disabled
+
+Although Text itself can't be disabled as such, it may be appropriate to add disabled styling to your Text component if it's nested inside another disabled component, such as Text within a disabled interactive Card. This can be achieved using the `disabled` prop.
+
+<Canvas>
+  <Story id="core-text--disabled" />
+</Canvas>
+
 ### StyleAs
 
 Although we do not encourage it, you may find it necessary to need to match one of our text components' styling to another element type. In this case you'd use the `styleAs` prop.
