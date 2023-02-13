@@ -3,14 +3,14 @@ import * as deckStories from "@stories/deck-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(deckStories);
-const { DefaultDeckLayout } = composedStories;
+const { Default } = composedStories;
 
 describe("Given a deck layout", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN no custom values are provided", () => {
     it("THEN it should render with default values", () => {
-      cy.mount(<DefaultDeckLayout />);
+      cy.mount(<Default />);
       cy.get(".saltDeckItem").should("have.length", 6);
       cy.get(".saltDeckItem")
         .eq(0)
@@ -22,13 +22,13 @@ describe("Given a deck layout", () => {
   });
   describe("WHEN an active index is provided", () => {
     it("THEN it should render in right DeckItem", () => {
-      cy.mount(<DefaultDeckLayout activeIndex={1} />);
+      cy.mount(<Default activeIndex={1} />);
       cy.get(".saltDeckItem")
         .eq(1)
         .should("have.class", "saltDeckItem-static-current");
     });
     it("THEN it should navigate trough items", () => {
-      cy.mount(<DefaultDeckLayout activeIndex={1} animation="slide" />);
+      cy.mount(<Default activeIndex={1} animation="slide" />);
       cy.get(".saltDeckItem")
         .eq(0)
         .should("have.class", "saltDeckItem-slide-previous");
@@ -70,7 +70,7 @@ describe("Given a deck layout", () => {
   });
   describe("WHEN animation and direction values are provided", () => {
     it("THEN deck should have vertical animation classes if direction is vertical", () => {
-      cy.mount(<DefaultDeckLayout direction="vertical" animation="slide" />);
+      cy.mount(<Default direction="vertical" animation="slide" />);
 
       cy.get(".saltDeckLayout-animate").should(
         "have.class",
@@ -78,7 +78,7 @@ describe("Given a deck layout", () => {
       );
     });
     it("THEN deck should have horizontal animation classes if direction is horizontal", () => {
-      cy.mount(<DefaultDeckLayout animation="slide" />);
+      cy.mount(<Default animation="slide" />);
       cy.get(".saltDeckLayout-animate").should(
         "have.class",
         "saltDeckLayout-slide-horizontal"

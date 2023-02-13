@@ -3,18 +3,12 @@ import * as layerStories from "@stories/layer-layout.stories";
 
 const composedStories = composeStories(layerStories);
 
-const {
-  DefaultLayerLayout,
-  LayerLayoutTop,
-  LayerLayoutRight,
-  LayerLayoutLeft,
-  LayerLayoutBottom,
-} = composedStories;
+const { Default, Top, Right, Left, Bottom } = composedStories;
 
 describe("GIVEN a Layer", () => {
   describe("WHEN scrim is enabled", () => {
     it("THEN it should display a scrim by default", () => {
-      cy.mount(<DefaultLayerLayout />);
+      cy.mount(<Default />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -24,7 +18,7 @@ describe("GIVEN a Layer", () => {
 
   describe("WHEN scrim is disabled", () => {
     it("THEN it should not display a scrim", () => {
-      cy.mount(<DefaultLayerLayout disableScrim={true} />);
+      cy.mount(<Default disableScrim={true} />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -34,7 +28,7 @@ describe("GIVEN a Layer", () => {
 
   describe("WHEN a position is not provided", () => {
     it("THEN it should default to a center position", () => {
-      cy.mount(<DefaultLayerLayout />);
+      cy.mount(<Default />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -44,7 +38,7 @@ describe("GIVEN a Layer", () => {
 
   describe("WHEN a position is provided", () => {
     it("THEN it should render at the top", () => {
-      cy.mount(<LayerLayoutTop />);
+      cy.mount(<Top />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -52,7 +46,7 @@ describe("GIVEN a Layer", () => {
     });
 
     it("THEN it should render on the right hand side", () => {
-      cy.mount(<LayerLayoutRight />);
+      cy.mount(<Right />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -60,7 +54,7 @@ describe("GIVEN a Layer", () => {
     });
 
     it("THEN it should render on the left hand side", () => {
-      cy.mount(<LayerLayoutLeft />);
+      cy.mount(<Left />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -68,7 +62,7 @@ describe("GIVEN a Layer", () => {
     });
 
     it("THEN it should render at the bottom", () => {
-      cy.mount(<LayerLayoutBottom />);
+      cy.mount(<Bottom />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -84,7 +78,7 @@ describe("GIVEN a Layer", () => {
         viewportWidth: 700,
       },
       () => {
-        cy.mount(<DefaultLayerLayout />);
+        cy.mount(<Default />);
 
         cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -104,7 +98,7 @@ describe("GIVEN a Layer", () => {
         viewportWidth: 961,
       },
       () => {
-        cy.mount(<DefaultLayerLayout fullScreenAtBreakpoint="md" />);
+        cy.mount(<Default fullScreenAtBreakpoint="md" />);
 
         cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -122,7 +116,7 @@ describe("GIVEN a Layer", () => {
         viewportWidth: 1821,
       },
       () => {
-        cy.mount(<DefaultLayerLayout fullScreenAtBreakpoint="xl" />);
+        cy.mount(<Default fullScreenAtBreakpoint="xl" />);
 
         cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -136,7 +130,7 @@ describe("GIVEN a Layer", () => {
 
   describe("WHEN a layer component is closed", () => {
     it("THEN it should display an exit animation", () => {
-      cy.mount(<DefaultLayerLayout />);
+      cy.mount(<Default />);
 
       cy.findByRole("button", { name: /Open Layer/i }).click();
 
@@ -161,7 +155,7 @@ describe("GIVEN a Layer", () => {
         viewportWidth: 700,
       },
       () => {
-        cy.mount(<DefaultLayerLayout />);
+        cy.mount(<Default />);
 
         cy.findByRole("button", { name: /Open Layer/i }).click();
 

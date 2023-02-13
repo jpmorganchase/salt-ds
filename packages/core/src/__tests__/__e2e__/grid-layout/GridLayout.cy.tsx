@@ -4,7 +4,7 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 import { SaltProvider } from "@salt-ds/core";
 
 const composedStories = composeStories(gridStories);
-const { DefaultGridLayout, GridLayoutNested } = composedStories;
+const { Default, Nested } = composedStories;
 
 const testElementsNumber = (elements: number) =>
   new RegExp(`^(\\d*\\.?\\d*px *){${elements}}$`);
@@ -15,7 +15,7 @@ describe("GIVEN a Grid", () => {
   describe("WHEN no props are provided", () => {
     it("THEN it should render 12 columns and 1 row", () => {
       // Passing empty columns to test default, as example needs columns for accessibility purposes.
-      cy.mount(<DefaultGridLayout columns={{}} />);
+      cy.mount(<Default columns={{}} />);
 
       cy.get(".saltGridLayout")
         .invoke("css", "grid-template-columns")
@@ -27,14 +27,14 @@ describe("GIVEN a Grid", () => {
     });
 
     it("THEN it should render with a default gap", () => {
-      cy.mount(<DefaultGridLayout />);
+      cy.mount(<Default />);
 
       cy.get(".saltGridLayout").should("have.css", "column-gap", "24px");
 
       cy.get(".saltGridLayout").should("have.css", "row-gap", "24px");
     });
     it("THEN nested items should not inherit css variables from parent", () => {
-      cy.mount(<GridLayoutNested />);
+      cy.mount(<Nested />);
 
       cy.get(".saltGridLayout").eq(0).should("have.css", "column-gap", "48px");
       cy.get(".saltGridLayout")
@@ -63,7 +63,7 @@ describe("GIVEN a Grid", () => {
     const rows = 3;
 
     it("THEN it should render multiple columns and rows", () => {
-      cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
+      cy.mount(<Default columns={columns} rows={rows} />);
 
       cy.get(".saltGridLayout")
         .invoke("css", "grid-template-columns")
@@ -86,7 +86,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 1921,
       },
       () => {
-        cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
+        cy.mount(<Default columns={columns} rows={rows} />);
 
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
@@ -105,7 +105,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 961,
       },
       () => {
-        cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
+        cy.mount(<Default columns={columns} rows={rows} />);
 
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
@@ -124,7 +124,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 700,
       },
       () => {
-        cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
+        cy.mount(<Default columns={columns} rows={rows} />);
 
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
@@ -143,7 +143,7 @@ describe("GIVEN a Grid", () => {
         viewportWidth: 600,
       },
       () => {
-        cy.mount(<DefaultGridLayout columns={columns} rows={rows} />);
+        cy.mount(<Default columns={columns} rows={rows} />);
 
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-columns")
@@ -177,7 +177,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
-            <DefaultGridLayout columns={columns} rows={rows} />
+            <Default columns={columns} rows={rows} />
           </SaltProvider>
         );
 
@@ -200,7 +200,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
-            <DefaultGridLayout columns={columns} rows={rows} />
+            <Default columns={columns} rows={rows} />
           </SaltProvider>
         );
 
@@ -223,7 +223,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
-            <DefaultGridLayout columns={columns} rows={rows} />
+            <Default columns={columns} rows={rows} />
           </SaltProvider>
         );
 
@@ -246,7 +246,7 @@ describe("GIVEN a Grid", () => {
       () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
-            <DefaultGridLayout columns={columns} rows={rows} />
+            <Default columns={columns} rows={rows} />
           </SaltProvider>
         );
 
