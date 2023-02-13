@@ -1,4 +1,4 @@
-import { Document } from '@jpmorganchase/mosaic-site-components';
+import { Document } from "@jpmorganchase/mosaic-site-components";
 
 export default class CustomisableDocument extends Document {
   /**

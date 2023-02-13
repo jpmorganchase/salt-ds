@@ -1,4 +1,7 @@
-import type { MosaicAppProps, MiddlewarePresetsProps } from '@jpmorganchase/mosaic-site-middleware';
+import type {
+  MosaicAppProps,
+  MiddlewarePresetsProps,
+} from "@jpmorganchase/mosaic-site-middleware";
 
 /**
  * In this file, define each of your own Middleware props, which combine together into MyAppProps
@@ -20,6 +23,7 @@ import type { MosaicAppProps, MiddlewarePresetsProps } from '@jpmorganchase/mosa
  * export interface MyAppProps extends MosaicAppProps<MyMiddlewareProps> {};
  */
 
-export declare type MyMiddlewareProps = MiddlewarePresetsProps /* & ExampleMiddlewareOptions */;
+export declare type MyMiddlewareProps =
+  MiddlewarePresetsProps /* & ExampleMiddlewareOptions */;
 
-export type MyAppProps = MosaicAppProps<MyMiddlewareProps>['props'];
+export type MyAppProps = MosaicAppProps<MyMiddlewareProps>["props"];

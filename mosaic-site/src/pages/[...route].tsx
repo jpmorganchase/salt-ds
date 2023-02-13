@@ -1,13 +1,13 @@
-import React from 'react';
-import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { Body } from '@jpmorganchase/mosaic-site-components';
+import React from "react";
+import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import { Body } from "@jpmorganchase/mosaic-site-components";
 import {
   createMiddlewareRunner,
   MiddlewareResult,
-  middlewarePresets
-} from '@jpmorganchase/mosaic-site-middleware';
+  middlewarePresets,
+} from "@jpmorganchase/mosaic-site-middleware";
 
-import type { MyAppProps, MyMiddlewareProps } from '../types/mosaic';
+import type { MyAppProps, MyMiddlewareProps } from "../types/mosaic";
 
 /**
  * Extend props passed to MyApp by adding your own middleware ('withMyExampleMiddleware') functions.
@@ -19,7 +19,10 @@ import type { MyAppProps, MyMiddlewareProps } from '../types/mosaic';
    ]
  );
  */
-const middlewareRunner = createMiddlewareRunner<MyMiddlewareProps>({}, middlewarePresets);
+const middlewareRunner = createMiddlewareRunner<MyMiddlewareProps>(
+  {},
+  middlewarePresets
+);
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
@@ -29,5 +32,5 @@ export async function getServerSideProps(
 }
 
 /** MyApp will be passed MyAppProps which is created by combining the result of all props created by Middleware */
-const MyApp = props => <Body {...props} />;
+const MyApp = (props) => <Body {...props} />;
 export default MyApp;
