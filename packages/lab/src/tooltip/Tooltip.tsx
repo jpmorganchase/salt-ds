@@ -93,17 +93,15 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       ...rest,
     };
 
-    const { arrowProps, open, getTriggerProps, getTooltipProps } =
+    const { arrowProps, open, triggerRef, getTriggerProps, getTooltipProps } =
       useTooltip(hookProps);
 
     const { ref: tooltipRef, ...restTooltipProps } = getTooltipProps();
 
-    const { ref: triggerRefHook, ...restTriggerProps } = getTriggerProps();
-
     const triggerRefMerged = useForkRef(
       // @ts-ignore
       isValidElement(children) ? children.ref : null,
-      triggerRefHook as Ref<HTMLDivElement>
+      triggerRef
     );
 
     return (
@@ -135,7 +133,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         {isValidElement(children) &&
           cloneElement(children, {
             ref: triggerRefMerged,
-            ...restTriggerProps,
+            ...getTriggerProps(),
           })}
       </>
     );

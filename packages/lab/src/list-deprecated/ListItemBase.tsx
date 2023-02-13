@@ -47,10 +47,7 @@ export const ListItemBase = memo(
     const setItemRef = useForkRef(overflowRef, ref);
 
     return (
-      <Tooltip
-        disabled={!isOverflowed}
-        content={tooltipText}
-      >
+      <Tooltip disabled={!isOverflowed} content={tooltipText}>
         <div
           aria-label={typeof children === "string" ? children : undefined}
           ref={detectTruncation ? ref : setItemRef}
