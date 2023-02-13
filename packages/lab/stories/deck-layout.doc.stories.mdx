@@ -5,42 +5,42 @@ import { DefaultDeckLayout } from "./deck-layout.stories";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Layout/DeckLayout"
+  title="Documentation/Lab/Layout/Deck Layout"
   component={DeckLayout}
   subcomponents={{ DeckItem }}
 />
 
-# Deck layout
+# Deck Layout
 
-The deck layout defines pages of content that appear within the same specified region, one at a time.
+The Deck Layout defines pages of content that appear within the same specified region, one at a time.
 
 It allows motion customization (`slide` or `fade`) and a custom direction for the animations (`horizontal` or `vertical`).
 
 This layout component also allows you to assign the initial page to be rendered via the `activeIndex` prop.
 
 <Canvas>
-  <Story id="lab-layout-decklayout--default-deck-layout" />
+  <Story id="lab-layout-deck-layout--default" />
 </Canvas>
 
-## Use Deck layout when...
+## Use Deck Layout when...
 
 You need to display a collection of children (pages). You may also choose to control the movement between pages by using buttons or tabs.
 
-### Don't use Deck layout when...
+### Don't use Deck Layout when...
 
-Instead you want your content to be displayed in a layer above the existing page. In this case we recommend you having a look at [Layer layout](?path=/docs/documentation-lab-layout-layerlayout--page).
+Instead you want your content to be displayed in a layer above the existing page. In this case we recommend you having a look at [Layer layout](?path=/docs/documentation-lab-layout-layer-layout--page).
 
 ### Example
 
 #### Deck used with tabstrip
 
-This example shows how the deck layout can be used in conjunction with `Tabstrip`. You can enable animations by setting the `animation` prop.
+This example shows how the Deck Layout can be used in conjunction with `Tabstrip`. You can enable animations by setting the `animation` prop.
 
 <Canvas>
-  <Story id="lab-layout-decklayout--deck-in-tabstrip" />
+  <Story id="lab-layout-deck-layout--deck-in-tabstrip" />
 </Canvas>
 
-## Configuring Deck layout
+## Configuring Deck Layout
 
 ### API
 
