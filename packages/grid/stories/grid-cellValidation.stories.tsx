@@ -191,7 +191,9 @@ export const CellValidation: Story = () => {
         precision={2}
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
-        getValidationMessage={() => "This is a custom validation error message"}
+        getValidationMessage={() =>
+          "This is a custom success validation message"
+        }
         getValidationStatus={({ row }) =>
           row.index > 2 ? "success" : undefined
         }
