@@ -6,42 +6,6 @@ import { useCallback } from "react";
 export default {
   title: "Lab/Tooltip",
   component: Tooltip,
-  argTypes: {
-    content: { control: { type: "text" } },
-    placement: {
-      control: {
-        type: "select",
-        options: [
-          "top",
-          "bottom",
-          "left",
-          "right",
-          "top-start",
-          "top-end",
-          "right-start",
-          "right-end",
-          "bottom-start",
-          "bottom-end",
-          "left-start",
-          "left-end",
-        ],
-      },
-    },
-    open: { control: { type: "boolean" } },
-    hideArrow: { control: { type: "boolean" } },
-    hideIcon: { control: { type: "boolean" } },
-    status: {
-      control: {
-        type: "select",
-        options: ["info", "warning", "error", "success"],
-      },
-    },
-    enterDelay: { control: { type: "number" } },
-    leaveDelay: { control: { type: "number" } },
-    disabled: { control: { type: "boolean" } },
-    disableHoverListener: { control: { type: "boolean" } },
-    disableFocusListener: { control: { type: "boolean" } },
-  },
 } as ComponentMeta<typeof Tooltip>;
 
 const defaultArgs: Omit<TooltipProps, "children"> = {
