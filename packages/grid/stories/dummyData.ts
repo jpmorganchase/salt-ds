@@ -1,4 +1,4 @@
-import { randomAmount } from "./utils";
+import { randomAmount, randomDate } from "./utils";
 import { RowKeyGetter } from "../src";
 
 export interface Investor {
@@ -10,6 +10,7 @@ export interface Investor {
   notes: string;
   amount: number;
   score?: string;
+  date: string;
 }
 
 export const investorKeyGetter = (rowData: Investor) => rowData.name;
@@ -60,6 +61,9 @@ export function createDummyInvestors(): Investor[] {
           strategy: str[i % str.length],
           notes: "",
           amount: randomAmount(100, 300, 4),
+          date: randomDate(new Date(2000, 0, 1), new Date())
+            .toISOString()
+            .substring(0, 10),
         });
         ++i;
       }

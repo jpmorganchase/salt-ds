@@ -41,6 +41,13 @@ const SortColumnsTemplate: Story<{}> = () => {
         isSortable
       />
       <GridColumn
+        name="Date incorporated"
+        id="date"
+        defaultWidth={150}
+        getValue={(rowData: Investor) => rowData.date}
+        isSortable
+      />
+      <GridColumn
         name="Score"
         id="score"
         getValue={(r) => r.score}
