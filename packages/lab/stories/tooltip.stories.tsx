@@ -46,16 +46,6 @@ export default {
 
 const defaultArgs: Omit<TooltipProps, "children"> = {
   content: "I am a tooltip",
-  placement: undefined,
-  open: undefined,
-  hideArrow: undefined,
-  hideIcon: undefined,
-  status: undefined,
-  enterDelay: undefined,
-  leaveDelay: undefined,
-  disabled: undefined,
-  disableHoverListener: undefined,
-  disableFocusListener: undefined,
 };
 
 export const Default: Story<TooltipProps> = (props: TooltipProps) => (
@@ -143,7 +133,7 @@ export const CustomContent: Story<TooltipProps> = (props) => (
             <strong>hideIcon:</strong> true
           </li>
           <li>
-            <strong>open:</strong> true
+            <strong>open:</strong> false
           </li>
           <li>
             <strong>status:</strong> info
