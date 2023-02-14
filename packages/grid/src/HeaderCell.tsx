@@ -59,12 +59,15 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
     return icon;
   };
 
-  const ariaSort =
-    sortOrder === "asc"
-      ? "ascending"
-      : sortOrder === "desc"
-      ? "descending"
-      : "none";
+  type AriaSortProps = "none" | "ascending" | "descending";
+
+  const ariaSortMap = {
+    asc: "ascending",
+    desc: "descending",
+    none: "none",
+  };
+
+  const ariaSort = ariaSortMap[sortOrder] as AriaSortProps;
 
   const onKeyDown: KeyboardEventHandler<HTMLTableHeaderCellElement> = (
     event

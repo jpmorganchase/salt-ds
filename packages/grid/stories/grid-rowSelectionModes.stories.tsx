@@ -87,7 +87,6 @@ const RowSelectionModesTemplate: Story<{}> = () => {
               sortedData = sortedData.reverse();
             }
 
-            console.log("inside customSort function");
             return sortedData;
           }}
         />
