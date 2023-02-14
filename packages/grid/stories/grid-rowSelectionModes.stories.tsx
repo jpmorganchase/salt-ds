@@ -78,17 +78,6 @@ const RowSelectionModesTemplate: Story<{}> = () => {
           getValue={(r: DummyRow) => r.b}
           align={"right"}
           isSortable
-          customSort={({ rowData, sortByColumnId, sortOrder }) => {
-            let sortedData = [...rowData].sort((a, b) =>
-              a[sortByColumnId] < b[sortByColumnId] ? -1 : 1
-            );
-
-            if (sortOrder === "desc") {
-              sortedData = sortedData.reverse();
-            }
-
-            return sortedData;
-          }}
         />
         <GridColumn name="C" id="c" defaultWidth={50} getValue={(r) => r.c} />
       </Grid>
