@@ -439,7 +439,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     const customSortingFn = getColById(sortByColumnId)?.info.props.customSort;
 
     if (customSortingFn) {
-      return customSortingFn({ rowData, sortByColumnId, sortOrder });
+      return customSortingFn({ rowData, sortOrder });
     }
 
     const valueGetter =

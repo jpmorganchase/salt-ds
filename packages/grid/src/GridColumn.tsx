@@ -65,7 +65,6 @@ export interface GridColumnProps<T = any> {
    * */
   customSort?: (args: {
     rowData: T[];
-    sortByColumnId: string;
     sortOrder: string;
   }) => T[];
   /**
