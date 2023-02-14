@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "target": "es2022",
+    "lib": ["es2022", "DOM", "DOM.iterable"],
+    "esModuleInterop": true,
+    "moduleResolution": "nodenext",
+    "isolatedModules": true,
+    "sourceMap": true,
+    "declaration": true,
+    "allowJs": false,
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "tsBuildInfoFile": "./dist/tsconfig.tsbuildinfo",
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "jsx": "preserve",
+    "module": "esnext"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist/**/*"]
+}
