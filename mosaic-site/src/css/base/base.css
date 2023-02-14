@@ -1,0 +1,4 @@
+:root {
+  --max-container-width: 1920px;
+  --max-content-width: min(var(--max-container-width), 120ch);
+}

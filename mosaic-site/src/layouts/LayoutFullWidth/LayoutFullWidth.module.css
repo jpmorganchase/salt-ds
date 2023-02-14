@@ -1,0 +1,7 @@
+.root {
+  background-position: 50%;
+  background-size: cover;
+  background-image: url("../../../public/img/background_gradient.svg");
+  background-repeat: no-repeat;
+  overflow: hidden;
+}

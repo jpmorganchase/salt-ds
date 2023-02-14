@@ -1,0 +1,16 @@
+.docsWrapper {
+  background-image: url("../../public/img/background_gradient.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+
+.docsPageContainer {
+  background-color: var(--salt-color-white);
+}
+
+.docsPageContent {
+  margin: calc(var(--salt-size-unit) * 2);
+  max-width: var(--max-content-width);
+  padding: calc(var(--salt-size-unit) * 3);
+}
