@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/BorderLayout",
+  title: "Core/Layout/Border Layout",
   component: BorderLayout,
   subcomponents: { BorderItem },
   argTypes: {
@@ -56,10 +56,10 @@ const Template: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const BorderLayoutAllPanels = Template.bind({});
-BorderLayoutAllPanels.args = {};
+export const AllPanels = Template.bind({});
+AllPanels.args = {};
 
-const NoRightPanel: ComponentStory<typeof BorderLayout> = (args) => {
+const NoRightPanelTemplate: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
       <BorderItem position="north">
@@ -91,10 +91,10 @@ const NoRightPanel: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const BorderLayoutNoRightPanel = NoRightPanel.bind({});
-BorderLayoutNoRightPanel.args = {};
+export const NoRightPanel = NoRightPanelTemplate.bind({});
+NoRightPanel.args = {};
 
-const NoLeftPanel: ComponentStory<typeof BorderLayout> = (args) => {
+const NoLeftPanelTemplate: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
       <BorderItem position="north">
@@ -126,10 +126,10 @@ const NoLeftPanel: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const BorderLayoutNoLeftPanel = NoLeftPanel.bind({});
-BorderLayoutNoLeftPanel.args = {};
+export const NoLeftPanel = NoLeftPanelTemplate.bind({});
+NoLeftPanel.args = {};
 
-const NoHeader: ComponentStory<typeof BorderLayout> = (args) => {
+const NoHeaderTemplate: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args}>
       <BorderItem position="west">
@@ -161,10 +161,10 @@ const NoHeader: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const BorderLayoutNoHeader = NoHeader.bind({});
-BorderLayoutNoHeader.args = {};
+export const NoHeader = NoHeaderTemplate.bind({});
+NoHeader.args = {};
 
-const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
+const FixedPanelsTemplate: ComponentStory<typeof BorderLayout> = (args) => {
   return (
     <BorderLayout {...args} style={{ width: "60vw" }}>
       <BorderItem position="north">
@@ -208,5 +208,5 @@ const FixedPanels: ComponentStory<typeof BorderLayout> = (args) => {
   );
 };
 
-export const BorderLayoutFixedPanels = FixedPanels.bind({});
-BorderLayoutFixedPanels.args = {};
+export const FixedPanels = FixedPanelsTemplate.bind({});
+FixedPanels.args = {};

@@ -59,8 +59,8 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
     </>
   );
 };
-export const DefaultDeckLayout = DefaultDeckLayoutStory.bind({});
-DefaultDeckLayout.args = {};
+export const Default = DefaultDeckLayoutStory.bind({});
+Default.args = {};
 
 const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
