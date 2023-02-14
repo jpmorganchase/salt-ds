@@ -9,6 +9,7 @@ export interface Investor {
   cohort: string[];
   notes: string;
   amount: number;
+  score?: string;
 }
 
 export const investorKeyGetter = (rowData: Investor) => rowData.name;
@@ -48,9 +49,9 @@ export function createDummyInvestors(): Investor[] {
 
   const investors: Investor[] = [];
   let i = 0;
-  for (let x of a) {
-    for (let y of b) {
-      for (let z of c) {
+  for (const x of a) {
+    for (const y of b) {
+      for (const z of c) {
         investors.push({
           name: [x, y, z].join(" "),
           addedInvestors: [],
