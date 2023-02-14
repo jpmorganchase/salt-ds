@@ -28,8 +28,8 @@ const Template: ComponentStory<typeof Avatar> = (props) => {
 
 export const Default = Template.bind({});
 
-export const Initials = Template.bind({});
-Initials.args = {
+export const WithInitials = Template.bind({});
+WithInitials.args = {
   children: "SB",
 };
 
@@ -38,8 +38,8 @@ AlternativeIcon.args = {
   fallbackIcon: <UserGroupIcon />,
 };
 
-export const ImageAvatar = Template.bind({});
-ImageAvatar.args = {
+export const WithImage = Template.bind({});
+WithImage.args = {
   children: <img src={imgSrc} alt="profile" />,
 };
 
@@ -58,8 +58,8 @@ const CustomSVG = (
   </svg>
 );
 
-export const SvgAvatar = Template.bind({});
-SvgAvatar.args = {
+export const WithCustomSvg = Template.bind({});
+WithCustomSvg.args = {
   children: CustomSVG,
 };
 
