@@ -1,4 +1,4 @@
-import { makePrefixer, FlexLayout } from "@salt-ds/core";
+import { FlexLayout, makePrefixer } from "@salt-ds/core";
 import { UserIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
