@@ -16,7 +16,7 @@ export {
 
 export * from "./accordion";
 export * from "./app-header";
-export * from "@salt-ds/core/src/avatar";
+export * from "./avatar";
 export * from "./badge";
 export * from "./banner";
 export * from "./breadcrumbs";
