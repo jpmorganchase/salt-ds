@@ -1,11 +1,11 @@
 import { UserGroupIcon } from "@salt-ds/icons";
-import { FlowLayout, StackLayout, Label, Avatar } from "@salt-ds/core";
-
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { FlowLayout, Label, StackLayout } from "@salt-ds/core";
 import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import { Avatar } from "@salt-ds/lab";
 
 export default {
-  title: "Core/Avatar",
+  title: "Lab/Avatar",
   component: Avatar,
 } as ComponentMeta<typeof Avatar>;
 const sizes = [1, 2, 3, 4] as const;
@@ -63,15 +63,9 @@ SvgAvatar.args = {
   children: CustomSVG,
 };
 
-type FallbackStoryProps = {
-  src: string;
-  alt: string;
-};
-
-export const ImageFallback: ComponentStory<any> = ({
-  src,
-  alt,
-}: FallbackStoryProps) => {
+export const ImageFallback: ComponentStory<typeof Avatar> = () => {
+  const src = imgSrc;
+  const alt = "profile";
   const [children, setChildren] = useState<ReactNode>(alt);
 
   useEffect(() => {
@@ -86,8 +80,4 @@ export const ImageFallback: ComponentStory<any> = ({
   }, [src, alt]);
 
   return <Avatar size={3}>{children}</Avatar>;
-};
-ImageFallback.args = {
-  src: imgSrc,
-  alt: "profile",
 };
