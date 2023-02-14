@@ -4,26 +4,26 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 import { SaltProvider } from "@salt-ds/core";
 
 const composedStories = composeStories(flexStories);
-const { DefaultFlexLayout, FlexLayoutNested } = composedStories;
+const { Default, Nested } = composedStories;
 
 describe("GIVEN a Flex", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN no props are provided", () => {
     it("THEN it should render with flex direction row", () => {
-      cy.mount(<DefaultFlexLayout />);
+      cy.mount(<Default />);
 
       cy.get(".saltFlexLayout").should("have.css", "flex-direction", "row");
     });
 
     it("THEN it should render with flex wrap", () => {
-      cy.mount(<DefaultFlexLayout />);
+      cy.mount(<Default />);
 
       cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
     });
 
     it("THEN it should render with a default gap", () => {
-      cy.mount(<DefaultFlexLayout />);
+      cy.mount(<Default />);
 
       cy.get(".saltFlexLayout").should("have.css", "column-gap", "24px");
 
@@ -31,7 +31,7 @@ describe("GIVEN a Flex", () => {
     });
 
     it("THEN nested items should not inherit css variables from parent", () => {
-      cy.mount(<FlexLayoutNested />);
+      cy.mount(<Nested />);
 
       cy.get(".saltFlexLayout").eq(0).should("have.css", "flex-wrap", "wrap");
       cy.get(".saltFlexLayout")
@@ -49,7 +49,7 @@ describe("GIVEN a Flex", () => {
 
   describe("WHEN a separator value is provided", () => {
     it("THEN it should render a separator", () => {
-      cy.mount(<DefaultFlexLayout separators wrap={false} />);
+      cy.mount(<Default separators wrap={false} />);
 
       cy.get(".saltFlexLayout").should(
         "have.class",
@@ -60,7 +60,7 @@ describe("GIVEN a Flex", () => {
 
   describe("WHEN wrap is set to false", () => {
     it("THEN it should render with no flex wrap", () => {
-      cy.mount(<DefaultFlexLayout wrap={false} />);
+      cy.mount(<Default wrap={false} />);
 
       cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
     });
@@ -82,7 +82,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 1921,
       },
       () => {
-        cy.mount(<DefaultFlexLayout wrap={wrap} />);
+        cy.mount(<Default wrap={wrap} />);
 
         cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "nowrap");
       }
@@ -95,7 +95,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 961,
       },
       () => {
-        cy.mount(<DefaultFlexLayout wrap={wrap} />);
+        cy.mount(<Default wrap={wrap} />);
 
         cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
@@ -108,7 +108,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 700,
       },
       () => {
-        cy.mount(<DefaultFlexLayout wrap={wrap} />);
+        cy.mount(<Default wrap={wrap} />);
 
         cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
@@ -121,7 +121,7 @@ describe("GIVEN a Flex", () => {
         viewportWidth: 600,
       },
       () => {
-        cy.mount(<DefaultFlexLayout wrap={wrap} />);
+        cy.mount(<Default wrap={wrap} />);
 
         cy.get(".saltFlexLayout").should("have.css", "flex-wrap", "wrap");
       }
@@ -154,7 +154,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
-            <DefaultFlexLayout wrap={wrap} />
+            <Default wrap={wrap} />
           </SaltProvider>
         );
 
@@ -171,7 +171,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
-            <DefaultFlexLayout wrap={wrap} />
+            <Default wrap={wrap} />
           </SaltProvider>
         );
 
@@ -188,7 +188,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
-            <DefaultFlexLayout wrap={wrap} />
+            <Default wrap={wrap} />
           </SaltProvider>
         );
 
@@ -205,7 +205,7 @@ describe("GIVEN a Flex", () => {
       () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
-            <DefaultFlexLayout wrap={wrap} />
+            <Default wrap={wrap} />
           </SaltProvider>
         );
 

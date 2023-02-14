@@ -1,20 +1,4 @@
 import { Story } from "@storybook/react";
-import "./grid.stories.css";
-import {
-  CellEditor,
-  ColumnGroup,
-  DropdownCellEditor,
-  Grid,
-  GridCellValueProps,
-  GridColumn,
-  GridHeaderValueProps,
-  NumericCellEditor,
-  NumericColumn,
-  RowSelectionCheckboxColumn,
-  RowSelectionRadioColumn,
-} from "../src";
-import { randomString, randomText } from "./utils";
-
 import {
   createContext,
   CSSProperties,
@@ -23,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { Card, FlexLayout } from "@salt-ds/core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -30,14 +15,29 @@ import {
   ChevronRightIcon,
   FavoriteIcon,
 } from "@salt-ds/icons";
-import { FlexLayout } from "@salt-ds/core";
-import { Card, Checkbox } from "@salt-ds/lab";
+import { Checkbox } from "@salt-ds/lab";
+import {
+  CellEditor,
+  ColumnGroup,
+  DropdownCellEditor,
+  Grid,
+  GridCellValueProps,
+  GridColumn,
+  GridHeaderValueProps,
+  GridProps,
+  NumericCellEditor,
+  NumericColumn,
+  RowSelectionCheckboxColumn,
+  RowSelectionRadioColumn,
+} from "../src";
+import { randomString, randomText } from "./utils";
 import {
   allLocations,
   createDummyInvestors,
   Investor,
   investorKeyGetter,
 } from "./dummyData";
+import "./grid.stories.css";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -55,7 +55,7 @@ const onLocationChange = (row: Investor, rowIndex: number, value: string) => {
   dummyInvestors[rowIndex].location = value;
 };
 
-const GridStoryTemplate: Story<{}> = (props) => {
+const GridStoryTemplate: Story<GridProps> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
@@ -117,7 +117,7 @@ const GridStoryTemplate: Story<{}> = (props) => {
   );
 };
 
-const SingleRowSelectionTemplate: Story<{}> = (props) => {
+const SingleRowSelectionTemplate: Story<GridProps> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
@@ -170,42 +170,68 @@ const SingleRowSelectionTemplate: Story<{}> = (props) => {
   );
 };
 
-const dummyInvestors5 = dummyInvestors.slice(0, 5);
-
-const SmallTemplate: Story<{}> = (props) => {
+export const SimpleGrid = () => {
   return (
-    <Grid
-      rowData={dummyInvestors5}
-      rowKeyGetter={investorKeyGetter}
-      className="smallGrid"
-      zebra={true}
-      columnSeparators={true}
-    >
-      <RowSelectionRadioColumn id="rowSelection" />
+    <Grid rowData={dummyInvestors.slice(0, 5)} style={{ height: 223 }}>
       <GridColumn
         name="Name"
         id="name"
         defaultWidth={200}
-        getValue={(x) => x.name}
+        getValue={(rowData: Investor) => rowData.name}
       />
-
       <GridColumn
         name="Location"
         id="location"
         defaultWidth={150}
-        getValue={(x) => x.location}
+        getValue={(rowData: Investor) => rowData.location}
       />
       <GridColumn
         name="Cohort"
         id="cohort"
         defaultWidth={200}
-        getValue={(x) => x.cohort}
+        getValue={(rowData: Investor) => rowData.cohort}
       />
     </Grid>
   );
 };
 
-const PinnedColumnsTemplate: Story<{}> = (props) => {
+const SmallTemplate: Story<GridProps> = (args) => {
+  return (
+    <Grid
+      rowKeyGetter={investorKeyGetter}
+      style={{ height: 223 }}
+      headerIsFocusable={args.rowSelectionMode === "multi"}
+      {...args}
+    >
+      {args.rowSelectionMode === "single" ? (
+        <RowSelectionRadioColumn id="rowSelection" />
+      ) : undefined}
+      {args.rowSelectionMode === "multi" ? (
+        <RowSelectionCheckboxColumn id="rowSelection" />
+      ) : undefined}
+      <GridColumn
+        name="Name"
+        id="name"
+        defaultWidth={200}
+        getValue={(rowData: Investor) => rowData.name}
+      />
+      <GridColumn
+        name="Location"
+        id="location"
+        defaultWidth={150}
+        getValue={(rowData: Investor) => rowData.location}
+      />
+      <GridColumn
+        name="Cohort"
+        id="cohort"
+        defaultWidth={200}
+        getValue={(rowData: Investor) => rowData.cohort}
+      />
+    </Grid>
+  );
+};
+
+const PinnedColumnsTemplate: Story<GridProps> = (props) => {
   const [columnSeparators, setColumnSeparators] = useState<boolean>(false);
   const [pinnedSeparators, setPinnedSeparators] = useState<boolean>(true);
 
@@ -315,7 +341,7 @@ const dummyData = [...new Array(30).keys()].map((i) => {
 
 const rowIdGetter = (row: any) => row.id;
 
-const LotsOfColumnsTemplate: Story<{}> = (props) => {
+const LotsOfColumnsTemplate: Story<GridProps> = (props) => {
   return (
     <Grid
       rowData={dummyData}
@@ -357,7 +383,7 @@ dummyColumnNames.forEach((name) => {
   group.columns.push(name);
 });
 
-const LotsOfColumnGroupsTemplate: Story<{}> = (props) => {
+const LotsOfColumnGroupsTemplate: Story<GridProps> = (props) => {
   return (
     <Grid
       rowData={dummyData}
@@ -428,7 +454,7 @@ const CustomHeader = (props: GridHeaderValueProps<any>) => {
 
 const customHeadersColumnNames = dummyColumnNames.slice(0, 10);
 
-const CustomHeadersTemplate: Story<{}> = (props) => {
+const CustomHeadersTemplate: Story<GridProps> = (props) => {
   const [sortBy, setSortBy] = useState<string>("A");
   const [sortDesc, setSortDesc] = useState<boolean>(false);
 
@@ -581,7 +607,7 @@ for (let i = 0; i < 10; i++) {
   }
 }
 
-const CustomCellsTemplate: Story<{}> = (props) => {
+const CustomCellsTemplate: Story<GridProps> = (props) => {
   const [data, setData] = useState(dummyTreeData);
 
   const dataById = useMemo(() => {
@@ -650,7 +676,7 @@ const CustomCellsTemplate: Story<{}> = (props) => {
   );
 };
 
-const ColumnDragAndDropTemplate: Story<{}> = (props) => {
+const ColumnDragAndDropTemplate: Story<GridProps> = (props) => {
   const [columnIds, setColumnIds] = useState<string[]>([
     "name",
     "location",
@@ -724,7 +750,7 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
     <Grid
       rowData={dummyInvestors}
       rowKeyGetter={investorKeyGetter}
-      className="smallGrid"
+      style={{ height: 600 }}
       zebra={true}
       columnSeparators={true}
       columnMove={true}
@@ -735,12 +761,19 @@ const ColumnDragAndDropTemplate: Story<{}> = (props) => {
   );
 };
 
+export const SmallGrid = SmallTemplate.bind({});
+SmallGrid.args = {
+  rowData: dummyInvestors.slice(0, 5),
+  rowSelectionMode: "single",
+  zebra: true,
+  columnSeparators: true,
+  variant: "primary",
+};
 export const GridExample = GridStoryTemplate.bind({});
 export const SingleRowSelect = SingleRowSelectionTemplate.bind({});
-export const SmallGrid = SmallTemplate.bind({});
-// export const PinnedColumns = PinnedColumnsTemplate.bind({});
 export const LotsOfColumns = LotsOfColumnsTemplate.bind({});
 export const LotsOfColumnGroups = LotsOfColumnGroupsTemplate.bind({});
+// export const PinnedColumns = PinnedColumnsTemplate.bind({});
 // export const CustomHeaders = CustomHeadersTemplate.bind({});
 // export const CustomCells = CustomCellsTemplate.bind({});
 // export const ColumnDragAndDrop = ColumnDragAndDropTemplate.bind({});

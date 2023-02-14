@@ -3,29 +3,29 @@ import { ParentChildLayout } from "@salt-ds/lab";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Layout/ParentChildLayout"
+  title="Documentation/Lab/Layout/Parent Child Layout"
   component={ParentChildLayout}
   parameters={{
     viewMode: "docs",
   }}
 />
 
-# Parent Child layout
+# Parent Child Layout
 
 Displays a hierarchical structure comprising of a main content area and an accompanying parent region, used to drive the content that is displayed.
-The parent and child layout is built using [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page) and it is intended for displaying two related layers such as navigation and associated content or a preferences dialog.
+The parent and child layout is built using [Flex layout](?path=/docs/documentation-core-layout-flex-layout--page) and it is intended for displaying two related layers such as navigation and associated content or a preferences dialog.
 
 <Canvas>
-  <Story id="lab-layout-parentchildlayout--default-parent-child-layout" />
+  <Story id="lab-layout-parent-child-layout--default" />
 </Canvas>
 
-## Use Parent Child layout when...
+## Use Parent Child Layout when...
 
 You want your layout to be split into two regions in a responsive manner.
 
-### Don't use Parent Child layout when...
+### Don't use Parent Child Layout when...
 
-You want your layout to flow in a single dimension. In this case we recommend you having a look at [Stack layout](?path=/docs/documentation-core-layout-stacklayout--page), [Flow layout](?path=/docs/documentation-core-layout-flowlayout--page) or [Flex layout](?path=/docs/documentation-core-layout-flexlayout--page).
+You want your layout to flow in a single dimension. In this case we recommend you having a look at [Stack layout](?path=/docs/documentation-core-layout-stack-layout--page), [Flow layout](?path=/docs/documentation-core-layout-flow-layout--page) or [Flex layout](?path=/docs/documentation-core-layout-flex-layout--page).
 
 ### Examples
 
@@ -34,7 +34,7 @@ You want your layout to flow in a single dimension. In this case we recommend yo
 The parent and child component changes to a stacked view once it approaches a specified breakpoint that can be customized via the `stackedAtBreakpoint` prop.
 
 <Canvas>
-  <Story id="lab-layout-parentchildlayout--toolkit-parent-child-layout-stacked" />
+  <Story id="lab-layout-parent-child-layout--toolkit-stacked" />
 </Canvas>
 
 #### Reduced motion
@@ -42,18 +42,18 @@ The parent and child component changes to a stacked view once it approaches a sp
 You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
 
 <Canvas>
-  <Story id="lab-layout-parentchildlayout--salt-parent-child-layout-reduced-motion" />
+  <Story id="lab-layout-parent-child-layout--salt-reduced-motion" />
 </Canvas>
 
 #### Composite usage
 
-This example shows a number of Salt components being used in conjunction with Parent Child layout to build a responsive page.
+This example shows a number of Salt components being used in conjunction with Parent Child Layout to build a responsive page.
 
 <Canvas>
-  <Story id="lab-layout-parentchildlayout--parent-child-layout-composite" />
+  <Story id="lab-layout-parent-child-layout--composite" />
 </Canvas>
 
-## Configuring Parent Child layout
+## Configuring Parent Child Layout
 
 ### API
 

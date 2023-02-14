@@ -86,9 +86,7 @@ page, the ‘role’ prop must be changed from ‘button’ (the default attribu
   [Button](/?path=/docs/toolkit-2-0-button) instead.
 
 <Canvas>
-  <Story name="Basic Pill">
-    <Pill label="Basic Pill" />
-  </Story>
+  <Story id="lab-pill--feature-pill" />
 </Canvas>
 
 ## Closable
@@ -112,9 +110,7 @@ that adds a new Pill.
   visible.
 
 <Canvas>
-  <Story name="Closable">
-    <Pill label="Closable Pill" variant="closable" />
-  </Story>
+  <Story id="lab-pill--feature-pill" />
 </Canvas>
 
 ## Selectable
@@ -140,9 +136,7 @@ ideal selection mechanism for a compact layout or user interface.
   more appropriate.
 
 <Canvas>
-  <Story name="Selectable">
-    <Pill label="Selectable Pill" variant="selectable" />
-  </Story>
+  <Story id="lab-pill--selectable" />
 </Canvas>
 
 ## Maximum Width
@@ -156,13 +150,7 @@ By default, the Tooltip is positioned above the Pill unless screen real estate
 does not allow—in that case it’s auto-repositioned.
 
 <Canvas>
-  <Story name="MaximumWidth">
-    <Pill
-      label="Extra extra long Pill label example."
-      style={{ marginRight: 24 }}
-    />
-    <Pill label="FX" />
-  </Story>
+  <Story id="lab-pill--max-width" />
 </Canvas>
 
 ## Icon Descriptors
@@ -171,9 +159,7 @@ Icons can be displayed on the left of a Basic or Closable Pill label to visually
 reinforce the theme or grouping of that Pill, and for quick recognition.
 
 <Canvas>
-  <Story name="Icon Descriptors">
-    <Pill icon={<UserBadgeIcon />} label="Pill with Icon" />
-  </Story>
+  <Story id="lab-pill--icon" />
 </Canvas>
 
 ## Disabled
@@ -182,9 +168,7 @@ A Pill can be set to a disabled state, with no resultant action when the user
 interacts with it.
 
 <Canvas>
-  <Story name="Disabled">
-    <Pill label="Disabled Pill" disabled variant="closable" />
-  </Story>
+  <Story id="lab-pill--disabled" />
 </Canvas>
 
 ## Controlled
@@ -194,7 +178,7 @@ application and not internally, within the component. It provides developers
 finer-grained control of interactions.
 
 <Canvas>
-  <Story id="core-pill--controlled-pill" />
+  <Story id="lab-pill--controlled" />
 </Canvas>
 
 ## Accessibility

@@ -4,13 +4,13 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 
 const composedStories = composeStories(tooltipStories);
 
-const { Default, OpenTooltip } = composedStories;
+const { Default, Open } = composedStories;
 
 describe("GIVEN a Tooltip", () => {
   checkAccessibility(composedStories);
 
   it('should have the aria role "tooltip"', () => {
-    cy.mount(<OpenTooltip />);
+    cy.mount(<Open />);
     cy.findByRole("tooltip").should("exist");
   });
 

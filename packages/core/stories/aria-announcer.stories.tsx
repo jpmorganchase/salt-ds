@@ -3,7 +3,7 @@ import { AriaAnnouncerProvider, useAriaAnnouncer } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Core/AriaAnnouncerProvider",
+  title: "Core/Aria Announcer Provider",
   component: AriaAnnouncerProvider,
   // Manually specify onClick action to test Actions panel
   // react-docgen-typescript-loader doesn't support detecting interface extension

@@ -1,8 +1,8 @@
 import {
   Breakpoints,
-  makePrefixer,
   FlexLayout,
   FlexLayoutProps,
+  makePrefixer,
 } from "@salt-ds/core";
 
 import { clsx } from "clsx";

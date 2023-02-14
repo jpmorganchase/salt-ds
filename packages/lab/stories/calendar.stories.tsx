@@ -35,7 +35,7 @@ const Template: ComponentStory<typeof Calendar> = (args) => {
   return <Calendar {...args} />;
 };
 
-export const DefaultCalendar = Template.bind({});
+export const Default = Template.bind({});
 
 export const UnselectableDates = Template.bind({});
 UnselectableDates.args = {
