@@ -619,14 +619,14 @@ describe("Grid", () => {
   });
 
   describe("cell validation", () => {
-    it.only("error validation should set [aria-invalid] on the grid cell", () => {
+    it("error validation should set [aria-invalid] on the grid cell", () => {
       cy.mount(<CellValidation />);
       assertGridReady();
 
       findCell(3, 0).should("have.attr", "aria-invalid", "true");
     });
 
-    it.only("validation should have a default aria description of the validation state", () => {
+    it("validation should have a default aria description of the validation state", () => {
       cy.mount(<CellValidation />);
       assertGridReady();
 
@@ -636,7 +636,7 @@ describe("Grid", () => {
       checkAriaDescription(findCell(3, 0), "Cell validation state is error");
     });
 
-    it.only("should render custom validation message as aria description", () => {
+    it("should render custom validation message as aria description", () => {
       cy.mount(<CellValidation />);
       assertGridReady();
 
@@ -646,7 +646,7 @@ describe("Grid", () => {
       );
     });
 
-    it.only("should NOT add [aria-invalid] for non error validation states", () => {
+    it("should NOT add [aria-invalid] for non error validation states", () => {
       cy.mount(<CellValidation />);
       assertGridReady();
 
@@ -654,15 +654,18 @@ describe("Grid", () => {
       findCell(3, 3).should("not.have.attr", "aria-invalid", "true");
     });
 
-    it.only("should render an svg icon when the validationType=strong ", () => {
+    it("should render an svg icon when the validationType=strong ", () => {
       cy.mount(<CellValidation />);
       assertGridReady();
 
-      findCell(3, 3).should("have.attr", "aria-invalid", "true");
+      checkAriaDescription(
+        findCell(3, 3),
+        "This is a custom success validation message"
+      );
       findCell(3, 3).find("svg").should("exist");
     });
 
-    it.only("should NOT render an svg icon when the validationType=light ", () => {
+    it("should NOT render an svg icon when the validationType=light ", () => {
       cy.mount(<CellValidation />);
       assertGridReady();
 
