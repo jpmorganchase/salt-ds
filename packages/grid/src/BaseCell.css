@@ -28,43 +28,35 @@
   border-color: transparent;
 }
 
-.saltGridCell-editable .saltGridBaseCell-valueContainer-status-error,
-.saltGridBaseCell-status-error:focus .saltGridCursor {
-  border-color: var(--salt-status-error-borderColor);
+.saltGridBaseCell-status-error {
+  --status-border-color: var(--salt-status-error-borderColor);
+  --status-background-color: var(--salt-status-error-background-emphasize);
 }
 
-.saltGridBaseCell-status-error:focus .saltGridCornerTag-focusOnly {
-  border-left-color: var(--salt-status-error-borderColor);
+.saltGridBaseCell-status-warning {
+  --status-border-color: var(--salt-status-warning-borderColor);
+  --status-background-color: var(--salt-status-warning-background-emphasize);
 }
 
-.saltGridBaseCell-valueContainer-status-error {
-  background-color: var(--salt-status-error-background-emphasize);
+.saltGridBaseCell-status-success {
+  --status-border-color: var(--salt-status-success-borderColor);
+  --status-background-color: var(--salt-status-success-background-emphasize);
 }
 
-.saltGridCell-editable .saltGridBaseCell-valueContainer-status-success,
-.saltGridBaseCell-status-success:focus .saltGridCursor {
-  border-color: var(--salt-status-success-borderColor);
+.saltGridCell-editable .saltGridBaseCell-valueContainer {
+  border-color: var(--status-border-color);
 }
 
-.saltGridBaseCell-status-success:focus .saltGridCornerTag-focusOnly {
-  border-left-color: var(--salt-status-success-borderColor);
+.saltGridBaseCell-hasValidation:focus .saltGridCursor {
+  border-color: var(--status-border-color);
 }
 
-.saltGridBaseCell-valueContainer-status-success {
-  background-color: var(--salt-palette-success-background-emphasize);
+.saltGridBaseCell-hasValidation:focus .saltGridCornerTag-focusOnly {
+  border-left-color: var(--status-border-color);
 }
 
-.saltGridCell-editable .saltGridBaseCell-valueContainer-status-warning,
-.saltGridBaseCell-status-warning:focus .saltGridCursor {
-  border-color: var(--salt-status-warning-borderColor);
-}
-
-.saltGridBaseCell-status-warning:focus .saltGridCornerTag-focusOnly {
-  border-left-color: var(--salt-status-warning-borderColor);
-}
-
-.saltGridBaseCell-valueContainer-status-warning {
-  background-color: var(--salt-palette-warning-background-emphasize);
+.saltGridBaseCell-valueContainer {
+  background-color: var(--status-background-color);
 }
 
 .salt-density-high {
@@ -92,18 +84,7 @@
 
 .saltGridBaseCell-statusContainer svg {
   display: block;
-}
-
-.saltGridBaseCell-statusContainer-status-warning svg {
-  fill: var(--salt-status-warning-borderColor);
-}
-
-.saltGridBaseCell-statusContainer-status-error svg {
-  fill: var(--salt-status-error-borderColor);
-}
-
-.saltGridBaseCell-statusContainer-status-success svg {
-  fill: var(--salt-status-success-borderColor);
+  fill: var(--status-border-color);
 }
 
 .saltGridBaseCell-statusContainer.saltGridBaseCell-statusContainer-align-right {

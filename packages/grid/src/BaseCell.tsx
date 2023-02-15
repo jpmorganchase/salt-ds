@@ -93,6 +93,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       isSelected={isSelected}
       isEditable={isEditable}
       className={clsx(className, {
+        [withBaseName("hasValidation")]: hasValidation,
         [withBaseName(`status-${validationStatus as string}`)]:
           validationStatus,
       })}
@@ -114,21 +115,11 @@ export function BaseCell<T>(props: GridCellProps<T>) {
             : `Cell validation state is ${validationStatus as string}`}
         </div>
       ) : null}
-      <div
-        className={clsx(withBaseName("valueContainer"), {
-          [withBaseName(`valueContainer-status-${validationStatus as string}`)]:
-            validationStatus,
-        })}
-      >
-        {children}
-      </div>
+      <div className={clsx(withBaseName("valueContainer"))}>{children}</div>
       {hasValidation && validationType === "strong" ? (
         <div
           className={clsx(withBaseName("statusContainer"), {
             [withBaseName(`statusContainer-align-${align as string}`)]: align,
-            [withBaseName(
-              `statusContainer-status-${validationStatus as string}`
-            )]: validationStatus,
           })}
         >
           {icons[validationStatus]}
