@@ -1,13 +1,13 @@
 import {
   Button,
   makePrefixer,
-  Portal,
   UseFloatingUIProps,
   useId,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
+import { Portal } from '../portal'
 import { useWindow } from "../window";
 
 import "./Overlay.css";
@@ -18,7 +18,7 @@ interface ADAExceptions {
 
 export interface OverlayProps
   extends ComponentPropsWithoutRef<"div">,
-    Partial<Pick<UseFloatingUIProps, "onOpenChange" | "open">> {
+  Partial<Pick<UseFloatingUIProps, "onOpenChange" | "open">> {
   /**
    * object that houses ada related props.
    * adaExceptions.showClose defaults to true. It can be removed at the risk of ADA compliance
