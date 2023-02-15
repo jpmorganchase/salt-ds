@@ -8,7 +8,7 @@ import { getAnnouncement } from "./getAnnouncement";
 import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
 import { isDesktop, useWindow } from "../../window";
 import { Portal } from "../../portal";
-import { useFloatingUI } from "../../popper";
+import { useFloatingUI } from "../../utils";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   Item,

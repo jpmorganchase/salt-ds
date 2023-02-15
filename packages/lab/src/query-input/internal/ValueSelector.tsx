@@ -9,7 +9,7 @@ import { CategoryList } from "./CategoryList";
 import { SearchList } from "./SearchList";
 import { ValueList } from "./ValueList";
 import { useWindow } from "../../window";
-import { useFloatingUI } from "../../popper";
+import { useFloatingUI } from "../../utils";
 import { Portal } from "../../portal";
 
 const withBaseName = makePrefixer("saltQueryInputValueSelector");

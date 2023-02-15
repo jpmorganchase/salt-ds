@@ -16,7 +16,7 @@ import { useMouseHandlers } from "./internal/useMouseHandlers";
 import { refsManager } from "./internal/useRefsManager";
 import { stateChangeTypes } from "./stateChangeTypes";
 import { useWindow } from "../window";
-import { useFloatingUI, UseFloatingUIProps } from "../popper";
+import { useFloatingUI, UseFloatingUIProps } from "../utils";
 import { Portal } from "../portal";
 
 import "./CascadingMenuList.css";

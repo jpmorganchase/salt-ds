@@ -13,7 +13,7 @@ import {
 } from "@floating-ui/react";
 import { HTMLProps, useRef } from "react";
 import { useControlled } from "@salt-ds/core";
-import { UseFloatingUIProps, useFloatingUI } from "../popper";
+import { UseFloatingUIProps, useFloatingUI } from "../utils";
 import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps
