@@ -38,7 +38,7 @@
 }
 
 .saltGridBaseCell-valueContainer-status-error {
-  background-color: var(--salt-palette-error-background-emphasize);
+  background-color: var(--salt-status-error-background-emphasize);
 }
 
 .saltGridCell-editable .saltGridBaseCell-valueContainer-status-success,
