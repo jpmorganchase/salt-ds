@@ -1,6 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Button, Text } from "@salt-ds/core";
-import { Tooltip } from "@salt-ds/lab";
+import { Button, Text, Tooltip } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -9,7 +8,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 
 <Meta
-  title="Documentation/Lab/Tooltip"
+  title="Documentation/Core/Tooltip"
   component={Tooltip}
   parameters={{
     viewMode: "docs",
@@ -23,7 +22,7 @@ A Tooltip provides guidance to the user when something requires more explanation
 ## Default
 
 <Canvas>
-  <Story id="lab-tooltip--default" />
+  <Story id="core-tooltip--default" />
 </Canvas>
 
 ## Features
@@ -33,7 +32,7 @@ A Tooltip provides guidance to the user when something requires more explanation
 Use the `status` prop to choose between `error`, `warning`, `success` and `info`.
 
 <Canvas>
-  <Story id="lab-tooltip--status" decorators={[withFlexGap]} />
+  <Story id="core-tooltip--status" decorators={[withFlexGap]} />
 </Canvas>
 
 ### Hide arrow
@@ -41,7 +40,7 @@ Use the `status` prop to choose between `error`, `warning`, `success` and `info`
 Use `hideArrow` prop if you'd like to display the tooltip without the arrow.
 
 <Canvas>
-  <Story id="lab-tooltip--without-arrow" />
+  <Story id="core-tooltip--without-arrow" />
 </Canvas>
 
 ### Hide icon
@@ -49,7 +48,7 @@ Use `hideArrow` prop if you'd like to display the tooltip without the arrow.
 Use `hideIcon` prop if you'd like to display the tooltip without state icon.
 
 <Canvas>
-  <Story id="lab-tooltip--without-icon" />
+  <Story id="core-tooltip--without-icon" />
 </Canvas>
 
 ### Custom content
@@ -57,7 +56,7 @@ Use `hideIcon` prop if you'd like to display the tooltip without state icon.
 Use the `content` prop to pass either a simple string or a React component.
 
 <Canvas>
-  <Story id="lab-tooltip--custom-content" />
+  <Story id="core-tooltip--custom-content" />
 </Canvas>
 
 ### Placement
@@ -65,7 +64,7 @@ Use the `content` prop to pass either a simple string or a React component.
 Use the `placement` prop to position the tooltip. The tooltip will flip and shift if there isn't enough space for it to be visible.
 
 <Canvas>
-  <Story id="lab-tooltip--placement" decorators={[withFlexGap]} />
+  <Story id="core-tooltip--placement" decorators={[withFlexGap]} />
 </Canvas>
 
 ### Delay before shown
@@ -73,7 +72,7 @@ Use the `placement` prop to position the tooltip. The tooltip will flip and shif
 Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults to 300ms.
 
 <Canvas>
-  <Story id="lab-tooltip--delay" decorators={[withFlexGap]} />
+  <Story id="core-tooltip--delay" decorators={[withFlexGap]} />
 </Canvas>
 
 ## Configuring Tooltip
@@ -81,7 +80,7 @@ Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults 
 ### API
 
 ```
-import { Tooltip } from "@salt-ds/lab";
+import { Tooltip } from "@salt-ds/core";
 ```
 
 ### Props

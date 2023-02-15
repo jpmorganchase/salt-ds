@@ -1,4 +1,4 @@
-import { Button, Card } from "@salt-ds/core";
+import { Button, Card, Tooltip } from "@salt-ds/core";
 import {
   CallIcon,
   ChatIcon,
@@ -25,7 +25,6 @@ import {
   useOverlay,
   ValueComponentProps,
   FormField,
-  Tooltip,
 } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { forwardRef, Fragment, ReactNode } from "react";
