@@ -1,4 +1,4 @@
-import type { Parameters } from "@storybook/react";
+import type { ArgTypes, Parameters } from "@storybook/react";
 import type { GlobalTypes } from "@storybook/csf";
 import "@salt-ds/theme/index.css";
 import "@fontsource/open-sans/300.css";
@@ -89,7 +89,7 @@ export const globalTypes: GlobalTypes = {
   },
 };
 
-export const argTypes = {
+export const argTypes: ArgTypes = {
   as: { type: "string" },
   ref: { control: { type: null } },
 };
