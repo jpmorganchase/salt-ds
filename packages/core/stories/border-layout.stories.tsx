@@ -16,6 +16,11 @@ export default {
     rowGap: {
       type: "number",
     },
+    as: {
+      type: "string",
+    },
+    children: { control: { type: null } },
+    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof BorderLayout>;
 

@@ -8,12 +8,10 @@ export default {
     position: {
       control: { type: "select" },
     },
-    horizontalAlignment: {
-      control: { type: "select" },
+    as: {
+      type: "string",
     },
-    verticalAlignment: {
-      control: { type: "select" },
-    },
+    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof BorderItem>;
 

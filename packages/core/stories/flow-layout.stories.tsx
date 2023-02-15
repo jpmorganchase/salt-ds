@@ -14,9 +14,10 @@ export default {
     gap: {
       type: "number",
     },
-  },
-  args: {
-    gap: 3,
+    as: {
+      type: "string",
+    },
+    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof FlowLayout>;
 

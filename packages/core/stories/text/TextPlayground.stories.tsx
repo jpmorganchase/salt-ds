@@ -47,6 +47,7 @@ export default {
       control: { type: "select" },
     },
     maxRows: { control: { type: "number" } },
+    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof Text>;
 

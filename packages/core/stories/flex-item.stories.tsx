@@ -12,6 +12,10 @@ export default {
     },
     shrink: { control: { type: "number" } },
     grow: { control: { type: "number" } },
+    as: {
+      type: "string",
+    },
+    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof FlexItem>;
 
