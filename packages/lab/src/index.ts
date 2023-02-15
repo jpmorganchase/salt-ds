@@ -20,6 +20,7 @@ export * from "./avatar";
 export * from "./badge";
 export * from "./banner";
 export * from "./breadcrumbs";
+export * from "./breakpoints";
 export * from "./button-bar";
 export * from "./calendar";
 export * from "./carousel";
