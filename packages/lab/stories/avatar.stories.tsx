@@ -10,9 +10,6 @@ export default {
 } as ComponentMeta<typeof Avatar>;
 const sizes = [1, 2, 3, 4] as const;
 
-const imgSrc =
-  "https://jpm-ui-toolkit-storybook-develop.apps.dev.na-2y.gap.jpmchase.net/static/media/avatarExampleImage.f6f996d1.jpg";
-
 const Template: ComponentStory<typeof Avatar> = (props) => {
   return (
     <FlowLayout gap={7} align="baseline">
@@ -38,10 +35,12 @@ AlternativeIcon.args = {
   fallbackIcon: <UserGroupIcon />,
 };
 
-export const WithImage = Template.bind({});
-WithImage.args = {
-  children: <img src={imgSrc} alt="profile" />,
-};
+// Add image story once design has provided a profile pic image
+
+// export const WithImage = Template.bind({});
+// WithImage.args = {
+//   children: <img src={imgSrc} alt="profile" />,
+// };
 
 const backgroundStyle = {
   "--saltAvatar-background": "var(--salt-color-orange-700)",
@@ -64,7 +63,7 @@ WithCustomSvg.args = {
 };
 
 export const ImageFallback: ComponentStory<typeof Avatar> = () => {
-  const src = imgSrc;
+  const src = "bad_url";
   const alt = "profile";
   const [children, setChildren] = useState<ReactNode>(alt);
 

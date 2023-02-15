@@ -5,15 +5,13 @@ import { forwardRef, HTMLAttributes, ReactNode } from "react";
 
 import "./Avatar.css";
 
-const classBase = "saltAvatar";
-
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode | string;
   size?: number;
   fallbackIcon?: ReactNode;
 }
 
-const withBaseName = makePrefixer(classBase);
+const withBaseName = makePrefixer("saltAvatar");
 const DEFAULT_AVATAR_SIZE = 2; // medium
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
