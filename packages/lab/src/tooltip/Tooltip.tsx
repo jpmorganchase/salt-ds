@@ -4,7 +4,6 @@ import {
   forwardRef,
   HTMLAttributes,
   ReactNode,
-  Ref,
   isValidElement,
 } from "react";
 import {
@@ -14,7 +13,6 @@ import {
   ValidationStatus,
 } from "@salt-ds/core";
 import { UseFloatingUIProps } from "../popper";
-import { Portal, PortalProps } from "../portal";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 
@@ -22,7 +20,6 @@ const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
-    PortalProps,
     Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
    * The children will be the tooltip's trigger.
@@ -71,12 +68,10 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const {
       children,
       className,
-      container,
       disabled,
-      disablePortal,
       hideArrow = false,
       hideIcon = false,
-      open: openProp,
+      open: openProp = true,
       content,
       status = "info",
       placement = "right",
@@ -111,27 +106,25 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     return (
       <>
         {open && !disabled && (
-          <Portal disablePortal={disablePortal} container={container} ref={ref}>
-            <div
-              className={clsx(withBaseName(), withBaseName(status), className)}
-              ref={floating}
-              {...getTooltipProps()}
-            >
-              <div className={withBaseName("container")}>
-                {!hideIcon && (
-                  <StatusIndicator
-                    status={status}
-                    size={1}
-                    className={withBaseName("icon")}
-                  />
-                )}
-                <span className={withBaseName("content")}>{content}</span>
-              </div>
-              {!hideArrow && (
-                <div className={withBaseName("arrow")} {...arrowProps} />
+          <div
+            className={clsx(withBaseName(), withBaseName(status), className)}
+            ref={floating}
+            {...getTooltipProps()}
+          >
+            <div className={withBaseName("container")}>
+              {!hideIcon && (
+                <StatusIndicator
+                  status={status}
+                  size={1}
+                  className={withBaseName("icon")}
+                />
               )}
+              <span className={withBaseName("content")}>{content}</span>
             </div>
-          </Portal>
+            {!hideArrow && (
+              <div className={withBaseName("arrow")} {...arrowProps} />
+            )}
+          </div>
         )}
 
         {isValidElement(children) &&
