@@ -9,9 +9,9 @@ import {
   useState,
 } from "react";
 import { DialogContext } from "./internal/DialogContext";
-import { Portal } from "../portal";
 import { Scrim, ScrimProps } from "../scrim";
 import { useWindow } from "../window";
+import { Portal } from "../portal";
 
 import "./Dialog.css";
 
