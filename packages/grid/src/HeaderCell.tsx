@@ -48,7 +48,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
   }
 
   const HeaderCellSortingIcon = ({ justify }: HeaderCellSortingIconProps) => {
-    const className = withBaseName("sortable");
+    const className = withBaseName("sortingIcon");
     const icon = (
       <FlexLayout className={className} justify={justify} aria-hidden>
         {sortOrder === "asc" && <ArrowUpIcon />}
@@ -88,7 +88,9 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       ref={ref}
       aria-colindex={column.index + 1}
       data-column-index={column.index}
-      className={clsx(withBaseName(), headerClassName)}
+      className={clsx(withBaseName(), headerClassName, {
+        [withBaseName("sortable")]: isSortable,
+      })}
       role="columnheader"
       data-testid="column-header"
       tabIndex={isFocused && !isFocusableContent ? 0 : -1}

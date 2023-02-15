@@ -89,6 +89,6 @@
   z-index: 2;
 }
 
-[aria-label="sort column"] {
+.saltGridHeaderCell-sortable {
   cursor: pointer;
 }
