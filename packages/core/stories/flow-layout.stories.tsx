@@ -15,9 +15,6 @@ export default {
       type: "number",
     },
   },
-  args: {
-    gap: 3,
-  },
 } as ComponentMeta<typeof FlowLayout>;
 
 const DefaultStory: ComponentStory<typeof FlowLayout> = (args) => {
