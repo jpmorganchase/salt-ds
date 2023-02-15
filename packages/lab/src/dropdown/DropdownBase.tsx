@@ -10,7 +10,7 @@ import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { forwardCallbackProps } from "../utils";
 import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdownBase } from "./useDropdownBase";
-import { Portal } from '../portal'
+import { Portal } from "../portal";
 import { isDesktop, useWindow } from "../window";
 
 import "./Dropdown.css";
@@ -85,16 +85,16 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
     const middleware = isDesktop
       ? []
       : [
-        flip({
-          fallbackPlacements: ["bottom-start", "top-start"],
-        }),
-        shift({ limiter: limitShift() }),
-        size({
-          apply({ availableHeight }) {
-            setMaxPopupHeight(availableHeight);
-          },
-        }),
-      ];
+          flip({
+            fallbackPlacements: ["bottom-start", "top-start"],
+          }),
+          shift({ limiter: limitShift() }),
+          size({
+            apply({ availableHeight }) {
+              setMaxPopupHeight(availableHeight);
+            },
+          }),
+        ];
 
     const { reference, floating, x, y, strategy } = useFloatingUI({
       placement,

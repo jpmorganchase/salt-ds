@@ -6,7 +6,7 @@ import {
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
-import { Portal } from '../portal'
+import { Portal } from "../portal";
 import { List, ListProps } from "../list-deprecated";
 
 import { DefaultMenuItem, MenuItemProps } from "./CascadingMenuItem";
@@ -175,9 +175,10 @@ export const CascadingMenuList = forwardRef<
         isRoot
           ? parentElement
           : parentElement.querySelector(
-            `#${parentElement.getAttribute("aria-activedescendant") as string
-            }`
-          )
+              `#${
+                parentElement.getAttribute("aria-activedescendant") as string
+              }`
+            )
       );
     }
   }, [reference, isRoot, parentElement]);

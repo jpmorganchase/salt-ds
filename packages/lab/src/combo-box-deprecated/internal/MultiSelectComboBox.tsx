@@ -1,11 +1,7 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
-import {
-  useAriaAnnouncer,
-  useFloatingUI,
-  useForkRef,
-} from "@salt-ds/core";
+import { useAriaAnnouncer, useFloatingUI, useForkRef } from "@salt-ds/core";
 import { useEffect, useRef, useState } from "react";
-import { Portal } from '../../portal'
+import { Portal } from "../../portal";
 import { ListBase, ListStateContext } from "../../list-deprecated";
 import { TokenizedInputBase, TokenizedInputProps } from "../../tokenized-input";
 import { BaseComboBoxProps } from "./DefaultComboBox";
@@ -84,16 +80,16 @@ export function MultiSelectComboBox<Item>(
   const middleware = isDesktop
     ? []
     : [
-      flip({
-        fallbackPlacements: ["bottom-start", "top-start"],
-      }),
-      shift({ limiter: limitShift() }),
-      size({
-        apply({ availableHeight }) {
-          setMaxListHeight(availableHeight);
-        },
-      }),
-    ];
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ availableHeight }) {
+            setMaxListHeight(availableHeight);
+          },
+        }),
+      ];
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: "bottom-start",
     middleware,
