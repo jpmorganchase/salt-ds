@@ -14,13 +14,24 @@ component:
     - Other Name
     - Another Name
     - Different Name
+  # [OPTIONAL] A list of other components that are related to this component and the
+  # nature of that relationship
+  relatedComponents:
+    # Each related component must list name & relationship.
+    # Permitted values for "relationship" are:
+    # - contains: This component contains the other component (e.g. Dropdown _contains_ List)
+    # - similarTo: This component is similar to the other component (e.g. a Switch _similarTo_ Checkbox)
+    - name: Other Component Name
+      relationship: contains
+    - name: Another Component Name
+      relationship: similarTo
 ---
 
 # Component Name
 
 <!-- Example image here of the default/most common usage -->
 
-![Text description of screenshot](./path/to/screenshot.jpg)
+![Text alternative for screenshot](./path/to/screenshot.jpg)
 
 <!-- Introductory text that briefly explains the purpose of the component and anything else of note. -->
 
@@ -45,10 +56,6 @@ component:
 ## Variants
 
 <!-- A visual list of all the available variants of the component, each example will have a corresponding code sample and some introductory/explanatory text    -->
-
-## Related components
-
-<!-- A bulleted list of any related components (links) along with an explanation of how they are related    -->
 
 ## Content
 
