@@ -8,7 +8,7 @@ import {
   useDismiss,
   useInteractions,
   useRole,
-} from "@floating-ui/react-dom-interactions";
+} from "@floating-ui/react";
 import { margin, useControlled } from "@salt-ds/core";
 import {
   ComponentPropsWithoutRef,

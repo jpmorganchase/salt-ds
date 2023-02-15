@@ -1,8 +1,8 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { CSSProperties } from "react";
+import { Tooltip } from "../../tooltip";
 import { getSliderAriaLabel } from "./utils";
-import { Tooltip, useTooltip } from "../../tooltip";
 
 import "../Slider.css";
 
@@ -21,30 +21,23 @@ export interface SliderHandleProps {
 export function SliderHandle(props: SliderHandleProps): JSX.Element {
   const { min, max, value, disabled, valueLength, index, style } = props;
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({ placement: "top" });
-
   return (
-    <>
+    <Tooltip content={value} placement="top">
       <div
-        {...getTriggerProps<"div">({
-          className: clsx(withBaseName(), {
-            [withBaseName("min")]: value === min,
-            [withBaseName("max")]: value === max,
-          }),
-          style,
-          role: "slider",
-          "aria-valuemin": min,
-          "aria-valuemax": max,
-          "aria-valuenow": value,
-          "aria-disabled": disabled,
-          "aria-label": getSliderAriaLabel(valueLength, index),
-          tabIndex: 0,
+        className={clsx(withBaseName(), {
+          [withBaseName("min")]: value === min,
+          [withBaseName("max")]: value === max,
         })}
+        style={style}
+        role="slider"
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        aria-disabled={disabled}
+        aria-label={getSliderAriaLabel(valueLength, index)}
+        tabIndex={0}
         data-handle-index={index}
       />
-      <Tooltip
-        {...getTooltipProps({ title: `${value}`, disablePortal: true })}
-      />
-    </>
+    </Tooltip>
   );
 }
