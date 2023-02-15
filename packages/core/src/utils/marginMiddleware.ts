@@ -1,5 +1,5 @@
 import { Middleware } from "@floating-ui/core";
-import { MiddlewareArguments } from "@floating-ui/react-dom-interactions";
+import { MiddlewareArguments } from "@floating-ui/react";
 
 export const margin = (value = 0): Middleware => ({
   name: "margin",

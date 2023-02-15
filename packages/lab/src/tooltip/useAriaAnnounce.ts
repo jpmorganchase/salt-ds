@@ -1,7 +1,4 @@
-import type {
-  ElementProps,
-  FloatingContext,
-} from "@floating-ui/react-dom-interactions";
+import type { ElementProps, FloatingContext } from "@floating-ui/react";
 import { PointerEvent, useEffect, useRef } from "react";
 import { useAriaAnnouncer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 
