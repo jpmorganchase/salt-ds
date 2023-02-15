@@ -7,6 +7,7 @@ import {
   NumericCellEditor,
   NumericColumn,
   TextCellEditor,
+  CellValidationState,
 } from "../src";
 import { Story } from "@storybook/react";
 import { faker } from "@faker-js/faker";
@@ -30,7 +31,7 @@ interface RowExample {
   amount: number;
   price: number;
   discount: string;
-  status?: "error" | "warning" | "success";
+  status?: CellValidationState;
 }
 
 const discountMap: Map<string, number> = new Map(
