@@ -8,7 +8,7 @@ import {
 } from "react";
 import { ItemToStringFunction } from "../list-deprecated";
 import { CascadingMenuListProps } from "./CascadingMenuList";
-import { UseFloatingUIProps } from "../popper";
+import { UseFloatingUIProps } from "../utils";
 
 export interface ScreenBounds {
   clientHeight: number;
