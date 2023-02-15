@@ -9,6 +9,7 @@ export * from "./ownerWindow";
 export * from "./polymorphicTypes";
 export * from "./setRef";
 export * from "./useControlled";
+export * from "./useFloatingUI";
 export * from "./useForkRef";
 export * from "./useId";
 export * from "./useIsFocusVisible";

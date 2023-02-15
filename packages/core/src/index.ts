@@ -11,7 +11,6 @@ export * from "./grid-item";
 export * from "./grid-layout";
 export * from "./link";
 export * from "./panel";
-export * from "./popper";
 export * from "./stack-layout";
 export * from "./status-indicator";
 export * from "./text";
