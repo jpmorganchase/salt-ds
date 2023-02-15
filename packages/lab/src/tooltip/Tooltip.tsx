@@ -1,131 +1,138 @@
-import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
-  ComponentProps,
+  cloneElement,
   forwardRef,
   HTMLAttributes,
   ReactNode,
-  useCallback,
+  isValidElement,
 } from "react";
-import { Portal, PortalProps } from "../portal";
-import { makePrefixer, StatusIndicator } from "@salt-ds/core";
-import { useWindow } from "../window";
-
+import {
+  makePrefixer,
+  useForkRef,
+  StatusIndicator,
+  ValidationStatus,
+} from "@salt-ds/core";
+import { UseFloatingUIProps } from "../utils";
+import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
-
-// Keep in order of preference. First items are used as default
-
-export type TooltipStatus = "error" | "info" | "success" | "warning";
 
 const withBaseName = makePrefixer("saltTooltip");
 
-// FIXME: Fix types
-export interface TooltipRenderProp {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Icon: any; // typeof Icon;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getIconProps: any; // StateAndPropGetterFunction<IconProps>;
-}
-
 export interface TooltipProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "title">,
-    Pick<PortalProps, "disablePortal" | "container"> {
-  arrowProps?: ComponentProps<"div">;
+  extends HTMLAttributes<HTMLDivElement>,
+    Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
-   * Removes the tooltip arrow.
+   * The children will be the tooltip's trigger.
+   */
+  children: ReactNode;
+  /**
+   * Whether to hide the tooltip arrow. Defaults to `false`.
    */
   hideArrow?: boolean;
   /**
-   * Whether to hide a state icon within the tooltip
+   * Whether to hide the state icon within the tooltip. Defaults to `false`.
    */
   hideIcon?: boolean;
   /**
-   * A callback function to render the tooltip content
-   * @param {function} getIcon getter for the icon based on the state
-   * @param {function} getIconProps getter for the icon properties
+   * Content displayed inside the tooltip. Can be a string or a React component.
    */
-  render?: (props: TooltipRenderProp) => ReactNode;
+  content: ReactNode;
   /**
-   * A string to determine the current status of the tooltip
+   * A string to determine the current status of the tooltip. Defaults to 'info'.
    */
-  status?: TooltipStatus;
-  title?: string;
+  status?: ValidationStatus;
   /**
-   * This prop is used to help implement the accessibility logic.
-   * If you don't provide this prop. It falls back to a randomly generated id.
+   * Delay in milliseconds before the tooltip is shown
    */
-  id?: string;
-  open?: boolean;
+  enterDelay?: number;
+  /**
+   * Delay in milliseconds before the tooltip is hidden
+   */
+  leaveDelay?: number;
+  /**
+   * Option to not display the tooltip. Can be used in conditional situations like text truncation.
+   */
+  disabled?: boolean;
+  /**
+   * Option to remove the hover listener
+   */
+  disableHoverListener?: boolean;
+  /**
+   * Option to remove the focus listener
+   */
+  disableFocusListener?: boolean;
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
-  function Tooltip(
-    {
-      arrowProps,
+  function Tooltip(props, ref) {
+    const {
       children,
-      className: classNameProp,
-      container,
-      disablePortal,
-      hideArrow,
-      hideIcon,
-      open,
-      render,
+      className,
+      disabled,
+      hideArrow = false,
+      hideIcon = false,
+      open: openProp,
+      content,
       status = "info",
-      title,
+      placement = "right",
+      enterDelay = 300,
+      leaveDelay = 0,
       ...rest
-    },
-    ref
-  ) {
-    const getIcon = useCallback(
-      (iconProps: IconProps) => {
-        if (hideIcon) {
-          return null;
-        }
-        return status !== "info" ? (
-          <StatusIndicator
-            status={status}
-            {...iconProps}
-            className={withBaseName("icon")}
-          />
-        ) : null;
-      },
-      [status, hideIcon]
+    } = props;
+
+    const hookProps: UseTooltipProps = {
+      open: openProp,
+      placement,
+      enterDelay,
+      leaveDelay,
+      ...rest,
+    };
+
+    const {
+      arrowProps,
+      open,
+      floating,
+      reference,
+      getTriggerProps,
+      getTooltipProps,
+    } = useTooltip(hookProps);
+
+    const triggerRef = useForkRef(
+      // @ts-ignore
+      isValidElement(children) ? children.ref : null,
+      reference
     );
 
-    const Window = useWindow();
-
-    if (!open) {
-      return null;
-    }
-
     return (
-      <Portal disablePortal={disablePortal} container={container}>
-        <Window
-          className={clsx(withBaseName(), withBaseName(status))}
-          ref={ref}
-          {...rest}
-        >
-          <div className={withBaseName("content")}>
-            {render ? (
-              render({
-                Icon: (passedProps: IconProps) => getIcon(passedProps),
-                getIconProps: () => ({
-                  status,
-                  className: withBaseName("icon"),
-                }),
-              })
-            ) : (
-              <>
-                {getIcon({})}
-                <span className={withBaseName("body")}>{title}</span>
-              </>
+      <>
+        {open && !disabled && (
+          <div
+            className={clsx(withBaseName(), withBaseName(status), className)}
+            ref={floating}
+            {...getTooltipProps()}
+          >
+            <div className={withBaseName("container")}>
+              {!hideIcon && (
+                <StatusIndicator
+                  status={status}
+                  size={1}
+                  className={withBaseName("icon")}
+                />
+              )}
+              <span className={withBaseName("content")}>{content}</span>
+            </div>
+            {!hideArrow && (
+              <div className={withBaseName("arrow")} {...arrowProps} />
             )}
           </div>
-          {!hideArrow && (
-            <div className={withBaseName("arrow")} {...arrowProps} />
-          )}
-        </Window>
-      </Portal>
+        )}
+
+        {isValidElement(children) &&
+          cloneElement(children, {
+            ...getTriggerProps(),
+            ref: triggerRef,
+          })}
+      </>
     );
   }
 );

@@ -10,7 +10,7 @@ import { ThumbsUpIcon } from "@salt-ds/icons";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/GridLayout",
+  title: "Core/Layout/Grid Layout",
   component: GridLayout,
   subcomponents: { GridItem },
   argTypes: {
@@ -22,7 +22,6 @@ export default {
     rowGap: { type: "number" },
     rows: { type: "number" },
   },
-  args: {},
 } as ComponentMeta<typeof GridLayout>;
 
 const customBreakpoints = { xs: 0, sm: 450, md: 450, lg: 700, xl: 700 };
@@ -38,8 +37,8 @@ const Template: ComponentStory<typeof GridLayout> = (args) => {
     </GridLayout>
   );
 };
-export const DefaultGridLayout = Template.bind({});
-DefaultGridLayout.args = {
+export const Default = Template.bind({});
+Default.args = {
   columns: { xs: 1, sm: 3, md: 6, lg: 9, xl: 12 },
 };
 
@@ -68,9 +67,8 @@ const ResponsiveView: ComponentStory<typeof GridLayout> = (args) => {
   );
 };
 
-export const GridLayoutResponsiveViewWithCustomBreakpoints =
-  ResponsiveView.bind({});
-GridLayoutResponsiveViewWithCustomBreakpoints.args = {
+export const ResponsiveViewWithCustomBreakpoints = ResponsiveView.bind({});
+ResponsiveViewWithCustomBreakpoints.args = {
   columns: { xs: 1, md: 6, lg: 12 },
   rows: { md: 8, lg: 3 },
 };
@@ -91,7 +89,7 @@ const footerColumns = Object.keys(footerLinks).map((header, index) => (
   </div>
 ));
 
-const Footer: ComponentStory<typeof GridLayout> = (args) => {
+const FooterTemplate: ComponentStory<typeof GridLayout> = (args) => {
   return (
     <GridLayout {...args}>
       <GridItem
@@ -110,8 +108,8 @@ const Footer: ComponentStory<typeof GridLayout> = (args) => {
     </GridLayout>
   );
 };
-export const GridLayoutFooter = Footer.bind({});
-GridLayoutFooter.args = {
+export const Footer = FooterTemplate.bind({});
+Footer.args = {
   columnGap: { xs: 2, md: 8 },
   columns: { xs: 1, sm: 2, md: 6 },
 };
@@ -210,8 +208,8 @@ const Blog: ComponentStory<typeof GridLayout> = (args) => {
     </div>
   );
 };
-export const GridLayoutComposite = Blog.bind({});
-GridLayoutComposite.args = {
+export const Composite = Blog.bind({});
+Composite.args = {
   as: "main",
   columns: { xs: 1, sm: 2, lg: 4 },
 };
@@ -227,5 +225,5 @@ const GridLayoutNestedExample: ComponentStory<typeof GridLayout> = () => {
     </GridLayout>
   );
 };
-export const GridLayoutNested = GridLayoutNestedExample.bind({});
-GridLayoutNested.args = {};
+export const Nested = GridLayoutNestedExample.bind({});
+Nested.args = {};

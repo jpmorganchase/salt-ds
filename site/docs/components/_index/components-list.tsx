@@ -184,7 +184,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-borderlayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-border-layout--page",
   },
   {
     name: "Breadcrumbs",
@@ -341,7 +341,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flexlayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flex-layout--page",
   },
   {
     name: "Flow Layout",
@@ -351,7 +351,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flowlayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flow-layout--page",
   },
   {
     name: "Form Field",
@@ -374,7 +374,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-gridlayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-grid-layout--page",
   },
   {
     name: "Icon",
@@ -585,7 +585,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCoreSince: "1.0.0",
     storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-stacklayout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-stack-layout--page",
   },
   {
     name: "Status Indicator",
@@ -683,8 +683,8 @@ export const componentDetails: ComponentDetails[] = [
     name: "Tooltip",
     description:
       "Displays an explanation or provides more information about an error or warning condition, when the user’s  mouse hovers over a target element.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.BACKLOG,
   },
   {
     name: "Tree",

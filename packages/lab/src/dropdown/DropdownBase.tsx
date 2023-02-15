@@ -1,16 +1,11 @@
-import {
-  flip,
-  limitShift,
-  shift,
-  size,
-} from "@floating-ui/react-dom-interactions";
+import { flip, limitShift, shift, size } from "@floating-ui/react";
 import { makePrefixer, useForkRef, useIdMemo as useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { forwardCallbackProps } from "../utils";
 import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdownBase } from "./useDropdownBase";
-import { useFloatingUI } from "../popper";
+import { useFloatingUI } from "../utils";
 import { Portal } from "../portal";
 import { isDesktop, useWindow } from "../window";
 

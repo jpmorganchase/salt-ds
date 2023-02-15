@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 
 export default {
-  title: "Core/Layout/FlowLayout",
+  title: "Core/Layout/Flow Layout",
   component: FlowLayout,
   argTypes: {
     align: {
@@ -15,12 +15,9 @@ export default {
       type: "number",
     },
   },
-  args: {
-    gap: 3,
-  },
 } as ComponentMeta<typeof FlowLayout>;
 
-const DefaultFlowLayoutStory: ComponentStory<typeof FlowLayout> = (args) => {
+const DefaultStory: ComponentStory<typeof FlowLayout> = (args) => {
   return (
     <FlowLayout className="layout-container" {...args}>
       {Array.from({ length: 12 }, (_, index) => (
@@ -31,5 +28,5 @@ const DefaultFlowLayoutStory: ComponentStory<typeof FlowLayout> = (args) => {
     </FlowLayout>
   );
 };
-export const DefaultFlowLayout = DefaultFlowLayoutStory.bind({});
-DefaultFlowLayout.args = {};
+export const Default = DefaultStory.bind({});
+Default.args = {};

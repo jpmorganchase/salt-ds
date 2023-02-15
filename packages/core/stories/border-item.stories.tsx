@@ -2,16 +2,10 @@ import { BorderLayout, BorderItem } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./layout-stories.css";
 export default {
-  title: "Core/Layout/BorderLayout/BorderItem",
+  title: "Core/Layout/Border Layout/Border Item",
   component: BorderItem,
   argTypes: {
     position: {
-      control: { type: "select" },
-    },
-    horizontalAlignment: {
-      control: { type: "select" },
-    },
-    verticalAlignment: {
       control: { type: "select" },
     },
   },

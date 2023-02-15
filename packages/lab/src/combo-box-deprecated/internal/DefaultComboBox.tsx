@@ -1,9 +1,4 @@
-import {
-  flip,
-  limitShift,
-  shift,
-  size,
-} from "@floating-ui/react-dom-interactions";
+import { flip, limitShift, shift, size } from "@floating-ui/react";
 import { useAriaAnnouncer, useForkRef } from "@salt-ds/core";
 import {
   ComponentType,
@@ -26,10 +21,9 @@ import {
 import { GetFilterRegex } from "../filterHelpers";
 import { getAnnouncement } from "./getAnnouncement";
 import { useComboBox } from "./useComboBox";
-import { Window, WindowProps, isDesktop } from "../../window";
-import { TooltipContext, TooltipContextProps } from "../../tooltip";
+import { isDesktop, Window, WindowProps } from "../../window";
 import { Input, InputProps } from "../../input";
-import { useFloatingUI } from "../../popper";
+import { useFloatingUI } from "../../utils";
 import { Portal } from "../../portal";
 
 export type BaseComboBoxProps<
@@ -47,15 +41,11 @@ export type BaseComboBoxProps<
     | "onChange"
     | "onSelect"
     | "overscanCount"
-    | "tooltipEnterDelay"
-    | "tooltipLeaveDelay"
-    | "tooltipPlacement"
     | "virtualized"
     | "width"
   > & {
     ListItem?: ComponentType<IndexedListItemProps<Item>>;
     ListProps?: Partial<ListProps<Item, Variant>>;
-    Tooltip?: TooltipContextProps["Tooltip"];
     WindowProps?: Partial<WindowProps>;
     allowFreeText?: boolean;
     disabled?: boolean;
@@ -90,11 +80,7 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
 ): ReactNode {
   const {
     ListItem,
-    Tooltip,
     WindowProps = {},
-    tooltipEnterDelay,
-    tooltipLeaveDelay,
-    tooltipPlacement,
     rootRef,
     listRef: listRefProp,
     inputRef: inputRefProp,
@@ -111,16 +97,6 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
   const setListRef = useForkRef(listRef, listRefProp);
 
   const { announce } = useAriaAnnouncer({ debounce: 1000 });
-
-  const tooltipContext = useMemo(
-    () => ({
-      Tooltip,
-      enterDelay: tooltipEnterDelay,
-      leaveDelay: tooltipLeaveDelay,
-      placement: tooltipPlacement,
-    }),
-    [Tooltip, tooltipEnterDelay, tooltipLeaveDelay, tooltipPlacement]
-  );
 
   const {
     inputRef: setHookInputRef,
@@ -193,23 +169,21 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
             {...WindowProps}
             ref={floating}
           >
-            <TooltipContext.Provider value={tooltipContext}>
-              <ListStateContext.Provider value={listContext}>
-                <ListBase
-                  {...{
-                    ListItem,
-                    disabled,
-                    itemCount,
-                    itemToString,
-                    width: listWidth || rootWidth,
-                    source,
-                    ...restListProps,
-                    listRef: setListRef,
-                  }}
-                  maxHeight={maxListHeight || listProps.maxHeight}
-                />
-              </ListStateContext.Provider>
-            </TooltipContext.Provider>
+            <ListStateContext.Provider value={listContext}>
+              <ListBase
+                {...{
+                  ListItem,
+                  disabled,
+                  itemCount,
+                  itemToString,
+                  width: listWidth || rootWidth,
+                  source,
+                  ...restListProps,
+                  listRef: setListRef,
+                }}
+                maxHeight={maxListHeight || listProps.maxHeight}
+              />
+            </ListStateContext.Provider>
           </Window>
         </Portal>
       )}

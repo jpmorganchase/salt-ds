@@ -11,14 +11,13 @@ import {
 
 import {
   FormField,
-  Tooltip,
-  useTooltip,
   Dropdown,
   DropdownButton,
   DropdownProps,
   ListItem,
   ListItemType,
   SelectionChangeHandler,
+  Tooltip,
 } from "@salt-ds/lab";
 import { usa_states } from "./list.data";
 
@@ -148,17 +147,12 @@ export const CustomRowRenderer: Story<DropdownProps> = (props) => (
 );
 
 const ListItemWithTooltip: ListItemType<string> = ({ item, ...props }) => {
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    placement: "right",
-  });
-  const { ref: triggerRef, ...triggerProps } =
-    getTriggerProps<typeof ListItem>(props);
-
   return (
-    <ListItem ref={triggerRef} {...triggerProps}>
-      <label style={{ width: "100%" }}>{item}</label>
-      <Tooltip {...getTooltipProps({ title: `I am a tooltip for ${item}` })} />
-    </ListItem>
+    <Tooltip content={`I am a tooltip for ${item}`} {...props}>
+      <ListItem>
+        <label style={{ width: "100%" }}>{item}</label>
+      </ListItem>
+    </Tooltip>
   );
 };
 
@@ -241,7 +235,7 @@ export const DisabledList: Story<DropdownProps> = (props) => {
 
 export const ControlledOpen: Story<DropdownProps> = (props) => {
   const [isOpen, setIsOpen] = useState(true);
-  const handleChange: any = (open: boolean) => {
+  const handleChange = (open: boolean) => {
     console.log({ openChanged: open });
     setIsOpen(open);
     props.onOpenChange?.(open);

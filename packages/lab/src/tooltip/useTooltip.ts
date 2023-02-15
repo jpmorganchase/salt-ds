@@ -1,8 +1,6 @@
-import { useFloatingUI, UseFloatingUIProps } from "../popper";
 import {
   arrow,
   flip,
-  limitShift,
   offset,
   safePolygon,
   shift,
@@ -11,24 +9,17 @@ import {
   useHover,
   useInteractions,
   useRole,
-} from "@floating-ui/react-dom-interactions";
+  limitShift,
+} from "@floating-ui/react";
+import { HTMLProps, useRef } from "react";
+import { useControlled } from "@salt-ds/core";
+import { UseFloatingUIProps, useFloatingUI } from "../utils";
 import { useAriaAnnounce } from "./useAriaAnnounce";
-import { margin, useControlled } from "@salt-ds/core";
-import {
-  ComponentPropsWithoutRef,
-  ComponentPropsWithRef,
-  JSXElementConstructor,
-  useCallback,
-  useRef,
-} from "react";
-import { TooltipProps } from "./Tooltip";
-import { isDesktop } from "../window";
 
 export interface UseTooltipProps
   extends Partial<
     Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
-  disabled?: boolean;
   /**
    * Do not respond to focus events.
    */
@@ -51,12 +42,11 @@ export interface UseTooltipProps
 
 export function useTooltip(props?: UseTooltipProps) {
   const {
-    enterDelay = 100,
-    leaveDelay = 0,
+    enterDelay,
+    leaveDelay,
     open: openProp,
     onOpenChange,
-    placement: placementProp = "right",
-    disabled,
+    placement: placementProp,
     disableHoverListener,
     disableFocusListener,
   } = props || {};
@@ -74,46 +64,26 @@ export function useTooltip(props?: UseTooltipProps) {
     onOpenChange?.(open);
   };
 
-  const middleware = isDesktop
-    ? [margin(8), arrow({ element: arrowRef })]
-    : [
-        offset(8),
-        flip(),
-        shift({
-          limiter: limitShift({
-            offset: () =>
-              Math.max(
-                arrowRef.current?.offsetWidth ?? 0,
-                arrowRef.current?.offsetHeight ?? 0
-              ),
-          }),
-        }),
-        arrow({ element: arrowRef }),
-      ];
   const {
     floating,
     reference,
     x,
     y,
     strategy,
-    update,
-    middlewareData,
+    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
     placement,
     context,
   } = useFloatingUI({
     open,
     onOpenChange: handleOpenChange,
     placement: placementProp,
-    middleware,
+    middleware: [
+      offset(8),
+      flip(),
+      shift({ limiter: limitShift() }),
+      arrow({ element: arrowRef }),
+    ],
   });
-
-  const handleArrowRef = useCallback(
-    (node: HTMLDivElement) => {
-      arrowRef.current = node;
-      update();
-    },
-    [update]
-  );
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {
@@ -122,11 +92,11 @@ export function useTooltip(props?: UseTooltipProps) {
         close: leaveDelay,
       },
       enabled: !disableHoverListener,
-      handleClose: isDesktop ? null : safePolygon(),
+      handleClose: safePolygon(),
     }),
     useFocus(context, { enabled: !disableFocusListener }),
     useRole(context, { role: "tooltip" }),
-    useDismiss(context, { ancestorScroll: true }),
+    useDismiss(context),
     useAriaAnnounce(context, {
       delay: {
         open: enterDelay,
@@ -135,68 +105,37 @@ export function useTooltip(props?: UseTooltipProps) {
     }),
   ]);
 
-  const getTooltipProps = (userProps?: TooltipProps): TooltipProps => {
-    const arrowProps = {
-      ref: handleArrowRef,
+  const arrowProps = {
+    ref: arrowRef,
+    style: {
+      left: arrowX ? `${arrowX}px` : "",
+      top: arrowY ? `${arrowY}px` : "",
+    },
+  };
+
+  const getTooltipProps = (): HTMLProps<HTMLDivElement> => {
+    return getFloatingProps({
+      // @ts-ignore
+      "data-placement": placement,
+      ref: floating,
       style: {
-        left: middlewareData.arrow?.x ?? "",
-        top: middlewareData.arrow?.y ?? "",
+        top: y ?? "",
+        left: x ?? "",
+        position: strategy,
       },
-    };
-
-    return {
-      arrowProps,
-      open,
-      ...getFloatingProps({
-        // @ts-ignore
-        "data-placement": placement,
-        ...userProps,
-        ref: floating,
-        style: {
-          top: y ?? "",
-          left: x ?? "",
-          position: strategy,
-          ...(userProps?.style || {}),
-        },
-      }),
-    } as TooltipProps;
+    });
   };
 
-  const getTriggerProps = <
-    Element extends
-      | keyof JSX.IntrinsicElements
-      // TODO: whether restrict `any`
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      | JSXElementConstructor<any> = "div"
-  >(
-    userProps?: ComponentPropsWithoutRef<Element>
-  ) => {
-    // FIXME: types from useInteractions
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return getReferenceProps({
-      ...userProps,
+  const getTriggerProps = () =>
+    getReferenceProps({
       ref: reference,
-    }) as ComponentPropsWithRef<Element>;
-  };
-
-  if (disabled) {
-    return {
-      getTooltipProps: (args?: TooltipProps) => args,
-      getTriggerProps: <
-        Element extends
-          | keyof JSX.IntrinsicElements
-          // TODO: whether restrict `any`
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          | JSXElementConstructor<any> = "div"
-      >(
-        args?: ComponentPropsWithRef<Element>
-        // FIXME: types from useInteractions
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      ) => args as ComponentPropsWithRef<Element>,
-    };
-  }
+    });
 
   return {
+    arrowProps,
+    open,
+    floating,
+    reference,
     getTooltipProps,
     getTriggerProps,
   };

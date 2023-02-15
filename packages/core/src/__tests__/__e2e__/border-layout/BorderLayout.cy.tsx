@@ -4,14 +4,14 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 import { BORDER_POSITION as borderAreas } from "@salt-ds/core";
 
 const composedStories = composeStories(borderStories);
-const { BorderLayoutAllPanels } = composedStories;
+const { AllPanels } = composedStories;
 
 describe("GIVEN a Border", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN border items are provided", () => {
     it("THEN it should render them in the right positions", () => {
-      cy.mount(<BorderLayoutAllPanels />);
+      cy.mount(<AllPanels />);
 
       cy.get(".saltBorderLayout").should(
         "have.css",
@@ -47,7 +47,7 @@ describe("GIVEN a Border", () => {
 
   describe("WHEN no gap values are provided", () => {
     it("THEN it should not display a gap by default", () => {
-      cy.mount(<BorderLayoutAllPanels />);
+      cy.mount(<AllPanels />);
 
       cy.get(".saltBorderLayout").should("have.css", "column-gap", "0px");
 
