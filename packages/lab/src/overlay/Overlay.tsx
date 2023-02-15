@@ -3,7 +3,7 @@ import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
 import { useWindow } from "../window";
-import { UseFloatingUIProps } from "../popper";
+import { UseFloatingUIProps } from "../utils";
 import { Portal } from "../portal";
 
 import "./Overlay.css";

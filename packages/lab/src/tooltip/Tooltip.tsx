@@ -12,7 +12,7 @@ import {
   StatusIndicator,
   ValidationStatus,
 } from "@salt-ds/core";
-import { UseFloatingUIProps } from "../popper";
+import { UseFloatingUIProps } from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 

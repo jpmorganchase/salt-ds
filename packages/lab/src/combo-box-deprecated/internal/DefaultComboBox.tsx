@@ -23,7 +23,7 @@ import { getAnnouncement } from "./getAnnouncement";
 import { useComboBox } from "./useComboBox";
 import { isDesktop, Window, WindowProps } from "../../window";
 import { Input, InputProps } from "../../input";
-import { useFloatingUI } from "../../popper";
+import { useFloatingUI } from "../../utils";
 import { Portal } from "../../portal";
 
 export type BaseComboBoxProps<

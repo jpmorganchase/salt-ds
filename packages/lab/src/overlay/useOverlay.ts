@@ -18,7 +18,7 @@ import {
   useRef,
 } from "react";
 import { OverlayProps } from "./Overlay";
-import { useFloatingUI, UseFloatingUIProps } from "../popper";
+import { useFloatingUI, UseFloatingUIProps } from "../utils";
 import { isDesktop } from "../window";
 
 export type UseOverlayProps = Partial<
