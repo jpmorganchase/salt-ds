@@ -3,4 +3,3 @@
 ---
 
 Move useFloatingUI from Popper to utils
-Remove Popper
