@@ -17,7 +17,6 @@ export default {
       type: "number",
     },
     children: { control: { type: null } },
-    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof BorderLayout>;
 

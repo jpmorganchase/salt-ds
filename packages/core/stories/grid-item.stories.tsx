@@ -9,7 +9,6 @@ export default {
     rowSpan: { control: { type: "number" } },
     horizontalAlignment: { control: { type: "select" } },
     verticalAlignment: { control: { type: "select" } },
-    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof GridItem>;
 

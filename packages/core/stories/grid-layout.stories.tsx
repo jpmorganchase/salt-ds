@@ -21,7 +21,6 @@ export default {
     },
     rowGap: { type: "number" },
     rows: { type: "number" },
-    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof GridLayout>;
 
