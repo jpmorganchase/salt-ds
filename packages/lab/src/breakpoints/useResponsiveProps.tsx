@@ -1,6 +1,10 @@
 import { ResponsiveProps, BpType, BreakpointsContextType } from "./types";
 import { getResolvedResponsiveValue } from "./utils";
 
+/**
+ * useResponsiveProps will convert each key in an object into a responsive prop
+ * It is used within makeResponsive to make all props of a component responsive
+ */
 export const createUseResponsiveProps = <BP extends BpType>(
   useBreakpointsContext: () => BreakpointsContextType<BP>
 ) => {

@@ -9,10 +9,18 @@ type ResponsiveChildrenProps<BP extends BpType> = Omit<
 > & {
   children: ReactNode;
 };
-
+/**
+ * ResponsiveChildren is a component which allows you to change the rendered component based on the viewport E.g.:
+ * <ResponsiveChildren
+ *    md={<h1>Medium Viewport Child</h1>}
+ * >
+ *    <h1>Default Child</h1>
+ * </ResponsiveChildren>`
+ */
 export const createResponsiveChildren = <BP extends BpType>(
   useResponsiveValue: UseResponsiveValue
 ) => {
+  //
   const ResponsiveChildren = ({
     children: childrenProp,
     ...rest

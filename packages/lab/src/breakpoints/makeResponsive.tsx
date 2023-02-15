@@ -9,6 +9,10 @@ import { ResponsiveProps, BpType } from "./types";
 
 import { UseResponsiveProps } from "./useResponsiveProps";
 
+/**
+ * makeResponsive is a higher-order component which will enable all the props of a provided Component to take responsive values.
+ * E.g. `const ResponsiveComponent = makeResponsive(Component)`
+ */
 export const createMakeResponsive = <BP extends BpType>(
   useResponsiveProps: UseResponsiveProps
 ) => {

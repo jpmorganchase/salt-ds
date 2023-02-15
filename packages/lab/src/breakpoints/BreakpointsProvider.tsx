@@ -1,15 +1,12 @@
 import { ReactNode, useState, useEffect, Context, useMemo } from "react";
 
 import {
-  // Breakpoints,
   BpType,
   Breakpoint,
   OrderedBreakpoints,
   BreakpointsContextType,
   BreakpointsOrder,
 } from "./types";
-
-// import { BreakpointsContext } from "./BreakpointsContext";
 
 const getBreakpointsOrder = <BP extends BpType>(
   orderedBreakpoints: OrderedBreakpoints<BP>
@@ -47,6 +44,7 @@ type GetBreakpointMatchersConfig<BP extends BpType> = {
   breakpoints: BP;
 };
 
+// Generated the MediaQueryList matchers which will be used to detect the current breakpoint
 const getBreakpointMatchers = <BP extends BpType>({
   orderedBreakpoints,
   breakpoints,
@@ -102,6 +100,7 @@ export const createBreakpointsProvider = <BP extends BpType>(
   breakpoints: BP,
   BreakpointsContext: Context<BreakpointsContextType<BP>>
 ) => {
+  // Generate breakpoint metadata and matchers in outer scope to maintain referential integrity for react hooks
   const orderedBreakpoints = getOrderedBreakpoints(breakpoints);
   const breakpointOrder = getBreakpointsOrder(orderedBreakpoints);
   const breakpointMatchers = getBreakpointMatchers({
@@ -114,6 +113,7 @@ export const createBreakpointsProvider = <BP extends BpType>(
       getCurrentBreakpoint({ breakpointMatchers, orderedBreakpoints })
     );
 
+    // setup the event handlers for detecting breakpoint changes
     useEffect(() => {
       const matchersCleanerupFns: (() => void)[] = [];
 
