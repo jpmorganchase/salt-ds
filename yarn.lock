@@ -2589,14 +2589,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-react-jsx-source@npm:^7.18.6":
-  version: 7.18.6
-  resolution: "@babel/plugin-transform-react-jsx-source@npm:7.18.6"
+"@babel/plugin-transform-react-jsx-source@npm:^7.18.6, @babel/plugin-transform-react-jsx-source@npm:^7.19.6":
+  version: 7.19.6
+  resolution: "@babel/plugin-transform-react-jsx-source@npm:7.19.6"
   dependencies:
-    "@babel/helper-plugin-utils": ^7.18.6
+    "@babel/helper-plugin-utils": ^7.19.0
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 7e17e631820955f158c16e9b01a96cf82e3ee81bb3c7c03f2896ee0d41da3e8a7557546893bc81792afe46b817c4e9014fd6e4de8644fcf16fd0f7c4daf66e41
+  checksum: 1e9e29a4efc5b79840bd4f68e404f5ab7765ce48c7bd22f12f2b185f9c782c66933bdf54a1b21879e4e56e6b50b4e88aca82789ecb1f61123af6dfa9ab16c555
   languageName: node
   linkType: hard
 
@@ -5097,7 +5097,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10":
+"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.13":
   version: 1.4.14
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.14"
   checksum: 61100637b6d173d3ba786a5dff019e1a74b1f394f323c1fee337ff390239f053b87266c7a948777f4b1ee68c01a8ad0ab61e5ff4abb5a012a0b091bec391ab97
@@ -6150,7 +6150,7 @@ __metadata:
     "@types/react-window": ^1.8.2
     "@types/tinycolor2": ^1.4.3
     "@types/warning": ^3.0.0
-    "@vitejs/plugin-react": ^2.1.0
+    "@vitejs/plugin-react": ^3.0.0
     ag-grid-community: ^28.2.1
     ag-grid-enterprise: ^28.2.1
     ag-grid-react: ^28.2.1
@@ -9502,7 +9502,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react@npm:^2.0.0, @vitejs/plugin-react@npm:^2.1.0":
+"@vitejs/plugin-react@npm:^2.0.0":
   version: 2.1.0
   resolution: "@vitejs/plugin-react@npm:2.1.0"
   dependencies:
@@ -9516,6 +9516,21 @@ __metadata:
   peerDependencies:
     vite: ^3.0.0
   checksum: cd13ad549f33e579e0e1d14f5b8a4ad60d5fbbc8cd579e4381d52bb426700118e876644a619a19c5cec4efeb4f8a0ff50b6c9456d5c24836071190b46d781fef
+  languageName: node
+  linkType: hard
+
+"@vitejs/plugin-react@npm:^3.0.0":
+  version: 3.1.0
+  resolution: "@vitejs/plugin-react@npm:3.1.0"
+  dependencies:
+    "@babel/core": ^7.20.12
+    "@babel/plugin-transform-react-jsx-self": ^7.18.6
+    "@babel/plugin-transform-react-jsx-source": ^7.19.6
+    magic-string: ^0.27.0
+    react-refresh: ^0.14.0
+  peerDependencies:
+    vite: ^4.1.0-beta.0
+  checksum: 450fac79e67cba9e1581c860f78e687b44108ab4117663ef20db279316e03cd8e87f94fef376e27cc5e200bd52813dcc09b70ea570c7c7cc291fcd47eb260fbc
   languageName: node
   linkType: hard
 
@@ -21925,6 +21940,15 @@ __metadata:
   dependencies:
     sourcemap-codec: ^1.4.8
   checksum: e72c9b3d90ccbde088acc5937109f73fa4be8b6a2c2ea9bf9c3c01974f1ebf09842259a74ff2ba4081008a7d49941d883cfef8c460e6c33a6eb564b58482b750
+  languageName: node
+  linkType: hard
+
+"magic-string@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "magic-string@npm:0.27.0"
+  dependencies:
+    "@jridgewell/sourcemap-codec": ^1.4.13
+  checksum: 273faaa50baadb7a2df6e442eac34ad611304fc08fe16e24fe2e472fd944bfcb73ffb50d2dc972dc04e92784222002af46868cb9698b1be181c81830fd95a13e
   languageName: node
   linkType: hard
 
