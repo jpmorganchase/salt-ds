@@ -17,7 +17,6 @@ import {
   ListItem,
   ListItemType,
   SelectionChangeHandler,
-  Tooltip,
 } from "@salt-ds/lab";
 import { usa_states } from "./list.data";
 

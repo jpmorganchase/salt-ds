@@ -6,13 +6,8 @@ import {
   ReactNode,
   isValidElement,
 } from "react";
-import {
-  makePrefixer,
-  useForkRef,
-  StatusIndicator,
-  UseFloatingUIProps,
-  ValidationStatus,
-} from "@salt-ds/core";
+import { StatusIndicator, ValidationStatus } from "../status-indicator";
+import { UseFloatingUIProps, makePrefixer, useForkRef } from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 

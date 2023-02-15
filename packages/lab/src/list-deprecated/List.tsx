@@ -1,4 +1,4 @@
-import { Tooltip, useForkRef } from "@salt-ds/core";
+import { useForkRef } from "@salt-ds/core";
 
 import {
   ForwardedRef,
@@ -9,7 +9,6 @@ import {
   useRef,
 } from "react";
 
-import { Tooltip } from "../tooltip";
 import { ListBase, ListScrollHandles } from "./ListBase";
 import { ListProps, ListSelectionVariant } from "./ListProps";
 import { ListStateContext } from "./ListStateContext";
