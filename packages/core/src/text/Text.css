@@ -3,6 +3,10 @@
   color: var(--saltText-color, var(--text-color));
 }
 
+.saltText::selection {
+  background: var(--saltText-highlight, var(--salt-text-background-selected));
+}
+
 /* Allows truncation */
 .saltText-lineClamp {
   display: -webkit-box;
