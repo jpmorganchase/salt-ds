@@ -9,6 +9,7 @@ import {
   useRef,
 } from "react";
 
+import { Tooltip } from "../tooltip";
 import { ListBase, ListScrollHandles } from "./ListBase";
 import { ListProps, ListSelectionVariant } from "./ListProps";
 import { ListStateContext } from "./ListStateContext";
