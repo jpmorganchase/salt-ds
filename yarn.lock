@@ -30680,6 +30680,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tabbable@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "tabbable@npm:6.0.1"
+  checksum: 65e378ad69a97416f2fdce34ade11b8ff68b33d9b2d978920a9d285c77e1bb88cb35113a8f00af8c4f0163d788d451a48840a216fa918d6a3f0c554951deb984
+  languageName: node
+  linkType: hard
+
 "table@npm:^6.0.9, table@npm:^6.8.1":
   version: 6.8.1
   resolution: "table@npm:6.8.1"
