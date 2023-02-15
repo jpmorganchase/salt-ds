@@ -1,35 +1,48 @@
-import type { Props } from "@floating-ui/react-dom-interactions";
+import type { Middleware, Placement, Strategy } from "@floating-ui/react";
 import {
   autoUpdate,
   flip,
   limitShift,
   shift,
   useFloating,
-} from "@floating-ui/react-dom-interactions";
-import { isDesktop } from "../window";
+} from "@floating-ui/react";
 
-export type UseFloatingUIProps = Partial<
-  Pick<Props, "placement" | "strategy" | "middleware" | "open" | "onOpenChange">
->;
+export type UseFloatingUIProps = {
+  /**
+   * Set position relative to trigger
+   */
+  placement?: Placement;
+  strategy?: Strategy;
+  middleware?: Middleware[];
+  /**
+   * Set visible state. Defaults to false
+   */
+  open?: boolean;
+  /**
+   * Callback function triggered when open state changes
+   */
+  onOpenChange?: (open: boolean) => void;
+};
 
-export const DEFAULT_FLOATING_UI_MIDDLEWARE = isDesktop
-  ? []
-  : [flip(), shift({ limiter: limitShift() })];
+export const DEFAULT_FLOATING_UI_MIDDLEWARE = [
+  flip(),
+  shift({ limiter: limitShift() }),
+];
 
 export function useFloatingUI(
   props: UseFloatingUIProps
 ): ReturnType<typeof useFloating> {
   const {
-    placement: placementProp,
-    strategy: strategyProp,
+    placement,
+    strategy,
     middleware = DEFAULT_FLOATING_UI_MIDDLEWARE,
-    open,
+    open = false,
     onOpenChange,
   } = props;
 
   const { reference, floating, refs, update, ...rest } = useFloating({
-    placement: placementProp,
-    strategy: strategyProp,
+    placement,
+    strategy,
     middleware,
     open,
     onOpenChange,

@@ -1,9 +1,12 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Button, Text } from "@salt-ds/core";
 import { Tooltip } from "@salt-ds/lab";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import { withFlexGap } from "docs/decorators/withFlexGap";
 
 <Meta
   title="Documentation/Lab/Tooltip"
@@ -23,20 +26,78 @@ A Tooltip provides guidance to the user when something requires more explanation
   <Story id="lab-tooltip--default" />
 </Canvas>
 
-# API
+## Features
+
+### Status
+
+Use the `status` prop to choose between `error`, `warning`, `success` and `info`.
+
+<Canvas>
+  <Story id="lab-tooltip--status" decorators={[withFlexGap]} />
+</Canvas>
+
+### Hide arrow
+
+Use `hideArrow` prop if you'd like to display the tooltip without the arrow.
+
+<Canvas>
+  <Story id="lab-tooltip--without-arrow" />
+</Canvas>
+
+### Hide icon
+
+Use `hideIcon` prop if you'd like to display the tooltip without state icon.
+
+<Canvas>
+  <Story id="lab-tooltip--without-icon" />
+</Canvas>
+
+### Custom content
+
+Use the `content` prop to pass either a simple string or a React component.
+
+<Canvas>
+  <Story id="lab-tooltip--custom-content" />
+</Canvas>
+
+### Placement
+
+Use the `placement` prop to position the tooltip. The tooltip will flip and shift if there isn't enough space for it to be visible.
+
+<Canvas>
+  <Story id="lab-tooltip--placement" decorators={[withFlexGap]} />
+</Canvas>
+
+### Delay before shown
+
+Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults to 300ms.
+
+<Canvas>
+  <Story id="lab-tooltip--delay" decorators={[withFlexGap]} />
+</Canvas>
+
+## Configuring Tooltip
+
+### API
 
 ```
 import { Tooltip } from "@salt-ds/lab";
 ```
 
-## Props
+### Props
 
 <ArgsTable of={Tooltip} />
 
-## CSS Class
+### CSS Class
 
 <CSSClassTable of={Tooltip} />
 
-## Characteristics Used
+### Characteristics Used
 
 <CharacteristicUsage of={Tooltip} />
+
+## Accessibility
+
+We do not recommend that you include interactive elements within a tooltip as this is inaccessible since tooltips do not receive focus. If you need to include focusable content like buttons or links, consider using the overlay component.
+
+<HelpAndSupport />
