@@ -8,10 +8,6 @@ export default {
     position: {
       control: { type: "select" },
     },
-    as: {
-      type: "string",
-    },
-    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof BorderItem>;
 

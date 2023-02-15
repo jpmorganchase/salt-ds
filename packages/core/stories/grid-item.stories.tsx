@@ -5,7 +5,6 @@ export default {
   title: "Core/Layout/Grid Layout/Grid Item",
   component: GridItem,
   argTypes: {
-    as: { type: "string" },
     colSpan: { control: { type: "number" } },
     rowSpan: { control: { type: "number" } },
     horizontalAlignment: { control: { type: "select" } },

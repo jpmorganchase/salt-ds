@@ -89,6 +89,11 @@ export const globalTypes: GlobalTypes = {
   },
 };
 
+export const argTypes = {
+  as: { type: "string" },
+  ref: { control: { type: null } },
+};
+
 export const parameters: Parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   layout: "centered",

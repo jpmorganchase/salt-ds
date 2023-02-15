@@ -21,10 +21,6 @@ export default {
     gap: {
       type: "number",
     },
-    as: {
-      type: "string",
-    },
-    ref: { control: { type: null } },
   },
 } as ComponentMeta<typeof StackLayout>;
 
@@ -45,7 +41,7 @@ Default.args = {};
 const SeparatorsStory: ComponentStory<typeof FlexLayout> = (args) => {
   return (
     <StackLayout {...args} className="layout-container">
-      {Array.from({ length: 3 }, (_, index) => (
+      {Array.from({ length: 10 }, (_, index) => (
         <div key={index}>
           <p>Item {index + 1}</p>
         </div>
@@ -56,5 +52,5 @@ const SeparatorsStory: ComponentStory<typeof FlexLayout> = (args) => {
 export const WithSeparators = SeparatorsStory.bind({});
 WithSeparators.args = {
   separators: "center",
-  direction: { sm: "row", xs: "column" },
+  direction: { lg: "row", sm: "column", xs: "column" },
 };

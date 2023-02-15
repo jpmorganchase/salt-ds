@@ -14,7 +14,6 @@ export default {
   component: GridLayout,
   subcomponents: { GridItem },
   argTypes: {
-    as: { type: "string" },
     columnGap: { type: "number" },
     columns: { type: "number" },
     gap: {
