@@ -5,6 +5,7 @@ import {
   BreakpointsProvider,
   useResponsiveValue,
   useResponsiveProps,
+  createResponsiveSystem,
 } from "@salt-ds/lab";
 
 export default {
@@ -115,5 +116,30 @@ export const UseResponsivePropsExample = () => {
     <BreakpointsProvider>
       <UseResponsivePropsExampleContent />
     </BreakpointsProvider>
+  );
+};
+
+const customResponsiveSystem = createResponsiveSystem({
+  tiny: 0,
+  kindabig: 800,
+  mahoosive: 1200,
+});
+
+const CustomResponsiveCard = customResponsiveSystem.makeResponsive(Card);
+
+export const CustomBreakpointsExample = () => {
+  return (
+    <customResponsiveSystem.BreakpointsProvider>
+      <CustomResponsiveCard
+        style={{
+          default: { background: "red" },
+          tiny: { background: "tomato", color: "white" },
+          kindabig: { background: "goldenrod", color: "black" },
+          mahoosive: { background: "darkgrey", color: "white" },
+        }}
+      >
+        Card 1
+      </CustomResponsiveCard>
+    </customResponsiveSystem.BreakpointsProvider>
   );
 };
