@@ -40,7 +40,7 @@
     "next": "^13.1.1"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "12.3.1",
+    "@next/eslint-plugin-next": "12.3.4",
     "@types/node": "^14.14.20",
     "concurrently": "^7.1.0",
     "cross-env": "^7.0.3",
