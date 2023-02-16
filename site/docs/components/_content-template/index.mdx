@@ -94,6 +94,11 @@ component:
 ### Configuration title (e.g. Striped rows)
 
 <!--
+  A brief description of what this configuration provides to users and when it
+  should be used.
+-->
+
+<!--
   A live example of the component configuration, with access to the correspoding
   source code.
 
@@ -104,21 +109,23 @@ component:
   </Canvas>
 -->
 
-<!--
-  A brief description of what this configuration provides to users and when it
-  should be used.
--->
-
 ## Content
 
 <!--
+  OPTIONAL: Remove this section if it is not applicable.
+
   Add any component-specific content guidance here, use visual examples where
   appropriate.
+
+  For example, a Button component might include guidance on recommended terms to
+  use for the label text, recommended maximum character counts, etc.
 -->
 
 ## Accessibility
 
 <!--
+  OPTIONAL: Remove this section if it is not applicable.
+
   Describe any considerations the users may need to take into account when using
   the component.
 -->
@@ -126,6 +133,8 @@ component:
 ## Responsive layout
 
 <!--
+  OPTIONAL: Remove this section if it is not applicable.
+
   Describe how the component behaves in responsive layout situations, and any
   limitations/restrictions.
 -->
@@ -157,18 +166,29 @@ component:
 ## Import
 
 <!--
-  Add a code sample of the API call required to import this component into your
-  application.
+  Show the typical import statement used to include this component in your
+  code.
 -->
+
+```js
+import { ComponentName } from "@some-org/some-package";
+```
 
 ## Props
 
-<!-- Insert a table of the props for this component in the following format:
+<!--
+  A table of the props for this component in the following format:
    
 | Prop  | Description | Data type.          | Default  | Mandatory (?)  |
 |-------|-------------|---------------------|----------|----------------|
 |       |             | boolean, enum, etc. |          |                |
 |       |             |                     |          |                |
 |       |             |                     |          |                |
+
+
+  Typically, this should be auto-generated from the source code. In Storybook
+  use:
+
+  <ArgsTable of={ComponentName} />
 
 -->
