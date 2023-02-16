@@ -13,8 +13,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { Tooltip, TooltipProps } from "../tooltip";
+import {
+  makePrefixer,
+  Tooltip,
+  TooltipProps,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 
 import { DeleteButton } from "./internal/DeleteButton";
 import { DivButton } from "./internal/DivButton";

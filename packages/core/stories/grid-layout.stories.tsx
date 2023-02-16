@@ -22,7 +22,6 @@ export default {
     rowGap: { type: "number" },
     rows: { type: "number" },
   },
-  args: {},
 } as ComponentMeta<typeof GridLayout>;
 
 const customBreakpoints = { xs: 0, sm: 450, md: 450, lg: 700, xl: 700 };

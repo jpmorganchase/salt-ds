@@ -11,9 +11,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import { makePrefixer, Tooltip, useForkRef, useId } from "@salt-ds/core";
 import { FormFieldContext } from "../form-field-context";
-import { Tooltip } from "../tooltip";
 import { classBase } from "./constant";
 import {
   FormActivationIndicator,
