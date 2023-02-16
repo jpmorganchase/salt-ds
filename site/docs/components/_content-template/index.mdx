@@ -202,9 +202,12 @@ export const componentMetaData = {
 ### Additional materials
 
 <!--
-  Add a bulleted list of links to additional, component-specific materials:
+  Add a bulleted list of links to additional, component-specific materials.
 
-  * [Full component specification (in Figma)](https://figma.com/path/to/spec)
+  Note that only publicly accessible pages can be linked to.
+
+  For example:
+
   * [Figma stickersheet](https://figma.com/path/to/stickersheet)
   * ...
 -->
@@ -225,18 +228,10 @@ import { ComponentName } from "@some-org/some-package";
 ### Props
 
 <!--
-  A table of the props for this component in the following format:
-   
-| Prop  | Description | Data type.          | Default  | Mandatory (?)  |
-|-------|-------------|---------------------|----------|----------------|
-|       |             | boolean, enum, etc. |          |                |
-|       |             |                     |          |                |
-|       |             |                     |          |                |
+  Insert an auto-generated table of the props for this component and their
+  respective descriptions, data types, etc. here.
 
-
-  Typically, this should be auto-generated from the source code. In Storybook
-  use:
+  In Storybook this is done like so:
 
   <ArgsTable of={ComponentName} />
-
 -->
