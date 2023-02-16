@@ -1,4 +1,5 @@
 import { IconProps } from "@salt-ds/icons";
+import { UseFloatingUIProps } from "@salt-ds/core";
 import {
   ComponentType,
   HTMLAttributes,
@@ -8,7 +9,6 @@ import {
 } from "react";
 import { ItemToStringFunction } from "../list-deprecated";
 import { CascadingMenuListProps } from "./CascadingMenuList";
-import { UseFloatingUIProps } from "../utils";
 
 export interface ScreenBounds {
   clientHeight: number;
