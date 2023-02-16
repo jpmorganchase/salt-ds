@@ -1,26 +1,34 @@
 ---
 # Metadata about the component
 component:
-  # [REQUIRED] URL to the relevant directory that contains the (main) source code for this component
+  # [REQUIRED] URL to the relevant directory that contains the (main) source
+  # code for this component
   sourceCodeUrl: https://github.com/some-org/some-repo/tree/main/path/to/component-name/
+
   # [REQUIRED] Name of the NPM package this component is published in
   npmPackage: "@some-org/some-package"
-  # [REQUIRED] The version of the NPM package that this component first appeared in
+
+  # [REQUIRED] The version of the NPM package that this component first appeared
+  # in
   npmPackageSince: "1.2.3"
-  # [OPTIONAL] A list of synonymous names that someone might search for when trying
-  # find this component. For example, a "Dialog" component might list "Modal" and "Prompt"
-  # as its alsoKnownAs names
+
+  # [OPTIONAL] A list of synonymous names that someone might search for when
+  # trying find this component. For example, a "Dialog" component might list
+  # "Modal" and "Prompt" as its alsoKnownAs names
   alsoKnownAs:
     - Other Name
     - Another Name
     - Different Name
-  # [OPTIONAL] A list of other components that are related to this component and the
-  # nature of that relationship
+
+  # [OPTIONAL] A list of other components that are related to this component and
+  # the nature of that relationship
   relatedComponents:
     # Each related component must list name & relationship.
     # Permitted values for "relationship" are:
-    # - contains: This component contains the other component (e.g. Dropdown _contains_ List)
-    # - similarTo: This component is similar to the other component (e.g. a Switch _similarTo_ Checkbox)
+    # - contains: This component contains the other component (e.g. Dropdown
+    #             _contains_ List)
+    # - similarTo: This component is similar to the other component (e.g. a
+    #              Switch _similarTo_ Checkbox)
     - name: Other Component Name
       relationship: contains
     - name: Another Component Name
@@ -29,11 +37,25 @@ component:
 
 # Component Name
 
-<!-- Example image here of the default/most common usage -->
+<!--
+  Example screenshot or live component demo here of the default/most common
+  usage.
 
-![Text alternative for screenshot](./path/to/screenshot.jpg)
+  For screenshots use Markdown:
 
-<!-- Introductory text that briefly explains the purpose of the component and anything else of note. -->
+  ![Text alternative for screenshot](./path/to/screenshot.jpg)
+
+  For live demos in Storybook use:
+
+  <Canvas>
+    <Story id="..." />
+  </Canvas>
+-->
+
+<!--
+  Introductory text that briefly explains the purpose of the component and
+  anything else of note.
+-->
 
 ## When to use Component Name
 
@@ -44,54 +66,100 @@ component:
 
 ## When not to use Component Name
 
-<!-- Bulleted list of scenarios where this component is not appropriate. Where possible, include a link to an alternative component that should be used in it's place -->
+<!--
+  Bulleted list of scenarios where this component is not appropriate. Where
+  possible, include a link to an alternative component that should be used in
+  it's place
+-->
 
 - ...
 - ...
 
-# Usage
+## Configurations
 
-<!-- This tab contains all the information on how all possible variants of the component can be used under the following headings    -->
+<!--
+  A visual list of possible configurations of the component.
 
-## Variants
+  The purpose is to convey the main features and/or usage options of the
+  component (e.g. the Data Grid's striped rows might be a "configuration" to
+  showcase here). The configurations listed here should aim to be comprehensive,
+  but not necessarily exhaustive (some complex components may have vast numbers
+  of possible permutations, so listing out each one would be impossible and
+  overwhelming to readers).
 
-<!-- A visual list of all the available variants of the component, each example will have a corresponding code sample and some introductory/explanatory text    -->
+  Each confguration should have its own section following the structure outlined
+  below:
+-->
+
+### Configuration title (e.g. Striped rows)
+
+<!--
+  A live example of the component configuration, with access to the correspoding
+  source code.
+
+  In Storybook this is done using something like:
+
+  <Canvas>
+    <Story id="..." />
+  </Canvas>
+-->
+
+<!--
+  A brief description of what this configuration provides to users and when it
+  should be used.
+-->
 
 ## Content
 
-<!-- Add any component-specific content guidance here, use visual examples where appropriate.    -->
-
-### Salt content guidelines
-
-<!-- Link out to the content guidelines section of the site.    -->
+<!--
+  Add any component-specific content guidance here, use visual examples where
+  appropriate.
+-->
 
 ## Accessibility
 
-<!-- Describe any considerations the users may need to take into account when using the component.    -->
+<!--
+  Describe any considerations the users may need to take into account when using
+  the component.
+-->
 
-## Responsiveness
+## Responsive layout
 
-<!-- Describe how the component behaves in responsive situations, and any limitations/restrictions.   -->
+<!--
+  Describe how the component behaves in responsive layout situations, and any
+  limitations/restrictions.
+-->
 
 # Designing
 
 ## Anatomy
 
-<!-- Insert a visual anatomy diagram with an accompanying paragraph if required.   -->
+<!--
+  Insert a visual anatomy diagram with an accompanying paragraph if required.
+-->
 
 ## Theming considerations
 
-<!-- Describe how Salt characteristics and theming impact the component, and any modifications that can be made.   -->
+<!--
+  Describe how Salt characteristics and theming impact the component, and any
+  modifications that can be made.
+-->
 
 ## Design guidance
 
-<!-- Add a bulleted list of any other design-related guidance the user may need to consider.   -->
+<!--
+  Add a bulleted list of any other design-related guidance the user may need to
+  consider.
+-->
 
 # Developing
 
 ## Import
 
-<!-- Add a code sample of the API call required to import this component into your application.   -->
+<!--
+  Add a code sample of the API call required to import this component into your
+  application.
+-->
 
 ## Props
 
@@ -104,7 +172,3 @@ component:
 |       |             |           |          |                |
 
 -->
-
-# Help and support
-
-<!-- Insert the standard block containing information on where users can get more support   -->
