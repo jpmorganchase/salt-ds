@@ -45,7 +45,7 @@ const Examples = () => (
           <H1>
             Card with Density
           </H1>
-          <span>Here is some content</span>
+          <Text>Here is some content</Text>
         </div>
       </Card>
     </ExampleRow>
@@ -67,7 +67,7 @@ export const Default: ComponentStory<typeof Card> = () => (
   <Card>
     <div>
       <H1>This is Card</H1>
-      <span>Using Nested DOM Elements</span>
+      <Text>Using Nested DOM Elements</Text>
     </div>
   </Card>
 );
