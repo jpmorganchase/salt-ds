@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as flowStories from "@stories/flow-layout.stories";
+import * as flowStories from "@stories/flow-layout/flow-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(flowStories);

@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as comboBoxStories from "@stories/combobox.stories";
+import * as comboBoxStories from "@stories/combobox/combobox.stories";
 
 const {
   Default,
