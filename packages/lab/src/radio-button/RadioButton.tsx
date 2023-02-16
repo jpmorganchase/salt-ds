@@ -4,9 +4,9 @@ import {
   forwardRef,
   HTMLAttributes,
   ComponentType,
+  ReactNode
 } from "react";
-import { makePrefixer } from "@salt-ds/core";
-import { ControlLabel, ControlLabelProps } from "../control-label";
+import { Label, makePrefixer } from "@salt-ds/core";
 import { RadioButtonBase as Radio } from "./RadioButtonBase";
 import { RadioButtonIconProps } from "./RadioButtonIcon";
 
@@ -26,8 +26,8 @@ export interface RadioButtonProps
   /**
    * The label to be shown next to the radio
    */
-  label?: ControlLabelProps["label"];
-  LabelProps?: Partial<ControlLabelProps>;
+  label?: ReactNode;
+  // LabelProps?: Partial<ControlLabelProps>;
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
@@ -41,7 +41,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       icon,
       disabled,
       label,
-      LabelProps,
+      // LabelProps,
       value,
       onChange,
       ...rest
@@ -58,7 +58,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         )}
         {...rest}
       >
-        <ControlLabel
+        {/* <ControlLabel
           {...LabelProps}
           className={clsx(
             withBaseName("labelContainer"),
@@ -71,15 +71,16 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           label={label}
           labelPlacement="right"
           ref={ref}
-        >
-          <Radio
-            checked={checked}
-            disabled={disabled}
-            value={value}
-            onChange={onChange}
-            icon={icon}
-          />
-        </ControlLabel>
+        > */}
+        <Radio
+          checked={checked}
+          disabled={disabled}
+          value={value}
+          onChange={onChange}
+          icon={icon}
+        />
+        <Label disabled={disabled} className={clsx(withBaseName("label"))}>{label}</Label>
+        {/* </ControlLabel> */}
       </div>
     );
   }

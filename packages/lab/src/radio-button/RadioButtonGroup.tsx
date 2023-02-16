@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useId } from "@salt-ds/core";
+import { FlexLayout, FlexLayoutProps, makePrefixer, useId } from "@salt-ds/core";
 import { useFormFieldProps } from "../form-field-context";
 import { FormGroup } from "../form-group";
 import { FormLabel } from "../form-field";
@@ -20,7 +20,7 @@ import "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
-export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
+export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement>, FlexLayoutProps<"div"> {
   className?: string;
   defaultValue?: string;
   icon?: ComponentType<RadioButtonIconProps>;
@@ -32,7 +32,7 @@ export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
     label?: string;
     value?: string;
   }[];
-  row?: boolean;
+  // row?: boolean;
   value?: string;
 }
 
@@ -49,7 +49,8 @@ export const RadioButtonGroup = forwardRef<
     radios,
     onChange,
     value: valueProp,
-    row,
+    // row,
+    direction = "column",
     name: nameProp,
     ...rest
   } = props;
@@ -102,7 +103,7 @@ export const RadioButtonGroup = forwardRef<
     <fieldset
       className={clsx(
         withBaseName(),
-        row ? withBaseName("horizontal") : withBaseName("vertical"),
+        // row ? withBaseName("horizontal") : withBaseName("vertical"),
         className
       )}
       data-testid="radio-button-group"
@@ -117,18 +118,20 @@ export const RadioButtonGroup = forwardRef<
       <RadioGroupContext.Provider
         value={{ name, onChange: handleChange, value: getValue() }}
       >
-        <FormGroup role="radiogroup" {...rest} row={row}>
-          {(radios &&
-            radios.map((radio) => (
-              <RadioButton
-                disabled={radio.disabled}
-                icon={icon}
-                key={radio.label}
-                label={radio.label}
-                value={radio.value}
-              />
-            ))) ||
-            children}
+        <FormGroup role="radiogroup" {...rest} className={clsx(withBaseName("formGroup"))}>
+          <FlexLayout direction={direction} gap={1}>
+            {(radios &&
+              radios.map((radio) => (
+                <RadioButton
+                  disabled={radio.disabled}
+                  icon={icon}
+                  key={radio.label}
+                  label={radio.label}
+                  value={radio.value}
+                />
+              ))) ||
+              children}
+          </FlexLayout>
         </FormGroup>
       </RadioGroupContext.Provider>
     </fieldset>

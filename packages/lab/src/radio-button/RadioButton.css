@@ -1,5 +1,5 @@
 /* Styles applied to root component  */
-.salt-density-medium {
+/* .salt-density-medium {
   --radioButton-label-marginTop: 6px;
   --radioButton-row-marginRight: 24px;
 }
@@ -17,11 +17,13 @@
 .salt-density-touch {
   --radioButton-label-marginTop: 12px;
   --radioButton-row-marginRight: 48px;
-}
+} */
 
 .saltRadioButton {
   cursor: pointer;
-  display: block;
+  display: flex;
+  gap: var(--salt-size-unit);
+  align-items: flex-start;
 }
 
 /* Styles applied to root component on hover if `disabled={true}` or FormField disabled */
@@ -37,15 +39,15 @@
 }
 
 /* Styles applied to container of label and Radio component */
-.saltRadioButton-labelContainer {
+/* .saltRadioButton-labelContainer {
   display: inline-flex;
   align-items: flex-start;
   margin-left: 0;
   margin-right: 0;
   margin-top: var(--saltRadioButton-label-marginTop, var(--radioButton-label-marginTop));
   vertical-align: baseline;
-}
-
+} */
+/*
 .saltRadioButton-labelContainer .saltRadioButton {
   display: inline-flex;
   align-content: flex-start;
@@ -54,4 +56,4 @@
 
 .saltFormGroup-row > .saltRadioButton {
   margin-right: var(--saltFormGroup-row-marginRight, var(--radioButton-row-marginRight));
-}
+} */

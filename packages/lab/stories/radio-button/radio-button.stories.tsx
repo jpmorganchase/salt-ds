@@ -1,5 +1,5 @@
 import { ChangeEventHandler, ReactNode, useState } from "react";
-import { Density, Mode, SaltProvider, Panel } from "@salt-ds/core";
+import { Density, Mode, SaltProvider, Panel, FlexLayout } from "@salt-ds/core";
 import {
   FormField,
   makeRadioIcon,
@@ -22,27 +22,25 @@ type ExampleWithTitleProps = {
 };
 
 const Radios = ({ title, density, name }: ExampleWithTitleProps) => (
-  <ColumnLayoutItem>
-    <SaltProvider density={density}>
-      <div data-testid="radio-button-next-density-example">
-        <RadioButtonGroup
-          aria-label="Uncontrolled Example"
-          defaultValue="forward"
-          legend={title}
-          name={name}
-        >
-          <RadioButton key="spot" label="Spot" value="spot" />
-          <RadioButton key="forward" label="Forward" value="forward" />
-          <RadioButton
-            disabled
-            key="option"
-            label="Option (disabled)"
-            value="option"
-          />
-        </RadioButtonGroup>
-      </div>
-    </SaltProvider>
-  </ColumnLayoutItem>
+  <SaltProvider density={density}>
+    <div data-testid="radio-button-next-density-example">
+      <RadioButtonGroup
+        aria-label="Uncontrolled Example"
+        defaultValue="forward"
+        legend={title}
+        name={name}
+      >
+        <RadioButton key="spot" label="Spot" value="spot" />
+        <RadioButton key="forward" label="Forward" value="forward" />
+        <RadioButton
+          disabled
+          key="option"
+          label="Option (disabled)"
+          value="option"
+        />
+      </RadioButtonGroup>
+    </div>
+  </SaltProvider>
 );
 
 export const All: Story = () => (
@@ -83,14 +81,12 @@ export const VerticalGroup = ({
 );
 
 export const RowGroup = ({ title, density, name }: ExampleWithTitleProps) => (
-  <Panel>
-    <SaltProvider density={density}>
-      <RadioButtonGroup legend={title} name={name} row>
-        <RadioButton key="spot" label="Spot" value="spot" />
-        <RadioButton key="forward" label="Forward" value="forward" />
-      </RadioButtonGroup>
-    </SaltProvider>
-  </Panel>
+  <SaltProvider density={density}>
+    <RadioButtonGroup legend={title} name={name} direction="row">
+      <RadioButton key="spot" label="Spot" value="spot" />
+      <RadioButton key="forward" label="Forward" value="forward" />
+    </RadioButtonGroup>
+  </SaltProvider>
 );
 
 interface DensityExampleProps {
@@ -99,18 +95,18 @@ interface DensityExampleProps {
 
 const DensityExample = ({ name }: DensityExampleProps) => (
   <Panel style={{ height: "unset" }}>
-    <ColumnLayoutContainer>
+    <FlexLayout gap={4}>
       <Radios name={`${name}-high`} title="High" density="high" />
       <Radios name={`${name}-medium`} title="Medium" density="medium" />
       <Radios name={`${name}-low`} title="Low" density="low" />
       <Radios name={`${name}-touch`} title="Touch" density="touch" />
-    </ColumnLayoutContainer>
-    <ColumnLayoutContainer>
+    </FlexLayout>
+    <FlexLayout gap={4}>
       <RowGroup name={`${name}-row-high`} title="high" density="high" />
       <RowGroup name={`${name}-row-medium`} title="medium" density="medium" />
       <RowGroup name={`${name}-row-low`} title="low" density="low" />
       <RowGroup name={`${name}-row-touch`} title="touch" density="touch" />
-    </ColumnLayoutContainer>
+    </FlexLayout>
   </Panel>
 );
 
@@ -311,7 +307,7 @@ const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
             defaultValue="forward"
             legend="Uncontrolled Group"
             name="fx"
-            row
+            direction={'row'}
           >
             <RadioButton key="spot" label="Spot" value="spot" />
             <RadioButton key="forward" label="Forward" value="forward" />
@@ -330,7 +326,7 @@ const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
             defaultValue="forward"
             legend="Uncontrolled Group"
             name="fx"
-            row
+            direction={'row'}
           >
             <RadioButton key="spot" label="Spot" value="spot" />
             <RadioButton key="forward" label="Forward" value="forward" />
@@ -349,7 +345,7 @@ const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
             defaultValue="forward"
             legend="Uncontrolled Group"
             name="fx"
-            row
+            direction={'row'}
           >
             <RadioButton key="spot" label="Spot" value="spot" />
             <RadioButton key="forward" label="Forward" value="forward" />
@@ -368,7 +364,7 @@ const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
             defaultValue="forward"
             legend="Uncontrolled Group"
             name="fx"
-            row
+            direction={'row'}
           >
             <RadioButton key="spot" label="Spot" value="spot" />
             <RadioButton key="forward" label="Forward" value="forward" />
@@ -386,7 +382,7 @@ const GroupFormFieldExamples = ({ mode }: { mode: Mode }) => (
             defaultValue="forward"
             legend="Uncontrolled Group"
             name="fx"
-            row
+            direction={'row'}
           >
             <RadioButton key="spot" label="Spot" value="spot" />
             <RadioButton key="forward" label="Forward" value="forward" />
@@ -549,7 +545,7 @@ export const HorizontalRadioButtonGroup: ComponentStory<
       legend="Uncontrolled Group"
       name="fx"
       onChange={onChange}
-      row
+      direction={'row'}
     >
       <RadioButton key="spot" label="Spot" value="spot" />
       <RadioButton key="forward" label="Forward" value="forward" />
