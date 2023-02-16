@@ -38,6 +38,8 @@ Cards can have interactable styling by setting `interactable={true}`. These card
 
 Cards can have disabled styling applied by setting `disabled={true}`.
 
+Make sure to as well apply `disabled={true}` to any nested components, such as Text, to ensure disabled styling is also applied to the inner content. We discourage the use of links within interactable Cards that can be disabled, since Salt Links cannot be disabled out of the box as they present usability issues, and create misleading interactions within an application.
+
 <Canvas>
   <Story id="core-card--disabled" />
 </Canvas>

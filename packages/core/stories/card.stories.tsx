@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Card, Link, SaltProvider, Panel, H1 } from "@salt-ds/core";
+import { Card, Link, SaltProvider, Panel, H1, Text } from "@salt-ds/core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 
 export default {
@@ -75,8 +75,8 @@ export const Default: ComponentStory<typeof Card> = () => (
 export const Disabled: ComponentStory<typeof Card> = () => (
   <Card data-testid="card-disabled-example" disabled>
     <div>
-      <H1>Disabled Card</H1>
-      <span>Here is some content</span>
+      <H1 disabled>Disabled Card</H1>
+      <Text disabled>Here is some content</Text>
     </div>
   </Card>
 );
