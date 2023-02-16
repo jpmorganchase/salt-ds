@@ -1,39 +1,55 @@
----
-# Metadata about the component
-component:
-  # [REQUIRED] URL to the relevant directory that contains the (main) source
-  # code for this component
-  sourceCodeUrl: https://github.com/some-org/some-repo/tree/main/path/to/component-name/
+<!-- Tool-specific (e.g. Storybook) imports & exports go here -->
 
-  # [REQUIRED] Name of the NPM package this component is published in
-  npmPackage: "@some-org/some-package"
+<!-- Metadata about the component -->
 
-  # [REQUIRED] The version of the NPM package that this component first appeared
-  # in
-  npmPackageSince: "1.2.3"
-
-  # [OPTIONAL] A list of synonymous names that someone might search for when
-  # trying find this component. For example, a "Dialog" component might list
-  # "Modal" and "Prompt" as its alsoKnownAs names
-  alsoKnownAs:
-    - Other Name
-    - Another Name
-    - Different Name
-
-  # [OPTIONAL] A list of other components that are related to this component and
-  # the nature of that relationship
-  relatedComponents:
-    # Each related component must list name & relationship.
-    # Permitted values for "relationship" are:
-    # - contains: This component contains the other component (e.g. Dropdown
-    #             _contains_ List)
-    # - similarTo: This component is similar to the other component (e.g. a
-    #              Switch _similarTo_ Checkbox)
-    - name: Other Component Name
-      relationship: contains
-    - name: Another Component Name
-      relationship: similarTo
----
+export const componentMetaData = {
+  /*
+   *  [REQUIRED] URL to the relevant directory that contains the (main) source
+   *  code for this component
+   */
+  sourceCodeUrl:
+    "https://github.com/some-org/some-repo/tree/main/path/to/component-name/",
+  /*
+   *  [REQUIRED] Name of the NPM package this component is published in
+   */
+  npmPackage: "@some-org/some-package",
+  /*
+   * [REQUIRED] The version of the NPM package that this component first
+   * appeared in.
+   */
+  npmPackageSince: "1.2.3",
+  /*
+   * [OPTIONAL] A list of synonymous names that someone might search for when
+   * trying find this component. For example, a "Dialog" component might list
+   * "Modal" and "Prompt" as its alsoKnownAs names.
+   */
+  alsoKnownAs: ["Other Name", "Another Name", "Different Name"],
+  /*
+   * [OPTIONAL] A list of other components that are related to this component
+   * and the nature of that relationship.
+   */
+  relatedComponents: [
+    /*
+     * Each related component must list name & relationship:
+     */
+    {
+      name: "Other Component Name",
+      /*
+        Permitted values for "relationship" are:
+        - contains:  This component contains the other component (e.g. Dropdown
+                     _contains_ List)
+        - similarTo: This component is similar to the other component (e.g. a
+                     Switch _similarTo_ Checkbox)
+      */
+      relationship: "contains",
+    },
+    {
+      name: "Another Component Name",
+      relationship: "similarTo",
+    },
+    // ...
+  ],
+};
 
 # Component Name
 
