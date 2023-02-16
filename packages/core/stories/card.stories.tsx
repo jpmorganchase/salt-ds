@@ -42,9 +42,7 @@ const Examples = () => (
     <ExampleRow name="Default">
       <Card>
         <div>
-          <H1>
-            Card with Density
-          </H1>
+          <H1>Card with Density</H1>
           <Text>Here is some content</Text>
         </div>
       </Card>
