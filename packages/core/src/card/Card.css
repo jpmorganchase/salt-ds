@@ -15,7 +15,7 @@
 
 /* Styles applied to Card content */
 .saltCard-content {
-  color: var(--saltCard-color, var(--uitk-text-primary-foreground));
+  color: var(--saltCard-color, var(--salt-text-primary-foreground));
   font-size: var(--saltCard-fontSize, inherit);
   letter-spacing: var(--saltCard-letterSpacing, inherit);
   line-height: var(--saltCard-lineHeight, inherit);
@@ -61,7 +61,7 @@ a:focus .saltCard-interactable.saltCard-disabled,
 a:focus .saltCard-interactable.saltCard-disabled {
   --card-borderColor: var(--salt-container-primary-borderColor-disabled);
 
-  color: var(--saltCard-color-disabled, var(--uitk-text-primary-foreground-disabled));
+  color: var(--saltCard-color-disabled, var(--salt-text-primary-foreground-disabled));
   cursor: var(--saltCard-cursor-disabled, var(--salt-selectable-cursor-disabled));
   outline: none;
 }
