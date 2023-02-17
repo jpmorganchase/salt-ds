@@ -1,15 +1,14 @@
 import React from "react";
-import clsx from "clsx";
 import {
   AppHeader,
   Breadcrumbs,
   Footer,
 } from "@jpmorganchase/mosaic-site-components";
 import { SaltProvider } from "@salt-ds/core";
-import { LayoutBase, LayoutFullWidth } from "@jpmorganchase/mosaic-layouts";
+import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
+import { LayoutFullWidth } from "../LayoutFullWidth";
 import type { LayoutProps } from "../types/index";
 import layoutStyles from "../index.module.css";
-import styles from "./DetailContentOnly.module.css";
 
 export const DetailContentOnly: React.FC<LayoutProps> = ({
   FooterProps,
@@ -19,10 +18,10 @@ export const DetailContentOnly: React.FC<LayoutProps> = ({
 
   return (
     <LayoutBase Header={<AppHeader />}>
-      <div className={clsx(styles.docsWrapper, layoutStyles.docsWrapper)}>
+      <div className={layoutStyles.docsWrapper}>
         <LayoutFullWidth Footer={<Footer {...FooterProps} />}>
           <Breadcrumbs />
-          <h1>{title}</h1>
+          <h1 className={layoutStyles.title}>{title}</h1>
           <SaltProvider mode="light">
             <div className={layoutStyles.docsPageContainer}>
               <div className={layoutStyles.docsPageContent}>{children}</div>

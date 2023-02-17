@@ -51,7 +51,7 @@ export const DetailTechnical: FC<LayoutProps> = ({
           Footer={<Footer {...FooterProps} />}
         >
           <Breadcrumbs />
-          <h1>{title}</h1>
+          <h1 className={layoutStyles.title}>{title}</h1>
           <SaltProvider mode="light">
             <div className={layoutStyles.docsPageContainer}>
               <div className={layoutStyles.docsPageContent}>{children}</div>

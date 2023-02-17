@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, ReactElement } from "react";
 import type {
   Breadcrumb,
   LinkType,
@@ -20,6 +20,7 @@ export type LayoutProps = {
   };
   BreadcrumbsProps?: { breadcrumbs: typeof Breadcrumb[] };
   BackLinkProps?: { label?: string; link: string };
+  Footer?: ReactElement;
   FooterProps?: any;
   layout?: string;
   meta?: {
