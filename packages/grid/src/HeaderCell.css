@@ -92,3 +92,7 @@
 .saltGridHeaderCell-sortable {
   cursor: pointer;
 }
+
+.saltGridHeaderCell-sortingIcon {
+  padding: var(--grid-cell-padding);
+}

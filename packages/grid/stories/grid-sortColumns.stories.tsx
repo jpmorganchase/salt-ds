@@ -53,6 +53,7 @@ const SortColumnsTemplate: Story<{}> = () => {
         getValue={(r) => r.score}
         onChange={onScoreChange}
         isSortable
+        align="right"
         customSort={({ rowData, sortOrder }) => {
           // custom sort percentage score as number
           let sortedData = [...rowData].sort((a, b) => {
