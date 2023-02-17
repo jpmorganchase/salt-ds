@@ -17,5 +17,6 @@ export * from "./text";
 export * from "./theme";
 export * from "./salt-provider";
 export * from "./split-layout";
+export * from "./tooltip";
 export * from "./utils";
 export * from "./viewport";

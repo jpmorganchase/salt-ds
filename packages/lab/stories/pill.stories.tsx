@@ -124,7 +124,7 @@ export const CustomTooltipText: ComponentStory<typeof Pill> = () => {
   return (
     <Pill
       label="Pill"
-      TooltipProps={{ title: "Extra extra long Pill label example." }}
+      TooltipProps={{ content: "Extra extra long Pill label example." }}
     />
   );
 };

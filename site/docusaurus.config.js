@@ -6,7 +6,7 @@
  */
 function getBuildType() {
   if (
-    process.env.GITHUB_EVENT_NAME === "push" &&
+    ["push", "workflow_dispatch"].includes(process.env.GITHUB_EVENT_NAME) &&
     process.env.GITHUB_REF_NAME === "main"
   ) {
     return "prod";
