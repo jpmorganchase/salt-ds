@@ -31,6 +31,17 @@ export const Secondary: ComponentStory<typeof Text> = () => {
   return <Text variant="secondary">This is a secondary text example</Text>;
 };
 
+export const Disabled: ComponentStory<typeof Text> = () => {
+  return (
+    <div>
+      <Text disabled>This is a disabled primary text example</Text>
+      <Text variant="secondary" disabled>
+        This is a disabled secondary text example
+      </Text>
+    </div>
+  );
+};
+
 export const Strong: ComponentStory<typeof Text> = () => {
   return (
     <Text>

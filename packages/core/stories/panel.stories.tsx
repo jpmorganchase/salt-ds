@@ -26,6 +26,9 @@ export const All: ComponentStory<typeof Panel> = (props) => {
 All.args = {
   children: <p>Lorem Ipsum</p>,
 };
+All.argTypes = {
+  children: { control: { type: null } },
+};
 
 export const Primary = Template.bind({});
 Primary.args = {

@@ -8,8 +8,13 @@ import {
   useDismiss,
   useInteractions,
   useRole,
-} from "@floating-ui/react-dom-interactions";
-import { margin, useControlled } from "@salt-ds/core";
+} from "@floating-ui/react";
+import {
+  margin,
+  useControlled,
+  useFloatingUI,
+  UseFloatingUIProps,
+} from "@salt-ds/core";
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,
@@ -18,7 +23,6 @@ import {
   useRef,
 } from "react";
 import { OverlayProps } from "./Overlay";
-import { useFloatingUI, UseFloatingUIProps } from "../popper";
 import { isDesktop } from "../window";
 
 export type UseOverlayProps = Partial<

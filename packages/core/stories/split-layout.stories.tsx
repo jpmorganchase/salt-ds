@@ -23,9 +23,6 @@ export default {
       options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
       control: { type: "select" },
     },
-    as: {
-      type: "string",
-    },
     direction: {
       options: ["row", "column"],
       control: { type: "select" },
@@ -33,6 +30,8 @@ export default {
     gap: {
       type: "number",
     },
+    endItem: { control: { type: null } },
+    startItem: { control: { type: null } },
   },
   decorators: [
     (Story) => (
