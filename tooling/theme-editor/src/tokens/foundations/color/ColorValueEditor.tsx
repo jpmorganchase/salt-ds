@@ -1,11 +1,9 @@
-import { makePrefixer, SaltProvider } from "@salt-ds/core";
+import { makePrefixer, SaltProvider, Tooltip } from "@salt-ds/core";
 import {
   capitalize,
   Color,
   ColorChooser,
   getColorNameByHexValue,
-  Tooltip,
-  useTooltip,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import { useEffect, useMemo, useState } from "react";
@@ -119,7 +117,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
       )
     );
     setSelectedColor(updatedColor);
-  }, [props.extractValue, props.value]);
+  }, [props]);
 
   const onSelect = (color: Color | undefined, finalSelection: boolean) => {
     finalSelection ? onColorClose(color) : setSelectedColor(color);
@@ -159,10 +157,6 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
     setSelectedColor(Color.makeColorFromHex(defaultColor));
   };
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    placement: "top-start",
-  });
-
   return (
     <div
       className={clsx(withBaseName("input"), {
@@ -192,23 +186,19 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
               </div>
             )}
             {props.isStateValue && (
-              <>
-                <Tooltip
-                  {...getTooltipProps({
-                    title:
-                      formFieldLabel === "Color" ||
-                      formFieldLabel === "Background"
-                        ? "Regular"
-                        : formFieldLabel,
-                  })}
-                />
+              <Tooltip
+                placement="top-start"
+                content={
+                  formFieldLabel === "Color" || formFieldLabel === "Background"
+                    ? "Regular"
+                    : formFieldLabel
+                }
+              >
                 <div
-                  {...getTriggerProps({
-                    className: clsx(
-                      "saltFormLabel",
-                      withBaseName("colorStatesField")
-                    ),
-                  })}
+                  className={clsx(
+                    "saltFormLabel",
+                    withBaseName("colorStatesField")
+                  )}
                 >
                   {formFieldLabel.split(" ").slice(-1)[0].toLowerCase() !==
                     "background" &&
@@ -221,7 +211,7 @@ export const ColorValueEditor = (props: ColorValueEditorProps): JSX.Element => {
                     <RegularIcon />
                   )}
                 </div>
-              </>
+              </Tooltip>
             )}
             <div
               className={clsx({

@@ -1,12 +1,12 @@
 import { useForkRef } from "@salt-ds/core";
 
 import {
-  forwardRef,
-  useRef,
-  useContext,
-  KeyboardEvent,
   ForwardedRef,
+  forwardRef,
+  KeyboardEvent,
   ReactElement,
+  useContext,
+  useRef,
 } from "react";
 
 import { ListBase, ListScrollHandles } from "./ListBase";
@@ -14,7 +14,6 @@ import { ListProps, ListSelectionVariant } from "./ListProps";
 import { ListStateContext } from "./ListStateContext";
 import { useList } from "./useList";
 import { useTypeSelect } from "./useTypeSelect";
-import { TooltipContext } from "../tooltip";
 
 import {
   DescendantContext,
@@ -100,29 +99,12 @@ export const List = forwardRef(function List<
   props: ListProps<Item, Variant>,
   ref?: ForwardedRef<ListScrollHandles<Item>>
 ) {
-  const {
-    Tooltip,
-    tooltipEnterDelay,
-    tooltipLeaveDelay,
-    tooltipPlacement,
-    ...restProps
-  } = props;
-
   const itemsRef = useRef([]);
 
   return (
-    <TooltipContext.Provider
-      value={{
-        Tooltip,
-        enterDelay: tooltipEnterDelay,
-        leaveDelay: tooltipLeaveDelay,
-        placement: tooltipPlacement,
-      }}
-    >
-      <DescendantProvider items={itemsRef}>
-        <ListWithDescendants<Item, Variant> ref={ref} {...restProps} />
-      </DescendantProvider>
-    </TooltipContext.Provider>
+    <DescendantProvider items={itemsRef}>
+      <ListWithDescendants<Item, Variant> ref={ref} {...props} />
+    </DescendantProvider>
   );
 }) as <Item = string, Variant extends ListSelectionVariant = "default">(
   props: ListProps<Item, Variant> & {

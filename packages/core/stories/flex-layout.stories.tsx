@@ -38,9 +38,6 @@ export default {
       control: "boolean",
     },
   },
-  args: {
-    gap: 3,
-  },
   excludeStories: ["NestedExample"],
 } as ComponentMeta<typeof FlexLayout>;
 
