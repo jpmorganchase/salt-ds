@@ -73,7 +73,9 @@ export const Default: ComponentStory<typeof Card> = () => (
 export const Disabled: ComponentStory<typeof Card> = () => (
   <Card data-testid="card-disabled-example" disabled>
     <div>
-      <H3 styleAs="h1" disabled>Disabled Card</H3>
+      <H3 styleAs="h1" disabled>
+        Disabled Card
+      </H3>
       <Text disabled>Here is some content</Text>
     </div>
   </Card>
