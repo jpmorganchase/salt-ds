@@ -16,10 +16,7 @@
 /* Styles applied to Card content */
 .saltCard-content {
   color: var(--saltCard-color, var(--salt-text-primary-foreground));
-  font-size: var(--saltCard-fontSize, inherit);
-  letter-spacing: var(--saltCard-letterSpacing, inherit);
-  line-height: var(--saltCard-lineHeight, inherit);
-  min-height: var(--saltCard-minHeight, var(--salt-text-minHeight));
+  min-height: var(--salt-text-minHeight);
   padding: var(--saltCard-padding, calc(var(--salt-size-unit) * 3));
 }
 
