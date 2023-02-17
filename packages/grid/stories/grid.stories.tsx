@@ -196,20 +196,18 @@ export const SimpleGrid = () => {
   );
 };
 
-const SmallTemplate: Story<GridProps> = (args) => {
+const SmallTemplate: Story<GridProps> = () => {
   return (
     <Grid
       rowKeyGetter={investorKeyGetter}
       style={{ height: 223 }}
-      headerIsFocusable={args.rowSelectionMode === "multi"}
-      {...args}
+      rowData={dummyInvestors.slice(0, 5)}
+      rowSelectionMode="single"
+      zebra
+      columnSeparators
+      variant="primary"
     >
-      {args.rowSelectionMode === "single" ? (
-        <RowSelectionRadioColumn id="rowSelection" />
-      ) : undefined}
-      {args.rowSelectionMode === "multi" ? (
-        <RowSelectionCheckboxColumn id="rowSelection" />
-      ) : undefined}
+      <RowSelectionRadioColumn id="rowSelection" />
       <GridColumn
         name="Name"
         id="name"
@@ -596,14 +594,14 @@ const CustomCell = (props: GridCellValueProps<TreeRowData>) => {
 
 const dummyTreeData: TreeRowData[] = [];
 for (let i = 0; i < 10; i++) {
-  let a = randomTreeData();
+  const a = randomTreeData();
   dummyTreeData.push(a);
   for (let j = 0; j < 10; j++) {
-    let b = randomTreeData();
+    const b = randomTreeData();
     b.level = 1;
     a.children.push(b);
     for (let k = 0; k < 10; k++) {
-      let c = randomTreeData();
+      const c = randomTreeData();
       c.level = 2;
       b.children.push(c);
     }
@@ -616,7 +614,7 @@ const CustomCellsTemplate: Story<GridProps> = (props) => {
   const dataById = useMemo(() => {
     const m = new Map<string, TreeRowData>();
     const indexRows = (rows: TreeRowData[]) => {
-      for (let r of rows) {
+      for (const r of rows) {
         m.set(r.id, r);
         indexRows(r.children);
       }
@@ -636,7 +634,7 @@ const CustomCellsTemplate: Story<GridProps> = (props) => {
   const visibleRows = useMemo(() => {
     const rows: TreeRowData[] = [];
     const addRows = (source: TreeRowData[]) => {
-      for (let r of source) {
+      for (const r of source) {
         rows.push(r);
         if (r.expanded) {
           addRows(r.children);
@@ -765,13 +763,6 @@ const ColumnDragAndDropTemplate: Story<GridProps> = (props) => {
 };
 
 export const SmallGrid = SmallTemplate.bind({});
-SmallGrid.args = {
-  rowData: dummyInvestors.slice(0, 5),
-  rowSelectionMode: "single",
-  zebra: true,
-  columnSeparators: true,
-  variant: "primary",
-};
 export const GridExample = GridStoryTemplate.bind({});
 export const SingleRowSelect = SingleRowSelectionTemplate.bind({});
 export const LotsOfColumns = LotsOfColumnsTemplate.bind({});
