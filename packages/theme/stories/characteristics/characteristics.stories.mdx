@@ -1,5 +1,5 @@
 import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { Card, Panel } from "@salt-ds/core";
+import { Card, H1, Panel, Text } from "@salt-ds/core";
 import { Input, FormField } from "@salt-ds/lab";
 import { DocGrid } from "docs/components/DocGrid";
 import "./characteristics.stories.css";
@@ -55,18 +55,16 @@ theme, --salt-actionable-primary-background resolves to `var(--salt-action-prima
 
 ### Simple customization using characteristics
 
-In the following example, we will show how to customize the Card component through characteristics. Currently, Card only has one variant, using tokens such as `---salt-container-primary-background` all of its styling purposes. Here's how it looks by default, shown on a purple Panel for demo purposes:
+In the following example, we will show how to customize the Card component through characteristics. Some components, like Button and Panel, have different variants such as 'cta' and 'secondary'. Currently, Card only has one variant, and uses tokens such as `---salt-container-primary-background` by default for all of its styling purposes. Here's how the Salt Card looks contained within a secondary Panel:
 
-<Panel style={{ background: "var(--salt-color-purple-10)" }}>
+<Panel variant="secondary">
   <Card>
-    <div>
-      <h1 style={{ margin: "0", lineHeight: "1.3em" }}>Default Card</h1>
-      <span>Here is some content</span>
-    </div>
+    <H1 style={{ margin: "0", lineHeight: "1.3em" }}>Default Card</H1>
+    <Text>Here is some content</Text>
   </Card>
 </Panel>
 
-Some components, like Button, have different variants such as 'cta' and 'secondary'. But these styling variants aren't limited to only those with a defined variant prop. We can easily add a new variant to Card, and directly use the `secondary` variant container characteristics instead. Let's add the following to `Card.css`:
+Perhaps we wanted the Card to appear more subtle on top of the Panel component. Luckily, design token variants aren't limited to only those with a defined variant prop. We can easily add a new variant to Card, and directly use the `secondary` container characteristics instead. Let's add the following to `Card.css`:
 
 ```css
 .saltCard.saltCard-secondary {
@@ -79,14 +77,12 @@ Some components, like Button, have different variants such as 'cta' and 'seconda
 
 Note the use of `-secondary` container characteristic tokens provided by Salt that weren't used in Card by default, as well as raw values to further emphasize the component. Now, all we have to do to use this secondary variant styling is pass in the `saltCard-secondary` class name (this name has been chosen to follow convention, but could really be anything you like):
 
-<Panel style={{ background: "var(--salt-color-purple-10)" }}>
+<Panel variant="secondary">
   <Card className="saltCard-secondary">
-    <div>
-      <h1 style={{ margin: "0", lineHeight: "1.3em" }}>
-        Card with our secondary styling
-      </h1>
-      <span>Here is some content</span>
-    </div>
+    <H1 style={{ margin: "0", lineHeight: "1.3em" }}>
+      Card with our secondary styling
+    </H1>
+    <Text>Here is some content</Text>
   </Card>
 </Panel>
 
@@ -102,14 +98,12 @@ Alternatively, we could actually redefine our design to mean that all Card compo
 
 Note how no class name is needed to be passed in. We have just redefined the Card's styling at a higher specificity, to produce the following styling:
 
-<Panel className="my-app" style={{ background: "var(--salt-color-purple-10)" }}>
+<Panel className="my-app" variant="secondary">
   <Card>
-    <div>
-      <h1 style={{ margin: "0", lineHeight: "1.3em" }}>
-        Card with accent styles
-      </h1>
-      <span>Here is some content</span>
-    </div>
+    <H1 style={{ margin: "0", lineHeight: "1.3em" }}>
+      Card with accent styles
+    </H1>
+    <Text>Here is some content</Text>
   </Card>
 </Panel>
 
