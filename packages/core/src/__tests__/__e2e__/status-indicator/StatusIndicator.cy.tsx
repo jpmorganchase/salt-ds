@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as statusIndicatorStories from "@stories/status-indicator.stories";
+import * as statusIndicatorStories from "@stories/status-indicator/status-indicator.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(statusIndicatorStories);
