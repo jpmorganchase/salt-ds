@@ -1,6 +1,12 @@
-import { useForkRef, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import {
+  useFloatingUI,
+  UseFloatingUIProps,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
+import { Portal } from "../portal";
 import { List, ListProps } from "../list-deprecated";
 
 import { DefaultMenuItem, MenuItemProps } from "./CascadingMenuItem";
@@ -16,8 +22,6 @@ import { useMouseHandlers } from "./internal/useMouseHandlers";
 import { refsManager } from "./internal/useRefsManager";
 import { stateChangeTypes } from "./stateChangeTypes";
 import { useWindow } from "../window";
-import { useFloatingUI, UseFloatingUIProps } from "../popper";
-import { Portal } from "../portal";
 
 import "./CascadingMenuList.css";
 
