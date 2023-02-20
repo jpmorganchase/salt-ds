@@ -39,9 +39,9 @@
 }
 
 /* Styles applied to root component on hover */
-.saltCheckbox:hover .saltCheckboxIcon,
+.saltCheckbox-label:hover .saltCheckboxIcon,
 .saltCheckboxIcon:hover {
-  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-borderColor));
+  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-borderColor-selected));
   stroke-width: var(--saltCheckbox-icon-strokeWidth-hover, var(--salt-size-border));
 }
 
