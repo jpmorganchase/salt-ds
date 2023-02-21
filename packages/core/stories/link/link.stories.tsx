@@ -1,7 +1,6 @@
 import { Link } from "@salt-ds/core";
-
-import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { StackoverflowIcon } from "@salt-ds/icons";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
   title: "Core/Link",

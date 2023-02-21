@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as parentChildStories from "@stories/parent-child-layout.stories";
+import * as parentChildStories from "@stories/parent-child-layout/parent-child-layout.stories";
 
 const composedStories = composeStories(parentChildStories);
 

@@ -1,6 +1,6 @@
 import { Banner } from "@salt-ds/lab";
 import { composeStories } from "@storybook/testing-react";
-import * as bannerStories from "@stories/banner.stories";
+import * as bannerStories from "@stories/banner/banner.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(bannerStories);

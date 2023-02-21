@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as cascadingMenuStories from "@stories/cascading-menu.stories";
+import * as cascadingMenuStories from "@stories/cascading-menu/cascading-menu.stories";
 import { version } from "react";
 
 const { Default } = composeStories(cascadingMenuStories);
