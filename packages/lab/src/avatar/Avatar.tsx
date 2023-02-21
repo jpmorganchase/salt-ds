@@ -1,12 +1,18 @@
-import { FlexLayout, makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { UserIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import { useLoaded } from "./internal/useLoaded";
 
 import "./Avatar.css";
 
+export type InitialsGetter = (name: string) => string | undefined;
+
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
-  children?: ReactNode | string;
+  name?: string;
+  initialsGetter?: InitialsGetter;
+  src?: string;
+  srcSet?: string;
   size?: number;
   fallbackIcon?: ReactNode;
 }
@@ -14,10 +20,21 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltAvatar");
 const DEFAULT_AVATAR_SIZE = 2; // medium
 
+const initialsDefaultGetter = (name: string | undefined) =>
+  name &&
+  name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
+
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   {
     className,
     children: childrenProp,
+    name,
+    initialsGetter = initialsDefaultGetter,
+    src,
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
     fallbackIcon = <UserIcon />,
@@ -25,26 +42,32 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   },
   ref
 ) {
+  let children;
+
   const style = {
     ...styleProp,
     "--saltAvatar-size-multiplier": `${size}`,
   };
 
-  let children = childrenProp;
-  if (typeof children === "string") {
-    children = children.slice(0, 2).toUpperCase();
+  const loaded = useLoaded({ src });
+  const hasImgNotFailing = src && loaded !== "error";
+
+  if (hasImgNotFailing) {
+    children = <img className={withBaseName("image")} alt={name} src={src} />;
+  } else if (childrenProp != null) {
+    children = childrenProp;
   }
 
+  const avatarInitials = name && initialsGetter(name);
+
   return (
-    <FlexLayout
+    <div
       ref={ref}
       style={style}
-      align="center"
-      justify="center"
       className={clsx(withBaseName(), className)}
       {...rest}
     >
-      {children || fallbackIcon}
-    </FlexLayout>
+      {children || avatarInitials || fallbackIcon}
+    </div>
   );
 });

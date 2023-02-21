@@ -14,6 +14,9 @@
 
 /* Style applied to the root element */
 .saltAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: var(--avatar-background);
   color: var(--avatar-foreground);
   font-size: var(--avatar-fontSize);
@@ -24,6 +27,7 @@
   overflow: hidden;
   user-select: none;
   border-radius: 50%;
+  outline: auto;
 }
 
 /* Style applied to the image/svg element. We specifically allow SVGs as the Avatar image to enable SVGs such as Flags to take up the full Avatar space */

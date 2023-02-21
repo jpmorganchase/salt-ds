@@ -13,13 +13,22 @@ describe("Given an Avatar", () => {
       cy.get('[data-testid="UserIcon"]').should("have.length", 4);
     });
   });
-  describe("WHEN Initials are provided as child", () => {
-    it("should show the child", () => {
-      cy.mount(<Default>JJ</Default>);
+  describe("WHEN only a name is provided", () => {
+    it("should show the initials", () => {
+      cy.mount(<Default name="Juanito Jones" />);
       cy.findAllByText("JJ").should("have.length", 4);
     });
   });
-
+  describe("WHEN a src image fails to load or is provided empty", () => {
+    it("should show the initials", () => {
+      cy.mount(<Default src={""} name="Juanito Jones" />);
+      cy.findAllByText("JJ").should("have.length", 4);
+    });
+    it("should show the default if there are no initials", () => {
+      cy.mount(<Default src={""} />);
+      cy.get('[data-testid="UserIcon"]').should("have.length", 4);
+    });
+  });
   describe("WHEN an image is provided", () => {
     it("should show an image with the src", () => {
       cy.mount(
