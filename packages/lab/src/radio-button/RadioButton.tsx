@@ -4,9 +4,9 @@ import {
   forwardRef,
   HTMLAttributes,
   ComponentType,
-  ReactNode
+  ReactNode,
 } from "react";
-import { Label, makePrefixer } from "@salt-ds/core";
+import { Label, makePrefixer, useId } from "@salt-ds/core";
 import { RadioButtonBase as Radio } from "./RadioButtonBase";
 import { RadioButtonIconProps } from "./RadioButtonIcon";
 
@@ -27,7 +27,6 @@ export interface RadioButtonProps
    * The label to be shown next to the radio
    */
   label?: ReactNode;
-  // LabelProps?: Partial<ControlLabelProps>;
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
@@ -38,7 +37,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     const {
       checked,
       className,
-      icon,
+      // icon,
       disabled,
       label,
       // LabelProps,
@@ -47,6 +46,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       ...rest
     } = props;
 
+    const id = useId();
     return (
       <div
         className={clsx(
@@ -58,29 +58,21 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         )}
         {...rest}
       >
-        {/* <ControlLabel
-          {...LabelProps}
-          className={clsx(
-            withBaseName("labelContainer"),
-            {
-              [withBaseName("disabled")]: disabled,
-            },
-            className
-          )}
-          disabled={disabled}
-          label={label}
-          labelPlacement="right"
-          ref={ref}
-        > */}
         <Radio
           checked={checked}
           disabled={disabled}
           value={value}
           onChange={onChange}
-          icon={icon}
+          ref={ref}
+          id={id}
         />
-        <Label disabled={disabled} className={clsx(withBaseName("label"))}>{label}</Label>
-        {/* </ControlLabel> */}
+        <Label
+          disabled={disabled}
+          className={clsx(withBaseName("label"))}
+          htmlFor={id}
+        >
+          {label}
+        </Label>
       </div>
     );
   }

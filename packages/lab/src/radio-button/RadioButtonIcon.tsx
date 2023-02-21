@@ -24,7 +24,12 @@ export const RadioButtonIcon = ({ checked }: RadioButtonIconProps) => {
     >
       <circle className={withBaseName("border")} cx="7" cy="7" r="6.5" />
       {checked && (
-        <circle className={withBaseName("inner-checked")} cx="7" cy="7" r="3" />
+        <circle
+          className={withBaseName("inner-checked")}
+          cx="7"
+          cy="7"
+          r="3.2"
+        />
       )}
     </svg>
   );

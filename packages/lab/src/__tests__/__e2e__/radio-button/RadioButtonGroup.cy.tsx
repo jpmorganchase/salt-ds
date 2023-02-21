@@ -28,15 +28,15 @@ describe("GIVEN a RadioButtonGroup component", () => {
   describe("WHEN rendered in horizontal (row) layout", () => {
     it("THEN should have the horizontal class name", () => {
       cy.mount(
-        <RadioButtonGroup data-testid="radio-button-group-test" row>
+        <RadioButtonGroup
+          data-testid="radio-button-group-test"
+          direction={"row"}
+        >
           <RadioButton label="Spot" value="spot" />
           <RadioButton label="Forward" value="forward" />
         </RadioButtonGroup>
       );
-      cy.findByTestId("radio-button-group-test").should(
-        "have.class",
-        "saltFormGroup-row"
-      );
+      cy.get(".saltFlexLayout").should("have.css", "flex-direction", "row");
     });
   });
 });

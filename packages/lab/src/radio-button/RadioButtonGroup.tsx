@@ -8,7 +8,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { FlexLayout, FlexLayoutProps, makePrefixer, useId } from "@salt-ds/core";
+import {
+  FlexLayout,
+  FlexLayoutProps,
+  makePrefixer,
+  useId,
+} from "@salt-ds/core";
 import { useFormFieldProps } from "../form-field-context";
 import { FormGroup } from "../form-group";
 import { FormLabel } from "../form-field";
@@ -20,7 +25,9 @@ import "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
-export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement>, FlexLayoutProps<"div"> {
+export interface RadioButtonGroupProps
+  extends HTMLAttributes<HTMLDivElement>,
+    Pick<FlexLayoutProps<"div">, "direction"> {
   className?: string;
   defaultValue?: string;
   icon?: ComponentType<RadioButtonIconProps>;
@@ -49,7 +56,6 @@ export const RadioButtonGroup = forwardRef<
     radios,
     onChange,
     value: valueProp,
-    // row,
     direction = "column",
     name: nameProp,
     ...rest
@@ -101,11 +107,7 @@ export const RadioButtonGroup = forwardRef<
 
   return (
     <fieldset
-      className={clsx(
-        withBaseName(),
-        // row ? withBaseName("horizontal") : withBaseName("vertical"),
-        className
-      )}
+      className={clsx(withBaseName(), className)}
       data-testid="radio-button-group"
       ref={ref}
       role="radiogroup"
@@ -118,7 +120,7 @@ export const RadioButtonGroup = forwardRef<
       <RadioGroupContext.Provider
         value={{ name, onChange: handleChange, value: getValue() }}
       >
-        <FormGroup role="radiogroup" {...rest} className={clsx(withBaseName("formGroup"))}>
+        <FormGroup role="radiogroup" {...rest}>
           <FlexLayout direction={direction} gap={1}>
             {(radios &&
               radios.map((radio) => (

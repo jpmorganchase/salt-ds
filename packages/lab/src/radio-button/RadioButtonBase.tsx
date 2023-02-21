@@ -153,7 +153,6 @@ export const RadioButtonBase = forwardRef<
       className={clsx(
         withBaseName(),
         {
-          [withBaseName("disabled")]: disabled,
           [withBaseName("focusVisible")]: focusVisible,
         },
         className
@@ -163,21 +162,19 @@ export const RadioButtonBase = forwardRef<
       onFocus={handleFocus}
       {...rest}
     >
-      <span className={withBaseName("radioContainer")}>
-        <input
-          className={withBaseName("input")}
-          checked={radioGroupChecked}
-          defaultChecked={defaultChecked}
-          disabled={disabled}
-          id={id}
-          name={name}
-          onChange={handleInputChange}
-          type="radio"
-          value={value}
-          tabIndex={tabIndex}
-        />
-        <RadioIcon checked={checked} />
-      </span>
+      <input
+        className={withBaseName("input")}
+        checked={radioGroupChecked}
+        defaultChecked={defaultChecked}
+        disabled={disabled}
+        id={id}
+        name={name}
+        onChange={handleInputChange}
+        type="radio"
+        value={value}
+        tabIndex={tabIndex}
+      />
+      <RadioIcon checked={checked} />
     </span>
   );
 });
