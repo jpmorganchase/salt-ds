@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Image } from "@jpmorganchase/mosaic-site-components";
 import Features from "./_index/features/Features";
-import Card, { CardProps } from "src/components/card/Card";
+import { Card, CardProps } from "src/components/card/Card";
 import HomepageAccordion from "./_index/accordion/Accordion";
 import styles from "./index.module.css";
 
