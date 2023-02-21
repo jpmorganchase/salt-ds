@@ -1,16 +1,19 @@
 import { clsx } from "clsx";
 import {
   ChangeEvent,
-  FocusEvent,
   FocusEventHandler,
   forwardRef,
   HTMLAttributes,
   InputHTMLAttributes,
-  useCallback,
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useIsFocusVisible,
+} from "@salt-ds/core";
 import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./CheckboxBase.css";
@@ -52,8 +55,7 @@ export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
     },
     ref
   ) {
-    // null is needed here so we can modify the ref on line 70
-    const inputRef = useRef<HTMLInputElement | null>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const [checked, setChecked] = useControlled({
       controlled: checkedProp,
@@ -75,31 +77,32 @@ export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
       onChange?.(event, value);
     };
 
-    const handleFocus = useCallback(
-      (event: FocusEvent<HTMLInputElement>) => {
-        // Fix for https://github.com/facebook/react/issues/7769
-        if (!inputRef.current) {
-          inputRef.current = event.currentTarget;
-        }
+    const {
+      isFocusVisibleRef,
+      onFocus: handleFocusVisible,
+      onBlur: handleBlurVisible,
+      ref: focusVisibleRef,
+    } = useIsFocusVisible<HTMLInputElement>();
 
-        // TODO :focus-visible not yet supported on Safari, so we'll need to use the
-        // useIsFocusVisible polyfill
-        if (inputRef.current?.matches(":focus-visible")) {
-          setFocusVisible(true);
-        }
+    const handleRef = useForkRef<HTMLInputElement>(inputRef, focusVisibleRef);
 
-        onFocus && onFocus(event);
-      },
-      [onFocus]
-    );
+    const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
+      handleFocusVisible(event);
+      if (isFocusVisibleRef.current) {
+        setFocusVisible(true);
+      }
+      if (onFocus) {
+        onFocus(event);
+      }
+    };
 
-    const handleBlur = useCallback(
-      (event: FocusEvent<HTMLInputElement>) => {
-        setFocusVisible(false);
-        onBlur && onBlur(event);
-      },
-      [onBlur]
-    );
+    const handleBlur: FocusEventHandler<HTMLInputElement> = (event) => {
+      handleBlurVisible();
+      setFocusVisible(false);
+      if (onBlur) {
+        onBlur(event);
+      }
+    };
 
     const className = clsx(withBaseName(), classNameProp, {
       saltFocusVisible: focusVisible,
@@ -119,7 +122,7 @@ export const CheckboxBase = forwardRef<HTMLDivElement, CheckboxBaseProps>(
           onBlur={handleBlur}
           onChange={handleChange}
           onFocus={handleFocus}
-          ref={inputRef}
+          ref={handleRef}
           type="checkbox"
         />
         <CheckboxIcon
