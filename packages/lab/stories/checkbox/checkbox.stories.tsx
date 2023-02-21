@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup, GroupCheckbox } from "@salt-ds/lab";
 
 export default {
   title: "Lab/Checkbox",
@@ -80,9 +80,9 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
 export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
   return (
     <CheckboxGroup direction={"row"}>
-      <Checkbox defaultChecked label="option 1" value="option-1" />
-      <Checkbox defaultChecked label="option 2" value="option-2" />
-      <Checkbox label="option 3" value="option-3" />
+      <GroupCheckbox defaultChecked label="option 1" value="option-1" />
+      <GroupCheckbox defaultChecked label="option 2" value="option-2" />
+      <GroupCheckbox label="option 3" value="option-3" />
     </CheckboxGroup>
   );
 };
@@ -92,9 +92,9 @@ export const UncontrolledGroup: ComponentStory<typeof CheckboxGroup> = (
 ) => {
   return (
     <CheckboxGroup {...args}>
-      <Checkbox defaultChecked label="option 1" value="option-1" />
-      <Checkbox defaultChecked label="option 2" value="option-2" />
-      <Checkbox label="option 3" value="option-3" />
+      <GroupCheckbox defaultChecked label="option 1" value="option-1" />
+      <GroupCheckbox defaultChecked label="option 2" value="option-2" />
+      <GroupCheckbox label="option 3" value="option-3" />
     </CheckboxGroup>
   );
 };
@@ -145,7 +145,7 @@ export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
       onChange={handleChange}
     >
       {checkboxesData.map((data) => (
-        <Checkbox key={data.value} {...data} />
+        <GroupCheckbox key={data.value} {...data} />
       ))}
     </CheckboxGroup>
   );
@@ -178,7 +178,7 @@ export const LongTextGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
       legend="Long Text Checkbox Group"
     >
       {checkboxesData.map((data) => (
-        <Checkbox key={data.value} {...data} />
+        <GroupCheckbox key={data.value} {...data} />
       ))}
     </CheckboxGroup>
   );
