@@ -1,7 +1,7 @@
 import { makePrefixer } from "@salt-ds/core";
 import { SVGAttributes } from "react";
 
-const withBaseName = makePrefixer("saltSvgSpinner");
+const withBaseName = makePrefixer("saltSpinner");
 
 /* SVG based on MD, do not change viewbox attribute */
 export const SpinnerSVG = (props: SVGAttributes<SVGSVGElement>) => (

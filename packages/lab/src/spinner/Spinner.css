@@ -1,22 +1,22 @@
-.saltSvgSpinner-gradientStop {
+.saltSpinner-gradientStop {
   stop-color: var(--saltSpinner-gradient-color, var(--salt-measured-fill));
 }
 
-.saltSvgSpinner {
+.saltSpinner {
   position: relative;
 }
 
-.saltSvgSpinner-default {
+.saltSpinner-default {
   height: var(--salt-size-base);
   width: var(--salt-size-base);
 }
 
-.saltSvgSpinner-large {
+.saltSpinner-large {
   height: calc(var(--salt-size-base) * 2);
   width: calc(var(--salt-size-base) * 2);
 }
 
-.saltSvgSpinner-spinner {
+.saltSpinner-spinner {
   animation: spinner 0.9s linear infinite;
   width: 100%;
   height: 100%;
