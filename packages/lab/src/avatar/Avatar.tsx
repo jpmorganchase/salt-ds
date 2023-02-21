@@ -9,11 +9,26 @@ import "./Avatar.css";
 export type InitialsGetter = (name: string) => string | undefined;
 
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * The name that Avatar represents.
+   */
   name?: string;
+  /**
+   * Defines the function that gets initials. Default is capital first letter of each separate word in name.
+   * If a function is not passed or returns undefined, Avatar will default to Icon.
+   */
   initialsGetter?: InitialsGetter;
+  /**
+   * Image src of Avatar.
+   */
   src?: string;
-  srcSet?: string;
+  /**
+   * Multiplier for the base avatar.
+   */
   size?: number;
+  /**
+   * Icon to be used as a default item. Defaults to `UserIcon`
+   */
   fallbackIcon?: ReactNode;
 }
 
