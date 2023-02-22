@@ -445,7 +445,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     const valueGetter =
       getColById(sortByColumnId)?.info.props.getValue ||
       ((r: T) => {
-        return r[sortByColumnId];
+        return r[sortByColumnId as keyof typeof r];
       });
 
     const sortedData = [...rowData].sort((a, b) =>
