@@ -556,4 +556,40 @@ describe("Grid", () => {
     checkRowSelected(2, true);
     checkRowSelected(3, true);
   });
+
+  describe("Column Sorting", () => {
+    it("should sort column values when sorting is enabled", () => {
+      cy.mount(<RowSelectionModes />);
+
+      cy.findAllByTestId("column-header")
+        .eq(2)
+        .should("have.text", "B")
+        .as("sortableHeader");
+
+      // first click: sort in ascending order
+      cy.get("@sortableHeader")
+        .click()
+        .should("have.attr", "aria-sort", "ascending")
+        .then(() => {
+          findCell(1, 2).should("have.text", "100.00");
+        });
+
+      // second click: sort in descending order
+      cy.get("@sortableHeader")
+        .dblclick()
+        .should("have.attr", "aria-sort", "descending")
+        .then(() => {
+          findCell(1, 2).should("have.text", "4800.00");
+        });
+
+      // third click: back to default order without sorting
+      cy.get("@sortableHeader")
+        .dblclick()
+        .click()
+        .should("not.have.attr", "aria-sort", "none")
+        .then(() => {
+          findCell(1, 2).should("have.text", "100.00");
+        });
+    });
+  });
 });
