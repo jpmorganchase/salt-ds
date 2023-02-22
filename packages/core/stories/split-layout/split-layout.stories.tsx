@@ -16,7 +16,7 @@ import {
 } from "@salt-ds/icons";
 
 export default {
-  title: "Core/Layout/SplitLayout",
+  title: "Core/Layout/Split Layout",
   component: SplitLayout,
   argTypes: {
     align: {
