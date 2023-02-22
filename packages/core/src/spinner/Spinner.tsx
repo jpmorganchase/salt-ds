@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
-import { useAriaAnnouncer } from "@salt-ds/core";
+import { useAriaAnnouncer } from "../aria-announcer";
 import { makePrefixer, useId } from "../utils";
 import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
 

@@ -1,5 +1,5 @@
-import { makePrefixer } from "@salt-ds/core";
 import { SVGAttributes } from "react";
+import { makePrefixer } from "../../utils";
 
 const withBaseName = makePrefixer("saltSpinner");
 
