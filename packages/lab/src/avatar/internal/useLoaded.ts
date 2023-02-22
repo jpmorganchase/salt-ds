@@ -22,6 +22,7 @@ export function useLoaded({ src }: ImgHTMLAttributes<HTMLImageElement>) {
       if (!active) {
         return;
       }
+      image.style.display = "none";
       setLoaded("error");
     };
     return () => {
