@@ -68,7 +68,7 @@ const infiniteScrollComponents = {
     if (params.value !== undefined) {
       return params.value;
     } else {
-      return <Spinner size="small" />;
+      return <Spinner size="default" />;
     }
   },
 };
