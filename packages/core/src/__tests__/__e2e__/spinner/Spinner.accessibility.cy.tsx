@@ -1,4 +1,6 @@
-import { Spinner } from "@salt-ds/lab";
+import { Spinner } from "@salt-ds/core";
+import { getContainerEl } from "cypress/react";
+import ReactDOM from "react-dom";
 
 const ariaLabel = "Loading component";
 
@@ -33,31 +35,22 @@ describe("GIVEN an available announcer", () => {
 
   // TODO fix unmount announcement
   it.skip("THEN the announcer should be called when the component unmounts", () => {
-    cy.mount(<Spinner aria-label={ariaLabel} />).then(({ unmount }) => {
-      unmount().then(() => {
-        cy.get("body").should("announce", `finished ${ariaLabel}`);
-      });
-    });
+    cy.mount(<Spinner aria-label={ariaLabel} />);
+    cy.then(() => ReactDOM.unmountComponentAtNode(getContainerEl()));
+    cy.get("body").should("announce", `finished ${ariaLabel}`);
   });
 
   it.skip("THEN nothing should be announced when announcer is disabled", () => {
-    cy.mount(<Spinner aria-label={ariaLabel} disableAnnouncer />).then(
-      ({ unmount }) => {
-        cy.findByRole("img").should("not.announce", ariaLabel);
-        unmount().then(() => {
-          cy.findByRole("img").should("not.announce", `finished ${ariaLabel}`);
-        });
-      }
-    );
+    cy.mount(<Spinner aria-label={ariaLabel} disableAnnouncer />);
+    cy.findByRole("img").should("not.announce", ariaLabel);
+    cy.then(() => ReactDOM.unmountComponentAtNode(getContainerEl()));
+    cy.findByRole("img").should("not.announce", `finished ${ariaLabel}`);
   });
 
   it.skip("THEN it should not announce completion message when set to null", () => {
-    cy.mount(
-      <Spinner aria-label={ariaLabel} completionAnnouncement={null} />
-    ).then(({ unmount }) => {
-      unmount().then(() => {
-        cy.findByRole("img").should("not.announce", `finished ${ariaLabel}`);
-      });
-    });
+    cy.mount(<Spinner aria-label={ariaLabel} completionAnnouncement={null} />);
+
+    cy.then(() => ReactDOM.unmountComponentAtNode(getContainerEl()));
+    cy.findByRole("img").should("not.announce", `finished ${ariaLabel}`);
   });
 });
