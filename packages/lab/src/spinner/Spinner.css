@@ -1,32 +1,22 @@
-.saltSvgSpinner-gradientStop1,
-.saltSvgSpinner-gradientStop2,
-.saltSvgSpinner-gradientStop3,
-.saltSvgSpinner-gradientStop4 {
-  stop-color: var(--saltSpinner-gradient-color, var(--spinner-gradient-color));
+.saltSpinner-gradientStop {
+  stop-color: var(--saltSpinner-gradient-color, var(--salt-measured-fill));
 }
 
-.saltSvgSpinner {
-  --spinner-gradient-color: var(--salt-measured-fill);
-
+.saltSpinner {
   position: relative;
 }
 
-.saltSvgSpinner-small {
-  height: var(--salt-size-graphic-small);
-  width: var(--salt-size-graphic-small);
+.saltSpinner-default {
+  height: var(--salt-size-base);
+  width: var(--salt-size-base);
 }
 
-.saltSvgSpinner-medium {
-  height: var(--salt-size-graphic-medium);
-  width: var(--salt-size-graphic-medium);
+.saltSpinner-large {
+  height: calc(var(--salt-size-base) * 2);
+  width: calc(var(--salt-size-base) * 2);
 }
 
-.saltSvgSpinner-large {
-  height: var(--salt-size-graphic-large);
-  width: var(--salt-size-graphic-large);
-}
-
-.saltSvgSpinner-spinner {
+.saltSpinner-spinner {
   animation: spinner 0.9s linear infinite;
   width: 100%;
   height: 100%;
