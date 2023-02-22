@@ -27,10 +27,9 @@ const withBaseName = makePrefixer("saltRadioButtonGroup");
 
 export interface RadioButtonGroupProps
   extends HTMLAttributes<HTMLDivElement>,
-    Pick<FlexLayoutProps<"div">, "direction"> {
+  Pick<FlexLayoutProps<"div">, "direction"> {
   className?: string;
   defaultValue?: string;
-  icon?: ComponentType<RadioButtonIconProps>;
   legend?: string;
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -39,7 +38,6 @@ export interface RadioButtonGroupProps
     label?: string;
     value?: string;
   }[];
-  // row?: boolean;
   value?: string;
 }
 
@@ -52,7 +50,6 @@ export const RadioButtonGroup = forwardRef<
     className,
     defaultValue,
     legend,
-    icon,
     radios,
     onChange,
     value: valueProp,
@@ -126,7 +123,6 @@ export const RadioButtonGroup = forwardRef<
               radios.map((radio) => (
                 <RadioButton
                   disabled={radio.disabled}
-                  icon={icon}
                   key={radio.label}
                   label={radio.label}
                   value={radio.value}

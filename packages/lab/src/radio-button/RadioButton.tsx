@@ -20,10 +20,6 @@ export interface RadioButtonProps
   className?: string;
   disabled?: boolean;
   /**
-   * Custom icon component
-   */
-  icon?: ComponentType<RadioButtonIconProps>;
-  /**
    * The label to be shown next to the radio
    */
   label?: ReactNode;
@@ -37,10 +33,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     const {
       checked,
       className,
-      // icon,
       disabled,
       label,
-      // LabelProps,
       value,
       onChange,
       ...rest
