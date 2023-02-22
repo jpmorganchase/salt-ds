@@ -14,7 +14,7 @@ import {
   }}
 />
 
-# RadioButton
+# RadioButton and RadioButtonGroup
 
 A group of Radio Button components represents a set of mutually exclusive, but related values. The user is able to select a single value at a time, and selecting an unselected value deselect any previously-selected option. Radio Buttons should therefore be used to display a choice between two or more values, as it’s impossible to deselect a single Radio Button once it’s been selected.
 
@@ -28,7 +28,7 @@ Radio groups allow selection of one or more values from a given set of choices. 
 - If there are more than 5 choices, use a Multiselect control instead.
 
 <Canvas>
-  <Story id="lab-radio-button--vertical-group" />
+  <Story id="lab-radio-button--column-group" />
 </Canvas>
 
 ## Row Group
@@ -43,12 +43,6 @@ Controlled Radio require events to trigger the state change. The application mus
 
 <Canvas>
   <Story id="lab-radio-button--controlled-radio-button-group" />
-</Canvas>
-
-## Custom Icons
-
-<Canvas>
-  <Story id="lab-radio-button--custom-icons" />
 </Canvas>
 
 ## Long Text
@@ -67,11 +61,21 @@ import { RadioButton, RadioButtonGroup } from "@salt-ds/lab";
 
 ## Props
 
-<ArgsTable of={RadioButton} />
+### RadioButtonGroup
 
 <ArgsTable of={RadioButtonGroup} />
 
+### RadioButton
+
+<ArgsTable of={RadioButton} />
+
 ## CSS Class
+
+### RadioButtonGroup
+
+<CSSClassTable of={RadioButtonGroup} />
+
+### RadioButton
 
 <CSSClassTable of={RadioButton} />
 
