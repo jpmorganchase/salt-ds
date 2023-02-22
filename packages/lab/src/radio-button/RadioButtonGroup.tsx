@@ -27,7 +27,7 @@ const withBaseName = makePrefixer("saltRadioButtonGroup");
 
 export interface RadioButtonGroupProps
   extends HTMLAttributes<HTMLDivElement>,
-  Pick<FlexLayoutProps<"div">, "direction"> {
+    Pick<FlexLayoutProps<"div">, "direction"> {
   className?: string;
   defaultValue?: string;
   legend?: string;

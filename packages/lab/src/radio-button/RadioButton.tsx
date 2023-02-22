@@ -30,15 +30,8 @@ export interface RadioButtonProps
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
   function RadioButton(props, ref) {
-    const {
-      checked,
-      className,
-      disabled,
-      label,
-      value,
-      onChange,
-      ...rest
-    } = props;
+    const { checked, className, disabled, label, value, onChange, ...rest } =
+      props;
 
     const id = useId();
     return (
