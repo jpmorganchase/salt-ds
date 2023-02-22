@@ -10,7 +10,8 @@ export interface Investor {
   notes: string;
   amount: number;
   score?: string;
-  date: string;
+  date?: string;
+  balance?: string;
 }
 
 export const investorKeyGetter = (rowData: Investor) => rowData.name;
@@ -22,7 +23,7 @@ export const allLocations = [
   "San Francisco, CA",
 ];
 
-export function createDummyInvestors(): Investor[] {
+const getInvestors = (reserve?: string[]) => {
   const a = [
     "Apple",
     "Orange",
@@ -34,6 +35,7 @@ export function createDummyInvestors(): Investor[] {
   ];
   const b = ["Investment", "Venture Capital", "Private Wealth"];
   const c = ["", "Inc."];
+
   const str = [
     ["FO"],
     ["PE"],
@@ -64,14 +66,24 @@ export function createDummyInvestors(): Investor[] {
           date: randomDate(new Date(2000, 0, 1), new Date())
             .toISOString()
             .substring(0, 10),
+          balance: reserve?.[i],
         });
         ++i;
       }
     }
   }
-
   return investors;
-}
+};
+
+export const createDummyInvestors = (externalData?: []) => {
+  console.log("externalData", externalData);
+  if (externalData) {
+    const balances = externalData.map(({ open_today_bal }) => open_today_bal);
+
+    return getInvestors(balances);
+  }
+  return getInvestors();
+};
 
 export interface DummyRow {
   id: string;

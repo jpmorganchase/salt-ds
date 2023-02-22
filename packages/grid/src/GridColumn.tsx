@@ -63,10 +63,7 @@ export interface GridColumnProps<T = any> {
   /**
    * Custom sorting function.
    * */
-  customSort?: (args: {
-    rowData: T[];
-    sortOrder: string;
-  }) => T[];
+  customSort?: (args: { rowData: T[]; sortOrder: string }) => T[];
   /**
    * Name is displayed on the column header by default.
    * */
