@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Button } from "@salt-ds/core";
+import { Button, H1 } from "@salt-ds/core";
 import { Spinner } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { AllRenderer } from "docs/components";
 
 export default {
   title: "Lab/Spinner",
@@ -16,16 +17,24 @@ const Template: ComponentStory<typeof Spinner> = (args) => {
   return <Spinner {...args} />;
 };
 
-export const FeatureSpinner = Template.bind({});
-
-export const Small = Template.bind({});
-Small.args = {
-  size: "small",
+export const All: Story = () => {
+  return (
+    <div>
+      <H1>Default</H1>
+      <AllRenderer>
+        <Spinner />
+      </AllRenderer>
+      <H1>Large</H1>
+      <AllRenderer>
+        <Spinner size="large" />
+      </AllRenderer>
+    </div>
+  );
 };
 
-export const Medium = Template.bind({});
-Medium.args = {
-  size: "medium",
+export const Default = Template.bind({});
+Default.args = {
+  size: "default",
 };
 
 export const Large = Template.bind({});
