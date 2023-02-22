@@ -39,6 +39,7 @@ const initialsDefaultGetter = (name: string | undefined) =>
   name &&
   name
     .split(" ")
+    .slice(0, 2)
     .map((n) => n[0])
     .join("")
     .toUpperCase();
