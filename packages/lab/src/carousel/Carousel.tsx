@@ -136,7 +136,6 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         </Button>
         <div className={withBaseName("dots")}>
           <RadioButtonGroup
-            direction="row"
             aria-label="Carousel buttons"
             onChange={handleRadioChange}
             radios={Array.from({ length: slidesCount }, (_, index) => ({

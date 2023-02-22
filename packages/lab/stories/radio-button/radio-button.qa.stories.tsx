@@ -22,6 +22,7 @@ export const AllExamplesGrid: Story<
         aria-label="Uncontrolled Example"
         defaultValue="forward"
         legend="Example"
+        direction={"column"}
       >
         <RadioButton key="spot" label="Spot" value="spot" />
         <RadioButton key="forward" label="Forward" value="forward" />
@@ -37,7 +38,6 @@ export const AllExamplesGrid: Story<
         defaultValue="forward"
         legend="Example"
         name="fx"
-        direction="row"
       >
         <RadioButton key="spot" label="Spot" value="spot" />
         <RadioButton key="forward" label="Forward" value="forward" />

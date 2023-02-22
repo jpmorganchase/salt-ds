@@ -1,7 +1,6 @@
 import { clsx } from "clsx";
 import {
   ChangeEventHandler,
-  ComponentType,
   forwardRef,
   HTMLAttributes,
   useImperativeHandle,
@@ -15,11 +14,9 @@ import {
   useId,
 } from "@salt-ds/core";
 import { useFormFieldProps } from "../form-field-context";
-import { FormGroup } from "../form-group";
 import { FormLabel } from "../form-field";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 import { RadioButton } from "./RadioButton";
-import { RadioButtonIconProps } from "./RadioButtonIcon";
 
 import "./RadioButtonGroup.css";
 
@@ -53,7 +50,7 @@ export const RadioButtonGroup = forwardRef<
     radios,
     onChange,
     value: valueProp,
-    direction = "column",
+    direction,
     name: nameProp,
     ...rest
   } = props;
@@ -117,20 +114,18 @@ export const RadioButtonGroup = forwardRef<
       <RadioGroupContext.Provider
         value={{ name, onChange: handleChange, value: getValue() }}
       >
-        <FormGroup role="radiogroup" {...rest}>
-          <FlexLayout direction={direction} gap={1}>
-            {(radios &&
-              radios.map((radio) => (
-                <RadioButton
-                  disabled={radio.disabled}
-                  key={radio.label}
-                  label={radio.label}
-                  value={radio.value}
-                />
-              ))) ||
-              children}
-          </FlexLayout>
-        </FormGroup>
+        <FlexLayout direction={direction} gap={1} {...rest}>
+          {(radios &&
+            radios.map((radio) => (
+              <RadioButton
+                disabled={radio.disabled}
+                key={radio.label}
+                label={radio.label}
+                value={radio.value}
+              />
+            ))) ||
+            children}
+        </FlexLayout>
       </RadioGroupContext.Provider>
     </fieldset>
   );

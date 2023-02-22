@@ -19,6 +19,7 @@ describe("GIVEN a RadioButtonGroup component", () => {
           data-testid="radio-button-group-test"
           radios={radios}
           value="button one"
+          direction={"column"}
         />
       );
       cy.findAllByRole("radio").should("have.length", 3);
@@ -28,10 +29,7 @@ describe("GIVEN a RadioButtonGroup component", () => {
   describe("WHEN rendered in horizontal (row) layout", () => {
     it("THEN should have the horizontal class name", () => {
       cy.mount(
-        <RadioButtonGroup
-          data-testid="radio-button-group-test"
-          direction={"row"}
-        >
+        <RadioButtonGroup data-testid="radio-button-group-test">
           <RadioButton label="Spot" value="spot" />
           <RadioButton label="Forward" value="forward" />
         </RadioButtonGroup>
@@ -50,6 +48,7 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children as funct
           defaultValue="forward"
           legend="Uncontrolled Group"
           name="fx"
+          direction={"column"}
         >
           <RadioButton key="spot" label="Spot" value="spot" />
           <RadioButton key="forward" label="Forward" value="forward" />
@@ -74,7 +73,7 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children as funct
     };
 
     cy.mount(
-      <RadioButtonGroup onChange={handleChange}>
+      <RadioButtonGroup onChange={handleChange} direction={"column"}>
         <RadioButton label="Spot" value="spot" />
         <RadioButton label="Forward" value="forward" />
       </RadioButtonGroup>

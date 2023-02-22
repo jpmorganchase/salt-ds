@@ -3,12 +3,10 @@ import {
   ChangeEventHandler,
   forwardRef,
   HTMLAttributes,
-  ComponentType,
   ReactNode,
 } from "react";
 import { Label, makePrefixer, useId } from "@salt-ds/core";
 import { RadioButtonBase as Radio } from "./RadioButtonBase";
-import { RadioButtonIconProps } from "./RadioButtonIcon";
 
 import "./RadioButton.css";
 
