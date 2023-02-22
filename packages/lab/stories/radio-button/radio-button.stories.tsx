@@ -139,39 +139,6 @@ export const ControlledRadioButtonGroup: ComponentStory<
   );
 };
 
-/* Custom Icons */
-const checkedIcon = <SuccessTickIcon />;
-const uncheckedIcon = (
-  <div style={{ height: "14px", width: "14px", border: "solid 1px black" }} />
-);
-const CustomIcon = makeRadioIcon(checkedIcon, uncheckedIcon);
-
-export const CustomIcons: ComponentStory<typeof RadioButtonGroup> = () => (
-  <div>
-    <RadioButtonGroup
-      aria-label="Custom Icons"
-      defaultValue="forward"
-      legend="Custom Icons"
-      name="fx"
-    >
-      <RadioButton key="spot" label="Spot" value="spot" icon={CustomIcon} />
-      <RadioButton
-        key="forward"
-        label="Forward"
-        value="forward"
-        icon={CustomIcon}
-      />
-      <RadioButton
-        disabled
-        key="option"
-        label="Option (disabled)"
-        value="option"
-        icon={CustomIcon}
-      />
-    </RadioButtonGroup>
-  </div>
-);
-
 /* FormField variants */
 
 // type ExampleWithTitleAndVariantProps = {
