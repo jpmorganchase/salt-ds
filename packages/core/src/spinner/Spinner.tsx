@@ -79,25 +79,26 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
 
       const startTime = new Date().getTime();
 
-      const interval =
-        // announcerInterval > 0 &&
-        // above line was causing typescript type error that I didn't manage to sort out right away
-        setInterval(() => {
-          if (new Date().getTime() - startTime > announcerTimeout) {
-            // the announcer will stop after 20s
-            announce(
-              `${ariaLabel} is still in progress, but will no longer announce.`
-            );
-            clearInterval(interval);
-            return;
-          }
-          announce(ariaLabel);
-        }, announcerInterval);
+      const interval = announcerInterval > 0 &&
+        setInterval(
+          () => {
+            if (new Date().getTime() - startTime > announcerTimeout) {
+              // The announcer will stop after `announcerTimeout` time
+              announce(
+                `${ariaLabel} is still in progress, but will no longer announce.`
+              );
+              interval && clearInterval(interval);
+              return;
+            }
+            announce(ariaLabel);
+          }, 
+          announcerInterval
+        );
 
       return () => {
         if (disableAnnouncer) return;
 
-        clearInterval(interval);
+        interval && clearInterval(interval);
         if (completionAnnouncement) {
           announce(completionAnnouncement);
         }
