@@ -110,13 +110,13 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
       }
     };
 
-    const className = clsx(withBaseName("base"), classNameProp, {
+    const baseClassName = clsx(withBaseName("base"), classNameProp, {
       saltFocusVisible: focusVisible,
     });
     return (
       <div
         {...rest}
-        className={clsx(classBase, className, {
+        className={clsx(classBase, classNameProp, {
           [`${classBase}-disabled`]: disabled,
         })}
         data-testid="checkbox"
@@ -129,7 +129,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
           label={label}
           labelPlacement={"right"}
         >
-          <span {...rest} className={className} ref={ref}>
+          <span {...rest} className={baseClassName} ref={ref}>
             <input
               aria-checked={indeterminate ? "mixed" : checked}
               name={name}
