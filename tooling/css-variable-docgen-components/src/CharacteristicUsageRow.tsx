@@ -73,7 +73,7 @@ export const CharacteristicUsageRow = (props: CharacteristicUsageRowProps) => {
             </Description>
           ))}
       </td>
-      <td>{tokens && tokens.map((token) => <TokenInfo token={token} />)}</td>
+     <td>{tokens && tokens.map((token,i) => <TokenInfo token={token} key={`${token}-${i}`} />)}</td>
     </tr>
   );
 };
