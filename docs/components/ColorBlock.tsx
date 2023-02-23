@@ -22,19 +22,14 @@ export const ColorBlock = ({
   const characteristicName = colorVar
     .split("--salt-")[1]
     .split("-")[0] as characteristic;
-  const [color, setColor] = useState<string | null>();
+  const color = getCharacteristicValue(
+    "salt-theme",
+    characteristicName,
+    colorVar.split(`${characteristicName}-`)[1]
+  );
+
   const [withBorder, setWithBorder] = useState<boolean>(false);
   const [transparent, setTransparent] = useState<boolean>(false);
-
-  useEffect(() => {
-    setColor(
-      getCharacteristicValue(
-        "salt-theme",
-        characteristicName,
-        colorVar.split(`${characteristicName}-`)[1]
-      )
-    );
-  }, []);
 
   useEffect(() => {
     if (color?.replaceAll(" ", "").includes("255,255,255")) {

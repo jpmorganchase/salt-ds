@@ -22,33 +22,37 @@ const isShadow = (value: string) => {
   return s.boxShadow.length;
 };
 
+const TokenBlock = (props: {
+  value: string;
+  token: string;
+}): React.ReactElement => {
+  const { value, token } = props;
+
+  if (isColor(value) || value === "transparent") {
+    return <ColorBlock hideToken colorVar={token} />;
+  }
+
+  if (isShadow(value)) {
+    return <ShadowBlockCell shadowVar={token} />;
+  }
+
+  return <Markdown className="token">{value.trim()}</Markdown>;
+};
+
 const TokenInfo = (props: { token: string }) => {
   const { token } = props;
   const characteristicName = token
     .split("--salt-")[1]
     .split("-")[0] as characteristic;
-  const [value, setValue] = useState<string | null>();
-
-  useEffect(() => {
-    setValue(
-      getCharacteristicValue(
-        "salt-theme",
-        characteristicName,
-        token.split(`${characteristicName}-`)[1]
-      )
-    );
-  }, []);
+  const value = getCharacteristicValue(
+    "salt-theme",
+    characteristicName,
+    token.split(`${characteristicName}-`)[1]
+  );
 
   return (
     <Description className="characteristicTokenDoc-inTable" key={token}>
-      {value &&
-        ((isColor(value) || value === "transparent") && !isShadow(value) ? (
-          <ColorBlock hideToken colorVar={token} />
-        ) : isShadow(value) ? (
-          <ShadowBlockCell shadowVar={token} />
-        ) : (
-          <Markdown className="token">{value.trim()}</Markdown>
-        ))}
+      {value && <TokenBlock value={value} token={token} />}
     </Description>
   );
 };

@@ -43,7 +43,7 @@ export function CharacteristicUsage(
   }, []);
 
   if (isLoading) {
-    return <Spinner />;
+    return <Spinner className="characteristicTokenDoc-loading" />;
   }
 
   if (Object.keys(characteristicTokenMap).length === 0) {
