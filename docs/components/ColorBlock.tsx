@@ -27,19 +27,9 @@ export const ColorBlock = ({
     characteristicName,
     colorVar.split(`${characteristicName}-`)[1]
   );
-
-  const [withBorder, setWithBorder] = useState<boolean>(false);
-  const [transparent, setTransparent] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (color?.replaceAll(" ", "").includes("255,255,255")) {
-      setWithBorder(true);
-    }
-    if (color?.includes("transparent")) {
-      setTransparent(true);
-    }
-  }, [color]);
-
+  const withBorder = color?.replaceAll(" ", "").includes("255,255,255")
+  const transparent = color?.includes("transparent")
+  
   return (
     <>
       <div
