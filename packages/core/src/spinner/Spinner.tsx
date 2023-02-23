@@ -1,7 +1,8 @@
-import { useAriaAnnouncer, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
-import { getSvgSpinner } from "./svgSpinners";
+import { useAriaAnnouncer } from "../aria-announcer";
+import { makePrefixer, useId } from "../utils";
+import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
 
 import "./Spinner.css";
 
@@ -9,15 +10,12 @@ import "./Spinner.css";
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="small | medium | large" />
+ * <Spinner size="default | large" />
  */
 
-// TODO: documentation -- add line about best practices:
-// - Improve accessibility by customizing the aria-label to provide additional context about *what* is loading, e.g. `aria-label="loading settings panel"`.
-
-export const SpinnerSizeValues = ["small", "medium", "large"] as const;
+export const SpinnerSizeValues = ["default", "large"] as const;
 export type SpinnerSize = typeof SpinnerSizeValues[number];
-const baseName = "saltSvgSpinner";
+const withBaseName = makePrefixer("saltSpinner");
 
 export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -45,7 +43,7 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   role?: string;
   /**
-   * Determines the size of the spinner. Must be one of: 'small', 'medium', 'large'.
+   * Determines the size of the spinner. Must be one of: 'default', 'large'.
    */
   size?: SpinnerSize;
   /**
@@ -64,14 +62,13 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       disableAnnouncer,
       role = "img",
       className,
-      size = "medium",
-      id: idProps,
+      size = "default",
+      id: idProp,
       ...rest
     },
     ref
   ) {
-    const generatedId = useId(idProps);
-    const SvgSpinner = getSvgSpinner(size);
+    const id = useId(idProp);
 
     const { announce } = useAriaAnnouncer();
 
@@ -117,12 +114,12 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
     return (
       <div
         aria-label={ariaLabel}
-        className={clsx(`${baseName}-${size}`, className, baseName)}
+        className={clsx(withBaseName(), withBaseName(size), className)}
         ref={ref}
         role={role}
         {...rest}
       >
-        <SvgSpinner id={generatedId} />
+        <SpinnerSVG id={id!} />
       </div>
     );
   }

@@ -5,7 +5,7 @@ import { DeckLayout, Tab, Tabstrip } from "@salt-ds/lab";
 import "../layout/layout.stories.css";
 
 export default {
-  title: "Lab/Layout/DeckLayout",
+  title: "Lab/Layout/Deck Layout",
   component: DeckLayout,
   argTypes: {
     activeIndex: {

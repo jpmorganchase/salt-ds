@@ -7,11 +7,10 @@ import {
   useState,
 } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { SaltProvider } from "@salt-ds/core";
+import { SaltProvider, Spinner } from "@salt-ds/core";
 import {
   AppHeader,
   SearchInput,
-  Spinner,
   useLayoutEffectSkipFirst,
   isDesktop,
 } from "@salt-ds/lab";

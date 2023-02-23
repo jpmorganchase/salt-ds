@@ -2,12 +2,13 @@ import {
   makePrefixer,
   StatusIndicator as BaseStatusIndicator,
   StatusIndicatorProps as BaseStatusIndicatorProps,
+  Spinner,
+  SpinnerProps,
 } from "@salt-ds/core";
 import { ReactElement } from "react";
 import { clsx } from "clsx";
 
 import { CircularProgress, CircularProgressProps } from "../../progress";
-import { Spinner, SpinnerProps } from "../../spinner";
 
 export interface StatusIndicatorProps
   extends Pick<SpinnerProps, "disableAnnouncer">,

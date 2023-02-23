@@ -561,7 +561,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Spinner",
     description:
       "Visually represents a process that is taking an indeterminate time to complete.",
-    devStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
