@@ -79,7 +79,7 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
 
 export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
   return (
-    <CheckboxGroup direction={"row"}>
+    <CheckboxGroup row>
       <GroupCheckbox defaultChecked label="option 1" value="option-1" />
       <GroupCheckbox defaultChecked label="option 2" value="option-2" />
       <GroupCheckbox label="option 3" value="option-3" />

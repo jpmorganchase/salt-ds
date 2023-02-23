@@ -6,15 +6,13 @@ import {
   HTMLAttributes,
   ReactNode,
 } from "react";
-import { FlexLayout, FlexLayoutProps, useControlled } from "@salt-ds/core";
-import { FormGroup } from "../form-group";
+import { useControlled } from "@salt-ds/core";
+import { FormGroup, FormGroupProps } from "../form-group";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 import "./CheckboxGroup.css";
 
-export interface CheckboxGroupProps
-  extends HTMLAttributes<HTMLDivElement>,
-    FlexLayoutProps<"div"> {
+export interface CheckboxGroupProps extends FormGroupProps {
   /**
    * The current checked options.
    */
@@ -58,7 +56,7 @@ export const CheckboxGroup = forwardRef<
     children,
     className,
     FormControlProps,
-    direction = "column",
+    row,
     name,
     onChange,
     ...other
@@ -89,11 +87,14 @@ export const CheckboxGroup = forwardRef<
     <CheckboxGroupContext.Provider
       value={{ name, onChange: handleChange, checkedValues }}
     >
-      <fieldset className={clsx(classBase)} ref={ref}>
-        <FormGroup className={`${classBase}-formGroup`} {...other}>
-          <FlexLayout direction={direction} gap={1}>
-            {children}
-          </FlexLayout>
+      <fieldset
+        className={clsx(classBase, {
+          [`${classBase}-horizontal`]: row,
+        })}
+        ref={ref}
+      >
+        <FormGroup className={`${classBase}-formGroup`} row={row} {...other}>
+          {children}
         </FormGroup>
       </fieldset>
     </CheckboxGroupContext.Provider>
