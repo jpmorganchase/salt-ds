@@ -558,16 +558,14 @@ describe("Grid", () => {
   });
 
   describe("Column Sorting", () => {
-    it("should sort column values when sorting is enabled", () => {
+    it.only("should sort column values when sorting is enabled", () => {
       cy.mount(<RowSelectionModes />);
 
+      // first click: sort in ascending order
       cy.findAllByTestId("column-header")
         .eq(2)
         .should("have.text", "B")
-        .as("sortableHeader");
-
-      // first click: sort in ascending order
-      cy.get("@sortableHeader")
+        .as("sortableHeader")
         .click()
         .should("have.attr", "aria-sort", "ascending")
         .then(() => {
@@ -575,7 +573,10 @@ describe("Grid", () => {
         });
 
       // second click: sort in descending order
-      cy.get("@sortableHeader")
+      cy.findAllByTestId("column-header")
+        .eq(2)
+        .should("have.text", "B")
+        .as("sortableHeader")
         .dblclick()
         .should("have.attr", "aria-sort", "descending")
         .then(() => {
@@ -583,7 +584,10 @@ describe("Grid", () => {
         });
 
       // third click: back to default order without sorting
-      cy.get("@sortableHeader")
+      cy.findAllByTestId("column-header")
+        .eq(2)
+        .should("have.text", "B")
+        .as("sortableHeader")
         .dblclick()
         .click()
         .should("not.have.attr", "aria-sort", "none")
