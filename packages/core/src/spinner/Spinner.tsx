@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
-import { makePrefixer, useAriaAnnouncer, useId } from "@salt-ds/core";
+import { useAriaAnnouncer } from "../aria-announcer";
+import { makePrefixer, useId } from "../utils";
 import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
 
 import "./Spinner.css";
@@ -9,11 +10,8 @@ import "./Spinner.css";
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="small | medium | large" />
+ * <Spinner size="default | large" />
  */
-
-// TODO: documentation -- add line about best practices:
-// - Improve accessibility by customizing the aria-label to provide additional context about *what* is loading, e.g. `aria-label="loading settings panel"`.
 
 export const SpinnerSizeValues = ["default", "large"] as const;
 export type SpinnerSize = typeof SpinnerSizeValues[number];
@@ -121,7 +119,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         role={role}
         {...rest}
       >
-        <SpinnerSVG id={id} />
+        <SpinnerSVG id={id!} />
       </div>
     );
   }
