@@ -31,7 +31,7 @@ export type BorderItemProps<T extends ElementType> =
        */
       verticalAlignment?: GridItemProps<T>["verticalAlignment"];
       /**
-       * Position in the border layout
+       * Position in the Border Layout
        */
       position: BorderPosition;
       /**
