@@ -79,21 +79,19 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
 
       const startTime = new Date().getTime();
 
-      const interval = announcerInterval > 0 &&
-        setInterval(
-          () => {
-            if (new Date().getTime() - startTime > announcerTimeout) {
-              // The announcer will stop after `announcerTimeout` time
-              announce(
-                `${ariaLabel} is still in progress, but will no longer announce.`
-              );
-              interval && clearInterval(interval);
-              return;
-            }
-            announce(ariaLabel);
-          }, 
-          announcerInterval
-        );
+      const interval =
+        announcerInterval > 0 &&
+        setInterval(() => {
+          if (new Date().getTime() - startTime > announcerTimeout) {
+            // The announcer will stop after `announcerTimeout` time
+            announce(
+              `${ariaLabel} is still in progress, but will no longer announce.`
+            );
+            interval && clearInterval(interval);
+            return;
+          }
+          announce(ariaLabel);
+        }, announcerInterval);
 
       return () => {
         if (disableAnnouncer) return;
