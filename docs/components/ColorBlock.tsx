@@ -27,9 +27,9 @@ export const ColorBlock = ({
     characteristicName,
     colorVar.split(`${characteristicName}-`)[1]
   );
-  const withBorder = color?.replaceAll(" ", "").includes("255,255,255")
-  const transparent = color?.includes("transparent")
-  
+  const withBorder = color?.replaceAll(" ", "").includes("255,255,255");
+  const transparent = color?.includes("transparent");
+
   return (
     <>
       <div
