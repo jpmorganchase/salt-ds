@@ -5,10 +5,12 @@ import {
   forwardRef,
   HTMLAttributes,
   InputHTMLAttributes,
+  useContext,
   useRef,
   useState,
 } from "react";
 import {
+  createChainedFunction,
   makePrefixer,
   useControlled,
   useForkRef,
@@ -18,6 +20,7 @@ import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./Checkbox.css";
 import { ControlLabel, ControlLabelProps } from "../control-label";
+import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 const withBaseName = makePrefixer("saltCheckbox");
 const classBase = "saltCheckbox";
@@ -46,7 +49,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
     {
       checked: checkedProp,
       className: classNameProp,
-      defaultChecked,
+      defaultChecked: defaultCheckedProp,
       disabled,
       indeterminate,
       inputProps,
@@ -61,27 +64,43 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
     },
     ref
   ) {
+    const groupContext = useContext(CheckboxGroupContext);
+
+    let isChecked = checkedProp;
+    let defaultChecked = defaultCheckedProp;
+
+    if (groupContext) {
+      if (typeof isChecked === "undefined" && typeof value === "string") {
+        isChecked = groupContext?.checkedValues?.includes(value);
+      }
+
+      defaultChecked = undefined;
+    }
+
+    const handleChange = createChainedFunction(
+      (event: ChangeEvent<HTMLInputElement>) => {
+        // Workaround for https://github.com/facebook/react/issues/9023
+        if (event.nativeEvent.defaultPrevented) {
+          return;
+        }
+
+        const value = event.target.checked;
+        setChecked(value);
+        onChange?.(event, value);
+      },
+      groupContext?.onChange
+    );
+
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [checked, setChecked] = useControlled({
-      controlled: checkedProp,
-      default: Boolean(defaultChecked),
+      controlled: isChecked,
+      default: Boolean(defaultCheckedProp),
       name: "Checkbox",
       state: "checked",
     });
 
     const [focusVisible, setFocusVisible] = useState(false);
-
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      // Workaround for https://github.com/facebook/react/issues/9023
-      if (event.nativeEvent.defaultPrevented) {
-        return;
-      }
-
-      const value = event.target.checked;
-      setChecked(value);
-      onChange?.(event, value);
-    };
 
     const {
       isFocusVisibleRef,
@@ -135,7 +154,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
               name={name}
               value={value}
               {...inputProps}
-              checked={checkedProp}
+              checked={checked}
               className={withBaseName("input")}
               data-indeterminate={indeterminate}
               defaultChecked={defaultChecked}

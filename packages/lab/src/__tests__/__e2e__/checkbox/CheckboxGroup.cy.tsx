@@ -1,13 +1,13 @@
-import { CheckboxGroup, GroupCheckbox } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
 import { ChangeEventHandler } from "react";
 
 describe("GIVEN a CheckboxGroup component", () => {
   it("THEN should render checkboxes", () => {
     cy.mount(
       <CheckboxGroup>
-        <GroupCheckbox label="one" value="one" />
-        <GroupCheckbox label="two" value="two" />
-        <GroupCheckbox label="three" value="three" />
+        <Checkbox label="one" value="one" />
+        <Checkbox label="two" value="two" />
+        <Checkbox label="three" value="three" />
       </CheckboxGroup>
     );
 
@@ -22,9 +22,9 @@ describe("GIVEN a CheckboxGroup component", () => {
     it("THEN should respect defaultCheckedValues", () => {
       cy.mount(
         <CheckboxGroup defaultCheckedValues={["one"]}>
-          <GroupCheckbox label="one" value="one" />
-          <GroupCheckbox label="two" value="two" />
-          <GroupCheckbox label="three" value="three" />
+          <Checkbox label="one" value="one" />
+          <Checkbox label="two" value="two" />
+          <Checkbox label="three" value="three" />
         </CheckboxGroup>
       );
       cy.findByRole("checkbox", { name: "one" }).should("be.checked");
@@ -45,9 +45,9 @@ describe("GIVEN a CheckboxGroup component", () => {
 
         cy.mount(
           <CheckboxGroup defaultCheckedValues={["one"]} onChange={handleChange}>
-            <GroupCheckbox label="one" value="one" />
-            <GroupCheckbox label="two" value="two" />
-            <GroupCheckbox label="three" value="three" />
+            <Checkbox label="one" value="one" />
+            <Checkbox label="two" value="two" />
+            <Checkbox label="three" value="three" />
           </CheckboxGroup>
         );
 
@@ -69,9 +69,9 @@ describe("GIVEN a CheckboxGroup component", () => {
     it("THEN should respect checkedValues", () => {
       cy.mount(
         <CheckboxGroup checkedValues={["one"]}>
-          <GroupCheckbox label="one" value="one" />
-          <GroupCheckbox label="two" value="two" />
-          <GroupCheckbox label="three" value="three" />
+          <Checkbox label="one" value="one" />
+          <Checkbox label="two" value="two" />
+          <Checkbox label="three" value="three" />
         </CheckboxGroup>
       );
 
@@ -93,9 +93,9 @@ describe("GIVEN a CheckboxGroup component", () => {
 
         cy.mount(
           <CheckboxGroup checkedValues={["one"]} onChange={handleChange}>
-            <GroupCheckbox label="one" value="one" />
-            <GroupCheckbox label="two" value="two" />
-            <GroupCheckbox label="three" value="three" />
+            <Checkbox label="one" value="one" />
+            <Checkbox label="two" value="two" />
+            <Checkbox label="three" value="three" />
           </CheckboxGroup>
         );
 
