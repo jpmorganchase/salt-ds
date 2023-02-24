@@ -49,7 +49,7 @@
 .saltTooltray-horizontal:not(:first-child):before {
   content: "";
   position: absolute;
-  background: #c5c9d0;
+  background: var(--salt-separable-primary-borderColor);
   top: 8px;
   left: 0;
   width: 1px;
