@@ -1,5 +1,23 @@
 # @salt-ds/core
 
+## 1.2.0
+
+### Minor Changes
+
+- afe57829: Add text background color for highlighted text globally and on Text component
+- 1e69cf3b: Move `Tooltip` from lab to core
+  Move `useFloatingUI` from lab to core
+- b1c5c32e: Move Spinner from lab to core
+- 88673e4a: Add `disabled` prop to Text component
+- 598991f8: Move `SplitLayout` from lab to core
+  Changes in `SplitLayout`
+
+  - Removed `FlexItem` wraps around `SplitLayout` children.
+  - `SplitLayout` uses `startItem` and `endItem` props as children to allow for direction.
+  - Added `direction` prop to `SplitLayout`.
+  - Remove `wrap` since `SplitLayout` has `direction` to control wrap by breakpoints.
+  - End Aligned `endItem` so the element is always at the end of the layout.
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,4 +1,4 @@
-import { Spinner } from "@salt-ds/lab";
+import { Spinner } from "@salt-ds/core";
 
 // All previous tests were snapshot tests. These tests are to check svg existence by class
 
