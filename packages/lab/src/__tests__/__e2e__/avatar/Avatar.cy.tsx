@@ -1,7 +1,7 @@
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { UserGroupIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/testing-react";
-import * as avatarStories from "@stories/avatar.stories";
+import * as avatarStories from "@stories/avatar/avatar.stories";
 
 const composedStories = composeStories(avatarStories);
 const { Default } = composedStories;
