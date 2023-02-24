@@ -16,7 +16,6 @@ const icons = {
   warning: (
     <svg
       aria-hidden
-      // width="1em"
       height="1em"
       viewBox="0 0 10 8"
       fill="none"
@@ -41,7 +40,6 @@ const icons = {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="1em"
-      // height="1em"
       viewBox="0 0 14 14"
       fill="none"
     >

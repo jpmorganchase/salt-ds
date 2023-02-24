@@ -15,7 +15,7 @@ import { GridColumnModel, GridRowModel } from "./Grid";
 
 export type GridColumnPin = "left" | "right" | null;
 
-export type CellValidationState = "error" | "warning" | "success" | undefined;
+export type CellValidationState = "error" | "warning" | "success";
 type CellValidationType = "strong" | "light";
 
 export interface GridCellProps<T, U = any> {
@@ -111,12 +111,14 @@ export interface GridColumnProps<T = any> {
    * Cell validation status getter. Should return one of the known validation status names: "none" | "error" | "warning"
    * If you require a custom validation status, you can achieve that by providing a custom cell component.
    * */
-  getValidationStatus?: (value: GridCellValueProps<T>) => CellValidationState;
+  getValidationStatus?: (
+    value: GridCellValueProps<T>
+  ) => CellValidationState | undefined;
   /**
    * Cell validation status message getter. Should return a string description of the validation state that can be used for the screen reader.
    * This prop is optional but if you don't provide a function a default message will be used.
    * */
-  getValidationMessage?: (value: GridCellValueProps<T>) => string;
+  getValidationMessage?: (value: GridCellValueProps<T>) => string | undefined;
   /**
    * Cell validation type. Determines the visual style of the validation. The available values are "strong" and "light". Strong will display the icon
    * along side the background and border. Light will only affect border and background. Use light if you are validation the whole row, and optionally
