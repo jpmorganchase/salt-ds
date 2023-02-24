@@ -1,44 +1,44 @@
-table {
+.docs-page-content table {
   display: inline-table;
   width: 100%;
 }
 
-table thead {
+.docs-page-content table thead {
   position: sticky;
   top: var(--ifm-navbar-height);
   z-index: 2;
 }
 
-table thead tr {
+.docs-page-content table thead tr {
   border: none;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
-table thead tr th {
+.docs-page-content table thead tr th {
   text-align: left;
   background: var(--salt-color-white);
 }
 
-table th,
-table td {
+.docs-page-content table th,
+.docs-page-content table td {
   border: none;
 }
 
-table tr {
+.docs-page-content table tr {
   border-bottom: 1px solid var(--salt-separable-tertiary-borderColor);
   border-top: 1px solid var(--salt-separable-tertiary-borderColor);
 }
 
-table th {
+.docs-page-content table th {
   color: var(--salt-text-secondary-foreground);
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-table tr td:not(:last-child) {
+.docs-page-content table tr td:not(:last-child) {
   border-right: 1px solid var(--salt-separable-tertiary-borderColor);
 }
 
-table tr th + th {
+.docs-page-content table tr th + th {
   border-left: 1px solid var(--salt-color-gray-90-fade-border-readonly);
 }
