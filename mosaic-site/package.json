@@ -9,7 +9,7 @@
   "style": "dist/index.css",
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
-    "build": "next build && next export",
+    "build": "next start && next build",
     "dev": "next dev",
     "postinstall": "patch-package",
     "start": "next start",
