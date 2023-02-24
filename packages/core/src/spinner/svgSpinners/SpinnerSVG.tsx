@@ -5,10 +5,12 @@ const withBaseName = makePrefixer("saltSpinner");
 
 /* SVG based on MD, do not change viewbox attribute */
 export const SpinnerSVG = (props: {
-  id: string;
+  id?: string;
   rest?: Omit<SVGAttributes<SVGSVGElement>, "id">;
 }) => {
-  const { id, rest } = props;
+  const { id: idProp, rest } = props;
+  const id = idProp || "svg-spinner";
+
   return (
     <svg
       className={withBaseName("spinner")}
