@@ -21,7 +21,6 @@ import { components as mosaicComponents } from "@jpmorganchase/mosaic-site-compo
 import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
 import "@jpmorganchase/mosaic-site-preset-styles/index.css";
 import "../css/index.css";
-import { Mode } from "@salt-ds/theme";
 import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
 import Homepage from "./index";
 import * as saltLayouts from "../layouts";
@@ -44,7 +43,7 @@ const DensityProvider = ({ children }) => {
   return <SaltProvider density={density}>{children}</SaltProvider>;
 };
 
-const colorMode: Mode = "dark";
+const colorMode: "light" | "dark" = "dark";
 
 export default function MyApp({
   Component,

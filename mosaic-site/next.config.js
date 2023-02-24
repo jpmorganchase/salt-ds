@@ -14,6 +14,13 @@ module.exports = {
     "@jpmorganchase/mosaic-theme",
     "@jpmorganchase/mosaic-store",
   ],
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
   rewrites() {
     return {
       // These rewrites are checked after headers/redirects

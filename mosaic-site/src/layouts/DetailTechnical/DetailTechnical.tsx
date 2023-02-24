@@ -10,6 +10,7 @@ import {
   VerticalNavigation,
 } from "@jpmorganchase/mosaic-site-components";
 import { LayoutBase, LayoutColumns } from "@jpmorganchase/mosaic-layouts"; // TODO: create custom LayoutColumns component
+import { useMeta } from "@jpmorganchase/mosaic-store";
 import { SaltProvider } from "@salt-ds/core";
 import { LayoutProps } from "../types/index";
 import layoutStyles from "../index.module.css";
@@ -40,7 +41,9 @@ export const DetailTechnical: FC<LayoutProps> = ({
 
   const SecondarySidebar = <TableOfContents />;
 
-  const title = children?.props.source.frontmatter.title;
+  const {
+    meta: { title },
+  } = useMeta();
 
   return (
     <LayoutBase Header={Header}>
