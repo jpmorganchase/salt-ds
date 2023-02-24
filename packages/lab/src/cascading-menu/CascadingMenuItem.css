@@ -37,7 +37,7 @@
 }
 
 .saltMenuItem-menuItemHover:hover {
-  background: #a4d5f4;
+  background: var(--salt-selectable-background-hover);
 }
 
 /* extra specificity requred to override ListItem selected */
