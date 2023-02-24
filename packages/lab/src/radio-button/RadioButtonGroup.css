@@ -1,6 +1,8 @@
 /* Styles applied to root element */
 .saltRadioButtonGroup {
   border: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* Styles applied to the FormField FormLabel component */
