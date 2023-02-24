@@ -39,6 +39,8 @@ module.exports = {
       /** Insert the domains where you will load images from */
       /* https://nextjs.org/docs/messages/next-image-unconfigured-host */
     ],
+    loader: "imgix",
+    path: "https://noop/",
   },
   webpack(config) {
     // Swaps out Buble for a smaller version that removes the latest Regex spec features.
