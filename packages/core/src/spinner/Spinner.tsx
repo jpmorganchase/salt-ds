@@ -118,7 +118,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         role={role}
         {...rest}
       >
-        <SpinnerSVG id={id!} />
+        <SpinnerSVG id={id} />
       </div>
     );
   }
