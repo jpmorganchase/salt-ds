@@ -7,14 +7,11 @@ import {
   InputHTMLAttributes,
   useContext,
   useRef,
-  useState,
 } from "react";
 import {
   createChainedFunction,
   makePrefixer,
   useControlled,
-  useForkRef,
-  useIsFocusVisible,
 } from "@salt-ds/core";
 import { CheckboxIcon } from "./CheckboxIcon";
 
@@ -100,38 +97,6 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
       state: "checked",
     });
 
-    const [focusVisible, setFocusVisible] = useState(false);
-
-    const {
-      isFocusVisibleRef,
-      onFocus: handleFocusVisible,
-      onBlur: handleBlurVisible,
-      ref: focusVisibleRef,
-    } = useIsFocusVisible<HTMLInputElement>();
-
-    const handleRef = useForkRef<HTMLInputElement>(inputRef, focusVisibleRef);
-
-    const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
-      handleFocusVisible(event);
-      if (isFocusVisibleRef.current) {
-        setFocusVisible(true);
-      }
-      if (onFocus) {
-        onFocus(event);
-      }
-    };
-
-    const handleBlur: FocusEventHandler<HTMLInputElement> = (event) => {
-      handleBlurVisible();
-      setFocusVisible(false);
-      if (onBlur) {
-        onBlur(event);
-      }
-    };
-
-    const baseClassName = clsx(withBaseName("base"), classNameProp, {
-      saltFocusVisible: focusVisible,
-    });
     return (
       <div
         {...rest}
@@ -148,7 +113,11 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
           label={label}
           labelPlacement={"right"}
         >
-          <span {...rest} className={baseClassName} ref={ref}>
+          <span
+            {...rest}
+            className={clsx(withBaseName("base"), classNameProp)}
+            ref={ref}
+          >
             <input
               aria-checked={indeterminate ? "mixed" : checked}
               name={name}
@@ -159,10 +128,10 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
               data-indeterminate={indeterminate}
               defaultChecked={defaultChecked}
               disabled={disabled}
-              onBlur={handleBlur}
+              onBlur={onBlur}
               onChange={handleChange}
-              onFocus={handleFocus}
-              ref={handleRef}
+              onFocus={onFocus}
+              ref={inputRef}
               type="checkbox"
             />
             <CheckboxIcon

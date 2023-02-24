@@ -50,6 +50,14 @@
   position: relative;
 }
 
+.saltCheckbox-input:focus-visible + .saltCheckboxIcon {
+  inset: var(--salt-focused-outlineInset);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+}
+
 /* Styles applied to input element */
 .saltCheckbox-input {
   cursor: inherit;
