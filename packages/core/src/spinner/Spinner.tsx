@@ -80,15 +80,14 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       const startTime = new Date().getTime();
 
       const interval =
-        // announcerInterval > 0 &&
-        // above line was causing typescript type error that I didn't manage to sort out right away
+        announcerInterval > 0 &&
         setInterval(() => {
           if (new Date().getTime() - startTime > announcerTimeout) {
-            // the announcer will stop after 20s
+            // The announcer will stop after `announcerTimeout` time
             announce(
               `${ariaLabel} is still in progress, but will no longer announce.`
             );
-            clearInterval(interval);
+            interval && clearInterval(interval);
             return;
           }
           announce(ariaLabel);
@@ -97,7 +96,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       return () => {
         if (disableAnnouncer) return;
 
-        clearInterval(interval);
+        interval && clearInterval(interval);
         if (completionAnnouncement) {
           announce(completionAnnouncement);
         }
@@ -119,7 +118,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         role={role}
         {...rest}
       >
-        <SpinnerSVG id={id!} />
+        <SpinnerSVG id={id} />
       </div>
     );
   }
