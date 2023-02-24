@@ -6,7 +6,7 @@ import { useLoaded } from "./internal/useLoaded";
 
 import "./Avatar.css";
 
-export type InitialsGetter = (name: string) => string | undefined;
+export type InitialsGetter = (name?: string) => string;
 
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -35,14 +35,13 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltAvatar");
 const DEFAULT_AVATAR_SIZE = 2; // medium
 
-const initialsDefaultGetter = (name: string | undefined) =>
-  name &&
+const initialsDefaultGetter = (name?: string) =>
   name
-    .split(" ")
+    ?.split(" ")
     .slice(0, 2)
     .map((n) => n[0])
     .join("")
-    .toUpperCase();
+    .toUpperCase() || undefined;
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   {
@@ -74,7 +73,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     children = childrenProp;
   }
 
-  const avatarInitials = name && initialsGetter(name);
+  const avatarInitials = initialsGetter(name);
 
   return (
     <div

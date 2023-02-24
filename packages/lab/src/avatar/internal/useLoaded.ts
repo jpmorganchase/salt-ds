@@ -12,20 +12,15 @@ export function useLoaded({ src }: ImgHTMLAttributes<HTMLImageElement>) {
 
     let active = true;
     const image = new Image();
-    image.onload = () => {
-      if (!active) {
-        return;
-      }
-      setLoaded("loaded");
-    };
-    image.onerror = () => {
-      if (!active) {
-        return;
-      }
-      image.style.display = "none";
-      setLoaded("error");
-    };
+    const onLoad = () => active && setLoaded("loaded");
+    const onError = () => active && setLoaded("error");
+
+    image.addEventListener("load", onLoad, { once: true });
+    image.addEventListener("error", onError, { once: true });
+
     return () => {
+      image.removeEventListener("load", onLoad);
+      image.removeEventListener("load", onError);
       active = false;
     };
   }, [src]);

@@ -42,7 +42,7 @@ Avatar renders with a default Icon `UserIcon` but an alternative icon can be pas
 
 #### Image
 
-Reference your image as a children of the component.
+Reference your image src in the `src` prop, or pass it as a children of the component.
 
 <Canvas>
   <Story id="lab-avatar--with-image" />
@@ -56,12 +56,19 @@ You can pass the initials as a children of the component.
   <Story id="lab-avatar--with-initials" />
 </Canvas>
 
-#### Custom SVG
+#### Custom image or SVG
 
-You can pass a custom SVG as children to the component to be used an an image.
+You can pass a custom image or SVG as children to the component to be used as an image.
 
 <Canvas>
   <Story id="lab-avatar--with-custom-svg" />
+</Canvas>
+
+
+Note that for images passed as children, you will also need to handle the fallback logic.
+
+<Canvas>
+  <Story id="lab-avatar--image-fallback" />
 </Canvas>
 
 #### Alternative Background
