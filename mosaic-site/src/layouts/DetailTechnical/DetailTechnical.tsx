@@ -7,7 +7,7 @@ import {
   Breadcrumbs,
   Footer,
   TableOfContents,
-  VerticalNavigation,
+  PageNavigation,
 } from "@jpmorganchase/mosaic-site-components";
 import { LayoutBase, LayoutColumns } from "@jpmorganchase/mosaic-layouts"; // TODO: create custom LayoutColumns component
 import { SaltProvider } from "@salt-ds/core";
@@ -31,7 +31,7 @@ export const DetailTechnical: FC<LayoutProps> = ({
         </header>
       )}
       {/*  TODO: Add salt light theme to vertical navigation */}
-      <VerticalNavigation />
+      <PageNavigation />
       {SidebarProps?.helpLinks && (
         <HelpLinks subTitle="Need help?" {...SidebarProps.helpLinks} />
       )}
