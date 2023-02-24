@@ -1,23 +1,55 @@
-import { FlexLayout, makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { UserIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import { useLoaded } from "./internal/useLoaded";
 
 import "./Avatar.css";
 
+export type InitialsGetter = (name?: string) => string;
+
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
-  children?: ReactNode | string;
+  /**
+   * The name that Avatar represents.
+   */
+  name?: string;
+  /**
+   * Defines the function that gets initials. Default is capital first letter of each separate word in name.
+   * If a function is not passed or returns undefined, Avatar will default to Icon.
+   */
+  initialsGetter?: InitialsGetter;
+  /**
+   * Image src of Avatar.
+   */
+  src?: string;
+  /**
+   * Multiplier for the base avatar.
+   */
   size?: number;
+  /**
+   * Icon to be used as a default item. Defaults to `UserIcon`
+   */
   fallbackIcon?: ReactNode;
 }
 
 const withBaseName = makePrefixer("saltAvatar");
 const DEFAULT_AVATAR_SIZE = 2; // medium
 
+const initialsDefaultGetter = (name?: string) =>
+  name
+    ?.split(" ")
+    .slice(0, 2)
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase() || undefined;
+
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   {
     className,
     children: childrenProp,
+    name,
+    initialsGetter = initialsDefaultGetter,
+    src,
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
     fallbackIcon = <UserIcon />,
@@ -25,26 +57,32 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   },
   ref
 ) {
+  let children;
+
   const style = {
     ...styleProp,
     "--saltAvatar-size-multiplier": `${size}`,
   };
 
-  let children = childrenProp;
-  if (typeof children === "string") {
-    children = children.slice(0, 2).toUpperCase();
+  const loaded = useLoaded({ src });
+  const hasImgNotFailing = src && loaded !== "error";
+
+  if (hasImgNotFailing) {
+    children = <img className={withBaseName("image")} alt={name} src={src} />;
+  } else if (childrenProp != null) {
+    children = childrenProp;
   }
 
+  const avatarInitials = initialsGetter(name);
+
   return (
-    <FlexLayout
+    <div
       ref={ref}
       style={style}
-      align="center"
-      justify="center"
       className={clsx(withBaseName(), className)}
       {...rest}
     >
-      {children || fallbackIcon}
-    </FlexLayout>
+      {children || avatarInitials || fallbackIcon}
+    </div>
   );
 });

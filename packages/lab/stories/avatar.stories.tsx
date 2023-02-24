@@ -3,6 +3,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlowLayout, Label, StackLayout } from "@salt-ds/core";
 import { CSSProperties, ReactNode, useEffect, useState } from "react";
 import { Avatar } from "@salt-ds/lab";
+import persona1 from "./assets/persona1.png";
 
 export default {
   title: "Lab/Avatar",
@@ -27,7 +28,7 @@ export const Default = Template.bind({});
 
 export const WithInitials = Template.bind({});
 WithInitials.args = {
-  children: "SB",
+  name: "Alex Brailescu",
 };
 
 export const AlternativeIcon = Template.bind({});
@@ -35,12 +36,10 @@ AlternativeIcon.args = {
   fallbackIcon: <UserGroupIcon />,
 };
 
-// Add image story once design has provided a profile pic image
-
-// export const WithImage = Template.bind({});
-// WithImage.args = {
-//   children: <img src={imgSrc} alt="profile" />,
-// };
+export const WithImage = Template.bind({});
+WithImage.args = {
+  children: <img src={persona1} alt="Alex Brailescu" />,
+};
 
 const backgroundStyle = {
   "--saltAvatar-background": "var(--salt-color-orange-700)",
