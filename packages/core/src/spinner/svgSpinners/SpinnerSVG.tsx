@@ -9,7 +9,7 @@ export const SpinnerSVG = (props: {
   rest?: Omit<SVGAttributes<SVGSVGElement>, "id">;
 }) => {
   const { id: idProp, rest } = props;
-  const id = idProp || 'svg-spinner';
+  const id = idProp || "svg-spinner";
 
   return (
     <svg
