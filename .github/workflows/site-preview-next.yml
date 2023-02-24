@@ -42,6 +42,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
           projectName: "saltdesignsystem-next"
           directory: ./mosaic-site/.next
+          exclude_patterns: ./mosaic-site/.next/cache
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.head_ref || github.ref_name }}
 
