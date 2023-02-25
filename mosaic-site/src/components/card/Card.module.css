@@ -65,7 +65,7 @@
   flex: 1;
 }
 
-.icon {
+.icon img {
   transition: 0.5s all ease-in-out;
   max-height: 160px;
 }
