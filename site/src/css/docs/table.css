@@ -1,88 +1,44 @@
-<<<<<<< HEAD:site/src/css/docs/table.css
 .docs-page-content table {
-=======
-.table {
-  --table-data-padding: 0.75rem;
-}
-
-.table {
->>>>>>> add getting started pages:mosaic-site/src/components/mdx/table/Table.module.css
   display: inline-table;
   width: 100%;
-  border-collapse: collapse;
 }
 
-<<<<<<< HEAD:site/src/css/docs/table.css
 .docs-page-content table thead {
-=======
-.table thead {
->>>>>>> add getting started pages:mosaic-site/src/components/mdx/table/Table.module.css
   position: sticky;
   top: var(--ifm-navbar-height);
   z-index: 2;
 }
 
-<<<<<<< HEAD:site/src/css/docs/table.css
 .docs-page-content table thead tr {
-=======
-.table thead tr {
->>>>>>> add getting started pages:mosaic-site/src/components/mdx/table/Table.module.css
   border: none;
   box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
-<<<<<<< HEAD:site/src/css/docs/table.css
 .docs-page-content table thead tr th {
-=======
-.table thead tr th {
->>>>>>> add getting started pages:mosaic-site/src/components/mdx/table/Table.module.css
   text-align: left;
   background: var(--salt-color-white);
 }
 
-<<<<<<< HEAD:site/src/css/docs/table.css
 .docs-page-content table th,
 .docs-page-content table td {
-=======
-.table th,
-.table td {
->>>>>>> add getting started pages:mosaic-site/src/components/mdx/table/Table.module.css
   border: none;
-  font-size: var(--salt-text-fontSize);
-  padding: var(--table-data-padding);
 }
 
-<<<<<<< HEAD:site/src/css/docs/table.css
 .docs-page-content table tr {
-=======
-.table tr {
->>>>>>> add getting started pages:mosaic-site/src/components/mdx/table/Table.module.css
   border-bottom: 1px solid var(--salt-separable-tertiary-borderColor);
   border-top: 1px solid var(--salt-separable-tertiary-borderColor);
 }
 
-<<<<<<< HEAD:site/src/css/docs/table.css
 .docs-page-content table th {
-=======
-.table th {
->>>>>>> add getting started pages:mosaic-site/src/components/mdx/table/Table.module.css
   color: var(--salt-text-secondary-foreground);
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-<<<<<<< HEAD:site/src/css/docs/table.css
 .docs-page-content table tr td:not(:last-child) {
   border-right: 1px solid var(--salt-separable-tertiary-borderColor);
 }
 
 .docs-page-content table tr th + th {
-=======
-.table tr td:not(:last-child) {
-  border-right: 1px solid var(--salt-separable-tertiary-borderColor);
-}
-
-.table tr th + th {
->>>>>>> add getting started pages:mosaic-site/src/components/mdx/table/Table.module.css
   border-left: 1px solid var(--salt-color-gray-90-fade-border-readonly);
 }
