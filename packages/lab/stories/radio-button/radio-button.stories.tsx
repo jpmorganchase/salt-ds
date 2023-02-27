@@ -1,14 +1,10 @@
-import { ChangeEventHandler, ReactNode, useState } from "react";
-import { Density, Mode, SaltProvider, Panel, FlexLayout } from "@salt-ds/core";
+import { ChangeEventHandler, useState } from "react";
+import { Density, SaltProvider, Panel, FlexLayout } from "@salt-ds/core";
 import {
-  FormField,
-  makeRadioIcon,
   RadioButton,
   RadioButtonGroup,
 } from "@salt-ds/lab";
-import { SuccessTickIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
-import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 
 export default {
   title: "Lab/Radio Button",
@@ -21,9 +17,32 @@ type ExampleWithTitleProps = {
   name: string;
 };
 
-export const Default = () => <RadioButton label="Default" />;
+export const RadioButtonVariations = () => {
+  return (
+    <div>
+      <RadioButton key="Unchecked" label="Unchecked" value="Unchecked" />
+      <RadioButton key="Checked" label="Checked" value="Checked" checked />
+      <RadioButton
+        disabled
+        key="Disabled"
+        label="Disabled"
+        value="Disabled"
+      />
+      <RadioButton
+        disabled
+        key="Disabled-checked"
+        label="Disabled checked"
+        value="Disabled-checked"
+        checked
+      />
 
-export const VerticalGroup = ({
+      <RadioButton key="Error-unchecked" label="Error unchecked" value="Error-unchecked" error />
+      <RadioButton key="Error-checked" label="Error checked" value="Error-checked" checked error />
+    </div>
+  )
+}
+
+export const VerticalRadioButtonGroup = ({
   title,
   density,
   name,
@@ -44,7 +63,7 @@ export const VerticalGroup = ({
   </Panel>
 );
 
-export const HorizontalGroup = ({
+export const HorizontalRadioButtonGroup = ({
   title,
   density,
   name,
@@ -70,22 +89,22 @@ interface DensityExampleProps {
 const DensityExample = ({ name }: DensityExampleProps) => (
   <Panel style={{ height: "unset" }}>
     <FlexLayout gap={4}>
-      <VerticalGroup name={`${name}-high`} title="High" density="high" />
-      <VerticalGroup name={`${name}-medium`} title="Medium" density="medium" />
-      <VerticalGroup name={`${name}-low`} title="Low" density="low" />
-      <VerticalGroup name={`${name}-touch`} title="Touch" density="touch" />
+      <VerticalRadioButtonGroup name={`${name}-high`} title="High" density="high" />
+      <VerticalRadioButtonGroup name={`${name}-medium`} title="Medium" density="medium" />
+      <VerticalRadioButtonGroup name={`${name}-low`} title="Low" density="low" />
+      <VerticalRadioButtonGroup name={`${name}-touch`} title="Touch" density="touch" />
     </FlexLayout>
     <FlexLayout gap={4}>
-      <HorizontalGroup name={`${name}-row-high`} title="high" density="high" />
-      <HorizontalGroup
+      <HorizontalRadioButtonGroup name={`${name}-row-high`} title="High" density="high" />
+      <HorizontalRadioButtonGroup
         name={`${name}-row-medium`}
-        title="medium"
+        title="Medium"
         density="medium"
       />
-      <HorizontalGroup name={`${name}-row-low`} title="low" density="low" />
-      <HorizontalGroup
+      <HorizontalRadioButtonGroup name={`${name}-row-low`} title="Low" density="low" />
+      <HorizontalRadioButtonGroup
         name={`${name}-row-touch`}
-        title="touch"
+        title="Touch"
         density="touch"
       />
     </FlexLayout>
@@ -149,14 +168,12 @@ export const ControlledRadioButtonGroup: ComponentStory<
 
 export const LongTextRadioButtonGroup: ComponentStory<
   typeof RadioButtonGroup
-> = ({ onChange }) => (
+> = () => (
   <div style={{ width: "500px" }}>
     <RadioButtonGroup
       aria-label="Long Text Example"
-      defaultValue="switches"
       legend="Long Text Group"
       name="selectionControls"
-      onChange={onChange}
     >
       <RadioButton
         key="checkboxes"

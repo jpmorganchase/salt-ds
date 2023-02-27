@@ -33,6 +33,7 @@ export interface RadioButtonBaseProps {
   id?: string;
   tabIndex?: number;
   value?: string;
+  error?: boolean
 }
 
 export const RadioButtonBase = forwardRef<
@@ -41,7 +42,6 @@ export const RadioButtonBase = forwardRef<
 >(function RadioBase(props, ref) {
   const {
     checked: checkedProp,
-    defaultChecked,
     name: nameProp,
     className,
     disabled: disabledProp,
@@ -51,6 +51,7 @@ export const RadioButtonBase = forwardRef<
     onChange,
     id,
     tabIndex,
+    error,
     ...rest
   } = props;
 
@@ -60,7 +61,8 @@ export const RadioButtonBase = forwardRef<
 
   let radioGroupChecked = checkedProp;
   let name = nameProp;
-  if (radioGroup) {
+
+  if (Object.keys(radioGroup).length) {
     if (typeof radioGroupChecked === "undefined") {
       radioGroupChecked = radioGroup.value === props.value;
     }
@@ -71,7 +73,7 @@ export const RadioButtonBase = forwardRef<
 
   const [checked, setCheckedState] = useControlled({
     controlled: radioGroupChecked,
-    default: Boolean(defaultChecked),
+    default: Boolean(radioGroupChecked),
     name: "RadioBase",
     state: "checked",
   });
@@ -149,11 +151,11 @@ export const RadioButtonBase = forwardRef<
       ref={handleRef}
       onBlur={handleBlur}
       onFocus={handleFocus}
+      {...rest}
     >
       <input
         className={withBaseName("input")}
-        checked={radioGroupChecked}
-        defaultChecked={defaultChecked}
+        checked={checked}
         disabled={disabled}
         id={id}
         name={name}
@@ -161,9 +163,8 @@ export const RadioButtonBase = forwardRef<
         type="radio"
         value={value}
         tabIndex={tabIndex}
-        {...rest}
       />
-      <RadioButtonIcon checked={checked} />
+      <RadioButtonIcon checked={checked} error={error} />
     </span>
   );
 });

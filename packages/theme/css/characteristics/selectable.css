@@ -14,6 +14,7 @@
   --salt-selectable-borderColor-selected: var(--salt-palette-interact-border-active);
   --salt-selectable-borderColor-selectedDisabled: var(--salt-palette-interact-border-activeDisabled);
   --salt-selectable-borderColor-disabled: var(--salt-palette-interact-border-disabled);
+  --salt-selectable-borderColor-error: var(--salt-palette-error-border);
 
   --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
   --salt-selectable-foreground-partialDisabled: var(--salt-palette-interact-foreground-partialDisabled);

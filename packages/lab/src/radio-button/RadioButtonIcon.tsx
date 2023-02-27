@@ -7,16 +7,18 @@ const withBaseName = makePrefixer("saltRadioButtonIcon");
 
 export interface RadioButtonIconProps {
   checked?: boolean;
+  error?: boolean
 }
 
 /**
  * Default radio icon
  */
-export const RadioButtonIcon = ({ checked }: RadioButtonIconProps) => {
+export const RadioButtonIcon = ({ checked, error }: RadioButtonIconProps) => {
   return (
     <svg
       className={clsx(withBaseName(), {
         [withBaseName("checked")]: checked,
+        [withBaseName("error")]: error,
       })}
       height="14"
       viewBox="0 0 14 14"
@@ -43,5 +45,5 @@ export const makeRadioIcon =
     iconChecked: ReactElement | null,
     iconUnchecked: ReactElement | null
   ): ComponentType<RadioButtonIconProps> =>
-  (props: RadioButtonIconProps) =>
-    props.checked ? iconChecked : iconUnchecked;
+    (props: RadioButtonIconProps) =>
+      props.checked ? iconChecked : iconUnchecked;

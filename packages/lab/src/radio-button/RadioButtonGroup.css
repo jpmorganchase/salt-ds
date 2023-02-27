@@ -18,7 +18,9 @@
 }
 
 /* Styles applied to the FormField FormLabel component */
-.saltRadioButtonGroup-legend.saltFormLabel {
-  margin-bottom: var(--saltRadioButton-group-vertical-label-marginBottom, calc(var(--salt-size-unit) * 2));
-  --saltFormField-label-transform: var(--radioButton-group-formLabel-transform);
+.saltRadioButtonGroup-legend {
+  display: inline-block;
+  font-size: var(--formField-label-fontSize);
+  color: var(--salt-text-primary-foreground);
+  margin-bottom: calc(var(--salt-size-unit) * 2);
 }

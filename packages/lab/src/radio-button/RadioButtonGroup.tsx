@@ -51,9 +51,10 @@ export const RadioButtonGroup = forwardRef<
     ...rest
   } = props;
 
-  const { inFormField, a11yProps } = useFormFieldProps({
-    focusVisible: false,
-  });
+  //TODO: to be added with FormField implementation
+  // const { inFormField, a11yProps } = useFormFieldProps({
+  //   focusVisible: false,
+  // });
 
   const [stateValue, setStateValue] = useState(props.defaultValue);
 
@@ -101,10 +102,11 @@ export const RadioButtonGroup = forwardRef<
       data-testid="radio-button-group"
       ref={ref}
       role="radiogroup"
-      {...a11yProps}
+    //TODO: to be added with FormField implementation
+    // {...a11yProps}
     >
-      {!inFormField && (
-        <FormLabel className={clsx(withBaseName("legend"))} label={legend} />
+      {legend && (
+        <label className={clsx(withBaseName("legend"))}>{legend}</label>
       )}
 
       <RadioGroupContext.Provider
