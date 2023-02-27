@@ -36,8 +36,12 @@ describe("GIVEN a RadioButtonGroup component", () => {
           <RadioButton label="Forward" value="forward" />
         </RadioButtonGroup>
       );
-      cy.get(".saltRadioButtonGroup-horizontal").should('exist')
-      cy.get(".saltRadioButtonGroup-horizontal").should("have.css", "flex-direction", "row");
+      cy.get(".saltRadioButtonGroup-horizontal").should("exist");
+      cy.get(".saltRadioButtonGroup-horizontal").should(
+        "have.css",
+        "flex-direction",
+        "row"
+      );
     });
   });
 });
