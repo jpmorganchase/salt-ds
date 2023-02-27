@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  AppHeader,
-  Breadcrumbs,
-  Footer,
-} from "@jpmorganchase/mosaic-site-components";
+import { AppHeader, Breadcrumbs } from "@jpmorganchase/mosaic-site-components";
+import { Footer } from "../../components/footer";
 import { SaltProvider } from "@salt-ds/core";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
 import { useMeta } from "@jpmorganchase/mosaic-store";

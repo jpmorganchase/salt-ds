@@ -6,10 +6,10 @@ import {
   DocPaginator,
   BackLink,
   Breadcrumbs,
-  Footer,
   TableOfContents,
   PageNavigation,
 } from "@jpmorganchase/mosaic-site-components";
+import { Footer } from "../../components/footer";
 import { LayoutBase, LayoutColumns } from "@jpmorganchase/mosaic-layouts"; // TODO: create custom LayoutColumns component
 import { SaltProvider } from "@salt-ds/core";
 import { useMeta } from "@jpmorganchase/mosaic-store";

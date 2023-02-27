@@ -1,5 +1,6 @@
 import React, { FC } from "react";
-import { AppHeader, Footer } from "@jpmorganchase/mosaic-site-components";
+import { AppHeader } from "@jpmorganchase/mosaic-site-components";
+import { Footer } from "../../components/footer";
 
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
 import { LayoutFullWidth } from "../LayoutFullWidth";
