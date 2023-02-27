@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from "react";
 import { SuccessIcon } from "@salt-ds/icons";
-import useSplitArray from "src/utils/useSplitArray";
+import splitArray from "src/utils/splitArray";
 import styles from "./Features.module.css";
 
 export interface FeaturesProps extends ComponentPropsWithoutRef<"div"> {
@@ -18,7 +18,7 @@ const ListItem = ({ item }: ListItemProps) => (
 );
 
 const Features = ({ heading, listItems }: FeaturesProps): JSX.Element => {
-  const [firstHalf, secondHalf] = useSplitArray(listItems);
+  const [firstHalf, secondHalf] = splitArray(listItems);
 
   return (
     <div className={styles.featuresContainerWrapper}>
