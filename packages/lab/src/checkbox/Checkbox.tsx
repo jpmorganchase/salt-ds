@@ -20,7 +20,6 @@ import { ControlLabel, ControlLabelProps } from "../control-label";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 const withBaseName = makePrefixer("saltCheckbox");
-const classBase = "saltCheckbox";
 
 export interface CheckboxProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
@@ -74,6 +73,15 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
       defaultChecked = undefined;
     }
 
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const [checked, setChecked] = useControlled({
+      controlled: isChecked,
+      default: Boolean(defaultCheckedProp),
+      name: "Checkbox",
+      state: "checked",
+    });
+
     const handleChange = createChainedFunction(
       (event: ChangeEvent<HTMLInputElement>) => {
         // Workaround for https://github.com/facebook/react/issues/9023
@@ -88,27 +96,18 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
       groupContext?.onChange
     );
 
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    const [checked, setChecked] = useControlled({
-      controlled: isChecked,
-      default: Boolean(defaultCheckedProp),
-      name: "Checkbox",
-      state: "checked",
-    });
-
     return (
       <div
         {...rest}
-        className={clsx(classBase, classNameProp, {
-          [`${classBase}-disabled`]: disabled,
+        className={clsx(withBaseName(), classNameProp, {
+          [withBaseName("disabled")]: disabled,
         })}
         data-testid="checkbox"
         ref={ref}
       >
         <ControlLabel
           {...LabelProps}
-          className={`${classBase}-label`}
+          className={withBaseName("label")}
           disabled={disabled}
           label={label}
           labelPlacement={"right"}
