@@ -1,7 +1,6 @@
 import { clsx } from "clsx";
 import {
   ChangeEventHandler,
-  ComponentType,
   FocusEventHandler,
   forwardRef,
   Ref,
@@ -16,8 +15,7 @@ import {
 } from "@salt-ds/core";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import {
-  RadioButtonIcon as DefaultRadioIcon,
-  RadioButtonIconProps,
+  RadioButtonIcon,
 } from "./RadioButtonIcon";
 
 import "./RadioButtonBase.css";
@@ -28,10 +26,6 @@ export interface RadioButtonBaseProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
-  /**
-   * custom icon component
-   */
-  icon?: ComponentType<RadioButtonIconProps>;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   name?: string;
   defaultChecked?: boolean;
@@ -53,7 +47,6 @@ export const RadioButtonBase = forwardRef<
     name: nameProp,
     className,
     disabled: disabledProp,
-    icon: iconProp,
     value,
     onFocus,
     onBlur,
@@ -146,8 +139,6 @@ export const RadioButtonBase = forwardRef<
     }
   };
 
-  const RadioIcon = iconProp || DefaultRadioIcon;
-
   return (
     <span
       className={clsx(
@@ -174,7 +165,7 @@ export const RadioButtonBase = forwardRef<
         value={value}
         tabIndex={tabIndex}
       />
-      <RadioIcon checked={checked} />
+      <RadioButtonIcon checked={checked} />
     </span>
   );
 });
