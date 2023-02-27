@@ -149,7 +149,6 @@ export const RadioButtonBase = forwardRef<
       ref={handleRef}
       onBlur={handleBlur}
       onFocus={handleFocus}
-      {...rest}
     >
       <input
         className={withBaseName("input")}
@@ -162,6 +161,7 @@ export const RadioButtonBase = forwardRef<
         type="radio"
         value={value}
         tabIndex={tabIndex}
+        {...rest}
       />
       <RadioButtonIcon checked={checked} />
     </span>
