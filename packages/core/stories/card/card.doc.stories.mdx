@@ -1,0 +1,63 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Card } from "@salt-ds/core";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+
+<Meta
+  title="Documentation/Core/Card"
+  component={Card}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Card
+
+A Card is a sheet of material that serves as an entry point to more detailed information. It is a convenient means of displaying content composed of different elements whose size or supported actions vary.
+
+## Card Component
+
+This default example is intended to show the way the Card component’s content can be implemented.
+
+<Canvas>
+  <Story id="core-card--default" />
+</Canvas>
+
+## Interactable
+
+Cards can have interactable styling by setting `interactable={true}`. These cards could be wrapped in Link, for example, for interactivity. We discourage the use of any focusable elements within interactable Cards.
+
+<Canvas>
+  <Story id="core-card--interactable" />
+</Canvas>
+
+## Disabled
+
+Cards can have disabled styling applied by setting `disabled={true}`.
+
+Make sure to as well apply `disabled={true}` to any nested components, such as Text, to ensure disabled styling is also applied to the inner content.
+
+<Canvas>
+  <Story id="core-card--disabled" />
+</Canvas>
+
+# API
+
+```
+import { Card } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={Card} />
+
+## CSS Class
+
+<CSSClassTable of={Card} />
+
+## Characteristics Used
+
+<CharacteristicUsage of={Card} />

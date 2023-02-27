@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as gridStories from "@stories/grid-layout.stories";
+import * as gridStories from "@stories/grid-layout/grid-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { SaltProvider } from "@salt-ds/core";
 

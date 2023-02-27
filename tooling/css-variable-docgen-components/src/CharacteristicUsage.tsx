@@ -1,9 +1,12 @@
+import { useContext, useEffect, useState } from "react";
 import { DocsContext, getComponent } from "@storybook/addon-docs";
 import { resetComponents, TableWrapper } from "@storybook/components";
-import { useContext } from "react";
+import { Spinner } from "@salt-ds/core";
 import { CharacteristicUsageRow } from "./CharacteristicUsageRow";
 import { EmptyBlock } from "./EmptyBlock";
 import { getCharacteristics, getDocgenSection } from "./utils";
+
+import "./CharacteristicUsage.css";
 
 const ResetWrapper = resetComponents.resetwrapper;
 
@@ -21,6 +24,7 @@ export interface Characteristic {
 export function CharacteristicUsage(
   props: Record<string, string>
 ): JSX.Element {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const context = useContext(DocsContext);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const main = getComponent(props, context);
@@ -31,6 +35,16 @@ export function CharacteristicUsage(
 
   const characteristicTokenMap =
     getCharacteristics<Record<string, CSSVariable>>(cssVariablesApi);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) {
+    return <Spinner className="characteristicTokenDoc-loading" />;
+  }
 
   if (Object.keys(characteristicTokenMap).length === 0) {
     return (
@@ -49,7 +63,7 @@ export function CharacteristicUsage(
               <span>Characteristic</span>
             </th>
             <th>
-              <span>Tokens</span>
+              <span>Token</span>
             </th>
           </tr>
         </thead>

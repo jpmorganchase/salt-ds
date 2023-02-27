@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as comboBoxStories from "@stories/combobox-deprecated.stories";
+import * as comboBoxStories from "@stories/combobox/combobox-deprecated.stories";
 
 const { Default, MultiSelect } = composeStories(comboBoxStories);
 

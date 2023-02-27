@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as layerStories from "@stories/layer-layout.stories";
+import * as layerStories from "@stories/layer-layout/layer-layout.stories";
 
 const composedStories = composeStories(layerStories);
 

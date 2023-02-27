@@ -4,7 +4,6 @@ import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
-
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
@@ -55,6 +54,14 @@ Use `<strong>` or `<small>` tags inside your text components to wrap the chunks 
 
 <Canvas>
   <Story id="core-text--small" />
+</Canvas>
+
+### Disabled
+
+Although Text itself can't be disabled as such, it may be appropriate to add disabled styling to your Text component if it's nested inside another disabled component, such as Text within a disabled interactive Card. This can be achieved using the `disabled` prop.
+
+<Canvas>
+  <Story id="core-text--disabled" />
 </Canvas>
 
 ### StyleAs

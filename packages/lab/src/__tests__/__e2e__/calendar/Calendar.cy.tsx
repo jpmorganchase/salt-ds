@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as calendarStories from "@stories/calendar.stories";
+import * as calendarStories from "@stories/calendar/calendar.stories";
 import {
   DateFormatter,
   DateValue,
