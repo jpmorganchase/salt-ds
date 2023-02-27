@@ -2,6 +2,9 @@ const webpack = require("webpack");
 
 module.exports = {
   reactStrictMode: true,
+  experimental: {
+    runtime: "experimental-edge",
+  },
   swcMinify: true,
   transpilePackages: [
     "@jpmorganchase/mosaic-components",
