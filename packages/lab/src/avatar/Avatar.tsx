@@ -64,7 +64,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     "--saltAvatar-size-multiplier": `${size}`,
   };
 
-  const hasImgNotFailing = useLoaded({ src }) !== "error";
+  const hasImgNotFailing = useLoaded({ src }) !== "error" && src;
 
   if (hasImgNotFailing) {
     children = <img className={withBaseName("image")} alt={name} src={src} />;
