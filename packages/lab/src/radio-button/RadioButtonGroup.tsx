@@ -8,8 +8,6 @@ import {
   useState,
 } from "react";
 import {
-  FlexLayout,
-  FlexLayoutProps,
   makePrefixer,
   useId,
 } from "@salt-ds/core";
@@ -22,11 +20,13 @@ import "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
+export type RadioButtonGroupDirectionProp = "row" | "column";
+
 export interface RadioButtonGroupProps
-  extends HTMLAttributes<HTMLDivElement>,
-    Pick<FlexLayoutProps<"div">, "direction"> {
+  extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   defaultValue?: string;
+  direction?: RadioButtonGroupDirectionProp;
   legend?: string;
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -50,7 +50,7 @@ export const RadioButtonGroup = forwardRef<
     radios,
     onChange,
     value: valueProp,
-    direction,
+    direction = 'column',
     name: nameProp,
     ...rest
   } = props;
@@ -114,7 +114,10 @@ export const RadioButtonGroup = forwardRef<
       <RadioGroupContext.Provider
         value={{ name, onChange: handleChange, value: getValue() }}
       >
-        <FlexLayout direction={direction} gap={1} {...rest}>
+        <div
+          className={clsx(withBaseName(direction))}
+          {...rest}>
+          {/* direction={direction} gap={1}  */}
           {(radios &&
             radios.map((radio) => (
               <RadioButton
@@ -125,8 +128,8 @@ export const RadioButtonGroup = forwardRef<
               />
             ))) ||
             children}
-        </FlexLayout>
+        </div>
       </RadioGroupContext.Provider>
-    </fieldset>
+    </fieldset >
   );
 });

@@ -142,6 +142,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
               value: `${index}`,
             }))}
             value={`${selectedSlide}`}
+            direction={"row"}
           />
         </div>
       </GridLayout>

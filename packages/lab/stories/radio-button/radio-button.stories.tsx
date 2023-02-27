@@ -30,7 +30,7 @@ export const ColumnGroup = ({
 }: ExampleWithTitleProps) => (
   <Panel>
     <SaltProvider density={density}>
-      <RadioButtonGroup legend={title} name={name} direction={"column"}>
+      <RadioButtonGroup legend={title} name={name}>
         <RadioButton key="spot" label="Spot" value="spot" />
         <RadioButton key="forward" label="Forward" value="forward" />
         <RadioButton
@@ -46,7 +46,7 @@ export const ColumnGroup = ({
 
 export const RowGroup = ({ title, density, name }: ExampleWithTitleProps) => (
   <SaltProvider density={density}>
-    <RadioButtonGroup legend={title} name={name}>
+    <RadioButtonGroup legend={title} name={name} direction={"row"}>
       <RadioButton key="spot" label="Spot" value="spot" />
       <RadioButton key="forward" label="Forward" value="forward" />
       <RadioButton
@@ -128,7 +128,7 @@ export const ControlledRadioButtonGroup: ComponentStory<
       onChange={handleChange}
       radios={radioData}
       value={controlledValue}
-      direction={"column"}
+      direction={"row"}
     />
   );
 };
@@ -145,7 +145,6 @@ export const LongTextRadioButtonGroup: ComponentStory<
       legend="Long Text Group"
       name="selectionControls"
       onChange={onChange}
-      direction={"column"}
     >
       <RadioButton
         key="checkboxes"

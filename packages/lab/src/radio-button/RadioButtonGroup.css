@@ -5,6 +5,18 @@
   padding: 0;
 }
 
+.saltRadioButtonGroup-column{
+  display: flex;
+  gap: var(--salt-size-unit);
+  flex-direction: column;
+}
+
+.saltRadioButtonGroup-row{
+  display: flex;
+  gap: var(--salt-size-unit);
+  flex-direction: row;
+}
+
 /* Styles applied to the FormField FormLabel component */
 .saltRadioButtonGroup-legend.saltFormLabel {
   margin-bottom: var(--saltRadioButton-group-vertical-label-marginBottom, calc(var(--salt-size-unit) * 2));
