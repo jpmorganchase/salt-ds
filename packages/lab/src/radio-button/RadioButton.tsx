@@ -52,11 +52,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         )}
         {...rest}
       >
-        <Label
-          disabled={disabled}
-          className={clsx(withBaseName("label"))}
-          htmlFor={id}
-        >
+        <Label disabled={disabled} className={clsx(withBaseName("label"))}>
           <Radio
             checked={checked}
             disabled={disabled}

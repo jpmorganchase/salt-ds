@@ -17,12 +17,12 @@ import "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
-export type RadioButtonGroupDirectionProp = "horizontal" | "vertical";
+export type RadioButtonGroupDirectionProps = "horizontal" | "vertical";
 
 export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   defaultValue?: string;
-  direction?: RadioButtonGroupDirectionProp;
+  direction?: RadioButtonGroupDirectionProps;
   legend?: string;
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
