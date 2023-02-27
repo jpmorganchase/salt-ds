@@ -25,10 +25,10 @@ describe("GIVEN a RadioButtonGroup component", () => {
     });
   });
 
-  describe("WHEN rendered in horizontal (row) layout", () => {
+  describe("WHEN rendered in horizontal layout", () => {
     it("THEN should have the horizontal class name", () => {
       cy.mount(
-        <RadioButtonGroup data-testid="radio-button-group-test" direction={"row"}>
+        <RadioButtonGroup data-testid="radio-button-group-test" direction={"horizontal"}>
           <RadioButton label="Spot" value="spot" />
           <RadioButton label="Forward" value="forward" />
         </RadioButtonGroup>

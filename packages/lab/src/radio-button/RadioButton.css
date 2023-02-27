@@ -1,13 +1,13 @@
-.saltRadioButton {
-  cursor: pointer;
-  display: flex;
-  gap: var(--salt-size-unit);
-  align-items: flex-start;
-}
-
 /* Styles applied to root component on hover if `disabled={true}` or FormField disabled */
 .saltRadioButton-disabled,
 .saltFormField-disabled .saltRadioButton {
   cursor: var(--salt-selectable-cursor-disabled);
   pointer-events: visible;
+}
+
+.saltRadioButton-label {
+  cursor: pointer;
+  display: flex;
+  gap: var(--salt-size-unit);
+  align-items: flex-start;
 }

@@ -20,7 +20,7 @@ import "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
-export type RadioButtonGroupDirectionProp = "row" | "column";
+export type RadioButtonGroupDirectionProp = "horizontal" | "vertical";
 
 export interface RadioButtonGroupProps
   extends HTMLAttributes<HTMLDivElement> {
@@ -50,7 +50,7 @@ export const RadioButtonGroup = forwardRef<
     radios,
     onChange,
     value: valueProp,
-    direction = 'column',
+    direction = 'vertical',
     name: nameProp,
     ...rest
   } = props;
@@ -117,7 +117,6 @@ export const RadioButtonGroup = forwardRef<
         <div
           className={clsx(withBaseName(direction))}
           {...rest}>
-          {/* direction={direction} gap={1}  */}
           {(radios &&
             radios.map((radio) => (
               <RadioButton

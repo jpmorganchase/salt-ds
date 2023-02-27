@@ -37,7 +37,7 @@ export const AllExamplesGrid: Story<
         defaultValue="forward"
         legend="Example"
         name="fx"
-        direction={"row"}
+        direction={"horizontal"}
       >
         <RadioButton key="spot" label="Spot" value="spot" />
         <RadioButton key="forward" label="Forward" value="forward" />

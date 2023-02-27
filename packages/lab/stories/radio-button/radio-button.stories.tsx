@@ -23,7 +23,7 @@ type ExampleWithTitleProps = {
 
 export const Default = () => <RadioButton label="Default" />;
 
-export const ColumnGroup = ({
+export const VerticalGroup = ({
   title,
   density,
   name,
@@ -44,9 +44,9 @@ export const ColumnGroup = ({
   </Panel>
 );
 
-export const RowGroup = ({ title, density, name }: ExampleWithTitleProps) => (
+export const HorizontalGroup = ({ title, density, name }: ExampleWithTitleProps) => (
   <SaltProvider density={density}>
-    <RadioButtonGroup legend={title} name={name} direction={"row"}>
+    <RadioButtonGroup legend={title} name={name} direction={"horizontal"}>
       <RadioButton key="spot" label="Spot" value="spot" />
       <RadioButton key="forward" label="Forward" value="forward" />
       <RadioButton
@@ -66,16 +66,16 @@ interface DensityExampleProps {
 const DensityExample = ({ name }: DensityExampleProps) => (
   <Panel style={{ height: "unset" }}>
     <FlexLayout gap={4}>
-      <ColumnGroup name={`${name}-high`} title="High" density="high" />
-      <ColumnGroup name={`${name}-medium`} title="Medium" density="medium" />
-      <ColumnGroup name={`${name}-low`} title="Low" density="low" />
-      <ColumnGroup name={`${name}-touch`} title="Touch" density="touch" />
+      <VerticalGroup name={`${name}-high`} title="High" density="high" />
+      <VerticalGroup name={`${name}-medium`} title="Medium" density="medium" />
+      <VerticalGroup name={`${name}-low`} title="Low" density="low" />
+      <VerticalGroup name={`${name}-touch`} title="Touch" density="touch" />
     </FlexLayout>
     <FlexLayout gap={4}>
-      <RowGroup name={`${name}-row-high`} title="high" density="high" />
-      <RowGroup name={`${name}-row-medium`} title="medium" density="medium" />
-      <RowGroup name={`${name}-row-low`} title="low" density="low" />
-      <RowGroup name={`${name}-row-touch`} title="touch" density="touch" />
+      <HorizontalGroup name={`${name}-row-high`} title="high" density="high" />
+      <HorizontalGroup name={`${name}-row-medium`} title="medium" density="medium" />
+      <HorizontalGroup name={`${name}-row-low`} title="low" density="low" />
+      <HorizontalGroup name={`${name}-row-touch`} title="touch" density="touch" />
     </FlexLayout>
   </Panel>
 );
@@ -128,7 +128,7 @@ export const ControlledRadioButtonGroup: ComponentStory<
       onChange={handleChange}
       radios={radioData}
       value={controlledValue}
-      direction={"row"}
+      direction={"horizontal"}
     />
   );
 };

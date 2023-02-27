@@ -24,14 +24,15 @@ export interface RadioButtonProps
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
+  id?: string
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
   function RadioButton(props, ref) {
-    const { checked, className, disabled, label, value, onChange, ...rest } =
+    const { checked, className, disabled, id: idProp, label, value, onChange, ...rest } =
       props;
 
-    const id = useId();
+    const id = idProp || useId();
     return (
       <div
         className={clsx(
@@ -43,19 +44,19 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         )}
         {...rest}
       >
-        <Radio
-          checked={checked}
-          disabled={disabled}
-          value={value}
-          onChange={onChange}
-          ref={ref}
-          id={id}
-        />
         <Label
           disabled={disabled}
           className={clsx(withBaseName("label"))}
           htmlFor={id}
         >
+          <Radio
+            checked={checked}
+            disabled={disabled}
+            value={value}
+            onChange={onChange}
+            ref={ref}
+            id={id}
+          />
           {label}
         </Label>
       </div>
