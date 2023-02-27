@@ -44,7 +44,11 @@ export const VerticalGroup = ({
   </Panel>
 );
 
-export const HorizontalGroup = ({ title, density, name }: ExampleWithTitleProps) => (
+export const HorizontalGroup = ({
+  title,
+  density,
+  name,
+}: ExampleWithTitleProps) => (
   <SaltProvider density={density}>
     <RadioButtonGroup legend={title} name={name} direction={"horizontal"}>
       <RadioButton key="spot" label="Spot" value="spot" />
@@ -73,9 +77,17 @@ const DensityExample = ({ name }: DensityExampleProps) => (
     </FlexLayout>
     <FlexLayout gap={4}>
       <HorizontalGroup name={`${name}-row-high`} title="high" density="high" />
-      <HorizontalGroup name={`${name}-row-medium`} title="medium" density="medium" />
+      <HorizontalGroup
+        name={`${name}-row-medium`}
+        title="medium"
+        density="medium"
+      />
       <HorizontalGroup name={`${name}-row-low`} title="low" density="low" />
-      <HorizontalGroup name={`${name}-row-touch`} title="touch" density="touch" />
+      <HorizontalGroup
+        name={`${name}-row-touch`}
+        title="touch"
+        density="touch"
+      />
     </FlexLayout>
   </Panel>
 );

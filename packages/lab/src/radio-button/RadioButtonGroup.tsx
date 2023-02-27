@@ -7,10 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  makePrefixer,
-  useId,
-} from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { useFormFieldProps } from "../form-field-context";
 import { FormLabel } from "../form-field";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
@@ -22,8 +19,7 @@ const withBaseName = makePrefixer("saltRadioButtonGroup");
 
 export type RadioButtonGroupDirectionProp = "horizontal" | "vertical";
 
-export interface RadioButtonGroupProps
-  extends HTMLAttributes<HTMLDivElement> {
+export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   defaultValue?: string;
   direction?: RadioButtonGroupDirectionProp;
@@ -50,7 +46,7 @@ export const RadioButtonGroup = forwardRef<
     radios,
     onChange,
     value: valueProp,
-    direction = 'vertical',
+    direction = "vertical",
     name: nameProp,
     ...rest
   } = props;
@@ -114,9 +110,7 @@ export const RadioButtonGroup = forwardRef<
       <RadioGroupContext.Provider
         value={{ name, onChange: handleChange, value: getValue() }}
       >
-        <div
-          className={clsx(withBaseName(direction))}
-          {...rest}>
+        <div className={clsx(withBaseName(direction))} {...rest}>
           {(radios &&
             radios.map((radio) => (
               <RadioButton
@@ -129,6 +123,6 @@ export const RadioButtonGroup = forwardRef<
             children}
         </div>
       </RadioGroupContext.Provider>
-    </fieldset >
+    </fieldset>
   );
 });

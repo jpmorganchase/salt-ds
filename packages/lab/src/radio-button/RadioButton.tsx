@@ -24,13 +24,21 @@ export interface RadioButtonProps
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
-  id?: string
+  id?: string;
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
   function RadioButton(props, ref) {
-    const { checked, className, disabled, id: idProp, label, value, onChange, ...rest } =
-      props;
+    const {
+      checked,
+      className,
+      disabled,
+      id: idProp,
+      label,
+      value,
+      onChange,
+      ...rest
+    } = props;
 
     const id = idProp || useId();
     return (

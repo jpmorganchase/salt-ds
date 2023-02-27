@@ -14,9 +14,7 @@ import {
   useIsFocusVisible,
 } from "@salt-ds/core";
 import { useRadioGroup } from "./internal/useRadioGroup";
-import {
-  RadioButtonIcon,
-} from "./RadioButtonIcon";
+import { RadioButtonIcon } from "./RadioButtonIcon";
 
 import "./RadioButtonBase.css";
 

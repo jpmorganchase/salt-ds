@@ -5,13 +5,13 @@
   padding: 0;
 }
 
-.saltRadioButtonGroup-vertical{
+.saltRadioButtonGroup-vertical {
   display: flex;
   gap: var(--salt-size-unit);
   flex-direction: column;
 }
 
-.saltRadioButtonGroup-horizontal{
+.saltRadioButtonGroup-horizontal {
   display: flex;
   gap: var(--salt-size-unit);
   flex-direction: row;
