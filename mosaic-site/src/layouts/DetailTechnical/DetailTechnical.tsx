@@ -8,6 +8,7 @@ import {
   Breadcrumbs,
   TableOfContents,
   PageNavigation,
+  Sidebar,
 } from "@jpmorganchase/mosaic-site-components";
 import { Footer } from "../../components/footer";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
@@ -50,16 +51,24 @@ export const DetailTechnical: FC<LayoutProps> = ({
   return (
     <LayoutBase Header={Header}>
       <div className={clsx(layoutStyles.docsWrapper, styles.docsWrapper)}>
-        <LayoutColumns
-          PrimarySidebar={PrimarySidebar}
-          // SecondarySidebar={SecondarySidebar} TODO: add TOC inside main container
-          // Footer={<Footer {...FooterProps} />}
-        >
+        <LayoutColumns PrimarySidebar={PrimarySidebar}>
           <Breadcrumbs />
           <h1 className={layoutStyles.title}>{title}</h1>
           <SaltProvider mode="light">
             <div className={layoutStyles.docsPageContainer}>
-              <div className={layoutStyles.docsPageContent}>{children}</div>
+              <div
+                className={clsx(
+                  layoutStyles.docsPageContent,
+                  styles.docsPageContent
+                )}
+              >
+                {children}
+              </div>
+              <div className={styles.sidebar}>
+                <SaltProvider density="medium">
+                  <Sidebar sticky>{SecondarySidebar}</Sidebar>
+                </SaltProvider>
+              </div>
             </div>
           </SaltProvider>
           <DocPaginator />

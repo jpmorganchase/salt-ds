@@ -7,6 +7,10 @@
 
 .docsPageContainer {
   background-color: var(--salt-color-white);
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .docsPageContent {
