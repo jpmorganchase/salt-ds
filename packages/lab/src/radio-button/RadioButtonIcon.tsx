@@ -7,7 +7,7 @@ const withBaseName = makePrefixer("saltRadioButtonIcon");
 
 export interface RadioButtonIconProps {
   checked?: boolean;
-  error?: boolean
+  error?: boolean;
 }
 
 /**
@@ -45,5 +45,5 @@ export const makeRadioIcon =
     iconChecked: ReactElement | null,
     iconUnchecked: ReactElement | null
   ): ComponentType<RadioButtonIconProps> =>
-    (props: RadioButtonIconProps) =>
-      props.checked ? iconChecked : iconUnchecked;
+  (props: RadioButtonIconProps) =>
+    props.checked ? iconChecked : iconUnchecked;

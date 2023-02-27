@@ -102,8 +102,8 @@ export const RadioButtonGroup = forwardRef<
       data-testid="radio-button-group"
       ref={ref}
       role="radiogroup"
-    //TODO: to be added with FormField implementation
-    // {...a11yProps}
+      //TODO: to be added with FormField implementation
+      // {...a11yProps}
     >
       {legend && (
         <label className={clsx(withBaseName("legend"))}>{legend}</label>

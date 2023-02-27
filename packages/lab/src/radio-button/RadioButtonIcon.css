@@ -90,7 +90,8 @@
 
 /* Styles applied to unchecked radio button icon with error */
 .saltRadioButton:hover .saltRadioButtonIcon-error .saltRadioButtonIcon-border,
-.saltRadioButtonIcon-error, .saltRadioButtonIcon-error .saltRadioButtonIcon-border {
+.saltRadioButtonIcon-error,
+.saltRadioButtonIcon-error .saltRadioButtonIcon-border {
   stroke: var(--saltRadioButton-icon-strokeColor-error, var(--radioButton-icon-strokeColor-error));
 }
 

@@ -33,7 +33,7 @@ export interface RadioButtonBaseProps {
   id?: string;
   tabIndex?: number;
   value?: string;
-  error?: boolean
+  error?: boolean;
 }
 
 export const RadioButtonBase = forwardRef<

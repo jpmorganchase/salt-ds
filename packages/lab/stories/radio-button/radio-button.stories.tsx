@@ -1,9 +1,6 @@
 import { ChangeEventHandler, useState } from "react";
 import { Density, SaltProvider, Panel, FlexLayout } from "@salt-ds/core";
-import {
-  RadioButton,
-  RadioButtonGroup,
-} from "@salt-ds/lab";
+import { RadioButton, RadioButtonGroup } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 
 export default {
@@ -22,12 +19,7 @@ export const RadioButtonVariations = () => {
     <div>
       <RadioButton key="Unchecked" label="Unchecked" value="Unchecked" />
       <RadioButton key="Checked" label="Checked" value="Checked" checked />
-      <RadioButton
-        disabled
-        key="Disabled"
-        label="Disabled"
-        value="Disabled"
-      />
+      <RadioButton disabled key="Disabled" label="Disabled" value="Disabled" />
       <RadioButton
         disabled
         key="Disabled-checked"
@@ -36,11 +28,22 @@ export const RadioButtonVariations = () => {
         checked
       />
 
-      <RadioButton key="Error-unchecked" label="Error unchecked" value="Error-unchecked" error />
-      <RadioButton key="Error-checked" label="Error checked" value="Error-checked" checked error />
+      <RadioButton
+        key="Error-unchecked"
+        label="Error unchecked"
+        value="Error-unchecked"
+        error
+      />
+      <RadioButton
+        key="Error-checked"
+        label="Error checked"
+        value="Error-checked"
+        checked
+        error
+      />
     </div>
-  )
-}
+  );
+};
 
 export const VerticalRadioButtonGroup = ({
   title,
@@ -89,19 +92,43 @@ interface DensityExampleProps {
 const DensityExample = ({ name }: DensityExampleProps) => (
   <Panel style={{ height: "unset" }}>
     <FlexLayout gap={4}>
-      <VerticalRadioButtonGroup name={`${name}-high`} title="High" density="high" />
-      <VerticalRadioButtonGroup name={`${name}-medium`} title="Medium" density="medium" />
-      <VerticalRadioButtonGroup name={`${name}-low`} title="Low" density="low" />
-      <VerticalRadioButtonGroup name={`${name}-touch`} title="Touch" density="touch" />
+      <VerticalRadioButtonGroup
+        name={`${name}-high`}
+        title="High"
+        density="high"
+      />
+      <VerticalRadioButtonGroup
+        name={`${name}-medium`}
+        title="Medium"
+        density="medium"
+      />
+      <VerticalRadioButtonGroup
+        name={`${name}-low`}
+        title="Low"
+        density="low"
+      />
+      <VerticalRadioButtonGroup
+        name={`${name}-touch`}
+        title="Touch"
+        density="touch"
+      />
     </FlexLayout>
     <FlexLayout gap={4}>
-      <HorizontalRadioButtonGroup name={`${name}-row-high`} title="High" density="high" />
+      <HorizontalRadioButtonGroup
+        name={`${name}-row-high`}
+        title="High"
+        density="high"
+      />
       <HorizontalRadioButtonGroup
         name={`${name}-row-medium`}
         title="Medium"
         density="medium"
       />
-      <HorizontalRadioButtonGroup name={`${name}-row-low`} title="Low" density="low" />
+      <HorizontalRadioButtonGroup
+        name={`${name}-row-low`}
+        title="Low"
+        density="low"
+      />
       <HorizontalRadioButtonGroup
         name={`${name}-row-touch`}
         title="Touch"

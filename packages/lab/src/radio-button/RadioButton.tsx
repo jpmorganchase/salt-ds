@@ -25,7 +25,7 @@ export interface RadioButtonProps
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string;
   id?: string;
-  error?: boolean
+  error?: boolean;
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
