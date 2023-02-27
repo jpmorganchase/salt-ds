@@ -62,12 +62,12 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
     [context, announce]
   );
 
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
       mountedRef.current = false;
-    },
-    []
-  );
+    };
+  }, []);
 
   return ariaAnnouncer;
 };
