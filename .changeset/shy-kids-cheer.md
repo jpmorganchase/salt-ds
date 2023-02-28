@@ -2,7 +2,7 @@
 "@salt-ds/theme": minor
 ---
 
-Add new opacity token for readonly backgrounds
+Added a new opacity token for readonly backgrounds
 
 ```diff
 - --salt-color-white-fade-background-readonly: rgba(255, 255, 255, var(--salt-palette-opacity-readonly));
