@@ -53,56 +53,55 @@ export const componentMetaData = {
     },// ...
   ],
 };
- 
+
 # Button
- 
+
 ## Overview
- 
+
 <!--
   Live component demo here of the default/most common usage.
- 
+
   For live demos in Storybook use:
- 
+
   <Canvas>
     <Story id="..." />
   </Canvas>
 -->
- 
+
 A Button executes an action when clicked. Button labels should use only one or two words and begin with an active verb. There are three Button variants:
 - Call-To-Action (a.k.a. CTA) performs a critical action on the screen.
 - Primary is the most commonly-used button.
 - Secondary performs an action less likely to be triggered.
- 
- 
+
 ## Configurations
- 
+
 <!--
   A visual list of possible configurations of the component.
- 
+
   The purpose is to convey the main features and/or usage options of the
   component (e.g. the Data Grid's striped rows might be a "configuration" to
   showcase here). The configurations listed here should aim to be comprehensive,
   but not necessarily exhaustive (some complex components may have vast numbers
   of possible permutations, so listing out each one would be impossible and
   overwhelming to readers).
- 
+
   Each confguration should have its own section following the structure outlined
   below:
 -->
- 
+
 ### Button with icon and label
 
 Icons can be put before or after text, or used alone. Check the Accessibility section for guidance on ensuring your Button remains accessible to all.
  - An icon should be put before the text if it is further describing the button's action, such as 'Upload', 'Submit', 'Play', or 'Done'. This can be useful in busy environments where an additional description can improve speed in locating actions.
 - When you put an icon after the button label, it typically suggests direction or movement, such as opening a menu overlay, expanding a panel or opening a document. In this case, when the button is pressed there is typically an immediate visual change.
 - A button with only an icon and no text should be self-explanatory, ideally using well-known metaphors which are easily related to. If the purpose of the button isn’t clear, a label should be added. If space is a consideration, add a tooltip to the button set to display on hover after a short delay (typically 300ms, --salt-delay-perceptible). The tooltip should add context to the action such as 'Edit this form', 'Print this document', or 'Lock document state'.
- 
+
 <!--
   A live example of the component configuration, with access to the correspoding
   source code.
- 
+
   In Storybook this is done using something like:
- 
+
   <Canvas>
     <Story id="..." />
   </Canvas>
@@ -114,33 +113,32 @@ A Button where the `disabled` prop has been set to `true`. This will suppress al
 
 
 ## Usage
- 
+
 ### When to use Button
- 
+
 <!-- Bulleted list of scenarios in which this component can be used  -->
- 
+
 - You want to indicate actions that the user can take.
 - The navigation is the core action on the page. In this case, a CTA Button should be used to trigger the navigation.
 
 ### When not to use Button
- 
+
 <!--
   Bulleted list of scenarios where this component is not appropriate. Where
   possible, include a link to an alternative component that should be used in
   it's place
 -->
- 
+
 The Button navigates the user to a new page or window rather than triggering a function, in that case a Link component is more appropriate.
 
- 
 ### Accessibility
- 
+
 <!--
   OPTIONAL: Remove this section if it is not applicable.
- 
+
   Describe any considerations the users may need to take into account when using
   the component. For example:
- 
+
   - Accessibility decisions that deviate from industry standard. (e.g., we've
     introduced an arrow key navigation, where usually is only tab).
   - Accessibility requirements that drive design (e.g., how multi-column forms
@@ -158,9 +156,9 @@ If you are using icons contained inside Button:
 - If the only content is an icon, you should pass an aria-label to Button that describes its purpose.
  
 ## Styling
- 
+
 ### Anatomy
- 
+
 <!--
   OPTIONAL: Remove this section if it is not applicable.
  
@@ -169,7 +167,7 @@ If you are using icons contained inside Button:
   the diagram and a numbered list below the image should provide the names or
   explanations for each part.
 -->
- 
+
 ![Text alternative for component anatomy diagram](./path/to/anatomy.jpg)
  
 1. Description of item in the anatomy badged with #1
@@ -177,21 +175,20 @@ If you are using icons contained inside Button:
 3. ...
  
 ### Additional materials
- 
+
 <!--
   OPTIONAL: Remove this section if it is not applicable.
- 
+
   Add a bulleted list of links to additional, component-specific materials.
- 
   Note that only publicly accessible pages can be linked to.
 -->
- 
+
 - [Figma stickersheet](https://www.figma.com/file/uQkaSNPxTxrIdkLhZ4UJnf/Button?node-id=1%3A2804&t=Wb9wJZuTMGRlCkw6-0)
- 
+
 ## Code
- 
+
 ### Import
- 
+
 <!--
   Show the typical import statement used to include this component in your
   code.
@@ -200,9 +197,9 @@ If you are using icons contained inside Button:
 ```js
 import { Button } from "@salt-ds/core";
 ```
- 
+
 ### Props
- 
+
 <!--
   Insert an auto-generated table of the props for this component and their
   respective descriptions, data types, etc. here.
