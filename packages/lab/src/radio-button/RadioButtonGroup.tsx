@@ -67,7 +67,7 @@ export const RadioButtonGroup = forwardRef<
     }
   };
 
-  const name = useId(nameProp);
+  const name = nameProp || useId();
 
   return (
     <fieldset
@@ -93,6 +93,7 @@ export const RadioButtonGroup = forwardRef<
                 key={radio.label}
                 label={radio.label}
                 value={radio.value}
+                name={name}
               />
             ))) ||
             children}

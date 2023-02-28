@@ -112,57 +112,59 @@ const DensityExample = ({
 
 const DensityExamples = ({ name }: DensityExamplesProps) => (
   <Panel style={{ height: "unset" }}>
-    <FlexLayout gap={4} wrap>
-      <DensityExample
-        density="high"
-        name={name}
-        title="High"
-        direction="vertical"
-      />
-      <DensityExample
-        density="medium"
-        name={name}
-        title="Medium"
-        direction="vertical"
-      />
-      <DensityExample
-        density="low"
-        name={name}
-        title="Low"
-        direction="vertical"
-      />
-      <DensityExample
-        density="touch"
-        name={name}
-        title="Touch"
-        direction="vertical"
-      />
-    </FlexLayout>
-    <FlexLayout gap={4} wrap>
-      <DensityExample
-        density="high"
-        name={name}
-        title="High"
-        direction="horizontal"
-      />
-      <DensityExample
-        density="medium"
-        name={name}
-        title="Medium"
-        direction="horizontal"
-      />
-      <DensityExample
-        density="low"
-        name={name}
-        title="Low"
-        direction="horizontal"
-      />
-      <DensityExample
-        density="touch"
-        name={name}
-        title="Touch"
-        direction="horizontal"
-      />
+    <FlexLayout gap={4} direction="column">
+      <FlexLayout gap={4} wrap>
+        <DensityExample
+          density="high"
+          name={name}
+          title="High"
+          direction="vertical"
+        />
+        <DensityExample
+          density="medium"
+          name={name}
+          title="Medium"
+          direction="vertical"
+        />
+        <DensityExample
+          density="low"
+          name={name}
+          title="Low"
+          direction="vertical"
+        />
+        <DensityExample
+          density="touch"
+          name={name}
+          title="Touch"
+          direction="vertical"
+        />
+      </FlexLayout>
+      <FlexLayout gap={4} wrap>
+        <DensityExample
+          density="high"
+          name={name}
+          title="High"
+          direction="horizontal"
+        />
+        <DensityExample
+          density="medium"
+          name={name}
+          title="Medium"
+          direction="horizontal"
+        />
+        <DensityExample
+          density="low"
+          name={name}
+          title="Low"
+          direction="horizontal"
+        />
+        <DensityExample
+          density="touch"
+          name={name}
+          title="Touch"
+          direction="horizontal"
+        />
+      </FlexLayout>
     </FlexLayout>
   </Panel>
 );

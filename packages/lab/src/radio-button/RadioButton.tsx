@@ -41,8 +41,8 @@ export interface RadioButtonProps {
   error?: boolean;
 }
 
-export const RadioButton = forwardRef<HTMLSpanElement, RadioButtonProps>(
-  function RadioBase(props, ref) {
+export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
+  function RadioButton(props, ref) {
     const {
       checked: checkedProp,
       name: nameProp,
@@ -54,7 +54,6 @@ export const RadioButton = forwardRef<HTMLSpanElement, RadioButtonProps>(
       onBlur,
       onChange,
       id: idProp,
-      tabIndex,
       error,
       ...rest
     } = props;
@@ -69,7 +68,7 @@ export const RadioButton = forwardRef<HTMLSpanElement, RadioButtonProps>(
 
     if (Object.keys(radioGroup).length) {
       if (typeof radioGroupChecked === "undefined") {
-        radioGroupChecked = radioGroup.value === props.value;
+        radioGroupChecked = radioGroup.value === value;
       }
       if (typeof name === "undefined") {
         name = radioGroup.name;
@@ -104,9 +103,9 @@ export const RadioButton = forwardRef<HTMLSpanElement, RadioButtonProps>(
       ref: focusVisibleRef,
     } = useIsFocusVisible();
 
-    const handleRef = useForkRef<HTMLSpanElement>(
+    const handleRef = useForkRef<HTMLLabelElement>(
       ref,
-      focusVisibleRef as Ref<HTMLSpanElement>
+      focusVisibleRef as Ref<HTMLLabelElement>
     );
 
     const handleFocus: FocusEventHandler<HTMLElement> = (event) => {
@@ -145,7 +144,11 @@ export const RadioButton = forwardRef<HTMLSpanElement, RadioButtonProps>(
     };
 
     return (
-      <Label disabled={disabled} className={clsx(withBaseName("label"))}>
+      <Label
+        disabled={disabled}
+        className={clsx(withBaseName("label"))}
+        ref={handleRef}
+      >
         <span
           className={clsx(
             withBaseName(),
@@ -154,10 +157,8 @@ export const RadioButton = forwardRef<HTMLSpanElement, RadioButtonProps>(
             },
             className
           )}
-          ref={handleRef}
           onBlur={handleBlur}
           onFocus={handleFocus}
-          {...rest}
         >
           <input
             className={withBaseName("input")}
@@ -168,7 +169,7 @@ export const RadioButton = forwardRef<HTMLSpanElement, RadioButtonProps>(
             onChange={handleInputChange}
             type="radio"
             value={value}
-            tabIndex={tabIndex}
+            {...rest}
           />
           <RadioButtonIcon checked={checked} error={error} />
         </span>
