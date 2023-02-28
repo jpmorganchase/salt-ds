@@ -6,7 +6,6 @@ import {
   HTMLAttributes,
   InputHTMLAttributes,
   useContext,
-  useRef,
 } from "react";
 import {
   createChainedFunction,
@@ -73,8 +72,6 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
       defaultChecked = undefined;
     }
 
-    const inputRef = useRef<HTMLInputElement>(null);
-
     const [checked, setChecked] = useControlled({
       controlled: isChecked,
       default: Boolean(defaultCheckedProp),
@@ -112,11 +109,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
           label={label}
           labelPlacement={"right"}
         >
-          <span
-            {...rest}
-            className={clsx(withBaseName("base"), classNameProp)}
-            ref={ref}
-          >
+          <span className={clsx(withBaseName("base"), classNameProp)}>
             <input
               aria-checked={indeterminate ? "mixed" : checked}
               name={name}
@@ -130,7 +123,6 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
               onBlur={onBlur}
               onChange={handleChange}
               onFocus={onFocus}
-              ref={inputRef}
               type="checkbox"
             />
             <CheckboxIcon
