@@ -32,7 +32,6 @@ export interface RadioButtonProps {
    */
   label?: ReactNode;
   name?: string;
-  defaultChecked?: boolean;
   onFocus?: FocusEventHandler<HTMLSpanElement>;
   onBlur?: FocusEventHandler<HTMLSpanElement>;
   required?: boolean;
