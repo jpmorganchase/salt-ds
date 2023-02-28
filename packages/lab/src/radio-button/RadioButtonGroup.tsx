@@ -3,13 +3,9 @@ import {
   ChangeEventHandler,
   forwardRef,
   HTMLAttributes,
-  useImperativeHandle,
-  useRef,
   useState,
 } from "react";
 import { makePrefixer, useId } from "@salt-ds/core";
-import { useFormFieldProps } from "../form-field-context";
-import { FormLabel } from "../form-field";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 import { RadioButton } from "./RadioButton";
 
@@ -70,29 +66,6 @@ export const RadioButtonGroup = forwardRef<
       props.onChange(event);
     }
   };
-
-  const rootRef = useRef<HTMLFieldSetElement>(null);
-
-  useImperativeHandle(
-    undefined,
-    () => ({
-      focus: () => {
-        const current = rootRef.current;
-        if (current) {
-          let input: HTMLInputElement | null = current.querySelector(
-            "input:not(:disabled):checked"
-          );
-          if (!input) {
-            input = current.querySelector("input:not(:disabled)");
-          }
-          if (input) {
-            input.focus();
-          }
-        }
-      },
-    }),
-    []
-  );
 
   const name = useId(nameProp);
 

@@ -52,7 +52,14 @@ export const VerticalRadioButtonGroup = ({
 }: ExampleWithTitleProps) => (
   <SaltProvider density={density}>
     <RadioButtonGroup legend={title} name={name}>
-      <RadioButtonVariations />
+      <RadioButton key="spot" label="Spot" value="spot" />
+      <RadioButton key="forward" label="Forward" value="forward" />
+      <RadioButton
+        disabled
+        key="option"
+        label="Option (disabled)"
+        value="option"
+      />
     </RadioButtonGroup>
   </SaltProvider>
 );
@@ -64,59 +71,97 @@ export const HorizontalRadioButtonGroup = ({
 }: ExampleWithTitleProps) => (
   <SaltProvider density={density}>
     <RadioButtonGroup legend={title} name={name} direction={"horizontal"}>
-      <RadioButtonVariations />
+      <RadioButton key="spot" label="Spot" value="spot" />
+      <RadioButton key="forward" label="Forward" value="forward" />
+      <RadioButton
+        disabled
+        key="option"
+        label="Option (disabled)"
+        value="option"
+      />
     </RadioButtonGroup>
   </SaltProvider>
 );
 
 interface DensityExampleProps {
+  density?: "high" | "medium" | "low" | "touch";
+  direction: "vertical" | "horizontal";
+  name: string;
+  title: string;
+}
+interface DensityExamplesProps {
   name: string;
 }
 
-const DensityExample = ({ name }: DensityExampleProps) => (
+const DensityExample = ({
+  density,
+  direction,
+  name,
+  title,
+}: DensityExampleProps) => (
+  <SaltProvider density={density}>
+    <RadioButtonGroup
+      name={`${name}-${density}`}
+      legend={title}
+      direction={direction}
+    >
+      <RadioButtonVariations />
+    </RadioButtonGroup>
+  </SaltProvider>
+);
+
+const DensityExamples = ({ name }: DensityExamplesProps) => (
   <Panel style={{ height: "unset" }}>
     <FlexLayout gap={4} wrap>
-      <VerticalRadioButtonGroup
-        name={`${name}-high`}
-        title="High"
+      <DensityExample
         density="high"
+        name={name}
+        title="High"
+        direction="vertical"
       />
-      <VerticalRadioButtonGroup
-        name={`${name}-medium`}
-        title="Medium"
+      <DensityExample
         density="medium"
+        name={name}
+        title="Medium"
+        direction="vertical"
       />
-      <VerticalRadioButtonGroup
-        name={`${name}-low`}
-        title="Low"
+      <DensityExample
         density="low"
+        name={name}
+        title="Low"
+        direction="vertical"
       />
-      <VerticalRadioButtonGroup
-        name={`${name}-touch`}
-        title="Touch"
+      <DensityExample
         density="touch"
+        name={name}
+        title="Touch"
+        direction="vertical"
       />
     </FlexLayout>
     <FlexLayout gap={4} wrap>
-      <HorizontalRadioButtonGroup
-        name={`${name}-row-high`}
-        title="High"
+      <DensityExample
         density="high"
+        name={name}
+        title="High"
+        direction="horizontal"
       />
-      <HorizontalRadioButtonGroup
-        name={`${name}-row-medium`}
-        title="Medium"
+      <DensityExample
         density="medium"
+        name={name}
+        title="Medium"
+        direction="horizontal"
       />
-      <HorizontalRadioButtonGroup
-        name={`${name}-row-low`}
-        title="Low"
+      <DensityExample
         density="low"
+        name={name}
+        title="Low"
+        direction="horizontal"
       />
-      <HorizontalRadioButtonGroup
-        name={`${name}-row-touch`}
-        title="Touch"
+      <DensityExample
         density="touch"
+        name={name}
+        title="Touch"
+        direction="horizontal"
       />
     </FlexLayout>
   </Panel>
@@ -125,10 +170,10 @@ const DensityExample = ({ name }: DensityExampleProps) => (
 export const All: Story = () => (
   <>
     <SaltProvider mode="light">
-      <DensityExample name="light" />
+      <DensityExamples name="light" />
     </SaltProvider>
     <SaltProvider mode="dark">
-      <DensityExample name="dark" />
+      <DensityExamples name="dark" />
     </SaltProvider>
   </>
 );

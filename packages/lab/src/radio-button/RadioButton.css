@@ -21,7 +21,7 @@
 }
 
 .saltRadioButton-disabled,
-.saltFormField-disabled .saltRadioButton {
+.saltText-disabled.saltRadioButton-label {
   cursor: var(--salt-selectable-cursor-disabled);
   pointer-events: visible;
 }
