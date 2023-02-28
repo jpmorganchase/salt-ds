@@ -1,6 +1,7 @@
 /* Opacities */
 .salt-theme {
   --salt-palette-opacity-background: var(--salt-opacity-3);
+  --salt-palette-opacity-background-readonly: var(--salt-opacity-1);
   --salt-palette-opacity-border: var(--salt-opacity-3);
   --salt-palette-opacity-border-readonly: var(--salt-opacity-2);
   --salt-palette-opacity-fill: var(--salt-opacity-3);
