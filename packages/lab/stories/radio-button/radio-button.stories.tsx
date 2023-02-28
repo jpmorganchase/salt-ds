@@ -16,7 +16,7 @@ type ExampleWithTitleProps = {
 
 export const RadioButtonVariations = () => {
   return (
-    <div>
+    <>
       <RadioButton key="Unchecked" label="Unchecked" value="Unchecked" />
       <RadioButton key="Checked" label="Checked" value="Checked" checked />
       <RadioButton disabled key="Disabled" label="Disabled" value="Disabled" />
@@ -41,7 +41,7 @@ export const RadioButtonVariations = () => {
         checked
         error
       />
-    </div>
+    </>
   );
 };
 
@@ -50,20 +50,11 @@ export const VerticalRadioButtonGroup = ({
   density,
   name,
 }: ExampleWithTitleProps) => (
-  <Panel>
-    <SaltProvider density={density}>
-      <RadioButtonGroup legend={title} name={name}>
-        <RadioButton key="spot" label="Spot" value="spot" />
-        <RadioButton key="forward" label="Forward" value="forward" />
-        <RadioButton
-          disabled
-          key="option"
-          label="Option (disabled)"
-          value="option"
-        />
-      </RadioButtonGroup>
-    </SaltProvider>
-  </Panel>
+  <SaltProvider density={density}>
+    <RadioButtonGroup legend={title} name={name}>
+      <RadioButtonVariations />
+    </RadioButtonGroup>
+  </SaltProvider>
 );
 
 export const HorizontalRadioButtonGroup = ({
@@ -73,14 +64,7 @@ export const HorizontalRadioButtonGroup = ({
 }: ExampleWithTitleProps) => (
   <SaltProvider density={density}>
     <RadioButtonGroup legend={title} name={name} direction={"horizontal"}>
-      <RadioButton key="spot" label="Spot" value="spot" />
-      <RadioButton key="forward" label="Forward" value="forward" />
-      <RadioButton
-        disabled
-        key="option"
-        label="Option (disabled)"
-        value="option"
-      />
+      <RadioButtonVariations />
     </RadioButtonGroup>
   </SaltProvider>
 );
@@ -91,7 +75,7 @@ interface DensityExampleProps {
 
 const DensityExample = ({ name }: DensityExampleProps) => (
   <Panel style={{ height: "unset" }}>
-    <FlexLayout gap={4}>
+    <FlexLayout gap={4} wrap>
       <VerticalRadioButtonGroup
         name={`${name}-high`}
         title="High"
@@ -113,7 +97,7 @@ const DensityExample = ({ name }: DensityExampleProps) => (
         density="touch"
       />
     </FlexLayout>
-    <FlexLayout gap={4}>
+    <FlexLayout gap={4} wrap>
       <HorizontalRadioButtonGroup
         name={`${name}-row-high`}
         title="High"
@@ -139,14 +123,14 @@ const DensityExample = ({ name }: DensityExampleProps) => (
 );
 
 export const All: Story = () => (
-  <div>
+  <>
     <SaltProvider mode="light">
       <DensityExample name="light" />
     </SaltProvider>
     <SaltProvider mode="dark">
       <DensityExample name="dark" />
     </SaltProvider>
-  </div>
+  </>
 );
 
 /* Controlled Radio Button Group */

@@ -67,16 +67,16 @@
 
 /* Styles applied to RadioButtonIcon border if `disabled={true}` or in a disabled FormField */
 .saltRadioButton-disabled .saltRadioButtonIcon-border,
-.saltFormField-disabled .saltRadioButton .saltRadioButtonIcon-border,
+.saltText-disabled .saltRadioButton .saltRadioButtonIcon-border,
 .saltRadioButton-disabled:hover .saltRadioButtonIcon-border,
-.saltFormField-disabled .saltRadioButton:hover .saltRadioButtonIcon-border {
+.saltText-disabled .saltRadioButton:hover .saltRadioButtonIcon-border {
   fill: var(--saltRadioButton-icon-fill-disabled, var(--radioButton-icon-fill));
   stroke: var(--saltRadioButton-icon-strokeColor-disabled, var(--radioButton-icon-strokeColor-disabled));
 }
 
 /* Styles applied to RadioButtonIcon border if `checked={true}` when `disabled={true}` or in a disabled FormField  */
-.saltFormField-disabled .saltRadioButton .saltRadioButtonIcon-checked .saltRadioButtonIcon-border,
-.saltFormField-disabled .saltRadioButton:hover .saltRadioButtonIcon-checked .saltRadioButtonIcon-border,
+.saltText-disabled .saltRadioButton .saltRadioButtonIcon-checked .saltRadioButtonIcon-border,
+.saltText-disabled .saltRadioButton:hover .saltRadioButtonIcon-checked .saltRadioButtonIcon-border,
 .saltRadioButton-disabled .saltRadioButtonIcon-checked .saltRadioButtonIcon-border,
 .saltRadioButton-disabled:hover .saltRadioButtonIcon-checked .saltRadioButtonIcon-border {
   fill: var(--saltRadioButton-icon-fill-checked-disabled, var(--radioButton-icon-fill-checked-disabled));
