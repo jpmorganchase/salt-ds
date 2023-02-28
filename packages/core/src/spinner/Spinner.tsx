@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
-import { makePrefixer, useAriaAnnouncer, useId } from "@salt-ds/core";
+import { useAriaAnnouncer } from "../aria-announcer";
+import { makePrefixer, useId } from "../utils";
 import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
 
 import "./Spinner.css";
@@ -9,11 +10,8 @@ import "./Spinner.css";
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="small | medium | large" />
+ * <Spinner size="default | large" />
  */
-
-// TODO: documentation -- add line about best practices:
-// - Improve accessibility by customizing the aria-label to provide additional context about *what* is loading, e.g. `aria-label="loading settings panel"`.
 
 export const SpinnerSizeValues = ["default", "large"] as const;
 export type SpinnerSize = typeof SpinnerSizeValues[number];
@@ -82,15 +80,14 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       const startTime = new Date().getTime();
 
       const interval =
-        // announcerInterval > 0 &&
-        // above line was causing typescript type error that I didn't manage to sort out right away
+        announcerInterval > 0 &&
         setInterval(() => {
           if (new Date().getTime() - startTime > announcerTimeout) {
-            // the announcer will stop after 20s
+            // The announcer will stop after `announcerTimeout` time
             announce(
               `${ariaLabel} is still in progress, but will no longer announce.`
             );
-            clearInterval(interval);
+            interval && clearInterval(interval);
             return;
           }
           announce(ariaLabel);
@@ -99,7 +96,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       return () => {
         if (disableAnnouncer) return;
 
-        clearInterval(interval);
+        interval && clearInterval(interval);
         if (completionAnnouncement) {
           announce(completionAnnouncement);
         }

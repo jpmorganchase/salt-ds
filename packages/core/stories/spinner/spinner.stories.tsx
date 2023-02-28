@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Button, H1 } from "@salt-ds/core";
-import { Spinner } from "@salt-ds/lab";
+import { Button, H1, Spinner } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
-  title: "Lab/Spinner",
+  title: "Core/Spinner",
   component: Spinner,
   args: {
     "aria-label": "loading",
