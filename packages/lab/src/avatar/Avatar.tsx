@@ -6,7 +6,7 @@ import { useLoaded } from "./internal/useLoaded";
 
 import "./Avatar.css";
 
-export type InitialsGetter = (name?: string) => string;
+export type NameToInitials = (name?: string) => string;
 
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -17,7 +17,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
    * Defines the function that gets initials. Default is capital first letter of each separate word in name.
    * If a function is not passed or returns undefined, Avatar will default to Icon.
    */
-  initialsGetter?: InitialsGetter;
+  nameToInitials?: NameToInitials;
   /**
    * Image src of Avatar.
    */
@@ -35,20 +35,20 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltAvatar");
 const DEFAULT_AVATAR_SIZE = 2; // medium
 
-const initialsDefaultGetter = (name?: string) =>
+const defaultNameToInitials = (name?: string) =>
   name
     ?.split(" ")
     .slice(0, 2)
     .map((n) => n[0])
     .join("")
-    .toUpperCase() || undefined;
+    .toUpperCase();
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   {
     className,
     children: childrenProp,
     name,
-    initialsGetter = initialsDefaultGetter,
+    nameToInitials = defaultNameToInitials,
     src,
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
@@ -72,7 +72,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     children = childrenProp;
   }
 
-  const avatarInitials = initialsGetter(name);
+  const avatarInitials = nameToInitials(name);
 
   return (
     <div
