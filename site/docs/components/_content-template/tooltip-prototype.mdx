@@ -1,0 +1,315 @@
+<!-- Tool-specific (e.g. Storybook) imports & exports go here -->
+
+<!-- Metadata about the component -->
+
+export const componentMetaData = {
+
+  /*
+   *  [REQUIRED] URL to the relevant directory that contains the (main) source
+   *  code for this component
+   */
+  sourceCodeUrl:
+    "https://github.com/some-org/some-repo/tree/main/path/to/component-name/",
+  /*
+   *  [REQUIRED] Name of the NPM package this component is published in
+   */
+  npmPackage: "@some-org/some-package",
+  /*
+   * [REQUIRED] The version of the NPM package that this component first
+   * appeared in.
+   */
+  npmPackageSince: "1.2.3",
+  /*
+   * [OPTIONAL] A list of synonymous names that someone might search for when
+   * trying find this component. For example, a "Dialog" component might list
+   * "Modal" and "Prompt" as its alsoKnownAs names.
+   */
+  alsoKnownAs: ["Other Name", "Another Name", "Different Name"],
+  /*
+   * [OPTIONAL] A list of other components that are related to this component
+   * and the nature of that relationship.
+   */
+  relatedComponents: [
+    /*
+     * Each related component must list name & relationship:
+     */
+    {
+      name: "Other Component Name",
+      /*
+        Permitted values for "relationship" are:
+        - contains:  This component contains the other component (e.g. Dropdown
+                     _contains_ List)
+        - similarTo: This component is similar to the other component (e.g. a
+                     Switch _similarTo_ Checkbox)
+      */
+      relationship: "contains",
+    },
+    {
+      name: "Another Component Name",
+      relationship: "similarTo",
+    },
+    // ...
+  ],
+};
+
+# Tooltip
+
+## Overview
+
+<!--
+
+  Live component demo here of the default/most common usage.
+
+  For live demos in Storybook use:
+
+  <Canvas>
+
+    <Story id="..." />
+
+  </Canvas>
+
+-->
+
+A Tooltip provides guidance to the user when something requires more explanation or context, or to provide more information about an error or warning condition. A Tooltip will typically be displayed after the user’s mouse hovers over the target element for a certain amount of time.
+
+## Configurations
+
+<!--
+
+  A visual list of possible configurations of the component.
+
+  The purpose is to convey the main features and/or usage options of the
+
+  component (e.g. the Data Grid's striped rows might be a "configuration" to
+
+  showcase here). The configurations listed here should aim to be comprehensive,
+
+  but not necessarily exhaustive (some complex components may have vast numbers
+
+  of possible permutations, so listing out each one would be impossible and
+
+  overwhelming to readers).
+
+  Each configuration should have its own section following the structure outlined
+
+  below:
+
+-->
+
+### Status
+
+You can use the `status` prop to add a status icon to your tooltip. Choose between `error`, `warning`, `success` and `info`. By default, the tooltip uses an `info` icon
+
+<!--
+
+  A live example of the component configuration, with access to the corresponding
+
+  source code.
+
+  In Storybook this is done using something like:
+
+  <Canvas>
+
+    <Story id="..." />
+
+  </Canvas>
+
+-->
+
+### Hide arrow
+
+To display the tooltip without the arrow linking it to the onscreen element, use the `hideArrow` prop.
+
+<!--
+
+  A live example of the component configuration, with access to the corresponding
+
+  source code.
+
+  In Storybook this is done using something like:
+
+  <Canvas>
+
+    <Story id="..." />
+
+  </Canvas>
+
+-->
+
+### Hide icon
+
+To display the tooltip without a state icon, use the `hideIcon` prop.
+
+<!--
+
+  A live example of the component configuration, with access to the corresponding
+
+  source code.
+
+  In Storybook this is done using something like:
+
+  <Canvas>
+
+    <Story id="..." />
+
+  </Canvas>
+
+-->
+
+### Custom content
+
+Using the `content` prop you can pass a simple string, or a React component to be displayed in the tooltip.
+
+<!--
+
+  A live example of the component configuration, with access to the corresponding
+
+  source code.
+
+  In Storybook this is done using something like:
+
+  <Canvas>
+
+    <Story id="..." />
+
+  </Canvas>
+
+-->
+
+### Placement
+
+Use the `placement` prop to position the tooltip. The tooltip will flip and shift if there isn't enough space for it to be visible.
+
+<!--
+
+  A live example of the component configuration, with access to the corresponding
+
+  source code.
+
+  In Storybook this is done using something like:
+
+  <Canvas>
+
+    <Story id="..." />
+
+  </Canvas>
+
+-->
+
+### Delay before shown
+
+By default, the tooltip displays after the on-screen element is hovered over for 300ms. Use the `enterDelay` prop to change the delay before the tooltip is shown
+
+<!--
+
+  A live example of the component configuration, with access to the corresponding
+
+  source code.
+
+  In Storybook this is done using something like:
+
+  <Canvas>
+
+    <Story id="..." />
+
+  </Canvas>
+
+-->
+
+## Usage
+
+### When not to use Tooltip
+
+<!--
+
+  Bulleted list of scenarios where this component is not appropriate. Where
+
+  possible, include a link to an alternative component that should be used in
+
+  it's place
+
+-->
+
+- Do not place information required by the user to complete a task inside a tooltip. Any important help text should remain visible on screen at all times, not just when a tooltip is displayed.
+
+### Content
+
+Content within tooltips should be supplementary information that provides succinct and descriptive clarity to the user. 
+
+### Accessibility
+
+We do not recommend that you include interactive elements within a tooltip as this is inaccessible since tooltips do not receive focus. If you need to include focusable content like buttons or links, consider using the overlay component.
+
+## Styling
+
+### Anatomy
+
+<!--
+
+  OPTIONAL: Remove this section if it is not applicable.
+
+  A visual anatomy diagram that shows the key parts or nested components that
+
+  this component is made up of. They should be annotated with numbered badges in
+
+  the diagram and a numbered list below the image should provide the names or
+
+  explanations for each part.
+
+-->
+
+![Text alternative for component anatomy diagram](./path/to/anatomy.jpg)
+
+1. Description of item in the anatomy badged with #1
+
+2. Description of item in the anatomy badged with #2
+
+3. ...
+
+### Additional materials
+
+<!--
+
+  OPTIONAL: Remove this section if it is not applicable.
+
+  Add a bulleted list of links to additional, component-specific materials.
+
+  Note that only publicly accessible pages can be linked to.
+
+-->
+
+- [Figma stickersheet](https://www.figma.com/file/0qHqLDEobXhRGb1PzQ0I5q/Tooltip?node-id=801%3A15352&t=n0FcTLAfzoBpPtLE-0)
+
+- ...
+
+## Code
+
+### Import
+
+<!--
+
+  Show the typical import statement used to include this component in your
+
+  code.
+
+-->
+
+```js
+
+import { Tooltip } from "@salt-ds/core";
+
+```
+
+### Props
+
+<!--
+
+  Insert an auto-generated table of the props for this component and their
+
+  respective descriptions, data types, etc. here.
+
+  In Storybook this is done like so:
+
+  <ArgsTable of={ComponentName} />
+
+-->
