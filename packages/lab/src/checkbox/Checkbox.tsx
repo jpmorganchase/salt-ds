@@ -37,7 +37,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
   function Checkbox(
     {
       checked: checkedProp,
-      className: classNameProp,
+      className,
       defaultChecked,
       disabled,
       indeterminate,
@@ -73,7 +73,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
 
     return (
       <div
-        className={clsx(withBaseName(), classNameProp, {
+        className={clsx(withBaseName(), className, {
           [withBaseName("disabled")]: disabled,
         })}
         data-testid="checkbox"
@@ -87,7 +87,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
           label={label}
           labelPlacement={"right"}
         >
-          <span className={clsx(withBaseName("base"), classNameProp)}>
+          <span className={clsx(withBaseName("base"), className)}>
             <input
               aria-checked={indeterminate ? "mixed" : checked}
               name={name}
