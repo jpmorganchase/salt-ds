@@ -5,18 +5,12 @@ import {
   forwardRef,
   HTMLAttributes,
   InputHTMLAttributes,
-  useContext,
 } from "react";
-import {
-  createChainedFunction,
-  makePrefixer,
-  useControlled,
-} from "@salt-ds/core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./Checkbox.css";
 import { ControlLabel, ControlLabelProps } from "../control-label";
-import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 const withBaseName = makePrefixer("saltCheckbox");
 
@@ -44,7 +38,7 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
     {
       checked: checkedProp,
       className: classNameProp,
-      defaultChecked: defaultCheckedProp,
+      defaultChecked,
       disabled,
       indeterminate,
       inputProps,
@@ -59,39 +53,23 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
     },
     ref
   ) {
-    const groupContext = useContext(CheckboxGroupContext);
-
-    let isChecked = checkedProp;
-    let defaultChecked = defaultCheckedProp;
-
-    if (groupContext) {
-      if (typeof isChecked === "undefined" && typeof value === "string") {
-        isChecked = groupContext?.checkedValues?.includes(value);
-      }
-
-      defaultChecked = undefined;
-    }
-
     const [checked, setChecked] = useControlled({
-      controlled: isChecked,
-      default: Boolean(defaultCheckedProp),
+      controlled: checkedProp,
+      default: Boolean(defaultChecked),
       name: "Checkbox",
       state: "checked",
     });
 
-    const handleChange = createChainedFunction(
-      (event: ChangeEvent<HTMLInputElement>) => {
-        // Workaround for https://github.com/facebook/react/issues/9023
-        if (event.nativeEvent.defaultPrevented) {
-          return;
-        }
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      // Workaround for https://github.com/facebook/react/issues/9023
+      if (event.nativeEvent.defaultPrevented) {
+        return;
+      }
 
-        const value = event.target.checked;
-        setChecked(value);
-        onChange?.(event, value);
-      },
-      groupContext?.onChange
-    );
+      const value = event.target.checked;
+      setChecked(value);
+      onChange?.(event, value);
+    };
 
     return (
       <div
