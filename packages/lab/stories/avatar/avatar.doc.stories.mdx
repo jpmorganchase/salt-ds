@@ -16,25 +16,25 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Avatar
 
-An Avatar is a small circular graphical representation of an entity through a profile picture or name initials.
+An Avatar is a small circular graphical representation of a user entity through a profile picture or name initials.
 It has three variants to account for different types of data:
 
-- Image is used when a photo is available;
-- Initials is used when a photo is unavailable but profile information is;
+- `Image` is used when a photo is available;
+- `Initials` is used when a photo is unavailable but profile information is;
 - A default `Icon` is used when neither photo nor profile information are available.
 
 ### Features
 
 #### Default Avatar
 
-Each Avatar variant has a default size across all four densities, equal to the size Foundation size-base; 20px (HD), 28px (MD), 36px (LD), and 44px (TD)
+Each Avatar variant has a default size across all four densities, equal to the size foundation size-base; 20px (HD), 28px (MD), 36px (LD), and 44px (TD)
 The size of Avatar can be changed in multiples of the base size.
 
 <Canvas>
   <Story id="lab-avatar--default" />
 </Canvas>
 
-Avatar renders with a default Icon `UserIcon` but an alternative icon can be passed as `fallbackIcon`.
+Avatar renders with a default icon defined by `UserIcon` but an alternative icon can be passed as `fallbackIcon`.
 
 <Canvas>
   <Story id="lab-avatar--alternative-icon" />
@@ -42,7 +42,7 @@ Avatar renders with a default Icon `UserIcon` but an alternative icon can be pas
 
 #### Image
 
-Reference your image src in the `src` prop, or pass it as the children of the component.
+Reference your image source in the `src` prop, or pass it as the child of the component.
 
 <Canvas>
   <Story id="lab-avatar--with-image" />
@@ -50,7 +50,7 @@ Reference your image src in the `src` prop, or pass it as the children of the co
 
 #### Initials
 
-You can pass the initials as the children of the component.
+You can pass the user's initials as the child of the component.
 
 <Canvas>
   <Story id="lab-avatar--initials" />
@@ -58,7 +58,7 @@ You can pass the initials as the children of the component.
 
 #### Custom image or SVG
 
-You can pass a custom image or SVG as children to the component to be used as an image.
+You can pass a custom image or SVG as the child of the component to be used as an image.
 
 <Canvas>
   <Story id="lab-avatar--with-custom-svg" />
@@ -72,7 +72,7 @@ Note that for images passed as children, you will also need to handle the fallba
 
 #### Alternative Background
 
-The `Avatar` background can be customised by using `--saltAvatar-background`.
+The `Avatar` background can be customized by using `--saltAvatar-background`.
 
 <Canvas>
   <Story id="lab-avatar--alternative-background" />
@@ -92,7 +92,7 @@ import { Avatar } from "@salt-ds/lab";
 
 ## Related components
 
-The avatar component can contain an [Icon](?path=/docs/documentation-icons-icon--page) component.
+The avatar component can contain an `[Icon]`(?path=/docs/documentation-icons-icon--page) component.
 
 ### Classes
 
