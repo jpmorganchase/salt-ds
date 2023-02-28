@@ -73,12 +73,12 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
 
     return (
       <div
-        {...rest}
         className={clsx(withBaseName(), classNameProp, {
           [withBaseName("disabled")]: disabled,
         })}
         data-testid="checkbox"
         ref={ref}
+        {...rest}
       >
         <ControlLabel
           {...LabelProps}
