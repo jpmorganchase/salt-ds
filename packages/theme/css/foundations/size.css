@@ -11,7 +11,7 @@
   --salt-size-sharktooth-width: 10px;
 
   --salt-size-divider-height: calc(var(--salt-size-base) - (1.5 * var(--salt-size-unit)) - (0.5 * var(--salt-size-basis-unit)));
-  --salt-size-selection: calc(var(--salt-size-base) - (1.5 * var(--salt-size-unit)) - (0.5 * var(--salt-size-basis-unit)));
+  --salt-size-selectable: calc(var(--salt-size-base) - (1.5 * var(--salt-size-unit)) - (0.5 * var(--salt-size-basis-unit)));
   --salt-size-stackable: calc(var(--salt-size-base) + var(--salt-size-unit));
 
   /* TODO: Remove on size/density design work completion */
