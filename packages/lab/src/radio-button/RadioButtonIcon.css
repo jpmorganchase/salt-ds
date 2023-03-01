@@ -68,13 +68,15 @@
 }
 
 /* Styles applied to RadioButtonIcon border if disabled */
-.saltRadioButton-disabled .saltRadioButtonIcon-border {
+.saltRadioButtonIcon-disabled .saltRadioButtonIcon-border,
+.saltRadioButton:hover .saltRadioButtonIcon-disabled .saltRadioButtonIcon-border {
   fill: var(--saltRadioButton-icon-fill-disabled, var(--radioButton-icon-fill));
   stroke: var(--saltRadioButton-icon-strokeColor-disabled, var(--radioButton-icon-strokeColor-disabled));
 }
 
 /* Styles applied to RadioButtonIcon border if checked and disabled */
-.saltRadioButton-disabled .saltRadioButtonIcon-checked .saltRadioButtonIcon-border {
+.saltRadioButtonIcon-disabled.saltRadioButtonIcon-checked .saltRadioButtonIcon-border,
+.saltRadioButton:hover .saltRadioButtonIcon-disabled.saltRadioButtonIcon-checked .saltRadioButtonIcon-border {
   fill: var(--saltRadioButton-icon-fill-checked-disabled, var(--radioButton-icon-fill-checked-disabled));
   stroke: var(--saltRadioButton-icon-strokeColor-checked-disabled, transparent);
 }

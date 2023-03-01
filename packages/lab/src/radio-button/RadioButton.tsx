@@ -25,12 +25,9 @@ export interface RadioButtonProps {
   name?: string;
   onFocus?: FocusEventHandler<HTMLSpanElement>;
   onBlur?: FocusEventHandler<HTMLSpanElement>;
-  required?: boolean;
   id?: string;
-  tabIndex?: number;
   value?: string;
   error?: boolean;
-  defaultCheched?: boolean;
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
@@ -39,7 +36,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       checked: checkedProp,
       name: nameProp,
       className,
-      defaultCheched,
       disabled,
       label,
       value,
@@ -68,7 +64,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
 
     const [checked, setCheckedState] = useControlled({
       controlled: radioGroupChecked,
-      default: Boolean(defaultCheched),
+      default: Boolean(checkedProp),
       name: "RadioBase",
       state: "checked",
     });
@@ -103,8 +99,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           [withBaseName("disabled")]: disabled,
         })}
         ref={ref}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
       >
         <input
           className={withBaseName("input")}
@@ -115,9 +109,11 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           onChange={handleInputChange}
           type="radio"
           value={value}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           {...rest}
         />
-        <RadioButtonIcon checked={checked} error={error} />
+        <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
         {label}
       </Label>
     );
