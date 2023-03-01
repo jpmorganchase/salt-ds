@@ -23,21 +23,21 @@
 
 .salt-density-high {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 1);
-  --salt-size-detail: calc(var(--salt-size-basis-unit) * 1.5);
+  --salt-size-compact: calc(var(--salt-size-basis-unit) * 1.5);
   --salt-size-base: calc(var(--salt-size-basis-unit) * 5);
 }
 .salt-density-medium {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 2);
-  --salt-size-detail: calc(var(--salt-size-basis-unit) * 2);
+  --salt-size-compact: calc(var(--salt-size-basis-unit) * 2);
   --salt-size-base: calc(var(--salt-size-basis-unit) * 7);
 }
 .salt-density-low {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 3);
-  --salt-size-detail: calc(var(--salt-size-basis-unit) * 2.5);
+  --salt-size-compact: calc(var(--salt-size-basis-unit) * 2.5);
   --salt-size-base: calc(var(--salt-size-basis-unit) * 9);
 }
 .salt-density-touch {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 4);
-  --salt-size-detail: calc(var(--salt-size-basis-unit) * 3);
+  --salt-size-compact: calc(var(--salt-size-basis-unit) * 3);
   --salt-size-base: calc(var(--salt-size-basis-unit) * 11);
 }
