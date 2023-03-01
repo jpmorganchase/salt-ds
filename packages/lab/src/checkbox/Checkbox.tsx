@@ -3,26 +3,24 @@ import {
   ChangeEvent,
   FocusEventHandler,
   forwardRef,
-  HTMLAttributes,
   InputHTMLAttributes,
+  ReactNode,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import { Label, makePrefixer, useControlled } from "@salt-ds/core";
 import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./Checkbox.css";
-import { ControlLabel, ControlLabelProps } from "../control-label";
 
 const withBaseName = makePrefixer("saltCheckbox");
 
-export interface CheckboxProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
+export interface CheckboxProps {
   checked?: boolean;
+  className?: string;
   defaultChecked?: boolean;
   disabled?: boolean;
   indeterminate?: boolean;
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
-  label?: ControlLabelProps["label"];
-  LabelProps?: Partial<ControlLabelProps>;
+  label?: ReactNode;
   name?: string;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
@@ -33,7 +31,7 @@ export interface CheckboxProps
   value?: string;
 }
 
-export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
+export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
   function Checkbox(
     {
       checked: checkedProp,
@@ -43,7 +41,6 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
       indeterminate,
       inputProps,
       label,
-      LabelProps,
       name,
       onBlur,
       onChange,
@@ -71,46 +68,39 @@ export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
       onChange?.(event, value);
     };
 
+    // Label needs a margin to the right
+
     return (
-      <div
+      <Label
+        disabled={disabled}
         className={clsx(withBaseName(), className, {
           [withBaseName("disabled")]: disabled,
         })}
-        data-testid="checkbox"
         ref={ref}
         {...rest}
       >
-        <ControlLabel
-          {...LabelProps}
-          className={withBaseName("label")}
+        <input
+          aria-checked={indeterminate ? "mixed" : checked}
+          name={name}
+          value={value}
+          {...inputProps}
+          checked={checked}
+          className={withBaseName("input")}
+          data-indeterminate={indeterminate}
+          defaultChecked={defaultChecked}
           disabled={disabled}
-          label={label}
-          labelPlacement={"right"}
-        >
-          <span className={clsx(withBaseName("base"), className)}>
-            <input
-              aria-checked={indeterminate ? "mixed" : checked}
-              name={name}
-              value={value}
-              {...inputProps}
-              checked={checked}
-              className={withBaseName("input")}
-              data-indeterminate={indeterminate}
-              defaultChecked={defaultChecked}
-              disabled={disabled}
-              onBlur={onBlur}
-              onChange={handleChange}
-              onFocus={onFocus}
-              type="checkbox"
-            />
-            <CheckboxIcon
-              checked={checked}
-              disabled={disabled}
-              indeterminate={indeterminate}
-            />
-          </span>
-        </ControlLabel>
-      </div>
+          onBlur={onBlur}
+          onChange={handleChange}
+          onFocus={onFocus}
+          type="checkbox"
+        />
+        <CheckboxIcon
+          checked={checked}
+          disabled={disabled}
+          indeterminate={indeterminate}
+        />
+        {label}
+      </Label>
     );
   }
 );

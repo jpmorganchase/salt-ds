@@ -20,6 +20,14 @@
 
 .saltCheckbox {
   line-height: var(--saltCheckbox-lineHeight, 1);
+  background: var(--saltCheckbox-background, none);
+  display: flex;
+  gap: var(--salt-size-unit);
+  margin-top: var(--checkbox-label-marginTop);
+  padding-top: 1px;
+  padding-bottom: 1px;
+  position: relative;
+  align-items: flex-start;
 }
 
 /* Styles applied to root component if `disabled={true}` */
@@ -29,7 +37,6 @@
 
 /* Styles applied to label element */
 .saltCheckbox-label {
-  align-items: flex-start;
   margin-top: var(--checkbox-label-marginTop);
 }
 
@@ -40,14 +47,6 @@
 
 .saltCheckbox-disabled {
   --saltControlLabel-color: var(--salt-text-primary-foreground-disabled);
-}
-
-.saltCheckbox-base {
-  background: var(--saltCheckbox-background, none);
-  line-height: 0;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  position: relative;
 }
 
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon {

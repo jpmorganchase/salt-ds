@@ -39,7 +39,7 @@
 }
 
 /* Styles applied to root component on hover */
-.saltCheckbox-label:hover .saltCheckboxIcon,
+.saltCheckbox:hover .saltCheckboxIcon,
 .saltCheckboxIcon:hover {
   stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-borderColor-hover));
   stroke-width: var(--saltCheckbox-icon-strokeWidth-hover, var(--salt-size-border));
