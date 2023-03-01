@@ -4,17 +4,8 @@ import {
   FocusEventHandler,
   forwardRef,
   ReactNode,
-  Ref,
-  useState,
 } from "react";
-import {
-  Label,
-  makePrefixer,
-  useControlled,
-  useForkRef,
-  useId,
-  useIsFocusVisible,
-} from "@salt-ds/core";
+import { Label, makePrefixer, useControlled, useId } from "@salt-ds/core";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { RadioButtonIcon } from "./RadioButtonIcon";
 
@@ -39,6 +30,7 @@ export interface RadioButtonProps {
   tabIndex?: number;
   value?: string;
   error?: boolean;
+  defaultCheched?: boolean;
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
@@ -47,7 +39,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       checked: checkedProp,
       name: nameProp,
       className,
-      disabled: disabledProp,
+      defaultCheched,
+      disabled,
       label,
       value,
       onFocus,
@@ -57,8 +50,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       error,
       ...rest
     } = props;
-
-    // useFormFieldProps();
 
     const id = idProp || useId();
     const radioGroup = useRadioGroup();
@@ -77,56 +68,18 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
 
     const [checked, setCheckedState] = useControlled({
       controlled: radioGroupChecked,
-      default: Boolean(radioGroupChecked),
+      default: Boolean(defaultCheched),
       name: "RadioBase",
       state: "checked",
     });
 
-    // const formFieldProps = useFormFieldProps();
-
-    let disabled = disabledProp;
-    // if (formFieldProps) {
-    //   if (typeof disabled === "undefined") {
-    //     disabled = formFieldProps.a11yProps?.disabled;
-    //   }
-    // }
-
-    const [focusVisible, setFocusVisible] = useState(false);
-    if (disabled && focusVisible) {
-      setFocusVisible(false);
-    }
-
-    const {
-      isFocusVisibleRef,
-      onFocus: handleFocusVisible,
-      onBlur: handleBlurVisible,
-      ref: focusVisibleRef,
-    } = useIsFocusVisible();
-
-    const handleRef = useForkRef<HTMLLabelElement>(
-      ref,
-      focusVisibleRef as Ref<HTMLLabelElement>
-    );
-
     const handleFocus: FocusEventHandler<HTMLElement> = (event) => {
-      // if (formFieldProps && formFieldProps.onFocus) {
-      //   formFieldProps.onFocus(event);
-      // }
-      handleFocusVisible(event);
-      if (isFocusVisibleRef.current) {
-        setFocusVisible(true);
-      }
       if (onFocus) {
         onFocus(event);
       }
     };
 
     const handleBlur: FocusEventHandler<HTMLElement> = (event) => {
-      // if (formFieldProps && formFieldProps.onBlur) {
-      //   formFieldProps.onBlur(event);
-      // }
-      handleBlurVisible();
-      setFocusVisible(false);
       if (onBlur) {
         onBlur(event);
       }
@@ -146,33 +99,25 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     return (
       <Label
         disabled={disabled}
-        className={clsx(withBaseName("label"))}
-        ref={handleRef}
+        className={clsx(withBaseName(), className, {
+          [withBaseName("disabled")]: disabled,
+        })}
+        ref={ref}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
       >
-        <span
-          className={clsx(
-            withBaseName(),
-            {
-              [withBaseName("focusVisible")]: focusVisible,
-            },
-            className
-          )}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-        >
-          <input
-            className={withBaseName("input")}
-            checked={checked}
-            disabled={disabled}
-            id={id}
-            name={name}
-            onChange={handleInputChange}
-            type="radio"
-            value={value}
-            {...rest}
-          />
-          <RadioButtonIcon checked={checked} error={error} />
-        </span>
+        <input
+          className={withBaseName("input")}
+          checked={checked}
+          disabled={disabled}
+          id={id}
+          name={name}
+          onChange={handleInputChange}
+          type="radio"
+          value={value}
+          {...rest}
+        />
+        <RadioButtonIcon checked={checked} error={error} />
         {label}
       </Label>
     );

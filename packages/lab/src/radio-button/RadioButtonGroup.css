@@ -5,19 +5,22 @@
   padding: 0;
 }
 
+/* Styles applied when direction is vertical */
 .saltRadioButtonGroup-vertical {
   display: flex;
   gap: var(--salt-size-unit);
   flex-direction: column;
 }
 
+/* Styles applied when direction is horizontal */
 .saltRadioButtonGroup-horizontal {
   display: flex;
   gap: var(--salt-size-unit);
   flex-direction: row;
+  flex-wrap: nowrap;
 }
 
-/* Styles applied to the FormField FormLabel component */
+/* Styles applied to radio group's legend */
 .saltRadioButtonGroup-legend {
   display: inline-block;
   font-size: var(--formField-label-fontSize);
