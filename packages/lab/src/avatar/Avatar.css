@@ -13,7 +13,7 @@
 
 /* Style applied to the root element */
 .saltAvatar {
-  line-height: var(--salt-accent-lineHeight);
+  line-height: var(--saltAvatar-lineHeight, var(--salt-accent-lineHeight));
   display: flex;
   justify-content: center;
   align-items: center;
