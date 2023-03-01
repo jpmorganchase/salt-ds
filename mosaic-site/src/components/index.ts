@@ -1,4 +1,5 @@
 export * from "./accordion";
+export * from "./app-header";
 export * from "./callout";
 export * from "./card";
 export * from "./components";

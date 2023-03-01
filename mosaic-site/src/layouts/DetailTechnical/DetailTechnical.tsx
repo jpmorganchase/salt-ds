@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import clsx from "clsx";
 import { HelpLinks } from "@jpmorganchase/mosaic-components";
 import {
-  AppHeader,
   DocPaginator,
   BackLink,
   Breadcrumbs,
@@ -10,7 +9,7 @@ import {
   PageNavigation,
   Sidebar,
 } from "@jpmorganchase/mosaic-site-components";
-import { Footer } from "../../components/footer";
+import { Footer, AppHeader } from "../../components";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
 import { LayoutColumns } from "../LayoutColumns/LayoutColumns";
 import { SaltProvider } from "@salt-ds/core";
