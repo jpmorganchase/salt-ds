@@ -13,7 +13,6 @@ export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
     <div className="saltGridCheckboxContainer">
       <RadioButton
         checked={isSelected}
-        tabIndex={isFocused ? 0 : -1}
         data-testid="grid-row-selection-radiobox"
       />
     </div>
