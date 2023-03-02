@@ -12,7 +12,7 @@
   line-height: var(--saltCheckbox-lineHeight, 1);
   background: var(--saltCheckbox-background, none);
   display: flex;
-  gap: var(--salt-size-unit);
+  gap: calc(var(--salt-size-unit) * 0.75);
   margin-top: var(--checkbox-label-marginTop);
   font-size: var(--salt-text-fontSize);
   padding: 1px 0;
