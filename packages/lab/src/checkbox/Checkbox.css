@@ -5,7 +5,7 @@
   --checkbox-space-multiplier: var(--saltCheckbox-space-multiplier, 3);
   --checkbox-top-multiplier: var(--saltCheckbox-top-multiplier, 0.75);
   --salt-text-label-fontSize: var(--salt-text-fontSize);
-  --salt-text-label-lineHeight: var(--salt-text-lineHeight)
+  --salt-text-label-lineHeight: var(--salt-text-lineHeight);
 }
 
 .saltCheckbox {
