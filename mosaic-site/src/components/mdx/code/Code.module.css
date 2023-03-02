@@ -1,0 +1,12 @@
+.code {
+  --code-padding-vertical: 0.1rem;
+  --code-padding-horizontal: 0.1rem;
+}
+
+.code {
+  font-family: SFMono-Regular, Menlo;
+  overflow-wrap: anywhere;
+  vertical-align: text-bottom;
+  white-space: pre-wrap;
+  padding: var(--code-padding-vertical) var(--code-padding-horizontal);
+}
