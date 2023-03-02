@@ -1,6 +1,6 @@
 import * as tooltipStories from "@stories/tooltip/tooltip.stories";
 import { composeStories } from "@storybook/testing-react";
-import { InfoIcon } from "packages/icons/src";
+import { InfoIcon } from "@salt-ds/icons";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { Tooltip } from "@salt-ds/core";
 
