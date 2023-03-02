@@ -24,11 +24,16 @@ import { Mode } from "@salt-ds/theme";
 import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
 import Homepage from "./index";
 import * as saltLayouts from "../layouts";
+import * as saltComponents from "../components";
 
 import { MyAppProps } from "../types/mosaic";
 
-const saltComponents = { Homepage };
-const components = { ...mosaicComponents, ...saltComponents };
+const components = {
+  ...mosaicComponents,
+  ...saltComponents,
+  Homepage,
+  Image,
+};
 
 const layoutComponents = { ...mosaicLayouts, ...saltLayouts };
 
