@@ -17,7 +17,7 @@
   display: flex;
   gap: var(--salt-size-unit);
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 /* Styles applied to radio group's legend */
