@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import clsx from "clsx";
 import { HelpLinks } from "@jpmorganchase/mosaic-components";
 import {
   AppHeader,
@@ -44,10 +45,10 @@ export const DetailTechnical: FC<LayoutProps> = ({
 
   return (
     <LayoutBase Header={Header}>
-      <div className={layoutStyles.docsWrapper}>
+      <div className={clsx(layoutStyles.docsWrapper, styles.docsWrapper)}>
         <LayoutColumns
           PrimarySidebar={PrimarySidebar}
-          SecondarySidebar={SecondarySidebar}
+          // SecondarySidebar={SecondarySidebar} TODO: add TOC inside main container
           Footer={<Footer {...FooterProps} />}
         >
           <Breadcrumbs />
