@@ -6,7 +6,7 @@ export function getColorNameByHexValue(
   hexValue: string | undefined,
   disableAlpha = false,
   saltColorOverrides?: Record<string, string>,
-  /** Whe disabled, color names not recognized will be undefined instead of hex values */
+  /** When disabled, color names not recognized will be undefined instead of hex values */
   disableFallBackToHex = false
 ): string | undefined {
   const hexNoAlpha = hexValueWithoutAlpha(hexValue);
