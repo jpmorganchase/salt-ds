@@ -5,16 +5,15 @@
   --checkbox-space-multiplier: var(--saltCheckbox-space-multiplier, 3);
   --checkbox-top-multiplier: var(--saltCheckbox-top-multiplier, 0.75);
   --salt-text-label-fontSize: var(--salt-text-fontSize);
+  --salt-text-label-lineHeight: var(--saltCheckbox-lineHeight, 1);
 }
 
 .saltCheckbox {
   cursor: var(--salt-selectable-cursor-hover);
-  line-height: var(--saltCheckbox-lineHeight, 1);
   background: var(--saltCheckbox-background, none);
   display: flex;
   gap: calc(var(--salt-size-unit) * 0.75);
   margin-top: var(--checkbox-label-marginTop);
-  font-size: var(--salt-text-fontSize);
   padding: 1px 0;
   position: relative;
   align-items: flex-start;
