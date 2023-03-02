@@ -68,8 +68,6 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       onChange?.(event, value);
     };
 
-    // Label needs a margin to the right
-
     return (
       <Label
         disabled={disabled}

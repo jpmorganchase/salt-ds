@@ -1,16 +1,4 @@
 /* Styles applied to root component */
-.salt-density-medium {
-  --checkbox-fontSize: 12px;
-}
-.salt-density-touch {
-  --checkbox-fontSize: 16px;
-}
-.salt-density-low {
-  --checkbox-fontSize: 14px;
-}
-.salt-density-high {
-  --checkbox-fontSize: 11px;
-}
 
 .saltCheckbox {
   --checkbox-label-marginTop: calc(var(--salt-size-unit) * var(--checkbox-top-multiplier));
@@ -19,6 +7,7 @@
 }
 
 .saltCheckbox {
+  cursor: pointer;
   line-height: var(--saltCheckbox-lineHeight, 1);
   background: var(--saltCheckbox-background, none);
   display: flex;
