@@ -1,6 +1,6 @@
 .saltGridCell {
   box-sizing: border-box;
-  overflow: hidden;
+  /* overflow: hidden; */
   margin: 0;
   padding: 0;
 

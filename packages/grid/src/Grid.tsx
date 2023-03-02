@@ -11,7 +11,7 @@ import React, {
   useState,
 } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { GridColumnInfo } from "./GridColumn";
+import { CellValidationState, GridColumnInfo } from "./GridColumn";
 import { GridContext } from "./GridContext";
 import { clsx } from "clsx";
 import {
@@ -142,6 +142,10 @@ export interface GridProps<T = any> {
    * If `true`, keyboard navigation is enabled for the header.
    * */
   headerIsFocusable?: boolean;
+
+  getRowValidationStatus?: (
+    row: GridRowModel<T>
+  ) => CellValidationState | undefined;
 }
 
 export interface GridRowModel<T> {
@@ -191,6 +195,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     cellSelectionMode = "none",
     onVisibleRowRangeChange,
     headerIsFocusable,
+    getRowValidationStatus,
   } = props;
 
   const rootRef = useRef<HTMLDivElement>(null);
@@ -1137,6 +1142,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                           hoverOverRowKey={hoverRowKey}
                           setHoverOverRowKey={setHoverRowKey}
                           zebra={zebra}
+                          getRowValidationStatus={getRowValidationStatus}
                         />
                       )}
                       <MiddlePart
@@ -1148,6 +1154,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                         setHoverOverRowKey={setHoverRowKey}
                         midGap={midGap}
                         zebra={zebra}
+                        getRowValidationStatus={getRowValidationStatus}
                       />
                       {rightCols.length > 0 && (
                         <RightPart
@@ -1159,6 +1166,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                           hoverOverRowKey={hoverRowKey}
                           setHoverOverRowKey={setHoverRowKey}
                           zebra={zebra}
+                          getRowValidationStatus={getRowValidationStatus}
                         />
                       )}
                       <ColumnDropTarget x={activeTarget?.x} />

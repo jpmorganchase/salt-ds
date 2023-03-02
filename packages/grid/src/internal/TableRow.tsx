@@ -12,13 +12,14 @@ import { GridColumnModel, GridRowModel } from "../Grid";
 import { FakeCell } from "./FakeCell";
 import { DefaultCellValue } from "./DefaultCellValue";
 import { useGridContext } from "../GridContext";
+import { CellValidationState } from "../GridColumn";
+import { RowValidationStatusContext } from "../RowValidationStatus";
 
 const withBaseName = makePrefixer("saltGridTableRow");
 
 export interface TableRowProps<T> {
   row: GridRowModel<T>;
-  isSelected?: boolean; // Render selected background and the bottom border. Top border is rendered by the previous row (it gets isFollowedBySelected = true)
-  isFollowedBySelected?: boolean; // Next row is selected. Render the bottom border.
+  isSelected?: boolean;
   isHoverOver?: boolean;
   zebra?: boolean;
   columns: GridColumnModel<T>[];
@@ -29,13 +30,13 @@ export interface TableRowProps<T> {
   editorColIdx?: number;
   isCellSelected?: (rowIdx: number, colIdx: number) => boolean;
   headerIsFocusable?: boolean;
+  validationStatus?: CellValidationState;
 }
 
 export function TableRow<T>(props: TableRowProps<T>) {
   const {
     row,
     isSelected,
-    isFollowedBySelected,
     zebra,
     isHoverOver,
     columns,
@@ -46,6 +47,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
     editorColIdx,
     isCellSelected,
     headerIsFocusable,
+    validationStatus: rowValidationStatus,
   } = props;
 
   const grid = useGridContext();
@@ -64,9 +66,9 @@ export function TableRow<T>(props: TableRowProps<T>) {
         [withBaseName("zebra")]: zebra,
         [withBaseName("hover")]: isHoverOver,
         [withBaseName("selected")]: isSelected,
-        [withBaseName("followedBySelected")]:
-          isFollowedBySelected && !isSelected,
         [withBaseName("first")]: row.index === 0,
+        [withBaseName(`validationStatus-${rowValidationStatus}`)]:
+          rowValidationStatus,
       })}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -115,29 +117,33 @@ export function TableRow<T>(props: TableRowProps<T>) {
           column.info.props.getValidationMessage?.(validationFnArg);
 
         return (
-          <Cell
-            key={colKey}
-            row={row}
-            column={column}
-            isFocused={isFocused}
-            isSelected={isSelected}
-            isEditable={isEditable}
-            validationStatus={validationStatus}
-            validationMessage={validationMessage}
-            validationType={column.info.props.validationType}
-            value={value}
-            align={column.info.props.align}
+          <RowValidationStatusContext.Provider
+            value={{ status: rowValidationStatus }}
           >
-            <CellValue
-              column={column}
+            <Cell
+              key={colKey}
               row={row}
-              value={value}
+              column={column}
               isFocused={isFocused}
+              isSelected={isSelected}
+              isEditable={isEditable}
               validationStatus={validationStatus}
               validationMessage={validationMessage}
               validationType={column.info.props.validationType}
-            />
-          </Cell>
+              value={value}
+              align={column.info.props.align}
+            >
+              <CellValue
+                column={column}
+                row={row}
+                value={value}
+                isFocused={isFocused}
+                validationStatus={validationStatus}
+                validationMessage={validationMessage}
+                validationType={column.info.props.validationType}
+              />
+            </Cell>
+          </RowValidationStatusContext.Provider>
         );
       })}
       {gap !== undefined && gap > 0 ? <FakeCell row={row} /> : null}

@@ -5,6 +5,7 @@ import { getRowKeyAttribute } from "./utils";
 import { useSelectionContext } from "../SelectionContext";
 import { useEditorContext } from "../EditorContext";
 import { useCursorContext } from "../CursorContext";
+import { CellValidationState } from "../GridColumn";
 
 export interface TableBodyProps<T> {
   columns: GridColumnModel<T>[];
@@ -13,10 +14,21 @@ export interface TableBodyProps<T> {
   setHoverRowKey: (key: string | undefined) => void;
   gap?: number;
   zebra?: boolean;
+  getRowValidationStatus?: (
+    row: GridRowModel<T>
+  ) => CellValidationState | undefined;
 }
 
 export function TableBody<T>(props: TableBodyProps<T>) {
-  const { columns, rows, hoverRowKey, setHoverRowKey, gap, zebra } = props;
+  const {
+    columns,
+    rows,
+    hoverRowKey,
+    setHoverRowKey,
+    gap,
+    zebra,
+    getRowValidationStatus,
+  } = props;
   const { selRowIdxs, selectedCellRange } = useSelectionContext();
 
   const isCellInSelectedRange = useCallback(
@@ -62,7 +74,6 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     <tbody onMouseLeave={onMouseLeave} onDoubleClick={onDoubleClick}>
       {rows.map((row) => {
         const isSelected = selRowIdxs.has(row.index);
-        const isFollowedBySelected = selRowIdxs.has(row.index + 1);
         const cursorIdx =
           focusedPart === "body" && cursorRowIdx === row.index
             ? cursorColIdx
@@ -76,13 +87,15 @@ export function TableBody<T>(props: TableBodyProps<T>) {
             columns={columns}
             isHoverOver={row.key === hoverRowKey}
             isSelected={isSelected}
-            isFollowedBySelected={isFollowedBySelected}
             cursorColIdx={cursorIdx}
             gap={gap}
             zebra={zebra && row.index % 2 == 0}
             editorColIdx={editorColIdx}
             isCellSelected={isCellInSelectedRange}
             headerIsFocusable={headerIsFocusable}
+            validationStatus={
+              getRowValidationStatus ? getRowValidationStatus(row) : undefined
+            }
           />
         );
       })}

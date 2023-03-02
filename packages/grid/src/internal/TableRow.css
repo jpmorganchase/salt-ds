@@ -32,8 +32,15 @@
   --grid-row-background: var(--grid-row-background-selected);
 }
 
-.saltGridTableRow-followedBySelected {
-  --grid-row-borderColor: var(--grid-row-borderColor-selected);
+.saltGridTableRow-selected .saltGridCell:before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--grid-row-borderColor);
+  z-index: 1;
 }
 
 .saltGridTableRow-zebra.saltGridTableRow-selected {
@@ -50,4 +57,30 @@
 
 .saltGridTableRow-selected.saltGridTableRow-hover {
   --grid-row-background: var(--grid-row-background-hover);
+}
+
+.saltGridTableRow-validationStatus-error,
+.saltGridTableRow-validationStatus-error.saltGridTableRow-hover {
+  --grid-row-background: var(--salt-status-error-background-emphasize);
+}
+.saltGridTableRow-validationStatus-warning,
+.saltGridTableRow-validationStatus-warning.saltGridTableRow-hover {
+  --grid-row-background: var(--salt-status-warning-background-emphasize);
+}
+.saltGridTableRow-validationStatus-success,
+.saltGridTableRow-validationStatus-success.saltGridTableRow-hover {
+  --grid-row-background: var(--salt-status-success-background-emphasize);
+}
+
+.saltGridTableRow-validationStatus-error.saltGridTableRow-selected {
+  --grid-row-background: var(--salt-status-error-background-selected);
+  --grid-row-borderColor: var(--salt-status-error-border-selected);
+}
+.saltGridTableRow-validationStatus-warning.saltGridTableRow-selected {
+  --grid-row-background: var(--salt-status-warning-background-selected);
+  --grid-row-borderColor: var(--salt-status-warning-border-selected);
+}
+.saltGridTableRow-validationStatus-success.saltGridTableRow-selected {
+  --grid-row-background: var(--salt-status-success-background-selected);
+  --grid-row-borderColor: var(--salt-status-success-border-selected);
 }
