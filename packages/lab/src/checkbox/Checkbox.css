@@ -26,12 +26,10 @@
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
+/* Styles applied to the icon component if focused */
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
-  inset: var(--salt-focused-outlineInset);
-  outline-color: var(--salt-focused-outlineColor);
   outline-offset: var(--salt-focused-outlineOffset);
-  outline-style: var(--salt-focused-outlineStyle);
-  outline-width: var(--salt-focused-outlineWidth);
+  outline: var(--salt-focused-outline);
 }
 
 /* Styles applied to input element */
