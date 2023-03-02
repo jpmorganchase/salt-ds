@@ -835,7 +835,7 @@ export const VerticalToolbar = () => {
       style={{ minHeight: "500px" }}
     >
       <ToolbarField>
-        <Avatar size="medium" />
+        <Avatar size={1} />
       </ToolbarField>
       <ToolbarButton>
         <InfoIcon /> View Description
