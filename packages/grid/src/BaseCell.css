@@ -60,26 +60,26 @@
 }
 
 .salt-density-high {
-  --grid-statusIndicator-size: 6px;
+  --grid-statusIndicator-size: 5px;
 }
 
 .salt-density-medium {
-  --grid-statusIndicator-size: 8px;
+  --grid-statusIndicator-size: 7px;
 }
 
 .salt-density-low {
-  --grid-statusIndicator-size: 10px;
+  --grid-statusIndicator-size: 9px;
 }
 
 .salt-density-touch {
-  --grid-statusIndicator-size: 12px;
+  --grid-statusIndicator-size: 11px;
 }
 
 .saltGridBaseCell-statusContainer {
   font-size: var(--saltGrid-statusIndicator-size, var(--grid-statusIndicator-size));
   position: absolute;
-  bottom: 2px;
-  right: 2px;
+  bottom: 3px;
+  right: 3px;
 }
 
 .saltGridBaseCell-statusContainer svg {
@@ -89,5 +89,5 @@
 
 .saltGridBaseCell-statusContainer.saltGridBaseCell-statusContainer-align-right {
   right: auto;
-  left: 2px;
+  left: 3px;
 }
