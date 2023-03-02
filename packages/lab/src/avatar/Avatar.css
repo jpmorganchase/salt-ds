@@ -1,66 +1,37 @@
 /* Default variables applied to the root element */
 .saltAvatar {
-  --avatar-background: var(--saltAvatar-background, var(--salt-accent-background));
   --avatar-foreground: var(--saltAvatar-foreground, var(--salt-accent-foreground));
+  --avatar-size-multiplier: var(--saltAvatar-size-multiplier, 1);
+  --avatar-base-size: var(--salt-size-base, 12px);
+  --avatar-base-fontSize: var(--saltAvatar-fontSize, var(--salt-accent-fontSize));
+  --avatar-container-size: calc(var(--avatar-base-size) * var(--avatar-size-multiplier));
+  --avatar-fontSize: calc(var(--avatar-base-fontSize) * var(--avatar-size-multiplier));
+  /* Icon styling */
+  --saltIcon-color: var(--avatar-foreground);
+  --salt-size-icon-base: calc(var(--avatar-container-size) / 2);
 }
 
 /* Style applied to the root element */
 .saltAvatar {
-  background: var(--avatar-background);
+  line-height: var(--saltAvatar-lineHeight, var(--salt-accent-lineHeight));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--saltAvatar-background, var(--salt-accent-background));
   color: var(--avatar-foreground);
   font-size: var(--avatar-fontSize);
-  line-height: var(--avatar-container-size);
   width: var(--avatar-container-size);
+  min-width: var(--avatar-container-size);
   height: var(--avatar-container-size);
-  letter-spacing: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: var(--avatar-container-size);
   overflow: hidden;
-  position: relative;
-  flex-shrink: 0;
   user-select: none;
   border-radius: 50%;
 }
 
-/* Style applied to the image element */
-.saltAvatar-image {
+/* Style applied to the image/svg element. We specifically allow SVGs as the Avatar image to enable SVGs such as Flags to take up the full Avatar space */
+.saltAvatar > img,
+.saltAvatar > svg:not(.saltIcon) {
   width: 100%;
   height: 100%;
-  text-align: center;
-  object-fit: cover;
-  color: transparent;
-  text-indent: 10000px;
-}
-
-/* Style applied to the svg element */
-.saltAvatar > svg {
-  width: var(--avatar-container-size);
-  height: var(--avatar-container-size);
-}
-
-.saltAvatar-svgDisc {
-  fill: var(--avatar-background);
-}
-
-.saltAvatar-svgHead {
-  fill: var(--avatar-foreground);
-}
-
-/* Style applied when size is small */
-.saltAvatar-small {
-  --avatar-fontSize: 8px;
-  --avatar-container-size: var(--salt-size-graphic-small);
-}
-
-/* Style applied when size is medium */
-.saltAvatar-medium {
-  --avatar-fontSize: 11px;
-  --avatar-container-size: var(--salt-size-graphic-medium);
-}
-
-/* Style applied when size is large */
-.saltAvatar-large {
-  --avatar-fontSize: 14px;
-  --avatar-container-size: var(--salt-size-graphic-large);
 }

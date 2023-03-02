@@ -1,10 +1,10 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Avatar } from "@salt-ds/lab";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Lab/Avatar"
@@ -16,44 +16,90 @@ import {
 
 # Avatar
 
-An Avatar is a small circular graphical representation of a person through a personal profile picture or name initials.
+An Avatar is a small circular graphical representation of a user entity through a profile picture or name initials.
+It has three variants to account for different types of data:
 
-## Default Avatar
+- `Image` is used when a photo is available;
+- `Initials` is used when a photo is unavailable but profile information is;
+- A default `Icon` is used when neither photo nor profile information are available.
+
+### Features
+
+#### Default Avatar
+
+Each Avatar variant has a default size across all four densities, equal to the size foundation size-base; 20px (HD), 28px (MD), 36px (LD), and 44px (TD)
+The size of Avatar can be changed in multiples of the base size.
 
 <Canvas>
   <Story id="lab-avatar--default" />
 </Canvas>
 
-## Image Avatar
-
-Reference your image in the `src` prop
+Avatar renders with a default icon defined by `UserIcon` but an alternative icon can be passed as `fallbackIcon`.
 
 <Canvas>
-  <Story id="lab-avatar--image" />
+  <Story id="lab-avatar--alternative-icon" />
 </Canvas>
 
-## Initials Avatar
+#### Image
 
-You can pass the initials as children
+Reference your image source in the `src` prop, or pass it as the child of the component.
+
+<Canvas>
+  <Story id="lab-avatar--with-image" />
+</Canvas>
+
+#### Initials
+
+You can pass the user's initials as the child of the component.
 
 <Canvas>
   <Story id="lab-avatar--initials" />
 </Canvas>
 
-# API
+#### Custom image or SVG
+
+You can pass a custom image or SVG as the child of the component to be used as an image.
+
+<Canvas>
+  <Story id="lab-avatar--with-custom-svg" />
+</Canvas>
+
+Note that for images passed as children, you will also need to handle the fallback logic.
+
+<Canvas>
+  <Story id="lab-avatar--image-fallback" />
+</Canvas>
+
+#### Alternative Background
+
+The `Avatar` background can be customized by using `--saltAvatar-background`.
+
+<Canvas>
+  <Story id="lab-avatar--alternative-background" />
+</Canvas>
+
+## Configuring Avatar
+
+### API
 
 ```
 import { Avatar } from "@salt-ds/lab";
 ```
 
-## Props
+### Props
 
 <ArgsTable of={Avatar} />
 
-## CSS Class
+## Related components
+
+The avatar component can contain an `[Icon]`(?path=/docs/documentation-icons-icon--page) component.
+
+### Classes
 
 <CSSClassTable of={Avatar} />
 
 ## Characteristics Used
 
 <CharacteristicUsage of={Avatar} />
+
+<HelpAndSupport />
