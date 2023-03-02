@@ -5,7 +5,9 @@ import { isTransparent } from "./color-utils";
 export function getColorNameByHexValue(
   hexValue: string | undefined,
   disableAlpha = false,
-  saltColorOverrides?: Record<string, string>
+  saltColorOverrides?: Record<string, string>,
+  /** Whe disabled, color names not recognized will be undefined instead of hex values */
+  disableFallBackToHex = false
 ): string | undefined {
   const hexNoAlpha = hexValueWithoutAlpha(hexValue);
   const saltColors = saltColorOverrides ?? saltColorMap;
@@ -36,7 +38,7 @@ export function getColorNameByHexValue(
     return hexValue.charAt(0) + hexValue.slice(1).toLowerCase();
   }
 
-  return getHexValue(hexValue, disableAlpha);
+  return disableFallBackToHex ? undefined : getHexValue(hexValue, disableAlpha);
 }
 
 export function hexValueWithoutAlpha(
