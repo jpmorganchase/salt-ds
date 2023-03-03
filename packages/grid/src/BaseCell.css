@@ -64,15 +64,15 @@
 }
 
 .salt-density-medium {
-  --grid-statusIndicator-size: 7px;
+  --grid-statusIndicator-size: 6px;
 }
 
 .salt-density-low {
-  --grid-statusIndicator-size: 9px;
+  --grid-statusIndicator-size: 7px;
 }
 
 .salt-density-touch {
-  --grid-statusIndicator-size: 11px;
+  --grid-statusIndicator-size: 9px;
 }
 
 .saltGridBaseCell-statusContainer {
