@@ -6,7 +6,7 @@ import {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
-import { Label, makePrefixer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./Checkbox.css";
@@ -69,8 +69,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     };
 
     return (
-      <Label
-        disabled={disabled}
+      <label
         className={clsx(withBaseName(), className, {
           [withBaseName("disabled")]: disabled,
         })}
@@ -98,7 +97,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           indeterminate={indeterminate}
         />
         {label}
-      </Label>
+      </label>
     );
   }
 );

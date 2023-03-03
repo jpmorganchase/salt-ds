@@ -1,29 +1,26 @@
 /* Styles applied to root component */
 .salt-density-high {
-  --checkbox-size: 12px;
   --checkbox-density-bar-y: 5px;
   --checkbox-density-bar-height: 3px;
 }
 
 .salt-density-medium {
-  --checkbox-size: 14px;
   --checkbox-density-bar-y: 6px;
   --checkbox-density-bar-height: 2px;
 }
 
 .salt-density-low {
-  --checkbox-size: 16px;
   --checkbox-density-bar-y: 6px;
   --checkbox-density-bar-height: 2px;
 }
 
 .salt-density-touch {
-  --checkbox-size: 18px;
   --checkbox-density-bar-y: 6px;
   --checkbox-density-bar-height: 2px;
 }
 
 .saltCheckboxIcon {
+  --checkbox-size: var(--salt-size-selectable);
   --checkbox-borderWidth: var(--salt-size-border);
   --checkbox-box-offset: calc(var(--checkbox-borderWidth) / 2);
   --checkbox-height: calc(var(--checkbox-viewbox) - var(--checkbox-borderWidth));
