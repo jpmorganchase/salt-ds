@@ -1,12 +1,11 @@
 import { UserGroupIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FlowLayout, Label, StackLayout } from "@salt-ds/core";
+import { Avatar, FlowLayout, Label, StackLayout } from "@salt-ds/core";
 import { CSSProperties, ReactNode, useEffect, useState } from "react";
-import { Avatar } from "@salt-ds/lab";
-import persona1 from "./../assets/persona1.png";
+import persona1 from "@stories/assets/persona1.png";
 
 export default {
-  title: "Lab/Avatar",
+  title: "Core/Avatar",
   component: Avatar,
 } as ComponentMeta<typeof Avatar>;
 const sizes = [1, 2, 3, 4] as const;

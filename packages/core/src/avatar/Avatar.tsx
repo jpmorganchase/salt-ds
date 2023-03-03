@@ -1,8 +1,8 @@
-import { makePrefixer } from "@salt-ds/core";
 import { UserIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useLoaded } from "./internal/useLoaded";
+import { makePrefixer } from "../utils";
 
 import "./Avatar.css";
 
