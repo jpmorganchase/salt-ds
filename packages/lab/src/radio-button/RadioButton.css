@@ -12,6 +12,7 @@
 
 /* Styles applied when RadioButton is disabled */
 .saltRadioButton-disabled {
+  color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
   pointer-events: visible;
 }

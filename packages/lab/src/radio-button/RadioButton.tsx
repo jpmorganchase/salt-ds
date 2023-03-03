@@ -5,7 +5,7 @@ import {
   forwardRef,
   ReactNode,
 } from "react";
-import { Label, makePrefixer, useControlled, useId } from "@salt-ds/core";
+import { makePrefixer, useControlled, useId } from "@salt-ds/core";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { RadioButtonIcon } from "./RadioButtonIcon";
 
@@ -17,33 +17,33 @@ export interface RadioButtonProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  error?: boolean;
+  id?: string;
   /**
    * The label to be shown next to the radio
    */
   label?: ReactNode;
   name?: string;
-  onFocus?: FocusEventHandler<HTMLSpanElement>;
   onBlur?: FocusEventHandler<HTMLSpanElement>;
-  id?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onFocus?: FocusEventHandler<HTMLSpanElement>;
   value?: string;
-  error?: boolean;
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
   function RadioButton(props, ref) {
     const {
       checked: checkedProp,
-      name: nameProp,
       className,
       disabled,
+      error,
+      id: idProp,
       label,
-      value,
+      name: nameProp,
       onFocus,
       onBlur,
       onChange,
-      id: idProp,
-      error,
+      value,
       ...rest
     } = props;
 
@@ -70,31 +70,26 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     });
 
     const handleFocus: FocusEventHandler<HTMLElement> = (event) => {
-      if (onFocus) {
-        onFocus(event);
-      }
+      onFocus && onFocus(event);
     };
 
     const handleBlur: FocusEventHandler<HTMLElement> = (event) => {
-      if (onBlur) {
-        onBlur(event);
-      }
+      onBlur && onBlur(event);
     };
 
     const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       const newChecked = event.target.checked;
       setCheckedState(newChecked);
-      if (onChange) {
-        onChange(event);
-      }
-      if (radioGroup && radioGroup.onChange) {
-        radioGroup.onChange(event);
+
+      onChange && onChange(event);
+
+      if (Object.keys(radioGroup).length) {
+        radioGroup.onChange && radioGroup.onChange(event);
       }
     };
 
     return (
-      <Label
-        disabled={disabled}
+      <label
         className={clsx(withBaseName(), className, {
           [withBaseName("disabled")]: disabled,
         })}
@@ -106,16 +101,16 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           disabled={disabled}
           id={id}
           name={name}
-          onChange={handleInputChange}
-          type="radio"
           value={value}
           onBlur={handleBlur}
+          onChange={handleInputChange}
           onFocus={handleFocus}
           {...rest}
+          type="radio"
         />
         <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
         {label}
-      </Label>
+      </label>
     );
   }
 );
