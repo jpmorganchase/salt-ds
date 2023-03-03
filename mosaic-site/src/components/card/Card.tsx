@@ -24,7 +24,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   keyLineAnimation?: boolean;
 }
 
-const Card = ({
+export const Card = ({
   icon,
   inlineIcon,
   title,
@@ -75,8 +75,6 @@ const Card = ({
   );
 };
 
-export default Card;
-
 export const InlineCard = ({
   icon,
   description,
@@ -111,7 +109,7 @@ export const InlineCard = ({
       className={clsx(styles.inlineCard, {
         [styles.lightTheme]: useLightTheme,
       })}
-      to={url}
+      href={url}
     >
       <div className={styles.inlineCardContent}>
         <div className={styles.iconContainer}>
