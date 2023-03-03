@@ -1,9 +1,9 @@
 /* Styles applied to root component */
 
 .saltCheckbox {
-  --checkbox-label-marginTop: calc(var(--salt-size-unit) * var(--checkbox-top-multiplier));
   --checkbox-space-multiplier: var(--saltCheckbox-space-multiplier, 3);
   --checkbox-top-multiplier: var(--saltCheckbox-top-multiplier, 0.75);
+  --checkbox-label-marginTop: calc(var(--salt-size-unit) * var(--checkbox-top-multiplier));
 }
 
 .saltCheckbox {
