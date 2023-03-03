@@ -8,6 +8,10 @@
   vertical-align: top;
 }
 
+.saltCheckboxGroup-formGroup {
+  gap: var(--salt-size-unit);
+}
+
 /* Styles applied to root component if `row={true}` */
 .saltCheckboxGroup-horizontal {
   --saltControlLabel-right-marginRight: calc(var(--salt-size-unit) * 3);

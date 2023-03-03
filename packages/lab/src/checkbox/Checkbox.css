@@ -3,7 +3,6 @@
 .saltCheckbox {
   --checkbox-space-multiplier: var(--saltCheckbox-space-multiplier, 3);
   --checkbox-top-multiplier: var(--saltCheckbox-top-multiplier, 0.75);
-  --checkbox-label-marginTop: calc(var(--salt-size-unit) * var(--checkbox-top-multiplier));
 }
 
 .saltCheckbox {
@@ -11,7 +10,6 @@
   background: var(--saltCheckbox-background, none);
   display: flex;
   gap: calc(var(--salt-size-unit) * 0.75);
-  margin-top: var(--checkbox-label-marginTop);
   position: relative;
   align-items: center;
 }
@@ -32,13 +30,11 @@
 /* Styles applied to input element */
 .saltCheckbox-input {
   cursor: inherit;
-  height: 10px;
   left: 0;
   margin: 0;
   opacity: 0;
   padding: 0;
   position: absolute;
   top: 0;
-  width: 10px;
   z-index: var(--salt-zIndex-default);
 }
