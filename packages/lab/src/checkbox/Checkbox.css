@@ -12,7 +12,6 @@
   display: flex;
   gap: calc(var(--salt-size-unit) * 0.75);
   margin-top: var(--checkbox-label-marginTop);
-  padding: 1px 0;
   position: relative;
   align-items: flex-start;
 }
