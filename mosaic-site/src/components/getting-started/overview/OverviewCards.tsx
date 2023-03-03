@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Card, CardProps } from "../../card/Card";
 import styles from "./OverviewCards.module.css";
 
@@ -7,13 +8,13 @@ export const OverviewCard = ({
   ...rest
 }: CardProps) => (
   <Card
-    description={children}
     keyLineAnimation={false}
     keylineColor={`var(--site-tertiary-accent-${keylineColor})`}
     {...rest}
+    description={children}
   />
 );
 
-export const OverviewCards = ({ children }) => (
+export const OverviewCards = ({ children }: { children: ReactNode }) => (
   <div className={styles.overviewCards}>{children}</div>
 );

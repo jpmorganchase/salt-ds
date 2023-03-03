@@ -1,11 +1,11 @@
-import { useRef } from "react";
+import { useRef, MutableRefObject } from "react";
 import clsx from "clsx";
 
 import PageIllustration from "./PageIllustration";
-import useOnScreen from "../../../utils/useOnScreen";
+import useOnScreen from "../../utils/useOnScreen";
 import Accordion, {
   AccordionBaseProps,
-} from "../../../components/accordion/Accordion";
+} from "../../components/accordion/Accordion";
 import styles from "./Accordion.module.css";
 
 type HomepageAccordionProps = {
@@ -15,7 +15,7 @@ type HomepageAccordionProps = {
 const HomepageAccordion = ({
   homePageInfo,
 }: HomepageAccordionProps): JSX.Element => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
 
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-50px");
   return (

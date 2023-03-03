@@ -3,6 +3,8 @@ import {
   useRef,
   cloneElement,
   CSSProperties,
+  MutableRefObject,
+  ReactNode,
 } from "react";
 import clsx from "clsx";
 import { Link } from "@jpmorganchase/mosaic-site-components";
@@ -17,7 +19,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   icon?: JSX.Element;
   inlineIcon?: JSX.Element;
   title?: string;
-  description: JSX.Element;
+  description: JSX.Element | ReactNode;
   url: string;
   footerText: string;
   keylineColor: CSSProperties["color"];
@@ -34,7 +36,7 @@ export const Card = ({
   keylineColor,
   keyLineAnimation = true,
 }: CardProps): JSX.Element => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
 
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-100px");
 
@@ -82,7 +84,7 @@ export const InlineCard = ({
   footerText,
   keylineColor,
 }: CardProps): JSX.Element => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
 
   const { mode } = useTheme();
 
@@ -112,9 +114,11 @@ export const InlineCard = ({
       href={url}
     >
       <div className={styles.inlineCardContent}>
-        <div className={styles.iconContainer}>
-          {cloneElement(icon, { ...icon.props, className: styles.icon })}
-        </div>
+        {icon && (
+          <div className={styles.iconContainer}>
+            {cloneElement(icon, { ...icon.props, className: styles.icon })}
+          </div>
+        )}
         <div className={styles.textContainer}>
           <div className={styles.cardText}>
             <div className={styles.cardDescription}>{description}</div>
