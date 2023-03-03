@@ -27,17 +27,8 @@ export const RadioButtonVariations = () => {
         checked
       />
 
-      <RadioButton
-        label="Error unchecked"
-        value="Error-unchecked"
-        error
-      />
-      <RadioButton
-        label="Error checked"
-        value="Error-checked"
-        checked
-        error
-      />
+      <RadioButton label="Error unchecked" value="Error-unchecked" error />
+      <RadioButton label="Error checked" value="Error-checked" checked error />
       <RadioButton
         label="Disabled error checked"
         value="disabled-error-checked"

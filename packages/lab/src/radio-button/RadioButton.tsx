@@ -3,6 +3,7 @@ import {
   ChangeEventHandler,
   FocusEventHandler,
   forwardRef,
+  InputHTMLAttributes,
   ReactNode,
 } from "react";
 import { makePrefixer, useControlled, useId } from "@salt-ds/core";
@@ -19,6 +20,7 @@ export interface RadioButtonProps {
   disabled?: boolean;
   error?: boolean;
   id?: string;
+  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
   /**
    * The label to be shown next to the radio
    */
@@ -38,6 +40,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       disabled,
       error,
       id: idProp,
+      inputProps,
       label,
       name: nameProp,
       onFocus,
@@ -94,9 +97,11 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           [withBaseName("disabled")]: disabled,
         })}
         ref={ref}
+        {...rest}
       >
         <input
           className={withBaseName("input")}
+          {...inputProps}
           checked={checked}
           disabled={disabled}
           id={id}
@@ -105,7 +110,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           onBlur={handleBlur}
           onChange={handleInputChange}
           onFocus={handleFocus}
-          {...rest}
           type="radio"
         />
         <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
