@@ -2,7 +2,8 @@
 
 .saltCheckbox {
   --checkbox-space-multiplier: var(--saltCheckbox-space-multiplier, 3);
-  --checkbox-label-marginTop: calc(var(--salt-size-unit));
+  --checkbox-top-multiplier: var(--saltCheckbox-top-multiplier, 0.75);
+  --checkbox-label-marginTop: calc(var(--salt-size-unit) * var(--checkbox-top-multiplier));
 }
 
 .saltCheckbox {
@@ -12,7 +13,7 @@
   gap: calc(var(--salt-size-unit) * 0.75);
   margin-top: var(--checkbox-label-marginTop);
   position: relative;
-  align-items: flex-start;
+  align-items: center;
 }
 
 /* Styles applied to root component if `disabled={true}` */
