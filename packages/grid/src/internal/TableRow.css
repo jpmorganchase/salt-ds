@@ -40,7 +40,7 @@
   right: 0;
   height: 1px;
   background: var(--grid-row-borderColor);
-  z-index: 1;
+  z-index: var(--salt-zIndex-default);
 }
 
 .saltGridTableRow-zebra.saltGridTableRow-selected {
