@@ -17,28 +17,32 @@ type ExampleWithTitleProps = {
 export const RadioButtonVariations = () => {
   return (
     <>
-      <RadioButton key="Unchecked" label="Unchecked" value="Unchecked" />
-      <RadioButton key="Checked" label="Checked" value="Checked" checked />
-      <RadioButton disabled key="Disabled" label="Disabled" value="Disabled" />
+      <RadioButton label="Unchecked" value="Unchecked" />
+      <RadioButton label="Checked" value="Checked" checked />
+      <RadioButton disabled label="Disabled" value="Disabled" />
       <RadioButton
         disabled
-        key="Disabled-checked"
         label="Disabled checked"
         value="Disabled-checked"
         checked
       />
 
       <RadioButton
-        key="Error-unchecked"
         label="Error unchecked"
         value="Error-unchecked"
         error
       />
       <RadioButton
-        key="Error-checked"
         label="Error checked"
         value="Error-checked"
         checked
+        error
+      />
+      <RadioButton
+        label="Disabled error checked"
+        value="disabled-error-checked"
+        checked
+        disabled
         error
       />
     </>
