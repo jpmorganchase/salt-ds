@@ -7,7 +7,7 @@ import {
 } from "react";
 import { makePrefixer, useId } from "@salt-ds/core";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
-import { RadioButton } from "./RadioButton";
+import { RadioButton, RadioButtonProps } from "./RadioButton";
 
 import "./RadioButtonGroup.css";
 
@@ -19,14 +19,9 @@ export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   defaultValue?: string;
   direction?: RadioButtonGroupDirectionProps;
-  legend?: string;
   name?: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
-  radios?: {
-    disabled?: boolean;
-    label?: string;
-    value?: string;
-  }[];
+  radios?: RadioButtonProps[];
   value?: string;
 }
 
@@ -38,7 +33,6 @@ export const RadioButtonGroup = forwardRef<
     children,
     className,
     defaultValue,
-    legend,
     radios,
     onChange,
     value: valueProp,
@@ -71,10 +65,6 @@ export const RadioButtonGroup = forwardRef<
       ref={ref}
       role="radiogroup"
     >
-      {legend && (
-        <label className={clsx(withBaseName("legend"))}>{legend}</label>
-      )}
-
       <RadioGroupContext.Provider
         value={{ name, onChange: handleChange, value: getValue() }}
       >
@@ -83,7 +73,6 @@ export const RadioButtonGroup = forwardRef<
             radios.map((radio) => (
               <RadioButton
                 disabled={radio.disabled}
-                key={radio.label}
                 label={radio.label}
                 value={radio.value}
                 name={name}
