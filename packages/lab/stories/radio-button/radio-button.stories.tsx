@@ -51,7 +51,7 @@ export const VerticalRadioButtonGroup = ({
   name,
 }: ExampleWithTitleProps) => (
   <SaltProvider density={density}>
-    <RadioButtonGroup legend={title} name={name}>
+    <RadioButtonGroup name={name}>
       <RadioButton key="spot" label="Spot" value="spot" />
       <RadioButton key="forward" label="Forward" value="forward" />
       <RadioButton
@@ -70,7 +70,7 @@ export const HorizontalRadioButtonGroup = ({
   name,
 }: ExampleWithTitleProps) => (
   <SaltProvider density={density}>
-    <RadioButtonGroup legend={title} name={name} direction={"horizontal"}>
+    <RadioButtonGroup name={name} direction={"horizontal"}>
       <RadioButton key="spot" label="Spot" value="spot" />
       <RadioButton key="forward" label="Forward" value="forward" />
       <RadioButton
@@ -100,11 +100,7 @@ const DensityExample = ({
   title,
 }: DensityExampleProps) => (
   <SaltProvider density={density}>
-    <RadioButtonGroup
-      name={`${name}-${density}`}
-      legend={title}
-      direction={direction}
-    >
+    <RadioButtonGroup name={`${name}-${density}`} direction={direction}>
       <RadioButtonVariations />
     </RadioButtonGroup>
   </SaltProvider>
@@ -212,7 +208,6 @@ export const ControlledRadioButtonGroup: ComponentStory<
   return (
     <RadioButtonGroup
       aria-label="Controlled Example"
-      legend="Controlled Group"
       name="fx"
       onChange={handleChange}
       radios={radioData}
@@ -228,11 +223,7 @@ export const LongTextRadioButtonGroup: ComponentStory<
   typeof RadioButtonGroup
 > = () => (
   <div style={{ width: "500px" }}>
-    <RadioButtonGroup
-      aria-label="Long Text Example"
-      legend="Long Text Group"
-      name="selectionControls"
-    >
+    <RadioButtonGroup aria-label="Long Text Example" name="selectionControls">
       <RadioButton
         key="checkboxes"
         label="Checkboxes allow the user to select multiple options from a set. If you have multiple options appearing in a list, you can preserve space by using checkboxes instead of on/off switches. If you have a single option, avoid using a checkbox and use an on/off switch instead."

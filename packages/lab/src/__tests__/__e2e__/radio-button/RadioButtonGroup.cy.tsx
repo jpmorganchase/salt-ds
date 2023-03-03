@@ -53,7 +53,6 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children as funct
         <RadioButtonGroup
           aria-label="Uncontrolled Example"
           defaultValue="forward"
-          legend="Uncontrolled Group"
           name="fx"
         >
           <RadioButton key="spot" label="Spot" value="spot" />
