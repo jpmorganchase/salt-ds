@@ -1,74 +1,87 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
+import { UserIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, ImgHTMLAttributes } from "react";
-import { classBase } from "./internal/constants";
-import { DefaultAvatar } from "./internal/DefaultAvatar";
+import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useLoaded } from "./internal/useLoaded";
 
 import "./Avatar.css";
 
+export type NameToInitials = (name?: string) => string;
+
 export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
-  alt?: string;
-  id?: string;
-  imgProps?: ImgHTMLAttributes<HTMLImageElement>;
-  size?: "small" | "medium" | "large";
-  sizes?: string;
+  /**
+   * The name that Avatar represents.
+   */
+  name?: string;
+  /**
+   * Defines the function that gets initials. Default is capital first letter of each separate word in name.
+   * If a function is not passed or returns undefined, Avatar will default to Icon.
+   */
+  nameToInitials?: NameToInitials;
+  /**
+   * Image src of Avatar.
+   */
   src?: string;
-  srcSet?: string;
-  title?: string;
+  /**
+   * Multiplier for the base avatar.
+   */
+  size?: number;
+  /**
+   * Icon to be used as a default item. Defaults to `UserIcon`
+   */
+  fallbackIcon?: ReactNode;
 }
 
-const withBaseName = makePrefixer(classBase);
+const withBaseName = makePrefixer("saltAvatar");
+const DEFAULT_AVATAR_SIZE = 2; // medium
+
+const defaultNameToInitials = (name?: string) =>
+  name
+    ?.split(" ")
+    .slice(0, 2)
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   {
-    alt = "",
     className,
     children: childrenProp,
-    id: idProp,
-    size = "medium",
+    name,
+    nameToInitials = defaultNameToInitials,
     src,
-    srcSet,
-    title = "user",
-    imgProps,
-    sizes,
+    size = DEFAULT_AVATAR_SIZE,
+    style: styleProp,
+    fallbackIcon = <UserIcon />,
     ...rest
   },
   ref
 ) {
   let children;
-  const id = useId(idProp);
 
-  const loaded = useLoaded({ ...imgProps, src, srcSet });
-  const hasImg = src || srcSet;
-  const hasImgNotFailing = hasImg && loaded !== "error";
+  const style = {
+    ...styleProp,
+    "--saltAvatar-size-multiplier": `${size}`,
+  };
+
+  const hasImgNotFailing = useLoaded({ src }) !== "error" && src;
 
   if (hasImgNotFailing) {
-    children = (
-      <img
-        className={withBaseName("image")}
-        alt={alt}
-        src={src}
-        srcSet={srcSet}
-        sizes={sizes}
-        {...imgProps}
-      />
-    );
+    children = <img className={withBaseName("image")} alt={name} src={src} />;
   } else if (childrenProp != null) {
     children = childrenProp;
-  } else if (hasImg && alt) {
-    children = alt[0];
-  } else {
-    children = <DefaultAvatar id={id} title={title} {...rest} />;
   }
+
+  const avatarInitials = nameToInitials(name);
 
   return (
     <div
       ref={ref}
-      className={clsx(withBaseName(), withBaseName(size), className)}
+      style={style}
+      className={clsx(withBaseName(), className)}
       {...rest}
     >
-      {children}
+      {children || avatarInitials || fallbackIcon}
     </div>
   );
 });
