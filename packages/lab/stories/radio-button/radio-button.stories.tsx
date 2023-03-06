@@ -211,10 +211,13 @@ export const ControlledRadioButtonGroup: ComponentStory<
       aria-label="Controlled Example"
       name="fx"
       onChange={handleChange}
-      radios={radioData}
       value={controlledValue}
       direction={"horizontal"}
-    />
+    >
+      {radioData.map((radio) => (
+        <RadioButton {...radio} />
+      ))}
+    </RadioButtonGroup>
   );
 };
 

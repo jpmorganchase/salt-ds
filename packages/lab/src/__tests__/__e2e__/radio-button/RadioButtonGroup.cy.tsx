@@ -17,9 +17,12 @@ describe("GIVEN a RadioButtonGroup component", () => {
       cy.mount(
         <RadioButtonGroup
           data-testid="radio-button-group-test"
-          radios={radios}
           value="button one"
-        />
+        >
+          {radios.map((radio) => (
+            <RadioButton {...radio} />
+          ))}
+        </RadioButtonGroup>
       );
       cy.findAllByRole("radio").should("have.length", 3);
     });
