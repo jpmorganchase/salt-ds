@@ -30,6 +30,12 @@ export const RadioButtonVariations = () => {
       <RadioButton label="Error unchecked" value="Error-unchecked" error />
       <RadioButton label="Error checked" value="Error-checked" checked error />
       <RadioButton
+        label="Disabled error"
+        value="disabled-error"
+        disabled
+        error
+      />
+      <RadioButton
         label="Disabled error checked"
         value="disabled-error-checked"
         checked
@@ -233,6 +239,7 @@ export const LongTextRadioButtonGroup: ComponentStory<
         key="switches"
         label="On/off switches toggle the state of a single settings option. The option that the switch controls, as well as the state it’s in, should be made clear from the corresponding inline label. Switch can also be used with a label description thanks to the FormControlLabel component."
         value="switches"
+        disabled
       />
     </RadioButtonGroup>
   </div>

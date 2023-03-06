@@ -1,10 +1,7 @@
 /* Styles applied to RadioButton container */
 .saltRadioButton {
-  padding: 1px 0;
   display: flex;
-  align-items: flex-start;
   gap: calc(var(--salt-size-unit) * 0.75);
-  outline: 0;
   position: relative;
   user-select: none;
   cursor: pointer;
