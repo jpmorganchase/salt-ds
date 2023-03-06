@@ -11,7 +11,6 @@
   --salt-status-success-borderColor: var(--salt-palette-success-border);
   --salt-status-warning-borderColor: var(--salt-palette-warning-border);
   --salt-status-error-borderColor: var(--salt-palette-error-border);
-  /* --salt-status-static-borderColor: var(--salt-palette-neutral-secondary-foreground); */
 
   --salt-status-info-background-emphasize: var(--salt-palette-info-background-emphasize);
   --salt-status-success-background-emphasize: var(--salt-palette-success-background-emphasize);
