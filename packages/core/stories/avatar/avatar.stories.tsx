@@ -1,8 +1,8 @@
+import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import { Avatar, FlowLayout, Label, StackLayout } from "@salt-ds/core";
 import { UserGroupIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Avatar, FlowLayout, Label, StackLayout } from "@salt-ds/core";
-import { CSSProperties, ReactNode, useEffect, useState } from "react";
-import persona1 from "./../assets/persona1.png";
+import persona1 from "../assets/persona1.png";
 
 export default {
   title: "Core/Avatar",
