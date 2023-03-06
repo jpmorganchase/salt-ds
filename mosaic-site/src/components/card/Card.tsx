@@ -3,7 +3,6 @@ import {
   useRef,
   cloneElement,
   CSSProperties,
-  MutableRefObject,
   ReactNode,
 } from "react";
 import clsx from "clsx";
@@ -84,7 +83,7 @@ export const InlineCard = ({
   footerText,
   keylineColor,
 }: CardProps): JSX.Element => {
-  const ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
+  const ref = useRef<HTMLDivElement>(null);
 
   const { mode } = useTheme();
 

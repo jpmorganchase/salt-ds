@@ -1,4 +1,4 @@
-import { useRef, MutableRefObject } from "react";
+import { useRef } from "react";
 import clsx from "clsx";
 
 import PageIllustration from "./PageIllustration";
