@@ -5,15 +5,24 @@
   --shadow-dark-elevation2: var(--salt-overlayable-shadow-scroll-color);
 }
 
+:global(header):has(.smallViewport) {
+  --navbar-padding-horizontal: var(--salt-size-unit);
+}
+
 :global(header):has(.root) {
   padding: var(--navbar-padding-vertical) var(--navbar-padding-horizontal);
+}
+
+:global(header):has(.smallViewport) {
+  height: calc(var(--salt-size-unit) * 5);
+  gap: var(--salt-size-unit);
+  align-items: stretch;
 }
 
 .root {
   flex-grow: 1;
   display: flex;
   align-items: flex-end;
-  flex-wrap: wrap;
   justify-content: space-between;
 }
 
@@ -38,8 +47,7 @@
   display: none;
 }
 
-@media screen and (max-width: 768px) {
-  :global(header):has(.root) {
-    --navbar-padding-horizontal: var(--salt-size-unit);
-  }
+.drawer svg {
+  width: 24px;
+  height: 24px;
 }

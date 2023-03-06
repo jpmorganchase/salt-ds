@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useLayoutEffect, useState } from "react";
-
+import classnames from "classnames";
 import { Logo } from "@salt-ds/lab";
 import { useBreakpoint, Link } from "@jpmorganchase/mosaic-components";
 import type { TabsMenu } from "@jpmorganchase/mosaic-components";
@@ -44,19 +44,26 @@ export const AppHeader: FC<AppHeaderProps> = ({
   const breakpoint = useBreakpoint();
   const { route } = useRoute();
 
+  const isMobileOrTablet = breakpoint === "mobile" || breakpoint === "tablet";
+
   useIsomorphicLayoutEffect(() => {
-    setShowDrawer(breakpoint === "mobile" || breakpoint === "tablet");
+    setShowDrawer(isMobileOrTablet);
   }, [breakpoint]);
 
-  const appHeaderLogo =
-    breakpoint === "mobile" || breakpoint === "tablet"
-      ? "/img/logo_mobile.svg"
-      : logo;
+  const appHeaderLogo = isMobileOrTablet ? "/img/logo_mobile.svg" : logo;
 
   return (
     <>
-      {showDrawer && <AppHeaderDrawer menu={createDrawerMenu(menu)} />}
-      <div className={styles.root}>
+      {showDrawer && (
+        <div className={styles.drawer}>
+          <AppHeaderDrawer menu={createDrawerMenu(menu)} />
+        </div>
+      )}
+      <div
+        className={classnames(styles.root, {
+          [styles.smallViewport]: isMobileOrTablet,
+        })}
+      >
         {homeLink && (
           <Link href={homeLink} variant="component">
             {logo && <Logo appTitle={title} src={appHeaderLogo} />}
