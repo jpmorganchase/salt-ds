@@ -12,6 +12,7 @@ export interface CheckboxIconProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
+  error?: boolean;
   indeterminate?: boolean;
 }
 
@@ -21,10 +22,12 @@ export const CheckboxIcon = ({
   checked = false,
   className: classNameProp,
   disabled,
+  error,
   indeterminate,
 }: CheckboxIconProps): JSX.Element => {
   const className = clsx(withBaseName(), classNameProp, {
     [withBaseName("disabled")]: disabled,
+    [withBaseName("error")]: error,
   });
   return indeterminate ? (
     <CheckboxIndeterminateIcon

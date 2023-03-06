@@ -18,6 +18,7 @@ export interface CheckboxProps {
   className?: string;
   defaultChecked?: boolean;
   disabled?: boolean;
+  error?: boolean;
   indeterminate?: boolean;
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
   label?: ReactNode;
@@ -38,6 +39,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       className,
       defaultChecked,
       disabled,
+      error,
       indeterminate,
       inputProps,
       label,
@@ -94,6 +96,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <CheckboxIcon
           checked={checked}
           disabled={disabled}
+          error={error}
           indeterminate={indeterminate}
         />
         {label}

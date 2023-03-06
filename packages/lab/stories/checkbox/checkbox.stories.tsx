@@ -11,7 +11,7 @@ const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => {
   return <Checkbox {...args} />;
 };
 
-export const Default: ComponentStory<typeof Checkbox> = () => {
+export const CheckboxVariations: ComponentStory<typeof Checkbox> = () => {
   return (
     <>
       <Checkbox label="I understand ADA required Labels on unchecked checkboxes" />
@@ -24,6 +24,46 @@ export const Default: ComponentStory<typeof Checkbox> = () => {
         indeterminate
         label="I understand ADA required Labels on indeterminate checkboxes"
       />
+      <Checkbox disabled label="disabled checkbox" />
+      <Checkbox
+        disabled
+        indeterminate
+        label="disabled indeterminate checkbox"
+      />
+      <Checkbox disabled checked label="disabled and checked checkbox" />
+      <Checkbox
+        error
+        label="I understand ADA required Labels on unchecked checkboxes"
+      />
+      <Checkbox
+        error
+        defaultChecked
+        label="I understand ADA required Labels on checked checkboxes"
+      />
+      <Checkbox
+        error
+        defaultChecked
+        indeterminate
+        label="I understand ADA required Labels on indeterminate checkboxes"
+      />
+      <Checkbox
+        error
+        disabled
+        label="I understand ADA required Labels on unchecked checkboxes"
+      />
+      <Checkbox
+        error
+        defaultChecked
+        disabled
+        label="I understand ADA required Labels on checked checkboxes"
+      />
+      <Checkbox
+        error
+        defaultChecked
+        disabled
+        indeterminate
+        label="I understand ADA required Labels on indeterminate checkboxes"
+      />
     </>
   );
 };
@@ -32,20 +72,6 @@ export const FeatureInput = CheckboxTemplate.bind({});
 
 FeatureInput.args = {
   label: "Checkbox",
-};
-
-export const Disabled: ComponentStory<typeof Checkbox> = () => {
-  return (
-    <>
-      <Checkbox disabled label="disabled checkbox" />
-      <Checkbox
-        disabled
-        indeterminate
-        label="disabled indeterminate checkbox"
-      />
-      <Checkbox disabled checked label="disabled and checked checkbox" />
-    </>
-  );
 };
 
 export const WithoutLabel = CheckboxTemplate.bind({});
@@ -172,14 +198,16 @@ export const LongTextGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
   ];
 
   return (
-    <CheckboxGroup
-      {...args}
-      defaultCheckedValues={["radio"]}
-      legend="Long Text Checkbox Group"
-    >
-      {checkboxesData.map((data) => (
-        <Checkbox key={data.value} {...data} />
-      ))}
-    </CheckboxGroup>
+    <div style={{ width: "500px" }}>
+      <CheckboxGroup
+        {...args}
+        defaultCheckedValues={["radio"]}
+        legend="Long Text Checkbox Group"
+      >
+        {checkboxesData.map((data) => (
+          <Checkbox key={data.value} {...data} />
+        ))}
+      </CheckboxGroup>
+    </div>
   );
 };

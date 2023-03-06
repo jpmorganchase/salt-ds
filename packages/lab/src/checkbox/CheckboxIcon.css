@@ -37,6 +37,12 @@
   min-width: var(--saltCheckbox-icon-size, var(--checkbox-size));
 }
 
+
+/* Styles applied to radio button icon when disabled and with error */
+.saltCheckboxIcon-disabled .saltCheckboxIcon-error {
+  opacity: var(--salt-opacity-3);
+}
+
 /* Styles applied to root component on hover */
 .saltCheckbox:hover .saltCheckboxIcon,
 .saltCheckboxIcon:hover {
@@ -57,6 +63,12 @@
   stroke-width: var(--saltCheckbox-icon-strokeWidth-disabled, var(--salt-size-border));
 }
 
+/* Styles applied if `error={true}` */
+.saltCheckboxIcon-error {
+  stroke: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor));
+  stroke-width: var(--saltCheckbox-icon-strokeWidth-error, var(--salt-size-border));
+}
+
 /* Styles applied if `checked={true}` */
 .saltCheckboxIcon-checked {
   --checkbox-borderWidth: var(--saltCheckbox-icon-borderWidth-checked, 0px);
@@ -67,6 +79,11 @@
 /* Styles applied if `checked={true}` and `disabled={true}` */
 .saltCheckboxIcon-checked.saltCheckboxIcon-disabled {
   fill: var(--saltCheckbox-icon-fill-disabled, var(--salt-selectable-borderColor-selectedDisabled));
+}
+
+/* Styles applied if `checked={true}` and `error={true}` */
+.saltCheckboxIcon-checked.saltCheckboxIcon-error {
+  fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor));
 }
 
 /* Styles applied to box */
@@ -86,6 +103,11 @@
 /* Styles applied if `indeterminate={true}` and `disabled={true}` */
 .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color-disabled, var(--salt-selectable-foreground-selectedDisabled));
+}
+
+/* Styles applied if `indeterminate={true}` and `error={true}` */
+.saltCheckboxIcon-error.saltCheckboxIcon-indeterminate {
+  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor));
 }
 
 /* Styles applied to tick */
