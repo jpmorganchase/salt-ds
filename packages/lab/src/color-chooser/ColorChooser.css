@@ -11,7 +11,7 @@
 .saltColorChooser-overlayButtonSwatchTransparent {
   height: calc(3 * var(--salt-size-unit) - 2px) !important;
   width: calc(3 * var(--salt-size-unit) - 2px) !important;
-  border: 1px solid var(--salt-differential-negative-foreground);
+  border: 1px solid var(--salt-status-negative-foreground);
   /* RGBA using red-700 */
   background: linear-gradient(
     to top left,
