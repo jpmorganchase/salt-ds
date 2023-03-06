@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, Image } from "@jpmorganchase/mosaic-site-components";
-import Features from "./_index/features/Features";
+import Features from "src/_index/features/Features";
 import { Card, CardProps } from "src/components/card/Card";
-import HomepageAccordion from "./_index/accordion/Accordion";
+import HomepageAccordion from "src/_index/accordion/Accordion";
 import styles from "./index.module.css";
 
 const tagline = `Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. It offers you well-documented, accessible components as well as comprehensive design templates, style libraries and assets.

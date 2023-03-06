@@ -1,5 +1,5 @@
 // eslint-disable import/no-duplicates
-import { useMemo } from "react";
+import { useMemo, ReactNode } from "react";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import {
@@ -20,7 +20,6 @@ import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
 import { SessionProvider } from "next-auth/react";
 import "@jpmorganchase/mosaic-site-preset-styles/index.css";
 import "../css/index.css";
-import { Mode } from "@salt-ds/theme";
 import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
 import Homepage from "./index";
 import * as saltLayouts from "../layouts";
@@ -37,7 +36,7 @@ const components = {
 
 const layoutComponents = { ...mosaicLayouts, ...saltLayouts };
 
-const DensityProvider = ({ children }) => {
+const DensityProvider = ({ children }: { children: ReactNode }) => {
   const viewport = useCurrentBreakpoint();
 
   const density = useMemo(
@@ -48,7 +47,7 @@ const DensityProvider = ({ children }) => {
   return <SaltProvider density={density}>{children}</SaltProvider>;
 };
 
-const colorMode: Mode = "dark";
+const colorMode: "light" | "dark" = "dark";
 
 export default function MyApp({
   Component,

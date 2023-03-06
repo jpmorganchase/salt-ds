@@ -6,6 +6,7 @@ import {
 } from "@jpmorganchase/mosaic-site-components";
 import { SaltProvider } from "@salt-ds/core";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
+import { useMeta } from "@jpmorganchase/mosaic-store";
 import { LayoutFullWidth } from "../LayoutFullWidth";
 import type { LayoutProps } from "../types/index";
 import layoutStyles from "../index.module.css";
@@ -14,7 +15,9 @@ export const DetailContentOnly: React.FC<LayoutProps> = ({
   FooterProps,
   children,
 }) => {
-  const title = children?.props.source.frontmatter.title;
+  const {
+    meta: { title },
+  } = useMeta();
 
   return (
     <LayoutBase Header={<AppHeader />}>

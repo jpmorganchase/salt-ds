@@ -1,6 +1,7 @@
+import { SVGProps } from "react";
 import styles from "./Accordion.module.css";
 
-export default (props) => (
+export default (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={1055}
