@@ -33,11 +33,13 @@
   --saltButton-fontWeight: none;
   --saltButton-letterSpacing: normal;
   --saltButton-height: auto;
-  --saltIcon-color: inherit;
-  --salt-actionable-primary-foreground-active: var(--button-text-color-hover);
 
   display: inline;
   padding: var(--table-cell-padding);
+}
+
+.componentList th button:hover {
+  --saltIcon-color: var(--button-text-color-hover);
 }
 
 .headerContainer {
