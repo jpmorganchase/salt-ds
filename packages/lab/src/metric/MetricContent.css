@@ -13,17 +13,17 @@
 }
 
 .saltMetric-direction-up .saltMetricContent-indicator {
-  fill: var(--salt-differential-positive-foreground);
+  fill: var(--salt-status-positive-foreground);
 }
 .saltMetric-direction-up .saltMetricContent-subvalue {
-  color: var(--salt-differential-positive-foreground);
+  color: var(--salt-status-positive-foreground);
 }
 
 .saltMetric-direction-down .saltMetricContent-indicator {
-  fill: var(--salt-differential-negative-foreground);
+  fill: var(--salt-status-negative-foreground);
 }
 .saltMetric-direction-down .saltMetricContent-subvalue {
-  color: var(--salt-differential-negative-foreground);
+  color: var(--salt-status-negative-foreground);
 }
 
 .saltMetricContent-subvalue {
