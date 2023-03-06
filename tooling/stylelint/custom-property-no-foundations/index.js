@@ -70,7 +70,6 @@ const allAllowedKeys = [
   // characteristics
   "actionable",
   "container",
-  "differential",
   "draggable",
   "target",
   "editable",
