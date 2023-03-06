@@ -10,7 +10,6 @@
   height: var(--saltRadioButton-icon-svg-size, var(--salt-size-selectable));
   border-radius: 50%;
   flex: none;
-  margin: 1px 0;
 }
 
 /* Styles applied to RadioButtonIcon border */

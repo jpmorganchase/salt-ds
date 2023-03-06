@@ -8,7 +8,7 @@ import {
   useEffect,
 } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
-import { RadioButtonGroup } from "../radio-button";
+import { RadioButtonGroup, RadioButton } from "../radio-button";
 import { DeckLayout } from "../deck-layout";
 import { clsx } from "clsx";
 import "./Carousel.css";
@@ -138,12 +138,15 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
           <RadioButtonGroup
             aria-label="Carousel buttons"
             onChange={handleRadioChange}
-            radios={Array.from({ length: slidesCount }, (_, index) => ({
-              value: `${index}`,
-            }))}
             value={`${selectedSlide}`}
             direction={"horizontal"}
-          />
+          >
+            {Array.from({ length: slidesCount }, (_, index) => ({
+              value: `${index}`,
+            })).map((radio) => (
+              <RadioButton {...radio} />
+            ))}
+          </RadioButtonGroup>
         </div>
       </GridLayout>
     );
