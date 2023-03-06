@@ -1,20 +1,21 @@
 /* Styles applied to root component */
 .saltCheckboxGroup {
-  border: 0;
+  border: none;
   margin: 0;
   padding: 0;
-  display: inline-flex;
-  flex-direction: column;
-  vertical-align: top;
 }
 
-.saltCheckboxGroup-formGroup {
-  gap: var(--salt-size-unit);
-}
-
-/* Styles applied to root component if `row={true}` */
+/* Styles applied to root component if `direction={"horizontal"}` */
 .saltCheckboxGroup-horizontal {
-  --saltControlLabel-right-marginRight: calc(var(--salt-size-unit) * 3);
+  display: flex;
+  gap: var(--salt-size-unit);
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 
-  display: block;
+/* Styles applied to root component if `direction={"vertical"}` */
+.saltCheckboxGroup-vertical {
+  display: flex;
+  gap: var(--salt-size-unit);
+  flex-direction: column;
 }

@@ -6,13 +6,14 @@ import {
   HTMLAttributes,
   ReactNode,
 } from "react";
-import { useControlled } from "@salt-ds/core";
-import { FormGroup, FormGroupProps } from "../form-group";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 import "./CheckboxGroup.css";
 
-export interface CheckboxGroupProps extends FormGroupProps {
+export type CheckboxGroupDirectionProps = "horizontal" | "vertical";
+
+export interface CheckboxGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The current checked options.
    */
@@ -21,6 +22,10 @@ export interface CheckboxGroupProps extends FormGroupProps {
    * The default selected options for un-controlled component.
    */
   defaultCheckedValues?: string[];
+  /**
+   * Display group of elements in a compact row.
+   */
+  direction?: CheckboxGroupDirectionProps;
   /**
    * Props spread onto the FormControl component that wraps the checkboxes.
    */
@@ -44,7 +49,7 @@ export interface CheckboxGroupProps extends FormGroupProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
-const classBase = "saltCheckboxGroup";
+const withBaseName = makePrefixer("saltCheckboxGroup");
 
 export const CheckboxGroup = forwardRef<
   HTMLFieldSetElement,
@@ -56,7 +61,7 @@ export const CheckboxGroup = forwardRef<
     children,
     className,
     FormControlProps,
-    row,
+    direction = "vertical",
     name,
     onChange,
     ...other
@@ -87,15 +92,10 @@ export const CheckboxGroup = forwardRef<
     <CheckboxGroupContext.Provider
       value={{ name, onChange: handleChange, checkedValues }}
     >
-      <fieldset
-        className={clsx(classBase, {
-          [`${classBase}-horizontal`]: row,
-        })}
-        ref={ref}
-      >
-        <FormGroup className={`${classBase}-formGroup`} row={row} {...other}>
+      <fieldset className={clsx(withBaseName(), className)} ref={ref}>
+        <div className={clsx(withBaseName(direction))} {...other}>
           {children}
-        </FormGroup>
+        </div>
       </fieldset>
     </CheckboxGroupContext.Provider>
   );

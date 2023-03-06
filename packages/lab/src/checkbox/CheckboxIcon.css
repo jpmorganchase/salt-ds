@@ -30,9 +30,11 @@
 
   fill: var(--saltCheckbox-icon-fill, var(--salt-selectable-background));
   height: var(--saltCheckbox-icon-size, var(--checkbox-size));
+  min-height: var(--saltCheckbox-icon-size, var(--checkbox-size));
   stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-borderColor));
   stroke-width: var(--saltCheckbox-icon-strokeWidth, var(--salt-size-border));
   width: var(--saltCheckbox-icon-size, var(--checkbox-size));
+  min-width: var(--saltCheckbox-icon-size, var(--checkbox-size));
 }
 
 /* Styles applied to root component on hover */
