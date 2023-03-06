@@ -15,7 +15,7 @@ type HomepageAccordionProps = {
 const HomepageAccordion = ({
   homePageInfo,
 }: HomepageAccordionProps): JSX.Element => {
-  const ref = useRef<HTMLDivElement>() as MutableRefObject<HTMLDivElement>;
+  const ref = useRef<HTMLDivElement>(null);
 
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-50px");
   return (
