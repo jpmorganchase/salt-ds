@@ -6409,7 +6409,7 @@ __metadata:
     vite: ^3.1.0
     vite-plugin-istanbul: ^4.0.0
     vite-tsconfig-paths: ^4.0.3
-    webpack: 5.74.0
+    webpack: 5.75.0
   languageName: unknown
   linkType: soft
 
@@ -33519,7 +33519,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:>=4.43.0 <6.0.0, webpack@npm:^5.73.0, webpack@npm:^5.9.0":
+"webpack@npm:5.75.0, webpack@npm:>=4.43.0 <6.0.0, webpack@npm:^5.73.0, webpack@npm:^5.9.0":
   version: 5.75.0
   resolution: "webpack@npm:5.75.0"
   dependencies:
