@@ -10,6 +10,7 @@
   display: flex;
   gap: calc(var(--salt-size-unit) * var(--checkbox-top-multiplier));
   position: relative;
+  width: fit-content;
 }
 
 /* Styles applied to root component if `disabled={true}` */
