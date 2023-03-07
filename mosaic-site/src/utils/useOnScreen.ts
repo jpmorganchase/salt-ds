@@ -1,7 +1,7 @@
 import { useEffect, useState, MutableRefObject } from "react";
 
 const useOnScreen = <T extends Element>(
-  ref: MutableRefObject<T>,
+  ref: MutableRefObject<T | null>,
   rootMargin: string = "0px"
 ): boolean => {
   const [isIntersecting, setIntersecting] = useState<boolean>(false);
@@ -15,7 +15,7 @@ const useOnScreen = <T extends Element>(
       }
     );
 
-    observer.observe(ref.current);
+    ref.current && observer.observe(ref.current);
 
     return () => {
       observer.disconnect();

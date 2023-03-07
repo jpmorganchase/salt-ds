@@ -1,8 +1,8 @@
-import { Children } from "react";
+import { Children, ReactNode } from "react";
 import useSplitArray from "../../../utils/useSplitArray";
 import styles from "./DesignCards.module.css";
 
-export const DesignCards = ({ children }) => {
+export const DesignCards = ({ children }: { children: ReactNode }) => {
   const childrenArray = Children.toArray(children);
   const [firstRow, secondRow] = useSplitArray(childrenArray);
 

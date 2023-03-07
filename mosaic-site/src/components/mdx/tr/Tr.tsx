@@ -1,1 +1,5 @@
-export const Tr = ({ children }) => <tr>{children}</tr>;
+import { ReactNode } from "react";
+
+export const Tr = ({ children }: { children: ReactNode }) => (
+  <tr>{children}</tr>
+);
