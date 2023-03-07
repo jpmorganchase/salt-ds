@@ -1,6 +1,10 @@
 import { ChangeEventHandler, useState } from "react";
 import { Density, SaltProvider, Panel, FlexLayout } from "@salt-ds/core";
-import { RadioButton, RadioButtonGroup } from "@salt-ds/lab";
+import {
+  RadioButton,
+  RadioButtonGroup,
+  RadioButtonGroupProps,
+} from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
 
 export default {
@@ -46,13 +50,9 @@ export const RadioButtonVariations = () => {
   );
 };
 
-export const VerticalRadioButtonGroup = ({
-  title,
-  density,
-  name,
-}: ExampleWithTitleProps) => (
-  <SaltProvider density={density}>
-    <RadioButtonGroup name={name}>
+export const VerticalRadioButtonGroup = () => (
+  <SaltProvider>
+    <RadioButtonGroup>
       <RadioButton key="spot" label="Spot" value="spot" />
       <RadioButton key="forward" label="Forward" value="forward" />
       <RadioButton
@@ -66,21 +66,18 @@ export const VerticalRadioButtonGroup = ({
 );
 
 export const HorizontalRadioButtonGroup = ({
-  title,
-  density,
-  name,
-}: ExampleWithTitleProps) => (
-  <SaltProvider density={density}>
-    <RadioButtonGroup name={name} direction={"horizontal"} labelWrap>
-      {/* <RadioButton key="spot" label="Spot" value="spot" />
+  labelWrap,
+}: RadioButtonGroupProps) => (
+  <SaltProvider>
+    <RadioButtonGroup direction={"horizontal"} labelWrap={labelWrap}>
+      <RadioButton key="spot" label="Spot" value="spot" />
       <RadioButton key="forward" label="Forward" value="forward" />
       <RadioButton
         disabled
         key="option"
         label="Option (disabled)"
         value="option"
-      /> */}
-      <RadioButtonVariations />
+      />
     </RadioButtonGroup>
   </SaltProvider>
 );
@@ -248,3 +245,12 @@ export const LongTextRadioButtonGroup: ComponentStory<
     </RadioButtonGroup>
   </div>
 );
+
+export const LabelWrapExample: ComponentStory<typeof RadioButtonGroup> = ({
+  labelWrap,
+}) => (
+  <div style={{ width: "200px" }}>
+    <HorizontalRadioButtonGroup labelWrap={labelWrap} />
+  </div>
+);
+LabelWrapExample.args = { labelWrap: true };
