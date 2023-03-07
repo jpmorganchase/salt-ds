@@ -1,6 +1,9 @@
+import { ReactNode } from "react";
 import styles from "./Callout.module.css";
 
-export const Callout = ({ title, children }) => {
+type CalloutProps = { title: string; children: ReactNode };
+
+export const Callout = ({ title, children }: CalloutProps) => {
   return (
     <div className={styles.callout}>
       <hr />
