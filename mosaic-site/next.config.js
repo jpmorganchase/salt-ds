@@ -55,12 +55,12 @@ module.exports = {
     return [
       {
         source: "/",
-        destination: "/mosaic/index",
+        destination: "/salt/index",
         permanent: true,
       },
       {
-        source: "/mosaic",
-        destination: "/mosaic/index",
+        source: "/salt",
+        destination: "/salt/index",
         permanent: true,
       },
       {
@@ -70,4 +70,8 @@ module.exports = {
       },
     ];
   },
+  i18n: {
+    locales: ['en'],
+    defaultLocale: 'en'
+  }
 };
