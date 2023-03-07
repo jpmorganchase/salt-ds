@@ -70,5 +70,10 @@ export const AnchorHeading: FC<PropsWithChildren<AnchorHeadingProps>> = ({
   );
 };
 
-export const withAnchorHeading = (Component) => (props) =>
-  <AnchorHeading Component={Component} {...props} />;
+type WithAnchorHeadingProps = JSX.IntrinsicAttributes &
+  AnchorHeadingProps & { children?: React.ReactNode };
+
+export const withAnchorHeading =
+  (Component: FC<PropsWithChildren<TypographyProps>>) =>
+  (props: WithAnchorHeadingProps) =>
+    <AnchorHeading {...props} Component={Component} />;

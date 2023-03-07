@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import classnames from "classnames";
+import { FooterProps as MosaicFooterProps } from "@jpmorganchase/mosaic-site-components";
 import { Link } from "@salt-ds/core";
 import styles from "./Footer.module.css";
 
@@ -8,9 +9,8 @@ type FooterLinkItem = {
   to?: string;
 };
 
-interface FooterProps {
-  className?: string;
-  links: FooterLinkItem[];
+export interface FooterProps extends MosaicFooterProps {
+  links?: FooterLinkItem[];
   copyright?: string;
 }
 
@@ -18,7 +18,7 @@ const defaultCopyright = `© ${new Date().getFullYear()} JPMorgan Chase & Co. Al
 
 export const Footer: FC<FooterProps> = ({
   className,
-  links,
+  links = [],
   copyright = defaultCopyright,
 }) => (
   <footer className={classnames(styles.footer, className)}>

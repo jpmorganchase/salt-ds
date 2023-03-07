@@ -9,7 +9,8 @@ import {
   PageNavigation,
   Sidebar,
 } from "@jpmorganchase/mosaic-site-components";
-import { Footer, AppHeader } from "../../components";
+import { Footer } from "../../components/footer";
+import { AppHeader } from "../../components/app-header";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
 import { LayoutColumns } from "../LayoutColumns/LayoutColumns";
 import { SaltProvider } from "@salt-ds/core";

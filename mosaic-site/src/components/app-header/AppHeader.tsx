@@ -2,8 +2,8 @@ import React, { FC, useEffect, useLayoutEffect, useState } from "react";
 import classnames from "classnames";
 import { Logo } from "@salt-ds/lab";
 import { useBreakpoint, Link } from "@jpmorganchase/mosaic-components";
-import type { TabsMenu } from "@jpmorganchase/mosaic-components";
-import { useRoute } from "@jpmorganchase/mosaic-store";
+import type { TabsMenu, TabsLinkItem } from "@jpmorganchase/mosaic-components";
+import { useRoute, SidebarItem } from "@jpmorganchase/mosaic-store";
 import {
   AppHeaderDrawer,
   AppHeaderTabs,
@@ -20,8 +20,10 @@ export type AppHeaderProps = {
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-const createDrawerMenu = (menu) =>
-  menu.reduce((result, item) => {
+type MenuItem = { link: string; title?: string; links: TabsLinkItem[] };
+
+const createDrawerMenu = (menu: any[]): SidebarItem[] =>
+  menu.reduce((result: SidebarItem[], item: MenuItem) => {
     const parsedItem = {
       id: item.link,
       name: item.title,
