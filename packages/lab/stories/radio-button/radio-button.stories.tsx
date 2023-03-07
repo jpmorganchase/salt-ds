@@ -71,15 +71,16 @@ export const HorizontalRadioButtonGroup = ({
   name,
 }: ExampleWithTitleProps) => (
   <SaltProvider density={density}>
-    <RadioButtonGroup name={name} direction={"horizontal"}>
-      <RadioButton key="spot" label="Spot" value="spot" />
+    <RadioButtonGroup name={name} direction={"horizontal"} labelWrap>
+      {/* <RadioButton key="spot" label="Spot" value="spot" />
       <RadioButton key="forward" label="Forward" value="forward" />
       <RadioButton
         disabled
         key="option"
         label="Option (disabled)"
         value="option"
-      />
+      /> */}
+      <RadioButtonVariations />
     </RadioButtonGroup>
   </SaltProvider>
 );
