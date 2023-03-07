@@ -1,0 +1,18 @@
+.pre button {
+  /* customise copy button */
+  --color-dark-actionable-primary-hover: transparent;
+  --color-dark-actionable-primary-regular: transparent;
+  --color-dark-actionable-label-light: var(--salt-color-gray-300);
+}
+
+.pre button {
+  border: 1px solid var(--salt-color-gray-300);
+  border-radius: 0.4rem;
+  padding: 0 var(--salt-size-unit);
+  margin: calc(var(--salt-size-unit) / 2);
+}
+
+.pre button svg {
+  width: 18px;
+  height: 18px;
+}
