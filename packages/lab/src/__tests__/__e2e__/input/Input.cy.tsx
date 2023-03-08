@@ -258,4 +258,28 @@ describe("GIVEN an Input", () => {
         .and("have.prop", "selectionEnd", 11);
     });
   });
+
+  // TODO Revisit when FormField is added
+  // describe("WHEN used in Formfield", () => {
+  //   test("and is disabled Then input within should be disabled", () => {
+  //     render(
+  //       <FormField label="Disabled form field" disabled>
+  //         <Input defaultValue="Value" />
+  //       </FormField>
+  //     );
+  //     expect(screen.getByLabelText(/Disabled form field/i)).toHaveAttribute(
+  //       "disabled"
+  //     );
+  //   });
+  // });
+  // test("and is readonly Then input within should be readonly", () => {
+  //   render(
+  //     <FormField label="Readonly form field" readOnly>
+  //       <Input defaultValue="Value" />
+  //     </FormField>
+  //   );
+  //   expect(screen.getByLabelText(/Readonly form field/i)).toHaveAttribute(
+  //     "readonly"
+  //   );
+  // });
 });
