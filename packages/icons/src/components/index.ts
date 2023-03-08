@@ -224,6 +224,7 @@ export * from "./StorageSolid";
 export * from "./Success";
 export * from "./SuccessSolid";
 export * from "./SuccessTick";
+export * from "./SuccessTickSmall";
 export * from "./Sum";
 export * from "./SumSolid";
 export * from "./Swap";
