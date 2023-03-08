@@ -1,7 +1,21 @@
 import { ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Card, Link, SaltProvider, Panel, H1, Text } from "@salt-ds/core";
+import {
+  Button,
+  Card,
+  InteractableCard,
+  SaltProvider,
+  Panel,
+  H1,
+  Text,
+  FlexLayout,
+  H2,
+  GridLayout,
+  Label,
+} from "@salt-ds/core";
+import { SearchIcon } from "@salt-ds/icons";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
+import stockPhoto from "./../assets/stockPhoto.png";
 
 export default {
   title: "Core/Card",
@@ -15,22 +29,17 @@ interface ExampleRowProps {
 
 const ExampleRow = ({ name, children }: ExampleRowProps) => (
   <Panel style={{ height: "unset", width: 800 }}>
-    <h1>{name} - ( Touch, Low, Medium, High )</h1>
     <ColumnLayoutContainer>
       <ColumnLayoutItem>
-        Touch
         <SaltProvider density="touch">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
-        Low
         <SaltProvider density="low">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
-        Medium
         <SaltProvider density="medium">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
-        High
         <SaltProvider density="high">{children}</SaltProvider>
       </ColumnLayoutItem>
     </ColumnLayoutContainer>
@@ -51,7 +60,7 @@ const Examples = () => (
 );
 
 export const All: ComponentStory<typeof Card> = () => (
-  <div style={{ marginTop: -200 }}>
+  <div>
     <SaltProvider mode="light">
       <Examples />
     </SaltProvider>
@@ -70,26 +79,67 @@ export const Default: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const Disabled: ComponentStory<typeof Card> = () => (
-  <Card data-testid="card-disabled-example" disabled>
-    <div>
-      <H1 disabled>Disabled Card</H1>
-      <Text disabled>Here is some content</Text>
-    </div>
-  </Card>
+export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
+  <FlexLayout>
+    {Array.from({ length: 4 }, (_, index) => (
+      <Card key={index}>
+        <div>
+          <H1>This is Card</H1>
+          {index % 2 === 0 && <H2>With a bit more information...</H2>}
+          <Text>Seen in FlexLayout</Text>
+        </div>
+      </Card>
+    ))}
+  </FlexLayout>
+);
+
+export const CardsInGridLayout: ComponentStory<typeof Card> = () => (
+  <GridLayout rows={2} columns={2}>
+    <Default />
+    <WithImage />
+    <WithImage />
+    <InteractableDisabled />
+  </GridLayout>
 );
 
 export const Interactable: ComponentStory<typeof Card> = () => (
-  <Link
-    href="https://google.com"
-    style={{ display: "inline-block", textDecoration: "none" }}
-    tab-index="0"
-    target="_parent"
+  <InteractableCard
+    onClick={() => {
+      window.open("https://google.com");
+    }}
   >
-    <Card interactable>
-      <div>
-        <p>Visit Google</p>
-      </div>
-    </Card>
-  </Link>
+    <div style={{ textAlign: "center" }}>
+      <div>Visit Google</div>
+    </div>
+  </InteractableCard>
+);
+
+export const InteractableDisabled: ComponentStory<typeof Card> = () => (
+  <InteractableCard
+    onClick={() => console.log("Clicked")}
+    data-testid="card-disabled-example"
+    disabled
+  >
+    <div>
+      <H1 disabled>Interactable Card</H1>
+      <Text disabled>This Card has been disabled</Text>
+    </div>
+  </InteractableCard>
+);
+
+export const WithImage: ComponentStory<typeof Card> = () => (
+  <Card>
+    <img src={stockPhoto} alt="Image from unsplash" height={150} />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingTop: "var(--salt-size-unit)",
+      }}
+    >
+      <Label>The Skies</Label>
+      <Button onClick={() => console.log("Clicked")}>See more</Button>
+    </div>
+  </Card>
 );

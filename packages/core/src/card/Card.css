@@ -15,8 +15,6 @@
 
 /* Styles applied to Card content */
 .saltCard-content {
-  color: var(--saltCard-color, var(--salt-text-primary-foreground));
-  min-height: var(--salt-text-minHeight);
   padding: var(--saltCard-padding, var(--salt-size-container-spacing));
 }
 
@@ -32,7 +30,7 @@ a:focus .saltCard-interactable,
   --card-borderColor: var(--salt-selectable-borderColor-hover);
   --card-shadow: var(--salt-overlayable-shadow-hover);
 
-  cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
+  cursor: var(--salt-selectable-cursor-hover);
   position: relative;
 }
 
@@ -41,7 +39,10 @@ a:focus .saltCard-interactable,
   --card-borderColor: var(--salt-selectable-borderColor-selected);
   --card-shadow: var(--salt-overlayable-shadow-hover);
 
-  outline: var(--salt-focused-outline);
+  cursor: var(--salt-selectable-cursor-active);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
@@ -52,18 +53,18 @@ a:focus .saltCard-interactable.saltCard-disabled,
   --card-shadow: var(--salt-overlayable-shadow);
 }
 
-/* Styles applied if `disabled={true}` */
-.saltCard-disabled,
-.saltCard-disabled.saltCard-interactable,
+/* Styles applied to InteractableCard if `disabled={true}` */
+.saltCard-interactable.saltCard-disabled,
 a:focus .saltCard-interactable.saltCard-disabled {
   --card-borderColor: var(--salt-container-primary-borderColor-disabled);
 
+  background: var(--saltCard-background, var(--salt-container-primary-background-disabled));
   color: var(--saltCard-color-disabled, var(--salt-text-primary-foreground-disabled));
-  cursor: var(--saltCard-cursor-disabled, var(--salt-selectable-cursor-disabled));
+  cursor: var(--salt-selectable-cursor-disabled);
   outline: none;
 }
 
-/* Styles applied to nested divs if `disabled={true}` */
-.saltCard-disabled div {
+/* Styles applied to nested divs in InteractableCard if `disabled={true}` */
+.saltCard-interactable.saltCard-disabled div {
   pointer-events: none;
 }

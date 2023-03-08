@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Card } from "@salt-ds/core";
+import { Card, InteractableCard } from "@salt-ds/core";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
@@ -16,7 +16,7 @@ import {
 
 # Card
 
-A Card is a sheet of material that serves as an entry point to more detailed information. It is a convenient means of displaying content composed of different elements whose size or supported actions vary.
+Cards contain content and actions about a single subject.
 
 ## Card Component
 
@@ -26,33 +26,41 @@ This default example is intended to show the way the Card component’s content 
   <Story id="core-card--default" />
 </Canvas>
 
-## Interactable
+## Interactable Cards
 
-Cards can have interactable styling by setting `interactable={true}`. These cards could be wrapped in Link, for example, for interactivity. We discourage the use of any focusable elements within interactable Cards.
+Cards can have actions by making use of `InteractableCard`. We discourage the use of any focusable elements within interactable Cards.
 
 <Canvas>
   <Story id="core-card--interactable" />
 </Canvas>
 
-## Disabled
+## Disabled Cards
 
-Cards can have disabled styling applied by setting `disabled={true}`.
+Interactable cards can have disabled styling applied by setting `disabled={true}`.
 
 Make sure to as well apply `disabled={true}` to any nested components, such as Text, to ensure disabled styling is also applied to the inner content.
 
 <Canvas>
-  <Story id="core-card--disabled" />
+  <Story id="core-card--interactable-disabled" />
+</Canvas>
+
+## Multiple Cards
+
+Layout components can be used for grouping Card components together.
+
+<Canvas>
+  <Story id="core-card--cards-in-grid-layout" />
 </Canvas>
 
 # API
 
 ```
-import { Card } from "@salt-ds/lab";
+import { Card, InteractableCard } from "@salt-ds/core";
 ```
 
-## Props
+## Interactable Card Props
 
-<ArgsTable of={Card} />
+<ArgsTable of={InteractableCard} />
 
 ## CSS Class
 
