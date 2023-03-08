@@ -1,16 +1,16 @@
 :global(header):has(.root) {
-  --navbar-padding-vertical: var(--salt-size-unit);
-  --navbar-padding-horizontal: calc(var(--salt-size-unit) * 3);
+  --site-navigation-padding-vertical: var(--salt-size-unit);
+  --site-navigation-padding-horizontal: calc(var(--salt-size-unit) * 3);
   --border-width-thin: 0;
   --shadow-dark-elevation2: var(--salt-overlayable-shadow-scroll-color);
 }
 
 :global(header):has(.smallViewport) {
-  --navbar-padding-horizontal: var(--salt-size-unit);
+  --site-navigation-padding-horizontal: var(--salt-size-unit);
 }
 
 :global(header):has(.root) {
-  padding: var(--navbar-padding-vertical) var(--navbar-padding-horizontal);
+  padding: var(--site-navigation-padding-vertical) var(--site-navigation-padding-horizontal);
 }
 
 :global(header):has(.smallViewport) {
