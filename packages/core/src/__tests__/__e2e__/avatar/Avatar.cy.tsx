@@ -10,7 +10,7 @@ describe("Given an Avatar", () => {
   describe("WHEN the default is left without children", () => {
     it("should show the default fallback icon", () => {
       cy.mount(<Default />);
-      cy.get('[data-testid="UserIcon"]').should("have.length", 4);
+      cy.get('[data-testid="UserSolidIcon"]').should("have.length", 4);
     });
   });
   describe("WHEN only a name is provided", () => {
@@ -45,7 +45,7 @@ describe("Given an Avatar", () => {
     it("should show the fallback icon when no children are provided", () => {
       const fallbackIcon = <UserGroupSolidIcon />;
       cy.mount(<Default fallbackIcon={fallbackIcon} />);
-      cy.get('[data-testid="UserGroupIcon"]').should("have.length", 4);
+      cy.get('[data-testid="UserGroupSolidIcon"]').should("have.length", 4);
     });
   });
 });
