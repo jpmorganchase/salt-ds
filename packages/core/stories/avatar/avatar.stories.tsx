@@ -63,13 +63,14 @@ WithCustomSvg.args = {
 export const ImageFallback: ComponentStory<typeof Avatar> = () => {
   const src = "bad_url";
   const alt = "profile";
+  const initials = "PP";
   const [children, setChildren] = useState<ReactNode>(alt);
 
   useEffect(() => {
     const img = new Image();
     img.src = src;
     img.onerror = () => {
-      setChildren(alt);
+      setChildren(initials);
     };
     img.onload = () => {
       setChildren(<img src={src} alt={alt} />);
