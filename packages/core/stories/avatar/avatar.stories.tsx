@@ -12,7 +12,7 @@ const sizes = [1, 2, 3, 4] as const;
 
 const Template: ComponentStory<typeof Avatar> = (props) => {
   return (
-    <FlowLayout gap={7} align="baseline">
+    <FlowLayout gap={7} align="end">
       {sizes.map((size) => (
         <StackLayout key={size} align="center">
           <Avatar {...props} key={size} size={size} />
