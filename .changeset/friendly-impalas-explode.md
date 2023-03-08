@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Tooltip uses default text styles by default.
+Fix Tooltip having incorrect text styles when being nested in elements with custom text styles.
