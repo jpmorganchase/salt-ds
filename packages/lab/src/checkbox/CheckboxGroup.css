@@ -8,7 +8,7 @@
 /* Styles applied to root component if `direction={"horizontal"}` */
 .saltCheckboxGroup-horizontal {
   display: flex;
-  gap: var(--salt-size-unit);
+  gap: calc(var(--salt-size-unit) * 0.75);
   flex-direction: row;
   flex-wrap: wrap;
 }
