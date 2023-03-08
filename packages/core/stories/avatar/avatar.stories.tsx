@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode, useEffect, useState } from "react";
 import { Avatar, FlowLayout, Label, StackLayout } from "@salt-ds/core";
-import { UserGroupIcon } from "@salt-ds/icons";
+import { UserGroupSolidIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import persona1 from "../assets/avatar.png";
 
@@ -32,7 +32,7 @@ Initials.args = {
 
 export const AlternativeIcon = Template.bind({});
 AlternativeIcon.args = {
-  fallbackIcon: <UserGroupIcon />,
+  fallbackIcon: <UserGroupSolidIcon />,
 };
 
 export const WithImage = Template.bind({});

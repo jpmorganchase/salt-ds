@@ -1,4 +1,4 @@
-import { UserIcon } from "@salt-ds/icons";
+import { UserSolidIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useLoaded } from "./internal/useLoaded";
@@ -52,7 +52,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     src,
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
-    fallbackIcon = <UserIcon />,
+    fallbackIcon = <UserSolidIcon />,
     ...rest
   },
   ref
