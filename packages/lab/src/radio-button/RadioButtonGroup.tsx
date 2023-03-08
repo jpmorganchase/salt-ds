@@ -16,14 +16,29 @@ export type RadioButtonGroupDirectionProps = "horizontal" | "vertical";
 
 export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
+  /**
+   * Set the selected value when initialized.
+   */
   defaultValue?: string;
+  /**
+   * Set the group direction.
+   */
   direction?: RadioButtonGroupDirectionProps;
   /**
    * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise the radio buttons will wrap onto the next line.
    */
   labelWrap?: boolean;
+  /**
+   * The name to be set on each radio button within the group. If not set, then one will be generated for you.
+   */
   name?: string;
+  /**
+   * Callback for change event.
+   */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  /**
+   * The value of the radio group, required for a controlled component.
+   */
   value?: string;
 }
 

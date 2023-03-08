@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useState } from "react";
-import { Density, SaltProvider, Panel, FlexLayout } from "@salt-ds/core";
+import { SaltProvider, Panel, FlexLayout } from "@salt-ds/core";
 import {
   RadioButton,
   RadioButtonGroup,
@@ -11,12 +11,6 @@ export default {
   title: "Lab/Radio Button",
   component: RadioButton,
 } as ComponentMeta<typeof RadioButton>;
-
-type ExampleWithTitleProps = {
-  title: string;
-  density: Density;
-  name: string;
-};
 
 export const RadioButtonVariations = () => {
   return (
@@ -53,13 +47,13 @@ export const RadioButtonVariations = () => {
 export const VerticalRadioButtonGroup = () => (
   <SaltProvider>
     <RadioButtonGroup>
-      <RadioButton key="spot" label="Spot" value="spot" />
-      <RadioButton key="forward" label="Forward" value="forward" />
+      <RadioButton key="option1" label="Radio Option 1" value="option1" />
+      <RadioButton key="option2" label="Radio Option 2" value="option2" />
       <RadioButton
         disabled
-        key="option"
-        label="Option (disabled)"
-        value="option"
+        key="option3"
+        label="Radio Option 3 (disabled)"
+        value="option3"
       />
     </RadioButtonGroup>
   </SaltProvider>
@@ -70,13 +64,13 @@ export const HorizontalRadioButtonGroup = ({
 }: RadioButtonGroupProps) => (
   <SaltProvider>
     <RadioButtonGroup direction={"horizontal"} labelWrap={labelWrap}>
-      <RadioButton key="spot" label="Spot" value="spot" />
-      <RadioButton key="forward" label="Forward" value="forward" />
+      <RadioButton key="option1" label="Radio Option 1" value="option1" />
+      <RadioButton key="option2" label="Radio Option 2" value="option2" />
       <RadioButton
         disabled
-        key="option"
-        label="Option (disabled)"
-        value="option"
+        key="option3"
+        label="Radio Option 3 (disabled)"
+        value="option3"
       />
     </RadioButtonGroup>
   </SaltProvider>
@@ -92,12 +86,7 @@ interface DensityExamplesProps {
   name: string;
 }
 
-const DensityExample = ({
-  density,
-  direction,
-  name,
-  title,
-}: DensityExampleProps) => (
+const DensityExample = ({ density, direction, name }: DensityExampleProps) => (
   <SaltProvider density={density}>
     <RadioButtonGroup name={`${name}-${density}`} direction={direction}>
       <RadioButtonVariations />
@@ -179,24 +168,24 @@ export const All: Story = () => (
 
 const radioData = [
   {
-    label: "Spot",
-    value: "spot",
+    label: "Controlled Radio Option 1",
+    value: "option1",
   },
   {
-    label: "Forward",
-    value: "forward",
+    label: "Controlled Radio Option 2",
+    value: "option2",
   },
   {
     disabled: true,
-    label: "Option (disabled)",
-    value: "option",
+    label: "Controlled Radio Option 3 (disabled)",
+    value: "option3",
   },
 ];
 
 export const ControlledRadioButtonGroup: ComponentStory<
   typeof RadioButtonGroup
 > = ({ onChange }) => {
-  const [controlledValue, setControlledValue] = useState("forward");
+  const [controlledValue, setControlledValue] = useState("option2");
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
@@ -210,7 +199,6 @@ export const ControlledRadioButtonGroup: ComponentStory<
       name="fx"
       onChange={handleChange}
       value={controlledValue}
-      direction={"horizontal"}
     >
       {radioData.map((radio) => (
         <RadioButton {...radio} />
@@ -224,7 +212,7 @@ export const ControlledRadioButtonGroup: ComponentStory<
 export const LongTextRadioButtonGroup: ComponentStory<
   typeof RadioButtonGroup
 > = () => (
-  <div style={{ width: "500px" }}>
+  <div style={{ width: 500 }}>
     <RadioButtonGroup aria-label="Long Text Example" name="selectionControls">
       <RadioButton
         key="checkboxes"
@@ -246,11 +234,25 @@ export const LongTextRadioButtonGroup: ComponentStory<
   </div>
 );
 
-export const LabelWrapExample: ComponentStory<typeof RadioButtonGroup> = ({
-  labelWrap,
-}) => (
-  <div style={{ width: "200px" }}>
-    <HorizontalRadioButtonGroup labelWrap={labelWrap} />
+export const LabelWrapRadioButtonGroup: ComponentStory<
+  typeof RadioButtonGroup
+> = ({ labelWrap }) => (
+  <div
+    style={{
+      width: 250,
+    }}
+  >
+    <RadioButtonGroup name="fx" direction={"horizontal"} labelWrap={labelWrap}>
+      <RadioButton key="option1" label="Radio Option 1" value="option1" />
+      <RadioButton key="option2" label="Radio Option 2" value="option2" />
+      <RadioButton
+        disabled
+        key="option3"
+        label="Radio Option 3 (disabled)"
+        value="option3"
+      />
+    </RadioButtonGroup>
   </div>
 );
-LabelWrapExample.args = { labelWrap: true };
+
+LabelWrapRadioButtonGroup.args = { labelWrap: true };

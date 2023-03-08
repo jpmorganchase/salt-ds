@@ -15,20 +15,47 @@ import "./RadioButton.css";
 const withBaseName = makePrefixer("saltRadioButton");
 
 export interface RadioButtonProps {
+  /**
+   * Set the default selected radio button in the group
+   */
   checked?: boolean;
   className?: string;
+  /**
+   * Prop used to set the styling
+   */
   disabled?: boolean;
+  /**
+   * Prop used to set the styling
+   */
   error?: boolean;
   id?: string;
+  /**
+   * Props to be passed to the radio input
+   */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
   /**
-   * The label to be shown next to the radio
+   * The label to be shown next to the radio icon
    */
   label?: ReactNode;
+  /**
+   * Name of the radio group
+   */
   name?: string;
+  /**
+   * Callback for blur event
+   */
   onBlur?: FocusEventHandler<HTMLSpanElement>;
+  /**
+   * Callback for change event
+   */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  /**
+   * Callback for focus event
+   */
   onFocus?: FocusEventHandler<HTMLSpanElement>;
+  /**
+   * Value of radio button
+   */
   value?: string;
 }
 
