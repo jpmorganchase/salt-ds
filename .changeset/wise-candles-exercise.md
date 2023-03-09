@@ -7,7 +7,7 @@ RadioButton
 
 Refactor API and cleanup styles
 Removed `icon` prop; icon is not customisable anymore
-Add inputProps
+Added `inputProps`
 Added `error` prop for error state styling
 
 RadioButtonGroup
