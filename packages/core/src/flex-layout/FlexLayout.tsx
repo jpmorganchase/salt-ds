@@ -101,16 +101,20 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
 
     return (
       <Component
-        className={clsx(className, withBaseName(), {
-          [withBaseName("separator")]: separatorAlignment && !wrap,
-          [withBaseName(
-            `separator-${flexDirection || "row"}-${
-              separatorAlignment || "center"
-            }`
-          )]: separatorAlignment && !wrap,
-          [withBaseName(`separator-${flexDirection || "row"}`)]:
-            separatorAlignment && !wrap,
-        })}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("separator")]: separatorAlignment && !wrap,
+            [withBaseName(
+              `separator-${flexDirection || "row"}-${
+                separatorAlignment || "center"
+              }`
+            )]: separatorAlignment && !wrap,
+            [withBaseName(`separator-${flexDirection || "row"}`)]:
+              separatorAlignment && !wrap,
+          },
+          className
+        )}
         ref={ref}
         style={flexLayoutStyles}
         {...rest}

@@ -69,7 +69,7 @@ export const FlexItem: FlexItemComponent = forwardRef(
     };
     return (
       <Component
-        className={clsx(className, withBaseName())}
+        className={clsx(withBaseName(), className)}
         ref={ref}
         style={itemStyle}
         {...rest}
