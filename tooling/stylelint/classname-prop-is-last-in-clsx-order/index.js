@@ -39,8 +39,8 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 const ruleName = "salt/classname-prop-is-last-in-clsx-order";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) =>
-    `ClassName passed by props should always be the last item inside clsx() to ensure it's higher specificity.`, // Can encode option in error message if needed
+  expected: () =>
+    `ClassName passed by props should always be the last item inside clsx() to ensure its higher specificity.`,
 });
 
 const meta = {
@@ -51,6 +51,13 @@ const ruleFunction = (primary, secondaryOptionObject, context) => {
   return (root, result) => {
     const verboseLog = primary.logLevel === "verbose";
 
+    function check(property) {
+      const checkResult =
+        property.length <= 1 || property[property.length - 1] === "class";
+      verboseLog && console.log("Checking", checkResult, property);
+      return checkResult;
+    }
+
     root.walkDecls((decl) => {
       const { prop, value } = decl;
 
@@ -58,22 +65,20 @@ const ruleFunction = (primary, secondaryOptionObject, context) => {
 
       parsedValue.walk((node) => {
         if (!isValueClass(node)) return;
-        const classList = node.value.split(/\s+/);
-        if (
-          classList.length > 1 &&
-          classList[classList.length - 1] !== "class"
-        ) {
-          const newClassList = classList.filter(
-            (className) => className !== "class"
-          );
-          newClassList.push("class");
-          const newClassName = newClassList.join(" ");
-          node.value = newClassName;
-          complain(declarationValueIndex(decl), node.value.length, decl);
-        }
-      });
 
+        const classList = node.value.split(/\s+/);
+        if (check(classList)) return;
+
+        complain(
+          declarationValueIndex(decl) + node.sourceIndex,
+          node.value.length,
+          decl
+        );
+      });
       verboseLog && console.log({ prop });
+
+      if (check(prop)) return;
+
       complain(0, prop.length, decl);
     });
 
