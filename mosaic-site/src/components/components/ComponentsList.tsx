@@ -162,11 +162,7 @@ export const ComponentsList = () => {
             <th aria-sort={isSortedBy === "name" ? ariaSort : "none"}>
               <ComponentHeader
                 logo={
-                  <Image
-                    src="/img/storybook_logo.svg"
-                    alt="storybook logo"
-                    nextImageClassName={""}
-                  />
+                  <Image src="/img/storybook_logo.svg" alt="storybook logo" />
                 }
                 label="Component"
                 isSorted={isSortedBy === "name"}
@@ -176,13 +172,7 @@ export const ComponentsList = () => {
             </th>
             <th aria-sort={isSortedBy === "devStatus" ? ariaSort : "none"}>
               <ComponentHeader
-                logo={
-                  <Image
-                    src="/img/react_logo.svg"
-                    alt="react logo"
-                    nextImageClassName={""}
-                  />
-                }
+                logo={<Image src="/img/react_logo.svg" alt="react logo" />}
                 label="React"
                 isSorted={isSortedBy === "devStatus"}
                 ascendingOrder={hasAscendingOrder}
@@ -191,13 +181,7 @@ export const ComponentsList = () => {
             </th>
             <th aria-sort={isSortedBy === "designStatus" ? ariaSort : "none"}>
               <ComponentHeader
-                logo={
-                  <Image
-                    src="/img/figma_logo.svg"
-                    alt="figma logo"
-                    nextImageClassName={""}
-                  />
-                }
+                logo={<Image src="/img/figma_logo.svg" alt="figma logo" />}
                 label="Figma"
                 isSorted={isSortedBy === "designStatus"}
                 ascendingOrder={hasAscendingOrder}
