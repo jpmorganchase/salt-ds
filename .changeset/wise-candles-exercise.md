@@ -14,8 +14,8 @@ RadioButtonGroup
 
 Removed `icon` prop; icon is not customisable anymore.
 Removed `legend` prop; will be implemented by FormField.
-Removed `radios` prop; should be the users' responsibility to add the children.
-Added `direction` prop, replaces row prop.
+Removed `radios` prop; should be the users' responsibility to provide the nested RadioButtons as children.
+Replaced `row` prop with `direction` prop.
 Added `labelWrap` prop.
 
 RadioButtonIcon
