@@ -222,6 +222,7 @@ export * from "./StepSuccess";
 export * from "./Storage";
 export * from "./StorageSolid";
 export * from "./Success";
+export * from "./SuccessSmall";
 export * from "./SuccessSolid";
 export * from "./SuccessTick";
 export * from "./SuccessTickSmall";

@@ -2,16 +2,16 @@ import { forwardRef } from "react";
 
 import { Icon, IconProps } from "../icon";
 
-export type SuccessTickSmallIconProps = IconProps;
+export type SuccessSmallIconProps = IconProps;
 
-export const SuccessTickSmallIcon = forwardRef<
+export const SuccessSmallIcon = forwardRef<
   SVGSVGElement,
-  SuccessTickSmallIconProps
->(function SuccessTickSmallIcon(props: SuccessTickSmallIconProps, ref) {
+  SuccessSmallIconProps
+>(function SuccessSmallIcon(props: SuccessSmallIconProps, ref) {
   return (
     <Icon
-      data-testid="SuccessTickSmallIcon"
-      aria-label="success tick small"
+      data-testid="SuccessSmallIcon"
+      aria-label="success small"
       viewBox="0 0 12 12"
       ref={ref}
       {...props}
