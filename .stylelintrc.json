@@ -2,7 +2,8 @@
   "plugins": [
     "./tooling/stylelint/custom-property-no-foundations/index.js",
     "./tooling/stylelint/custom-property-attributes-kebab-case/index.js",
-    "./tooling/stylelint/custom-property-starts-with-component-name/index.js"
+    "./tooling/stylelint/custom-property-starts-with-component-name/index.js",
+    "./tooling/stylelint/classname-prop-is-last-in-clsx-order/index.js"
   ],
   "rules": {
     "salt/custom-property-no-foundations": {
@@ -12,6 +13,9 @@
       "logLevel": "default"
     },
     "salt/custom-property-starts-with-component-name": {
+      "logLevel": "default"
+    },
+    "salt/classname-prop-is-last-in-clsx-order": {
       "logLevel": "default"
     }
   }
