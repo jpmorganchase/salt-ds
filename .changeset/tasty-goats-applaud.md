@@ -2,7 +2,7 @@
 "@salt-ds/theme": patch
 ---
 
-New font family css variable for all text components which points to `--salt-text-fontFamily`.
+New font family css variable for all text components which point to `--salt-typography-fontFamily`.
 
 ```
 --salt-text-display1-fontFamily
