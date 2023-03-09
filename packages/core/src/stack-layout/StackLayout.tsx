@@ -67,7 +67,6 @@ export const StackLayout: StackLayoutComponent = forwardRef(
     return (
       <FlexLayout
         className={clsx(
-          className,
           withBaseName(),
           withBaseName(flexDirection),
           {
@@ -75,7 +74,8 @@ export const StackLayout: StackLayoutComponent = forwardRef(
             [separatorAlignment
               ? withBaseName(`separator-${separatorAlignment}`)
               : ""]: separatorAlignment,
-          }
+          },
+          className
         )}
         ref={ref}
         direction={direction}
