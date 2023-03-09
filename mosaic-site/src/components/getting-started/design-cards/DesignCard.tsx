@@ -7,7 +7,7 @@ type DesignCardProps = { src: string; alt: string; children: ReactNode };
 
 export const DesignCard = ({ src, alt, children }: DesignCardProps) => (
   <div className={styles.card}>
-    <Image src={src} alt={alt} nextImageClassName={""} />
+    <Image src={src} alt={alt} />
     <div className={styles.textContainer}>{children}</div>
   </div>
 );

@@ -53,12 +53,16 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
   ) {
     return (
       <FlexItem
-        className={clsx(className, withBaseName(), {
-          ...(direction && {
-            [withBaseName(`slide-${direction}`)]: !disableAnimations,
-          }),
-          "saltFlexItem-stacked": isStacked,
-        })}
+        className={clsx(
+          withBaseName(),
+          {
+            ...(direction && {
+              [withBaseName(`slide-${direction}`)]: !disableAnimations,
+            }),
+            "saltFlexItem-stacked": isStacked,
+          },
+          className
+        )}
         ref={ref}
         {...rest}
       >
