@@ -1,4 +1,4 @@
-import { RadioButton } from "@salt-ds/lab";
+import { RadioButton } from "@salt-ds/core";
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
 import "./CheckboxCell.css";

@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from "react";
-import { createContext } from "@salt-ds/core";
+import { createContext } from "../../utils";
 
 export interface RadioGroupContextValue {
   name?: string;

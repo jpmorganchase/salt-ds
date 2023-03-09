@@ -1,5 +1,5 @@
-import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { makePrefixer } from "../utils";
 import "./RadioButtonIcon.css";
 
 const withBaseName = makePrefixer("saltRadioButtonIcon");

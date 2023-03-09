@@ -54,7 +54,6 @@ export * from "./pill";
 export * from "./portal";
 export * from "./progress";
 export * from "./query-input";
-export * from "./radio-button";
 export * from "./responsive";
 export * from "./scrim";
 export * from "./search-input";

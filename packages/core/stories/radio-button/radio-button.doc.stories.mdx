@@ -6,7 +6,7 @@ import {
 } from "css-variable-docgen-components";
 
 <Meta
-  title="Documentation/Lab/Radio Button"
+  title="Documentation/Core/Radio Button"
   component={RadioButton}
   parameters={{
     viewMode: "docs",
@@ -22,7 +22,7 @@ A group of Radio Button components represents a set of mutually exclusive, but r
 ### Variations
 
 <Canvas>
-  <Story id="lab-radio-button--radio-button-variations" />
+  <Story id="core-radio-button--radio-button-variations" />
 </Canvas>
 
 ## Radio Button Group
@@ -37,13 +37,13 @@ Radio groups allow selection of one or more values from a given set of choices. 
 ### Vertical Group
 
 <Canvas>
-  <Story id="lab-radio-button--vertical-group" />
+  <Story id="core-radio-button--vertical-group" />
 </Canvas>
 
 ### Horizontal Group
 
 <Canvas>
-  <Story id="lab-radio-button--horizontal-group" />
+  <Story id="core-radio-button--horizontal-group" />
 </Canvas>
 
 #### Wrapping
@@ -53,13 +53,13 @@ By default, the horizontal radios will wrap onto the next line if the group does
 `wrap=true`
 
 <Canvas>
-  <Story id="lab-radio-button--wrap-group" />
+  <Story id="core-radio-button--wrap-group" />
 </Canvas>
 
 `wrap=false`
 
 <Canvas>
-  <Story id="lab-radio-button--no-wrap-group" />
+  <Story id="core-radio-button--no-wrap-group" />
 </Canvas>
 
 ### Controlled
@@ -67,7 +67,7 @@ By default, the horizontal radios will wrap onto the next line if the group does
 Controlled Radio require events to trigger the state change. The application must track state and update Radio props manually. Useful for when logic or validation needs to be applied or a request should happen when updating a form.
 
 <Canvas>
-  <Story id="lab-radio-button--controlled-group" />
+  <Story id="core-radio-button--controlled-group" />
 </Canvas>
 
 ### Long Text
@@ -75,13 +75,13 @@ Controlled Radio require events to trigger the state change. The application mus
 When the text label wraps to multiple lines, align the text to the top.
 
 <Canvas>
-  <Story id="lab-radio-button--long-text-group" />
+  <Story id="core-radio-button--long-text-group" />
 </Canvas>
 
 ## API
 
 ```
-import { RadioButton, RadioButtonGroup } from "@salt-ds/lab";
+import { RadioButton, RadioButtonGroup } from "@salt-ds/core";
 ```
 
 ## Props
