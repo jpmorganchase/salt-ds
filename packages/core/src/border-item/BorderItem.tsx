@@ -67,9 +67,14 @@ export const BorderItem: BorderItemComponent = forwardRef(
     return (
       <GridItem
         ref={ref}
-        className={clsx(withBaseName(), className, "saltGridItem-area", {
-          [withBaseName("sticky")]: sticky,
-        })}
+        className={clsx(
+          withBaseName(),
+          "saltGridItem-area",
+          {
+            [withBaseName("sticky")]: sticky,
+          },
+          className
+        )}
         style={gridItemStyles}
         {...rest}
       >
