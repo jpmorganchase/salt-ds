@@ -5,15 +5,20 @@
 
 RadioButton
 
-Refactor API and cleanup styles
-Removed `icon` prop; icon is not customisable anymore
-Added `inputProps`
-Added `error` prop for error state styling
+Refactor API and cleanup styles.
+Removed `icon` prop; icon is not customisable anymore.
+Added `inputProps` prop to be passed to the radio input.
+Added `error` prop for error state styling.
 
 RadioButtonGroup
 
-Remove icon prop; icon is not customisable anymore
-Remove legend prop; will be implemented by FormField
-Remove radios prop; should be the users' responsibility
-Add direction prop, replaces row prop
-Add labelWrap prop
+Removed `icon` prop; icon is not customisable anymore.
+Removed `legend` prop; will be implemented by FormField.
+Removed `radios` prop; should be the users' responsibility to add the children.
+Added `direction` prop, replaces row prop.
+Added `labelWrap` prop.
+
+RadioButtonIcon
+
+Added `error` prop for error state styling.
+Added `disabled` prop for disabled state styling.
