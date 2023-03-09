@@ -12,7 +12,7 @@ export const SuccessTickSmallIcon = forwardRef<
     <Icon
       data-testid="SuccessTickSmallIcon"
       aria-label="success small"
-      viewBox="0 0 8 8"
+      viewBox="0 0 12 12"
       ref={ref}
       {...props}
     >
