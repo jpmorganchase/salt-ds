@@ -74,6 +74,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       <label
         className={clsx(withBaseName(), className, {
           [withBaseName("disabled")]: disabled,
+          [withBaseName("error")]: error,
         })}
         ref={ref}
         {...rest}
