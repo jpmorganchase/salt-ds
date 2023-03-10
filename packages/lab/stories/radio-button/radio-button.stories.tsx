@@ -56,9 +56,7 @@ export const VerticalGroup = () => (
   </RadioButtonGroup>
 );
 
-export const HorizontalGroup = ({
-  labelWrap,
-}: RadioButtonGroupProps) => (
+export const HorizontalGroup = ({ labelWrap }: RadioButtonGroupProps) => (
   <RadioButtonGroup direction={"horizontal"} labelWrap={labelWrap}>
     <RadioButton key="option1" label="Radio Option 1" value="option1" />
     <RadioButton key="option2" label="Radio Option 2" value="option2" />
@@ -89,9 +87,9 @@ const radioData = [
   },
 ];
 
-export const ControlledGroup: ComponentStory<
-  typeof RadioButtonGroup
-> = ({ onChange }) => {
+export const ControlledGroup: ComponentStory<typeof RadioButtonGroup> = ({
+  onChange,
+}) => {
   const [controlledValue, setControlledValue] = useState("option2");
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -116,9 +114,7 @@ export const ControlledGroup: ComponentStory<
 
 /* Long Text Radio Button Group */
 
-export const LongTextGroup: ComponentStory<
-  typeof RadioButtonGroup
-> = () => (
+export const LongTextGroup: ComponentStory<typeof RadioButtonGroup> = () => (
   <div style={{ width: 500 }}>
     <RadioButtonGroup aria-label="Long Text Example" name="selectionControls">
       <RadioButton
@@ -141,9 +137,9 @@ export const LongTextGroup: ComponentStory<
   </div>
 );
 
-export const LabelWrapGroup: ComponentStory<
-  typeof RadioButtonGroup
-> = ({ labelWrap }) => (
+export const LabelWrapGroup: ComponentStory<typeof RadioButtonGroup> = ({
+  labelWrap,
+}) => (
   <div
     style={{
       width: 250,
