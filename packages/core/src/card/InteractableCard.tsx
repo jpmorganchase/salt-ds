@@ -5,11 +5,14 @@ import "./Card.css";
 
 const withBaseName = makePrefixer("saltCard");
 
-export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
+export interface InteractableCardProps extends Omit<ComponentPropsWithoutRef<"div">, "onClick"> {
   /**
    * If `true`, the card will be disabled.
    */
-  disabled?: boolean;
+  disabled?: boolean; /**
+  * Action called on click.
+  */
+  onClick: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export const InteractableCard = forwardRef<
