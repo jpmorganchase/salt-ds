@@ -56,8 +56,8 @@ export const VerticalGroup = () => (
   </RadioButtonGroup>
 );
 
-export const HorizontalGroup = ({ labelWrap }: RadioButtonGroupProps) => (
-  <RadioButtonGroup direction={"horizontal"} labelWrap={labelWrap}>
+export const HorizontalGroup = () => (
+  <RadioButtonGroup direction={"horizontal"}>
     <RadioButton key="option1" label="Radio Option 1" value="option1" />
     <RadioButton key="option2" label="Radio Option 2" value="option2" />
     <RadioButton
@@ -68,6 +68,32 @@ export const HorizontalGroup = ({ labelWrap }: RadioButtonGroupProps) => (
     />
   </RadioButtonGroup>
 );
+
+export const WrapGroup: ComponentStory<typeof RadioButtonGroup> = ({
+  wrap,
+}) => (
+  <div
+    style={{
+      width: 250,
+    }}
+  >
+    <RadioButtonGroup name="fx" direction={"horizontal"} wrap={wrap}>
+      <RadioButton key="option1" label="Radio Option 1" value="option1" />
+      <RadioButton key="option2" label="Radio Option 2" value="option2" />
+      <RadioButton
+        disabled
+        key="option3"
+        label="Radio Option 3 (disabled)"
+        value="option3"
+      />
+    </RadioButtonGroup>
+  </div>
+);
+
+WrapGroup.args = { wrap: true };
+
+export const NoWrapGroup = WrapGroup.bind({});
+NoWrapGroup.args = { wrap: false };
 
 /* Controlled Radio Button Group */
 
@@ -136,26 +162,3 @@ export const LongTextGroup: ComponentStory<typeof RadioButtonGroup> = () => (
     </RadioButtonGroup>
   </div>
 );
-
-export const LabelWrapGroup: ComponentStory<typeof RadioButtonGroup> = ({
-  labelWrap,
-}) => (
-  <div
-    style={{
-      width: 250,
-    }}
-  >
-    <RadioButtonGroup name="fx" direction={"horizontal"} labelWrap={labelWrap}>
-      <RadioButton key="option1" label="Radio Option 1" value="option1" />
-      <RadioButton key="option2" label="Radio Option 2" value="option2" />
-      <RadioButton
-        disabled
-        key="option3"
-        label="Radio Option 3 (disabled)"
-        value="option3"
-      />
-    </RadioButtonGroup>
-  </div>
-);
-
-LabelWrapGroup.args = { labelWrap: true };

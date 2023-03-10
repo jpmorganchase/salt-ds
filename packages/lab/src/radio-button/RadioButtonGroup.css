@@ -20,10 +20,10 @@
   flex-wrap: wrap;
 }
 
-.saltRadioButtonGroup-labelWrap {
+.saltRadioButtonGroup-noWrap {
   flex-wrap: nowrap;
 }
-.saltRadioButtonGroup-labelWrap .saltRadioButton {
+.saltRadioButtonGroup-noWrap .saltRadioButton {
   white-space: break-spaces;
 }
 

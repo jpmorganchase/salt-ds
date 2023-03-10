@@ -26,7 +26,7 @@ export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise the radio buttons will wrap onto the next line.
    */
-  labelWrap?: boolean;
+  wrap?: boolean;
   /**
    * The name to be set on each radio button within the group. If not set, then one will be generated for you.
    */
@@ -50,7 +50,7 @@ export const RadioButtonGroup = forwardRef<
     className,
     defaultValue,
     direction = "vertical",
-    labelWrap,
+    wrap = true,
     name: nameProp,
     onChange,
     value: valueProp,
@@ -86,8 +86,7 @@ export const RadioButtonGroup = forwardRef<
       >
         <div
           className={clsx(withBaseName(direction), {
-            [withBaseName("labelWrap")]:
-              direction === "horizontal" && labelWrap,
+            [withBaseName("noWrap")]: !wrap,
           })}
           {...rest}
         >
