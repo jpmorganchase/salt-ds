@@ -12,7 +12,7 @@ Added `error` prop for error state styling.
 
 RadioButtonGroup
 
-Removed `icon` prop; icon is not customisable anymore.
+Removed `icon` prop; icon is not customizable any more.
 Removed `legend` prop; will be implemented by FormField.
 Removed `radios` prop; should be the users' responsibility to provide the nested RadioButtons as children.
 Replaced `row` prop with `direction` prop.
