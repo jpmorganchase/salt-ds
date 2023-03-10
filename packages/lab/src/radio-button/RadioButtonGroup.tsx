@@ -15,7 +15,6 @@ const withBaseName = makePrefixer("saltRadioButtonGroup");
 export type RadioButtonGroupDirectionProps = "horizontal" | "vertical";
 
 export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
-  className?: string;
   /**
    * Set the selected value when initialized.
    */

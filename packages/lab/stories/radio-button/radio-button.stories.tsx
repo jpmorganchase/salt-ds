@@ -1,11 +1,10 @@
 import { ChangeEventHandler, useState } from "react";
-import { SaltProvider, Panel, FlexLayout } from "@salt-ds/core";
 import {
   RadioButton,
   RadioButtonGroup,
   RadioButtonGroupProps,
 } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
   title: "Lab/Radio Button",
@@ -44,124 +43,32 @@ export const RadioButtonVariations = () => {
   );
 };
 
-export const VerticalRadioButtonGroup = () => (
-  <SaltProvider>
-    <RadioButtonGroup>
-      <RadioButton key="option1" label="Radio Option 1" value="option1" />
-      <RadioButton key="option2" label="Radio Option 2" value="option2" />
-      <RadioButton
-        disabled
-        key="option3"
-        label="Radio Option 3 (disabled)"
-        value="option3"
-      />
-    </RadioButtonGroup>
-  </SaltProvider>
+export const VerticalGroup = () => (
+  <RadioButtonGroup>
+    <RadioButton key="option1" label="Radio Option 1" value="option1" />
+    <RadioButton key="option2" label="Radio Option 2" value="option2" />
+    <RadioButton
+      disabled
+      key="option3"
+      label="Radio Option 3 (disabled)"
+      value="option3"
+    />
+  </RadioButtonGroup>
 );
 
-export const HorizontalRadioButtonGroup = ({
+export const HorizontalGroup = ({
   labelWrap,
 }: RadioButtonGroupProps) => (
-  <SaltProvider>
-    <RadioButtonGroup direction={"horizontal"} labelWrap={labelWrap}>
-      <RadioButton key="option1" label="Radio Option 1" value="option1" />
-      <RadioButton key="option2" label="Radio Option 2" value="option2" />
-      <RadioButton
-        disabled
-        key="option3"
-        label="Radio Option 3 (disabled)"
-        value="option3"
-      />
-    </RadioButtonGroup>
-  </SaltProvider>
-);
-
-interface DensityExampleProps {
-  density?: "high" | "medium" | "low" | "touch";
-  direction: "vertical" | "horizontal";
-  name: string;
-  title: string;
-}
-interface DensityExamplesProps {
-  name: string;
-}
-
-const DensityExample = ({ density, direction, name }: DensityExampleProps) => (
-  <SaltProvider density={density}>
-    <RadioButtonGroup name={`${name}-${density}`} direction={direction}>
-      <RadioButtonVariations />
-    </RadioButtonGroup>
-  </SaltProvider>
-);
-
-const DensityExamples = ({ name }: DensityExamplesProps) => (
-  <Panel style={{ height: "unset" }}>
-    <FlexLayout gap={4} direction="column">
-      <FlexLayout gap={4} wrap>
-        <DensityExample
-          density="high"
-          name={name}
-          title="High"
-          direction="vertical"
-        />
-        <DensityExample
-          density="medium"
-          name={name}
-          title="Medium"
-          direction="vertical"
-        />
-        <DensityExample
-          density="low"
-          name={name}
-          title="Low"
-          direction="vertical"
-        />
-        <DensityExample
-          density="touch"
-          name={name}
-          title="Touch"
-          direction="vertical"
-        />
-      </FlexLayout>
-      <FlexLayout gap={4} wrap>
-        <DensityExample
-          density="high"
-          name={name}
-          title="High"
-          direction="horizontal"
-        />
-        <DensityExample
-          density="medium"
-          name={name}
-          title="Medium"
-          direction="horizontal"
-        />
-        <DensityExample
-          density="low"
-          name={name}
-          title="Low"
-          direction="horizontal"
-        />
-        <DensityExample
-          density="touch"
-          name={name}
-          title="Touch"
-          direction="horizontal"
-        />
-      </FlexLayout>
-    </FlexLayout>
-  </Panel>
-);
-
-export const All: Story = () => (
-  <>
-    <SaltProvider mode="light">
-      <DensityExamples name="light" />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <DensityExamples name="dark" />
-    </SaltProvider>
-  </>
+  <RadioButtonGroup direction={"horizontal"} labelWrap={labelWrap}>
+    <RadioButton key="option1" label="Radio Option 1" value="option1" />
+    <RadioButton key="option2" label="Radio Option 2" value="option2" />
+    <RadioButton
+      disabled
+      key="option3"
+      label="Radio Option 3 (disabled)"
+      value="option3"
+    />
+  </RadioButtonGroup>
 );
 
 /* Controlled Radio Button Group */
@@ -182,7 +89,7 @@ const radioData = [
   },
 ];
 
-export const ControlledRadioButtonGroup: ComponentStory<
+export const ControlledGroup: ComponentStory<
   typeof RadioButtonGroup
 > = ({ onChange }) => {
   const [controlledValue, setControlledValue] = useState("option2");
@@ -209,7 +116,7 @@ export const ControlledRadioButtonGroup: ComponentStory<
 
 /* Long Text Radio Button Group */
 
-export const LongTextRadioButtonGroup: ComponentStory<
+export const LongTextGroup: ComponentStory<
   typeof RadioButtonGroup
 > = () => (
   <div style={{ width: 500 }}>
@@ -234,7 +141,7 @@ export const LongTextRadioButtonGroup: ComponentStory<
   </div>
 );
 
-export const LabelWrapRadioButtonGroup: ComponentStory<
+export const LabelWrapGroup: ComponentStory<
   typeof RadioButtonGroup
 > = ({ labelWrap }) => (
   <div
@@ -255,4 +162,4 @@ export const LabelWrapRadioButtonGroup: ComponentStory<
   </div>
 );
 
-LabelWrapRadioButtonGroup.args = { labelWrap: true };
+LabelWrapGroup.args = { labelWrap: true };

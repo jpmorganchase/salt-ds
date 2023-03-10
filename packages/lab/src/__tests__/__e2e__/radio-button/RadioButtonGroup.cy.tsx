@@ -1,7 +1,14 @@
 import { ChangeEventHandler } from "react";
 import { RadioButton, RadioButtonGroup } from "../../../radio-button";
+import { composeStories } from "@storybook/testing-react";
+import * as radioButtonStories from "@stories/radio-button/radio-button.stories";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+
+const composedStories = composeStories(radioButtonStories);
 
 describe("GIVEN a RadioButtonGroup component", () => {
+  checkAccessibility(composedStories);
+
   describe("WHEN three radio buttons are passed as a prop", () => {
     const radios = [
       { value: "button one", label: "button one", disabled: false },

@@ -5,7 +5,7 @@
 
 RadioButton
 
-Refactor API and cleanup styles.
+Removed `RadioButtonBase` and replaced with `RadioButton`
 Removed `icon` prop; icon is not customisable anymore.
 Added `inputProps` prop to be passed to the radio input.
 Added `error` prop for error state styling.

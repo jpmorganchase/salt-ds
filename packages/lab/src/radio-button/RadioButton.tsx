@@ -17,23 +17,21 @@ const withBaseName = makePrefixer("saltRadioButton");
 
 export interface RadioButtonProps
   extends Omit<
-    HTMLAttributes<HTMLDivElement>,
-    "onChange" | "onBlur" | "onFocus"
+  HTMLAttributes<HTMLLabelElement>,
+  "onChange" | "onBlur" | "onFocus"
   > {
   /**
    * Set the default selected radio button in the group
    */
   checked?: boolean;
-  className?: string;
   /**
-   * Prop used to set the styling
+   * Set the disabled state
    */
   disabled?: boolean;
   /**
-   * Prop used to set the styling
+   * Set the error state
    */
   error?: boolean;
-  id?: string;
   /**
    * Props to be passed to the radio input
    */
@@ -64,7 +62,7 @@ export interface RadioButtonProps
   value?: string;
 }
 
-export const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
+export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
   function RadioButton(props, ref) {
     const {
       checked: checkedProp,
@@ -82,7 +80,6 @@ export const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
       ...rest
     } = props;
 
-    const id = idProp || useId();
     const radioGroup = useRadioGroup();
 
     let radioGroupChecked = checkedProp;
@@ -124,7 +121,7 @@ export const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
     };
 
     return (
-      <div
+      <label
         className={clsx(
           withBaseName(),
           {
@@ -140,7 +137,6 @@ export const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
           {...inputProps}
           checked={checked}
           disabled={disabled}
-          id={id}
           name={name}
           value={value}
           onBlur={handleBlur}
@@ -150,7 +146,7 @@ export const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
         />
         <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
         {label}
-      </div>
+      </label>
     );
   }
 );
