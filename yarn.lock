@@ -5189,14 +5189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19":
-  version: 0.1.0-beta.23
-  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.23"
-  checksum: 0b633c694ef4615a9cad397e9ed1bb6024df443f71768e03acee417623888dad62b2641f6234f4a49480ff9ebbe305d42d35e4d16c92167222afa6591a995f01
-  languageName: node
-  linkType: hard
-
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.24":
+"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19, @jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.24":
   version: 0.1.0-beta.24
   resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.24"
   checksum: 86a1319ba78a5abdf513a55003b874c00b5796d1cf7e172063ee5d51f20472944385819e364f19f3a4bcae29baa80a3403f8bc421b8ef9c2c7695da5285ea6a8
@@ -6382,7 +6375,7 @@ __metadata:
     ci-info: ^3.3.1
     clipboard-copy: ^4.0.1
     clsx: ^1.2.1
-    compute-scroll-into-view: ^2.0.0
+    compute-scroll-into-view: ^3.0.0
     csstree-validator: ^3.0.0
     cypress: ^12.3.0
     cypress-axe: ^1.2.0
@@ -13183,6 +13176,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"compute-scroll-into-view@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "compute-scroll-into-view@npm:3.0.0"
+  checksum: 06965595510d3190bfb58705cf74bacc0b6fea8021f56a6477ad134fadcd1971d2083a714c6e3c99f545cc72614d60a9a97d774ea81a37ad302efddc849d372c
+  languageName: node
+  linkType: hard
+
 "concat-map@npm:0.0.1":
   version: 0.0.1
   resolution: "concat-map@npm:0.0.1"
@@ -15114,11 +15114,11 @@ __metadata:
   linkType: hard
 
 "dns-packet@npm:^5.2.2":
-  version: 5.3.1
-  resolution: "dns-packet@npm:5.3.1"
+  version: 5.4.0
+  resolution: "dns-packet@npm:5.4.0"
   dependencies:
     "@leichtgewicht/ip-codec": ^2.0.1
-  checksum: 196ff74a0669126cf5fc901a5849b72f625bd7a4cb163b3f4d41fbe19ed0b017cf7674daef5b0acbd448c094fcd795e501d7066f301be428e4acecfcf3c5f336
+  checksum: a169963848e8539dfd8a19058562f9e1c15c0f82cbf76fa98942f11c46f3c74e7e7c82e3a8a5182d4c9e6ff19e21be738dbd098a876dde755d3aedd2cc730880
   languageName: node
   linkType: hard
 

@@ -1,19 +1,18 @@
-import { UserGroupIcon } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FlowLayout, Label, StackLayout } from "@salt-ds/core";
 import { CSSProperties, ReactNode, useEffect, useState } from "react";
-import { Avatar } from "@salt-ds/lab";
-import persona1 from "./../assets/persona1.png";
+import { Avatar, FlowLayout, Label, StackLayout } from "@salt-ds/core";
+import { UserGroupSolidIcon } from "@salt-ds/icons";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import persona1 from "../assets/avatar.png";
 
 export default {
-  title: "Lab/Avatar",
+  title: "Core/Avatar",
   component: Avatar,
 } as ComponentMeta<typeof Avatar>;
 const sizes = [1, 2, 3, 4] as const;
 
 const Template: ComponentStory<typeof Avatar> = (props) => {
   return (
-    <FlowLayout gap={7} align="baseline">
+    <FlowLayout gap={7} align="end">
       {sizes.map((size) => (
         <StackLayout key={size} align="center">
           <Avatar {...props} key={size} size={size} />
@@ -33,12 +32,13 @@ Initials.args = {
 
 export const AlternativeIcon = Template.bind({});
 AlternativeIcon.args = {
-  fallbackIcon: <UserGroupIcon />,
+  fallbackIcon: <UserGroupSolidIcon />,
 };
 
 export const WithImage = Template.bind({});
 WithImage.args = {
-  children: <img src={persona1} alt="Alex Brailescu" />,
+  src: persona1,
+  name: "Alex Brailescu",
 };
 
 const backgroundStyle = {
@@ -64,13 +64,14 @@ WithCustomSvg.args = {
 export const ImageFallback: ComponentStory<typeof Avatar> = () => {
   const src = "bad_url";
   const alt = "profile";
+  const initials = "PP";
   const [children, setChildren] = useState<ReactNode>(alt);
 
   useEffect(() => {
     const img = new Image();
     img.src = src;
     img.onerror = () => {
-      setChildren(alt);
+      setChildren(initials);
     };
     img.onload = () => {
       setChildren(<img src={src} alt={alt} />);
