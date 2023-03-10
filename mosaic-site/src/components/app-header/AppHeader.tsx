@@ -61,11 +61,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
           <AppHeaderDrawer menu={createDrawerMenu(menu)} />
         </div>
       )}
-      <div
-        className={classnames(styles.root, {
-          [styles.smallViewport]: isMobileOrTablet,
-        })}
-      >
+      <div className={styles.root}>
         {homeLink && (
           <Link href={homeLink} variant="component">
             {logo && <Logo appTitle={title} src={appHeaderLogo} />}

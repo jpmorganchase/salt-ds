@@ -1,24 +1,3 @@
-:global(header):has(.root) {
-  --site-navigation-padding-vertical: var(--salt-size-unit);
-  --site-navigation-padding-horizontal: calc(var(--salt-size-unit) * 3);
-  --border-width-thin: 0;
-  --shadow-dark-elevation2: var(--salt-overlayable-shadow-scroll-color);
-}
-
-:global(header):has(.smallViewport) {
-  --site-navigation-padding-horizontal: var(--salt-size-unit);
-}
-
-:global(header):has(.root) {
-  padding: var(--site-navigation-padding-vertical) var(--site-navigation-padding-horizontal);
-}
-
-:global(header):has(.smallViewport) {
-  height: calc(var(--salt-size-unit) * 5);
-  gap: var(--salt-size-unit);
-  align-items: stretch;
-}
-
 .root {
   flex-grow: 1;
   display: flex;

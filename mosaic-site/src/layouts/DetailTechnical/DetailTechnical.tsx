@@ -49,7 +49,7 @@ export const DetailTechnical: FC<LayoutProps> = ({
   } = useMeta();
 
   return (
-    <LayoutBase Header={Header}>
+    <LayoutBase Header={Header} className={layoutStyles.base}>
       <div className={clsx(layoutStyles.docsWrapper, styles.docsWrapper)}>
         <LayoutColumns PrimarySidebar={PrimarySidebar}>
           <Breadcrumbs />

@@ -17,7 +17,7 @@ export const DetailContentOnly: React.FC<LayoutProps> = ({
   } = useMeta();
 
   return (
-    <LayoutBase Header={<AppHeader />}>
+    <LayoutBase Header={<AppHeader />} className={layoutStyles.base}>
       <div className={layoutStyles.docsWrapper}>
         <LayoutFullWidth Footer={<Footer {...FooterProps} />}>
           <Breadcrumbs />
