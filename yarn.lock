@@ -6315,7 +6315,7 @@ __metadata:
     "@jpmorganchase/mosaic-theme": ^0.1.0-beta.24
     "@next/eslint-plugin-next": 12.3.4
     "@philpl/buble": ^0.19.7
-    "@types/node": ^16.0.0
+    "@types/node": ^18.0.0
     "@types/react": ^18.0.26
     concurrently: ^7.1.0
     cross-env: ^7.0.3
@@ -6356,7 +6356,7 @@ __metadata:
     "@testing-library/user-event": ^13.2.1
     "@types/jest": ^26.0.20
     "@types/no-scroll": ^2.1.0
-    "@types/node": ^14.14.20
+    "@types/node": ^18.0.0
     "@types/react": ^18.0.0
     "@types/react-color": ^3.0.6
     "@types/react-dom": ^18.0.0
@@ -8925,10 +8925,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.7.19":
-  version: 18.13.0
-  resolution: "@types/node@npm:18.13.0"
-  checksum: 4ea10f8802848b01672bce938f678b6774ca2cee0c9774f12275ab064ae07818419c3e2e41d6257ce7ba846d1ea26c63214aa1dfa4166fa3746291752b8c6416
+"@types/node@npm:*, @types/node@npm:^18.0.0, @types/node@npm:^18.7.19":
+  version: 18.15.0
+  resolution: "@types/node@npm:18.15.0"
+  checksum: d81372276dd5053b1743338b61a2178ff9722dc609189d01fc7d1c2acd539414039e0e4780678730514390dad3f29c366a28c29e8dbd5b0025651181f6dd6669
   languageName: node
   linkType: hard
 
@@ -8946,14 +8946,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.0.10 || ^16.0.0, @types/node@npm:^14.14.20 || ^16.0.0, @types/node@npm:^16.0.0":
+"@types/node@npm:^14.0.10 || ^16.0.0, @types/node@npm:^14.14.20 || ^16.0.0":
   version: 16.18.12
   resolution: "@types/node@npm:16.18.12"
   checksum: fc3271182414f8593018ef8f00b4718116a92f463f619081bd399d9460e7861e1dd7eebc7cf94c23567e418ff397babed077011711aae8d47171b5a81c5bd71d
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.14.20, @types/node@npm:^14.14.31":
+"@types/node@npm:^14.14.31":
   version: 14.18.16
   resolution: "@types/node@npm:14.18.16"
   checksum: 1999799309dc8620a2adf9a5d5e48416af87321bae4c950b4aa8018fcef2c3b6c1fcf98c39eae06f6492c03a643a5a44e2bb3750cd2574d9cf7eac33bac50e24

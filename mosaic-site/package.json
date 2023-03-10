@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "12.3.4",
-    "@types/node": "^16.0.0",
+    "@types/node": "^18.0.0",
     "concurrently": "^7.1.0",
     "cross-env": "^7.0.3",
     "eslint-config-next": "^12.3.1",
