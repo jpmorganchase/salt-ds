@@ -17,7 +17,7 @@ const withBaseName = makePrefixer("saltRadioButton");
 
 export interface RadioButtonProps
   extends Omit<
-    HTMLAttributes<HTMLLabelElement>,
+    HTMLAttributes<HTMLDivElement>,
     "onChange" | "onBlur" | "onFocus"
   > {
   /**
@@ -64,7 +64,7 @@ export interface RadioButtonProps
   value?: string;
 }
 
-export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
+export const RadioButton = forwardRef<HTMLDivElement, RadioButtonProps>(
   function RadioButton(props, ref) {
     const {
       checked: checkedProp,
@@ -124,7 +124,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     };
 
     return (
-      <label
+      <div
         className={clsx(
           withBaseName(),
           {
@@ -150,7 +150,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         />
         <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
         {label}
-      </label>
+      </div>
     );
   }
 );
