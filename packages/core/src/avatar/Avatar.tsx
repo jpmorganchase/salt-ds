@@ -67,18 +67,21 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const hasImgNotFailing = useLoaded({ src }) !== "error" && src;
 
   if (hasImgNotFailing) {
-    children = <img className={withBaseName("image")} alt={name} src={src} />;
+    children = <img alt={name} src={src} />;
   } else if (childrenProp != null) {
     children = childrenProp;
   }
 
   const avatarInitials = nameToInitials(name);
-
   return (
     <div
       ref={ref}
       style={style}
-      className={clsx(withBaseName(), className)}
+      className={clsx(
+        withBaseName(),
+        { [withBaseName("withImage")]: hasImgNotFailing },
+        className
+      )}
       {...rest}
     >
       {children || avatarInitials || fallbackIcon}

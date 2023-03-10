@@ -37,7 +37,8 @@ AlternativeIcon.args = {
 
 export const WithImage = Template.bind({});
 WithImage.args = {
-  children: <img src={persona1} alt="Alex Brailescu" />,
+  src: persona1,
+  name: "Alex Brailescu",
 };
 
 const backgroundStyle = {
