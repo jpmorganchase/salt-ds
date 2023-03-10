@@ -3,6 +3,7 @@ import {
   ChangeEventHandler,
   FocusEventHandler,
   forwardRef,
+  HTMLAttributes,
   InputHTMLAttributes,
   ReactNode,
 } from "react";
@@ -14,7 +15,11 @@ import "./RadioButton.css";
 
 const withBaseName = makePrefixer("saltRadioButton");
 
-export interface RadioButtonProps {
+export interface RadioButtonProps
+  extends Omit<
+    HTMLAttributes<HTMLLabelElement>,
+    "onChange" | "onBlur" | "onFocus"
+  > {
   /**
    * Set the default selected radio button in the group
    */
@@ -120,9 +125,13 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
 
     return (
       <label
-        className={clsx(withBaseName(), className, {
-          [withBaseName("disabled")]: disabled,
-        })}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+          },
+          className
+        )}
         ref={ref}
         {...rest}
       >

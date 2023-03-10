@@ -4,7 +4,7 @@ import { useSelectionContext } from "./SelectionContext";
 import "./CheckboxCell.css";
 
 export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
-  const { row, isFocused } = props;
+  const { row } = props;
   const { selRowIdxs } = useSelectionContext();
 
   const isSelected = selRowIdxs.has(row.index);
