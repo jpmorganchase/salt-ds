@@ -5189,14 +5189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19":
-  version: 0.1.0-beta.23
-  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.23"
-  checksum: 0b633c694ef4615a9cad397e9ed1bb6024df443f71768e03acee417623888dad62b2641f6234f4a49480ff9ebbe305d42d35e4d16c92167222afa6591a995f01
-  languageName: node
-  linkType: hard
-
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.24":
+"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19, @jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.24":
   version: 0.1.0-beta.24
   resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.24"
   checksum: 86a1319ba78a5abdf513a55003b874c00b5796d1cf7e172063ee5d51f20472944385819e364f19f3a4bcae29baa80a3403f8bc421b8ef9c2c7695da5285ea6a8
@@ -6359,7 +6352,7 @@ __metadata:
     "@testing-library/cypress": ^9.0.0
     "@testing-library/dom": ^9.0.0
     "@testing-library/jest-dom": ^5.14.1
-    "@testing-library/react": ^12.1.0
+    "@testing-library/react": ^14.0.0
     "@testing-library/user-event": ^13.2.1
     "@types/jest": ^26.0.20
     "@types/no-scroll": ^2.1.0
@@ -8251,7 +8244,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^8.0.0, @testing-library/dom@npm:^8.1.0, @testing-library/dom@npm:^8.3.0, @testing-library/dom@npm:^8.5.0":
+"@testing-library/dom@npm:^8.1.0, @testing-library/dom@npm:^8.3.0, @testing-library/dom@npm:^8.5.0":
   version: 8.19.1
   resolution: "@testing-library/dom@npm:8.19.1"
   dependencies:
@@ -8300,20 +8293,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^12.1.0":
-  version: 12.1.3
-  resolution: "@testing-library/react@npm:12.1.3"
-  dependencies:
-    "@babel/runtime": ^7.12.5
-    "@testing-library/dom": ^8.0.0
-    "@types/react-dom": "*"
-  peerDependencies:
-    react: "*"
-    react-dom: "*"
-  checksum: 2f059e93dc3f161c4d15910d1fa80cd4f5cfb6eff8a733939a72ac720c2499b74761e8980c02983a6e49153b776e82bd770a1c3e66e05c4429db0e01612f7d0a
-  languageName: node
-  linkType: hard
-
 "@testing-library/react@npm:^13.4.0":
   version: 13.4.0
   resolution: "@testing-library/react@npm:13.4.0"
@@ -8325,6 +8304,20 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
   checksum: 51ec548c1fdb1271089a5c63e0908f0166f2c7fcd9cacd3108ebbe0ce64cb4351812d885892020dc37608418cfb15698514856502b3cab0e5cc58d6cc1bd4a3e
+  languageName: node
+  linkType: hard
+
+"@testing-library/react@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "@testing-library/react@npm:14.0.0"
+  dependencies:
+    "@babel/runtime": ^7.12.5
+    "@testing-library/dom": ^9.0.0
+    "@types/react-dom": ^18.0.0
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 4a54c8f56cc4a39b50803205f84f06280bb76521d6d5d4b3b36651d760c7c7752ef142d857d52aaf4fad4848ed7a8be49afc793a5dda105955d2f8bef24901ac
   languageName: node
   linkType: hard
 
@@ -9098,7 +9091,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:*, @types/react-dom@npm:^18.0.0":
+"@types/react-dom@npm:^18.0.0":
   version: 18.0.6
   resolution: "@types/react-dom@npm:18.0.6"
   dependencies:
