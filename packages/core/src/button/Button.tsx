@@ -57,10 +57,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         {...restButtonProps}
-        className={clsx(withBaseName(), className, withBaseName(variant), {
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("active")]: active,
-        })}
+        className={clsx(
+          withBaseName(),
+          withBaseName(variant),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("active")]: active,
+          },
+          className
+        )}
         {...restProps}
         ref={ref}
         type={type}
