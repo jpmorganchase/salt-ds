@@ -30,7 +30,6 @@ const HomepageHeader = () => {
         className={styles.heroImage}
         src="/img/hero_image.svg"
         alt="hero image"
-        nextImageClassName={""}
       />
     </div>
   );
@@ -49,9 +48,7 @@ const features = [
 
 const cards: CardProps[] = [
   {
-    icon: (
-      <Image src="/img/pencil.svg" alt="pencil icon" nextImageClassName={""} />
-    ),
+    icon: <Image src="/img/pencil.svg" alt="pencil icon" />,
     title: "Design and develop",
     description: (
       <p>
@@ -65,13 +62,7 @@ const cards: CardProps[] = [
     keylineColor: "var(--site-tertiary-accent-purple)",
   },
   {
-    icon: (
-      <Image
-        src="/img/code.svg"
-        alt="code brackets icon"
-        nextImageClassName={""}
-      />
-    ),
+    icon: <Image src="/img/code.svg" alt="code brackets icon" />,
     title: "Browse our components",
     description: (
       <p>
@@ -85,13 +76,7 @@ const cards: CardProps[] = [
     keylineColor: "var(--site-tertiary-accent-teal)",
   },
   {
-    icon: (
-      <Image
-        src="/img/arrows.svg"
-        alt="circle with arrows icon"
-        nextImageClassName={""}
-      />
-    ),
+    icon: <Image src="/img/arrows.svg" alt="circle with arrows icon" />,
     title: "Get involved",
     description: (
       <p>
