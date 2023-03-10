@@ -1,11 +1,11 @@
-import computeScrollIntoView from "compute-scroll-into-view";
+import { compute } from "compute-scroll-into-view";
 
 export function scrollIntoView(item, list) {
   if (!item) {
     return;
   }
 
-  const actions = computeScrollIntoView(item, {
+  const actions = compute(item, {
     boundary: list,
     block: "nearest",
     scrollMode: "if-needed",

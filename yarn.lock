@@ -5189,14 +5189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19":
-  version: 0.1.0-beta.23
-  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.23"
-  checksum: 0b633c694ef4615a9cad397e9ed1bb6024df443f71768e03acee417623888dad62b2641f6234f4a49480ff9ebbe305d42d35e4d16c92167222afa6591a995f01
-  languageName: node
-  linkType: hard
-
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.24":
+"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19, @jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.24":
   version: 0.1.0-beta.24
   resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.24"
   checksum: 86a1319ba78a5abdf513a55003b874c00b5796d1cf7e172063ee5d51f20472944385819e364f19f3a4bcae29baa80a3403f8bc421b8ef9c2c7695da5285ea6a8
@@ -6382,7 +6375,7 @@ __metadata:
     ci-info: ^3.3.1
     clipboard-copy: ^4.0.1
     clsx: ^1.2.1
-    compute-scroll-into-view: ^2.0.0
+    compute-scroll-into-view: ^3.0.0
     csstree-validator: ^3.0.0
     cypress: ^12.3.0
     cypress-axe: ^1.2.0
@@ -13180,6 +13173,13 @@ __metadata:
   version: 2.0.3
   resolution: "compute-scroll-into-view@npm:2.0.3"
   checksum: ada53eb52758d203ee021616b54680bab3d8d9b9e00477c8e3dc4984dfa492379ec8acf747a74acb0f17292c8b71f1262021d476e40d5e772ae20fb9049f9e9e
+  languageName: node
+  linkType: hard
+
+"compute-scroll-into-view@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "compute-scroll-into-view@npm:3.0.0"
+  checksum: 06965595510d3190bfb58705cf74bacc0b6fea8021f56a6477ad134fadcd1971d2083a714c6e3c99f545cc72614d60a9a97d774ea81a37ad302efddc849d372c
   languageName: node
   linkType: hard
 
