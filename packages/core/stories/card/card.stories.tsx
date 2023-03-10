@@ -13,7 +13,6 @@ import {
   GridLayout,
   Label,
 } from "@salt-ds/core";
-import { SearchIcon } from "@salt-ds/icons";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 import stockPhoto from "./../assets/stockPhoto.png";
 
@@ -31,16 +30,16 @@ const ExampleRow = ({ name, children }: ExampleRowProps) => (
   <Panel style={{ height: "unset", width: 800 }}>
     <ColumnLayoutContainer>
       <ColumnLayoutItem>
-        <SaltProvider density="touch">{children}</SaltProvider>
-      </ColumnLayoutItem>
-      <ColumnLayoutItem>
-        <SaltProvider density="low">{children}</SaltProvider>
+        <SaltProvider density="high">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
         <SaltProvider density="medium">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
-        <SaltProvider density="high">{children}</SaltProvider>
+        <SaltProvider density="low">{children}</SaltProvider>
+      </ColumnLayoutItem>
+      <ColumnLayoutItem>
+        <SaltProvider density="touch">{children}</SaltProvider>
       </ColumnLayoutItem>
     </ColumnLayoutContainer>
   </Panel>
@@ -50,11 +49,8 @@ const Examples = () => (
   <>
     <ExampleRow name="Default">
       <Card>
-        <div>
-          <H1>Card with Density</H1>
-          <Text>Here is some content</Text>
-        </div>
-      </Card>
+          <Text>Content</Text>
+        </Card>
     </ExampleRow>
   </>
 );
@@ -94,10 +90,10 @@ export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
 );
 
 export const CardsInGridLayout: ComponentStory<typeof Card> = () => (
-  <GridLayout rows={2} columns={2}>
+  <GridLayout style={{maxWidth: "700px"}} rows={2} columns={2}>
     <Default />
-    <WithImage />
-    <WithImage />
+    <WithImageAndButton />
+    <WithImageAndButton />
     <InteractableDisabled />
   </GridLayout>
 );
@@ -127,18 +123,22 @@ export const InteractableDisabled: ComponentStory<typeof Card> = () => (
   </InteractableCard>
 );
 
-export const WithImage: ComponentStory<typeof Card> = () => (
+export const WithImageAndButton: ComponentStory<typeof Card> = () => (
   <Card>
-    <img src={stockPhoto} alt="Image from unsplash" height={150} />
+    <img src={stockPhoto} alt="Image from unsplash" style={{maxWidth: "100%", maxHeight: "100%", paddingBottom: "var(--salt-size-unit)"}} />
     <div
       style={{
+        borderTop: "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor)",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingTop: "var(--salt-size-unit)",
+        padding: "var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit)"
       }}
     >
-      <Label>The Skies</Label>
+      <div style={{display: "grid", alignItems: "flex-start", gap: "var(--salt-size-unit)"}}>
+        <Label><strong>The Skies</strong></Label>
+        <Label>Art by Dominik Schröder</Label>
+      </div>
       <Button onClick={() => console.log("Clicked")}>See more</Button>
     </div>
   </Card>
