@@ -1,72 +1,76 @@
-import React, { createRef } from "react";
-import { fireEvent, render } from "@testing-library/react";
-import { Pagination, Paginator, GoToInput } from "../../pagination";
+import { Pagination, Paginator, GoToInput } from "@salt-ds/lab";
 
 describe("GIVEN an Pagination", () => {
   describe("WHEN navigation using the mouse", () => {
     describe("THEN clicking the next arrow button", () => {
       it("THEN should move to the next page", () => {
-        const pageChangeSpy = jest.fn();
-        const { getByRole } = render(
+        const pageChangeSpy = cy.stub().as("pageChangeSpy");
+        cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
             <Paginator />
           </Pagination>
         );
 
-        expect(getByRole("link", { name: "Page 3" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 3" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        fireEvent.click(getByRole("link", { name: "Next Page" }));
-        expect(getByRole("link", { name: "Page 4" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 4" }).realClick();
+        cy.findByRole("link", { name: "Page 4" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        expect(pageChangeSpy.mock.calls[0][0]).toEqual(4);
+        cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
       });
     });
 
     describe("THEN clicking the previous arrow button", () => {
       it("THEN should move to the previous page", () => {
-        const pageChangeSpy = jest.fn();
-        const { getByRole } = render(
+        const pageChangeSpy = cy.stub().as("pageChangeSpy");
+        cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
             <Paginator />
           </Pagination>
         );
 
-        expect(getByRole("link", { name: "Page 3" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 3" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        fireEvent.click(getByRole("link", { name: "Previous Page" }));
-        expect(getByRole("link", { name: "Page 2" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 2" }).realClick();
+        cy.findByRole("link", { name: "Page 2" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        expect(pageChangeSpy.mock.calls[0][0]).toEqual(2);
+        cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
       });
     });
 
     describe("THEN clicking a paginator item", () => {
       it("THEN should move to the clicked page", () => {
-        const pageChangeSpy = jest.fn();
-        const { getByRole } = render(
+        const pageChangeSpy = cy.stub().as("pageChangeSpy");
+        cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
             <Paginator />
           </Pagination>
         );
 
-        expect(getByRole("link", { name: "Page 3" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 3" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        fireEvent.click(getByRole("link", { name: "Page 5" }));
-        expect(getByRole("link", { name: "Page 5" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 5" }).realClick();
+        cy.findByRole("link", { name: "Page 5" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        expect(pageChangeSpy.mock.calls[0][0]).toEqual(5);
+        cy.get("@pageChangeSpy").should("have.been.calledWith", 5);
       });
     });
   });
@@ -74,107 +78,112 @@ describe("GIVEN an Pagination", () => {
   describe("WHEN navigation using the keyboard", () => {
     describe("THEN using the next arrow button", () => {
       it("THEN should move to the next page", () => {
-        const pageChangeSpy = jest.fn();
-        const { getByRole } = render(
+        const pageChangeSpy = cy.stub().as("pageChangeSpy");
+        cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
             <Paginator />
           </Pagination>
         );
 
-        expect(getByRole("link", { name: "Page 3" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 3" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
 
-        fireEvent.keyDown(getByRole("link", { name: "Next Page" }), {
-          key: "Enter",
-        });
-        expect(getByRole("link", { name: "Page 4" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Next Page" }).realClick();
+        cy.findByRole("link", { name: "Page 4" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        expect(pageChangeSpy.mock.calls[0][0]).toEqual(4);
+
+        cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
       });
     });
 
     describe("THEN using the previous arrow button", () => {
       it("THEN should move to the previous page", () => {
-        const pageChangeSpy = jest.fn();
-        const { getByRole } = render(
+        const pageChangeSpy = cy.stub().as("pageChangeSpy");
+        cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
             <Paginator />
           </Pagination>
         );
 
-        expect(getByRole("link", { name: "Page 3" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 3" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        fireEvent.keyDown(getByRole("link", { name: "Previous Page" }), {
-          key: "Enter",
-        });
-        expect(getByRole("link", { name: "Page 2" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Previous Page" }).focus();
+        cy.realPress("Enter");
+        cy.findByRole("link", { name: "Page 2" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        expect(pageChangeSpy.mock.calls[0][0]).toEqual(2);
+        cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
       });
     });
 
     describe("THEN using a paginator item", () => {
-      it("THEN should move to the clicked page", () => {
-        const pageChangeSpy = jest.fn();
-        const { getByRole } = render(
+      it("THEN should move to the selected page", () => {
+        const pageChangeSpy = cy.stub().as("pageChangeSpy");
+        cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
             <Paginator />
           </Pagination>
         );
 
-        expect(getByRole("link", { name: "Page 3" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 3" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        fireEvent.keyDown(getByRole("link", { name: "Page 5" }), {
-          key: "Enter",
-        });
-        expect(getByRole("link", { name: "Page 5" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 5" }).focus();
+        cy.realPress("Enter");
+        cy.findByRole("link", { name: "Page 5" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
-        expect(pageChangeSpy.mock.calls[0][0]).toEqual(5);
+        cy.get("@pageChangeSpy").should("have.been.calledWith", 5);
       });
     });
   });
 
   describe("WHEN on the first page", () => {
     it("THEN should disable the previous button", () => {
-      const { getByRole } = render(
+      cy.mount(
         <Pagination count={10} initialPage={1}>
           <Paginator />
         </Pagination>
       );
 
-      expect(getByRole("link", { name: "Page 1" })).toHaveAttribute(
+      cy.findByRole("link", { name: "Page 1" }).should(
+        "have.attr",
         "aria-current",
         "page"
       );
-      expect(getByRole("link", { name: "Previous Page" })).toBeDisabled();
+      cy.findByRole("link", { name: "Previous Page" }).should("be.disabled");
     });
   });
 
   describe("WHEN on the last page", () => {
     it("THEN should disable the next button", () => {
-      const { getByRole } = render(
+      cy.mount(
         <Pagination count={10} initialPage={10}>
           <Paginator />
         </Pagination>
       );
 
-      expect(getByRole("link", { name: "Page 10" })).toHaveAttribute(
+      cy.findByRole("link", { name: "Page 10" }).should(
+        "have.attr",
         "aria-current",
         "page"
       );
-      expect(getByRole("link", { name: "Next Page" })).toBeDisabled();
+      cy.findByRole("link", { name: "Next Page" }).should("be.disabled");
     });
   });
 
@@ -182,8 +191,8 @@ describe("GIVEN an Pagination", () => {
     describe("AND navigating using the mouse", () => {
       describe("THEN clicking the next arrow button", () => {
         it("THEN should move to the next page", () => {
-          const pageChangeSpy = jest.fn();
-          const { getByRole } = render(
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
             <Pagination
               compact={true}
               count={10}
@@ -194,17 +203,17 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          expect(getByRole("textbox")).toHaveValue("3");
-          fireEvent.click(getByRole("link", { name: "Next Page" }));
-          expect(getByRole("textbox")).toHaveValue("4");
-          expect(pageChangeSpy.mock.calls[0][0]).toEqual(4);
+          cy.findByRole("textbox").should("have.value", "3");
+          cy.findByRole("link", { name: "Next Page" }).realClick();
+          cy.findByRole("textbox").should("have.value", "4");
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
         });
       });
 
       describe("THEN clicking the previous arrow button", () => {
         it("THEN should move to the previous page", () => {
-          const pageChangeSpy = jest.fn();
-          const { getByRole } = render(
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
             <Pagination
               compact
               count={10}
@@ -215,17 +224,17 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          expect(getByRole("textbox")).toHaveValue("3");
-          fireEvent.click(getByRole("link", { name: "Previous Page" }));
-          expect(getByRole("textbox")).toHaveValue("2");
-          expect(pageChangeSpy.mock.calls[0][0]).toEqual(2);
+          cy.findByRole("textbox").should("have.value", "3");
+          cy.findByRole("link", { name: "Previous Page" }).realClick();
+          cy.findByRole("textbox").should("have.value", "2");
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
         });
       });
 
       describe("THEN clicking a the count item", () => {
         it("THEN should move to the last page", () => {
-          const pageChangeSpy = jest.fn();
-          const { getByRole } = render(
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
             <Pagination
               compact
               count={10}
@@ -236,10 +245,10 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          expect(getByRole("textbox")).toHaveValue("3");
-          fireEvent.click(getByRole("link", { name: "Page 10" }));
-          expect(getByRole("textbox")).toHaveValue("10");
-          expect(pageChangeSpy.mock.calls[0][0]).toEqual(10);
+          cy.findByRole("textbox").should("have.value", "3");
+          cy.findByRole("link", { name: "Page 10" }).realClick();
+          cy.findByRole("textbox").should("have.value", "10");
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 10);
         });
       });
     });
@@ -247,8 +256,8 @@ describe("GIVEN an Pagination", () => {
     describe("AND navigating using the keyboard", () => {
       describe("THEN using the next arrow button", () => {
         it("THEN should move to the next page", () => {
-          const pageChangeSpy = jest.fn();
-          const { getByRole } = render(
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
             <Pagination
               compact
               count={10}
@@ -259,19 +268,18 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          expect(getByRole("textbox")).toHaveValue("3");
-          fireEvent.keyDown(getByRole("link", { name: "Next Page" }), {
-            key: "Enter",
-          });
-          expect(getByRole("textbox")).toHaveValue("4");
-          expect(pageChangeSpy.mock.calls[0][0]).toEqual(4);
+          cy.findByRole("textbox").should("have.value", "3");
+          cy.findByRole("link", { name: "Next Page" }).focus();
+          cy.realPress("Enter");
+          cy.findByRole("textbox").should("have.value", "4");
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
         });
       });
 
       describe("THEN clicking the previous arrow button", () => {
         it("THEN should move to the previous page", () => {
-          const pageChangeSpy = jest.fn();
-          const { getByRole } = render(
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
             <Pagination
               compact
               count={10}
@@ -282,19 +290,18 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          expect(getByRole("textbox")).toHaveValue("3");
-          fireEvent.keyDown(getByRole("link", { name: "Previous Page" }), {
-            key: "Enter",
-          });
-          expect(getByRole("textbox")).toHaveValue("2");
-          expect(pageChangeSpy.mock.calls[0][0]).toEqual(2);
+          cy.findByRole("textbox").should("have.value", "3");
+          cy.findByRole("link", { name: "Previous Page" }).focus();
+          cy.realPress("Enter");
+          cy.findByRole("textbox").should("have.value", "2");
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
         });
       });
 
       describe("THEN clicking a the count item", () => {
         it("THEN should move to the last page", () => {
-          const pageChangeSpy = jest.fn();
-          const { getByRole } = render(
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
             <Pagination
               compact
               count={10}
@@ -305,20 +312,19 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          expect(getByRole("textbox")).toHaveValue("3");
-          fireEvent.keyDown(getByRole("link", { name: "Page 10" }), {
-            key: "Enter",
-          });
-          expect(getByRole("textbox")).toHaveValue("10");
-          expect(pageChangeSpy.mock.calls[0][0]).toEqual(10);
+          cy.findByRole("textbox").should("have.value", "3");
+          cy.findByRole("link", { name: "Page 10" }).focus();
+          cy.realPress("Enter");
+          cy.findByRole("textbox").should("have.value", "10");
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 10);
         });
       });
     });
 
     describe("AND using the embedded go to", () => {
       it("SHOULD then reset to the current page on blur", () => {
-        const pageChangeSpy = jest.fn();
-        const { getByRole } = render(
+        const pageChangeSpy = cy.stub().as("pageChangeSpy");
+        cy.mount(
           <Pagination
             compact
             count={10}
@@ -329,18 +335,18 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        expect(getByRole("textbox")).toHaveValue("3");
-        getByRole("textbox").focus();
-        fireEvent.change(getByRole("textbox"), { target: { value: "4" } });
-        expect(getByRole("textbox")).toHaveValue("4");
-        getByRole("textbox").blur();
-        expect(getByRole("textbox")).toHaveValue("3");
-        expect(pageChangeSpy).not.toHaveBeenCalled();
+        cy.findByRole("textbox").should("have.value", "3");
+        cy.findByRole("textbox").focus();
+        cy.realType("4");
+        cy.findByRole("textbox").should("have.value", "4");
+        cy.findByRole("textbox").blur();
+        cy.findByRole("textbox").should("have.value", "3");
+        cy.get("@pageChangeSpy").should("not.have.been.called");
       });
 
       it("SHOULD go to the page entered when enter is pressed", () => {
-        const pageChangeSpy = jest.fn();
-        const { getByRole } = render(
+        const pageChangeSpy = cy.stub().as("pageChangeSpy");
+        cy.mount(
           <Pagination
             compact
             count={10}
@@ -351,13 +357,13 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        expect(getByRole("textbox")).toHaveValue("3");
-        getByRole("textbox").focus();
-        fireEvent.change(getByRole("textbox"), { target: { value: "4" } });
-        expect(getByRole("textbox")).toHaveValue("4");
-        fireEvent.keyDown(getByRole("textbox"), { key: "Enter" });
-        expect(getByRole("textbox")).toHaveValue("4");
-        expect(pageChangeSpy).toHaveBeenCalled();
+        cy.findByRole("textbox").should("have.value", "3");
+        cy.findByRole("textbox").focus();
+        cy.realType("4");
+        cy.findByRole("textbox").should("have.value", "4");
+        cy.realPress("Enter");
+        cy.findByRole("textbox").should("have.value", "4");
+        cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
       });
     });
   });
@@ -407,26 +413,28 @@ describe("GIVEN an Pagination", () => {
   describe("WHEN customising the siblingCount", () => {
     describe("AND setting it to `3`", () => {
       it("THEN should render 11 buttons when the count is 11", () => {
-        const { queryAllByRole } = render(
+        cy.mount(
           <Pagination count={11}>
             <Paginator siblingCount={3} />
           </Pagination>
         );
 
-        expect(queryAllByRole("link", { name: /^Page.*/ })).toHaveLength(11);
+        cy.findAllByRole("link", { name: /^Page.*/ }).should("have.length", 11);
       });
 
       it("THEN should render 9 buttons when the count is 12", () => {
-        const { queryAllByRole } = render(
+        cy.mount(
           <Pagination count={12}>
             <Paginator siblingCount={3} />
           </Pagination>
         );
 
-        expect(queryAllByRole("link", { name: /^Page.*/ })).toHaveLength(10);
+        cy.findAllByRole("link", { name: /^Page.*/ }).should("have.length", 10);
       });
     });
 
+    // TODO revisit when we focus on Pagination
+    //
     //   describe("AND setting it to medium breakpoint", () => {
     //     let matchMediaInstances;
     //
@@ -469,168 +477,187 @@ describe("GIVEN an Pagination", () => {
   describe("WHEN using the GoToInput", () => {
     describe("AND changing the order of the components", () => {
       it("SHOULD then render on the left if GoToInput is before Paginator", () => {
-        const paginatorRef = createRef<HTMLDivElement>();
-        const { getByRole } = render(
+        cy.mount(
           <Pagination count={10} initialPage={3}>
             <GoToInput />
-            <Paginator ref={paginatorRef} />
+            <Paginator data-testid="paginator" />
           </Pagination>
         );
 
-        expect(
-          // eslint-disable-next-line no-bitwise
-          getByRole("textbox").compareDocumentPosition(paginatorRef.current!) &
-            Node.DOCUMENT_POSITION_PRECEDING
-        ).toEqual(0);
+        cy.findByRole("textbox").then((input) => {
+          cy.findByTestId("paginator").then((paginator) => {
+            cy.wrap(
+              input[0].compareDocumentPosition(paginator[0]) &
+                Node.DOCUMENT_POSITION_PRECEDING
+            ).should("equal", 0);
+          });
+        });
       });
 
       it("SHOULD then render on the right if GoToInput is after Paginator", () => {
-        const paginatorRef = createRef<HTMLDivElement>();
-        const { getByRole } = render(
+        cy.mount(
           <Pagination count={10} initialPage={3}>
-            <Paginator ref={paginatorRef} />
+            <Paginator data-testid="paginator" />
             <GoToInput />
           </Pagination>
         );
 
-        expect(
-          // eslint-disable-next-line no-bitwise
-          getByRole("textbox").compareDocumentPosition(paginatorRef.current!) &
-            Node.DOCUMENT_POSITION_FOLLOWING
-        ).toEqual(0);
+        cy.findByRole("textbox").then((input) => {
+          cy.findByTestId("paginator").then((paginator) => {
+            cy.wrap(
+              input[0].compareDocumentPosition(paginator[0]) &
+                Node.DOCUMENT_POSITION_FOLLOWING
+            ).should("equal", 0);
+          });
+        });
       });
     });
 
     describe("AND entering text into the input", () => {
       it("SHOULD accept any value", () => {
-        const { getByRole } = render(
+        cy.mount(
           <Pagination count={10} initialPage={3}>
             <GoToInput />
             <Paginator />
           </Pagination>
         );
 
-        fireEvent.change(getByRole("textbox"), { target: { value: "abc" } });
-        expect(getByRole("textbox")).toHaveValue("abc");
-        fireEvent.change(getByRole("textbox"), { target: { value: "-2" } });
-        expect(getByRole("textbox")).toHaveValue("-2");
-        fireEvent.change(getByRole("textbox"), { target: { value: "200" } });
-        expect(getByRole("textbox")).toHaveValue("200");
+        cy.findByRole("textbox").focus();
+        cy.realType("abc");
+        cy.findByRole("textbox").should("have.value", "abc");
+        cy.findByRole("textbox").clear();
+        cy.realType("-2");
+        cy.findByRole("textbox").should("have.value", "-2");
+        cy.findByRole("textbox").clear();
+        cy.realType("200");
+        cy.findByRole("textbox").should("have.value", "200");
       });
 
       it("SHOULD not change page when the value is invalid", () => {
-        const { getByRole } = render(
+        cy.mount(
           <Pagination count={10} initialPage={3}>
             <GoToInput />
             <Paginator />
           </Pagination>
         );
 
-        fireEvent.change(getByRole("textbox"), { target: { value: "abc" } });
-        expect(getByRole("textbox")).toHaveValue("abc");
-        fireEvent.keyDown(getByRole("textbox"), { key: "Enter" });
-        expect(getByRole("link", { name: "Page 3" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 3" }).should(
+          "have.attr",
+          "aria-current",
+          "page"
+        );
+        cy.findByRole("textbox").focus();
+        cy.realType("abc");
+        cy.findByRole("textbox").should("have.value", "abc");
+        cy.realPress("Enter");
+        cy.findByRole("link", { name: "Page 3" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
       });
 
       it("SHOULD change page when the value is valid", () => {
-        const { getByRole } = render(
+        cy.mount(
           <Pagination count={10} initialPage={3}>
             <GoToInput />
             <Paginator />
           </Pagination>
         );
 
-        fireEvent.change(getByRole("textbox"), { target: { value: "5" } });
-        expect(getByRole("textbox")).toHaveValue("5");
-        fireEvent.keyDown(getByRole("textbox"), { key: "Enter" });
-        expect(getByRole("link", { name: "Page 5" })).toHaveAttribute(
+        cy.findByRole("link", { name: "Page 3" }).should(
+          "have.attr",
+          "aria-current",
+          "page"
+        );
+        cy.findByRole("textbox").focus();
+        cy.realType("5");
+        cy.findByRole("textbox").should("have.value", "5");
+        cy.realPress("Enter");
+        cy.findByRole("link", { name: "Page 5" }).should(
+          "have.attr",
           "aria-current",
           "page"
         );
       });
 
       it("SHOULD clear on blur", () => {
-        const { getByRole } = render(
+        cy.mount(
           <Pagination count={10} initialPage={3}>
             <GoToInput />
             <Paginator />
           </Pagination>
         );
 
-        getByRole("textbox").focus();
-        fireEvent.change(getByRole("textbox"), { target: { value: "5" } });
-        expect(getByRole("textbox")).toHaveValue("5");
-        getByRole("textbox").blur();
-        expect(getByRole("textbox")).toHaveValue("");
+        cy.findByRole("textbox").focus();
+        cy.realType("5");
+        cy.findByRole("textbox").should("have.value", "5");
+        cy.findByRole("textbox").blur();
+        cy.findByRole("textbox").should("have.value", "");
       });
     });
 
     describe("AND pagination is in compact mode", () => {
       it("SHOULD then be hidden", () => {
-        const { queryAllByRole } = render(
+        cy.mount(
           <Pagination compact count={10} initialPage={3}>
             <GoToInput />
             <Paginator />
           </Pagination>
         );
 
-        expect(queryAllByRole("textbox")).toHaveLength(1);
+        cy.findAllByRole("textbox").should("have.length", 1);
       });
     });
   });
 
   describe("WHEN the count is 1", () => {
     it("should collapse the pagination", () => {
-      const { queryByRole } = render(
+      cy.mount(
         <Pagination count={1}>
           <Paginator />
         </Pagination>
       );
 
-      expect(queryByRole("navigation")).toEqual(null);
+      cy.findByRole("navigation").should("not.exist");
     });
   });
 
   describe("WHEN using keyboard shortcuts", () => {
-    test("Alt+PageDown moves to the next page", () => {
-      const pageChangeSpy = jest.fn();
-      const { getByRole } = render(
+    it("Alt+PageDown moves to the next page", () => {
+      const pageChangeSpy = cy.stub().as("pageChangeSpy");
+      cy.mount(
         <Pagination count={10} onPageChange={pageChangeSpy}>
           <Paginator />
         </Pagination>
       );
 
-      expect(getByRole("link", { name: "Page 1" })).toHaveAttribute(
+      cy.findByRole("link", { name: "Page 1" }).should(
+        "have.attr",
         "aria-current",
         "page"
       );
-      fireEvent.keyDown(getByRole("navigation"), {
-        altKey: true,
-        key: "PageDown",
-      });
-      expect(pageChangeSpy.mock.calls[0][0]).toEqual(2);
+      cy.realPress("Tab");
+      cy.realPress(["Alt", "PageDown"]);
+      cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
     });
 
-    test("Alt+PageUp moves to the next page", () => {
-      const pageChangeSpy = jest.fn();
-      const { getByRole } = render(
+    it("Alt+PageUp moves to the next page", () => {
+      const pageChangeSpy = cy.stub().as("pageChangeSpy");
+      cy.mount(
         <Pagination count={10} initialPage={2} onPageChange={pageChangeSpy}>
           <Paginator />
         </Pagination>
       );
 
-      expect(getByRole("link", { name: "Page 2" })).toHaveAttribute(
+      cy.findByRole("link", { name: "Page 2" }).should(
+        "have.attr",
         "aria-current",
         "page"
       );
-      fireEvent.keyDown(getByRole("navigation"), {
-        altKey: true,
-        key: "PageUp",
-      });
-      expect(pageChangeSpy.mock.calls[0][0]).toEqual(1);
+      cy.realPress("Tab");
+      cy.realPress(["Alt", "PageUp"]);
+      cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
     });
   });
 });

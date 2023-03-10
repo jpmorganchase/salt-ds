@@ -1,5 +1,5 @@
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { UserGroupIcon } from "@salt-ds/icons";
+import { UserGroupSolidIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/testing-react";
 import * as avatarStories from "@stories/avatar/avatar.stories";
 
@@ -10,7 +10,7 @@ describe("Given an Avatar", () => {
   describe("WHEN the default is left without children", () => {
     it("should show the default fallback icon", () => {
       cy.mount(<Default />);
-      cy.get('[data-testid="UserIcon"]').should("have.length", 4);
+      cy.get('[data-testid="UserSolidIcon"]').should("have.length", 4);
     });
   });
   describe("WHEN only a name is provided", () => {
@@ -26,7 +26,7 @@ describe("Given an Avatar", () => {
     });
     it("should show the default if there are no initials", () => {
       cy.mount(<Default src={""} />);
-      cy.get('[data-testid="UserIcon"]').should("have.length", 4);
+      cy.get('[data-testid="UserSolidIcon"]').should("have.length", 4);
     });
   });
   describe("WHEN an image is provided", () => {
@@ -43,9 +43,9 @@ describe("Given an Avatar", () => {
 
   describe("WHEN a fallback icon is provided", () => {
     it("should show the fallback icon when no children are provided", () => {
-      const fallbackIcon = <UserGroupIcon />;
+      const fallbackIcon = <UserGroupSolidIcon />;
       cy.mount(<Default fallbackIcon={fallbackIcon} />);
-      cy.get('[data-testid="UserGroupIcon"]').should("have.length", 4);
+      cy.get('[data-testid="UserGroupSolidIcon"]').should("have.length", 4);
     });
   });
 });

@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Avatar } from "@salt-ds/lab";
+import { Avatar } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -7,7 +7,7 @@ import {
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Avatar"
+  title="Documentation/Core/Avatar"
   component={Avatar}
   parameters={{
     viewMode: "docs",
@@ -16,28 +16,28 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Avatar
 
-An Avatar is a small circular graphical representation of a user entity through a profile picture or name initials.
+The Avatar component is a graphical element which can be used to represent a person, group, entity, or communication channel.
 It has three variants to account for different types of data:
 
 - `Image` is used when a photo is available;
-- `Initials` is used when a photo is unavailable but profile information is;
-- A default `Icon` is used when neither photo nor profile information are available.
+- `Initials` can be used when a photo is unavailable but profile information is;
+- `Icon` can be used when neither a photo nor profile information are available.
 
 ### Features
 
 #### Default Avatar
 
-Each Avatar variant has a default size across all four densities, equal to the size foundation size-base; 20px (HD), 28px (MD), 36px (LD), and 44px (TD)
+Each Avatar variant has a default size across all four densities, equal to the size foundation size-base; 20px (HD), 28px (MD), 36px (LD), and 44px (TD).
 The size of Avatar can be changed in multiples of the base size.
 
 <Canvas>
-  <Story id="lab-avatar--default" />
+  <Story id="core-avatar--default" />
 </Canvas>
 
-Avatar renders with a default icon defined by `UserIcon` but an alternative icon can be passed as `fallbackIcon`.
+Avatar renders with an icon defined by `UserSolidIcon` but an alternative icon can be passed as `fallbackIcon`.
 
 <Canvas>
-  <Story id="lab-avatar--alternative-icon" />
+  <Story id="core-avatar--alternative-icon" />
 </Canvas>
 
 #### Image
@@ -45,7 +45,7 @@ Avatar renders with a default icon defined by `UserIcon` but an alternative icon
 Reference your image source in the `src` prop, or pass it as the child of the component.
 
 <Canvas>
-  <Story id="lab-avatar--with-image" />
+  <Story id="core-avatar--with-image" />
 </Canvas>
 
 #### Initials
@@ -53,7 +53,7 @@ Reference your image source in the `src` prop, or pass it as the child of the co
 You can pass the user's initials as the child of the component.
 
 <Canvas>
-  <Story id="lab-avatar--initials" />
+  <Story id="core-avatar--initials" />
 </Canvas>
 
 #### Custom image or SVG
@@ -61,13 +61,13 @@ You can pass the user's initials as the child of the component.
 You can pass a custom image or SVG as the child of the component to be used as an image.
 
 <Canvas>
-  <Story id="lab-avatar--with-custom-svg" />
+  <Story id="core-avatar--with-custom-svg" />
 </Canvas>
 
 Note that for images passed as children, you will also need to handle the fallback logic.
 
 <Canvas>
-  <Story id="lab-avatar--image-fallback" />
+  <Story id="core-avatar--image-fallback" />
 </Canvas>
 
 #### Alternative Background
@@ -75,7 +75,7 @@ Note that for images passed as children, you will also need to handle the fallba
 The `Avatar` background can be customized by using `--saltAvatar-background`.
 
 <Canvas>
-  <Story id="lab-avatar--alternative-background" />
+  <Story id="core-avatar--alternative-background" />
 </Canvas>
 
 ## Configuring Avatar
@@ -83,7 +83,7 @@ The `Avatar` background can be customized by using `--saltAvatar-background`.
 ### API
 
 ```
-import { Avatar } from "@salt-ds/lab";
+import { Avatar } from "@salt-ds/core";
 ```
 
 ### Props
