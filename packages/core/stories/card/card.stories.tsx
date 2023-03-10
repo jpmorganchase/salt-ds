@@ -19,6 +19,7 @@ import stockPhoto from "./../assets/stockPhoto.png";
 export default {
   title: "Core/Card",
   component: Card,
+  argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof Card>;
 
 interface ExampleRowProps {
@@ -49,8 +50,8 @@ const Examples = () => (
   <>
     <ExampleRow name="Default">
       <Card>
-          <Text>Content</Text>
-        </Card>
+        <Text>Content</Text>
+      </Card>
     </ExampleRow>
   </>
 );
@@ -90,25 +91,39 @@ export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
 );
 
 export const CardsInGridLayout: ComponentStory<typeof Card> = () => (
-  <GridLayout style={{maxWidth: "700px"}} rows={2} columns={2}>
+  <GridLayout style={{ maxWidth: "700px" }} rows={2} columns={2}>
     <Default />
-    <WithImageAndButton />
+    <InteractableAsLink />
     <WithImageAndButton />
     <InteractableDisabled />
   </GridLayout>
 );
 
-export const Interactable: ComponentStory<typeof Card> = () => (
-  <InteractableCard
-    onClick={() => {
-      window.open("https://google.com");
-    }}
-  >
-    <div style={{ textAlign: "center" }}>
-      <div>Visit Google</div>
-    </div>
-  </InteractableCard>
-);
+export const InteractableAsLink: ComponentStory<typeof Card> = () => {
+  return (
+    <a href="https://saltdesignsystem.com/" tabIndex={0}>
+      <InteractableCard>
+        <div style={{ textAlign: "center" }}>
+          <div>Visit Salt</div>
+        </div>
+      </InteractableCard>
+    </a>
+  );
+};
+
+// export const InteractableAsAction: ComponentStory<typeof Card> = () => {
+//   const handleClick = () => {
+//     console.log("Clicked");
+//   };
+
+//   return (
+//     <InteractableCard onClick={handleClick} tabIndex={0}>
+//       <div style={{ textAlign: "center" }}>
+//         <div>Click me</div>
+//       </div>
+//     </InteractableCard>
+//   );
+// };
 
 export const InteractableDisabled: ComponentStory<typeof Card> = () => (
   <InteractableCard
@@ -125,21 +140,63 @@ export const InteractableDisabled: ComponentStory<typeof Card> = () => (
 
 export const WithImageAndButton: ComponentStory<typeof Card> = () => (
   <Card>
-    <img src={stockPhoto} alt="Image from unsplash" style={{maxWidth: "100%", maxHeight: "100%", paddingBottom: "var(--salt-size-unit)"}} />
+    <img
+      src={stockPhoto}
+      alt="Image from unsplash"
+      style={{
+        maxWidth: "100%",
+        maxHeight: "100%",
+        paddingBottom: "var(--salt-size-unit)",
+      }}
+    />
     <div
       style={{
-        borderTop: "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor)",
-        display: "flex",
-        justifyContent: "space-between",
+        borderTop:
+          "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor)",
+        display: "grid",
+        gridTemplateColumns: "repeat(2, auto)",
+        gap: "calc(var(--salt-size-unit) * 2)",
         alignItems: "center",
-        padding: "var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit)"
+        padding:
+          "var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit)",
       }}
     >
-      <div style={{display: "grid", alignItems: "flex-start", gap: "var(--salt-size-unit)"}}>
-        <Label><strong>The Skies</strong></Label>
+      <div
+        style={{
+          display: "grid",
+          alignItems: "flex-start",
+          gap: "var(--salt-size-unit)",
+        }}
+      >
+        <Label>
+          <strong>The Skies</strong>
+        </Label>
         <Label>Art by Dominik Schröder</Label>
       </div>
       <Button onClick={() => console.log("Clicked")}>See more</Button>
     </div>
   </Card>
+);
+
+export const Variations: ComponentStory<typeof Card> = () => (
+  <div style={{display: "grid", gap: "calc(2 * var(--salt-size-unit))"}}>
+    <InteractableCard>
+      <div>
+        <H1 style={{margin: "0"}}>This is Card</H1>
+        <Text>Using Nested DOM Elements</Text>
+      </div>
+    </InteractableCard>
+    <InteractableCard accentPosition="left">
+      <div>
+        <H1 style={{margin: "0"}}>This is Card</H1>
+        <Text>Using Nested DOM Elements</Text>
+      </div>
+    </InteractableCard>
+    <InteractableCard accentPosition="top">
+      <div>
+        <H1 style={{margin: "0"}}>This is Card</H1>
+        <Text>Using Nested DOM Elements</Text>
+      </div>
+    </InteractableCard>
+  </div>
 );

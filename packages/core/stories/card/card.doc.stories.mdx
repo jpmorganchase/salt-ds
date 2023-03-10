@@ -16,7 +16,7 @@ import {
 
 # Card
 
-Cards contain content and actions about a single subject.
+A Card is a visually distinct container that displays a snapshot of information about a single subject, and acts as entry point to more detailed information.
 
 ## Card Component
 
@@ -28,7 +28,13 @@ This default example is intended to show the way the Card component’s content 
 
 ## Interactable Card
 
-Cards can have actions by making use of `InteractableCard`. We discourage the use of any focusable elements within interactable Cards.
+### Interactable
+
+**Deprecated:** Cards can have interactable styling by setting `interactable={true}`. These cards could be wrapped in Link, for example, for interactivity. We discourage the use of any focusable elements within interactable Cards.
+
+### Interactable Card
+
+**Updated:** Cards can have actions by making use of `InteractableCard`. We discourage the use of any focusable elements within interactable Cards.
 
 <Canvas>
   <Story id="core-card--interactable" />
@@ -36,7 +42,13 @@ Cards can have actions by making use of `InteractableCard`. We discourage the us
 
 ## Disabled Card
 
-Interactable cards can have disabled styling applied by setting `disabled={true}`.
+### Disabled Card
+
+**Deprecated:** Cards can have disabled styling applied by setting `disabled={true}`.
+
+### Disabled (Interactable) Card
+
+**Updated:** Interactable cards can have disabled styling applied by setting `disabled={true}`.
 
 Make sure to as well apply `disabled={true}` to any nested components, such as Text, to ensure disabled styling is also applied to the inner content.
 

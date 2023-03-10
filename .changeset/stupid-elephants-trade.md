@@ -1,6 +1,10 @@
 ---
 "@salt-ds/core": minor
+"@salt-ds/lab": minor
 ---
 
-Removed `interactable` and `disabled` props from Card
-Created `InteractableCard` component
+Deprecated `interactable` and `disabled` props in Card
+
+Created `InteractableCard` component with redesign
+
+Moved `capitalize` from lab to core
