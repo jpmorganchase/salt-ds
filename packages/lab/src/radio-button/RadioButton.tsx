@@ -49,7 +49,7 @@ export interface RadioButtonProps
   /**
    * Callback for blur event
    */
-  onBlur?: FocusEventHandler<HTMLSpanElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
    * Callback for change event
    */
@@ -57,7 +57,7 @@ export interface RadioButtonProps
   /**
    * Callback for focus event
    */
-  onFocus?: FocusEventHandler<HTMLSpanElement>;
+  onFocus?: FocusEventHandler<HTMLInputElement>;
   /**
    * Value of radio button
    */
@@ -104,15 +104,15 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       state: "checked",
     });
 
-    const handleFocus: FocusEventHandler<HTMLElement> = (event) => {
+    const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
       onFocus && onFocus(event);
     };
 
-    const handleBlur: FocusEventHandler<HTMLElement> = (event) => {
+    const handleBlur: FocusEventHandler<HTMLInputElement> = (event) => {
       onBlur && onBlur(event);
     };
 
-    const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       const newChecked = event.target.checked;
       setCheckedState(newChecked);
 
@@ -144,7 +144,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           name={name}
           value={value}
           onBlur={handleBlur}
-          onChange={handleInputChange}
+          onChange={handleChange}
           onFocus={handleFocus}
           type="radio"
         />
