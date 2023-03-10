@@ -48,9 +48,9 @@ export const AnchorHeading: FC<PropsWithChildren<AnchorHeadingProps>> = ({
   const { link } = LinkPropsProp;
   const anchorLink = link || `#${id}`;
   return (
-    <div className={classnames(className, styles.root)}>
+    <div className={classnames(styles.root, className)}>
       <Link
-        className={classnames(className, styles.link)}
+        className={styles.link}
         {...LinkPropsProp}
         endIcon="none"
         link={anchorLink}
