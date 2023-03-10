@@ -16,7 +16,6 @@ export {
 
 export * from "./accordion";
 export * from "./app-header";
-export * from "./avatar";
 export * from "./badge";
 export * from "./banner";
 export * from "./breadcrumbs";

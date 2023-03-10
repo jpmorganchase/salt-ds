@@ -1,8 +1,7 @@
 import { forwardRef, useEffect } from "react";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, Avatar, AvatarProps } from "@salt-ds/core";
 import { useContactDetailsContext } from "./internal";
 import { clsx } from "clsx";
-import { Avatar, AvatarProps } from "../avatar";
 
 const withBaseName = makePrefixer("saltContactAvatar");
 

@@ -1,8 +1,8 @@
-import { makePrefixer } from "@salt-ds/core";
-import { UserIcon } from "@salt-ds/icons";
+import { UserSolidIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useLoaded } from "./internal/useLoaded";
+import { makePrefixer } from "../utils";
 
 import "./Avatar.css";
 
@@ -52,7 +52,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     src,
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
-    fallbackIcon = <UserIcon />,
+    fallbackIcon = <UserSolidIcon />,
     ...rest
   },
   ref
@@ -67,18 +67,21 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const hasImgNotFailing = useLoaded({ src }) !== "error" && src;
 
   if (hasImgNotFailing) {
-    children = <img className={withBaseName("image")} alt={name} src={src} />;
+    children = <img alt={name} src={src} />;
   } else if (childrenProp != null) {
     children = childrenProp;
   }
 
   const avatarInitials = nameToInitials(name);
-
   return (
     <div
       ref={ref}
       style={style}
-      className={clsx(withBaseName(), className)}
+      className={clsx(
+        withBaseName(),
+        { [withBaseName("withImage")]: hasImgNotFailing },
+        className
+      )}
       {...rest}
     >
       {children || avatarInitials || fallbackIcon}
