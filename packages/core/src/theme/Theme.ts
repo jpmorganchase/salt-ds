@@ -2,7 +2,6 @@ export type characteristic =
   | "accent"
   | "actionable"
   | "container"
-  | "differential"
   | "draggable"
   | "editable"
   | "focused"

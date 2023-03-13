@@ -12,6 +12,10 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   T,
   {
     /**
+     * Applies disabled styling when true
+     */
+    disabled?: boolean;
+    /**
      * Apply text truncation by mentioning number of rows to be displayed
      */
     maxRows?: number;
@@ -43,13 +47,14 @@ const withBaseName = makePrefixer("saltText");
 export const Text: TextComponent = forwardRef(
   <T extends ElementType = "div">(
     {
+      as,
       children,
       className,
-      as,
+      disabled = false,
       maxRows,
+      style,
       styleAs,
       variant = "primary",
-      style,
       ...restProps
     }: TextProps<T>,
     ref?: PolymorphicRef<T>
@@ -60,11 +65,16 @@ export const Text: TextComponent = forwardRef(
 
     return (
       <Component
-        className={clsx(withBaseName(), className, {
-          [withBaseName("lineClamp")]: maxRows,
-          [withBaseName(styleAs || "")]: styleAs,
-          [withBaseName(variant)]: variant,
-        })}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("lineClamp")]: maxRows,
+            [withBaseName(styleAs || "")]: styleAs,
+            [withBaseName(variant)]: variant,
+          },
+          className
+        )}
         {...restProps}
         ref={ref}
         style={textStyles}

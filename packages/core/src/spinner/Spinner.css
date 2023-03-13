@@ -1,0 +1,40 @@
+/* Styles applied to the root element */
+.saltSpinner {
+  position: relative;
+}
+
+/* Styles applied to the SVG stop elements */
+.saltSpinner-gradientStop {
+  stop-color: var(--saltSpinner-gradient-color, var(--salt-measured-fill));
+}
+
+/* Styles applied when `size="default"` */
+.saltSpinner-default {
+  height: var(--salt-size-base);
+  width: var(--salt-size-base);
+}
+
+/* Styles applied when `size="large"` */
+.saltSpinner-large {
+  height: calc(var(--salt-size-base) * 2);
+  width: calc(var(--salt-size-base) * 2);
+}
+
+/* Styles applied to the SVG */
+.saltSpinner-spinner {
+  animation: spinner 0.9s linear infinite;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

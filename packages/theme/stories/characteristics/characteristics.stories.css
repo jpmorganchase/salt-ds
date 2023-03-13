@@ -8,10 +8,5 @@
 .my-app .saltCard {
   --saltCard-background: var(--salt-accent-background);
   --saltCard-borderColor: var(--salt-accent-borderColor);
-  --saltCard-color: var(--salt-accent-foreground);
-}
-
-.salt-theme .saltCard .sbdocs {
-  background: unset;
-  color: unset;
+  --saltText-color: var(--salt-accent-foreground);
 }

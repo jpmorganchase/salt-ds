@@ -31,7 +31,7 @@ export type BorderItemProps<T extends ElementType> =
        */
       verticalAlignment?: GridItemProps<T>["verticalAlignment"];
       /**
-       * Position in the border layout
+       * Position in the Border Layout
        */
       position: BorderPosition;
       /**
@@ -67,9 +67,14 @@ export const BorderItem: BorderItemComponent = forwardRef(
     return (
       <GridItem
         ref={ref}
-        className={clsx(withBaseName(), className, "saltGridItem-area", {
-          [withBaseName("sticky")]: sticky,
-        })}
+        className={clsx(
+          withBaseName(),
+          "saltGridItem-area",
+          {
+            [withBaseName("sticky")]: sticky,
+          },
+          className
+        )}
         style={gridItemStyles}
         {...rest}
       >

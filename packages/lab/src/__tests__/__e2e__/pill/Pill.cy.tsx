@@ -1,7 +1,7 @@
 import { Pill } from "../../../pill";
 import { CallIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/testing-react";
-import * as pillStories from "@stories/pill.stories";
+import * as pillStories from "@stories/pill/pill.stories";
 
 const composedStories = composeStories(pillStories);
 const { CustomTooltipText } = composedStories;

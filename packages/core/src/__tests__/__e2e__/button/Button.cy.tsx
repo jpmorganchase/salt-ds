@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as buttonStories from "@stories/button.stories";
+import * as buttonStories from "@stories/button/button.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(buttonStories);

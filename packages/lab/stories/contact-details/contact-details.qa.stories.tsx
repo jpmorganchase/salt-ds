@@ -15,7 +15,7 @@ import {
 } from "@salt-ds/lab";
 import { CallIcon, ChatIcon, MessageIcon } from "@salt-ds/icons";
 import { QAContainer, QAContainerProps } from "docs/components";
-import avatar1 from "./assets/avatar1.png";
+import avatar1 from "../assets/avatar1.png";
 
 export default {
   title: "Lab/Contact Details/QA",
@@ -82,7 +82,7 @@ const getComponent = (props: { variant?: string; className?: string }) => {
             : "default"
         }
       >
-        {!!avatar && <ContactAvatar src={avatar1} />}
+        {!!avatar && <ContactAvatar>{avatar1}</ContactAvatar>}
 
         <ContactFavoriteToggle onChange={console.log} />
 

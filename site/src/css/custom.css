@@ -1,6 +1,5 @@
 @import "./base/";
 @import "./theme/";
-@import "./global/";
 @import "./navbar";
 @import "./docs/";
 @import "./footer/";

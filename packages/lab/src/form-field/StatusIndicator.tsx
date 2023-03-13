@@ -2,10 +2,11 @@ import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ElementType } from "react";
 import {
-  StatusIndicator as BaseStatusIndicator,
   makePrefixer,
+  StatusIndicator as BaseStatusIndicator,
+  Tooltip,
+  TooltipProps,
 } from "@salt-ds/core";
-import { Tooltip, TooltipProps, useTooltip } from "../tooltip";
 
 const withBaseName = makePrefixer("saltFormField");
 
@@ -32,33 +33,25 @@ export const StatusIndicator = (props: StatusIndicatorProps) => {
     ...restProps
   } = props;
 
-  const { getTriggerProps, getTooltipProps } = useTooltip({
-    placement: "top",
-    disabled: !hasTooltip,
-  });
-
   return (
-    <>
-      <TooltipComponent
-        {...getTooltipProps({
-          hideIcon: true,
-          status,
-          title: tooltipText,
-          ...TooltipProps,
-        })}
-      />
+    <TooltipComponent
+      hideIcon
+      status={status}
+      content={tooltipText}
+      placement="top"
+      disabled={!hasTooltip}
+      {...TooltipProps}
+    >
       <BaseStatusIndicator
-        {...getTriggerProps<typeof BaseStatusIndicator>({
-          status,
-          ...restProps,
-          ...IconProps,
-          className: clsx(
-            withBaseName("statusIndicator"),
-            className,
-            IconProps?.className
-          ),
-        })}
+        status={status}
+        {...restProps}
+        {...IconProps}
+        className={clsx(
+          withBaseName("statusIndicator"),
+          className,
+          IconProps?.className
+        )}
       />
-    </>
+    </TooltipComponent>
   );
 };

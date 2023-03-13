@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as deckStories from "@stories/deck-layout.stories";
+import * as deckStories from "@stories/deck-layout/deck-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(deckStories);
