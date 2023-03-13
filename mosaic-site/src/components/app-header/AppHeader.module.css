@@ -27,6 +27,6 @@
 }
 
 .drawer svg {
-  width: 24px;
-  height: 24px;
+  width: calc(var(--salt-size-unit) * 1.5);
+  height: calc(var(--salt-size-unit) * 1.5);
 }
