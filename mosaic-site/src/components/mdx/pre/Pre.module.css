@@ -13,6 +13,6 @@
 }
 
 .pre button svg {
-  width: 18px;
-  height: 18px;
+  width: calc(var(--salt-size-unit) * 1.5);
+  height: calc(var(--salt-size-unit) * 1.5);
 }
