@@ -6,7 +6,7 @@
 }
 
 .pre button {
-  border: 1px solid var(--salt-color-gray-300);
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-color-gray-300);
   border-radius: 0.4rem;
   padding: 0 var(--salt-size-unit);
   margin: calc(var(--salt-size-unit) / 2);
