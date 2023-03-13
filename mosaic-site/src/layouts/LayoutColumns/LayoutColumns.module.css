@@ -6,7 +6,7 @@
 
 .withSidebar {
   width: 100%;
-  z-index: 1;
+  z-index: var(--salt-zIndex-default);
   display: flex;
 }
 
