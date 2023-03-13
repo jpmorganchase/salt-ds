@@ -2,7 +2,7 @@
   --site-navigation-padding-vertical: var(--salt-size-unit);
   --site-navigation-padding-horizontal: calc(var(--salt-size-unit) * 3);
   --border-width-thin: 0;
-  --shadow-dark-elevation2: var(--salt-overlayable-shadow-scroll-color);
+  --shadow-dark-elevation2: var(--salt-shadow-1-color);
 }
 
 .docsWrapper {
