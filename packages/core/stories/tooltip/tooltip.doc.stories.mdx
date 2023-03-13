@@ -75,6 +75,14 @@ Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults 
   <Story id="core-tooltip--delay" decorators={[withFlexGap]} />
 </Canvas>
 
+### Strategy
+
+This prop allows you to change the css positioning to fixed.
+
+### Portal
+
+When `strategy="fixed"` is not enough and your Tooltip is still getting clipped by other content, or you are struggling with z-index stacking, you can use the portal prop to render the Tooltip at the root of the `body` element. Be midful if you are customizing the style of the Tooltip with a nested class name, it will no longer work (eg. `.customClass .saltTooltip`).
+
 ## Configuring Tooltip
 
 ### API

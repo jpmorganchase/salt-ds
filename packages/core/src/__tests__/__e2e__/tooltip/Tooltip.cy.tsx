@@ -156,4 +156,38 @@ describe("GIVEN a Tooltip", () => {
       cy.get("li").should("be.visible");
     });
   });
+
+  describe("WHEN portal prop is true", () => {
+    it("should render the tooltip at the root of the body element", () => {
+      cy.mount(
+        <div id="container">
+          <Open content="tooltip" portal />
+        </div>
+      );
+
+      cy.get("#container .saltTooltip").should("not.exist");
+
+      cy.get("body > [data-floating-ui-portal] > .saltTooltip").should("exist");
+    });
+  });
+
+  describe("By default the strategy prop is 'absolute'", () => {
+    it("should render the tooltip with css position fixed", () => {
+      cy.mount(<Open content="tooltip" />);
+
+      cy.get(".saltTooltip").then(($el) => {
+        expect(getComputedStyle($el[0]).position).to.be.eq("absolute");
+      });
+    });
+  });
+
+  describe("WHEN strategy prop is 'fixed'", () => {
+    it("should render the tooltip with css position fixed", () => {
+      cy.mount(<Open content="tooltip" strategy="fixed" />);
+
+      cy.get(".saltTooltip").then(($el) => {
+        expect(getComputedStyle($el[0]).position).to.be.eq("fixed");
+      });
+    });
+  });
 });

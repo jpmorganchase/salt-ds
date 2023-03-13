@@ -17,7 +17,7 @@ import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps
   extends Partial<
-    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
+    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement" | "strategy">
   > {
   /**
    * Do not respond to focus events.
@@ -48,6 +48,7 @@ export function useTooltip(props?: UseTooltipProps) {
     placement: placementProp,
     disableHoverListener,
     disableFocusListener,
+    strategy: strategyProp,
   } = props || {};
 
   const arrowRef = useRef<HTMLDivElement | null>(null);
@@ -73,6 +74,7 @@ export function useTooltip(props?: UseTooltipProps) {
     placement,
     context,
   } = useFloatingUI({
+    strategy: strategyProp,
     open,
     onOpenChange: handleOpenChange,
     placement: placementProp,
