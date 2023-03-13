@@ -2,4 +2,4 @@
 "@salt-ds/theme": minor
 ---
 
-Changed `--salt-size-brandBar` to `--salt-size-accent` with new density dependent values
+Deprecated `--salt-size-brandBar`; replaced with `--salt-size-accent` with new density dependent values

@@ -11,9 +11,9 @@ All size values are based on 4px, `--salt-size-basis-unit`. If you need to chang
 ## Tokens
 
 <DocGrid>
+  <SpacingBlock spacingVar="--salt-size-accent" />
   <SpacingBlock spacingVar="--salt-size-basis-unit" />
   <SpacingBlock spacingVar="--salt-size-border" />
-  <SpacingBlock spacingVar="--salt-size-accent" />
   <SpacingBlock spacingVar="--salt-size-divider-strokeWidth" />
   <SpacingBlock spacingVar="--salt-size-sharktooth-height" />
   <SpacingBlock spacingVar="--salt-size-sharktooth-width" />
@@ -24,3 +24,22 @@ All size values are based on 4px, `--salt-size-basis-unit`. If you need to chang
   <SpacingBlock spacingVar="--salt-size-selectable" />
   <SpacingBlock spacingVar="--salt-size-stackable" />
 </DocGrid>
+
+### **Deprecated**
+
+<div style={{ "--saltDocGrid-columns": "repeat(3, auto)" }}>
+  <DocGrid>
+    <SpacingBlock spacingVar="--salt-size-brandBar" />
+    <div>
+      **deprecated**: use <code>--salt-size-accent</code> instead
+    </div>
+    <SpacingBlock spacingVar="--salt-size-detail" />
+    <div>
+      **deprecated**: use <code>--salt-size-compact</code> instead
+    </div>
+    <SpacingBlock spacingVar="--salt-size-selection" />
+    <div>
+      **deprecated**: use <code>--salt-size-selectable</code> instead
+    </div>
+  </DocGrid>
+</div>
