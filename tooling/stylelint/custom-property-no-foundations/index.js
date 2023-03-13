@@ -59,13 +59,6 @@ const isSaltThemeCustomProperty = function (property) {
   return property.startsWith("--salt-");
 };
 
-/**
- * Test whether a property value is for backwards compatibility
- */
-const isBackwardsCompatToken = function (property) {
-  return property.startsWith("--backwardsCompat-");
-};
-
 const allAllowedKeys = [
   // characteristics
   "actionable",
@@ -85,10 +78,9 @@ const allAllowedKeys = [
   // additional to decide
   "animation",
   "delay", // to be merged with animation
-  "palette", // currently for opacity purposes
+  "palette-opacity", // palette only allowed for opacity purposes
   "size",
-  "opacity",
-  "zIndex", // to be added to overlayable
+  "zIndex"
 ];
 
 const regexpPattern = new RegExp(
@@ -104,21 +96,12 @@ module.exports = stylelint.createPlugin(
       function check(property) {
         const checkResult =
           !isSaltThemeCustomProperty(property) ||
-          regexpPattern.test(property) ||
-          !isBackwardsCompatToken(property);
+          regexpPattern.test(property);
         verboseLog && console.log("Checking", checkResult, property);
         return checkResult;
       }
 
       root.walkDecls((decl) => {
-        if (
-          decl.parent?.type === "rule" &&
-          decl.parent?.selector?.includes?.("backwardsCompat")
-        ) {
-          // Do not check backwardsCompat CSS
-          return;
-        }
-
         const { prop, value } = decl;
 
         const parsedValue = valueParser(value);
