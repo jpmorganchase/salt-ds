@@ -3,4 +3,4 @@
 "@salt-ds/theme": patch
 ---
 
-Remove `--salt-overlayable-shadow-scroll-color`
+Deprecated `--salt-overlayable-shadow-scroll-color`, use `--salt-shadow-1-color` instead

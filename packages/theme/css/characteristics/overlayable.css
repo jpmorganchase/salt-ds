@@ -8,4 +8,7 @@
   --salt-overlayable-shadow-modal: var(--salt-shadow-5);
 
   --salt-overlayable-background: var(--salt-palette-neutral-backdrop);
+
+  /* **deprecated**: use --salt-shadow-1-color instead */
+  --salt-overlayable-shadow-scroll-color: var(--salt-shadow-1-color);
 }
