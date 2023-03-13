@@ -1,0 +1,16 @@
+/* Style applied to the root element */
+.saltCountrySymbol {
+  --country-symbol-size-multiplier: var(--saltCountrySymbol-size-multiplier, 1);
+  --country-symbol-base-size: var(--salt-size-base, 20px);
+  --country-symbol-size: calc(var(--country-symbol-base-size) * var(--country-symbol-size-multiplier));
+}
+
+.saltCountrySymbol {
+  display: inline-block;
+  margin: var(--saltCountrySymbol-margin, 0);
+  position: relative;
+  width: var(--country-symbol-size);
+  height: var(--country-symbol-size);
+  min-width: var(--country-symbol-size);
+  min-height: var(--country-symbol-size);
+}
