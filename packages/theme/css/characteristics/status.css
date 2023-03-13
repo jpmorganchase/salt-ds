@@ -13,12 +13,4 @@
   --salt-status-success-background-emphasize: var(--salt-palette-success-background-emphasize);
   --salt-status-warning-background-emphasize: var(--salt-palette-warning-background-emphasize);
   --salt-status-error-background-emphasize: var(--salt-palette-error-background-emphasize);
-
-  --salt-status-error-background-selected: rgba(255, 187, 178, 1);
-  --salt-status-warning-background-selected: rgba(254, 214, 142, 1);
-  --salt-status-success-background-selected: rgba(160, 221, 164, 1);
-
-  --salt-status-error-border-selected: rgba(227, 43, 22, 1);
-  --salt-status-warning-border-selected: rgba(214, 85, 19, 1);
-  --salt-status-success-border-selected: rgba(36, 135, 75, 1);
 }
