@@ -1,0 +1,61 @@
+$icons: (
+  aggregation: "\e974",
+  arrows: "\e90e",
+  asc: "\e940",
+  cancel: "\e90e",
+  columns: "\e910",
+  copy: "\e90d",
+  csv: "\e93f",
+  desc: "\e93f",
+  filter: "\e922",
+  first: "\e934",
+  grip: "\e970",
+  group: "\e929",
+  last: "\e951",
+  menu: "\e969",
+  next: "\e950",
+  pin: "\e944",
+  pivot: "\e979",
+  previous: "\e933",
+  small-right: "\e950",
+  tick: "\e95b",
+  tree-closed: "\e950",
+  tree-open: "\e91b",
+);
+
+@font-face {
+  font-family: "jpmuitk-icons";
+  src: url("fonts/jpmuitk-icons.woff") format("woff");
+}
+
+@each $mode in "light", "dark" {
+  @each $name, $glyph in $icons {
+    .ag-theme-uitk-high-#{$mode} .ag-icon-#{$name},
+    .ag-theme-uitk-medium-#{$mode} .ag-icon-#{$name},
+    .ag-theme-uitk-low-#{$mode} .ag-icon-#{$name},
+    .ag-theme-uitk-touch-#{$mode} .ag-icon-#{$name} {
+      font-family: "jpmuitk-icons";
+    }
+
+    .ag-theme-uitk-high-#{$mode} .ag-icon-#{$name}::before,
+    .ag-theme-uitk-medium-#{$mode} .ag-icon-#{$name}::before,
+    .ag-theme-uitk-low-#{$mode} .ag-icon-#{$name}::before,
+    .ag-theme-uitk-touch-#{$mode} .ag-icon-#{$name}::before {
+      content: $glyph;
+    }
+  }
+
+  .ag-theme-uitk-high-#{$mode} .ag-checkbox-input-wrapper::after,
+  .ag-theme-uitk-medium-#{$mode} .ag-checkbox-input-wrapper::after,
+  .ag-theme-uitk-low-#{$mode} .ag-checkbox-input-wrapper::after,
+  .ag-theme-uitk-touch-#{$mode} .ag-checkbox-input-wrapper::after {
+    font-family: "jpmuitk-icons";
+    content: "";
+  }
+  .ag-theme-uitk-high-#{$mode} .ag-checkbox-input-wrapper.ag-checked::after,
+  .ag-theme-uitk-medium-#{$mode} .ag-checkbox-input-wrapper.ag-checked::after,
+  .ag-theme-uitk-low-#{$mode} .ag-checkbox-input-wrapper.ag-checked::after,
+  .ag-theme-uitk-touch-#{$mode} .ag-checkbox-input-wrapper.ag-checked::after {
+    content: "\e95b";
+  }
+}
