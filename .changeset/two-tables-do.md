@@ -4,7 +4,7 @@
 "@salt-ds/theme": minor
 ---
 
-Removed differential characteristic
+Deprecated differential characteristic
 Moved differential tokens to status characteristic
 Added 'static' status variant
 

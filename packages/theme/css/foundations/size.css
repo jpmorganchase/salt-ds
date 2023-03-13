@@ -5,7 +5,8 @@
 .salt-density-high {
   --salt-size-basis-unit: 4px;
 
-  --salt-size-border: 1px;
+  --salt-size-border: 1px;  
+  --salt-size-brandBar: 4px;
   --salt-size-divider-strokeWidth: 1px;
   --salt-size-sharktooth-height: 5px;
   --salt-size-sharktooth-width: 10px;
@@ -18,6 +19,9 @@
   --salt-size-graphic-small: 12px;
   --salt-size-graphic-medium: 24px;
   --salt-size-graphic-large: 48px;
+
+  /* Deprecated */
+  --salt-size-selection: var(--salt-size-selectable);
 }
 
 .salt-density-high {
@@ -25,22 +29,34 @@
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 1.5);
   --salt-size-base: calc(var(--salt-size-basis-unit) * 5);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 0.5);
+
+  /* Deprecated */
+  --salt-size-detail: var(--salt-size-compact);
 }
 .salt-density-medium {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 2);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 2);
   --salt-size-base: calc(var(--salt-size-basis-unit) * 7);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 1);
+
+  /* Deprecated */
+  --salt-size-detail: var(--salt-size-compact);
 }
 .salt-density-low {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 3);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 2.5);
   --salt-size-base: calc(var(--salt-size-basis-unit) * 9);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 1.5);
+
+  /* Deprecated */
+  --salt-size-detail: var(--salt-size-compact);
 }
 .salt-density-touch {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 4);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 3);
   --salt-size-base: calc(var(--salt-size-basis-unit) * 11);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 2);
+
+  /* Deprecated */
+  --salt-size-detail: var(--salt-size-compact);
 }
