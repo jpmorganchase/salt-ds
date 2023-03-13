@@ -1,0 +1,36 @@
+{
+  "name": "@salt-ds/countries",
+  "version": "1.1.0",
+  "license": "Apache-2.0",
+  "main": "./src/index.ts",
+  "modular": {
+    "type": "package"
+  },
+  "sideEffects": [
+    "**/*.css",
+    "**/*.css.js"
+  ],
+  "scripts": {
+    "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg' && node ./scripts/generateCountryIndex.js && yarn generateCountrySymbolsAll",
+    "generateCountrySymbolsAll": "node ./scripts/generateCountrySymbolsAll.js",
+    "clean": "rimraf ./src/components"
+  },
+  "peerDependencies": {
+    "@types/react": ">=16.8.6",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "mustache": "^4.2.0",
+    "rimraf": "^4.4.0",
+    "svgo": "^3.0.0"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-countries"
+  }
+}
