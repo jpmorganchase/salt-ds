@@ -674,7 +674,7 @@ describe("Grid", () => {
     });
   });
 
-  describe.only("row validation", () => {
+  describe("row validation", () => {
     it("should render an RowValidationColumn icon when the row has an validation status", () => {
       cy.mount(<RowValidation />);
       assertGridReady();
