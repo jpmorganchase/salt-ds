@@ -95,14 +95,14 @@ const CellCustomizationTemplate: Story<{}> = () => {
         id="ccyPair"
         defaultWidth={100}
         getValue={(r) => r.currencyPair}
-        isSortable
+        sortable
       />
       <GridColumn
         name="Bid/Ask"
         id="bidAsk"
         defaultWidth={120}
         getValue={(r) => r.bidAskPrice.bid}
-        isSortable
+        sortable
         cellValueComponent={BidAskCellValue}
       />
       <GridColumn
@@ -111,7 +111,7 @@ const CellCustomizationTemplate: Story<{}> = () => {
         cellValueComponent={PercentageCellValue}
         defaultWidth={200}
         minWidth={120}
-        isSortable
+        sortable
       />
     </Grid>
   );

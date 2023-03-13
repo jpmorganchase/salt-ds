@@ -44,27 +44,27 @@ const SortColumnsTemplate: Story<{}> = () => {
         id="name"
         defaultWidth={200}
         getValue={(rowData: Investor) => rowData.name}
-        isSortable
+        sortable
       />
       <GridColumn
         name="Strategy"
         id="strategy"
         getValue={(rowData: Investor) => rowData.strategy.join(", ")}
-        isSortable
+        sortable
       />
       <GridColumn
         name="Date incorporated"
         id="date"
         defaultWidth={150}
         getValue={(rowData: Investor) => rowData.date}
-        isSortable
+        sortable
       />
       <GridColumn
         name="Score"
         id="score"
         getValue={(r) => r.score}
         onChange={onScoreChange}
-        isSortable
+        sortable
         align="right"
         customSort={({ rowData, sortOrder }) => {
           // custom sort percentage score as number
@@ -92,7 +92,7 @@ const SortColumnsTemplate: Story<{}> = () => {
         getValue={(rowData) => {
           return rowData.balance;
         }}
-        isSortable
+        sortable
         customSort={({ rowData, sortOrder }) => {
           // custom sort cash balance string as number
           let sortedData = [...rowData].sort((a, b) => {

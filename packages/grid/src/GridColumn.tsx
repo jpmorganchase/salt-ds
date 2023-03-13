@@ -59,7 +59,7 @@ export interface GridColumnProps<T = any> {
    * To enable column header's keyboard navigation on sort,
    * users need to set `headerIsFocusable` prop to `true` in Grid component.
    * */
-  isSortable?: boolean;
+  sortable?: boolean;
   /**
    * Custom sorting function.
    * */

@@ -113,7 +113,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         name="Name"
         getValue={(r) => r.name}
         onChange={setName}
-        isSortable
+        sortable
       >
         <CellEditor>
           <TextCellEditor />
@@ -125,7 +125,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         getValue={(r: RowExample) => r.amount}
         precision={0}
         onChange={setAmount}
-        isSortable
+        sortable
       >
         <CellEditor>
           <NumericCellEditor />
@@ -137,7 +137,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         precision={2}
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
-        isSortable
+        sortable
       >
         <CellEditor>
           <NumericCellEditor />
@@ -148,7 +148,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         name="Discount"
         getValue={(r) => r.discount}
         onChange={setDiscount}
-        isSortable
+        sortable
       >
         <CellEditor>
           <DropdownCellEditor options={discountOptions} />

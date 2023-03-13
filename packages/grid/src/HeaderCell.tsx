@@ -2,7 +2,6 @@ import "./HeaderCell.css";
 import { KeyboardEventHandler, useRef } from "react";
 import {
   FlexContentAlignment,
-  FlexLayout,
   makePrefixer,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
@@ -26,10 +25,12 @@ export function HeaderCellSeparator(props: HeaderCellSeparatorProps) {
   return <div className={className} />;
 }
 
+type AriaSortProps = "none" | "ascending" | "descending";
+
 export function HeaderCell<T>(props: HeaderCellProps<T>) {
   const { column, children, isFocused } = props;
   const { separator } = column;
-  const { align, id, headerClassName, isSortable } = column.info.props;
+  const { align, id, headerClassName, sortable } = column.info.props;
   const { onResizeHandleMouseDown } = useSizingContext();
 
   const { columnMove, onColumnMoveHandleMouseDown } = useColumnDragContext();
@@ -50,16 +51,18 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
   const HeaderCellSortingIcon = ({ justify }: HeaderCellSortingIconProps) => {
     const className = withBaseName("sortingIcon");
     const icon = (
-      <FlexLayout className={className} justify={justify} aria-hidden>
+      <div
+        className={className}
+        style={{ display: "flex", justifyContent: `${justify}` }}
+        aria-hidden
+      >
         {sortOrder === "asc" && <ArrowUpIcon />}
         {sortOrder === "desc" && <ArrowDownIcon />}
-      </FlexLayout>
+      </div>
     );
 
     return icon;
   };
-
-  type AriaSortProps = "none" | "ascending" | "descending";
 
   const ariaSortMap = {
     asc: "ascending",
@@ -89,18 +92,18 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       aria-colindex={column.index + 1}
       data-column-index={column.index}
       className={clsx(withBaseName(), headerClassName, {
-        [withBaseName("sortable")]: isSortable,
+        [withBaseName("sortable")]: sortable,
       })}
       role="columnheader"
       data-testid="column-header"
       tabIndex={isFocused && !isFocusableContent ? 0 : -1}
       onFocus={onFocus}
-      onClick={isSortable ? onClick : undefined}
-      onKeyDown={isSortable ? onKeyDown : undefined}
-      aria-label={isSortable ? "sort column" : undefined}
-      aria-sort={sortByColumnId === id && isSortable ? ariaSort : undefined}
+      onClick={sortable ? onClick : undefined}
+      onKeyDown={sortable ? onKeyDown : undefined}
+      aria-label={sortable ? "sort column" : undefined}
+      aria-sort={sortByColumnId === id && sortable ? ariaSort : undefined}
     >
-      {sortByColumnId === id && isSortable && valueAlignRight && (
+      {sortByColumnId === id && sortable && valueAlignRight && (
         <HeaderCellSortingIcon justify="start" />
       )}
       <div
@@ -111,7 +114,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       >
         {children}
       </div>
-      {sortByColumnId === id && isSortable && !valueAlignRight && (
+      {sortByColumnId === id && sortable && !valueAlignRight && (
         <HeaderCellSortingIcon justify="end" />
       )}
       <HeaderCellSeparator separatorType={separator} />

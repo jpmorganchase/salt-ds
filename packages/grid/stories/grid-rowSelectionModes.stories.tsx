@@ -77,7 +77,7 @@ const RowSelectionModesTemplate: Story<{}> = () => {
           precision={2}
           getValue={(r: DummyRow) => r.b}
           align={"right"}
-          isSortable
+          sortable
         />
         <GridColumn name="C" id="c" defaultWidth={50} getValue={(r) => r.c} />
       </Grid>
