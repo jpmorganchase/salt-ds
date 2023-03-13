@@ -16,8 +16,8 @@
     no-repeat;
   content: "";
   display: block;
-  height: 14px;
-  width: 14px;
+  height: calc(var(--salt-size-unit) * 1.2);
+  width: calc(var(--salt-size-unit) * 1.2);
   align-self: center;
 }
 
