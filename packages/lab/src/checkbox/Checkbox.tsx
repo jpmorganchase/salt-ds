@@ -5,11 +5,17 @@ import {
   forwardRef,
   InputHTMLAttributes,
   ReactNode,
+  useContext,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import {
+  createChainedFunction,
+  makePrefixer,
+  useControlled,
+} from "@salt-ds/core";
 import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./Checkbox.css";
+import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 const withBaseName = makePrefixer("saltCheckbox");
 
@@ -37,7 +43,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     {
       checked: checkedProp,
       className,
-      defaultChecked,
+      defaultChecked: defaultCheckedProp,
       disabled,
       error,
       indeterminate,
@@ -52,14 +58,9 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     },
     ref
   ) {
-    const [checked, setChecked] = useControlled({
-      controlled: checkedProp,
-      default: Boolean(defaultChecked),
-      name: "Checkbox",
-      state: "checked",
-    });
+    const groupContext = useContext(CheckboxGroupContext);
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleInternalChange = (event: ChangeEvent<HTMLInputElement>) => {
       // Workaround for https://github.com/facebook/react/issues/9023
       if (event.nativeEvent.defaultPrevented) {
         return;
@@ -69,6 +70,30 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       setChecked(value);
       onChange?.(event, value);
     };
+
+    const handleChange = createChainedFunction(
+      handleInternalChange,
+      groupContext?.onChange
+    );
+
+    let isCheckchecked = checkedProp;
+    let defaultChecked = defaultCheckedProp;
+
+    if (groupContext) {
+      if (typeof isCheckchecked === "undefined" && typeof value === "string") {
+        isCheckchecked = groupContext?.checkedValues?.includes(value);
+      }
+      defaultChecked = undefined;
+    }
+
+    console.log(isCheckchecked);
+
+    const [checked, setChecked] = useControlled({
+      controlled: isCheckchecked,
+      default: Boolean(defaultCheckedProp),
+      name: "Checkbox",
+      state: "checked",
+    });
 
     return (
       <label
