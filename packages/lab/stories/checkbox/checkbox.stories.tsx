@@ -14,16 +14,9 @@ const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => {
 export const CheckboxVariations: ComponentStory<typeof Checkbox> = () => {
   return (
     <>
-      <Checkbox label="I understand ADA required Labels on unchecked checkboxes" />
-      <Checkbox
-        defaultChecked
-        label="I understand ADA required Labels on checked checkboxes"
-      />
-      <Checkbox
-        defaultChecked
-        indeterminate
-        label="I understand ADA required Labels on indeterminate checkboxes"
-      />
+      <Checkbox label="unchecked checkbox" />
+      <Checkbox defaultChecked label="checked checkbox" />
+      <Checkbox defaultChecked indeterminate label="indeterminate checkbox" />
       <Checkbox disabled label="disabled checkbox" />
       <Checkbox
         disabled
@@ -31,38 +24,27 @@ export const CheckboxVariations: ComponentStory<typeof Checkbox> = () => {
         label="disabled indeterminate checkbox"
       />
       <Checkbox disabled checked label="disabled and checked checkbox" />
-      <Checkbox
-        error
-        label="I understand ADA required Labels on unchecked checkboxes"
-      />
-      <Checkbox
-        error
-        defaultChecked
-        label="I understand ADA required Labels on checked checkboxes"
-      />
+      <Checkbox error label="error checkbox" />
+      <Checkbox error defaultChecked label="error checkbox checked" />
       <Checkbox
         error
         defaultChecked
         indeterminate
-        label="I understand ADA required Labels on indeterminate checkboxes"
+        label="error checkbox indeterminate"
       />
-      <Checkbox
-        error
-        disabled
-        label="I understand ADA required Labels on unchecked checkboxes"
-      />
+      <Checkbox error disabled label="disabled and error checkbox" />
       <Checkbox
         error
         defaultChecked
         disabled
-        label="I understand ADA required Labels on checked checkboxes"
+        label="disabled,error and checked checkbox"
       />
       <Checkbox
         error
         defaultChecked
         disabled
         indeterminate
-        label="I understand ADA required Labels on indeterminate checkboxes"
+        label="disabled,error and indeterminate checkbox"
       />
     </>
   );
