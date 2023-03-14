@@ -235,7 +235,7 @@ To trigger edit mode on cells on your:
 
 ### Cell Validation
 
-To display a cell in one of expected validation states, use the `getValidationState` prop on the `GridColumn` omponent. This prop is a function that provides row and column data, and expects as return value one of known validation states, "error", "warning", and "success".
+To display a cell in one of expected validation states, use the `getValidationState` prop on the `GridColumn` component. This prop is a function that provides row and column data, and expects as return value one of known validation states, "error", "warning", and "success".
 Optionally, you can provide a custom accessibility label with the `getValidationMessage` prop. If you don't provide a custom message yourself, the default message will be `Cell validation state is ${status}`.
 
 Another optional prop to cusomize the validation is `validationType`. This can be either "strong", or "light". The default value is "light". Both options only apply the visual styling. You will need to provide the validation logic yourself.
