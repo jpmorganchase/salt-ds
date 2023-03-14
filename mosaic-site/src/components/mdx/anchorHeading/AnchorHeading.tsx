@@ -6,7 +6,7 @@ import React, {
   PropsWithChildren,
   HTMLProps,
 } from "react";
-import classnames from "classnames";
+import clsx from "clsx";
 import { Link, LinkProps } from "@jpmorganchase/mosaic-components";
 import styles from "./AnchorHeading.module.css";
 
@@ -48,7 +48,7 @@ export const AnchorHeading: FC<PropsWithChildren<AnchorHeadingProps>> = ({
   const { link } = LinkPropsProp;
   const anchorLink = link || `#${id}`;
   return (
-    <div className={classnames(styles.root, className)}>
+    <div className={clsx(styles.root, className)}>
       <Link
         className={styles.link}
         {...LinkPropsProp}

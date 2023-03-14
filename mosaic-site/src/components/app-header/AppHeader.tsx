@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useLayoutEffect, useState } from "react";
-import classnames from "classnames";
 import { Logo } from "@salt-ds/lab";
 import { useBreakpoint, Link } from "@jpmorganchase/mosaic-components";
 import type { TabsMenu, TabsLinkItem } from "@jpmorganchase/mosaic-components";

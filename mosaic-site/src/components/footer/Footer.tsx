@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import classnames from "classnames";
+import clsx from "clsx";
 import { FooterProps as MosaicFooterProps } from "@jpmorganchase/mosaic-site-components";
 import { Link } from "@salt-ds/core";
 import styles from "./Footer.module.css";
@@ -21,7 +21,7 @@ export const Footer: FC<FooterProps> = ({
   links = [],
   copyright = defaultCopyright,
 }) => (
-  <footer className={classnames(styles.footer, className)}>
+  <footer className={clsx(styles.footer, className)}>
     <div className={styles.container}>
       <div className={styles.links}>
         {links.map(({ label, to }) => (
