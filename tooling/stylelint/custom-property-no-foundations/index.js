@@ -80,7 +80,7 @@ const allAllowedKeys = [
   "delay", // to be merged with animation
   "palette-opacity", // palette only allowed for opacity purposes
   "size",
-  "zIndex"
+  "zIndex",
 ];
 
 const regexpPattern = new RegExp(
@@ -95,8 +95,7 @@ module.exports = stylelint.createPlugin(
 
       function check(property) {
         const checkResult =
-          !isSaltThemeCustomProperty(property) ||
-          regexpPattern.test(property);
+          !isSaltThemeCustomProperty(property) || regexpPattern.test(property);
         verboseLog && console.log("Checking", checkResult, property);
         return checkResult;
       }
