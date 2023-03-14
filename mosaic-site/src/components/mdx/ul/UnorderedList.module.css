@@ -1,0 +1,8 @@
+.unorderedList {
+  margin-bottom: calc(var(--salt-size-unit) * 2);
+  padding-left: 2rem;
+}
+
+.unorderedList li + li {
+  margin-top: 0.25rem;
+}

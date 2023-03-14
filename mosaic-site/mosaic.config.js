@@ -12,12 +12,13 @@ module.exports = deepmerge(mosaicConfig, {
   sources: [
     {
       modulePath: "@jpmorganchase/mosaic-source-git-repo",
-      namespace: "mosaic",
+      namespace: "salt",
       options: {
-        prefixDir: "mosaic",
+        prefixDir: "salt",
         cache: true,
-        subfolder: "docs",
-        repo: "https://github.com/jpmorganchase/mosaic.git",
+        subfolder: "mosaic-site/docs",
+        credentials: process.env.MOSAIC_DOCS_CLONE_CREDENTIALS,
+        repo: "https://github.com/jpmorganchase/salt-ds.git",
         branch: "main",
         extensions: [".mdx"],
         remote: "origin",

@@ -65,12 +65,16 @@ export const Text: TextComponent = forwardRef(
 
     return (
       <Component
-        className={clsx(withBaseName(), className, {
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("lineClamp")]: maxRows,
-          [withBaseName(styleAs || "")]: styleAs,
-          [withBaseName(variant)]: variant,
-        })}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("lineClamp")]: maxRows,
+            [withBaseName(styleAs || "")]: styleAs,
+            [withBaseName(variant)]: variant,
+          },
+          className
+        )}
         {...restProps}
         ref={ref}
         style={textStyles}

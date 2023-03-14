@@ -150,8 +150,8 @@ export const componentDetails: ComponentDetails[] = [
     name: "Avatar",
     description:
       "Represents a person. It has three variants to account for different types of data: photo, initials and a default version when neither is available.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "AG Grid Theme",
@@ -684,7 +684,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Displays an explanation or provides more information about an error or warning condition, when the user’s  mouse hovers over a target element.",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.BACKLOG,
+    designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
     name: "Tree",

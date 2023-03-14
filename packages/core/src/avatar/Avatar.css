@@ -1,0 +1,40 @@
+/* Default variables applied to the root element */
+.saltAvatar {
+  --avatar-foreground: var(--saltAvatar-foreground, var(--salt-accent-foreground));
+  --avatar-size-multiplier: var(--saltAvatar-size-multiplier, 1);
+  --avatar-base-size: var(--salt-size-base, 12px);
+  --avatar-base-fontSize: var(--saltAvatar-fontSize, var(--salt-accent-fontSize));
+  --avatar-container-size: calc(var(--avatar-base-size) * var(--avatar-size-multiplier));
+  --avatar-fontSize: calc(var(--avatar-base-fontSize) * var(--avatar-size-multiplier));
+  /* Icon styling */
+  --saltIcon-color: var(--avatar-foreground);
+  --salt-size-icon-base: calc(var(--avatar-container-size) / 2);
+}
+
+/* Style applied to the root element */
+.saltAvatar {
+  line-height: var(--saltAvatar-lineHeight, var(--salt-accent-lineHeight));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--saltAvatar-background, var(--salt-accent-background));
+  color: var(--avatar-foreground);
+  font-size: var(--avatar-fontSize);
+  width: var(--avatar-container-size);
+  min-width: var(--avatar-container-size);
+  height: var(--avatar-container-size);
+  min-height: var(--avatar-container-size);
+  overflow: hidden;
+  user-select: none;
+  border-radius: 50%;
+}
+.saltAvatar:has(img),
+.saltAvatar-withImage {
+  background: none;
+}
+/* Style applied to the image/svg element. We specifically allow SVGs as the Avatar image to enable SVGs such as Flags to take up the full Avatar space */
+.saltAvatar > img,
+.saltAvatar > svg:not(.saltIcon) {
+  width: 100%;
+  height: 100%;
+}

@@ -32,5 +32,11 @@ export async function getServerSideProps(
 }
 
 /** MyApp will be passed MyAppProps which is created by combining the result of all props created by Middleware */
-const MyApp = (props) => <Body {...props} />;
+const MyApp = (
+  props: JSX.IntrinsicAttributes & {
+    [x: string]: any;
+    components?: {} | undefined;
+    type: any;
+  }
+) => <Body {...props} />;
 export default MyApp;
