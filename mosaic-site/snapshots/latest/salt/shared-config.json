@@ -1,1 +1,19 @@
-{"config":{"header":{"homeLink":"/local/index","logo":"/img/logo.svg","searchNamespace":"local","menu":[{"title":"Home","link":"/local/index"},{"title":"Getting started","link":"/local/getting-started/index"},{"title":"Components","link":"/local/components/index"},{"title":"Support and contributions","link":"/local/support-and-contributions/index"}]},"footer":{"title":"Footer links","href":"/local"}}}
+{
+  "config": {
+    "header": {
+      "homeLink": "/local/index",
+      "logo": "/img/logo.svg",
+      "searchNamespace": "local",
+      "menu": [
+        { "title": "Home", "link": "/local/index" },
+        { "title": "Getting started", "link": "/local/getting-started/index" },
+        { "title": "Components", "link": "/local/components/index" },
+        {
+          "title": "Support and contributions",
+          "link": "/local/support-and-contributions/index"
+        }
+      ]
+    },
+    "footer": { "title": "Footer links", "href": "/local" }
+  }
+}
