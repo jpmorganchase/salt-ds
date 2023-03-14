@@ -18,6 +18,7 @@ import { useCreateStore, StoreProvider } from "@jpmorganchase/mosaic-store";
 import { components as mosaicComponents } from "@jpmorganchase/mosaic-site-components";
 import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
 import { SessionProvider } from "next-auth/react";
+import { themeClassName } from "@jpmorganchase/mosaic-theme";
 import "@jpmorganchase/mosaic-site-preset-styles/index.css";
 import "../css/index.css";
 import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
@@ -64,7 +65,7 @@ export default function MyApp({
     <SessionProvider>
       <StoreProvider value={createStore()}>
         <Metadata Component={Head} />
-        <ThemeProvider>
+        <ThemeProvider className={themeClassName}>
           <DensityProvider>
             <BaseUrlProvider>
               <ImageProvider value={Image}>
