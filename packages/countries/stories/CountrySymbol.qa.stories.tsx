@@ -1,6 +1,5 @@
 import { Meta, Story } from "@storybook/react";
-
-import { allCountries } from "./countries.all";
+import { countryMeta } from "@salt-ds/countries";
 
 export default {
   title: "CountrySymbols/CountrySymbol/QA",
@@ -20,8 +19,8 @@ export const AllCountrySymbols: Story = () => {
             padding: "12px 0",
           }}
         >
-          {allCountries.map((CountrySymbolComponent, i) => (
-            <CountrySymbolComponent key={i} size={size} />
+          {Object.entries(countryMeta).map(([code, { Component }]) => (
+            <Component key={code} size={size} />
           ))}
         </div>
       ))}

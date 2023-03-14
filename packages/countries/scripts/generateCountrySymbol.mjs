@@ -18,8 +18,6 @@ import { optimize } from "svgo";
 import { fileURLToPath } from "url";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 /** Change kebab casing to Pascal casing */
 function pascalCase(str) {
   let arr = str.split(" ");
@@ -32,161 +30,281 @@ function pascalCase(str) {
   return capital.join("");
 }
 
-const fileArg = process.argv.splice(2).join("|");
-// options is optional
-const options = {};
-const basePath = path.join(__dirname, "../src");
+// Createthe folder for the CountrySymbolComponents
+const generateComponentsFolder = (basePath) => {
+  if (!fs.existsSync(path.join(basePath, "./components/"))) {
+    fs.mkdirSync(path.join(basePath, "./components/"));
+  }
+};
 
-if (!fs.existsSync(path.join(basePath, "./components/"))) {
-  fs.mkdirSync(path.join(basePath, "./components/"));
-}
+// Generate all the country symbol components
+const generateCountrySymbolComponents = ({
+  templatePath,
+  basePath,
+  componentsPath,
+}) => {
+  const countryMetaMap = {};
 
-const template = fs.readFileSync(
-  path.join(__dirname, "./templateCountrySymbol.mustache"),
-  "utf-8"
-);
-const globPath = path.join(basePath, `./SVG/+(${fileArg})`).replace(/\\/g, "/");
-console.log("globPath", globPath);
-glob(globPath, options, function (error, filenames) {
-  filenames.forEach((fileName) => {
-    fs.readFile(fileName, "utf-8", (error, svgString) => {
-      if (error) throw error;
+  const fileArg = process.argv.splice(2).join("|");
+  // options is optional
+  const options = {};
 
-      const filenameWithoutExtension = path.parse(fileName).name;
+  const template = fs.readFileSync(templatePath, "utf-8");
+  const globPath = path
+    .join(basePath, `./SVG/+(${fileArg})`)
+    .replace(/\\/g, "/");
 
-      const firstSpaceIndex = filenameWithoutExtension.indexOf(" ");
+  const fileNames = glob.sync(globPath, options);
 
-      const baseCountryName = filenameWithoutExtension
-        .slice(firstSpaceIndex)
-        .trim();
+  fileNames.map((fileName) => {
+    const svgString = fs.readFileSync(fileName, "utf-8");
 
-      const countryCode = filenameWithoutExtension
-        .slice(0, firstSpaceIndex)
-        .toUpperCase();
-      const countryName = filenameWithoutExtension
-        .slice(firstSpaceIndex)
-        .trim()
-        .replaceAll(new RegExp("[(|)|.|\\-|,|'|\\[|\\]]", "g"), "")
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "");
-      const componentName = pascalCase(countryName);
+    const filenameWithoutExtension = path.parse(fileName).name;
 
-      let viewBox;
-      const newFileName = path.join(
-        basePath,
-        "./components/",
-        componentName + ".tsx"
-      );
+    const firstSpaceIndex = filenameWithoutExtension.indexOf(" ");
 
-      console.log("processing", fileName, "to", newFileName);
+    const baseCountryName = filenameWithoutExtension
+      .slice(firstSpaceIndex)
+      .trim();
 
-      // let iconTitle = filenameWithoutExtension
-      //   .split("-")
-      //   .join(" ")
-      //   .toLowerCase();
+    const countryCode = filenameWithoutExtension
+      .slice(0, firstSpaceIndex)
+      .toUpperCase();
 
-      // SVGO is a separate step to enable multi-pass optimizations.
-      const optimizedSvg = optimize(svgString, {
-        multipass: true,
-        plugins: [
-          {
-            name: "preset-default",
-            params: {
-              overrides: {
-                // makes country symbols scaled into width/height box
-                removeViewBox: false,
+    const countryName = filenameWithoutExtension.slice(firstSpaceIndex).trim();
+
+    const countryNameSanitized = countryName
+      .replaceAll(new RegExp("[(|)|.|\\-|,|'|\\[|\\]]", "g"), "")
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "");
+    const componentName = pascalCase(countryNameSanitized);
+
+    const countryFileName = componentName + ".tsx";
+
+    let viewBox;
+    const newFilePath = path.join(componentsPath, componentName + ".tsx");
+
+    countryMetaMap[countryCode] = {
+      countryCode,
+      countryName,
+      countryNameSanitized,
+      componentName,
+      textName: baseCountryName,
+      countryFileName,
+    };
+
+    console.log("processing", fileName, "to", newFilePath);
+
+    // let iconTitle = filenameWithoutExtension
+    //   .split("-")
+    //   .join(" ")
+    //   .toLowerCase();
+
+    // SVGO is a separate step to enable multi-pass optimizations.
+    const optimizedSvg = optimize(svgString, {
+      multipass: true,
+      plugins: [
+        {
+          name: "preset-default",
+          params: {
+            overrides: {
+              // makes country symbols scaled into width/height box
+              removeViewBox: false,
+            },
+          },
+        },
+        {
+          name: "removeAttrs",
+          params: {
+            attrs: "(width|height)",
+          },
+        },
+      ],
+    });
+
+    const svgPaths = optimize(optimizedSvg.data, {
+      plugins: [
+        {
+          name: "mapHTMLAttributesToReactProps",
+          fn: () => {
+            return {
+              element: {
+                enter: (node) => {
+                  const newAttributes = {};
+                  // preserve an order of attributes
+                  for (const [name, value] of Object.entries(node.attributes)) {
+                    if (
+                      node.name === "mask" &&
+                      name === "style" &&
+                      typeof value === "string" &&
+                      value.includes("mask-type:")
+                    ) {
+                      newAttributes["mask-type"] = value.slice(10);
+                    } else {
+                      newAttributes[svgAttributeMap[name] || name] = value;
+                    }
+                  }
+                  node.attributes = newAttributes;
+                },
               },
-            },
+            };
           },
-          {
-            name: "removeAttrs",
-            params: {
-              attrs: "(width|height)",
-            },
-          },
-        ],
-      });
-
-      const svgPaths = optimize(optimizedSvg.data, {
-        plugins: [
-          {
-            name: "mapHTMLAttributesToReactProps",
-            fn: () => {
-              return {
-                element: {
-                  enter: (node) => {
-                    const newAttributes = {};
-                    // preserve an order of attributes
-                    for (const [name, value] of Object.entries(
-                      node.attributes
-                    )) {
-                      if (
-                        node.name === "mask" &&
-                        name === "style" &&
-                        typeof value === "string" &&
-                        value.includes("mask-type:")
-                      ) {
-                        newAttributes["mask-type"] = value.slice(10);
-                      } else {
-                        newAttributes[svgAttributeMap[name] || name] = value;
-                      }
-                    }
-                    node.attributes = newAttributes;
-                  },
+        },
+        {
+          name: "find-viewBox",
+          fn: () => {
+            return {
+              element: {
+                enter: (node, parentNode) => {
+                  if (parentNode.type === "root") {
+                    viewBox = node.attributes.viewBox;
+                  }
                 },
-              };
-            },
+              },
+            };
           },
-          {
-            name: "find-viewBox",
-            fn: () => {
-              return {
-                element: {
-                  enter: (node, parentNode) => {
-                    if (parentNode.type === "root") {
-                      viewBox = node.attributes.viewBox;
-                    }
-                  },
+        },
+        {
+          name: "removeSvg",
+          fn: () => {
+            return {
+              element: {
+                exit: (node, parentNode) => {
+                  if (node.name === "svg") {
+                    const index = parentNode.children.indexOf(node);
+                    parentNode.children.splice(index, 1, ...node.children);
+                  }
                 },
-              };
-            },
+              },
+            };
           },
-          {
-            name: "removeSvg",
-            fn: () => {
-              return {
-                element: {
-                  exit: (node, parentNode) => {
-                    if (node.name === "svg") {
-                      const index = parentNode.children.indexOf(node);
-                      parentNode.children.splice(index, 1, ...node.children);
-                    }
-                  },
-                },
-              };
-            },
-          },
-        ],
-      });
+        },
+      ],
+    });
 
-      const fileContents = Mustache.render(template, {
-        svgElements: svgPaths.data,
-        componentName,
-        ariaLabel: baseCountryName.toLowerCase(),
-        viewBox: viewBox ?? "0 0 72 72",
-      });
+    const fileContents = Mustache.render(template, {
+      svgElements: svgPaths.data,
+      componentName,
+      ariaLabel: baseCountryName.toLowerCase(),
+      viewBox: viewBox ?? "0 0 72 72",
+    });
 
-      const formattedResult = prettier.format(fileContents, {
-        parser: "babel-ts",
-        singleQuote: false,
-        trailingComma: "none",
-        printWidth: 80,
-        proseWrap: "always",
-      });
+    const formattedResult = prettier.format(fileContents, {
+      parser: "babel-ts",
+      singleQuote: false,
+      trailingComma: "none",
+      printWidth: 80,
+      proseWrap: "always",
+    });
 
-      fs.writeFileSync(newFileName, formattedResult, {
-        encoding: "utf8",
-      });
+    fs.writeFileSync(newFilePath, formattedResult, {
+      encoding: "utf8",
     });
   });
+
+  return countryMetaMap;
+};
+
+// Generate the index file to export the CountrySymbol components
+const generateIndex = ({ countryMetaMap, componentsPath }) => {
+  const content = Object.values(countryMetaMap)
+    .sort((a, b) => a.fileName - b.fileName)
+    .map((countryMeta) => {
+      return `export * from './${countryMeta.componentName}';`;
+    });
+
+  const contentWithMetaExport = [...content];
+
+  const formattedResult = prettier.format(contentWithMetaExport.join("\n"), {
+    parser: "babel-ts",
+    singleQuote: false,
+    trailingComma: "none",
+    printWidth: 80,
+    proseWrap: "always",
+  });
+
+  const outputFile = path.join(componentsPath, "index.ts");
+
+  console.log("creating index at:", outputFile);
+
+  fs.writeFile(
+    outputFile,
+    formattedResult,
+    { encoding: "utf8" },
+    function (err) {
+      if (err) return console.log(err);
+    }
+  );
+};
+
+const generateCountryMeta = ({ countryMetaMap, basePath }) => {
+  const outputFile = path.join(basePath, "countryMeta.ts");
+
+  const importText = `
+  import { ElementType } from 'react';
+    import * as Countries from './components';
+    import { CountrySymbolProps } from './country-symbol';
+  `;
+
+  const typeText = `
+    type CountryMeta = {
+      countryCode: string;
+      countryName: string;
+      countryNameSanitized: string;
+      componentName: string;
+      textName: string;
+      countryFileName: string;
+      Component: ElementType<CountrySymbolProps>
+    }
+
+    type CountriesMeta = Record<string, CountryMeta>;
+  `;
+
+  let metaText = ["export const countryMeta: CountriesMeta = {"];
+
+  for (const code in countryMetaMap) {
+    const countryMeta = countryMetaMap[code];
+
+    const entryText = `"${code}": {
+      countryCode: "${countryMeta.countryCode}",
+      countryName: "${countryMeta.countryName}",
+      countryNameSanitized:  "${countryMeta.countryNameSanitized}",
+      componentName: "${countryMeta.componentName}",
+      textName: "${countryMeta.textName}",
+      countryFileName: "${countryMeta.countryFileName}",
+      Component: Countries.${countryMeta.componentName}
+    },`;
+
+    metaText.push(entryText);
+  }
+
+  metaText.push("};");
+
+  const joinedText = [importText, typeText, metaText.join("\n")].join("\n");
+
+  const formattedResult = prettier.format(joinedText);
+
+  fs.writeFile(
+    outputFile,
+    formattedResult,
+    { encoding: "utf8" },
+    function (err) {
+      if (err) return console.log(err);
+    }
+  );
+};
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const basePath = path.join(__dirname, "../src");
+const componentsPath = path.join(basePath, "./components/");
+const templatePath = path.join(__dirname, "./templateCountrySymbol.mustache");
+
+// Run it
+generateComponentsFolder(basePath);
+const countryMetaMap = generateCountrySymbolComponents({
+  templatePath,
+  componentsPath,
+  basePath,
 });
+generateCountryMeta({ countryMetaMap, basePath });
+generateIndex({ countryMetaMap, componentsPath });

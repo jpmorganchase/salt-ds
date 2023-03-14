@@ -1,35 +1,15 @@
-import {
-  createElement,
-  ElementType,
-  NamedExoticComponent,
-  useState,
-} from "react";
+import { ElementType, useState } from "react";
 import {
   TrinidadAndTobago,
   GreatBritain,
   Mexico,
   CountrySymbol,
   CountrySymbolProps,
+  countryMeta,
 } from "@salt-ds/countries";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexLayout, StackLayout } from "@salt-ds/core";
 import { FormField, Input } from "@salt-ds/lab";
-import { allCountries } from "./countries.all";
-
-const formatCountrySymbolName = (countryName: string) => {
-  const fullName = countryName.replace(/([A-Z])/g, " $1");
-
-  const formattedName = fullName.substring(0, fullName.lastIndexOf(" "));
-  console.log(countryName);
-  return countryName;
-};
-
-const allCountriesNames = allCountries.map(
-  (countrySymbol: NamedExoticComponent<CountrySymbolProps>) => ({
-    name: formatCountrySymbolName(countrySymbol?.displayName || " "),
-    countrySymbol,
-  })
-);
 
 export default {
   title: "CountrySymbols/CountrySymbol",
@@ -80,9 +60,9 @@ export const SaltTypes: ComponentStory<typeof CountrySymbol> = () => (
 export const AllCountrySymbols: ComponentStory<typeof CountrySymbol> = () => {
   return (
     <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
-      {allCountriesNames.map(({ countrySymbol }, i) => {
-        return createElement(countrySymbol, { key: i, size: 1 });
-      })}
+      {Object.entries(countryMeta).map(([code, { Component }]) => (
+        <Component key={code} size={1} />
+      ))}
     </FlexLayout>
   );
 };
@@ -93,30 +73,30 @@ export const AllCountrySymbolsWithSearch: ComponentStory<
   const [inputText, setInputText] = useState("");
 
   return (
-    <StackLayout separators>
-      <FormField
-        label={"search country symbols"}
-        style={{ marginBlock: "1rem", maxWidth: "300px" }}
-      >
-        <Input value={inputText} onChange={(_, value) => setInputText(value)} />
-      </FormField>
-      <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
-        {allCountriesNames
-          .filter(({ name, countrySymbol }) =>
-            new RegExp(inputText, "i").test(name)
-          )
-          .map(({ name, countrySymbol }, i) => {
-            return (
+    <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0 }}>
+      <StackLayout separators>
+        <FormField
+          label={"search country symbols"}
+          style={{ marginBlock: "1rem", maxWidth: "300px" }}
+        >
+          <Input
+            value={inputText}
+            onChange={(_, value) => setInputText(value)}
+          />
+        </FormField>
+        <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
+          {Object.entries(countryMeta)
+            .filter(([code, { textName }]) =>
+              new RegExp(inputText, "i").test(textName)
+            )
+            .map(([code, { Component, textName }]) => (
               <StackLayout style={{ width: "150px" }} gap={1} align="center">
-                {createElement(countrySymbol, {
-                  key: i,
-                  size: 2,
-                })}
-                <p style={{ margin: 0 }}>{name}</p>
+                <Component key={code} size={2} />
+                <p style={{ margin: 0 }}>{textName}</p>
               </StackLayout>
-            );
-          })}
-      </FlexLayout>
-    </StackLayout>
+            ))}
+        </FlexLayout>
+      </StackLayout>
+    </div>
   );
 };

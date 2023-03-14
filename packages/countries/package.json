@@ -11,8 +11,7 @@
     "**/*.css.js"
   ],
   "scripts": {
-    "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg' && node ./scripts/generateCountryIndex.js && yarn generateCountrySymbolsAll",
-    "generateCountrySymbolsAll": "node ./scripts/generateCountrySymbolsAll.js",
+    "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
     "clean": "rimraf ./src/components"
   },
   "peerDependencies": {
