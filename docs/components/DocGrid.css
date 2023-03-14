@@ -27,3 +27,7 @@
 .saltDocGrid-textExample {
   width: fit-content;
 }
+
+.saltDocGrid-withNotes {
+  grid-template-columns: repeat(3, auto);
+}
