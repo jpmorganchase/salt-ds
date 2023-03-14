@@ -81,7 +81,7 @@ describe("GIVEN a CheckboxGroup component", () => {
     });
 
     describe("AND a checkbox is checked and unchecked", () => {
-      it.skip("THEN should call onChange and not update the DOM", () => {
+      it("THEN should call onChange and not update the DOM", () => {
         const changeSpy = cy.stub().as("changeSpy");
 
         const handleChange: ChangeEventHandler<HTMLInputElement> = (
