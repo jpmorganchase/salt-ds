@@ -25,12 +25,12 @@
 }
 
 .bid {
-  color: var(--salt-color-green-800);
+  color: var(--salt-status-positive-foreground);
   padding-right: 4px;
 }
 
 .ask {
-  color: var(--salt-color-red-800);
+  color: var(--salt-status-negative-foreground);
   padding-left: 4px;
 }
 
@@ -67,7 +67,7 @@
 
 .miniChartBar {
   width: 7%;
-  background-color: var(--salt-palette-accent-background);
+  background-color: var(--salt-accent-background);
 }
 
 .paginatedGrid {

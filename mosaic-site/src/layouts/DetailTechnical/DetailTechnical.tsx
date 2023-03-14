@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import clsx from "clsx";
 import { HelpLinks } from "@jpmorganchase/mosaic-components";
 import {
   AppHeader,
@@ -11,6 +12,7 @@ import {
 } from "@jpmorganchase/mosaic-site-components";
 import { LayoutBase, LayoutColumns } from "@jpmorganchase/mosaic-layouts"; // TODO: create custom LayoutColumns component
 import { SaltProvider } from "@salt-ds/core";
+import { useMeta } from "@jpmorganchase/mosaic-store";
 import { LayoutProps } from "../types/index";
 import layoutStyles from "../index.module.css";
 import styles from "./DetailTechnical.module.css";
@@ -40,14 +42,16 @@ export const DetailTechnical: FC<LayoutProps> = ({
 
   const SecondarySidebar = <TableOfContents />;
 
-  const title = children?.props.source.frontmatter.title;
+  const {
+    meta: { title },
+  } = useMeta();
 
   return (
     <LayoutBase Header={Header}>
-      <div className={layoutStyles.docsWrapper}>
+      <div className={clsx(layoutStyles.docsWrapper, styles.docsWrapper)}>
         <LayoutColumns
           PrimarySidebar={PrimarySidebar}
-          SecondarySidebar={SecondarySidebar}
+          // SecondarySidebar={SecondarySidebar} TODO: add TOC inside main container
           Footer={<Footer {...FooterProps} />}
         >
           <Breadcrumbs />

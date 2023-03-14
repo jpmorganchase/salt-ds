@@ -21,7 +21,6 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         {...rest}
         className={clsx(
           withBaseName(),
-          className,
           {
             [withBaseName("leftGutter")]: !!status,
           },

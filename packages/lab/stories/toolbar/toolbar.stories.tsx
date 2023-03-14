@@ -1,5 +1,5 @@
 import type { ComponentMeta, Story } from "@storybook/react";
-import { Button } from "@salt-ds/core";
+import { Avatar, Button } from "@salt-ds/core";
 import {
   AddIcon,
   ChatIcon,
@@ -26,7 +26,6 @@ import {
   VisibleIcon,
 } from "@salt-ds/icons";
 import {
-  Avatar,
   Dropdown,
   ToggleButton,
   Toolbar,
@@ -835,7 +834,7 @@ export const VerticalToolbar = () => {
       style={{ minHeight: "500px" }}
     >
       <ToolbarField>
-        <Avatar size="medium" />
+        <Avatar size={1} />
       </ToolbarField>
       <ToolbarButton>
         <InfoIcon /> View Description
