@@ -20,7 +20,7 @@ export function CheckboxCheckedIcon({
         {density === "high" ? (
           <path
             className={`saltCheckboxIcon-tick`}
-            d="m9.99656 3.30278L4.86481 9.20967L2.01196 6.67379L2.67633 5.92638L4.77323 7.79031L9.24166 2.64694L9.99656 3.30278z"
+            d="m10 3.70547L4.83651 9.27702L2 6.6259L2.70868 5.86766L4.78375 7.8071L9.23877 3L10 3.70547z"
           />
         ) : (
           <polygon
