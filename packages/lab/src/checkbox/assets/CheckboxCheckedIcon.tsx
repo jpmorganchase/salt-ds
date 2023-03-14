@@ -21,7 +21,7 @@ export function CheckboxCheckedIcon({
           <path
             className={`saltCheckboxIcon-tick`}
             transform={"translate(1,1)"}
-            d="m11.8 2.26-7.463 8.052-4.1-3.832 1.024-1.096L4.26 8.187l6.439-6.948 1.1 1.02z"
+            d="m8 0.705475L2.83651 6.27702L0 3.6259L0.708682 2.86766L2.78375 4.8071L7.23877 0L8 0.705475z"
           />
         ) : (
           <polygon
