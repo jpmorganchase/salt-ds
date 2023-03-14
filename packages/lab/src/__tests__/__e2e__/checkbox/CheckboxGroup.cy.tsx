@@ -19,7 +19,7 @@ describe("GIVEN a CheckboxGroup component", () => {
   });
 
   describe("WHEN mounted as an uncontrolled component", () => {
-    it.skip("THEN should respect defaultCheckedValues", () => {
+    it("THEN should respect defaultCheckedValues", () => {
       cy.mount(
         <CheckboxGroup defaultCheckedValues={["one"]}>
           <Checkbox label="one" value="one" />
@@ -33,7 +33,7 @@ describe("GIVEN a CheckboxGroup component", () => {
     });
 
     describe("AND a checkbox is checked and unchecked", () => {
-      it.skip("THEN should call onChange and update the DOM", () => {
+      it("THEN should call onChange and update the DOM", () => {
         const changeSpy = cy.stub().as("changeSpy");
 
         const handleChange: ChangeEventHandler<HTMLInputElement> = (
@@ -66,7 +66,7 @@ describe("GIVEN a CheckboxGroup component", () => {
   });
 
   describe("WHEN mounted as a controlled component", () => {
-    it.skip("THEN should respect checkedValues", () => {
+    it("THEN should respect checkedValues", () => {
       cy.mount(
         <CheckboxGroup checkedValues={["one"]}>
           <Checkbox label="one" value="one" />
