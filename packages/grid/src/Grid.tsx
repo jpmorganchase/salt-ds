@@ -249,7 +249,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     midGroups,
     rightGroups,
     contextValue,
-  } = useColumnRegistry(children);
+  } = useColumnRegistry<T>(children);
 
   const midColsById = useMemo(
     () =>
