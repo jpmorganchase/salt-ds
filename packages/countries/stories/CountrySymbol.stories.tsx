@@ -5,7 +5,7 @@ import {
   Mexico,
   CountrySymbol,
   CountrySymbolProps,
-  countryMeta,
+  countryMetaMap,
   countrySymbolMap,
   LazyCountrySymbol,
   countryCodes,
@@ -120,7 +120,7 @@ export const AllCountrySymbolsWithSearch: ComponentStory<
           />
         </FormField>
         <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
-          {Object.entries(countryMeta)
+          {Object.entries(countryMetaMap)
             .filter(([code, { textName }]) =>
               new RegExp(inputText, "i").test(textName)
             )
