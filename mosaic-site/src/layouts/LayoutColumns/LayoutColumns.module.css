@@ -1,0 +1,36 @@
+.fullWidth {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.withSidebar {
+  width: 100%;
+  z-index: var(--salt-zIndex-default);
+  display: flex;
+}
+
+.mainWrapper {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.columnWrapper {
+  width: 100%;
+  display: flex;
+  max-width: 100%;
+}
+
+.contentColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  z-index: 2;
+  width: 100%;
+}
+
+.contentBody {
+  flex-grow: 1;
+}
