@@ -1,5 +1,6 @@
-import React, { FC, useEffect, useLayoutEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { Logo } from "@salt-ds/lab";
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useBreakpoint, Link } from "@jpmorganchase/mosaic-components";
 import type { TabsMenu, TabsLinkItem } from "@jpmorganchase/mosaic-components";
 import { useRoute, SidebarItem } from "@jpmorganchase/mosaic-store";
@@ -15,9 +16,6 @@ export type AppHeaderProps = {
   menu?: TabsMenu;
   title?: string;
 };
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 type MenuItem = { link: string; title?: string; links: TabsLinkItem[] };
 
