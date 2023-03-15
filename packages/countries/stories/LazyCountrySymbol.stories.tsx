@@ -1,6 +1,8 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { LazyCountrySymbol as LazyCountrySymbolComponent } from "@salt-ds/countries/src/lazy-country-symbol";
-import { countryCodes } from "@salt-ds/countries/src/countryMetaMap";
+import {
+  countryCodes,
+  LazyCountrySymbol as LazyCountrySymbolComponent,
+} from "@salt-ds/countries";
 
 export default {
   title: "Country Symbols/Lazy Country Symbol",
