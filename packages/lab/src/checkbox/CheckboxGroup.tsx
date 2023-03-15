@@ -27,10 +27,6 @@ export interface CheckboxGroupProps extends HTMLAttributes<HTMLDivElement> {
    */
   direction?: CheckboxGroupDirectionProps;
   /**
-   * Props spread onto the FormControl component that wraps the checkboxes.
-   */
-  FormControlProps?: Partial<HTMLAttributes<HTMLFieldSetElement>>;
-  /**
    * Props spread onto the legend.
    */
   LegendProps?: unknown;
@@ -60,7 +56,6 @@ export const CheckboxGroup = forwardRef<
     defaultCheckedValues = [],
     children,
     className,
-    FormControlProps,
     direction = "vertical",
     name,
     onChange,

@@ -20,21 +20,60 @@ import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 const withBaseName = makePrefixer("saltCheckbox");
 
 export interface CheckboxProps {
+  /**
+   * Properties applied to the input element.
+   */
   checked?: boolean;
+  /**
+   * The className(s) applied to the component
+   */
   className?: string;
+  /**
+   * Whether the checkbox component is checked by default
+   * This will be disregarded if checked is already set
+   */
   defaultChecked?: boolean;
+  /**
+   * If `true`, the checkbox will be disabled.
+   */
   disabled?: boolean;
+  /**
+   * If `true`, the checkbox will be disabled.
+   */
   error?: boolean;
+  /**
+   * If `true`, the checkbox will be disabled.
+   */
   indeterminate?: boolean;
+  /**
+   * If true, the checkbox appears indeterminate. This does not set the native
+   * input element to indeterminate due to the inconsistent behaviour across browsers
+   * However, a data-indeterminate attribute is set on the input
+   */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
+  /**
+   * The label to be shown next to the checkbox
+   */
   label?: ReactNode;
+  /**
+   * The name applied to the input
+   */
   name?: string;
+  /**
+   * Callback when checkbox loses focus
+   */
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
    * Callback when checked state is changed
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  /**
+   * Callback when checkbox gains focus
+   */
   onFocus?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * The value of the checkbox
+   */
   value?: string;
 }
 
