@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type AzerbaijanProps = CountrySymbolProps;
 
-export const Azerbaijan = forwardRef<SVGSVGElement, AzerbaijanProps>(
+const Azerbaijan = forwardRef<SVGSVGElement, AzerbaijanProps>(
   function Azerbaijan(props: AzerbaijanProps, ref) {
     return (
       <CountrySymbol
@@ -34,3 +34,5 @@ export const Azerbaijan = forwardRef<SVGSVGElement, AzerbaijanProps>(
     );
   }
 );
+
+export default Azerbaijan;

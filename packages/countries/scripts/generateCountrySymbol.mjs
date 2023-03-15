@@ -210,7 +210,7 @@ const generateIndex = ({ countryMetaMap, componentsPath }) => {
   const content = Object.values(countryMetaMap)
     .sort((a, b) => a.fileName - b.fileName)
     .map((countryMeta) => {
-      return `export * from './${countryMeta.componentName}';`;
+      return `export { default as ${countryMeta.componentName} } from './${countryMeta.componentName}';`;
     });
 
   const contentWithMetaExport = [...content];
@@ -240,30 +240,28 @@ const generateIndex = ({ countryMetaMap, componentsPath }) => {
 const generateCountryMeta = ({ countryMetaMap, basePath }) => {
   const outputFile = path.join(basePath, "countryMeta.ts");
 
-  const importText = `
-  import { ElementType } from 'react';
-    import * as Countries from './components';
-    import { CountrySymbolProps } from './country-symbol';
-  `;
-
   const typeText = `
-    type CountryMeta = {
+    export type CountryMeta = {
       countryCode: string;
       countryName: string;
       countryNameSanitized: string;
       componentName: string;
       textName: string;
       countryFileName: string;
-      Component: ElementType<CountrySymbolProps>
     }
 
-    type CountriesMeta = Record<string, CountryMeta>;
+    export type CountryCode = (typeof countryCodes)[number];
+
+    export type CountriesMeta = Record<CountryCode, CountryMeta>;
   `;
 
   let metaText = ["export const countryMeta: CountriesMeta = {"];
+  const countryCodes = [];
 
   for (const code in countryMetaMap) {
     const countryMeta = countryMetaMap[code];
+
+    countryCodes.push(code);
 
     const entryText = `"${code}": {
       countryCode: "${countryMeta.countryCode}",
@@ -272,8 +270,59 @@ const generateCountryMeta = ({ countryMetaMap, basePath }) => {
       componentName: "${countryMeta.componentName}",
       textName: "${countryMeta.textName}",
       countryFileName: "${countryMeta.countryFileName}",
-      Component: Countries.${countryMeta.componentName}
     },`;
+
+    metaText.push(entryText);
+  }
+
+  metaText.push("};");
+
+  const countryCodeText = `export const countryCodes = ${JSON.stringify(
+    countryCodes
+  )} as const`;
+
+  const joinedText = [countryCodeText, typeText, metaText.join("\n")].join(
+    "\n"
+  );
+
+  const formattedResult = prettier.format(joinedText, {
+    parser: "babel-ts",
+    singleQuote: false,
+    trailingComma: "none",
+    printWidth: 80,
+    proseWrap: "always",
+  });
+
+  fs.writeFile(
+    outputFile,
+    formattedResult,
+    { encoding: "utf8" },
+    function (err) {
+      if (err) return console.log(err);
+    }
+  );
+};
+
+const generateCountrySymbolMap = ({ countryMetaMap, basePath }) => {
+  const outputFile = path.join(basePath, "countrySymbolMap.ts");
+
+  const importText = `
+  import { ElementType } from 'react';
+    import * as Countries from './components';
+    import { CountrySymbolProps } from './country-symbol';
+    import { CountryCode } from './countryMeta';
+  `;
+
+  const typeText = `
+    type CountrySymbolMap = Record<CountryCode, ElementType<CountrySymbolProps>>;
+  `;
+
+  let metaText = ["export const countrySymbolMap: CountrySymbolMap = {"];
+
+  for (const code in countryMetaMap) {
+    const countryMeta = countryMetaMap[code];
+
+    const entryText = `"${code}": Countries.${countryMeta.componentName},`;
 
     metaText.push(entryText);
   }
@@ -282,7 +331,56 @@ const generateCountryMeta = ({ countryMetaMap, basePath }) => {
 
   const joinedText = [importText, typeText, metaText.join("\n")].join("\n");
 
-  const formattedResult = prettier.format(joinedText);
+  const formattedResult = prettier.format(joinedText, {
+    parser: "babel-ts",
+    singleQuote: false,
+    trailingComma: "none",
+    printWidth: 80,
+    proseWrap: "always",
+  });
+
+  fs.writeFile(
+    outputFile,
+    formattedResult,
+    { encoding: "utf8" },
+    function (err) {
+      if (err) return console.log(err);
+    }
+  );
+};
+
+const generateLazyMap = ({ countryMetaMap, basePath }) => {
+  const outputFile = path.join(
+    basePath,
+    "./lazy-country-symbol/",
+    "lazyMap.ts"
+  );
+
+  const importText = `
+    import React from "react";
+  `;
+
+  let laztMapText = ["export const lazyMap = {"];
+
+  for (const code in countryMetaMap) {
+    const countryMeta = countryMetaMap[code];
+
+    const entryText = `"${code}": React.lazy(() => import("../components/${countryMeta.componentName}")),`;
+
+    laztMapText.push(entryText);
+  }
+
+  laztMapText.push("} as const");
+
+  const joinedText = [importText, laztMapText.join("\n")].join("\n");
+
+  const formattedResult = prettier.format(joinedText, {
+    parser: "babel-ts",
+    singleQuote: false,
+    trailingComma: "none",
+    printWidth: 80,
+    proseWrap: "always",
+  });
 
   fs.writeFile(
     outputFile,
@@ -306,5 +404,7 @@ const countryMetaMap = generateCountrySymbolComponents({
   componentsPath,
   basePath,
 });
+generateCountrySymbolMap({ countryMetaMap, basePath });
 generateCountryMeta({ countryMetaMap, basePath });
+generateLazyMap({ countryMetaMap, basePath });
 generateIndex({ countryMetaMap, componentsPath });

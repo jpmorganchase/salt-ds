@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BritishIndianOceanTerritoryTheProps = CountrySymbolProps;
 
-export const BritishIndianOceanTerritoryThe = forwardRef<
+const BritishIndianOceanTerritoryThe = forwardRef<
   SVGSVGElement,
   BritishIndianOceanTerritoryTheProps
 >(function BritishIndianOceanTerritoryThe(
@@ -69,3 +69,5 @@ export const BritishIndianOceanTerritoryThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default BritishIndianOceanTerritoryThe;

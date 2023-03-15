@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BonaireSintEustatiusAndSabaProps = CountrySymbolProps;
 
-export const BonaireSintEustatiusAndSaba = forwardRef<
+const BonaireSintEustatiusAndSaba = forwardRef<
   SVGSVGElement,
   BonaireSintEustatiusAndSabaProps
 >(function BonaireSintEustatiusAndSaba(
@@ -30,3 +30,5 @@ export const BonaireSintEustatiusAndSaba = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default BonaireSintEustatiusAndSaba;

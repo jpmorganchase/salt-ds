@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CuracaoProps = CountrySymbolProps;
 
-export const Curacao = forwardRef<SVGSVGElement, CuracaoProps>(function Curacao(
+const Curacao = forwardRef<SVGSVGElement, CuracaoProps>(function Curacao(
   props: CuracaoProps,
   ref
 ) {
@@ -30,3 +30,5 @@ export const Curacao = forwardRef<SVGSVGElement, CuracaoProps>(function Curacao(
     </CountrySymbol>
   );
 });
+
+export default Curacao;

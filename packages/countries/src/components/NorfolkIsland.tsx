@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NorfolkIslandProps = CountrySymbolProps;
 
-export const NorfolkIsland = forwardRef<SVGSVGElement, NorfolkIslandProps>(
+const NorfolkIsland = forwardRef<SVGSVGElement, NorfolkIslandProps>(
   function NorfolkIsland(props: NorfolkIslandProps, ref) {
     return (
       <CountrySymbol
@@ -29,3 +29,5 @@ export const NorfolkIsland = forwardRef<SVGSVGElement, NorfolkIslandProps>(
     );
   }
 );
+
+export default NorfolkIsland;

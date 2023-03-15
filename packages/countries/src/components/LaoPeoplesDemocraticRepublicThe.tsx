@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type LaoPeoplesDemocraticRepublicTheProps = CountrySymbolProps;
 
-export const LaoPeoplesDemocraticRepublicThe = forwardRef<
+const LaoPeoplesDemocraticRepublicThe = forwardRef<
   SVGSVGElement,
   LaoPeoplesDemocraticRepublicTheProps
 >(function LaoPeoplesDemocraticRepublicThe(
@@ -30,3 +30,5 @@ export const LaoPeoplesDemocraticRepublicThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default LaoPeoplesDemocraticRepublicThe;

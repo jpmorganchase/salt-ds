@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type GreatBritainProps = CountrySymbolProps;
 
-export const GreatBritain = forwardRef<SVGSVGElement, GreatBritainProps>(
+const GreatBritain = forwardRef<SVGSVGElement, GreatBritainProps>(
   function GreatBritain(props: GreatBritainProps, ref) {
     return (
       <CountrySymbol
@@ -63,3 +63,5 @@ export const GreatBritain = forwardRef<SVGSVGElement, GreatBritainProps>(
     );
   }
 );
+
+export default GreatBritain;

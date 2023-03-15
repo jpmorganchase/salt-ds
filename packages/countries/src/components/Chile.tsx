@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type ChileProps = CountrySymbolProps;
 
-export const Chile = forwardRef<SVGSVGElement, ChileProps>(function Chile(
+const Chile = forwardRef<SVGSVGElement, ChileProps>(function Chile(
   props: ChileProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Chile = forwardRef<SVGSVGElement, ChileProps>(function Chile(
     </CountrySymbol>
   );
 });
+
+export default Chile;

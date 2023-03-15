@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type LiechtensteinProps = CountrySymbolProps;
 
-export const Liechtenstein = forwardRef<SVGSVGElement, LiechtensteinProps>(
+const Liechtenstein = forwardRef<SVGSVGElement, LiechtensteinProps>(
   function Liechtenstein(props: LiechtensteinProps, ref) {
     return (
       <CountrySymbol
@@ -31,3 +31,5 @@ export const Liechtenstein = forwardRef<SVGSVGElement, LiechtensteinProps>(
     );
   }
 );
+
+export default Liechtenstein;

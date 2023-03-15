@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TogoProps = CountrySymbolProps;
 
-export const Togo = forwardRef<SVGSVGElement, TogoProps>(function Togo(
+const Togo = forwardRef<SVGSVGElement, TogoProps>(function Togo(
   props: TogoProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Togo = forwardRef<SVGSVGElement, TogoProps>(function Togo(
     </CountrySymbol>
   );
 });
+
+export default Togo;

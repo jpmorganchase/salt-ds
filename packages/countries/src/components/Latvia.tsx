@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type LatviaProps = CountrySymbolProps;
 
-export const Latvia = forwardRef<SVGSVGElement, LatviaProps>(function Latvia(
+const Latvia = forwardRef<SVGSVGElement, LatviaProps>(function Latvia(
   props: LatviaProps,
   ref
 ) {
@@ -26,3 +26,5 @@ export const Latvia = forwardRef<SVGSVGElement, LatviaProps>(function Latvia(
     </CountrySymbol>
   );
 });
+
+export default Latvia;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type GreeceProps = CountrySymbolProps;
 
-export const Greece = forwardRef<SVGSVGElement, GreeceProps>(function Greece(
+const Greece = forwardRef<SVGSVGElement, GreeceProps>(function Greece(
   props: GreeceProps,
   ref
 ) {
@@ -29,3 +29,5 @@ export const Greece = forwardRef<SVGSVGElement, GreeceProps>(function Greece(
     </CountrySymbol>
   );
 });
+
+export default Greece;

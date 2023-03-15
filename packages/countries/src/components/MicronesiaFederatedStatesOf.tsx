@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MicronesiaFederatedStatesOfProps = CountrySymbolProps;
 
-export const MicronesiaFederatedStatesOf = forwardRef<
+const MicronesiaFederatedStatesOf = forwardRef<
   SVGSVGElement,
   MicronesiaFederatedStatesOfProps
 >(function MicronesiaFederatedStatesOf(
@@ -38,3 +38,5 @@ export const MicronesiaFederatedStatesOf = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default MicronesiaFederatedStatesOf;

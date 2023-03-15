@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SintMaartenDutchPartProps = CountrySymbolProps;
 
-export const SintMaartenDutchPart = forwardRef<
+const SintMaartenDutchPart = forwardRef<
   SVGSVGElement,
   SintMaartenDutchPartProps
 >(function SintMaartenDutchPart(props: SintMaartenDutchPartProps, ref) {
@@ -42,3 +42,5 @@ export const SintMaartenDutchPart = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default SintMaartenDutchPart;

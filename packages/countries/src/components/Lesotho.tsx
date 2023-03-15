@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type LesothoProps = CountrySymbolProps;
 
-export const Lesotho = forwardRef<SVGSVGElement, LesothoProps>(function Lesotho(
+const Lesotho = forwardRef<SVGSVGElement, LesothoProps>(function Lesotho(
   props: LesothoProps,
   ref
 ) {
@@ -62,3 +62,5 @@ export const Lesotho = forwardRef<SVGSVGElement, LesothoProps>(function Lesotho(
     </CountrySymbol>
   );
 });
+
+export default Lesotho;

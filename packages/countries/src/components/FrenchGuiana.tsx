@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type FrenchGuianaProps = CountrySymbolProps;
 
-export const FrenchGuiana = forwardRef<SVGSVGElement, FrenchGuianaProps>(
+const FrenchGuiana = forwardRef<SVGSVGElement, FrenchGuianaProps>(
   function FrenchGuiana(props: FrenchGuianaProps, ref) {
     return (
       <CountrySymbol
@@ -29,3 +29,5 @@ export const FrenchGuiana = forwardRef<SVGSVGElement, FrenchGuianaProps>(
     );
   }
 );
+
+export default FrenchGuiana;

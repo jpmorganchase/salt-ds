@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type JamaicaProps = CountrySymbolProps;
 
-export const Jamaica = forwardRef<SVGSVGElement, JamaicaProps>(function Jamaica(
+const Jamaica = forwardRef<SVGSVGElement, JamaicaProps>(function Jamaica(
   props: JamaicaProps,
   ref
 ) {
@@ -30,3 +30,5 @@ export const Jamaica = forwardRef<SVGSVGElement, JamaicaProps>(function Jamaica(
     </CountrySymbol>
   );
 });
+
+export default Jamaica;

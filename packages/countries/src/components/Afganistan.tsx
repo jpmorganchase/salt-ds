@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type AfganistanProps = CountrySymbolProps;
 
-export const Afganistan = forwardRef<SVGSVGElement, AfganistanProps>(
+const Afganistan = forwardRef<SVGSVGElement, AfganistanProps>(
   function Afganistan(props: AfganistanProps, ref) {
     return (
       <CountrySymbol
@@ -38,3 +38,5 @@ export const Afganistan = forwardRef<SVGSVGElement, AfganistanProps>(
     );
   }
 );
+
+export default Afganistan;

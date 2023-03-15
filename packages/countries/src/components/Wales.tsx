@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type WalesProps = CountrySymbolProps;
 
-export const Wales = forwardRef<SVGSVGElement, WalesProps>(function Wales(
+const Wales = forwardRef<SVGSVGElement, WalesProps>(function Wales(
   props: WalesProps,
   ref
 ) {
@@ -30,3 +30,5 @@ export const Wales = forwardRef<SVGSVGElement, WalesProps>(function Wales(
     </CountrySymbol>
   );
 });
+
+export default Wales;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MaltaProps = CountrySymbolProps;
 
-export const Malta = forwardRef<SVGSVGElement, MaltaProps>(function Malta(
+const Malta = forwardRef<SVGSVGElement, MaltaProps>(function Malta(
   props: MaltaProps,
   ref
 ) {
@@ -27,3 +27,5 @@ export const Malta = forwardRef<SVGSVGElement, MaltaProps>(function Malta(
     </CountrySymbol>
   );
 });
+
+export default Malta;

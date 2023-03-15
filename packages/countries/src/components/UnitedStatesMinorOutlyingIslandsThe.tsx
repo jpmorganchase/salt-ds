@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type UnitedStatesMinorOutlyingIslandsTheProps = CountrySymbolProps;
 
-export const UnitedStatesMinorOutlyingIslandsThe = forwardRef<
+const UnitedStatesMinorOutlyingIslandsThe = forwardRef<
   SVGSVGElement,
   UnitedStatesMinorOutlyingIslandsTheProps
 >(function UnitedStatesMinorOutlyingIslandsThe(
@@ -37,3 +37,5 @@ export const UnitedStatesMinorOutlyingIslandsThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default UnitedStatesMinorOutlyingIslandsThe;

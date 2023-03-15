@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type ElSalvadorProps = CountrySymbolProps;
 
-export const ElSalvador = forwardRef<SVGSVGElement, ElSalvadorProps>(
+const ElSalvador = forwardRef<SVGSVGElement, ElSalvadorProps>(
   function ElSalvador(props: ElSalvadorProps, ref) {
     return (
       <CountrySymbol
@@ -33,3 +33,5 @@ export const ElSalvador = forwardRef<SVGSVGElement, ElSalvadorProps>(
     );
   }
 );
+
+export default ElSalvador;

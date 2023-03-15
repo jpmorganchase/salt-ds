@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TuvaluProps = CountrySymbolProps;
 
-export const Tuvalu = forwardRef<SVGSVGElement, TuvaluProps>(function Tuvalu(
+const Tuvalu = forwardRef<SVGSVGElement, TuvaluProps>(function Tuvalu(
   props: TuvaluProps,
   ref
 ) {
@@ -51,3 +51,5 @@ export const Tuvalu = forwardRef<SVGSVGElement, TuvaluProps>(function Tuvalu(
     </CountrySymbol>
   );
 });
+
+export default Tuvalu;

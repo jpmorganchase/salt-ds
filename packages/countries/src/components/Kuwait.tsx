@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type KuwaitProps = CountrySymbolProps;
 
-export const Kuwait = forwardRef<SVGSVGElement, KuwaitProps>(function Kuwait(
+const Kuwait = forwardRef<SVGSVGElement, KuwaitProps>(function Kuwait(
   props: KuwaitProps,
   ref
 ) {
@@ -28,3 +28,5 @@ export const Kuwait = forwardRef<SVGSVGElement, KuwaitProps>(function Kuwait(
     </CountrySymbol>
   );
 });
+
+export default Kuwait;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BahamasTheProps = CountrySymbolProps;
 
-export const BahamasThe = forwardRef<SVGSVGElement, BahamasTheProps>(
+const BahamasThe = forwardRef<SVGSVGElement, BahamasTheProps>(
   function BahamasThe(props: BahamasTheProps, ref) {
     return (
       <CountrySymbol
@@ -26,3 +26,5 @@ export const BahamasThe = forwardRef<SVGSVGElement, BahamasTheProps>(
     );
   }
 );
+
+export default BahamasThe;

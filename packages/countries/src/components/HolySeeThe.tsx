@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type HolySeeTheProps = CountrySymbolProps;
 
-export const HolySeeThe = forwardRef<SVGSVGElement, HolySeeTheProps>(
+const HolySeeThe = forwardRef<SVGSVGElement, HolySeeTheProps>(
   function HolySeeThe(props: HolySeeTheProps, ref) {
     return (
       <CountrySymbol
@@ -40,3 +40,5 @@ export const HolySeeThe = forwardRef<SVGSVGElement, HolySeeTheProps>(
     );
   }
 );
+
+export default HolySeeThe;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type AndorraProps = CountrySymbolProps;
 
-export const Andorra = forwardRef<SVGSVGElement, AndorraProps>(function Andorra(
+const Andorra = forwardRef<SVGSVGElement, AndorraProps>(function Andorra(
   props: AndorraProps,
   ref
 ) {
@@ -36,3 +36,5 @@ export const Andorra = forwardRef<SVGSVGElement, AndorraProps>(function Andorra(
     </CountrySymbol>
   );
 });
+
+export default Andorra;

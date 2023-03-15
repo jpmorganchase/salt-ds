@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type AngolaProps = CountrySymbolProps;
 
-export const Angola = forwardRef<SVGSVGElement, AngolaProps>(function Angola(
+const Angola = forwardRef<SVGSVGElement, AngolaProps>(function Angola(
   props: AngolaProps,
   ref
 ) {
@@ -34,3 +34,5 @@ export const Angola = forwardRef<SVGSVGElement, AngolaProps>(function Angola(
     </CountrySymbol>
   );
 });
+
+export default Angola;

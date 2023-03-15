@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type GuineabissauProps = CountrySymbolProps;
 
-export const Guineabissau = forwardRef<SVGSVGElement, GuineabissauProps>(
+const Guineabissau = forwardRef<SVGSVGElement, GuineabissauProps>(
   function Guineabissau(props: GuineabissauProps, ref) {
     return (
       <CountrySymbol
@@ -30,3 +30,5 @@ export const Guineabissau = forwardRef<SVGSVGElement, GuineabissauProps>(
     );
   }
 );
+
+export default Guineabissau;

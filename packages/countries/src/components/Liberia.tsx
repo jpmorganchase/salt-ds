@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type LiberiaProps = CountrySymbolProps;
 
-export const Liberia = forwardRef<SVGSVGElement, LiberiaProps>(function Liberia(
+const Liberia = forwardRef<SVGSVGElement, LiberiaProps>(function Liberia(
   props: LiberiaProps,
   ref
 ) {
@@ -34,3 +34,5 @@ export const Liberia = forwardRef<SVGSVGElement, LiberiaProps>(function Liberia(
     </CountrySymbol>
   );
 });
+
+export default Liberia;

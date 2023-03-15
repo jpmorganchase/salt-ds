@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MyanmarProps = CountrySymbolProps;
 
-export const Myanmar = forwardRef<SVGSVGElement, MyanmarProps>(function Myanmar(
+const Myanmar = forwardRef<SVGSVGElement, MyanmarProps>(function Myanmar(
   props: MyanmarProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Myanmar = forwardRef<SVGSVGElement, MyanmarProps>(function Myanmar(
     </CountrySymbol>
   );
 });
+
+export default Myanmar;

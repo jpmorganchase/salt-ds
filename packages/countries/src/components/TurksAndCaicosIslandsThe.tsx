@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TurksAndCaicosIslandsTheProps = CountrySymbolProps;
 
-export const TurksAndCaicosIslandsThe = forwardRef<
+const TurksAndCaicosIslandsThe = forwardRef<
   SVGSVGElement,
   TurksAndCaicosIslandsTheProps
 >(function TurksAndCaicosIslandsThe(props: TurksAndCaicosIslandsTheProps, ref) {
@@ -54,3 +54,5 @@ export const TurksAndCaicosIslandsThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default TurksAndCaicosIslandsThe;

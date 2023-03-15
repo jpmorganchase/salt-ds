@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type UgandaProps = CountrySymbolProps;
 
-export const Uganda = forwardRef<SVGSVGElement, UgandaProps>(function Uganda(
+const Uganda = forwardRef<SVGSVGElement, UgandaProps>(function Uganda(
   props: UgandaProps,
   ref
 ) {
@@ -65,3 +65,5 @@ export const Uganda = forwardRef<SVGSVGElement, UgandaProps>(function Uganda(
     </CountrySymbol>
   );
 });
+
+export default Uganda;

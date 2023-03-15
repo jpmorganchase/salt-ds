@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NorthernMarianaIslandsTheProps = CountrySymbolProps;
 
-export const NorthernMarianaIslandsThe = forwardRef<
+const NorthernMarianaIslandsThe = forwardRef<
   SVGSVGElement,
   NorthernMarianaIslandsTheProps
 >(function NorthernMarianaIslandsThe(
@@ -42,3 +42,5 @@ export const NorthernMarianaIslandsThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default NorthernMarianaIslandsThe;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BelizeProps = CountrySymbolProps;
 
-export const Belize = forwardRef<SVGSVGElement, BelizeProps>(function Belize(
+const Belize = forwardRef<SVGSVGElement, BelizeProps>(function Belize(
   props: BelizeProps,
   ref
 ) {
@@ -49,3 +49,5 @@ export const Belize = forwardRef<SVGSVGElement, BelizeProps>(function Belize(
     </CountrySymbol>
   );
 });
+
+export default Belize;

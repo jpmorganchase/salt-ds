@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type PalauProps = CountrySymbolProps;
 
-export const Palau = forwardRef<SVGSVGElement, PalauProps>(function Palau(
+const Palau = forwardRef<SVGSVGElement, PalauProps>(function Palau(
   props: PalauProps,
   ref
 ) {
@@ -26,3 +26,5 @@ export const Palau = forwardRef<SVGSVGElement, PalauProps>(function Palau(
     </CountrySymbol>
   );
 });
+
+export default Palau;

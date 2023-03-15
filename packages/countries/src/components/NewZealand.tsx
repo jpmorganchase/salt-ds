@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NewZealandProps = CountrySymbolProps;
 
-export const NewZealand = forwardRef<SVGSVGElement, NewZealandProps>(
+const NewZealand = forwardRef<SVGSVGElement, NewZealandProps>(
   function NewZealand(props: NewZealandProps, ref) {
     return (
       <CountrySymbol
@@ -50,3 +50,5 @@ export const NewZealand = forwardRef<SVGSVGElement, NewZealandProps>(
     );
   }
 );
+
+export default NewZealand;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SaintLuciaProps = CountrySymbolProps;
 
-export const SaintLucia = forwardRef<SVGSVGElement, SaintLuciaProps>(
+const SaintLucia = forwardRef<SVGSVGElement, SaintLuciaProps>(
   function SaintLucia(props: SaintLuciaProps, ref) {
     return (
       <CountrySymbol
@@ -36,3 +36,5 @@ export const SaintLucia = forwardRef<SVGSVGElement, SaintLuciaProps>(
     );
   }
 );
+
+export default SaintLucia;

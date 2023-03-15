@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TunisiaProps = CountrySymbolProps;
 
-export const Tunisia = forwardRef<SVGSVGElement, TunisiaProps>(function Tunisia(
+const Tunisia = forwardRef<SVGSVGElement, TunisiaProps>(function Tunisia(
   props: TunisiaProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Tunisia = forwardRef<SVGSVGElement, TunisiaProps>(function Tunisia(
     </CountrySymbol>
   );
 });
+
+export default Tunisia;

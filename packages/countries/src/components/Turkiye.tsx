@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TurkiyeProps = CountrySymbolProps;
 
-export const Turkiye = forwardRef<SVGSVGElement, TurkiyeProps>(function Turkiye(
+const Turkiye = forwardRef<SVGSVGElement, TurkiyeProps>(function Turkiye(
   props: TurkiyeProps,
   ref
 ) {
@@ -33,3 +33,5 @@ export const Turkiye = forwardRef<SVGSVGElement, TurkiyeProps>(function Turkiye(
     </CountrySymbol>
   );
 });
+
+export default Turkiye;

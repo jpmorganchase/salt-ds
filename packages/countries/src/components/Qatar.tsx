@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type QatarProps = CountrySymbolProps;
 
-export const Qatar = forwardRef<SVGSVGElement, QatarProps>(function Qatar(
+const Qatar = forwardRef<SVGSVGElement, QatarProps>(function Qatar(
   props: QatarProps,
   ref
 ) {
@@ -29,3 +29,5 @@ export const Qatar = forwardRef<SVGSVGElement, QatarProps>(function Qatar(
     </CountrySymbol>
   );
 });
+
+export default Qatar;

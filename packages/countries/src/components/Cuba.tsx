@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CubaProps = CountrySymbolProps;
 
-export const Cuba = forwardRef<SVGSVGElement, CubaProps>(function Cuba(
+const Cuba = forwardRef<SVGSVGElement, CubaProps>(function Cuba(
   props: CubaProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Cuba = forwardRef<SVGSVGElement, CubaProps>(function Cuba(
     </CountrySymbol>
   );
 });
+
+export default Cuba;

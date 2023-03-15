@@ -4,36 +4,39 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CameroonProps = CountrySymbolProps;
 
-export const Cameroon = forwardRef<SVGSVGElement, CameroonProps>(
-  function Cameroon(props: CameroonProps, ref) {
-    return (
-      <CountrySymbol
-        data-testid="Cameroon"
-        aria-label="cameroon"
-        viewBox="0 0 72 72"
-        ref={ref}
-        {...props}
-      >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
-          <circle
-            cx="36"
-            cy="36"
-            r="36"
-            fill="#D9D9D9"
-            transform="rotate(90 36 36)"
-          />
-        </mask>
-        <g mask="url(#a)">
-          <path fill="#FBD381" d="M0 0h72v72H0z" />
-          <path fill="#005B33" d="M0 0h23v72H0z" />
-          <path
-            fill="#DD2033"
-            fillRule="evenodd"
-            d="M49 0H23v72h26V0ZM33.317 33.068 36 27l2.683 6.068 6.317.807-4.66 4.558L41.563 45 36 41.25 30.438 45l1.222-6.567L27 33.875l6.317-.807Z"
-            clipRule="evenodd"
-          />
-        </g>
-      </CountrySymbol>
-    );
-  }
-);
+const Cameroon = forwardRef<SVGSVGElement, CameroonProps>(function Cameroon(
+  props: CameroonProps,
+  ref
+) {
+  return (
+    <CountrySymbol
+      data-testid="Cameroon"
+      aria-label="cameroon"
+      viewBox="0 0 72 72"
+      ref={ref}
+      {...props}
+    >
+      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <circle
+          cx="36"
+          cy="36"
+          r="36"
+          fill="#D9D9D9"
+          transform="rotate(90 36 36)"
+        />
+      </mask>
+      <g mask="url(#a)">
+        <path fill="#FBD381" d="M0 0h72v72H0z" />
+        <path fill="#005B33" d="M0 0h23v72H0z" />
+        <path
+          fill="#DD2033"
+          fillRule="evenodd"
+          d="M49 0H23v72h26V0ZM33.317 33.068 36 27l2.683 6.068 6.317.807-4.66 4.558L41.563 45 36 41.25 30.438 45l1.222-6.567L27 33.875l6.317-.807Z"
+          clipRule="evenodd"
+        />
+      </g>
+    </CountrySymbol>
+  );
+});
+
+export default Cameroon;

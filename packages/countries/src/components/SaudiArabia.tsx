@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SaudiArabiaProps = CountrySymbolProps;
 
-export const SaudiArabia = forwardRef<SVGSVGElement, SaudiArabiaProps>(
+const SaudiArabia = forwardRef<SVGSVGElement, SaudiArabiaProps>(
   function SaudiArabia(props: SaudiArabiaProps, ref) {
     return (
       <CountrySymbol
@@ -36,3 +36,5 @@ export const SaudiArabia = forwardRef<SVGSVGElement, SaudiArabiaProps>(
     );
   }
 );
+
+export default SaudiArabia;

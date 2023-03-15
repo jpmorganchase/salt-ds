@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MalawiProps = CountrySymbolProps;
 
-export const Malawi = forwardRef<SVGSVGElement, MalawiProps>(function Malawi(
+const Malawi = forwardRef<SVGSVGElement, MalawiProps>(function Malawi(
   props: MalawiProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Malawi = forwardRef<SVGSVGElement, MalawiProps>(function Malawi(
     </CountrySymbol>
   );
 });
+
+export default Malawi;

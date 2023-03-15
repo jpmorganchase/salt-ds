@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MonacoProps = CountrySymbolProps;
 
-export const Monaco = forwardRef<SVGSVGElement, MonacoProps>(function Monaco(
+const Monaco = forwardRef<SVGSVGElement, MonacoProps>(function Monaco(
   props: MonacoProps,
   ref
 ) {
@@ -26,3 +26,5 @@ export const Monaco = forwardRef<SVGSVGElement, MonacoProps>(function Monaco(
     </CountrySymbol>
   );
 });
+
+export default Monaco;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SenegalProps = CountrySymbolProps;
 
-export const Senegal = forwardRef<SVGSVGElement, SenegalProps>(function Senegal(
+const Senegal = forwardRef<SVGSVGElement, SenegalProps>(function Senegal(
   props: SenegalProps,
   ref
 ) {
@@ -37,3 +37,5 @@ export const Senegal = forwardRef<SVGSVGElement, SenegalProps>(function Senegal(
     </CountrySymbol>
   );
 });
+
+export default Senegal;

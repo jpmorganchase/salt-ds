@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type KazakhstanProps = CountrySymbolProps;
 
-export const Kazakhstan = forwardRef<SVGSVGElement, KazakhstanProps>(
+const Kazakhstan = forwardRef<SVGSVGElement, KazakhstanProps>(
   function Kazakhstan(props: KazakhstanProps, ref) {
     return (
       <CountrySymbol
@@ -28,3 +28,5 @@ export const Kazakhstan = forwardRef<SVGSVGElement, KazakhstanProps>(
     );
   }
 );
+
+export default Kazakhstan;

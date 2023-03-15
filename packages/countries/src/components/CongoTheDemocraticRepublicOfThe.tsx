@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CongoTheDemocraticRepublicOfTheProps = CountrySymbolProps;
 
-export const CongoTheDemocraticRepublicOfThe = forwardRef<
+const CongoTheDemocraticRepublicOfThe = forwardRef<
   SVGSVGElement,
   CongoTheDemocraticRepublicOfTheProps
 >(function CongoTheDemocraticRepublicOfThe(
@@ -40,3 +40,5 @@ export const CongoTheDemocraticRepublicOfThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default CongoTheDemocraticRepublicOfThe;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BhutanProps = CountrySymbolProps;
 
-export const Bhutan = forwardRef<SVGSVGElement, BhutanProps>(function Bhutan(
+const Bhutan = forwardRef<SVGSVGElement, BhutanProps>(function Bhutan(
   props: BhutanProps,
   ref
 ) {
@@ -30,3 +30,5 @@ export const Bhutan = forwardRef<SVGSVGElement, BhutanProps>(function Bhutan(
     </CountrySymbol>
   );
 });
+
+export default Bhutan;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BeninProps = CountrySymbolProps;
 
-export const Benin = forwardRef<SVGSVGElement, BeninProps>(function Benin(
+const Benin = forwardRef<SVGSVGElement, BeninProps>(function Benin(
   props: BeninProps,
   ref
 ) {
@@ -27,3 +27,5 @@ export const Benin = forwardRef<SVGSVGElement, BeninProps>(function Benin(
     </CountrySymbol>
   );
 });
+
+export default Benin;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SamoaProps = CountrySymbolProps;
 
-export const Samoa = forwardRef<SVGSVGElement, SamoaProps>(function Samoa(
+const Samoa = forwardRef<SVGSVGElement, SamoaProps>(function Samoa(
   props: SamoaProps,
   ref
 ) {
@@ -30,3 +30,5 @@ export const Samoa = forwardRef<SVGSVGElement, SamoaProps>(function Samoa(
     </CountrySymbol>
   );
 });
+
+export default Samoa;

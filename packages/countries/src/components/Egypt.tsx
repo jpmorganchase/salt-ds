@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type EgyptProps = CountrySymbolProps;
 
-export const Egypt = forwardRef<SVGSVGElement, EgyptProps>(function Egypt(
+const Egypt = forwardRef<SVGSVGElement, EgyptProps>(function Egypt(
   props: EgyptProps,
   ref
 ) {
@@ -35,3 +35,5 @@ export const Egypt = forwardRef<SVGSVGElement, EgyptProps>(function Egypt(
     </CountrySymbol>
   );
 });
+
+export default Egypt;

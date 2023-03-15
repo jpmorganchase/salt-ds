@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type KoreaDemocraticPeoplesRepublicOfProps = CountrySymbolProps;
 
-export const KoreaDemocraticPeoplesRepublicOf = forwardRef<
+const KoreaDemocraticPeoplesRepublicOf = forwardRef<
   SVGSVGElement,
   KoreaDemocraticPeoplesRepublicOfProps
 >(function KoreaDemocraticPeoplesRepublicOf(
@@ -36,3 +36,5 @@ export const KoreaDemocraticPeoplesRepublicOf = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default KoreaDemocraticPeoplesRepublicOf;

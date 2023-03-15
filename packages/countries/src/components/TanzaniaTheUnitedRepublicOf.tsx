@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TanzaniaTheUnitedRepublicOfProps = CountrySymbolProps;
 
-export const TanzaniaTheUnitedRepublicOf = forwardRef<
+const TanzaniaTheUnitedRepublicOf = forwardRef<
   SVGSVGElement,
   TanzaniaTheUnitedRepublicOfProps
 >(function TanzaniaTheUnitedRepublicOf(
@@ -37,3 +37,5 @@ export const TanzaniaTheUnitedRepublicOf = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default TanzaniaTheUnitedRepublicOf;

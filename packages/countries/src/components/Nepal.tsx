@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NepalProps = CountrySymbolProps;
 
-export const Nepal = forwardRef<SVGSVGElement, NepalProps>(function Nepal(
+const Nepal = forwardRef<SVGSVGElement, NepalProps>(function Nepal(
   props: NepalProps,
   ref
 ) {
@@ -50,3 +50,5 @@ export const Nepal = forwardRef<SVGSVGElement, NepalProps>(function Nepal(
     </CountrySymbol>
   );
 });
+
+export default Nepal;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type PapuaNewGuineaProps = CountrySymbolProps;
 
-export const PapuaNewGuinea = forwardRef<SVGSVGElement, PapuaNewGuineaProps>(
+const PapuaNewGuinea = forwardRef<SVGSVGElement, PapuaNewGuineaProps>(
   function PapuaNewGuinea(props: PapuaNewGuineaProps, ref) {
     return (
       <CountrySymbol
@@ -39,3 +39,5 @@ export const PapuaNewGuinea = forwardRef<SVGSVGElement, PapuaNewGuineaProps>(
     );
   }
 );
+
+export default PapuaNewGuinea;

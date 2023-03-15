@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TokelauProps = CountrySymbolProps;
 
-export const Tokelau = forwardRef<SVGSVGElement, TokelauProps>(function Tokelau(
+const Tokelau = forwardRef<SVGSVGElement, TokelauProps>(function Tokelau(
   props: TokelauProps,
   ref
 ) {
@@ -33,3 +33,5 @@ export const Tokelau = forwardRef<SVGSVGElement, TokelauProps>(function Tokelau(
     </CountrySymbol>
   );
 });
+
+export default Tokelau;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type LuxembourgProps = CountrySymbolProps;
 
-export const Luxembourg = forwardRef<SVGSVGElement, LuxembourgProps>(
+const Luxembourg = forwardRef<SVGSVGElement, LuxembourgProps>(
   function Luxembourg(props: LuxembourgProps, ref) {
     return (
       <CountrySymbol
@@ -26,3 +26,5 @@ export const Luxembourg = forwardRef<SVGSVGElement, LuxembourgProps>(
     );
   }
 );
+
+export default Luxembourg;

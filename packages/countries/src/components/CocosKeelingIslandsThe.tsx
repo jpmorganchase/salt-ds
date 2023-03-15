@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CocosKeelingIslandsTheProps = CountrySymbolProps;
 
-export const CocosKeelingIslandsThe = forwardRef<
+const CocosKeelingIslandsThe = forwardRef<
   SVGSVGElement,
   CocosKeelingIslandsTheProps
 >(function CocosKeelingIslandsThe(props: CocosKeelingIslandsTheProps, ref) {
@@ -35,3 +35,5 @@ export const CocosKeelingIslandsThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default CocosKeelingIslandsThe;

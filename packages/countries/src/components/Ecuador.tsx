@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type EcuadorProps = CountrySymbolProps;
 
-export const Ecuador = forwardRef<SVGSVGElement, EcuadorProps>(function Ecuador(
+const Ecuador = forwardRef<SVGSVGElement, EcuadorProps>(function Ecuador(
   props: EcuadorProps,
   ref
 ) {
@@ -62,3 +62,5 @@ export const Ecuador = forwardRef<SVGSVGElement, EcuadorProps>(function Ecuador(
     </CountrySymbol>
   );
 });
+
+export default Ecuador;

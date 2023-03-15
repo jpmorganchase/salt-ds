@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type IraqProps = CountrySymbolProps;
 
-export const Iraq = forwardRef<SVGSVGElement, IraqProps>(function Iraq(
+const Iraq = forwardRef<SVGSVGElement, IraqProps>(function Iraq(
   props: IraqProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Iraq = forwardRef<SVGSVGElement, IraqProps>(function Iraq(
     </CountrySymbol>
   );
 });
+
+export default Iraq;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type UkraineProps = CountrySymbolProps;
 
-export const Ukraine = forwardRef<SVGSVGElement, UkraineProps>(function Ukraine(
+const Ukraine = forwardRef<SVGSVGElement, UkraineProps>(function Ukraine(
   props: UkraineProps,
   ref
 ) {
@@ -26,3 +26,5 @@ export const Ukraine = forwardRef<SVGSVGElement, UkraineProps>(function Ukraine(
     </CountrySymbol>
   );
 });
+
+export default Ukraine;

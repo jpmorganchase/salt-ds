@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NauruProps = CountrySymbolProps;
 
-export const Nauru = forwardRef<SVGSVGElement, NauruProps>(function Nauru(
+const Nauru = forwardRef<SVGSVGElement, NauruProps>(function Nauru(
   props: NauruProps,
   ref
 ) {
@@ -30,3 +30,5 @@ export const Nauru = forwardRef<SVGSVGElement, NauruProps>(function Nauru(
     </CountrySymbol>
   );
 });
+
+export default Nauru;

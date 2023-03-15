@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SouthGeorgiaAndTheSouthSandwichIslandsProps = CountrySymbolProps;
 
-export const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
+const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
   SVGSVGElement,
   SouthGeorgiaAndTheSouthSandwichIslandsProps
 >(function SouthGeorgiaAndTheSouthSandwichIslands(
@@ -72,3 +72,5 @@ export const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default SouthGeorgiaAndTheSouthSandwichIslands;

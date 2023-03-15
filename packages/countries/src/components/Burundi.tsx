@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BurundiProps = CountrySymbolProps;
 
-export const Burundi = forwardRef<SVGSVGElement, BurundiProps>(function Burundi(
+const Burundi = forwardRef<SVGSVGElement, BurundiProps>(function Burundi(
   props: BurundiProps,
   ref
 ) {
@@ -34,3 +34,5 @@ export const Burundi = forwardRef<SVGSVGElement, BurundiProps>(function Burundi(
     </CountrySymbol>
   );
 });
+
+export default Burundi;

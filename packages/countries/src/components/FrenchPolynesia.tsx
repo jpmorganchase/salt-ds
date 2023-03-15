@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type FrenchPolynesiaProps = CountrySymbolProps;
 
-export const FrenchPolynesia = forwardRef<SVGSVGElement, FrenchPolynesiaProps>(
+const FrenchPolynesia = forwardRef<SVGSVGElement, FrenchPolynesiaProps>(
   function FrenchPolynesia(props: FrenchPolynesiaProps, ref) {
     return (
       <CountrySymbol
@@ -46,3 +46,5 @@ export const FrenchPolynesia = forwardRef<SVGSVGElement, FrenchPolynesiaProps>(
     );
   }
 );
+
+export default FrenchPolynesia;

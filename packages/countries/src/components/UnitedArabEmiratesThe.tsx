@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type UnitedArabEmiratesTheProps = CountrySymbolProps;
 
-export const UnitedArabEmiratesThe = forwardRef<
+const UnitedArabEmiratesThe = forwardRef<
   SVGSVGElement,
   UnitedArabEmiratesTheProps
 >(function UnitedArabEmiratesThe(props: UnitedArabEmiratesTheProps, ref) {
@@ -28,3 +28,5 @@ export const UnitedArabEmiratesThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default UnitedArabEmiratesThe;

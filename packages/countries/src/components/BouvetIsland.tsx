@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BouvetIslandProps = CountrySymbolProps;
 
-export const BouvetIsland = forwardRef<SVGSVGElement, BouvetIslandProps>(
+const BouvetIsland = forwardRef<SVGSVGElement, BouvetIslandProps>(
   function BouvetIsland(props: BouvetIslandProps, ref) {
     return (
       <CountrySymbol
@@ -31,3 +31,5 @@ export const BouvetIsland = forwardRef<SVGSVGElement, BouvetIslandProps>(
     );
   }
 );
+
+export default BouvetIsland;

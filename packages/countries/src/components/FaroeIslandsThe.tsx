@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type FaroeIslandsTheProps = CountrySymbolProps;
 
-export const FaroeIslandsThe = forwardRef<SVGSVGElement, FaroeIslandsTheProps>(
+const FaroeIslandsThe = forwardRef<SVGSVGElement, FaroeIslandsTheProps>(
   function FaroeIslandsThe(props: FaroeIslandsTheProps, ref) {
     return (
       <CountrySymbol
@@ -31,3 +31,5 @@ export const FaroeIslandsThe = forwardRef<SVGSVGElement, FaroeIslandsTheProps>(
     );
   }
 );
+
+export default FaroeIslandsThe;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type GabonProps = CountrySymbolProps;
 
-export const Gabon = forwardRef<SVGSVGElement, GabonProps>(function Gabon(
+const Gabon = forwardRef<SVGSVGElement, GabonProps>(function Gabon(
   props: GabonProps,
   ref
 ) {
@@ -27,3 +27,5 @@ export const Gabon = forwardRef<SVGSVGElement, GabonProps>(function Gabon(
     </CountrySymbol>
   );
 });
+
+export default Gabon;

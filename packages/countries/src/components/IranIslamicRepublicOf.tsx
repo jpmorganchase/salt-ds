@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type IranIslamicRepublicOfProps = CountrySymbolProps;
 
-export const IranIslamicRepublicOf = forwardRef<
+const IranIslamicRepublicOf = forwardRef<
   SVGSVGElement,
   IranIslamicRepublicOfProps
 >(function IranIslamicRepublicOf(props: IranIslamicRepublicOfProps, ref) {
@@ -37,3 +37,5 @@ export const IranIslamicRepublicOf = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default IranIslamicRepublicOf;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MoroccoProps = CountrySymbolProps;
 
-export const Morocco = forwardRef<SVGSVGElement, MoroccoProps>(function Morocco(
+const Morocco = forwardRef<SVGSVGElement, MoroccoProps>(function Morocco(
   props: MoroccoProps,
   ref
 ) {
@@ -29,3 +29,5 @@ export const Morocco = forwardRef<SVGSVGElement, MoroccoProps>(function Morocco(
     </CountrySymbol>
   );
 });
+
+export default Morocco;

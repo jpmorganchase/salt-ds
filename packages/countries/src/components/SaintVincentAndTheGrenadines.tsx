@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SaintVincentAndTheGrenadinesProps = CountrySymbolProps;
 
-export const SaintVincentAndTheGrenadines = forwardRef<
+const SaintVincentAndTheGrenadines = forwardRef<
   SVGSVGElement,
   SaintVincentAndTheGrenadinesProps
 >(function SaintVincentAndTheGrenadines(
@@ -35,3 +35,5 @@ export const SaintVincentAndTheGrenadines = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default SaintVincentAndTheGrenadines;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type RussianFederationTheProps = CountrySymbolProps;
 
-export const RussianFederationThe = forwardRef<
+const RussianFederationThe = forwardRef<
   SVGSVGElement,
   RussianFederationTheProps
 >(function RussianFederationThe(props: RussianFederationTheProps, ref) {
@@ -27,3 +27,5 @@ export const RussianFederationThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default RussianFederationThe;

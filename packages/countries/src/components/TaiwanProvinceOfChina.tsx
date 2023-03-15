@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TaiwanProvinceOfChinaProps = CountrySymbolProps;
 
-export const TaiwanProvinceOfChina = forwardRef<
+const TaiwanProvinceOfChina = forwardRef<
   SVGSVGElement,
   TaiwanProvinceOfChinaProps
 >(function TaiwanProvinceOfChina(props: TaiwanProvinceOfChinaProps, ref) {
@@ -30,3 +30,5 @@ export const TaiwanProvinceOfChina = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default TaiwanProvinceOfChina;

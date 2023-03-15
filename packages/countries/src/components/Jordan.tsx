@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type JordanProps = CountrySymbolProps;
 
-export const Jordan = forwardRef<SVGSVGElement, JordanProps>(function Jordan(
+const Jordan = forwardRef<SVGSVGElement, JordanProps>(function Jordan(
   props: JordanProps,
   ref
 ) {
@@ -32,3 +32,5 @@ export const Jordan = forwardRef<SVGSVGElement, JordanProps>(function Jordan(
     </CountrySymbol>
   );
 });
+
+export default Jordan;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type KenyaProps = CountrySymbolProps;
 
-export const Kenya = forwardRef<SVGSVGElement, KenyaProps>(function Kenya(
+const Kenya = forwardRef<SVGSVGElement, KenyaProps>(function Kenya(
   props: KenyaProps,
   ref
 ) {
@@ -46,3 +46,5 @@ export const Kenya = forwardRef<SVGSVGElement, KenyaProps>(function Kenya(
     </CountrySymbol>
   );
 });
+
+export default Kenya;

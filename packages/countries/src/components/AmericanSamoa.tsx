@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type AmericanSamoaProps = CountrySymbolProps;
 
-export const AmericanSamoa = forwardRef<SVGSVGElement, AmericanSamoaProps>(
+const AmericanSamoa = forwardRef<SVGSVGElement, AmericanSamoaProps>(
   function AmericanSamoa(props: AmericanSamoaProps, ref) {
     return (
       <CountrySymbol
@@ -35,3 +35,5 @@ export const AmericanSamoa = forwardRef<SVGSVGElement, AmericanSamoaProps>(
     );
   }
 );
+
+export default AmericanSamoa;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type VietNamProps = CountrySymbolProps;
 
-export const VietNam = forwardRef<SVGSVGElement, VietNamProps>(function VietNam(
+const VietNam = forwardRef<SVGSVGElement, VietNamProps>(function VietNam(
   props: VietNamProps,
   ref
 ) {
@@ -29,3 +29,5 @@ export const VietNam = forwardRef<SVGSVGElement, VietNamProps>(function VietNam(
     </CountrySymbol>
   );
 });
+
+export default VietNam;

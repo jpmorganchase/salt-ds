@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MayotteProps = CountrySymbolProps;
 
-export const Mayotte = forwardRef<SVGSVGElement, MayotteProps>(function Mayotte(
+const Mayotte = forwardRef<SVGSVGElement, MayotteProps>(function Mayotte(
   props: MayotteProps,
   ref
 ) {
@@ -33,3 +33,5 @@ export const Mayotte = forwardRef<SVGSVGElement, MayotteProps>(function Mayotte(
     </CountrySymbol>
   );
 });
+
+export default Mayotte;

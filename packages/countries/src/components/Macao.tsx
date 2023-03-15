@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MacaoProps = CountrySymbolProps;
 
-export const Macao = forwardRef<SVGSVGElement, MacaoProps>(function Macao(
+const Macao = forwardRef<SVGSVGElement, MacaoProps>(function Macao(
   props: MacaoProps,
   ref
 ) {
@@ -50,3 +50,5 @@ export const Macao = forwardRef<SVGSVGElement, MacaoProps>(function Macao(
     </CountrySymbol>
   );
 });
+
+export default Macao;

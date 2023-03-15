@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type FijiProps = CountrySymbolProps;
 
-export const Fiji = forwardRef<SVGSVGElement, FijiProps>(function Fiji(
+const Fiji = forwardRef<SVGSVGElement, FijiProps>(function Fiji(
   props: FijiProps,
   ref
 ) {
@@ -63,3 +63,5 @@ export const Fiji = forwardRef<SVGSVGElement, FijiProps>(function Fiji(
     </CountrySymbol>
   );
 });
+
+export default Fiji;

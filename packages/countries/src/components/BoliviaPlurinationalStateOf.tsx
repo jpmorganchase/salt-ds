@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BoliviaPlurinationalStateOfProps = CountrySymbolProps;
 
-export const BoliviaPlurinationalStateOf = forwardRef<
+const BoliviaPlurinationalStateOf = forwardRef<
   SVGSVGElement,
   BoliviaPlurinationalStateOfProps
 >(function BoliviaPlurinationalStateOf(
@@ -69,3 +69,5 @@ export const BoliviaPlurinationalStateOf = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default BoliviaPlurinationalStateOf;

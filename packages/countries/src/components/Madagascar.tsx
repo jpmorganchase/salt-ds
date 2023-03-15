@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MadagascarProps = CountrySymbolProps;
 
-export const Madagascar = forwardRef<SVGSVGElement, MadagascarProps>(
+const Madagascar = forwardRef<SVGSVGElement, MadagascarProps>(
   function Madagascar(props: MadagascarProps, ref) {
     return (
       <CountrySymbol
@@ -26,3 +26,5 @@ export const Madagascar = forwardRef<SVGSVGElement, MadagascarProps>(
     );
   }
 );
+
+export default Madagascar;

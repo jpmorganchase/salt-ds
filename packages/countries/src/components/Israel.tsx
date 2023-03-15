@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type IsraelProps = CountrySymbolProps;
 
-export const Israel = forwardRef<SVGSVGElement, IsraelProps>(function Israel(
+const Israel = forwardRef<SVGSVGElement, IsraelProps>(function Israel(
   props: IsraelProps,
   ref
 ) {
@@ -32,3 +32,5 @@ export const Israel = forwardRef<SVGSVGElement, IsraelProps>(function Israel(
     </CountrySymbol>
   );
 });
+
+export default Israel;

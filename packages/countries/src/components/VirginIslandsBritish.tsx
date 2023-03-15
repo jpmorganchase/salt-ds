@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type VirginIslandsBritishProps = CountrySymbolProps;
 
-export const VirginIslandsBritish = forwardRef<
+const VirginIslandsBritish = forwardRef<
   SVGSVGElement,
   VirginIslandsBritishProps
 >(function VirginIslandsBritish(props: VirginIslandsBritishProps, ref) {
@@ -57,3 +57,5 @@ export const VirginIslandsBritish = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default VirginIslandsBritish;

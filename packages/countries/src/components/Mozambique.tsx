@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MozambiqueProps = CountrySymbolProps;
 
-export const Mozambique = forwardRef<SVGSVGElement, MozambiqueProps>(
+const Mozambique = forwardRef<SVGSVGElement, MozambiqueProps>(
   function Mozambique(props: MozambiqueProps, ref) {
     return (
       <CountrySymbol
@@ -32,3 +32,5 @@ export const Mozambique = forwardRef<SVGSVGElement, MozambiqueProps>(
     );
   }
 );
+
+export default Mozambique;

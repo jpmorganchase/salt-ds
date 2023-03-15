@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type JerseyProps = CountrySymbolProps;
 
-export const Jersey = forwardRef<SVGSVGElement, JerseyProps>(function Jersey(
+const Jersey = forwardRef<SVGSVGElement, JerseyProps>(function Jersey(
   props: JerseyProps,
   ref
 ) {
@@ -33,3 +33,5 @@ export const Jersey = forwardRef<SVGSVGElement, JerseyProps>(function Jersey(
     </CountrySymbol>
   );
 });
+
+export default Jersey;

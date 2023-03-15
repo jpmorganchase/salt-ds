@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type UnitedStatesOfAmericaTheProps = CountrySymbolProps;
 
-export const UnitedStatesOfAmericaThe = forwardRef<
+const UnitedStatesOfAmericaThe = forwardRef<
   SVGSVGElement,
   UnitedStatesOfAmericaTheProps
 >(function UnitedStatesOfAmericaThe(props: UnitedStatesOfAmericaTheProps, ref) {
@@ -34,3 +34,5 @@ export const UnitedStatesOfAmericaThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default UnitedStatesOfAmericaThe;

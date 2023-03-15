@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BosniaAndHerzegovinaProps = CountrySymbolProps;
 
-export const BosniaAndHerzegovina = forwardRef<
+const BosniaAndHerzegovina = forwardRef<
   SVGSVGElement,
   BosniaAndHerzegovinaProps
 >(function BosniaAndHerzegovina(props: BosniaAndHerzegovinaProps, ref) {
@@ -36,3 +36,5 @@ export const BosniaAndHerzegovina = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default BosniaAndHerzegovina;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type GuamProps = CountrySymbolProps;
 
-export const Guam = forwardRef<SVGSVGElement, GuamProps>(function Guam(
+const Guam = forwardRef<SVGSVGElement, GuamProps>(function Guam(
   props: GuamProps,
   ref
 ) {
@@ -48,3 +48,5 @@ export const Guam = forwardRef<SVGSVGElement, GuamProps>(function Guam(
     </CountrySymbol>
   );
 });
+
+export default Guam;

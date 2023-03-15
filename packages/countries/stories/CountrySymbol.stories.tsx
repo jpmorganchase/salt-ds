@@ -6,6 +6,10 @@ import {
   CountrySymbol,
   CountrySymbolProps,
   countryMeta,
+  countrySymbolMap,
+  LazyCountrySymbol,
+  countryCodes,
+  CountryCode,
 } from "@salt-ds/countries";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexLayout, StackLayout } from "@salt-ds/core";
@@ -14,6 +18,14 @@ import { FormField, Input } from "@salt-ds/lab";
 export default {
   title: "CountrySymbols/CountrySymbol",
   component: CountrySymbol,
+  argTypes: {
+    code: {
+      type: "string",
+    },
+    size: {
+      type: "number",
+    },
+  },
 } as ComponentMeta<typeof CountrySymbol>;
 
 const sizes = [1, 2, 3] as const;
@@ -60,10 +72,33 @@ export const SaltTypes: ComponentStory<typeof CountrySymbol> = () => (
 export const AllCountrySymbols: ComponentStory<typeof CountrySymbol> = () => {
   return (
     <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
-      {Object.entries(countryMeta).map(([code, { Component }]) => (
+      {Object.entries(countrySymbolMap).map(([code, Component]) => (
         <Component key={code} size={1} />
       ))}
     </FlexLayout>
+  );
+};
+
+export const Lazy: ComponentStory<typeof LazyCountrySymbol> = () => {
+  const [countryCode, setCountryCode] = useState<CountryCode>(countryCodes[0]);
+
+  return (
+    <StackLayout>
+      <label htmlFor="code">
+        Change country code
+        <select
+          id="code"
+          onChange={(e) => {
+            setCountryCode(e.target.value as CountryCode);
+          }}
+        >
+          {countryCodes.map((code) => (
+            <option value={code}>{code}</option>
+          ))}
+        </select>
+      </label>
+      <LazyCountrySymbol code={countryCode} />
+    </StackLayout>
   );
 };
 
@@ -89,12 +124,16 @@ export const AllCountrySymbolsWithSearch: ComponentStory<
             .filter(([code, { textName }]) =>
               new RegExp(inputText, "i").test(textName)
             )
-            .map(([code, { Component, textName }]) => (
-              <StackLayout style={{ width: "150px" }} gap={1} align="center">
-                <Component key={code} size={2} />
-                <p style={{ margin: 0 }}>{textName}</p>
-              </StackLayout>
-            ))}
+            .map(([code, { textName }]) => {
+              const Component = countrySymbolMap[code as CountryCode];
+
+              return (
+                <StackLayout style={{ width: "150px" }} gap={1} align="center">
+                  <Component key={code} size={2} />
+                  <p style={{ margin: 0 }}>{textName}</p>
+                </StackLayout>
+              );
+            })}
         </FlexLayout>
       </StackLayout>
     </div>

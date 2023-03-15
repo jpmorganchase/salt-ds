@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type ArubaProps = CountrySymbolProps;
 
-export const Aruba = forwardRef<SVGSVGElement, ArubaProps>(function Aruba(
+const Aruba = forwardRef<SVGSVGElement, ArubaProps>(function Aruba(
   props: ArubaProps,
   ref
 ) {
@@ -36,3 +36,5 @@ export const Aruba = forwardRef<SVGSVGElement, ArubaProps>(function Aruba(
     </CountrySymbol>
   );
 });
+
+export default Aruba;

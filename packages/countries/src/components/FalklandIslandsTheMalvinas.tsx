@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type FalklandIslandsTheMalvinasProps = CountrySymbolProps;
 
-export const FalklandIslandsTheMalvinas = forwardRef<
+const FalklandIslandsTheMalvinas = forwardRef<
   SVGSVGElement,
   FalklandIslandsTheMalvinasProps
 >(function FalklandIslandsTheMalvinas(
@@ -64,3 +64,5 @@ export const FalklandIslandsTheMalvinas = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default FalklandIslandsTheMalvinas;

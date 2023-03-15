@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type GuyanaProps = CountrySymbolProps;
 
-export const Guyana = forwardRef<SVGSVGElement, GuyanaProps>(function Guyana(
+const Guyana = forwardRef<SVGSVGElement, GuyanaProps>(function Guyana(
   props: GuyanaProps,
   ref
 ) {
@@ -45,3 +45,5 @@ export const Guyana = forwardRef<SVGSVGElement, GuyanaProps>(function Guyana(
     </CountrySymbol>
   );
 });
+
+export default Guyana;

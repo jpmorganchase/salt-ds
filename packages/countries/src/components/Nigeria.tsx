@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NigeriaProps = CountrySymbolProps;
 
-export const Nigeria = forwardRef<SVGSVGElement, NigeriaProps>(function Nigeria(
+const Nigeria = forwardRef<SVGSVGElement, NigeriaProps>(function Nigeria(
   props: NigeriaProps,
   ref
 ) {
@@ -32,3 +32,5 @@ export const Nigeria = forwardRef<SVGSVGElement, NigeriaProps>(function Nigeria(
     </CountrySymbol>
   );
 });
+
+export default Nigeria;

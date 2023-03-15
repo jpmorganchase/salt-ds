@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type DominicanRepublicTheProps = CountrySymbolProps;
 
-export const DominicanRepublicThe = forwardRef<
+const DominicanRepublicThe = forwardRef<
   SVGSVGElement,
   DominicanRepublicTheProps
 >(function DominicanRepublicThe(props: DominicanRepublicTheProps, ref) {
@@ -27,3 +27,5 @@ export const DominicanRepublicThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default DominicanRepublicThe;

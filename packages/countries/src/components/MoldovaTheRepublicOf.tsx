@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MoldovaTheRepublicOfProps = CountrySymbolProps;
 
-export const MoldovaTheRepublicOf = forwardRef<
+const MoldovaTheRepublicOf = forwardRef<
   SVGSVGElement,
   MoldovaTheRepublicOfProps
 >(function MoldovaTheRepublicOf(props: MoldovaTheRepublicOfProps, ref) {
@@ -52,3 +52,5 @@ export const MoldovaTheRepublicOf = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default MoldovaTheRepublicOf;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MauritaniaProps = CountrySymbolProps;
 
-export const Mauritania = forwardRef<SVGSVGElement, MauritaniaProps>(
+const Mauritania = forwardRef<SVGSVGElement, MauritaniaProps>(
   function Mauritania(props: MauritaniaProps, ref) {
     return (
       <CountrySymbol
@@ -33,3 +33,5 @@ export const Mauritania = forwardRef<SVGSVGElement, MauritaniaProps>(
     );
   }
 );
+
+export default Mauritania;

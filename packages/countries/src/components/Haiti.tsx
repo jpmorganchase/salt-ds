@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type HaitiProps = CountrySymbolProps;
 
-export const Haiti = forwardRef<SVGSVGElement, HaitiProps>(function Haiti(
+const Haiti = forwardRef<SVGSVGElement, HaitiProps>(function Haiti(
   props: HaitiProps,
   ref
 ) {
@@ -43,3 +43,5 @@ export const Haiti = forwardRef<SVGSVGElement, HaitiProps>(function Haiti(
     </CountrySymbol>
   );
 });
+
+export default Haiti;

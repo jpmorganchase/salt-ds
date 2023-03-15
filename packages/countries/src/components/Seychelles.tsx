@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SeychellesProps = CountrySymbolProps;
 
-export const Seychelles = forwardRef<SVGSVGElement, SeychellesProps>(
+const Seychelles = forwardRef<SVGSVGElement, SeychellesProps>(
   function Seychelles(props: SeychellesProps, ref) {
     return (
       <CountrySymbol
@@ -37,3 +37,5 @@ export const Seychelles = forwardRef<SVGSVGElement, SeychellesProps>(
     );
   }
 );
+
+export default Seychelles;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type {{componentName}}Props = CountrySymbolProps;
 
-export const {{componentName}} = forwardRef<SVGSVGElement, {{componentName}}Props>(
+const {{componentName}} = forwardRef<SVGSVGElement, {{componentName}}Props>(
   function {{componentName}}(props: {{componentName}}Props, ref) {
     return (
       <CountrySymbol data-testid="{{componentName}}" aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} {...props}>
@@ -13,3 +13,5 @@ export const {{componentName}} = forwardRef<SVGSVGElement, {{componentName}}Prop
     );
   }
 );
+
+export default {{componentName}};

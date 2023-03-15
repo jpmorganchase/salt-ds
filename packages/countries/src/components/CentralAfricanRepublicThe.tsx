@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CentralAfricanRepublicTheProps = CountrySymbolProps;
 
-export const CentralAfricanRepublicThe = forwardRef<
+const CentralAfricanRepublicThe = forwardRef<
   SVGSVGElement,
   CentralAfricanRepublicTheProps
 >(function CentralAfricanRepublicThe(
@@ -36,3 +36,5 @@ export const CentralAfricanRepublicThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default CentralAfricanRepublicThe;

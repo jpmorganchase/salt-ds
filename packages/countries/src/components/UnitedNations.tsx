@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type UnitedNationsProps = CountrySymbolProps;
 
-export const UnitedNations = forwardRef<SVGSVGElement, UnitedNationsProps>(
+const UnitedNations = forwardRef<SVGSVGElement, UnitedNationsProps>(
   function UnitedNations(props: UnitedNationsProps, ref) {
     return (
       <CountrySymbol
@@ -55,3 +55,5 @@ export const UnitedNations = forwardRef<SVGSVGElement, UnitedNationsProps>(
     );
   }
 );
+
+export default UnitedNations;

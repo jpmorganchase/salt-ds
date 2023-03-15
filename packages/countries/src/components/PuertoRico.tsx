@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type PuertoRicoProps = CountrySymbolProps;
 
-export const PuertoRico = forwardRef<SVGSVGElement, PuertoRicoProps>(
+const PuertoRico = forwardRef<SVGSVGElement, PuertoRicoProps>(
   function PuertoRico(props: PuertoRicoProps, ref) {
     return (
       <CountrySymbol
@@ -30,3 +30,5 @@ export const PuertoRico = forwardRef<SVGSVGElement, PuertoRicoProps>(
     );
   }
 );
+
+export default PuertoRico;

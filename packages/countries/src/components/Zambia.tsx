@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type ZambiaProps = CountrySymbolProps;
 
-export const Zambia = forwardRef<SVGSVGElement, ZambiaProps>(function Zambia(
+const Zambia = forwardRef<SVGSVGElement, ZambiaProps>(function Zambia(
   props: ZambiaProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Zambia = forwardRef<SVGSVGElement, ZambiaProps>(function Zambia(
     </CountrySymbol>
   );
 });
+
+export default Zambia;

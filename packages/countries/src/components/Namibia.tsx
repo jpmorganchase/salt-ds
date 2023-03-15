@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NamibiaProps = CountrySymbolProps;
 
-export const Namibia = forwardRef<SVGSVGElement, NamibiaProps>(function Namibia(
+const Namibia = forwardRef<SVGSVGElement, NamibiaProps>(function Namibia(
   props: NamibiaProps,
   ref
 ) {
@@ -38,3 +38,5 @@ export const Namibia = forwardRef<SVGSVGElement, NamibiaProps>(function Namibia(
     </CountrySymbol>
   );
 });
+
+export default Namibia;

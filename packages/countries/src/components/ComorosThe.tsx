@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type ComorosTheProps = CountrySymbolProps;
 
-export const ComorosThe = forwardRef<SVGSVGElement, ComorosTheProps>(
+const ComorosThe = forwardRef<SVGSVGElement, ComorosTheProps>(
   function ComorosThe(props: ComorosTheProps, ref) {
     return (
       <CountrySymbol
@@ -32,3 +32,5 @@ export const ComorosThe = forwardRef<SVGSVGElement, ComorosTheProps>(
     );
   }
 );
+
+export default ComorosThe;

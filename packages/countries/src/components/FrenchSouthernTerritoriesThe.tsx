@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type FrenchSouthernTerritoriesTheProps = CountrySymbolProps;
 
-export const FrenchSouthernTerritoriesThe = forwardRef<
+const FrenchSouthernTerritoriesThe = forwardRef<
   SVGSVGElement,
   FrenchSouthernTerritoriesTheProps
 >(function FrenchSouthernTerritoriesThe(
@@ -45,3 +45,5 @@ export const FrenchSouthernTerritoriesThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default FrenchSouthernTerritoriesThe;

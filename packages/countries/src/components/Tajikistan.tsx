@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TajikistanProps = CountrySymbolProps;
 
-export const Tajikistan = forwardRef<SVGSVGElement, TajikistanProps>(
+const Tajikistan = forwardRef<SVGSVGElement, TajikistanProps>(
   function Tajikistan(props: TajikistanProps, ref) {
     return (
       <CountrySymbol
@@ -30,3 +30,5 @@ export const Tajikistan = forwardRef<SVGSVGElement, TajikistanProps>(
     );
   }
 );
+
+export default Tajikistan;

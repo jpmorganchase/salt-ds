@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type YemenProps = CountrySymbolProps;
 
-export const Yemen = forwardRef<SVGSVGElement, YemenProps>(function Yemen(
+const Yemen = forwardRef<SVGSVGElement, YemenProps>(function Yemen(
   props: YemenProps,
   ref
 ) {
@@ -27,3 +27,5 @@ export const Yemen = forwardRef<SVGSVGElement, YemenProps>(function Yemen(
     </CountrySymbol>
   );
 });
+
+export default Yemen;

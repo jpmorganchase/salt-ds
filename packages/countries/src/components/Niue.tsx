@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NiueProps = CountrySymbolProps;
 
-export const Niue = forwardRef<SVGSVGElement, NiueProps>(function Niue(
+const Niue = forwardRef<SVGSVGElement, NiueProps>(function Niue(
   props: NiueProps,
   ref
 ) {
@@ -47,3 +47,5 @@ export const Niue = forwardRef<SVGSVGElement, NiueProps>(function Niue(
     </CountrySymbol>
   );
 });
+
+export default Niue;

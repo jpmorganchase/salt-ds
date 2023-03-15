@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SwedenProps = CountrySymbolProps;
 
-export const Sweden = forwardRef<SVGSVGElement, SwedenProps>(function Sweden(
+const Sweden = forwardRef<SVGSVGElement, SwedenProps>(function Sweden(
   props: SwedenProps,
   ref
 ) {
@@ -26,3 +26,5 @@ export const Sweden = forwardRef<SVGSVGElement, SwedenProps>(function Sweden(
     </CountrySymbol>
   );
 });
+
+export default Sweden;

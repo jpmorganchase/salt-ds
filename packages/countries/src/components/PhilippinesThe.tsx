@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type PhilippinesTheProps = CountrySymbolProps;
 
-export const PhilippinesThe = forwardRef<SVGSVGElement, PhilippinesTheProps>(
+const PhilippinesThe = forwardRef<SVGSVGElement, PhilippinesTheProps>(
   function PhilippinesThe(props: PhilippinesTheProps, ref) {
     return (
       <CountrySymbol
@@ -31,3 +31,5 @@ export const PhilippinesThe = forwardRef<SVGSVGElement, PhilippinesTheProps>(
     );
   }
 );
+
+export default PhilippinesThe;

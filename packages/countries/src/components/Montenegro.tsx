@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MontenegroProps = CountrySymbolProps;
 
-export const Montenegro = forwardRef<SVGSVGElement, MontenegroProps>(
+const Montenegro = forwardRef<SVGSVGElement, MontenegroProps>(
   function Montenegro(props: MontenegroProps, ref) {
     return (
       <CountrySymbol
@@ -58,3 +58,5 @@ export const Montenegro = forwardRef<SVGSVGElement, MontenegroProps>(
     );
   }
 );
+
+export default Montenegro;

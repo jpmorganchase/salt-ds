@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type EritreaProps = CountrySymbolProps;
 
-export const Eritrea = forwardRef<SVGSVGElement, EritreaProps>(function Eritrea(
+const Eritrea = forwardRef<SVGSVGElement, EritreaProps>(function Eritrea(
   props: EritreaProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Eritrea = forwardRef<SVGSVGElement, EritreaProps>(function Eritrea(
     </CountrySymbol>
   );
 });
+
+export default Eritrea;

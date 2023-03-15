@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type GrenadaProps = CountrySymbolProps;
 
-export const Grenada = forwardRef<SVGSVGElement, GrenadaProps>(function Grenada(
+const Grenada = forwardRef<SVGSVGElement, GrenadaProps>(function Grenada(
   props: GrenadaProps,
   ref
 ) {
@@ -52,3 +52,5 @@ export const Grenada = forwardRef<SVGSVGElement, GrenadaProps>(function Grenada(
     </CountrySymbol>
   );
 });
+
+export default Grenada;

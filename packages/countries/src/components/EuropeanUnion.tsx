@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type EuropeanUnionProps = CountrySymbolProps;
 
-export const EuropeanUnion = forwardRef<SVGSVGElement, EuropeanUnionProps>(
+const EuropeanUnion = forwardRef<SVGSVGElement, EuropeanUnionProps>(
   function EuropeanUnion(props: EuropeanUnionProps, ref) {
     return (
       <CountrySymbol
@@ -34,3 +34,5 @@ export const EuropeanUnion = forwardRef<SVGSVGElement, EuropeanUnionProps>(
     );
   }
 );
+
+export default EuropeanUnion;

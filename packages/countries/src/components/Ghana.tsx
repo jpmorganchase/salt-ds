@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type GhanaProps = CountrySymbolProps;
 
-export const Ghana = forwardRef<SVGSVGElement, GhanaProps>(function Ghana(
+const Ghana = forwardRef<SVGSVGElement, GhanaProps>(function Ghana(
   props: GhanaProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Ghana = forwardRef<SVGSVGElement, GhanaProps>(function Ghana(
     </CountrySymbol>
   );
 });
+
+export default Ghana;

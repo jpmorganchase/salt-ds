@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type WesternSaharaProps = CountrySymbolProps;
 
-export const WesternSahara = forwardRef<SVGSVGElement, WesternSaharaProps>(
+const WesternSahara = forwardRef<SVGSVGElement, WesternSaharaProps>(
   function WesternSahara(props: WesternSaharaProps, ref) {
     return (
       <CountrySymbol
@@ -30,3 +30,5 @@ export const WesternSahara = forwardRef<SVGSVGElement, WesternSaharaProps>(
     );
   }
 );
+
+export default WesternSahara;

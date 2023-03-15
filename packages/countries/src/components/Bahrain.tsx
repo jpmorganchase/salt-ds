@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BahrainProps = CountrySymbolProps;
 
-export const Bahrain = forwardRef<SVGSVGElement, BahrainProps>(function Bahrain(
+const Bahrain = forwardRef<SVGSVGElement, BahrainProps>(function Bahrain(
   props: BahrainProps,
   ref
 ) {
@@ -29,3 +29,5 @@ export const Bahrain = forwardRef<SVGSVGElement, BahrainProps>(function Bahrain(
     </CountrySymbol>
   );
 });
+
+export default Bahrain;

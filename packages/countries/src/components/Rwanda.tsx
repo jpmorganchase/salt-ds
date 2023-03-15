@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type RwandaProps = CountrySymbolProps;
 
-export const Rwanda = forwardRef<SVGSVGElement, RwandaProps>(function Rwanda(
+const Rwanda = forwardRef<SVGSVGElement, RwandaProps>(function Rwanda(
   props: RwandaProps,
   ref
 ) {
@@ -27,3 +27,5 @@ export const Rwanda = forwardRef<SVGSVGElement, RwandaProps>(function Rwanda(
     </CountrySymbol>
   );
 });
+
+export default Rwanda;

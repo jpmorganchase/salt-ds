@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type HeardIslandAndMcdonaldIslandsProps = CountrySymbolProps;
 
-export const HeardIslandAndMcdonaldIslands = forwardRef<
+const HeardIslandAndMcdonaldIslands = forwardRef<
   SVGSVGElement,
   HeardIslandAndMcdonaldIslandsProps
 >(function HeardIslandAndMcdonaldIslands(
@@ -54,3 +54,5 @@ export const HeardIslandAndMcdonaldIslands = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default HeardIslandAndMcdonaldIslands;

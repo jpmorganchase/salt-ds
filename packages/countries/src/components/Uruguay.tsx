@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type UruguayProps = CountrySymbolProps;
 
-export const Uruguay = forwardRef<SVGSVGElement, UruguayProps>(function Uruguay(
+const Uruguay = forwardRef<SVGSVGElement, UruguayProps>(function Uruguay(
   props: UruguayProps,
   ref
 ) {
@@ -33,3 +33,5 @@ export const Uruguay = forwardRef<SVGSVGElement, UruguayProps>(function Uruguay(
     </CountrySymbol>
   );
 });
+
+export default Uruguay;

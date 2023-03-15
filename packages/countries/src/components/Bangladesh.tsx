@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BangladeshProps = CountrySymbolProps;
 
-export const Bangladesh = forwardRef<SVGSVGElement, BangladeshProps>(
+const Bangladesh = forwardRef<SVGSVGElement, BangladeshProps>(
   function Bangladesh(props: BangladeshProps, ref) {
     return (
       <CountrySymbol
@@ -31,3 +31,5 @@ export const Bangladesh = forwardRef<SVGSVGElement, BangladeshProps>(
     );
   }
 );
+
+export default Bangladesh;

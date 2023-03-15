@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type LebanonProps = CountrySymbolProps;
 
-export const Lebanon = forwardRef<SVGSVGElement, LebanonProps>(function Lebanon(
+const Lebanon = forwardRef<SVGSVGElement, LebanonProps>(function Lebanon(
   props: LebanonProps,
   ref
 ) {
@@ -30,3 +30,5 @@ export const Lebanon = forwardRef<SVGSVGElement, LebanonProps>(function Lebanon(
     </CountrySymbol>
   );
 });
+
+export default Lebanon;

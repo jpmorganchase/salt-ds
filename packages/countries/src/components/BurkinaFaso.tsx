@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BurkinaFasoProps = CountrySymbolProps;
 
-export const BurkinaFaso = forwardRef<SVGSVGElement, BurkinaFasoProps>(
+const BurkinaFaso = forwardRef<SVGSVGElement, BurkinaFasoProps>(
   function BurkinaFaso(props: BurkinaFasoProps, ref) {
     return (
       <CountrySymbol
@@ -29,3 +29,5 @@ export const BurkinaFaso = forwardRef<SVGSVGElement, BurkinaFasoProps>(
     );
   }
 );
+
+export default BurkinaFaso;

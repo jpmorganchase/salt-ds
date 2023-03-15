@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type ChadProps = CountrySymbolProps;
 
-export const Chad = forwardRef<SVGSVGElement, ChadProps>(function Chad(
+const Chad = forwardRef<SVGSVGElement, ChadProps>(function Chad(
   props: ChadProps,
   ref
 ) {
@@ -33,3 +33,5 @@ export const Chad = forwardRef<SVGSVGElement, ChadProps>(function Chad(
     </CountrySymbol>
   );
 });
+
+export default Chad;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TongaProps = CountrySymbolProps;
 
-export const Tonga = forwardRef<SVGSVGElement, TongaProps>(function Tonga(
+const Tonga = forwardRef<SVGSVGElement, TongaProps>(function Tonga(
   props: TongaProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Tonga = forwardRef<SVGSVGElement, TongaProps>(function Tonga(
     </CountrySymbol>
   );
 });
+
+export default Tonga;

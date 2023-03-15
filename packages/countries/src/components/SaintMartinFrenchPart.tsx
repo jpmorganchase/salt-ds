@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SaintMartinFrenchPartProps = CountrySymbolProps;
 
-export const SaintMartinFrenchPart = forwardRef<
+const SaintMartinFrenchPart = forwardRef<
   SVGSVGElement,
   SaintMartinFrenchPartProps
 >(function SaintMartinFrenchPart(props: SaintMartinFrenchPartProps, ref) {
@@ -33,3 +33,5 @@ export const SaintMartinFrenchPart = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default SaintMartinFrenchPart;

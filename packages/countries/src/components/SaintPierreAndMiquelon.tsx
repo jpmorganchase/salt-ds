@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SaintPierreAndMiquelonProps = CountrySymbolProps;
 
-export const SaintPierreAndMiquelon = forwardRef<
+const SaintPierreAndMiquelon = forwardRef<
   SVGSVGElement,
   SaintPierreAndMiquelonProps
 >(function SaintPierreAndMiquelon(props: SaintPierreAndMiquelonProps, ref) {
@@ -33,3 +33,5 @@ export const SaintPierreAndMiquelon = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default SaintPierreAndMiquelon;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type ArmeniaProps = CountrySymbolProps;
 
-export const Armenia = forwardRef<SVGSVGElement, ArmeniaProps>(function Armenia(
+const Armenia = forwardRef<SVGSVGElement, ArmeniaProps>(function Armenia(
   props: ArmeniaProps,
   ref
 ) {
@@ -27,3 +27,5 @@ export const Armenia = forwardRef<SVGSVGElement, ArmeniaProps>(function Armenia(
     </CountrySymbol>
   );
 });
+
+export default Armenia;

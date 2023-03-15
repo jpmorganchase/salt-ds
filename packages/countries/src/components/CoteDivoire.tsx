@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CoteDivoireProps = CountrySymbolProps;
 
-export const CoteDivoire = forwardRef<SVGSVGElement, CoteDivoireProps>(
+const CoteDivoire = forwardRef<SVGSVGElement, CoteDivoireProps>(
   function CoteDivoire(props: CoteDivoireProps, ref) {
     return (
       <CountrySymbol
@@ -32,3 +32,5 @@ export const CoteDivoire = forwardRef<SVGSVGElement, CoteDivoireProps>(
     );
   }
 );
+
+export default CoteDivoire;

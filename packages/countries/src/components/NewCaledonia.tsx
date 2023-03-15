@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NewCaledoniaProps = CountrySymbolProps;
 
-export const NewCaledonia = forwardRef<SVGSVGElement, NewCaledoniaProps>(
+const NewCaledonia = forwardRef<SVGSVGElement, NewCaledoniaProps>(
   function NewCaledonia(props: NewCaledoniaProps, ref) {
     return (
       <CountrySymbol
@@ -32,3 +32,5 @@ export const NewCaledonia = forwardRef<SVGSVGElement, NewCaledoniaProps>(
     );
   }
 );
+
+export default NewCaledonia;

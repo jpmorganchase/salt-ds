@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type AntarcticaProps = CountrySymbolProps;
 
-export const Antarctica = forwardRef<SVGSVGElement, AntarcticaProps>(
+const Antarctica = forwardRef<SVGSVGElement, AntarcticaProps>(
   function Antarctica(props: AntarcticaProps, ref) {
     return (
       <CountrySymbol
@@ -28,3 +28,5 @@ export const Antarctica = forwardRef<SVGSVGElement, AntarcticaProps>(
     );
   }
 );
+
+export default Antarctica;

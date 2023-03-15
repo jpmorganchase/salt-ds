@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MontserratProps = CountrySymbolProps;
 
-export const Montserrat = forwardRef<SVGSVGElement, MontserratProps>(
+const Montserrat = forwardRef<SVGSVGElement, MontserratProps>(
   function Montserrat(props: MontserratProps, ref) {
     return (
       <CountrySymbol
@@ -66,3 +66,5 @@ export const Montserrat = forwardRef<SVGSVGElement, MontserratProps>(
     );
   }
 );
+
+export default Montserrat;

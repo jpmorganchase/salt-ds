@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type KyrgyzstanProps = CountrySymbolProps;
 
-export const Kyrgyzstan = forwardRef<SVGSVGElement, KyrgyzstanProps>(
+const Kyrgyzstan = forwardRef<SVGSVGElement, KyrgyzstanProps>(
   function Kyrgyzstan(props: KyrgyzstanProps, ref) {
     return (
       <CountrySymbol
@@ -44,3 +44,5 @@ export const Kyrgyzstan = forwardRef<SVGSVGElement, KyrgyzstanProps>(
     );
   }
 );
+
+export default Kyrgyzstan;

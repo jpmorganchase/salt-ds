@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type VenezuelaBolivarianRepublicOfProps = CountrySymbolProps;
 
-export const VenezuelaBolivarianRepublicOf = forwardRef<
+const VenezuelaBolivarianRepublicOf = forwardRef<
   SVGSVGElement,
   VenezuelaBolivarianRepublicOfProps
 >(function VenezuelaBolivarianRepublicOf(
@@ -34,3 +34,5 @@ export const VenezuelaBolivarianRepublicOf = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default VenezuelaBolivarianRepublicOf;

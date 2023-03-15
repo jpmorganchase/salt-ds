@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NorthMacedoniaProps = CountrySymbolProps;
 
-export const NorthMacedonia = forwardRef<SVGSVGElement, NorthMacedoniaProps>(
+const NorthMacedonia = forwardRef<SVGSVGElement, NorthMacedoniaProps>(
   function NorthMacedonia(props: NorthMacedoniaProps, ref) {
     return (
       <CountrySymbol
@@ -28,3 +28,5 @@ export const NorthMacedonia = forwardRef<SVGSVGElement, NorthMacedoniaProps>(
     );
   }
 );
+
+export default NorthMacedonia;

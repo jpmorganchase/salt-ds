@@ -1,18 +1,274 @@
-import { ElementType } from "react";
-import * as Countries from "./components";
-import { CountrySymbolProps } from "./country-symbol";
+export const countryCodes = [
+  "AD",
+  "AE",
+  "AF",
+  "AG",
+  "AI",
+  "AL",
+  "AM",
+  "AO",
+  "AQ",
+  "AR",
+  "AS",
+  "AT",
+  "AU",
+  "AW",
+  "AX",
+  "AZ",
+  "BA",
+  "BB",
+  "BD",
+  "BE",
+  "BF",
+  "BG",
+  "BH",
+  "BI",
+  "BJ",
+  "BL",
+  "BM",
+  "BN",
+  "BO",
+  "BQ",
+  "BR",
+  "BS",
+  "BT",
+  "BV",
+  "BW",
+  "BY",
+  "BZ",
+  "CA",
+  "CC",
+  "CD",
+  "CF",
+  "CG",
+  "CH",
+  "CI",
+  "CK",
+  "CL",
+  "CM",
+  "CN",
+  "CO",
+  "CR",
+  "CU",
+  "CV",
+  "CW",
+  "CX",
+  "CY",
+  "CZ",
+  "DE",
+  "DJ",
+  "DK",
+  "DM",
+  "DO",
+  "DZ",
+  "EC",
+  "EE",
+  "EG",
+  "EH",
+  "ER",
+  "ES",
+  "ET",
+  "EU",
+  "FI",
+  "FJ",
+  "FK",
+  "FM",
+  "FO",
+  "FR",
+  "GA",
+  "GB",
+  "GB-ENG",
+  "GB-NIR",
+  "GB-SCT",
+  "GB-WLS",
+  "GD",
+  "GE",
+  "GF",
+  "GG",
+  "GH",
+  "GI",
+  "GL",
+  "GM",
+  "GN",
+  "GP",
+  "GQ",
+  "GR",
+  "GS",
+  "GT",
+  "GU",
+  "GW",
+  "GY",
+  "HK",
+  "HM",
+  "HN",
+  "HR",
+  "HT",
+  "HU",
+  "ID",
+  "IE",
+  "IL",
+  "IM",
+  "IN",
+  "IO",
+  "IQ",
+  "IR",
+  "IS",
+  "IT",
+  "JE",
+  "JM",
+  "JO",
+  "JP",
+  "KE",
+  "KG",
+  "KH",
+  "KI",
+  "KM",
+  "KN",
+  "KP",
+  "KR",
+  "KW",
+  "KY",
+  "KZ",
+  "LA",
+  "LB",
+  "LC",
+  "LI",
+  "LK",
+  "LR",
+  "LS",
+  "LT",
+  "LU",
+  "LV",
+  "LY",
+  "MA",
+  "MC",
+  "MD",
+  "ME",
+  "MF",
+  "MG",
+  "MH",
+  "MK",
+  "ML",
+  "MM",
+  "MN",
+  "MO",
+  "MP",
+  "MQ",
+  "MR",
+  "MS",
+  "MT",
+  "MU",
+  "MV",
+  "MW",
+  "MX",
+  "MY",
+  "MZ",
+  "NA",
+  "NC",
+  "NE",
+  "NF",
+  "NG",
+  "NI",
+  "NL",
+  "NO",
+  "NP",
+  "NR",
+  "NU",
+  "NZ",
+  "OM",
+  "PA",
+  "PE",
+  "PF",
+  "PG",
+  "PH",
+  "PK",
+  "PL",
+  "PM",
+  "PN",
+  "PR",
+  "PS",
+  "PT",
+  "PW",
+  "PY",
+  "QA",
+  "RE",
+  "RO",
+  "RS",
+  "RU",
+  "RW",
+  "SA",
+  "SB",
+  "SC",
+  "SD",
+  "SE",
+  "SG",
+  "SH",
+  "SI",
+  "SJ",
+  "SK",
+  "SL",
+  "SM",
+  "SN",
+  "SO",
+  "SR",
+  "SS",
+  "ST",
+  "SV",
+  "SX",
+  "SY",
+  "SZ",
+  "TC",
+  "TD",
+  "TF",
+  "TG",
+  "TH",
+  "TJ",
+  "TK",
+  "TL",
+  "TM",
+  "TN",
+  "TO",
+  "TR",
+  "TT",
+  "TV",
+  "TW",
+  "TZ",
+  "UA",
+  "UG",
+  "UM",
+  "UN",
+  "US",
+  "UY",
+  "UZ",
+  "VA",
+  "VC",
+  "VE",
+  "VG",
+  "VI",
+  "VN",
+  "VU",
+  "WF",
+  "WS",
+  "XK",
+  "YE",
+  "YT",
+  "ZA",
+  "ZM",
+  "ZW"
+] as const;
 
-type CountryMeta = {
-  countryCode: string,
-  countryName: string,
-  countryNameSanitized: string,
-  componentName: string,
-  textName: string,
-  countryFileName: string,
-  Component: ElementType<CountrySymbolProps>,
+export type CountryMeta = {
+  countryCode: string;
+  countryName: string;
+  countryNameSanitized: string;
+  componentName: string;
+  textName: string;
+  countryFileName: string;
 };
 
-type CountriesMeta = Record<string, CountryMeta>;
+export type CountryCode = typeof countryCodes[number];
+
+export type CountriesMeta = Record<CountryCode, CountryMeta>;
 
 export const countryMeta: CountriesMeta = {
   AD: {
@@ -21,8 +277,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Andorra",
     componentName: "Andorra",
     textName: "Andorra",
-    countryFileName: "Andorra.tsx",
-    Component: Countries.Andorra,
+    countryFileName: "Andorra.tsx"
   },
   AE: {
     countryCode: "AE",
@@ -30,8 +285,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "United Arab Emirates the",
     componentName: "UnitedArabEmiratesThe",
     textName: "United Arab Emirates (the)",
-    countryFileName: "UnitedArabEmiratesThe.tsx",
-    Component: Countries.UnitedArabEmiratesThe,
+    countryFileName: "UnitedArabEmiratesThe.tsx"
   },
   AF: {
     countryCode: "AF",
@@ -39,8 +293,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Afganistan",
     componentName: "Afganistan",
     textName: "Afganistan",
-    countryFileName: "Afganistan.tsx",
-    Component: Countries.Afganistan,
+    countryFileName: "Afganistan.tsx"
   },
   AG: {
     countryCode: "AG",
@@ -48,8 +301,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Antigua and Barbuda",
     componentName: "AntiguaAndBarbuda",
     textName: "Antigua and Barbuda",
-    countryFileName: "AntiguaAndBarbuda.tsx",
-    Component: Countries.AntiguaAndBarbuda,
+    countryFileName: "AntiguaAndBarbuda.tsx"
   },
   AI: {
     countryCode: "AI",
@@ -57,8 +309,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Anguilla",
     componentName: "Anguilla",
     textName: "Anguilla",
-    countryFileName: "Anguilla.tsx",
-    Component: Countries.Anguilla,
+    countryFileName: "Anguilla.tsx"
   },
   AL: {
     countryCode: "AL",
@@ -66,8 +317,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Albania",
     componentName: "Albania",
     textName: "Albania",
-    countryFileName: "Albania.tsx",
-    Component: Countries.Albania,
+    countryFileName: "Albania.tsx"
   },
   AM: {
     countryCode: "AM",
@@ -75,8 +325,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Armenia",
     componentName: "Armenia",
     textName: "Armenia",
-    countryFileName: "Armenia.tsx",
-    Component: Countries.Armenia,
+    countryFileName: "Armenia.tsx"
   },
   AO: {
     countryCode: "AO",
@@ -84,8 +333,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Angola",
     componentName: "Angola",
     textName: "Angola",
-    countryFileName: "Angola.tsx",
-    Component: Countries.Angola,
+    countryFileName: "Angola.tsx"
   },
   AQ: {
     countryCode: "AQ",
@@ -93,8 +341,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Antarctica",
     componentName: "Antarctica",
     textName: "Antarctica",
-    countryFileName: "Antarctica.tsx",
-    Component: Countries.Antarctica,
+    countryFileName: "Antarctica.tsx"
   },
   AR: {
     countryCode: "AR",
@@ -102,8 +349,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Argentina",
     componentName: "Argentina",
     textName: "Argentina",
-    countryFileName: "Argentina.tsx",
-    Component: Countries.Argentina,
+    countryFileName: "Argentina.tsx"
   },
   AS: {
     countryCode: "AS",
@@ -111,8 +357,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "American Samoa",
     componentName: "AmericanSamoa",
     textName: "American Samoa",
-    countryFileName: "AmericanSamoa.tsx",
-    Component: Countries.AmericanSamoa,
+    countryFileName: "AmericanSamoa.tsx"
   },
   AT: {
     countryCode: "AT",
@@ -120,8 +365,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Austria",
     componentName: "Austria",
     textName: "Austria",
-    countryFileName: "Austria.tsx",
-    Component: Countries.Austria,
+    countryFileName: "Austria.tsx"
   },
   AU: {
     countryCode: "AU",
@@ -129,8 +373,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Australia",
     componentName: "Australia",
     textName: "Australia",
-    countryFileName: "Australia.tsx",
-    Component: Countries.Australia,
+    countryFileName: "Australia.tsx"
   },
   AW: {
     countryCode: "AW",
@@ -138,8 +381,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Aruba",
     componentName: "Aruba",
     textName: "Aruba",
-    countryFileName: "Aruba.tsx",
-    Component: Countries.Aruba,
+    countryFileName: "Aruba.tsx"
   },
   AX: {
     countryCode: "AX",
@@ -147,8 +389,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Aland Islands",
     componentName: "AlandIslands",
     textName: "Åland Islands",
-    countryFileName: "AlandIslands.tsx",
-    Component: Countries.AlandIslands,
+    countryFileName: "AlandIslands.tsx"
   },
   AZ: {
     countryCode: "AZ",
@@ -156,8 +397,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Azerbaijan",
     componentName: "Azerbaijan",
     textName: "Azerbaijan",
-    countryFileName: "Azerbaijan.tsx",
-    Component: Countries.Azerbaijan,
+    countryFileName: "Azerbaijan.tsx"
   },
   BA: {
     countryCode: "BA",
@@ -165,8 +405,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bosnia and Herzegovina",
     componentName: "BosniaAndHerzegovina",
     textName: "Bosnia and Herzegovina",
-    countryFileName: "BosniaAndHerzegovina.tsx",
-    Component: Countries.BosniaAndHerzegovina,
+    countryFileName: "BosniaAndHerzegovina.tsx"
   },
   BB: {
     countryCode: "BB",
@@ -174,8 +413,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Barbados",
     componentName: "Barbados",
     textName: "Barbados",
-    countryFileName: "Barbados.tsx",
-    Component: Countries.Barbados,
+    countryFileName: "Barbados.tsx"
   },
   BD: {
     countryCode: "BD",
@@ -183,8 +421,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bangladesh",
     componentName: "Bangladesh",
     textName: "Bangladesh",
-    countryFileName: "Bangladesh.tsx",
-    Component: Countries.Bangladesh,
+    countryFileName: "Bangladesh.tsx"
   },
   BE: {
     countryCode: "BE",
@@ -192,8 +429,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Belgium",
     componentName: "Belgium",
     textName: "Belgium",
-    countryFileName: "Belgium.tsx",
-    Component: Countries.Belgium,
+    countryFileName: "Belgium.tsx"
   },
   BF: {
     countryCode: "BF",
@@ -201,8 +437,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Burkina Faso",
     componentName: "BurkinaFaso",
     textName: "Burkina Faso",
-    countryFileName: "BurkinaFaso.tsx",
-    Component: Countries.BurkinaFaso,
+    countryFileName: "BurkinaFaso.tsx"
   },
   BG: {
     countryCode: "BG",
@@ -210,8 +445,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bulgaria",
     componentName: "Bulgaria",
     textName: "Bulgaria",
-    countryFileName: "Bulgaria.tsx",
-    Component: Countries.Bulgaria,
+    countryFileName: "Bulgaria.tsx"
   },
   BH: {
     countryCode: "BH",
@@ -219,8 +453,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bahrain",
     componentName: "Bahrain",
     textName: "Bahrain",
-    countryFileName: "Bahrain.tsx",
-    Component: Countries.Bahrain,
+    countryFileName: "Bahrain.tsx"
   },
   BI: {
     countryCode: "BI",
@@ -228,8 +461,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Burundi",
     componentName: "Burundi",
     textName: "Burundi",
-    countryFileName: "Burundi.tsx",
-    Component: Countries.Burundi,
+    countryFileName: "Burundi.tsx"
   },
   BJ: {
     countryCode: "BJ",
@@ -237,8 +469,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Benin",
     componentName: "Benin",
     textName: "Benin",
-    countryFileName: "Benin.tsx",
-    Component: Countries.Benin,
+    countryFileName: "Benin.tsx"
   },
   BL: {
     countryCode: "BL",
@@ -246,8 +477,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Saint Barthelemy",
     componentName: "SaintBarthelemy",
     textName: "Saint Barthélemy",
-    countryFileName: "SaintBarthelemy.tsx",
-    Component: Countries.SaintBarthelemy,
+    countryFileName: "SaintBarthelemy.tsx"
   },
   BM: {
     countryCode: "BM",
@@ -255,8 +485,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bermuda",
     componentName: "Bermuda",
     textName: "Bermuda",
-    countryFileName: "Bermuda.tsx",
-    Component: Countries.Bermuda,
+    countryFileName: "Bermuda.tsx"
   },
   BN: {
     countryCode: "BN",
@@ -264,8 +493,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Brunei Darussalam",
     componentName: "BruneiDarussalam",
     textName: "Brunei Darussalam",
-    countryFileName: "BruneiDarussalam.tsx",
-    Component: Countries.BruneiDarussalam,
+    countryFileName: "BruneiDarussalam.tsx"
   },
   BO: {
     countryCode: "BO",
@@ -273,8 +501,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bolivia Plurinational State of",
     componentName: "BoliviaPlurinationalStateOf",
     textName: "Bolivia (Plurinational State of)",
-    countryFileName: "BoliviaPlurinationalStateOf.tsx",
-    Component: Countries.BoliviaPlurinationalStateOf,
+    countryFileName: "BoliviaPlurinationalStateOf.tsx"
   },
   BQ: {
     countryCode: "BQ",
@@ -282,8 +509,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bonaire Sint Eustatius and Saba",
     componentName: "BonaireSintEustatiusAndSaba",
     textName: "Bonaire Sint Eustatius and Saba",
-    countryFileName: "BonaireSintEustatiusAndSaba.tsx",
-    Component: Countries.BonaireSintEustatiusAndSaba,
+    countryFileName: "BonaireSintEustatiusAndSaba.tsx"
   },
   BR: {
     countryCode: "BR",
@@ -291,8 +517,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Brazil",
     componentName: "Brazil",
     textName: "Brazil",
-    countryFileName: "Brazil.tsx",
-    Component: Countries.Brazil,
+    countryFileName: "Brazil.tsx"
   },
   BS: {
     countryCode: "BS",
@@ -300,8 +525,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bahamas the",
     componentName: "BahamasThe",
     textName: "Bahamas (the)",
-    countryFileName: "BahamasThe.tsx",
-    Component: Countries.BahamasThe,
+    countryFileName: "BahamasThe.tsx"
   },
   BT: {
     countryCode: "BT",
@@ -309,8 +533,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bhutan",
     componentName: "Bhutan",
     textName: "Bhutan",
-    countryFileName: "Bhutan.tsx",
-    Component: Countries.Bhutan,
+    countryFileName: "Bhutan.tsx"
   },
   BV: {
     countryCode: "BV",
@@ -318,8 +541,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Bouvet Island",
     componentName: "BouvetIsland",
     textName: "Bouvet Island",
-    countryFileName: "BouvetIsland.tsx",
-    Component: Countries.BouvetIsland,
+    countryFileName: "BouvetIsland.tsx"
   },
   BW: {
     countryCode: "BW",
@@ -327,8 +549,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Botswana",
     componentName: "Botswana",
     textName: "Botswana",
-    countryFileName: "Botswana.tsx",
-    Component: Countries.Botswana,
+    countryFileName: "Botswana.tsx"
   },
   BY: {
     countryCode: "BY",
@@ -336,8 +557,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Belarus",
     componentName: "Belarus",
     textName: "Belarus",
-    countryFileName: "Belarus.tsx",
-    Component: Countries.Belarus,
+    countryFileName: "Belarus.tsx"
   },
   BZ: {
     countryCode: "BZ",
@@ -345,8 +565,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Belize",
     componentName: "Belize",
     textName: "Belize",
-    countryFileName: "Belize.tsx",
-    Component: Countries.Belize,
+    countryFileName: "Belize.tsx"
   },
   CA: {
     countryCode: "CA",
@@ -354,8 +573,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Canada",
     componentName: "Canada",
     textName: "Canada",
-    countryFileName: "Canada.tsx",
-    Component: Countries.Canada,
+    countryFileName: "Canada.tsx"
   },
   CC: {
     countryCode: "CC",
@@ -363,8 +581,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Cocos Keeling Islands the",
     componentName: "CocosKeelingIslandsThe",
     textName: "Cocos (Keeling) Islands (the)",
-    countryFileName: "CocosKeelingIslandsThe.tsx",
-    Component: Countries.CocosKeelingIslandsThe,
+    countryFileName: "CocosKeelingIslandsThe.tsx"
   },
   CD: {
     countryCode: "CD",
@@ -372,8 +589,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Congo the Democratic Republic of the",
     componentName: "CongoTheDemocraticRepublicOfThe",
     textName: "Congo (the Democratic Republic of the)",
-    countryFileName: "CongoTheDemocraticRepublicOfThe.tsx",
-    Component: Countries.CongoTheDemocraticRepublicOfThe,
+    countryFileName: "CongoTheDemocraticRepublicOfThe.tsx"
   },
   CF: {
     countryCode: "CF",
@@ -381,8 +597,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Central African Republic the",
     componentName: "CentralAfricanRepublicThe",
     textName: "Central African Republic (the)",
-    countryFileName: "CentralAfricanRepublicThe.tsx",
-    Component: Countries.CentralAfricanRepublicThe,
+    countryFileName: "CentralAfricanRepublicThe.tsx"
   },
   CG: {
     countryCode: "CG",
@@ -390,8 +605,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Congo the",
     componentName: "CongoThe",
     textName: "Congo (the)",
-    countryFileName: "CongoThe.tsx",
-    Component: Countries.CongoThe,
+    countryFileName: "CongoThe.tsx"
   },
   CH: {
     countryCode: "CH",
@@ -399,8 +613,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Switzerland",
     componentName: "Switzerland",
     textName: "Switzerland",
-    countryFileName: "Switzerland.tsx",
-    Component: Countries.Switzerland,
+    countryFileName: "Switzerland.tsx"
   },
   CI: {
     countryCode: "CI",
@@ -408,8 +621,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Cote dIvoire",
     componentName: "CoteDivoire",
     textName: "Côte d'Ivoire",
-    countryFileName: "CoteDivoire.tsx",
-    Component: Countries.CoteDivoire,
+    countryFileName: "CoteDivoire.tsx"
   },
   CK: {
     countryCode: "CK",
@@ -417,8 +629,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Cook Islands the",
     componentName: "CookIslandsThe",
     textName: "Cook Islands (the)",
-    countryFileName: "CookIslandsThe.tsx",
-    Component: Countries.CookIslandsThe,
+    countryFileName: "CookIslandsThe.tsx"
   },
   CL: {
     countryCode: "CL",
@@ -426,8 +637,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Chile",
     componentName: "Chile",
     textName: "Chile",
-    countryFileName: "Chile.tsx",
-    Component: Countries.Chile,
+    countryFileName: "Chile.tsx"
   },
   CM: {
     countryCode: "CM",
@@ -435,8 +645,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Cameroon",
     componentName: "Cameroon",
     textName: "Cameroon",
-    countryFileName: "Cameroon.tsx",
-    Component: Countries.Cameroon,
+    countryFileName: "Cameroon.tsx"
   },
   CN: {
     countryCode: "CN",
@@ -444,8 +653,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "China",
     componentName: "China",
     textName: "China",
-    countryFileName: "China.tsx",
-    Component: Countries.China,
+    countryFileName: "China.tsx"
   },
   CO: {
     countryCode: "CO",
@@ -453,8 +661,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Colombia",
     componentName: "Colombia",
     textName: "Colombia",
-    countryFileName: "Colombia.tsx",
-    Component: Countries.Colombia,
+    countryFileName: "Colombia.tsx"
   },
   CR: {
     countryCode: "CR",
@@ -462,8 +669,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Costa Rica",
     componentName: "CostaRica",
     textName: "Costa Rica",
-    countryFileName: "CostaRica.tsx",
-    Component: Countries.CostaRica,
+    countryFileName: "CostaRica.tsx"
   },
   CU: {
     countryCode: "CU",
@@ -471,8 +677,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Cuba",
     componentName: "Cuba",
     textName: "Cuba",
-    countryFileName: "Cuba.tsx",
-    Component: Countries.Cuba,
+    countryFileName: "Cuba.tsx"
   },
   CV: {
     countryCode: "CV",
@@ -480,8 +685,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Cabo Verde",
     componentName: "CaboVerde",
     textName: "Cabo Verde",
-    countryFileName: "CaboVerde.tsx",
-    Component: Countries.CaboVerde,
+    countryFileName: "CaboVerde.tsx"
   },
   CW: {
     countryCode: "CW",
@@ -489,8 +693,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Curacao",
     componentName: "Curacao",
     textName: "Curaçao",
-    countryFileName: "Curacao.tsx",
-    Component: Countries.Curacao,
+    countryFileName: "Curacao.tsx"
   },
   CX: {
     countryCode: "CX",
@@ -498,8 +701,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Christmas Island",
     componentName: "ChristmasIsland",
     textName: "Christmas Island",
-    countryFileName: "ChristmasIsland.tsx",
-    Component: Countries.ChristmasIsland,
+    countryFileName: "ChristmasIsland.tsx"
   },
   CY: {
     countryCode: "CY",
@@ -507,8 +709,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Cyprus",
     componentName: "Cyprus",
     textName: "Cyprus",
-    countryFileName: "Cyprus.tsx",
-    Component: Countries.Cyprus,
+    countryFileName: "Cyprus.tsx"
   },
   CZ: {
     countryCode: "CZ",
@@ -516,8 +717,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Czechia",
     componentName: "Czechia",
     textName: "Czechia",
-    countryFileName: "Czechia.tsx",
-    Component: Countries.Czechia,
+    countryFileName: "Czechia.tsx"
   },
   DE: {
     countryCode: "DE",
@@ -525,8 +725,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Germany",
     componentName: "Germany",
     textName: "Germany",
-    countryFileName: "Germany.tsx",
-    Component: Countries.Germany,
+    countryFileName: "Germany.tsx"
   },
   DJ: {
     countryCode: "DJ",
@@ -534,8 +733,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Djibouti",
     componentName: "Djibouti",
     textName: "Djibouti",
-    countryFileName: "Djibouti.tsx",
-    Component: Countries.Djibouti,
+    countryFileName: "Djibouti.tsx"
   },
   DK: {
     countryCode: "DK",
@@ -543,8 +741,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Denmark",
     componentName: "Denmark",
     textName: "Denmark",
-    countryFileName: "Denmark.tsx",
-    Component: Countries.Denmark,
+    countryFileName: "Denmark.tsx"
   },
   DM: {
     countryCode: "DM",
@@ -552,8 +749,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Dominica",
     componentName: "Dominica",
     textName: "Dominica",
-    countryFileName: "Dominica.tsx",
-    Component: Countries.Dominica,
+    countryFileName: "Dominica.tsx"
   },
   DO: {
     countryCode: "DO",
@@ -561,8 +757,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Dominican Republic the",
     componentName: "DominicanRepublicThe",
     textName: "Dominican Republic (the)",
-    countryFileName: "DominicanRepublicThe.tsx",
-    Component: Countries.DominicanRepublicThe,
+    countryFileName: "DominicanRepublicThe.tsx"
   },
   DZ: {
     countryCode: "DZ",
@@ -570,8 +765,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Algeria",
     componentName: "Algeria",
     textName: "Algeria",
-    countryFileName: "Algeria.tsx",
-    Component: Countries.Algeria,
+    countryFileName: "Algeria.tsx"
   },
   EC: {
     countryCode: "EC",
@@ -579,8 +773,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Ecuador",
     componentName: "Ecuador",
     textName: "Ecuador",
-    countryFileName: "Ecuador.tsx",
-    Component: Countries.Ecuador,
+    countryFileName: "Ecuador.tsx"
   },
   EE: {
     countryCode: "EE",
@@ -588,8 +781,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Estonia",
     componentName: "Estonia",
     textName: "Estonia",
-    countryFileName: "Estonia.tsx",
-    Component: Countries.Estonia,
+    countryFileName: "Estonia.tsx"
   },
   EG: {
     countryCode: "EG",
@@ -597,8 +789,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Egypt",
     componentName: "Egypt",
     textName: "Egypt",
-    countryFileName: "Egypt.tsx",
-    Component: Countries.Egypt,
+    countryFileName: "Egypt.tsx"
   },
   EH: {
     countryCode: "EH",
@@ -606,8 +797,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Western Sahara",
     componentName: "WesternSahara",
     textName: "Western Sahara",
-    countryFileName: "WesternSahara.tsx",
-    Component: Countries.WesternSahara,
+    countryFileName: "WesternSahara.tsx"
   },
   ER: {
     countryCode: "ER",
@@ -615,8 +805,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Eritrea",
     componentName: "Eritrea",
     textName: "Eritrea",
-    countryFileName: "Eritrea.tsx",
-    Component: Countries.Eritrea,
+    countryFileName: "Eritrea.tsx"
   },
   ES: {
     countryCode: "ES",
@@ -624,8 +813,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Spain",
     componentName: "Spain",
     textName: "Spain",
-    countryFileName: "Spain.tsx",
-    Component: Countries.Spain,
+    countryFileName: "Spain.tsx"
   },
   ET: {
     countryCode: "ET",
@@ -633,8 +821,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Ethiopia",
     componentName: "Ethiopia",
     textName: "Ethiopia",
-    countryFileName: "Ethiopia.tsx",
-    Component: Countries.Ethiopia,
+    countryFileName: "Ethiopia.tsx"
   },
   EU: {
     countryCode: "EU",
@@ -642,8 +829,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "European Union",
     componentName: "EuropeanUnion",
     textName: "European Union",
-    countryFileName: "EuropeanUnion.tsx",
-    Component: Countries.EuropeanUnion,
+    countryFileName: "EuropeanUnion.tsx"
   },
   FI: {
     countryCode: "FI",
@@ -651,8 +837,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Finland",
     componentName: "Finland",
     textName: "Finland",
-    countryFileName: "Finland.tsx",
-    Component: Countries.Finland,
+    countryFileName: "Finland.tsx"
   },
   FJ: {
     countryCode: "FJ",
@@ -660,8 +845,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Fiji",
     componentName: "Fiji",
     textName: "Fiji",
-    countryFileName: "Fiji.tsx",
-    Component: Countries.Fiji,
+    countryFileName: "Fiji.tsx"
   },
   FK: {
     countryCode: "FK",
@@ -669,8 +853,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Falkland Islands the Malvinas",
     componentName: "FalklandIslandsTheMalvinas",
     textName: "Falkland Islands (the) [Malvinas]",
-    countryFileName: "FalklandIslandsTheMalvinas.tsx",
-    Component: Countries.FalklandIslandsTheMalvinas,
+    countryFileName: "FalklandIslandsTheMalvinas.tsx"
   },
   FM: {
     countryCode: "FM",
@@ -678,8 +861,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Micronesia Federated States of",
     componentName: "MicronesiaFederatedStatesOf",
     textName: "Micronesia (Federated States of)",
-    countryFileName: "MicronesiaFederatedStatesOf.tsx",
-    Component: Countries.MicronesiaFederatedStatesOf,
+    countryFileName: "MicronesiaFederatedStatesOf.tsx"
   },
   FO: {
     countryCode: "FO",
@@ -687,8 +869,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Faroe Islands the",
     componentName: "FaroeIslandsThe",
     textName: "Faroe Islands (the)",
-    countryFileName: "FaroeIslandsThe.tsx",
-    Component: Countries.FaroeIslandsThe,
+    countryFileName: "FaroeIslandsThe.tsx"
   },
   FR: {
     countryCode: "FR",
@@ -696,8 +877,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "France",
     componentName: "France",
     textName: "France",
-    countryFileName: "France.tsx",
-    Component: Countries.France,
+    countryFileName: "France.tsx"
   },
   GA: {
     countryCode: "GA",
@@ -705,8 +885,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Gabon",
     componentName: "Gabon",
     textName: "Gabon",
-    countryFileName: "Gabon.tsx",
-    Component: Countries.Gabon,
+    countryFileName: "Gabon.tsx"
   },
   GB: {
     countryCode: "GB",
@@ -714,8 +893,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Great Britain",
     componentName: "GreatBritain",
     textName: "Great Britain",
-    countryFileName: "GreatBritain.tsx",
-    Component: Countries.GreatBritain,
+    countryFileName: "GreatBritain.tsx"
   },
   "GB-ENG": {
     countryCode: "GB-ENG",
@@ -723,8 +901,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "England",
     componentName: "England",
     textName: "England",
-    countryFileName: "England.tsx",
-    Component: Countries.England,
+    countryFileName: "England.tsx"
   },
   "GB-NIR": {
     countryCode: "GB-NIR",
@@ -732,8 +909,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Northern Ireland",
     componentName: "NorthernIreland",
     textName: "Northern Ireland",
-    countryFileName: "NorthernIreland.tsx",
-    Component: Countries.NorthernIreland,
+    countryFileName: "NorthernIreland.tsx"
   },
   "GB-SCT": {
     countryCode: "GB-SCT",
@@ -741,8 +917,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Scotland",
     componentName: "Scotland",
     textName: "Scotland",
-    countryFileName: "Scotland.tsx",
-    Component: Countries.Scotland,
+    countryFileName: "Scotland.tsx"
   },
   "GB-WLS": {
     countryCode: "GB-WLS",
@@ -750,8 +925,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Wales",
     componentName: "Wales",
     textName: "Wales",
-    countryFileName: "Wales.tsx",
-    Component: Countries.Wales,
+    countryFileName: "Wales.tsx"
   },
   GD: {
     countryCode: "GD",
@@ -759,8 +933,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Grenada",
     componentName: "Grenada",
     textName: "Grenada",
-    countryFileName: "Grenada.tsx",
-    Component: Countries.Grenada,
+    countryFileName: "Grenada.tsx"
   },
   GE: {
     countryCode: "GE",
@@ -768,8 +941,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Georgia",
     componentName: "Georgia",
     textName: "Georgia",
-    countryFileName: "Georgia.tsx",
-    Component: Countries.Georgia,
+    countryFileName: "Georgia.tsx"
   },
   GF: {
     countryCode: "GF",
@@ -777,8 +949,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "French Guiana",
     componentName: "FrenchGuiana",
     textName: "French Guiana",
-    countryFileName: "FrenchGuiana.tsx",
-    Component: Countries.FrenchGuiana,
+    countryFileName: "FrenchGuiana.tsx"
   },
   GG: {
     countryCode: "GG",
@@ -786,8 +957,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Guernsey",
     componentName: "Guernsey",
     textName: "Guernsey",
-    countryFileName: "Guernsey.tsx",
-    Component: Countries.Guernsey,
+    countryFileName: "Guernsey.tsx"
   },
   GH: {
     countryCode: "GH",
@@ -795,8 +965,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Ghana",
     componentName: "Ghana",
     textName: "Ghana",
-    countryFileName: "Ghana.tsx",
-    Component: Countries.Ghana,
+    countryFileName: "Ghana.tsx"
   },
   GI: {
     countryCode: "GI",
@@ -804,8 +973,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Gibraltar",
     componentName: "Gibraltar",
     textName: "Gibraltar",
-    countryFileName: "Gibraltar.tsx",
-    Component: Countries.Gibraltar,
+    countryFileName: "Gibraltar.tsx"
   },
   GL: {
     countryCode: "GL",
@@ -813,8 +981,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Greenland",
     componentName: "Greenland",
     textName: "Greenland",
-    countryFileName: "Greenland.tsx",
-    Component: Countries.Greenland,
+    countryFileName: "Greenland.tsx"
   },
   GM: {
     countryCode: "GM",
@@ -822,8 +989,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Gambia the",
     componentName: "GambiaThe",
     textName: "Gambia (the)",
-    countryFileName: "GambiaThe.tsx",
-    Component: Countries.GambiaThe,
+    countryFileName: "GambiaThe.tsx"
   },
   GN: {
     countryCode: "GN",
@@ -831,8 +997,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Guinea",
     componentName: "Guinea",
     textName: "Guinea",
-    countryFileName: "Guinea.tsx",
-    Component: Countries.Guinea,
+    countryFileName: "Guinea.tsx"
   },
   GP: {
     countryCode: "GP",
@@ -840,8 +1005,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Guadeloupe",
     componentName: "Guadeloupe",
     textName: "Guadeloupe",
-    countryFileName: "Guadeloupe.tsx",
-    Component: Countries.Guadeloupe,
+    countryFileName: "Guadeloupe.tsx"
   },
   GQ: {
     countryCode: "GQ",
@@ -849,8 +1013,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Equatorial Guinea",
     componentName: "EquatorialGuinea",
     textName: "Equatorial Guinea",
-    countryFileName: "EquatorialGuinea.tsx",
-    Component: Countries.EquatorialGuinea,
+    countryFileName: "EquatorialGuinea.tsx"
   },
   GR: {
     countryCode: "GR",
@@ -858,8 +1021,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Greece",
     componentName: "Greece",
     textName: "Greece",
-    countryFileName: "Greece.tsx",
-    Component: Countries.Greece,
+    countryFileName: "Greece.tsx"
   },
   GS: {
     countryCode: "GS",
@@ -867,8 +1029,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "South Georgia and the South Sandwich Islands",
     componentName: "SouthGeorgiaAndTheSouthSandwichIslands",
     textName: "South Georgia and the South Sandwich Islands",
-    countryFileName: "SouthGeorgiaAndTheSouthSandwichIslands.tsx",
-    Component: Countries.SouthGeorgiaAndTheSouthSandwichIslands,
+    countryFileName: "SouthGeorgiaAndTheSouthSandwichIslands.tsx"
   },
   GT: {
     countryCode: "GT",
@@ -876,8 +1037,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Guatemala",
     componentName: "Guatemala",
     textName: "Guatemala",
-    countryFileName: "Guatemala.tsx",
-    Component: Countries.Guatemala,
+    countryFileName: "Guatemala.tsx"
   },
   GU: {
     countryCode: "GU",
@@ -885,8 +1045,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Guam",
     componentName: "Guam",
     textName: "Guam",
-    countryFileName: "Guam.tsx",
-    Component: Countries.Guam,
+    countryFileName: "Guam.tsx"
   },
   GW: {
     countryCode: "GW",
@@ -894,8 +1053,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "GuineaBissau",
     componentName: "Guineabissau",
     textName: "Guinea-Bissau",
-    countryFileName: "Guineabissau.tsx",
-    Component: Countries.Guineabissau,
+    countryFileName: "Guineabissau.tsx"
   },
   GY: {
     countryCode: "GY",
@@ -903,8 +1061,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Guyana",
     componentName: "Guyana",
     textName: "Guyana",
-    countryFileName: "Guyana.tsx",
-    Component: Countries.Guyana,
+    countryFileName: "Guyana.tsx"
   },
   HK: {
     countryCode: "HK",
@@ -912,8 +1069,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Hong Kong",
     componentName: "HongKong",
     textName: "Hong Kong",
-    countryFileName: "HongKong.tsx",
-    Component: Countries.HongKong,
+    countryFileName: "HongKong.tsx"
   },
   HM: {
     countryCode: "HM",
@@ -921,8 +1077,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Heard Island and McDonald Islands",
     componentName: "HeardIslandAndMcdonaldIslands",
     textName: "Heard Island and McDonald Islands",
-    countryFileName: "HeardIslandAndMcdonaldIslands.tsx",
-    Component: Countries.HeardIslandAndMcdonaldIslands,
+    countryFileName: "HeardIslandAndMcdonaldIslands.tsx"
   },
   HN: {
     countryCode: "HN",
@@ -930,8 +1085,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Honduras",
     componentName: "Honduras",
     textName: "Honduras",
-    countryFileName: "Honduras.tsx",
-    Component: Countries.Honduras,
+    countryFileName: "Honduras.tsx"
   },
   HR: {
     countryCode: "HR",
@@ -939,8 +1093,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Croatia",
     componentName: "Croatia",
     textName: "Croatia",
-    countryFileName: "Croatia.tsx",
-    Component: Countries.Croatia,
+    countryFileName: "Croatia.tsx"
   },
   HT: {
     countryCode: "HT",
@@ -948,8 +1101,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Haiti",
     componentName: "Haiti",
     textName: "Haiti",
-    countryFileName: "Haiti.tsx",
-    Component: Countries.Haiti,
+    countryFileName: "Haiti.tsx"
   },
   HU: {
     countryCode: "HU",
@@ -957,8 +1109,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Hungary",
     componentName: "Hungary",
     textName: "Hungary",
-    countryFileName: "Hungary.tsx",
-    Component: Countries.Hungary,
+    countryFileName: "Hungary.tsx"
   },
   ID: {
     countryCode: "ID",
@@ -966,8 +1117,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Indonisia",
     componentName: "Indonisia",
     textName: "Indonisia",
-    countryFileName: "Indonisia.tsx",
-    Component: Countries.Indonisia,
+    countryFileName: "Indonisia.tsx"
   },
   IE: {
     countryCode: "IE",
@@ -975,8 +1125,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Ireland",
     componentName: "Ireland",
     textName: "Ireland",
-    countryFileName: "Ireland.tsx",
-    Component: Countries.Ireland,
+    countryFileName: "Ireland.tsx"
   },
   IL: {
     countryCode: "IL",
@@ -984,8 +1133,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Israel",
     componentName: "Israel",
     textName: "Israel",
-    countryFileName: "Israel.tsx",
-    Component: Countries.Israel,
+    countryFileName: "Israel.tsx"
   },
   IM: {
     countryCode: "IM",
@@ -993,8 +1141,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Isle of Man",
     componentName: "IsleOfMan",
     textName: "Isle of Man",
-    countryFileName: "IsleOfMan.tsx",
-    Component: Countries.IsleOfMan,
+    countryFileName: "IsleOfMan.tsx"
   },
   IN: {
     countryCode: "IN",
@@ -1002,8 +1149,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "India",
     componentName: "India",
     textName: "India",
-    countryFileName: "India.tsx",
-    Component: Countries.India,
+    countryFileName: "India.tsx"
   },
   IO: {
     countryCode: "IO",
@@ -1011,8 +1157,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "British Indian Ocean Territory the",
     componentName: "BritishIndianOceanTerritoryThe",
     textName: "British Indian Ocean Territory (the)",
-    countryFileName: "BritishIndianOceanTerritoryThe.tsx",
-    Component: Countries.BritishIndianOceanTerritoryThe,
+    countryFileName: "BritishIndianOceanTerritoryThe.tsx"
   },
   IQ: {
     countryCode: "IQ",
@@ -1020,8 +1165,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Iraq",
     componentName: "Iraq",
     textName: "Iraq",
-    countryFileName: "Iraq.tsx",
-    Component: Countries.Iraq,
+    countryFileName: "Iraq.tsx"
   },
   IR: {
     countryCode: "IR",
@@ -1029,8 +1173,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Iran Islamic Republic of",
     componentName: "IranIslamicRepublicOf",
     textName: "Iran (Islamic Republic of)",
-    countryFileName: "IranIslamicRepublicOf.tsx",
-    Component: Countries.IranIslamicRepublicOf,
+    countryFileName: "IranIslamicRepublicOf.tsx"
   },
   IS: {
     countryCode: "IS",
@@ -1038,8 +1181,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Iceland",
     componentName: "Iceland",
     textName: "Iceland",
-    countryFileName: "Iceland.tsx",
-    Component: Countries.Iceland,
+    countryFileName: "Iceland.tsx"
   },
   IT: {
     countryCode: "IT",
@@ -1047,8 +1189,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Italy",
     componentName: "Italy",
     textName: "Italy",
-    countryFileName: "Italy.tsx",
-    Component: Countries.Italy,
+    countryFileName: "Italy.tsx"
   },
   JE: {
     countryCode: "JE",
@@ -1056,8 +1197,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Jersey",
     componentName: "Jersey",
     textName: "Jersey",
-    countryFileName: "Jersey.tsx",
-    Component: Countries.Jersey,
+    countryFileName: "Jersey.tsx"
   },
   JM: {
     countryCode: "JM",
@@ -1065,8 +1205,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Jamaica",
     componentName: "Jamaica",
     textName: "Jamaica",
-    countryFileName: "Jamaica.tsx",
-    Component: Countries.Jamaica,
+    countryFileName: "Jamaica.tsx"
   },
   JO: {
     countryCode: "JO",
@@ -1074,8 +1213,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Jordan",
     componentName: "Jordan",
     textName: "Jordan",
-    countryFileName: "Jordan.tsx",
-    Component: Countries.Jordan,
+    countryFileName: "Jordan.tsx"
   },
   JP: {
     countryCode: "JP",
@@ -1083,8 +1221,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Japan",
     componentName: "Japan",
     textName: "Japan",
-    countryFileName: "Japan.tsx",
-    Component: Countries.Japan,
+    countryFileName: "Japan.tsx"
   },
   KE: {
     countryCode: "KE",
@@ -1092,8 +1229,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Kenya",
     componentName: "Kenya",
     textName: "Kenya",
-    countryFileName: "Kenya.tsx",
-    Component: Countries.Kenya,
+    countryFileName: "Kenya.tsx"
   },
   KG: {
     countryCode: "KG",
@@ -1101,8 +1237,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Kyrgyzstan",
     componentName: "Kyrgyzstan",
     textName: "Kyrgyzstan",
-    countryFileName: "Kyrgyzstan.tsx",
-    Component: Countries.Kyrgyzstan,
+    countryFileName: "Kyrgyzstan.tsx"
   },
   KH: {
     countryCode: "KH",
@@ -1110,8 +1245,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Cambodia",
     componentName: "Cambodia",
     textName: "Cambodia",
-    countryFileName: "Cambodia.tsx",
-    Component: Countries.Cambodia,
+    countryFileName: "Cambodia.tsx"
   },
   KI: {
     countryCode: "KI",
@@ -1119,8 +1253,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Kiribati",
     componentName: "Kiribati",
     textName: "Kiribati",
-    countryFileName: "Kiribati.tsx",
-    Component: Countries.Kiribati,
+    countryFileName: "Kiribati.tsx"
   },
   KM: {
     countryCode: "KM",
@@ -1128,8 +1261,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Comoros the",
     componentName: "ComorosThe",
     textName: "Comoros (the)",
-    countryFileName: "ComorosThe.tsx",
-    Component: Countries.ComorosThe,
+    countryFileName: "ComorosThe.tsx"
   },
   KN: {
     countryCode: "KN",
@@ -1137,8 +1269,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Saint Kitts and Nevis",
     componentName: "SaintKittsAndNevis",
     textName: "Saint Kitts and Nevis",
-    countryFileName: "SaintKittsAndNevis.tsx",
-    Component: Countries.SaintKittsAndNevis,
+    countryFileName: "SaintKittsAndNevis.tsx"
   },
   KP: {
     countryCode: "KP",
@@ -1146,8 +1277,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Korea Democratic Peoples Republic of",
     componentName: "KoreaDemocraticPeoplesRepublicOf",
     textName: "Korea (Democratic People's Republic of)",
-    countryFileName: "KoreaDemocraticPeoplesRepublicOf.tsx",
-    Component: Countries.KoreaDemocraticPeoplesRepublicOf,
+    countryFileName: "KoreaDemocraticPeoplesRepublicOf.tsx"
   },
   KR: {
     countryCode: "KR",
@@ -1155,8 +1285,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Korea Republic of",
     componentName: "KoreaRepublicOf",
     textName: "Korea (Republic of)",
-    countryFileName: "KoreaRepublicOf.tsx",
-    Component: Countries.KoreaRepublicOf,
+    countryFileName: "KoreaRepublicOf.tsx"
   },
   KW: {
     countryCode: "KW",
@@ -1164,8 +1293,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Kuwait",
     componentName: "Kuwait",
     textName: "Kuwait",
-    countryFileName: "Kuwait.tsx",
-    Component: Countries.Kuwait,
+    countryFileName: "Kuwait.tsx"
   },
   KY: {
     countryCode: "KY",
@@ -1173,8 +1301,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Cayman Islands the",
     componentName: "CaymanIslandsThe",
     textName: "Cayman Islands (the)",
-    countryFileName: "CaymanIslandsThe.tsx",
-    Component: Countries.CaymanIslandsThe,
+    countryFileName: "CaymanIslandsThe.tsx"
   },
   KZ: {
     countryCode: "KZ",
@@ -1182,8 +1309,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Kazakhstan",
     componentName: "Kazakhstan",
     textName: "Kazakhstan",
-    countryFileName: "Kazakhstan.tsx",
-    Component: Countries.Kazakhstan,
+    countryFileName: "Kazakhstan.tsx"
   },
   LA: {
     countryCode: "LA",
@@ -1191,8 +1317,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Lao Peoples Democratic Republic the",
     componentName: "LaoPeoplesDemocraticRepublicThe",
     textName: "Lao People's Democratic Republic (the)",
-    countryFileName: "LaoPeoplesDemocraticRepublicThe.tsx",
-    Component: Countries.LaoPeoplesDemocraticRepublicThe,
+    countryFileName: "LaoPeoplesDemocraticRepublicThe.tsx"
   },
   LB: {
     countryCode: "LB",
@@ -1200,8 +1325,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Lebanon",
     componentName: "Lebanon",
     textName: "Lebanon",
-    countryFileName: "Lebanon.tsx",
-    Component: Countries.Lebanon,
+    countryFileName: "Lebanon.tsx"
   },
   LC: {
     countryCode: "LC",
@@ -1209,8 +1333,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Saint Lucia",
     componentName: "SaintLucia",
     textName: "Saint Lucia",
-    countryFileName: "SaintLucia.tsx",
-    Component: Countries.SaintLucia,
+    countryFileName: "SaintLucia.tsx"
   },
   LI: {
     countryCode: "LI",
@@ -1218,8 +1341,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Liechtenstein",
     componentName: "Liechtenstein",
     textName: "Liechtenstein",
-    countryFileName: "Liechtenstein.tsx",
-    Component: Countries.Liechtenstein,
+    countryFileName: "Liechtenstein.tsx"
   },
   LK: {
     countryCode: "LK",
@@ -1227,8 +1349,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Sri Lanka",
     componentName: "SriLanka",
     textName: "Sri Lanka",
-    countryFileName: "SriLanka.tsx",
-    Component: Countries.SriLanka,
+    countryFileName: "SriLanka.tsx"
   },
   LR: {
     countryCode: "LR",
@@ -1236,8 +1357,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Liberia",
     componentName: "Liberia",
     textName: "Liberia",
-    countryFileName: "Liberia.tsx",
-    Component: Countries.Liberia,
+    countryFileName: "Liberia.tsx"
   },
   LS: {
     countryCode: "LS",
@@ -1245,8 +1365,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Lesotho",
     componentName: "Lesotho",
     textName: "Lesotho",
-    countryFileName: "Lesotho.tsx",
-    Component: Countries.Lesotho,
+    countryFileName: "Lesotho.tsx"
   },
   LT: {
     countryCode: "LT",
@@ -1254,8 +1373,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Lithuania",
     componentName: "Lithuania",
     textName: "Lithuania",
-    countryFileName: "Lithuania.tsx",
-    Component: Countries.Lithuania,
+    countryFileName: "Lithuania.tsx"
   },
   LU: {
     countryCode: "LU",
@@ -1263,8 +1381,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Luxembourg",
     componentName: "Luxembourg",
     textName: "Luxembourg",
-    countryFileName: "Luxembourg.tsx",
-    Component: Countries.Luxembourg,
+    countryFileName: "Luxembourg.tsx"
   },
   LV: {
     countryCode: "LV",
@@ -1272,8 +1389,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Latvia",
     componentName: "Latvia",
     textName: "Latvia",
-    countryFileName: "Latvia.tsx",
-    Component: Countries.Latvia,
+    countryFileName: "Latvia.tsx"
   },
   LY: {
     countryCode: "LY",
@@ -1281,8 +1397,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Libya",
     componentName: "Libya",
     textName: "Libya",
-    countryFileName: "Libya.tsx",
-    Component: Countries.Libya,
+    countryFileName: "Libya.tsx"
   },
   MA: {
     countryCode: "MA",
@@ -1290,8 +1405,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Morocco",
     componentName: "Morocco",
     textName: "Morocco",
-    countryFileName: "Morocco.tsx",
-    Component: Countries.Morocco,
+    countryFileName: "Morocco.tsx"
   },
   MC: {
     countryCode: "MC",
@@ -1299,8 +1413,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Monaco",
     componentName: "Monaco",
     textName: "Monaco",
-    countryFileName: "Monaco.tsx",
-    Component: Countries.Monaco,
+    countryFileName: "Monaco.tsx"
   },
   MD: {
     countryCode: "MD",
@@ -1308,8 +1421,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Moldova the Republic of",
     componentName: "MoldovaTheRepublicOf",
     textName: "Moldova (the Republic of)",
-    countryFileName: "MoldovaTheRepublicOf.tsx",
-    Component: Countries.MoldovaTheRepublicOf,
+    countryFileName: "MoldovaTheRepublicOf.tsx"
   },
   ME: {
     countryCode: "ME",
@@ -1317,8 +1429,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Montenegro",
     componentName: "Montenegro",
     textName: "Montenegro",
-    countryFileName: "Montenegro.tsx",
-    Component: Countries.Montenegro,
+    countryFileName: "Montenegro.tsx"
   },
   MF: {
     countryCode: "MF",
@@ -1326,8 +1437,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Saint Martin French part",
     componentName: "SaintMartinFrenchPart",
     textName: "Saint Martin (French part)",
-    countryFileName: "SaintMartinFrenchPart.tsx",
-    Component: Countries.SaintMartinFrenchPart,
+    countryFileName: "SaintMartinFrenchPart.tsx"
   },
   MG: {
     countryCode: "MG",
@@ -1335,8 +1445,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Madagascar",
     componentName: "Madagascar",
     textName: "Madagascar",
-    countryFileName: "Madagascar.tsx",
-    Component: Countries.Madagascar,
+    countryFileName: "Madagascar.tsx"
   },
   MH: {
     countryCode: "MH",
@@ -1344,8 +1453,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Marshall Islands the",
     componentName: "MarshallIslandsThe",
     textName: "Marshall Islands (the)",
-    countryFileName: "MarshallIslandsThe.tsx",
-    Component: Countries.MarshallIslandsThe,
+    countryFileName: "MarshallIslandsThe.tsx"
   },
   MK: {
     countryCode: "MK",
@@ -1353,8 +1461,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "North Macedonia",
     componentName: "NorthMacedonia",
     textName: "North Macedonia",
-    countryFileName: "NorthMacedonia.tsx",
-    Component: Countries.NorthMacedonia,
+    countryFileName: "NorthMacedonia.tsx"
   },
   ML: {
     countryCode: "ML",
@@ -1362,8 +1469,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Mali",
     componentName: "Mali",
     textName: "Mali",
-    countryFileName: "Mali.tsx",
-    Component: Countries.Mali,
+    countryFileName: "Mali.tsx"
   },
   MM: {
     countryCode: "MM",
@@ -1371,8 +1477,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Myanmar",
     componentName: "Myanmar",
     textName: "Myanmar",
-    countryFileName: "Myanmar.tsx",
-    Component: Countries.Myanmar,
+    countryFileName: "Myanmar.tsx"
   },
   MN: {
     countryCode: "MN",
@@ -1380,8 +1485,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Mongolia",
     componentName: "Mongolia",
     textName: "Mongolia",
-    countryFileName: "Mongolia.tsx",
-    Component: Countries.Mongolia,
+    countryFileName: "Mongolia.tsx"
   },
   MO: {
     countryCode: "MO",
@@ -1389,8 +1493,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Macao",
     componentName: "Macao",
     textName: "Macao",
-    countryFileName: "Macao.tsx",
-    Component: Countries.Macao,
+    countryFileName: "Macao.tsx"
   },
   MP: {
     countryCode: "MP",
@@ -1398,8 +1501,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Northern Mariana Islands the",
     componentName: "NorthernMarianaIslandsThe",
     textName: "Northern Mariana Islands (the)",
-    countryFileName: "NorthernMarianaIslandsThe.tsx",
-    Component: Countries.NorthernMarianaIslandsThe,
+    countryFileName: "NorthernMarianaIslandsThe.tsx"
   },
   MQ: {
     countryCode: "MQ",
@@ -1407,8 +1509,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Martinique",
     componentName: "Martinique",
     textName: "Martinique",
-    countryFileName: "Martinique.tsx",
-    Component: Countries.Martinique,
+    countryFileName: "Martinique.tsx"
   },
   MR: {
     countryCode: "MR",
@@ -1416,8 +1517,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Mauritania",
     componentName: "Mauritania",
     textName: "Mauritania",
-    countryFileName: "Mauritania.tsx",
-    Component: Countries.Mauritania,
+    countryFileName: "Mauritania.tsx"
   },
   MS: {
     countryCode: "MS",
@@ -1425,8 +1525,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Montserrat",
     componentName: "Montserrat",
     textName: "Montserrat",
-    countryFileName: "Montserrat.tsx",
-    Component: Countries.Montserrat,
+    countryFileName: "Montserrat.tsx"
   },
   MT: {
     countryCode: "MT",
@@ -1434,8 +1533,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Malta",
     componentName: "Malta",
     textName: "Malta",
-    countryFileName: "Malta.tsx",
-    Component: Countries.Malta,
+    countryFileName: "Malta.tsx"
   },
   MU: {
     countryCode: "MU",
@@ -1443,8 +1541,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Mauritius",
     componentName: "Mauritius",
     textName: "Mauritius",
-    countryFileName: "Mauritius.tsx",
-    Component: Countries.Mauritius,
+    countryFileName: "Mauritius.tsx"
   },
   MV: {
     countryCode: "MV",
@@ -1452,8 +1549,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Maldives",
     componentName: "Maldives",
     textName: "Maldives",
-    countryFileName: "Maldives.tsx",
-    Component: Countries.Maldives,
+    countryFileName: "Maldives.tsx"
   },
   MW: {
     countryCode: "MW",
@@ -1461,8 +1557,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Malawi",
     componentName: "Malawi",
     textName: "Malawi",
-    countryFileName: "Malawi.tsx",
-    Component: Countries.Malawi,
+    countryFileName: "Malawi.tsx"
   },
   MX: {
     countryCode: "MX",
@@ -1470,8 +1565,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Mexico",
     componentName: "Mexico",
     textName: "Mexico",
-    countryFileName: "Mexico.tsx",
-    Component: Countries.Mexico,
+    countryFileName: "Mexico.tsx"
   },
   MY: {
     countryCode: "MY",
@@ -1479,8 +1573,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Malaysia",
     componentName: "Malaysia",
     textName: "Malaysia",
-    countryFileName: "Malaysia.tsx",
-    Component: Countries.Malaysia,
+    countryFileName: "Malaysia.tsx"
   },
   MZ: {
     countryCode: "MZ",
@@ -1488,8 +1581,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Mozambique",
     componentName: "Mozambique",
     textName: "Mozambique",
-    countryFileName: "Mozambique.tsx",
-    Component: Countries.Mozambique,
+    countryFileName: "Mozambique.tsx"
   },
   NA: {
     countryCode: "NA",
@@ -1497,8 +1589,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Namibia",
     componentName: "Namibia",
     textName: "Namibia",
-    countryFileName: "Namibia.tsx",
-    Component: Countries.Namibia,
+    countryFileName: "Namibia.tsx"
   },
   NC: {
     countryCode: "NC",
@@ -1506,8 +1597,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "New Caledonia",
     componentName: "NewCaledonia",
     textName: "New Caledonia",
-    countryFileName: "NewCaledonia.tsx",
-    Component: Countries.NewCaledonia,
+    countryFileName: "NewCaledonia.tsx"
   },
   NE: {
     countryCode: "NE",
@@ -1515,8 +1605,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Niger the",
     componentName: "NigerThe",
     textName: "Niger (the)",
-    countryFileName: "NigerThe.tsx",
-    Component: Countries.NigerThe,
+    countryFileName: "NigerThe.tsx"
   },
   NF: {
     countryCode: "NF",
@@ -1524,8 +1613,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Norfolk Island",
     componentName: "NorfolkIsland",
     textName: "Norfolk Island",
-    countryFileName: "NorfolkIsland.tsx",
-    Component: Countries.NorfolkIsland,
+    countryFileName: "NorfolkIsland.tsx"
   },
   NG: {
     countryCode: "NG",
@@ -1533,8 +1621,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Nigeria",
     componentName: "Nigeria",
     textName: "Nigeria",
-    countryFileName: "Nigeria.tsx",
-    Component: Countries.Nigeria,
+    countryFileName: "Nigeria.tsx"
   },
   NI: {
     countryCode: "NI",
@@ -1542,8 +1629,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Nicaragua",
     componentName: "Nicaragua",
     textName: "Nicaragua",
-    countryFileName: "Nicaragua.tsx",
-    Component: Countries.Nicaragua,
+    countryFileName: "Nicaragua.tsx"
   },
   NL: {
     countryCode: "NL",
@@ -1551,8 +1637,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Netherlands the",
     componentName: "NetherlandsThe",
     textName: "Netherlands (the)",
-    countryFileName: "NetherlandsThe.tsx",
-    Component: Countries.NetherlandsThe,
+    countryFileName: "NetherlandsThe.tsx"
   },
   NO: {
     countryCode: "NO",
@@ -1560,8 +1645,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Norway",
     componentName: "Norway",
     textName: "Norway",
-    countryFileName: "Norway.tsx",
-    Component: Countries.Norway,
+    countryFileName: "Norway.tsx"
   },
   NP: {
     countryCode: "NP",
@@ -1569,8 +1653,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Nepal",
     componentName: "Nepal",
     textName: "Nepal",
-    countryFileName: "Nepal.tsx",
-    Component: Countries.Nepal,
+    countryFileName: "Nepal.tsx"
   },
   NR: {
     countryCode: "NR",
@@ -1578,8 +1661,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Nauru",
     componentName: "Nauru",
     textName: "Nauru",
-    countryFileName: "Nauru.tsx",
-    Component: Countries.Nauru,
+    countryFileName: "Nauru.tsx"
   },
   NU: {
     countryCode: "NU",
@@ -1587,8 +1669,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Niue",
     componentName: "Niue",
     textName: "Niue",
-    countryFileName: "Niue.tsx",
-    Component: Countries.Niue,
+    countryFileName: "Niue.tsx"
   },
   NZ: {
     countryCode: "NZ",
@@ -1596,8 +1677,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "New Zealand",
     componentName: "NewZealand",
     textName: "New Zealand",
-    countryFileName: "NewZealand.tsx",
-    Component: Countries.NewZealand,
+    countryFileName: "NewZealand.tsx"
   },
   OM: {
     countryCode: "OM",
@@ -1605,8 +1685,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Oman",
     componentName: "Oman",
     textName: "Oman",
-    countryFileName: "Oman.tsx",
-    Component: Countries.Oman,
+    countryFileName: "Oman.tsx"
   },
   PA: {
     countryCode: "PA",
@@ -1614,8 +1693,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Panama",
     componentName: "Panama",
     textName: "Panama",
-    countryFileName: "Panama.tsx",
-    Component: Countries.Panama,
+    countryFileName: "Panama.tsx"
   },
   PE: {
     countryCode: "PE",
@@ -1623,8 +1701,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Peru",
     componentName: "Peru",
     textName: "Peru",
-    countryFileName: "Peru.tsx",
-    Component: Countries.Peru,
+    countryFileName: "Peru.tsx"
   },
   PF: {
     countryCode: "PF",
@@ -1632,8 +1709,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "French Polynesia",
     componentName: "FrenchPolynesia",
     textName: "French Polynesia",
-    countryFileName: "FrenchPolynesia.tsx",
-    Component: Countries.FrenchPolynesia,
+    countryFileName: "FrenchPolynesia.tsx"
   },
   PG: {
     countryCode: "PG",
@@ -1641,8 +1717,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Papua New Guinea",
     componentName: "PapuaNewGuinea",
     textName: "Papua New Guinea",
-    countryFileName: "PapuaNewGuinea.tsx",
-    Component: Countries.PapuaNewGuinea,
+    countryFileName: "PapuaNewGuinea.tsx"
   },
   PH: {
     countryCode: "PH",
@@ -1650,8 +1725,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Philippines the",
     componentName: "PhilippinesThe",
     textName: "Philippines (the)",
-    countryFileName: "PhilippinesThe.tsx",
-    Component: Countries.PhilippinesThe,
+    countryFileName: "PhilippinesThe.tsx"
   },
   PK: {
     countryCode: "PK",
@@ -1659,8 +1733,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Pakistan",
     componentName: "Pakistan",
     textName: "Pakistan",
-    countryFileName: "Pakistan.tsx",
-    Component: Countries.Pakistan,
+    countryFileName: "Pakistan.tsx"
   },
   PL: {
     countryCode: "PL",
@@ -1668,8 +1741,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Poland",
     componentName: "Poland",
     textName: "Poland",
-    countryFileName: "Poland.tsx",
-    Component: Countries.Poland,
+    countryFileName: "Poland.tsx"
   },
   PM: {
     countryCode: "PM",
@@ -1677,8 +1749,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Saint Pierre and Miquelon",
     componentName: "SaintPierreAndMiquelon",
     textName: "Saint Pierre and Miquelon",
-    countryFileName: "SaintPierreAndMiquelon.tsx",
-    Component: Countries.SaintPierreAndMiquelon,
+    countryFileName: "SaintPierreAndMiquelon.tsx"
   },
   PN: {
     countryCode: "PN",
@@ -1686,8 +1757,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Pitcairn",
     componentName: "Pitcairn",
     textName: "Pitcairn",
-    countryFileName: "Pitcairn.tsx",
-    Component: Countries.Pitcairn,
+    countryFileName: "Pitcairn.tsx"
   },
   PR: {
     countryCode: "PR",
@@ -1695,8 +1765,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Puerto Rico",
     componentName: "PuertoRico",
     textName: "Puerto Rico",
-    countryFileName: "PuertoRico.tsx",
-    Component: Countries.PuertoRico,
+    countryFileName: "PuertoRico.tsx"
   },
   PS: {
     countryCode: "PS",
@@ -1704,8 +1773,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Palestine State of",
     componentName: "PalestineStateOf",
     textName: "Palestine (State of)",
-    countryFileName: "PalestineStateOf.tsx",
-    Component: Countries.PalestineStateOf,
+    countryFileName: "PalestineStateOf.tsx"
   },
   PT: {
     countryCode: "PT",
@@ -1713,8 +1781,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Portugal",
     componentName: "Portugal",
     textName: "Portugal",
-    countryFileName: "Portugal.tsx",
-    Component: Countries.Portugal,
+    countryFileName: "Portugal.tsx"
   },
   PW: {
     countryCode: "PW",
@@ -1722,8 +1789,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Palau",
     componentName: "Palau",
     textName: "Palau",
-    countryFileName: "Palau.tsx",
-    Component: Countries.Palau,
+    countryFileName: "Palau.tsx"
   },
   PY: {
     countryCode: "PY",
@@ -1731,8 +1797,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Paraguay",
     componentName: "Paraguay",
     textName: "Paraguay",
-    countryFileName: "Paraguay.tsx",
-    Component: Countries.Paraguay,
+    countryFileName: "Paraguay.tsx"
   },
   QA: {
     countryCode: "QA",
@@ -1740,8 +1805,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Qatar",
     componentName: "Qatar",
     textName: "Qatar",
-    countryFileName: "Qatar.tsx",
-    Component: Countries.Qatar,
+    countryFileName: "Qatar.tsx"
   },
   RE: {
     countryCode: "RE",
@@ -1749,8 +1813,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Reunion",
     componentName: "Reunion",
     textName: "Réunion",
-    countryFileName: "Reunion.tsx",
-    Component: Countries.Reunion,
+    countryFileName: "Reunion.tsx"
   },
   RO: {
     countryCode: "RO",
@@ -1758,8 +1821,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Romania",
     componentName: "Romania",
     textName: "Romania",
-    countryFileName: "Romania.tsx",
-    Component: Countries.Romania,
+    countryFileName: "Romania.tsx"
   },
   RS: {
     countryCode: "RS",
@@ -1767,8 +1829,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Serbia",
     componentName: "Serbia",
     textName: "Serbia",
-    countryFileName: "Serbia.tsx",
-    Component: Countries.Serbia,
+    countryFileName: "Serbia.tsx"
   },
   RU: {
     countryCode: "RU",
@@ -1776,8 +1837,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Russian Federation the",
     componentName: "RussianFederationThe",
     textName: "Russian Federation (the)",
-    countryFileName: "RussianFederationThe.tsx",
-    Component: Countries.RussianFederationThe,
+    countryFileName: "RussianFederationThe.tsx"
   },
   RW: {
     countryCode: "RW",
@@ -1785,8 +1845,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Rwanda",
     componentName: "Rwanda",
     textName: "Rwanda",
-    countryFileName: "Rwanda.tsx",
-    Component: Countries.Rwanda,
+    countryFileName: "Rwanda.tsx"
   },
   SA: {
     countryCode: "SA",
@@ -1794,8 +1853,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Saudi Arabia",
     componentName: "SaudiArabia",
     textName: "Saudi Arabia",
-    countryFileName: "SaudiArabia.tsx",
-    Component: Countries.SaudiArabia,
+    countryFileName: "SaudiArabia.tsx"
   },
   SB: {
     countryCode: "SB",
@@ -1803,8 +1861,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Solomon Islands",
     componentName: "SolomonIslands",
     textName: "Solomon Islands",
-    countryFileName: "SolomonIslands.tsx",
-    Component: Countries.SolomonIslands,
+    countryFileName: "SolomonIslands.tsx"
   },
   SC: {
     countryCode: "SC",
@@ -1812,8 +1869,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Seychelles",
     componentName: "Seychelles",
     textName: "Seychelles",
-    countryFileName: "Seychelles.tsx",
-    Component: Countries.Seychelles,
+    countryFileName: "Seychelles.tsx"
   },
   SD: {
     countryCode: "SD",
@@ -1821,8 +1877,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Sudan the",
     componentName: "SudanThe",
     textName: "Sudan (the)",
-    countryFileName: "SudanThe.tsx",
-    Component: Countries.SudanThe,
+    countryFileName: "SudanThe.tsx"
   },
   SE: {
     countryCode: "SE",
@@ -1830,8 +1885,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Sweden",
     componentName: "Sweden",
     textName: "Sweden",
-    countryFileName: "Sweden.tsx",
-    Component: Countries.Sweden,
+    countryFileName: "Sweden.tsx"
   },
   SG: {
     countryCode: "SG",
@@ -1839,8 +1893,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Singapore",
     componentName: "Singapore",
     textName: "Singapore",
-    countryFileName: "Singapore.tsx",
-    Component: Countries.Singapore,
+    countryFileName: "Singapore.tsx"
   },
   SH: {
     countryCode: "SH",
@@ -1848,8 +1901,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Saint Helena Ascension and Tristan da Cunha",
     componentName: "SaintHelenaAscensionAndTristanDaCunha",
     textName: "Saint Helena, Ascension and Tristan da Cunha",
-    countryFileName: "SaintHelenaAscensionAndTristanDaCunha.tsx",
-    Component: Countries.SaintHelenaAscensionAndTristanDaCunha,
+    countryFileName: "SaintHelenaAscensionAndTristanDaCunha.tsx"
   },
   SI: {
     countryCode: "SI",
@@ -1857,8 +1909,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Slovenia",
     componentName: "Slovenia",
     textName: "Slovenia",
-    countryFileName: "Slovenia.tsx",
-    Component: Countries.Slovenia,
+    countryFileName: "Slovenia.tsx"
   },
   SJ: {
     countryCode: "SJ",
@@ -1866,8 +1917,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Svalbard and Jan Mayen",
     componentName: "SvalbardAndJanMayen",
     textName: "Svalbard and Jan Mayen",
-    countryFileName: "SvalbardAndJanMayen.tsx",
-    Component: Countries.SvalbardAndJanMayen,
+    countryFileName: "SvalbardAndJanMayen.tsx"
   },
   SK: {
     countryCode: "SK",
@@ -1875,8 +1925,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Slovakia",
     componentName: "Slovakia",
     textName: "Slovakia",
-    countryFileName: "Slovakia.tsx",
-    Component: Countries.Slovakia,
+    countryFileName: "Slovakia.tsx"
   },
   SL: {
     countryCode: "SL",
@@ -1884,8 +1933,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Sierra Leone",
     componentName: "SierraLeone",
     textName: "Sierra Leone",
-    countryFileName: "SierraLeone.tsx",
-    Component: Countries.SierraLeone,
+    countryFileName: "SierraLeone.tsx"
   },
   SM: {
     countryCode: "SM",
@@ -1893,8 +1941,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "San Marino",
     componentName: "SanMarino",
     textName: "San Marino",
-    countryFileName: "SanMarino.tsx",
-    Component: Countries.SanMarino,
+    countryFileName: "SanMarino.tsx"
   },
   SN: {
     countryCode: "SN",
@@ -1902,8 +1949,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Senegal",
     componentName: "Senegal",
     textName: "Senegal",
-    countryFileName: "Senegal.tsx",
-    Component: Countries.Senegal,
+    countryFileName: "Senegal.tsx"
   },
   SO: {
     countryCode: "SO",
@@ -1911,8 +1957,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Somalia",
     componentName: "Somalia",
     textName: "Somalia",
-    countryFileName: "Somalia.tsx",
-    Component: Countries.Somalia,
+    countryFileName: "Somalia.tsx"
   },
   SR: {
     countryCode: "SR",
@@ -1920,8 +1965,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Suriname",
     componentName: "Suriname",
     textName: "Suriname",
-    countryFileName: "Suriname.tsx",
-    Component: Countries.Suriname,
+    countryFileName: "Suriname.tsx"
   },
   SS: {
     countryCode: "SS",
@@ -1929,8 +1973,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "South Sudan",
     componentName: "SouthSudan",
     textName: "South Sudan",
-    countryFileName: "SouthSudan.tsx",
-    Component: Countries.SouthSudan,
+    countryFileName: "SouthSudan.tsx"
   },
   ST: {
     countryCode: "ST",
@@ -1938,8 +1981,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Sao Tome and Principe",
     componentName: "SaoTomeAndPrincipe",
     textName: "Sao Tome and Principe",
-    countryFileName: "SaoTomeAndPrincipe.tsx",
-    Component: Countries.SaoTomeAndPrincipe,
+    countryFileName: "SaoTomeAndPrincipe.tsx"
   },
   SV: {
     countryCode: "SV",
@@ -1947,8 +1989,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "El Salvador",
     componentName: "ElSalvador",
     textName: "El Salvador",
-    countryFileName: "ElSalvador.tsx",
-    Component: Countries.ElSalvador,
+    countryFileName: "ElSalvador.tsx"
   },
   SX: {
     countryCode: "SX",
@@ -1956,8 +1997,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Sint Maarten Dutch part",
     componentName: "SintMaartenDutchPart",
     textName: "Sint Maarten (Dutch part)",
-    countryFileName: "SintMaartenDutchPart.tsx",
-    Component: Countries.SintMaartenDutchPart,
+    countryFileName: "SintMaartenDutchPart.tsx"
   },
   SY: {
     countryCode: "SY",
@@ -1965,8 +2005,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Syrian Arab Republic the",
     componentName: "SyrianArabRepublicThe",
     textName: "Syrian Arab Republic (the)",
-    countryFileName: "SyrianArabRepublicThe.tsx",
-    Component: Countries.SyrianArabRepublicThe,
+    countryFileName: "SyrianArabRepublicThe.tsx"
   },
   SZ: {
     countryCode: "SZ",
@@ -1974,8 +2013,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Eswatini",
     componentName: "Eswatini",
     textName: "Eswatini",
-    countryFileName: "Eswatini.tsx",
-    Component: Countries.Eswatini,
+    countryFileName: "Eswatini.tsx"
   },
   TC: {
     countryCode: "TC",
@@ -1983,8 +2021,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Turks and Caicos Islands the",
     componentName: "TurksAndCaicosIslandsThe",
     textName: "Turks and Caicos Islands (the)",
-    countryFileName: "TurksAndCaicosIslandsThe.tsx",
-    Component: Countries.TurksAndCaicosIslandsThe,
+    countryFileName: "TurksAndCaicosIslandsThe.tsx"
   },
   TD: {
     countryCode: "TD",
@@ -1992,8 +2029,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Chad",
     componentName: "Chad",
     textName: "Chad",
-    countryFileName: "Chad.tsx",
-    Component: Countries.Chad,
+    countryFileName: "Chad.tsx"
   },
   TF: {
     countryCode: "TF",
@@ -2001,8 +2037,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "French Southern Territories the",
     componentName: "FrenchSouthernTerritoriesThe",
     textName: "French Southern Territories (the)",
-    countryFileName: "FrenchSouthernTerritoriesThe.tsx",
-    Component: Countries.FrenchSouthernTerritoriesThe,
+    countryFileName: "FrenchSouthernTerritoriesThe.tsx"
   },
   TG: {
     countryCode: "TG",
@@ -2010,8 +2045,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Togo",
     componentName: "Togo",
     textName: "Togo",
-    countryFileName: "Togo.tsx",
-    Component: Countries.Togo,
+    countryFileName: "Togo.tsx"
   },
   TH: {
     countryCode: "TH",
@@ -2019,8 +2053,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Thailand",
     componentName: "Thailand",
     textName: "Thailand",
-    countryFileName: "Thailand.tsx",
-    Component: Countries.Thailand,
+    countryFileName: "Thailand.tsx"
   },
   TJ: {
     countryCode: "TJ",
@@ -2028,8 +2061,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Tajikistan",
     componentName: "Tajikistan",
     textName: "Tajikistan",
-    countryFileName: "Tajikistan.tsx",
-    Component: Countries.Tajikistan,
+    countryFileName: "Tajikistan.tsx"
   },
   TK: {
     countryCode: "TK",
@@ -2037,8 +2069,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Tokelau",
     componentName: "Tokelau",
     textName: "Tokelau",
-    countryFileName: "Tokelau.tsx",
-    Component: Countries.Tokelau,
+    countryFileName: "Tokelau.tsx"
   },
   TL: {
     countryCode: "TL",
@@ -2046,8 +2077,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "TimorLeste",
     componentName: "Timorleste",
     textName: "Timor-Leste",
-    countryFileName: "Timorleste.tsx",
-    Component: Countries.Timorleste,
+    countryFileName: "Timorleste.tsx"
   },
   TM: {
     countryCode: "TM",
@@ -2055,8 +2085,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Turkmenistan",
     componentName: "Turkmenistan",
     textName: "Turkmenistan",
-    countryFileName: "Turkmenistan.tsx",
-    Component: Countries.Turkmenistan,
+    countryFileName: "Turkmenistan.tsx"
   },
   TN: {
     countryCode: "TN",
@@ -2064,8 +2093,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Tunisia",
     componentName: "Tunisia",
     textName: "Tunisia",
-    countryFileName: "Tunisia.tsx",
-    Component: Countries.Tunisia,
+    countryFileName: "Tunisia.tsx"
   },
   TO: {
     countryCode: "TO",
@@ -2073,8 +2101,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Tonga",
     componentName: "Tonga",
     textName: "Tonga",
-    countryFileName: "Tonga.tsx",
-    Component: Countries.Tonga,
+    countryFileName: "Tonga.tsx"
   },
   TR: {
     countryCode: "TR",
@@ -2082,8 +2109,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Turkiye",
     componentName: "Turkiye",
     textName: "Türkiye",
-    countryFileName: "Turkiye.tsx",
-    Component: Countries.Turkiye,
+    countryFileName: "Turkiye.tsx"
   },
   TT: {
     countryCode: "TT",
@@ -2091,8 +2117,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Trinidad and Tobago",
     componentName: "TrinidadAndTobago",
     textName: "Trinidad and Tobago",
-    countryFileName: "TrinidadAndTobago.tsx",
-    Component: Countries.TrinidadAndTobago,
+    countryFileName: "TrinidadAndTobago.tsx"
   },
   TV: {
     countryCode: "TV",
@@ -2100,8 +2125,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Tuvalu",
     componentName: "Tuvalu",
     textName: "Tuvalu",
-    countryFileName: "Tuvalu.tsx",
-    Component: Countries.Tuvalu,
+    countryFileName: "Tuvalu.tsx"
   },
   TW: {
     countryCode: "TW",
@@ -2109,8 +2133,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Taiwan Province of China",
     componentName: "TaiwanProvinceOfChina",
     textName: "Taiwan (Province of China)",
-    countryFileName: "TaiwanProvinceOfChina.tsx",
-    Component: Countries.TaiwanProvinceOfChina,
+    countryFileName: "TaiwanProvinceOfChina.tsx"
   },
   TZ: {
     countryCode: "TZ",
@@ -2118,8 +2141,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Tanzania the United Republic of",
     componentName: "TanzaniaTheUnitedRepublicOf",
     textName: "Tanzania (the United Republic of)",
-    countryFileName: "TanzaniaTheUnitedRepublicOf.tsx",
-    Component: Countries.TanzaniaTheUnitedRepublicOf,
+    countryFileName: "TanzaniaTheUnitedRepublicOf.tsx"
   },
   UA: {
     countryCode: "UA",
@@ -2127,8 +2149,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Ukraine",
     componentName: "Ukraine",
     textName: "Ukraine",
-    countryFileName: "Ukraine.tsx",
-    Component: Countries.Ukraine,
+    countryFileName: "Ukraine.tsx"
   },
   UG: {
     countryCode: "UG",
@@ -2136,8 +2157,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Uganda",
     componentName: "Uganda",
     textName: "Uganda",
-    countryFileName: "Uganda.tsx",
-    Component: Countries.Uganda,
+    countryFileName: "Uganda.tsx"
   },
   UM: {
     countryCode: "UM",
@@ -2145,8 +2165,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "United States Minor  Outlying Islands the",
     componentName: "UnitedStatesMinorOutlyingIslandsThe",
     textName: "United States Minor  Outlying Islands (the)",
-    countryFileName: "UnitedStatesMinorOutlyingIslandsThe.tsx",
-    Component: Countries.UnitedStatesMinorOutlyingIslandsThe,
+    countryFileName: "UnitedStatesMinorOutlyingIslandsThe.tsx"
   },
   UN: {
     countryCode: "UN",
@@ -2154,8 +2173,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "United Nations",
     componentName: "UnitedNations",
     textName: "United Nations",
-    countryFileName: "UnitedNations.tsx",
-    Component: Countries.UnitedNations,
+    countryFileName: "UnitedNations.tsx"
   },
   US: {
     countryCode: "US",
@@ -2163,8 +2181,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "United States of America the",
     componentName: "UnitedStatesOfAmericaThe",
     textName: "United States of America (the)",
-    countryFileName: "UnitedStatesOfAmericaThe.tsx",
-    Component: Countries.UnitedStatesOfAmericaThe,
+    countryFileName: "UnitedStatesOfAmericaThe.tsx"
   },
   UY: {
     countryCode: "UY",
@@ -2172,8 +2189,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Uruguay",
     componentName: "Uruguay",
     textName: "Uruguay",
-    countryFileName: "Uruguay.tsx",
-    Component: Countries.Uruguay,
+    countryFileName: "Uruguay.tsx"
   },
   UZ: {
     countryCode: "UZ",
@@ -2181,8 +2197,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Uzbekistan",
     componentName: "Uzbekistan",
     textName: "Uzbekistan",
-    countryFileName: "Uzbekistan.tsx",
-    Component: Countries.Uzbekistan,
+    countryFileName: "Uzbekistan.tsx"
   },
   VA: {
     countryCode: "VA",
@@ -2190,8 +2205,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Holy See the",
     componentName: "HolySeeThe",
     textName: "Holy See (the)",
-    countryFileName: "HolySeeThe.tsx",
-    Component: Countries.HolySeeThe,
+    countryFileName: "HolySeeThe.tsx"
   },
   VC: {
     countryCode: "VC",
@@ -2199,8 +2213,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Saint Vincent and the Grenadines",
     componentName: "SaintVincentAndTheGrenadines",
     textName: "Saint Vincent and the Grenadines",
-    countryFileName: "SaintVincentAndTheGrenadines.tsx",
-    Component: Countries.SaintVincentAndTheGrenadines,
+    countryFileName: "SaintVincentAndTheGrenadines.tsx"
   },
   VE: {
     countryCode: "VE",
@@ -2208,8 +2221,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Venezuela Bolivarian Republic of",
     componentName: "VenezuelaBolivarianRepublicOf",
     textName: "Venezuela (Bolivarian Republic of)",
-    countryFileName: "VenezuelaBolivarianRepublicOf.tsx",
-    Component: Countries.VenezuelaBolivarianRepublicOf,
+    countryFileName: "VenezuelaBolivarianRepublicOf.tsx"
   },
   VG: {
     countryCode: "VG",
@@ -2217,8 +2229,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Virgin Islands British",
     componentName: "VirginIslandsBritish",
     textName: "Virgin Islands (British)",
-    countryFileName: "VirginIslandsBritish.tsx",
-    Component: Countries.VirginIslandsBritish,
+    countryFileName: "VirginIslandsBritish.tsx"
   },
   VI: {
     countryCode: "VI",
@@ -2226,8 +2237,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Virgin Islands US",
     componentName: "VirginIslandsUs",
     textName: "Virgin Islands (U.S.)",
-    countryFileName: "VirginIslandsUs.tsx",
-    Component: Countries.VirginIslandsUs,
+    countryFileName: "VirginIslandsUs.tsx"
   },
   VN: {
     countryCode: "VN",
@@ -2235,8 +2245,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Viet Nam",
     componentName: "VietNam",
     textName: "Viet Nam",
-    countryFileName: "VietNam.tsx",
-    Component: Countries.VietNam,
+    countryFileName: "VietNam.tsx"
   },
   VU: {
     countryCode: "VU",
@@ -2244,8 +2253,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Vanuatu",
     componentName: "Vanuatu",
     textName: "Vanuatu",
-    countryFileName: "Vanuatu.tsx",
-    Component: Countries.Vanuatu,
+    countryFileName: "Vanuatu.tsx"
   },
   WF: {
     countryCode: "WF",
@@ -2253,8 +2261,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Wallis and Futuna",
     componentName: "WallisAndFutuna",
     textName: "Wallis and Futuna",
-    countryFileName: "WallisAndFutuna.tsx",
-    Component: Countries.WallisAndFutuna,
+    countryFileName: "WallisAndFutuna.tsx"
   },
   WS: {
     countryCode: "WS",
@@ -2262,8 +2269,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Samoa",
     componentName: "Samoa",
     textName: "Samoa",
-    countryFileName: "Samoa.tsx",
-    Component: Countries.Samoa,
+    countryFileName: "Samoa.tsx"
   },
   XK: {
     countryCode: "XK",
@@ -2271,8 +2277,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Kosovo the Republic of",
     componentName: "KosovoTheRepublicOf",
     textName: "Kosovo (the Republic of)",
-    countryFileName: "KosovoTheRepublicOf.tsx",
-    Component: Countries.KosovoTheRepublicOf,
+    countryFileName: "KosovoTheRepublicOf.tsx"
   },
   YE: {
     countryCode: "YE",
@@ -2280,8 +2285,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Yemen",
     componentName: "Yemen",
     textName: "Yemen",
-    countryFileName: "Yemen.tsx",
-    Component: Countries.Yemen,
+    countryFileName: "Yemen.tsx"
   },
   YT: {
     countryCode: "YT",
@@ -2289,8 +2293,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Mayotte",
     componentName: "Mayotte",
     textName: "Mayotte",
-    countryFileName: "Mayotte.tsx",
-    Component: Countries.Mayotte,
+    countryFileName: "Mayotte.tsx"
   },
   ZA: {
     countryCode: "ZA",
@@ -2298,8 +2301,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "south Africa",
     componentName: "SouthAfrica",
     textName: "south Africa",
-    countryFileName: "SouthAfrica.tsx",
-    Component: Countries.SouthAfrica,
+    countryFileName: "SouthAfrica.tsx"
   },
   ZM: {
     countryCode: "ZM",
@@ -2307,8 +2309,7 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Zambia",
     componentName: "Zambia",
     textName: "Zambia",
-    countryFileName: "Zambia.tsx",
-    Component: Countries.Zambia,
+    countryFileName: "Zambia.tsx"
   },
   ZW: {
     countryCode: "ZW",
@@ -2316,7 +2317,6 @@ export const countryMeta: CountriesMeta = {
     countryNameSanitized: "Zimbabwe",
     componentName: "Zimbabwe",
     textName: "Zimbabwe",
-    countryFileName: "Zimbabwe.tsx",
-    Component: Countries.Zimbabwe,
-  },
+    countryFileName: "Zimbabwe.tsx"
+  }
 };

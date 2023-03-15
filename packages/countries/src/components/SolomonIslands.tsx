@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SolomonIslandsProps = CountrySymbolProps;
 
-export const SolomonIslands = forwardRef<SVGSVGElement, SolomonIslandsProps>(
+const SolomonIslands = forwardRef<SVGSVGElement, SolomonIslandsProps>(
   function SolomonIslands(props: SolomonIslandsProps, ref) {
     return (
       <CountrySymbol
@@ -33,3 +33,5 @@ export const SolomonIslands = forwardRef<SVGSVGElement, SolomonIslandsProps>(
     );
   }
 );
+
+export default SolomonIslands;

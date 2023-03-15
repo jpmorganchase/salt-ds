@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type VanuatuProps = CountrySymbolProps;
 
-export const Vanuatu = forwardRef<SVGSVGElement, VanuatuProps>(function Vanuatu(
+const Vanuatu = forwardRef<SVGSVGElement, VanuatuProps>(function Vanuatu(
   props: VanuatuProps,
   ref
 ) {
@@ -41,3 +41,5 @@ export const Vanuatu = forwardRef<SVGSVGElement, VanuatuProps>(function Vanuatu(
     </CountrySymbol>
   );
 });
+
+export default Vanuatu;

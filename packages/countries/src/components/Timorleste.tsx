@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TimorlesteProps = CountrySymbolProps;
 
-export const Timorleste = forwardRef<SVGSVGElement, TimorlesteProps>(
+const Timorleste = forwardRef<SVGSVGElement, TimorlesteProps>(
   function Timorleste(props: TimorlesteProps, ref) {
     return (
       <CountrySymbol
@@ -30,3 +30,5 @@ export const Timorleste = forwardRef<SVGSVGElement, TimorlesteProps>(
     );
   }
 );
+
+export default Timorleste;

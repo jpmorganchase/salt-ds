@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type PanamaProps = CountrySymbolProps;
 
-export const Panama = forwardRef<SVGSVGElement, PanamaProps>(function Panama(
+const Panama = forwardRef<SVGSVGElement, PanamaProps>(function Panama(
   props: PanamaProps,
   ref
 ) {
@@ -40,3 +40,5 @@ export const Panama = forwardRef<SVGSVGElement, PanamaProps>(function Panama(
     </CountrySymbol>
   );
 });
+
+export default Panama;

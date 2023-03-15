@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CzechiaProps = CountrySymbolProps;
 
-export const Czechia = forwardRef<SVGSVGElement, CzechiaProps>(function Czechia(
+const Czechia = forwardRef<SVGSVGElement, CzechiaProps>(function Czechia(
   props: CzechiaProps,
   ref
 ) {
@@ -27,3 +27,5 @@ export const Czechia = forwardRef<SVGSVGElement, CzechiaProps>(function Czechia(
     </CountrySymbol>
   );
 });
+
+export default Czechia;

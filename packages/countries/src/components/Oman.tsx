@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type OmanProps = CountrySymbolProps;
 
-export const Oman = forwardRef<SVGSVGElement, OmanProps>(function Oman(
+const Oman = forwardRef<SVGSVGElement, OmanProps>(function Oman(
   props: OmanProps,
   ref
 ) {
@@ -30,3 +30,5 @@ export const Oman = forwardRef<SVGSVGElement, OmanProps>(function Oman(
     </CountrySymbol>
   );
 });
+
+export default Oman;

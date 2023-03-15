@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type NetherlandsTheProps = CountrySymbolProps;
 
-export const NetherlandsThe = forwardRef<SVGSVGElement, NetherlandsTheProps>(
+const NetherlandsThe = forwardRef<SVGSVGElement, NetherlandsTheProps>(
   function NetherlandsThe(props: NetherlandsTheProps, ref) {
     return (
       <CountrySymbol
@@ -26,3 +26,5 @@ export const NetherlandsThe = forwardRef<SVGSVGElement, NetherlandsTheProps>(
     );
   }
 );
+
+export default NetherlandsThe;

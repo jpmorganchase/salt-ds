@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type AustriaProps = CountrySymbolProps;
 
-export const Austria = forwardRef<SVGSVGElement, AustriaProps>(function Austria(
+const Austria = forwardRef<SVGSVGElement, AustriaProps>(function Austria(
   props: AustriaProps,
   ref
 ) {
@@ -26,3 +26,5 @@ export const Austria = forwardRef<SVGSVGElement, AustriaProps>(function Austria(
     </CountrySymbol>
   );
 });
+
+export default Austria;

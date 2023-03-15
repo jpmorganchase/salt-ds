@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type PeruProps = CountrySymbolProps;
 
-export const Peru = forwardRef<SVGSVGElement, PeruProps>(function Peru(
+const Peru = forwardRef<SVGSVGElement, PeruProps>(function Peru(
   props: PeruProps,
   ref
 ) {
@@ -52,3 +52,5 @@ export const Peru = forwardRef<SVGSVGElement, PeruProps>(function Peru(
     </CountrySymbol>
   );
 });
+
+export default Peru;

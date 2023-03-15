@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SyrianArabRepublicTheProps = CountrySymbolProps;
 
-export const SyrianArabRepublicThe = forwardRef<
+const SyrianArabRepublicThe = forwardRef<
   SVGSVGElement,
   SyrianArabRepublicTheProps
 >(function SyrianArabRepublicThe(props: SyrianArabRepublicTheProps, ref) {
@@ -31,3 +31,5 @@ export const SyrianArabRepublicThe = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default SyrianArabRepublicThe;

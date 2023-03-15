@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type ReunionProps = CountrySymbolProps;
 
-export const Reunion = forwardRef<SVGSVGElement, ReunionProps>(function Reunion(
+const Reunion = forwardRef<SVGSVGElement, ReunionProps>(function Reunion(
   props: ReunionProps,
   ref
 ) {
@@ -33,3 +33,5 @@ export const Reunion = forwardRef<SVGSVGElement, ReunionProps>(function Reunion(
     </CountrySymbol>
   );
 });
+
+export default Reunion;

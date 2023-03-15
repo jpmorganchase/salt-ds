@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CyprusProps = CountrySymbolProps;
 
-export const Cyprus = forwardRef<SVGSVGElement, CyprusProps>(function Cyprus(
+const Cyprus = forwardRef<SVGSVGElement, CyprusProps>(function Cyprus(
   props: CyprusProps,
   ref
 ) {
@@ -33,3 +33,5 @@ export const Cyprus = forwardRef<SVGSVGElement, CyprusProps>(function Cyprus(
     </CountrySymbol>
   );
 });
+
+export default Cyprus;

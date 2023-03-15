@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type GuadeloupeProps = CountrySymbolProps;
 
-export const Guadeloupe = forwardRef<SVGSVGElement, GuadeloupeProps>(
+const Guadeloupe = forwardRef<SVGSVGElement, GuadeloupeProps>(
   function Guadeloupe(props: GuadeloupeProps, ref) {
     return (
       <CountrySymbol
@@ -32,3 +32,5 @@ export const Guadeloupe = forwardRef<SVGSVGElement, GuadeloupeProps>(
     );
   }
 );
+
+export default Guadeloupe;

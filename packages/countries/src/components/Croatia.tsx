@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CroatiaProps = CountrySymbolProps;
 
-export const Croatia = forwardRef<SVGSVGElement, CroatiaProps>(function Croatia(
+const Croatia = forwardRef<SVGSVGElement, CroatiaProps>(function Croatia(
   props: CroatiaProps,
   ref
 ) {
@@ -48,3 +48,5 @@ export const Croatia = forwardRef<SVGSVGElement, CroatiaProps>(function Croatia(
     </CountrySymbol>
   );
 });
+
+export default Croatia;

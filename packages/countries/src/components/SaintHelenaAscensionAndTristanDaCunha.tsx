@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SaintHelenaAscensionAndTristanDaCunhaProps = CountrySymbolProps;
 
-export const SaintHelenaAscensionAndTristanDaCunha = forwardRef<
+const SaintHelenaAscensionAndTristanDaCunha = forwardRef<
   SVGSVGElement,
   SaintHelenaAscensionAndTristanDaCunhaProps
 >(function SaintHelenaAscensionAndTristanDaCunha(
@@ -82,3 +82,5 @@ export const SaintHelenaAscensionAndTristanDaCunha = forwardRef<
     </CountrySymbol>
   );
 });
+
+export default SaintHelenaAscensionAndTristanDaCunha;

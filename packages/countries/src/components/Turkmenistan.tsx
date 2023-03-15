@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type TurkmenistanProps = CountrySymbolProps;
 
-export const Turkmenistan = forwardRef<SVGSVGElement, TurkmenistanProps>(
+const Turkmenistan = forwardRef<SVGSVGElement, TurkmenistanProps>(
   function Turkmenistan(props: TurkmenistanProps, ref) {
     return (
       <CountrySymbol
@@ -43,3 +43,5 @@ export const Turkmenistan = forwardRef<SVGSVGElement, TurkmenistanProps>(
     );
   }
 );
+
+export default Turkmenistan;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type LibyaProps = CountrySymbolProps;
 
-export const Libya = forwardRef<SVGSVGElement, LibyaProps>(function Libya(
+const Libya = forwardRef<SVGSVGElement, LibyaProps>(function Libya(
   props: LibyaProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const Libya = forwardRef<SVGSVGElement, LibyaProps>(function Libya(
     </CountrySymbol>
   );
 });
+
+export default Libya;

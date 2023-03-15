@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SierraLeoneProps = CountrySymbolProps;
 
-export const SierraLeone = forwardRef<SVGSVGElement, SierraLeoneProps>(
+const SierraLeone = forwardRef<SVGSVGElement, SierraLeoneProps>(
   function SierraLeone(props: SierraLeoneProps, ref) {
     return (
       <CountrySymbol
@@ -26,3 +26,5 @@ export const SierraLeone = forwardRef<SVGSVGElement, SierraLeoneProps>(
     );
   }
 );
+
+export default SierraLeone;

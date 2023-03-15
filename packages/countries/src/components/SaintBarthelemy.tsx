@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type SaintBarthelemyProps = CountrySymbolProps;
 
-export const SaintBarthelemy = forwardRef<SVGSVGElement, SaintBarthelemyProps>(
+const SaintBarthelemy = forwardRef<SVGSVGElement, SaintBarthelemyProps>(
   function SaintBarthelemy(props: SaintBarthelemyProps, ref) {
     return (
       <CountrySymbol
@@ -32,3 +32,5 @@ export const SaintBarthelemy = forwardRef<SVGSVGElement, SaintBarthelemyProps>(
     );
   }
 );
+
+export default SaintBarthelemy;

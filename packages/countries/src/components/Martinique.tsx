@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MartiniqueProps = CountrySymbolProps;
 
-export const Martinique = forwardRef<SVGSVGElement, MartiniqueProps>(
+const Martinique = forwardRef<SVGSVGElement, MartiniqueProps>(
   function Martinique(props: MartiniqueProps, ref) {
     return (
       <CountrySymbol
@@ -32,3 +32,5 @@ export const Martinique = forwardRef<SVGSVGElement, MartiniqueProps>(
     );
   }
 );
+
+export default Martinique;

@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type CookIslandsTheProps = CountrySymbolProps;
 
-export const CookIslandsThe = forwardRef<SVGSVGElement, CookIslandsTheProps>(
+const CookIslandsThe = forwardRef<SVGSVGElement, CookIslandsTheProps>(
   function CookIslandsThe(props: CookIslandsTheProps, ref) {
     return (
       <CountrySymbol
@@ -49,3 +49,5 @@ export const CookIslandsThe = forwardRef<SVGSVGElement, CookIslandsTheProps>(
     );
   }
 );
+
+export default CookIslandsThe;

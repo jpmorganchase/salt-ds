@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type MaliProps = CountrySymbolProps;
 
-export const Mali = forwardRef<SVGSVGElement, MaliProps>(function Mali(
+const Mali = forwardRef<SVGSVGElement, MaliProps>(function Mali(
   props: MaliProps,
   ref
 ) {
@@ -33,3 +33,5 @@ export const Mali = forwardRef<SVGSVGElement, MaliProps>(function Mali(
     </CountrySymbol>
   );
 });
+
+export default Mali;

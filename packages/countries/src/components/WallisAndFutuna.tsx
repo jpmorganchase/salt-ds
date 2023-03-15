@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type WallisAndFutunaProps = CountrySymbolProps;
 
-export const WallisAndFutuna = forwardRef<SVGSVGElement, WallisAndFutunaProps>(
+const WallisAndFutuna = forwardRef<SVGSVGElement, WallisAndFutunaProps>(
   function WallisAndFutuna(props: WallisAndFutunaProps, ref) {
     return (
       <CountrySymbol
@@ -32,3 +32,5 @@ export const WallisAndFutuna = forwardRef<SVGSVGElement, WallisAndFutunaProps>(
     );
   }
 );
+
+export default WallisAndFutuna;

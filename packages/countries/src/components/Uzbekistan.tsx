@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type UzbekistanProps = CountrySymbolProps;
 
-export const Uzbekistan = forwardRef<SVGSVGElement, UzbekistanProps>(
+const Uzbekistan = forwardRef<SVGSVGElement, UzbekistanProps>(
   function Uzbekistan(props: UzbekistanProps, ref) {
     return (
       <CountrySymbol
@@ -31,3 +31,5 @@ export const Uzbekistan = forwardRef<SVGSVGElement, UzbekistanProps>(
     );
   }
 );
+
+export default Uzbekistan;

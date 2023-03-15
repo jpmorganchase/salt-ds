@@ -4,7 +4,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
 export type BermudaProps = CountrySymbolProps;
 
-export const Bermuda = forwardRef<SVGSVGElement, BermudaProps>(function Bermuda(
+const Bermuda = forwardRef<SVGSVGElement, BermudaProps>(function Bermuda(
   props: BermudaProps,
   ref
 ) {
@@ -63,3 +63,5 @@ export const Bermuda = forwardRef<SVGSVGElement, BermudaProps>(function Bermuda(
     </CountrySymbol>
   );
 });
+
+export default Bermuda;
