@@ -61,10 +61,10 @@ const isSaltThemeCustomProperty = function (property) {
 
 const allAllowedKeys = [
   // characteristics
+  "accent",
   "actionable",
   "container",
   "draggable",
-  "target",
   "editable",
   "focused",
   "measured",
@@ -73,14 +73,16 @@ const allAllowedKeys = [
   "selectable",
   "separable",
   "status",
+  "target",
   "taggable",
   "text",
-  // additional to decide
+  // foundations
   "animation",
-  "delay", // to be merged with animation
-  "palette-opacity", // palette only allowed for opacity purposes
+  "delay", // TODO: to be merged with animation
   "size",
   "zIndex",
+  // palette opacity
+  "palette-opacity"
 ];
 
 const regexpPattern = new RegExp(
