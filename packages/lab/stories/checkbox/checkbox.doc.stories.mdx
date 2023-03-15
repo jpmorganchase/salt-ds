@@ -1,5 +1,12 @@
-import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Checkbox } from "@salt-ds/lab";
+import {
+  ArgsTable,
+  Canvas,
+  Meta,
+  Story
+} from "@storybook/addon-docs";
+import {
+  Checkbox
+} from "@salt-ds/lab";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -20,25 +27,17 @@ A Checkbox allows the user to turn a specific value on or off. The value can be 
 ## Default
 
 <Canvas>
-  <Story id="lab-checkbox--default" />
+  <Story id="lab-checkbox--checkbox-variations" />
 </Canvas>
 
-## Disabled
+## Checkbox Group
+
+A Checkbox group allow selection of one or more values from a given set of choices. They can be aligned horizontally or vertically.
+
+## Uncontrolled Group
 
 <Canvas>
-  <Story id="lab-checkbox--disabled" />
-</Canvas>
-
-## Without Label
-
-<Canvas>
-  <Story id="lab-checkbox--without-label" />
-</Canvas>
-
-## Indeterminate
-
-<Canvas>
-  <Story id="lab-checkbox--indeterminate" />
+  <Story id="lab-checkbox--uncontrolled-group" />
 </Canvas>
 
 ## Horizontal Group
@@ -49,14 +48,12 @@ A Checkbox allows the user to turn a specific value on or off. The value can be 
 
 ## Controlled Group
 
+Controlled
+
+A controlled checkbox group requires events to trigger the state change. The application must track state and update the props manually. This is useful for when logic or validation needs to be applied or a request should happen when updating a form.
+
 <Canvas>
   <Story id="lab-checkbox--controlled-group" />
-</Canvas>
-
-## Uncontrolled Group
-
-<Canvas>
-  <Story id="lab-checkbox--uncontrolled-group" />
 </Canvas>
 
 ## Long Text Group

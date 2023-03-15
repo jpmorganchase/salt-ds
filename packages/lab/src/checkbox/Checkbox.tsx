@@ -21,16 +21,16 @@ const withBaseName = makePrefixer("saltCheckbox");
 
 export interface CheckboxProps {
   /**
-   * Properties applied to the input element.
+   * If `true`, the checkbox will be checked.
    */
   checked?: boolean;
   /**
-   * The className(s) applied to the component
+   * The className(s) applied to the component.
    */
   className?: string;
   /**
    * Whether the checkbox component is checked by default
-   * This will be disregarded if checked is already set
+   * This will be disregarded if checked is already set.
    */
   defaultChecked?: boolean;
   /**
@@ -38,41 +38,41 @@ export interface CheckboxProps {
    */
   disabled?: boolean;
   /**
-   * If `true`, the checkbox will be disabled.
+   * If `true`, the checkbox will be in the error state.
    */
   error?: boolean;
   /**
-   * If `true`, the checkbox will be disabled.
+   * If true, the checkbox appears indeterminate. This does not set the native
+   * input element to indeterminate due to the inconsistent behaviour across browsers
+   * However, a data-indeterminate attribute is set on the input.
    */
   indeterminate?: boolean;
   /**
-   * If true, the checkbox appears indeterminate. This does not set the native
-   * input element to indeterminate due to the inconsistent behaviour across browsers
-   * However, a data-indeterminate attribute is set on the input
+   * Properties applied to the input element.
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
   /**
-   * The label to be shown next to the checkbox
+   * The label to be shown next to the checkbox.
    */
   label?: ReactNode;
   /**
-   * The name applied to the input
+   * The name applied to the input.
    */
   name?: string;
   /**
-   * Callback when checkbox loses focus
+   * Callback when checkbox loses focus.
    */
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
-   * Callback when checked state is changed
+   * Callback when checked state is changed.
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
   /**
-   * Callback when checkbox gains focus
+   * Callback when checkbox gains focus.
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
   /**
-   * The value of the checkbox
+   * The value of the checkbox.
    */
   value?: string;
 }
