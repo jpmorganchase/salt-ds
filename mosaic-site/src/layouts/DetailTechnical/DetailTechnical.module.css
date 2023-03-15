@@ -76,9 +76,24 @@
   font-size: 0.8rem;
 }
 
-.sidebar li {
-  padding: var(calc(--salt-size-unit * 2));
+/* TODO: Decrease specificity once Mosaic exposes their css vars */
+[data-mode="dark"] .sidebar li[data-selected="true"] {
   height: 36px;
+  border-left-width: 3px;
+}
+
+[data-mode="dark"] .sidebar li:not([data-selected="true"]):not(:hover),
+[data-mode="dark"] .sidebar li {
+  border-color: transparent;
+}
+
+[data-mode="dark"] .sidebar li:hover {
+  background-color: transparent;
+}
+
+.sidebar li:not([data-selected="true"]):not(:hover) {
+  border-color: transparent;
+  color: var(--salt-text-secondary-foreground);
 }
 
 .sidebar li:hover {
@@ -86,7 +101,7 @@
   text-decoration: underline;
 }
 
-.sidebar li[aria-checked="true"] {
+.sidebar li[aria-checked="true"]:not(:hover) {
   color: var(--salt-text-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight-active);
 }
