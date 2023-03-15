@@ -28,34 +28,21 @@ $icons: (
   src: url("fonts/jpmuitk-icons.woff") format("woff");
 }
 
-@each $mode in "light", "dark" {
-  @each $name, $glyph in $icons {
-    .ag-theme-uitk-high-#{$mode} .ag-icon-#{$name},
-    .ag-theme-uitk-medium-#{$mode} .ag-icon-#{$name},
-    .ag-theme-uitk-low-#{$mode} .ag-icon-#{$name},
-    .ag-theme-uitk-touch-#{$mode} .ag-icon-#{$name} {
-      font-family: "jpmuitk-icons";
-    }
-
-    .ag-theme-uitk-high-#{$mode} .ag-icon-#{$name}::before,
-    .ag-theme-uitk-medium-#{$mode} .ag-icon-#{$name}::before,
-    .ag-theme-uitk-low-#{$mode} .ag-icon-#{$name}::before,
-    .ag-theme-uitk-touch-#{$mode} .ag-icon-#{$name}::before {
-      content: $glyph;
-    }
-  }
-
-  .ag-theme-uitk-high-#{$mode} .ag-checkbox-input-wrapper::after,
-  .ag-theme-uitk-medium-#{$mode} .ag-checkbox-input-wrapper::after,
-  .ag-theme-uitk-low-#{$mode} .ag-checkbox-input-wrapper::after,
-  .ag-theme-uitk-touch-#{$mode} .ag-checkbox-input-wrapper::after {
+@each $name, $glyph in $icons {
+  [class^="ag-theme-uitk"] .ag-icon-#{$name} {
     font-family: "jpmuitk-icons";
-    content: "";
   }
-  .ag-theme-uitk-high-#{$mode} .ag-checkbox-input-wrapper.ag-checked::after,
-  .ag-theme-uitk-medium-#{$mode} .ag-checkbox-input-wrapper.ag-checked::after,
-  .ag-theme-uitk-low-#{$mode} .ag-checkbox-input-wrapper.ag-checked::after,
-  .ag-theme-uitk-touch-#{$mode} .ag-checkbox-input-wrapper.ag-checked::after {
-    content: "\e95b";
+
+  [class^="ag-theme-uitk"] .ag-icon-#{$name}::before {
+    content: $glyph;
   }
+}
+
+[class^="ag-theme-uitk"] .ag-checkbox-input-wrapper::after {
+  font-family: "jpmuitk-icons";
+  content: "";
+}
+
+[class^="ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-checked::after {
+  content: "\e95b";
 }
