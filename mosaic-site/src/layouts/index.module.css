@@ -1,8 +1,6 @@
 .base header {
   --site-navigation-padding-vertical: var(--salt-size-unit);
   --site-navigation-padding-horizontal: calc(var(--salt-size-unit) * 3);
-  --border-width-thin: 0;
-  --shadow-dark-elevation2: var(--salt-shadow-1-color);
 }
 
 .docsWrapper {
@@ -32,8 +30,11 @@
   margin: calc(var(--salt-size-unit) * 8) calc(var(--salt-size-unit) * 3) calc(var(--salt-size-unit) * 2) calc(var(--salt-size-unit) * 3);
 }
 
-.base header {
+/* TODO: Remove this once Mosaic exposes their css vars */
+.base header:not(#id) {
   padding: var(--site-navigation-padding-vertical) var(--site-navigation-padding-horizontal);
+  border-bottom-width: 0;
+  box-shadow: var(--salt-shadow-1-color);
 }
 
 @media screen and (max-width: 768px) {
