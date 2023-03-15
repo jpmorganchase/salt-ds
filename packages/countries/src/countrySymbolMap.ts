@@ -3,7 +3,7 @@
 import { ElementType } from "react";
 import * as Countries from "./components";
 import { CountrySymbolProps } from "./country-symbol";
-import { CountryCode } from "./countryMeta";
+import { CountryCode } from "./countryMetaMap";
 
 type CountrySymbolMap = Record<CountryCode, ElementType<CountrySymbolProps>>;
 
@@ -263,5 +263,5 @@ export const countrySymbolMap: CountrySymbolMap = {
   YT: Countries.Mayotte,
   ZA: Countries.SouthAfrica,
   ZM: Countries.Zambia,
-  ZW: Countries.Zimbabwe
+  ZW: Countries.Zimbabwe,
 };

@@ -8,10 +8,11 @@ import { fileURLToPath } from "url";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
 const PRETTIER_SETTINGS = {
-  parser: "babel-ts",
-  singleQuote: false,
+  parser: "typescript",
+  useTabs: false,
+  tabWidth: 2,
   printWidth: 80,
-  proseWrap: "always",
+  endOfLine: "lf",
 };
 
 const GENERATED_WARNING_COMMENT =
@@ -303,7 +304,7 @@ const generateCountrySymbolMap = ({ countryMetaMap, basePath }) => {
   import { ElementType } from 'react';
     import * as Countries from './components';
     import { CountrySymbolProps } from './country-symbol';
-    import { CountryCode } from './countryMeta';
+    import { CountryCode } from './countryMetaMap';
   `;
 
   const typeText = `

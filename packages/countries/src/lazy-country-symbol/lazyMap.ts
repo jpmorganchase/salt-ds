@@ -97,8 +97,8 @@ export const lazyMap = {
   GP: React.lazy(() => import("../components/Guadeloupe")),
   GQ: React.lazy(() => import("../components/EquatorialGuinea")),
   GR: React.lazy(() => import("../components/Greece")),
-  GS: React.lazy(() =>
-    import("../components/SouthGeorgiaAndTheSouthSandwichIslands")
+  GS: React.lazy(
+    () => import("../components/SouthGeorgiaAndTheSouthSandwichIslands")
   ),
   GT: React.lazy(() => import("../components/Guatemala")),
   GU: React.lazy(() => import("../components/Guam")),
@@ -130,8 +130,8 @@ export const lazyMap = {
   KI: React.lazy(() => import("../components/Kiribati")),
   KM: React.lazy(() => import("../components/ComorosThe")),
   KN: React.lazy(() => import("../components/SaintKittsAndNevis")),
-  KP: React.lazy(() =>
-    import("../components/KoreaDemocraticPeoplesRepublicOf")
+  KP: React.lazy(
+    () => import("../components/KoreaDemocraticPeoplesRepublicOf")
   ),
   KR: React.lazy(() => import("../components/KoreaRepublicOf")),
   KW: React.lazy(() => import("../components/Kuwait")),
@@ -210,8 +210,8 @@ export const lazyMap = {
   SD: React.lazy(() => import("../components/SudanThe")),
   SE: React.lazy(() => import("../components/Sweden")),
   SG: React.lazy(() => import("../components/Singapore")),
-  SH: React.lazy(() =>
-    import("../components/SaintHelenaAscensionAndTristanDaCunha")
+  SH: React.lazy(
+    () => import("../components/SaintHelenaAscensionAndTristanDaCunha")
   ),
   SI: React.lazy(() => import("../components/Slovenia")),
   SJ: React.lazy(() => import("../components/SvalbardAndJanMayen")),
@@ -245,8 +245,8 @@ export const lazyMap = {
   TZ: React.lazy(() => import("../components/TanzaniaTheUnitedRepublicOf")),
   UA: React.lazy(() => import("../components/Ukraine")),
   UG: React.lazy(() => import("../components/Uganda")),
-  UM: React.lazy(() =>
-    import("../components/UnitedStatesMinorOutlyingIslandsThe")
+  UM: React.lazy(
+    () => import("../components/UnitedStatesMinorOutlyingIslandsThe")
   ),
   UN: React.lazy(() => import("../components/UnitedNations")),
   US: React.lazy(() => import("../components/UnitedStatesOfAmericaThe")),
@@ -266,5 +266,5 @@ export const lazyMap = {
   YT: React.lazy(() => import("../components/Mayotte")),
   ZA: React.lazy(() => import("../components/SouthAfrica")),
   ZM: React.lazy(() => import("../components/Zambia")),
-  ZW: React.lazy(() => import("../components/Zimbabwe"))
+  ZW: React.lazy(() => import("../components/Zimbabwe")),
 } as const;
