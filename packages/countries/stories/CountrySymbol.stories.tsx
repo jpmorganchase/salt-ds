@@ -7,8 +7,6 @@ import {
   CountrySymbolProps,
   countryMetaMap,
   countrySymbolMap,
-  LazyCountrySymbol,
-  countryCodes,
   CountryCode,
 } from "@salt-ds/countries";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -16,7 +14,7 @@ import { FlexLayout, StackLayout } from "@salt-ds/core";
 import { FormField, Input } from "@salt-ds/lab";
 
 export default {
-  title: "CountrySymbols/CountrySymbol",
+  title: "Country Symbols/Country Symbol",
   component: CountrySymbol,
   argTypes: {
     code: {
@@ -54,19 +52,13 @@ const CountrySymbolGrid = ({
 export const SaltCountrySymbol: ComponentStory<typeof CountrySymbol> = (
   props
 ) => <TrinidadAndTobago {...props} />;
+
 export const CountrySymbolMultipleSizes: ComponentStory<
   typeof CountrySymbol
 > = () => (
   <CountrySymbolGrid
     CountrySymbol={Mexico as ElementType<CountrySymbolProps>}
   />
-);
-
-export const SaltTypes: ComponentStory<typeof CountrySymbol> = () => (
-  <FlexLayout wrap gap={2}>
-    <GreatBritain size={4} />
-    <Mexico size={4} />
-  </FlexLayout>
 );
 
 export const AllCountrySymbols: ComponentStory<typeof CountrySymbol> = () => {
@@ -76,29 +68,6 @@ export const AllCountrySymbols: ComponentStory<typeof CountrySymbol> = () => {
         <Component key={code} size={1} />
       ))}
     </FlexLayout>
-  );
-};
-
-export const Lazy: ComponentStory<typeof LazyCountrySymbol> = () => {
-  const [countryCode, setCountryCode] = useState<CountryCode>(countryCodes[0]);
-
-  return (
-    <StackLayout>
-      <label htmlFor="code">
-        Change country code
-        <select
-          id="code"
-          onChange={(e) => {
-            setCountryCode(e.target.value as CountryCode);
-          }}
-        >
-          {countryCodes.map((code) => (
-            <option value={code}>{code}</option>
-          ))}
-        </select>
-      </label>
-      <LazyCountrySymbol code={countryCode} />
-    </StackLayout>
   );
 };
 
