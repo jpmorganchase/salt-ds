@@ -4,7 +4,6 @@ import {
   ChangeEventHandler,
   forwardRef,
   HTMLAttributes,
-  ReactNode,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
@@ -26,14 +25,6 @@ export interface CheckboxGroupProps extends HTMLAttributes<HTMLDivElement> {
    * Display group of elements in a compact row.
    */
   direction?: CheckboxGroupDirectionProps;
-  /**
-   * Props spread onto the legend.
-   */
-  LegendProps?: unknown;
-  /**
-   * The label for the group legend
-   */
-  legend?: ReactNode;
   /**
    * The name used to reference the value of the control.
    */

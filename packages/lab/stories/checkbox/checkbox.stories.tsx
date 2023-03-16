@@ -110,10 +110,6 @@ export const UncontrolledGroup: ComponentStory<typeof CheckboxGroup> = (
   );
 };
 
-UncontrolledGroup.args = {
-  legend: "Uncontrolled CheckboxGroup",
-};
-
 export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
   const checkboxesData = [
     {
@@ -152,7 +148,6 @@ export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
     <CheckboxGroup
       {...args}
       checkedValues={controlledValues}
-      legend="Controlled Checkbox Group"
       onChange={handleChange}
     >
       {checkboxesData.map((data) => (
@@ -184,11 +179,7 @@ export const LongTextGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
 
   return (
     <div style={{ width: "500px" }}>
-      <CheckboxGroup
-        {...args}
-        defaultCheckedValues={["radio"]}
-        legend="Long Text Checkbox Group"
-      >
+      <CheckboxGroup {...args} defaultCheckedValues={["radio"]}>
         {checkboxesData.map((data) => (
           <Checkbox key={data.value} {...data} />
         ))}
