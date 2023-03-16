@@ -77,34 +77,36 @@ export const AllCountrySymbolsWithSearch: ComponentStory<
   const [inputText, setInputText] = useState("");
 
   return (
-    <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0 }}>
-      <StackLayout separators>
-        <FormField
-          label={"search country symbols"}
-          style={{ marginBlock: "1rem", maxWidth: "300px" }}
-        >
-          <Input
-            value={inputText}
-            onChange={(_, value) => setInputText(value)}
-          />
-        </FormField>
-        <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
-          {Object.entries(countryMetaMap)
-            .filter(([code, { textName }]) =>
-              new RegExp(inputText, "i").test(textName)
-            )
-            .map(([code, { textName }]) => {
-              const Component = countrySymbolMap[code as CountryCode];
+    <StackLayout separators>
+      <FormField
+        label={"search country symbols"}
+        style={{ marginBlock: "1rem", maxWidth: "300px" }}
+      >
+        <Input value={inputText} onChange={(_, value) => setInputText(value)} />
+      </FormField>
+      <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
+        {Object.entries(countryMetaMap)
+          .filter(([code, { textName, componentName }]) => {
+            const searchText = inputText.toLowerCase();
 
-              return (
-                <StackLayout style={{ width: "150px" }} gap={1} align="center">
-                  <Component key={code} size={2} />
-                  <p style={{ margin: 0 }}>{textName}</p>
-                </StackLayout>
-              );
-            })}
-        </FlexLayout>
-      </StackLayout>
-    </div>
+            return (
+              code.toLowerCase().includes(searchText) ||
+              textName.toLowerCase().includes(searchText) ||
+              componentName.toLowerCase().includes(searchText)
+            );
+          })
+          .map(([code, { textName, componentName }]) => {
+            const Component = countrySymbolMap[code as CountryCode];
+
+            return (
+              <StackLayout style={{ width: "150px" }} gap={1} align="center">
+                <Component key={code} size={2} />
+                <p style={{ margin: 0 }}>{code}</p>
+                <p style={{ margin: 0 }}>{componentName}</p>
+              </StackLayout>
+            );
+          })}
+      </FlexLayout>
+    </StackLayout>
   );
 };
