@@ -2,4 +2,4 @@
 "@salt-ds/theme": minor
 ---
 
-Renamed `--salt-size-selection` to `--salt-size-selectable`
+Deprecated `--salt-size-selection`; replaced with `--salt-size-selectable`

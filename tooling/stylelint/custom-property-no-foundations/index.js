@@ -72,6 +72,7 @@ const allAllowedKeys = [
   "container",
   "draggable",
   "target",
+  "differential", // TODO: **deprecated** delete here
   "editable",
   "focused",
   "measured",
