@@ -34,7 +34,7 @@ A Checkbox allows the user to turn a specific value on or off. The value can be 
 
 A Checkbox group allow selection of one or more values from a given set of choices. They can be aligned horizontally or vertically.
 
-## Uncontrolled Group
+## Vertical Group
 
 <Canvas>
   <Story id="lab-checkbox--uncontrolled-group" />
@@ -42,13 +42,13 @@ A Checkbox group allow selection of one or more values from a given set of choic
 
 ## Horizontal Group
 
+The checkbox group layout can be set to horizontal by setting the `direction` prop to "horizontal"
+
 <Canvas>
   <Story id="lab-checkbox--horizontal-group" />
 </Canvas>
 
 ## Controlled Group
-
-Controlled
 
 A controlled checkbox group requires events to trigger the state change. The application must track state and update the props manually. This is useful for when logic or validation needs to be applied or a request should happen when updating a form.
 
