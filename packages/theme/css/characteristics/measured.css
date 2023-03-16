@@ -1,3 +1,8 @@
+
+/* 
+ * **Deprecated:** 
+ * Use track characteristic instead 
+ */
 .salt-theme {
   --salt-measured-borderStyle: solid;
   --salt-measured-borderStyle-active: solid;

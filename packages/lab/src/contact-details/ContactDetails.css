@@ -261,7 +261,7 @@
 }
 
 .saltContactFavoriteToggle-deselected {
-  --contactDetails-favoriteToggle-fill: var(--salt-measured-borderColor);
+  --contactDetails-favoriteToggle-fill: var(--salt-track-borderColor);
 }
 
 .saltContactFavoriteToggle-selecting {
@@ -273,7 +273,7 @@
 }
 
 .saltContactFavoriteToggle-deselecting {
-  --contactDetails-favoriteToggle-fill: var(--salt-measured-borderColor);
+  --contactDetails-favoriteToggle-fill: var(--salt-track-borderColor);
 }
 
 .saltContactFavoriteToggle-svg {

@@ -1,0 +1,64 @@
+import {
+  Meta,
+  Story,
+  Canvas,
+  ColorPalette,
+  ColorItem,
+} from "@storybook/addon-docs";
+import { ColorContainer } from "docs/components/ColorContainer";
+import { DocGrid } from "docs/components/DocGrid";
+
+<Meta title="Theme/Palettes/Track" />
+
+# Track
+
+Colors used to represent a measurement, value or progression.
+
+## Base
+
+<ColorContainer className="paletteContainer">
+  <ColorPalette className="docs">
+    <ColorItem
+      title="Background"
+      subtitle="--salt-palette-track-background"
+      colors={{
+        "--salt-palette-track-background":
+          "var(--salt-palette-track-background)",
+        "--salt-palette-track-border-background":
+          "var(--salt-palette-track-border-background)",
+      }}
+    />
+    <ColorItem
+      title="Border"
+      subtitle="--salt-palette-track-border"
+      colors={{
+        "--salt-palette-track-border": "var(--salt-palette-track-border)",
+        "--salt-palette-track-border-disabled":
+          "var(--salt-palette-track-border-disabled)",
+      }}
+    />
+    <ColorItem
+      title="Fill"
+      subtitle="--salt-palette-track-fill"
+      colors={{
+        "--salt-palette-track-fill": "var(--salt-palette-track-fill)",
+        "--salt-palette-track-fill-disabled":
+          "var(--salt-palette-track-fill-disabled)",
+      }}
+    />
+    <ColorItem
+      title="Foreground"
+      subtitle="--salt-palette-track-foreground"
+      colors={{
+        "--salt-palette-track-foreground":
+          "var(--salt-palette-track-foreground)",
+        "--salt-palette-track-foreground-disabled":
+          "var(--salt-palette-track-foreground-disabled)",
+        "--salt-palette-track-foreground-active":
+          "var(--salt-palette-track-foreground-active)",
+        "--salt-palette-track-foreground-activeDisabled":
+          "var(--salt-palette-track-foreground-activeDisabled)",
+      }}
+    />
+  </ColorPalette>
+</ColorContainer>
