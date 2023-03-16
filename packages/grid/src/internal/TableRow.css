@@ -74,13 +74,13 @@
 
 .saltGridTableRow-validationStatus-error.saltGridTableRow-selected {
   --grid-row-background: var(--salt-status-error-background-selected);
-  --grid-row-borderColor: var(--salt-status-error-border-selected);
+  --grid-row-borderColor: var(--salt-status-error-borderColor);
 }
 .saltGridTableRow-validationStatus-warning.saltGridTableRow-selected {
   --grid-row-background: var(--salt-status-warning-background-selected);
-  --grid-row-borderColor: var(--salt-status-warning-border-selected);
+  --grid-row-borderColor: var(--salt-status-warning-borderColor);
 }
 .saltGridTableRow-validationStatus-success.saltGridTableRow-selected {
   --grid-row-background: var(--salt-status-success-background-selected);
-  --grid-row-borderColor: var(--salt-status-success-border-selected);
+  --grid-row-borderColor: var(--salt-status-success-borderColor);
 }
