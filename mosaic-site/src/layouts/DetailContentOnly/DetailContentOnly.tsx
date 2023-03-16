@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  AppHeader,
-  Breadcrumbs,
-  Footer,
-} from "@jpmorganchase/mosaic-site-components";
+import { Breadcrumbs } from "@jpmorganchase/mosaic-site-components";
+import { Footer, AppHeader } from "../../components";
 import { SaltProvider } from "@salt-ds/core";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
 import { useMeta } from "@jpmorganchase/mosaic-store";
@@ -20,7 +17,7 @@ export const DetailContentOnly: React.FC<LayoutProps> = ({
   } = useMeta();
 
   return (
-    <LayoutBase Header={<AppHeader />}>
+    <LayoutBase Header={<AppHeader />} className={layoutStyles.base}>
       <div className={layoutStyles.docsWrapper}>
         <LayoutFullWidth Footer={<Footer {...FooterProps} />}>
           <Breadcrumbs />
