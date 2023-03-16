@@ -13,4 +13,7 @@
   height: var(--country-symbol-size);
   min-width: var(--country-symbol-size);
   min-height: var(--country-symbol-size);
+  overflow: hidden;
+  user-select: none;
+  border-radius: 50%;
 }
