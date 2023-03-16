@@ -96,7 +96,7 @@
 }
 
 .primarySidebar aside {
-  background-color: var(--salt-palette-accent-foreground);
+  background-color: var(--salt-accent-foreground);
 }
 
 .primarySidebar aside svg {
