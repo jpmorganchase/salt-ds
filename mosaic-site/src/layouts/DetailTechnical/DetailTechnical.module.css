@@ -26,7 +26,7 @@
 }
 
 .primarySidebar :global(a.ps-menu-button) {
-  color: var(--salt-palette-neutral-secondary-foreground);
+  color: var(--salt-text-secondary-foreground);
 }
 
 .primarySidebar :global(.ps-menu-label) {
