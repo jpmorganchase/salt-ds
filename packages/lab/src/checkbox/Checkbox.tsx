@@ -125,8 +125,6 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       defaultChecked = undefined;
     }
 
-    console.log(isCheckchecked);
-
     const [checked, setChecked] = useControlled({
       controlled: isCheckchecked,
       default: Boolean(defaultCheckedProp),
