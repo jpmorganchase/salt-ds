@@ -137,7 +137,8 @@
     "storybook-addon-docusaurus@^0.2.1": "patch:storybook-addon-docusaurus@npm%3A0.2.1#./.yarn/patches/storybook-addon-docusaurus-npm-0.2.1-ed15d70641.patch",
     "@jpmorganchase/mosaic-components/@salt-ds/lab": "1.0.0-alpha.1",
     "@jpmorganchase/mosaic-labs-components/@salt-ds/lab": "1.0.0-alpha.1",
-    "@jpmorganchase/mosaic-layouts/@salt-ds/lab": "1.0.0-alpha.1"
+    "@jpmorganchase/mosaic-layouts/@salt-ds/lab": "1.0.0-alpha.1",
+    "@jpmorganchase/mosaic-site-components/@salt-ds/lab": "1.0.0-alpha.1"
   },
   "browserslist": {
     "production": [
