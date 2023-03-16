@@ -5,12 +5,15 @@ import {
   Story
 } from "@storybook/addon-docs";
 import {
-  Checkbox
+  Checkbox,
+  CheckboxGroup
 } from "@salt-ds/lab";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
+import HelpAndSupport
+  from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Lab/Checkbox"
@@ -76,6 +79,12 @@ import { Checkbox } from "@salt-ds/lab";
 
 <CSSClassTable of={Checkbox} />
 
+<CSSClassTable of={CheckboxGroup} />
+
 ## Characteristics Used
 
 <CharacteristicUsage of={Checkbox} />
+
+## Accessibility
+
+<HelpAndSupport />
