@@ -13,7 +13,8 @@ export type characteristic =
   | "status"
   | "taggable"
   | "target"
-  | "text";
+  | "text"
+  | "differential" /* **deprecated** */;
 
 export type ThemeName = string;
 
