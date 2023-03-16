@@ -42,7 +42,7 @@
 .primarySidebar :global(.ps-menu-button.ps-active) {
   border-left: 4px solid var(--site-tertiary-accent-orange);
   background-color: var(--color-dark-neutral-background-emphasis);
-  color: var(--salt-palette-interact-foreground);
+  color: var(--salt-selectable-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight);
 }
 
