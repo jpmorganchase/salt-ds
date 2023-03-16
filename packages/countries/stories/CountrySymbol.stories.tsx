@@ -1,7 +1,6 @@
-import { ElementType, useState } from "react";
+import { ElementType, ReactNode, useState } from "react";
 import {
   TrinidadAndTobago,
-  GreatBritain,
   Mexico,
   CountrySymbol,
   CountrySymbolProps,
@@ -26,29 +25,6 @@ export default {
   },
 } as ComponentMeta<typeof CountrySymbol>;
 
-const sizes = [1, 2, 3] as const;
-
-const CountrySymbolGrid = ({
-  CountrySymbol: CountrySymbolComponent,
-}: {
-  CountrySymbol: ElementType<CountrySymbolProps>;
-}) => {
-  return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${sizes.length}, 100px)`,
-
-        gridGap: 50,
-      }}
-    >
-      {sizes.map((size) => (
-        <CountrySymbolComponent key={size} size={size} />
-      ))}
-    </div>
-  );
-};
-
 export const SaltCountrySymbol: ComponentStory<typeof CountrySymbol> = (
   props
 ) => <TrinidadAndTobago {...props} />;
@@ -56,9 +32,13 @@ export const SaltCountrySymbol: ComponentStory<typeof CountrySymbol> = (
 export const CountrySymbolMultipleSizes: ComponentStory<
   typeof CountrySymbol
 > = () => (
-  <CountrySymbolGrid
-    CountrySymbol={Mexico as ElementType<CountrySymbolProps>}
-  />
+  <StackLayout direction="row">
+    <Mexico size={1} />
+    <Mexico size={2} />
+    <Mexico size={3} />
+    <Mexico size={4} />
+    <Mexico size={5} />
+  </StackLayout>
 );
 
 export const AllCountrySymbols: ComponentStory<typeof CountrySymbol> = () => {
