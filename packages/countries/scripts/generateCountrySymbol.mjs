@@ -180,7 +180,7 @@ const generateCountrySymbolComponents = ({
     const fileContents = Mustache.render(template, {
       svgElements: svgPaths.data,
       componentName,
-      ariaLabel: baseCountryName.toLowerCase(),
+      ariaLabel: baseCountryName,
       viewBox: viewBox ?? "0 0 72 72",
     });
 
