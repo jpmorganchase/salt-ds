@@ -16,7 +16,10 @@
 
   /* Deprecated */
   --salt-size-selection: var(--salt-size-selectable);
-  --salt-size-brandBar: 4px; /* Use --salt-size-accent */
+  --salt-size-brandBar: 4px; /* Use --salt-size-accent */  
+  --salt-size-graphic-small: 12px; 
+  --salt-size-graphic-medium: 24px;
+  --salt-size-graphic-large: 48px;
 }
 
 .salt-density-high {
