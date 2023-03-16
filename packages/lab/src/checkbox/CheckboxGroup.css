@@ -19,3 +19,11 @@
   gap: var(--salt-size-unit);
   flex-direction: column;
 }
+
+.saltCheckboxGroup-noWrap {
+  flex-wrap: nowrap;
+}
+
+.saltCheckboxGroup-noWrap .saltCheckbox {
+  white-space: break-spaces;
+}

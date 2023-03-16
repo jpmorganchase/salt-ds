@@ -34,6 +34,10 @@ export interface CheckboxGroupProps extends HTMLAttributes<HTMLDivElement> {
    * `event.target.value` returns the value of the checkbox that was clicked.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  /**
+   * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise, the checkboxes will wrap onto the next line.
+   */
+  wrap?: boolean;
 }
 
 const withBaseName = makePrefixer("saltCheckboxGroup");
@@ -50,6 +54,7 @@ export const CheckboxGroup = forwardRef<
     direction = "vertical",
     name,
     onChange,
+    wrap,
     ...other
   },
   ref
@@ -79,7 +84,12 @@ export const CheckboxGroup = forwardRef<
       value={{ name, onChange: handleChange, checkedValues }}
     >
       <fieldset className={clsx(withBaseName(), className)} ref={ref}>
-        <div className={clsx(withBaseName(direction))} {...other}>
+        <div
+          className={clsx(withBaseName(direction), {
+            [withBaseName("noWrap")]: !wrap,
+          })}
+          {...other}
+        >
           {children}
         </div>
       </fieldset>

@@ -37,14 +37,14 @@ export const CheckboxVariations: ComponentStory<typeof Checkbox> = () => {
         error
         defaultChecked
         disabled
-        label="disabled,error and checked checkbox"
+        label="disabled and error checkbox checked"
       />
       <Checkbox
         error
         defaultChecked
         disabled
         indeterminate
-        label="disabled,error and indeterminate checkbox"
+        label="disabled and error checkbox indeterminate"
       />
     </>
   );
@@ -97,6 +97,30 @@ export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
     </CheckboxGroup>
   );
 };
+
+export const WrapGroup: ComponentStory<typeof CheckboxGroup> = ({ wrap }) => (
+  <div
+    style={{
+      width: 250,
+    }}
+  >
+    <CheckboxGroup name="fx" direction={"horizontal"} wrap={wrap}>
+      <Checkbox key="option1" label="Checkbox label 1" value="option1" />
+      <Checkbox key="option2" label="Checkbox label 2" value="option2" />
+      <Checkbox
+        disabled
+        key="option3"
+        label="Checkbox label 3 (disabled)"
+        value="option3"
+      />
+    </CheckboxGroup>
+  </div>
+);
+
+WrapGroup.args = { wrap: true };
+
+export const NoWrapGroup = WrapGroup.bind({});
+NoWrapGroup.args = { wrap: false };
 
 export const UncontrolledGroup: ComponentStory<typeof CheckboxGroup> = (
   args
