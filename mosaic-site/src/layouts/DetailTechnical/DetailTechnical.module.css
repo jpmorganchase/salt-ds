@@ -30,7 +30,7 @@
 }
 
 .primarySidebar :global(.ps-menu-label) {
-  font-weight: var(--salt-typography-fontWeight-regular);
+  font-weight: var(--salt-navigable-fontWeight);
   padding-left: var(--salt-size-unit);
 }
 
