@@ -6254,6 +6254,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/countries@workspace:packages/countries"
   dependencies:
+    glob: ^8.0.0
     mustache: ^4.2.0
     rimraf: ^4.4.0
     svgo: ^3.0.0
@@ -6431,7 +6432,6 @@ __metadata:
     eslint-plugin-storybook: ^0.6.10
     glob: ^8.0.0
     modular-scripts: "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch"
-    modular-template-package: ^1.2.0
     no-scroll: ^2.1.1
     nyse-holidays: ^1.2.0
     prettier: ^2.6.2
@@ -24314,13 +24314,6 @@ __metadata:
   bin:
     modular: dist-cjs/cli.js
   checksum: 82c7734861ad6212560861ddbbe168fb6e6ce29f7fc9a46e70ba6c5adaf8779c866917f97e1b81816b7ba90f101530457ae923dfa92e41c18aa6b9f4a7f6e8d2
-  languageName: node
-  linkType: hard
-
-"modular-template-package@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "modular-template-package@npm:1.2.0"
-  checksum: 5155df67d5e33319eb2949a7d98acb3e25ec0afe86763d8905b43b3b061961824b4b0f7b0b1b1dee216aa2f5e1163476a37b4c0369e8d06d16bc049a178a6ca4
   languageName: node
   linkType: hard
 
