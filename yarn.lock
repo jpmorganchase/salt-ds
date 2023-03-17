@@ -5189,14 +5189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19":
-  version: 0.1.0-beta.24
-  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.24"
-  checksum: 86a1319ba78a5abdf513a55003b874c00b5796d1cf7e172063ee5d51f20472944385819e364f19f3a4bcae29baa80a3403f8bc421b8ef9c2c7695da5285ea6a8
-  languageName: node
-  linkType: hard
-
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.25":
+"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19, @jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.25":
   version: 0.1.0-beta.25
   resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.25"
   checksum: bf82f14993b65e62b6a743dca447e6a239194905447d0912c3a9f2d6b0af18665c16e5333c8a75359de3aa50b747ebe1b41e82cfa03147b5e2519096826b046e
@@ -6428,7 +6421,7 @@ __metadata:
     tinycolor2: ^1.4.2
     ts-node: ^10.4.0
     typescript: 4.6.4
-    vite: ^3.1.0
+    vite: ^4.0.0
     vite-plugin-istanbul: ^4.0.0
     vite-tsconfig-paths: ^4.0.3
     webpack: 5.74.0
@@ -26995,7 +26988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.0, postcss@npm:^8.2.14, postcss@npm:^8.2.15, postcss@npm:^8.3.11, postcss@npm:^8.3.5, postcss@npm:^8.4.14, postcss@npm:^8.4.16, postcss@npm:^8.4.17, postcss@npm:^8.4.21, postcss@npm:^8.4.7":
+"postcss@npm:^8.1.0, postcss@npm:^8.2.14, postcss@npm:^8.2.15, postcss@npm:^8.3.11, postcss@npm:^8.3.5, postcss@npm:^8.4.14, postcss@npm:^8.4.17, postcss@npm:^8.4.21, postcss@npm:^8.4.7":
   version: 8.4.21
   resolution: "postcss@npm:8.4.21"
   dependencies:
@@ -29299,9 +29292,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:~2.78.0":
-  version: 2.78.1
-  resolution: "rollup@npm:2.78.1"
+"rollup@npm:^3.18.0":
+  version: 3.19.1
+  resolution: "rollup@npm:3.19.1"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -29309,7 +29302,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 9034814383ca5bdb4bea6d499270aeb31cdb0bb884f81b0c6a1d19c63cc973f040e6ee09b7af8a7169dd231c090f4b44ef8b99c4bfdf884aceeb3dcefb8cfa14
+  checksum: f78198c6de224b26650c70b16db156762d1fcceeb375d34fb2c76fc5b23a78f712c3c881d3248e6f277a511589e20d50c247bcf5c7920f1ddc0a43cadf9f0140
   languageName: node
   linkType: hard
 
@@ -33098,7 +33091,7 @@ __metadata:
   dependencies:
     ts-morph: ^15.1.0
   peerDependencies:
-    vite: ^3.0.0
+    vite: ^4.0.0
   languageName: unknown
   linkType: soft
 
@@ -33115,35 +33108,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "vite@npm:3.1.0"
+"vite@npm:^4.0.0":
+  version: 4.2.0
+  resolution: "vite@npm:4.2.0"
   dependencies:
-    esbuild: ^0.15.6
+    esbuild: ^0.17.5
     fsevents: ~2.3.2
-    postcss: ^8.4.16
+    postcss: ^8.4.21
     resolve: ^1.22.1
-    rollup: ~2.78.0
+    rollup: ^3.18.0
   peerDependencies:
+    "@types/node": ">= 14"
     less: "*"
     sass: "*"
     stylus: "*"
+    sugarss: "*"
     terser: ^5.4.0
   dependenciesMeta:
     fsevents:
       optional: true
   peerDependenciesMeta:
+    "@types/node":
+      optional: true
     less:
       optional: true
     sass:
       optional: true
     stylus:
       optional: true
+    sugarss:
+      optional: true
     terser:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 1a343e3d46450181f79f34ff49cca5ff59bb7472de51ea2c4a042aa076f597d27d25c49f48405e82f607af7d8c1c13a9e789402ccb1b23570132382132ec3903
+  checksum: 1088cdc0c89ab835aab07a0a114397b749e8dfb20f4b94241ba179d9c371b72d31e13782b22893860c3d65da596e43b24fce5e023f79cfde427f42549f2e1844
   languageName: node
   linkType: hard
 
