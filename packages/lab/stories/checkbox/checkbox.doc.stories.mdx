@@ -68,6 +68,22 @@ The checkbox group layout can be set to horizontal by setting the `direction` pr
   <Story id="lab-checkbox--horizontal-group" />
 </Canvas>
 
+#### Wrapping
+
+By default, the horizontal checkboxes will wrap onto the next line if the group doesn't fit within the container. There is the option to force the checkboxes to remain inline and wrap the label text instead by setting `wrap` prop to `false`.
+
+`wrap=true`
+
+<Canvas>
+  <Story id="lab-checkbox--wrap-group" />
+</Canvas>
+
+`wrap=false`
+
+<Canvas>
+  <Story id="lab-checkbox--no-wrap-group" />
+</Canvas>
+
 ## Controlled Group
 
 A controlled checkbox group requires events to trigger the state change. The application must track state and update the props manually. This is useful for when logic or validation needs to be applied or a request should happen when updating a form.
