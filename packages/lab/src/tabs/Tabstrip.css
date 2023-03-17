@@ -136,7 +136,7 @@
 }
 
 .saltTabstrip-overflowMenu-dropTarget:after {
-  background: var(--salt-palette-interact-background-active);
+  background: var(--salt-selectable-background-selected);
   content: "";
   position: absolute;
   height: 2px;

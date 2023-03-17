@@ -59,19 +59,12 @@ const isSaltThemeCustomProperty = function (property) {
   return property.startsWith("--salt-");
 };
 
-/**
- * Test whether a property value is for backwards compatibility
- */
-const isBackwardsCompatToken = function (property) {
-  return property.startsWith("--backwardsCompat-");
-};
-
 const allAllowedKeys = [
   // characteristics
+  "accent",
   "actionable",
   "container",
   "draggable",
-  "target",
   "differential", // TODO: **deprecated** delete here
   "editable",
   "focused",
@@ -82,14 +75,15 @@ const allAllowedKeys = [
   "separable",
   "status",
   "taggable",
-  "text",
-  // additional to decide
+  "target",
+  "text",  
+  // foundations
   "animation",
-  "delay", // to be merged with animation
-  "palette", // currently for opacity purposes
+  "delay", // TODO: to be merged with animation
   "size",
-  "opacity",
-  "zIndex", // to be added to overlayable
+  "zIndex",
+  // palette opacity
+  "palette-opacity",
 ];
 
 const regexpPattern = new RegExp(
@@ -105,21 +99,12 @@ module.exports = stylelint.createPlugin(
       function check(property) {
         const checkResult =
           !isSaltThemeCustomProperty(property) ||
-          regexpPattern.test(property) ||
-          !isBackwardsCompatToken(property);
+          regexpPattern.test(property);
         verboseLog && console.log("Checking", checkResult, property);
         return checkResult;
       }
 
       root.walkDecls((decl) => {
-        if (
-          decl.parent?.type === "rule" &&
-          decl.parent?.selector?.includes?.("backwardsCompat")
-        ) {
-          // Do not check backwardsCompat CSS
-          return;
-        }
-
         const { prop, value } = decl;
 
         const parsedValue = valueParser(value);
