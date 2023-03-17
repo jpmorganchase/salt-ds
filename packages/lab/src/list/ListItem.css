@@ -14,7 +14,7 @@
 }
 
 .saltListItemHeader {
-  font-weight: var(--salt-typography-fontWeight-bold);
+  font-weight: var(--salt-text-fontWeight-strong); /*  TODO: Check token with design */
 }
 
 .saltListItemHeader[data-sticky] {
