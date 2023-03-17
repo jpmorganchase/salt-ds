@@ -6322,6 +6322,7 @@ __metadata:
     "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.25
     "@jpmorganchase/mosaic-layouts": ^0.1.0-beta.25
     "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.25
+    "@jpmorganchase/mosaic-site-middleware": ^0.1.0-beta.25
     "@jpmorganchase/mosaic-site-preset-styles": ^0.1.0-beta.25
     "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.25
     "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.25
