@@ -27,6 +27,23 @@ import HelpAndSupport
 
 A Checkbox allows the user to turn a specific value on or off. The value can be an independent value or a selection of one or more values from a given set of choices (structured as a Checkbox Group).
 
+##### Use when
+
+- You want to present an independent choice that the user can toggle on or off.
+- You want to present a list of independent options where the user can select any number of choices.
+
+##### Don't use when
+
+- The checkbox displays a mutually exclusive choice between two or more values, in that case a `Radio` component is more appropriate.
+
+## Features
+
+Checkbox contains two variants `regular` and `error`. A Checkbox can be in one of three states, `unchecked`, `checked` or `indeterminate`
+
+### Disabled Checkbox
+
+A Checkbox with the prop `disabled="true"` will suppress all functionality along with disabling the Checkbox.
+
 ## Variations
 
 <Canvas>
@@ -74,6 +91,12 @@ import { Checkbox } from "@salt-ds/lab";
 ## Props
 
 <ArgsTable of={Checkbox} />
+
+## Related components
+
+The Checkbox component is similar to the following components:
+
+- [Radio Button](?path=/docs/documentation-lab-radio-button--page)
 
 ## CSS Class
 
