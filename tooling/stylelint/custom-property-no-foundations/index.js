@@ -76,7 +76,7 @@ const allAllowedKeys = [
   "status",
   "taggable",
   "target",
-  "text",  
+  "text",
   // foundations
   "animation",
   "delay", // TODO: to be merged with animation
@@ -98,8 +98,7 @@ module.exports = stylelint.createPlugin(
 
       function check(property) {
         const checkResult =
-          !isSaltThemeCustomProperty(property) ||
-          regexpPattern.test(property);
+          !isSaltThemeCustomProperty(property) || regexpPattern.test(property);
         verboseLog && console.log("Checking", checkResult, property);
         return checkResult;
       }
