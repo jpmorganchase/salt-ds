@@ -83,7 +83,7 @@ const allAllowedKeys = [
   "size",
   "zIndex",
   // palette opacity
-  "palette-opacity"
+  "palette-opacity",
 ];
 
 const regexpPattern = new RegExp(
