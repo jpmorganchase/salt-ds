@@ -1,15 +1,72 @@
+.docsWrapper {
+  --toc-width: 282px;
+}
+
+.sidebar {
+  --toc-padding-vertical: 0.5rem;
+  --toc-padding-horizontal: 0.5rem;
+}
+
+.sidebar li {
+  --color-dark-navigable-selectableLink-selected: var(--salt-navigable-indicator-active);
+  --color-dark-navigable-selectableLink-unselected: transparent;
+  --color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
+  --color-dark-neutral-background-emphasis: transparent;
+  --color-dark-navigable-selectableLink-hover: transparent;
+  --border-width-medium: 3px;
+}
+
+.docsPageContent {
+  width: calc(100% - var(--toc-width));
+}
+
+.sidebar {
+  display: contents;
+}
+
 .sidebarHeader {
   flex-shrink: 0;
 }
 
-/* TODO: remove these once we add our custom LayoutColumns and vertical nav */
-.docsWrapper > div > div > div {
-  max-width: none;
-  padding: 0;
+.sidebar aside {
+  width: var(--toc-width);
+  padding-top: calc(3 * var(--salt-size-unit));
+  padding-left: calc(5 * var(--salt-size-unit));
+  margin-top: 0;
 }
 
-/* TODO: remove these once we add our custom LayoutColumns and vertical nav */
-.docsWrapper > div > div > div > div {
-  padding: 0;
+.sidebar aside nav > p {
+  font-size: var(--salt-text-h4-fontSize);
+  font-weight: var(--salt-text-h4-fontWeight);
+}
+
+.sidebar aside ul {
   margin: 0;
+  padding: var(--toc-padding-vertical) 0 var(--toc-padding-vertical) var(--toc-padding-horizontal);
+  font-size: 0.8rem;
+}
+
+.sidebar li {
+  padding: var(calc(--salt-size-unit * 2));
+  height: 36px;
+}
+
+.sidebar li:hover {
+  color: var(--salt-text-link-foreground-hover);
+  text-decoration: underline;
+}
+
+.sidebar li[aria-checked="true"] {
+  color: var(--salt-text-primary-foreground);
+  font-weight: var(--salt-navigable-fontWeight-active);
+}
+
+@media screen and (max-width: 768px) {
+  .docsPageContent {
+    width: 100%;
+  }
+
+  .sidebar {
+    display: none;
+  }
 }

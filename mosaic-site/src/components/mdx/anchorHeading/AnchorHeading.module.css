@@ -1,0 +1,11 @@
+.root .link,
+.root .link:hover,
+.root .link:visited {
+  color: inherit;
+}
+
+.badgeContainer {
+  padding-left: 0.5rem;
+  text-decoration: underline;
+  color: var(--salt-text-link-foreground-hover);
+}

@@ -2,15 +2,17 @@ import React, { FC } from "react";
 import clsx from "clsx";
 import { HelpLinks } from "@jpmorganchase/mosaic-components";
 import {
-  AppHeader,
   DocPaginator,
   BackLink,
   Breadcrumbs,
-  Footer,
   TableOfContents,
   PageNavigation,
+  Sidebar,
 } from "@jpmorganchase/mosaic-site-components";
-import { LayoutBase, LayoutColumns } from "@jpmorganchase/mosaic-layouts"; // TODO: create custom LayoutColumns component
+import { Footer } from "../../components/footer";
+import { AppHeader } from "../../components/app-header";
+import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
+import { LayoutColumns } from "../LayoutColumns/LayoutColumns";
 import { SaltProvider } from "@salt-ds/core";
 import { useMeta } from "@jpmorganchase/mosaic-store";
 import { LayoutProps } from "../types/index";
@@ -47,23 +49,32 @@ export const DetailTechnical: FC<LayoutProps> = ({
   } = useMeta();
 
   return (
-    <LayoutBase Header={Header}>
+    <LayoutBase Header={Header} className={layoutStyles.base}>
       <div className={clsx(layoutStyles.docsWrapper, styles.docsWrapper)}>
-        <LayoutColumns
-          PrimarySidebar={PrimarySidebar}
-          // SecondarySidebar={SecondarySidebar} TODO: add TOC inside main container
-          Footer={<Footer {...FooterProps} />}
-        >
+        <LayoutColumns PrimarySidebar={PrimarySidebar}>
           <Breadcrumbs />
           <h1 className={layoutStyles.title}>{title}</h1>
           <SaltProvider mode="light">
             <div className={layoutStyles.docsPageContainer}>
-              <div className={layoutStyles.docsPageContent}>{children}</div>
+              <div
+                className={clsx(
+                  layoutStyles.docsPageContent,
+                  styles.docsPageContent
+                )}
+              >
+                {children}
+              </div>
+              <div className={styles.sidebar}>
+                <SaltProvider density="medium">
+                  <Sidebar sticky>{SecondarySidebar}</Sidebar>
+                </SaltProvider>
+              </div>
             </div>
           </SaltProvider>
           <DocPaginator />
         </LayoutColumns>
       </div>
+      <Footer {...FooterProps} />
     </LayoutBase>
   );
 };
