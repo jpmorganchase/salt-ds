@@ -1,4 +1,5 @@
 const webpack = require("webpack");
+const fs = require("fs-extra");
 
 module.exports = {
   reactStrictMode: true,
@@ -61,11 +62,6 @@ module.exports = {
       {
         source: "/salt",
         destination: "/salt/index",
-        permanent: true,
-      },
-      {
-        source: "/local",
-        destination: "/local/index",
         permanent: true,
       },
     ];
