@@ -21,7 +21,6 @@ import { withPathResolve } from "../middleware/withPathResolve";
  );
  */
 const middlewareRunner = createMiddlewareRunner<MyMiddlewareProps>({}, [
-  ...middlewarePresets,
   withPathResolve,
 ]);
 
