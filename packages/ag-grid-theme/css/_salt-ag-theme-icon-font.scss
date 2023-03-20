@@ -1,0 +1,48 @@
+$icons: (
+  aggregation: "\e974",
+  arrows: "\e90e",
+  asc: "\e940",
+  cancel: "\e90e",
+  columns: "\e910",
+  copy: "\e90d",
+  csv: "\e93f",
+  desc: "\e93f",
+  filter: "\e922",
+  first: "\e934",
+  grip: "\e970",
+  group: "\e929",
+  last: "\e951",
+  menu: "\e969",
+  next: "\e950",
+  pin: "\e944",
+  pivot: "\e979",
+  previous: "\e933",
+  small-right: "\e950",
+  tick: "\e95b",
+  tree-closed: "\e950",
+  tree-open: "\e91b",
+);
+
+@font-face {
+  font-family: "jpmuitk-icons";
+  src: url("fonts/jpmuitk-icons.woff") format("woff");
+}
+
+@each $name, $glyph in $icons {
+  [class^="ag-theme-salt"] .ag-icon-#{$name} {
+    font-family: "jpmuitk-icons";
+  }
+
+  [class^="ag-theme-salt"] .ag-icon-#{$name}::before {
+    content: $glyph;
+  }
+}
+
+[class^="ag-theme-salt"] .ag-checkbox-input-wrapper::after {
+  font-family: "jpmuitk-icons";
+  content: "";
+}
+
+[class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked::after {
+  content: "\e95b";
+}

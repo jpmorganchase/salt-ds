@@ -1,11 +1,13 @@
-const esbuild = require("esbuild");
-const path = require("path");
-const del = require("del");
-const fs = require("fs");
+import esbuild from "esbuild";
+import path from "node:path";
+import { deleteSync } from "del";
+import fs from "node:fs";
+import { fileURLToPath } from "node:url";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildFolder = path.join(__dirname, "../../../dist/salt-ds-theme");
 
-del.sync([buildFolder], { force: true });
+deleteSync([buildFolder], { force: true });
 
 esbuild
   .build({

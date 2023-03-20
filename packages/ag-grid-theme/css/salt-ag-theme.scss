@@ -537,3 +537,6 @@ $ag-theme-salt-params-touch-dark: map-merge(
     var(--salt-focused-outlineColor)
   );
 }
+
+// Import is here so the custom icons are injected after the default ag-grid icons.
+@import "./salt-ag-theme-icon-font";
