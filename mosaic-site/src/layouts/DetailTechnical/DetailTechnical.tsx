@@ -28,18 +28,19 @@ export const DetailTechnical: FC<LayoutProps> = ({
   const Header = <AppHeader />;
 
   const PrimarySidebar = (
-    <>
-      {BackLinkProps && (
-        <header className={styles.sidebarHeader}>
-          <BackLink {...BackLinkProps} />
-        </header>
-      )}
-      {/*  TODO: Add salt light theme to vertical navigation */}
-      <PageNavigation />
-      {SidebarProps?.helpLinks && (
-        <HelpLinks subTitle="Need help?" {...SidebarProps.helpLinks} />
-      )}
-    </>
+    <SaltProvider mode="light">
+      <div className={styles.primarySidebar}>
+        {BackLinkProps && (
+          <header className={styles.sidebarHeader}>
+            <BackLink {...BackLinkProps} />
+          </header>
+        )}
+        <PageNavigation />
+        {SidebarProps?.helpLinks && (
+          <HelpLinks subTitle="Need help?" {...SidebarProps.helpLinks} />
+        )}
+      </div>
+    </SaltProvider>
   );
 
   const SecondarySidebar = <TableOfContents />;
