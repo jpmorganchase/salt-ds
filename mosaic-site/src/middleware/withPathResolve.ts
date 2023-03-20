@@ -2,7 +2,7 @@ import path from "path";
 import { GetServerSidePropsContext } from "next";
 import type { ContentProps } from "@jpmorganchase/mosaic-types";
 import { MosaicMiddleware } from "@jpmorganchase/mosaic-site-middleware";
-import { readFileSync } from "fs";
+import { readdirSync } from "fs";
 
 if (typeof window !== "undefined") {
   throw new Error("This file should not be loaded on the client.");
@@ -11,12 +11,17 @@ if (typeof window !== "undefined") {
 export const withPathResolve: MosaicMiddleware<ContentProps> = async (
   context: GetServerSidePropsContext
 ) => {
-  const filePath = path.posix.resolve(
-    process.cwd(),
-    process.env.MOSAIC_SNAPSHOT_DIR || "whoops",
-    "salt/index"
+  const snapshotFiles = readdirSync(
+    path.join(process.cwd(), process.env.MOSAIC_SNAPSHOT_DIR || "whoops")
   );
-  console.log(filePath);
+  console.log("snapshot files: ", snapshotFiles);
+
+  // const filePath = path.posix.resolve(
+  //   process.cwd(),
+  //   process.env.MOSAIC_SNAPSHOT_DIR || "whoops",
+  //   "salt/index"
+  // );
+  // console.log(filePath);
 
   return {};
 };

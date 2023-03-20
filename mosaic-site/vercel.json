@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/route.js": {
-      "includeFiles": "./snapshots/latest"
-    }
-  }
-}
