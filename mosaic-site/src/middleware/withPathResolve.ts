@@ -17,8 +17,8 @@ export const withPathResolve: MosaicMiddleware<ContentProps> = async (
     "salt/index"
   );
   console.log(filePath);
-  const data = readFileSync(filePath, "utf8");
-  console.log(data);
+  // const data = readFileSync(filePath, "utf8");
+  // console.log(data);
 
   return {};
 };
