@@ -70,9 +70,4 @@ module.exports = {
       },
     ];
   },
-  experimental: {
-    outputFileTracingIncludes: {
-      "/api/route": ["./snapshots/latest/**/*"],
-    },
-  },
 };
