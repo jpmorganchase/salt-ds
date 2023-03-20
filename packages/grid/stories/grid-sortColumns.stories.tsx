@@ -44,7 +44,7 @@ const SortColumnsTemplate: Story = () => {
 
   useEffect(() => {
     setLoading(true);
-    void api(sortOrder).then((data) => {
+    void api(sortOrder ?? SortOrder.NONE).then((data) => {
       setServerData(data as Investor[]);
       setLoading(false);
     });
@@ -99,7 +99,7 @@ const SortColumnsTemplate: Story = () => {
             const A = Number(a["score"]?.slice(0, length - 1));
             const B = Number(b["score"]?.slice(0, length - 1));
 
-            return loading ? "loading..." : A < B ? -1 : 1;
+            return A < B ? -1 : 1;
           });
 
           if (sortOrder === SortOrder.DESC) {
