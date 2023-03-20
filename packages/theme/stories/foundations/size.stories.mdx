@@ -6,7 +6,7 @@ import { DocGrid } from "docs/components/DocGrid";
 
 # Size
 
-All size values are based on 4px, `--salt-size-basis-unit`. If you need to change this, use `--salt-size-unit` (see density aware values below) which will adjust this base value according to density.
+All size values are built on the basis of 4px, `--salt-size-basis-unit`. We encourage you to use the density aware `--salt-size-unit` which will adjust this base value according to density.
 
 ## Tokens
 
@@ -14,14 +14,14 @@ All size values are based on 4px, `--salt-size-basis-unit`. If you need to chang
   <SpacingBlock spacingVar="--salt-size-accent" />
   <SpacingBlock spacingVar="--salt-size-basis-unit" />
   <SpacingBlock spacingVar="--salt-size-border" />
-  <SpacingBlock spacingVar="--salt-size-divider-strokeWidth" />
   <SpacingBlock spacingVar="--salt-size-sharktooth-height" />
   <SpacingBlock spacingVar="--salt-size-sharktooth-width" />
   <SpacingBlock spacingVar="--salt-size-unit" />
   <SpacingBlock spacingVar="--salt-size-compact" />
   <SpacingBlock spacingVar="--salt-size-base" />
-  <SpacingBlock spacingVar="--salt-size-divider-height" />
   <SpacingBlock spacingVar="--salt-size-selectable" />
+  <SpacingBlock spacingVar="--salt-size-separator-height" />
+  <SpacingBlock spacingVar="--salt-size-separator-strokeWidth" />
   <SpacingBlock spacingVar="--salt-size-stackable" />
   <SpacingBlock
     spacingVar="--salt-size-brandBar"
@@ -34,5 +34,13 @@ All size values are based on 4px, `--salt-size-basis-unit`. If you need to chang
   <SpacingBlock
     spacingVar="--salt-size-selection"
     replacementToken="--salt-size-selectable"
+  />
+  <SpacingBlock
+    spacingVar="--salt-size-divider-height"
+    replacementToken="--salt-size-separator-height"
+  />
+  <SpacingBlock
+    spacingVar="--salt-size-divider-strokeWidth"
+    replacementToken="--salt-size-separator-strokeWidth"
   />
 </DocGrid>

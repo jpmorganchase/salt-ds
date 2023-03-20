@@ -205,7 +205,7 @@
 /* Style applied to Pill icon */
 .saltPill .saltPill-icon {
   fill: var(--pill-icon-color);
-  height: var(--salt-size-graphic-small);
+  height: 12px; /* TODO: Replace with updated size */
   margin-left: calc(var(--salt-size-unit) * 0.75);
   margin-right: calc(var(--salt-size-unit) * 0.5);
 }

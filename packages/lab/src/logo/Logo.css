@@ -14,7 +14,7 @@
 .saltLogo {
   --logo-color: var(--saltLogo-color, var(--salt-text-secondary-foreground));
   --logo-divider-color: var(--saltLogo-pipe-color, var(--salt-separable-secondary-borderColor));
-  --logo-divider-height: var(--saltLogo-title-height, var(--salt-size-divider-height));
+  --logo-divider-height: var(--saltLogo-title-height, var(--salt-size-separator-height));
   --logo-divider-margin: 0 calc(var(--salt-size-unit) * 2);
   --logo-fontSize: var(--salt-text-fontSize);
   --logo-lineHeight: var(--salt-text-lineHeight);

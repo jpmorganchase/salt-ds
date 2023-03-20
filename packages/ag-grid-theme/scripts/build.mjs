@@ -3,7 +3,7 @@ import path from "node:path";
 import fs from "fs-extra";
 import { fileURLToPath, pathToFileURL } from "url";
 import { createRequire } from "module";
-import del from "del";
+import { deleteSync } from "del";
 import sass from "sass";
 import postcss from "postcss";
 import cssnano from "cssnano";
@@ -21,7 +21,7 @@ function buildStyles(entry) {
     "../../../dist/salt-ds-ag-grid-theme"
   );
   const outputName = path.join(outputFolder, sourceFileName);
-  del.sync([outputName], { force: true });
+  deleteSync([outputName], { force: true });
   const result = sass.compile(entry, {
     // https://sass-lang.com/documentation/js-api/interfaces/FileImporter
     importers: [
