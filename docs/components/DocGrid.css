@@ -12,7 +12,7 @@
   display: grid;
   height: var(--saltDocGrid-height, unset);
   gap: var(--saltDocGrid-gap, var(--doc-grid-gap));
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: var(--saltDocGrid-columns, repeat(2, auto));
   padding-block-start: var(--saltDocGrid-paddingBlockStart, var(--doc-grid-paddingBlockStart));
   padding-block-end: var(--saltDocGrid-paddingBlockEnd, var(--doc-grid-paddingBlockEnd));
   line-height: 1;
@@ -26,4 +26,8 @@
 
 .saltDocGrid-textExample {
   width: fit-content;
+}
+
+.saltDocGrid-withNotes {
+  grid-template-columns: repeat(3, auto);
 }
