@@ -10,6 +10,11 @@
   display: flex;
 }
 
+.withSidebar > aside {
+  margin-top: 0;
+  top: 0;
+}
+
 .mainWrapper {
   width: 100%;
   min-width: 0;
