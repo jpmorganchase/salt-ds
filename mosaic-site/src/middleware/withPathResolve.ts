@@ -11,9 +11,10 @@ if (typeof window !== "undefined") {
 export const withPathResolve: MosaicMiddleware<ContentProps> = async (
   context: GetServerSidePropsContext
 ) => {
-  const filePath = path.posix.join(
+  const filePath = path.posix.resolve(
     process.cwd(),
-    process.env.MOSAIC_SNAPSHOT_DIR || "whoops"
+    process.env.MOSAIC_SNAPSHOT_DIR || "whoops",
+    "salt/index"
   );
   console.log(filePath);
 
