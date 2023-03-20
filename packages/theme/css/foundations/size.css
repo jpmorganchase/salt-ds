@@ -6,11 +6,11 @@
   --salt-size-basis-unit: 4px;
 
   --salt-size-border: 1px;
-  --salt-size-divider-strokeWidth: 1px;
   --salt-size-sharktooth-height: 5px;
   --salt-size-sharktooth-width: 10px;
 
-  --salt-size-divider-height: calc(var(--salt-size-compact) + 1.5 * var(--salt-size-basis-unit));
+  --salt-size-separator-strokeWidth: 1px;
+  --salt-size-separator-height: calc(var(--salt-size-compact) + 1.5 * var(--salt-size-basis-unit));
   --salt-size-selectable: calc(var(--salt-size-base) - (1.5 * var(--salt-size-unit)) - (0.5 * var(--salt-size-basis-unit)));
   --salt-size-stackable: calc(var(--salt-size-base) + var(--salt-size-unit));
 
@@ -20,6 +20,8 @@
   --salt-size-graphic-small: 12px;
   --salt-size-graphic-medium: 24px;
   --salt-size-graphic-large: 48px;
+  --salt-size-divider-height: var(--salt-size-separator-height);
+  --salt-size-divider-strokeWidth: var(--salt-size-separator-strokeWidth);
 }
 
 .salt-density-high {
