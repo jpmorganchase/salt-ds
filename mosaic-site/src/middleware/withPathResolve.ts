@@ -13,12 +13,9 @@ export const withPathResolve: MosaicMiddleware<ContentProps> = async (
 ) => {
   const filePath = path.posix.join(
     process.cwd(),
-    process.env.MOSAIC_SNAPSHOT_DIR || "whoops",
-    "salt/index"
+    process.env.MOSAIC_SNAPSHOT_DIR || "whoops"
   );
   console.log(filePath);
-  // const data = readFileSync(filePath, "utf8");
-  // console.log(data);
 
   return {};
 };
