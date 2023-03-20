@@ -115,18 +115,18 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       groupContext?.onChange
     );
 
-    let isCheckchecked = checkedProp;
+    let isChecked = checkedProp;
     let defaultChecked = defaultCheckedProp;
 
     if (groupContext) {
-      if (typeof isCheckchecked === "undefined" && typeof value === "string") {
-        isCheckchecked = groupContext?.checkedValues?.includes(value);
+      if (typeof isChecked === "undefined" && typeof value === "string") {
+        isChecked = groupContext?.checkedValues?.includes(value);
       }
       defaultChecked = undefined;
     }
 
     const [checked, setChecked] = useControlled({
-      controlled: isCheckchecked,
+      controlled: isChecked,
       default: Boolean(defaultCheckedProp),
       name: "Checkbox",
       state: "checked",
