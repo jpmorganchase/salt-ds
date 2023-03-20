@@ -1,6 +1,12 @@
 const webpack = require("webpack");
 
 module.exports = {
+  output: "standalone",
+  experimental: {
+    outputFileTracingIncludes: {
+      "/": ["./snapshots/**/*"],
+    },
+  },
   reactStrictMode: true,
   swcMinify: true,
   transpilePackages: [
