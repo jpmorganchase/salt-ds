@@ -70,8 +70,9 @@ module.exports = {
       },
     ];
   },
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+  experimental: {
+    outputFileTracingIncludes: {
+      "/api/route": ["./snapshots/latest/**/*"],
+    },
   },
 };
