@@ -6,6 +6,7 @@ import * as rowSelectionModesStories from "@stories/grid-rowSelectionModes.stori
 import * as rowSelectionControlledStories from "@stories/grid-rowSelectionControlled.stories";
 import * as cellCustomizationStories from "@stories/grid-cellCustomization.stories";
 import * as columnGroupsStories from "@stories/grid-columnGroups.stories";
+import * as sortColumnsStories from "@stories/grid-sortColumns.stories";
 import { Grid, GridColumn, ColumnGroup } from "@salt-ds/data-grid";
 
 const { GridVariants } = composeStories(variantsStories);
@@ -23,6 +24,7 @@ const {
 } = composeStories(gridStories);
 const { EditableCells } = composeStories(gridEditableStories);
 const { ColumnGroups } = composeStories(columnGroupsStories);
+const { SortColumns } = composeStories(sortColumnsStories);
 
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
@@ -585,6 +587,43 @@ describe("Grid", () => {
         .click()
         .should("not.have.attr", "aria-sort", "none");
       findCell(1, 2).should("have.text", "100.00");
+    });
+
+    it("allows sorting on server side", () => {
+      cy.mount(<SortColumns />);
+
+      // first click: sort in ascending order
+      cy.findAllByTestId("column-header")
+        .eq(4)
+        .should("have.text", "Amount")
+        .click();
+      findCell(0, 4).should("have.text", "loading...");
+      cy.findAllByTestId("column-header")
+        .eq(4)
+        .should("have.text", "Amount")
+        .should("have.attr", "aria-sort", "ascending");
+
+      // second click: sort in descending order
+      cy.findAllByTestId("column-header")
+        .eq(4)
+        .should("have.text", "Amount")
+        .dblclick();
+      findCell(0, 4).should("have.text", "loading...");
+      cy.findAllByTestId("column-header")
+        .eq(4)
+        .should("have.text", "Amount")
+        .should("have.attr", "aria-sort", "descending");
+
+      // third click: back to default order without sorting
+      cy.findAllByTestId("column-header")
+        .eq(4)
+        .should("have.text", "Amount")
+        .dblclick();
+      findCell(0, 4).should("have.text", "loading...");
+      cy.findAllByTestId("column-header")
+        .eq(4)
+        .should("have.text", "Amount")
+        .should("have.attr", "aria-sort", "none");
     });
   });
 });
