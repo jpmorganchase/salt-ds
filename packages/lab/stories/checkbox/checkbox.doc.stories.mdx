@@ -6,7 +6,8 @@ import {
 } from "@storybook/addon-docs";
 import {
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  CheckboxIcon
 } from "@salt-ds/lab";
 import {
   CharacteristicUsage,
@@ -34,17 +35,17 @@ A Checkbox allows the user to turn a specific value on or off. The value can be 
 
 ##### Don't use when
 
-- The checkbox displays a mutually exclusive choice between two or more values, in that case a `Radio` component is more appropriate.
+- The checkbox displays a mutually exclusive choice between two or more values, in that case a `RadioButton` component is more appropriate.
 
 ## Features
+
+### Variations
 
 Checkbox contains two variants `regular` and `error`. A Checkbox can be in one of three states, `unchecked`, `checked` or `indeterminate`
 
 ### Disabled Checkbox
 
 A Checkbox with the prop `disabled="true"` will suppress all functionality along with disabling the Checkbox.
-
-## Variations
 
 <Canvas>
   <Story id="lab-checkbox--checkbox-variations" />
@@ -92,13 +93,13 @@ A controlled checkbox group requires events to trigger the state change. The app
   <Story id="lab-checkbox--controlled-group" />
 </Canvas>
 
-## Long Text Group
+### Long Text Group
 
 <Canvas>
   <Story id="lab-checkbox--long-text-group" />
 </Canvas>
 
-# API
+## API
 
 ```
 import { Checkbox } from "@salt-ds/lab";
@@ -114,15 +115,29 @@ The Checkbox component is similar to the following components:
 
 - [Radio Button](?path=/docs/documentation-lab-radio-button--page)
 
-## CSS Class
+## Classes
+
+### Checkbox
 
 <CSSClassTable of={Checkbox} />
 
+### Checkbox Group
+
 <CSSClassTable of={CheckboxGroup} />
+
+### CheckboxIcon
+
+<CSSClassTable of={CheckboxIcon} />
 
 ## Characteristics Used
 
+### Checkbox
+
 <CharacteristicUsage of={Checkbox} />
+
+### CheckboxIcon
+
+<CharacteristicUsage of={CheckboxIcon} />
 
 ## Accessibility
 

@@ -44,12 +44,13 @@
   stroke: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-foreground));
 }
 
+/* Styles applied if `error={true}` */
 .saltCheckbox-error:hover .saltCheckboxIcon,
 .saltCheckboxIcon-error:hover {
   background: var(--salt-palette-error-background-emphasize);
 }
 
-/* Styles applied if `error={true}` */
+/* Styles applied if `error={true}` and `disabled={true}` */
 .saltCheckbox-error.saltCheckbox-disabled .saltCheckboxIcon,
 .saltCheckbox-error.saltCheckbox-disabled:hover .saltCheckboxIcon {
   stroke: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-foreground));
