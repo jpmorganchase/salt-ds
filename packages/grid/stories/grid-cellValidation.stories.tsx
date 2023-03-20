@@ -10,6 +10,7 @@ import {
   CellValidationState,
 } from "../src";
 import { Story } from "@storybook/react";
+import * as yup from "yup";
 import { faker } from "@faker-js/faker";
 import { useCallback, useState } from "react";
 import "./grid.stories.css";
@@ -138,10 +139,62 @@ const useExampleDataSource = () => {
   return { rows, setAmount, setName, setDiscount, setPrice };
 };
 
+const validationSchema = yup.object({
+  name: yup.string().required().min(3),
+  price: yup.number().required().min(10).max(2000),
+  amount: yup.number().required().min(10).max(2000),
+  total: yup.number().required().min(10).max(2000),
+});
+
 export const CellValidation: Story = () => {
   const { setPrice, setDiscount, rows, setAmount, setName } =
     useExampleDataSource();
-
+  const [validationStatus, setValidationStatus] = useState<
+    Array<{
+      price?: CellValidationState;
+      amount?: CellValidationState;
+      total?: CellValidationState;
+      name?: CellValidationState;
+    }>
+  >(() =>
+    rows.map((_, index) => {
+      if (index > 2) {
+        return {
+          price: "success",
+          amount: "warning",
+          total: "error",
+          name: "error",
+        };
+      }
+      return {};
+    })
+  );
+  const asyncValidate = ({
+    value,
+    name,
+    index,
+  }: {
+    value: number | string;
+    index: number;
+    name: "name" | "price" | "amount" | "total";
+  }) => {
+    validationSchema
+      .validateAt(name, { [name]: value })
+      .then(() => {
+        setValidationStatus((s) => {
+          const copy = [...s];
+          copy[index][name] = "success";
+          return copy;
+        });
+      })
+      .catch(() => {
+        setValidationStatus((s) => {
+          const copy = [...s];
+          copy[index][name] = "error";
+          return copy;
+        });
+      });
+  };
   return (
     <Grid
       rowData={rows}
@@ -154,9 +207,13 @@ export const CellValidation: Story = () => {
         id="name"
         name="Name"
         defaultWidth={180}
-        getValue={(r) => r.name}
-        onChange={setName}
-        getValidationStatus={({ row }) => (row.index > 2 ? "error" : undefined)}
+        getValue={(r: RowExample) => r.name}
+        onChange={(...args) => {
+          const [, index, value] = args;
+          setName(...args);
+          asyncValidate({ value, index, name: "name" });
+        }}
+        getValidationStatus={({ row }) => validationStatus[row.index].name}
         validationType="strong"
       >
         <CellEditor>
@@ -167,8 +224,7 @@ export const CellValidation: Story = () => {
         defaultWidth={200}
         id="description"
         name="Description"
-        getValue={(r) => r.description}
-        onChange={setName}
+        getValue={(r: RowExample) => r.description}
       />
 
       <NumericColumn
@@ -176,10 +232,12 @@ export const CellValidation: Story = () => {
         name="Amount"
         getValue={(r: RowExample) => r.amount}
         precision={0}
-        onChange={setAmount}
-        getValidationStatus={({ row }) =>
-          row.index > 2 ? "warning" : undefined
-        }
+        onChange={(...args) => {
+          const [, index, value] = args;
+          setAmount(...args);
+          asyncValidate({ value, index, name: "amount" });
+        }}
+        getValidationStatus={({ row }) => validationStatus[row.index].amount}
         validationType="strong"
       >
         <CellEditor>
@@ -191,13 +249,15 @@ export const CellValidation: Story = () => {
         name="Price"
         precision={2}
         getValue={(r: RowExample) => r.price}
-        onChange={setPrice}
+        onChange={(...args) => {
+          const [, index, value] = args;
+          setPrice(...args);
+          asyncValidate({ value, index, name: "price" });
+        }}
         getValidationMessage={() =>
           "This is a custom success validation message"
         }
-        getValidationStatus={({ row }) =>
-          row.index > 2 ? "success" : undefined
-        }
+        getValidationStatus={({ row }) => validationStatus[row.index].price}
         validationType="strong"
       >
         <CellEditor>
@@ -207,7 +267,7 @@ export const CellValidation: Story = () => {
       <GridColumn
         id="discount"
         name="Discount"
-        getValue={(r) => r.discount}
+        getValue={(r: RowExample) => r.discount}
         onChange={setDiscount}
       >
         <CellEditor>
@@ -219,7 +279,7 @@ export const CellValidation: Story = () => {
         name="Total"
         getValue={getTotal}
         align="left"
-        getValidationStatus={({ row }) => (row.index > 2 ? "error" : undefined)}
+        getValidationStatus={({ row }) => validationStatus[row.index].total}
       />
     </Grid>
   );
