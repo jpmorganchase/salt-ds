@@ -55,13 +55,14 @@ export interface GridColumnProps<T = any> {
    * */
   id: string; // TODO make optional
   /**
-   * Enables sorting for the column.
+   * Enables sorting (by sort order: `asc | desc | none`) for the column.
    * To enable column header's keyboard navigation on sort,
    * users need to set `headerIsFocusable` prop to `true` in Grid component.
+   * To customise how GridColumn data sorts, use also  `customSort` or `onSortOrderChanged`.
    * */
   sortable?: boolean;
   /**
-   * Custom sorting function for client side sorting.
+   * Custom sorting function. Use for client side sorting.
    * */
   customSort?: (args: { rowData: T[]; sortOrder: SortOrder }) => T[];
   /**
