@@ -8,7 +8,6 @@ import {
 } from "@jpmorganchase/mosaic-site-middleware";
 
 import type { MyAppProps, MyMiddlewareProps } from "../types/mosaic";
-import { withPathResolve } from "../middleware/withPathResolve";
 
 /**
  * Extend props passed to MyApp by adding your own middleware ('withMyExampleMiddleware') functions.
@@ -20,10 +19,10 @@ import { withPathResolve } from "../middleware/withPathResolve";
    ]
  );
  */
-const middlewareRunner = createMiddlewareRunner<MyMiddlewareProps>({}, [
-  ...middlewarePresets,
-  withPathResolve,
-]);
+const middlewareRunner = createMiddlewareRunner<MyMiddlewareProps>(
+  {},
+  middlewarePresets
+);
 
 export async function getServerSideProps(
   context: GetServerSidePropsContext
