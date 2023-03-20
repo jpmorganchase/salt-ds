@@ -1,8 +1,14 @@
-import { CellEditor, DropdownCellEditor, Grid, GridColumn } from "../src";
+import {
+  CellEditor,
+  DropdownCellEditor,
+  Grid,
+  GridColumn,
+  SortOrder,
+} from "../src";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 import { createDummyInvestors, Investor, investorKeyGetter } from "./dummyData";
-import useSWR from "swr";
+import { useEffect, useState } from "react";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -10,18 +16,39 @@ export default {
   argTypes: {},
 };
 
-const fetcher = (...args: Parameters<typeof fetch>) =>
-  fetch(...args).then((res) => res.json());
+const dummyInvestors = createDummyInvestors();
 
-const SortColumnsTemplate: Story<{}> = () => {
-  const { data, error, isLoading } = useSWR(
-    "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/dts_table_1",
-    fetcher
-  );
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+const api = (sortOrder: SortOrder) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      if (sortOrder === SortOrder.ASC) {
+        const sortedItems = [...dummyInvestors].sort((a, b) => {
+          return a.amount - b.amount;
+        });
+        return resolve(sortedItems);
+      }
+      if (sortOrder === SortOrder.DESC) {
+        const sortedItems = [...dummyInvestors].sort((a, b) => {
+          return b.amount - a.amount;
+        });
+        return resolve(sortedItems);
+      }
+      return resolve([...dummyInvestors]);
+    }, 1000);
+  });
 
-  const dummyInvestors = createDummyInvestors(data.data);
+const SortColumnsTemplate: Story = () => {
+  const [serverData, setServerData] = useState<Investor[]>([]);
+  const [sortOrder, setSortOrder] = useState<SortOrder>();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    void api(sortOrder).then((data) => {
+      setServerData(data as Investor[]);
+      setLoading(false);
+    });
+  }, [sortOrder]);
 
   const scoreOptions = ["-", "5%", "10%", "15%", "20%"];
 
@@ -31,7 +58,7 @@ const SortColumnsTemplate: Story<{}> = () => {
 
   return (
     <Grid
-      rowData={dummyInvestors}
+      rowData={serverData}
       rowKeyGetter={investorKeyGetter}
       style={{ height: 600 }}
       headerIsFocusable
@@ -68,14 +95,14 @@ const SortColumnsTemplate: Story<{}> = () => {
         align="right"
         customSort={({ rowData, sortOrder }) => {
           // custom sort percentage score as number
-          let sortedData = [...rowData].sort((a, b) => {
+          const sortedData = [...rowData].sort((a, b) => {
             const A = Number(a["score"]?.slice(0, length - 1));
             const B = Number(b["score"]?.slice(0, length - 1));
 
-            return A < B ? -1 : 1;
+            return loading ? "loading..." : A < B ? -1 : 1;
           });
 
-          if (sortOrder === "desc") {
+          if (sortOrder === SortOrder.DESC) {
             return sortedData.reverse();
           }
 
@@ -87,26 +114,14 @@ const SortColumnsTemplate: Story<{}> = () => {
         </CellEditor>
       </GridColumn>
       <GridColumn
-        name="$ balance"
-        id="balance"
-        getValue={(rowData) => {
-          return rowData.balance;
-        }}
+        name="Amount"
+        id="amount"
+        getValue={(rowData: Investor) =>
+          loading ? "loading..." : rowData.amount
+        }
         sortable
-        customSort={({ rowData, sortOrder }) => {
-          // custom sort cash balance string as number
-          let sortedData = [...rowData].sort((a, b) => {
-            const A = Number(a["balance"]?.slice(0, length - 1));
-            const B = Number(b["balance"]?.slice(0, length - 1));
-
-            return A < B ? -1 : 1;
-          });
-
-          if (sortOrder === "desc") {
-            return sortedData.reverse();
-          }
-
-          return sortedData;
+        onSortOrderChange={({ sortOrder }) => {
+          setSortOrder(sortOrder);
         }}
       />
     </Grid>

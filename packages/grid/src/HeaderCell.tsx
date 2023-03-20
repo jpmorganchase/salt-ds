@@ -6,7 +6,7 @@ import {
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { ColumnSeparatorType } from "./Grid";
+import { ColumnSeparatorType, SortOrder } from "./Grid";
 import { useSizingContext } from "./SizingContext";
 import { useColumnDragContext } from "./ColumnDragContext";
 import { Cursor, useFocusableContent } from "./internal";
@@ -30,7 +30,8 @@ type AriaSortProps = "none" | "ascending" | "descending";
 export function HeaderCell<T>(props: HeaderCellProps<T>) {
   const { column, children, isFocused } = props;
   const { separator } = column;
-  const { align, id, headerClassName, sortable } = column.info.props;
+  const { align, id, headerClassName, sortable, onSortOrderChange } =
+    column.info.props;
   const { onResizeHandleMouseDown } = useSizingContext();
 
   const { columnMove, onColumnMoveHandleMouseDown } = useColumnDragContext();
@@ -39,8 +40,13 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
   const { ref, isFocusableContent, onFocus } =
     useFocusableContent<HTMLTableHeaderCellElement>();
 
-  const { onClickSortColumn, setSortByColumnId, sortOrder, sortByColumnId } =
-    useColumnSortContext();
+  const {
+    onClickSortColumn,
+    setSortByColumnId,
+    sortOrder,
+    sortByColumnId,
+    setSortOrder,
+  } = useColumnSortContext();
 
   const valueAlignRight = align === "right";
 
@@ -56,8 +62,8 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
         style={{ display: "flex", justifyContent: `${justify}` }}
         aria-hidden
       >
-        {sortOrder === "asc" && <ArrowUpIcon />}
-        {sortOrder === "desc" && <ArrowDownIcon />}
+        {sortOrder === SortOrder.ASC && <ArrowUpIcon />}
+        {sortOrder === SortOrder.DESC && <ArrowDownIcon />}
       </div>
     );
 
@@ -72,18 +78,30 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
 
   const ariaSort = ariaSortMap[sortOrder] as AriaSortProps;
 
+  const order =
+    sortOrder === SortOrder.ASC
+      ? SortOrder.DESC
+      : sortOrder === SortOrder.DESC
+      ? SortOrder.NONE
+      : SortOrder.ASC;
+
+  const onClick = () => {
+    if (onSortOrderChange) {
+      setSortByColumnId(id);
+      setSortOrder(order);
+      onSortOrderChange({ sortOrder: order });
+      return;
+    }
+    setSortByColumnId(id);
+    onClickSortColumn(id);
+  };
+
   const onKeyDown: KeyboardEventHandler<HTMLTableHeaderCellElement> = (
     event
   ) => {
     if (event.key === "Enter" || event.key === " ") {
-      setSortByColumnId(id);
-      onClickSortColumn(id);
+      onClick();
     }
-  };
-
-  const onClick = () => {
-    setSortByColumnId(id);
-    onClickSortColumn(id);
   };
 
   return (

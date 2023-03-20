@@ -11,7 +11,7 @@ import {
   useState,
 } from "react";
 import { useGridContext } from "./GridContext";
-import { GridColumnModel, GridRowModel } from "./Grid";
+import { GridColumnModel, GridRowModel, SortOrder } from "./Grid";
 
 export type GridColumnPin = "left" | "right" | null;
 
@@ -61,9 +61,13 @@ export interface GridColumnProps<T = any> {
    * */
   sortable?: boolean;
   /**
-   * Custom sorting function.
+   * Custom sorting function for client side sorting.
    * */
-  customSort?: (args: { rowData: T[]; sortOrder: string }) => T[];
+  customSort?: (args: { rowData: T[]; sortOrder: SortOrder }) => T[];
+  /**
+   * Exposes GridColumn sort order. Use for server side sorting.
+   * */
+  onSortOrderChange?: (args: { sortOrder: SortOrder }) => void;
   /**
    * Name is displayed on the column header by default.
    * */

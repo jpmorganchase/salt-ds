@@ -66,7 +66,12 @@ export type ColumnGroupRowSeparatorType = "first" | "regular" | "last";
 export type ColumnGroupColumnSeparatorType = "regular" | "none" | "pinned";
 export type GridRowSelectionMode = "single" | "multi" | "none";
 export type GridCellSelectionMode = "range" | "none";
-export type SortOrder = "none" | "asc" | "desc";
+
+export enum SortOrder {
+  ASC = "asc",
+  DESC = "desc",
+  NONE = "none",
+}
 
 export type RowKeyGetter<T> = (row: T, index: number) => string;
 
@@ -230,7 +235,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const [sortByColumnId, setSortByColumnId] =
     useState<GridColumnProps["id"]>("");
-  const [sortOrder, setSortOrder] = useState<SortOrder>("none");
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.NONE);
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [initialText, setInitialText] = useState<string | undefined>(undefined);
@@ -431,10 +436,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [getColById]
   );
 
-  const isSortMode = sortByColumnId && sortOrder !== "none";
+  const isSortMode = sortByColumnId && sortOrder !== SortOrder.NONE;
 
   const sortedRowData = useMemo(() => {
-    if (!isSortMode) return rowData;
+    const onSortOrderChange =
+      getColById(sortByColumnId)?.info.props.onSortOrderChange;
+
+    if (!isSortMode || onSortOrderChange) return rowData;
 
     const customSortingFn = getColById(sortByColumnId)?.info.props.customSort;
 
@@ -452,7 +460,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       valueGetter(a) < valueGetter(b) ? -1 : 1
     );
 
-    if (sortOrder === "desc") {
+    if (sortOrder === SortOrder.DESC) {
       return sortedData.reverse();
     }
 
@@ -463,18 +471,18 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     (colHeaderId: GridColumnProps["id"]) => {
       if (sortByColumnId === colHeaderId) {
         switch (sortOrder) {
-          case "asc":
-            setSortOrder("desc");
+          case SortOrder.ASC:
+            setSortOrder(SortOrder.DESC);
             break;
-          case "desc":
-            setSortOrder("none");
+          case SortOrder.DESC:
+            setSortOrder(SortOrder.NONE);
             break;
           default:
-            setSortOrder("asc");
+            setSortOrder(SortOrder.ASC);
         }
       } else {
         setSortByColumnId(colHeaderId);
-        setSortOrder("asc");
+        setSortOrder(SortOrder.ASC);
       }
     },
     [sortByColumnId, sortOrder]
