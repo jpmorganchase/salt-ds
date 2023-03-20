@@ -12,15 +12,15 @@ const Curacao = forwardRef<SVGSVGElement, CuracaoProps>(function Curacao(
   return (
     <CountrySymbol
       data-testid="Curacao"
-      aria-label="curaçao"
+      aria-label="Curaçao"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="CW__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#CW__a)">
         <path fill="#004692" d="M0 0h72v72H0z" />
         <path fill="#FBD381" d="M.4 48v-6h72v6z" />
         <path

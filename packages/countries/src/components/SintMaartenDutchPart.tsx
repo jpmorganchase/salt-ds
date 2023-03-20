@@ -12,15 +12,15 @@ const SintMaartenDutchPart = forwardRef<
   return (
     <CountrySymbol
       data-testid="SintMaartenDutchPart"
-      aria-label="sint maarten (dutch part)"
+      aria-label="Sint Maarten (Dutch part)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="SX__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#SX__a)">
         <path fill="#004692" d="M0 72V36h72v36z" />
         <path fill="#DD2033" d="M0 36V0h72v36z" />
         <path fill="#F5F7F8" d="M48 36 0 0v72l48-36Z" />

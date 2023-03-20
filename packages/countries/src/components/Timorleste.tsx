@@ -10,15 +10,21 @@ const Timorleste = forwardRef<SVGSVGElement, TimorlesteProps>(
     return (
       <CountrySymbol
         data-testid="Timorleste"
-        aria-label="timor-leste"
+        aria-label="Timor-Leste"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="TL__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#TL__a)">
           <path fill="#DD2033" d="M0 0h72v72H0z" />
           <path fill="#FBD381" d="M66 36 0 0v72l66-36Z" />
           <path fill="#31373D" d="M48 36 0 0v72l48-36Z" />

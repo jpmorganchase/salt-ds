@@ -12,12 +12,12 @@ const Mali = forwardRef<SVGSVGElement, MaliProps>(function Mali(
   return (
     <CountrySymbol
       data-testid="Mali"
-      aria-label="mali"
+      aria-label="Mali"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="ML__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Mali = forwardRef<SVGSVGElement, MaliProps>(function Mali(
           transform="matrix(0 -1 -1 0 72 72)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#ML__a)">
         <path fill="#009B77" d="M0 72h24V0H0z" />
         <path fill="#FBD381" d="M24 72h24V0H24z" />
         <path fill="#DD2033" d="M48 72h24V0H48z" />

@@ -12,15 +12,15 @@ const Belarus = forwardRef<SVGSVGElement, BelarusProps>(function Belarus(
   return (
     <CountrySymbol
       data-testid="Belarus"
-      aria-label="belarus"
+      aria-label="Belarus"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="BY__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#BY__a)">
         <path fill="#F5F7F8" d="M0 0h72v72H0z" />
         <path fill="#A00009" d="M0 42V0h72v42H0Z" />
         <path fill="#F5F7F8" d="M0 0h24v72H0V0Z" />

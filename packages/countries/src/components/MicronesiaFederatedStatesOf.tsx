@@ -15,12 +15,12 @@ const MicronesiaFederatedStatesOf = forwardRef<
   return (
     <CountrySymbol
       data-testid="MicronesiaFederatedStatesOf"
-      aria-label="micronesia (federated states of)"
+      aria-label="Micronesia (Federated States of)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="FM__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -29,7 +29,7 @@ const MicronesiaFederatedStatesOf = forwardRef<
           transform="rotate(-90 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#FM__a)">
         <path fill="#86C5FA" d="M0 0h72v72H0z" />
         <path
           fill="#F5F7F8"

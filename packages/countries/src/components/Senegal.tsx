@@ -12,12 +12,12 @@ const Senegal = forwardRef<SVGSVGElement, SenegalProps>(function Senegal(
   return (
     <CountrySymbol
       data-testid="Senegal"
-      aria-label="senegal"
+      aria-label="Senegal"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="SN__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Senegal = forwardRef<SVGSVGElement, SenegalProps>(function Senegal(
           transform="matrix(0 -1 -1 0 72 72)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#SN__a)">
         <path fill="#005B33" d="M0 72h24V0H0z" />
         <path fill="#FBD381" d="M24 72h24V0H24z" />
         <path fill="#DD2033" d="M48 72h24V0H48z" />

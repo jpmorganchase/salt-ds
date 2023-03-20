@@ -12,12 +12,12 @@ const Greenland = forwardRef<SVGSVGElement, GreenlandProps>(function Greenland(
   return (
     <CountrySymbol
       data-testid="Greenland"
-      aria-label="greenland"
+      aria-label="Greenland"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="GL__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Greenland = forwardRef<SVGSVGElement, GreenlandProps>(function Greenland(
           transform="rotate(180 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#GL__a)">
         <path fill="#F5F7F8" d="M72 0v36H0V0z" />
         <path
           fill="#DD2033"

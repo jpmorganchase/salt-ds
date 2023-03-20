@@ -12,12 +12,12 @@ const Singapore = forwardRef<SVGSVGElement, SingaporeProps>(function Singapore(
   return (
     <CountrySymbol
       data-testid="Singapore"
-      aria-label="singapore"
+      aria-label="Singapore"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="SG__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Singapore = forwardRef<SVGSVGElement, SingaporeProps>(function Singapore(
           transform="rotate(-180 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#SG__a)">
         <path fill="#DD2033" d="M72 0v38H0V0z" />
         <path
           fill="#F5F7F8"

@@ -10,15 +10,21 @@ const AmericanSamoa = forwardRef<SVGSVGElement, AmericanSamoaProps>(
     return (
       <CountrySymbol
         data-testid="AmericanSamoa"
-        aria-label="american samoa"
+        aria-label="American Samoa"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="AS__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#AS__a)">
           <path fill="#004692" d="M0 0h72v72H0z" />
           <path fill="#DD2033" d="m-11 36 83 42V-6l-83 42Z" />
           <path fill="#F5F7F8" d="m5 36 83 42V-6L5 36Z" />

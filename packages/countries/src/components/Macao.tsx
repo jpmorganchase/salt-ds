@@ -12,12 +12,12 @@ const Macao = forwardRef<SVGSVGElement, MacaoProps>(function Macao(
   return (
     <CountrySymbol
       data-testid="Macao"
-      aria-label="macao"
+      aria-label="Macao"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="MO__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,12 +26,18 @@ const Macao = forwardRef<SVGSVGElement, MacaoProps>(function Macao(
           transform="rotate(-90 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#MO__a)">
         <path fill="#008259" d="M72 72H0V0h72z" />
-        <mask id="b" x="11" y="12" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="MO__b"
+          x="11"
+          y="12"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="35.6" cy="36" r="24" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#MO__b)">
           <path
             fill="#F5F7F8"
             fillRule="evenodd"

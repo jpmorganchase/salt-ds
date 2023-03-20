@@ -15,15 +15,15 @@ const BritishIndianOceanTerritoryThe = forwardRef<
   return (
     <CountrySymbol
       data-testid="BritishIndianOceanTerritoryThe"
-      aria-label="british indian ocean territory (the)"
+      aria-label="British Indian Ocean Territory (the)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="IO__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#IO__a)">
         <path fill="#004692" d="M0 0h72v72H0z" />
         <path
           fill="#F5F7F8"
@@ -44,10 +44,16 @@ const BritishIndianOceanTerritoryThe = forwardRef<
           fill="#009B77"
           d="m49 14 1.969 4.223 4.447-1.054-1.992 4.212L57 24.29l-4.452 1.029L52.56 30 49 27.071 45.44 30l.012-4.681L41 24.289l3.576-2.908-1.992-4.212 4.447 1.054L49 14Z"
         />
-        <mask id="b" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="IO__b"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#IO__b)">
           <path fill="#004692" d="M0 0h36v36H0z" />
           <path
             fill="#F5F7F8"

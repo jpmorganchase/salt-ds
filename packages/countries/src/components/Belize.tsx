@@ -12,15 +12,15 @@ const Belize = forwardRef<SVGSVGElement, BelizeProps>(function Belize(
   return (
     <CountrySymbol
       data-testid="Belize"
-      aria-label="belize"
+      aria-label="Belize"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="BZ__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#BZ__a)">
         <path fill="#DD2033" d="M0 72V0h72v72z" />
         <path fill="#004692" d="M0 8h72v56H0z" />
         <circle cx="36" cy="36" r="24" fill="#F5F7F8" />
@@ -34,13 +34,19 @@ const Belize = forwardRef<SVGSVGElement, BelizeProps>(function Belize(
           fill="#86C5FA"
           d="M26.8 28h18v6.657A14.39 14.39 0 0 1 35.8 48a14.39 14.39 0 0 1-9-13.343V28Z"
         />
-        <mask id="b" x="26" y="28" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="BZ__b"
+          x="26"
+          y="28"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path
             fill="#86C5FA"
             d="M26.8 28h18v6.657A14.39 14.39 0 0 1 35.8 48a14.39 14.39 0 0 1-9-13.343V28Z"
           />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#BZ__b)">
           <path
             fill="#F1B434"
             d="m25.8 27.071 8.987-8.987 17.677 17.678-8.986 8.987z"

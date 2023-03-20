@@ -12,15 +12,15 @@ const Zimbabwe = forwardRef<SVGSVGElement, ZimbabweProps>(function Zimbabwe(
   return (
     <CountrySymbol
       data-testid="Zimbabwe"
-      aria-label="zimbabwe"
+      aria-label="Zimbabwe"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="ZW__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#ZW__a)">
         <path fill="#008259" d="M0 72V0h72v72z" />
         <path fill="#F1B434" d="M0 61V11h72v50z" />
         <path fill="#DD2033" d="M0 51V21h72v30z" />

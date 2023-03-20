@@ -12,15 +12,15 @@ const India = forwardRef<SVGSVGElement, IndiaProps>(function India(
   return (
     <CountrySymbol
       data-testid="India"
-      aria-label="india"
+      aria-label="India"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="IN__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#IN__a)">
         <path fill="#009B77" d="M0 72V52h72v20z" />
         <path fill="#F5F7F8" d="M0 52V20h72v32z" />
         <path fill="#FF9E42" d="M0 20V0h72v20z" />

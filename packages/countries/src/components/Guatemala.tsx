@@ -12,12 +12,12 @@ const Guatemala = forwardRef<SVGSVGElement, GuatemalaProps>(function Guatemala(
   return (
     <CountrySymbol
       data-testid="Guatemala"
-      aria-label="guatemala"
+      aria-label="Guatemala"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="GT__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Guatemala = forwardRef<SVGSVGElement, GuatemalaProps>(function Guatemala(
           transform="rotate(-90 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#GT__a)">
         <path fill="#0091DA" d="M0 0h72v72H0z" />
         <path fill="#F5F7F8" d="M16 0h40v72H16z" />
         <path

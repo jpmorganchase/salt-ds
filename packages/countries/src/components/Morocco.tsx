@@ -12,15 +12,15 @@ const Morocco = forwardRef<SVGSVGElement, MoroccoProps>(function Morocco(
   return (
     <CountrySymbol
       data-testid="Morocco"
-      aria-label="morocco"
+      aria-label="Morocco"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="MA__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#MA__a)">
         <path fill="#DD2033" d="M0 72V0h72v72z" />
         <path
           fill="#005B33"

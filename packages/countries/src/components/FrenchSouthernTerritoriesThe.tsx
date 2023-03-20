@@ -15,15 +15,15 @@ const FrenchSouthernTerritoriesThe = forwardRef<
   return (
     <CountrySymbol
       data-testid="FrenchSouthernTerritoriesThe"
-      aria-label="french southern territories (the)"
+      aria-label="French Southern Territories (the)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="TF__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#TF__a)">
         <path fill="#004692" d="M0 0h72v72H0z" />
         <path fill="#F5F7F8" d="M0 0h38v38H0z" />
         <path fill="#004692" d="M0 36h12V0H0z" />

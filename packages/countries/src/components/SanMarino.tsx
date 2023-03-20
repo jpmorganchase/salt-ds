@@ -12,12 +12,12 @@ const SanMarino = forwardRef<SVGSVGElement, SanMarinoProps>(function SanMarino(
   return (
     <CountrySymbol
       data-testid="SanMarino"
-      aria-label="san marino"
+      aria-label="San Marino"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="SM__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,14 +26,14 @@ const SanMarino = forwardRef<SVGSVGElement, SanMarinoProps>(function SanMarino(
           transform="rotate(180 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#SM__a)">
         <path fill="#F5F7F8" d="M72 0v36H0V0z" />
         <path fill="#86C5FA" d="M72 36v36H0V36z" />
         <path
           fill="#009B77"
           d="M20.737 28.403C18.634 31.27 17.4 34.765 17.4 38.536c0 8.642 6.484 15.833 15.044 17.347a3 3 0 0 0-.518 4.657l4.06-4.06 4.061 4.06a3 3 0 0 0-.602-4.708c8.421-1.62 14.765-8.748 14.765-17.296 0-3.771-1.235-7.266-3.338-10.133l-4.02 3.299a12.168 12.168 0 0 1 2.1 6.834c0 6.96-5.886 12.6-13.147 12.6-7.26 0-13.146-5.64-13.146-12.6 0-2.519.77-4.865 2.1-6.834l-4.022-3.299Z"
         />
-        <mask id="b" fill="#fff">
+        <mask id="SM__b" fill="#fff">
           <path d="M23.4 26.177a4 4 0 0 1 4-4h17a4 4 0 0 1 4 4v7.964c0 6.109-3.74 11.595-9.426 13.829L35.9 49.177l-3.074-1.207A14.857 14.857 0 0 1 23.4 34.14v-7.963Z" />
         </mask>
         <path
@@ -41,7 +41,7 @@ const SanMarino = forwardRef<SVGSVGElement, SanMarinoProps>(function SanMarino(
           stroke="#F1B434"
           strokeWidth="6"
           d="M23.4 26.177a4 4 0 0 1 4-4h17a4 4 0 0 1 4 4v7.964c0 6.109-3.74 11.595-9.426 13.829L35.9 49.177l-3.074-1.207A14.857 14.857 0 0 1 23.4 34.14v-7.963Z"
-          mask="url(#b)"
+          mask="url(#SM__b)"
         />
         <path
           fill="#008259"

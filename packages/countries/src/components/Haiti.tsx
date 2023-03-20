@@ -12,12 +12,12 @@ const Haiti = forwardRef<SVGSVGElement, HaitiProps>(function Haiti(
   return (
     <CountrySymbol
       data-testid="Haiti"
-      aria-label="haiti"
+      aria-label="Haiti"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="HT__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Haiti = forwardRef<SVGSVGElement, HaitiProps>(function Haiti(
           transform="rotate(180 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#HT__a)">
         <path fill="#004692" d="M72 0v36H0V0z" />
         <path fill="#DD2033" d="M72 36v36H0V36z" />
         <path fill="#F5F7F8" d="M20 21h32v30H20z" />

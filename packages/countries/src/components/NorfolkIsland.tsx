@@ -10,15 +10,21 @@ const NorfolkIsland = forwardRef<SVGSVGElement, NorfolkIslandProps>(
     return (
       <CountrySymbol
         data-testid="NorfolkIsland"
-        aria-label="norfolk island"
+        aria-label="Norfolk Island"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="NF__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#NF__a)">
           <path fill="#008259" d="M0 0h72v72H0z" />
           <path fill="#F5F7F8" d="M54 72H18V0h36z" />
           <path

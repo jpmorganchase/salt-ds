@@ -12,15 +12,15 @@ const Togo = forwardRef<SVGSVGElement, TogoProps>(function Togo(
   return (
     <CountrySymbol
       data-testid="Togo"
-      aria-label="togo"
+      aria-label="Togo"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="TG__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#TG__a)">
         <path fill="#009B77" d="M0 72V0h72v72z" />
         <path fill="#F1B434" d="M0 28V14h72v14zm0 30V44h72v14z" />
         <path fill="#DD2033" d="M0 44V0h44v44z" />

@@ -10,15 +10,21 @@ const NorthMacedonia = forwardRef<SVGSVGElement, NorthMacedoniaProps>(
     return (
       <CountrySymbol
         data-testid="NorthMacedonia"
-        aria-label="north macedonia"
+        aria-label="North Macedonia"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="MK__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#MK__a)">
           <path fill="#DD2033" d="M0 0h72v72H0z" />
           <path
             fill="#FBD381"

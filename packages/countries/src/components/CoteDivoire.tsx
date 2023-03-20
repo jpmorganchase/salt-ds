@@ -10,12 +10,18 @@ const CoteDivoire = forwardRef<SVGSVGElement, CoteDivoireProps>(
     return (
       <CountrySymbol
         data-testid="CoteDivoire"
-        aria-label="côte d&#39;ivoire"
+        aria-label="Côte d&#39;Ivoire"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="CI__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle
             cx="36"
             cy="36"
@@ -24,7 +30,7 @@ const CoteDivoire = forwardRef<SVGSVGElement, CoteDivoireProps>(
             transform="rotate(90 36 36)"
           />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#CI__a)">
           <path fill="#009B77" d="M48 0h24v72H48z" />
           <path fill="#F5F7F8" d="M24 0h24v72H24z" />
           <path fill="#FF9E42" d="M0 0h24v72H0z" />

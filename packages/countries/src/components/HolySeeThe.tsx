@@ -10,15 +10,21 @@ const HolySeeThe = forwardRef<SVGSVGElement, HolySeeTheProps>(
     return (
       <CountrySymbol
         data-testid="HolySeeThe"
-        aria-label="holy see (the)"
+        aria-label="Holy See (the)"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="VA__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#VA__a)">
           <path fill="#F5F7F8" d="M0 0h72v72H0z" />
           <path
             fill="#F1B434"

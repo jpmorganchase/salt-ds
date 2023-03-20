@@ -15,15 +15,15 @@ const KoreaDemocraticPeoplesRepublicOf = forwardRef<
   return (
     <CountrySymbol
       data-testid="KoreaDemocraticPeoplesRepublicOf"
-      aria-label="korea (democratic people&#39;s republic of)"
+      aria-label="Korea (Democratic People&#39;s Republic of)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="KP__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#KP__a)">
         <path fill="#004692" d="M0 0h72v72H0z" />
         <path fill="#F5F7F8" d="M0 60V12h72v48z" />
         <path fill="#DD2033" d="M0 54V18h72v36z" />

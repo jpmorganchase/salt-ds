@@ -12,15 +12,15 @@ const Croatia = forwardRef<SVGSVGElement, CroatiaProps>(function Croatia(
   return (
     <CountrySymbol
       data-testid="Croatia"
-      aria-label="croatia"
+      aria-label="Croatia"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="HR__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#HR__a)">
         <path fill="#004692" d="M0 72V48h72v24z" />
         <path fill="#F5F7F8" d="M0 48V24h72v24z" />
         <path fill="#DD2033" d="M0 24V0h72v24z" />
@@ -28,13 +28,19 @@ const Croatia = forwardRef<SVGSVGElement, CroatiaProps>(function Croatia(
           fill="#F5F7F8"
           d="M22 24h28v16c0 7.732-6.268 14-14 14s-14-6.268-14-14V24Z"
         />
-        <mask id="b" x="22" y="24" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="HR__b"
+          x="22"
+          y="24"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path
             fill="#F5F7F8"
             d="M22 24h28v16c0 7.732-6.268 14-14 14s-14-6.268-14-14V24Z"
           />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#HR__b)">
           <path
             fill="#DD2033"
             fillRule="evenodd"

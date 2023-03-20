@@ -10,15 +10,21 @@ const ComorosThe = forwardRef<SVGSVGElement, ComorosTheProps>(
     return (
       <CountrySymbol
         data-testid="ComorosThe"
-        aria-label="comoros (the)"
+        aria-label="Comoros (the)"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="KM__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#KM__a)">
           <path fill="#004692" d="M0 72V54h72v18z" />
           <path fill="#DD2033" d="M0 54V36h72v18z" />
           <path fill="#F5F7F8" d="M0 36V18h72v18z" />

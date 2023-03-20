@@ -12,12 +12,12 @@ const BosniaAndHerzegovina = forwardRef<
   return (
     <CountrySymbol
       data-testid="BosniaAndHerzegovina"
-      aria-label="bosnia and herzegovina"
+      aria-label="Bosnia and Herzegovina"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="BA__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const BosniaAndHerzegovina = forwardRef<
           transform="matrix(1 0 0 -1 0 72)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#BA__a)">
         <path fill="#004692" d="M-.2 0h72v72h-72z" />
         <path
           fill="#F5F7F8"

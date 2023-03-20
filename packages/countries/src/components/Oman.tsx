@@ -12,15 +12,15 @@ const Oman = forwardRef<SVGSVGElement, OmanProps>(function Oman(
   return (
     <CountrySymbol
       data-testid="Oman"
-      aria-label="oman"
+      aria-label="Oman"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="OM__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#OM__a)">
         <path fill="#DD2033" d="M0 0h72v72H0z" />
         <path fill="#005B33" d="M37 72V48h35v24z" />
         <path

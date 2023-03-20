@@ -10,15 +10,21 @@ const Uzbekistan = forwardRef<SVGSVGElement, UzbekistanProps>(
     return (
       <CountrySymbol
         data-testid="Uzbekistan"
-        aria-label="uzbekistan"
+        aria-label="Uzbekistan"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="UZ__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#UZ__a)">
           <path fill="#0091DA" d="M0 0v24h72V0z" />
           <path
             fill="#F5F7F8"

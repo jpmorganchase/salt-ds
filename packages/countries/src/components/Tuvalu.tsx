@@ -12,24 +12,30 @@ const Tuvalu = forwardRef<SVGSVGElement, TuvaluProps>(function Tuvalu(
   return (
     <CountrySymbol
       data-testid="Tuvalu"
-      aria-label="tuvalu"
+      aria-label="Tuvalu"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="TV__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#TV__a)">
         <path fill="#0091DA" d="M0 0h72v72H0z" />
         <path
           fill="#FBD381"
           d="m52.8 26-1.49 3.371-3.51.449 2.589 2.532-.68 3.648 3.091-2.083L55.89 36l-.679-3.648L57.8 29.82l-3.51-.449L52.8 26ZM40.3 38.67l.395 3.664-2.815 2.144 3.508.898 1.236 3.5 1.634-3.35 3.718.259-2.412-2.82.976-3.487-3.264 1.366L40.3 38.67ZM57.8 43l-1.49 3.371-3.51.449 2.589 2.532-.68 3.648 3.091-2.083L60.89 53l-.679-3.648L62.8 46.82l-3.51-.449L57.8 43Zm-12.294 8.17-.567 3.642-3.274 1.342 3.156 1.776.288 3.7 2.446-2.813 3.524 1.213-1.6-3.348 1.845-3.116-3.506.475-2.312-2.87ZM32.8 56l-1.49 3.371-3.51.449 2.589 2.532-.68 3.648 3.091-2.083L35.89 66l-.679-3.648L37.8 59.82l-3.51-.449L32.8 56Z"
         />
-        <mask id="b" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="TV__b"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#TV__b)">
           <path fill="#004692" d="M0 0h36v36H0z" />
           <path
             fill="#F5F7F8"

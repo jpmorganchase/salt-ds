@@ -10,15 +10,21 @@ const EquatorialGuinea = forwardRef<SVGSVGElement, EquatorialGuineaProps>(
     return (
       <CountrySymbol
         data-testid="EquatorialGuinea"
-        aria-label="equatorial guinea"
+        aria-label="Equatorial Guinea"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="GQ__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#GQ__a)">
           <path fill="#DD2033" d="M0 72V50h72v22z" />
           <path fill="#F5F7F8" d="M0 50V22h72v28z" />
           <path fill="#008259" d="M0 22V0h72v22z" />

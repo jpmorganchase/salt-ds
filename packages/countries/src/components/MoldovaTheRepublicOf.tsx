@@ -12,15 +12,15 @@ const MoldovaTheRepublicOf = forwardRef<
   return (
     <CountrySymbol
       data-testid="MoldovaTheRepublicOf"
-      aria-label="moldova (the republic of)"
+      aria-label="Moldova (the Republic of)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="MD__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#MD__a)">
         <path fill="#DD2033" d="M72 72H56V0h16z" />
         <path fill="#F1B434" d="M56 72H16V0h40z" />
         <path fill="#004692" d="M16 72H0V0h16z" />
@@ -36,13 +36,19 @@ const MoldovaTheRepublicOf = forwardRef<
           fill="#DD2033"
           d="M26.2 27.823h20v7.942a14.857 14.857 0 0 1-9.34 13.794l-.66.264-.66-.264a14.857 14.857 0 0 1-9.34-13.794v-7.942Z"
         />
-        <mask id="b" x="26" y="27" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="MD__b"
+          x="26"
+          y="27"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path
             fill="#005EB8"
             d="M26.2 27.823h20v7.942a14.857 14.857 0 0 1-9.34 13.794l-.66.264-.66-.264a14.857 14.857 0 0 1-9.34-13.794v-7.942Z"
           />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#MD__b)">
           <path fill="#0091DA" d="M26.2 38h20v12h-20V38Z" />
           <path
             fill="#F1B434"

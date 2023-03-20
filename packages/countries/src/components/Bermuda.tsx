@@ -12,24 +12,30 @@ const Bermuda = forwardRef<SVGSVGElement, BermudaProps>(function Bermuda(
   return (
     <CountrySymbol
       data-testid="Bermuda"
-      aria-label="bermuda"
+      aria-label="Bermuda"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="BM__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#BM__a)">
         <path fill="#DD2033" d="M0 0h72v72H0z" />
         <path
           fill="#F5F7F8"
           d="M40.8 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L51.3 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
         />
-        <mask id="b" x="40" y="50" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="BM__b"
+          x="40"
+          y="50"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#D9D9D9" d="M40.8 50h22v8h-22z" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#BM__b)">
           <path
             fill="#009B77"
             d="M40.8 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L51.3 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
@@ -38,10 +44,16 @@ const Bermuda = forwardRef<SVGSVGElement, BermudaProps>(function Bermuda(
         <rect x="48.8" y="38" fill="#DD2033" rx="2.5" />
         <path fill="#86C5FA" d="M46.8 50v-7h9v7h-9Z" />
         <path fill="#F5F7F8" d="M51.3 52.857 46.8 50h9l-4.5 2.857Z" />
-        <mask id="c" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="BM__c"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
         </mask>
-        <g mask="url(#c)">
+        <g mask="url(#BM__c)">
           <path fill="#004692" d="M0 0h36v36H0z" />
           <path
             fill="#F5F7F8"

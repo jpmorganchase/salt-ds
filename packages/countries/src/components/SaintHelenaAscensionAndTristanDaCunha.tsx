@@ -15,38 +15,50 @@ const SaintHelenaAscensionAndTristanDaCunha = forwardRef<
   return (
     <CountrySymbol
       data-testid="SaintHelenaAscensionAndTristanDaCunha"
-      aria-label="saint helena, ascension and tristan da cunha"
+      aria-label="Saint Helena, Ascension and Tristan da Cunha"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="SH__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#SH__a)">
         <path fill="#004692" d="M0 0h72v72H0z" />
         <path
           fill="#F1B434"
           d="M40.4 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L50.9 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
         />
         <circle cx="50.9" cy="38.5" r="2.5" fill="#FDEFD3" />
-        <mask id="b" x="40" y="42" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="SH__b"
+          x="40"
+          y="42"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#D9D9D9" d="M40.4 42h21v16h-21z" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#SH__b)">
           <path
             fill="#86C5FA"
             d="M40.4 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L50.9 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
           />
           <path fill="#31373D" d="M40.4 42h21v2h-21z" />
         </g>
-        <mask id="c" x="40" y="35" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="SH__c"
+          x="40"
+          y="35"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path
             fill="#F1B434"
             d="M40.4 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L50.9 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
           />
         </mask>
-        <g mask="url(#c)">
+        <g mask="url(#SH__c)">
           <path
             fill="#F5F7F8"
             d="M50.9 50c-2.626 0-2.626 2.182-5.25 2.182-2.625 0-2.625-2.182-5.25-2.182v3.818c2.625 0 2.625 2.182 5.25 2.182 2.624 0 2.624-2.182 5.25-2.182 2.624 0 2.624 2.182 5.25 2.182 2.625 0 2.625-2.182 5.25-2.182V50c-2.625 0-2.625 2.182-5.25 2.182-2.626 0-2.626-2.182-5.25-2.182Z"
@@ -57,10 +69,16 @@ const SaintHelenaAscensionAndTristanDaCunha = forwardRef<
           fill="#31373D"
           d="M50.9 55.5a4.5 4.5 0 0 0 4.5-4.5h-9a4.5 4.5 0 0 0 4.5 4.5Z"
         />
-        <mask id="d" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="SH__d"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
         </mask>
-        <g mask="url(#d)">
+        <g mask="url(#SH__d)">
           <path fill="#004692" d="M0 0h36v36H0z" />
           <path
             fill="#F5F7F8"

@@ -10,18 +10,24 @@ const PapuaNewGuinea = forwardRef<SVGSVGElement, PapuaNewGuineaProps>(
     return (
       <CountrySymbol
         data-testid="PapuaNewGuinea"
-        aria-label="papua new guinea"
+        aria-label="Papua New Guinea"
         viewBox="0 0 73 73"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="PG__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path
             fill="#D9D9D9"
             d="M62.191 10.632c14.06 14.06 14.06 36.853 0 50.912-14.059 14.059-36.853 14.059-50.912 0-14.058-14.059-14.058-36.853 0-50.912 14.06-14.059 36.853-14.059 50.912 0Z"
           />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#PG__a)">
           <path fill="#DD2033" d="M73 72H1V0h72v72Z" />
           <path
             fill="#31373D"

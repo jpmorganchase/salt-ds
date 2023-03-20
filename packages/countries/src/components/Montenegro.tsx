@@ -10,12 +10,18 @@ const Montenegro = forwardRef<SVGSVGElement, MontenegroProps>(
     return (
       <CountrySymbol
         data-testid="Montenegro"
-        aria-label="montenegro"
+        aria-label="Montenegro"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="ME__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle
             cx="36"
             cy="36"
@@ -24,7 +30,7 @@ const Montenegro = forwardRef<SVGSVGElement, MontenegroProps>(
             transform="rotate(-90 36 36)"
           />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#ME__a)">
           <path fill="#F1B434" d="M72 72H0V0h72z" />
           <circle cx="36" cy="36" r="31" fill="#DD2033" />
           <path
@@ -40,7 +46,7 @@ const Montenegro = forwardRef<SVGSVGElement, MontenegroProps>(
             d="M26 28h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36 50l-.66-.264A14.857 14.857 0 0 1 26 35.94V28Z"
           />
           <mask
-            id="b"
+            id="ME__b"
             x="26"
             y="28"
             maskUnits="userSpaceOnUse"
@@ -51,7 +57,7 @@ const Montenegro = forwardRef<SVGSVGElement, MontenegroProps>(
               d="M26 28h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36 50l-.66-.264A14.857 14.857 0 0 1 26 35.94V28Z"
             />
           </mask>
-          <g mask="url(#b)">
+          <g mask="url(#ME__b)">
             <path fill="#009B77" d="M26 38h20v12H26z" />
           </g>
         </g>

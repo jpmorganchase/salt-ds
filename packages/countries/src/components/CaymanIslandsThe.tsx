@@ -10,15 +10,21 @@ const CaymanIslandsThe = forwardRef<SVGSVGElement, CaymanIslandsTheProps>(
     return (
       <CountrySymbol
         data-testid="CaymanIslandsThe"
-        aria-label="cayman islands (the)"
+        aria-label="Cayman Islands (the)"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="KY__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#KY__a)">
           <path fill="#004692" d="M0 0h72v72H0z" />
           <path fill="#FBD381" d="M61.4 53h-21v5h3v3h15v-3h3v-5Z" />
           <circle cx="50.9" cy="27.5" r="2.5" fill="#FBD381" />
@@ -28,7 +34,7 @@ const CaymanIslandsThe = forwardRef<SVGSVGElement, CaymanIslandsTheProps>(
             d="M40.4 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L50.9 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
           />
           <mask
-            id="b"
+            id="KY__b"
             x="40"
             y="35"
             maskUnits="userSpaceOnUse"
@@ -39,7 +45,7 @@ const CaymanIslandsThe = forwardRef<SVGSVGElement, CaymanIslandsTheProps>(
               d="M40.4 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L50.9 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
             />
           </mask>
-          <g mask="url(#b)">
+          <g mask="url(#KY__b)">
             <path fill="#005EB8" d="M40.4 45h21v13h-21z" />
             <path
               fill="#F5F7F8"
@@ -47,10 +53,16 @@ const CaymanIslandsThe = forwardRef<SVGSVGElement, CaymanIslandsTheProps>(
             />
             <path fill="#F1B434" d="M43.4 37h15v4h-15z" />
           </g>
-          <mask id="c" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+          <mask
+            id="KY__c"
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            mask-type="alpha"
+          >
             <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
           </mask>
-          <g mask="url(#c)">
+          <g mask="url(#KY__c)">
             <path fill="#004692" d="M0 0h36v36H0z" />
             <path
               fill="#F5F7F8"

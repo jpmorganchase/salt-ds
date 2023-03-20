@@ -12,15 +12,15 @@ const Nauru = forwardRef<SVGSVGElement, NauruProps>(function Nauru(
   return (
     <CountrySymbol
       data-testid="Nauru"
-      aria-label="nauru"
+      aria-label="Nauru"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="NR__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#NR__a)">
         <path fill="#004692" d="M0 0h72v72H0z" />
         <path fill="#F1B434" d="M0 41V31h72v10z" />
         <path

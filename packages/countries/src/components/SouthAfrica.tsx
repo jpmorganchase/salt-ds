@@ -10,12 +10,18 @@ const SouthAfrica = forwardRef<SVGSVGElement, SouthAfricaProps>(
     return (
       <CountrySymbol
         data-testid="SouthAfrica"
-        aria-label="south africa"
+        aria-label="south Africa"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="ZA__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle
             cx="36"
             cy="36"
@@ -24,7 +30,7 @@ const SouthAfrica = forwardRef<SVGSVGElement, SouthAfricaProps>(
             transform="matrix(1 0 0 -1 0 72)"
           />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#ZA__a)">
           <path fill="#DD2033" d="M0 0v24h72V0z" />
           <path fill="#005EB8" d="M0 48v24h72V48z" />
           <path fill="#F5F7F8" d="M72.4 24H44.8l-32-24v72l32-24h27.6V24Z" />

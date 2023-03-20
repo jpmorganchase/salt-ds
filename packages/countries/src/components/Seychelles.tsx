@@ -10,15 +10,21 @@ const Seychelles = forwardRef<SVGSVGElement, SeychellesProps>(
     return (
       <CountrySymbol
         data-testid="Seychelles"
-        aria-label="seychelles"
+        aria-label="Seychelles"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="SC__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#SC__a)">
           <path fill="#004692" d="M0 0h72v72H0z" />
           <path fill="#009B77" d="M71.8 72V20l-62 52h62Z" />
           <path

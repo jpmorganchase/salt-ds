@@ -10,12 +10,18 @@ const Bangladesh = forwardRef<SVGSVGElement, BangladeshProps>(
     return (
       <CountrySymbol
         data-testid="Bangladesh"
-        aria-label="bangladesh"
+        aria-label="Bangladesh"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="BD__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle
             cx="36"
             cy="36"
@@ -24,7 +30,7 @@ const Bangladesh = forwardRef<SVGSVGElement, BangladeshProps>(
             transform="rotate(-90 36 36)"
           />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#BD__a)">
           <path fill="#005B33" d="M72 72H0V0h72z" />
           <circle cx="30" cy="36" r="16" fill="#DD2033" />
         </g>

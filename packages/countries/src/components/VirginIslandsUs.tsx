@@ -10,15 +10,21 @@ const VirginIslandsUs = forwardRef<SVGSVGElement, VirginIslandsUsProps>(
     return (
       <CountrySymbol
         data-testid="VirginIslandsUs"
-        aria-label="virgin islands (u.s.)"
+        aria-label="Virgin Islands (U.S.)"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="VI__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#VI__a)">
           <path fill="#F5F7F8" d="M0 0h72v72H0z" />
           <path
             fill="#F1B434"
@@ -29,7 +35,7 @@ const VirginIslandsUs = forwardRef<SVGSVGElement, VirginIslandsUsProps>(
             d="M25.8 28h20v7.941a14.857 14.857 0 0 1-9.34 13.795L35.8 50l-.66-.264A14.857 14.857 0 0 1 25.8 35.94V28Z"
           />
           <mask
-            id="b"
+            id="VI__b"
             x="25"
             y="28"
             maskUnits="userSpaceOnUse"
@@ -40,7 +46,7 @@ const VirginIslandsUs = forwardRef<SVGSVGElement, VirginIslandsUsProps>(
               d="M25.8 28h20v7.941a14.857 14.857 0 0 1-9.34 13.795L35.8 50l-.66-.264A14.857 14.857 0 0 1 25.8 35.94V28Z"
             />
           </mask>
-          <g mask="url(#b)">
+          <g mask="url(#VI__b)">
             <path fill="#F5F7F8" d="M25.8 35h20v15h-20V35Z" />
             <path
               fill="#DD2033"

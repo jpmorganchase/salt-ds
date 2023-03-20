@@ -12,15 +12,15 @@ const Dominica = forwardRef<SVGSVGElement, DominicaProps>(function Dominica(
   return (
     <CountrySymbol
       data-testid="Dominica"
-      aria-label="dominica"
+      aria-label="Dominica"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="DM__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#DM__a)">
         <path fill="#008259" d="M0 0h72v72H0z" />
         <path fill="#F5F7F8" d="M40 0h8v40h24v8H48v24h-8V48H0v-8h40V0Z" />
         <path fill="#FBD381" d="M24 0h8v24h40v8H32v40h-8V32H0v-8h24V0Z" />

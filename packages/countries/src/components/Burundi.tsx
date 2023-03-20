@@ -12,15 +12,15 @@ const Burundi = forwardRef<SVGSVGElement, BurundiProps>(function Burundi(
   return (
     <CountrySymbol
       data-testid="Burundi"
-      aria-label="burundi"
+      aria-label="Burundi"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="BI__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#BI__a)">
         <path fill="#009B77" d="m0 0 36 35L72 0v72L36 35 0 72V0Z" />
         <path fill="#A00009" d="m0 72 35-36L0 0h72L35 36l37 36H0Z" />
         <path

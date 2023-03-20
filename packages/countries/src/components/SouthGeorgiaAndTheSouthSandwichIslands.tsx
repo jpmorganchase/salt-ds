@@ -15,12 +15,12 @@ const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
   return (
     <CountrySymbol
       data-testid="SouthGeorgiaAndTheSouthSandwichIslands"
-      aria-label="south georgia and the south sandwich islands"
+      aria-label="South Georgia and the South Sandwich Islands"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="GS__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -29,7 +29,7 @@ const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
           transform="rotate(-90 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#GS__a)">
         <path fill="#004692" d="M0 0h72v72H0z" />
         <path fill="#C1C3C3" d="M46.4 26.8h9v8h-9z" />
         <path fill="#936846" d="M47.4 19.8h2.5v3h3.5v4h-6v-7Z" />
@@ -38,10 +38,16 @@ const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
           fill="#F5F7F8"
           d="M40.4 34.8h21v8.743a14.857 14.857 0 0 1-9.36 13.803l-1.14.454-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V34.8Z"
         />
-        <mask id="b" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="GS__b"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#GS__b)">
           <path fill="#004692" d="M0 0h36v36H0z" />
           <path
             fill="#F5F7F8"
@@ -61,13 +67,19 @@ const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
           />
         </g>
       </g>
-      <mask id="c" x="40" y="34" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask
+        id="GS__c"
+        x="40"
+        y="34"
+        maskUnits="userSpaceOnUse"
+        mask-type="alpha"
+      >
         <path
           fill="#F5F7F8"
           d="M40.4 34.8h21v8.743a14.857 14.857 0 0 1-9.36 13.803l-1.14.454-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V34.8Z"
         />
       </mask>
-      <g fill="#005EB8" mask="url(#c)">
+      <g fill="#005EB8" mask="url(#GS__c)">
         <path d="m50.65 34.3 4.75 4.75-4.75 4.75-4.75-4.75 4.75-4.75Zm-9.5 9.5 4.75 4.75-4.75 4.75-4.75-4.75 4.75-4.75Zm23.75-4.75-4.75-4.75-4.75 4.75 4.75 4.75 4.75-4.75ZM50.65 43.8l4.75 4.75-4.75 4.75 4.75 4.75-4.75 4.75-4.75-4.75 4.75-4.75-4.75-4.75 4.75-4.75Zm-4.75-4.75-4.75-4.75-4.75 4.75 4.75 4.75 4.75-4.75Zm14.25 4.75 4.75 4.75-4.75 4.75-4.75-4.75 4.75-4.75Z" />
       </g>
     </CountrySymbol>

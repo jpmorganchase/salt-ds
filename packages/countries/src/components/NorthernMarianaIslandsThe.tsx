@@ -15,15 +15,15 @@ const NorthernMarianaIslandsThe = forwardRef<
   return (
     <CountrySymbol
       data-testid="NorthernMarianaIslandsThe"
-      aria-label="northern mariana islands (the)"
+      aria-label="Northern Mariana Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="MP__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#MP__a)">
         <path fill="#0091DA" d="M0 0h72v72H0z" />
         <path
           fill="#F5F7F8"

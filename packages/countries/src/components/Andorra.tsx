@@ -12,15 +12,15 @@ const Andorra = forwardRef<SVGSVGElement, AndorraProps>(function Andorra(
   return (
     <CountrySymbol
       data-testid="Andorra"
-      aria-label="andorra"
+      aria-label="Andorra"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="AD__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#AD__a)">
         <path fill="#004692" d="M0 0h22v72H0z" />
         <path fill="#FBD381" d="M22 0h28v72H22z" />
         <path

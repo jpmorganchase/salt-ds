@@ -12,12 +12,12 @@ const Vanuatu = forwardRef<SVGSVGElement, VanuatuProps>(function Vanuatu(
   return (
     <CountrySymbol
       data-testid="Vanuatu"
-      aria-label="vanuatu"
+      aria-label="Vanuatu"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="VU__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Vanuatu = forwardRef<SVGSVGElement, VanuatuProps>(function Vanuatu(
           transform="matrix(1 0 0 -1 0 72)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#VU__a)">
         <path fill="#DD2033" d="M0 0v27h72V0z" />
         <path fill="#008259" d="M0 45v27h72V45z" />
         <path fill="#31373D" d="M72 27H50.8l-36-27H7.4v72h7.4l36-27H72V27Z" />

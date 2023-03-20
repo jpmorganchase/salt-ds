@@ -15,15 +15,15 @@ const UnitedStatesMinorOutlyingIslandsThe = forwardRef<
   return (
     <CountrySymbol
       data-testid="UnitedStatesMinorOutlyingIslandsThe"
-      aria-label="united states minor  outlying islands (the)"
+      aria-label="United States Minor  Outlying Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="UM__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#UM__a)">
         <path fill="#F5F7F8" d="M0 63V0h72v63z" />
         <path
           fill="#DD2033"

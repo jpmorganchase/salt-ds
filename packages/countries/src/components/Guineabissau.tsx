@@ -10,15 +10,21 @@ const Guineabissau = forwardRef<SVGSVGElement, GuineabissauProps>(
     return (
       <CountrySymbol
         data-testid="Guineabissau"
-        aria-label="guinea-bissau"
+        aria-label="Guinea-Bissau"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="GW__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#GW__a)">
           <path fill="#009B77" d="M0 72V36h72v36z" />
           <path fill="#F1B434" d="M0 36V0h72v36z" />
           <path fill="#DD2033" d="M0 0h32v72H0z" />

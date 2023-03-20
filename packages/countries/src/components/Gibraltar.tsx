@@ -12,12 +12,12 @@ const Gibraltar = forwardRef<SVGSVGElement, GibraltarProps>(function Gibraltar(
   return (
     <CountrySymbol
       data-testid="Gibraltar"
-      aria-label="gibraltar"
+      aria-label="Gibraltar"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="GI__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Gibraltar = forwardRef<SVGSVGElement, GibraltarProps>(function Gibraltar(
           transform="rotate(-90 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#GI__a)">
         <path fill="#F5F7F8" d="M0 0h72v48H0z" />
         <path
           fill="#DD2033"

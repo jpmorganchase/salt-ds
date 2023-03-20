@@ -12,12 +12,12 @@ const Barbados = forwardRef<SVGSVGElement, BarbadosProps>(function Barbados(
   return (
     <CountrySymbol
       data-testid="Barbados"
-      aria-label="barbados"
+      aria-label="Barbados"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="BB__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Barbados = forwardRef<SVGSVGElement, BarbadosProps>(function Barbados(
           transform="rotate(-90 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#BB__a)">
         <path fill="#004692" d="M72 72H0V0h72z" />
         <path fill="#F1B434" d="M52 72H20V0h32z" />
         <path

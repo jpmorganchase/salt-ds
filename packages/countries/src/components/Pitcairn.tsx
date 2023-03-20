@@ -12,15 +12,15 @@ const Pitcairn = forwardRef<SVGSVGElement, PitcairnProps>(function Pitcairn(
   return (
     <CountrySymbol
       data-testid="Pitcairn"
-      aria-label="pitcairn"
+      aria-label="Pitcairn"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="PN__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#PN__a)">
         <path fill="#004692" d="M0 0h72v72H0z" />
         <path fill="#C1C3C3" d="M46 27.177h9v8h-9z" />
         <path fill="#008259" d="M47 20.177h2.5v3H53v4h-6v-7Z" />
@@ -28,20 +28,32 @@ const Pitcairn = forwardRef<SVGSVGElement, PitcairnProps>(function Pitcairn(
           fill="#86C5FA"
           d="M40 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L50.5 58l-1.14-.454A14.857 14.857 0 0 1 40 43.743V35Z"
         />
-        <mask id="b" x="40" y="35" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="PN__b"
+          x="40"
+          y="35"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path
             fill="#86C5FA"
             d="M40 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L50.5 58l-1.14-.454A14.857 14.857 0 0 1 40 43.743V35Z"
           />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#PN__b)">
           <path fill="#FBD381" d="M50.5 35 61 58H40l10.5-23Z" />
           <path fill="#008259" d="m50.5 40.177 10.5 23H40l10.5-23Z" />
         </g>
-        <mask id="c" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="PN__c"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
         </mask>
-        <g mask="url(#c)">
+        <g mask="url(#PN__c)">
           <path fill="#004692" d="M0 0h36v36H0z" />
           <path
             fill="#F5F7F8"

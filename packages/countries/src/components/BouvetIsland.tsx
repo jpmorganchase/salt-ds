@@ -10,15 +10,21 @@ const BouvetIsland = forwardRef<SVGSVGElement, BouvetIslandProps>(
     return (
       <CountrySymbol
         data-testid="BouvetIsland"
-        aria-label="bouvet island"
+        aria-label="Bouvet Island"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="BV__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#BV__a)">
           <path fill="#DD2033" d="M0 0h72v72H0z" />
           <path
             fill="#F5F7F8"

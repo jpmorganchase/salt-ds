@@ -12,12 +12,12 @@ const Peru = forwardRef<SVGSVGElement, PeruProps>(function Peru(
   return (
     <CountrySymbol
       data-testid="Peru"
-      aria-label="peru"
+      aria-label="Peru"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="PE__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Peru = forwardRef<SVGSVGElement, PeruProps>(function Peru(
           transform="rotate(-90 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#PE__a)">
         <path fill="#DD2033" d="M0 0h72v72H0z" />
         <path fill="#F5F7F8" d="M56 72H16V0h40z" />
         <path
@@ -39,13 +39,19 @@ const Peru = forwardRef<SVGSVGElement, PeruProps>(function Peru(
           fill="#FF9E42"
           d="M26.2 20h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36.2 42l-.66-.264A14.857 14.857 0 0 1 26.2 27.94V20Z"
         />
-        <mask id="b" x="26" y="20" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="PE__b"
+          x="26"
+          y="20"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path
             fill="#005EB8"
             d="M26.2 20h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36.2 42l-.66-.264A14.857 14.857 0 0 1 26.2 27.94V20Z"
           />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#PE__b)">
           <path fill="#DD2033" d="M26.2 30h20v12h-20z" />
           <path fill="#0091DA" d="M26.2 20h10v10h-10z" />
         </g>

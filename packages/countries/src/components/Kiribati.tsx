@@ -12,15 +12,15 @@ const Kiribati = forwardRef<SVGSVGElement, KiribatiProps>(function Kiribati(
   return (
     <CountrySymbol
       data-testid="Kiribati"
-      aria-label="kiribati"
+      aria-label="Kiribati"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="KI__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#KI__a)">
         <path fill="#DD2033" d="M0 0h72v43H0z" />
         <path
           fill="#F1B434"

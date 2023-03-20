@@ -12,23 +12,29 @@ const Slovakia = forwardRef<SVGSVGElement, SlovakiaProps>(function Slovakia(
   return (
     <CountrySymbol
       data-testid="Slovakia"
-      aria-label="slovakia"
+      aria-label="Slovakia"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="SK__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#SK__a)">
         <path fill="#DD2033" d="M0 72V48h72v24z" />
         <path fill="#005EB8" d="M0 48V24h72v24z" />
         <path fill="#F5F7F8" d="M0 24V0h72v24z" />
         <path fill="#DD2033" d="M11.8 19h33v29.455L28.3 55l-16.5-6.545V19Z" />
-        <mask id="b" x="11" y="19" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="SK__b"
+          x="11"
+          y="19"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#DD2033" d="M11.8 19h33v29.455L28.3 55l-16.5-6.545V19Z" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#SK__b)">
           <path
             fill="#F5F7F8"
             d="M27 22h3v3h4v3h-4v3h7v3h-7v6h-3v-6h-7v-3h7v-3h-4v-3h4v-3Z"

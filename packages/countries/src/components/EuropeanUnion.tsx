@@ -10,12 +10,18 @@ const EuropeanUnion = forwardRef<SVGSVGElement, EuropeanUnionProps>(
     return (
       <CountrySymbol
         data-testid="EuropeanUnion"
-        aria-label="european union"
+        aria-label="European Union"
         viewBox="0 0 72 72"
         ref={ref}
         {...props}
       >
-        <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="EU__a"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle
             cx="36"
             cy="36"
@@ -24,7 +30,7 @@ const EuropeanUnion = forwardRef<SVGSVGElement, EuropeanUnionProps>(
             transform="rotate(-90 36 36)"
           />
         </mask>
-        <g mask="url(#a)">
+        <g mask="url(#EU__a)">
           <path fill="#004692" d="M0 0h72v72H0z" />
           <path
             fill="#F1B434"

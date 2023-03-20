@@ -12,12 +12,12 @@ const Spain = forwardRef<SVGSVGElement, SpainProps>(function Spain(
   return (
     <CountrySymbol
       data-testid="Spain"
-      aria-label="spain"
+      aria-label="Spain"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="ES__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Spain = forwardRef<SVGSVGElement, SpainProps>(function Spain(
           transform="rotate(180 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#ES__a)">
         <path fill="#A00009" d="M0 0h72v72H0z" />
         <path fill="#F1B434" d="M72 18v36H0V18z" />
         <path
@@ -39,13 +39,19 @@ const Spain = forwardRef<SVGSVGElement, SpainProps>(function Spain(
           fill="#F5F7F8"
           d="M14.6 33h18v9.822a9.7 9.7 0 0 1-6.065 8.992 7.834 7.834 0 0 1-5.87 0 9.699 9.699 0 0 1-6.065-8.992V33Z"
         />
-        <mask id="b" x="14" y="33" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="ES__b"
+          x="14"
+          y="33"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path
             fill="#F5F7F8"
             d="M14.6 33h18v9.822a9.7 9.7 0 0 1-6.065 8.992 7.834 7.834 0 0 1-5.87 0 9.699 9.699 0 0 1-6.065-8.992V33Z"
           />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#ES__b)">
           <path fill="#DD2033" d="M14.6 33h9v10h-9z" />
           <path fill="#E26E00" d="M14.6 43h9v10h-9z" />
           <path fill="#DD2033" d="M23.6 43h9v10h-9z" />

@@ -12,12 +12,12 @@ const Grenada = forwardRef<SVGSVGElement, GrenadaProps>(function Grenada(
   return (
     <CountrySymbol
       data-testid="Grenada"
-      aria-label="grenada"
+      aria-label="Grenada"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="GD__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,12 +26,18 @@ const Grenada = forwardRef<SVGSVGElement, GrenadaProps>(function Grenada(
           transform="rotate(-90 36 36)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#GD__a)">
         <path fill="#A00009" d="M0 0h72v72H0z" />
-        <mask id="b" x="8" y="8" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="GD__b"
+          x="8"
+          y="8"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <circle cx="36" cy="36" r="28" fill="#DD2033" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#GD__b)">
           <path fill="#008259" d="M68.516 68.516H3.484V3.484h65.032z" />
           <path
             fill="#F1B434"

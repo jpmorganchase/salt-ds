@@ -146,6 +146,12 @@ const generateCountrySymbolComponents = ({
           },
         },
         {
+          name: "prefixIds",
+          params: {
+            prefix: countryCode,
+          },
+        },
+        {
           name: "find-viewBox",
           fn: () => {
             return {

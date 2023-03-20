@@ -15,15 +15,15 @@ const BoliviaPlurinationalStateOf = forwardRef<
   return (
     <CountrySymbol
       data-testid="BoliviaPlurinationalStateOf"
-      aria-label="bolivia (plurinational state of)"
+      aria-label="Bolivia (Plurinational State of)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="BO__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#BO__a)">
         <path fill="#009B77" d="M0 72V50h72v22z" />
         <path fill="#FBD381" d="M0 50V22h72v28z" />
         <path fill="#DD2033" d="M0 22V0h72v22z" />
@@ -47,10 +47,16 @@ const BoliviaPlurinationalStateOf = forwardRef<
           fill="#F1B434"
           d="M29.767 41.123 36 40l6.233 1.123a4 4 0 0 0 4.707-4.066l-.34-10.503L36 29l-10.6-2.446-.34 10.503a4 4 0 0 0 4.707 4.066Z"
         />
-        <mask id="b" x="29" y="26" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="BO__b"
+          x="29"
+          y="26"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <ellipse cx="36" cy="36" fill="#D9D9D9" rx="7" ry="10" />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#BO__b)">
           <path
             fill="#FBD381"
             d="M42.588 44.218C41.063 46.396 38.765 48 36 48s-5.063-1.603-6.588-3.782C27.882 42.033 27 39.121 27 36c0-3.121.882-6.033 2.412-8.218C30.937 25.604 33.235 24 36 24s5.063 1.604 6.588 3.782C44.118 29.967 45 32.879 45 36c0 3.121-.882 6.033-2.412 8.218Z"

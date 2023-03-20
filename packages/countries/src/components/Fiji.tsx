@@ -12,36 +12,48 @@ const Fiji = forwardRef<SVGSVGElement, FijiProps>(function Fiji(
   return (
     <CountrySymbol
       data-testid="Fiji"
-      aria-label="fiji"
+      aria-label="Fiji"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="FJ__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#FJ__a)">
         <path fill="#86C5FA" d="M0 0h72v72H0z" />
         <path
           fill="#F5F7F8"
           d="M40.8 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L51.3 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
         />
-        <mask id="b" x="40" y="35" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="FJ__b"
+          x="40"
+          y="35"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path
             fill="#F5F7F8"
             d="M40.8 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L51.3 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
           />
         </mask>
-        <g mask="url(#b)">
+        <g mask="url(#FJ__b)">
           <path
             fill="#DD2033"
             d="M40.8 35h21v6h-9v6h9v3h-9v8h-3v-8h-9v-3h9v-6h-9v-6Z"
           />
         </g>
-        <mask id="c" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+        <mask
+          id="FJ__c"
+          x="0"
+          y="0"
+          maskUnits="userSpaceOnUse"
+          mask-type="alpha"
+        >
           <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
         </mask>
-        <g mask="url(#c)">
+        <g mask="url(#FJ__c)">
           <path fill="#004692" d="M0 0h36v36H0z" />
           <path
             fill="#F5F7F8"

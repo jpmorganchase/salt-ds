@@ -12,12 +12,12 @@ const Italy = forwardRef<SVGSVGElement, ItalyProps>(function Italy(
   return (
     <CountrySymbol
       data-testid="Italy"
-      aria-label="italy"
+      aria-label="Italy"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
     >
-      <mask id="a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
+      <mask id="IT__a" x="0" y="0" maskUnits="userSpaceOnUse" mask-type="alpha">
         <circle
           cx="36"
           cy="36"
@@ -26,7 +26,7 @@ const Italy = forwardRef<SVGSVGElement, ItalyProps>(function Italy(
           transform="matrix(0 -1 -1 0 72 72)"
         />
       </mask>
-      <g mask="url(#a)">
+      <g mask="url(#IT__a)">
         <path fill="#008259" d="M0 72h24V0H0z" />
         <path fill="#F5F7F8" d="M24 72h24V0H24z" />
         <path fill="#DD2033" d="M48 72h24V0H48z" />
