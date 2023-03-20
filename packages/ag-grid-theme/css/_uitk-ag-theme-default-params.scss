@@ -1,5 +1,4 @@
 @import "~ag-grid-community/src/styles/ag-theme-base/sass/ag-theme-base-default-params";
-@import "./uitk-ag-theme-font-vars";
 
 $uitk-ag-theme-default-params: (
   grid-size: 8px,
@@ -83,9 +82,6 @@ $uitk-ag-theme-default-params: (
       "Open Sans",
       sans-serif,
     ),
-  icon-font-family: $uitk-ag-theme-icon-font-family,
-  icons-data: $uitk-ag-theme-icons-data,
-  icons-font-codes: $uitk-ag-theme-icons-font-codes,
   card-radius: ag-derived(border-radius),
   card-shadow: none,
   popup-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3),
