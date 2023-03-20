@@ -72,7 +72,7 @@
 }
 
 .docPaginator {
-  background-color: #10212b;
+  background-color: var(--card-background);
   padding: 0 calc(var(--salt-size-unit) * 3);
 }
 
