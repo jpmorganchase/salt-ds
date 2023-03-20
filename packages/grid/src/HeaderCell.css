@@ -95,4 +95,13 @@
 
 .saltGridHeaderCell-sortingIcon {
   padding: var(--grid-cell-padding);
+  display: flex;
+}
+
+.saltGridHeaderCell-sortingIconStart {
+  justify-content: start;
+}
+
+.saltGridHeaderCell-sortingIconEnd {
+  justify-content: end;
 }

@@ -58,8 +58,10 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
     const className = withBaseName("sortingIcon");
     const icon = (
       <div
-        className={className}
-        style={{ display: "flex", justifyContent: `${justify}` }}
+        className={clsx(className, {
+          [withBaseName("sortingIconStart")]: justify === "start",
+          [withBaseName("sortingIconEnd")]: justify === "end",
+        })}
         aria-hidden
       >
         {sortOrder === SortOrder.ASC && <ArrowUpIcon />}
