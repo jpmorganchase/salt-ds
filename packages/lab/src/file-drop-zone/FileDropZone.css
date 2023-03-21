@@ -3,7 +3,7 @@
   --fileDropZone-background: var(--salt-container-secondary-background);
   --fileDropZone-borderColor: var(--salt-container-secondary-borderColor);
   --fileDropZone-borderWidth: var(--salt-size-border);
-  --fileDropZone-borderStyle: var(--salt-dropTarget-borderStyle);
+  --fileDropZone-borderStyle: var(--salt-target-borderStyle);
   --fileDropZone-text-color: var(--salt-text-primary-foreground);
   --fileDropZone-icon-color: var(--salt-text-primary-foreground);
   --fileDropZone-padding: calc(var(--salt-size-unit) * 3);
@@ -42,7 +42,7 @@
 
 /* Styles applied if `isActive={true}` */
 .saltFileDropZone-active:not(.saltFileDropZone-disabled) {
-  --fileDropZone-background: var(--salt-dropTarget-background-hover);
+  --fileDropZone-background: var(--salt-target-background-hover);
 }
 
 /* Styles applied to description if `isRejected={true}`  */
@@ -59,7 +59,7 @@
 
 /* Styles applied on if `isRejected={true}` and `isActive={true}` */
 .saltFileDropZone-error:not(.saltFileDropZone-disabled).saltFileDropZone-active {
-  --fileDropZone-background: var(--salt-dropTarget-background-hover);
+  --fileDropZone-background: var(--salt-target-background-hover);
   --fileDropZone-borderColor: var(--salt-container-secondary-borderColor);
 }
 
@@ -95,7 +95,7 @@
 .saltFileDropZone-disabled {
   --fileDropZone-borderColor: var(--salt-container-secondary-borderColor-disabled);
 
-  cursor: var(--salt-dropTarget-cursor-disabled);
+  cursor: var(--salt-target-cursor-disabled);
 }
 
 /* Styles applied if `disabled={true}` to icon and title */
