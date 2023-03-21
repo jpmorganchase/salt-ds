@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.2
+
+### Patch Changes
+
+- 1ad02da3: Deprecated `--salt-overlayable-shadow-scroll-color`, use `--salt-shadow-1-color` instead
+
 ## 1.0.1
 
 ### Patch Changes
