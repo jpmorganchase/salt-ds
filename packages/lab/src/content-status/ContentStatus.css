@@ -18,7 +18,7 @@
 
 /* Styles applied to status title */
 .saltContentStatus-title {
-  font-weight: var(--salt-typography-fontWeight-semiBold);
+  font-weight: var(--salt-text-display1-fontWeight); /* TODO: Use correct token */
 }
 
 /* Styles applied to status message */
