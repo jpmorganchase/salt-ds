@@ -16,6 +16,4 @@
   --salt-track-background-disabled: var(--salt-palette-track-background-disabled);
   --salt-track-borderColor: var(--salt-palette-track-border);
   --salt-track-borderColor-disabled: var(--salt-palette-track-border-disabled);
-  --salt-track-foreground: var(--salt-palette-track-foreground);
-  --salt-track-foreground-disabled: var(--salt-palette-track-foreground-disabled);
 }
