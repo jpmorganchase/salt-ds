@@ -33,7 +33,7 @@
   --slider-rail-mark-height: var(--saltSlider-rail-mark-height, 7px);
   --slider-rail-mark-color: var(--saltSlider-rail-mark-color, var(--slider-rail-color));
 
-  --slider-selection-color: var(--saltSlider-selection-color, var(--salt-measured-fill));
+  --slider-selection-color: var(--saltSlider-selection-color, var(--salt-accent-background));
   --slider-selection-height: var(--saltSlider-selection-height, 2px);
 
   --slider-handle-size: var(--saltSlider-handle-size, calc(var(--salt-size-base) * 0.5));
