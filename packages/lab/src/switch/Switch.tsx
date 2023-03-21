@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
-import { ControlLabel, ControlLabelProps } from "../control-label";
 import { useFormFieldProps } from "../form-field-context";
 import { CheckedIcon } from "./assets/CheckedIcon";
 
@@ -17,8 +16,7 @@ import "./Switch.css";
 
 export interface SwitchProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
-  label?: ControlLabelProps["label"];
-  LabelProps?: Partial<ControlLabelProps>;
+  label?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
 }
 
@@ -37,7 +35,6 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     defaultChecked,
     disabled,
     label,
-    LabelProps,
     onBlur,
     onChange,
     onFocus,
@@ -88,46 +85,38 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   );
 
   return (
-    <ControlLabel
-      {...LabelProps}
+    <label
       className={clsx(
-        withBaseName("label"),
-        { [withBaseName("disabled")]: disabled },
+        withBaseName(), className,
+        {
+          [withBaseName("disabled")]: disabled,
+          [withBaseName("checked")]: checked,
+        },
         className
       )}
-      disabled={disabled}
-      label={label}
       ref={ref}
     >
-      <span className={clsx(withBaseName(), className)}>
-        <span
-          className={clsx(withBaseName("base"), {
-            [withBaseName("checked")]: checked,
-            [withBaseName("focusVisible")]: focusVisible,
-          })}
-        >
-          <span className={withBaseName("inputContainer")}>
-            <input
-              className={withBaseName("input")}
-              checked={checked}
-              disabled={disabled}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              ref={inputRef}
-              type="checkbox"
-              {...a11yProps}
-              {...rest}
-            />
-            {checked ? (
-              <CheckedIcon className={withBaseName("icon")} />
-            ) : (
-              <span className={withBaseName("thumb")} />
-            )}
-          </span>
-        </span>
+      <span className={withBaseName("iconContainer")}>
+        <input
+          className={withBaseName("input")}
+          checked={checked}
+          disabled={disabled}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          ref={inputRef}
+          type="checkbox"
+          {...a11yProps}
+          {...rest}
+        />
         <span className={withBaseName("track")} />
+        {checked ? (
+          <CheckedIcon className={withBaseName("icon")} />
+        ) : (
+          <span className={withBaseName("thumb")} />
+        )}
       </span>
-    </ControlLabel>
+      {label}
+    </label>
   );
 });
