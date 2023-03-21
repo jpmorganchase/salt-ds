@@ -8,6 +8,7 @@ import {
   NumericColumn,
   TextCellEditor,
   CellValidationState,
+  GridColumnProps,
 } from "../src";
 import { Story } from "@storybook/react";
 import * as yup from "yup";
@@ -92,51 +93,26 @@ const useExampleDataSource = () => {
     },
   ]);
 
-  const setName = useCallback(
-    (row: RowExample, rowIndex: number, value: string) => {
+  const setValue = useCallback(
+    ({
+      rowIndex,
+      name,
+      value,
+    }: {
+      rowIndex: number;
+      value: string | number;
+      name: EditableFieldKeys;
+    }) => {
       setRows((x) => {
         x = [...x];
-        x[rowIndex] = { ...x[rowIndex], name: value };
+        x[rowIndex] = { ...x[rowIndex], [name]: value };
         return x;
       });
     },
     [setRows]
   );
 
-  const setPrice = useCallback(
-    (row: RowExample, rowIndex: number, value: string) => {
-      setRows((x) => {
-        x = [...x];
-        x[rowIndex] = { ...x[rowIndex], price: Number.parseFloat(value) };
-        return x;
-      });
-    },
-    [setRows]
-  );
-
-  const setAmount = useCallback(
-    (row: RowExample, rowIndex: number, value: string) => {
-      setRows((x) => {
-        x = [...x];
-        x[rowIndex] = { ...x[rowIndex], amount: Number.parseInt(value) };
-        return x;
-      });
-    },
-    [setRows]
-  );
-
-  const setDiscount = useCallback(
-    (row: RowExample, rowIndex: number, value: string) => {
-      setRows((x) => {
-        x = [...x];
-        x[rowIndex] = { ...x[rowIndex], discount: value };
-        return x;
-      });
-    },
-    [setRows]
-  );
-
-  return { rows, setAmount, setName, setDiscount, setPrice };
+  return { rows, setValue };
 };
 
 const validationSchema = yup.object({
@@ -144,17 +120,23 @@ const validationSchema = yup.object({
   price: yup.number().required().min(10).max(2000),
   amount: yup.number().required().min(10).max(2000),
   total: yup.number().required().min(10).max(2000),
+  discount: yup.string(),
 });
 
+type EditableFieldKeys = "name" | "price" | "amount" | "total" | "discount";
+type CreateValueSetter = (
+  name: EditableFieldKeys
+) => GridColumnProps<RowExample>["onChange"];
+
 export const CellValidation: Story = () => {
-  const { setPrice, setDiscount, rows, setAmount, setName } =
-    useExampleDataSource();
+  const { rows, setValue } = useExampleDataSource();
   const [validationStatus, setValidationStatus] = useState<
     Array<{
       price?: CellValidationState;
       amount?: CellValidationState;
       total?: CellValidationState;
       name?: CellValidationState;
+      discount?: CellValidationState;
     }>
   >(() =>
     rows.map((_, index) => {
@@ -164,11 +146,23 @@ export const CellValidation: Story = () => {
           amount: "warning",
           total: "error",
           name: "error",
+          discount: undefined,
         };
       }
       return {};
     })
   );
+
+  const setNumberValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value: Number.parseFloat(value) });
+    asyncValidate({ value, index, name });
+  };
+
+  const setStringValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value });
+    asyncValidate({ value, index, name });
+  };
+
   const asyncValidate = ({
     value,
     name,
@@ -176,7 +170,7 @@ export const CellValidation: Story = () => {
   }: {
     value: number | string;
     index: number;
-    name: "name" | "price" | "amount" | "total";
+    name: EditableFieldKeys;
   }) => {
     validationSchema
       .validateAt(name, { [name]: value })
@@ -208,11 +202,7 @@ export const CellValidation: Story = () => {
         name="Name"
         defaultWidth={180}
         getValue={(r: RowExample) => r.name}
-        onChange={(...args) => {
-          const [, index, value] = args;
-          setName(...args);
-          asyncValidate({ value, index, name: "name" });
-        }}
+        onChange={setStringValue("name")}
         getValidationStatus={({ row }) => validationStatus[row.index].name}
         validationType="strong"
       >
@@ -232,11 +222,7 @@ export const CellValidation: Story = () => {
         name="Amount"
         getValue={(r: RowExample) => r.amount}
         precision={0}
-        onChange={(...args) => {
-          const [, index, value] = args;
-          setAmount(...args);
-          asyncValidate({ value, index, name: "amount" });
-        }}
+        onChange={setNumberValue("amount")}
         getValidationStatus={({ row }) => validationStatus[row.index].amount}
         validationType="strong"
       >
@@ -249,11 +235,7 @@ export const CellValidation: Story = () => {
         name="Price"
         precision={2}
         getValue={(r: RowExample) => r.price}
-        onChange={(...args) => {
-          const [, index, value] = args;
-          setPrice(...args);
-          asyncValidate({ value, index, name: "price" });
-        }}
+        onChange={setNumberValue("price")}
         getValidationMessage={() =>
           "This is a custom success validation message"
         }
@@ -268,7 +250,7 @@ export const CellValidation: Story = () => {
         id="discount"
         name="Discount"
         getValue={(r: RowExample) => r.discount}
-        onChange={setDiscount}
+        onChange={setStringValue("discount")}
       >
         <CellEditor>
           <DropdownCellEditor options={discountOptions} />
@@ -310,8 +292,14 @@ function RowValidationCell({
 }
 
 export const RowValidation: Story = () => {
-  const { setPrice, setDiscount, rows, setAmount, setName } =
-    useExampleDataSource();
+  const { rows, setValue } = useExampleDataSource();
+  const setNumberValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value: Number.parseFloat(value) });
+  };
+
+  const setStringValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value });
+  };
 
   return (
     <Grid
@@ -332,7 +320,7 @@ export const RowValidation: Story = () => {
         name="Name"
         defaultWidth={180}
         getValue={(r) => r.name}
-        onChange={setName}
+        onChange={setStringValue("name")}
         getValidationStatus={({ row }) => row.data.status}
       >
         <CellEditor>
@@ -343,8 +331,7 @@ export const RowValidation: Story = () => {
         id="description"
         name="Description"
         defaultWidth={200}
-        getValue={(r) => r.description}
-        onChange={setName}
+        getValue={(r: RowExample) => r.description}
         getValidationStatus={({ row }) => row.data.status}
       />
 
@@ -353,7 +340,7 @@ export const RowValidation: Story = () => {
         name="Amount"
         getValue={(r: RowExample) => r.amount}
         precision={0}
-        onChange={setAmount}
+        onChange={setNumberValue("amount")}
         getValidationStatus={({ row }) => row.data.status}
       >
         <CellEditor>
@@ -365,7 +352,7 @@ export const RowValidation: Story = () => {
         name="Price"
         precision={2}
         getValue={(r: RowExample) => r.price}
-        onChange={setPrice}
+        onChange={setNumberValue("price")}
         getValidationStatus={({ row }) => row.data.status}
       >
         <CellEditor>
@@ -376,7 +363,7 @@ export const RowValidation: Story = () => {
         id="discount"
         name="Discount"
         getValue={(r) => r.discount}
-        onChange={setDiscount}
+        onChange={setStringValue("discount")}
         getValidationStatus={({ row }) => row.data.status}
       >
         <CellEditor>
