@@ -1,4 +1,3 @@
-import { ComponentType, ReactElement } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import "./RadioButtonIcon.css";
@@ -42,14 +41,3 @@ export const RadioButtonIcon = ({
     </svg>
   );
 };
-
-/**
- * Creates a component that can be given to Radio or RadioButton as the 'icon'
- */
-export const makeRadioIcon =
-  (
-    iconChecked: ReactElement | null,
-    iconUnchecked: ReactElement | null
-  ): ComponentType<RadioButtonIconProps> =>
-  (props: RadioButtonIconProps) =>
-    props.checked ? iconChecked : iconUnchecked;

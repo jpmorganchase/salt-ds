@@ -1,9 +1,5 @@
 import { ChangeEventHandler, useState } from "react";
-import {
-  RadioButton,
-  RadioButtonGroup,
-  RadioButtonGroupProps,
-} from "@salt-ds/lab";
+import { RadioButton, RadioButtonGroup } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -121,7 +117,7 @@ export const ControlledGroup: ComponentStory<typeof RadioButtonGroup> = ({
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
     setControlledValue(value);
-    onChange && onChange(event);
+    onChange?.(event);
   };
 
   return (
@@ -132,7 +128,12 @@ export const ControlledGroup: ComponentStory<typeof RadioButtonGroup> = ({
       value={controlledValue}
     >
       {radioData.map((radio) => (
-        <RadioButton {...radio} />
+        <RadioButton
+          key={radio.label}
+          label={radio.label}
+          value={radio.value}
+          disabled={radio.disabled}
+        />
       ))}
     </RadioButtonGroup>
   );
@@ -144,17 +145,14 @@ export const LongTextGroup: ComponentStory<typeof RadioButtonGroup> = () => (
   <div style={{ width: 500 }}>
     <RadioButtonGroup aria-label="Long Text Example" name="selectionControls">
       <RadioButton
-        key="checkboxes"
         label="Checkboxes allow the user to select multiple options from a set. If you have multiple options appearing in a list, you can preserve space by using checkboxes instead of on/off switches. If you have a single option, avoid using a checkbox and use an on/off switch instead."
         value="checkboxes"
       />
       <RadioButton
-        key="radio"
         label="Radio buttons allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side. Radio buttons allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side."
         value="radio"
       />
       <RadioButton
-        key="switches"
         label="On/off switches toggle the state of a single settings option. The option that the switch controls, as well as the state it’s in, should be made clear from the corresponding inline label. Switch can also be used with a label description thanks to the FormControlLabel component."
         value="switches"
         disabled

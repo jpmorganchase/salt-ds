@@ -1,20 +1,18 @@
 import { clsx } from "clsx";
 import {
   ChangeEventHandler,
+  ComponentPropsWithoutRef,
   forwardRef,
-  HTMLAttributes,
-  useState,
 } from "react";
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer, useControlled, useId } from "@salt-ds/core";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 
 import "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
-export type RadioButtonGroupDirectionProps = "horizontal" | "vertical";
-
-export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
+export interface RadioButtonGroupProps
+  extends Omit<ComponentPropsWithoutRef<"fieldset">, "onChange"> {
   /**
    * Set the selected value when initialized.
    */
@@ -22,7 +20,7 @@ export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Set the group direction.
    */
-  direction?: RadioButtonGroupDirectionProps;
+  direction?: "horizontal" | "vertical";
   /**
    * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise the radio buttons will wrap onto the next line.
    */
@@ -57,41 +55,39 @@ export const RadioButtonGroup = forwardRef<
     ...rest
   } = props;
 
-  const [stateValue, setStateValue] = useState(props.defaultValue);
-
-  const getValue = () => (isControlled() ? props.value : stateValue);
-
-  const isControlled = () => props.value !== undefined;
+  const [value, setStateValue] = useControlled({
+    controlled: valueProp,
+    default: defaultValue,
+    state: "value",
+    name: "RadioButtonGroup",
+  });
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    if (!isControlled()) {
-      setStateValue(event.target.value);
-    }
-    if (props.onChange) {
-      props.onChange(event);
-    }
+    setStateValue(event.target.value);
+    onChange?.(event);
   };
 
-  const name = nameProp || useId();
+  const name = useId(nameProp);
 
   return (
     <fieldset
-      className={clsx(withBaseName(), className)}
+      className={clsx(
+        withBaseName(),
+        withBaseName(direction),
+        {
+          [withBaseName("noWrap")]: !wrap,
+        },
+        className
+      )}
       data-testid="radio-button-group"
       ref={ref}
       role="radiogroup"
+      {...rest}
     >
       <RadioGroupContext.Provider
-        value={{ name, onChange: handleChange, value: getValue() }}
+        value={{ name, onChange: handleChange, value }}
       >
-        <div
-          className={clsx(withBaseName(direction), {
-            [withBaseName("noWrap")]: !wrap,
-          })}
-          {...rest}
-        >
-          {children}
-        </div>
+        {children}
       </RadioGroupContext.Provider>
     </fieldset>
   );
