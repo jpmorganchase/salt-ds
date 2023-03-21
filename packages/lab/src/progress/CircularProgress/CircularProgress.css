@@ -1,5 +1,5 @@
 .saltCircularProgress {
-  --circularProgress-gradient-color: var(--salt-measured-fill);
+  --circularProgress-gradient-color: var(--salt-accent-background);
 
   color: var(--salt-text-primary-foreground);
   display: inline-flex;
@@ -47,7 +47,7 @@
 }
 
 .saltCircularProgress-railCircle {
-  stroke: var(--salt-measured-background);
+  stroke: var(--salt-accent-background);
   stroke-width: 1px;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .saltCircularProgress-svg {
-  fill: var(--salt-measured-background);
+  fill: var(--salt-accent-background);
   display: block;
 }
 

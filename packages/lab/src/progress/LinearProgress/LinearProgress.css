@@ -29,11 +29,11 @@
 }
 
 .saltLinearProgress-disabled .saltLinearProgress-bar {
-  background: var(--salt-measured-fill-disabled);
+  background: var(--salt-accent-background-disabled);
 }
 
 .saltLinearProgress-disabled .saltLinearProgress-barContainer :after {
-  background: var(--salt-measured-fill-disabled);
+  background: var(--salt-accent-background-disabled);
 }
 
 .saltLinearProgress-disabled .saltLinearProgress-progressValue {
@@ -52,7 +52,7 @@
 /* Horizontal line under the progress indicator bar */
 .saltLinearProgress-barContainer:after {
   top: var(--linearProgress-after-top);
-  background: var(--salt-measured-background);
+  background: var(--salt-accent-background);
   content: "";
   display: block;
   height: 1px;
@@ -79,7 +79,7 @@
   top: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
-  background: var(--salt-measured-fill);
+  background: var(--salt-accent-background);
   z-index: 2;
 }
 

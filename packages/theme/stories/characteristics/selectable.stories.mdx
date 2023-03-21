@@ -22,7 +22,7 @@ trigger actions.
 ### Base
 
 <Canvas>
-  <Story name="Base">
+  <Story name="Base" withNotes>
     <DocGrid>
       <CursorBlock cursor="--salt-selectable-cursor-hover" />
       <CursorBlock cursor="--salt-selectable-cursor-selected" />
@@ -47,8 +47,18 @@ trigger actions.
       <ColorBlock colorVar="--salt-selectable-borderColor-selected" />
       <ColorBlock colorVar="--salt-selectable-borderColor-selectedDisabled" />
       <ColorBlock colorVar="--salt-selectable-foreground" />
-      <ColorBlock colorVar="--salt-selectable-foreground-partial" />
-      <ColorBlock colorVar="--salt-selectable-foreground-partialDisabled" />
+      <ColorBlock colorVar="--salt-selectable-foreground-disabled" />
+      <ColorBlock colorVar="--salt-selectable-foreground-hover" />
+      <ColorBlock colorVar="--salt-selectable-foreground-selected" />
+      <ColorBlock colorVar="--salt-selectable-foreground-selectedDisabled" />
+      <ColorBlock
+        colorVar="--salt-selectable-foreground-partial"
+        replacementToken="--salt-selectable-foreground-selected"
+      />
+      <ColorBlock
+        colorVar="--salt-selectable-foreground-partialDisabled"
+        replacementToken="--salt-selectable-foreground-selectedDisabled"
+      />
     </DocGrid>
   </Story>
 </Canvas>
@@ -67,10 +77,13 @@ trigger actions.
         colorVar="--salt-selectable-cta-foreground"
         replacementToken="--salt-text-primary-foreground"
       />
+      <ColorBlock
+        colorVar="--salt-selectable-cta-foreground-disabled"
+        replacementToken="--salt-text-primary-foreground-disabled"
+      />
       <ColorBlock colorVar="--salt-selectable-cta-foreground-hover" />
       <ColorBlock colorVar="--salt-selectable-cta-foreground-selected" />
       <ColorBlock colorVar="--salt-selectable-cta-foreground-selectedDisabled" />
-      <ColorBlock colorVar="--salt-selectable-cta-foreground-disabled" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -89,10 +102,13 @@ trigger actions.
         colorVar="--salt-selectable-primary-foreground"
         replacementToken="--salt-text-primary-foreground"
       />
+      <ColorBlock
+        colorVar="--salt-selectable-primary-foreground-disabled"
+        replacementToken="--salt-text-primary-foreground-disabled"
+      />
       <ColorBlock colorVar="--salt-selectable-primary-foreground-hover" />
       <ColorBlock colorVar="--salt-selectable-primary-foreground-selected" />
       <ColorBlock colorVar="--salt-selectable-primary-foreground-selectedDisabled" />
-      <ColorBlock colorVar="--salt-selectable-primary-foreground-disabled" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -111,10 +127,13 @@ trigger actions.
         colorVar="--salt-selectable-secondary-foreground"
         replacementToken="--salt-text-primary-foreground"
       />
+      <ColorBlock
+        colorVar="--salt-selectable-secondary-foreground-disabled"
+        replacementToken="--salt-text-primary-foreground-disabled"
+      />
       <ColorBlock colorVar="--salt-selectable-secondary-foreground-hover" />
       <ColorBlock colorVar="--salt-selectable-secondary-foreground-selected" />
       <ColorBlock colorVar="--salt-selectable-secondary-foreground-selectedDisabled" />
-      <ColorBlock colorVar="--salt-selectable-secondary-foreground-disabled" />
     </DocGrid>
   </Story>
 </Canvas>
