@@ -1,23 +1,27 @@
 import { clsx } from "clsx";
 import {
   ChangeEvent,
-  FocusEvent,
+  FocusEventHandler,
   forwardRef,
   InputHTMLAttributes,
-  useCallback,
-  useRef,
-  useState,
+  RefObject,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
-import { useFormFieldProps } from "../form-field-context";
 import { CheckedIcon } from "./assets/CheckedIcon";
 
 import "./Switch.css";
 
-export interface SwitchProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+export interface SwitchProps {
+  checked?: boolean;
+  className?: string;
+  defaultChecked?: boolean;
+  disabled?: boolean;
   label?: string;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  onFocus?: FocusEventHandler<HTMLInputElement>;
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  inputRef?: RefObject<HTMLInputElement>
+  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
 }
 
 const withBaseName = makePrefixer("saltSwitch");
@@ -26,22 +30,20 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   props,
   ref
 ) {
-  const { a11yProps } = useFormFieldProps();
 
   const {
     checked: checkedProp,
     className,
-    color,
     defaultChecked,
     disabled,
     label,
+    inputRef,
+    inputProps,
     onBlur,
     onChange,
     onFocus,
     ...rest
   } = props;
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const [checked, setChecked] = useControlled({
     controlled: checkedProp,
@@ -50,39 +52,11 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     state: "checked",
   });
 
-  const [focusVisible, setFocusVisible] = useState(false);
-
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.checked;
     setChecked(value);
     onChange?.(event, value);
   };
-
-  const handleFocus = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      // Fix for https://github.com/facebook/react/issues/7769
-      if (!inputRef.current) {
-        inputRef.current = event.currentTarget;
-      }
-
-      // TODO :focus-visible not yet supported on Safari, so we'll need to use the
-      // useIsFocusVisible polyfill
-      if (inputRef.current?.matches(":focus-visible")) {
-        setFocusVisible(true);
-      }
-
-      onFocus?.(event);
-    },
-    [onFocus]
-  );
-
-  const handleBlur = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      setFocusVisible(false);
-      onBlur?.(event);
-    },
-    [onBlur]
-  );
 
   return (
     <label
@@ -95,20 +69,20 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
         className
       )}
       ref={ref}
+      {...rest}
     >
+      <input
+        className={withBaseName("input")}
+        checked={checked}
+        disabled={disabled}
+        onBlur={onBlur}
+        onChange={handleChange}
+        onFocus={onFocus}
+        ref={inputRef}
+        type="checkbox"
+        {...inputProps}
+      />
       <span className={withBaseName("iconContainer")}>
-        <input
-          className={withBaseName("input")}
-          checked={checked}
-          disabled={disabled}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          ref={inputRef}
-          type="checkbox"
-          {...a11yProps}
-          {...rest}
-        />
         <span className={withBaseName("track")} />
         {checked ? (
           <CheckedIcon className={withBaseName("icon")} />

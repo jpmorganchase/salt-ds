@@ -1,41 +1,7 @@
-/* Styles applied to root element */
-.salt-density-touch {
-  /* --switch-width: 44px; */
-  /* --switch-thumb-margin: 3px 0 0 3px; */
-  /* --switch-thumb-size: 18px; */
-  --switch-thumb-translate: 20px;
-  /* --switch-height: 24px; */
-}
-
-.salt-density-low {
-  /* --switch-width: 38px; */
-  /* --switch-thumb-margin: 2px 0 0 2px; */
-  /* --switch-thumb-size: 16px; */
-  --switch-thumb-translate: 18px;
-  /* --switch-height: 20px; */
-}
-
-.salt-density-medium {
-  /* --switch-width: 34px; */
-  /* --switch-thumb-margin: 2px 0 0 2px; */
-  /* --switch-thumb-size: 14px; */
-  --switch-thumb-translate: 16px;
-  --switch-height: 18px;
-}
-
-.salt-density-high {
-  /* --switch-width: 30px; */
-  /* --switch-thumb-margin: 2px 0 0 2px; */
-  /* --switch-thumb-size: 12px; */
-  --switch-thumb-translate: 14px;
-  /* --switch-height: 16px; */
-}
-
 .saltSwitch {
   --switch-background: #84878E;
-  --switch-label-color: var(--salt-text-secondary-foreground);
-  --switch-thumb-background: var(--salt-selectable-primary-foreground-selected);
-  --switch-track-color: var(--salt-selectable-borderColor);
+  /* --switch-thumb-background: var(--salt-selectable-primary-foreground-selected); */
+  /* --switch-track-color: var(--salt-selectable-borderColor); */
   --switch-track-color-hover: var(--salt-selectable-borderColor-hover);
   --switch-track-color-disabled: var(--salt-selectable-borderColor-disabled);
   --switch-track-color-checked: var(--salt-selectable-borderColor-selected);
@@ -48,16 +14,8 @@
   display: flex;
   gap: calc(var(--salt-size-unit) * 0.75);
   cursor: pointer;
-}
-
-/* Styles applied to track on hover  */
-.saltSwitch:hover .saltSwitch-track {
-  background: var(--saltSwitch-track-color-hover, var(--switch-track-color-hover));
-}
-
-/* Styles applied to track on hover if `disabled={true}` */
-.saltSwitch.saltSwitch-disabled:hover .saltSwitch-track {
-  background: var(--saltSwitch-track-color-disabled, var(--switch-track-color-disabled));
+  color: var(--salt-text-secondary-foreground);
+  position: relative;
 }
 
 .saltSwitch-iconContainer {
@@ -81,8 +39,8 @@
 /* Styles applied to input element */
 .saltSwitch-input {
   cursor: inherit;
-  height: 100%;
-  width: 100%;
+  height: var(--salt-size-selectable);
+  width: calc(var(--salt-size-selectable) * 2);
   left: 0;
   margin: 0;
   opacity: 0;
@@ -96,7 +54,6 @@
 .saltSwitch-thumb, .saltSwitch-icon  {
   background: var(--switch-background);
   /* background: var(--salt-selectable-borderColor); */
-  /* background: var(--saltSwitch-thumb-background, var(--switch-thumb-background)); */
   border-radius: var(--saltSwitch-thumb-borderRadius, 0);
   border: var(--saltSwitch-thumb-border, none);
   box-shadow: none;
@@ -110,23 +67,29 @@
   fill: var(--saltSwitch-thumb-background, var(--switch-thumb-background));
 }
 
-/* Styles applied to input container if `checked={true}` */
-/* .saltSwitch-base.saltSwitch-checked .saltSwitch-inputContainer {
-  transform: translateX(var(--saltSwitch-thumb-translate, var(--switch-thumb-translate)));
-} */
-
-/* Styles applied to tracks where `checked={true}` */
-.saltSwitch-base.saltSwitch-checked + .saltSwitch-track {
-  background: var(--saltSwitch-track-color-checked, var(--switch-track-color-checked));
-  border: var(--saltSwitch-track-border-checked, 1px solid var(--switch-track-color-checked));
-}
-
-/* Styles applied to icon tick shown when `checked={true}` */
+/* Styles applied to icon when `checked={true}` */
 .saltSwitch-icon {
+  transform: translateX(var(--salt-size-selectable));
   fill: var(--saltSwitch-icon-color-checked, var(--switch-tick-color));
 }
 .saltSwitch-iconTick {
   fill: white;
+}
+
+/* Styles applied to track where `checked={true}` */
+.saltSwitch-checked .saltSwitch-track {
+  background: var(--salt-selectable-borderColor-selected);
+}
+
+
+/* Styles applied to track on hover  */
+.saltSwitch:hover .saltSwitch-track {
+  background: var(--salt-selectable-borderColor-hover);
+}
+
+/* Styles applied to track on hover if `disabled={true}` */
+.saltSwitch.saltSwitch-disabled:hover .saltSwitch-track {
+  background: var(--saltSwitch-track-color-disabled, var(--switch-track-color-disabled));
 }
 
 /* Styles applied to icon tick shown when `checked={true}` and `disabled={true}` */
@@ -135,24 +98,11 @@
 }
 
 /* Styles applied when `focusVisible={true}` */
-.saltSwitch-focusVisible:before {
-  background: transparent;
-  content: "";
-  display: block;
-  height: var(--salt-size-selectable);
-  left: var(--saltSwitch-focused-left, -2px);
+.saltSwitch-input:focus-visible + .saltSwitch-iconContainer {
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--salt-focused-outlineColor);
   outline-offset: var(--salt-focused-outlineOffset);
-  position: absolute;
-  top: var(--saltSwitch-focused-top, -2px);
-  /* width: var(--saltSwitch-focused-width, var(--switch-width)); */
-}
-
-/* Styles applied to tracks when `focusVisible={true}` */
-.saltSwitch-focusVisible + .saltSwitch-track {
-  background: var(--saltSwitch-track-color-hover, var(--switch-track-color-hover));
 }
 
 /* Styles applied to track if `disabled={true}` */
