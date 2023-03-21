@@ -72,7 +72,9 @@ export const DetailTechnical: FC<LayoutProps> = ({
               </div>
             </div>
           </SaltProvider>
-          <DocPaginator />
+          <div className={styles.docPaginator}>
+            <DocPaginator />
+          </div>
         </LayoutColumns>
       </div>
       <Footer {...FooterProps} />

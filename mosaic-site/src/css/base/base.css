@@ -3,3 +3,7 @@
   --max-content-width: min(var(--max-container-width), 120ch);
   --card-background: #10212b;
 }
+
+::selection {
+  background: var(--salt-text-background-selected);
+}
