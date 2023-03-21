@@ -42,12 +42,14 @@ div[data-mosaic-id="portal-root"] a[href*="github"] span:before {
   width: calc(var(--salt-size-unit) * 2);
   align-self: center;
 }
+
 div[data-mosaic-id="portal-root"] .saltLayerLayout:before {
+  /* Display Salt logo next to close button */
   background: url("../../../public/img/logo_mobile.svg") no-repeat;
   content: "";
   display: block;
-  height: 36px;
-  width: 200px;
+  height: calc((var(--salt-size-unit) * 5));
+  width: 100%;
   margin-top: calc((var(--salt-size-unit) * 2));
   margin-left: calc((var(--salt-size-unit) * 3));
 }
