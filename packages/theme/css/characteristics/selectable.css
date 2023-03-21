@@ -16,8 +16,10 @@
   --salt-selectable-borderColor-disabled: var(--salt-palette-interact-border-disabled);
 
   --salt-selectable-foreground: var(--salt-palette-interact-foreground);
-  --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
-  --salt-selectable-foreground-partialDisabled: var(--salt-palette-interact-foreground-partialDisabled);
+  --salt-selectable-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
+  --salt-selectable-foreground-hover: var(--salt-palette-interact-foreground-hover);
+  --salt-selectable-foreground-selected: var(--salt-palette-interact-foreground-active);
+  --salt-selectable-foreground-selectedDisabled: var(--salt-palette-interact-foreground-activeDisabled);
 
   --salt-selectable-background: var(--salt-palette-interact-background);
   --salt-selectable-background-hover: var(--salt-palette-interact-background-hover);
@@ -59,4 +61,8 @@
   --salt-selectable-primary-foreground: var(--salt-palette-interact-foreground);
   --salt-selectable-secondary-foreground: var(--salt-palette-interact-foreground);
   --salt-selectable-cta-foreground: var(--salt-palette-interact-foreground);
+
+  /* **Deprecated:** use --salt-selectable-foreground-selected instead */
+  --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
+  --salt-selectable-foreground-partialDisabled: var(--salt-palette-interact-foreground-partialDisabled);
 }
