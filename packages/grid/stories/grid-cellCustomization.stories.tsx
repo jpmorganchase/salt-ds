@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import {
   Grid,
   GridCellValueProps,
@@ -7,8 +7,8 @@ import {
 } from "../src";
 import { LinearProgress } from "@salt-ds/lab";
 import "./grid.stories.css";
-import { FavoriteIcon } from "@salt-ds/icons";
-import { Button, FlexLayout, Tooltip } from "@salt-ds/core";
+import { FavoriteIcon, FavoriteSolidIcon } from "@salt-ds/icons";
+import { Button, FlexLayout } from "@salt-ds/core";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -56,10 +56,16 @@ const PercentageCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   );
 };
 
+const FavoriteContext = createContext<{
+  favorites: Record<number, boolean>;
+  setFavorite: (index: number) => void;
+}>({ favorites: {}, setFavorite: () => undefined });
+
 const ButtonsCellValue = ({
-  value,
+  row,
 }: GridCellValueProps<CurrencyPairRow, string>) => {
-  if (!value) return null;
+  const { favorites, setFavorite } = useContext(FavoriteContext);
+  const isFavorite = favorites[row.index];
 
   return (
     <FlexLayout
@@ -69,11 +75,18 @@ const ButtonsCellValue = ({
       direction="row"
       gap={1}
     >
-      <Tooltip content={`Favorite ${value}`} status="info" portal>
-        <Button>
-          <FavoriteIcon />
-        </Button>
-      </Tooltip>
+      <Button
+        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+        onMouseDown={(e) => {
+          // this is necessary to prevent row selection when we click on a button
+          e.stopPropagation();
+        }}
+        onClick={() => {
+          setFavorite(row.index);
+        }}
+      >
+        {isFavorite ? <FavoriteSolidIcon /> : <FavoriteIcon />}
+      </Button>
     </FlexLayout>
   );
 };
@@ -81,6 +94,7 @@ const ButtonsCellValue = ({
 const rowKeyGetter = (row: CurrencyPairRow) => row.currencyPair;
 
 export const CellCustomization = () => {
+  const [favorites, setFavorites] = useState({});
   const [rowData] = useState<CurrencyPairRow[]>(() => {
     const currencies = ["AUD", "USD", "SGD", "GBP", "HKD", "NZD", "EUR"];
     const result: CurrencyPairRow[] = [];
@@ -100,43 +114,54 @@ export const CellCustomization = () => {
     return result;
   });
 
+  const contextValue = useMemo(
+    () => ({
+      favorites,
+      setFavorite: (index: number) =>
+        setFavorites({ ...favorites, [index]: true }),
+    }),
+    [favorites]
+  );
+
   return (
-    <Grid
-      rowData={rowData}
-      rowKeyGetter={rowKeyGetter}
-      className="grid"
-      zebra
-      columnSeparators
-      headerIsFocusable
-    >
-      <RowSelectionCheckboxColumn id="s" />
-      <GridColumn
-        name="Currency Pair"
-        id="ccyPair"
-        defaultWidth={100}
-        getValue={(r: CurrencyPairRow) => r.currencyPair}
-      />
-      <GridColumn
-        name="Bid/Ask"
-        id="bidAsk"
-        defaultWidth={120}
-        getValue={(r) => r.currencyPair}
-        cellValueComponent={BidAskCellValue}
-      />
-      <GridColumn
-        name="Percentage"
-        id="percentage"
-        cellValueComponent={PercentageCellValue}
-        defaultWidth={200}
-        minWidth={120}
-      />
-      <GridColumn
-        defaultWidth={50}
-        name="Action"
-        id="button"
-        getValue={(r) => r.currencyPair}
-        cellValueComponent={ButtonsCellValue}
-      />
-    </Grid>
+    <FavoriteContext.Provider value={contextValue}>
+      <Grid
+        rowData={rowData}
+        rowKeyGetter={rowKeyGetter}
+        className="grid"
+        zebra
+        columnSeparators
+        headerIsFocusable
+      >
+        <RowSelectionCheckboxColumn id="s" />
+        <GridColumn
+          name="Currency Pair"
+          id="ccyPair"
+          defaultWidth={100}
+          getValue={(r: CurrencyPairRow) => r.currencyPair}
+        />
+        <GridColumn
+          name="Bid/Ask"
+          id="bidAsk"
+          defaultWidth={120}
+          getValue={(r) => r.currencyPair}
+          cellValueComponent={BidAskCellValue}
+        />
+        <GridColumn
+          name="Percentage"
+          id="percentage"
+          cellValueComponent={PercentageCellValue}
+          defaultWidth={200}
+          minWidth={120}
+        />
+        <GridColumn
+          defaultWidth={60}
+          name="Action"
+          id="button"
+          getValue={(r) => r.currencyPair}
+          cellValueComponent={ButtonsCellValue}
+        />
+      </Grid>
+    </FavoriteContext.Provider>
   );
 };
