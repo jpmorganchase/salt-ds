@@ -1,5 +1,26 @@
 # @salt-ds/core
 
+## 1.3.0
+
+### Minor Changes
+
+- 242941c9: Move `Avatar` from lab to core
+- 9cae606a: Deprecated differential characteristic; replaced tokens with below
+  Moved differential tokens to status characteristic
+  Added 'static' status variant
+
+  ```diff
+  - --salt-differential-positive-foreground
+  - --salt-differential-negative-foreground
+  + --salt-status-positive-foreground
+  + --salt-status-negative-foreground
+  + --salt-status-static-foreground
+  ```
+
+### Patch Changes
+
+- 8b58e28b: Fix AriaAnnouncer not removing announced text from the DOM
+
 ## 1.2.0
 
 ### Minor Changes
