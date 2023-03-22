@@ -14,7 +14,7 @@ export const ColorBlock = ({
   colorVar,
   className,
   hideToken,
-  replacementToken
+  replacementToken,
 }: {
   colorVar: string;
   className?: string;
@@ -48,14 +48,14 @@ export const ColorBlock = ({
       {!hideToken && <code className="DocGrid-code">{colorVar}</code>}
       {replacementToken ? (
         <div className="DocGrid-notes">
-            <p>
-              <strong>Deprecated</strong>: use{" "}
-              <code className="DocGrid-code">{replacementToken}</code> instead
-            </p>
+          <p>
+            <strong>Deprecated</strong>: use{" "}
+            <code className="DocGrid-code">{replacementToken}</code> instead
+          </p>
         </div>
-        ) : (
-          "")
-        }
+      ) : (
+        ""
+      )}
     </>
   );
 };

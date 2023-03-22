@@ -21,7 +21,7 @@
 .saltToggleButton {
   --saltButton-text-color: var(--salt-text-primary-foreground);
   --saltButton-text-color-disabled: var(--salt-text-primary-foreground-disabled);
-  
+
   --saltIcon-color: var(--salt-text-primary-foreground);
 }
 

@@ -44,7 +44,7 @@
   --salt-selectable-primary-background-hover: var(--salt-palette-interact-primary-background-hover);
   --salt-selectable-primary-background-selected: var(--salt-palette-interact-primary-background-active);
   --salt-selectable-primary-background-selectedDisabled: var(--salt-palette-interact-primary-background-activeDisabled);
-  
+
   --salt-selectable-secondary-foreground-hover: var(--salt-palette-interact-secondary-foreground-hover);
   --salt-selectable-secondary-foreground-selected: var(--salt-palette-interact-secondary-foreground-active);
   --salt-selectable-secondary-foreground-selectedDisabled: var(--salt-palette-interact-secondary-foreground-activeDisabled);

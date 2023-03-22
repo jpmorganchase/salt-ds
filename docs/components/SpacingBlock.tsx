@@ -16,14 +16,14 @@ export const SpacingBlock = ({
       <code className="DocGrid-code">{spacingVar}</code>
       {replacementToken ? (
         <div className="DocGrid-notes">
-            <p>
-              <strong>Deprecated</strong>: use{" "}
-              <code className="DocGrid-code">{replacementToken}</code> instead
-            </p>
+          <p>
+            <strong>Deprecated</strong>: use{" "}
+            <code className="DocGrid-code">{replacementToken}</code> instead
+          </p>
         </div>
-        ) : (
-          "")
-        }
+      ) : (
+        ""
+      )}
     </>
   );
 };

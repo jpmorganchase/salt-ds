@@ -293,7 +293,6 @@
   --salt-palette-measured-background-disabled: var(--salt-color-gray-60-fade-background);
   --salt-palette-measured-border: var(--salt-color-gray-90);
   --salt-palette-measured-border-disabled: var(--salt-color-gray-90-fade-border);
-  
 }
 
 .salt-theme[data-mode="dark"] {
