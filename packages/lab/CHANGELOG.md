@@ -1,5 +1,24 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.3
+
+### Minor Changes
+
+- 2e0fdff0: Deprecated `--salt-size-graphic-small`, `--salt-size-graphic-medium`, `--salt-size-graphic-large`
+  Deprecated `--salt-size-divider-height`, `--salt-size-divider-strokeWidth`, replaced with `--salt-size-separator-height`, `--salt-size-separator-strokeWidth`
+- 242941c9: Move `Avatar` from lab to core
+- 9cae606a: Deprecated differential characteristic; replaced tokens with below
+  Moved differential tokens to status characteristic
+  Added 'static' status variant
+
+  ```diff
+  - --salt-differential-positive-foreground
+  - --salt-differential-negative-foreground
+  + --salt-status-positive-foreground
+  + --salt-status-negative-foreground
+  + --salt-status-static-foreground
+  ```
+
 ## 1.0.0-alpha.2
 
 ### Minor Changes
