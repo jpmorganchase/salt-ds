@@ -14,7 +14,7 @@ export default {
 const RadioButtonGroups = () => {
   return (
     <>
-      <RadioButtonGroup>
+      <RadioButtonGroup defaultValue="option2">
         <RadioButton key="option1" label="Radio Option 1" value="option1" />
         <RadioButton key="option2" label="Radio Option 2" value="option2" />
         <RadioButton
@@ -24,7 +24,7 @@ const RadioButtonGroups = () => {
           value="option3"
         />
       </RadioButtonGroup>
-      <RadioButtonGroup direction={"horizontal"}>
+      <RadioButtonGroup direction={"horizontal"} defaultValue="option2">
         <RadioButton key="option1" label="Radio Option 1" value="option1" />
         <RadioButton key="option2" label="Radio Option 2" value="option2" />
         <RadioButton
