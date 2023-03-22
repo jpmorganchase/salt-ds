@@ -5,7 +5,7 @@ export const SpacingBlock = ({
   replacementToken,
 }: {
   spacingVar: string;
-  replacementToken: string;
+  replacementToken?: string;
 }) => {
   return (
     <>

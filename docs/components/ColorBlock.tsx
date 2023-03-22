@@ -19,7 +19,7 @@ export const ColorBlock = ({
   colorVar: string;
   className?: string;
   hideToken?: boolean;
-  replacementToken: string;
+  replacementToken?: string;
 }) => {
   const characteristicName = colorVar
     .split("--salt-")[1]
