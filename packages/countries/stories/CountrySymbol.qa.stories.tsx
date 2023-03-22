@@ -2,7 +2,7 @@ import { Meta, Story } from "@storybook/react";
 import { countrySymbolMap } from "@salt-ds/countries";
 
 export default {
-  title: "CountrySymbols/CountrySymbol/QA",
+  title: "Country Symbols/Country Symbol/QA",
 } as Meta;
 
 const sizes = [1, 2, 3] as const;
@@ -20,7 +20,7 @@ export const AllCountrySymbols: Story = () => {
           }}
         >
           {Object.entries(countrySymbolMap).map(([code, Component]) => (
-            <Component key={code} size={size} />
+            <Component key={code} id={`${size}-${code}`} size={size} />
           ))}
         </div>
       ))}

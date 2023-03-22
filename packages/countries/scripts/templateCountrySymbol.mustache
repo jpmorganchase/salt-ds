@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 
 import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
@@ -6,6 +6,9 @@ export type {{componentName}}Props = CountrySymbolProps;
 
 const {{componentName}} = forwardRef<SVGSVGElement, {{componentName}}Props>(
   function {{componentName}}(props: {{componentName}}Props, ref) {
+
+    const [uid] = useState(() => props.id || Math.random().toString());
+
     return (
       <CountrySymbol data-testid="{{componentName}}" aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} {...props}>
         {{{svgElements}}}
