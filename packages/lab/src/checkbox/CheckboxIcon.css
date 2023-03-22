@@ -27,7 +27,7 @@
 }
 
 /* Styles applied if `disabled={true}` */
-.saltCheckbox.saltCheckbox-disabled:hover .saltCheckboxIcon,
+.saltCheckbox-disabled:hover .saltCheckboxIcon,
 .saltCheckboxIcon-disabled {
   stroke: var(--saltCheckbox-icon-stroke-disabled, var(--salt-selectable-borderColor-disabled));
   background: var(--salt-palette-interact-background-disabled);
