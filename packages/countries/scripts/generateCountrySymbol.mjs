@@ -136,12 +136,18 @@ const generateCountrySymbolComponents = ({
                   // preserve an order of attributes
                   for (const [name, value] of Object.entries(node.attributes)) {
                     if (node.name === "mask") {
+                      // convert style="mask-type:... to style={{ maskType: ... }} "
                       if (
                         name === "style" &&
                         typeof value === "string" &&
                         value.includes("mask-type:")
                       ) {
-                        newAttributes["mask-type"] = value.slice(10);
+                        newAttributes[
+                          "style"
+                        ] = `${REPLACE_START}{{ maskType: '${value.slice(
+                          10
+                        )}' }}${REPLACE_END}`;
+                        // Allow each component instance to use unique ids for masks
                       } else if (name === "id") {
                         newAttributes[
                           svgAttributeMap[name] || name
@@ -153,6 +159,7 @@ const generateCountrySymbolComponents = ({
                         newAttributes[svgAttributeMap[name] || name] = value;
                       }
                     } else if (name === "mask") {
+                      // Reference the unique mask Ids in the url for the mask attribute
                       const maskId = value
                         .replace("url(", "")
                         .replace(")", "")
@@ -162,10 +169,10 @@ const generateCountrySymbolComponents = ({
                         countryCode,
                         maskId
                       )})\`}${REPLACE_END}`;
-                      console.log(name, value, newValue);
 
                       newAttributes[svgAttributeMap[name] || name] = newValue;
                     } else {
+                      // Everything else
                       newAttributes[svgAttributeMap[name] || name] = value;
                     }
                   }

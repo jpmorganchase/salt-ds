@@ -22,7 +22,7 @@ const Guadeloupe = forwardRef<SVGSVGElement, GuadeloupeProps>(
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <circle
             cx="36"

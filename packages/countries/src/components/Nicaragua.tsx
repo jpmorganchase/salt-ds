@@ -24,7 +24,7 @@ const Nicaragua = forwardRef<SVGSVGElement, NicaraguaProps>(function Nicaragua(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
@@ -42,7 +42,7 @@ const Nicaragua = forwardRef<SVGSVGElement, NicaraguaProps>(function Nicaragua(
           x="29"
           y="30"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path fill="#D9D9D9" d="m35.7 30 6.495 11.25h-12.99L35.7 30Z" />
         </mask>

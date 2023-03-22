@@ -24,7 +24,7 @@ const Lesotho = forwardRef<SVGSVGElement, LesothoProps>(function Lesotho(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
@@ -37,7 +37,7 @@ const Lesotho = forwardRef<SVGSVGElement, LesothoProps>(function Lesotho(
           x="28"
           y="32"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path
             fill="#D9D9D9"
@@ -63,7 +63,7 @@ const Lesotho = forwardRef<SVGSVGElement, LesothoProps>(function Lesotho(
           x="23"
           y="30"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path
             fill="#D9D9D9"

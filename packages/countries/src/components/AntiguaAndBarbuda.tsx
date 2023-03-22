@@ -22,7 +22,7 @@ const AntiguaAndBarbuda = forwardRef<SVGSVGElement, AntiguaAndBarbudaProps>(
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
@@ -34,7 +34,7 @@ const AntiguaAndBarbuda = forwardRef<SVGSVGElement, AntiguaAndBarbudaProps>(
             x="-9"
             y="0"
             maskUnits="userSpaceOnUse"
-            mask-type="alpha"
+            style={{ maskType: "alpha" }}
           >
             <path fill="#31373D" d="M36 72 81 0H-9l45 72Z" />
           </mask>

@@ -22,7 +22,7 @@ const Montenegro = forwardRef<SVGSVGElement, MontenegroProps>(
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <circle
             cx="36"
@@ -52,7 +52,7 @@ const Montenegro = forwardRef<SVGSVGElement, MontenegroProps>(
             x="26"
             y="28"
             maskUnits="userSpaceOnUse"
-            mask-type="alpha"
+            style={{ maskType: "alpha" }}
           >
             <path
               fill="#005EB8"

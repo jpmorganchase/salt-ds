@@ -24,7 +24,7 @@ const HongKong = forwardRef<SVGSVGElement, HongKongProps>(function HongKong(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle
           cx="36"

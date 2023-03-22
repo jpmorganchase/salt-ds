@@ -22,7 +22,7 @@ const FrenchPolynesia = forwardRef<SVGSVGElement, FrenchPolynesiaProps>(
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
@@ -34,7 +34,7 @@ const FrenchPolynesia = forwardRef<SVGSVGElement, FrenchPolynesiaProps>(
             x="21"
             y="21"
             maskUnits="userSpaceOnUse"
-            mask-type="alpha"
+            style={{ maskType: "alpha" }}
           >
             <circle cx="36" cy="36" r="15" fill="#D9D9D9" />
           </mask>

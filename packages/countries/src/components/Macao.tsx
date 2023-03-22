@@ -24,7 +24,7 @@ const Macao = forwardRef<SVGSVGElement, MacaoProps>(function Macao(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle
           cx="36"
@@ -41,7 +41,7 @@ const Macao = forwardRef<SVGSVGElement, MacaoProps>(function Macao(
           x="11"
           y="12"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <circle cx="35.6" cy="36" r="24" fill="#D9D9D9" />
         </mask>

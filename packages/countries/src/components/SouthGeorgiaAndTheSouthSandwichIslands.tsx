@@ -27,7 +27,7 @@ const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle
           cx="36"
@@ -51,7 +51,7 @@ const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
         </mask>
@@ -80,7 +80,7 @@ const SouthGeorgiaAndTheSouthSandwichIslands = forwardRef<
         x="40"
         y="34"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <path
           fill="#F5F7F8"

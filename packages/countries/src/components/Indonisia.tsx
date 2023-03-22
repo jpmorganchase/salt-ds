@@ -24,7 +24,7 @@ const Indonisia = forwardRef<SVGSVGElement, IndonisiaProps>(function Indonisia(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle
           cx="36"

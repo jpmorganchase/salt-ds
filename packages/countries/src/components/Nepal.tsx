@@ -24,7 +24,7 @@ const Nepal = forwardRef<SVGSVGElement, NepalProps>(function Nepal(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
@@ -47,7 +47,7 @@ const Nepal = forwardRef<SVGSVGElement, NepalProps>(function Nepal(
           x="10"
           y="10"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <circle cx="21.6" cy="21" r="11" fill="#D9D9D9" />
         </mask>

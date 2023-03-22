@@ -24,7 +24,7 @@ const Finland = forwardRef<SVGSVGElement, FinlandProps>(function Finland(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>

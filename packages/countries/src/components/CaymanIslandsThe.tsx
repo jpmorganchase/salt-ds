@@ -22,7 +22,7 @@ const CaymanIslandsThe = forwardRef<SVGSVGElement, CaymanIslandsTheProps>(
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
         </mask>
@@ -40,7 +40,7 @@ const CaymanIslandsThe = forwardRef<SVGSVGElement, CaymanIslandsTheProps>(
             x="40"
             y="35"
             maskUnits="userSpaceOnUse"
-            mask-type="alpha"
+            style={{ maskType: "alpha" }}
           >
             <path
               fill="#DD2033"
@@ -60,7 +60,7 @@ const CaymanIslandsThe = forwardRef<SVGSVGElement, CaymanIslandsTheProps>(
             x="0"
             y="0"
             maskUnits="userSpaceOnUse"
-            mask-type="alpha"
+            style={{ maskType: "alpha" }}
           >
             <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
           </mask>

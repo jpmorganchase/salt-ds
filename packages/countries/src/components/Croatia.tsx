@@ -24,7 +24,7 @@ const Croatia = forwardRef<SVGSVGElement, CroatiaProps>(function Croatia(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
@@ -41,7 +41,7 @@ const Croatia = forwardRef<SVGSVGElement, CroatiaProps>(function Croatia(
           x="22"
           y="24"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path
             fill="#F5F7F8"

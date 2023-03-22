@@ -24,7 +24,7 @@ const Peru = forwardRef<SVGSVGElement, PeruProps>(function Peru(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle
           cx="36"
@@ -52,7 +52,7 @@ const Peru = forwardRef<SVGSVGElement, PeruProps>(function Peru(
           x="26"
           y="20"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path
             fill="#005EB8"

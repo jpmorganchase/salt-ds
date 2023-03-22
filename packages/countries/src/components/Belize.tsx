@@ -24,7 +24,7 @@ const Belize = forwardRef<SVGSVGElement, BelizeProps>(function Belize(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
@@ -47,7 +47,7 @@ const Belize = forwardRef<SVGSVGElement, BelizeProps>(function Belize(
           x="26"
           y="28"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path
             fill="#86C5FA"

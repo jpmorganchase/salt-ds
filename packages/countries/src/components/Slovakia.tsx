@@ -24,7 +24,7 @@ const Slovakia = forwardRef<SVGSVGElement, SlovakiaProps>(function Slovakia(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
@@ -38,7 +38,7 @@ const Slovakia = forwardRef<SVGSVGElement, SlovakiaProps>(function Slovakia(
           x="11"
           y="19"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path fill="#DD2033" d="M11.8 19h33v29.455L28.3 55l-16.5-6.545V19Z" />
         </mask>

@@ -24,7 +24,7 @@ const Grenada = forwardRef<SVGSVGElement, GrenadaProps>(function Grenada(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle
           cx="36"
@@ -41,7 +41,7 @@ const Grenada = forwardRef<SVGSVGElement, GrenadaProps>(function Grenada(
           x="8"
           y="8"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <circle cx="36" cy="36" r="28" fill="#DD2033" />
         </mask>

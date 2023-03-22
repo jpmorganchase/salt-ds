@@ -24,7 +24,7 @@ const Spain = forwardRef<SVGSVGElement, SpainProps>(function Spain(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle
           cx="36"
@@ -52,7 +52,7 @@ const Spain = forwardRef<SVGSVGElement, SpainProps>(function Spain(
           x="14"
           y="33"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path
             fill="#F5F7F8"

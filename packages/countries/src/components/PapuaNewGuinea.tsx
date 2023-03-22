@@ -22,7 +22,7 @@ const PapuaNewGuinea = forwardRef<SVGSVGElement, PapuaNewGuineaProps>(
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path
             fill="#D9D9D9"

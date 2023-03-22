@@ -22,7 +22,7 @@ const NewCaledonia = forwardRef<SVGSVGElement, NewCaledoniaProps>(
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <circle
             cx="36"

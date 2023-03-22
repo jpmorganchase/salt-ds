@@ -24,7 +24,7 @@ const Australia = forwardRef<SVGSVGElement, AustraliaProps>(function Australia(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle cx="36.514" cy="36" r="36" fill="#D9D9D9" />
       </mask>
@@ -40,7 +40,7 @@ const Australia = forwardRef<SVGSVGElement, AustraliaProps>(function Australia(
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
-          mask-type="alpha"
+          style={{ maskType: "alpha" }}
         >
           <path fill="#002F6C" d="M.514 36c0-19.882 16.118-36 36-36v36h-36Z" />
         </mask>

@@ -24,7 +24,7 @@ const Guyana = forwardRef<SVGSVGElement, GuyanaProps>(function Guyana(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle
           cx="36"

@@ -24,7 +24,7 @@ const IsleOfMan = forwardRef<SVGSVGElement, IsleOfManProps>(function IsleOfMan(
         x="0"
         y="0"
         maskUnits="userSpaceOnUse"
-        mask-type="alpha"
+        style={{ maskType: "alpha" }}
       >
         <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
       </mask>
