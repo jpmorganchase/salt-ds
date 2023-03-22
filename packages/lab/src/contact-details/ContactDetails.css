@@ -261,7 +261,7 @@
 }
 
 .saltContactFavoriteToggle-deselected {
-  --contactDetails-favoriteToggle-fill: transparent;
+  --contactDetails-favoriteToggle-fill: var(--salt-accent-borderColor);
 }
 
 .saltContactFavoriteToggle-selecting {

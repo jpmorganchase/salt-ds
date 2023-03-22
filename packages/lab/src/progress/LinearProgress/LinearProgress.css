@@ -52,7 +52,7 @@
 /* Horizontal line under the progress indicator bar */
 .saltLinearProgress-barContainer:after {
   top: var(--linearProgress-after-top);
-  background: var(--salt-accent-background);
+  background: var(--salt-track-borderColor);
   content: "";
   display: block;
   height: 1px;
