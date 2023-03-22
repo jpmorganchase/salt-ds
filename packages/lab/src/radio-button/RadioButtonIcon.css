@@ -72,5 +72,5 @@
 
 /* Styles applied to radio button icon when checked and with error */
 .saltRadioButton-disabled .saltRadioButtonIcon-error {
-  opacity: var(--salt-opacity-3);
+  opacity: var(--salt-palette-opacity-background);
 }
