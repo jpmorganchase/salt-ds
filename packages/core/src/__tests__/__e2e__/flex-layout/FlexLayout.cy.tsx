@@ -6,7 +6,7 @@ import { SaltProvider } from "@salt-ds/core";
 const composedStories = composeStories(flexStories);
 const { Default, Nested } = composedStories;
 
-describe("GIVEN a Flex", () => {
+describe("GIVEN a FlexLayout", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN no props are provided", () => {
