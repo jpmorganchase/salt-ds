@@ -3,7 +3,7 @@ import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Radio Button/QA",
+  title: "Core/Radio Button/QA",
   component: RadioButton,
   // Manually specify onClick action to test Actions panel
   // react-docgen-typescript-loader doesn't support detecting interface extension
