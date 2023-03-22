@@ -33,7 +33,7 @@ Updated values in light mode
 + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-200-fade-foreground);
 ```
 
-Updated values in light mode
+Updated values in dark mode
 
 ```diff
 - --salt-palette-interact-foreground: var(--salt-color-white);
