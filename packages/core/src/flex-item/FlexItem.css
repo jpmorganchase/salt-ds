@@ -3,6 +3,7 @@
   --saltFlexItem-alignment: auto;
   --saltFlexItem-shrink: 1;
   --saltFlexItem-grow: 0;
+  --saltFlexItem-basis: auto;
 }
 
 /* Style applied to the root element */
@@ -11,6 +12,7 @@
   align-self: var(--saltFlexItem-alignment);
   flex-grow: var(--saltFlexItem-grow);
   flex-shrink: var(--saltFlexItem-shrink);
+  flex-basis: var(--saltFlexItem-basis);
 }
 
 .saltFlexItem-stacked {
