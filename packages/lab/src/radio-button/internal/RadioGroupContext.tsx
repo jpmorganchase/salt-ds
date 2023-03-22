@@ -7,7 +7,7 @@ export interface RadioGroupContextValue {
   onChange?: ChangeEventHandler<HTMLElement>;
 }
 
-export const RadioGroupContext = createContext(
+export const RadioGroupContext = createContext<RadioGroupContextValue>(
   "RadioGroupContext",
-  {} as RadioGroupContextValue
+  {}
 );

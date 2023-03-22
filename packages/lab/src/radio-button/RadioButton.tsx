@@ -7,7 +7,7 @@ import {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
-import { makePrefixer, useControlled, useId } from "@salt-ds/core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { RadioButtonIcon } from "./RadioButtonIcon";
 
@@ -69,7 +69,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       className,
       disabled,
       error,
-      id: idProp,
       inputProps,
       label,
       name: nameProp,
@@ -82,17 +81,11 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
 
     const radioGroup = useRadioGroup();
 
-    let radioGroupChecked = checkedProp;
-    let name = nameProp;
-
-    if (Object.keys(radioGroup).length) {
-      if (typeof radioGroupChecked === "undefined") {
-        radioGroupChecked = radioGroup.value === value;
-      }
-      if (typeof name === "undefined") {
-        name = radioGroup.name;
-      }
-    }
+    let radioGroupChecked =
+      radioGroup.value != null && value != null
+        ? radioGroup.value === value
+        : checkedProp;
+    const name = nameProp ?? radioGroup.name;
 
     const [checked, setCheckedState] = useControlled({
       controlled: radioGroupChecked,
@@ -101,23 +94,12 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       state: "checked",
     });
 
-    const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
-      onFocus && onFocus(event);
-    };
-
-    const handleBlur: FocusEventHandler<HTMLInputElement> = (event) => {
-      onBlur && onBlur(event);
-    };
-
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       const newChecked = event.target.checked;
       setCheckedState(newChecked);
 
-      onChange && onChange(event);
-
-      if (Object.keys(radioGroup).length) {
-        radioGroup.onChange && radioGroup.onChange(event);
-      }
+      onChange?.(event);
+      radioGroup.onChange?.(event);
     };
 
     return (
@@ -139,9 +121,9 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           disabled={disabled}
           name={name}
           value={value}
-          onBlur={handleBlur}
+          onBlur={onBlur}
           onChange={handleChange}
-          onFocus={handleFocus}
+          onFocus={onFocus}
           type="radio"
         />
         <RadioButtonIcon checked={checked} error={error} disabled={disabled} />

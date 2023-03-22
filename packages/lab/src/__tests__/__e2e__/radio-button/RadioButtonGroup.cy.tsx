@@ -9,7 +9,7 @@ const composedStories = composeStories(radioButtonStories);
 describe("GIVEN a RadioButtonGroup component", () => {
   checkAccessibility(composedStories);
 
-  describe("WHEN three radio buttons are passed as a prop", () => {
+  describe("WHEN three radio buttons are provided as children", () => {
     const radios = [
       { value: "button one", label: "button one", disabled: false },
       { value: "button two", label: "button two", disabled: false },
