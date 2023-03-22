@@ -76,12 +76,6 @@
   fill: white;
 }
 
-/* Styles applied to track where `checked={true}` */
-.saltSwitch-checked .saltSwitch-track {
-  background: var(--salt-selectable-borderColor-selected);
-}
-
-
 /* Styles applied to track on hover  */
 .saltSwitch:hover .saltSwitch-track {
   background: var(--salt-selectable-borderColor-hover);

@@ -7,37 +7,17 @@ export default {
   component: Switch,
 } as ComponentMeta<typeof Switch>;
 
-const Template: ComponentStory<typeof Switch> = (args) => {
-  return <Switch {...args} />;
-};
 
-export const FeatureSwitch = Template.bind({});
-
-FeatureSwitch.args = {
-  label: "Default",
-};
-
-export const Checked = Template.bind({});
-
-Checked.args = {
-  defaultChecked: true,
-  label: "Checked",
-};
-
-export const Disabled = Template.bind({});
-
-Disabled.args = {
-  disabled: true,
-  label: "Disabled",
-};
-
-export const DisabledChecked = Template.bind({});
-
-DisabledChecked.args = {
-  disabled: true,
-  defaultChecked: true,
-  label: "Disabled + Checked",
-};
+export const AllVariations = () => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <Switch label="Default" />
+      <Switch label="Checked" checked />
+      <Switch label="Disabled" disabled />
+      <Switch label="Checked Disabled" checked disabled />
+    </div>
+  )
+}
 
 export const Controlled: ComponentStory<typeof Switch> = (args) => {
   const [checked, setChecked] = useState(false);
