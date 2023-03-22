@@ -81,7 +81,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
 
     const radioGroup = useRadioGroup();
 
-    let radioGroupChecked =
+    const radioGroupChecked =
       radioGroup.value != null && value != null
         ? radioGroup.value === value
         : checkedProp;

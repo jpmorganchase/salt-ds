@@ -10,6 +10,7 @@
   height: var(--saltRadioButton-icon-svg-size, var(--salt-size-selectable));
   border-radius: 50%;
   flex: none;
+  margin-top: var(--salt-size-border);
 }
 
 /* Styles applied to RadioButtonIcon border */
@@ -42,7 +43,7 @@
 .saltRadioButtonIcon-disabled .saltRadioButtonIcon-border,
 .saltRadioButton:hover .saltRadioButtonIcon-disabled .saltRadioButtonIcon-border {
   fill: var(--saltRadioButton-icon-fill-disabled, var(--radioButton-icon-fill));
-  stroke: var(--saltRadioButton-icon-strokeColor-disabled, var(--salt-selectable-borderColor-selectedDisabled));
+  stroke: var(--saltRadioButton-icon-strokeColor-disabled, var(--salt-selectable-borderColor-disabled));
 }
 
 /* Styles applied to RadioButtonIcon border if checked and disabled */
