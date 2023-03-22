@@ -19,11 +19,27 @@
 + --salt-selectable-foreground-hover: var(--salt-palette-interact-foreground-hover);
 + --salt-selectable-foreground-selected: var(--salt-palette-interact-foreground-active);
 + --salt-selectable-foreground-selectedDisabled: var(--salt-palette-interact-foreground-activeDisabled);
-+ --salt-palette-interact-foreground
 + --salt-palette-interact-foreground-active
 + --salt-palette-interact-foreground-activeDisabled
-+ --salt-palette-interact-foreground-disabled
 + --salt-palette-interact-foreground-hover
+```
+
+Updated values in light mode
+
+```diff
+- --salt-palette-interact-foreground: var(--salt-color-gray-900);
++ --salt-palette-interact-foreground: var(--salt-color-gray-200);
+- --salt-palette-interact-foreground-disabled: var(--salt-color-gray-900-fade-foreground);
++ --salt-palette-interact-foreground-disabled: var(--salt-color-gray-200-fade-foreground);
+```
+
+Updated values in light mode
+
+```diff
+- --salt-palette-interact-foreground: var(--salt-color-white);
++ --salt-palette-interact-foreground: var(--salt-color-gray-90);
+- --salt-palette-interact-foreground-disabled: var(--salt-color-white-fade-foreground);
++ --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-fade-foreground);
 ```
 
 - Deprecated the following `selectable` tokens, use `--salt-text-primary-foreground` and `--salt-text-primary-foreground-disabled` as replacements
