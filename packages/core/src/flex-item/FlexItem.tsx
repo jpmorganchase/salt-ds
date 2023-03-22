@@ -1,4 +1,4 @@
-import { forwardRef, ElementType, ReactElement } from "react";
+import { forwardRef, ElementType, ReactElement, CSSProperties } from "react";
 import {
   makePrefixer,
   ResponsiveProp,
@@ -28,14 +28,17 @@ export type FlexItemProps<T extends ElementType> =
        */
       align?: flexItemAlignment;
       /**
-   * Defines the ability for an item to shrink x times more compared to it's siblings, default is 1.
-
-   */
+       * Defines the ability for an item to shrink x times more compared to it's siblings, default is 1.
+       */
       shrink?: ResponsiveProp<number>;
       /**
        * Defines the ability for an item to grow x times more compared to it's siblings, default is 0.
        */
       grow?: ResponsiveProp<number>;
+      /**
+       * Sets the initial main size of a flex item, default is "auto".
+       */
+      basis?: ResponsiveProp<CSSProperties["flexBasis"]>;
     }
   >;
 
@@ -52,6 +55,7 @@ export const FlexItem: FlexItemComponent = forwardRef(
       className,
       shrink,
       grow,
+      basis,
       style,
       ...rest
     }: FlexItemProps<T>,
@@ -60,11 +64,13 @@ export const FlexItem: FlexItemComponent = forwardRef(
     const Component = as || "div";
     const flexItemShrink = useResponsiveProp(shrink, 1);
     const flexItemGrow = useResponsiveProp(grow, 0);
+    const flexItemBasis = useResponsiveProp(basis, "auto");
 
     const itemStyle = {
       "--saltFlexItem-alignment": align,
       "--saltFlexItem-shrink": flexItemShrink,
       "--saltFlexItem-grow": flexItemGrow,
+      "--saltFlexItem-basis": flexItemBasis,
       ...style,
     };
     return (
