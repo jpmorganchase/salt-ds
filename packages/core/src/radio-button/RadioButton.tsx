@@ -17,8 +17,8 @@ const withBaseName = makePrefixer("saltRadioButton");
 
 export interface RadioButtonProps
   extends Omit<
-  HTMLAttributes<HTMLLabelElement>,
-  "onChange" | "onBlur" | "onFocus"
+    HTMLAttributes<HTMLLabelElement>,
+    "onChange" | "onBlur" | "onFocus"
   > {
   /**
    * Set the default selected radio button in the group
