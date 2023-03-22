@@ -30,7 +30,7 @@
 .saltBanner-label {
   flex: 1 0;
   padding: calc(var(--banner-padding) + 2px) 0 calc(var(--banner-padding));
-  font-weight: var(--salt-typography-fontWeight-semiBold);
+  font-weight: var(--salt-text-label-fontWeight);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
   color: var(--banner-label-color);
@@ -45,7 +45,7 @@
 }
 
 .saltBanner-link {
-  font-weight: var(--salt-typography-fontWeight-semiBold);
+  font-weight: var(--salt-text-label-fontWeight);
   margin-left: 1ch;
 }
 

@@ -1,6 +1,9 @@
 import AssertionStatic = Chai.AssertionStatic;
 import ChaiPlugin = Chai.ChaiPlugin;
-import { computeAccessibleName } from "dom-accessibility-api";
+import {
+  computeAccessibleDescription,
+  computeAccessibleName,
+} from "dom-accessibility-api";
 import { prettyDOM } from "@testing-library/dom";
 
 function elementToString(element: Element | null | undefined) {
@@ -153,8 +156,52 @@ const hasAccessibleName: ChaiPlugin = (_chai, utils) => {
   _chai.Assertion.addMethod("accessibleName", assertHasAccessibleName);
 };
 
-// registers our assertion function "isFoo" with Chai
 chai.use(hasAccessibleName);
+
+/**
+ * Checks if the accessible description computation (according to `accdescription` spec)
+ * matches the expectation.
+ *
+ * @example
+ * cy.findByRole('button).should('have.accessibleDescription','Close')
+ */
+const hasAccessibleDescription: ChaiPlugin = (_chai, utils) => {
+  function assertHasAccessibleDescription(
+    this: AssertionStatic,
+    expectedDescription: string
+  ) {
+    const root = this._obj.get(0);
+    // make sure it's an Element
+    new _chai.Assertion(
+      root.nodeType,
+      `Expected an Element but got '${String(root)}'`
+    ).to.equal(1);
+
+    const actualDescription = computeAccessibleDescription(root, {
+      computedStyleSupportsPseudoElements: true,
+    });
+
+    this.assert(
+      actualDescription === expectedDescription,
+      `expected \n${elementToString(
+        root
+      )} to have accessible description #{exp} but got #{act} instead.`,
+      `expected \n${elementToString(
+        root
+      )} not to have accessible description #{exp}.`,
+      expectedDescription,
+      actualDescription
+    );
+  }
+
+  _chai.Assertion.addMethod(
+    "accessibleDescription",
+    assertHasAccessibleDescription
+  );
+};
+
+chai.use(hasAccessibleDescription);
+
 const announces: ChaiPlugin = (_chai, utils) => {
   function assertAnnounces(
     this: AssertionStatic,

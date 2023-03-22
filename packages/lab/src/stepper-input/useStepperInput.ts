@@ -256,6 +256,7 @@ export const useStepperInput = (
     buttonPropsProp: ButtonProps = {}
   ) => ({
     "aria-hidden": true,
+    "data-testid": `${type}-button`,
     tabIndex: -1,
     ...buttonPropsProp,
     onMouseDown: callAll(

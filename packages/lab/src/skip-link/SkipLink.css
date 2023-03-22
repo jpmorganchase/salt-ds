@@ -42,7 +42,7 @@
 
 .saltSkipLink {
   font-size: var(--salt-text-fontSize);
-  font-family: var(--saltSkipLink-fontFamily, var(--salt-typography-fontFamily));
+  font-family: var(--saltSkipLink-fontFamily, var(--salt-text-fontFamily));
   line-height: var(--saltSkipLink-lineHeight, var(--salt-text-lineHeight));
 }
 
