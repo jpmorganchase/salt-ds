@@ -43,27 +43,12 @@ const RadioButtonVariations = () => {
   );
 };
 
-export const AllExamplesGrid: Story<
-  QAContainerProps & { className?: string }
-> = (props) => {
-  const { className } = props;
+export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={2} itemPadding={6} itemWidthAuto {...props}>
-      <RadioButtonGroup
-        className={className}
-        aria-label="Uncontrolled Example"
-        defaultValue="forward"
-      >
+      <div style={{ display: "flex", flexDirection: "column" }}>
         <RadioButtonVariations />
-      </RadioButtonGroup>
-      <RadioButtonGroup
-        className={className}
-        defaultValue="forward"
-        name="fx"
-        direction={"horizontal"}
-      >
-        <RadioButtonVariations />
-      </RadioButtonGroup>
+      </div>
     </QAContainer>
   );
 };
