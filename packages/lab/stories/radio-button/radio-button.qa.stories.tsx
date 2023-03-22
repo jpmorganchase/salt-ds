@@ -11,34 +11,29 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof RadioButton>;
 
-const RadioButtonVariations = () => {
+const RadioButtonGroups = () => {
   return (
     <>
-      <RadioButton label="Unchecked" value="Unchecked" />
-      <RadioButton label="Checked" value="Checked" checked />
-      <RadioButton disabled label="Disabled" value="Disabled" />
-      <RadioButton
-        disabled
-        label="Disabled checked"
-        value="Disabled-checked"
-        checked
-      />
-
-      <RadioButton label="Error unchecked" value="Error-unchecked" error />
-      <RadioButton label="Error checked" value="Error-checked" checked error />
-      <RadioButton
-        label="Disabled error"
-        value="disabled-error"
-        disabled
-        error
-      />
-      <RadioButton
-        label="Disabled error checked"
-        value="disabled-error-checked"
-        checked
-        disabled
-        error
-      />
+      <RadioButtonGroup>
+        <RadioButton key="option1" label="Radio Option 1" value="option1" />
+        <RadioButton key="option2" label="Radio Option 2" value="option2" />
+        <RadioButton
+          disabled
+          key="option3"
+          label="Radio Option 3 (disabled)"
+          value="option3"
+        />
+      </RadioButtonGroup>
+      <RadioButtonGroup direction={"horizontal"}>
+        <RadioButton key="option1" label="Radio Option 1" value="option1" />
+        <RadioButton key="option2" label="Radio Option 2" value="option2" />
+        <RadioButton
+          disabled
+          key="option3"
+          label="Radio Option 3 (disabled)"
+          value="option3"
+        />
+      </RadioButtonGroup>
     </>
   );
 };
@@ -46,9 +41,7 @@ const RadioButtonVariations = () => {
 export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={2} itemPadding={6} itemWidthAuto {...props}>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <RadioButtonVariations />
-      </div>
+      <RadioButtonGroups />
     </QAContainer>
   );
 };
