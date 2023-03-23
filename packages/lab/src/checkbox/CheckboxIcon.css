@@ -81,12 +81,12 @@
 
 /* Styles applied to icon if `indeterminate={true}` */
 .saltCheckboxIcon-indeterminate {
-  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color, var(--salt-selectable-foreground-partial));
+  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color, var(--salt-selectable-foreground-selected));
 }
 
 /* Styles applied if `indeterminate={true}` and `disabled={true}` */
 .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
-  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color-disabled, var(--salt-selectable-foreground-partialDisabled));
+  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color-disabled, var(--salt-selectable-foreground-selectedDisabled));
 }
 
 /* Styles applied to tick */
