@@ -55,13 +55,11 @@ export function SortColumns() {
 function SortColumnsImpl() {
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.NONE);
 
-  const { isLoading, data, isFetching } = useQuery<Investor[]>(
-    ["sortOrder", sortOrder],
-    () => api(sortOrder),
-    {
-      keepPreviousData: true,
-    }
-  );
+  const { isLoading, data, isFetching, isFetchedAfterMount } = useQuery<
+    Investor[]
+  >(["sortOrder", sortOrder], () => api(sortOrder), {
+    keepPreviousData: true,
+  });
 
   if (isLoading) return <div>loading...</div>;
 
@@ -75,10 +73,15 @@ function SortColumnsImpl() {
     <div
       style={{
         position: "relative",
-        "--salt-overlayable-background": "rgba(255,255,255, .5)",
+        "--salt-overlayable-background":
+          "var(--salt-color-gray-20-fade-background-readonly)",
       }}
     >
-      <Scrim aria-label="Example Scrim" open={isFetching} enableContainerMode>
+      <Scrim
+        aria-label="Example Scrim"
+        open={isFetching && !isFetchedAfterMount}
+        enableContainerMode
+      >
         <ContentStatus status="loading" />
       </Scrim>
 
