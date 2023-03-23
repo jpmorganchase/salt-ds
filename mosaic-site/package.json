@@ -10,6 +10,7 @@
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
     "build": "next build",
+    "deploy": "yarn mosaic deploy --out snapshots --name latest --config mosaic.config.js",
     "dev": "next dev",
     "start": "next start",
     "gen:snapshot": "yarn mosaic build --out snapshots --name latest --config mosaic.config.js",
