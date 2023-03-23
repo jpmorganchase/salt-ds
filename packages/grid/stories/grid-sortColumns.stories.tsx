@@ -6,9 +6,14 @@ import {
   SortOrder,
 } from "../src";
 import "./grid.stories.css";
-import { Story } from "@storybook/react";
 import { createDummyInvestors, Investor, investorKeyGetter } from "./dummyData";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Scrim, ContentStatus } from "@salt-ds/lab";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -18,7 +23,7 @@ export default {
 
 const dummyInvestors = createDummyInvestors();
 
-const api = (sortOrder: SortOrder) =>
+const api = (sortOrder: SortOrder): Promise<Investor[]> =>
   new Promise((resolve) => {
     setTimeout(() => {
       if (sortOrder === SortOrder.ASC) {
@@ -37,18 +42,28 @@ const api = (sortOrder: SortOrder) =>
     }, 1000);
   });
 
-const SortColumnsTemplate: Story = () => {
-  const [serverData, setServerData] = useState<Investor[]>([]);
-  const [sortOrder, setSortOrder] = useState<SortOrder>();
-  const [loading, setLoading] = useState(false);
+const queryClient = new QueryClient();
 
-  useEffect(() => {
-    setLoading(true);
-    void api(sortOrder ?? SortOrder.NONE).then((data) => {
-      setServerData(data as Investor[]);
-      setLoading(false);
-    });
-  }, [sortOrder]);
+export function SortColumns() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SortColumnsImpl />
+    </QueryClientProvider>
+  );
+}
+
+function SortColumnsImpl() {
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.NONE);
+
+  const { isLoading, data, isFetching } = useQuery<Investor[]>(
+    ["sortOrder", sortOrder],
+    () => api(sortOrder),
+    {
+      keepPreviousData: true,
+    }
+  );
+
+  if (isLoading) return <div>loading...</div>;
 
   const scoreOptions = ["-", "5%", "10%", "15%", "20%"];
 
@@ -57,75 +72,84 @@ const SortColumnsTemplate: Story = () => {
   };
 
   return (
-    <Grid
-      rowData={serverData}
-      rowKeyGetter={investorKeyGetter}
-      style={{ height: 600 }}
-      headerIsFocusable
-      className="grid"
-      zebra={true}
-      columnSeparators={true}
+    <div
+      style={{
+        position: "relative",
+        "--salt-overlayable-background": "rgba(255,255,255, .5)",
+      }}
     >
-      <GridColumn
-        name="Name"
-        id="name"
-        defaultWidth={200}
-        getValue={(rowData: Investor) => rowData.name}
-        sortable
-      />
-      <GridColumn
-        name="Strategy"
-        id="strategy"
-        getValue={(rowData: Investor) => rowData.strategy.join(", ")}
-        sortable
-      />
-      <GridColumn
-        name="Date incorporated"
-        id="date"
-        defaultWidth={150}
-        getValue={(rowData: Investor) => rowData.date}
-        sortable
-      />
-      <GridColumn
-        name="Score"
-        id="score"
-        getValue={(r) => r.score}
-        onChange={onScoreChange}
-        sortable
-        align="right"
-        customSort={({ rowData, sortOrder }) => {
-          // custom sort percentage score as number
-          const sortedData = [...rowData].sort((a, b) => {
-            const A = Number(a["score"]?.slice(0, length - 1));
-            const B = Number(b["score"]?.slice(0, length - 1));
+      <Scrim aria-label="Example Scrim" open={isFetching} enableContainerMode>
+        <ContentStatus status="loading" />
+      </Scrim>
 
-            return A < B ? -1 : 1;
-          });
-
-          if (sortOrder === SortOrder.DESC) {
-            return sortedData.reverse();
-          }
-
-          return sortedData;
-        }}
+      <Grid
+        rowData={data || []}
+        rowKeyGetter={investorKeyGetter}
+        style={{ height: 600 }}
+        headerIsFocusable
+        className="grid"
+        zebra={true}
+        columnSeparators={true}
       >
-        <CellEditor>
-          <DropdownCellEditor options={scoreOptions} />
-        </CellEditor>
-      </GridColumn>
-      <GridColumn
-        name="Amount"
-        id="amount"
-        getValue={(rowData: Investor) =>
-          loading ? "loading..." : rowData.amount
-        }
-        sortable
-        onSortOrderChange={({ sortOrder }) => {
-          setSortOrder(sortOrder);
-        }}
-      />
-    </Grid>
-  );
-};
+        <GridColumn
+          name="Name"
+          id="name"
+          defaultWidth={200}
+          getValue={(rowData: Investor) => rowData.name}
+          sortable
+        />
+        <GridColumn
+          name="Strategy"
+          id="strategy"
+          getValue={(rowData: Investor) => rowData.strategy.join(", ")}
+          sortable
+        />
+        <GridColumn
+          name="Date incorporated"
+          id="date"
+          defaultWidth={150}
+          getValue={(rowData: Investor) => rowData.date}
+          sortable
+        />
+        <GridColumn
+          name="Score"
+          id="score"
+          getValue={(r) => r.score}
+          onChange={onScoreChange}
+          sortable
+          align="right"
+          customSort={({ rowData, sortOrder }) => {
+            // custom sort percentage score as number
+            const sortedData = [...rowData].sort((a, b) => {
+              const A = Number(a["score"]?.slice(0, a.score.length - 1));
+              const B = Number(b["score"]?.slice(0, b.score.length - 1));
 
-export const SortColumns = SortColumnsTemplate.bind({});
+              return A < B ? -1 : 1;
+            });
+
+            if (sortOrder === SortOrder.DESC) {
+              return sortedData.reverse();
+            }
+
+            return sortedData;
+          }}
+        >
+          <CellEditor>
+            <DropdownCellEditor options={scoreOptions} />
+          </CellEditor>
+        </GridColumn>
+        <GridColumn
+          name="Amount"
+          id="amount"
+          getValue={(rowData: Investor) =>
+            isFetching ? "loading..." : rowData.amount
+          }
+          sortable
+          onSortOrderChange={({ sortOrder }) => {
+            setSortOrder(sortOrder);
+          }}
+        />
+      </Grid>
+    </div>
+  );
+}
