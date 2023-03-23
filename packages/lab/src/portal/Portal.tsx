@@ -1,18 +1,6 @@
-import {
-  cloneElement,
-  forwardRef,
-  isValidElement,
-  ReactNode,
-  useRef,
-  useState,
-} from "react";
-import { FloatingPortal } from '@floating-ui/react';
-import {
-  SaltProvider,
-  ownerDocument,
-  useForkRef,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
+import { cloneElement, forwardRef, isValidElement, ReactNode } from "react";
+import { FloatingPortal } from "@floating-ui/react";
+import { SaltProvider, useForkRef } from "@salt-ds/core";
 
 export interface PortalProps {
   /**
@@ -57,8 +45,6 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
   },
   ref
 ) {
-  const [mounted, setMounted] = useState(false);
-  const portalRef = useRef<HTMLElement | null>(null);
   const handleRef = useForkRef(
     // @ts-ignore
     isValidElement(children) ? children.ref : null,
@@ -66,25 +52,6 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
   );
 
   const container = getContainer(containerProp) ?? document.body;
-
-  useIsomorphicLayoutEffect(() => {
-    const root = ownerDocument(container).getElementById(id);
-
-    if (root) {
-      portalRef.current = root;
-    } else {
-      portalRef.current = ownerDocument(container).createElement("div");
-      portalRef.current.id = id;
-    }
-
-    const el = portalRef.current;
-
-    if (!container.contains(el)) {
-      container.appendChild(el);
-    }
-
-    setMounted(true);
-  }, [id, container]);
 
   if (disablePortal) {
     if (isValidElement(children)) {
@@ -95,13 +62,9 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
     return <>{children}</>;
   }
 
-  if (mounted && portalRef.current && children) {
-    return (
-      <FloatingPortal root={container as HTMLElement}>
-        <SaltProvider>{children}</SaltProvider>
-      </FloatingPortal>
-    )
-  }
-
-  return null;
+  return (
+    <FloatingPortal root={container as HTMLElement} id={id}>
+      <SaltProvider>{children}</SaltProvider>
+    </FloatingPortal>
+  );
 });
