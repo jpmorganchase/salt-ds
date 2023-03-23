@@ -5,7 +5,7 @@ export const SpacingBlock = ({
   replacementToken,
 }: {
   spacingVar: string;
-  replacementToken: string;
+  replacementToken?: string;
 }) => {
   return (
     <>
@@ -14,16 +14,16 @@ export const SpacingBlock = ({
         style={{ width: `var(${spacingVar})` }}
       />
       <code className="DocGrid-code">{spacingVar}</code>
-      <div className="DocGrid-notes">
-        {replacementToken ? (
+      {replacementToken ? (
+        <div className="DocGrid-notes">
           <p>
             <strong>Deprecated</strong>: use{" "}
             <code className="DocGrid-code">{replacementToken}</code> instead
           </p>
-        ) : (
-          ""
-        )}
-      </div>
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };
