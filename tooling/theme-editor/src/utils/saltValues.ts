@@ -3,12 +3,10 @@ export const SALT_CHARACTERISTICS = [
   "actionable",
   "container",
   "delay",
-  "disabled",
   "draggable",
   "target",
   "editable",
   "focused",
-  "measured",
   "navigable",
   "overlayable",
   "selectable",
@@ -16,6 +14,7 @@ export const SALT_CHARACTERISTICS = [
   "status",
   "taggable",
   "text",
+  "track",
 ];
 
 export const SALT_FOUNDATIONS = [

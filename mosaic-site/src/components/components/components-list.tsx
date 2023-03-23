@@ -152,7 +152,9 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Represents a person. It has three variants to account for different types of data: photo, initials and a default version when neither is available.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.READY,
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-avatar--page",
   },
   {
     name: "AG Grid Theme",
@@ -570,6 +572,8 @@ export const componentDetails: ComponentDetails[] = [
       "Visually represents a process that is taking an indeterminate time to complete.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-spinner--page",
   },
   {
     name: "Split Button",
@@ -585,6 +589,8 @@ export const componentDetails: ComponentDetails[] = [
       "Defines left and right regions for UI elements within a span, such as a button bar.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-split-layout--page",
   },
   {
     name: "Stack Layout",
@@ -694,6 +700,8 @@ export const componentDetails: ComponentDetails[] = [
       "Displays an explanation or provides more information about an error or warning condition, when the user’s  mouse hovers over a target element.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-tooltip--page",
   },
   {
     name: "Tree",
