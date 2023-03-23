@@ -50,12 +50,29 @@ const componentsListSorting = (
     return componentsListSortedByName(ascendingOrder);
   }
 
-  return componentsListSortedByName().sort(
-    (a, b) =>
+  return componentsListSortedByName().sort((a, b) => {
+    const orderMultiplier = ascendingOrder ? 1 : -1;
+    const statusDiff =
       (statusSortList.indexOf(a[componentDetail]) -
         statusSortList.indexOf(b[componentDetail])) *
-      (ascendingOrder ? 1 : -1)
-  );
+      orderMultiplier;
+    if (statusDiff === 0 && componentDetail === "devStatus") {
+      if (a.availableInCoreSince && b.availableInCoreSince) {
+        return (
+          a.availableInCoreSince.localeCompare(b.availableInCoreSince) *
+          orderMultiplier
+        );
+      } else if (a.availableInCoreSince) {
+        return orderMultiplier;
+      } else if (b.availableInCoreSince) {
+        return -1 * orderMultiplier;
+      } else {
+        return 0;
+      }
+    } else {
+      return statusDiff;
+    }
+  });
 };
 
 const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
