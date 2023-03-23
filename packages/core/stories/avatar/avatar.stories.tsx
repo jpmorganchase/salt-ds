@@ -32,7 +32,7 @@ Initials.args = {
 
 export const AlternativeIcon = Template.bind({});
 AlternativeIcon.args = {
-  fallbackIcon: <UserGroupSolidIcon />,
+  fallbackIcon: <UserGroupSolidIcon aria-label="Team Avatar" />,
 };
 
 export const WithImage = Template.bind({});
