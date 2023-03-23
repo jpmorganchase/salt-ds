@@ -1,18 +1,18 @@
 import { clsx } from "clsx";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { capitalize, makePrefixer } from "../utils";
+import { makePrefixer } from "../utils";
 import "./Card.css";
 
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * **Deprecated:** Use the InteractableCard instead
+   * **Deprecated:** Use the InteractableCard component instead
    *
    * If `true`, the card will be disabled.
    */
   disabled?: boolean;
   /**
-   * **Deprecated:** Use the InteractableCard instead
+   * **Deprecated:** Use the InteractableCard component instead
    *
    * If `true`, interactive styles will be applied to `Card`. These styles give prominence to certain content
    * on the page.

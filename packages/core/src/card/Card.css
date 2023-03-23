@@ -34,17 +34,17 @@
   transition: none;
 }
 
-/* Styles applied to Card if `accentPosition="bottom"` (default) */
+/* Styles applied to InteractableCard if `accentPosition="bottom"` (default) */
 .saltCard-accentBottom {
   --card-borderWidth: 0 0 var(--salt-size-accent) 0;
 }
 
-/* Styles applied to Card if `accentPosition="left"` */
+/* Styles applied to InteractableCard if `accentPosition="left"` */
 .saltCard-accentLeft {
   --card-borderWidth: 0 0 0 var(--salt-size-accent);
 }
 
-/* Styles applied to Card if `accentPosition="top"` */
+/* Styles applied to InteractableCard if `accentPosition="top"` */
 .saltCard-accentTop {
   --card-borderWidth: var(--salt-size-accent) 0 0 0;
 }
