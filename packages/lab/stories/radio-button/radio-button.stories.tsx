@@ -9,33 +9,33 @@ export default {
 
 export const RadioButtonVariations = () => {
   return (
-    <>
-      <RadioButton label="Unchecked" value="Unchecked" />
-      <RadioButton label="Checked" value="Checked" checked />
+    <div style={{ background: '#eee', padding: 20 }}>
+      <RadioButton label="Default" value="Unchecked" />
       <RadioButton disabled label="Disabled" value="Disabled" />
+      <RadioButton label="Checked" value="Checked" checked />
       <RadioButton
         disabled
-        label="Disabled checked"
+        label="Checked Disabled"
         value="Disabled-checked"
         checked
       />
 
-      <RadioButton label="Error unchecked" value="Error-unchecked" error />
-      <RadioButton label="Error checked" value="Error-checked" checked error />
+      <RadioButton label="Error" value="Error-unchecked" error />
       <RadioButton
-        label="Disabled error"
+        label="Error Disabled"
         value="disabled-error"
         disabled
         error
       />
+      <RadioButton label="Error Checked" value="Error-checked" checked error />
       <RadioButton
-        label="Disabled error checked"
+        label="Error Checked Disabled"
         value="disabled-error-checked"
         checked
         disabled
         error
       />
-    </>
+    </div>
   );
 };
 
