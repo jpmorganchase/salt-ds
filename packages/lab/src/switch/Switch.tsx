@@ -20,7 +20,7 @@ export interface SwitchProps {
   onBlur?: FocusEventHandler<HTMLInputElement>;
   onFocus?: FocusEventHandler<HTMLInputElement>;
   onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
-  inputRef?: RefObject<HTMLInputElement>
+  inputRef?: RefObject<HTMLInputElement>;
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
 }
 
@@ -30,7 +30,6 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   props,
   ref
 ) {
-
   const {
     checked: checkedProp,
     className,
@@ -61,7 +60,8 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   return (
     <label
       className={clsx(
-        withBaseName(), className,
+        withBaseName(),
+        className,
         {
           [withBaseName("disabled")]: disabled,
           [withBaseName("checked")]: checked,

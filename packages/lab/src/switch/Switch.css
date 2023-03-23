@@ -1,5 +1,5 @@
 .saltSwitch {
-  --switch-background: #84878E;
+  --switch-background: #84878e;
   /* --switch-thumb-background: var(--salt-selectable-primary-foreground-selected); */
   /* --switch-track-color: var(--salt-selectable-borderColor); */
   --switch-track-color-hover: var(--salt-selectable-borderColor-hover);
@@ -51,7 +51,8 @@
 }
 
 /* Styles applied to thumb, and icon if `checked={true}` */
-.saltSwitch-thumb, .saltSwitch-icon  {
+.saltSwitch-thumb,
+.saltSwitch-icon {
   background: var(--switch-background);
   /* background: var(--salt-selectable-borderColor); */
   border-radius: var(--saltSwitch-thumb-borderRadius, 0);

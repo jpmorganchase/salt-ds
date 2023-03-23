@@ -7,17 +7,16 @@ export default {
   component: Switch,
 } as ComponentMeta<typeof Switch>;
 
-
 export const AllVariations = () => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       <Switch label="Default" />
       <Switch label="Checked" checked />
       <Switch label="Disabled" disabled />
       <Switch label="Checked Disabled" checked disabled />
     </div>
-  )
-}
+  );
+};
 
 export const Controlled: ComponentStory<typeof Switch> = (args) => {
   const [checked, setChecked] = useState(false);
