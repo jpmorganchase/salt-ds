@@ -42,7 +42,7 @@ export const useInteractableCard = <T extends Element>({
 
   useEffect(() => {
     const t = setTimeout(() => {
-      // This key state check is to stop continual visual state change when using Enter Key, which the browser treats as both key and click events on a Button
+      // This key state check is to stop continual visual state change when using Enter Key, which the browser treats as both key and click events on a Button-like component
       // This key state check also fixes Firefox Button where Space key is pressed but button fails to be in active state
       if (keyIsDown !== enter && keyIsDown !== space) {
         setActive(false);
@@ -72,7 +72,6 @@ export const useInteractableCard = <T extends Element>({
 
   const handleKeyDown = (event: KeyboardEvent<T>) => {
     if (event.key === enter || event.key === space) {
-      console.log(event.key);
       setkeyIsDown(event.key);
       setActive(true);
     }

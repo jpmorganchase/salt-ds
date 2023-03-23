@@ -5,6 +5,6 @@
 
 Deprecated `interactable` and `disabled` props in Card
 
-Created `InteractableCard` component with redesign
+Created `InteractableCard` component for Cards which can perform an action, e.g. linking to a different page or content
 
 Moved `capitalize` from lab to core

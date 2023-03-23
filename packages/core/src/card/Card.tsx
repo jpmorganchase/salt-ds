@@ -24,7 +24,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   props,
   ref
 ) {
-  const { className, children,  disabled, interactable, ...rest } = props;
+  const { className, children, disabled, interactable, ...rest } = props;
   return (
     <div
       className={clsx(

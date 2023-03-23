@@ -1,13 +1,16 @@
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { forwardRef } from "react";
+import { Card, CardProps } from "./Card";
 import { capitalize, makePrefixer } from "../utils";
 import { useInteractableCard } from "./useInteractableCard";
 
-import "./Card.css";
+import "./InteractableCard.css";
 
-const withBaseName = makePrefixer("saltCard");
+const withBaseName = makePrefixer("saltInteractableCard");
 
-export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
+// TODO: Remove omissions when Card props deprecated
+export interface InteractableCardProps
+  extends Omit<CardProps, "disabled" | "interactable"> {
   /**
    * Accent border position: defaults to "bottom"
    *
@@ -43,15 +46,14 @@ export const InteractableCard = forwardRef<
     onBlur,
     onClick,
   });
-  // for now, we do not want to spread tab index as users may be wrapping in a link
+  // for now, we do not want to spread tab index here as users may be wrapping in a link
   const { tabIndex, ...restCardProps } = cardProps;
 
   return (
-    <div
+    <Card
       {...restCardProps}
       className={clsx(
         withBaseName(),
-        withBaseName("interactable"),
         withBaseName(`accent${capitalize(accentPosition)}`),
         {
           [withBaseName("disabled")]: disabled,
@@ -62,7 +64,7 @@ export const InteractableCard = forwardRef<
       {...rest}
       ref={ref}
     >
-      <div className={withBaseName("content")}>{children}</div>
-    </div>
+      {children}
+    </Card>
   );
 });
