@@ -8,12 +8,12 @@
 }
 
 .sidebar li {
-  --color-dark-navigable-selectableLink-selected: var(--salt-navigable-indicator-active);
-  --color-dark-navigable-selectableLink-unselected: transparent;
-  --color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
-  --color-dark-neutral-background-emphasis: transparent;
-  --color-dark-navigable-selectableLink-hover: transparent;
-  --border-width-medium: 3px;
+  --mosaic-color-dark-navigable-selectableLink-selected: var(--salt-navigable-indicator-active);
+  --mosaic-color-dark-navigable-selectableLink-unselected: transparent;
+  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
+  --mosaic-color-dark-neutral-background-emphasis: transparent;
+  --mosaic-color-dark-navigable-selectableLink-hover: transparent;
+  --mosaic-border-width-medium: 3px;
 }
 
 .primarySidebar :global(.ps-menu-button) {
@@ -76,24 +76,8 @@
   font-size: 0.8rem;
 }
 
-/* TODO: Decrease specificity once Mosaic exposes their css vars */
-[data-mode="dark"] .sidebar li[data-selected="true"] {
+.sidebar li {
   height: 36px;
-  border-left-width: 3px;
-}
-
-[data-mode="dark"] .sidebar li:not([data-selected="true"]):not(:hover),
-[data-mode="dark"] .sidebar li {
-  border-color: transparent;
-}
-
-[data-mode="dark"] .sidebar li:hover {
-  background-color: transparent;
-}
-
-.sidebar li:not([data-selected="true"]):not(:hover) {
-  border-color: transparent;
-  color: var(--salt-text-secondary-foreground);
 }
 
 .sidebar li:hover {
@@ -101,7 +85,7 @@
   text-decoration: underline;
 }
 
-.sidebar li[aria-checked="true"]:not(:hover) {
+.sidebar li[aria-checked="true"] {
   color: var(--salt-text-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight-active);
 }

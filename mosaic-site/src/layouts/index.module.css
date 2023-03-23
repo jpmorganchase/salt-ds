@@ -1,6 +1,9 @@
 .base > header {
   --site-navigation-padding-vertical: var(--salt-size-unit);
   --site-navigation-padding-horizontal: calc(var(--salt-size-unit) * 3);
+  --mosaic-border-width-thin: 0;
+  --mosaic-shadow-dark-elevation2: var(--salt-shadow-1-color);
+  --mosaic-color-dark-neutral-background-regular: var(--salt-color-gray-900);
 }
 
 .docsWrapper {
@@ -34,13 +37,8 @@
   margin: calc(var(--salt-size-unit) * 8) calc(var(--salt-size-unit) * 3) calc(var(--salt-size-unit) * 2) calc(var(--salt-size-unit) * 3);
 }
 
-/* TODO: Decrease specificity once Mosaic exposes their css vars */
-[data-mode="dark"] .base > header:not([data-selected="true"]):not(:hover),
-[data-mode="dark"] .base > header:not([data-selected="true"]):hover {
+.base > header {
   padding: var(--site-navigation-padding-vertical) var(--site-navigation-padding-horizontal);
-  border-bottom-width: 0;
-  box-shadow: var(--salt-shadow-1-color);
-  background-color: var(--salt-color-gray-900);
 }
 
 @media screen and (max-width: 768px) {
