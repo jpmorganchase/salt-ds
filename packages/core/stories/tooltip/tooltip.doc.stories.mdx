@@ -5,7 +5,6 @@ import {
   CSSClassTable,
 } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 
 <Meta
   title="Documentation/Core/Tooltip"
@@ -18,6 +17,11 @@ import { withFlexGap } from "docs/decorators/withFlexGap";
 # Tooltip
 
 A Tooltip provides guidance to the user when something requires more explanation or context, or to provide more information about an error or warning condition. A Tooltip will typically be displayed after the user’s mouse hovers over the target element for a certain amount of time.
+
+## Best practise
+
+- Content within tooltips should be supplementary information that provides succinct and descriptive clarity to the user.
+- Do not place information necessary for the user to complete a task inside a tooltip. Any important help text should remain visible on screen at all times, not just when a tooltip is displayed.
 
 ## Default
 
@@ -32,28 +36,28 @@ A Tooltip provides guidance to the user when something requires more explanation
 Use the `status` prop to choose between `error`, `warning`, `success` and `info`.
 
 <Canvas>
-  <Story id="core-tooltip--status" decorators={[withFlexGap]} />
+  <Story id="core-tooltip--status" />
 </Canvas>
 
-### Hide arrow
+### Without arrow
 
-Use `hideArrow` prop if you'd like to display the tooltip without the arrow.
+If you'd like to display the Tooltip without the arrow, use the `hideArrow` prop.
 
 <Canvas>
   <Story id="core-tooltip--without-arrow" />
 </Canvas>
 
-### Hide icon
+### Without icon
 
-Use `hideIcon` prop if you'd like to display the tooltip without state icon.
+To display the Tooltip with text only, and no status icon, use the `hideIcon` prop.
 
 <Canvas>
   <Story id="core-tooltip--without-icon" />
 </Canvas>
 
-### Custom content
+### Content
 
-Use the `content` prop to pass either a simple string or a React component.
+Use the `content` prop to pass either a simple string or a React component to be displayed inside the Tooltip.
 
 <Canvas>
   <Story id="core-tooltip--custom-content" />
@@ -61,18 +65,18 @@ Use the `content` prop to pass either a simple string or a React component.
 
 ### Placement
 
-Use the `placement` prop to position the tooltip. The tooltip will flip and shift if there isn't enough space for it to be visible.
+To position the Tooltip, use the `placement` prop. The component will flip and shift if there isn't enough space for it to be visible.
 
 <Canvas>
-  <Story id="core-tooltip--placement" decorators={[withFlexGap]} />
+  <Story id="core-tooltip--placement" />
 </Canvas>
 
 ### Delay before shown
 
-Use `enterDelay` prop to change the delay before the tooltip is shown. Defaults to 300ms.
+By default, the Tooltip displays after 300ms. To change the delay before it’s shown, use the `enterDelay` prop.
 
 <Canvas>
-  <Story id="core-tooltip--delay" decorators={[withFlexGap]} />
+  <Story id="core-tooltip--delay" />
 </Canvas>
 
 ## Configuring Tooltip
@@ -87,16 +91,20 @@ import { Tooltip } from "@salt-ds/core";
 
 <ArgsTable of={Tooltip} />
 
-### CSS Class
+### CSS class
 
 <CSSClassTable of={Tooltip} />
 
-### Characteristics Used
+### Characteristics used
 
 <CharacteristicUsage of={Tooltip} />
 
+## Related components
+
+The Tooltip component can contain a [StatusIndicator](?path=/docs/documentation-core-status-indicator--page)
+
 ## Accessibility
 
-We do not recommend that you include interactive elements within a tooltip as this is inaccessible since tooltips do not receive focus. If you need to include focusable content like buttons or links, consider using the overlay component.
+The Tooltip doesn’t receive focus, so we recommend that you don’t include interactive elements as they won’t be accessible. If you need to display focusable content such as buttons or links, consider using the Overlay component instead.
 
 <HelpAndSupport />

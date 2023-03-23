@@ -15,7 +15,7 @@ const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
-    Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
+  Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
    * The children will be the tooltip's trigger.
    */
@@ -25,7 +25,7 @@ export interface TooltipProps
    */
   hideArrow?: boolean;
   /**
-   * Whether to hide the state icon within the tooltip. Defaults to `false`.
+   * Whether to hide the status icon within the tooltip. Defaults to `false`.
    */
   hideIcon?: boolean;
   /**
@@ -33,15 +33,15 @@ export interface TooltipProps
    */
   content: ReactNode;
   /**
-   * A string to determine the current status of the tooltip. Defaults to 'info'.
+   * A string to determine the status of the tooltip. Defaults to `info`.
    */
   status?: ValidationStatus;
   /**
-   * Delay in milliseconds before the tooltip is shown
+   * Delay in milliseconds before the tooltip is shown.
    */
   enterDelay?: number;
   /**
-   * Delay in milliseconds before the tooltip is hidden
+   * Delay in milliseconds before the tooltip is hidden.
    */
   leaveDelay?: number;
   /**
@@ -49,11 +49,11 @@ export interface TooltipProps
    */
   disabled?: boolean;
   /**
-   * Option to remove the hover listener
+   * Option to remove the hover listener.
    */
   disableHoverListener?: boolean;
   /**
-   * Option to remove the focus listener
+   * Option to remove the focus listener.
    */
   disableFocusListener?: boolean;
 }
