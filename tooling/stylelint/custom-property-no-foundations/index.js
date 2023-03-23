@@ -68,7 +68,7 @@ const allAllowedKeys = [
   "differential", // TODO: **deprecated** delete here
   "editable",
   "focused",
-  "measured",
+  "measured", // TODO: **deprecated** delete here
   "navigable",
   "overlayable",
   "selectable",
@@ -77,7 +77,8 @@ const allAllowedKeys = [
   "taggable",
   "target",
   "text",
-  // foundations
+  "track",
+  // additional to decide
   "animation",
   "delay", // TODO: to be merged with animation
   "size",

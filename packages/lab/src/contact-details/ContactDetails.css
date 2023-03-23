@@ -261,19 +261,19 @@
 }
 
 .saltContactFavoriteToggle-deselected {
-  --contactDetails-favoriteToggle-fill: var(--salt-measured-borderColor);
+  --contactDetails-favoriteToggle-fill: var(--salt-accent-borderColor);
 }
 
 .saltContactFavoriteToggle-selecting {
-  --contactDetails-favoriteToggle-fill: var(--salt-measured-fill);
+  --contactDetails-favoriteToggle-fill: var(--salt-selectable-foreground-hover);
 }
 
 .saltContactFavoriteToggle-selected {
-  --contactDetails-favoriteToggle-fill: var(--salt-measured-fill);
+  --contactDetails-favoriteToggle-fill: var(--salt-selectable-foreground-selected);
 }
 
 .saltContactFavoriteToggle-deselecting {
-  --contactDetails-favoriteToggle-fill: var(--salt-measured-borderColor);
+  --contactDetails-favoriteToggle-fill: var(--salt-selectable-foreground-hover);
 }
 
 .saltContactFavoriteToggle-svg {
