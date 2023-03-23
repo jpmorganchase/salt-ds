@@ -1,5 +1,10 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
-import { useAriaAnnouncer, useFloatingUI, useForkRef } from "@salt-ds/core";
+import {
+  Portal,
+  useAriaAnnouncer,
+  useFloatingUI,
+  useForkRef,
+} from "@salt-ds/core";
 import {
   ComponentType,
   HTMLAttributes,
@@ -11,7 +16,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { Portal } from "../../portal";
 import {
   IndexedListItemProps,
   ListBase,

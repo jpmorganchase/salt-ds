@@ -1,8 +1,8 @@
-import { Portal } from "@salt-ds/lab";
+import { Portal } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Lab/Portal",
+  title: "Core/Portal",
   component: Portal,
 } as ComponentMeta<typeof Portal>;
 

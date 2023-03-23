@@ -14,6 +14,7 @@ export * from "./grid-layout";
 export * from "./link";
 export * from "./panel";
 export * from "./radio-button";
+export * from "./portal";
 export * from "./spinner";
 export * from "./stack-layout";
 export * from "./status-indicator";

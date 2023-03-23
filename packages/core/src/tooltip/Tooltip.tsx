@@ -5,8 +5,10 @@ import {
   HTMLAttributes,
   ReactNode,
   isValidElement,
+  Fragment,
 } from "react";
 import { FloatingArrow } from "@floating-ui/react";
+import { Portal } from "../portal";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import { UseFloatingUIProps, makePrefixer, useForkRef } from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
@@ -16,7 +18,7 @@ const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
-    Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
+  Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
    * The children will be the Tooltip's trigger.
    */
@@ -57,6 +59,7 @@ export interface TooltipProps
    * Option to remove the focus listener.
    */
   disableFocusListener?: boolean;
+  disablePortal?: boolean;
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
@@ -73,6 +76,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       placement = "right",
       enterDelay = 300,
       leaveDelay = 0,
+      disablePortal,
       ...rest
     } = props;
 
@@ -99,6 +103,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       reference
     );
 
+    const Wrapper = !disablePortal ? Portal : Fragment;
+
     return (
       <>
         {isValidElement(children) &&
@@ -108,33 +114,37 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           })}
 
         {open && !disabled && (
-          <div
-            className={clsx(withBaseName(), withBaseName(status), className)}
-            ref={floating}
-            {...getTooltipProps()}
-          >
-            <div className={withBaseName("container")}>
-              {!hideIcon && (
-                <StatusIndicator
-                  status={status}
-                  size={1}
-                  className={withBaseName("icon")}
-                />
-              )}
-              <span className={withBaseName("content")}>{content}</span>
-            </div>
-            {!hideArrow && (
-              <FloatingArrow
-                {...arrowProps}
-                className={withBaseName("arrow")}
-                strokeWidth={1}
-                fill="var(--salt-container-primary-background)"
-                stroke="var(--tooltip-status-borderColor)"
-                height={5}
-                width={10}
-              />
-            )}
-          </div>
+          <Wrapper>
+            <div
+              className={clsx(withBaseName(), withBaseName(status), className)}
+              ref={floating}
+              {...getTooltipProps()}
+            >
+              <div className={withBaseName("container")}>
+                {!hideIcon && (
+                  <StatusIndicator
+                    status={status}
+                    size={1}
+                    className={withBaseName("icon")}
+                  />
+                )}
+                <span className={withBaseName("content")}>{content}</span>
+              </div>
+              {
+                !hideArrow && (
+                  <FloatingArrow
+                    {...arrowProps}
+                    className={withBaseName("arrow")}
+                    strokeWidth={1}
+                    fill="var(--salt-container-primary-background)"
+                    stroke="var(--tooltip-status-borderColor)"
+                    height={5}
+                    width={10}
+                  />
+                )
+              }
+            </div >
+          </Wrapper>
         )}
       </>
     );

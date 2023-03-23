@@ -1,4 +1,4 @@
-import { Portal } from "../../portal";
+import { Portal } from "@salt-ds/core";
 import { forwardRef } from "react";
 import { Rect } from "./dragDropTypes";
 

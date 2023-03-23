@@ -1,6 +1,7 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
 import {
   makePrefixer,
+  Portal,
   useFloatingUI,
   useForkRef,
   useIdMemo as useId,
@@ -10,7 +11,6 @@ import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { forwardCallbackProps } from "../utils";
 import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdownBase } from "./useDropdownBase";
-import { Portal } from "../portal";
 import { isDesktop, useWindow } from "../window";
 
 import "./Dropdown.css";

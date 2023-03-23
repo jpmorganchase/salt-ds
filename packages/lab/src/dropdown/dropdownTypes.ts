@@ -1,4 +1,4 @@
-import { PortalProps } from "../portal";
+import { PortalProps } from "@salt-ds/core";
 import { HTMLAttributes, KeyboardEvent, ReactElement, RefObject } from "react";
 
 export type DropdownPlacement =
