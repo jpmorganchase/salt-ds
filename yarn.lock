@@ -5594,6 +5594,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/styles@workspace:packages/styles":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/styles@workspace:packages/styles"
+  peerDependencies:
+    "@types/react": ">=16.8.6"
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/theme-editor-app@workspace:playground/theme-editor-app":
   version: 0.0.0-use.local
   resolution: "@salt-ds/theme-editor-app@workspace:playground/theme-editor-app"
@@ -5612,6 +5625,19 @@ __metadata:
 "@salt-ds/theme@^1.0.0, @salt-ds/theme@workspace:packages/theme":
   version: 0.0.0-use.local
   resolution: "@salt-ds/theme@workspace:packages/theme"
+  languageName: unknown
+  linkType: soft
+
+"@salt-ds/window@workspace:packages/window":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/window@workspace:packages/window"
+  peerDependencies:
+    "@types/react": ">=16.8.6"
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
