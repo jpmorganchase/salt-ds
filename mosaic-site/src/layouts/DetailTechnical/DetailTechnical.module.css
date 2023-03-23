@@ -16,13 +16,14 @@
   --mosaic-border-width-medium: 3px;
 }
 
-.primarySidebar :global(.ps-menu-button) {
-  --color-dark-neutral-background-emphasis: var(--salt-palette-navigate-primary-background-hover);
-  --color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
+.primarySidebar :global(.ps-menu-button),
+.primarySidebar :global(.ps-menuitem-root) {
+  --mosaic-color-dark-neutral-background-emphasis: var(--salt-palette-navigate-primary-background-hover);
+  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
 }
 
 .primarySidebar :global(.ps-active) {
-  --color-dark-navigable-selectableLink-unselectedLabel: var(--salt-palette-interact-foreground);
+  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-palette-interact-foreground);
 }
 
 .primarySidebar :global(a.ps-menu-button) {
