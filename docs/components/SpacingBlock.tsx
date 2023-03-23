@@ -1,3 +1,4 @@
+import { ReplacementToken } from "./ReplacementToken";
 import "./SpacingBlock.css";
 
 export const SpacingBlock = ({
@@ -14,14 +15,7 @@ export const SpacingBlock = ({
         style={{ width: `var(${spacingVar})` }}
       />
       <code className="DocGrid-code">{spacingVar}</code>
-      {replacementToken ? (
-        <div className="DocGrid-notes">
-          <p>
-            <strong>Deprecated</strong>: use{" "}
-            <code className="DocGrid-code">{replacementToken}</code> instead
-          </p>
-        </div>
-      ) : (
+      {replacementToken ? <ReplacementToken replacementToken={replacementToken} /> : (
         ""
       )}
     </>

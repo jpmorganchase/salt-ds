@@ -3,11 +3,7 @@ import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { FontSizeBlock } from "docs/components/FontSizeBlock";
 import { FontWeightBlock } from "docs/components/FontWeightBlock";
-import {
-  LineBlock,
-  LineBlockCell,
-  LineBlockCode,
-} from "docs/components/LineBlock";
+import { LineBlock } from "docs/components/LineBlock";
 
 <Meta title="Theme/Characteristics/Track" />
 
@@ -26,14 +22,22 @@ Components which have the ability to visually indicate progress, scale, or range
       <ColorBlock colorVar="--salt-track-background-disabled" />
       <ColorBlock colorVar="--salt-track-borderColor" />
       <ColorBlock colorVar="--salt-track-borderColor-disabled" />
-      <LineBlockCell />
-      <LineBlockCode>--salt-track-borderStyle</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-track-borderStyle-active</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-track-borderStyle-complete</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-track-borderStyle-incomplete</LineBlockCode>
+      <LineBlock
+        token="--salt-track-borderStyle"
+        lineStyle="--salt-track-borderStyle"
+      />
+      <LineBlock
+        token="--salt-track-borderStyle-active"
+        lineStyle="--salt-track-borderStyle-active"
+      />
+      <LineBlock
+        token="--salt-track-borderStyle-complete"
+        lineStyle="--salt-track-borderStyle-complete"
+      />
+      <LineBlock
+        token="--salt-track-borderStyle-incomplete"
+        lineStyle="--salt-track-borderStyle-incomplete"
+      />
       <LineBlock lineWidth="--salt-track-borderWidth" />
       <LineBlock lineWidth="--salt-track-borderWidth-active" />
       <LineBlock lineWidth="--salt-track-borderWidth-complete" />

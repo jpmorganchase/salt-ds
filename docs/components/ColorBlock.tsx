@@ -1,10 +1,10 @@
 import { clsx } from "clsx";
-import { useEffect, useState } from "react";
 import {
   characteristic,
   getCharacteristicValue,
   makePrefixer,
 } from "@salt-ds/core";
+import { ReplacementToken } from "./ReplacementToken";
 
 import "./ColorBlock.css";
 
@@ -14,7 +14,8 @@ export const ColorBlock = ({
   colorVar,
   className,
   hideToken,
-  replacementToken,
+  replacementToken
+  
 }: {
   colorVar: string;
   className?: string;
@@ -46,16 +47,7 @@ export const ColorBlock = ({
         )}
       />
       {!hideToken && <code className="DocGrid-code">{colorVar}</code>}
-      {replacementToken ? (
-        <div className="DocGrid-notes">
-          <p>
-            <strong>Deprecated</strong>: use{" "}
-            <code className="DocGrid-code">{replacementToken}</code> instead
-          </p>
-        </div>
-      ) : (
-        ""
-      )}
+      {replacementToken ? <ReplacementToken replacementToken={replacementToken} /> : ""}
     </>
   );
 };
