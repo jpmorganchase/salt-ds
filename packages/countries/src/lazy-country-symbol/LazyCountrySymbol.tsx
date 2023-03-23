@@ -1,6 +1,4 @@
-import { Suspense, useEffect, useState, useTransition } from "react";
-
-import { CountrySymbolProps, CountrySymbol } from "../country-symbol";
+import { CountrySymbolProps } from "../country-symbol";
 import { lazyMap } from "./lazyMap";
 
 export type LazyCountrySymbolProps = {
@@ -8,29 +6,16 @@ export type LazyCountrySymbolProps = {
 } & CountrySymbolProps;
 
 export const LazyCountrySymbol = ({
-  code: codeProp,
+  code,
   ...props
 }: LazyCountrySymbolProps) => {
-  const [isPending, startTransition] = useTransition();
-  const [code, setCode] = useState(codeProp);
-
-  useEffect(() => {
-    startTransition(() => {
-      setCode(codeProp);
-    });
-  }, [codeProp]);
-
   const Component = lazyMap[code];
 
   if (!Component && process.env.NODE_ENV !== "production") {
     console.warn(
-      `Setting country code to ${codeProp} which is invalid for <LazyCountrySymbol />`
+      `Setting country code to ${code} which is invalid for <LazyCountrySymbol />`
     );
   }
 
-  return (
-    <Suspense fallback={<CountrySymbol {...props} />}>
-      <Component {...props} />
-    </Suspense>
-  );
+  return <Component {...props} />;
 };

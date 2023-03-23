@@ -1,24 +1,21 @@
-import { ElementType, ReactNode, useState } from "react";
+import { Suspense, useState } from "react";
 import {
-  TrinidadAndTobago,
-  Mexico,
+  TT,
+  MX,
   CountrySymbol,
-  CountrySymbolProps,
   countryMetaMap,
-  countrySymbolMap,
-  CountryCode,
+  LazyCountrySymbol,
 } from "@salt-ds/countries";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { FlexLayout, StackLayout } from "@salt-ds/core";
 import { FormField, Input } from "@salt-ds/lab";
 
+const countryCodes = Object.keys(countryMetaMap);
+
 export default {
   title: "Country Symbols/Country Symbol",
   component: CountrySymbol,
   argTypes: {
-    code: {
-      type: "string",
-    },
     size: {
       type: "number",
     },
@@ -26,34 +23,42 @@ export default {
 } as ComponentMeta<typeof CountrySymbol>;
 
 export const SaltCountrySymbol: ComponentStory<typeof CountrySymbol> = (
-  props
-) => <TrinidadAndTobago {...props} />;
+  args
+) => <TT {...args} />;
 
 export const CountrySymbolMultipleSizes: ComponentStory<
   typeof CountrySymbol
 > = () => (
   <StackLayout direction="row">
-    <Mexico size={1} />
-    <Mexico size={2} />
-    <Mexico size={3} />
-    <Mexico size={4} />
-    <Mexico size={5} />
+    <MX size={1} />
+    <MX size={2} />
+    <MX size={3} />
+    <MX size={4} />
+    <MX size={5} />
   </StackLayout>
 );
 
-export const AllCountrySymbols: ComponentStory<typeof CountrySymbol> = () => {
+export const AllCountrySymbols: ComponentStory<typeof CountrySymbol> = (
+  args
+) => {
   return (
-    <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
-      {Object.entries(countrySymbolMap).map(([code, Component]) => (
-        <Component key={code} size={1} />
-      ))}
-    </FlexLayout>
+    <Suspense>
+      <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
+        {Object.values(countryMetaMap).map(({ countryCode }) => (
+          <LazyCountrySymbol key={countryCode} code={countryCode} {...args} />
+        ))}
+      </FlexLayout>
+    </Suspense>
   );
+};
+
+AllCountrySymbols.args = {
+  size: 1,
 };
 
 export const AllCountrySymbolsWithSearch: ComponentStory<
   typeof CountrySymbol
-> = () => {
+> = (args) => {
   const [inputText, setInputText] = useState("");
 
   return (
@@ -65,28 +70,33 @@ export const AllCountrySymbolsWithSearch: ComponentStory<
         <Input value={inputText} onChange={(_, value) => setInputText(value)} />
       </FormField>
       <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
-        {Object.entries(countryMetaMap)
-          .filter(([code, { textName, componentName }]) => {
+        {Object.values(countryMetaMap)
+          .filter(({ countryCode, countryName }) => {
             const searchText = inputText.toLowerCase();
 
             return (
-              code.toLowerCase().includes(searchText) ||
-              textName.toLowerCase().includes(searchText) ||
-              componentName.toLowerCase().includes(searchText)
+              countryCode.toLowerCase().includes(searchText) ||
+              countryName.toLowerCase().includes(searchText)
             );
           })
-          .map(([code, { textName, componentName }]) => {
-            const Component = countrySymbolMap[code as CountryCode];
-
+          .map(({ countryCode, countryName }) => {
             return (
               <StackLayout style={{ width: "150px" }} gap={1} align="center">
-                <Component key={code} size={2} />
-                <p style={{ margin: 0 }}>{code}</p>
-                <p style={{ margin: 0 }}>{componentName}</p>
+                <LazyCountrySymbol
+                  key={countryCode}
+                  code={countryCode}
+                  {...args}
+                />
+                <p style={{ margin: 0 }}>{countryCode}</p>
+                <p style={{ margin: 0 }}>{countryName}</p>
               </StackLayout>
             );
           })}
       </FlexLayout>
     </StackLayout>
   );
+};
+
+AllCountrySymbolsWithSearch.args = {
+  size: 2,
 };

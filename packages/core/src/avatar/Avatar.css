@@ -1,4 +1,5 @@
 /* Default variables applied to the root element */
+
 .saltAvatar {
   --avatar-foreground: var(--saltAvatar-foreground, var(--salt-accent-foreground));
   --avatar-size-multiplier: var(--saltAvatar-size-multiplier, 1);

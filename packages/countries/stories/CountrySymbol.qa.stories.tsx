@@ -1,5 +1,6 @@
 import { Meta, Story } from "@storybook/react";
-import { countrySymbolMap } from "@salt-ds/countries";
+import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
+import { Suspense } from "react";
 
 export default {
   title: "Country Symbols/Country Symbol/QA",
@@ -9,7 +10,7 @@ const sizes = [1, 2, 3] as const;
 
 export const AllCountrySymbols: Story = () => {
   return (
-    <>
+    <Suspense>
       {sizes.map((size) => (
         <div
           style={{
@@ -19,12 +20,17 @@ export const AllCountrySymbols: Story = () => {
             padding: "12px 0",
           }}
         >
-          {Object.entries(countrySymbolMap).map(([code, Component]) => (
-            <Component key={code} id={`${size}-${code}`} size={size} />
+          {Object.values(countryMetaMap).map(({ countryCode }) => (
+            <LazyCountrySymbol
+              key={countryCode}
+              code={countryCode}
+              id={`${size}-${countryCode}`}
+              size={size}
+            />
           ))}
         </div>
       ))}
-    </>
+    </Suspense>
   );
 };
 

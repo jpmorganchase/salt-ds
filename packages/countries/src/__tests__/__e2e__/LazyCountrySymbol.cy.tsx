@@ -4,6 +4,6 @@ import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibil
 
 const composedStories = composeStories(countrySymbolStory);
 
-describe("Given an LazyCountrySYmbol", () => {
+describe("Given an LazyCountrySymbol", () => {
   checkAccessibility(composedStories);
 });
