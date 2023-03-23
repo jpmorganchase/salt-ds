@@ -148,10 +148,13 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Avatar",
+    availableInCoreSince: "1.3.0",
     description:
       "Represents a person. It has three variants to account for different types of data: photo, initials and a default version when neither is available.",
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-avatar--page",
   },
   {
     name: "AG Grid Theme",
@@ -245,7 +248,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Checkbox",
     description:
       "Enables the user to turn a specific value on or off. The value can be independent or a selection of one or more values from a given set of choices.",
-    devStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
@@ -281,6 +284,11 @@ export const componentDetails: ComponentDetails[] = [
       "Displays information when content isn’t ready to be shown in a container component, and remains visible until the situation is resolved.",
     devStatus: ComponentStatus.IN_BACKLOG,
     designStatus: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Country Symbol",
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Data Grid",
@@ -504,7 +512,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Radio Button",
     description:
       "Allows the user to select one option at a time, from a set that’s vertically or horizontally aligned.",
-    devStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
@@ -559,10 +567,13 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Spinner",
+    availableInCoreSince: "1.2.0",
     description:
       "Visually represents a process that is taking an indeterminate time to complete.",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-spinner--page",
   },
   {
     name: "Split Button",
@@ -573,10 +584,13 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Split Layout",
+    availableInCoreSince: "1.2.0",
     description:
       "Defines left and right regions for UI elements within a span, such as a button bar.",
-    devStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-split-layout--page",
   },
   {
     name: "Stack Layout",
@@ -681,10 +695,13 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Tooltip",
+    availableInCoreSince: "1.2.0",
     description:
       "Displays an explanation or provides more information about an error or warning condition, when the user’s  mouse hovers over a target element.",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_BACKLOG,
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-tooltip--page",
   },
   {
     name: "Tree",

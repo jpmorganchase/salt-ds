@@ -18,38 +18,42 @@
   padding: var(--saltToggleButton-icon-padding, var(--toggleButton-icon-padding));
 }
 
+.saltToggleButton {
+  --saltButton-text-color: var(--salt-text-primary-foreground);
+  --saltButton-text-color-disabled: var(--salt-text-primary-foreground-disabled);
+
+  --saltIcon-color: var(--salt-text-primary-foreground);
+}
+
+.saltToggleButton-disabled.saltButton-disabled {
+  --saltButton-text-color-active: var(--salt-text-primary-foreground-disabled);
+  --saltButton-text-color-hover: var(--salt-text-primary-foreground-disabled);
+
+  --saltIcon-color: var(--salt-text-primary-foreground-disabled);
+}
+
 /* CTA */
 .saltToggleButton-cta {
   --saltButton-background: var(--salt-selectable-background);
   --saltButton-background-hover: var(--salt-selectable-cta-background-hover);
   --saltButton-background-active: var(--salt-selectable-cta-background-selected);
   --saltButton-background-disabled: var(--salt-selectable-background-disabled);
-
-  --saltButton-text-color: var(--salt-selectable-cta-foreground);
   --saltButton-text-color-hover: var(--salt-selectable-cta-foreground-hover);
   --saltButton-text-color-active: var(--salt-selectable-cta-foreground-selected);
-  --saltButton-text-color-disabled: var(--salt-selectable-cta-foreground-disabled);
-
-  --saltIcon-color: var(--salt-selectable-cta-foreground);
 }
 .saltToggleButton-cta.saltToggleButton-disabled.saltButton-disabled {
   --saltButton-background-hover: var(--salt-selectable-background-disabled);
   --saltButton-background-active: var(--salt-selectable-cta-background-disabled);
-
-  --saltButton-text-color-hover: var(--salt-selectable-cta-foreground-disabled);
-  --saltButton-text-color-active: var(--salt-selectable-cta-foreground-disabled);
-
-  --saltIcon-color: var(--salt-selectable-cta-foreground-disabled);
 }
 .saltToggleButton-cta.saltToggleButton-disabled {
   --saltButton-background-active: var(--salt-selectable-cta-background-selectedDisabled);
   --saltButton-text-color-active: var(--salt-selectable-cta-foreground-selectedDisabled);
+
   --saltIcon-color-active: var(--salt-selectable-cta-foreground-selectedDisabled);
 }
 .saltToggleButton-cta.saltToggleButton-toggled {
   --saltButton-background: var(--salt-selectable-cta-background-selected);
   --saltButton-background-hover: var(--salt-selectable-cta-background-selected);
-
   --saltButton-text-color: var(--salt-selectable-cta-foreground-selected);
   --saltButton-text-color-hover: var(--salt-selectable-cta-foreground-selected);
 
@@ -58,7 +62,6 @@
 .saltToggleButton-cta.saltToggleButton-toggled.saltToggleButton-disabled {
   --saltButton-background-disabled: var(--salt-selectable-cta-background-selectedDisabled);
   --saltButton-background-hover: var(--salt-selectable-cta-background-selectedDisabled);
-
   --saltButton-text-color-disabled: var(--salt-selectable-cta-foreground-selectedDisabled);
   --saltButton-text-color-hover: var(--salt-selectable-cta-foreground-selectedDisabled);
 
@@ -71,22 +74,12 @@
   --saltButton-background-hover: var(--salt-selectable-primary-background-hover);
   --saltButton-background-active: var(--salt-selectable-primary-background-selected);
   --saltButton-background-disabled: var(--salt-selectable-primary-background-disabled);
-
-  --saltButton-text-color: var(--salt-selectable-primary-foreground);
   --saltButton-text-color-hover: var(--salt-selectable-primary-foreground-hover);
   --saltButton-text-color-active: var(--salt-selectable-primary-foreground-selected);
-  --saltButton-text-color-disabled: var(--salt-selectable-primary-foreground-disabled);
-
-  --saltIcon-color: var(--salt-selectable-primary-foreground);
 }
 .saltToggleButton-primary.saltToggleButton-disabled.saltButton-disabled {
   --saltButton-background-active: var(--salt-selectable-primary-background-disabled);
   --saltButton-background-hover: var(--salt-selectable-background-disabled);
-
-  --saltButton-text-color-hover: var(--salt-selectable-primary-foreground-disabled);
-  --saltButton-text-color-active: var(--salt-selectable-primary-foreground-disabled);
-
-  --saltIcon-color: var(--salt-selectable-primary-foreground-disabled);
 }
 .saltToggleButton-primary.saltToggleButton-disabled.saltButton-active {
   --saltButton-background-active: var(--salt-selectable-primary-background-selectedDisabled);
@@ -95,7 +88,6 @@
 .saltToggleButton-primary.saltToggleButton-toggled {
   --saltButton-background: var(--salt-selectable-primary-background-selected);
   --saltButton-background-hover: var(--salt-selectable-primary-background-selected);
-
   --saltButton-text-color: var(--salt-selectable-primary-foreground-selected);
   --saltButton-text-color-hover: var(--salt-selectable-primary-foreground-selected);
 
@@ -104,7 +96,6 @@
 .saltToggleButton-primary.saltToggleButton-toggled.saltToggleButton-disabled {
   --saltButton-background-disabled: var(--salt-selectable-primary-background-selectedDisabled);
   --saltButton-background-hover: var(--salt-selectable-primary-background-selectedDisabled);
-
   --saltButton-text-color-disabled: var(--salt-selectable-primary-foreground-selectedDisabled);
   --saltButton-text-color-hover: var(--salt-selectable-primary-foreground-selectedDisabled);
 
@@ -117,32 +108,22 @@
   --saltButton-background-hover: var(--salt-selectable-secondary-background-hover);
   --saltButton-background-active: var(--salt-selectable-secondary-background-selected);
   --saltButton-background-disabled: var(--salt-selectable-background-disabled);
-
-  --saltButton-text-color: var(--salt-selectable-secondary-foreground);
   --saltButton-text-color-hover: var(--salt-selectable-secondary-foreground-hover);
   --saltButton-text-color-active: var(--salt-selectable-secondary-foreground-selected);
-  --saltButton-text-color-disabled: var(--salt-selectable-secondary-foreground-disabled);
-
-  --saltIcon-color: var(--salt-selectable-secondary-foreground);
 }
 .saltToggleButton-secondary.saltToggleButton-disabled.saltButton-disabled {
   --saltButton-background-active: var(--salt-selectable-secondary-background-disabled);
   --saltButton-background-hover: var(--salt-selectable-background-disabled);
-
-  --saltButton-text-color-active: var(--salt-selectable-secondary-foreground-disabled);
-  --saltButton-text-color-hover: var(--salt-selectable-secondary-foreground-disabled);
-
-  --saltIcon-color: var(--salt-selectable-secondary-foreground-disabled);
 }
 .saltToggleButton-secondary.saltToggleButton-disabled.saltButton-active {
   --saltButton-background-active: var(--salt-selectable-secondary-background-selectedDisabled);
   --saltButton-text-color-active: var(--salt-selectable-secondary-foreground-selectedDisabled);
+
   --saltIcon-color-active: var(--salt-selectable-secondary-foreground-selectedDisabled);
 }
 .saltToggleButton-secondary.saltToggleButton-toggled {
   --saltButton-background: var(--salt-selectable-secondary-background-selected);
   --saltButton-background-hover: var(--salt-selectable-secondary-background-selected);
-
   --saltButton-text-color: var(--salt-selectable-secondary-foreground-selected);
   --saltButton-text-color-hover: var(--salt-selectable-secondary-foreground-selected);
 
@@ -153,5 +134,6 @@
   --saltButton-background-hover: var(--salt-selectable-secondary-background-selectedDisabled);
   --saltButton-text-color-disabled: var(--salt-selectable-secondary-foreground-selectedDisabled);
   --saltButton-text-color-hover: var(--salt-selectable-secondary-foreground-selectedDisabled);
+
   --saltIcon-color: var(--salt-selectable-secondary-foreground-selectedDisabled);
 }

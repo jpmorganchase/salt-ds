@@ -5,7 +5,7 @@
 
 /* Styles applied to the SVG stop elements */
 .saltSpinner-gradientStop {
-  stop-color: var(--saltSpinner-gradient-color, var(--salt-measured-fill));
+  stop-color: var(--saltSpinner-gradient-color, var(--salt-accent-background));
 }
 
 /* Styles applied when `size="default"` */

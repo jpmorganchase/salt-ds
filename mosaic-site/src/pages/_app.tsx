@@ -54,11 +54,17 @@ export default function MyApp({
   Component,
   pageProps = {},
 }: AppProps<MyAppProps>) {
-  const { searchIndex, sharedConfig, source } = pageProps;
+  const { searchIndex, searchConfig, sharedConfig, source } = pageProps;
 
   const customSource = source as { frontmatter: Record<string, unknown> };
   const frontmatter = customSource?.frontmatter || {};
-  const storeProps = { sharedConfig, colorMode, searchIndex, ...frontmatter };
+  const storeProps = {
+    sharedConfig,
+    colorMode,
+    searchIndex,
+    searchConfig,
+    ...frontmatter,
+  };
   const createStore = useCreateStore(storeProps);
 
   return (
