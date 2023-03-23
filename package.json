@@ -139,7 +139,7 @@
     "@jpmorganchase/mosaic-labs-components/@salt-ds/lab": "1.0.0-alpha.1",
     "@jpmorganchase/mosaic-layouts/@salt-ds/lab": "1.0.0-alpha.1",
     "@jpmorganchase/mosaic-site-components/@salt-ds/lab": "1.0.0-alpha.1",
-    "rollup": "2.79.0"
+    "rollup": "2.79.1"
   },
   "browserslist": {
     "production": [
