@@ -17,7 +17,17 @@ export const LineBlockCode = ({ children }: { children: ReactNode }) => {
   return <code className="DocGrid-code">{children}</code>;
 };
 
-export const LineBlock = ({ token, lineWidth, lineStyle, replacementToken }: { token: string, lineWidth?: string, lineStyle?: string, replacementToken?: string }) => {
+export const LineBlock = ({
+  token,
+  lineWidth,
+  lineStyle,
+  replacementToken,
+}: {
+  token: string;
+  lineWidth?: string;
+  lineStyle?: string;
+  replacementToken?: string;
+}) => {
   return (
     <>
       <div className="LineBlock-cell">
@@ -25,13 +35,21 @@ export const LineBlock = ({ token, lineWidth, lineStyle, replacementToken }: { t
           <path
             d="M 0,8 L 16,8"
             vectorEffect="non-scaling-stroke"
-            strokeWidth={lineWidth ? `var(${lineWidth})` : "1px"} 
-            stroke-dasharray={lineStyle === "dashed" ? "10,10" : lineStyle === "dotted" ? "3,3" : "0"}
+            strokeWidth={lineWidth ? `var(${lineWidth})` : "1px"}
+            stroke-dasharray={
+              lineStyle === "dashed"
+                ? "10,10"
+                : lineStyle === "dotted"
+                ? "3,3"
+                : "0"
+            }
           />
         </svg>
       </div>
       <code className="DocGrid-code">{token}</code>
-      {replacementToken && <ReplacementToken replacementToken={replacementToken} />}
+      {replacementToken && (
+        <ReplacementToken replacementToken={replacementToken} />
+      )}
     </>
   );
 };

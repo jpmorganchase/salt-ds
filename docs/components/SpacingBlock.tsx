@@ -15,7 +15,9 @@ export const SpacingBlock = ({
         style={{ width: `var(${spacingVar})` }}
       />
       <code className="DocGrid-code">{spacingVar}</code>
-      {replacementToken ? <ReplacementToken replacementToken={replacementToken} /> : (
+      {replacementToken ? (
+        <ReplacementToken replacementToken={replacementToken} />
+      ) : (
         ""
       )}
     </>
