@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { createPortal } from "react-dom";
+import { FloatingPortal } from '@floating-ui/react';
 import {
   SaltProvider,
   ownerDocument,
@@ -96,10 +96,11 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
   }
 
   if (mounted && portalRef.current && children) {
-    return createPortal(
-      <SaltProvider>{children}</SaltProvider>,
-      portalRef.current
-    );
+    return (
+      <FloatingPortal root={container as HTMLElement}>
+        <SaltProvider>{children}</SaltProvider>
+      </FloatingPortal>
+    )
   }
 
   return null;
