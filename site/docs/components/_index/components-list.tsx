@@ -152,7 +152,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Represents a person. It has three variants to account for different types of data: photo, initials and a default version when neither is available.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-avatar--page",
   },
