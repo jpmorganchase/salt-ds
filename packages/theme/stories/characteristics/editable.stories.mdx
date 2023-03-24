@@ -3,11 +3,9 @@ import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
 import { CornerBlock } from "docs/components/CornerBlock";
-import {
-  LineBlock,
-  LineBlockCell,
-  LineBlockCode,
-} from "docs/components/LineBlock";
+import { LineBlock } from "docs/components/LineBlock";
+import { TextBlock } from "docs/components/TextBlock";
+import { BlankBlockCode } from "docs/components/BlankBlock";
 
 <Meta title="Theme/Characteristics/Editable" />
 
@@ -26,22 +24,30 @@ Components that hold mutable data and allow for data entry.
       <CursorBlock cursor="--salt-editable-cursor-hover" />
       <CursorBlock cursor="--salt-editable-cursor-disabled" />
       <CursorBlock cursor="--salt-editable-cursor-readonly" />
-      <LineBlockCell />
-      <LineBlockCode>--salt-editable-borderStyle</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-editable-borderStyle-hover</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-editable-borderStyle-active</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-editable-borderStyle-disabled</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-editable-borderStyle-readonly</LineBlockCode>
-      <LineBlock lineWidth="--salt-editable-borderWidth-active" />
-    </DocGrid>
-    <TextBlock fontStyle="--salt-editable-help-fontStyle" />
-    <DocGrid textExample={true}>
-      <BlankBlockCell />
-      <BlankBlockCode>--salt-editable-help-fontStyle</BlankBlockCode>
+      <LineBlock
+        token="--salt-editable-borderStyle"
+        lineStyle="--salt-editable-borderStyle"
+      />
+      <LineBlock
+        token="--salt-editable-borderStyle-hover"
+        lineStyle="--salt-editable-borderStyle-hover"
+      />
+      <LineBlock
+        token="--salt-editable-borderStyle-active"
+        lineStyle="--salt-editable-borderStyle-active"
+      />
+      <LineBlock
+        token="--salt-editable-borderStyle-disabled"
+        lineStyle="--salt-editable-borderStyle-disabled"
+      />
+      <LineBlock
+        token="--salt-editable-borderStyle-readonly"
+        lineStyle="--salt-editable-borderStyle-readonly"
+      />
+      <LineBlock
+        token="--salt-editable-borderWidth-active"
+        lineWidth="--salt-editable-borderWidth-active"
+      />
     </DocGrid>
     <DocGrid>
       <ColorBlock colorVar="--salt-editable-borderColor" />
@@ -49,6 +55,10 @@ Components that hold mutable data and allow for data entry.
       <ColorBlock colorVar="--salt-editable-borderColor-hover" />
       <ColorBlock colorVar="--salt-editable-borderColor-disabled" />
       <ColorBlock colorVar="--salt-editable-borderColor-readonly" />
+    </DocGrid>
+    <DocGrid textExample={true}>
+      <TextBlock fontStyle="--salt-editable-help-fontStyle" />
+      <BlankBlockCode>--salt-editable-help-fontStyle</BlankBlockCode>
     </DocGrid>
   </Story>
 </Canvas>
