@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "glob": "^8.0.0"
+    "glob": "^9.0.0"
   }
 }
