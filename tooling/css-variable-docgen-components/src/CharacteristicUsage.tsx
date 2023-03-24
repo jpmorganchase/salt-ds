@@ -49,7 +49,7 @@ export function CharacteristicUsage(
   if (Object.keys(characteristicTokenMap).length === 0) {
     return (
       <EmptyBlock>
-        No characteristics used directly for this component.
+        We have not applied any characteristics to this component.
       </EmptyBlock>
     );
   }

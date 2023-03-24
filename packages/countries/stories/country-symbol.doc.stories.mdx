@@ -17,11 +17,11 @@ import {
 
 # Country Symbol
 
-The CountrySymbol component displays an icon that represents the flag of a country or inter-governmental organization. You can use Country Symbols individually or as a complete package.
+The Country Symbol component displays an icon that represents the flag of a country or inter-governmental organization. You can use Country Symbols individually or as a complete package.
 
-We've made the symbols circular, as traditional flag shape can't easily be interchanged with other elements, such as icons or avatars. This also standardizes the shape of each flag, even when they have different proportions.
+We've made the symbols circular as the traditional flag shape can't easily be interchanged with other elements, such as icons or avatars. This also standardizes the shape of each flag, even when they have different proportions.
 
-The CountrySymbols are stylized and representative—so users are more likely to recognize them at smaller sizes, and they maintain their character within the circular form.
+The Country Symbols are stylized and representative—so users are more likely to recognize them at smaller sizes, and they maintain their character within the circular form.
 
 <Canvas>
   <Story id="country-symbols-country-symbol--salt-country-symbol" />
@@ -29,8 +29,10 @@ The CountrySymbols are stylized and representative—so users are more likely to
 
 ## Size
 
-A Country Symbol's default size is equal to the size set by the size-base token. The default size is different in each density.
-To change the size of a Country Symbol you can use the `size` prop which will multiply the base size.
+Our base size for high density (HD) elements is 10px. However, for accessibility and visual design reasons, we don't recommend icon sizes that are smaller than 12px.
+Therefore, our default HD Country Symbol icons start at 12px but they increase size in multiples of 10px—so that 2x size is 20px, 4x is 40px, etc.
+
+To change the size of a Country Symbol, use the `size` prop to multiply the base size.
 
 <Canvas>
   <Story id="country-symbols-country-symbol--country-symbol-multiple-sizes" />
@@ -38,7 +40,7 @@ To change the size of a Country Symbol you can use the `size` prop which will mu
 
 ## Usage
 
-To reduce bundle size, Country Symbols are in a separate package, which you should first install using:
+To reduce bundle size, Country Symbols are in a separate package that you should first install using:
 
 `npm install @salt-ds/countries` or `yarn add @salt-ds/countries`
 
@@ -54,9 +56,9 @@ The following list shows every available Country Symbol alongside its country co
 
 ## Metadata
 
-If you only need to display a single Country Symbol component, we recommend importing it individually.
+If you're displaying one Country Symbol component, we recommend importing only the symbol you need.
 
-However, when you're displaying the symbols in a Country Picker, for example, you would need several. To make it easier to render a list of Country Symbols and their related information you can use:
+However, to display the symbols in a Country Picker, for example, you would need several. To make it easier to render a list of all the symbols and their related information, use:
 
 ```
 import { countryMetaMap } from "@salt-ds/countries"
@@ -65,7 +67,7 @@ import { countryMetaMap } from "@salt-ds/countries"
 and
 
 ```tsx
-<LazyCountrySymbol />
+<LazyCountrySymbol code="code" />
 ```
 
 <Canvas>
@@ -86,7 +88,7 @@ and
 
 ## Accessibility
 
-Decorative country symbols (symbols that repeat the information already expressed by the accompanied text) should be hidden from the screen reader to avoid repetition.
-If you are adding an country symbol for decorative purposes, pass `aria-hidden=”true”` to hide its label from the screen reader.
+If you're using Country Symbol for decorative purposes, and the country is named in accompanying text, you should hide its label from screen readers to avoid repetition.
+To hide this label from screen readers, pass `aria-hidden=”true”`.
 
 <HelpAndSupport />
