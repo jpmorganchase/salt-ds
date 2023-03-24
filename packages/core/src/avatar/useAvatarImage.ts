@@ -1,7 +1,7 @@
 import { ImgHTMLAttributes, useEffect, useState } from "react";
-import { useIsomorphicLayoutEffect } from "../../utils";
+import { useIsomorphicLayoutEffect } from "../utils";
 
-export function useImage({ src }: ImgHTMLAttributes<HTMLImageElement>) {
+export function useAvatarImage({ src }: ImgHTMLAttributes<HTMLImageElement>) {
   const [status, setStatus] = useState<
     "pending" | "loading" | "loaded" | "error"
   >("loading");

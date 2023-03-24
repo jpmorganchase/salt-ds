@@ -1,7 +1,7 @@
 import { UserSolidIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
-import { useImage } from "./internal/useImage";
+import { useAvatarImage } from "./useAvatarImage";
 import { makePrefixer } from "../utils";
 
 import "./Avatar.css";
@@ -53,6 +53,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
     fallbackIcon = <UserSolidIcon />,
+    role = name ? "img" : undefined,
     ...rest
   },
   ref
@@ -64,10 +65,10 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     "--saltAvatar-size-multiplier": `${size}`,
   };
 
-  const status = useImage({ src });
+  const status = useAvatarImage({ src });
   const hasImgNotFailing = status === "loaded";
   if (hasImgNotFailing) {
-    children = <img alt={name} src={src} />;
+    children = <img alt="" src={src} />;
   } else if (childrenProp != null) {
     children = childrenProp;
   }
@@ -82,6 +83,9 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
         { [withBaseName("withImage")]: hasImgNotFailing },
         className
       )}
+      role={role}
+      aria-label={name}
+      aria-hidden={name ? undefined : true}
       {...rest}
     >
       {children || avatarInitials || fallbackIcon}
