@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useEffect, useState } from "react";
+import { CSSProperties } from "react";
 import { Avatar, FlowLayout, Label, StackLayout } from "@salt-ds/core";
 import { UserGroupSolidIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -62,21 +62,5 @@ WithCustomSvg.args = {
 };
 
 export const ImageFallback: ComponentStory<typeof Avatar> = () => {
-  const src = "bad_url";
-  const alt = "profile";
-  const initials = "PP";
-  const [children, setChildren] = useState<ReactNode>(alt);
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = src;
-    img.onerror = () => {
-      setChildren(initials);
-    };
-    img.onload = () => {
-      setChildren(<img src={src} alt={alt} />);
-    };
-  }, [src, alt]);
-
-  return <Avatar size={3}>{children}</Avatar>;
+  return <Avatar size={3} src="bad_url" name="Peter Piper" />;
 };

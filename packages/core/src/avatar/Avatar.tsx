@@ -1,7 +1,7 @@
 import { UserSolidIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
-import { useLoaded } from "./internal/useLoaded";
+import { useImage } from "./internal/useImage";
 import { makePrefixer } from "../utils";
 
 import "./Avatar.css";
@@ -64,8 +64,8 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     "--saltAvatar-size-multiplier": `${size}`,
   };
 
-  const hasImgNotFailing = useLoaded({ src }) !== "error" && src;
-
+  const status = useImage({ src });
+  const hasImgNotFailing = status === "loaded";
   if (hasImgNotFailing) {
     children = <img alt={name} src={src} />;
   } else if (childrenProp != null) {
