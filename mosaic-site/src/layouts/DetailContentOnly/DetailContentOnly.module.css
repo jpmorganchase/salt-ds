@@ -1,0 +1,7 @@
+.base,
+.base main,
+.layoutFullWidth {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
