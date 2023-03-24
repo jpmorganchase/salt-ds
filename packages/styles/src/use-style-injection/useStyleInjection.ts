@@ -4,28 +4,48 @@ import * as React from "react";
 const maybeUseInsertionEffect: typeof React.useLayoutEffect =
   (React as any)[`${"useInsertionEffect"}${""}`] ?? React.useLayoutEffect;
 
-const isInserted = new Set<string>();
+type WindowLike = Window & typeof globalThis;
+
 export interface UseComponentCssInjection {
   id: string;
   css: string;
-  window: Window & typeof globalThis;
+  window: WindowLike;
 }
+
+const windowSheetsMap = new WeakMap<
+  WindowLike,
+  Map<string, HTMLStyleElement>
+>();
 export function useComponentCssInjection({
   id,
   css,
   window: targetWindow,
 }: UseComponentCssInjection): void {
   maybeUseInsertionEffect(() => {
-    if (!isInserted.has(id)) {
-      const style = targetWindow.document.createElement("style");
-      style.setAttribute("data-meta", id);
+    let sheetsMap =
+      windowSheetsMap.get(targetWindow) ?? new Map<string, HTMLStyleElement>();
+    let style = sheetsMap.get(id);
+
+    if (!style) {
+      style = targetWindow.document.createElement("style");
+      style.setAttribute("type", "text/css");
+      style.setAttribute("data-salt-style", id);
       style.textContent = css;
+
       targetWindow.document.head.appendChild(style);
+    } else {
+      style.textContent = css;
     }
+    sheetsMap.set(id, style);
+    windowSheetsMap.set(targetWindow, sheetsMap);
+
     return () => {
-      targetWindow.document.head
-        .querySelector(`style[data-meta="${id}"]`)
-        ?.remove();
+      const sheetsMap = windowSheetsMap.get(targetWindow);
+      const style = sheetsMap?.get(id);
+      if (style) {
+        targetWindow.document.head.removeChild(style);
+        sheetsMap?.delete(id);
+      }
     };
   });
 }
