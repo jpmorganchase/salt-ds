@@ -9,6 +9,7 @@ const mosaicConfig = require("@jpmorganchase/mosaic-standard-generator/dist/fs.c
  * sources: <...source definitions>
  */
 module.exports = deepmerge(mosaicConfig, {
+  deployment: { mode: "snapshot-file", platform: "vercel" },
   sources: [
     {
       modulePath: "@jpmorganchase/mosaic-source-git-repo",

@@ -1,8 +1,15 @@
 import { ChangeEventHandler } from "react";
 import { RadioButton, RadioButtonGroup } from "../../../radio-button";
+import { composeStories } from "@storybook/testing-react";
+import * as radioButtonStories from "@stories/radio-button/radio-button.stories";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+
+const composedStories = composeStories(radioButtonStories);
 
 describe("GIVEN a RadioButtonGroup component", () => {
-  describe("WHEN three radio buttons are passed as a prop", () => {
+  checkAccessibility(composedStories);
+
+  describe("WHEN three radio buttons are provided as children", () => {
     const radios = [
       { value: "button one", label: "button one", disabled: false },
       { value: "button two", label: "button two", disabled: false },
@@ -17,25 +24,33 @@ describe("GIVEN a RadioButtonGroup component", () => {
       cy.mount(
         <RadioButtonGroup
           data-testid="radio-button-group-test"
-          radios={radios}
           value="button one"
-        />
+        >
+          {radios.map((radio) => (
+            <RadioButton {...radio} />
+          ))}
+        </RadioButtonGroup>
       );
       cy.findAllByRole("radio").should("have.length", 3);
     });
   });
 
-  describe("WHEN rendered in horizontal (row) layout", () => {
+  describe("WHEN rendered in horizontal layout", () => {
     it("THEN should have the horizontal class name", () => {
       cy.mount(
-        <RadioButtonGroup data-testid="radio-button-group-test" row>
+        <RadioButtonGroup
+          data-testid="radio-button-group-test"
+          direction={"horizontal"}
+        >
           <RadioButton label="Spot" value="spot" />
           <RadioButton label="Forward" value="forward" />
         </RadioButtonGroup>
       );
-      cy.findByTestId("radio-button-group-test").should(
-        "have.class",
-        "saltFormGroup-row"
+      cy.get(".saltRadioButtonGroup-horizontal").should("exist");
+      cy.get(".saltRadioButtonGroup-horizontal").should(
+        "have.css",
+        "flex-direction",
+        "row"
       );
     });
   });
@@ -48,7 +63,6 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children as funct
         <RadioButtonGroup
           aria-label="Uncontrolled Example"
           defaultValue="forward"
-          legend="Uncontrolled Group"
           name="fx"
         >
           <RadioButton key="spot" label="Spot" value="spot" />

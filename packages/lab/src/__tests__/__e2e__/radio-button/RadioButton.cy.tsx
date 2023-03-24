@@ -1,14 +1,6 @@
 import { RadioButton } from "../../../radio-button";
 
 describe("GIVEN a RadioButton component", () => {
-  describe("WHEN RadioButton is given a default checked", () => {
-    it("SHOULD render with the specified defaultChecked", () => {
-      cy.mount(<RadioButton defaultChecked />);
-
-      cy.findByRole("radio").should("be.checked");
-    });
-  });
-
   describe("WHEN RadioButton is given a value", () => {
     it("SHOULD render with the specified value", () => {
       cy.mount(<RadioButton value="some value" />);

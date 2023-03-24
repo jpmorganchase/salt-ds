@@ -74,17 +74,24 @@
   --salt-palette-error-background-emphasize: var(--salt-color-red-10);
   --salt-palette-error-background-selected: var(--salt-color-red-20);
   --salt-palette-error-border: var(--salt-color-red-500);
+  --salt-palette-error-border-disabled: var(--salt-color-red-500-fade-border);
   --salt-palette-error-foreground: var(--salt-color-red-500);
+  --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
   --salt-palette-info-background-emphasize: var(--salt-color-blue-10);
   --salt-palette-info-border: var(--salt-color-blue-500);
+  --salt-palette-info-border-disabled: var(--salt-color-blue-500-fade-border);
   --salt-palette-info-foreground: var(--salt-color-blue-500);
+  --salt-palette-info-foreground-disabled: var(--salt-color-blue-500-fade-foreground);
   --salt-palette-success-background-emphasize: var(--salt-color-green-10);
   --salt-palette-success-background-selected: var(--salt-color-green-20);
   --salt-palette-success-border: var(--salt-color-green-500);
+  --salt-palette-success-border-disabled: var(--salt-color-green-500-fade-border);
   --salt-palette-success-foreground: var(--salt-color-green-500);
+  --salt-palette-success-foreground-disabled: var(--salt-color-green-500-fade-foreground);
   --salt-palette-warning-background-emphasize: var(--salt-color-orange-10);
   --salt-palette-warning-background-selected: var(--salt-color-orange-20);
   --salt-palette-warning-border: var(--salt-color-orange-700);
+  --salt-palette-warning-border-disabled: var(--salt-color-orange-700-fade-border);
   --salt-palette-warning-foreground: var(--salt-color-orange-700);
 
   /* Navigate */
@@ -106,6 +113,7 @@
 
   /* Negative */
   --salt-palette-negative-foreground: var(--salt-color-red-700);
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-700-fade-foreground);
 
   /* Neutral */
   --salt-palette-neutral-primary-background: var(--salt-color-white);
@@ -134,6 +142,7 @@
 
   /* Positive */
   --salt-palette-positive-foreground: var(--salt-color-green-700);
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-700-fade-foreground);
 
   /* Track */
   --salt-palette-track-background: var(--salt-color-gray-60);
@@ -203,21 +212,27 @@
   --salt-palette-error-background-emphasize: var(--salt-color-red-900);
   --salt-palette-error-background-selected: var(--salt-color-red-900);
   --salt-palette-error-border: var(--salt-color-red-500);
+  --salt-palette-error-border-disabled: var(--salt-color-red-500-fade-border);
   --salt-palette-error-foreground: var(--salt-color-red-500);
+  --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
   --salt-palette-info-background-emphasize: var(--salt-color-blue-900);
   --salt-palette-info-border: var(--salt-color-blue-500);
+  --salt-palette-info-border-disabled: var(--salt-color-blue-500-fade-border);
   --salt-palette-info-foreground: var(--salt-color-blue-500);
+  --salt-palette-info-foreground-disabled: var(--salt-color-blue-500-fade-foreground);
   --salt-palette-success-background-emphasize: var(--salt-color-green-900);
   --salt-palette-success-background-selected: var(--salt-color-green-900);
   --salt-palette-success-border: var(--salt-color-green-400);
+  --salt-palette-success-border-disabled: var(--salt-color-green-400-fade-border);
   --salt-palette-success-foreground: var(--salt-color-green-400);
+  --salt-palette-success-foreground-disabled: var(--salt-color-green-400-fade-foreground);
   --salt-palette-warning-background-emphasize: var(--salt-color-orange-900);
   --salt-palette-warning-background-selected: var(--salt-color-orange-900);
   --salt-palette-warning-border: var(--salt-color-orange-500);
+  --salt-palette-warning-border-disabled: var(--salt-color-orange-500-fade-border);
   --salt-palette-warning-foreground: var(--salt-color-orange-500);
 
   /* Navigate */
-
   --salt-palette-navigate-primary-background: transparent;
   --salt-palette-navigate-primary-background-active: transparent;
   --salt-palette-navigate-primary-background-hover: var(--salt-color-gray-700);
@@ -236,6 +251,7 @@
 
   /* Negative */
   --salt-palette-negative-foreground: var(--salt-color-red-300);
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-300-fade-foreground);
 
   /* Neutral */
   --salt-palette-neutral-primary-background: var(--salt-color-gray-800);
@@ -264,6 +280,7 @@
 
   /* Positive */
   --salt-palette-positive-foreground: var(--salt-color-green-300);
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-300-fade-foreground);
 
   /* Track */
   --salt-palette-track-background: var(--salt-color-gray-300);

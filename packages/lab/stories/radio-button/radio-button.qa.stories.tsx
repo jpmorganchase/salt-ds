@@ -11,43 +11,37 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof RadioButton>;
 
-export const AllExamplesGrid: Story<
-  QAContainerProps & { className?: string }
-> = (props) => {
-  const { className } = props;
+const RadioButtonGroups = () => {
+  return (
+    <>
+      <RadioButtonGroup defaultValue="option2">
+        <RadioButton key="option1" label="Radio Option 1" value="option1" />
+        <RadioButton key="option2" label="Radio Option 2" value="option2" />
+        <RadioButton
+          disabled
+          key="option3"
+          label="Radio Option 3 (disabled)"
+          value="option3"
+        />
+      </RadioButtonGroup>
+      <RadioButtonGroup direction={"horizontal"} defaultValue="option2">
+        <RadioButton key="option1" label="Radio Option 1" value="option1" />
+        <RadioButton key="option2" label="Radio Option 2" value="option2" />
+        <RadioButton
+          disabled
+          key="option3"
+          label="Radio Option 3 (disabled)"
+          value="option3"
+        />
+      </RadioButtonGroup>
+    </>
+  );
+};
+
+export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={2} itemPadding={6} itemWidthAuto {...props}>
-      <RadioButtonGroup
-        className={className}
-        aria-label="Uncontrolled Example"
-        defaultValue="forward"
-        legend="Example"
-      >
-        <RadioButton key="spot" label="Spot" value="spot" />
-        <RadioButton key="forward" label="Forward" value="forward" />
-        <RadioButton
-          disabled
-          key="option"
-          label="Option (disabled)"
-          value="option"
-        />
-      </RadioButtonGroup>
-      <RadioButtonGroup
-        className={className}
-        defaultValue="forward"
-        legend="Example"
-        name="fx"
-        row
-      >
-        <RadioButton key="spot" label="Spot" value="spot" />
-        <RadioButton key="forward" label="Forward" value="forward" />
-        <RadioButton
-          disabled
-          key="option"
-          label="Option (disabled)"
-          value="option"
-        />
-      </RadioButtonGroup>
+      <RadioButtonGroups />
     </QAContainer>
   );
 };
