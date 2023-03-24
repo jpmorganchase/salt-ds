@@ -72,11 +72,11 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     children = childrenProp;
   }
 
-  const avatarInitials = nameToInitials(name) && (
-    <div role="img" aria-label={name}>
-      {nameToInitials(name)}
-    </div>
-  );
+  const avatarInitials = nameToInitials(name);
+  const initialsProps = avatarInitials ? {
+    role: 'img',
+    'aria-label': nameToInitials(name)
+  } : {}
   return (
     <div
       ref={ref}
@@ -86,6 +86,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
         { [withBaseName("withImage")]: hasImgNotFailing },
         className
       )}
+      {...initialsProps}
       {...rest}
     >
       {children || avatarInitials || fallbackIcon}
