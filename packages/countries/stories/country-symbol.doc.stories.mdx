@@ -8,7 +8,7 @@ import {
 } from "css-variable-docgen-components";
 
 <Meta
-  title="Documentation/Country Symbols/CountrySymbol"
+  title="Documentation/Country Symbols/Country Symbol"
   component={CountrySymbol}
   parameters={{
     viewMode: "docs",
@@ -17,11 +17,11 @@ import {
 
 # Country Symbol
 
-The CountrySymbol component enables the display of an icon representative of a country or inter-governmental organisations flag. CountrySymbols can be used singularly or as a complete package
+The CountrySymbol component displays an icon that represents the flag of a country or inter-governmental organization. You can use Country Symbols individually or as a complete package.
 
-The components are circular, as traditional flags cannot be easily interchanged with other primitive elements, such as icons or avatars. This also standardises the shape of each flag which are not all the same ratio.
+We've made the symbols circular, as traditional flag shape can't easily be interchanged with other elements, such as icons or avatars. This also standardizes the shape of each flag, even when they have different proportions.
 
-The CountrySymbols are stylised and representative to allow better recognition at smaller sizes and to maintain their character within the circular form.
+The CountrySymbols are stylized and representative—so users are more likely to recognize them at smaller sizes, and they maintain their character within the circular form.
 
 <Canvas>
   <Story id="country-symbols-country-symbol--salt-country-symbol" />
@@ -29,8 +29,8 @@ The CountrySymbols are stylised and representative to allow better recognition a
 
 ## Size
 
-Each CountrySymbol has a default size across all four densities, equal to the size foundation size-base; 20px (HD), 28px (MD), 36px (LD), and 44px (TD).
-The size of each CountrySymbol can be changed in multiples of the base size.
+A Country Symbol's default size is equal to the size set by the size-base token. The default size is different in each density.
+To change the size of a Country Symbol you can use the `size` prop which will multiply the base size.
 
 <Canvas>
   <Story id="country-symbols-country-symbol--country-symbol-multiple-sizes" />
@@ -38,15 +38,15 @@ The size of each CountrySymbol can be changed in multiples of the base size.
 
 ## Usage
 
-To reduce bundle size the CountrySymbol have a separate package which must first be installed using:
+To reduce bundle size, Country Symbols are in a separate package, which you should first install using:
 
 `npm install @salt-ds/countries` or `yarn add @salt-ds/countries`
 
-Each CountrySymbol component can then be imported as follows:
+You can then import each Country Symbol component as follows:
 
 `import { GB } from "@salt-ds/countries";`
 
-The following list shows all the available CountrySymbols alongside their component name and country code:
+The following list shows every available Country Symbol alongside its country code:
 
 <Canvas>
   <Story id="country-symbols-country-symbol--all-country-symbols-with-search" />
@@ -54,12 +54,18 @@ The following list shows all the available CountrySymbols alongside their compon
 
 ## Metadata
 
-In some applications you will only need a single CountrySymbol component and we recommend importing this individually (see above). However for other applications e.g. a country picker you would need several.
+If you only need to display a single Country Symbol component, we recommend importing it individually.
 
-For convenience we export a mapping to simplify rendering a list of CountrySymbols and relevant information (see story code):
+However, when you're displaying the symbols in a Country Picker, for example, you would need several. To make it easier to render a list of Country Symbols and their related information you can use:
 
 ```
-import { countrySymbolMap } from "@salt-ds/countries"
+import { countryMetaMap } from "@salt-ds/countries"
+```
+
+and
+
+```tsx
+<LazyCountrySymbol />
 ```
 
 <Canvas>
@@ -74,7 +80,7 @@ import { countrySymbolMap } from "@salt-ds/countries"
 
 <CSSClassTable of={CountrySymbol} />
 
-## Characteristics Used
+## Characteristics used
 
 <CharacteristicUsage of={CountrySymbol} />
 

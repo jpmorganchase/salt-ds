@@ -64,7 +64,7 @@ export const AllCountrySymbolsWithSearch: ComponentStory<
   return (
     <StackLayout separators>
       <FormField
-        label={"search country symbols"}
+        label={"Search country symbols"}
         style={{ marginBlock: "1rem", maxWidth: "300px" }}
       >
         <Input value={inputText} onChange={(_, value) => setInputText(value)} />
