@@ -5191,14 +5191,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19":
-  version: 0.1.0-beta.26
-  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.26"
-  checksum: d9c316486c50dc1ce40c6cb85e6685716c2e440e0776a8565f9edd9b3ef757d17e79db8d75ece2ff2fbca437cdb2245790f3d0bb77f5b2c3fa6477233f2f8fbc
-  languageName: node
-  linkType: hard
-
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.27":
+"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19, @jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.27":
   version: 0.1.0-beta.27
   resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.27"
   checksum: b983e8b0d14526264df6b90445016fd844556240ce05d2cd1b0c49d26f65e2499c7d4835d4b82b0fd567854028d0e3da924b2a87c8ed144ecc8dc1923722d78a
@@ -29546,9 +29539,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:2.79.1":
-  version: 2.79.1
-  resolution: "rollup@npm:2.79.1"
+"rollup@npm:3.20.2":
+  version: 3.20.2
+  resolution: "rollup@npm:3.20.2"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -29556,7 +29549,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 6a2bf167b3587d4df709b37d149ad0300692cc5deb510f89ac7bdc77c8738c9546ae3de9322b0968e1ed2b0e984571f5f55aae28fa7de4cfcb1bc5402a4e2be6
+  checksum: 34b0932839b7c2a5d1742fb21ce95a47e0b49a0849f4abee2dccf25833187aa7babb898ca90d4fc761cffa4102b9ed0ac6ad7f6f6b96c8b8e2d67305abc5da65
   languageName: node
   linkType: hard
 
