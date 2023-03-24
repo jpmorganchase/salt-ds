@@ -20,7 +20,7 @@ const HomepageHeader = () => {
           {splitTagline.map((tagline, index) => (
             <p key={index}>{tagline}</p>
           ))}
-          <Link href="./getting-started" className={styles.heroLink}>
+          <Link href="./getting-started/index" className={styles.heroLink}>
             Start using Salt
           </Link>
         </div>
@@ -57,7 +57,7 @@ const cards: CardProps[] = [
         packages.
       </p>
     ),
-    url: "./getting-started",
+    url: "./getting-started/index",
     footerText: "Read the guides",
     keylineColor: "var(--site-tertiary-accent-purple)",
   },
@@ -71,7 +71,7 @@ const cards: CardProps[] = [
         use cases.
       </p>
     ),
-    url: "./components",
+    url: "./components/index",
     footerText: "Explore components",
     keylineColor: "var(--site-tertiary-accent-teal)",
   },
@@ -85,7 +85,7 @@ const cards: CardProps[] = [
         email.
       </p>
     ),
-    url: "./support-and-contributions",
+    url: "./support-and-contributions/index",
     footerText: "Contact us",
     keylineColor: "var(--site-tertiary-accent-orange)",
   },
@@ -158,8 +158,8 @@ const homePageInfo = [
         <p>
           We’d love to share this journey with you, with your input and
           contributions informing and shaping our next steps.{" "}
-          <Link href="./support-and-contributions">Get in touch</Link> to share
-          your feedback.
+          <Link href="./support-and-contributions/index">Get in touch</Link> to
+          share your feedback.
         </p>
       </>
     ),
