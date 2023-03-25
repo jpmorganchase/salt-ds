@@ -11,7 +11,7 @@ const KR = forwardRef<SVGSVGElement, KRProps>(function KR(props: KRProps, ref) {
   return (
     <CountrySymbol
       data-testid="KR"
-      aria-label="Korea (Republic of)"
+      aria-label="Korea (the Republic of)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

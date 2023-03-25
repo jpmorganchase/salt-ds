@@ -12,7 +12,6 @@
   ],
   "scripts": {
     "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
-    "generateCountryAll": "yarn node ./scripts/generateCountryAll.mjs",
     "clean": "rimraf ./src/components"
   },
   "peerDependencies": {

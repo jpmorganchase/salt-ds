@@ -70,8 +70,14 @@ and
 <LazyCountrySymbol code="code" />
 ```
 
+## Lazy Country Symbol
+
+The Lazy Country Symbol component is a wrapper around the Country Symbol component that loads a Country Symbol based on its country code.
+This component uses [React.lazy](https://react.dev/reference/react/lazy) to load the country symbol.
+This means you can wrap it or any of its parents into a `<Suspense>` boundary to specify the loading fallback.
+
 <Canvas>
-  <Story id="country-symbols-country-symbol--all-country-symbols" />
+  <Story id="country-symbols-lazy-country-symbol--lazy-country-symbol" />
 </Canvas>
 
 ### Props

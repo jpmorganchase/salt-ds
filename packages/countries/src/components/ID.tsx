@@ -11,7 +11,7 @@ const ID = forwardRef<SVGSVGElement, IDProps>(function ID(props: IDProps, ref) {
   return (
     <CountrySymbol
       data-testid="ID"
-      aria-label="Indonisia"
+      aria-label="Indonesia"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

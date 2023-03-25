@@ -11,7 +11,7 @@ export const countryMetaMap = {
   },
   AF: {
     countryCode: "AF",
-    countryName: "Afganistan",
+    countryName: "Afghanistan",
   },
   AG: {
     countryCode: "AG",
@@ -311,7 +311,7 @@ export const countryMetaMap = {
   },
   GB: {
     countryCode: "GB",
-    countryName: "Great Britain",
+    countryName: "United Kingdom of Great Britain and Northern Ireland (the)",
   },
   "GB-ENG": {
     countryCode: "GB-ENG",
@@ -423,7 +423,7 @@ export const countryMetaMap = {
   },
   ID: {
     countryCode: "ID",
-    countryName: "Indonisia",
+    countryName: "Indonesia",
   },
   IE: {
     countryCode: "IE",
@@ -503,11 +503,11 @@ export const countryMetaMap = {
   },
   KP: {
     countryCode: "KP",
-    countryName: "Korea (Democratic People's Republic of)",
+    countryName: "Korea (the Democratic People's Republic of)",
   },
   KR: {
     countryCode: "KR",
-    countryName: "Korea (Republic of)",
+    countryName: "Korea (the Republic of)",
   },
   KW: {
     countryCode: "KW",
@@ -947,7 +947,7 @@ export const countryMetaMap = {
   },
   UM: {
     countryCode: "UM",
-    countryName: "United States Minor  Outlying Islands (the)",
+    countryName: "United States Minor Outlying Islands (the)",
   },
   UN: {
     countryCode: "UN",
@@ -1015,7 +1015,7 @@ export const countryMetaMap = {
   },
   ZA: {
     countryCode: "ZA",
-    countryName: "south Africa",
+    countryName: "South Africa",
   },
   ZM: {
     countryCode: "ZM",

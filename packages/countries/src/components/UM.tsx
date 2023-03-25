@@ -11,7 +11,7 @@ const UM = forwardRef<SVGSVGElement, UMProps>(function UM(props: UMProps, ref) {
   return (
     <CountrySymbol
       data-testid="UM"
-      aria-label="United States Minor  Outlying Islands (the)"
+      aria-label="United States Minor Outlying Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

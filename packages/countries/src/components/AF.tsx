@@ -11,7 +11,7 @@ const AF = forwardRef<SVGSVGElement, AFProps>(function AF(props: AFProps, ref) {
   return (
     <CountrySymbol
       data-testid="AF"
-      aria-label="Afganistan"
+      aria-label="Afghanistan"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

@@ -34,7 +34,7 @@ export const LazyCountrySymbol: ComponentStory<
   typeof LazyCountrySymbolComponent
 > = (args) => {
   return (
-    <Suspense>
+    <Suspense fallback={"Loading..."}>
       <LazyCountrySymbolComponent {...args} />
     </Suspense>
   );
