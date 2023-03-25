@@ -26,10 +26,14 @@ export const CheckboxIcon = ({
   error,
   indeterminate,
 }: CheckboxIconProps): JSX.Element => {
-  const className = clsx(withBaseName(), classNameProp, {
-    [withBaseName("disabled")]: disabled,
-    [withBaseName("error")]: error,
-  });
+  const className = clsx(
+    withBaseName(),
+    {
+      [withBaseName("disabled")]: disabled,
+      [withBaseName("error")]: error,
+    },
+    classNameProp
+  );
 
   // A different CheckboxCheckedIcon is rendered if the density is set to high
   const density = useDensity();

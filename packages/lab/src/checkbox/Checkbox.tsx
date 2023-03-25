@@ -1,33 +1,28 @@
 import { clsx } from "clsx";
 import {
-  ChangeEvent,
+  ChangeEventHandler,
   FocusEventHandler,
   forwardRef,
   InputHTMLAttributes,
   ReactNode,
-  useContext,
 } from "react";
-import {
-  createChainedFunction,
-  makePrefixer,
-  useControlled,
-} from "@salt-ds/core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./Checkbox.css";
-import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
+import { useCheckboxGroup } from "./internal/useCheckboxGroup";
 
 const withBaseName = makePrefixer("saltCheckbox");
 
-export interface CheckboxProps {
+export interface CheckboxProps
+  extends Omit<
+    InputHTMLAttributes<HTMLLabelElement>,
+    "onChange" | "onBlur" | "onFocus"
+  > {
   /**
    * If `true`, the checkbox will be checked.
    */
   checked?: boolean;
-  /**
-   * The className(s) applied to the component.
-   */
-  className?: string;
   /**
    * Whether the checkbox component is checked by default
    * This will be disregarded if checked is already set.
@@ -66,7 +61,7 @@ export interface CheckboxProps {
   /**
    * Callback when checked state is changed.
    */
-  onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   /**
    * Callback when checkbox gains focus.
    */
@@ -82,7 +77,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     {
       checked: checkedProp,
       className,
-      defaultChecked: defaultCheckedProp,
+      defaultChecked,
       disabled,
       error,
       indeterminate,
@@ -97,9 +92,9 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     },
     ref
   ) {
-    const groupContext = useContext(CheckboxGroupContext);
+    const checkboxGroup = useCheckboxGroup();
 
-    const handleInternalChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       // Workaround for https://github.com/facebook/react/issues/9023
       if (event.nativeEvent.defaultPrevented) {
         return;
@@ -107,37 +102,32 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
 
       const value = event.target.checked;
       setChecked(value);
-      onChange?.(event, value);
+      onChange?.(event);
+      checkboxGroup.onChange?.(event);
     };
 
-    const handleChange = createChainedFunction(
-      handleInternalChange,
-      groupContext?.onChange
-    );
-
-    let isChecked = checkedProp;
-    let defaultChecked = defaultCheckedProp;
-
-    if (groupContext) {
-      if (typeof isChecked === "undefined" && typeof value === "string") {
-        isChecked = groupContext?.checkedValues?.includes(value);
-      }
-      defaultChecked = undefined;
-    }
+    const checkboxGroupChecked =
+      checkedProp == null && value != null
+        ? checkboxGroup.checkedValues?.includes(value)
+        : checkedProp;
 
     const [checked, setChecked] = useControlled({
-      controlled: isChecked,
-      default: Boolean(defaultCheckedProp),
+      controlled: checkboxGroupChecked,
+      default: Boolean(defaultChecked),
       name: "Checkbox",
       state: "checked",
     });
 
     return (
       <label
-        className={clsx(withBaseName(), className, {
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("error")]: error,
-        })}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("error")]: error,
+          },
+          className
+        )}
         ref={ref}
         {...rest}
       >

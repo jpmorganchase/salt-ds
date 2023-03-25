@@ -2,17 +2,16 @@ import { clsx } from "clsx";
 import {
   ChangeEvent,
   ChangeEventHandler,
+  ComponentPropsWithoutRef,
   forwardRef,
-  HTMLAttributes,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 import "./CheckboxGroup.css";
 
-export type CheckboxGroupDirectionProps = "horizontal" | "vertical";
-
-export interface CheckboxGroupProps extends HTMLAttributes<HTMLDivElement> {
+export interface CheckboxGroupProps
+  extends Omit<ComponentPropsWithoutRef<"fieldset">, "onChange"> {
   /**
    * The current checked options.
    */
@@ -24,7 +23,7 @@ export interface CheckboxGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Display group of elements in a compact row.
    */
-  direction?: CheckboxGroupDirectionProps;
+  direction?: "horizontal" | "vertical";
   /**
    * The name used to reference the value of the control.
    */
@@ -80,19 +79,23 @@ export const CheckboxGroup = forwardRef<
   };
 
   return (
-    <CheckboxGroupContext.Provider
-      value={{ name, onChange: handleChange, checkedValues }}
+    <fieldset
+      className={clsx(
+        withBaseName(),
+        withBaseName(direction),
+        {
+          [withBaseName("noWrap")]: !wrap,
+        },
+        className
+      )}
+      ref={ref}
+      {...other}
     >
-      <fieldset className={clsx(withBaseName(), className)} ref={ref}>
-        <div
-          className={clsx(withBaseName(direction), {
-            [withBaseName("noWrap")]: !wrap,
-          })}
-          {...other}
-        >
-          {children}
-        </div>
-      </fieldset>
-    </CheckboxGroupContext.Provider>
+      <CheckboxGroupContext.Provider
+        value={{ name, onChange: handleChange, checkedValues }}
+      >
+        {children}
+      </CheckboxGroupContext.Provider>
+    </fieldset>
   );
 });
