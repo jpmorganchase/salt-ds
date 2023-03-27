@@ -7,6 +7,7 @@ import { deleteSync } from "del";
 import sass from "sass";
 import postcss from "postcss";
 import cssnano from "cssnano";
+import url from "postcss-url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
@@ -49,6 +50,10 @@ function buildStyles(entry) {
     cssnano({
       preset: ["default", { normalizeWhitespace: false }],
     }),
+    url({
+      url: "inline",
+      basePath: path.resolve(__dirname, "../fonts"),
+    }),
   ])
     .process(result.css, { from: undefined })
     .then((optimizedResult) => {
@@ -61,11 +66,6 @@ function buildStyles(entry) {
       fs.copyFileSync(
         path.resolve(__dirname, "../package.json"),
         path.join(outputFolder, "package.json")
-      );
-
-      fs.copySync(
-        path.resolve(__dirname, "../fonts"),
-        path.join(outputFolder, "fonts")
       );
     });
 }
