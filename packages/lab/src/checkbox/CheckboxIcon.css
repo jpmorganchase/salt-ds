@@ -48,7 +48,7 @@
 .saltCheckbox-error.saltCheckbox-disabled .saltCheckboxIcon,
 .saltCheckbox-error.saltCheckbox-disabled:hover .saltCheckboxIcon {
   stroke: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-foreground));
-  opacity: var(--salt-opacity-3);
+  opacity: var(--salt-palette-opacity-background);
   background: var(--salt-selectable-background-disabled);
 }
 
