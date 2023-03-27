@@ -47,9 +47,8 @@
 /* Styles applied if `error={true}` and `disabled={true}` */
 .saltCheckbox-error.saltCheckbox-disabled .saltCheckboxIcon,
 .saltCheckbox-error.saltCheckbox-disabled:hover .saltCheckboxIcon {
-  stroke: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-foreground));
-  opacity: var(--salt-palette-opacity-background);
-  background: var(--salt-selectable-background-disabled);
+  stroke: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor-disabled));
+  background: var(--salt-selectable-background);
 }
 
 /* Styles applied if `checked={true}` */
@@ -68,9 +67,9 @@
   fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor));
 }
 
-/* Styles applied if `error={true}` */
-.saltCheckbox-error.saltCheckbox-disabled .saltCheckboxIcon-checked {
-  opacity: var(--salt-palette-opacity-background);
+/* Styles applied if `checked={true}`,`error={true}` and `disabled={true}` */
+.saltCheckboxIcon-checked.saltCheckboxIcon-error.saltCheckboxIcon-disabled {
+  fill: var(--saltCheckbox-icon-fill-disabled, var(--salt-status-error-borderColor-disabled));
 }
 
 /* Styles applied to box */
