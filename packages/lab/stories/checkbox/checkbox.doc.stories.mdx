@@ -25,7 +25,7 @@ A Checkbox allows the user to turn a specific value on or off. The value can be 
 
 ##### Don't use when
 
-- The checkbox displays a mutually exclusive choice between two or more values, in that case a `RadioButton` component is more appropriate.
+- The checkbox displays a mutually exclusive choice between two or more values, in that case a `Radio Button` component is more appropriate.
 
 ## Features
 
@@ -33,7 +33,7 @@ A Checkbox allows the user to turn a specific value on or off. The value can be 
 
 Checkbox contains two variants `regular` and `error`. A Checkbox can be in one of three states, `unchecked`, `checked` or `indeterminate`
 
-### Disabled Checkbox
+### Disabled
 
 A Checkbox with the prop `disabled="true"` will suppress all functionality along with disabling the Checkbox.
 
@@ -43,15 +43,15 @@ A Checkbox with the prop `disabled="true"` will suppress all functionality along
 
 ## Checkbox Group
 
-A Checkbox group allow selection of one or more values from a given set of choices. They can be aligned horizontally or vertically.
+A checkbox group allow selection of one or more values from a given set of choices. They can be aligned horizontally or vertically.
 
-## Vertical Group
+### Vertical group
 
 <Canvas>
   <Story id="lab-checkbox--uncontrolled-group" />
 </Canvas>
 
-## Horizontal Group
+### Horizontal group
 
 The checkbox group layout can be set to horizontal by setting the `direction` prop to "horizontal"
 
@@ -59,7 +59,7 @@ The checkbox group layout can be set to horizontal by setting the `direction` pr
   <Story id="lab-checkbox--horizontal-group" />
 </Canvas>
 
-#### Wrapping
+### Wrapping
 
 By default, the horizontal checkboxes will wrap onto the next line if the group doesn't fit within the container. There is the option to force the checkboxes to remain inline and wrap the label text instead by setting `wrap` prop to `false`.
 
@@ -75,7 +75,7 @@ By default, the horizontal checkboxes will wrap onto the next line if the group 
   <Story id="lab-checkbox--no-wrap-group" />
 </Canvas>
 
-## Controlled Group
+### Controlled
 
 A controlled checkbox group requires events to trigger the state change. The application must track state and update the props manually. This is useful for when logic or validation needs to be applied or a request should happen when updating a form.
 
@@ -89,15 +89,23 @@ A controlled checkbox group requires events to trigger the state change. The app
   <Story id="lab-checkbox--long-text-group" />
 </Canvas>
 
-## API
+## Configuring Checkbox
+
+### API
 
 ```
-import { Checkbox } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
 ```
 
 ## Props
 
+### Checkbox
+
 <ArgsTable of={Checkbox} />
+
+### Checkbox Group
+
+<ArgsTable of={CheckboxGroup} />
 
 ## Related components
 
@@ -119,11 +127,15 @@ The Checkbox component is similar to the following components:
 
 <CSSClassTable of={CheckboxIcon} />
 
-## Characteristics Used
+## Characteristics used
 
 ### Checkbox
 
 <CharacteristicUsage of={Checkbox} />
+
+### Checkbox Group
+
+<CharacteristicUsage of={CheckboxGroup} />
 
 ### Checkbox Icon
 
