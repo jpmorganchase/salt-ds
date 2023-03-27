@@ -1,5 +1,11 @@
 # @salt-ds/ag-grid-theme
 
+## 1.1.2
+
+### Patch Changes
+
+- 0c478a6b: Fix fonts not being published in the ag-grid-theme
+
 ## 1.1.1
 
 ### Patch Changes
