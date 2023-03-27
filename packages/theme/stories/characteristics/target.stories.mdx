@@ -1,11 +1,7 @@
 import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
-import {
-  LineBlock,
-  LineBlockCell,
-  LineBlockDashed,
-} from "docs/components/LineBlock";
+import { LineBlock } from "docs/components/LineBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
 
 <Meta title="Theme/Characteristics/Target" />
@@ -23,9 +19,18 @@ Components which indicate a target area where a draggable item can be dropped (r
     <DocGrid>
       <ColorBlock colorVar="--salt-target-background-hover" />
       <ColorBlock colorVar="--salt-target-borderColor-hover" />
-      <LineBlockDashed lineStyle="--salt-target-borderStyle" />
-      <LineBlockDashed lineStyle="--salt-target-borderStyle-hover" />
-      <LineBlockDashed lineStyle="--salt-target-borderStyle-disabled" />
+      <LineBlock
+        token="--salt-target-borderStyle"
+        lineStyle="--salt-target-borderStyle"
+      />
+      <LineBlock
+        token="--salt-target-borderStyle-hover"
+        lineStyle="--salt-target-borderStyle-hover"
+      />
+      <LineBlock
+        token="--salt-target-borderStyle-disabled"
+        lineStyle="--salt-target-borderStyle-disabled"
+      />
       <CursorBlock cursor="--salt-target-cursor-disabled" />
     </DocGrid>
   </Story>
