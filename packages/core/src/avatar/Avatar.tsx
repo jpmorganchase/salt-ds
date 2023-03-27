@@ -67,7 +67,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const status = useAvatarImage({ src });
   const hasImgNotFailing = status === "loaded";
   if (hasImgNotFailing) {
-    children = <img alt="" src={src} />;
+    children = <img alt={name} src={src} />;
   } else if (childrenProp != null) {
     children = childrenProp;
   }
