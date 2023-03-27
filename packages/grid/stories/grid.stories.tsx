@@ -1,5 +1,6 @@
 import { Story } from "@storybook/react";
 import {
+  ChangeEvent,
   createContext,
   CSSProperties,
   useCallback,
@@ -235,12 +236,14 @@ const PinnedColumnsTemplate: Story<GridProps> = (props) => {
   const [columnSeparators, setColumnSeparators] = useState<boolean>(false);
   const [pinnedSeparators, setPinnedSeparators] = useState<boolean>(true);
 
-  const onChangeColumnSeparators = (_: any, checked: boolean) => {
+  const onChangeColumnSeparators = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
     console.log(`Column separators ${checked ? "enabled" : "disabled"}`);
     setColumnSeparators(checked);
   };
 
-  const onChangePinnedSeparators = (_: any, checked: boolean) => {
+  const onChangePinnedSeparators = (event: ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
     console.log(`Pinned separators ${checked ? "enabled" : "disabled"}`);
     setPinnedSeparators(checked);
   };
