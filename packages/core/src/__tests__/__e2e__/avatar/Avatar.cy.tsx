@@ -22,9 +22,8 @@ describe("Given an Avatar", () => {
   describe("WHEN a src image fails to load or is provided empty", () => {
     it("should show the initials", () => {
       cy.mount(<Default src={"bad_url"} name="Juanito Jones" />);
-      cy.findByText("JJ").should("exist");
-      cy.findByRole("img").should("not.exist");
-      cy.findByTestId("UserSolidIcon").should("not.exist");
+      cy.findByRole("img").should("exist");
+      cy.findByRole("img").should("have.attr", "aria-label", "JJ");
     });
     it("should show the default if there are no initials", () => {
       cy.mount(<Default src={"bad_url"} />);
@@ -40,7 +39,7 @@ describe("Given an Avatar", () => {
         </Default>
       );
       cy.findAllByRole("img").should("exist");
-      cy.findAllByRole("img").eq(0).should("have.attr", "src", "blah.png");
+      cy.findAllByRole("img").eq(1).should("have.attr", "src", "blah.png");
     });
   });
 
