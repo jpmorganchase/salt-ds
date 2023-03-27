@@ -416,7 +416,7 @@
   { "title": "Salt Design System", "route": "/local/index", "content": [] },
   {
     "title": "Components",
-    "route": "./components/index",
+    "route": "/local/components/index",
     "content": [
       "Our components are built with accessibility in mind. ",
       "Each one has comprehensive\n",
@@ -739,7 +739,7 @@
   },
   {
     "title": "Getting started",
-    "route": "./getting-started/index",
+    "route": "/local/getting-started/index",
     "content": [
       "Follow our step-by-step guides to design and develop accessible, responsive, best-in-class user experiences with Salt.",
       "Find out how to access Salt’s comprehensive libraries in Figma, add\n",
@@ -817,7 +817,7 @@
   },
   {
     "title": "Support and contributions",
-    "route": "./support-and-contributions/index",
+    "route": "/local/support-and-contributions/index",
     "content": [
       "Help us shape the future of Salt by contributing not just code—but also your thoughts, requests, frustrations and successes.",
       "Join the Salt community on GitHub to give us feedback and help improve the design\n",
