@@ -16,6 +16,8 @@ describe("Given an Avatar", () => {
   describe("WHEN only a name is provided", () => {
     it("should show the initials", () => {
       cy.mount(<Default name="Juanito Jones" />);
+      cy.findByRole("img").should("exist");
+      cy.findByRole("img").should("have.attr", "aria-label", "JJ");
       cy.findByText("JJ").should("exist");
     });
   });
