@@ -1,3 +1,4 @@
+# Based on https://github.com/Shopify/polaris/blob/e6157f13d146b3add9c7a227d2d5481278251fac/.github/workflows/snapit.yml
 name: Snapshot
 
 on:
