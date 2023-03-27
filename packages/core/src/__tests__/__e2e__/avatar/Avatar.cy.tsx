@@ -17,7 +17,7 @@ describe("Given an Avatar", () => {
     it("should show the initials", () => {
       cy.mount(<Default name="Juanito Jones" />);
       cy.findByRole("img").should("exist");
-      cy.findByRole("img").should("have.attr", "aria-label", "JJ");
+      cy.findByRole("img").should("have.attr", "aria-label", "Juanito Jones");
       cy.findByText("JJ").should("exist");
     });
   });
@@ -25,12 +25,12 @@ describe("Given an Avatar", () => {
     it("should show the initials", () => {
       cy.mount(<Default src={"bad_url"} name="Juanito Jones" />);
       cy.findByRole("img").should("exist");
-      cy.findByRole("img").should("have.attr", "aria-label", "JJ");
+      cy.findByRole("img").should("have.attr", "aria-label", "Juanito Jones");
     });
     it("should show the default if there are no initials", () => {
       cy.mount(<Default src={"bad_url"} />);
       cy.findByTestId("UserSolidIcon").should("exist");
-      cy.findByRole("img").should("not.exist");
+      cy.findByRole("img").should("have.attr", "aria-label", "User Avatar");
     });
   });
   describe("WHEN an image is provided", () => {
@@ -41,7 +41,7 @@ describe("Given an Avatar", () => {
         </Default>
       );
       cy.findAllByRole("img").should("exist");
-      cy.findAllByRole("img").eq(1).should("have.attr", "src", "blah.png");
+      cy.findAllByRole("img").eq(0).should("have.attr", "src", "blah.png");
     });
   });
 

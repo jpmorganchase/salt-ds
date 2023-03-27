@@ -52,8 +52,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     src,
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
-    fallbackIcon = <UserSolidIcon />,
-    role = name ? "img" : undefined,
+    fallbackIcon = <UserSolidIcon aria-label="User Avatar" />,
     ...rest
   },
   ref
@@ -74,6 +73,14 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   }
 
   const avatarInitials = nameToInitials(name);
+
+  const initialsProps = avatarInitials
+    ? {
+        role: "img",
+        "aria-label": name,
+      }
+    : {};
+
   return (
     <div
       ref={ref}
@@ -83,9 +90,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
         { [withBaseName("withImage")]: hasImgNotFailing },
         className
       )}
-      role={role}
-      aria-label={name}
-      aria-hidden={name ? undefined : true}
+      {...initialsProps}
       {...rest}
     >
       {children || avatarInitials || fallbackIcon}
