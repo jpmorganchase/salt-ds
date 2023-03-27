@@ -96,6 +96,11 @@
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor));
 }
 
+/* Styles applied if `indeterminate={true}`,`disabled={true}` and `error={true}` */
+.saltCheckboxIcon-error.saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
+  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor-disabled));
+}
+
 /* Styles applied to tick */
 .saltCheckboxIcon-tick {
   fill: var(--saltCheckbox-icon-tick-fill, var(--checkbox-icon-tick-fill));
