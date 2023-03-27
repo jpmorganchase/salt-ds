@@ -15,7 +15,6 @@ module.exports = deepmerge(mosaicConfig, {
       modulePath: "@jpmorganchase/mosaic-source-git-repo",
       namespace: "salt",
       options: {
-        prefixDir: "salt",
         cache: true,
         subfolder: "mosaic-site/docs",
         credentials: process.env.MOSAIC_DOCS_CLONE_CREDENTIALS,
