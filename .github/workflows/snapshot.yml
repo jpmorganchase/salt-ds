@@ -27,7 +27,7 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            const response = octokit.rest.repos.getCollaboratorPermissionLevel({
+            const response = github.rest.repos.getCollaboratorPermissionLevel({
               owner,
               repo,
               username,
@@ -36,7 +36,7 @@ jobs:
             const permission = response.data.permission
 
             if (permission === "write" || permission === "admin") {
-              await octokit.rest.reactions.createForIssueComment({
+              await github.rest.reactions.createForIssueComment({
                 owner,
                 repo,
                 comment_id: COMMENT_ID,
@@ -130,7 +130,7 @@ jobs:
                 body,
               })
 
-              await octokit.rest.reactions.createForIssueComment({
+              await github.rest.reactions.createForIssueComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 comment_id: COMMENT_ID,
