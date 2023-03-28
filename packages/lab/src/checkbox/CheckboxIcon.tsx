@@ -1,9 +1,10 @@
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useDensity } from "@salt-ds/core";
 import {
-  CheckboxUncheckedIcon,
   CheckboxCheckedIcon,
+  CheckboxCheckedIconHD,
   CheckboxIndeterminateIcon,
+  CheckboxUncheckedIcon,
 } from "./assets";
 
 import "./CheckboxIcon.css";
@@ -12,6 +13,7 @@ export interface CheckboxIconProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
+  error?: boolean;
   indeterminate?: boolean;
 }
 
@@ -21,17 +23,35 @@ export const CheckboxIcon = ({
   checked = false,
   className: classNameProp,
   disabled,
+  error,
   indeterminate,
 }: CheckboxIconProps): JSX.Element => {
-  const className = clsx(withBaseName(), classNameProp, {
-    [withBaseName("disabled")]: disabled,
-  });
+  const className = clsx(
+    withBaseName(),
+    {
+      [withBaseName("disabled")]: disabled,
+      [withBaseName("error")]: error,
+    },
+    classNameProp
+  );
+
+  // A different CheckboxCheckedIcon is rendered if the density is set to high
+  const density = useDensity();
+
   return indeterminate ? (
     <CheckboxIndeterminateIcon
       className={clsx(className, withBaseName("indeterminate"))}
     />
   ) : checked ? (
-    <CheckboxCheckedIcon className={clsx(className, withBaseName("checked"))} />
+    density === "high" ? (
+      <CheckboxCheckedIconHD
+        className={clsx(className, withBaseName("checked"))}
+      />
+    ) : (
+      <CheckboxCheckedIcon
+        className={clsx(className, withBaseName("checked"))}
+      />
+    )
   ) : (
     <CheckboxUncheckedIcon className={className} />
   );
