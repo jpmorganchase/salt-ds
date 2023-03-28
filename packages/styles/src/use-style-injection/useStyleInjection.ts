@@ -12,40 +12,51 @@ export interface UseComponentCssInjection {
   window: WindowLike;
 }
 
-const windowSheetsMap = new WeakMap<
-  WindowLike,
-  Map<string, HTMLStyleElement>
->();
+type StyleElementMap = Map<
+  string,
+  { styleElement: HTMLStyleElement | null; count: number }
+>;
+
+const windowSheetsMap = new WeakMap<WindowLike, StyleElementMap>();
 export function useComponentCssInjection({
   id,
   css,
   window: targetWindow,
 }: UseComponentCssInjection): void {
   maybeUseInsertionEffect(() => {
-    let sheetsMap =
-      windowSheetsMap.get(targetWindow) ?? new Map<string, HTMLStyleElement>();
-    let style = sheetsMap.get(id);
+    let sheetsMap = windowSheetsMap.get(targetWindow) ?? new Map();
+    let styleMap = sheetsMap.get(id) ?? { styleElement: null, count: 0 };
 
-    if (!style) {
-      style = targetWindow.document.createElement("style");
-      style.setAttribute("type", "text/css");
-      style.setAttribute("data-salt-style", id);
-      style.textContent = css;
+    if (styleMap.styleElement == null) {
+      styleMap.styleElement = targetWindow.document.createElement("style");
+      styleMap.styleElement.setAttribute("type", "text/css");
+      styleMap.styleElement.setAttribute("data-salt-style", id);
+      styleMap.styleElement.textContent = css;
 
-      targetWindow.document.head.appendChild(style);
+      styleMap.count = 1;
+
+      targetWindow.document.head.insertBefore(
+        styleMap.styleElement,
+        targetWindow.document.head.firstChild
+      );
     } else {
-      style.textContent = css;
+      styleMap.styleElement.textContent = css;
+      styleMap.count++;
     }
-    sheetsMap.set(id, style);
+    sheetsMap.set(id, styleMap);
     windowSheetsMap.set(targetWindow, sheetsMap);
 
     return () => {
       const sheetsMap = windowSheetsMap.get(targetWindow);
-      const style = sheetsMap?.get(id);
-      if (style) {
-        targetWindow.document.head.removeChild(style);
-        sheetsMap?.delete(id);
+      const styleMap = sheetsMap?.get(id);
+      if (styleMap?.styleElement) {
+        styleMap.count--;
+        if (styleMap.count < 1) {
+          targetWindow.document.head.removeChild(styleMap.styleElement);
+          styleMap.styleElement = null;
+          sheetsMap?.delete(id);
+        }
       }
     };
-  });
+  }, [id, css, targetWindow]);
 }
