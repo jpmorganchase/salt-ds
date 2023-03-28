@@ -171,7 +171,7 @@ describe("GIVEN a Tooltip", () => {
       );
       cy.findByText("tooltip")
         .should("be.visible")
-        .should("have.css", "font-size", "11px")
+        .should("have.css", "font-size", "12px")
         .should("have.css", "font-weight", "400");
     });
   });
