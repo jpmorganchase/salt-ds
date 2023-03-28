@@ -100,6 +100,12 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     return (
       <>
+        {isValidElement(children) &&
+          cloneElement(children, {
+            ...getTriggerProps(),
+            ref: triggerRef,
+          })}
+
         {open && !disabled && (
           <div
             className={clsx(withBaseName(), withBaseName(status), className)}
@@ -121,12 +127,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             )}
           </div>
         )}
-
-        {isValidElement(children) &&
-          cloneElement(children, {
-            ...getTriggerProps(),
-            ref: triggerRef,
-          })}
       </>
     );
   }
