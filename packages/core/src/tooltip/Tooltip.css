@@ -15,7 +15,7 @@
   color: var(--saltTooltip-text-color, var(--salt-text-primary-foreground));
   font-size: var(--saltTooltip-fontSize, var(--salt-text-fontSize));
   font-weight: var(--saltTooltip-fontWeight, var(--salt-text-fontWeight));
-  line-height: var(--saltTooltip-lineHeight, var(--salt-text-label-lineHeight));
+  line-height: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
   max-width: var(--saltTooltip-maxWidth, 230px);
   padding: var(--saltTooltip-padding, var(--salt-size-unit));
   position: relative;
