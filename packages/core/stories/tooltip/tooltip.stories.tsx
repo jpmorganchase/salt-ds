@@ -22,20 +22,23 @@ export const Open: Story<TooltipProps> = Default.bind({});
 Open.args = { ...defaultArgs, open: true };
 
 export const Status: ComponentStory<typeof Tooltip> = (props: TooltipProps) => (
-  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+  <>
     <Tooltip {...props} content="I am a tooltip" status="info">
       <Button>Info</Button>
     </Tooltip>
+    <br /><br />
     <Tooltip {...props} content="We found an issue" status="error">
       <Button>Error</Button>
     </Tooltip>
+    <br /><br />
     <Tooltip {...props} content="Are you sure" status="warning">
       <Button>Warning</Button>
     </Tooltip>
+    <br /><br />
     <Tooltip {...props} content="Well done" status="success">
       <Button>Success</Button>
     </Tooltip>
-  </div>
+  </>
 );
 Status.args = defaultArgs;
 
@@ -129,16 +132,18 @@ export const Placement: Story<TooltipProps> = (props) => (
 Placement.args = defaultArgs;
 
 export const Delay: Story<TooltipProps> = (props) => (
-  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+  <>
     <Tooltip {...props} content="I am a tooltip" enterDelay={100}>
       <Button>100ms</Button>
     </Tooltip>
+    <br /><br />
     <Tooltip {...props} content="I am a tooltip">
       <Button>300ms</Button>
     </Tooltip>
+    <br /><br />
     <Tooltip {...props} content="I am a tooltip" enterDelay={500}>
       <Button>500ms</Button>
     </Tooltip>
-  </div>
+  </>
 );
 Delay.args = defaultArgs;
