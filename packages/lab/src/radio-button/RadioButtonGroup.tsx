@@ -1,38 +1,41 @@
 import { clsx } from "clsx";
 import {
   ChangeEventHandler,
-  ComponentType,
+  ComponentPropsWithoutRef,
   forwardRef,
-  HTMLAttributes,
-  useImperativeHandle,
-  useRef,
-  useState,
 } from "react";
-import { makePrefixer, useId } from "@salt-ds/core";
-import { useFormFieldProps } from "../form-field-context";
-import { FormGroup } from "../form-group";
-import { FormLabel } from "../form-field";
+import { makePrefixer, useControlled, useId } from "@salt-ds/core";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
-import { RadioButton } from "./RadioButton";
-import { RadioButtonIconProps } from "./RadioButtonIcon";
 
 import "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
-export interface RadioButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
-  className?: string;
+export interface RadioButtonGroupProps
+  extends Omit<ComponentPropsWithoutRef<"fieldset">, "onChange"> {
+  /**
+   * Set the selected value when initialized.
+   */
   defaultValue?: string;
-  icon?: ComponentType<RadioButtonIconProps>;
-  legend?: string;
+  /**
+   * Set the group direction.
+   */
+  direction?: "horizontal" | "vertical";
+  /**
+   * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise the radio buttons will wrap onto the next line.
+   */
+  wrap?: boolean;
+  /**
+   * The name to be set on each radio button within the group. If not set, then one will be generated for you.
+   */
   name?: string;
+  /**
+   * Callback for change event.
+   */
   onChange?: ChangeEventHandler<HTMLInputElement>;
-  radios?: {
-    disabled?: boolean;
-    label?: string;
-    value?: string;
-  }[];
-  row?: boolean;
+  /**
+   * The value of the radio group, required for a controlled component.
+   */
   value?: string;
 }
 
@@ -44,57 +47,25 @@ export const RadioButtonGroup = forwardRef<
     children,
     className,
     defaultValue,
-    legend,
-    icon,
-    radios,
+    direction = "vertical",
+    wrap = true,
+    name: nameProp,
     onChange,
     value: valueProp,
-    row,
-    name: nameProp,
     ...rest
   } = props;
 
-  const { inFormField, a11yProps } = useFormFieldProps({
-    focusVisible: false,
+  const [value, setStateValue] = useControlled({
+    controlled: valueProp,
+    default: defaultValue,
+    state: "value",
+    name: "RadioButtonGroup",
   });
 
-  const [stateValue, setStateValue] = useState(props.defaultValue);
-
-  const getValue = () => (isControlled() ? props.value : stateValue);
-
-  const isControlled = () => props.value !== undefined;
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    if (!isControlled()) {
-      setStateValue(event.target.value);
-    }
-    if (props.onChange) {
-      props.onChange(event);
-    }
+    setStateValue(event.target.value);
+    onChange?.(event);
   };
-
-  const rootRef = useRef<HTMLFieldSetElement>(null);
-
-  useImperativeHandle(
-    undefined,
-    () => ({
-      focus: () => {
-        const current = rootRef.current;
-        if (current) {
-          let input: HTMLInputElement | null = current.querySelector(
-            "input:not(:disabled):checked"
-          );
-          if (!input) {
-            input = current.querySelector("input:not(:disabled)");
-          }
-          if (input) {
-            input.focus();
-          }
-        }
-      },
-    }),
-    []
-  );
 
   const name = useId(nameProp);
 
@@ -102,34 +73,21 @@ export const RadioButtonGroup = forwardRef<
     <fieldset
       className={clsx(
         withBaseName(),
-        row ? withBaseName("horizontal") : withBaseName("vertical"),
+        withBaseName(direction),
+        {
+          [withBaseName("noWrap")]: !wrap,
+        },
         className
       )}
       data-testid="radio-button-group"
       ref={ref}
       role="radiogroup"
-      {...a11yProps}
+      {...rest}
     >
-      {!inFormField && (
-        <FormLabel className={clsx(withBaseName("legend"))} label={legend} />
-      )}
-
       <RadioGroupContext.Provider
-        value={{ name, onChange: handleChange, value: getValue() }}
+        value={{ name, onChange: handleChange, value }}
       >
-        <FormGroup role="radiogroup" {...rest} row={row}>
-          {(radios &&
-            radios.map((radio) => (
-              <RadioButton
-                disabled={radio.disabled}
-                icon={icon}
-                key={radio.label}
-                label={radio.label}
-                value={radio.value}
-              />
-            ))) ||
-            children}
-        </FormGroup>
+        {children}
       </RadioGroupContext.Provider>
     </fieldset>
   );

@@ -17,6 +17,24 @@ describe("Color", () => {
       expect(newColor.rgba).toEqual({ a: 1, b: 255, g: 255, r: 255 });
     });
   });
+  describe("get colorName", () => {
+    it("should get white value", () => {
+      const newColor = Color.makeColorFromRGB(255, 255, 255, 1);
+      expect(newColor.colorName).toEqual("White");
+    });
+    it("should get transparent value", () => {
+      const newColor = Color.makeColorFromRGB(12, 34, 56, 0);
+      expect(newColor.colorName).toEqual("Transparent");
+    });
+    it("should get the salt palette name", () => {
+      const newColor = Color.makeColorFromRGB(214, 85, 19, 1);
+      expect(newColor.colorName).toEqual("Orange700");
+    });
+    it("should get undefined with unknown color", () => {
+      const newColor = Color.makeColorFromRGB(1, 2, 3, 1);
+      expect(newColor.colorName).toBeUndefined();
+    });
+  });
   describe("makeColorFromHex", () => {
     it("should make the correct color object with 6 digit hex", () => {
       const newColor = Color.makeColorFromHex("#4E8FC0");

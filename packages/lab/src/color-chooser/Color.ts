@@ -1,4 +1,5 @@
 import tinycolor from "tinycolor2";
+import { getColorNameByHexValue } from "./ColorHelpers";
 
 export type RGBAValue = {
   r: number;
@@ -23,6 +24,16 @@ export class Color {
       b: this.color.toRgb().b,
       a: this.color.toRgb().a,
     };
+  }
+
+  /** E.g. Orange800 */
+  public get colorName(): string | undefined {
+    return getColorNameByHexValue(
+      this.color.toHex8String(),
+      false,
+      undefined,
+      true
+    );
   }
 
   static makeColorFromHex(hexValue: string | undefined): Color | undefined {

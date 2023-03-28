@@ -19,6 +19,7 @@
   height: calc(var(--salt-size-unit) * 1.2);
   width: calc(var(--salt-size-unit) * 1.2);
   align-self: center;
+  font-size: 0;
 }
 
 .root a[href*="github"] > div {
