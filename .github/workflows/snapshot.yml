@@ -27,7 +27,7 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
-            const response = github.rest.repos.getCollaboratorPermissionLevel({
+            const response = await github.rest.repos.getCollaboratorPermissionLevel({
               owner,
               repo,
               username,
