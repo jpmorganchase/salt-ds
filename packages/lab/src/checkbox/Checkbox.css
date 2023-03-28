@@ -1,14 +1,10 @@
 /* Styles applied to root component */
 
 .saltCheckbox {
-  --checkbox-gap-multiplier: var(--saltCheckbox-top-multiplier, 0.75);
-}
-
-.saltCheckbox {
   cursor: var(--salt-selectable-cursor-hover);
   background: var(--saltCheckbox-background, none);
   display: flex;
-  gap: calc(var(--salt-size-unit) * var(--checkbox-gap-multiplier));
+  gap: var(--saltCheckbox-gap, calc(var(--salt-size-unit) * 0.75));
   position: relative;
   width: fit-content;
 }
