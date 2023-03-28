@@ -5,7 +5,7 @@
 <g mask="url(#mask0_5_458)">
 <rect width="72" height="72" fill="#004692"/>
 <mask id="mask1_5_458" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36">
-<path d="M0 36V36C-8.69081e-07 16.1177 16.1177 -7.04529e-07 36 -1.57361e-06V-1.57361e-06L36 36L0 36Z" fill="#002F6C"/>
+<path d="M0 36C-8.69081e-07 16.1178 16.1177 -7.04529e-07 36 -1.57361e-06L36 36L0 36Z" fill="#002F6C"/>
 </mask>
 <g mask="url(#mask1_5_458)">
 <path d="M12.5223 3.1339L10.401 5.25522L39.927 34.7812L42.0483 32.6599L12.5223 3.1339Z" fill="#F5F7F8"/>

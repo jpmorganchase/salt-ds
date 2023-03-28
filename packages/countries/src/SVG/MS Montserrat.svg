@@ -13,7 +13,7 @@
 <rect x="40.8" y="51" width="21" height="7" fill="#936846"/>
 </g>
 <mask id="mask2_45_535" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36">
-<path d="M0 36V36C-8.69081e-07 16.1177 16.1177 -7.04529e-07 36 -1.57361e-06V-1.57361e-06L36 36L0 36Z" fill="#002F6C"/>
+<path d="M0 36C-8.69081e-07 16.1178 16.1177 -7.04529e-07 36 -1.57361e-06L36 36L0 36Z" fill="#002F6C"/>
 </mask>
 <g mask="url(#mask2_45_535)">
 <rect x="-0.000244141" width="36" height="36" fill="#004692"/>

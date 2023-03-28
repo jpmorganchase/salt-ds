@@ -11,7 +11,7 @@ const CI = forwardRef<SVGSVGElement, CIProps>(function CI(props: CIProps, ref) {
   return (
     <CountrySymbol
       data-testid="CI"
-      aria-label="Côte d&#39;Ivoire"
+      aria-label="Côte d&#39;Ivoire"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

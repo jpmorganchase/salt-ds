@@ -11,7 +11,7 @@ const TR = forwardRef<SVGSVGElement, TRProps>(function TR(props: TRProps, ref) {
   return (
     <CountrySymbol
       data-testid="TR"
-      aria-label="Türkiye"
+      aria-label="Türkiye"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

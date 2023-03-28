@@ -11,7 +11,7 @@ export const countryMetaMap = {
   },
   AF: {
     countryCode: "AF",
-    countryName: "Afghanistan",
+    countryName: "Afganistan",
   },
   AG: {
     countryCode: "AG",
@@ -59,7 +59,7 @@ export const countryMetaMap = {
   },
   AX: {
     countryCode: "AX",
-    countryName: "Åland Islands",
+    countryName: "Åland Islands",
   },
   AZ: {
     countryCode: "AZ",
@@ -103,7 +103,7 @@ export const countryMetaMap = {
   },
   BL: {
     countryCode: "BL",
-    countryName: "Saint Barthélemy",
+    countryName: "Saint Barthélemy",
   },
   BM: {
     countryCode: "BM",
@@ -136,10 +136,6 @@ export const countryMetaMap = {
   BV: {
     countryCode: "BV",
     countryName: "Bouvet Island",
-  },
-  BW: {
-    countryCode: "BW",
-    countryName: "Botswana",
   },
   BY: {
     countryCode: "BY",
@@ -175,7 +171,7 @@ export const countryMetaMap = {
   },
   CI: {
     countryCode: "CI",
-    countryName: "Côte d'Ivoire",
+    countryName: "Côte d'Ivoire",
   },
   CK: {
     countryCode: "CK",
@@ -211,7 +207,7 @@ export const countryMetaMap = {
   },
   CW: {
     countryCode: "CW",
-    countryName: "Curaçao",
+    countryName: "Curaçao",
   },
   CX: {
     countryCode: "CX",
@@ -311,7 +307,7 @@ export const countryMetaMap = {
   },
   GB: {
     countryCode: "GB",
-    countryName: "United Kingdom of Great Britain and Northern Ireland (the)",
+    countryName: "Great Britain",
   },
   "GB-ENG": {
     countryCode: "GB-ENG",
@@ -423,7 +419,7 @@ export const countryMetaMap = {
   },
   ID: {
     countryCode: "ID",
-    countryName: "Indonesia",
+    countryName: "Indonisia",
   },
   IE: {
     countryCode: "IE",
@@ -503,11 +499,11 @@ export const countryMetaMap = {
   },
   KP: {
     countryCode: "KP",
-    countryName: "Korea (the Democratic People's Republic of)",
+    countryName: "Korea (Democratic People's Republic of)",
   },
   KR: {
     countryCode: "KR",
-    countryName: "Korea (the Republic of)",
+    countryName: "Korea (Republic of)",
   },
   KW: {
     countryCode: "KW",
@@ -771,7 +767,7 @@ export const countryMetaMap = {
   },
   RE: {
     countryCode: "RE",
-    countryName: "Réunion",
+    countryName: "Réunion",
   },
   RO: {
     countryCode: "RO",
@@ -919,7 +915,7 @@ export const countryMetaMap = {
   },
   TR: {
     countryCode: "TR",
-    countryName: "Türkiye",
+    countryName: "Türkiye",
   },
   TT: {
     countryCode: "TT",
@@ -947,7 +943,7 @@ export const countryMetaMap = {
   },
   UM: {
     countryCode: "UM",
-    countryName: "United States Minor Outlying Islands (the)",
+    countryName: "United States Minor  Outlying Islands (the)",
   },
   UN: {
     countryCode: "UN",
@@ -1015,7 +1011,7 @@ export const countryMetaMap = {
   },
   ZA: {
     countryCode: "ZA",
-    countryName: "South Africa",
+    countryName: "south Africa",
   },
   ZM: {
     countryCode: "ZM",

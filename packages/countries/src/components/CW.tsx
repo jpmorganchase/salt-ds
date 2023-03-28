@@ -11,7 +11,7 @@ const CW = forwardRef<SVGSVGElement, CWProps>(function CW(props: CWProps, ref) {
   return (
     <CountrySymbol
       data-testid="CW"
-      aria-label="Curaçao"
+      aria-label="Curaçao"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

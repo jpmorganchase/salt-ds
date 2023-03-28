@@ -6,9 +6,9 @@
 <rect x="0.00012207" y="72.0001" width="24" height="72" transform="rotate(-90 0.00012207 72.0001)" fill="#004692"/>
 <rect x="0.00012207" y="47.9999" width="24" height="72" transform="rotate(-90 0.00012207 47.9999)" fill="#F5F7F8"/>
 <rect x="0.00012207" y="23.9999" width="24" height="72" transform="rotate(-90 0.00012207 23.9999)" fill="#DD2033"/>
-<path d="M22 24H50V40C50 47.732 43.732 54 36 54V54C28.268 54 22 47.732 22 40V24Z" fill="#F5F7F8"/>
+<path d="M22 24H50V40C50 47.732 43.732 54 36 54C28.268 54 22 47.732 22 40V24Z" fill="#F5F7F8"/>
 <mask id="mask1_38_13389" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="22" y="24" width="28" height="30">
-<path d="M22 24H50V40C50 47.732 43.732 54 36 54V54C28.268 54 22 47.732 22 40V24Z" fill="#F5F7F8"/>
+<path d="M22 24H50V40C50 47.732 43.732 54 36 54C28.268 54 22 47.732 22 40V24Z" fill="#F5F7F8"/>
 </mask>
 <g mask="url(#mask1_38_13389)">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M29 24H22V31H29V38H22V45H29V52H22V59H29V52H36V59H43V52H50V45H43V38H50V31L43 31V24H36V31L29 31V24ZM36 38H43V31L36 31V38ZM36 45H29V38H36V45ZM36 45H43V52H36V45Z" fill="#DD2033"/>

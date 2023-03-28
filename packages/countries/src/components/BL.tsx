@@ -11,7 +11,7 @@ const BL = forwardRef<SVGSVGElement, BLProps>(function BL(props: BLProps, ref) {
   return (
     <CountrySymbol
       data-testid="BL"
-      aria-label="Saint Barthélemy"
+      aria-label="Saint Barthélemy"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

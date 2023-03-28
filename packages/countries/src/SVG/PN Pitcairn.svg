@@ -15,7 +15,7 @@
 <path d="M50.5 40.1768L61 63.1768H40L50.5 40.1768Z" fill="#008259"/>
 </g>
 <mask id="mask2_46_6653" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36">
-<path d="M0 36V36C-8.69081e-07 16.1177 16.1177 -7.04529e-07 36 -1.57361e-06V-1.57361e-06L36 36L0 36Z" fill="#002F6C"/>
+<path d="M0 36C-8.69081e-07 16.1178 16.1177 -7.04529e-07 36 -1.57361e-06L36 36L0 36Z" fill="#002F6C"/>
 </mask>
 <g mask="url(#mask2_46_6653)">
 <rect x="-0.000244141" width="36" height="36" fill="#004692"/>

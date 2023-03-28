@@ -11,7 +11,7 @@ const AX = forwardRef<SVGSVGElement, AXProps>(function AX(props: AXProps, ref) {
   return (
     <CountrySymbol
       data-testid="AX"
-      aria-label="Åland Islands"
+      aria-label="Åland Islands"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

@@ -11,7 +11,7 @@ const RE = forwardRef<SVGSVGElement, REProps>(function RE(props: REProps, ref) {
   return (
     <CountrySymbol
       data-testid="RE"
-      aria-label="Réunion"
+      aria-label="Réunion"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}

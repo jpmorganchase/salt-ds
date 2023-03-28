@@ -34,7 +34,6 @@ export { default as BR } from "./BR";
 export { default as BS } from "./BS";
 export { default as BT } from "./BT";
 export { default as BV } from "./BV";
-export { default as BW } from "./BW";
 export { default as BY } from "./BY";
 export { default as BZ } from "./BZ";
 export { default as CA } from "./CA";

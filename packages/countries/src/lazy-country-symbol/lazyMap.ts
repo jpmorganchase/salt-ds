@@ -37,7 +37,6 @@ export const lazyMap = {
   BS: lazy(() => import("../components/BS")),
   BT: lazy(() => import("../components/BT")),
   BV: lazy(() => import("../components/BV")),
-  BW: lazy(() => import("../components/BW")),
   BY: lazy(() => import("../components/BY")),
   BZ: lazy(() => import("../components/BZ")),
   CA: lazy(() => import("../components/CA")),

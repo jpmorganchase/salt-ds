@@ -11,7 +11,7 @@ const ZA = forwardRef<SVGSVGElement, ZAProps>(function ZA(props: ZAProps, ref) {
   return (
     <CountrySymbol
       data-testid="ZA"
-      aria-label="South Africa"
+      aria-label="south Africa"
       viewBox="0 0 72 72"
       ref={ref}
       {...props}
