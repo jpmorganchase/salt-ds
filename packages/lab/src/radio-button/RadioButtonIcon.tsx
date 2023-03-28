@@ -28,7 +28,6 @@ export const RadioButtonIcon = ({
       height="14"
       viewBox="0 0 14 14"
       width="14"
-      fill="none"
     >
       <circle className={withBaseName("border")} cx="7" cy="7" r="6.5" />
       {checked && (
