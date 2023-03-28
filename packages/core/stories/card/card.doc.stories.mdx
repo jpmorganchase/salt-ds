@@ -28,11 +28,7 @@ This default example is intended to show the way the Card component’s content 
 
 ## Interactable Card
 
-### Interactable prop
-
-**Deprecated:** Cards can have interactable styling by setting `interactable={true}`. These cards could be wrapped in Link, for example, for interactivity. We discourage the use of any focusable elements within interactable Cards.
-
-### Interactable Card
+**Deprecated:** In previous versions, Cards could have interactable styling by setting `interactable={true}`. These cards could be wrapped in Link, for example, for interactivity. We discourage the use of any focusable elements within interactable Cards.
 
 **Updated:** Cards can have actions by making use of the `InteractableCard` component. We discourage the use of any focusable elements within interactable Cards.
 
@@ -42,15 +38,11 @@ This default example is intended to show the way the Card component’s content 
 
 ## Disabled Card
 
-### Disabled Card
+**Deprecated:** In previous versions, Cards could have disabled styling applied by setting `disabled={true}`.
 
-**Deprecated:** Cards can have disabled styling applied by setting `disabled={true}`.
+**Updated:** Interactable cards can currently have disabled styling applied by setting `disabled={true}`.
 
-### Disabled (Interactable) Card
-
-**Updated:** Interactable cards can have disabled styling applied by setting `disabled={true}`.
-
-Make sure to as well apply `disabled={true}` to any nested components, such as Text, to ensure disabled styling is also applied to the inner content.
+Make sure to also apply `disabled={true}` to any nested components, such as Text, to ensure disabled styling is also applied to the inner content.
 
 <Canvas>
   <Story id="core-card--interactable-disabled" />
