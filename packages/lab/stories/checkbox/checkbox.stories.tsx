@@ -11,18 +11,40 @@ const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => {
   return <Checkbox {...args} />;
 };
 
-export const Default: ComponentStory<typeof Checkbox> = () => {
+export const CheckboxVariations: ComponentStory<typeof Checkbox> = () => {
   return (
     <>
-      <Checkbox label="I understand ADA required Labels on unchecked checkboxes" />
+      <Checkbox label="unchecked checkbox" />
+      <Checkbox defaultChecked label="checked checkbox" />
+      <Checkbox defaultChecked indeterminate label="indeterminate checkbox" />
+      <Checkbox disabled label="disabled checkbox" />
       <Checkbox
-        defaultChecked
-        label="I understand ADA required Labels on checked checkboxes"
+        disabled
+        indeterminate
+        label="disabled indeterminate checkbox"
       />
+      <Checkbox disabled checked label="disabled and checked checkbox" />
+      <Checkbox error label="error checkbox" />
+      <Checkbox error defaultChecked label="error checkbox checked" />
       <Checkbox
+        error
         defaultChecked
         indeterminate
-        label="I understand ADA required Labels on indeterminate checkboxes"
+        label="error checkbox indeterminate"
+      />
+      <Checkbox error disabled label="disabled and error checkbox" />
+      <Checkbox
+        error
+        defaultChecked
+        disabled
+        label="disabled and error checkbox checked"
+      />
+      <Checkbox
+        error
+        defaultChecked
+        disabled
+        indeterminate
+        label="disabled and error checkbox indeterminate"
       />
     </>
   );
@@ -32,20 +54,6 @@ export const FeatureInput = CheckboxTemplate.bind({});
 
 FeatureInput.args = {
   label: "Checkbox",
-};
-
-export const Disabled: ComponentStory<typeof Checkbox> = () => {
-  return (
-    <>
-      <Checkbox disabled label="disabled checkbox" />
-      <Checkbox
-        disabled
-        indeterminate
-        label="disabled indeterminate checkbox"
-      />
-      <Checkbox disabled checked label="disabled and checked checkbox" />
-    </>
-  );
 };
 
 export const WithoutLabel = CheckboxTemplate.bind({});
@@ -79,28 +87,51 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
 
 export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
   return (
-    <CheckboxGroup row>
-      <Checkbox defaultChecked label="option 1" value="option-1" />
-      <Checkbox defaultChecked label="option 2" value="option-2" />
+    <CheckboxGroup
+      defaultCheckedValues={["option-1", "option-2"]}
+      direction={"horizontal"}
+    >
+      <Checkbox label="option 1" value="option-1" />
+      <Checkbox label="option 2" value="option-2" />
       <Checkbox label="option 3" value="option-3" />
     </CheckboxGroup>
   );
 };
+
+export const WrapGroup: ComponentStory<typeof CheckboxGroup> = ({ wrap }) => (
+  <div
+    style={{
+      width: 250,
+    }}
+  >
+    <CheckboxGroup name="fx" direction={"horizontal"} wrap={wrap}>
+      <Checkbox key="option1" label="Checkbox label 1" value="option1" />
+      <Checkbox key="option2" label="Checkbox label 2" value="option2" />
+      <Checkbox
+        disabled
+        key="option3"
+        label="Checkbox label 3 (disabled)"
+        value="option3"
+      />
+    </CheckboxGroup>
+  </div>
+);
+
+WrapGroup.args = { wrap: true };
+
+export const NoWrapGroup = WrapGroup.bind({});
+NoWrapGroup.args = { wrap: false };
 
 export const UncontrolledGroup: ComponentStory<typeof CheckboxGroup> = (
   args
 ) => {
   return (
-    <CheckboxGroup {...args}>
-      <Checkbox defaultChecked label="option 1" value="option-1" />
-      <Checkbox defaultChecked label="option 2" value="option-2" />
+    <CheckboxGroup {...args} defaultCheckedValues={["option-1", "option-2"]}>
+      <Checkbox label="option 1" value="option-1" />
+      <Checkbox label="option 2" value="option-2" />
       <Checkbox label="option 3" value="option-3" />
     </CheckboxGroup>
   );
-};
-
-UncontrolledGroup.args = {
-  legend: "Uncontrolled CheckboxGroup",
 };
 
 export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
@@ -141,7 +172,6 @@ export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
     <CheckboxGroup
       {...args}
       checkedValues={controlledValues}
-      legend="Controlled Checkbox Group"
       onChange={handleChange}
     >
       {checkboxesData.map((data) => (
@@ -172,14 +202,12 @@ export const LongTextGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
   ];
 
   return (
-    <CheckboxGroup
-      {...args}
-      defaultCheckedValues={["radio"]}
-      legend="Long Text Checkbox Group"
-    >
-      {checkboxesData.map((data) => (
-        <Checkbox key={data.value} {...data} />
-      ))}
-    </CheckboxGroup>
+    <div style={{ width: "500px" }}>
+      <CheckboxGroup {...args} defaultCheckedValues={["radio"]}>
+        {checkboxesData.map((data) => (
+          <Checkbox key={data.value} {...data} />
+        ))}
+      </CheckboxGroup>
+    </div>
   );
 };
