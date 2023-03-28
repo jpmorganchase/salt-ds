@@ -225,7 +225,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Conveniently displays content that’s composed of different elements that have varied sizes or supported actions.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
     availableInCoreSince: "1.1.0",
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-card--page",
@@ -249,7 +249,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Enables the user to turn a specific value on or off. The value can be independent or a selection of one or more values from a given set of choices.",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Color Chooser",
@@ -465,7 +465,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       'Organizes content areas in an application by providing expand/collapse behavior, its own scroll bar, and "floating" and "docked" states.',
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
     availableInCoreSince: "1.1.0",
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-panel--page",
@@ -513,7 +513,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Allows the user to select one option at a time, from a set that’s vertically or horizontally aligned.",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Salt Provider",
@@ -571,7 +571,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Visually represents a process that is taking an indeterminate time to complete.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-spinner--page",
   },

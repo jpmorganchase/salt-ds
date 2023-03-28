@@ -17,22 +17,36 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 # Avatar
 
 The Avatar component is a graphical element which can be used to represent a person, group, entity, or communication channel.
-It has three variants to account for different types of data:
 
-- `Image` is used when a photo is available;
-- `Initials` can be used when a photo is unavailable but profile information is;
-- `Icon` can be used when neither a photo nor profile information are available.
+## Features
 
-### Features
+### Default Avatar
 
-#### Default Avatar
+<Canvas>
+  <Story id="core-avatar--default" />
+</Canvas>
+
+### Sizes
 
 Each Avatar variant has a default size across all four densities, equal to the size foundation size-base; 20px (HD), 28px (MD), 36px (LD), and 44px (TD).
 The size of Avatar can be changed in multiples of the base size.
 
 <Canvas>
-  <Story id="core-avatar--default" />
+  <Story id="core-avatar--sizes" />
 </Canvas>
+
+### Fallback
+
+If a photo is not available, the Avatar will fall back to initials or an icon:
+
+- `Initials` can be used when a photo is unavailable but profile information is;
+- `Icon` can be used when neither a photo nor profile information are available.
+
+<Canvas>
+  <Story id="core-avatar--fallback" />
+</Canvas>
+
+### Alternative fallback icon
 
 Avatar renders with an icon defined by `UserSolidIcon` but an alternative icon can be passed as `fallbackIcon`.
 
@@ -40,23 +54,7 @@ Avatar renders with an icon defined by `UserSolidIcon` but an alternative icon c
   <Story id="core-avatar--alternative-icon" />
 </Canvas>
 
-#### Image
-
-Reference your image source in the `src` prop, or pass it as the child of the component.
-
-<Canvas>
-  <Story id="core-avatar--with-image" />
-</Canvas>
-
-#### Initials
-
-You can pass the user's initials as the child of the component.
-
-<Canvas>
-  <Story id="core-avatar--initials" />
-</Canvas>
-
-#### Custom image or SVG
+### Custom image or SVG
 
 You can pass a custom image or SVG as the child of the component to be used as an image.
 
@@ -67,16 +65,18 @@ You can pass a custom image or SVG as the child of the component to be used as a
 Note that for images passed as children, you will also need to handle the fallback logic.
 
 <Canvas>
-  <Story id="core-avatar--image-fallback" />
+  <Story id="core-avatar--with-custom-img" />
 </Canvas>
 
-#### Alternative background
+## Content
 
-The `Avatar` background can be customized by using `--saltAvatar-background`.
+When using the Avatar we recommend describing what the image will represent:
 
-<Canvas>
-  <Story id="core-avatar--alternative-background" />
-</Canvas>
+- `name="Person's name"` - when the image represents a person
+- `name="Group's name"` - when the image represents a group
+- `name="Entity's name"` - when the image represents an entity
+- `name="Channel's name"` - when the image represents a communication channel
+- `name=""` - when the name is provided next to the Avatar
 
 ## Configuring Avatar
 
