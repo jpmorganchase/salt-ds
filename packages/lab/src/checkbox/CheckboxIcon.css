@@ -8,7 +8,7 @@
   --checkbox-size: var(--salt-size-selectable);
   --checkbox-box-offset: calc(var(--checkbox-borderWidth) / 2);
   /* 14px is used to match the svg's viewbox */
-  --checkbox-box-size: calc(14px - var(--checkbox-borderWidth));
+  --checkbox-box-size: calc(100% - var(--checkbox-borderWidth));
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-tick-color, var(--salt-selectable-primary-foreground-selected));
 
   fill: var(--saltCheckbox-icon-fill, var(--salt-selectable-background));
