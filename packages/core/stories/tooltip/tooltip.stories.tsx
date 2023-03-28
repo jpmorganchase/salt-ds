@@ -22,7 +22,7 @@ export const Open: Story<TooltipProps> = Default.bind({});
 Open.args = { ...defaultArgs, open: true };
 
 export const Status: ComponentStory<typeof Tooltip> = (props: TooltipProps) => (
-  <div style={{ display: "flex", gap: 8 }}>
+  <div style={{ display: "flex", flexDirection: 'column', gap: 8 }}>
     <Tooltip {...props} content="I am a tooltip" status="info">
       <Button>Info</Button>
     </Tooltip>
@@ -53,7 +53,7 @@ export const WithoutIcon: Story<TooltipProps> = (props) => (
 );
 WithoutIcon.args = defaultArgs;
 
-export const ScrollTooltip: Story<TooltipProps> = (props) => {
+export const FlipAndShiftTooltip: Story<TooltipProps> = (props) => {
   const handleScrollButton = useCallback((node: HTMLButtonElement | null) => {
     node?.scrollIntoView({ block: "center", inline: "center" });
   }, []);
@@ -78,7 +78,7 @@ export const ScrollTooltip: Story<TooltipProps> = (props) => {
     </div>
   );
 };
-ScrollTooltip.args = {
+FlipAndShiftTooltip.args = {
   content: "I am a tooltip",
   placement: "top",
   open: true,
@@ -129,7 +129,7 @@ export const Placement: Story<TooltipProps> = (props) => (
 Placement.args = defaultArgs;
 
 export const Delay: Story<TooltipProps> = (props) => (
-  <div style={{ display: "flex", gap: 8 }}>
+  <div style={{ display: "flex", flexDirection: 'column', gap: 8 }}>
     <Tooltip {...props} content="I am a tooltip" enterDelay={100}>
       <Button>100ms</Button>
     </Tooltip>
