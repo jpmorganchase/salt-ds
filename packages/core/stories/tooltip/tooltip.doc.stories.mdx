@@ -16,7 +16,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Tooltip
 
-A Tooltip provides guidance to the user when something requires more explanation or context, or to provide more information about an error or warning condition. A Tooltip will typically be displayed after the user’s mouse hovers over the target element for a certain amount of time.
+A Tooltip provides guidance to the user when something requires more explanation or context, or to provide more information about an error or warning condition. A Tooltip will typically be displayed after the user’s mouse hovers over the target element for a set amount of time.
 
 ## Best practise
 
@@ -25,12 +25,12 @@ A Tooltip provides guidance to the user when something requires more explanation
 
 ## Use when...
 
-You want to display extra information or description of an element.
+You want to display extra information or a description of an on-screen element.
 
 ## Don't use when...
 
 - **The Tooltip contains interactive elements like link, input or button.** Consider making this content visible on the page or use an Overlay or a Dialog instead.
-- **There is a lot of content inside the Tooltip.** Tooltip content should be short and self-explanatory. If the text needs to be more descriptive, then consider adding it to the page so it's always visible to the user.
+- **There is a lot of content inside the Tooltip.** Tooltip content should be short and self-explanatory. If the text needs to be more descriptive, consider adding it to the page so it's always visible to the user.
 
 ## Default
 
@@ -42,7 +42,7 @@ You want to display extra information or description of an element.
 
 ### Status
 
-Use the `status` prop to choose between `error`, `warning`, `success` and `info`.
+Use the `status` prop to choose between `error`, `warning`, `success` and `info`. This defines which icon will be displayed in the Tooltip.
 
 <Canvas>
   <Story id="core-tooltip--status" />
