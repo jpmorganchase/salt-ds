@@ -120,11 +120,18 @@ export const InteractableAsLink: ComponentStory<typeof Card> = () => {
     window.open("https://saltdesignsystem.com/");
   };
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if(event.key === "Enter") {
+      window.open("https://saltdesignsystem.com/");
+      console.log("Clicked");
+    }
+  };
+
   return (
     <InteractableCard
       tabIndex={0}
       onClick={handleClick}
-      onKeyDown={handleClick}
+      onKeyDown={handleKeyDown}
       style={{ maxWidth: "500px" }}
     >
       <div style={{ textAlign: "center" }}>
@@ -155,13 +162,19 @@ export const InteractableVariations: ComponentStory<typeof Card> = () => (
         <Text>Using Nested DOM Elements</Text>
       </div>
     </InteractableCard>
-    <InteractableCard accentPosition="left">
+    <InteractableCard accentPlacement="left">
       <div>
         <H1 style={{ margin: "0" }}>This is Card</H1>
         <Text>Using Nested DOM Elements</Text>
       </div>
     </InteractableCard>
-    <InteractableCard accentPosition="top">
+    <InteractableCard accentPlacement="top">
+      <div>
+        <H1 style={{ margin: "0" }}>This is Card</H1>
+        <Text>Using Nested DOM Elements</Text>
+      </div>
+    </InteractableCard>
+    <InteractableCard accentPlacement="right">
       <div>
         <H1 style={{ margin: "0" }}>This is Card</H1>
         <Text>Using Nested DOM Elements</Text>
