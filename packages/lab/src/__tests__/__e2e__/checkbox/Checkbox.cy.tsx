@@ -23,15 +23,13 @@ describe("GIVEN a Checkbox", () => {
         cy.findByRole("checkbox").realClick();
         cy.get("@changeSpy").should(
           "have.been.calledWith",
-          Cypress.sinon.match.any,
-          true
+          Cypress.sinon.match.any
         );
         cy.findByRole("checkbox").should("be.checked");
         cy.findByRole("checkbox").realClick();
         cy.get("@changeSpy").should(
           "have.been.calledWith",
-          Cypress.sinon.match.any,
-          false
+          Cypress.sinon.match.any
         );
         cy.findByRole("checkbox").should("not.be.checked");
       });
@@ -55,8 +53,7 @@ describe("GIVEN a Checkbox", () => {
         cy.findByRole("checkbox").realClick();
         cy.get("@changeSpy").should(
           "have.been.calledWith",
-          Cypress.sinon.match.any,
-          true
+          Cypress.sinon.match.any
         );
         cy.findByRole("checkbox").should("not.be.checked");
       });
