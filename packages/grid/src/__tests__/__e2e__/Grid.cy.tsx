@@ -281,13 +281,15 @@ describe("Grid", () => {
     expectFakeColumnWidth(398);
   });
 
-  it.skip("Dropdown editor", () => {
+  it("Dropdown editor", () => {
     cy.mount(<GridExample />);
-    findCell(0, 2).dblclick({ force: true });
+    assertGridReady();
+    findCell(0, 2).click({ force: true }).type("{Enter}");
     cy.findByTestId("grid-cell-editor-trigger")
       .should("exist")
-      .type("{downArrow}")
+      .type("{downarrow}")
       .type("{Enter}");
+    checkCursorPos(2, 2);
     findCell(0, 2).should("have.text", "Jersey City, NJ");
   });
 
@@ -367,8 +369,21 @@ describe("Grid", () => {
     findCell(0, 4).should("have.text", "3.14");
   });
 
-  // Docs Examples
+  it("Cell with a single button passes the focus on to the button when focused", () => {
+    cy.mount(<CellCustomization />);
 
+    assertGridReady();
+    clickCell(0, 3);
+    cy.focused().realType("{rightarrow}");
+    checkCursorPos(1, 4);
+    cy.focused().then(($el) => {
+      expect($el[0].tagName).equal("BUTTON");
+    });
+    cy.focused().realType("{leftarrow}");
+    checkCursorPos(1, 3);
+  });
+
+  // Docs Examples
   describe("Grid Variants", () => {
     it("displays 'Primary' variant by default", () => {
       cy.mount(<GridVariants />);

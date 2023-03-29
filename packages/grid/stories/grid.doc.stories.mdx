@@ -233,6 +233,12 @@ To trigger edit mode on cells on your:
 - keyboard: press either the `backspace` _or_ `F2` key, _alternatively_ simply start typing
 - mouse: double click
 
+### Actionable cells
+
+The grid currently allows users to pass interactive elements inside the custom cells, and that interactive element will automatically receive focus when the cell is focused. Avoid passing multiple interactive elements for now since those cells will not have proper keyboard accessibility. If you need multiple buttons per row, render each button in its own column.
+
+If you add an interactive element with complex keyboard functionality, you may have to prevent the keyboard events from bubbling up since some grid keyboard event listeners might clash with the interactive child element and potentially break keyboard interactions.
+
 ### Pagination
 
 [Implement pagination](https://saltdesignsystem-storybook.pages.dev/?path=/story/lab-pagination--default-pagination) using the `Paginator` component. It is not a feature of the grid itself.

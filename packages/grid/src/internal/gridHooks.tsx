@@ -1242,13 +1242,39 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
   };
 }
 
-export function useFocusableContent<T extends HTMLElement>() {
+const candidateSelector = [
+  "input",
+  "select",
+  "textarea",
+  "a[href]",
+  "button",
+  "[tabindex]:not(slot)",
+  "audio[controls]",
+  "video[controls]",
+  '[contenteditable]:not([contenteditable="false"])',
+  "details>summary:first-of-type",
+  "details",
+].join(",");
+
+export function useFocusableContent<T extends HTMLElement>({
+  isFocused,
+}: {
+  isFocused?: boolean;
+} = {}) {
   const ref = useRef<T>(null);
   const [isFocusableContent, setFocusableContent] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (!ref.current) return;
+    const nestedInteractive = ref.current.querySelector(candidateSelector);
+    if (nestedInteractive) {
+      (nestedInteractive as HTMLElement).tabIndex = !isFocused ? -1 : 0;
+    }
+  }, [isFocused]);
+
   const onFocus: FocusEventHandler<T> = (event) => {
     if (event.target === ref.current) {
-      const nestedInteractive = ref.current.querySelector(`[tabindex="0"]`);
+      const nestedInteractive = ref.current.querySelector(candidateSelector);
       if (nestedInteractive) {
         (nestedInteractive as HTMLElement).focus();
         setFocusableContent(true);
