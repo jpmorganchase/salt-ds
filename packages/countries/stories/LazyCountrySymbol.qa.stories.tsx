@@ -10,7 +10,7 @@ const sizes = [1, 2, 3] as const;
 
 export const AllLazyCountrySymbols: Story = () => {
   return (
-    <Suspense>
+    <Suspense fallback="Loading...">
       {sizes.map((size) => (
         <div
           style={{
