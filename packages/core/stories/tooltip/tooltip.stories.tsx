@@ -95,18 +95,13 @@ export const CustomContent: Story<TooltipProps> = (props) => (
     {...props}
     content={
       <>
-        <Text as="h3">Tooltip</Text>
-        <Text>Props:</Text>
-        <ul>
-          <li>
-            <strong>hideIcon:</strong> true
-          </li>
-          <li>
-            <strong>open:</strong> false
-          </li>
-          <li>
-            <strong>status:</strong> info
-          </li>
+        <Text as="h3">Persona B</Text>
+        <Text as="h4">personab@example.com</Text>
+        <ul style={{ paddingLeft: 20, margin: 0 }}>
+          <li>Role</li>
+          <li>Position</li>
+          <li>Location</li>
+          <li>City, Country</li>
         </ul>
       </>
     }
