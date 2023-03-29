@@ -1,4 +1,5 @@
 import { ChangeEventHandler, useState } from "react";
+import { Link, Text } from "@salt-ds/core";
 import { RadioButton, RadioButtonGroup } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -149,4 +150,21 @@ export const LongTextGroup: ComponentStory<typeof RadioButtonGroup> = () => (
       />
     </RadioButtonGroup>
   </div>
+);
+
+export const ADAExample = () => (
+  <>
+    <Link>Link for testing</Link>
+    <RadioButtonGroup>
+      <RadioButton key="option1" label="Radio Option 1" value="option1" />
+      <RadioButton
+        key="option2"
+        label="Radio Option 2 (disabled)"
+        value="option2"
+        disabled
+      />
+      <RadioButton key="option3" label="Radio Option 3" value="option3" />
+    </RadioButtonGroup>
+    <Text>Text for testing</Text>
+  </>
 );
