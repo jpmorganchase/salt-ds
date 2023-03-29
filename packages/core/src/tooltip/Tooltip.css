@@ -2,6 +2,8 @@
 .saltTooltip {
   --tooltip-background: var(--saltTooltip-background, var(--salt-container-primary-background));
   --tooltip-zIndex: var(--saltTooltip-zIndex, var(--salt-zIndex-flyover));
+  /* apply icon margin based on the text line height so it's aligned on all densities */
+  --tooltip-icon-marginTop: calc((var(--salt-text-lineHeight) - 12px) / 2);
 }
 
 .saltTooltip {
@@ -32,9 +34,9 @@
 
 /* Styles applied to status indicator */
 .saltTooltip-icon {
-  --saltIcon-margin: 0 var(--saltTooltip-icon-marginRight, 6px) 0 0;
+  --saltIcon-margin: var(--tooltip-icon-marginTop) var(--saltTooltip-icon-marginRight, 6px) 0 0;
   vertical-align: top;
-  align-self: center;
+  align-self: flex-start;
 }
 
 /* Styles applied to arrow */
