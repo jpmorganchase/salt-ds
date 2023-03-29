@@ -1,5 +1,5 @@
 import { ComponentMeta, Story } from "@storybook/react";
-import { Checkbox } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
@@ -12,26 +12,28 @@ export const AllExamplesGrid: Story<
 > = ({ className, ...props }) => {
   return (
     <QAContainer cols={1} height={500} width={1200} {...props}>
-      <Checkbox
-        className={className}
-        label="I understand ADA requires Labels on unchecked checkboxes"
-      />
-      <Checkbox
-        className={className}
-        defaultChecked
-        label="I understand ADA requires Labels on checked checkboxes"
-      />
-      <Checkbox
-        className={className}
-        defaultChecked
-        indeterminate
-        label="I understand ADA requires Labels on indeterminate checkboxes"
-      />
-      <Checkbox
-        className={className}
-        disabled
-        label="I understand ADA requires Labels on indeterminate checkboxes"
-      />
+      <CheckboxGroup>
+        <Checkbox
+          className={className}
+          label="I understand ADA requires Labels on unchecked checkboxes"
+        />
+        <Checkbox
+          className={className}
+          defaultChecked
+          label="I understand ADA requires Labels on checked checkboxes"
+        />
+        <Checkbox
+          className={className}
+          defaultChecked
+          indeterminate
+          label="I understand ADA requires Labels on indeterminate checkboxes"
+        />
+        <Checkbox
+          className={className}
+          disabled
+          label="I understand ADA requires Labels on indeterminate checkboxes"
+        />
+      </CheckboxGroup>
     </QAContainer>
   );
 };

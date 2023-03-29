@@ -1,79 +1,159 @@
 import { clsx } from "clsx";
-import { forwardRef, useContext } from "react";
-import { createChainedFunction } from "@salt-ds/core";
-import { ControlLabel, ControlLabelProps } from "../control-label";
-import { CheckboxBase, CheckboxBaseProps } from "./CheckboxBase";
-import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
+import {
+  ChangeEventHandler,
+  FocusEventHandler,
+  forwardRef,
+  InputHTMLAttributes,
+  ReactNode,
+} from "react";
+import { makePrefixer, useControlled } from "@salt-ds/core";
+import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./Checkbox.css";
+import { useCheckboxGroup } from "./internal/useCheckboxGroup";
 
-export interface CheckboxProps extends CheckboxBaseProps {
-  label?: ControlLabelProps["label"];
-  LabelProps?: Partial<ControlLabelProps>;
+const withBaseName = makePrefixer("saltCheckbox");
+
+export interface CheckboxProps
+  extends Omit<
+    InputHTMLAttributes<HTMLLabelElement>,
+    "onChange" | "onBlur" | "onFocus"
+  > {
+  /**
+   * If `true`, the checkbox will be checked.
+   */
+  checked?: boolean;
+  /**
+   * Whether the checkbox component is checked by default
+   * This will be disregarded if checked is already set.
+   */
+  defaultChecked?: boolean;
+  /**
+   * If `true`, the checkbox will be disabled.
+   */
+  disabled?: boolean;
+  /**
+   * If `true`, the checkbox will be in the error state.
+   */
+  error?: boolean;
+  /**
+   * If true, the checkbox appears indeterminate. This does not set the native
+   * input element to indeterminate due to the inconsistent behaviour across browsers
+   * However, a data-indeterminate attribute is set on the input.
+   */
+  indeterminate?: boolean;
+  /**
+   * Properties applied to the input element.
+   */
+  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
+  /**
+   * The label to be shown next to the checkbox.
+   */
+  label?: ReactNode;
+  /**
+   * The name applied to the input.
+   */
+  name?: string;
+  /**
+   * Callback when checkbox loses focus.
+   */
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * Callback when checked state is changed.
+   */
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  /**
+   * Callback when checkbox gains focus.
+   */
+  onFocus?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * The value of the checkbox.
+   */
+  value?: string;
 }
 
-const classBase = "saltCheckbox";
-
-export const Checkbox = forwardRef<HTMLDivElement, CheckboxProps>(
-  function Checkbox(props, ref) {
-    const {
+export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
+  function Checkbox(
+    {
       checked: checkedProp,
       className,
-      defaultChecked: defaultCheckedProp,
+      defaultChecked,
       disabled,
+      error,
       indeterminate,
       inputProps,
       label,
-      LabelProps,
+      name,
+      onBlur,
       onChange,
+      onFocus,
       value,
       ...rest
-    } = props;
+    },
+    ref
+  ) {
+    const checkboxGroup = useCheckboxGroup();
 
-    const groupContext = useContext(CheckboxGroupContext);
-
-    const handleChange = createChainedFunction(
-      onChange,
-      groupContext?.onChange
-    );
-
-    let checked = checkedProp;
-    let defaultChecked = defaultCheckedProp;
-
-    if (groupContext) {
-      if (typeof checked === "undefined" && typeof value === "string") {
-        checked = groupContext?.checkedValues?.includes(value);
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+      // Workaround for https://github.com/facebook/react/issues/9023
+      if (event.nativeEvent.defaultPrevented) {
+        return;
       }
 
-      defaultChecked = undefined;
-    }
+      const value = event.target.checked;
+      setChecked(value);
+      onChange?.(event);
+      checkboxGroup.onChange?.(event);
+    };
+
+    const checkboxGroupChecked =
+      checkedProp == null && value != null
+        ? checkboxGroup.checkedValues?.includes(value)
+        : checkedProp;
+
+    const [checked, setChecked] = useControlled({
+      controlled: checkboxGroupChecked,
+      default: Boolean(defaultChecked),
+      name: "Checkbox",
+      state: "checked",
+    });
 
     return (
-      <div
-        {...rest}
-        className={clsx(classBase, className, {
-          [`${classBase}-disabled`]: disabled,
-        })}
-        data-testid="checkbox"
+      <label
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("error")]: error,
+          },
+          className
+        )}
         ref={ref}
+        {...rest}
       >
-        <ControlLabel
-          {...LabelProps}
-          className={`${classBase}-label`}
+        <input
+          aria-checked={indeterminate ? "mixed" : checked}
+          name={name}
+          value={value}
+          {...inputProps}
+          checked={checked}
+          className={withBaseName("input")}
+          data-indeterminate={indeterminate}
+          defaultChecked={defaultChecked}
           disabled={disabled}
-          label={label}
-          labelPlacement={"right"}
-        >
-          <CheckboxBase
-            checked={checked}
-            disabled={disabled}
-            defaultChecked={defaultChecked}
-            indeterminate={indeterminate}
-            onChange={handleChange}
-            value={value}
-          />
-        </ControlLabel>
-      </div>
+          onBlur={onBlur}
+          onChange={handleChange}
+          onFocus={onFocus}
+          type="checkbox"
+        />
+        <CheckboxIcon
+          checked={checked}
+          disabled={disabled}
+          error={error}
+          indeterminate={indeterminate}
+        />
+        {label}
+      </label>
     );
   }
 );
