@@ -136,8 +136,8 @@
   flex-grow: 1;
   font-weight: var(--saltPill-fontWeight, var(--salt-text-fontWeight));
   overflow: hidden;
-  padding-left: var(--saltPill-label-paddingLeft, calc(var(--salt-size-unit) * 0.75));
-  padding-right: var(--saltPill-label-paddingRight, calc(var(--salt-size-unit) * 0.75));
+  padding-left: var(--saltPill-label-paddingLeft, var(--salt-size-adornmentGap));
+  padding-right: var(--saltPill-label-paddingRight, var(--salt-size-adornmentGap));
   pointer-events: none;
   text-align: center;
   text-overflow: ellipsis;
@@ -206,7 +206,7 @@
 .saltPill .saltPill-icon {
   fill: var(--pill-icon-color);
   height: 12px; /* TODO: Replace with updated size */
-  margin-left: calc(var(--salt-size-unit) * 0.75);
+  margin-left: var(--salt-size-adornmentGap);
   margin-right: calc(var(--salt-size-unit) * 0.5);
 }
 

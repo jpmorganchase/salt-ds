@@ -36,7 +36,7 @@
   /* TODO: use odyssey breakpoints? */
   .featuresContainerWrapper {
     max-width: none;
-    margin-top: calc(var(--salt-size-unit) * 3);
+    margin-top: var(--salt-size-container-spacing);
     padding: calc(var(--salt-size-unit) * 3) calc(var(--salt-size-unit) * 2);
   }
 }
