@@ -66,7 +66,7 @@
 }
 
 .flow-layout-container {
-  padding: calc(var(--salt-size-unit) * 2) calc(var(--salt-size-unit) * 3);
+  padding: calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing);
   background-color: var(--salt-container-secondary-background);
 }
 
@@ -99,11 +99,11 @@
 
 .border-layout-button-container,
 .flow-layout-form-container {
-  padding: calc(var(--salt-size-unit) * 2) calc(var(--salt-size-unit) * 3);
+  padding: calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing);
 }
 
 .border-layout-pill {
-  margin: calc(var(--salt-size-unit) * 2) calc(var(--salt-size-unit) * 3);
+  margin: calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing);
   --saltPill-background: var(--salt-status-success-foreground);
   --saltPill-text-color: var(--salt-color-white);
   --saltPill-borderRadius: 10px;
@@ -124,18 +124,18 @@
 }
 
 .border-layout-contacts {
-  padding: calc(var(--salt-size-unit) * 3) 0 calc(var(--salt-size-unit) * 3) 0;
+  padding: var(--salt-size-container-spacing) 0 var(--salt-size-container-spacing) 0;
 }
 
 .border-layout-contacts h2 {
   margin-top: 0;
-  margin-bottom: calc(var(--salt-size-unit) * 3);
+  margin-bottom: var(--salt-size-container-spacing);
 }
 
 .border-layout-contacts-footer {
   border-top: 1px solid;
   border-color: var(--salt-separable-secondary-borderColor);
-  padding: calc(var(--salt-size-unit) * 3) 0 calc(var(--salt-size-unit) * 2) 0;
+  padding: var(--salt-size-container-spacing) 0 calc(var(--salt-size-unit) * 2) 0;
   text-align: center;
 }
 
@@ -175,7 +175,7 @@
 }
 
 .grid-blog-container {
-  padding: calc(var(--salt-size-unit) * 3);
+  padding: var(--salt-size-container-spacing);
 }
 
 .grid-blog-container .saltCard {
@@ -185,7 +185,7 @@
 .parent-child-composite-container {
   max-width: 1200px;
   min-height: 800px;
-  padding: calc(var(--salt-size-unit) * 3);
+  padding: var(--salt-size-container-spacing);
 }
 
 .parent-child-composite-container h2 {
@@ -193,7 +193,7 @@
 }
 
 .parent-child-composite-title {
-  margin-bottom: calc(var(--salt-size-unit) * 3);
+  margin-bottom: var(--salt-size-container-spacing);
 }
 
 .parent-child-composite-empty-container {
@@ -208,7 +208,7 @@
 
 .parent-child-composite-container {
   max-width: 1200px;
-  padding: calc(var(--salt-size-unit) * 3);
+  padding: var(--salt-size-container-spacing);
 }
 
 .parent-child-composite-container h2 {
@@ -216,7 +216,7 @@
 }
 
 .parent-child-composite-title {
-  margin-bottom: calc(var(--salt-size-unit) * 3);
+  margin-bottom: var(--salt-size-container-spacing);
 }
 
 .parent-child-composite-empty-container {

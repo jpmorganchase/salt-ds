@@ -4,7 +4,7 @@
   height: 100vh;
   position: sticky;
   padding-left: calc(5 * var(--salt-size-unit));
-  padding-top: calc(3 * var(--salt-size-unit));
+  padding-top: var(--salt-size-container-spacing);
   top: calc(var(--ifm-navbar-height) + var(--salt-size-unit));
   width: 282px;
 }

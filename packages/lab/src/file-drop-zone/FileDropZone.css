@@ -6,7 +6,7 @@
   --fileDropZone-borderStyle: var(--salt-target-borderStyle);
   --fileDropZone-text-color: var(--salt-text-primary-foreground);
   --fileDropZone-icon-color: var(--salt-text-primary-foreground);
-  --fileDropZone-padding: calc(var(--salt-size-unit) * 3);
+  --fileDropZone-padding: var(--salt-size-container-spacing);
   --fileDropZone-title-fontSize: var(--salt-text-fontSize);
   --fileDropZone-title-lineHeight: var(--salt-text-lineHeight);
 }
