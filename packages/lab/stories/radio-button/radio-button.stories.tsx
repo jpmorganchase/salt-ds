@@ -154,7 +154,7 @@ export const LongTextGroup: ComponentStory<typeof RadioButtonGroup> = () => (
 
 export const ADAExample = () => (
   <>
-    <Link>Link for testing</Link>
+    <Link href="google.com">Link for testing</Link>
     <RadioButtonGroup>
       <RadioButton key="option1" label="Radio Option 1" value="option1" />
       <RadioButton
