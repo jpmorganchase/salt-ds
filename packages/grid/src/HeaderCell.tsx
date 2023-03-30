@@ -87,6 +87,8 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       ? SortOrder.NONE
       : SortOrder.ASC;
 
+  const withSortOrder = sortOrder !== SortOrder.NONE && sortByColumnId === id;
+
   const onClick = () => {
     if (onSortOrderChange) {
       setSortByColumnId(id);
@@ -129,6 +131,10 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       <div
         className={clsx(withBaseName("valueContainer"), {
           [withBaseName("alignRight")]: valueAlignRight,
+          [withBaseName("alignRightWithSortOrder")]:
+            valueAlignRight && withSortOrder,
+          [withBaseName("alignLeftWithSortOrder")]:
+            !valueAlignRight && withSortOrder,
         })}
         onMouseDown={onMouseDown}
       >
