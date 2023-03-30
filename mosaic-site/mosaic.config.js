@@ -8,7 +8,18 @@ const mosaicConfig = require("@jpmorganchase/mosaic-standard-generator/dist/fs.c
  * plugins: <...plugin definitions>
  * sources: <...source definitions>
  */
-module.exports = deepmerge(mosaicConfig, {
+const saltConfig = {
+  ...mosaicConfig,
+  plugins: [
+    ...mosaicConfig.plugins,
+    {
+      modulePath: "@jpmorganchase/mosaic-plugins/SidebarPlugin",
+      options: { rootDirGlob: "*/*" },
+    },
+  ],
+};
+
+module.exports = deepmerge(saltConfig, {
   deployment: { mode: "snapshot-file", platform: "vercel" },
   sources: [
     {
