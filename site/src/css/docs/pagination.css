@@ -1,12 +1,12 @@
 .docs-wrapper .pagination-nav {
   --ifm-link-decoration: none;
   background-color: #10212b;
-  padding: 0 calc(var(--salt-size-unit) * 3);
+  padding: 0 var(--salt-size-container-spacing);
   margin-top: 0;
 }
 
 .docs-wrapper .pagination-nav__link {
-  padding: calc(var(--salt-size-unit) * 3);
+  padding: var(--salt-size-container-spacing);
   text-align: left;
   border: none;
   border-radius: unset;

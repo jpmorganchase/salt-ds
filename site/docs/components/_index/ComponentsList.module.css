@@ -1,5 +1,5 @@
 .componentList {
-  margin: calc(var(--salt-size-unit) * 3) 0;
+  margin: var(--salt-size-container-spacing) 0;
 }
 
 .componentList table {
