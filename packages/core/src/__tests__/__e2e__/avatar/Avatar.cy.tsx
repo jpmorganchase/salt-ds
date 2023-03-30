@@ -10,33 +10,37 @@ describe("Given an Avatar", () => {
   describe("WHEN the default is left without children", () => {
     it("should show the default fallback icon", () => {
       cy.mount(<Default />);
-      cy.get('[data-testid="UserSolidIcon"]').should("have.length", 4);
+      cy.findByTestId("UserSolidIcon").should("exist");
     });
   });
   describe("WHEN only a name is provided", () => {
     it("should show the initials", () => {
       cy.mount(<Default name="Juanito Jones" />);
-      cy.findAllByText("JJ").should("have.length", 4);
+      cy.findByRole("img").should("exist");
+      cy.findByRole("img").should("have.attr", "aria-label", "Juanito Jones");
+      cy.findByText("JJ").should("exist");
     });
   });
   describe("WHEN a src image fails to load or is provided empty", () => {
     it("should show the initials", () => {
-      cy.mount(<Default src={""} name="Juanito Jones" />);
-      cy.findAllByText("JJ").should("have.length", 4);
+      cy.mount(<Default src={"bad_url"} name="Juanito Jones" />);
+      cy.findByRole("img").should("exist");
+      cy.findByRole("img").should("have.attr", "aria-label", "Juanito Jones");
     });
     it("should show the default if there are no initials", () => {
-      cy.mount(<Default src={""} />);
-      cy.get('[data-testid="UserSolidIcon"]').should("have.length", 4);
+      cy.mount(<Default src={"bad_url"} />);
+      cy.findByTestId("UserSolidIcon").should("exist");
+      cy.findByRole("img").should("have.attr", "aria-label", "User Avatar");
     });
   });
   describe("WHEN an image is provided", () => {
     it("should show an image with the src", () => {
       cy.mount(
         <Default>
-          <img src={"blah.png"} alt="profile" />
+          <img src={"blah.png"} alt="" />
         </Default>
       );
-      cy.findAllByRole("img").should("have.length", 4);
+      cy.findAllByRole("img").should("exist");
       cy.findAllByRole("img").eq(0).should("have.attr", "src", "blah.png");
     });
   });
@@ -45,7 +49,7 @@ describe("Given an Avatar", () => {
     it("should show the fallback icon when no children are provided", () => {
       const fallbackIcon = <UserGroupSolidIcon />;
       cy.mount(<Default fallbackIcon={fallbackIcon} />);
-      cy.get('[data-testid="UserGroupSolidIcon"]').should("have.length", 4);
+      cy.findByTestId("UserGroupSolidIcon").should("exist");
     });
   });
 });

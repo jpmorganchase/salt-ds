@@ -2,17 +2,16 @@ import { clsx } from "clsx";
 import {
   ChangeEvent,
   ChangeEventHandler,
+  ComponentPropsWithoutRef,
   forwardRef,
-  HTMLAttributes,
-  ReactNode,
 } from "react";
-import { useControlled } from "@salt-ds/core";
-import { FormGroup, FormGroupProps } from "../form-group";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 import "./CheckboxGroup.css";
 
-export interface CheckboxGroupProps extends FormGroupProps {
+export interface CheckboxGroupProps
+  extends Omit<ComponentPropsWithoutRef<"fieldset">, "onChange"> {
   /**
    * The current checked options.
    */
@@ -22,17 +21,9 @@ export interface CheckboxGroupProps extends FormGroupProps {
    */
   defaultCheckedValues?: string[];
   /**
-   * Props spread onto the FormControl component that wraps the checkboxes.
+   * Display group of elements in a compact row.
    */
-  FormControlProps?: Partial<HTMLAttributes<HTMLFieldSetElement>>;
-  /**
-   * Props spread onto the legend.
-   */
-  LegendProps?: unknown;
-  /**
-   * The label for the group legend
-   */
-  legend?: ReactNode;
+  direction?: "horizontal" | "vertical";
   /**
    * The name used to reference the value of the control.
    */
@@ -42,9 +33,13 @@ export interface CheckboxGroupProps extends FormGroupProps {
    * `event.target.value` returns the value of the checkbox that was clicked.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  /**
+   * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise, the checkboxes will wrap onto the next line.
+   */
+  wrap?: boolean;
 }
 
-const classBase = "saltCheckboxGroup";
+const withBaseName = makePrefixer("saltCheckboxGroup");
 
 export const CheckboxGroup = forwardRef<
   HTMLFieldSetElement,
@@ -55,10 +50,10 @@ export const CheckboxGroup = forwardRef<
     defaultCheckedValues = [],
     children,
     className,
-    FormControlProps,
-    row,
+    direction = "vertical",
     name,
     onChange,
+    wrap,
     ...other
   },
   ref
@@ -84,19 +79,23 @@ export const CheckboxGroup = forwardRef<
   };
 
   return (
-    <CheckboxGroupContext.Provider
-      value={{ name, onChange: handleChange, checkedValues }}
+    <fieldset
+      className={clsx(
+        withBaseName(),
+        withBaseName(direction),
+        {
+          [withBaseName("noWrap")]: !wrap,
+        },
+        className
+      )}
+      ref={ref}
+      {...other}
     >
-      <fieldset
-        className={clsx(classBase, {
-          [`${classBase}-horizontal`]: row,
-        })}
-        ref={ref}
+      <CheckboxGroupContext.Provider
+        value={{ name, onChange: handleChange, checkedValues }}
       >
-        <FormGroup className={`${classBase}-formGroup`} row={row} {...other}>
-          {children}
-        </FormGroup>
-      </fieldset>
-    </CheckboxGroupContext.Provider>
+        {children}
+      </CheckboxGroupContext.Provider>
+    </fieldset>
   );
 });

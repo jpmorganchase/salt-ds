@@ -1,3 +1,3 @@
 export const isTransparent = (color?: string): boolean => {
-  return color?.toLowerCase() === "#00000000";
+  return color ? /#[\da-f]{6}00/i.test(color) : false;
 };

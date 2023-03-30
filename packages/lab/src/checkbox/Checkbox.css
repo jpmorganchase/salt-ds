@@ -1,43 +1,35 @@
 /* Styles applied to root component */
-.salt-density-medium {
-  --checkbox-fontSize: 12px;
-}
-.salt-density-touch {
-  --checkbox-fontSize: 16px;
-}
-.salt-density-low {
-  --checkbox-fontSize: 14px;
-}
-.salt-density-high {
-  --checkbox-fontSize: 11px;
-}
 
 .saltCheckbox {
-  --checkbox-label-marginTop: calc(var(--salt-size-unit) * var(--checkbox-top-multiplier));
-  --checkbox-space-multiplier: var(--saltCheckbox-space-multiplier, 3);
-  --checkbox-top-multiplier: var(--saltCheckbox-top-multiplier, 0.75);
-}
-
-.saltCheckbox {
-  line-height: var(--saltCheckbox-lineHeight, 1);
+  cursor: var(--salt-selectable-cursor-hover);
+  background: var(--saltCheckbox-background, none);
+  display: flex;
+  gap: var(--saltCheckbox-gap, calc(var(--salt-size-unit) * 0.75));
+  position: relative;
+  width: fit-content;
 }
 
 /* Styles applied to root component if `disabled={true}` */
 .saltCheckbox-disabled {
   pointer-events: visible;
+  color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
-/* Styles applied to label element */
-.saltCheckbox-label {
-  align-items: flex-start;
-  margin-top: var(--checkbox-label-marginTop);
+/* Styles applied to the icon component if focused */
+.saltCheckbox-input:focus-visible + .saltCheckboxIcon {
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline: var(--salt-focused-outline);
 }
 
-.saltCheckbox .saltControlLabel-label {
-  vertical-align: baseline;
-  min-height: var(--saltCheckbox-label-minHeight, var(--salt-text-minHeight));
-}
-
-.saltCheckbox-disabled {
-  --saltControlLabel-color: var(--salt-text-primary-foreground-disabled);
+/* Styles applied to input element */
+.saltCheckbox-input {
+  cursor: inherit;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  z-index: var(--salt-zIndex-default);
 }

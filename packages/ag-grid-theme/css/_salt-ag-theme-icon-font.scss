@@ -25,7 +25,7 @@ $icons: (
 
 @font-face {
   font-family: "jpmuitk-icons";
-  src: url("fonts/jpmuitk-icons.woff") format("woff");
+  src: url("../fonts/jpmuitk-icons.woff") format("woff");
 }
 
 @each $name, $glyph in $icons {

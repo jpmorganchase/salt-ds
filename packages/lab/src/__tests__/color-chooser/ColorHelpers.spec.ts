@@ -51,6 +51,24 @@ describe("Color chooser helpers", () => {
     it("should just return the hex value with no alpha if it is not a Salt color and alpha slider is disabled", () => {
       expect(getColorNameByHexValue("#D1F4C780", true)).toEqual("#D1F4C7");
     });
+
+    describe("WHEN disableFallBackToHex", () => {
+      it("should get the correct Salt color name if passed 6 digit hex", () => {
+        expect(
+          getColorNameByHexValue("#D1F4C9", false, undefined, true)
+        ).toEqual("Green10");
+      });
+      it("should get the correct Salt color name if passed 8 digit hex", () => {
+        expect(
+          getColorNameByHexValue("#D1F4C980", false, undefined, true)
+        ).toEqual("Green10");
+      });
+      it("should just return undefined if it is not a Salt color and alpha slider is disabled", () => {
+        expect(
+          getColorNameByHexValue("#D1F4C780", true, undefined, true)
+        ).toBeUndefined();
+      });
+    });
   });
   describe("convertColorMapValueToHex", () => {
     it("Should convert rgb string into hex value", () => {

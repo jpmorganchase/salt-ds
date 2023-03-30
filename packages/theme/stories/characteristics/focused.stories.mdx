@@ -1,12 +1,7 @@
 import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
-import {
-  LineBlock,
-  LineBlockCell,
-  LineBlockCode,
-  LineBlockDotted,
-} from "docs/components/LineBlock";
+import { LineBlock } from "docs/components/LineBlock";
 import { BlankBlockCell, BlankBlockCode } from "docs/components/BlankBlock";
 import { OutlineBlock } from "docs/components/OutlineBlock";
 import { BorderBlock } from "docs/components/BorderBlock";
@@ -27,8 +22,12 @@ The following variables can be used on their own, but make up parts of the more 
   <Story name="Base">
     <DocGrid>
       <ColorBlock colorVar="--salt-focused-outlineColor" />
-      <LineBlock lineWidth="--salt-focused-outlineWidth" />
-      <LineBlockDotted
+      <LineBlock
+        token="--salt-focused-outlineWidth"
+        lineWidth="--salt-focused-outlineWidth"
+      />
+      <LineBlock
+        token="--salt-focused-outlineStyle"
         lineWidth="--salt-focused-outlineWidth"
         lineStyle="--salt-focused-outlineStyle"
       />
