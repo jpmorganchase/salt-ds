@@ -42,7 +42,7 @@ export const AllCountrySymbolsWithSearch: ComponentStory<
   const [inputText, setInputText] = useState("");
 
   return (
-    <Suspense>
+    <Suspense fallback="Loading...">
       <StackLayout separators>
         <FormField
           label={"Search country symbols"}
