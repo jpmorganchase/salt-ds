@@ -159,7 +159,7 @@
   display: none;
 }
 .docPaginator a[role="link"] {
-  padding: var(--salt-size-container-spacing);
+  padding: calc(var(--salt-size-unit) * 3);
 }
 
 @media screen and (max-width: 768px) {
