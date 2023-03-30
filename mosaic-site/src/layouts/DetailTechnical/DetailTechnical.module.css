@@ -60,6 +60,9 @@
 }
 
 .sidebar aside {
+  align-self: flex-start;
+  position: sticky;
+  top: 44px;
   width: var(--toc-width);
   padding-top: calc(3 * var(--salt-size-unit));
   padding-left: calc(5 * var(--salt-size-unit));
