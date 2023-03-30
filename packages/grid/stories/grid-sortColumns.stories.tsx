@@ -73,6 +73,7 @@ function SortColumnsImpl() {
     <div
       style={{
         position: "relative",
+        // @ts-ignore
         "--salt-overlayable-background":
           "var(--salt-color-gray-20-fade-background-readonly)",
       }}
