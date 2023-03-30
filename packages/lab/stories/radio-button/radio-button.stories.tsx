@@ -43,12 +43,7 @@ export const VerticalGroup = () => (
   <RadioButtonGroup>
     <RadioButton key="option1" label="Radio Option 1" value="option1" />
     <RadioButton key="option2" label="Radio Option 2" value="option2" />
-    <RadioButton
-      disabled
-      key="option3"
-      label="Radio Option 3 (disabled)"
-      value="option3"
-    />
+    <RadioButton key="option3" label="Radio Option 3" value="option3" />
   </RadioButtonGroup>
 );
 
@@ -56,12 +51,7 @@ export const HorizontalGroup = () => (
   <RadioButtonGroup direction={"horizontal"}>
     <RadioButton key="option1" label="Radio Option 1" value="option1" />
     <RadioButton key="option2" label="Radio Option 2" value="option2" />
-    <RadioButton
-      disabled
-      key="option3"
-      label="Radio Option 3 (disabled)"
-      value="option3"
-    />
+    <RadioButton key="option3" label="Radio Option 3" value="option3" />
   </RadioButtonGroup>
 );
 
