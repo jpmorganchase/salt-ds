@@ -524,7 +524,7 @@ const sizes = [1, 2, 3] as const;
 
 export const AllCountrySymbols: Story = () => {
   return (
-    <Fragment>
+    <div>
       {sizes.map((size) => (
         <div
           style={{
@@ -539,7 +539,7 @@ export const AllCountrySymbols: Story = () => {
           ))}
         </div>
       ))}
-    </Fragment>
+    </div>
   );
 };
 
