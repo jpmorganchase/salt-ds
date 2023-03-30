@@ -131,6 +131,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       <div
         className={clsx(withBaseName("valueContainer"), {
           [withBaseName("alignRight")]: valueAlignRight,
+          // both classNames below needed to ensure header cell title & sort icon do not overlap when column resized to be smaller
           [withBaseName("alignRightWithSortOrder")]:
             valueAlignRight && withSortOrder,
           [withBaseName("alignLeftWithSortOrder")]:
