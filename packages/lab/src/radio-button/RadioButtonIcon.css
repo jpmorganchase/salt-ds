@@ -1,7 +1,7 @@
 /* Styles applied to radio button icon */
 .saltRadioButtonIcon {
-  --radioButton-icon-strokeColor-error: var(--saltRadioButton-icon-strokeColor-error, var(--salt-status-error-borderColor));
-  --radioButton-icon-strokeColor-error-disabled: var(--saltRadioButton-icon-strokeColor-error-disabled, var(--salt-status-error-borderColor-disabled));
+  --radioButton-strokeColor-error: var(--salt-status-error-borderColor);
+  --radioButton-strokeColor-error-disabled: var(--salt-status-error-borderColor-disabled);
 
   width: var(--salt-size-selectable);
   height: var(--salt-size-selectable);
@@ -12,78 +12,78 @@
 
 /* Styles applied to radio button icon circle */
 .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-fill, var(--salt-container-primary-background));
-  stroke: var(--saltRadioButton-icon-strokeColor, var(--salt-selectable-borderColor));
+  fill: var(--saltRadioButton-fill, var(--salt-container-primary-background));
+  stroke: var(--saltRadioButton-strokeColor, var(--salt-selectable-borderColor));
   stroke-width: var(--salt-size-border);
 }
 
 /* Styles applied to radio button icon on hover */
 .saltRadioButton:hover .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-fill-hover, var(--salt-selectable-background-hover));
-  stroke: var(--saltRadioButton-icon-strokeColor-hover, var(--salt-selectable-borderColor-hover));
+  fill: var(--saltRadioButton-fill-hover, var(--salt-selectable-background-hover));
+  stroke: var(--saltRadioButton-strokeColor-hover, var(--salt-selectable-borderColor-hover));
 }
 
 /* Styles applied to radio button icon if checked */
 .saltRadioButtonIcon-checked .saltRadioButtonIcon-circle,
 .saltRadioButton:hover .saltRadioButtonIcon-checked .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-fill-checked, var(--salt-selectable-foreground-selected));
-  stroke: var(--saltRadioButton-icon-strokeColor-checked, var(--salt-selectable-borderColor-selected));
+  fill: var(--saltRadioButton-fill-checked, var(--salt-selectable-foreground-selected));
+  stroke: var(--saltRadioButton-strokeColor-checked, var(--salt-selectable-borderColor-selected));
   stroke-width: var(--salt-size-border);
 }
 
 /* Styles applied to radio button icon if disabled */
 .saltRadioButtonIcon-disabled .saltRadioButtonIcon-circle,
 .saltRadioButton:hover .saltRadioButtonIcon-disabled .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-fill-disabled, var(--salt-selectable-background));
-  stroke: var(--saltRadioButton-icon-strokeColor-disabled, var(--salt-selectable-borderColor-disabled));
+  fill: var(--saltRadioButton-fill-disabled, var(--salt-selectable-background));
+  stroke: var(--saltRadioButton-strokeColor-disabled, var(--salt-selectable-borderColor-disabled));
 }
 
 /* Styles applied to radio button icon if checked and disabled */
 .saltRadioButtonIcon-disabled.saltRadioButtonIcon-checked .saltRadioButtonIcon-circle,
 .saltRadioButton:hover .saltRadioButtonIcon-disabled.saltRadioButtonIcon-checked .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-fill-checked-disabled, var(--salt-container-primary-background-disabled));
-  stroke: var(--saltRadioButton-icon-strokeColor-checked-disabled, var(--salt-selectable-borderColor-selectedDisabled));
+  fill: var(--saltRadioButton-fill-checked-disabled, var(--salt-container-primary-background-disabled));
+  stroke: var(--saltRadioButton-strokeColor-checked-disabled, var(--salt-selectable-borderColor-selectedDisabled));
   stroke-width: calc(var(--salt-size-border) * 6.5);
 }
 
 /* Styles applied to radio button icon with error */
 .saltRadioButtonIcon-error .saltRadioButtonIcon-circle,
 .saltRadioButton:hover .saltRadioButtonIcon-error .saltRadioButtonIcon-circle {
-  stroke: var(--radioButton-icon-strokeColor-error);
+  stroke: var(--saltRadioButton-strokeColor-error, var(--radioButton-strokeColor-error));
 }
 
 .saltRadioButton:hover .saltRadioButtonIcon-error .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-fill-error-hover, var(--salt-status-error-background-emphasize));
+  fill: var(--saltRadioButton-fill-error-hover, var(--salt-status-error-background-emphasize));
 }
 
 /* Styles applied to radio button icon with error and disabled */
 .saltRadioButtonIcon-error.saltRadioButtonIcon-disabled .saltRadioButtonIcon-circle,
 .saltRadioButton:hover .saltRadioButtonIcon-error.saltRadioButtonIcon-disabled .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-fill-disabled, var(--salt-selectable-background));
-  stroke: var(--radioButton-icon-strokeColor-error-disabled);
+  fill: var(--saltRadioButton-fill-disabled, var(--salt-selectable-background));
+  stroke: var(--saltRadioButton-strokeColor-error-disabled, var(--radioButton-strokeColor-error-disabled));
 }
 
 /* Styles applied to radio button icon when checked and with error */
 .saltRadioButtonIcon-checked.saltRadioButtonIcon-error .saltRadioButtonIcon-circle,
 .saltRadioButton:hover .saltRadioButtonIcon-checked.saltRadioButtonIcon-error .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-fill-error, var(--salt-status-error-foreground));
-  stroke: var(--radioButton-icon-strokeColor-error);
+  fill: var(--saltRadioButton-fill-error, var(--salt-status-error-foreground));
+  stroke: var(--saltRadioButton-strokeColor-error, var(--radioButton-strokeColor-error));
 }
 
 /* Styles applied to radio button icon when checked and with error and disabled */
 .saltRadioButtonIcon-disabled.saltRadioButtonIcon-checked.saltRadioButtonIcon-error .saltRadioButtonIcon-circle,
 .saltRadioButton:hover .saltRadioButtonIcon-disabled.saltRadioButtonIcon-checked.saltRadioButtonIcon-error .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-fill-checked-disabled, var(--salt-container-primary-background-disabled));
-  stroke: var(--radioButton-icon-strokeColor-error-disabled);
+  fill: var(--saltRadioButton-fill-checked-disabled, var(--salt-container-primary-background-disabled));
+  stroke: var(--saltRadioButton-strokeColor-error-disabled, var(--radioButton-strokeColor-error-disabled));
   stroke-width: calc(var(--salt-size-border) * 6.5);
 }
 
 /* Styles applied to checked inner circle */
 .saltRadioButtonIcon-checked-circle {
-  fill: var(--saltRadioButton-icon-inner-fill, var(--salt-container-primary-background));
+  fill: var(--saltRadioButton-inner-fill, var(--salt-container-primary-background));
 }
 
 /* Styles applied to checked inner circle when disabled */
 .saltRadioButtonIcon-disabled .saltRadioButtonIcon-checked-circle {
-  fill: var(--saltRadioButton-icon-inner-fill-disabled, var(--salt-container-primary-background-disabled));
+  fill: var(--saltRadioButton-inner-fill-disabled, var(--salt-container-primary-background-disabled));
 }
