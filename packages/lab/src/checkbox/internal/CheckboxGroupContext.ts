@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { CheckboxGroupProps } from "../CheckboxGroup";
 
-interface CheckboxGroupState {
+export interface CheckboxGroupState {
   name?: CheckboxGroupProps["name"];
   onChange?: CheckboxGroupProps["onChange"];
   checkedValues?: CheckboxGroupProps["checkedValues"];
