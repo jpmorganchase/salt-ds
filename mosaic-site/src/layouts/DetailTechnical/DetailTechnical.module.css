@@ -61,7 +61,7 @@
 
 .sidebar aside {
   width: var(--toc-width);
-  padding-top: var(--salt-size-container-spacing);
+  padding-top: calc(3 * var(--salt-size-unit));
   padding-left: calc(5 * var(--salt-size-unit));
   margin-top: 0;
 }
@@ -115,7 +115,7 @@
 
 .docPaginator {
   background-color: var(--card-background);
-  padding: 0 var(--salt-size-container-spacing);
+  padding: 0 calc(var(--salt-size-unit) * 3);
 }
 
 /* TODO: remove these once we add a theme contract */

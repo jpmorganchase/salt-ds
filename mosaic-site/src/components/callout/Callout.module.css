@@ -5,7 +5,7 @@
 .callout hr {
   border: 0;
   margin-bottom: var(--salt-size-unit);
-  margin-top: var(--salt-size-container-spacing);
+  margin-top: calc(3 * var(--salt-size-unit));
   background-color: var(--callout-color);
   height: 3px;
 }

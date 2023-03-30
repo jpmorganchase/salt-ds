@@ -87,12 +87,12 @@
 
 @media screen and (max-width: 996px) {
   .accordionWrapper {
-    padding: var(--salt-size-unit) var(--salt-size-unit) var(--salt-size-container-spacing) var(--salt-size-unit);
+    padding: var(--salt-size-unit) var(--salt-size-unit) calc(var(--salt-size-unit) * 3) var(--salt-size-unit);
   }
 
   .keyline {
     left: calc(-1 * var(--salt-size-unit));
-    top: var(--salt-size-container-spacing);
+    top: calc(var(--salt-size-unit) * 3);
   }
 
   .accordionIllustration {
