@@ -11,7 +11,7 @@
 
 .navbar-sidebar .navbar-sidebar__item .menu__list .menu__link {
   --ifm-menu-link-padding-vertical: var(--salt-size-unit);
-  --ifm-menu-link-padding-horizontal: calc(var(--salt-size-container-padding) - var(--sidebar-border-left-width));
+  --ifm-menu-link-padding-horizontal: calc(var(--salt-size-container-spacing) - var(--sidebar-border-left-width));
 
   border-radius: 0;
 }

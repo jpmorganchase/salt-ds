@@ -37,7 +37,7 @@
   white-space: normal;
 }
 .carousel-image-placeholder span {
-  padding: var(--salt-size-container-padding);
+  padding: var(--salt-size-container-spacing);
 }
 
 .carousel-image-placeholder-1 {

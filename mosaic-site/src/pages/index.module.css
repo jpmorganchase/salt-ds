@@ -114,7 +114,7 @@
 
   .cardContainer {
     flex-direction: column;
-    padding: var(--salt-size-container-padding) calc(var(--salt-size-unit) * 2);
+    padding: var(--salt-size-container-spacing) calc(var(--salt-size-unit) * 2);
     gap: calc(var(--salt-size-unit) * 2);
   }
 }

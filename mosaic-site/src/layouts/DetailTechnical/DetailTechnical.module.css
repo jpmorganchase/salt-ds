@@ -61,7 +61,7 @@
 
 .sidebar aside {
   width: var(--toc-width);
-  padding-top: var(--salt-size-container-padding);
+  padding-top: var(--salt-size-container-spacing);
   padding-left: calc(5 * var(--salt-size-unit));
   margin-top: 0;
 }
@@ -115,7 +115,7 @@
 
 .docPaginator {
   background-color: var(--card-background);
-  padding: 0 var(--salt-size-container-padding);
+  padding: 0 var(--salt-size-container-spacing);
 }
 
 /* TODO: remove these once we add a theme contract */
@@ -159,7 +159,7 @@
   display: none;
 }
 .docPaginator a[role="link"] {
-  padding: var(--salt-size-container-padding);
+  padding: var(--salt-size-container-spacing);
 }
 
 @media screen and (max-width: 768px) {

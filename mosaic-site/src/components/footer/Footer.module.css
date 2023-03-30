@@ -1,6 +1,6 @@
 .footer {
   --footer-items-separator-height: 16px;
-  --footer-padding-horizontal: var(--salt-size-container-padding);
+  --footer-padding-horizontal: var(--salt-size-container-spacing);
   --footer-padding-vertical: var(--salt-size-unit);
 }
 

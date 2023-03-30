@@ -4,4 +4,4 @@
 "@salt-ds/theme": minor
 ---
 
-New `--salt-size-container-padding` and `--salt-size-adornmentGap` tokens
+New `--salt-size-container-spacing` and `--salt-size-adornmentGap` tokens

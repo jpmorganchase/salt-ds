@@ -14,6 +14,6 @@
   color: var(--saltPanel-color, inherit);
   height: var(--saltPanel-height, 100%);
   overflow: auto;
-  padding: var(--saltPanel-padding, var(--salt-size-container-padding));
+  padding: var(--saltPanel-padding, var(--salt-size-container-spacing));
   width: var(--saltPanel-width, 100%);
 }

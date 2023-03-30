@@ -9,8 +9,8 @@
 }
 
 .saltColorChooser-overlayButtonSwatchTransparent {
-  height: calc(var(--salt-size-container-padding) - 2px) !important;
-  width: calc(var(--salt-size-container-padding) - 2px) !important;
+  height: calc(var(--salt-size-container-spacing) - 2px) !important;
+  width: calc(var(--salt-size-container-spacing) - 2px) !important;
   border: 1px solid var(--salt-status-negative-foreground);
   /* RGBA using red-700 */
   background: linear-gradient(
@@ -37,7 +37,7 @@
 }
 
 .saltColorChooser-overlayButtonHiddenLabel {
-  width: var(--salt-size-container-padding);
+  width: var(--salt-size-container-spacing);
   display: contents;
 }
 

@@ -3,7 +3,7 @@
   padding-top: calc(var(--salt-size-unit) * 6);
   padding-bottom: calc(var(--salt-size-unit) * 6);
   padding-left: calc(var(--salt-size-unit) * 5);
-  padding-right: var(--salt-size-container-padding);
+  padding-right: var(--salt-size-container-spacing);
   max-width: 75vw;
 }
 
@@ -33,8 +33,8 @@
 @media screen and (max-width: 960px) {
   .featuresContainerWrapper {
     max-width: none;
-    margin-top: var(--salt-size-container-padding);
-    padding: var(--salt-size-container-padding) calc(var(--salt-size-unit) * 2);
+    margin-top: var(--salt-size-container-spacing);
+    padding: var(--salt-size-container-spacing) calc(var(--salt-size-unit) * 2);
   }
 }
 

@@ -7,7 +7,7 @@
 
   --salt-size-adornmentGap: calc(0.75 * var(--salt-size-unit));
   --salt-size-border: 1px;
-  --salt-size-container-padding: calc(3 * var(--salt-size-unit));
+  --salt-size-container-spacing: calc(3 * var(--salt-size-unit));
   --salt-size-separator-strokeWidth: 1px;
   --salt-size-selectable: calc(var(--salt-size-base) - (1.5 * var(--salt-size-unit)) - (0.5 * var(--salt-size-basis-unit)));
   --salt-size-separator-height: calc(var(--salt-size-compact) + 1.5 * var(--salt-size-basis-unit));

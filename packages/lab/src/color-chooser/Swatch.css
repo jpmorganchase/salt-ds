@@ -11,8 +11,8 @@
 .salt-density-medium,
 .salt-density-high {
   --colorChooser-swatch-density-high-size: calc(5 * var(--salt-size-unit));
-  --colorChooser-swatch-density-medium-size: var(--salt-size-container-padding);
-  --colorChooser-swatch-density-low-size: var(--salt-size-container-padding);
+  --colorChooser-swatch-density-medium-size: var(--salt-size-container-spacing);
+  --colorChooser-swatch-density-low-size: var(--salt-size-container-spacing);
   --colorChooser-swatch-density-touch-size: calc(2 * var(--salt-size-unit));
 }
 

@@ -11,7 +11,7 @@
 }
 
 .theme-doc-markdown.markdown > h1:first-child {
-  margin: calc(var(--salt-size-unit) * 7) var(--salt-size-container-padding) calc(var(--salt-size-unit) * 2) var(--salt-size-container-padding);
+  margin: calc(var(--salt-size-unit) * 7) var(--salt-size-container-spacing) calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing);
 }
 
 .theme-code-block {

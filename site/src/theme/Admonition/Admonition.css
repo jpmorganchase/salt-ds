@@ -3,7 +3,7 @@
 }
 .saltAdmonition hr {
   margin-bottom: var(--salt-size-unit);
-  margin-top: var(--salt-size-container-padding);
+  margin-top: var(--salt-size-container-spacing);
 }
 
 .saltAdmonition-info {

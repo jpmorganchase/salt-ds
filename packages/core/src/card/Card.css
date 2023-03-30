@@ -17,7 +17,7 @@
 .saltCard-content {
   color: var(--saltCard-color, var(--salt-text-primary-foreground));
   min-height: var(--salt-text-minHeight);
-  padding: var(--saltCard-padding, var(--salt-size-container-padding));
+  padding: var(--saltCard-padding, var(--salt-size-container-spacing));
 }
 
 /* Styles applied if `interactable={true}` */
