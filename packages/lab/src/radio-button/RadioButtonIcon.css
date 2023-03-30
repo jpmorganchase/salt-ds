@@ -15,7 +15,7 @@
   --radioButtonIcon-strokeColor-error-disabled: var(--salt-status-error-foreground-disabled);
 
   fill: var(--radioButtonIcon-fill);
-  stroke:var(--radioButtonIcon-stroke);
+  stroke: var(--radioButtonIcon-stroke);
   stroke-width: var(--salt-size-border);
 }
 
