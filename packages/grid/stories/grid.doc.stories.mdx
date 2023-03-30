@@ -233,6 +233,20 @@ To trigger edit mode on cells on your:
 - keyboard: press either the `backspace` _or_ `F2` key, _alternatively_ simply start typing
 - mouse: double click
 
+### Column sorting
+
+The grid allows you to sort individual columns on client side or server side, use `sortable`on `GridColumn` component to enable this.
+
+For client side sorting, user could use inbuilt default sort, or provide a custom sorting function through `customSort`, see "Score" column for example.
+
+For server side sorting, we expose sort order (`asc | desc | none`) through `onSortOrderChange`, see "Amount" column for example.
+
+<LazyStoryCanvas>
+  <Canvas>
+    <Story id="data-grid-data-grid--sort-columns" decorators={[withFlexGap]} />
+  </Canvas>
+</LazyStoryCanvas>
+
 ### Pagination
 
 [Implement pagination](https://saltdesignsystem-storybook.pages.dev/?path=/story/lab-pagination--default-pagination) using the `Paginator` component. It is not a feature of the grid itself.
