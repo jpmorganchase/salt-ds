@@ -2,7 +2,7 @@
   --ifm-navbar-height: calc(var(--salt-size-unit) * 5);
   --ifm-navbar-background-color: var(--salt-color-gray-900);
   --ifm-navbar-padding-vertical: var(--salt-size-unit);
-  --ifm-navbar-padding-horizontal: calc(var(--salt-size-unit) * 3);
+  --ifm-navbar-padding-horizontal: var(--salt-size-container-spacing);
   --ifm-link-decoration: none;
 }
 

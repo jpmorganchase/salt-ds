@@ -25,7 +25,7 @@
   color: var(--card-color);
   display: flex;
   flex-direction: column;
-  gap: calc(var(--salt-size-unit) * 3);
+  gap: var(--salt-size-container-spacing);
   flex: 1;
 }
 
@@ -85,7 +85,7 @@
 
 .inlineCardContent {
   display: flex;
-  margin-bottom: calc(var(--salt-size-unit) * 3);
+  margin-bottom: var(--salt-size-container-spacing);
 }
 
 .inlineCardContent .textContainer {
@@ -96,7 +96,7 @@
 }
 
 .inlineCard .cardText {
-  margin: calc(var(--salt-size-unit) * 3) calc(var(--salt-size-unit) * 5) var(--salt-size-unit) calc(var(--salt-size-unit) * 2);
+  margin: var(--salt-size-container-spacing) calc(var(--salt-size-unit) * 5) var(--salt-size-unit) calc(var(--salt-size-unit) * 2);
 }
 
 .inlineCard .cardDescription {
