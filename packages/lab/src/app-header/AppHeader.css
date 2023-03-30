@@ -12,7 +12,7 @@
   --appHeader-background: var(--salt-container-primary-background);
   --appHeader-separable-bar: var(--salt-separable-secondary-borderColor);
   --appHeader-shadow: var(--saltAppHeader-shadow, var(--salt-overlayable-shadow-borderRegion));
-  --appHeader-padding: calc(var(--salt-size-unit) * 3);
+  --appHeader-padding: var(--salt-size-container-padding);
   --appHeader-paddingLeft: 8px;
   --appHeader-paddingRight: var(--appHeader-padding);
 

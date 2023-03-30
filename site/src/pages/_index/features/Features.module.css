@@ -3,7 +3,7 @@
   padding-top: calc(var(--salt-size-unit) * 6);
   padding-bottom: calc(var(--salt-size-unit) * 6);
   padding-left: calc(var(--salt-size-unit) * 5);
-  padding-right: calc(var(--salt-size-unit) * 3);
+  padding-right: var(--salt-size-container-padding);
   max-width: 75vw;
 }
 
@@ -36,8 +36,8 @@
   /* TODO: use odyssey breakpoints? */
   .featuresContainerWrapper {
     max-width: none;
-    margin-top: calc(var(--salt-size-unit) * 3);
-    padding: calc(var(--salt-size-unit) * 3) calc(var(--salt-size-unit) * 2);
+    margin-top: var(--salt-size-container-padding);
+    padding: var(--salt-size-container-padding) calc(var(--salt-size-unit) * 2);
   }
 }
 

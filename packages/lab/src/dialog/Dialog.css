@@ -5,8 +5,8 @@
   --dialog-borderStyle: var(--saltDialog-borderStyle, var(--salt-container-borderStyle));
   --dialog-borderWidth: var(--saltDialog-borderColor, var(--salt-size-border));
   --dialog-boxShadow: var(--saltDialog-boxShadow, var(--salt-overlayable-shadow-modal));
-  --dialog-margin: var(--saltDialog-margin, calc(3 * var(--salt-size-unit)));
-  --dialog-padding: var(--saltDialog-padding, calc(3 * var(--salt-size-unit)));
+  --dialog-margin: var(--saltDialog-margin, var(--salt-size-container-padding));
+  --dialog-padding: var(--saltDialog-padding, var(--salt-size-container-padding));
 }
 
 .saltDialog {

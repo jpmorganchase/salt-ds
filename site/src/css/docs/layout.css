@@ -31,7 +31,7 @@
 
 .docs-page-content {
   --ifm-list-margin: calc(var(--salt-size-unit) * 2);
-  padding: calc(var(--salt-size-unit) * 3);
+  padding: var(--salt-size-container-padding);
   max-width: var(--max-content-width);
 }
 

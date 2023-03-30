@@ -1,7 +1,7 @@
 .saltColorChooserHexInput {
   display: flex;
   flex-direction: row;
-  padding: 0px 0px calc(3 * var(--salt-size-unit)) 0px;
+  padding: 0px 0px var(--salt-size-container-padding) 0px;
 }
 
 .saltColorChooserHexInput-hashSign {

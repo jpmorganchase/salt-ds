@@ -2,7 +2,7 @@
   --ifm-footer-background-color: var(--salt-color-gray-900);
   --ifm-footer-link-color: var(--salt-text-secondary-foreground);
   --footer-items-separator-height: 16px;
-  --ifm-footer-padding-horizontal: calc(var(--salt-size-unit) * 3);
+  --ifm-footer-padding-horizontal: var(--salt-size-container-padding);
   --ifm-footer-padding-vertical: calc(var(--salt-size-unit) * 1);
 }
 
