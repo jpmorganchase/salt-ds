@@ -17,35 +17,35 @@ export interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
     Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
-   * The children will be the tooltip's trigger.
+   * The children will be the Tooltip's trigger.
    */
   children: ReactNode;
   /**
-   * Whether to hide the tooltip arrow. Defaults to `false`.
+   * Whether to hide the Tooltip arrow. Defaults to `false`.
    */
   hideArrow?: boolean;
   /**
-   * Whether to hide the status icon within the tooltip. Defaults to `false`.
+   * Whether to hide the status icon within the Tooltip. Defaults to `false`.
    */
   hideIcon?: boolean;
   /**
-   * Content displayed inside the tooltip. Can be a string or a React component.
+   * Content displayed inside the Tooltip. Can be a string or a React component.
    */
   content: ReactNode;
   /**
-   * A string to determine the status of the tooltip. Defaults to `info`.
+   * A string to determine the status of the Tooltip. Defaults to `info`.
    */
   status?: ValidationStatus;
   /**
-   * Delay in milliseconds before the tooltip is shown.
+   * Delay in milliseconds before the Tooltip is shown.
    */
   enterDelay?: number;
   /**
-   * Delay in milliseconds before the tooltip is hidden.
+   * Delay in milliseconds before the Tooltip is hidden.
    */
   leaveDelay?: number;
   /**
-   * Option to not display the tooltip. Can be used in conditional situations like text truncation.
+   * Option to not display the Tooltip. Can be used in conditional situations like text truncation.
    */
   disabled?: boolean;
   /**

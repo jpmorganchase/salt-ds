@@ -16,7 +16,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Tooltip
 
-A Tooltip provides guidance to the user when something requires more explanation or context, or to provide more information about an error or warning condition. A Tooltip will typically be displayed after the user’s mouse hovers over the target element for a set amount of time.
+A Tooltip allows you to display a brief message to the user that provides context or information about a UI element or an issue. The Tooltip appears after the user’s mouse hovers over the target element for a certain amount of time.
 
 ## Best practise
 
@@ -25,12 +25,14 @@ A Tooltip provides guidance to the user when something requires more explanation
 
 ## Use when...
 
-You want to display extra information or a description of an on-screen element.
+- You want to display extra information or a description about an on-screen element.
+- You have supplementary information that provides clarity to the user.
+- The Tooltip content is short and self-explanatory. If a longer description is needed, consider adding it to the page so it's always visible.
 
 ## Don't use when...
 
-- **The Tooltip contains interactive elements like link, input or button.** Consider making this content visible on the page or use an Overlay or a Dialog instead.
-- **There is a lot of content inside the Tooltip.** Tooltip content should be short and self-explanatory. If the text needs to be more descriptive, consider adding it to the page so it's always visible to the user.
+- The Tooltip contains interactive elements, like a link, input or button. Consider making this content visible at all times or use an Overlay or a Dialog instead.
+- There’s information in the Tooltip that the user needs to know to complete a task. Important help text should always be visible and not hidden from the user.
 
 ## Default
 
@@ -42,7 +44,7 @@ You want to display extra information or a description of an on-screen element.
 
 ### Status
 
-Use the `status` prop to choose between `error`, `warning`, `success` and `info`. This defines which icon will be displayed and the color of the tooltip border.
+Use the `status` prop to define the icon that's displayed in the Tooltip. You can choose between `error`, `warning`, `success` and `info`.
 
 <Canvas>
   <Story id="core-tooltip--status" />
@@ -66,7 +68,7 @@ To display the Tooltip with text only, and no status icon, use the `hideIcon` pr
 
 ### Content
 
-Use the `content` prop to pass either a simple string or a React component to be displayed inside the Tooltip.
+Use the `content` prop to pass either a simple string or a React component that's displayed inside the Tooltip.
 
 <Canvas>
   <Story id="core-tooltip--custom-content" />
@@ -74,7 +76,7 @@ Use the `content` prop to pass either a simple string or a React component to be
 
 ### Placement
 
-To position the Tooltip, use the `placement` prop. The component will flip and shift if there isn't enough space for it to be visible.
+To position the Tooltip, use the `placement` prop. The component shifts automatically when there's limited space, so it remains visible.
 
 <Canvas>
   <Story id="core-tooltip--placement" />
@@ -82,7 +84,7 @@ To position the Tooltip, use the `placement` prop. The component will flip and s
 
 ### Delay before shown
 
-By default, the Tooltip displays after 300ms. To change the delay before it’s shown, use the `enterDelay` prop.
+By default, the Tooltip displays after 300 milliseconds (ms). To change the delay before it’s shown, use the `enterDelay` prop.
 
 <Canvas>
   <Story id="core-tooltip--delay" />
@@ -110,7 +112,7 @@ import { Tooltip } from "@salt-ds/core";
 
 ## Related components
 
-The Tooltip component can contain a [StatusIndicator](?path=/docs/documentation-core-status-indicator--page)
+The Tooltip component can contain a [StatusIndicator](?path=/docs/documentation-core-status-indicator--page).
 
 ## Accessibility
 
