@@ -2,7 +2,7 @@
 "@salt-ds/theme": minor
 ---
 
-Add `--salt-accent-foreground-disabled`
+Added `--salt-accent-foreground-disabled`
 
 ```diff
 + --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled)
