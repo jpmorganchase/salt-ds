@@ -90,7 +90,6 @@ export const globalTypes: GlobalTypes = {
 };
 
 export const argTypes: ArgTypes = {
-  as: { type: "string", if:{ arg :"as", exists: true }},
   ref: { control: { type: null } },
 };
 
