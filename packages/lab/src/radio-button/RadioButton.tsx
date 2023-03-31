@@ -126,8 +126,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           onFocus={onFocus}
           type="radio"
         />
-        <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
         {label}
+        <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
       </label>
     );
   }
