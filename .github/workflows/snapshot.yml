@@ -58,7 +58,7 @@ jobs:
           script: |
             try {
               // Pull request from fork
-              if (FORK) {
+              if (process.env.FORK) {
                 const errorMessage = 'snapshot releases not supported on pull requests from forked repositories.'
                 await github.rest.issues.createComment({
                   issue_number: context.issue.number,
