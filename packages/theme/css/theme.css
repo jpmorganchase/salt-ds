@@ -6,7 +6,8 @@
 /* Foundations (base values) */
 @import url(foundations/animation.css);
 @import url(foundations/color.css);
-@import url(foundations/delay.css);
+@import url(foundations/delay.css); /* **Deprecated:** replaced by duration */
+@import url(foundations/duration.css);
 @import url(foundations/fade.css);
 @import url(foundations/icon.css);
 @import url(foundations/opacity.css);
