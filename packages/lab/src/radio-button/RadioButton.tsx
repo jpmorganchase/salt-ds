@@ -103,10 +103,11 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     };
 
     return (
-      <>
+      <div className={withBaseName()}>
+        <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
         <label
           className={clsx(
-            withBaseName(),
+            // withBaseName(),
             {
               [withBaseName("disabled")]: disabled,
             },
@@ -117,7 +118,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         >
           {label}
         </label>
-        <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
         <input
           className={withBaseName("input")}
           {...inputProps}
@@ -130,7 +130,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           onFocus={onFocus}
           type="radio"
         />
-      </>
+      </div>
     );
   }
 );
