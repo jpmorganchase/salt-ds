@@ -80,6 +80,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     } = props;
 
     const radioGroup = useRadioGroup();
+    const id = { id };
 
     const radioGroupChecked =
       radioGroup.value != null && value != null
@@ -114,6 +115,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
             className
           )}
           ref={ref}
+          htmlFor={id}
           {...rest}
         >
           {label}
@@ -129,6 +131,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           onChange={handleChange}
           onFocus={onFocus}
           type="radio"
+          id={id}
         />
       </div>
     );
