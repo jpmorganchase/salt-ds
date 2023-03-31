@@ -29,6 +29,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
   { className, children, variant = "primary", ...restProps },
   ref
 ) {
+  console.log(restProps)
   return (
     <div
       className={clsx(withBaseName(), withBaseName(variant), className)}

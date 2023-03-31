@@ -1,4 +1,4 @@
-import { Panel } from "@salt-ds/core";
+import { GridLayout, Panel } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
@@ -23,8 +23,9 @@ export const All: ComponentStory<typeof Panel> = (props) => {
     </>
   );
 };
+
 All.args = {
-  children: <p>Lorem Ipsum</p>,
+  children: <p>This is a Panel</p>,
 };
 All.argTypes = {
   children: { control: { type: null } },
@@ -32,11 +33,31 @@ All.argTypes = {
 
 export const Primary = Template.bind({});
 Primary.args = {
-  children: "Lorem Ipsum",
+  children: "This is a Panel",
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
-  children: "Lorem Ipsum",
+  children: "This is a Panel",
   variant: "secondary",
 };
+
+export const FixedHeightAndWidth: ComponentStory<typeof Panel> = () => (
+  <Panel 
+    style={{ height: "500px", width: "800px" }}
+    variant="secondary" 
+  >
+    <p>This is a Panel</p>
+  </Panel>
+);
+
+export const PanelInGridLayout: ComponentStory<typeof Panel> = () => (
+  <GridLayout columns={2}>
+    <Panel style={{width: "100vh"}}>
+      <p>This is a Panel</p>
+    </Panel>
+    <Panel variant="secondary" style={{width: "100vh"}}>
+      <p>This is a Panel</p>
+    </Panel>
+  </GridLayout>
+);
