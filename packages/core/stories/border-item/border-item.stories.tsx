@@ -5,6 +5,7 @@ export default {
   title: "Core/Layout/Border Layout/Border Item",
   component: BorderItem,
   argTypes: {
+    as: { type: "string" },
     position: {
       control: { type: "select" },
     },
