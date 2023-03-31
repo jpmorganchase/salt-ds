@@ -1,3 +1,6 @@
+/*
+* **Deprecated:** Use duration instead
+*/
 .salt-theme {
   --salt-delay-instant: 100;
   --salt-delay-perceptible: 300;
