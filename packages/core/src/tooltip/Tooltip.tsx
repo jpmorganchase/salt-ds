@@ -126,6 +126,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             {!hideArrow && (
               <FloatingArrow
                 {...arrowProps}
+                className={withBaseName("arrow")}
                 strokeWidth={1}
                 fill="var(--salt-container-primary-background)"
                 stroke="var(--tooltip-status-borderColor)"
