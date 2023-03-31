@@ -80,7 +80,7 @@ const allAllowedKeys = [
   "track",
   // additional to decide
   "animation",
-  "delay", // TODO: to be merged with animation
+  "duration", // TODO: to be merged with animation
   "size",
   "zIndex",
   // palette opacity
