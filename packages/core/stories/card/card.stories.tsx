@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { KeyboardEventHandler, ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
   Button,
@@ -120,7 +120,7 @@ export const InteractableAsLink: ComponentStory<typeof Card> = () => {
     window.open("https://saltdesignsystem.com/");
   };
 
-  const handleKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
     if (event.key === "Enter") {
       window.open("https://saltdesignsystem.com/");
       console.log("Clicked");
