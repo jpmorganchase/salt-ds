@@ -6,6 +6,7 @@ import {
   ReactNode,
   isValidElement,
 } from "react";
+import { FloatingArrow } from "@floating-ui/react";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import { UseFloatingUIProps, makePrefixer, useForkRef } from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
@@ -123,7 +124,14 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
               <span className={withBaseName("content")}>{content}</span>
             </div>
             {!hideArrow && (
-              <div className={withBaseName("arrow")} {...arrowProps} />
+              <FloatingArrow
+                {...arrowProps}
+                strokeWidth={1}
+                fill="var(--salt-container-primary-background)"
+                stroke="var(--tooltip-status-borderColor)"
+                height={5}
+                width={10}
+              />
             )}
           </div>
         )}

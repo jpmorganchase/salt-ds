@@ -50,7 +50,7 @@ export function useTooltip(props?: UseTooltipProps) {
     disableFocusListener,
   } = props || {};
 
-  const arrowRef = useRef<HTMLDivElement | null>(null);
+  const arrowRef = useRef<SVGSVGElement | null>(null);
 
   const [open, setOpen] = useControlled({
     controlled: openProp,
@@ -106,6 +106,7 @@ export function useTooltip(props?: UseTooltipProps) {
 
   const arrowProps = {
     ref: arrowRef,
+    context,
     style: {
       left: arrowX ? `${arrowX}px` : "",
       top: arrowY ? `${arrowY}px` : "",
