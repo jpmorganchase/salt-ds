@@ -151,7 +151,7 @@ describe("GIVEN a Tooltip", () => {
     it("then tooltip displays the component", () => {
       cy.mount(<CustomContent open />);
 
-      cy.get("h3").should("be.visible");
+      cy.get("div").should("be.visible");
       cy.get("ul").should("be.visible");
       cy.get("li").should("be.visible");
     });
