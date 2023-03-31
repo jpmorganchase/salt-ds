@@ -6,9 +6,7 @@ on:
     types:
       - created
 
-permissions:
-  pull-requests: write
-  metadata: read
+permissions: write-all
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
