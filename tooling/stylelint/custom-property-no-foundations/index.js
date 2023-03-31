@@ -65,10 +65,10 @@ const allAllowedKeys = [
   "actionable",
   "container",
   "draggable",
-  "differential", // TODO: **deprecated** delete here
+  "differential", // TODO: **deprecated:** delete here
   "editable",
   "focused",
-  "measured", // TODO: **deprecated** delete here
+  "measured", // TODO: **deprecated:** delete here
   "navigable",
   "overlayable",
   "selectable",
@@ -80,6 +80,7 @@ const allAllowedKeys = [
   "track",
   // additional to decide
   "animation",
+  "delay", // TODO: **deprecated:** delete here
   "duration", // TODO: to be merged with animation
   "size",
   "zIndex",
