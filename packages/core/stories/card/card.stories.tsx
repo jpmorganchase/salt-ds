@@ -121,7 +121,7 @@ export const InteractableAsLink: ComponentStory<typeof Card> = () => {
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if(event.key === "Enter") {
+    if (event.key === "Enter") {
       window.open("https://saltdesignsystem.com/");
       console.log("Clicked");
     }
