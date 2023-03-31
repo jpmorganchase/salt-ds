@@ -7,7 +7,7 @@ import {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useControlled, useId } from "@salt-ds/core";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { RadioButtonIcon } from "./RadioButtonIcon";
 
@@ -80,7 +80,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     } = props;
 
     const radioGroup = useRadioGroup();
-    const id = { id };
+    const id = useId();
 
     const radioGroupChecked =
       radioGroup.value != null && value != null
@@ -105,21 +105,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
 
     return (
       <div className={withBaseName()}>
-        <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
-        <label
-          className={clsx(
-            // withBaseName(),
-            {
-              [withBaseName("disabled")]: disabled,
-            },
-            className
-          )}
-          ref={ref}
-          htmlFor={id}
-          {...rest}
-        >
-          {label}
-        </label>
         <input
           className={withBaseName("input")}
           {...inputProps}
@@ -133,6 +118,26 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           type="radio"
           id={id}
         />
+
+        <label
+          className={clsx(
+            // withBaseName(),
+            {
+              [withBaseName("disabled")]: disabled,
+            },
+            className
+          )}
+          ref={ref}
+          htmlFor={id}
+          {...rest}
+        >
+          <RadioButtonIcon
+            checked={checked}
+            error={error}
+            disabled={disabled}
+          />
+          {label}
+        </label>
       </div>
     );
   }
