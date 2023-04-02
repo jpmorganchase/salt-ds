@@ -1,6 +1,7 @@
 import {
   ChangeEventHandler,
   KeyboardEventHandler,
+  FocusEventHandler,
   useEffect,
   useRef,
   useState,
@@ -33,6 +34,10 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEditorText(e.target.value);
+  };
+  
+  const onBlur: FocusEventHandler<HTMLInputElement> = (e) => {
+    endEditMode(e.target.value);
   };
 
   const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
@@ -69,6 +74,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
           value={editorText}
           onChange={onChange}
           onKeyDown={onKeyDown}
+          onBlur={onBlur}
         />
       </div>
       <CornerTag />

@@ -4,6 +4,7 @@ import { GridColumnModel, GridRowModel } from "./Grid";
 import {
   ChangeEventHandler,
   KeyboardEventHandler,
+  FocusEventHandler,
   ReactNode,
   useEffect,
   useRef,
@@ -50,6 +51,10 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEditorText(e.target.value);
   };
+  
+  const onBlur: FocusEventHandler<HTMLInputElement> = (e) => {
+    endEditMode(e.target.value);
+  };
 
   const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (event.key === "Enter") {
@@ -85,6 +90,7 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
           value={editorText}
           onChange={onChange}
           onKeyDown={onKeyDown}
+          onBlur={onBlur}
         />
       </div>
       <CornerTag />

@@ -453,7 +453,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     rowIdx: number,
     colIdx: number
   ) => {
-    setTimeout(() => {
       const selector =
         part === "body"
           ? `td[data-row-index="${rowIdx}"][data-column-index="${colIdx}"]`
@@ -464,7 +463,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       } else {
         console.warn(`focusCellElement can't find the element`);
       }
-    }, 0);
   };
 
   const startEditMode = (text?: string) => {
