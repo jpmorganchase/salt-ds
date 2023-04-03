@@ -21,5 +21,6 @@
   --salt-accent-borderColor: var(--salt-palette-accent-border);
   --salt-accent-borderColor-disabled: var(--salt-palette-accent-border-disabled);
   --salt-accent-foreground: var(--salt-palette-accent-foreground);
+  --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
   --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold);
 }
