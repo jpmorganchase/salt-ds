@@ -7,6 +7,7 @@ export default {
   title: "Core/Layout/Flow Layout",
   component: FlowLayout,
   argTypes: {
+    as: { type: "string" },
     align: {
       options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
       control: { type: "select" },
