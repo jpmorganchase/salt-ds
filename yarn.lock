@@ -4811,19 +4811,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@joshwooding/vite-plugin-react-docgen-typescript@npm:0.0.5":
-  version: 0.0.5
-  resolution: "@joshwooding/vite-plugin-react-docgen-typescript@npm:0.0.5"
+"@joshwooding/vite-plugin-react-docgen-typescript@npm:0.2.1":
+  version: 0.2.1
+  resolution: "@joshwooding/vite-plugin-react-docgen-typescript@npm:0.2.1"
   dependencies:
-    "@rollup/pluginutils": ^4.2.1
     glob: ^7.2.0
     glob-promise: ^4.2.0
-    magic-string: ^0.26.1
-    react-docgen-typescript: ^2.1.1
+    magic-string: ^0.27.0
+    react-docgen-typescript: ^2.2.2
   peerDependencies:
     typescript: ">= 4.3.x"
-    vite: ">2.0.0-0"
-  checksum: e722b472413bf67e879bdd3969a43223e161b2d2b634848b7a88c89ddb507ad331959808ff7e17b6513527e797aae4aad973dda0bd3c7ab3348ebc691ab76b83
+    vite: ^3.0.0 || ^4.0.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 91401505b379396cb48c74e99ebafb8a3f85bb0c38783d4b17df42d5420782bf733f049f9a97659feb4423b4e4db9ba35fd8230add5fd32e615d5633d37cdcfd
   languageName: node
   linkType: hard
 
@@ -5192,14 +5194,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19":
-  version: 0.1.0-beta.27
-  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.27"
-  checksum: b983e8b0d14526264df6b90445016fd844556240ce05d2cd1b0c49d26f65e2499c7d4835d4b82b0fd567854028d0e3da924b2a87c8ed144ecc8dc1923722d78a
-  languageName: node
-  linkType: hard
-
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.28":
+"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.19, @jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.28":
   version: 0.1.0-beta.28
   resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.28"
   checksum: ffc361e2d89a668a28e4b95852637899ae3b30e3d303d17d5a70cab2f2f700f83b2a9efa1336429a6b68ecbbf27183f5fb18da2281d12086aaff86e5bb64b2a9
@@ -5280,7 +5275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10":
+"@jridgewell/sourcemap-codec@npm:1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.13":
   version: 1.4.14
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.14"
   checksum: 61100637b6d173d3ba786a5dff019e1a74b1f394f323c1fee337ff390239f053b87266c7a948777f4b1ee68c01a8ad0ab61e5ff4abb5a012a0b091bec391ab97
@@ -6193,7 +6188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/pluginutils@npm:^4.1.1, @rollup/pluginutils@npm:^4.2.1":
+"@rollup/pluginutils@npm:^4.1.1":
   version: 4.2.1
   resolution: "@rollup/pluginutils@npm:4.2.1"
   dependencies:
@@ -6371,7 +6366,7 @@ __metadata:
     "@storybook/addon-links": ^6.5.16
     "@storybook/addon-storysource": ^6.5.16
     "@storybook/addons": ^6.5.16
-    "@storybook/builder-vite": ^0.2.7
+    "@storybook/builder-vite": ^0.4.0
     "@storybook/node-logger": ^6.5.16
     "@storybook/react": ^6.5.16
     "@storybook/testing-react": ^1.3.0
@@ -7087,17 +7082,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/builder-vite@npm:^0.2.7":
-  version: 0.2.7
-  resolution: "@storybook/builder-vite@npm:0.2.7"
+"@storybook/builder-vite@npm:^0.4.0":
+  version: 0.4.2
+  resolution: "@storybook/builder-vite@npm:0.4.2"
   dependencies:
-    "@joshwooding/vite-plugin-react-docgen-typescript": 0.0.5
+    "@joshwooding/vite-plugin-react-docgen-typescript": 0.2.1
     "@storybook/core-common": ^6.4.3
-    "@storybook/mdx1-csf": ^0.0.4
+    "@storybook/mdx1-csf": 1.0.0-next.0
     "@storybook/node-logger": ^6.4.3
     "@storybook/semver": ^7.3.2
     "@storybook/source-loader": ^6.4.3
-    "@vitejs/plugin-react": ^2.0.0
     ast-types: ^0.14.2
     es-module-lexer: ^0.9.3
     glob: ^7.2.0
@@ -7107,21 +7101,27 @@ __metadata:
     slash: ^3.0.0
     sveltedoc-parser: ^4.2.1
   peerDependencies:
-    "@storybook/mdx2-csf": ^0.0.3
-    "@sveltejs/vite-plugin-svelte": ^1.0.0
-    "@vitejs/plugin-vue": ^3.0.0
-    vite: ">= 3.0.0"
+    "@storybook/mdx2-csf": ">=1.0.0-next.0"
+    "@sveltejs/vite-plugin-svelte": ^2.0.0
+    "@vitejs/plugin-react": ^3.0.0
+    "@vitejs/plugin-react-swc": ^3.0.0
+    "@vitejs/plugin-vue": ^4.0.0
+    vite: ">= 4.0.0"
     vue-docgen-api: ^4.40.0
   peerDependenciesMeta:
     "@storybook/mdx2-csf":
       optional: true
     "@sveltejs/vite-plugin-svelte":
       optional: true
+    "@vitejs/plugin-react":
+      optional: true
+    "@vitejs/plugin-react-swc":
+      optional: true
     "@vitejs/plugin-vue":
       optional: true
     vue-docgen-api:
       optional: true
-  checksum: 4e676545623c03cf98f355a0adda55d0404c6118426cc2a746ccf85443576e31234863513c14c23d51b07ef2df4acf1b6c5fc136ae133071de8b04f1bde4a473
+  checksum: 18a4ce3aa215ab0a17f444207587f752da4c11180755e2fed84c16635864802956564254bb08b6af0b5dc4ed3f1b516f5096b831ba6b9cd4b7047eb59ec0b93e
   languageName: node
   linkType: hard
 
@@ -7706,6 +7706,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/mdx1-csf@npm:1.0.0-next.0":
+  version: 1.0.0-next.0
+  resolution: "@storybook/mdx1-csf@npm:1.0.0-next.0"
+  dependencies:
+    "@mdx-js/mdx": ^1.6.22
+    "@mdx-js/react": ^1.6.22
+  checksum: 4524619df9f412d93e37df05bcdcef40bf3337b8de181a5bcc7ab2051f7afc96e8b9bf4bef8e078d470df81cc4d9d01315cd840e358ca3bfb1102efd595720cd
+  languageName: node
+  linkType: hard
+
 "@storybook/mdx1-csf@npm:^0.0.1":
   version: 0.0.1
   resolution: "@storybook/mdx1-csf@npm:0.0.1"
@@ -7722,26 +7732,6 @@ __metadata:
     prettier: ">=2.2.1 <=2.3.0"
     ts-dedent: ^2.0.0
   checksum: 34f952f4d00d4fbf680aadea53ca0d9b02b10c94ea492a47a6df916474ea1e36d08eece70ffaba760a4cdf6f634a8684360dc49355cf8a1461050b8a470d2666
-  languageName: node
-  linkType: hard
-
-"@storybook/mdx1-csf@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "@storybook/mdx1-csf@npm:0.0.4"
-  dependencies:
-    "@babel/generator": ^7.12.11
-    "@babel/parser": ^7.12.11
-    "@babel/preset-env": ^7.12.11
-    "@babel/types": ^7.12.11
-    "@mdx-js/mdx": ^1.6.22
-    "@mdx-js/react": ^1.6.22
-    "@types/lodash": ^4.14.167
-    js-string-escape: ^1.0.1
-    loader-utils: ^2.0.0
-    lodash: ^4.17.21
-    prettier: ">=2.2.1 <=2.3.0"
-    ts-dedent: ^2.0.0
-  checksum: 834dcf6eb063c559f2768ec3ce669cff651096f7658739c95de1fff190e86fe0253c1e91858f2405b2c6fc218561102837b8d7e951a2f5997ed86f0a72ee5b9e
   languageName: node
   linkType: hard
 
@@ -9791,7 +9781,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react@npm:^2.0.0, @vitejs/plugin-react@npm:^2.1.0":
+"@vitejs/plugin-react@npm:^2.1.0":
   version: 2.1.0
   resolution: "@vitejs/plugin-react@npm:2.1.0"
   dependencies:
@@ -22421,17 +22411,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^7.14.1":
+"lru-cache@npm:^7.14.1, lru-cache@npm:^7.4.4, lru-cache@npm:^7.5.1, lru-cache@npm:^7.7.1":
   version: 7.18.3
   resolution: "lru-cache@npm:7.18.3"
   checksum: e550d772384709deea3f141af34b6d4fa392e2e418c1498c078de0ee63670f1f46f5eee746e8ef7e69e1c895af0d4224e62ee33e66a543a14763b0f2e74c1356
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:^7.4.4, lru-cache@npm:^7.5.1, lru-cache@npm:^7.7.1":
-  version: 7.14.1
-  resolution: "lru-cache@npm:7.14.1"
-  checksum: d72c6713c6a6d86836a7a6523b3f1ac6764768cca47ec99341c3e76db06aacd4764620e5e2cda719a36848785a52a70e531822dc2b33fb071fa709683746c104
   languageName: node
   linkType: hard
 
@@ -22459,6 +22442,15 @@ __metadata:
   dependencies:
     sourcemap-codec: ^1.4.8
   checksum: e72c9b3d90ccbde088acc5937109f73fa4be8b6a2c2ea9bf9c3c01974f1ebf09842259a74ff2ba4081008a7d49941d883cfef8c460e6c33a6eb564b58482b750
+  languageName: node
+  linkType: hard
+
+"magic-string@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "magic-string@npm:0.27.0"
+  dependencies:
+    "@jridgewell/sourcemap-codec": ^1.4.13
+  checksum: 273faaa50baadb7a2df6e442eac34ad611304fc08fe16e24fe2e472fd944bfcb73ffb50d2dc972dc04e92784222002af46868cb9698b1be181c81830fd95a13e
   languageName: node
   linkType: hard
 
@@ -24012,16 +24004,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minipass@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "minipass@npm:4.0.0"
-  dependencies:
-    yallist: ^4.0.0
-  checksum: 7a609afbf394abfcf9c48e6c90226f471676c8f2a67f07f6838871afb03215ede431d1433feffe1b855455bcb13ef0eb89162841b9796109d6fed8d89790f381
-  languageName: node
-  linkType: hard
-
-"minipass@npm:^4.0.2, minipass@npm:^4.2.4":
+"minipass@npm:^4.0.0, minipass@npm:^4.0.2, minipass@npm:^4.2.4":
   version: 4.2.5
   resolution: "minipass@npm:4.2.5"
   checksum: 4f9c19af23a5d4a9e7156feefc9110634b178a8cff8f8271af16ec5ebf7e221725a97429952c856f5b17b30c2065ebd24c81722d90c93d2122611d75b952b48f
@@ -28051,7 +28034,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-docgen-typescript@npm:2.2.2, react-docgen-typescript@npm:^2.1.1":
+"react-docgen-typescript@npm:2.2.2, react-docgen-typescript@npm:^2.1.1, react-docgen-typescript@npm:^2.2.2":
   version: 2.2.2
   resolution: "react-docgen-typescript@npm:2.2.2"
   peerDependencies:
