@@ -14,6 +14,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { useTheme } from "@salt-ds/core";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -61,6 +62,8 @@ function SortColumnsImpl() {
     keepPreviousData: true,
   });
 
+  const { mode } = useTheme();
+
   if (isLoading) return <div>loading...</div>;
 
   const scoreOptions = ["-", "5%", "10%", "15%", "20%"];
@@ -75,7 +78,9 @@ function SortColumnsImpl() {
         position: "relative",
         // @ts-ignore
         "--salt-overlayable-background":
-          "var(--salt-color-gray-20-fade-background-readonly)",
+          mode === "light"
+            ? "var(--salt-color-gray-60-fade-background)"
+            : "var(--salt-color-gray-300-fade-background)",
       }}
     >
       <Scrim
