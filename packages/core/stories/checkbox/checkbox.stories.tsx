@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Checkbox",
+  title: "Core/Checkbox",
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 

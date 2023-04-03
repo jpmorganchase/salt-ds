@@ -23,7 +23,6 @@ export * from "./button-bar";
 export * from "./calendar";
 export * from "./carousel";
 export * from "./cascading-menu";
-export * from "./checkbox";
 export * from "./color-chooser";
 export * from "./combo-box";
 export * from "./combo-box-deprecated";

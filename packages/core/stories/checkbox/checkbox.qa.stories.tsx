@@ -1,9 +1,9 @@
 import { ComponentMeta, Story } from "@storybook/react";
-import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Checkbox/QA",
+  title: "Core/Checkbox/QA",
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 

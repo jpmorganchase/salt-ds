@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { makePrefixer, useDensity } from "@salt-ds/core";
+import { makePrefixer, useDensity } from "../index";
 import {
   CheckboxCheckedIcon,
   CheckboxCheckedIconHD,
