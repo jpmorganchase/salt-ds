@@ -7,7 +7,7 @@ import {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
-import { makePrefixer, useControlled } from "../utils";
+import { makePrefixer, useControlled, useId } from "../utils";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { RadioButtonIcon } from "./RadioButtonIcon";
 
@@ -17,8 +17,8 @@ const withBaseName = makePrefixer("saltRadioButton");
 
 export interface RadioButtonProps
   extends Omit<
-  HTMLAttributes<HTMLLabelElement>,
-  "onChange" | "onBlur" | "onFocus"
+    HTMLAttributes<HTMLLabelElement>,
+    "onChange" | "onBlur" | "onFocus"
   > {
   /**
    * Set the default selected radio button in the group
