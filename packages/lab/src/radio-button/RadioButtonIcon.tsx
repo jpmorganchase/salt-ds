@@ -29,10 +29,10 @@ export const RadioButtonIcon = ({
       viewBox="0 0 14 14"
       width="14"
     >
-      <circle className={withBaseName("border")} cx="7" cy="7" r="6.5" />
+      <circle className={withBaseName("circle")} cx="7" cy="7" r="6.5" />
       {checked && (
         <circle
-          className={withBaseName("inner-checked")}
+          className={withBaseName("checked-circle")}
           cx="7"
           cy="7"
           r="3.2"
