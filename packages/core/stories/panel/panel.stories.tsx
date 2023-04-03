@@ -43,20 +43,17 @@ Secondary.args = {
 };
 
 export const FixedHeightAndWidth: ComponentStory<typeof Panel> = () => (
-  <Panel 
-    style={{ height: "500px", width: "800px" }}
-    variant="secondary" 
-  >
+  <Panel style={{ height: "500px", width: "800px" }} variant="secondary">
     <p>This is a Panel</p>
   </Panel>
 );
 
 export const PanelInGridLayout: ComponentStory<typeof Panel> = () => (
   <GridLayout columns={2}>
-    <Panel style={{width: "100vh"}}>
+    <Panel style={{ width: "100vh" }}>
       <p>This is a Panel</p>
     </Panel>
-    <Panel variant="secondary" style={{width: "100vh"}}>
+    <Panel variant="secondary" style={{ width: "100vh" }}>
       <p>This is a Panel</p>
     </Panel>
   </GridLayout>
