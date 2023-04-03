@@ -7,7 +7,7 @@ import {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useControlled } from "../utils";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { RadioButtonIcon } from "./RadioButtonIcon";
 
