@@ -18,7 +18,9 @@
   --salt-palette-accent-background: var(--salt-color-blue-500);
   --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
   --salt-palette-accent-border: var(--salt-color-blue-500);
+  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
   --salt-palette-accent-foreground: var(--salt-color-white);
+  --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
 
   /* Interact */
   --salt-palette-interact-background: transparent;
@@ -156,7 +158,9 @@
   --salt-palette-accent-background: var(--salt-color-blue-500);
   --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
   --salt-palette-accent-border: var(--salt-color-blue-500);
+  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
   --salt-palette-accent-foreground: var(--salt-color-white);
+  --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
 
   /* Interact */
   --salt-palette-interact-background: transparent;
@@ -173,7 +177,7 @@
   --salt-palette-interact-foreground: var(--salt-color-gray-90);
   --salt-palette-interact-foreground-active: var(--salt-color-blue-100);
   --salt-palette-interact-foreground-activeDisabled: var(--salt-color-blue-100-fade-foreground);
-  --salt-palette-interact-foreground-disabled: var(--salt-color-90-fade-foreground);
+  --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-fade-foreground);
   --salt-palette-interact-foreground-hover: var(--salt-color-blue-500);
   --salt-palette-interact-outline: var(--salt-color-blue-100);
 
