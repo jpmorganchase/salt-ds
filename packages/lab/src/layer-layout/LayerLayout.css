@@ -1,8 +1,8 @@
 .saltLayerLayout {
   --layerLayout-boxShadow: var(--saltLayerLayout-boxShadow, var(--salt-overlayable-shadow-modal));
   --layerLayout-background: var(--saltLayerLayout-background, var(--salt-container-primary-background));
-  --layerLayout-padding: var(--saltLayerLayout-padding, calc(3 * var(--salt-size-unit)));
-  --layerLayout-margin: var(--saltLayerLayout-margin, calc(3 * var(--salt-size-unit)));
+  --layerLayout-padding: var(--saltLayerLayout-padding, var(--salt-size-container-spacing));
+  --layerLayout-margin: var(--saltLayerLayout-margin, var(--salt-size-container-spacing));
 }
 
 .saltLayerLayout {

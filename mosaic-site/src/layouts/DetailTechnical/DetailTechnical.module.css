@@ -8,21 +8,22 @@
 }
 
 .sidebar li {
-  --color-dark-navigable-selectableLink-selected: var(--salt-navigable-indicator-active);
-  --color-dark-navigable-selectableLink-unselected: transparent;
-  --color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
-  --color-dark-neutral-background-emphasis: transparent;
-  --color-dark-navigable-selectableLink-hover: transparent;
-  --border-width-medium: 3px;
+  --mosaic-color-dark-navigable-selectableLink-selected: var(--salt-navigable-indicator-active);
+  --mosaic-color-dark-navigable-selectableLink-unselected: transparent;
+  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
+  --mosaic-color-dark-neutral-background-emphasis: transparent;
+  --mosaic-color-dark-navigable-selectableLink-hover: transparent;
+  --mosaic-border-width-medium: 3px;
 }
 
-.primarySidebar :global(.ps-menu-button) {
-  --color-dark-neutral-background-emphasis: var(--salt-palette-navigate-primary-background-hover);
-  --color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
+.primarySidebar :global(.ps-menu-button),
+.primarySidebar :global(.ps-menuitem-root) {
+  --mosaic-color-dark-neutral-background-emphasis: var(--salt-palette-navigate-primary-background-hover);
+  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
 }
 
 .primarySidebar :global(.ps-active) {
-  --color-dark-navigable-selectableLink-unselectedLabel: var(--salt-palette-interact-foreground);
+  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-palette-interact-foreground);
 }
 
 .primarySidebar :global(a.ps-menu-button) {
@@ -77,7 +78,6 @@
 }
 
 .sidebar li {
-  padding: var(calc(--salt-size-unit * 2));
   height: 36px;
 }
 
