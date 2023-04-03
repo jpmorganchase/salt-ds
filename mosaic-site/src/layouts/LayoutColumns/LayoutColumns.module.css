@@ -23,7 +23,7 @@
 .sidebar {
   grid-area: layout-column-sidebar;
   position: sticky;
-  top: 44px;
+  top: var(--navbar-height);
   max-width: var(--site-sidebar-width);
   height: 100vh;
 }
