@@ -30,4 +30,3 @@ To migrate from the previous to new implementation:
 +   );
 ```
 
-Moved `capitalize` from lab to core
