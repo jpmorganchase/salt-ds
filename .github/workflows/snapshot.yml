@@ -101,7 +101,7 @@ jobs:
             let output = ''
 
             const options = {
-              listeners = {
+              listeners: {
                 stdout: (data) => {
                   output += data.toString();
                 },
