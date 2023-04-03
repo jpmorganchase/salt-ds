@@ -3,7 +3,7 @@ import { capitalize, makePrefixer } from "@salt-ds/core";
 import {
   AccordionSection,
   AccordionDetails,
-  AccordionSummary
+  AccordionSummary,
 } from "@salt-ds/lab";
 import { ReactElement } from "react";
 import { JSONObj } from "../../../helpers/parseToJson";

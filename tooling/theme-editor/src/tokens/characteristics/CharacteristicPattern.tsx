@@ -5,7 +5,7 @@ import { capitalize, makePrefixer } from "@salt-ds/core";
 import {
   AccordionDetails,
   AccordionSection,
-  AccordionSummary
+  AccordionSummary,
 } from "@salt-ds/lab";
 import { JSONObj } from "../../helpers/parseToJson";
 import { ChildrenValuesWithinSection } from "../ChildrenValues";
