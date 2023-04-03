@@ -24,6 +24,7 @@ export interface PortalProps {
    * If this node does not exist on the document, it will be created for you.
    */
   id?: string;
+  preserveTabOrder?: boolean
 }
 
 function getContainer(container: PortalProps["container"]) {
@@ -42,6 +43,7 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
     container: containerProp = document.body,
     disablePortal = false,
     id = DEFAULT_ID,
+    ...rest
   },
   ref
 ) {
@@ -63,7 +65,7 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
   }
 
   return (
-    <FloatingPortal root={container as HTMLElement} id={id}>
+    <FloatingPortal root={container as HTMLElement} id={id} {...rest}>
       <SaltProvider>{children}</SaltProvider>
     </FloatingPortal>
   );
