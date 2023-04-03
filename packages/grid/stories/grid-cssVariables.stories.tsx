@@ -1,6 +1,5 @@
 import {
   CellEditor,
-  Checkbox,
   ColumnGroup,
   Grid,
   GridColumn,
@@ -13,7 +12,7 @@ import {
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
 } from "@salt-ds/lab";
-import { Button, FlexItem, FlexLayout } from "@salt-ds/core";
+import { Button, Checkbox, FlexItem, FlexLayout } from "@salt-ds/core";
 import { DeleteIcon, UndoIcon } from "@salt-ds/icons";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";

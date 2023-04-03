@@ -8,11 +8,10 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Card, FlexLayout } from "@salt-ds/core";
+import { Card, Checkbox, FlexLayout } from "@salt-ds/core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
-  Checkbox,
   ChevronDownIcon,
   ChevronRightIcon,
   FavoriteIcon,
