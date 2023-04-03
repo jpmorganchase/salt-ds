@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { makePrefixer, useDensity } from "../index";
+import { makePrefixer } from "../utils";
 import {
   CheckboxCheckedIcon,
   CheckboxCheckedIconHD,
@@ -8,6 +8,7 @@ import {
 } from "./assets";
 
 import "./CheckboxIcon.css";
+import {useDensity} from "../salt-provider";
 
 export interface CheckboxIconProps {
   checked?: boolean;
