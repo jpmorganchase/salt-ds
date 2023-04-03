@@ -1,4 +1,4 @@
-import { Checkbox } from "@salt-ds/lab";
+import { Checkbox } from "@salt-ds/core";
 
 describe("GIVEN a Checkbox", () => {
   describe("WHEN in an indeterminate state", () => {
