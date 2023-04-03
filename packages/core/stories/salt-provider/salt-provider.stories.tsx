@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Button, Card, Density, ModeValues, SaltProvider } from "@salt-ds/core";
+import { Button, Card, Checkbox, Density, ModeValues, SaltProvider } from "@salt-ds/core";
 import {
-  Checkbox,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,

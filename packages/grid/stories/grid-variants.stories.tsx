@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   Grid,
   GridColumn,
   GridProps,
@@ -8,7 +9,6 @@ import {
 } from "../src";
 import { ChangeEvent, useState } from "react";
 import {
-  Checkbox,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,

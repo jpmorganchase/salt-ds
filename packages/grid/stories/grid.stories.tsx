@@ -12,11 +12,11 @@ import { Card, FlexLayout } from "@salt-ds/core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
+  Checkbox,
   ChevronDownIcon,
   ChevronRightIcon,
   FavoriteIcon,
 } from "@salt-ds/icons";
-import { Checkbox } from "@salt-ds/lab";
 import {
   CellEditor,
   ColumnGroup,

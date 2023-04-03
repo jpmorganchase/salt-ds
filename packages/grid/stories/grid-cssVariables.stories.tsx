@@ -1,5 +1,6 @@
 import {
   CellEditor,
+  Checkbox,
   ColumnGroup,
   Grid,
   GridColumn,
@@ -8,7 +9,6 @@ import {
 } from "../src";
 import { ChangeEvent, useMemo, useState } from "react";
 import {
-  Checkbox,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
