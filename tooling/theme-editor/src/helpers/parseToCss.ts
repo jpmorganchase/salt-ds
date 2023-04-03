@@ -1,6 +1,6 @@
 /* eslint-disable */
 //@ts-nocheck
-import { capitalize } from "@salt-ds/lab";
+import { capitalize } from "@salt-ds/core";
 import { JSONByScope } from "./parseToJson";
 import { SALT_CHARACTERISTICS, SALT_FOUNDATIONS } from "../utils/saltValues";
 

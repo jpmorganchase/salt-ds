@@ -1,6 +1,5 @@
-import { makePrefixer, Tooltip } from "@salt-ds/core";
-import { capitalize } from "@salt-ds/lab";
 import { ReactElement } from "react";
+import { capitalize, makePrefixer, Tooltip } from "@salt-ds/core";
 
 import "./ScopeLabel.css";
 
