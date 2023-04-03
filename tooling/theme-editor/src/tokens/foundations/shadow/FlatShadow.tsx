@@ -1,11 +1,10 @@
 import { ReactElement } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { capitalize,  makePrefixer } from "@salt-ds/core";
 import {
   AccordionSection,
   AccordionDetails,
-  AccordionSummary,
-  capitalize,
+  AccordionSummary
 } from "@salt-ds/lab";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { getShadowParts } from "./getShadowParts";
