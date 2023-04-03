@@ -1,4 +1,3 @@
-export * from "./capitalize";
 export * from "./escapeRegExp";
 export * from "./isEmail";
 export * from "./forwardCallbackProps";

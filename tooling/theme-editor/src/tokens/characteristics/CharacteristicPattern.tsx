@@ -1,12 +1,11 @@
+import { clsx } from "clsx";
 import { ReactElement } from "react";
 import { useSearchParams } from "react-router-dom";
-import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { capitalize, makePrefixer } from "@salt-ds/core";
 import {
   AccordionDetails,
   AccordionSection,
   AccordionSummary,
-  capitalize,
 } from "@salt-ds/lab";
 import { JSONObj } from "../../helpers/parseToJson";
 import { ChildrenValuesWithinSection } from "../ChildrenValues";
