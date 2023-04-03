@@ -112,7 +112,7 @@ jobs:
 
             const { COMMENT_ID } = process.env
             const newTags = Array
-              .from(stdout.matchAll(/New tag:\s+([^\s\n]+)/g))
+              .from(output.matchAll(/New tag:\s+([^\s\n]+)/g))
               .map(([_, tag]) => tag)
             if (newTags.length) {
               const multiple = newTags.length > 1
