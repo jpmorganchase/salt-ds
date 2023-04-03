@@ -35,7 +35,7 @@
     "@storybook/builder-webpack5": "^6.5.16",
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/react": "^6.5.16",
-    "@storybook/testing-library": "^0.0.13",
+    "@storybook/testing-library": "^0.1.0",
     "@tsconfig/docusaurus": "^1.0.5",
     "chromatic": "^6.14.0",
     "storybook-addon-docusaurus": "^0.2.1",
