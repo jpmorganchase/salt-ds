@@ -1,4 +1,4 @@
-import { RadioButton } from "../../../radio-button";
+import { RadioButton } from "@salt-ds/core";
 
 describe("GIVEN a RadioButton component", () => {
   describe("WHEN RadioButton is given a value", () => {

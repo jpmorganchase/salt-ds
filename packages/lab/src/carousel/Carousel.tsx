@@ -1,4 +1,11 @@
-import { Button, GridLayout, makePrefixer, useId } from "@salt-ds/core";
+import {
+  Button,
+  GridLayout,
+  makePrefixer,
+  RadioButtonGroup,
+  RadioButton,
+  useId,
+} from "@salt-ds/core";
 import {
   ChangeEventHandler,
   Children,
@@ -8,7 +15,6 @@ import {
   useEffect,
 } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
-import { RadioButtonGroup, RadioButton } from "../radio-button";
 import { DeckLayout } from "../deck-layout";
 import { clsx } from "clsx";
 import "./Carousel.css";
