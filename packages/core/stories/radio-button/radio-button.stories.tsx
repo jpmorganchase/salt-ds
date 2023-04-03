@@ -1,10 +1,10 @@
 import { ChangeEventHandler, useState } from "react";
 import { Link, Text } from "@salt-ds/core";
-import { RadioButton, RadioButtonGroup } from "@salt-ds/lab";
+import { RadioButton, RadioButtonGroup } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Lab/Radio Button",
+  title: "Core/Radio Button",
   component: RadioButton,
 } as ComponentMeta<typeof RadioButton>;
 

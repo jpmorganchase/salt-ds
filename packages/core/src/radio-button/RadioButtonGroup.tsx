@@ -4,7 +4,7 @@ import {
   ComponentPropsWithoutRef,
   forwardRef,
 } from "react";
-import { makePrefixer, useControlled, useId } from "@salt-ds/core";
+import { makePrefixer, useControlled, useId } from "../utils";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 
 import "./RadioButtonGroup.css";
