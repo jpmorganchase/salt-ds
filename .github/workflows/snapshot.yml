@@ -6,9 +6,7 @@ on:
     types:
       - created
 
-permissions:
-  pull-requests: write
-  metadata: read
+permissions: write-all
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -60,7 +58,7 @@ jobs:
           script: |
             try {
               // Pull request from fork
-              if (FORK) {
+              if (process.env.FORK) {
                 const errorMessage = 'snapshot releases not supported on pull requests from forked repositories.'
                 await github.rest.issues.createComment({
                   issue_number: context.issue.number,
