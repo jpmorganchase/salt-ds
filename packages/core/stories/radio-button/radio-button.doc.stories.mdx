@@ -16,7 +16,7 @@ import {
 
 # Radio Button and Radio Button Group
 
-A group of Radio Button components represents a set of mutually exclusive, but related values. The user is able to select a single value at a time, and selecting an unselected value deselect any previously-selected option. Radio Buttons should therefore be used to display a choice between two or more values, as it’s impossible to deselect a single Radio Button once it’s been selected.
+A group of Radio Button components represents a set of mutually exclusive, but related values. The user can select a single value at a time, and if they select an unselected value it will automatically deselect any previously-selected option. Radio Buttons should therefore be used to display a choice between two or more values, as it’s impossible to deselect a single Radio Button once it’s been selected.
 
 ## Radio Button
 
@@ -28,12 +28,12 @@ A group of Radio Button components represents a set of mutually exclusive, but r
 
 ## Radio Button Group
 
-Radio groups allow selection of one or more values from a given set of choices. They can be aligned horizontally or vertically.
+Radio groups allow users to select one or more values from a given set of choices. They can be aligned horizontally or vertically.
 
 **Best practices**
 
-- Always use a label for Radio Group.
-- If there are more than 5 choices, use a multiselect instead.
+- Always use a label for a Radio Group.
+- If there are more than five choices, we suggest you use a multiselect instead.
 
 ### Vertical Group
 
@@ -49,7 +49,7 @@ Radio groups allow selection of one or more values from a given set of choices. 
 
 #### Wrapping
 
-By default, the horizontal radios will wrap onto the next line if the group doesn't fit within the container. There is the option to force the radios to remain inline and wrap the label text instead by setting `wrap` prop to `false`.
+By default, horizontal radio groups will wrap onto the next line if the group doesn't fit within the container. You can force the group to remain inline and wrap the label text instead by setting the `wrap` prop to `false`.
 
 `wrap=true`
 
@@ -65,7 +65,7 @@ By default, the horizontal radios will wrap onto the next line if the group does
 
 ### Controlled
 
-Controlled Radio require events to trigger the state change. The application must track state and update Radio props manually. Useful for when logic or validation needs to be applied or a request should happen when updating a form.
+Controlled Radio buttons require events to trigger the state change. The application must track state and update Radio props manually. Useful for when logic or validation needs to be applied or a request should happen when updating a form.
 
 <Canvas>
   <Story id="core-radio-button--controlled-group" />
@@ -73,7 +73,7 @@ Controlled Radio require events to trigger the state change. The application mus
 
 ### Long Text
 
-When the text label wraps to multiple lines, align the text to the top.
+When the text label wraps over multiple lines, align the text to the top.
 
 <Canvas>
   <Story id="core-radio-button--long-text-group" />
