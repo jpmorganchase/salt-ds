@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
-import { capitalize } from "@salt-ds/lab";
+import { capitalize, makePrefixer } from "@salt-ds/core";
 import { JSONObj } from "../../helpers/parseToJson";
 import "./InnerFieldLabel.css";
 import { SECTIONED_BY_COLOR_STATE } from "../ChildrenValues";
