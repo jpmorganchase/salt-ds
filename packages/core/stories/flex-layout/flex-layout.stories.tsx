@@ -8,6 +8,7 @@ export default {
   component: FlexLayout,
   subcomponents: { FlexItem },
   argTypes: {
+    as: { type: "string" },
     align: {
       options: ["start", "end", "center", "stretch", "baseline"],
       control: { type: "select" },

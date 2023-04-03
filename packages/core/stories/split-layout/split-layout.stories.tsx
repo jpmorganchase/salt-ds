@@ -19,6 +19,7 @@ export default {
   title: "Core/Layout/Split Layout",
   component: SplitLayout,
   argTypes: {
+    as: { type: "string" },
     align: {
       options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
       control: { type: "select" },
