@@ -713,6 +713,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       if (part === "header" && !headerIsFocusable) {
         return;
       }
+      if (editMode) {
+        endEditMode(editorText);
+      }
       moveCursor(part, rowIndex, columnIndex);
     } catch (e) {
       // TODO

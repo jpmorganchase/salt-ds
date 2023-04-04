@@ -377,6 +377,22 @@ describe("Grid", () => {
     findCell(0, 4).should("have.text", "3.14");
   });
 
+  it("Clicking on a different cell ends edit and confirms new cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("asd");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "asd");
+
+    clickCell(0, 1);
+    checkCursorPos(0, 1);
+    findCell(0, 0).should("have.text", "asd");
+  });
+
   // Docs Examples
 
   describe("Grid Variants", () => {
