@@ -29,4 +29,3 @@ To migrate from the previous to new implementation:
 +       <InteractableCard disabled />
 +   );
 ```
-
