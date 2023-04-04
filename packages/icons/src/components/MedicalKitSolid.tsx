@@ -17,7 +17,12 @@ export const MedicalKitSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M4.5 8v.5h3v-1h1v3h-5v-3h1V8ZM8 4.5h-.5v-1h-3v1h-1v-3h5v3H8Zm3.5 6h-1v-9h1v9Zm-11-9h1v9h-1v-9Z" />
+      <path
+        fillRule="evenodd"
+        d="M9 1H3v10h6V1ZM5 8V7H4V5h1V4h2v1h1v2H7v1H5Z"
+        clipRule="evenodd"
+      />
+      <path d="M10 1v10h2V1h-2ZM0 1h2v10H0V1Z" />
     </Icon>
   );
 });
