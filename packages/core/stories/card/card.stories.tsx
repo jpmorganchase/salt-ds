@@ -11,6 +11,7 @@ import {
   FlexLayout,
   GridLayout,
   Label,
+  Link,
 } from "@salt-ds/core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 import stockPhoto from "./../assets/stockPhoto.png";
@@ -114,18 +115,23 @@ export const InteractableAll: ComponentStory<typeof Card> = () => (
   </div>
 );
 
+const MyEmptyComponent = () => <></>;
+
 export const InteractableAsLink: ComponentStory<typeof Card> = () => {
   return (
-    <a
-      className="saltInteractableCard-link"
+    <Link 
       href="https://saltdesignsystem.com/"
+      IconComponent={MyEmptyComponent} 
+      target="_blank" 
     >
-      <InteractableCard style={{ maxWidth: "500px" }}>
+      <InteractableCard
+        style={{ maxWidth: "500px" }}
+        >
         <div style={{ textAlign: "center" }}>
           <div>Visit Salt</div>
         </div>
       </InteractableCard>
-    </a>
+    </Link>
   );
 };
 
