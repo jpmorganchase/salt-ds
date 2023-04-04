@@ -43,7 +43,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {children}
       {target === "_blank" && (
         <>
-          {IconComponent && <IconComponent className={withBaseName("icon")} aria-hidden />}
+          {IconComponent && (
+            <IconComponent className={withBaseName("icon")} aria-hidden />
+          )}
           <span className={withBaseName("externalLinkADA")}>External Link</span>
         </>
       )}
