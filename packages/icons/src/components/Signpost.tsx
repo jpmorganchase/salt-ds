@@ -15,18 +15,11 @@ export const SignpostIcon = forwardRef<SVGSVGElement, SignpostIconProps>(
         ref={ref}
         {...props}
       >
-        <g clipPath="url(#a)">
-          <path
-            fillRule="evenodd"
-            d="M5 0h1v1h4.067L12 3l-1.933 2H6v7H5V7H1.933L0 5l1.933-2H5V0Zm1 4h3.666l.967-1-.967-1H6v2ZM5 4H2.334l-.967 1 .967 1H5V4Z"
-            clipRule="evenodd"
-          />
-        </g>
-        <defs>
-          <clipPath id="a">
-            <path d="M0 0h12v12H0z" />
-          </clipPath>
-        </defs>
+        <path
+          fillRule="evenodd"
+          d="M5 0h1v1h4.067L12 3l-1.933 2H6v7H5V7H1.933L0 5l1.933-2H5V0Zm1 4h3.666l.967-1-.967-1H6v2ZM5 4H2.334l-.967 1 .967 1H5V4Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

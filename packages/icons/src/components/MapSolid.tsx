@@ -15,18 +15,11 @@ export const MapSolidIcon = forwardRef<SVGSVGElement, MapSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <g clipPath="url(#a)">
-          <path
-            fillRule="evenodd"
-            d="m3 10-3 2V2l3-2 3 2 3-2 3 2v10l-3-2-3 2-3-2Zm3.5-7.131v7.596l2-1.334V1.535l-2 1.334Zm-4 6.262V1.535l-1.5 1v7.597l1.5-1Z"
-            clipRule="evenodd"
-          />
-        </g>
-        <defs>
-          <clipPath id="a">
-            <path d="M0 0h12v12H0z" />
-          </clipPath>
-        </defs>
+        <path
+          fillRule="evenodd"
+          d="m3 10-3 2V2l3-2 3 2 3-2 3 2v10l-3-2-3 2-3-2Zm3.5-7.131v7.596l2-1.334V1.535l-2 1.334Zm-4 6.262V1.535l-1.5 1v7.597l1.5-1Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

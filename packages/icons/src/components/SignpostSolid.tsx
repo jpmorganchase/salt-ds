@@ -17,14 +17,7 @@ export const SignpostSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <g clipPath="url(#a)">
-        <path d="M5 0h1v1h4.067L12 3l-1.933 2H6v7H5V7H1.933L0 5l1.933-2H5V0Z" />
-      </g>
-      <defs>
-        <clipPath id="a">
-          <path d="M0 0h12v12H0z" />
-        </clipPath>
-      </defs>
+      <path d="M5 0h1v1h4.067L12 3l-1.933 2H6v7H5V7H1.933L0 5l1.933-2H5V0Z" />
     </Icon>
   );
 });
