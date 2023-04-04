@@ -116,10 +116,11 @@ export const InteractableAll: ComponentStory<typeof Card> = () => (
 
 export const InteractableAsLink: ComponentStory<typeof Card> = () => {
   return (
-    <a className="saltInteractableCard-link" href="https://saltdesignsystem.com/">
-      <InteractableCard
-        style={{ maxWidth: "500px" }}
-        >
+    <a
+      className="saltInteractableCard-link"
+      href="https://saltdesignsystem.com/"
+    >
+      <InteractableCard style={{ maxWidth: "500px" }}>
         <div style={{ textAlign: "center" }}>
           <div>Visit Salt</div>
         </div>
