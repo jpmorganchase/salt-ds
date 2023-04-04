@@ -1,5 +1,4 @@
 import { ChangeEventHandler, useState } from "react";
-import { Link, Text } from "@salt-ds/core";
 import { RadioButton, RadioButtonGroup } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
