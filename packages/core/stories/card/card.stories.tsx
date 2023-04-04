@@ -115,13 +115,11 @@ export const InteractableAll: ComponentStory<typeof Card> = () => (
   </div>
 );
 
-const MyEmptyComponent = () => <></>;
-
 export const InteractableAsLink: ComponentStory<typeof Card> = () => {
   return (
     <Link 
       href="https://saltdesignsystem.com/"
-      IconComponent={MyEmptyComponent} // TODO: fix Link to accept null Icons
+      IconComponent={null} 
       target="_blank" 
     >
       <InteractableCard
