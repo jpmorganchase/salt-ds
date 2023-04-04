@@ -121,7 +121,7 @@ export const InteractableAsLink: ComponentStory<typeof Card> = () => {
   return (
     <Link 
       href="https://saltdesignsystem.com/"
-      IconComponent={MyEmptyComponent} 
+      IconComponent={MyEmptyComponent} // TODO: fix Link to accept null Icons
       target="_blank" 
     >
       <InteractableCard
