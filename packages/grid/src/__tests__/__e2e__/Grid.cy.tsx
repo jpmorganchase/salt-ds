@@ -355,6 +355,16 @@ describe("Grid", () => {
     checkCursorPos(0, 1);
   });
 
+  it("Arbitrary typing on an editable cell enters edit mode with the first key as value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realType("a");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "a");
+  });
   it("Numeric cell editor", () => {
     cy.mount(<GridExample />);
 
