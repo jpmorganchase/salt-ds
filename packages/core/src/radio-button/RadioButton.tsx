@@ -7,7 +7,7 @@ import {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
-import { makePrefixer, useControlled, useId } from "../utils";
+import { makePrefixer, useControlled } from "../utils";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import { RadioButtonIcon } from "./RadioButtonIcon";
 
@@ -80,7 +80,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     } = props;
 
     const radioGroup = useRadioGroup();
-    const id = useId();
 
     const radioGroupChecked =
       radioGroup.value != null && value != null
@@ -104,7 +103,17 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     };
 
     return (
-      <div className={withBaseName()}>
+      <label
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+          },
+          className
+        )}
+        ref={ref}
+        {...rest}
+      >
         <input
           className={withBaseName("input")}
           {...inputProps}
@@ -116,29 +125,11 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           onChange={handleChange}
           onFocus={onFocus}
           type="radio"
-          id={id}
         />
 
-        <label
-          className={clsx(
-            // withBaseName(),
-            {
-              [withBaseName("disabled")]: disabled,
-            },
-            className
-          )}
-          ref={ref}
-          htmlFor={id}
-          {...rest}
-        >
-          <RadioButtonIcon
-            checked={checked}
-            error={error}
-            disabled={disabled}
-          />
-          {label}
-        </label>
-      </div>
+        <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
+        {label}
+      </label>
     );
   }
 );
