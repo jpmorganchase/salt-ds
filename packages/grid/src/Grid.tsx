@@ -227,7 +227,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   );
 
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [initialText, setInitialText] = useState<string | undefined>(undefined);
+  const [editorText, setEditorText] = useState<string | undefined>(undefined);
 
   const resizeClient: ScrollableProps<T>["resizeClient"] = useCallback(
     (dimensions) => {
@@ -471,16 +471,19 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     if (editMode || cursorRowIdx == undefined || cursorColIdx == undefined) {
       return;
     }
-    const r = rowData[cursorRowIdx];
-    const c = cols[cursorColIdx];
-    const isEditable = !!contextValue.getEditor(c.info.props.id);
+    const column = cols[cursorColIdx];
+    const isEditable = !!contextValue.getEditor(column.info.props.id);
     if (isEditable) {
-      setInitialText(text);
+      setEditorText(
+        text !== undefined
+          ? text
+          : column.info.props.getValue!(rowData[cursorRowIdx])
+      );
       setEditMode(true);
     }
   };
 
-  const endEditMode = (value: string) => {
+  const endEditMode = (value?: string) => {
     if (!editMode) {
       return;
     }
@@ -613,13 +616,21 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const editorContext: EditorContext = useMemo(
     () => ({
-      initialText,
+      editorText,
+      setEditorText,
       editMode,
       startEditMode,
       endEditMode,
       cancelEditMode,
     }),
-    [editMode, startEditMode, endEditMode, cancelEditMode, initialText]
+    [
+      editMode,
+      startEditMode,
+      endEditMode,
+      cancelEditMode,
+      editorText,
+      setEditorText,
+    ]
   );
 
   const [isFocused, setFocused] = useState<boolean>(false);

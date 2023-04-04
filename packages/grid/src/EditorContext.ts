@@ -1,10 +1,11 @@
 import { createContext, useContext } from "react";
 
 export interface EditorContext {
-  initialText?: string;
+  editorText?: string;
   editMode?: boolean;
-  startEditMode: () => void;
-  endEditMode: (value: string) => void;
+  startEditMode: (value?: string) => void;
+  endEditMode: (value?: string) => void;
+  setEditorText: (value?: string) => void;
   cancelEditMode: () => void;
 }
 
