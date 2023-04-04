@@ -1,5 +1,5 @@
 .base > header {
-  --site-navigation-padding-vertical: var(--salt-size-unit);
+  --site-navigation-padding-vertical: 0;
   --site-navigation-padding-horizontal: calc(var(--salt-size-unit) * 3);
   --mosaic-border-width-thin: 0;
   --mosaic-shadow-dark-elevation2: var(--salt-shadow-1-color);
@@ -41,6 +41,10 @@
   padding: var(--site-navigation-padding-vertical) var(--site-navigation-padding-horizontal);
 }
 
+.base > main {
+  flex-direction: column;
+}
+
 @media screen and (max-width: 768px) {
   .docsPageContent {
     padding: calc(var(--salt-size-unit) * 2);
@@ -58,11 +62,14 @@
 @media screen and (max-width: 959px) {
   .base > header {
     --site-navigation-padding-horizontal: var(--salt-size-unit);
+    --site-navigation-padding-vertical: var(--salt-size-unit);
   }
 
   .base > header {
+    padding: var(--site-navigation-padding-vertical) var(--site-navigation-padding-horizontal);
     height: calc(var(--salt-size-unit) * 5);
     gap: var(--salt-size-unit);
     align-items: stretch;
+    display: flex;
   }
 }

@@ -5,3 +5,7 @@
   flex-direction: column;
   flex: 1;
 }
+
+.base {
+  min-height: 100vh;
+}

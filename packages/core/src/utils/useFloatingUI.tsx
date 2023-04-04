@@ -9,17 +9,17 @@ import {
 
 export type UseFloatingUIProps = {
   /**
-   * Set position relative to trigger
+   * Sets position relative to trigger.
    */
   placement?: Placement;
   strategy?: Strategy;
   middleware?: Middleware[];
   /**
-   * Set visible state. Defaults to false
+   * Sets visible state.
    */
   open?: boolean;
   /**
-   * Callback function triggered when open state changes
+   * Callback function triggered when open state changes.
    */
   onOpenChange?: (open: boolean) => void;
 };
