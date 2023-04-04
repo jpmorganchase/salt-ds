@@ -96,7 +96,7 @@ jobs:
         with:
           script: |
 
-            exec.exec('yarn changeset version --snapshot snapshot');
+            await exec.exec('yarn changeset version --snapshot snapshot');
 
             let output = ''
 
@@ -108,11 +108,11 @@ jobs:
               }
             };
 
-            exec.exec('yarn changeset publish --no-git-tag --snapshot --tag snapshot', [], options);
+            await exec.exec('yarn changeset publish --no-git-tag --snapshot --tag snapshot', [], options);
 
             const { COMMENT_ID } = process.env
             const newTags = Array
-              .from(stdout.matchAll(/New tag:\s+([^\s\n]+)/g))
+              .from(output.matchAll(/New tag:\s+([^\s\n]+)/g))
               .map(([_, tag]) => tag)
             if (newTags.length) {
               const multiple = newTags.length > 1
