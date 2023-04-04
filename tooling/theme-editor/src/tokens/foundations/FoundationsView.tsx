@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 import { Route, Routes } from "react-router-dom";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
-import { Tab, Tabstrip, capitalize } from "@salt-ds/lab";
+import { capitalize, makePrefixer } from "@salt-ds/core";
+import { Tab, Tabstrip } from "@salt-ds/lab";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { ThemeMode } from "../../header/ScopeSelector";
 import { SALT_FOUNDATIONS } from "../../utils/saltValues";
