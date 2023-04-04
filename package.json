@@ -116,7 +116,7 @@
     "react-color": "^2.19.3",
     "react-docgen-typescript": "2.2.2",
     "react-dom": "^18.0.0",
-    "react-live": "^3.1.1",
+    "react-live": "^4.0.0",
     "react-router-dom": "^6.2.1",
     "react-window": "^1.8.6",
     "rifm": "^0.12.0",
