@@ -1,12 +1,11 @@
+import { Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
+import { DecoratorFn } from "@storybook/react";
 import {
-  CellEditor,
-  DropdownCellEditor,
-  Grid,
-  GridColumn,
-  SortOrder,
-} from "../src";
-import "./grid.stories.css";
-import { createDummyInvestors, Investor, investorKeyGetter } from "./dummyData";
+  Investor,
+  investorKeyGetter,
+  db,
+  createDummyInvestors,
+} from "./dummyData";
 import { useState } from "react";
 import { Scrim, ContentStatus } from "@salt-ds/lab";
 import {
@@ -15,62 +14,80 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { useTheme } from "@salt-ds/core";
+import { rest } from "msw";
+import "./grid.stories.css";
 
 export default {
   title: "Data Grid/Data Grid",
   component: Grid,
-  argTypes: {},
+  parameters: {
+    msw: {
+      handlers: [
+        rest.get("/api/investors", (req, res, ctx) => {
+          const sortBy = req.url.searchParams.get("sort_by");
+
+          const orderBy =
+            sortBy
+              ?.split(",")
+              .map((s) => {
+                const [sortColumn, sortOrder] = s.split(".");
+                console.log(sortColumn, sortOrder);
+                if (sortOrder && sortColumn) {
+                  return {
+                    [sortColumn]: sortOrder,
+                  } as Record<keyof Investor, SortOrder>;
+                }
+              })
+              .filter(Boolean) ?? [];
+
+          const response = db.investor.findMany({
+            // @ts-ignore
+            orderBy,
+            take: 50,
+          });
+
+          return res(ctx.json(response));
+        }),
+      ],
+    },
+  },
 };
 
-const dummyInvestors = createDummyInvestors();
+type SortModel = {
+  column: keyof Investor | undefined;
+  order: SortOrder;
+};
 
-const api = (sortOrder: SortOrder): Promise<Investor[]> =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      if (sortOrder === SortOrder.ASC) {
-        const sortedItems = [...dummyInvestors].sort((a, b) => {
-          return a.amount - b.amount;
-        });
-        return resolve(sortedItems);
-      }
-      if (sortOrder === SortOrder.DESC) {
-        const sortedItems = [...dummyInvestors].sort((a, b) => {
-          return b.amount - a.amount;
-        });
-        return resolve(sortedItems);
-      }
-      return resolve([...dummyInvestors]);
-    }, 1000);
+const getInvestors = async (sortModel: SortModel) => {
+  const url = new URL("/api/investors", window.location.origin);
+  if (sortModel.column && sortModel.order !== SortOrder.NONE) {
+    url.searchParams.set("sort_by", `${sortModel.column}.${sortModel.order}`);
+  }
+  const res = await fetch(url.toString());
+  return await res.json();
+};
+
+const useInvestors = (sortModel: SortModel) => {
+  return useQuery<Investor[]>({
+    queryKey: ["investors", sortModel],
+    queryFn: () => getInvestors(sortModel),
+    keepPreviousData: true,
   });
+};
 
 const queryClient = new QueryClient();
 
-export function SortColumns() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <SortColumnsImpl />
-    </QueryClientProvider>
-  );
-}
-
-function SortColumnsImpl() {
-  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.NONE);
-
-  const { isLoading, data, isFetching, isFetchedAfterMount } = useQuery<
-    Investor[]
-  >(["sortOrder", sortOrder], () => api(sortOrder), {
-    keepPreviousData: true,
+export function ServerSideSort() {
+  const [sortModel, setSortModel] = useState<SortModel>({
+    column: undefined,
+    order: SortOrder.NONE,
   });
+  const { isLoading, data, isFetching, isFetchedAfterMount } =
+    useInvestors(sortModel);
 
   const { mode } = useTheme();
 
   if (isLoading) return <div>loading...</div>;
-
-  const scoreOptions = ["-", "5%", "10%", "15%", "20%"];
-
-  const onScoreChange = (row: Investor, rowIndex: number, value: string) => {
-    dummyInvestors[rowIndex].score = value;
-  };
 
   return (
     <div
@@ -106,12 +123,18 @@ function SortColumnsImpl() {
           defaultWidth={200}
           getValue={(rowData: Investor) => rowData.name}
           sortable
+          onSortOrderChange={({ sortOrder }) => {
+            setSortModel({ order: sortOrder, column: "name" });
+          }}
         />
         <GridColumn
           name="Strategy"
           id="strategy"
           getValue={(rowData: Investor) => rowData.strategy.join(", ")}
           sortable
+          onSortOrderChange={({ sortOrder }) => {
+            setSortModel({ order: sortOrder, column: "strategy" });
+          }}
         />
         <GridColumn
           name="Date incorporated"
@@ -119,34 +142,10 @@ function SortColumnsImpl() {
           defaultWidth={150}
           getValue={(rowData: Investor) => rowData.date}
           sortable
-        />
-        <GridColumn
-          name="Score"
-          id="score"
-          getValue={(r) => r.score}
-          onChange={onScoreChange}
-          sortable
-          align="right"
-          customSort={({ rowData, sortOrder }) => {
-            // custom sort percentage score as number
-            const sortedData = [...rowData].sort((a, b) => {
-              const A = Number(a["score"]?.slice(0, a.score.length - 1));
-              const B = Number(b["score"]?.slice(0, b.score.length - 1));
-
-              return A < B ? -1 : 1;
-            });
-
-            if (sortOrder === SortOrder.DESC) {
-              return sortedData.reverse();
-            }
-
-            return sortedData;
+          onSortOrderChange={({ sortOrder }) => {
+            setSortModel({ order: sortOrder, column: "date" });
           }}
-        >
-          <CellEditor>
-            <DropdownCellEditor options={scoreOptions} />
-          </CellEditor>
-        </GridColumn>
+        />
         <GridColumn
           name="Amount"
           id="amount"
@@ -155,10 +154,72 @@ function SortColumnsImpl() {
           }
           sortable
           onSortOrderChange={({ sortOrder }) => {
-            setSortOrder(sortOrder);
+            setSortModel({ order: sortOrder, column: "amount" });
           }}
         />
       </Grid>
     </div>
+  );
+}
+
+ServerSideSort.decorators = [
+  ((Story) => (
+    <QueryClientProvider client={queryClient}>
+      <Story />
+    </QueryClientProvider>
+  )) as DecoratorFn,
+];
+
+const dummyInvestors = createDummyInvestors({ limit: 50 });
+
+export function ClientSideSort() {
+  return (
+    <Grid
+      rowData={dummyInvestors || []}
+      rowKeyGetter={investorKeyGetter}
+      style={{ height: 600 }}
+      headerIsFocusable
+      className="grid"
+      zebra={true}
+      columnSeparators={true}
+    >
+      <GridColumn
+        name="Name"
+        id="name"
+        defaultWidth={200}
+        getValue={(rowData: Investor) => rowData.name}
+        sortable
+      />
+      <GridColumn
+        name="Strategy"
+        id="strategy"
+        getValue={(rowData: Investor) => rowData.strategy.join(", ")}
+        sortable
+      />
+      <GridColumn
+        name="Date incorporated"
+        id="date"
+        defaultWidth={150}
+        getValue={(rowData: Investor) => rowData.date}
+        sortable
+      />
+      <GridColumn
+        name="Amount"
+        id="amount"
+        getValue={(rowData: Investor) => rowData.amount}
+        sortable
+        customSort={({ rowData, sortOrder }) => {
+          const sortedData = [...rowData].sort((a, b) => {
+            return a.amount < b.amount ? -1 : 1;
+          });
+
+          if (sortOrder === SortOrder.DESC) {
+            return sortedData.reverse();
+          }
+
+          return sortedData;
+        }}
+      />
+    </Grid>
   );
 }

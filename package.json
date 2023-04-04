@@ -52,10 +52,12 @@
   "dependencies": {
     "@changesets/cli": "^2.25.2",
     "@cypress/code-coverage": "^3.10.0",
+    "@faker-js/faker": "^7.6.0",
     "@floating-ui/react": "^0.20.0",
     "@fontsource/open-sans": "^4.5.13",
     "@internationalized/date": "^3.0.0",
     "@jpmorganchase/mosaic-create-site": "^0.1.0-beta.19",
+    "@mswjs/data": "^0.12.0",
     "@storybook/addon-a11y": "^6.5.16",
     "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-docs": "^6.5.16",
@@ -110,6 +112,8 @@
     "eslint-plugin-storybook": "^0.6.10",
     "glob": "^8.0.0",
     "modular-scripts": "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch",
+    "msw": "^1.2.1",
+    "msw-storybook-addon": "^1.8.0",
     "no-scroll": "^2.1.1",
     "nyse-holidays": "^1.2.0",
     "prettier": "^2.6.2",
@@ -161,5 +165,8 @@
       "<rootDir>/node_modules/csstree-validator"
     ]
   },
-  "packageManager": "yarn@3.5.0"
+  "packageManager": "yarn@3.5.0",
+  "msw": {
+    "workerDirectory": "docs\\public"
+  }
 }

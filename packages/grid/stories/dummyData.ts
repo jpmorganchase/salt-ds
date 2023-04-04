@@ -1,19 +1,20 @@
-import { randomAmount, randomDate } from "./utils";
+import { factory, primaryKey } from "@mswjs/data";
+import { faker } from "@faker-js/faker";
 import { RowKeyGetter } from "../src";
 
+faker.seed(5417);
+
 export interface Investor {
+  id: string;
   name: string;
-  addedInvestors: string[];
   location: string;
   strategy: string[];
   cohort: string[];
-  notes: string;
   amount: number;
-  score?: string;
   date?: string;
 }
 
-export const investorKeyGetter = (rowData: Investor) => rowData.name;
+export const investorKeyGetter = (rowData: Investor) => rowData.id;
 
 export const allLocations = [
   "New York, NY",
@@ -22,59 +23,57 @@ export const allLocations = [
   "San Francisco, CA",
 ];
 
-const getInvestors = () => {
-  const a = [
-    "Apple",
-    "Orange",
-    "Dragonfruit",
-    "Coffee",
-    "Fig",
-    "Grape",
-    "Hazelnut",
-  ];
-  const b = ["Investment", "Venture Capital", "Private Wealth"];
-  const c = ["", "Inc."];
+const fruits = [
+  "Apple",
+  "Orange",
+  "Dragonfruit",
+  "Coffee",
+  "Fig",
+  "Grape",
+  "Hazelnut",
+];
+const types = ["Investment", "Venture Capital", "Private Wealth"];
+const suffixes = ["", "Inc."];
 
-  const str = [
-    ["FO"],
-    ["PE"],
-    ["VC"],
-    ["FO", "PE"],
-    ["FO", "PE", "VC"],
-    ["VC", "PE"],
-  ];
-  const coh = [
-    ["Potential Leads"],
-    ["Top VCs"],
-    ["Potential Leads", "Top VCs"],
-  ];
+const strategies = [
+  ["FO"],
+  ["PE"],
+  ["VC"],
+  ["FO", "PE"],
+  ["FO", "PE", "VC"],
+  ["VC", "PE"],
+];
+const cohorts = [
+  ["Potential Leads"],
+  ["Top VCs"],
+  ["Potential Leads", "Top VCs"],
+];
 
-  const investors: Investor[] = [];
-  let i = 0;
-  for (const x of a) {
-    for (const y of b) {
-      for (const z of c) {
-        investors.push({
-          name: [x, y, z].join(" "),
-          addedInvestors: [],
-          location: allLocations[i % allLocations.length],
-          cohort: coh[i % coh.length],
-          strategy: str[i % str.length],
-          notes: "",
-          amount: randomAmount(100, 300, 4),
-          date: randomDate(new Date(2000, 0, 1), new Date())
-            .toISOString()
-            .substring(0, 10),
-        });
-        ++i;
-      }
-    }
-  }
-  return investors;
-};
+export const db = factory({
+  investor: {
+    id: primaryKey(faker.datatype.uuid),
+    name: () =>
+      `${faker.helpers.arrayElement(fruits)} ${faker.helpers.arrayElement(
+        types
+      )} ${faker.helpers.arrayElement(suffixes)}`,
+    location: () => faker.helpers.arrayElement(allLocations),
+    cohort: () => faker.helpers.arrayElement(cohorts),
+    strategy: () => faker.helpers.arrayElement(strategies),
+    amount: () => faker.finance.amount(100, 300, 4),
+    score: () => "",
+    date: () =>
+      faker.date
+        .between("2000-01-01", "2020-12-31")
+        .toISOString()
+        .substring(0, 10),
+  },
+});
 
-export const createDummyInvestors = () => {
-  return getInvestors();
+// Create 50 investors
+Array.from({ length: 2000 }).forEach(() => db.investor.create());
+
+export const createDummyInvestors = ({ limit }: { limit?: number } = {}) => {
+  return db.investor.findMany({ take: limit ?? 50 }) as unknown as Investor[];
 };
 
 export interface DummyRow {
