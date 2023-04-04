@@ -115,29 +115,16 @@ export const InteractableAll: ComponentStory<typeof Card> = () => (
 );
 
 export const InteractableAsLink: ComponentStory<typeof Card> = () => {
-  const handleClick = () => {
-    console.log("Clicked");
-    window.open("https://saltdesignsystem.com/");
-  };
-
-  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
-    if (event.key === "Enter") {
-      window.open("https://saltdesignsystem.com/");
-      console.log("Clicked");
-    }
-  };
-
   return (
-    <InteractableCard
-      tabIndex={0}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      style={{ maxWidth: "500px" }}
-    >
-      <div style={{ textAlign: "center" }}>
-        <div>Visit Salt</div>
-      </div>
-    </InteractableCard>
+    <a className="saltInteractableCard-link" href="https://saltdesignsystem.com/">
+      <InteractableCard
+        style={{ maxWidth: "500px" }}
+        >
+        <div style={{ textAlign: "center" }}>
+          <div>Visit Salt</div>
+        </div>
+      </InteractableCard>
+    </a>
   );
 };
 

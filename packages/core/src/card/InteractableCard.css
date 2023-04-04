@@ -69,3 +69,13 @@ a:focus-visible .saltInteractableCard,
 .saltInteractableCard-disabled div {
   pointer-events: none;
 }
+
+/* Class that can be used for anchor tags wrapping InteractableCard */
+.saltInteractableCard-link {
+  color: var(--saltCard-link-color, var(--salt-text-primary-foreground));
+  inset: var(--salt-focused-outlineInset);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+}
