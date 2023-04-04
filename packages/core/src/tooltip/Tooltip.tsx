@@ -6,6 +6,7 @@ import {
   ReactNode,
   isValidElement,
 } from "react";
+import { FloatingArrow } from "@floating-ui/react";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import { UseFloatingUIProps, makePrefixer, useForkRef } from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
@@ -17,43 +18,43 @@ export interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
     Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
-   * The children will be the tooltip's trigger.
+   * The children will be the Tooltip's trigger.
    */
   children: ReactNode;
   /**
-   * Whether to hide the tooltip arrow. Defaults to `false`.
+   * Whether to hide the Tooltip arrow. Defaults to `false`.
    */
   hideArrow?: boolean;
   /**
-   * Whether to hide the state icon within the tooltip. Defaults to `false`.
+   * Whether to hide the status icon within the Tooltip. Defaults to `false`.
    */
   hideIcon?: boolean;
   /**
-   * Content displayed inside the tooltip. Can be a string or a React component.
+   * Content displayed inside the Tooltip. Can be a string or a React component.
    */
   content: ReactNode;
   /**
-   * A string to determine the current status of the tooltip. Defaults to 'info'.
+   * A string to determine the status of the Tooltip. Defaults to `info`.
    */
   status?: ValidationStatus;
   /**
-   * Delay in milliseconds before the tooltip is shown
+   * Delay in milliseconds before the Tooltip is shown.
    */
   enterDelay?: number;
   /**
-   * Delay in milliseconds before the tooltip is hidden
+   * Delay in milliseconds before the Tooltip is hidden.
    */
   leaveDelay?: number;
   /**
-   * Option to not display the tooltip. Can be used in conditional situations like text truncation.
+   * Option to not display the Tooltip. Can be used in conditional situations like text truncation.
    */
   disabled?: boolean;
   /**
-   * Option to remove the hover listener
+   * Option to remove the hover listener.
    */
   disableHoverListener?: boolean;
   /**
-   * Option to remove the focus listener
+   * Option to remove the focus listener.
    */
   disableFocusListener?: boolean;
 }
@@ -100,6 +101,12 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     return (
       <>
+        {isValidElement(children) &&
+          cloneElement(children, {
+            ...getTriggerProps(),
+            ref: triggerRef,
+          })}
+
         {open && !disabled && (
           <div
             className={clsx(withBaseName(), withBaseName(status), className)}
@@ -117,16 +124,18 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
               <span className={withBaseName("content")}>{content}</span>
             </div>
             {!hideArrow && (
-              <div className={withBaseName("arrow")} {...arrowProps} />
+              <FloatingArrow
+                {...arrowProps}
+                className={withBaseName("arrow")}
+                strokeWidth={1}
+                fill="var(--salt-container-primary-background)"
+                stroke="var(--tooltip-status-borderColor)"
+                height={5}
+                width={10}
+              />
             )}
           </div>
         )}
-
-        {isValidElement(children) &&
-          cloneElement(children, {
-            ...getTriggerProps(),
-            ref: triggerRef,
-          })}
       </>
     );
   }

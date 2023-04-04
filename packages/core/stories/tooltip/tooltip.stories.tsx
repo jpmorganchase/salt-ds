@@ -23,15 +23,21 @@ Open.args = { ...defaultArgs, open: true };
 
 export const Status: ComponentStory<typeof Tooltip> = (props: TooltipProps) => (
   <>
-    <Tooltip {...props} content="I am a tooltip" status="info">
-      <Button>Info</Button>
-    </Tooltip>
-    <Tooltip {...props} content="We found an issue" status="error">
-      <Button>Error</Button>
-    </Tooltip>
-    <Tooltip {...props} content="Are you sure" status="warning">
-      <Button>Warning</Button>
-    </Tooltip>
+    <div style={{ marginBottom: 10 }}>
+      <Tooltip {...props} content="I am a tooltip" status="info">
+        <Button>Info</Button>
+      </Tooltip>
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <Tooltip {...props} content="We found an issue" status="error">
+        <Button>Error</Button>
+      </Tooltip>
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <Tooltip {...props} content="Are you sure" status="warning">
+        <Button>Warning</Button>
+      </Tooltip>
+    </div>
     <Tooltip {...props} content="Well done" status="success">
       <Button>Success</Button>
     </Tooltip>
@@ -53,7 +59,7 @@ export const WithoutIcon: Story<TooltipProps> = (props) => (
 );
 WithoutIcon.args = defaultArgs;
 
-export const ScrollTooltip: Story<TooltipProps> = (props) => {
+export const FlipAndShiftTooltip: Story<TooltipProps> = (props) => {
   const handleScrollButton = useCallback((node: HTMLButtonElement | null) => {
     node?.scrollIntoView({ block: "center", inline: "center" });
   }, []);
@@ -78,7 +84,7 @@ export const ScrollTooltip: Story<TooltipProps> = (props) => {
     </div>
   );
 };
-ScrollTooltip.args = {
+FlipAndShiftTooltip.args = {
   content: "I am a tooltip",
   placement: "top",
   open: true,
@@ -89,18 +95,13 @@ export const CustomContent: Story<TooltipProps> = (props) => (
     {...props}
     content={
       <>
-        <Text as="h3">Tooltip</Text>
-        <Text>Props:</Text>
-        <ul>
-          <li>
-            <strong>hideIcon:</strong> true
-          </li>
-          <li>
-            <strong>open:</strong> false
-          </li>
-          <li>
-            <strong>status:</strong> info
-          </li>
+        <Text styleAs="h3">Persona B</Text>
+        <Text styleAs="h4">personab@example.com</Text>
+        <ul style={{ paddingLeft: 20, margin: 0 }}>
+          <li>Role</li>
+          <li>Position</li>
+          <li>Location</li>
+          <li>City, Country</li>
         </ul>
       </>
     }
@@ -112,15 +113,21 @@ CustomContent.args = { ...defaultArgs, hideIcon: true };
 
 export const Placement: Story<TooltipProps> = (props) => (
   <>
-    <Tooltip {...props} content="I am a tooltip" placement={"top"}>
-      <Button>Top</Button>
-    </Tooltip>
-    <Tooltip {...props} content="I am a tooltip" placement={"bottom"}>
-      <Button>Bottom</Button>
-    </Tooltip>
-    <Tooltip {...props} content="I am a tooltip" placement={"left"}>
-      <Button>Left</Button>
-    </Tooltip>
+    <div style={{ marginBottom: 10 }}>
+      <Tooltip {...props} content="I am a tooltip" placement={"top"}>
+        <Button>Top</Button>
+      </Tooltip>
+    </div>
+    <div style={{ marginBottom: 40 }}>
+      <Tooltip {...props} content="I am a tooltip" placement={"bottom"}>
+        <Button>Bottom</Button>
+      </Tooltip>
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <Tooltip {...props} content="I am a tooltip" placement={"left"}>
+        <Button>Left</Button>
+      </Tooltip>
+    </div>
     <Tooltip {...props} content="I am a tooltip" placement={"right"}>
       <Button>Right</Button>
     </Tooltip>
@@ -130,12 +137,16 @@ Placement.args = defaultArgs;
 
 export const Delay: Story<TooltipProps> = (props) => (
   <>
-    <Tooltip {...props} content="I am a tooltip" enterDelay={100}>
-      <Button>100ms</Button>
-    </Tooltip>
-    <Tooltip {...props} content="I am a tooltip">
-      <Button>300ms</Button>
-    </Tooltip>
+    <div style={{ marginBottom: 10 }}>
+      <Tooltip {...props} content="I am a tooltip" enterDelay={100}>
+        <Button>100ms</Button>
+      </Tooltip>
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <Tooltip {...props} content="I am a tooltip">
+        <Button>300ms</Button>
+      </Tooltip>
+    </div>
     <Tooltip {...props} content="I am a tooltip" enterDelay={500}>
       <Button>500ms</Button>
     </Tooltip>
