@@ -12,7 +12,7 @@ import "./RadioButtonGroup.css";
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
 export interface RadioButtonGroupProps
-  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  extends Omit<ComponentPropsWithoutRef<"fieldset">, "onChange"> {
   /**
    * Set the selected value when initialized.
    */
@@ -40,7 +40,7 @@ export interface RadioButtonGroupProps
 }
 
 export const RadioButtonGroup = forwardRef<
-  HTMLDivElement,
+  HTMLFieldSetElement,
   RadioButtonGroupProps
 >(function RadioButtonGroup(props, ref) {
   const {
@@ -70,7 +70,7 @@ export const RadioButtonGroup = forwardRef<
   const name = useId(nameProp);
 
   return (
-    <div
+    <fieldset
       className={clsx(
         withBaseName(),
         withBaseName(direction),
@@ -81,7 +81,6 @@ export const RadioButtonGroup = forwardRef<
       )}
       data-testid="radio-button-group"
       ref={ref}
-      role="radiogroup"
       {...rest}
     >
       <RadioGroupContext.Provider
@@ -89,6 +88,6 @@ export const RadioButtonGroup = forwardRef<
       >
         {children}
       </RadioGroupContext.Provider>
-    </div>
+    </fieldset>
   );
 });
