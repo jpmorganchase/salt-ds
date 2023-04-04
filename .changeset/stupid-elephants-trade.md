@@ -1,6 +1,5 @@
 ---
 "@salt-ds/core": minor
-"@salt-ds/lab": minor
 ---
 
 Deprecated `interactable` and `disabled` props in Card
