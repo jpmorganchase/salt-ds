@@ -15,7 +15,7 @@ const withBaseName = makePrefixer("saltLink");
  * <LinkExample to="#link">Action</LinkExample>
  */
 export interface LinkProps extends Omit<TextProps<"a">, "as" | "disabled"> {
-  IconComponent?: ComponentType<IconProps>;
+  IconComponent?: ComponentType<IconProps> | null;
 }
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
@@ -43,7 +43,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {children}
       {target === "_blank" && (
         <>
-          <IconComponent className={withBaseName("icon")} aria-hidden />
+          {IconComponent && <IconComponent className={withBaseName("icon")} aria-hidden />}
           <span className={withBaseName("externalLinkADA")}>External Link</span>
         </>
       )}
