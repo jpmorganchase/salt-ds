@@ -58,7 +58,7 @@ FeatureInput.args = {
 
 export const WithoutLabel = CheckboxTemplate.bind({});
 
-WithoutLabel.args = { defaultChecked: true };
+WithoutLabel.args = { defaultChecked: true, "aria-label": "Select" };
 
 export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
   const [checkboxState, setCheckboxState] = useState({
