@@ -8,7 +8,7 @@ import {
 } from "./assets";
 
 import "./CheckboxIcon.css";
-import {useDensity} from "../salt-provider";
+import { useDensity } from "../salt-provider";
 
 export interface CheckboxIconProps {
   checked?: boolean;
