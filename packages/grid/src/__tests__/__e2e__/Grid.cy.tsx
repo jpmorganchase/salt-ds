@@ -160,24 +160,28 @@ describe("Grid", () => {
   it("Row virtualization", () => {
     cy.mount(<LotsOfColumns />);
     assertGridReady();
-    cy.findByTestId("grid-scrollable").scrollTo(0, 50, {
-      easing: "linear",
-      duration: 100,
-    });
+    cy.get("[data-testid='grid-middle-part']")
+      .find("tr")
+      .then(($res) => {
+        const numberOfVisibleRows = $res.length;
 
-    cy.findByTestId("grid-scrollable");
+        cy.findByTestId("grid-scrollable").scrollTo(0, 50, {
+          easing: "linear",
+          duration: 100,
+        });
 
-    const getRow = (n: number) =>
-      cy
-        .get("[data-testid='grid-middle-part']")
-        .find(`[aria-rowindex="${n + 1}"]`);
+        cy.findByTestId("grid-scrollable");
 
-    // Rows 1 to 14 should be rendered, everything above and below - not
-    getRow(0).should("not.exist");
-    getRow(1).should("exist");
-    getRow(15).should("exist");
-    // this will fail locally on a mac because macs don't render scrollbars and therefore render an extra row
-    getRow(16).should("not.exist");
+        const getRow = (n: number) =>
+          cy
+            .get("[data-testid='grid-middle-part']")
+            .find(`[aria-rowindex="${n + 1}"]`);
+
+        getRow(0).should("not.exist");
+        getRow(1).should("exist");
+        getRow(numberOfVisibleRows + 1).should("exist");
+        getRow(numberOfVisibleRows + 2).should("not.exist");
+      });
   });
 
   it("Header virtualization in grouped mode", () => {
@@ -365,6 +369,22 @@ describe("Grid", () => {
       .should("exist")
       .should("have.value", "a");
   });
+
+  it("Escape cancels edit and reverts cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("asd");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "asd")
+      .type("{Esc}");
+    findCell(0, 0).should("not.have.text", "a");
+    checkCursorPos(0, 0);
+  });
+
   it("Numeric cell editor", () => {
     cy.mount(<GridExample />);
 
