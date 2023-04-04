@@ -251,7 +251,7 @@ describe("GIVEN Text component with styleAs=display3", () => {
   });
 });
 
-describe.only("GIVEN Text component within font family CSS var override", () => {
+describe("GIVEN Text component within font family CSS var override", () => {
   it("should have non-default font family applied", () => {
     cy.mount(
       <div style={{ "--salt-text-fontFamily": "Lato" } as React.CSSProperties}>
