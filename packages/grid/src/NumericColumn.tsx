@@ -39,13 +39,10 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   const { column, row } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { endEditMode, cancelEditMode, initialText } = useEditorContext();
+  const { endEditMode, cancelEditMode, editorText, setEditorText } =
+    useEditorContext();
 
-  const [editorText, setEditorText] = useState<string>(
-    initialText != null ? initialText : column!.info.props.getValue!(row!.data)
-  );
-
-  const initialSelectionRef = useRef(!!initialText);
+  const firstRenderSelectionRef = useRef(false);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEditorText(e.target.value);
@@ -69,11 +66,15 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   };
 
   useEffect(() => {
-    if (inputRef.current && !initialSelectionRef.current) {
+    if (
+      inputRef.current &&
+      !firstRenderSelectionRef.current &&
+      editorText === column!.info.props.getValue!(row!.data)
+    ) {
       inputRef.current.select();
-      initialSelectionRef.current = true;
     }
-  }, [inputRef.current]);
+    firstRenderSelectionRef.current = true;
+  }, [column, editorText, row]);
 
   return (
     <Cell separator={column?.separator} className="saltGridNumericCellEditor">
