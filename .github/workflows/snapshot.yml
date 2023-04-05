@@ -6,6 +6,8 @@ on:
     types:
       - created
 
+permissions: write-all
+
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
@@ -22,7 +24,6 @@ jobs:
           COMMENT_ID: ${{ github.event.comment.id }}
         with:
           script: |
-            const { COMMENT_ID } = process.env
             const username = context.actor;
             const owner = context.repo.owner;
             const repo = context.repo.repo;
@@ -39,7 +40,7 @@ jobs:
               await github.rest.reactions.createForIssueComment({
                 owner,
                 repo,
-                comment_id: COMMENT_ID,
+                comment_id: process.env.COMMENT_ID,
                 content: "eyes",
               })
             } else {
@@ -55,13 +56,8 @@ jobs:
         with:
           script: |
             try {
-              const pullRequest = await github.rest.pulls.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.issue.number,
-              })
               // Pull request from fork
-              if (FORK) {
+              if (process.env.FORK) {
                 const errorMessage = 'snapshot releases not supported on pull requests from forked repositories.'
                 await github.rest.issues.createComment({
                   issue_number: context.issue.number,
@@ -88,28 +84,36 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-      - name: Build
-        run: yarn build
-      - name: Create Release Pull Request or Publish packages
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          version: yarn changeset version --snapshot snapshot
-          publish: yarn changeset publish --no-git-tag --snapshot --tag snapshot
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Comment on PR
+      - name: Create and publish snapshot release
         uses: actions/github-script@v6
         env:
-          PACKAGES: ${{ steps.changesets.outputs.published }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMENT_ID: ${{ github.event.comment.id }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           script: |
-            const { PACKAGES, COMMENT_ID } = process.env
-            const newTags = JSON.parse(PACKAGES).map(pkg => `${pkg.name}@${pkg.version}`)
+
+            await exec.exec('yarn changeset version --snapshot snapshot');
+
+            await exec.exec('yarn build');
+
+            let output = ''
+
+            const options = {
+              listeners: {
+                stdout: (data) => {
+                  output += data.toString();
+                },
+              }
+            };
+
+            await exec.exec('yarn changeset publish --no-git-tag --snapshot --tag snapshot', [], options);
+
+            const { COMMENT_ID } = process.env
+            const newTags = Array
+              .from(output.matchAll(/New tag:\s+([^\s\n]+)/g))
+              .map(([_, tag]) => tag)
             if (newTags.length) {
               const multiple = newTags.length > 1
               const body = (

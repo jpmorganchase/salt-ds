@@ -1,5 +1,5 @@
-import { makePrefixer } from "@salt-ds/core";
-import { capitalize, FormField, Input } from "@salt-ds/lab";
+import { capitalize, makePrefixer } from "@salt-ds/core";
+import { FormField, Input } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import { validateTokenInput } from "../../helpers/validateTokenInput";

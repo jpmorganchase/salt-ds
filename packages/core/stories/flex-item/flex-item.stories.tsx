@@ -6,6 +6,7 @@ export default {
   title: "Core/Layout/Flex Layout/Flex Item",
   component: FlexItem,
   argTypes: {
+    as: { type: "string" },
     align: {
       options: ["start", "end", "center", "stretch"],
       control: { type: "select" },

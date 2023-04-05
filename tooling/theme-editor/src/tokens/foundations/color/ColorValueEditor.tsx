@@ -1,10 +1,5 @@
-import { makePrefixer, SaltProvider, Tooltip } from "@salt-ds/core";
-import {
-  capitalize,
-  Color,
-  ColorChooser,
-  getColorNameByHexValue,
-} from "@salt-ds/lab";
+import { capitalize, makePrefixer, SaltProvider, Tooltip } from "@salt-ds/core";
+import { Color, ColorChooser, getColorNameByHexValue } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import { useEffect, useMemo, useState } from "react";
 

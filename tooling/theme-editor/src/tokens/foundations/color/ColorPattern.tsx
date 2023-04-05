@@ -1,10 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { capitalize } from "@salt-ds/core";
 import {
   AccordionSection,
   AccordionDetails,
   AccordionSummary,
-  capitalize,
 } from "@salt-ds/lab";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { ChildrenValues } from "../../ChildrenValues";

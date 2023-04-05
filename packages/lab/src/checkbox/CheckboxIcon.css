@@ -14,22 +14,23 @@
   fill: var(--saltCheckbox-icon-fill, var(--salt-selectable-background));
   height: var(--saltCheckbox-icon-size, var(--checkbox-size));
   min-height: var(--saltCheckbox-icon-size, var(--checkbox-size));
-  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-borderColor));
+  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-foreground));
   stroke-width: var(--saltCheckbox-icon-strokeWidth, var(--checkbox-borderWidth));
   width: var(--saltCheckbox-icon-size, var(--checkbox-size));
   min-width: var(--saltCheckbox-icon-size, var(--checkbox-size));
+  background: var(--salt-container-primary-background);
 }
 
 /* Styles applied to root component on hover */
 .saltCheckbox:hover .saltCheckboxIcon {
-  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-borderColor-hover));
+  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-foreground-hover));
   background: var(--salt-selectable-background-hover);
 }
 
 /* Styles applied if `disabled={true}` */
 .saltCheckbox-disabled:hover .saltCheckboxIcon,
 .saltCheckboxIcon-disabled {
-  stroke: var(--saltCheckbox-icon-stroke-disabled, var(--salt-selectable-borderColor-disabled));
+  stroke: var(--saltCheckbox-icon-stroke-disabled, var(--salt-selectable-foreground-disabled));
   background: var(--salt-selectable-background);
 }
 
@@ -47,29 +48,29 @@
 /* Styles applied if `error={true}` and `disabled={true}` */
 .saltCheckbox-error.saltCheckbox-disabled .saltCheckboxIcon,
 .saltCheckbox-error.saltCheckbox-disabled:hover .saltCheckboxIcon {
-  stroke: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor-disabled));
+  stroke: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-foreground-disabled));
   background: var(--salt-selectable-background);
 }
 
 /* Styles applied if `checked={true}` */
 .saltCheckboxIcon-checked {
-  fill: var(--saltCheckbox-icon-fill-checked, var(--salt-selectable-borderColor-selected));
+  fill: var(--saltCheckbox-icon-fill-checked, var(--salt-selectable-foreground-selected));
   --checkbox-borderWidth: var(--saltCheckbox-icon-borderWidth-checked, 0px);
 }
 
 /* Styles applied if `checked={true}` and `disabled={true}` */
 .saltCheckboxIcon-checked.saltCheckboxIcon-disabled {
-  fill: var(--saltCheckbox-icon-fill-disabled, var(--salt-selectable-borderColor-selectedDisabled));
+  fill: var(--saltCheckbox-icon-fill-disabled, var(--salt-selectable-foreground-selectedDisabled));
 }
 
 /* Styles applied if `checked={true}` and `error={true}` */
 .saltCheckboxIcon-checked.saltCheckboxIcon-error {
-  fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor));
+  fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-foreground));
 }
 
 /* Styles applied if `checked={true}`,`error={true}` and `disabled={true}` */
 .saltCheckboxIcon-checked.saltCheckboxIcon-error.saltCheckboxIcon-disabled {
-  fill: var(--saltCheckbox-icon-fill-disabled, var(--salt-status-error-borderColor-disabled));
+  fill: var(--saltCheckbox-icon-fill-disabled, var(--salt-status-error-foreground-disabled));
 }
 
 /* Styles applied to box */
@@ -93,12 +94,12 @@
 
 /* Styles applied if `indeterminate={true}` and `error={true}` */
 .saltCheckboxIcon-error.saltCheckboxIcon-indeterminate {
-  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor));
+  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-foreground));
 }
 
 /* Styles applied if `indeterminate={true}`,`disabled={true}` and `error={true}` */
 .saltCheckboxIcon-error.saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
-  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-borderColor-disabled));
+  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-foreground-disabled));
 }
 
 /* Styles applied to tick */
