@@ -23,17 +23,12 @@ module.exports = deepmerge(saltConfig, {
   deployment: { mode: "snapshot-file", platform: "vercel" },
   sources: [
     {
-      modulePath: "@jpmorganchase/mosaic-source-git-repo",
+      modulePath: "@jpmorganchase/mosaic-source-local-folder",
       namespace: "salt",
       options: {
+        rootDir: "./docs",
         prefixDir: "salt",
-        cache: true,
-        subfolder: "mosaic-site/docs",
-        credentials: process.env.MOSAIC_DOCS_CLONE_CREDENTIALS,
-        repo: "https://github.com/jpmorganchase/salt-ds.git",
-        branch: "main",
         extensions: [".mdx"],
-        remote: "origin",
       },
     },
   ],
