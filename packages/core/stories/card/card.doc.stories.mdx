@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Card } from "@salt-ds/core";
+import { Card, InteractableCard } from "@salt-ds/core";
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
@@ -16,7 +16,7 @@ import {
 
 # Card
 
-A Card is a sheet of material that serves as an entry point to more detailed information. It is a convenient means of displaying content composed of different elements whose size or supported actions vary.
+A Card is a visually distinct container that displays a snapshot of information about a single subject, and acts as an entry point to more detailed information.
 
 ## Card Component
 
@@ -26,38 +26,58 @@ This default example is intended to show the way the Card component’s content 
   <Story id="core-card--default" />
 </Canvas>
 
-## Interactable
+## Interactable Card
 
-Cards can have interactable styling by setting `interactable={true}`. These cards could be wrapped in Link, for example, for interactivity. We discourage the use of any focusable elements within interactable Cards.
+To apply actions to Cards use the `InteractableCard` component. We discourage the use of any focusable elements within interactable Cards.
 
 <Canvas>
-  <Story id="core-card--interactable" />
+  <Story id="core-card--interactable-as-link" />
 </Canvas>
 
-## Disabled
+## Disabled Interactable Card
 
-Cards can have disabled styling applied by setting `disabled={true}`.
+Set `disabled={true}` to apply disabled styling to Interactable cards.
 
-Make sure to as well apply `disabled={true}` to any nested components, such as Text, to ensure disabled styling is also applied to the inner content.
+Make sure to also apply `disabled={true}` to any nested components, such as Text, to ensure disabled styling is also applied to the inner content.
 
 <Canvas>
-  <Story id="core-card--disabled" />
+  <Story id="core-card--interactable-disabled" />
+</Canvas>
+
+## Multiple Cards
+
+Layout components can be used for grouping Card components together.
+
+<Canvas>
+  <Story id="core-card--cards-in-grid-layout" />
 </Canvas>
 
 # API
 
 ```
-import { Card } from "@salt-ds/lab";
+import { Card, InteractableCard } from "@salt-ds/core";
 ```
 
-## Props
+## Card Props
 
 <ArgsTable of={Card} />
 
-## CSS Class
+## Interactable Card Props
+
+<ArgsTable of={InteractableCard} />
+
+## Card CSS Classes
 
 <CSSClassTable of={Card} />
 
-## Characteristics Used
+## Interactable Card CSS Classes
+
+<CSSClassTable of={InteractableCard} />
+
+## Characteristics Used in Card
 
 <CharacteristicUsage of={Card} />
+
+## Characteristics Used in Interactable Card
+
+<CharacteristicUsage of={InteractableCard} />

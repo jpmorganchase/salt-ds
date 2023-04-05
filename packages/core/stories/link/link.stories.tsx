@@ -63,6 +63,14 @@ export const StyleAs: ComponentStory<typeof Link> = () => {
   );
 };
 
+export const TargetBlankNoIcon: ComponentStory<typeof Link> = () => {
+  return (
+    <Link IconComponent={null} href="#root" target="_blank">
+      This has no icon
+    </Link>
+  );
+};
+
 export const Truncation: ComponentStory<typeof Link> = () => {
   return (
     <div style={{ width: 150 }}>

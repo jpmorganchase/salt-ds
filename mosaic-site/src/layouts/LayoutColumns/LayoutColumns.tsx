@@ -14,20 +14,15 @@ export const LayoutColumns = ({
   const breakpoint = useBreakpoint();
   const showDrawer = breakpoint === "mobile" || breakpoint == "tablet";
   return (
-    <div
-      className={clsx({
-        [styles.fullWidth]: !PrimarySidebar,
-        [styles.withSidebar]: PrimarySidebar,
-      })}
-    >
-      {!showDrawer && PrimarySidebar && <Sidebar>{PrimarySidebar}</Sidebar>}
-      <div className={styles.mainWrapper}>
-        <div className={styles.columnWrapper}>
-          <div className={styles.contentColumn}>
-            <main className={styles.contentBody}>{children}</main>
-          </div>
+    <div className={styles.root}>
+      {!showDrawer && PrimarySidebar && (
+        <div className={styles.sidebar}>
+          <Sidebar>{PrimarySidebar}</Sidebar>
         </div>
-      </div>
+      )}
+      <main className={clsx(styles.main, { [styles.showDrawer]: showDrawer })}>
+        {children}
+      </main>
     </div>
   );
 };

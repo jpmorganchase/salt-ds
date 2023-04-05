@@ -1,10 +1,9 @@
 import { forwardRef, useContext } from "react";
 import { clsx } from "clsx";
 
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { Button, ButtonProps, capitalize, makePrefixer } from "@salt-ds/core";
 import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { useDescendant } from "./internal/useDescendant";
-import { capitalize } from "../utils";
 
 import "./OrderedButton.css";
 

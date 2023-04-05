@@ -81,7 +81,6 @@ export const RadioButtonGroup = forwardRef<
       )}
       data-testid="radio-button-group"
       ref={ref}
-      role="radiogroup"
       {...rest}
     >
       <RadioGroupContext.Provider

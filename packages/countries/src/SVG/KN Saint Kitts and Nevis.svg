@@ -1,0 +1,13 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_40_1498" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+<circle cx="36" cy="36" r="36" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_40_1498)">
+<rect width="72" height="72" fill="#009B77"/>
+<path d="M72 72L-2.19355e-06 72L72 0L72 72Z" fill="#DD2033"/>
+<rect width="32" height="74" transform="matrix(0.707107 0.707107 0.707107 -0.707107 -0.476685 50.8492)" fill="#FBD381"/>
+<rect x="17.9081" y="69.0538" width="20" height="72.5417" transform="rotate(-135 17.9081 69.0538)" fill="#31373D"/>
+<path d="M16.8571 44.7696L18.9849 50.2697L15.5216 54.7479L21.3151 54.684L24.6746 59.5795L25.8137 53.7263L31.6669 52.5872L26.7714 49.2277L26.8353 43.4342L22.3571 46.8975L16.8571 44.7696Z" fill="#F5F7F8"/>
+<path d="M44.9699 16.6568L47.0977 22.1569L43.6344 26.6351L49.4279 26.5712L52.7873 31.4667L53.9265 25.6135L59.7797 24.4744L54.8842 21.1149L54.9481 15.3214L50.4699 18.7847L44.9699 16.6568Z" fill="#F5F7F8"/>
+</g>
+</svg>
