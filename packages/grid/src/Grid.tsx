@@ -227,7 +227,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   );
 
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [editorText, setEditorText] = useState<string | undefined>(undefined);
+  const [editorText, setEditorText] = useState<string>("");
 
   const resizeClient: ScrollableProps<T>["resizeClient"] = useCallback(
     (dimensions) => {
@@ -483,7 +483,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }
   };
 
-  const endEditMode = (value?: string) => {
+  const endEditMode = useCallback(
+    (value: string) => {
     if (!editMode) {
       return;
     }
@@ -506,7 +507,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }
     setEditMode(false);
     focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
-  };
+    },
+    [cols, cursorColIdx, cursorRowIdx, editMode, focusedPart, rowData]
+  );
 
   const cancelEditMode = () => {
     if (!editMode) {
