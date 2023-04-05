@@ -36,14 +36,5 @@ module.exports = deepmerge(saltConfig, {
         remote: "origin",
       },
     },
-    {
-      modulePath: "@jpmorganchase/mosaic-source-local-folder",
-      namespace: "local",
-      options: {
-        rootDir: "./docs",
-        prefixDir: "local",
-        extensions: [".mdx"],
-      },
-    },
   ],
 });

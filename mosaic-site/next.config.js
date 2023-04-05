@@ -63,11 +63,6 @@ module.exports = {
         destination: "/salt/index",
         permanent: true,
       },
-      {
-        source: "/local",
-        destination: "/local/index",
-        permanent: true,
-      },
     ];
   },
 };
