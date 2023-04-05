@@ -54,7 +54,7 @@
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
-  height: var(--salt-size-stackable);
+  height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
   outline: none;
   padding: 0 var(--tabs-tab-spacing);
   position: relative;
