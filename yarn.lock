@@ -6249,7 +6249,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/countries@workspace:packages/countries"
   dependencies:
-    glob: ^8.0.0
+    glob: ^9.0.0
     mustache: ^4.2.0
     rimraf: ^4.4.0
     svgo: ^3.0.0
@@ -6426,7 +6426,7 @@ __metadata:
     eslint-config-modular-app: 3.0.2
     eslint-plugin-cypress: ^2.12.1
     eslint-plugin-storybook: ^0.6.10
-    glob: ^8.0.0
+    glob: ^9.0.0
     modular-scripts: "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch"
     no-scroll: ^2.1.1
     nyse-holidays: ^1.2.0
@@ -14070,7 +14070,7 @@ __metadata:
     "@storybook/theming": ^6.5.16
     "@types/css-tree": ^2.0.0
     css-tree: ^2.0.4
-    glob: ^8.0.0
+    glob: ^9.0.0
     glob-promise: ^6.0.0
     markdown-to-jsx: ^7.1.3
     polished: ^4.0.5
@@ -15288,7 +15288,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "docusaurus-css-variable-docgen-plugin@workspace:tooling/docusaurus-css-variable-docgen-plugin"
   dependencies:
-    glob: ^8.0.0
+    glob: ^9.0.0
   languageName: unknown
   linkType: soft
 
@@ -18401,7 +18401,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^8.0.0, glob@npm:^8.0.1, glob@npm:^8.0.3":
+"glob@npm:^8.0.1, glob@npm:^8.0.3":
   version: 8.0.3
   resolution: "glob@npm:8.0.3"
   dependencies:
@@ -18414,15 +18414,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^9.2.0":
-  version: 9.3.2
-  resolution: "glob@npm:9.3.2"
+"glob@npm:^9.0.0, glob@npm:^9.2.0":
+  version: 9.3.4
+  resolution: "glob@npm:9.3.4"
   dependencies:
     fs.realpath: ^1.0.0
-    minimatch: ^7.4.1
+    minimatch: ^8.0.2
     minipass: ^4.2.4
     path-scurry: ^1.6.1
-  checksum: f3d188e9f70e24fa729a63ca197bcdb36d838677abec1fb9bbfe4b7620063bf90dc0f8d195203d632abfdfa049fad0edf22f93c60076de67cef20c23bcbfaee8
+  checksum: bcf49eaf475dc4ce8d4e98f896408a9f6507a2cb7d24a207c012cb318b969e04a02bcde2ff2920eadd5055ccae444a007b769e418147a56268fab2cda8694cde
   languageName: node
   linkType: hard
 
@@ -23880,12 +23880,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^7.4.1":
-  version: 7.4.3
-  resolution: "minimatch@npm:7.4.3"
+"minimatch@npm:^8.0.2":
+  version: 8.0.3
+  resolution: "minimatch@npm:8.0.3"
   dependencies:
     brace-expansion: ^2.0.1
-  checksum: daa954231b6859e3ba0e5fbd2486986d3cae283bb69acb7ed3833c84a293f8d7edb8514360ea62c01426ba791446b2a1e1cc0d718bed15c0212cef35c59a6b95
+  checksum: 8957d8105be6729bf1d3af9c410b2a38ffcf3cd17d4ffaf715b2aa4841490aaa82f1ebff785e71b5b97747199ccc61027db597495941cf46243d9a64382e1560
   languageName: node
   linkType: hard
 
