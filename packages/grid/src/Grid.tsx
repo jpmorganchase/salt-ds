@@ -485,28 +485,28 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const endEditMode = useCallback(
     (value: string) => {
-    if (!editMode) {
-      return;
-    }
-    if (cursorColIdx == undefined) {
-      console.error(`endEditMode: cursorColIdx is undefined in edit mode`);
-      return;
-    }
-    const c = cols[cursorColIdx];
-    const handler = c.info.props.onChange;
-    if (cursorRowIdx == undefined) {
-      console.error(`endEditMode: cursorRowIdx is undefined in edit mode`);
-      return;
-    }
-    if (!handler) {
-      console.warn(
-        `onChange is not specified for editable column "${c.info.props.id}".`
-      );
-    } else {
-      handler(rowData[cursorRowIdx], cursorRowIdx, value);
-    }
-    setEditMode(false);
-    focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
+      if (!editMode) {
+        return;
+      }
+      if (cursorColIdx == undefined) {
+        console.error(`endEditMode: cursorColIdx is undefined in edit mode`);
+        return;
+      }
+      const c = cols[cursorColIdx];
+      const handler = c.info.props.onChange;
+      if (cursorRowIdx == undefined) {
+        console.error(`endEditMode: cursorRowIdx is undefined in edit mode`);
+        return;
+      }
+      if (!handler) {
+        console.warn(
+          `onChange is not specified for editable column "${c.info.props.id}".`
+        );
+      } else {
+        handler(rowData[cursorRowIdx], cursorRowIdx, value);
+      }
+      setEditMode(false);
+      focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
     },
     [cols, cursorColIdx, cursorRowIdx, editMode, focusedPart, rowData]
   );
@@ -705,6 +705,26 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }),
     [columnMove, onColumnMoveHandleMouseDown]
   );
+
+  // End edit mode and confirm value when the user clicks outside the current editable cell.
+  // In order to not conflict with existing listeners we only react to a click outside the grid and on the header.
+  useEffect(() => {
+    if (!editMode) return;
+    const listener = (e: MouseEvent) => {
+      if (middleRef.current?.querySelector("table")?.contains(e.target as Node))
+        return;
+      if (leftRef.current?.querySelector("table")?.contains(e.target as Node))
+        return;
+      if (rightRef.current?.querySelector("table")?.contains(e.target as Node))
+        return;
+
+      endEditMode(editorText);
+    };
+    document.addEventListener("click", listener);
+    return () => {
+      document.removeEventListener("click", listener);
+    };
+  }, [editMode, editorText, endEditMode]);
 
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
     onRowSelectionMouseDown(event);

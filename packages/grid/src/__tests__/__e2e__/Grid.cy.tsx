@@ -409,6 +409,31 @@ describe("Grid", () => {
     findCell(0, 0).should("have.text", "asd");
   });
 
+  it("Clicking on a header or outside the grid ends edit and confirms new cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("asd");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "asd");
+
+    cy.get("body").click();
+    findCell(0, 0).should("have.text", "asd");
+
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("qwe");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "qwe");
+
+    cy.get(".saltGridTopPart").click();
+    findCell(0, 0).should("have.text", "qwe");
+  });
+
   // Docs Examples
 
   describe("Grid Variants", () => {
