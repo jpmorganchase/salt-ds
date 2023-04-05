@@ -2,8 +2,8 @@ import { ReactElement } from "react";
 import { clsx } from "clsx";
 import { capitalize, makePrefixer } from "@salt-ds/core";
 import { JSONObj } from "../../helpers/parseToJson";
-import "./InnerFieldLabel.css";
 import { SECTIONED_BY_COLOR_STATE } from "../ChildrenValues";
+import "./InnerFieldLabel.css";
 
 const withBaseName = makePrefixer("saltInnerFieldLabel");
 

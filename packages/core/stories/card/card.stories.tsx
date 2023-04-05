@@ -1,11 +1,25 @@
-import { ReactNode } from "react";
+import { KeyboardEventHandler, ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Card, Link, SaltProvider, Panel, H1, Text } from "@salt-ds/core";
+import {
+  Button,
+  Card,
+  InteractableCard,
+  SaltProvider,
+  Panel,
+  H1,
+  Text,
+  FlexLayout,
+  GridLayout,
+  Label,
+  Link,
+} from "@salt-ds/core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
+import stockPhoto from "./../assets/stockPhoto.png";
 
 export default {
   title: "Core/Card",
   component: Card,
+  argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof Card>;
 
 interface ExampleRowProps {
@@ -15,43 +29,41 @@ interface ExampleRowProps {
 
 const ExampleRow = ({ name, children }: ExampleRowProps) => (
   <Panel style={{ height: "unset", width: 800 }}>
-    <h1>{name} - ( Touch, Low, Medium, High )</h1>
     <ColumnLayoutContainer>
       <ColumnLayoutItem>
-        Touch
-        <SaltProvider density="touch">{children}</SaltProvider>
+        <SaltProvider density="high">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
-        Low
-        <SaltProvider density="low">{children}</SaltProvider>
-      </ColumnLayoutItem>
-      <ColumnLayoutItem>
-        Medium
         <SaltProvider density="medium">{children}</SaltProvider>
       </ColumnLayoutItem>
       <ColumnLayoutItem>
-        High
-        <SaltProvider density="high">{children}</SaltProvider>
+        <SaltProvider density="low">{children}</SaltProvider>
+      </ColumnLayoutItem>
+      <ColumnLayoutItem>
+        <SaltProvider density="touch">{children}</SaltProvider>
       </ColumnLayoutItem>
     </ColumnLayoutContainer>
   </Panel>
 );
 
 const Examples = () => (
-  <>
-    <ExampleRow name="Default">
-      <Card>
-        <div>
-          <H1>Card with Density</H1>
-          <Text>Here is some content</Text>
-        </div>
-      </Card>
-    </ExampleRow>
-  </>
+  <ExampleRow name="Default">
+    <Card>
+      <Text>Content</Text>
+    </Card>
+  </ExampleRow>
+);
+
+const InteractableExamples = () => (
+  <ExampleRow name="Default">
+    <InteractableCard>
+      <Text>Content</Text>
+    </InteractableCard>
+  </ExampleRow>
 );
 
 export const All: ComponentStory<typeof Card> = () => (
-  <div style={{ marginTop: -200 }}>
+  <div>
     <SaltProvider mode="light">
       <Examples />
     </SaltProvider>
@@ -70,26 +82,133 @@ export const Default: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const Disabled: ComponentStory<typeof Card> = () => (
-  <Card data-testid="card-disabled-example" disabled>
-    <div>
-      <H1 disabled>Disabled Card</H1>
-      <Text disabled>Here is some content</Text>
-    </div>
-  </Card>
+export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
+  <FlexLayout>
+    {Array.from({ length: 4 }, (_, index) => (
+      <Card key={index}>
+        <div>
+          <H1>This is Card</H1>
+          <Text>Seen in FlexLayout</Text>
+        </div>
+      </Card>
+    ))}
+  </FlexLayout>
 );
 
-export const Interactable: ComponentStory<typeof Card> = () => (
-  <Link
-    href="https://google.com"
-    style={{ display: "inline-block", textDecoration: "none" }}
-    tab-index="0"
-    target="_parent"
+export const CardsInGridLayout: ComponentStory<typeof Card> = () => (
+  <GridLayout style={{ maxWidth: "700px" }} rows={2} columns={2}>
+    <Default />
+    <Default />
+    <Default />
+    <Default />
+  </GridLayout>
+);
+
+export const InteractableAll: ComponentStory<typeof Card> = () => (
+  <div>
+    <SaltProvider mode="light">
+      <InteractableExamples />
+    </SaltProvider>
+    <SaltProvider mode="dark">
+      <InteractableExamples />
+    </SaltProvider>
+  </div>
+);
+
+export const InteractableAsLink: ComponentStory<typeof Card> = () => {
+  return (
+    <Link
+      href="https://saltdesignsystem.com/"
+      IconComponent={null}
+      target="_blank"
+    >
+      <InteractableCard style={{ maxWidth: "500px" }}>
+        <div style={{ textAlign: "center" }}>
+          <div>Visit Salt</div>
+        </div>
+      </InteractableCard>
+    </Link>
+  );
+};
+
+export const InteractableDisabled: ComponentStory<typeof Card> = () => (
+  <InteractableCard
+    onClick={() => console.log("Clicked")}
+    data-testid="card-disabled-example"
+    disabled
   >
-    <Card interactable>
+    <div>
+      <H1 disabled>Interactable Card</H1>
+      <Text disabled>This Card has been disabled</Text>
+    </div>
+  </InteractableCard>
+);
+
+export const InteractableVariations: ComponentStory<typeof Card> = () => (
+  <div style={{ display: "grid", gap: "calc(2 * var(--salt-size-unit))" }}>
+    <InteractableCard>
       <div>
-        <p>Visit Google</p>
+        <H1 style={{ margin: "0" }}>This is Card</H1>
+        <Text>Using Nested DOM Elements</Text>
       </div>
-    </Card>
-  </Link>
+    </InteractableCard>
+    <InteractableCard accentPlacement="left">
+      <div>
+        <H1 style={{ margin: "0" }}>This is Card</H1>
+        <Text>Using Nested DOM Elements</Text>
+      </div>
+    </InteractableCard>
+    <InteractableCard accentPlacement="top">
+      <div>
+        <H1 style={{ margin: "0" }}>This is Card</H1>
+        <Text>Using Nested DOM Elements</Text>
+      </div>
+    </InteractableCard>
+    <InteractableCard accentPlacement="right">
+      <div>
+        <H1 style={{ margin: "0" }}>This is Card</H1>
+        <Text>Using Nested DOM Elements</Text>
+      </div>
+    </InteractableCard>
+  </div>
+);
+
+export const WithImageAndButton: ComponentStory<typeof Card> = () => (
+  <Card>
+    <img
+      src={stockPhoto}
+      alt="Image from unsplash"
+      style={{
+        maxWidth: "100%",
+        maxHeight: "100%",
+        paddingBottom: "var(--salt-size-unit)",
+      }}
+    />
+    <div
+      style={{
+        borderTop:
+          "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor)",
+        display: "grid",
+        gridTemplateColumns: "repeat(2, auto)",
+        gap: "calc(var(--salt-size-unit) * 2)",
+        alignItems: "center",
+        padding:
+          "var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit)",
+      }}
+    >
+      <div
+        style={{
+          display: "grid",
+          alignItems: "flex-start",
+          gap: "var(--salt-size-unit)",
+        }}
+      >
+        <Label>
+          <strong>The Skies</strong>
+        </Label>
+        <Label>Art by Dominik Schröder</Label>
+      </div>
+      <Button onClick={() => console.log("Clicked")}>See more</Button>
+    </div>
+  </Card>
 );
