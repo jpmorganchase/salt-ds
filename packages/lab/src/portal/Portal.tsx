@@ -24,7 +24,7 @@ export interface PortalProps {
    * If this node does not exist on the document, it will be created for you.
    */
   id?: string;
-  preserveTabOrder?: boolean
+  preserveTabOrder?: boolean;
 }
 
 function getContainer(container: PortalProps["container"]) {
