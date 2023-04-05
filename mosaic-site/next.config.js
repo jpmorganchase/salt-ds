@@ -21,6 +21,18 @@ module.exports = {
       // allows overriding page files
       beforeFiles: [
         { source: "/favicon.ico", destination: "/img/favicon.png" },
+        {
+          source: "/getting-started/:path*",
+          destination: "/salt/getting-started/:path*",
+        },
+        {
+          source: "/components/:path*",
+          destination: "/salt/components/:path*",
+        },
+        {
+          source: "/support-and-contributions/:path*",
+          destination: "/salt/support-and-contributions/:path*",
+        },
       ],
       // These rewrites are checked after pages/public files
       // are checked but before dynamic routes
