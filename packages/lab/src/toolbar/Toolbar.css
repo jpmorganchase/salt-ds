@@ -20,7 +20,6 @@
 } */
 
 .saltToolbar > .Responsive-inner {
-  /* align-items: flex-start; */
   align-items: center;
   flex: 1;
   flex-wrap: wrap;
