@@ -8,6 +8,7 @@ const mosaicConfig = require("@jpmorganchase/mosaic-standard-generator/dist/fs.c
  * plugins: <...plugin definitions>
  * sources: <...source definitions>
  */
+
 const saltConfig = {
   ...mosaicConfig,
   plugins: [
@@ -15,6 +16,10 @@ const saltConfig = {
     {
       modulePath: "@jpmorganchase/mosaic-plugins/SidebarPlugin",
       options: { rootDirGlob: "*/*" },
+    },
+    {
+      modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
+      disabled: true,
     },
   ],
 };
