@@ -1,6 +1,7 @@
 import { cloneElement, forwardRef, isValidElement, ReactNode } from "react";
 import { FloatingPortal } from "@floating-ui/react";
-import { SaltProvider, useForkRef } from "@salt-ds/core";
+import { SaltProvider } from "../salt-provider";
+import { useForkRef } from "../utils";
 
 export interface PortalProps {
   /**

@@ -18,7 +18,7 @@ const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
-  Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
+    Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
    * The children will be the Tooltip's trigger.
    */
@@ -130,20 +130,18 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
                 )}
                 <span className={withBaseName("content")}>{content}</span>
               </div>
-              {
-                !hideArrow && (
-                  <FloatingArrow
-                    {...arrowProps}
-                    className={withBaseName("arrow")}
-                    strokeWidth={1}
-                    fill="var(--salt-container-primary-background)"
-                    stroke="var(--tooltip-status-borderColor)"
-                    height={5}
-                    width={10}
-                  />
-                )
-              }
-            </div >
+              {!hideArrow && (
+                <FloatingArrow
+                  {...arrowProps}
+                  className={withBaseName("arrow")}
+                  strokeWidth={1}
+                  fill="var(--salt-container-primary-background)"
+                  stroke="var(--tooltip-status-borderColor)"
+                  height={5}
+                  width={10}
+                />
+              )}
+            </div>
           </Wrapper>
         )}
       </>
