@@ -39,7 +39,9 @@ A Checkbox can be in one of two states, `unchecked` or `checked`
 
 ### Indeterminate
 
-An Checkbox with the prop `indeterminate="true"` will display the checkbox with an indeterminate icon, this is separate from the `unchecked` state.
+A Checkbox with the prop `indeterminate="true"` will display the checkbox with an indeterminate icon, this is a third state separate from the `unchecked` and `checked` states.
+The most common use case is a nested checkbox group which shows a hierarchy of selections. If a group contains a mix of selected and unselected
+children, the parent will show an indeterminate state.
 
 <Canvas>
   <Story id="lab-checkbox--indeterminate" />
