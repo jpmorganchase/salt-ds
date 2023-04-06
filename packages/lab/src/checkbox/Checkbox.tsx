@@ -132,7 +132,6 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         {...rest}
       >
         <input
-          aria-checked={indeterminate ? "mixed" : checked}
           name={name}
           value={value}
           {...inputProps}

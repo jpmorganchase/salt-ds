@@ -12,11 +12,46 @@ const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => {
 };
 
 export const CheckboxVariations: ComponentStory<typeof Checkbox> = () => {
+  const [checkboxState, setCheckboxState] = useState({
+    checked: false,
+    indeterminate: true,
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedChecked = event.target.checked;
+    setCheckboxState({
+      indeterminate: !updatedChecked && checkboxState.checked,
+      checked:
+        checkboxState.indeterminate && updatedChecked ? false : updatedChecked,
+    });
+  };
+
+  const [checkboxStateError, setCheckboxStateError] = useState({
+    checked: false,
+    indeterminate: true,
+  });
+
+  const handleChangeError = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedChecked = event.target.checked;
+    setCheckboxStateError({
+      indeterminate: !updatedChecked && checkboxStateError.checked,
+      checked:
+        checkboxStateError.indeterminate && updatedChecked
+          ? false
+          : updatedChecked,
+    });
+  };
+
   return (
-    <>
+    <CheckboxGroup>
       <Checkbox label="unchecked checkbox" />
       <Checkbox defaultChecked label="checked checkbox" />
-      <Checkbox defaultChecked indeterminate label="indeterminate checkbox" />
+      <Checkbox
+        checked={checkboxState.checked}
+        indeterminate={checkboxState.indeterminate}
+        onChange={handleChange}
+        label="indeterminate checkbox"
+      />
       <Checkbox disabled label="disabled checkbox" />
       <Checkbox
         disabled
@@ -28,8 +63,9 @@ export const CheckboxVariations: ComponentStory<typeof Checkbox> = () => {
       <Checkbox error defaultChecked label="error checkbox checked" />
       <Checkbox
         error
-        defaultChecked
-        indeterminate
+        checked={checkboxStateError.checked}
+        indeterminate={checkboxStateError.indeterminate}
+        onChange={handleChangeError}
         label="error checkbox indeterminate"
       />
       <Checkbox error disabled label="disabled and error checkbox" />
@@ -46,7 +82,7 @@ export const CheckboxVariations: ComponentStory<typeof Checkbox> = () => {
         indeterminate
         label="disabled and error checkbox indeterminate"
       />
-    </>
+    </CheckboxGroup>
   );
 };
 
