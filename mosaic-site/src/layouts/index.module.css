@@ -4,6 +4,7 @@
   --mosaic-border-width-thin: 0;
   --mosaic-shadow-dark-elevation2: var(--salt-shadow-1-color);
   --mosaic-color-dark-neutral-background-regular: var(--salt-color-gray-900);
+  --mosaic-color-dark-neutral-background-emphasis: transparent;
 }
 
 .docsWrapper {
