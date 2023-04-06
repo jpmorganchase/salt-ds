@@ -3,21 +3,21 @@ import { forwardRef } from "react";
 
 import { Icon, IconProps } from "../icon";
 
-export type SuccessIconProps = IconProps;
+export type ToteIconProps = IconProps;
 
-export const SuccessIcon = forwardRef<SVGSVGElement, SuccessIconProps>(
-  function SuccessIcon(props: SuccessIconProps, ref) {
+export const ToteIcon = forwardRef<SVGSVGElement, ToteIconProps>(
+  function ToteIcon(props: ToteIconProps, ref) {
     return (
       <Icon
-        data-testid="SuccessIcon"
-        aria-label="success"
+        data-testid="ToteIcon"
+        aria-label="tote"
         viewBox="0 0 12 12"
         ref={ref}
         {...props}
       >
         <path
           fillRule="evenodd"
-          d="m3.871 8.033 6.187-6.187 1.061 1.06-7.248 7.248-2.99-2.99 1.06-1.061 1.93 1.93Z"
+          d="M4 4V3a2 2 0 1 1 4 0v1h4v8H0V4h4Zm3-1v1H5V3a1 1 0 0 1 2 0Zm1 4V5h3v6H1V5h3v2h1V5h2v2h1Z"
           clipRule="evenodd"
         />
       </Icon>

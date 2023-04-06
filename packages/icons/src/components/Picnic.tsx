@@ -3,21 +3,21 @@ import { forwardRef } from "react";
 
 import { Icon, IconProps } from "../icon";
 
-export type SuccessIconProps = IconProps;
+export type PicnicIconProps = IconProps;
 
-export const SuccessIcon = forwardRef<SVGSVGElement, SuccessIconProps>(
-  function SuccessIcon(props: SuccessIconProps, ref) {
+export const PicnicIcon = forwardRef<SVGSVGElement, PicnicIconProps>(
+  function PicnicIcon(props: PicnicIconProps, ref) {
     return (
       <Icon
-        data-testid="SuccessIcon"
-        aria-label="success"
+        data-testid="PicnicIcon"
+        aria-label="picnic"
         viewBox="0 0 12 12"
         ref={ref}
         {...props}
       >
         <path
           fillRule="evenodd"
-          d="m3.871 8.033 6.187-6.187 1.061 1.06-7.248 7.248-2.99-2.99 1.06-1.061 1.93 1.93Z"
+          d="M12 8.5 9.5 0 7 8.5h2V11H5V8h1V7H3v1h1v3H2v-1h1V9H0v1h1v1H0v1h12v-1h-2V8.5h2Zm-2-1h.7l-1.2-4-1.15 4H9v-1h1v1Z"
           clipRule="evenodd"
         />
       </Icon>
