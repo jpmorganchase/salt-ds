@@ -84,8 +84,6 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-      - name: Build
-        run: yarn build
       - name: Create and publish snapshot release
         uses: actions/github-script@v6
         env:
@@ -97,6 +95,8 @@ jobs:
           script: |
 
             await exec.exec('yarn changeset version --snapshot snapshot');
+
+            await exec.exec('yarn build');
 
             let output = ''
 

@@ -31,7 +31,7 @@ export const AllExamplesGrid: Story<
         <Checkbox
           className={className}
           disabled
-          label="I understand ADA requires Labels on indeterminate checkboxes"
+          label="I understand ADA requires Labels on disabled checkboxes"
         />
       </CheckboxGroup>
     </QAContainer>
