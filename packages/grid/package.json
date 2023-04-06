@@ -18,6 +18,7 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-data-grid"
+    "directory": "../../dist/salt-ds-data-grid",
+    "tag": "alpha"
   }
 }
