@@ -11,84 +11,9 @@ const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => {
   return <Checkbox {...args} />;
 };
 
-export const CheckboxVariations: ComponentStory<typeof Checkbox> = () => {
-  const [checkboxState, setCheckboxState] = useState({
-    checked: false,
-    indeterminate: true,
-  });
+export const Default = CheckboxTemplate.bind({});
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const updatedChecked = event.target.checked;
-    setCheckboxState({
-      indeterminate: !updatedChecked && checkboxState.checked,
-      checked:
-        checkboxState.indeterminate && updatedChecked ? false : updatedChecked,
-    });
-  };
-
-  const [checkboxStateError, setCheckboxStateError] = useState({
-    checked: false,
-    indeterminate: true,
-  });
-
-  const handleChangeError = (event: ChangeEvent<HTMLInputElement>) => {
-    const updatedChecked = event.target.checked;
-    setCheckboxStateError({
-      indeterminate: !updatedChecked && checkboxStateError.checked,
-      checked:
-        checkboxStateError.indeterminate && updatedChecked
-          ? false
-          : updatedChecked,
-    });
-  };
-
-  return (
-    <CheckboxGroup>
-      <Checkbox label="unchecked checkbox" />
-      <Checkbox defaultChecked label="checked checkbox" />
-      <Checkbox
-        checked={checkboxState.checked}
-        indeterminate={checkboxState.indeterminate}
-        onChange={handleChange}
-        label="indeterminate checkbox"
-      />
-      <Checkbox disabled label="disabled checkbox" />
-      <Checkbox
-        disabled
-        indeterminate
-        label="disabled indeterminate checkbox"
-      />
-      <Checkbox disabled checked label="disabled and checked checkbox" />
-      <Checkbox error label="error checkbox" />
-      <Checkbox error defaultChecked label="error checkbox checked" />
-      <Checkbox
-        error
-        checked={checkboxStateError.checked}
-        indeterminate={checkboxStateError.indeterminate}
-        onChange={handleChangeError}
-        label="error checkbox indeterminate"
-      />
-      <Checkbox error disabled label="disabled and error checkbox" />
-      <Checkbox
-        error
-        defaultChecked
-        disabled
-        label="disabled and error checkbox checked"
-      />
-      <Checkbox
-        error
-        defaultChecked
-        disabled
-        indeterminate
-        label="disabled and error checkbox indeterminate"
-      />
-    </CheckboxGroup>
-  );
-};
-
-export const FeatureInput = CheckboxTemplate.bind({});
-
-FeatureInput.args = {
+Default.args = {
   label: "Checkbox",
 };
 
@@ -99,7 +24,7 @@ WithoutLabel.args = { defaultChecked: true, "aria-label": "Select" };
 export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
   const [checkboxState, setCheckboxState] = useState({
     checked: false,
-    indeterminate: false,
+    indeterminate: true,
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -118,6 +43,45 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
       label="Indeterminate checkbox"
       onChange={handleChange}
     />
+  );
+};
+
+export const Error: ComponentStory<typeof Checkbox> = () => {
+  return (
+    <CheckboxGroup>
+      <Checkbox error checked={false} label="disabled checkbox" />
+      <Checkbox error indeterminate label="disabled indeterminate checkbox" />
+      <Checkbox error checked label="disabled checked checkbox" />
+    </CheckboxGroup>
+  );
+};
+
+export const Disabled: ComponentStory<typeof Checkbox> = () => {
+  return (
+    <CheckboxGroup>
+      <Checkbox disabled label="disabled checkbox" />
+      <Checkbox
+        disabled
+        indeterminate
+        label="disabled indeterminate checkbox"
+      />
+      <Checkbox disabled checked label="disabled checked checkbox" />
+      <CheckboxGroup>
+        <Checkbox error disabled label="disabled checkbox in error state" />
+        <Checkbox
+          error
+          disabled
+          indeterminate
+          label="disabled indeterminate checkbox in error state"
+        />
+        <Checkbox
+          error
+          disabled
+          checked
+          label="disabled checked checkbox in error state"
+        />
+      </CheckboxGroup>
+    </CheckboxGroup>
   );
 };
 
