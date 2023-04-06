@@ -84,6 +84,7 @@
 
 /* Styles applied to icon if `indeterminate={true}` */
 .saltCheckboxIcon-indeterminate {
+  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-foreground-selected));
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color, var(--salt-selectable-foreground-selected));
 }
 
