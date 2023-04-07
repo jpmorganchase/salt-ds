@@ -23,10 +23,13 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   const { column, row } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { endEditMode, cancelEditMode, editorText, setEditorText } =
-    useEditorContext();
+  const { endEditMode, cancelEditMode, initialText } = useEditorContext();
 
-  const firstRenderSelectionRef = useRef(false);
+  const [editorText, setEditorText] = useState<string>(
+    initialText != null ? initialText : column!.info.props.getValue!(row!.data)
+  );
+
+  const initialSelectionRef = useRef(!!initialText);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEditorText(e.target.value);
@@ -50,15 +53,11 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   };
 
   useEffect(() => {
-    if (
-      inputRef.current &&
-      !firstRenderSelectionRef.current &&
-      editorText === column!.info.props.getValue!(row!.data)
-    ) {
+    if (inputRef.current && !initialSelectionRef.current) {
       inputRef.current.select();
+      initialSelectionRef.current = true;
     }
-    firstRenderSelectionRef.current = true;
-  }, [column, editorText, row]);
+  }, [inputRef.current]);
 
   return (
     <Cell separator={column?.separator} className={withBaseName()}>
