@@ -91,7 +91,7 @@
 
   .ag-menu {
     background-color: var(--agGrid-background);
-    padding: 20px 20px 0 20px;
+    padding: var(--agGrid-menu-padding) var(--agGrid-menu-padding) 0;
     color: var(--agGrid-menu-color);
   }
 
