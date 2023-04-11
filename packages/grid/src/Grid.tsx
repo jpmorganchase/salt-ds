@@ -795,8 +795,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
               end: { rowIdx: rowData.length, colIdx: cols.length },
             });
             selectAll();
+            return true;
+          } else {
+            return false;
           }
-          break;
         default:
           return false;
       }
@@ -1000,6 +1002,9 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         }
       }
       if (!event.isPropagationStopped()) {
+        // each handler returns true or false
+        // if the event is handled and should not be handled by anything else return true
+        // if the event is not handled and we should keep trying other handlers return false
         [
           navigationKeyHandler,
           clipboardKeyHandler,
