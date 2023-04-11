@@ -15,7 +15,7 @@
     "directory": "../../dist/salt-ds-ag-grid-theme"
   },
   "devDependencies": {
-    "cssnano": "^5.1.13",
+    "cssnano": "^6.0.0",
     "fs-extra": "^11.1.0",
     "postcss": "^8.4.14",
     "postcss-url": "^10.1.3",
