@@ -90,6 +90,7 @@
 
 /* Styles applied if `indeterminate={true}` and `disabled={true}` */
 .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
+  stroke: var(--saltCheckbox-icon-stroke-disabled, var(--salt-selectable-foreground-disabled));
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color-disabled, var(--salt-selectable-foreground-selectedDisabled));
 }
 

@@ -49,9 +49,13 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
 export const Error: ComponentStory<typeof Checkbox> = () => {
   return (
     <CheckboxGroup>
-      <Checkbox error checked={false} label="disabled checkbox" />
-      <Checkbox error indeterminate label="disabled indeterminate checkbox" />
-      <Checkbox error checked label="disabled checked checkbox" />
+      <Checkbox error checked={false} label="checkbox in error state" />
+      <Checkbox
+        error
+        indeterminate
+        label="indeterminate checkbox in error state"
+      />
+      <Checkbox error checked label="checked checkbox in error state" />
     </CheckboxGroup>
   );
 };
