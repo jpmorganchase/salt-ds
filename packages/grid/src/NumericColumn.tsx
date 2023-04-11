@@ -75,6 +75,22 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
     }
   }, [inputRef.current]);
 
+  useEffect(() => {
+    const input = inputRef.current;
+    const focusOut = (event: FocusEvent) => {
+      if (!input?.contains(event.target as Node)) {
+        endEditMode(editorText);
+      }
+    };
+
+    // This uses the capture phase to detect clicks outside the input to avoid a race condition where the component gets unmounted when edit mode ends.
+    document?.addEventListener("mousedown", focusOut, true);
+
+    return () => {
+      document?.removeEventListener("mousedown", focusOut, true);
+    };
+  }, [endEditMode, editorText]);
+
   return (
     <Cell separator={column?.separator} className="saltGridNumericCellEditor">
       <div className="saltGridNumericCellEditor-inputContainer">

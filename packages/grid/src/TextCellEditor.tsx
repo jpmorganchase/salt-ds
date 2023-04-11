@@ -67,6 +67,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
       }
     };
 
+    // This uses the capture phase to detect clicks outside the input to avoid a race condition where the component gets unmounted when edit mode ends.
     document?.addEventListener("mousedown", focusOut, true);
 
     return () => {
