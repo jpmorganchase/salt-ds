@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Checkbox",
+  title: "Core/Checkbox",
   component: Checkbox,
 } as ComponentMeta<typeof Checkbox>;
 
@@ -49,9 +49,13 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
 export const Error: ComponentStory<typeof Checkbox> = () => {
   return (
     <CheckboxGroup>
-      <Checkbox error checked={false} label="disabled checkbox" />
-      <Checkbox error indeterminate label="disabled indeterminate checkbox" />
-      <Checkbox error checked label="disabled checked checkbox" />
+      <Checkbox error checked={false} label="checkbox in error state" />
+      <Checkbox
+        error
+        indeterminate
+        label="indeterminate checkbox in error state"
+      />
+      <Checkbox error checked label="checked checkbox in error state" />
     </CheckboxGroup>
   );
 };

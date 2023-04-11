@@ -6,7 +6,7 @@ import {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useControlled } from "../utils";
 import { CheckboxIcon } from "./CheckboxIcon";
 
 import "./Checkbox.css";

@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Checkbox, CheckboxGroup, CheckboxIcon } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup, CheckboxIcon } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -7,7 +7,7 @@ import {
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Checkbox"
+  title="Documentation/Core/Checkbox"
   component={Checkbox}
   parameters={{
     viewMode: "docs",
@@ -61,7 +61,7 @@ Use this state when you want to alert the user of a critical issue that is relat
 A Checkbox with the prop `disabled="true"` will suppress all functionality along with disabling the Checkbox.
 
 <Canvas>
-  <Story id="lab-checkbox--disabled" />
+  <Story id="core-checkbox--disabled" />
 </Canvas>
 
 ## Checkbox Group
@@ -71,7 +71,7 @@ A checkbox group allow selection of one or more values from a given set of choic
 ### Vertical group
 
 <Canvas>
-  <Story id="lab-checkbox--uncontrolled-group" />
+  <Story id="core-checkbox--uncontrolled-group" />
 </Canvas>
 
 ### Horizontal group
@@ -79,7 +79,7 @@ A checkbox group allow selection of one or more values from a given set of choic
 The checkbox group layout can be set to horizontal by setting the `direction` prop to "horizontal"
 
 <Canvas>
-  <Story id="lab-checkbox--horizontal-group" />
+  <Story id="core-checkbox--horizontal-group" />
 </Canvas>
 
 ### Wrapping
@@ -89,13 +89,13 @@ By default, the horizontal checkboxes will wrap onto the next line if the group 
 `wrap=true`
 
 <Canvas>
-  <Story id="lab-checkbox--wrap-group" />
+  <Story id="core-checkbox--wrap-group" />
 </Canvas>
 
 `wrap=false`
 
 <Canvas>
-  <Story id="lab-checkbox--no-wrap-group" />
+  <Story id="core-checkbox--no-wrap-group" />
 </Canvas>
 
 ### Controlled
@@ -103,13 +103,13 @@ By default, the horizontal checkboxes will wrap onto the next line if the group 
 A controlled checkbox group requires events to trigger the state change. The application must track state and update the props manually. This is useful for when logic or validation needs to be applied or a request should happen when updating a form.
 
 <Canvas>
-  <Story id="lab-checkbox--controlled-group" />
+  <Story id="core-checkbox--controlled-group" />
 </Canvas>
 
 ### Long Text Group
 
 <Canvas>
-  <Story id="lab-checkbox--long-text-group" />
+  <Story id="core-checkbox--long-text-group" />
 </Canvas>
 
 ## Configuring Checkbox
@@ -117,7 +117,7 @@ A controlled checkbox group requires events to trigger the state change. The app
 ### API
 
 ```
-import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup } from "@salt-ds/core";
 ```
 
 ## Props
