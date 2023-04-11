@@ -99,6 +99,12 @@ export interface InputProps
   }) => ReactNode;
   endAdornment?: ReactNode;
   startAdornment?: ReactNode;
+  /**
+   * Styling variant
+   * 
+   * Defaults to "primary"
+   */
+  variant?: "primary" | "secondary";
 }
 
 function mergeA11yProps(
@@ -155,6 +161,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     startAdornment,
     textAlign = "left",
     type = "text",
+    variant = "primary",
     ...other
   },
   ref
@@ -247,6 +254,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("inputAdornedStart")]: startAdornment,
           [withBaseName("inputAdornedEnd")]: endAdornment,
+          [withBaseName(variant)]: variant,
         },
         classNameProp
       )}

@@ -1,0 +1,19 @@
+.saltFormLabel {
+  align-items: center;
+  color: var(--saltFormField-label-text-color, var(--salt-text-secondary-foreground));
+  display: block;
+  margin-bottom: calc(var(--salt-size-unit) / 2);
+  padding-left: var(--saltFormField-label-paddingLeft, 0);
+  padding-right: var(--saltFormField-label-paddingRight, var(--salt-size-unit));
+  white-space: nowrap;
+}
+
+/* Styles applied when `disabled={true}` */
+.saltFormLabel-disabled {
+  color: var(--saltFormField-label-color-disabled, var(--salt-text-secondary-foreground-disabled));
+  cursor: var(--salt-editable-cursor-disabled);
+}
+
+.saltFormLabel.saltText {
+  font-weight: var(--saltFormField-helperText-fontWeight, var(--salt-text-fontWeight-strong));
+}

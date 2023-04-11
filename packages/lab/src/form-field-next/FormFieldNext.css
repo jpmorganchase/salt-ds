@@ -1,0 +1,81 @@
+.saltFormFieldNext {
+  border: 0;
+  display: inline-grid;
+  font-size: var(--saltFormFieldNext-fontSize, var(--salt-text-fontSize));
+  min-width: 0;
+  position: relative;
+  padding: 0;
+  row-gap: var(--salt-size-adornmentGap);
+  vertical-align: top;
+  width: var(--saltFormFieldNext-width, auto);
+}
+
+.saltFormFieldNext-withHelperText {
+}
+
+.saltFormFieldNext-labelLeft {
+    align-self: start;
+    grid-template-columns: auto 1fr;
+}
+
+.saltFormFieldNext-labelTop {
+}
+
+.saltFormFieldNext > * {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.saltFormFieldNext > .saltFormLabel {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.saltFormFieldNext-labelLeft > * {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.saltFormFieldNext > .saltFormHelperText {
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+.saltFormFieldNext.saltFormFieldNext-labelLeft > .saltFormHelperText {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.saltFormFieldNext-labelLeft > .saltFormLabel ~ * {
+    grid-column-start: 2;
+    grid-column-end: 2;
+}  
+
+.saltFormFieldNext:not(.saltFormFieldNext-labelLeft).saltFormFieldNext-focused > .saltFormLabel + *:before {
+    content: " ";
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    outline-color: var(--salt-focused-outlineColor);
+    outline-style: var(--salt-focused-outlineStyle);
+    outline-width: var(--salt-focused-outlineWidth);
+    outline-offset: var(--salt-focused-outlineOffset);
+}
+
+.saltFormFieldNext-labelLeft.saltFormFieldNext-focused > .saltFormLabel + *:before {
+  content: " ";
+  position: absolute;
+  bottom: 0px;
+  top: 0;
+  left: 0;
+  right: 0;
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  z-index: -1;
+}

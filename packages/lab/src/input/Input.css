@@ -19,7 +19,7 @@
 /* Style applied to the root element */
 .saltInput {
   align-items: center;
-  background: var(--saltInput-background, none);
+  background: var(--saltInput-background, var(--input-background));
   border: var(--saltInput-border, none);
   border-radius: var(--saltInput-borderRadius, 0);
   color: var(--saltInput-text-color, var(--salt-text-primary-foreground));
@@ -34,6 +34,16 @@
   padding: var(--saltInput-padding, 0 var(--salt-size-unit));
   position: var(--saltInput-position, relative);
   width: 100%;
+}
+
+/* Class applied if `variant="primary"` */
+.saltInput-primary {
+  --input-background: var(--salt-editable-primary-background);
+}
+
+/* Class applied if `variant="secondary"` */
+.saltInput-secondary {
+  --input-background: var(--salt-editable-secondary-background);
 }
 
 /* Reset in the next class */
