@@ -21,6 +21,8 @@ div[data-mosaic-id="portal-root"] .saltLayerLayout-fullScreen {
 div[data-mosaic-id="portal-root"] aside {
   background-color: var(--salt-container-primary-background);
   top: 0;
+  /* Setting the font size because we're not able to wrap the portal in a SaltProvider */
+  font-size: calc(var(--salt-size-unit) * 2);
 }
 
 div[data-mosaic-id="portal-root"] li a.ps-menu-button {
