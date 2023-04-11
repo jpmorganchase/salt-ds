@@ -5,7 +5,7 @@ import {
   ComponentPropsWithoutRef,
   forwardRef,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useControlled } from "../utils";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 import "./CheckboxGroup.css";

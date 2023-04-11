@@ -1,6 +1,6 @@
 import { useSelectionContext } from "./SelectionContext";
 import { KeyboardEventHandler, MouseEventHandler } from "react";
-import { Checkbox } from "@salt-ds/lab";
+import { Checkbox } from "@salt-ds/core";
 import "./CheckboxCell.css";
 import { GridHeaderValueProps } from "./GridColumn";
 

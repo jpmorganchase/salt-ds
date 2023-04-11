@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup } from "@salt-ds/lab";
+import { Checkbox, CheckboxGroup } from "@salt-ds/core";
 import { ChangeEventHandler } from "react";
 
 describe("GIVEN a CheckboxGroup component", () => {

@@ -1,5 +1,5 @@
-import { Button, Card } from "@salt-ds/core";
-import { Checkbox, Slider, SliderProps } from "@salt-ds/lab";
+import { Button, Card, Checkbox } from "@salt-ds/core";
+import { Slider, SliderProps } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 
 export default {
