@@ -88,6 +88,12 @@
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color, var(--salt-selectable-foreground-selected));
 }
 
+/* Styles applied to icon if `indeterminate={true}` on hover */
+.saltCheckbox:hover .saltCheckboxIcon-indeterminate {
+  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-foreground-hover));
+  --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke, var(--salt-selectable-foreground-hover));
+}
+
 /* Styles applied if `indeterminate={true}` and `disabled={true}` */
 .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
   stroke: var(--saltCheckbox-icon-stroke-disabled, var(--salt-selectable-foreground-disabled));
