@@ -536,7 +536,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const moveCursor = useCallback(
     (part: FocusedPart, rowIdx: number, colIdx: number) => {
-      cancelEditMode();
       if (!headerIsFocusable && part === "header") {
         console.warn(
           `Cannot move focus to the header. "headerIsFocusable" prop is false.`
