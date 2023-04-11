@@ -11,7 +11,7 @@
 .docsWrapper {
   background-image: url("../../public/img/background_gradient.svg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: auto;
   background-position: top;
   display: flex;
   flex-direction: column;
