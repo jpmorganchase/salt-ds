@@ -30,7 +30,7 @@ div[data-mosaic-id="portal-root"] a[href*="github"] span {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
-  gap: var(--salt-size-unit);
+  gap: calc(var(--salt-size-unit) * 2);
 }
 
 div[data-mosaic-id="portal-root"] a[href*="github"] span:before {
