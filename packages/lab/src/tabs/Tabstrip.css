@@ -18,22 +18,24 @@
 
 /* Tabstrip orientation is horizontal */
 .saltTabstrip-horizontal {
+  --saltTabs-activationIndicator-height: 1px;
+  --saltTabs-activationIndicator-thumb-inset: -1px 0 0 0;
+
   --tabs-activationIndicator-borderStyle: none none solid none;
-  --tabs-activationIndicator-height: 1px;
   --tabs-activationIndicator-inset: auto 0px 0px 0px;
   --tabs-activationIndicator-transitionProperty: left;
   --tabs-activationIndicator-thumb-height: 2px;
-  --tabs-activationIndicator-thumb-inset: -1px 0 0 0;
 }
 
 /* Tabstrip orientation is vertical */
 .saltTabstrip-vertical {
+  --saltTabs-activationIndicator-thumb-inset: 0 0 0 -1px;
+
   --tabs-activationIndicator-transition: top 0.3s ease;
   --tabs-activationIndicator-borderStyle: none solid none none;
   --tabs-activationIndicator-inset: 0px 0px 0px auto;
   --tabs-activationIndicator-transitionProperty: top;
   --tabs-activationIndicator-width: 1px;
-  --tabs-activationIndicator-thumb-inset: 0 0 0 -1px;
   --tabs-activationIndicator-thumb-width: 2px;
 
   align-self: flex-start;

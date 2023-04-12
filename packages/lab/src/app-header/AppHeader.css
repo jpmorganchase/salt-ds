@@ -16,8 +16,14 @@
   --appHeader-paddingLeft: 8px;
   --appHeader-paddingRight: var(--appHeader-padding);
 
-  --saltTabs-tabstrip-height: var(--appHeader-height);
   --saltToolbar-width: auto;
+}
+
+.saltAppHeader .saltTabstrip {
+  --saltTabs-tabstrip-height: var(--appHeader-height);
+  /* App header has its own bottom border, so remove tabs line but keeping activation indicator */
+  --saltTabs-activationIndicator-height: 0px;
+  --saltTabs-activationIndicator-thumb-inset: -2px 0 0 0;
 }
 
 .saltAppHeader {
