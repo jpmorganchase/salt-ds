@@ -1,4 +1,4 @@
-import { Portal } from "@salt-ds/core";
+import { Button, Portal, Tooltip } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -6,10 +6,22 @@ export default {
   component: Portal,
 } as ComponentMeta<typeof Portal>;
 
-export const PortalExample: ComponentStory<typeof Portal> = (args) => {
+export const TooltipExample: ComponentStory<typeof Portal> = (args) => {
+  const TooltipContent = () => {
+    return (
+      <div>
+        <div>Tooltp</div>
+        <Tooltip content="Another tooltip content">
+          <Button>Another Button</Button>
+        </Tooltip>
+      </div>
+    );
+  };
   return (
     <Portal {...args} container={document.querySelector("#root")}>
-      <div style={{ border: "1px solid gray" }}>Portal content</div>
+      <Tooltip content={<TooltipContent />}>
+        <Button>Button</Button>
+      </Tooltip>
     </Portal>
   );
 };

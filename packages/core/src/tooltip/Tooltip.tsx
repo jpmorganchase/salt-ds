@@ -8,7 +8,7 @@ import {
   Fragment,
 } from "react";
 import { FloatingArrow } from "@floating-ui/react";
-import { Portal } from "../portal";
+import { Portal, PortalProps } from "../portal";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import { UseFloatingUIProps, makePrefixer, useForkRef } from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
@@ -18,6 +18,7 @@ const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
   extends HTMLAttributes<HTMLDivElement>,
+    PortalProps,
     Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
   /**
    * The children will be the Tooltip's trigger.
@@ -77,6 +78,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       enterDelay = 300,
       leaveDelay = 0,
       disablePortal,
+      container,
+      preserveTabOrder,
       ...rest
     } = props;
 
@@ -103,8 +106,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       reference
     );
 
-    const Wrapper = !disablePortal ? Portal : Fragment;
-
     return (
       <>
         {isValidElement(children) &&
@@ -114,7 +115,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           })}
 
         {open && !disabled && (
-          <Wrapper>
+          <Portal
+            disablePortal={disablePortal}
+            container={container}
+            preserveTabOrder={preserveTabOrder}
+          >
             <div
               className={clsx(withBaseName(), withBaseName(status), className)}
               ref={floating}
@@ -134,7 +139,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
                 <FloatingArrow
                   {...arrowProps}
                   className={withBaseName("arrow")}
-                  strokeWidth={1}
+                  strokeWidth={2}
                   fill="var(--salt-container-primary-background)"
                   stroke="var(--tooltip-status-borderColor)"
                   height={5}
@@ -142,7 +147,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
                 />
               )}
             </div>
-          </Wrapper>
+          </Portal>
         )}
       </>
     );
