@@ -1,7 +1,6 @@
 import { forwardRef, ForwardedRef, HTMLAttributes, memo } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
-import { CheckboxIcon } from "../checkbox";
+import { CheckboxIcon, makePrefixer } from "@salt-ds/core";
 import { ListItemType, ListItemProps } from "./listTypes";
 import { Highlighter } from "./Highlighter";
 

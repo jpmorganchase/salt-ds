@@ -8,7 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Card, FlexLayout } from "@salt-ds/core";
+import { Card, Checkbox, FlexLayout } from "@salt-ds/core";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -16,7 +16,6 @@ import {
   ChevronRightIcon,
   FavoriteIcon,
 } from "@salt-ds/icons";
-import { Checkbox } from "@salt-ds/lab";
 import {
   CellEditor,
   ColumnGroup,

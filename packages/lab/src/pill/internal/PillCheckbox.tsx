@@ -1,5 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
-import { CheckboxIcon } from "../../checkbox";
+import { CheckboxIcon, makePrefixer } from "@salt-ds/core";
 import { pillBaseName } from "../constants";
 
 import "./PillCheckbox.css";

@@ -38,8 +38,7 @@ export const useDropdownBase = ({
 
   const {
     inFormField,
-    // onFocus: formFieldOnFocus,
-    // onBlur: formFieldOnBlur,
+    setFocused: setFormFieldFocused,
     a11yProps: { "aria-labelledby": ariaLabelledBy, ...restA11yProps } = {},
   } = useFormFieldProps();
 
@@ -65,13 +64,23 @@ export const useDropdownBase = ({
   });
 
   const handleTriggerFocus = useCallback(() => {
-    setIsOpen(true);
-    onOpenChange?.(true);
-    // Suppress response to click if click was the cause of focus
-    justFocused.current = window.setTimeout(() => {
-      justFocused.current = null;
-    }, 1000);
-  }, [onOpenChange, setIsOpen]);
+    if (!disabled) {
+      setFormFieldFocused?.(true);
+
+      if (openOnFocus) {
+        setIsOpen(true);
+        onOpenChange?.(true);
+        // Suppress response to click if click was the cause of focus
+        justFocused.current = window.setTimeout(() => {
+          justFocused.current = null;
+        }, 1000);
+      }
+    }
+  }, [disabled, onOpenChange, openOnFocus, setFormFieldFocused, setIsOpen]);
+
+  const handleTriggerBlur = useCallback(() => {
+    setFormFieldFocused?.(false);
+  }, [setFormFieldFocused]);
 
   const handleTriggerToggle = useCallback(
     (e: MouseEvent) => {
@@ -132,7 +141,8 @@ export const useDropdownBase = ({
     "aria-owns": isOpen ? componentId : undefined,
     id: `${id}-control`,
     onClick: disabled || openOnFocus ? undefined : handleTriggerToggle,
-    onFocus: openOnFocus && !disabled ? handleTriggerFocus : undefined,
+    onFocus: handleTriggerFocus,
+    onBlur: handleTriggerBlur,
     role: "listbox",
     onKeyDown: disabled ? undefined : handleKeydown,
     style: { width: fullWidth ? undefined : width },

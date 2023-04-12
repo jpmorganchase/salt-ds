@@ -8,6 +8,7 @@ const mosaicConfig = require("@jpmorganchase/mosaic-standard-generator/dist/fs.c
  * plugins: <...plugin definitions>
  * sources: <...source definitions>
  */
+
 const saltConfig = {
   ...mosaicConfig,
   plugins: [
@@ -16,6 +17,10 @@ const saltConfig = {
       modulePath: "@jpmorganchase/mosaic-plugins/SidebarPlugin",
       options: { rootDirGlob: "*/*" },
     },
+    {
+      modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
+      disabled: true,
+    },
   ],
 };
 
@@ -23,25 +28,11 @@ module.exports = deepmerge(saltConfig, {
   deployment: { mode: "snapshot-file", platform: "vercel" },
   sources: [
     {
-      modulePath: "@jpmorganchase/mosaic-source-git-repo",
+      modulePath: "@jpmorganchase/mosaic-source-local-folder",
       namespace: "salt",
       options: {
-        prefixDir: "salt",
-        cache: true,
-        subfolder: "mosaic-site/docs",
-        credentials: process.env.MOSAIC_DOCS_CLONE_CREDENTIALS,
-        repo: "https://github.com/jpmorganchase/salt-ds.git",
-        branch: "main",
-        extensions: [".mdx"],
-        remote: "origin",
-      },
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-source-local-folder",
-      namespace: "local",
-      options: {
         rootDir: "./docs",
-        prefixDir: "local",
+        prefixDir: "salt",
         extensions: [".mdx"],
       },
     },

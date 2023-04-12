@@ -355,6 +355,32 @@ describe("Grid", () => {
     checkCursorPos(0, 1);
   });
 
+  it("Arbitrary typing on an editable cell enters edit mode with the first key as value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realType("a");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "a");
+  });
+
+  it("Escape cancels edit and reverts cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("asd");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "asd")
+      .type("{Esc}");
+    findCell(0, 0).should("not.have.text", "a");
+    checkCursorPos(0, 0);
+  });
+
   it("Numeric cell editor", () => {
     cy.mount(<GridExample />);
 
@@ -365,6 +391,47 @@ describe("Grid", () => {
       .type("3.1415")
       .type("{Enter}");
     findCell(0, 4).should("have.text", "3.14");
+  });
+
+  it("Clicking on a different cell ends edit and confirms new cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("asd");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "asd");
+
+    clickCell(0, 1);
+    checkCursorPos(0, 1);
+    findCell(0, 0).should("have.text", "asd");
+  });
+
+  it("Clicking on a header or outside the grid ends edit and confirms new cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("asd");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "asd");
+
+    cy.get("body").click();
+    findCell(0, 0).should("have.text", "asd");
+
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("qwe");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "qwe");
+
+    cy.get(".saltGridTopPart").click();
+    findCell(0, 0).should("have.text", "qwe");
   });
 
   // Docs Examples
