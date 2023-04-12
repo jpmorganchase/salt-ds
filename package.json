@@ -10,7 +10,7 @@
     "tooling/**",
     "playground/**",
     "docs",
-    "mosaic-site"
+    "site"
   ],
   "modular": {
     "type": "root"
