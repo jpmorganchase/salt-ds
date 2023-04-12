@@ -1,3 +1,7 @@
+.listItem > svg {
+  --saltIcon-color: var(--salt-actionable-primary-background-active);
+}
+
 .featuresContainerWrapper {
   background-color: var(--salt-color-teal-900);
   padding-top: calc(var(--salt-size-unit) * 6);

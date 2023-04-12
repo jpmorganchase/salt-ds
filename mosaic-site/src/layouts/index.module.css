@@ -4,12 +4,14 @@
   --mosaic-border-width-thin: 0;
   --mosaic-shadow-dark-elevation2: var(--salt-shadow-1-color);
   --mosaic-color-dark-neutral-background-regular: var(--salt-color-gray-900);
+  --mosaic-color-dark-neutral-background-emphasis: transparent;
+  --mosaic-color-dark-actionable-secondary-hover: transparent;
 }
 
 .docsWrapper {
   background-image: url("../../public/img/background_gradient.svg");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: auto;
   background-position: top;
   display: flex;
   flex-direction: column;
