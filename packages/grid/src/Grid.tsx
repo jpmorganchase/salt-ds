@@ -547,13 +547,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }, 0);
   };
 
-  const r = sortedRowData[cursorRowIdx];
-
   const startEditMode = (text?: string) => {
     if (editMode || cursorRowIdx == undefined || cursorColIdx == undefined) {
       return;
     }
-    const r = rowData[cursorRowIdx];
     const c = cols[cursorColIdx];
     const isEditable = !!contextValue.getEditor(c.info.props.id);
     if (isEditable) {
@@ -581,7 +578,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         `onChange is not specified for editable column "${c.info.props.id}".`
       );
     } else {
-      handler(rowData[cursorRowIdx], cursorRowIdx, value);
+      handler(sortedRowData[cursorRowIdx], cursorRowIdx, value);
     }
     setEditMode(false);
     focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
