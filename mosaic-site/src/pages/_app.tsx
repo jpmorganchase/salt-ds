@@ -20,13 +20,16 @@ import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
 import { SessionProvider } from "next-auth/react";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
 import "@jpmorganchase/mosaic-site-preset-styles/index.css";
-import "../css/index.css";
 import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
+import { PT_Mono, Open_Sans } from "next/font/google";
+
+import "../css/index.css";
 import Homepage from "./index";
 import * as saltLayouts from "../layouts";
 import * as saltComponents from "../components";
 
 import { MyAppProps } from "../types/mosaic";
+import clsx from "clsx";
 
 const components = {
   ...mosaicComponents,
@@ -50,6 +53,17 @@ const DensityProvider = ({ children }: { children: ReactNode }) => {
 
 const colorMode: "light" | "dark" = "dark";
 
+const ptMono = PT_Mono({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--site-font-family-code",
+});
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  variable: "--site-font-family",
+  display: "swap",
+});
 export default function MyApp({
   Component,
   pageProps = {},
@@ -71,7 +85,9 @@ export default function MyApp({
     <SessionProvider>
       <StoreProvider value={createStore()}>
         <Metadata Component={Head} />
-        <ThemeProvider className={themeClassName}>
+        <ThemeProvider
+          className={clsx(themeClassName, ptMono.variable, openSans.variable)}
+        >
           <DensityProvider>
             <BaseUrlProvider>
               <ImageProvider value={Image}>
