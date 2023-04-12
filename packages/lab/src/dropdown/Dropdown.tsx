@@ -60,7 +60,7 @@ export const Dropdown = forwardRef(function Dropdown<
     triggerComponent,
     ListItem,
     ListProps,
-    width = 180,
+    width = "100%",
     ...props
   }: DropdownProps<Item, Selection>,
   forwardedRef: ForwardedRef<HTMLDivElement>

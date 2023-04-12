@@ -38,6 +38,11 @@ export interface FormFieldProps
    * Props to be applied to the FormLabel
    */
   LabelProps?: Partial<FormLabelProps>;
+  /**
+   * Styling variant
+   * Defaults to "primary"
+   */
+  variant?: "primary" | "secondary";
 }
 
 export interface A11yValueProps {
@@ -81,6 +86,7 @@ export const FormField = forwardRef(
       LabelProps = {},
       onBlur,
       onFocus,
+      variant = "primary",
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -105,7 +111,8 @@ export const FormField = forwardRef(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName(`label${capitalize(labelPlacement)}`)]: labelPlacement,
-            [withBaseName("withHelperText")]: helperText
+            [withBaseName("withHelperText")]: helperText,
+            [withBaseName(variant)]: variant
           },
           className
         )}

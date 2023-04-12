@@ -36,6 +36,8 @@
   width: 100%;
 }
 
+/* TODO: Decide if this is controlled by FF, or if Input has variants */
+
 /* Class applied if `variant="primary"` */
 .saltInput-primary {
   --input-background: var(--salt-editable-primary-background);

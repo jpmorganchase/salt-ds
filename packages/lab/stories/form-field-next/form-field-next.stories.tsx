@@ -80,22 +80,12 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
     );
   };
   
-export const Template: ComponentStory<typeof FormFieldNext> = (props) => {
+
+/* TODO: These issues (in helper text) need consideration */
+
+export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <div style={{width: "366px"}}>
-      <FormFieldNext
-        label="Typed input"
-        {...props}
-      >
-        <Input variant="secondary" defaultValue="Entry 1" />
-      </FormFieldNext>
-      <div style={{ height: 16 }} />
-      <FormFieldNext
-        label="Percentage"
-        {...props}
-      >
-        <Input variant="secondary" defaultValue="100" />
-      </FormFieldNext>
       <div style={{ height: 16 }} />
       <FormFieldNext
         label="Paired fields"
@@ -107,13 +97,14 @@ export const Template: ComponentStory<typeof FormFieldNext> = (props) => {
       </FormFieldNext>
       <div style={{ height: 16 }} />
       <FormFieldNext
+        variant="secondary"
         label="Multi criteria inputs"
         helperText="*User must enter all values in the string to complete the input"
         {...props}
       >
-        <Input variant="secondary" defaultValue="2.5" />
-        <Input variant="secondary" defaultValue="20" />
-        <Input variant="secondary" defaultValue="750" />
+        <Input defaultValue="2.5" />
+        <Dropdown source={["From","To"]} defaultSelected="From" />
+        <Input defaultValue="750" />
       </FormFieldNext>
     </div>
   );

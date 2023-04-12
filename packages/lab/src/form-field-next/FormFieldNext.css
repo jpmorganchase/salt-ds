@@ -60,6 +60,16 @@
     grid-column-end: 2;
 }  
 
-.saltFormFieldNext .saltInput {
+/* TODO: Replace with activation indicator */
+.saltFormFieldNext .saltInput, 
+.saltFormFieldNext .saltDropdown {
   border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+}
+
+/* TODO: Decide if this is controlled by FF */
+.saltFormFieldNext-secondary .saltInput, 
+.saltFormFieldNext-secondary .saltDropdown .saltButton {
+  --saltButton-background:  var(--salt-editable-secondary-background);
+  --saltButton-background-hover:  var(--salt-editable-secondary-background);
+  --saltInput-background: var(--salt-editable-secondary-background);
 }
