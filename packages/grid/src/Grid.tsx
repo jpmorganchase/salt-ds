@@ -227,7 +227,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   );
 
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [editorText, setEditorText] = useState<string>("");
+  const [initialText, setInitialText] = useState<string | undefined>(undefined);
 
   const resizeClient: ScrollableProps<T>["resizeClient"] = useCallback(
     (dimensions) => {
@@ -471,45 +471,39 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     if (editMode || cursorRowIdx == undefined || cursorColIdx == undefined) {
       return;
     }
-    const column = cols[cursorColIdx];
-    const isEditable = !!contextValue.getEditor(column.info.props.id);
+    const r = rowData[cursorRowIdx];
+    const c = cols[cursorColIdx];
+    const isEditable = !!contextValue.getEditor(c.info.props.id);
     if (isEditable) {
-      setEditorText(
-        text !== undefined
-          ? text
-          : column.info.props.getValue!(rowData[cursorRowIdx])
-      );
+      setInitialText(text);
       setEditMode(true);
     }
   };
 
-  const endEditMode = useCallback(
-    (value: string) => {
-      if (!editMode) {
-        return;
-      }
-      if (cursorColIdx == undefined) {
-        console.error(`endEditMode: cursorColIdx is undefined in edit mode`);
-        return;
-      }
-      const c = cols[cursorColIdx];
-      const handler = c.info.props.onChange;
-      if (cursorRowIdx == undefined) {
-        console.error(`endEditMode: cursorRowIdx is undefined in edit mode`);
-        return;
-      }
-      if (!handler) {
-        console.warn(
-          `onChange is not specified for editable column "${c.info.props.id}".`
-        );
-      } else {
-        handler(rowData[cursorRowIdx], cursorRowIdx, value);
-      }
-      setEditMode(false);
-      focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
-    },
-    [cols, cursorColIdx, cursorRowIdx, editMode, focusedPart, rowData]
-  );
+  const endEditMode = (value: string) => {
+    if (!editMode) {
+      return;
+    }
+    if (cursorColIdx == undefined) {
+      console.error(`endEditMode: cursorColIdx is undefined in edit mode`);
+      return;
+    }
+    const c = cols[cursorColIdx];
+    const handler = c.info.props.onChange;
+    if (cursorRowIdx == undefined) {
+      console.error(`endEditMode: cursorRowIdx is undefined in edit mode`);
+      return;
+    }
+    if (!handler) {
+      console.warn(
+        `onChange is not specified for editable column "${c.info.props.id}".`
+      );
+    } else {
+      handler(rowData[cursorRowIdx], cursorRowIdx, value);
+    }
+    setEditMode(false);
+    focusCellElement(focusedPart, cursorRowIdx, cursorColIdx);
+  };
 
   const cancelEditMode = () => {
     if (!editMode) {
@@ -542,7 +536,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const moveCursor = useCallback(
     (part: FocusedPart, rowIdx: number, colIdx: number) => {
-      cancelEditMode();
       if (!headerIsFocusable && part === "header") {
         console.warn(
           `Cannot move focus to the header. "headerIsFocusable" prop is false.`
@@ -619,21 +612,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const editorContext: EditorContext = useMemo(
     () => ({
-      editorText,
-      setEditorText,
+      initialText,
       editMode,
       startEditMode,
       endEditMode,
       cancelEditMode,
     }),
-    [
-      editMode,
-      startEditMode,
-      endEditMode,
-      cancelEditMode,
-      editorText,
-      setEditorText,
-    ]
+    [editMode, startEditMode, endEditMode, cancelEditMode, initialText]
   );
 
   const [isFocused, setFocused] = useState<boolean>(false);
@@ -706,26 +691,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     [columnMove, onColumnMoveHandleMouseDown]
   );
 
-  // End edit mode and confirm value when the user clicks outside the current editable cell.
-  // In order to not conflict with existing listeners we only react to a click outside the grid and on the header.
-  useEffect(() => {
-    if (!editMode) return;
-    const listener = (e: MouseEvent) => {
-      if (middleRef.current?.querySelector("table")?.contains(e.target as Node))
-        return;
-      if (leftRef.current?.querySelector("table")?.contains(e.target as Node))
-        return;
-      if (rightRef.current?.querySelector("table")?.contains(e.target as Node))
-        return;
-
-      endEditMode(editorText);
-    };
-    document.addEventListener("click", listener);
-    return () => {
-      document.removeEventListener("click", listener);
-    };
-  }, [editMode, editorText, endEditMode]);
-
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
     onRowSelectionMouseDown(event);
     rangeSelection.onCellMouseDown(event);
@@ -735,9 +700,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       const { part, rowIndex, columnIndex } = getFocusablePosition(target);
       if (part === "header" && !headerIsFocusable) {
         return;
-      }
-      if (editMode) {
-        endEditMode(editorText);
       }
       moveCursor(part, rowIndex, columnIndex);
     } catch (e) {
