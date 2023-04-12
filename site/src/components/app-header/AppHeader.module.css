@@ -8,6 +8,7 @@
 .appHeaderTabs :first-child {
   font-size: var(--salt-text-fontSize);
   gap: var(--salt-size-unit);
+  white-space: nowrap;
 }
 
 .root a[href*="github"] {
