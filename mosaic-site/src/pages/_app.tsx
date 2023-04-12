@@ -56,11 +56,13 @@ const colorMode: "light" | "dark" = "dark";
 const ptMono = PT_Mono({
   weight: "400",
   subsets: ["latin"],
+  display: "swap",
   variable: "--site-font-family-code",
 });
 const openSans = Open_Sans({
   subsets: ["latin"],
   variable: "--site-font-family",
+  display: "swap",
 });
 export default function MyApp({
   Component,
