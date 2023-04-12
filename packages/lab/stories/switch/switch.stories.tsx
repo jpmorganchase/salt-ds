@@ -11,7 +11,7 @@ export const AllVariations = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       <Switch label="Default" />
-      <Switch label="Checked" checked />
+      <Switch label="Checked" defaultChecked />
       <Switch label="Disabled" disabled />
       <Switch label="Checked Disabled" checked disabled />
     </div>
