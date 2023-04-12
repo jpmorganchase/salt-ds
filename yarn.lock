@@ -5463,35 +5463,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/mosaic-site@workspace:mosaic-site":
-  version: 0.0.0-use.local
-  resolution: "@salt-ds/mosaic-site@workspace:mosaic-site"
-  dependencies:
-    "@jpmorganchase/mosaic-cli": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-components": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-layouts": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-site-preset-styles": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-store": ^0.1.0-beta.28
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.28
-    "@next/eslint-plugin-next": 13.2.4
-    "@philpl/buble": ^0.19.7
-    "@types/node": ^16.0.0
-    "@types/react": ^18.0.26
-    concurrently: ^8.0.0
-    cross-env: ^7.0.3
-    eslint-config-next: ^13.0.0
-    next: ^13.3.0
-    next-auth: ^4.20.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
 "@salt-ds/root@workspace:.":
   version: 0.0.0-use.local
   resolution: "@salt-ds/root@workspace:."
@@ -5574,6 +5545,35 @@ __metadata:
     vite-plugin-istanbul: ^4.0.0
     vite-tsconfig-paths: ^4.0.3
     webpack: 5.74.0
+  languageName: unknown
+  linkType: soft
+
+"@salt-ds/site@workspace:site":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/site@workspace:site"
+  dependencies:
+    "@jpmorganchase/mosaic-cli": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-components": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-layouts": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-site-preset-styles": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-store": ^0.1.0-beta.28
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.28
+    "@next/eslint-plugin-next": 13.2.4
+    "@philpl/buble": ^0.19.7
+    "@types/node": ^16.0.0
+    "@types/react": ^18.0.26
+    concurrently: ^8.0.0
+    cross-env: ^7.0.3
+    eslint-config-next: ^13.0.0
+    next: ^13.3.0
+    next-auth: ^4.20.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
