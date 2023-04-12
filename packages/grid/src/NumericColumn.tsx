@@ -39,10 +39,13 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   const { column, row } = props;
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { endEditMode, cancelEditMode, editorText, setEditorText } =
-    useEditorContext();
+  const { endEditMode, cancelEditMode, initialText } = useEditorContext();
 
-  const firstRenderSelectionRef = useRef(false);
+  const [editorText, setEditorText] = useState<string>(
+    initialText != null ? initialText : column!.info.props.getValue!(row!.data)
+  );
+
+  const initialSelectionRef = useRef(!!initialText);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEditorText(e.target.value);
@@ -66,15 +69,27 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   };
 
   useEffect(() => {
-    if (
-      inputRef.current &&
-      !firstRenderSelectionRef.current &&
-      editorText === column!.info.props.getValue!(row!.data)
-    ) {
+    if (inputRef.current && !initialSelectionRef.current) {
       inputRef.current.select();
+      initialSelectionRef.current = true;
     }
-    firstRenderSelectionRef.current = true;
-  }, [column, editorText, row]);
+  }, [inputRef.current]);
+
+  useEffect(() => {
+    const input = inputRef.current;
+    const focusOut = (event: FocusEvent) => {
+      if (!input?.contains(event.target as Node)) {
+        endEditMode(editorText);
+      }
+    };
+
+    // This uses the capture phase to detect clicks outside the input to avoid a race condition where the component gets unmounted when edit mode ends.
+    document?.addEventListener("mousedown", focusOut, true);
+
+    return () => {
+      document?.removeEventListener("mousedown", focusOut, true);
+    };
+  }, [endEditMode, editorText]);
 
   return (
     <Cell separator={column?.separator} className="saltGridNumericCellEditor">
