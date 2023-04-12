@@ -7,7 +7,7 @@
   padding: 0;
   row-gap: var(--salt-size-adornmentGap);
   vertical-align: top;
-  width: var(--saltFormFieldNext-width, auto);
+  width: var(--saltFormFieldNext-width, 100%);
 }
 
 .saltFormFieldNext-withHelperText {
@@ -60,44 +60,6 @@
     grid-column-end: 2;
 }  
 
-/* TODO: Needed if design stays as outline ring */
-
-/* .saltFormFieldNext:not(.saltFormFieldNext-labelLeft).saltFormFieldNext-focused > .saltFormLabel + *:before {
-    content: " ";
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    outline-color: var(--salt-focused-outlineColor);
-    outline-style: var(--salt-focused-outlineStyle);
-    outline-width: var(--salt-focused-outlineWidth);
-    outline-offset: var(--salt-focused-outlineOffset);
-} */
-
-/* .saltFormFieldNext.saltFormFieldNext-focused > .saltFormFieldNext-controls *:before {
-  content: " ";
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  outline-color: var(--salt-focused-outlineColor);
-  outline-style: var(--salt-focused-outlineStyle);
-  outline-width: var(--salt-focused-outlineWidth);
-  outline-offset: var(--salt-focused-outlineOffset);
-} */
-
-/* .saltFormFieldNext-labelLeft.saltFormFieldNext-focused > .saltFormLabel + *:before {
-  content: " ";
-  position: absolute;
-  bottom: 0px;
-  top: 0;
-  left: 0;
-  right: 0;
-  outline-style: var(--salt-focused-outlineStyle);
-  outline-width: var(--salt-focused-outlineWidth);
-  outline-color: var(--salt-focused-outlineColor);
-  outline-offset: var(--salt-focused-outlineOffset);
-  z-index: -1;
-} */
+.saltFormFieldNext .saltInput {
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+}

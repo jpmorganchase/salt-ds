@@ -7,9 +7,9 @@ import {
   useRef,
 } from "react";
 import { makePrefixer, useId, useForkRef, capitalize } from "@salt-ds/core";
+import { FormFieldContext } from "../form-field-context";
 import { FormLabel, FormLabelProps } from "./FormLabel";
 import { FormHelperText } from "./FormHelperText";
-import { FormFieldContext, useFormField } from "../form-field-context";
 
 import "./FormFieldNext.css";
 
@@ -89,11 +89,6 @@ export const FormField = forwardRef(
 
     const handleTriggerRef = useForkRef(rootRef, ref);
 
-    const [states, dispatchers, eventHandlers] = useFormField({
-      onBlur,
-      onFocus,
-    });
-
     const labelId = useId(LabelProps?.id);
 
     const a11yValue = useA11yValue({
@@ -110,21 +105,15 @@ export const FormField = forwardRef(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName(`label${capitalize(labelPlacement)}`)]: labelPlacement,
-            [withBaseName("withHelperText")]: helperText,
-            [withBaseName("focused")]: states.focused,
+            [withBaseName("withHelperText")]: helperText
           },
           className
         )}
-        {...eventHandlers}
         {...restProps}
       >
         <FormFieldContext.Provider
           value={{
-            ...states,
-            ...dispatchers,
-            ...eventHandlers,
             a11yProps: a11yValue,
-            inFormField: false,
             ref: rootRef,
           }}
         >

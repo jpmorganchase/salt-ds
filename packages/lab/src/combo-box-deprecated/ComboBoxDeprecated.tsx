@@ -59,7 +59,7 @@ export const ComboBoxDeprecated = forwardRef<
   ComboBoxDeprecatedProps
 >(function ComboBox(props, ref) {
   const {
-    inFormField,
+    inFormField, /* TODO: Delete if using FF next*/
     a11yProps: {
       "aria-labelledby": ariaLabelledBy,
       "aria-required": ariaRequired,

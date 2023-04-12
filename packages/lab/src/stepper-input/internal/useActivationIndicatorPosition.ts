@@ -17,8 +17,7 @@ export function useActivationIndicatorPosition(
   adornmentRef: MutableRefObject<HTMLDivElement | null>,
   refreshButtonVisible: boolean
 ) {
-  const formFieldProps = useFormFieldProps();
-  const { ref: formFieldRef } = formFieldProps;
+  const { ref: formFieldRef } = useFormFieldProps();
   const density = useDensity();
 
   useIsomorphicLayoutEffect(() => {

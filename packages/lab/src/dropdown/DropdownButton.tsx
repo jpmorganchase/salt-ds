@@ -72,7 +72,6 @@ export const DropdownButton = forwardRef(function DropdownButton(
   }: DropdownButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
-  const { inFormField } = useFormFieldProps();
   // FIXME: use polymorphic button
   // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing
   // tool's false alarm on role of 'listbox'
@@ -81,8 +80,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
       className={clsx(
         withBaseName(),
         {
-          [withBaseName("fullwidth")]: fullWidth,
-          [withBaseName("formField")]: inFormField,
+          [withBaseName("fullwidth")]: fullWidth
         },
         className
       )}

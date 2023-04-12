@@ -1,5 +1,5 @@
 import { Checkbox, RadioButton } from "@salt-ds/core";
-import { FormFieldNext, Input } from "@salt-ds/lab";
+import { Dropdown, FormFieldNext, Input } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -80,3 +80,41 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
     );
   };
   
+export const Template: ComponentStory<typeof FormFieldNext> = (props) => {
+  return (
+    <div style={{width: "366px"}}>
+      <FormFieldNext
+        label="Typed input"
+        {...props}
+      >
+        <Input variant="secondary" defaultValue="Entry 1" />
+      </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        label="Percentage"
+        {...props}
+      >
+        <Input variant="secondary" defaultValue="100" />
+      </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        label="Paired fields"
+        helperText="*User entry in either field will automatically poluate the corresponding field with the correct value"
+        {...props}
+      >
+        <Input variant="secondary" defaultValue="123" />
+        <Input variant="secondary" defaultValue="35" />
+      </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        label="Multi criteria inputs"
+        helperText="*User must enter all values in the string to complete the input"
+        {...props}
+      >
+        <Input variant="secondary" defaultValue="2.5" />
+        <Input variant="secondary" defaultValue="20" />
+        <Input variant="secondary" defaultValue="750" />
+      </FormFieldNext>
+    </div>
+  );
+};

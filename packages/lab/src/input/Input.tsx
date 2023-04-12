@@ -173,7 +173,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       ...restA11y
     } = {},
     setFocused: setFormFieldFocused,
-    inFormField,
+    inFormField
   } = useFormFieldProps();
 
   const [focused, setFocused] = useState(false);
@@ -249,8 +249,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         withBaseName(),
         {
           [withBaseName(`${textAlign}TextAlign`)]: textAlign,
-          [withBaseName("formField")]: inFormField,
-          [withBaseName("focused")]: focused && !inFormField,
+          [withBaseName("focused")]: focused && !inFormField, /* TODO: Remove when ff legacy deprecated */
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("inputAdornedStart")]: startAdornment,
           [withBaseName("inputAdornedEnd")]: endAdornment,

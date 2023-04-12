@@ -139,9 +139,3 @@
 .saltInput-rightTextAlign .saltInput-input {
   text-align: right;
 }
-
-/* Style applied if `inFormField={true}` */
-.saltInput-formField {
-  min-width: var(--saltFormField-input-minWidth, 0px);
-  width: 100%;
-}
