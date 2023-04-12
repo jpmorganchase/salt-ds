@@ -124,12 +124,12 @@ export const FormField = forwardRef(
             ...dispatchers,
             ...eventHandlers,
             a11yProps: a11yValue,
-            inFormField: true,
+            inFormField: false,
             ref: rootRef,
           }}
         >
           {label && <FormLabel disabled={disabled} label={label} />}
-          {children}
+          <div className={withBaseName("controls")}>{children}</div>
           {helperText && <FormHelperText helperText={helperText} />}
         </FormFieldContext.Provider>
       </div>

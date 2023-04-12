@@ -21,9 +21,15 @@
 .saltFormFieldNext-labelTop {
 }
 
+.saltFormFieldNext-controls {
+    align-items: center;
+    display: grid;
+    grid-auto-columns: minmax(0,1fr);
+    grid-auto-flow: column;
+    grid-column-gap: calc(2 * var(--salt-size-unit));
+}
+
 .saltFormFieldNext > * {
-  grid-column-start: 1;
-  grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 3;
 }
@@ -32,6 +38,7 @@
   grid-row-start: 1;
   grid-row-end: 2;
 }
+
 
 .saltFormFieldNext-labelLeft > * {
   grid-row-start: 1;
@@ -53,7 +60,9 @@
     grid-column-end: 2;
 }  
 
-.saltFormFieldNext:not(.saltFormFieldNext-labelLeft).saltFormFieldNext-focused > .saltFormLabel + *:before {
+/* TODO: Needed if design stays as outline ring */
+
+/* .saltFormFieldNext:not(.saltFormFieldNext-labelLeft).saltFormFieldNext-focused > .saltFormLabel + *:before {
     content: " ";
     position: absolute;
     bottom: 0;
@@ -64,9 +73,22 @@
     outline-style: var(--salt-focused-outlineStyle);
     outline-width: var(--salt-focused-outlineWidth);
     outline-offset: var(--salt-focused-outlineOffset);
-}
+} */
 
-.saltFormFieldNext-labelLeft.saltFormFieldNext-focused > .saltFormLabel + *:before {
+/* .saltFormFieldNext.saltFormFieldNext-focused > .saltFormFieldNext-controls *:before {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  outline-color: var(--salt-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
+} */
+
+/* .saltFormFieldNext-labelLeft.saltFormFieldNext-focused > .saltFormLabel + *:before {
   content: " ";
   position: absolute;
   bottom: 0px;
@@ -78,4 +100,4 @@
   outline-color: var(--salt-focused-outlineColor);
   outline-offset: var(--salt-focused-outlineOffset);
   z-index: -1;
-}
+} */
