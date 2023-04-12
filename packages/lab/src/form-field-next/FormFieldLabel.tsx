@@ -2,26 +2,26 @@ import { clsx } from "clsx";
 import { HTMLAttributes } from "react";
 import { Label, makePrefixer } from "@salt-ds/core";
 
-import "./FormLabel.css";
+import "./FormFieldLabel.css";
 
-const withBaseName = makePrefixer("saltFormLabel");
-export interface FormLabelProps extends HTMLAttributes<HTMLLabelElement> {
+const withBaseName = makePrefixer("saltFormFieldLabel");
+export interface FormFieldLabelProps extends HTMLAttributes<HTMLLabelElement> {
   /**
    * Whether the form field is disabled.
    */
   disabled?: boolean;
   /**
-   * The label value for the FormLabel
+   * The label value for the FormFieldLabel
    */
   label?: string;
 }
 
-export const FormLabel = ({
+export const FormFieldLabel = ({
   label,
   className,
   disabled,
   ...restProps
-}: FormLabelProps) => (
+}: FormFieldLabelProps) => (
   <Label
     className={clsx(withBaseName(), className, {
       [withBaseName("disabled")]: disabled,

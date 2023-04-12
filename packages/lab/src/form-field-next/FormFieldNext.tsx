@@ -8,7 +8,7 @@ import {
 } from "react";
 import { makePrefixer, useId, useForkRef, capitalize } from "@salt-ds/core";
 import { FormFieldContext } from "../form-field-context";
-import { FormLabel, FormLabelProps } from "./FormLabel";
+import { FormFieldLabel, FormFieldLabelProps } from "./FormFieldLabel";
 import { FormHelperText } from "./FormHelperText";
 
 import "./FormFieldNext.css";
@@ -35,9 +35,9 @@ export interface FormFieldProps
    */
   labelPlacement?: FormFieldLabelPlacement;
   /**
-   * Props to be applied to the FormLabel
+   * Props to be applied to the FormFieldLabel
    */
-  LabelProps?: Partial<FormLabelProps>;
+  LabelProps?: Partial<FormFieldLabelProps>;
   /**
    * Styling variant
    * Defaults to "primary"
@@ -124,7 +124,7 @@ export const FormField = forwardRef(
             ref: rootRef,
           }}
         >
-          {label && <FormLabel disabled={disabled} label={label} />}
+          {label && <FormFieldLabel disabled={disabled} label={label} />}
           <div className={withBaseName("controls")}>{children}</div>
           {helperText && <FormHelperText helperText={helperText} />}
         </FormFieldContext.Provider>

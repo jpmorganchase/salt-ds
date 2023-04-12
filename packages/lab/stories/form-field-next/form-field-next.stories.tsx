@@ -1,4 +1,4 @@
-import { Checkbox, RadioButton } from "@salt-ds/core";
+import { Checkbox, RadioButton, RadioButtonGroup } from "@salt-ds/core";
 import { Dropdown, FormFieldNext, Input } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -75,6 +75,18 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
         >
           <Input variant="secondary" defaultValue="Value" />
           <Input variant="secondary" defaultValue="Value 2" />
+        </FormFieldNext>
+      <div style={{ height: 40 }} />
+        <FormFieldNext
+          helperText="Default helper text"
+          label="Default Form Field label"
+          {...props}
+        >
+        <RadioButtonGroup>
+          <RadioButton key="option1" label="Radio Option 1" value="option1" />
+          <RadioButton key="option2" label="Radio Option 2" value="option2" />
+          <RadioButton key="option3" label="Radio Option 3" value="option3" />
+        </RadioButtonGroup>
         </FormFieldNext>
       </>
     );

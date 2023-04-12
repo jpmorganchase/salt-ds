@@ -14,7 +14,7 @@
 }
 
 .saltFormFieldNext-labelLeft {
-    align-self: start;
+    align-self: center;
     grid-template-columns: auto 1fr;
 }
 
@@ -34,11 +34,10 @@
   grid-row-end: 3;
 }
 
-.saltFormFieldNext > .saltFormLabel {
+.saltFormFieldNext > .saltFormFieldLabel {
   grid-row-start: 1;
   grid-row-end: 2;
 }
-
 
 .saltFormFieldNext-labelLeft > * {
   grid-row-start: 1;
@@ -55,7 +54,7 @@
   grid-row-end: 3;
 }
 
-.saltFormFieldNext-labelLeft > .saltFormLabel ~ * {
+.saltFormFieldNext-labelLeft > .saltFormFieldLabel ~ * {
     grid-column-start: 2;
     grid-column-end: 2;
 }  
