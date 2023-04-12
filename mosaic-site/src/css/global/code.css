@@ -10,7 +10,7 @@ pre {
   --pre-color: #393a34;
   --code-font-size: 90%;
   --pre-line-height: 1.45;
-  --font-family-monospace: SFMono-Regular, Menlo;
+  --font-family-monospace: var(--salt-text-code-fontFamily);
   --pre-shadow: 0 1px 2px 0 #0000001a;
 }
 
