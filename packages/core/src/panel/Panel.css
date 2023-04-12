@@ -11,7 +11,7 @@
 /* Styles applied to the root element */
 .saltPanel {
   background: var(--saltPanel-background, var(--panel-background));
-  color: var(--saltPanel-color, inherit);
+  color: var(--saltPanel-color, initial);
   height: var(--saltPanel-height, 100%);
   overflow: auto;
   padding: var(--saltPanel-padding, var(--salt-size-container-spacing));
