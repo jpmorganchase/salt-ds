@@ -8,12 +8,11 @@ import {
 } from "../src";
 import { ChangeEvent, useState } from "react";
 import {
-  Checkbox,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
 } from "@salt-ds/lab";
-import { FlexItem, FlexLayout, useDensity } from "@salt-ds/core";
+import { Checkbox, FlexItem, FlexLayout, useDensity } from "@salt-ds/core";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
