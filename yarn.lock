@@ -13857,14 +13857,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"docusaurus-css-variable-docgen-plugin@workspace:tooling/docusaurus-css-variable-docgen-plugin":
-  version: 0.0.0-use.local
-  resolution: "docusaurus-css-variable-docgen-plugin@workspace:tooling/docusaurus-css-variable-docgen-plugin"
-  dependencies:
-    glob: ^8.0.0
-  languageName: unknown
-  linkType: soft
-
 "dom-accessibility-api@npm:^0.5.10, dom-accessibility-api@npm:^0.5.6, dom-accessibility-api@npm:^0.5.9":
   version: 0.5.11
   resolution: "dom-accessibility-api@npm:0.5.11"
