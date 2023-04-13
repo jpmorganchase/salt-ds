@@ -43,6 +43,10 @@ export interface FormFieldProps
    * Defaults to "primary"
    */
   variant?: "primary" | "secondary";
+  /**
+   * Validation state
+   */
+  state?: "error" | "warning";
 }
 
 export interface A11yValueProps {
@@ -87,6 +91,7 @@ export const FormField = forwardRef(
       onBlur,
       onFocus,
       variant = "primary",
+      state,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -112,6 +117,8 @@ export const FormField = forwardRef(
             [withBaseName("disabled")]: disabled,
             [withBaseName(`label${capitalize(labelPlacement)}`)]: labelPlacement,
             [withBaseName("withHelperText")]: helperText,
+            [withBaseName("error")]: state === "error",
+            [withBaseName("warning")]: state === "warning",
             [withBaseName(variant)]: variant
           },
           className

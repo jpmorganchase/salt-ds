@@ -91,7 +91,6 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
       </>
     );
   };
-  
 
 /* TODO: These issues (in helper text) need consideration */
 
@@ -117,6 +116,49 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
         <Input defaultValue="2.5" />
         <Dropdown source={["From","To"]} defaultSelected="From" />
         <Input defaultValue="750" />
+      </FormFieldNext>
+    </div>
+  );
+};
+
+export const Validation: ComponentStory<typeof FormFieldNext> = (props) => {
+  return (
+    <div style={{width: "366px"}}>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        label="Default Form Field label"
+        state="error"
+        helperText="Default helper text"
+        {...props}
+      >
+        <Input variant="secondary" defaultValue="123" />
+      </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        label="Default Form Field label"
+        state="error"
+        helperText="Default helper text"
+        {...props}
+      >
+        <Input defaultValue="123" />
+      </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        label="Default Form Field label"
+        state="warning"
+        helperText="Default helper text"
+        {...props}
+      >
+        <Input variant="secondary" defaultValue="123" />
+      </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        label="Default Form Field label"
+        state="warning"
+        helperText="Default helper text"
+        {...props}
+      >
+        <Input defaultValue="123" />
       </FormFieldNext>
     </div>
   );

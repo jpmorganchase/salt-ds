@@ -40,12 +40,12 @@
 
 /* Class applied if `variant="primary"` */
 .saltInput-primary {
-  --input-background: var(--salt-editable-primary-background);
+  --input-background: var(--saltInput-primary-background, var(--salt-editable-primary-background));
 }
 
 /* Class applied if `variant="secondary"` */
 .saltInput-secondary {
-  --input-background: var(--salt-editable-secondary-background);
+  --input-background: var(--saltInput-secondary-background, var(--salt-editable-secondary-background));
 }
 
 /* Reset in the next class */
