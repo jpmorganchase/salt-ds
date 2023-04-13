@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Checkbox, CheckboxGroup } from "@salt-ds/core";
+import { Button, Checkbox, CheckboxGroup } from "@salt-ds/core";
+import { ColumnLayoutContainer } from "docs/story-layout";
 
 export default {
   title: "Core/Checkbox",
@@ -65,40 +66,43 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
   };
 
   return (
-    <CheckboxGroup>
-      <Checkbox
-        error={errorState}
-        onChange={() => setErrorState(false)}
-        label="Option 1"
-      />
-      <Checkbox
-        error={errorState}
-        onChange={() => setErrorState(false)}
-        defaultChecked
-        label="Option 2"
-      />
-      <Checkbox
-        error={errorState}
-        checked={checkboxState.checked}
-        indeterminate={checkboxState.indeterminate}
-        onChange={handleChange}
-        label="Option 3"
-      />
-    </CheckboxGroup>
+    <ColumnLayoutContainer>
+      <CheckboxGroup>
+        <Checkbox
+          error={errorState}
+          onChange={() => setErrorState(false)}
+          label="Option 1"
+        />
+        <Checkbox
+          error={errorState}
+          onChange={() => setErrorState(false)}
+          defaultChecked
+          label="Option 2"
+        />
+        <Checkbox
+          error={errorState}
+          checked={checkboxState.checked}
+          indeterminate={checkboxState.indeterminate}
+          onChange={handleChange}
+          label="Option 3"
+        />
+        <Button onClick={() => setErrorState(true)}>Reset</Button>
+      </CheckboxGroup>
+    </ColumnLayoutContainer>
   );
 };
 
 export const Disabled: ComponentStory<typeof Checkbox> = () => {
   return (
-    <CheckboxGroup>
-      <Checkbox disabled label="disabled checkbox" />
-      <Checkbox
-        disabled
-        indeterminate
-        label="disabled indeterminate checkbox"
-      />
-      <Checkbox disabled checked label="disabled checked checkbox" />
+    <>
       <CheckboxGroup>
+        <Checkbox disabled label="disabled checkbox" />
+        <Checkbox
+          disabled
+          indeterminate
+          label="disabled indeterminate checkbox"
+        />
+        <Checkbox disabled checked label="disabled checked checkbox" />
         <Checkbox error disabled label="disabled checkbox in error state" />
         <Checkbox
           error
@@ -113,7 +117,7 @@ export const Disabled: ComponentStory<typeof Checkbox> = () => {
           label="disabled checked checkbox in error state"
         />
       </CheckboxGroup>
-    </CheckboxGroup>
+    </>
   );
 };
 
