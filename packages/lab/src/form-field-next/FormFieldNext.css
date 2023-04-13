@@ -73,6 +73,7 @@
   /* Dropdown */
   --saltButton-background:  var(--salt-editable-secondary-background);
   --saltButton-background-hover:  var(--salt-editable-secondary-background);
+  --saltButton-fontWeight:  var(--salt-text-fontWeight);
 
   /* Input */
   --saltInput-background: var(--salt-editable-secondary-background);
