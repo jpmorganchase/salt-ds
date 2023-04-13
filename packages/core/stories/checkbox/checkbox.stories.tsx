@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, Checkbox, CheckboxGroup } from "@salt-ds/core";
-import { ColumnLayoutContainer } from "docs/story-layout";
+import { Button, Checkbox, CheckboxGroup, StackLayout } from "@salt-ds/core";
 
 export default {
   title: "Core/Checkbox",
@@ -66,7 +65,7 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
   };
 
   return (
-    <ColumnLayoutContainer>
+    <StackLayout>
       <CheckboxGroup>
         <Checkbox
           error={errorState}
@@ -86,9 +85,9 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
           onChange={handleChange}
           label="Option 3"
         />
-        <Button onClick={() => setErrorState(true)}>Reset</Button>
       </CheckboxGroup>
-    </ColumnLayoutContainer>
+      <Button onClick={() => setErrorState(true)}>Reset</Button>
+    </StackLayout>
   );
 };
 
