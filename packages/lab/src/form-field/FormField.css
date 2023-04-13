@@ -23,12 +23,12 @@
 }
 
 .saltFormField-tertiary.saltFormField {
-  --saltInput-primary-background: var(--salt-editable-tertiary-background);
+  --saltInput-primary-background: transparent;
   --formField-background: var(--salt-editable-tertiary-background);
 }
 
 .saltFormField-secondary.saltFormField {
-  --saltInput-primary-background: var(--salt-editable-secondary-background);
+  --saltInput-primary-background: transparent;
   --formField-background: var(--salt-editable-secondary-background);
 }
 
@@ -136,13 +136,13 @@
 
 /* Error state styling when `variant="secondary"` */
 .saltFormField-secondary.saltFormField-error {
-  --saltInput-primary-background: var(--salt-status-error-background-emphasize);
+  --saltInput-primary-background: transparent;
   --formField-background: var(--salt-status-error-background-emphasize);
 }
 
 /* Warning state styling when `variant="secondary"` */
 .saltFormField-secondary.saltFormField-warning {
-  --saltInput-primary-background: var(--salt-status-warning-background-emphasize);
+  --saltInput-primary-background: transparent;
   --formField-background: var(--salt-status-warning-background-emphasize);
 }
 
