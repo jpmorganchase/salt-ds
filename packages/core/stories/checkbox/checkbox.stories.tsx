@@ -47,15 +47,43 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
 };
 
 export const Error: ComponentStory<typeof Checkbox> = () => {
+  const [errorState, setErrorState] = useState(true);
+
+  const [checkboxState, setCheckboxState] = useState({
+    checked: false,
+    indeterminate: true,
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedChecked = event.target.checked;
+    setErrorState(false);
+    setCheckboxState({
+      indeterminate: !updatedChecked && checkboxState.checked,
+      checked:
+        checkboxState.indeterminate && updatedChecked ? false : updatedChecked,
+    });
+  };
+
   return (
     <CheckboxGroup>
-      <Checkbox error checked={false} label="checkbox in error state" />
       <Checkbox
-        error
-        indeterminate
-        label="indeterminate checkbox in error state"
+        error={errorState}
+        onChange={() => setErrorState(false)}
+        label="Option 1"
       />
-      <Checkbox error checked label="checked checkbox in error state" />
+      <Checkbox
+        error={errorState}
+        onChange={() => setErrorState(false)}
+        defaultChecked
+        label="Option 2"
+      />
+      <Checkbox
+        error={errorState}
+        checked={checkboxState.checked}
+        indeterminate={checkboxState.indeterminate}
+        onChange={handleChange}
+        label="Option 3"
+      />
     </CheckboxGroup>
   );
 };
