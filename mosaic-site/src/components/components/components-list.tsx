@@ -225,7 +225,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Conveniently displays content that’s composed of different elements that have varied sizes or supported actions.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.1.0",
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-card--page",
@@ -249,7 +249,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Enables the user to turn a specific value on or off. The value can be independent or a selection of one or more values from a given set of choices.",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
   },
   {
     name: "Color Chooser",
@@ -288,7 +288,7 @@ export const componentDetails: ComponentDetails[] = [
   {
     name: "Country Symbol",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
   },
   {
     name: "Data Grid",
@@ -365,7 +365,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Form Field",
     description: "",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Formatted Input",
@@ -422,8 +422,8 @@ export const componentDetails: ComponentDetails[] = [
     name: "List",
     description:
       "Allows the user to select one or more items from an array of options. Long Lists are shown in a scrolling pane to provide access to all options in a space-efficient way.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Logo",
@@ -465,7 +465,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       'Organizes content areas in an application by providing expand/collapse behavior, its own scroll bar, and "floating" and "docked" states.',
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.1.0",
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-panel--page",
@@ -513,7 +513,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Allows the user to select one option at a time, from a set that’s vertically or horizontally aligned.",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
   },
   {
     name: "Salt Provider",
@@ -571,7 +571,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Visually represents a process that is taking an indeterminate time to complete.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-spinner--page",
   },
@@ -699,7 +699,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Displays an explanation or provides more information about an error or warning condition, when the user’s  mouse hovers over a target element.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-tooltip--page",
   },
