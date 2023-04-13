@@ -1,4 +1,4 @@
-import { Checkbox, RadioButton, RadioButtonGroup } from "@salt-ds/core";
+import { Checkbox, GridLayout, RadioButton, RadioButtonGroup } from "@salt-ds/core";
 import { Dropdown, FormFieldNext, Input } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -136,30 +136,45 @@ export const Validation: ComponentStory<typeof FormFieldNext> = (props) => {
       <div style={{ height: 16 }} />
       <FormFieldNext
         label="Default Form Field label"
-        state="error"
-        helperText="Default helper text"
-        {...props}
-      >
-        <Input defaultValue="123" />
-      </FormFieldNext>
-      <div style={{ height: 16 }} />
-      <FormFieldNext
-        label="Default Form Field label"
         state="warning"
         helperText="Default helper text"
         {...props}
       >
         <Input variant="secondary" defaultValue="123" />
       </FormFieldNext>
-      <div style={{ height: 16 }} />
+    </div>
+  );
+};
+
+export const DefaultTemplate: ComponentStory<typeof FormFieldNext> = (props) => {
+  return (
+    <GridLayout >
       <FormFieldNext
-        label="Default Form Field label"
-        state="warning"
+        labelPlacement="left"
         helperText="Default helper text"
+        label="Default Form Field label"
         {...props}
       >
-        <Input defaultValue="123" />
+        <Input defaultValue="Value" />
       </FormFieldNext>
-    </div>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        labelPlacement="left"
+        helperText="Default helper text text text"
+        label="Default Form Field label label label"
+        {...props}
+      >
+        <Input defaultValue="Value" />
+      </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        labelPlacement="left"
+        helperText="Default helper text text text text"
+        label="Default Form Field label label label label label label"
+        {...props}
+      >
+        <Input defaultValue="Value" />
+      </FormFieldNext>
+    </GridLayout>
   );
 };

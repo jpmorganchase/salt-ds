@@ -104,7 +104,7 @@ export interface InputProps
    * 
    * Defaults to "primary"
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 function mergeA11yProps(

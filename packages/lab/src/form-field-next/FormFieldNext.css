@@ -88,10 +88,10 @@
  */
 .saltFormFieldNext-error {
   --formFieldNext-borderColor: var(--salt-status-error-borderColor);
-  --saltInput-secondary-background: var(--salt-status-error-background-emphasize);
+  --saltInput-background: var(--salt-status-error-background-emphasize);
 }
 
 .saltFormFieldNext-warning {
   --formFieldNext-borderColor: var(--salt-status-warning-borderColor);
-  --saltInput-secondary-background: var(--salt-status-warning-background-emphasize);
+  --saltInput-background: var(--salt-status-warning-background-emphasize);
 }

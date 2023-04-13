@@ -36,16 +36,19 @@
   width: 100%;
 }
 
-/* TODO: Decide if this is controlled by FF, or if Input has variants */
-
 /* Class applied if `variant="primary"` */
 .saltInput-primary {
-  --input-background: var(--saltInput-primary-background, var(--salt-editable-primary-background));
+  --input-background: var(--saltInput-background, var(--salt-editable-primary-background));
 }
 
 /* Class applied if `variant="secondary"` */
 .saltInput-secondary {
-  --input-background: var(--saltInput-secondary-background, var(--salt-editable-secondary-background));
+  --input-background: var(--saltInput-background, var(--salt-editable-secondary-background));
+}
+
+/* Class applied if `variant="secondary"` */
+.saltInput-tertiary {
+  --input-background: var(--saltInput-background, var(--salt-editable-tertiary-background));
 }
 
 /* Reset in the next class */
