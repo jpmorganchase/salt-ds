@@ -90,7 +90,6 @@
 
 /* Styles applied to icon if `indeterminate={true}` on hover */
 .saltCheckbox:hover .saltCheckboxIcon-indeterminate {
-  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-foreground-hover));
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke, var(--salt-selectable-foreground-hover));
 }
 
@@ -101,7 +100,8 @@
 }
 
 /* Styles applied if `indeterminate={true}` and `error={true}` */
-.saltCheckboxIcon-error.saltCheckboxIcon-indeterminate {
+.saltCheckboxIcon-error.saltCheckboxIcon-indeterminate,
+.saltCheckbox:hover .saltCheckboxIcon-error.saltCheckboxIcon-indeterminate {
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-stroke-error, var(--salt-status-error-foreground));
 }
 
