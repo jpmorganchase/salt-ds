@@ -20,6 +20,7 @@ import { withTheme } from "docs/decorators/withTheme";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
+import { withScaffold } from "docs/decorators/withScaffold";
 import { SaltProvider } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
 
@@ -87,6 +88,15 @@ export const globalTypes: GlobalTypes = {
       title: "Strict Mode",
     },
   },
+  scaffold: {
+    name: "Scaffold",
+    description: "Enables the testing scaffold",
+    defaultValue: "disable",
+    toolbar: {
+      items: ["disable", "enable"],
+      title: "Scaffold",
+    },
+  },
 };
 
 export const argTypes: ArgTypes = {
@@ -136,6 +146,7 @@ export const parameters: Parameters = {
 // Bottom most is outermost
 export const decorators = [
   // When theme provider alone is outside of density provider, some variables can't be resolved. Use withSaltProvider
+  withScaffold,
   withResponsiveWrapper,
   withTheme,
   WithTextSpacingWrapper,
