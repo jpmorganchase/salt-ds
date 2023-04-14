@@ -46,12 +46,12 @@
   grid-row-end: 2;
 }
 
-.saltFormFieldNext > .saltFormHelperText {
+.saltFormFieldNext > .saltFormFieldHelperText {
     grid-row-start: 3;
     grid-row-end: 4;
 }
 
-.saltFormFieldNext.saltFormFieldNext-labelLeft > .saltFormHelperText {
+.saltFormFieldNext.saltFormFieldNext-labelLeft > .saltFormFieldHelperText {
   grid-row-start: 2;
   grid-row-end: 3;
 }
@@ -68,7 +68,7 @@
 }
 
 /* 
-* TODO: This is probably going to be in HelperText and controls; state coming in v2
+* TODO: This is probably going to be in HelperText and controls
 *
 .saltFormFieldNext-error {
   --formFieldNext-borderColor: var(--salt-status-error-borderColor);

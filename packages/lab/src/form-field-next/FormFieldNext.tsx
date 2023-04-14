@@ -9,7 +9,7 @@ import {
 import { makePrefixer, useId, useForkRef, capitalize } from "@salt-ds/core";
 import { FormFieldContext } from "../form-field-context";
 import { FormFieldLabel, FormFieldLabelProps } from "./FormFieldLabel";
-import { FormHelperText } from "./FormHelperText";
+import { FormFieldHelperText } from "./FormFieldHelperText";
 
 import "./FormFieldNext.css";
 
@@ -119,7 +119,7 @@ export const FormField = forwardRef(
         >
           {label && <FormFieldLabel disabled={disabled} label={label} />}
           <div className={withBaseName("controls")}>{children}</div>
-          {helperText && <FormHelperText helperText={helperText} />}
+          {helperText && <FormFieldHelperText helperText={helperText} />}
         </FormFieldContext.Provider>
       </div>
     );
