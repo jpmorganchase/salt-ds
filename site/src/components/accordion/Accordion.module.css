@@ -7,9 +7,9 @@
   --saltAccordion-summary-background-hover: transparent;
   --accordion-padding-left: var(--salt-size-unit);
   --accordion-section-padding: calc(var(--salt-size-unit) * 2) 0;
-  --ifm-link-decoration: var(--salt-text-link-textDecoration);
-  --ifm-heading-margin-bottom: 0;
+}
 
+.accordion {
   height: calc(100% - var(--keyline-height));
 }
 
@@ -28,6 +28,10 @@
   line-height: initial;
   flex-direction: row-reverse;
   justify-content: space-between;
+}
+
+.accordion a {
+  text-decoration: var(--salt-text-link-textDecoration);
 }
 
 /* Override Salt accordion styles */
