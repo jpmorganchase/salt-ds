@@ -41,7 +41,33 @@ const columnsWithGrouping = (
   },
   {
     headerName: groupName,
-    children: dataGridExampleColumns.slice(1),
+    children: [
+      {
+        headerName: "Name",
+        field: "name",
+        filterParams: {
+          buttons: ["reset", "apply"],
+        },
+        editable: false,
+      },
+      {
+        headerName: "Code",
+        field: "code",
+        columnGroupShow: "open",
+      },
+      {
+        headerName: "Capital",
+        field: "capital",
+      },
+      {
+        headerName: "Population",
+        type: "numericColumn",
+        field: "population",
+        filter: "agNumberColumnFilter",
+        editable: true,
+        cellClass: ["numeric-cell", "editable-cell"],
+      },
+    ],
   },
 ];
 
