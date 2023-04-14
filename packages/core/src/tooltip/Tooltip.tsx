@@ -6,7 +6,7 @@ import {
   ReactNode,
   isValidElement,
 } from "react";
-import { FloatingArrow } from "@floating-ui/react";
+import { FloatingArrow, FloatingPortal } from "@floating-ui/react";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import { UseFloatingUIProps, makePrefixer, useForkRef } from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
@@ -108,33 +108,35 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           })}
 
         {open && !disabled && (
-          <div
-            className={clsx(withBaseName(), withBaseName(status), className)}
-            ref={floating}
-            {...getTooltipProps()}
-          >
-            <div className={withBaseName("container")}>
-              {!hideIcon && (
-                <StatusIndicator
-                  status={status}
-                  size={1}
-                  className={withBaseName("icon")}
+          <FloatingPortal>
+            <div
+              className={clsx(withBaseName(), withBaseName(status), className)}
+              ref={floating}
+              {...getTooltipProps()}
+            >
+              <div className={withBaseName("container")}>
+                {!hideIcon && (
+                  <StatusIndicator
+                    status={status}
+                    size={1}
+                    className={withBaseName("icon")}
+                  />
+                )}
+                <span className={withBaseName("content")}>{content}</span>
+              </div>
+              {!hideArrow && (
+                <FloatingArrow
+                  {...arrowProps}
+                  className={withBaseName("arrow")}
+                  strokeWidth={1}
+                  fill="var(--salt-container-primary-background)"
+                  stroke="var(--tooltip-status-borderColor)"
+                  height={5}
+                  width={10}
                 />
               )}
-              <span className={withBaseName("content")}>{content}</span>
             </div>
-            {!hideArrow && (
-              <FloatingArrow
-                {...arrowProps}
-                className={withBaseName("arrow")}
-                strokeWidth={1}
-                fill="var(--salt-container-primary-background)"
-                stroke="var(--tooltip-status-borderColor)"
-                height={5}
-                width={10}
-              />
-            )}
-          </div>
+          </FloatingPortal>
         )}
       </>
     );
