@@ -1,10 +1,10 @@
 import { useControlled } from "@salt-ds/core";
 import { KeyboardEvent, useCallback, useRef, useState } from "react";
 
-import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
-import { useClickAway } from "./useClickAway";
+import { useClickAway } from "../common-hooks";
 import { measurements, useResizeObserver, WidthOnly } from "../responsive";
 import { useFormFieldProps } from "../form-field-context";
+import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
 
 const NO_OBSERVER: string[] = [];
 

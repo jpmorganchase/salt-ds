@@ -8,6 +8,7 @@ export * from "./useCollapsibleGroups";
 export * from "./list-dom-utils";
 export * from "./navigationTypes";
 export * from "./selectionTypes";
+export * from "./useClickAway";
 export * from "./useCollectionItems";
 export * from "./useImperativeScrollingAPI";
 export * from "./useKeyboardNavigation";
