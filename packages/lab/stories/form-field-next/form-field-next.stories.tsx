@@ -120,30 +120,32 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
   );
 };
 
-export const Validation: ComponentStory<typeof FormFieldNext> = (props) => {
-  return (
-    <div style={{width: "366px"}}>
-      <div style={{ height: 16 }} />
-      <FormFieldNext
-        label="Default Form Field label"
-        state="error"
-        helperText="Default helper text"
-        {...props}
-      >
-        <Input variant="secondary" defaultValue="123" />
-      </FormFieldNext>
-      <div style={{ height: 16 }} />
-      <FormFieldNext
-        label="Default Form Field label"
-        state="warning"
-        helperText="Default helper text"
-        {...props}
-      >
-        <Input variant="secondary" defaultValue="123" />
-      </FormFieldNext>
-    </div>
-  );
-};
+// COMING V2
+// 
+// export const Validation: ComponentStory<typeof FormFieldNext> = (props) => {
+//   return (
+//     <div style={{width: "366px"}}>
+//       <div style={{ height: 16 }} />
+//       <FormFieldNext
+//         label="Default Form Field label"
+//         state="error"
+//         helperText="Default helper text"
+//         {...props}
+//       >
+//         <Input variant="secondary" defaultValue="123" />
+//       </FormFieldNext>
+//       <div style={{ height: 16 }} />
+//       <FormFieldNext
+//         label="Default Form Field label"
+//         state="warning"
+//         helperText="Default helper text"
+//         {...props}
+//       >
+//         <Input variant="secondary" defaultValue="123" />
+//       </FormFieldNext>
+//     </div>
+//   );
+// };
 
 export const Example: ComponentStory<typeof FormFieldNext> = (props) => {
   return (

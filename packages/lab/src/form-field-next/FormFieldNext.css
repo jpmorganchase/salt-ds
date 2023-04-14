@@ -67,13 +67,9 @@
   border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--formFieldNext-borderColor);
 }
 
-/* TODO: Decide if this is controlled by FF 
- * 
- * Checkbox and RadioButton include status themselves...
- * & if controlled here, what would this apply to? Just Input? Dropdown?
- *
- * How does this decision also impact status indication?
- */
+/* 
+* TODO: This is probably going to be in HelperText and controls; state coming in v2
+*
 .saltFormFieldNext-error {
   --formFieldNext-borderColor: var(--salt-status-error-borderColor);
   --saltInput-background: var(--salt-status-error-background-emphasize);
@@ -82,4 +78,4 @@
 .saltFormFieldNext-warning {
   --formFieldNext-borderColor: var(--salt-status-warning-borderColor);
   --saltInput-background: var(--salt-status-warning-background-emphasize);
-}
+} */

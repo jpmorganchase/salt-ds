@@ -29,11 +29,5 @@ export const FormFieldLabel = ({
     {...restProps}
   >
     {label}
-    {/* <NecessityIndicator
-      required={required}
-      displayedNecessity={displayedNecessity}
-      necessityText={necessityText}
-      className={withBaseName("necessityIndicator")}
-    /> */}
   </Label>
 );

@@ -38,10 +38,6 @@ export interface FormFieldProps
    * Props to be applied to the FormFieldLabel
    */
   LabelProps?: Partial<FormFieldLabelProps>;
-  /**
-   * Validation state
-   */
-  state?: "error" | "warning";
 }
 
 export interface A11yValueProps {
@@ -85,7 +81,6 @@ export const FormField = forwardRef(
       LabelProps = {},
       onBlur,
       onFocus,
-      state,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -110,9 +105,7 @@ export const FormField = forwardRef(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName(`label${capitalize(labelPlacement)}`)]: labelPlacement,
-            [withBaseName("withHelperText")]: helperText,
-            [withBaseName("error")]: state === "error",
-            [withBaseName("warning")]: state === "warning"
+            [withBaseName("withHelperText")]: helperText
           },
           className
         )}
