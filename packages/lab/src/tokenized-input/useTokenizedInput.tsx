@@ -88,6 +88,7 @@ export function useTokenizedInput<Item>(
   validateProps(props);
 
   const {
+    inFormField,
     // @ts-ignore
     popoutMode,
     // @ts-ignore
@@ -650,7 +651,7 @@ export function useTokenizedInput<Item>(
     activeIndices,
     highlightedIndex,
     expanded,
-    focused: focused,
+    focused: !inFormField && focused,
   };
 
   const eventHandlers = {
