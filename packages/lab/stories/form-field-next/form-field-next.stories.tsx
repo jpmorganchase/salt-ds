@@ -108,14 +108,13 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
       </FormFieldNext>
       <div style={{ height: 16 }} />
       <FormFieldNext
-        variant="secondary"
         label="Multi criteria inputs"
         helperText="*User must enter all values in the string to complete the input"
         {...props}
       >
-        <Input defaultValue="2.5" />
-        <Dropdown source={["From","To"]} defaultSelected="From" />
-        <Input defaultValue="750" />
+        <Input variant="secondary" defaultValue="2.5" />
+        <Dropdown variant="secondary" source={["From","To"]} defaultSelected="From" />
+        <Input variant="secondary" defaultValue="750" />
       </FormFieldNext>
     </div>
   );
@@ -146,7 +145,7 @@ export const Validation: ComponentStory<typeof FormFieldNext> = (props) => {
   );
 };
 
-export const DefaultTemplate: ComponentStory<typeof FormFieldNext> = (props) => {
+export const Example: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <GridLayout >
       <FormFieldNext

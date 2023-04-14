@@ -21,6 +21,7 @@ export interface DropdownBaseProps
   popupWidth?: number;
   triggerComponent?: JSX.Element;
   width?: number | string;
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export interface DropdownHookProps

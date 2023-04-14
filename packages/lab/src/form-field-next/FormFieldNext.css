@@ -67,18 +67,6 @@
   border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--formFieldNext-borderColor);
 }
 
-/* TODO: Decide if this is controlled by FF */
-.saltFormFieldNext-secondary .saltInput, 
-.saltFormFieldNext-secondary .saltDropdown .saltButton {
-  /* Dropdown */
-  --saltButton-background:  var(--salt-editable-secondary-background);
-  --saltButton-background-hover:  var(--salt-editable-secondary-background);
-  --saltButton-fontWeight:  var(--salt-text-fontWeight);
-
-  /* Input */
-  --saltInput-background: var(--salt-editable-secondary-background);
-}
-
 /* TODO: Decide if this is controlled by FF 
  * 
  * Checkbox and RadioButton include status themselves...

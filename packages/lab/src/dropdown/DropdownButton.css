@@ -1,7 +1,5 @@
 .saltDropdownButton {
-  --saltButton-background-hover: var(--salt-actionable-secondary-background);
-  --saltButton-background-active: var(--salt-actionable-secondary-background);
-  --saltButton-fontWeight: var(--salt-text-fontWeight-strong); /* TODO: Check with design */
+  --saltButton-fontWeight: var(--salt-text-fontWeight);
   --saltButton-textAlign: left;
   --saltButton-textTransform: none;
   --saltButton-width: 100%;
@@ -35,4 +33,22 @@
 .saltDropdownButton-formField.saltButton:focus,
 .saltDropdownButton-formField.saltButton:focus-visible {
   outline: none;
+}
+
+.saltDropdown-primary .saltDropdownButton {
+  --saltButton-background:  var(--salt-editable-primary-background);
+  --saltButton-background-hover:  var(--salt-editable-primary-background-hover);
+  --saltButton-background-active:  var(--salt-editable-primary-background-active);
+}
+
+.saltDropdown-secondary .saltDropdownButton {
+  --saltButton-background:  var(--salt-editable-secondary-background);
+  --saltButton-background-hover:  var(--salt-editable-secondary-background-hover);
+  --saltButton-background-active:  var(--salt-editable-secondary-background-active);
+}
+
+.saltDropdown-tertiary .saltDropdownButton {
+  --saltButton-background:  var(--salt-editable-tertiary-background);
+  --saltButton-background-hover:  var(--salt-editable-tertiary-background-hover);
+  --saltButton-background-active:  var(--salt-editable-tertiary-background-active);
 }

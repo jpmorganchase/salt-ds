@@ -24,6 +24,7 @@ import { DropdownButton } from "./DropdownButton";
 import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdown } from "./useDropdown";
 import { forwardCallbackProps } from "../utils";
+import { withBaseName } from "../pagination/utils";
 
 export interface DropdownProps<
   Item = string,
@@ -61,6 +62,7 @@ export const Dropdown = forwardRef(function Dropdown<
     ListItem,
     ListProps,
     width = "100%",
+    variant = "primary",
     ...props
   }: DropdownProps<Item, Selection>,
   forwardedRef: ForwardedRef<HTMLDivElement>
@@ -161,6 +163,7 @@ export const Dropdown = forwardRef(function Dropdown<
         onOpenChange={dropdownListHook.onOpenChange}
         ref={forkedRef}
         width={width}
+        variant={variant}
       >
         {getTriggerComponent()}
         <List<Item, Selection>

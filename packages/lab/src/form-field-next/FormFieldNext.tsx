@@ -39,11 +39,6 @@ export interface FormFieldProps
    */
   LabelProps?: Partial<FormFieldLabelProps>;
   /**
-   * Styling variant
-   * Defaults to "primary"
-   */
-  variant?: "primary" | "secondary";
-  /**
    * Validation state
    */
   state?: "error" | "warning";
@@ -90,7 +85,6 @@ export const FormField = forwardRef(
       LabelProps = {},
       onBlur,
       onFocus,
-      variant = "primary",
       state,
       ...restProps
     }: FormFieldProps,
@@ -118,8 +112,7 @@ export const FormField = forwardRef(
             [withBaseName(`label${capitalize(labelPlacement)}`)]: labelPlacement,
             [withBaseName("withHelperText")]: helperText,
             [withBaseName("error")]: state === "error",
-            [withBaseName("warning")]: state === "warning",
-            [withBaseName(variant)]: variant
+            [withBaseName("warning")]: state === "warning"
           },
           className
         )}
