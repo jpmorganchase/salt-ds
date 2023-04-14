@@ -154,7 +154,7 @@ const SingleRowSelectionTemplate: Story<GridProps> = (props) => {
           name="Amount"
           id="amount"
           defaultWidth={200}
-          getValue={(x) => x.amount.toFixed(4)}
+          getValue={(x) => x.amount}
           align="right"
           onChange={onAmountChange}
         />
@@ -295,7 +295,7 @@ const PinnedColumnsTemplate: Story<GridProps> = (props) => {
             name="Amount"
             id="amount"
             defaultWidth={250}
-            getValue={(x) => x.amount.toFixed(4)}
+            getValue={(x) => x.amount}
             align="right"
             onChange={onAmountChange}
           />

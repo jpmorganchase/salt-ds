@@ -6,7 +6,7 @@ import {
   db,
   createDummyInvestors,
 } from "./dummyData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Scrim, ContentStatus } from "@salt-ds/lab";
 import {
   useQuery,
@@ -81,8 +81,21 @@ export function ServerSideSort() {
     column: undefined,
     order: SortOrder.NONE,
   });
+  const [showFetching, setShowFetching] = useState(false);
   const { isLoading, data, isFetching, isFetchedAfterMount } =
     useInvestors(sortModel);
+
+  useEffect(() => {
+    if (isFetching) {
+      const timeout = setTimeout(() => {
+        setShowFetching(true);
+      }, 800);
+
+      return () => {
+        timeout && clearTimeout(timeout);
+      };
+    }
+  }, [isFetching]);
 
   const { mode } = useTheme();
 
@@ -101,7 +114,7 @@ export function ServerSideSort() {
     >
       <Scrim
         aria-label="Example Scrim"
-        open={isFetching && !isFetchedAfterMount}
+        open={showFetching && !isFetchedAfterMount}
         enableContainerMode
       >
         <ContentStatus status="loading" />
@@ -149,7 +162,7 @@ export function ServerSideSort() {
           name="Amount"
           id="amount"
           getValue={(rowData: Investor) =>
-            isFetching ? "loading..." : rowData.amount
+            showFetching ? "loading..." : rowData.amount
           }
           sortable
           onSortOrderChange={({ sortOrder }) => {

@@ -122,7 +122,6 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       onFocus={onFocus}
       onClick={sortable ? onClick : undefined}
       onKeyDown={sortable ? onKeyDown : undefined}
-      aria-label={sortable ? "sort column" : undefined}
       aria-sort={sortByColumnId === id && sortable ? ariaSort : undefined}
     >
       {sortByColumnId === id && sortable && valueAlignRight && (

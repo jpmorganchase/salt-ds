@@ -29,10 +29,13 @@ const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
 const DEFAULT_MODE = "light";
 
-// Initialize MSW
-initialize({
-  onUnhandledRequest: "bypass",
-});
+// @ts-ignore
+if (!window.Cypress) {
+  // Initialize MSW
+  initialize({
+    onUnhandledRequest: "bypass",
+  });
+}
 
 export const globalTypes: GlobalTypes = {
   mode: {

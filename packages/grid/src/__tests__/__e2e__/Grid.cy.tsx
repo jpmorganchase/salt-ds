@@ -7,7 +7,8 @@ import * as rowSelectionControlledStories from "@stories/grid-rowSelectionContro
 import * as cellCustomizationStories from "@stories/grid-cellCustomization.stories";
 import * as columnGroupsStories from "@stories/grid-columnGroups.stories";
 import * as sortColumnsStories from "@stories/grid-sortColumns.stories";
-import { Grid, GridColumn, ColumnGroup } from "@salt-ds/data-grid";
+import { Grid, GridColumn, ColumnGroup, SortOrder } from "@salt-ds/data-grid";
+import { db, Investor } from "@stories/dummyData";
 
 const { GridVariants } = composeStories(variantsStories);
 const { CellCustomization } = composeStories(cellCustomizationStories);
@@ -24,7 +25,7 @@ const {
 } = composeStories(gridStories);
 const { EditableCells } = composeStories(gridEditableStories);
 const { ColumnGroups } = composeStories(columnGroupsStories);
-const { SortColumns } = composeStories(sortColumnsStories);
+const { ServerSideSort } = composeStories(sortColumnsStories);
 
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
@@ -231,7 +232,7 @@ describe("Grid", () => {
     cy.focused().realPress(["Home"]);
     checkCursorPos(1, 0);
     cy.focused().realPress(["ControlLeft", "End"]);
-    checkCursorPos(42, 5);
+    checkCursorPos(50, 5);
     cy.focused().realPress(["ControlLeft", "Home"]);
     checkCursorPos(1, 0);
     cy.focused().realPress(["PageDown"]);
@@ -657,40 +658,57 @@ describe("Grid", () => {
     });
 
     it("allows sorting on server side", () => {
-      cy.mount(<SortColumns />);
+      cy.intercept("GET", "/api/investors*", (req) => {
+        const url = new URL(req.url);
+        const sortBy = url.searchParams.get("sort_by");
+
+        const orderBy =
+          sortBy
+            ?.split(",")
+            .map((s) => {
+              const [sortColumn, sortOrder] = s.split(".");
+              if (sortOrder && sortColumn) {
+                return {
+                  [sortColumn]: sortOrder,
+                } as Record<keyof Investor, SortOrder>;
+              }
+            })
+            .filter(Boolean) ?? [];
+
+        const response = db.investor.findMany({
+          // @ts-ignore
+          orderBy,
+          take: 50,
+        });
+
+        return req.reply({ body: response });
+      });
+
+      cy.mount(<ServerSideSort />);
 
       // first click: sort in ascending order
-      cy.findAllByTestId("column-header")
-        .eq(4)
-        .should("have.text", "Amount")
-        .click();
-      findCell(0, 4).should("have.text", "loading...");
-      cy.findAllByTestId("column-header")
-        .eq(4)
-        .should("have.text", "Amount")
-        .should("have.attr", "aria-sort", "ascending");
+      cy.findByRole("columnheader", { name: "Amount" }).realClick();
+      cy.findByRole("columnheader", { name: "Amount" }).should(
+        "have.attr",
+        "aria-sort",
+        "ascending"
+      );
 
       // second click: sort in descending order
-      cy.findAllByTestId("column-header")
-        .eq(4)
-        .should("have.text", "Amount")
-        .dblclick();
-      findCell(0, 4).should("have.text", "loading...");
-      cy.findAllByTestId("column-header")
-        .eq(4)
-        .should("have.text", "Amount")
-        .should("have.attr", "aria-sort", "descending");
+      cy.findByRole("columnheader", { name: "Amount" }).realClick();
+      cy.findByRole("columnheader", { name: "Amount" }).should(
+        "have.attr",
+        "aria-sort",
+        "descending"
+      );
 
       // third click: back to default order without sorting
-      cy.findAllByTestId("column-header")
-        .eq(4)
-        .should("have.text", "Amount")
-        .dblclick();
-      findCell(0, 4).should("have.text", "loading...");
-      cy.findAllByTestId("column-header")
-        .eq(4)
-        .should("have.text", "Amount")
-        .should("have.attr", "aria-sort", "none");
+      cy.findByRole("columnheader", { name: "Amount" }).realClick();
+      cy.findByRole("columnheader", { name: "Amount" }).should(
+        "have.attr",
+        "aria-sort",
+        "none"
+      );
     });
   });
 });
