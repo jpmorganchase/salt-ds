@@ -7,7 +7,7 @@ import {
   useRef,
 } from "react";
 import { makePrefixer, useId, useForkRef, capitalize } from "@salt-ds/core";
-import { FormFieldContext } from "../form-field-context";
+import { FormFieldContextNext } from "../form-field-context";
 import { FormFieldLabel, FormFieldLabelProps } from "./FormFieldLabel";
 import { FormFieldHelperText } from "./FormFieldHelperText";
 
@@ -104,14 +104,15 @@ export const FormField = forwardRef(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName(`label${capitalize(labelPlacement)}`)]: labelPlacement,
-            [withBaseName("withHelperText")]: helperText
+            [withBaseName(`label${capitalize(labelPlacement)}`)]:
+              labelPlacement,
+            [withBaseName("withHelperText")]: helperText,
           },
           className
         )}
         {...restProps}
       >
-        <FormFieldContext.Provider
+        <FormFieldContextNext.Provider
           value={{
             a11yProps: a11yValue,
             ref: rootRef,
@@ -120,7 +121,7 @@ export const FormField = forwardRef(
           {label && <FormFieldLabel disabled={disabled} label={label} />}
           <div className={withBaseName("controls")}>{children}</div>
           {helperText && <FormFieldHelperText helperText={helperText} />}
-        </FormFieldContext.Provider>
+        </FormFieldContextNext.Provider>
       </div>
     );
   }

@@ -11,7 +11,6 @@ import {
   KeyboardEventHandler,
   MouseEvent,
   MouseEventHandler,
-  ReactNode,
   useRef,
   useState,
 } from "react";
@@ -19,9 +18,9 @@ import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { useFormFieldProps } from "../form-field-context";
 import { useCursorOnFocus } from "./useCursorOnFocus";
 
-import "./Input.css";
+import "./InputNext.css";
 
-const withBaseName = makePrefixer("saltInput");
+const withBaseName = makePrefixer("saltInputNext");
 
 // TODO: Double confirm whether this should be extending DivElement given root is `<div>`.
 // And forwarded ref is not assigned to the root like other components.
@@ -44,11 +43,6 @@ export interface InputProps
    */
   disabled?: HTMLInputElement["disabled"];
   /**
-   * The marker to use in an empty read only Input.
-   * Use `''` to disable this feature. Defaults to '—'.
-   */
-  emptyReadOnlyMarker?: string;
-  /**
    * Determines what gets highlighted on focus of the input.
    *
    * If `true` all text will be highlighted.
@@ -66,7 +60,7 @@ export interface InputProps
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
-   * Callback for change event.
+   * Callbacks for events.
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, value: string) => void;
   onFocus?: FocusEventHandler<HTMLInputElement>;
@@ -79,26 +73,17 @@ export interface InputProps
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
-  /**
-   *
-   * Determines the alignment of the input text.
-   */
-  textAlign?: "left" | "right" | "center";
   type?: HTMLInputElement["type"];
   /**
    * The value of the `input` element, required for a controlled component.
    */
   value?: HTMLInputElement["value"];
-  renderSuffix?: (state: {
-    disabled?: boolean;
-    error?: boolean;
-    focused?: boolean;
-    margin?: "dense" | "none" | "normal";
-    required?: boolean;
-    startAdornment?: ReactNode;
-  }) => ReactNode;
-  endAdornment?: ReactNode;
-  startAdornment?: ReactNode;
+  /**
+   * Styling variant
+   *
+   * Defaults to "primary"
+   */
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 function mergeA11yProps(
@@ -115,7 +100,7 @@ function mergeA11yProps(
     ...misplacedAriaProps,
     ...a11yProps,
     ...inputProps,
-    // The weird filtering is due to TokenizedInputBase
+    // TODO: look at this - The weird filtering is due to TokenizedInputBase
     "aria-labelledby": ariaLabelledBy
       ? Array.from(new Set(ariaLabelledBy.split(" "))).join(" ")
       : null,
@@ -130,8 +115,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     className: classNameProp,
     cursorPositionOnFocus,
     disabled,
-    emptyReadOnlyMarker = "—",
-    endAdornment,
     highlightOnFocus,
     id,
     inputComponent: InputComponent = "input",
@@ -151,23 +134,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     onMouseMove,
     onMouseDown,
     readOnly: readOnlyProp,
-    renderSuffix,
-    startAdornment,
-    textAlign = "left",
     type = "text",
+    variant = "primary",
     ...other
   },
   ref
 ) {
-  const {
-    a11yProps: {
-      readOnly: a11yReadOnly,
-      disabled: a11yDisabled,
-      ...restA11y
-    } = {},
-    setFocused: setFormFieldFocused,
-    inFormField,
-  } = useFormFieldProps();
+  const { a11yProps: { disabled: a11yDisabled, ...restA11y } = {} } =
+    useFormFieldProps();
 
   const [focused, setFocused] = useState(false);
   const inputRef = useRef(null);
@@ -177,8 +151,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     highlightOnFocus,
   });
 
-  const isDisabled = disabled || a11yDisabled;
-  const isReadOnly = readOnlyProp || a11yReadOnly;
   const misplacedAriaProps = {
     "aria-activedescendant": ariaActiveDescendant,
     "aria-expanded": ariaExpanded,
@@ -190,12 +162,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     inputPropsProp,
     misplacedAriaProps
   );
-  const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
-  const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
-    default: defaultValue,
+    default: defaultValueProp,
     name: "Input",
     state: "value",
   });
@@ -208,13 +178,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
     onFocus?.(event);
-    setFormFieldFocused?.(true);
     setFocused(true);
   };
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
     onBlur?.(event);
-    setFormFieldFocused?.(false);
     setFocused(false);
   };
 
@@ -241,27 +209,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       className={clsx(
         withBaseName(),
         {
-          [withBaseName(`${textAlign}TextAlign`)]: textAlign,
-          [withBaseName("formField")]: inFormField,
-          [withBaseName("focused")]: focused && !inFormField,
-          [withBaseName("disabled")]: isDisabled,
-          [withBaseName("inputAdornedStart")]: startAdornment,
-          [withBaseName("inputAdornedEnd")]: endAdornment,
+          [withBaseName("focused")]: focused,
+          [withBaseName(variant)]: variant,
         },
         classNameProp
       )}
       style={style}
       {...other}
     >
-      {startAdornment && (
-        <div className={withBaseName("prefixContainer")}>{startAdornment}</div>
-      )}
       <InputComponent
         type={type}
         id={id}
         {...inputProps}
         className={clsx(withBaseName("input"), inputProps?.className)}
-        disabled={isDisabled}
         ref={handleRef}
         value={value}
         onBlur={handleBlur}
@@ -272,13 +232,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
-        readOnly={isReadOnly}
       />
-      {endAdornment && (
-        <div className={withBaseName("suffixContainer")}>{endAdornment}</div>
-      )}
-      {/* TODO: Confirm implementation of suffix */}
-      {renderSuffix?.({ disabled, focused })}
     </div>
   );
 });

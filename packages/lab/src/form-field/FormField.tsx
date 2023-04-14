@@ -1,14 +1,18 @@
 import { clsx } from "clsx";
 import {
+  Dispatch,
   ElementType,
+  FocusEventHandler,
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
+  SetStateAction,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { makePrefixer, Tooltip, useForkRef, useId } from "@salt-ds/core";
-import { FormFieldContext, useFormField } from "../form-field-context";
+import { FormFieldContext } from "../form-field-context";
 import { classBase } from "./constant";
 import {
   FormActivationIndicator,
@@ -141,6 +145,44 @@ const useA11yValue = ({
     }),
     [labelId, disabled, readOnly, required, renderHelperText, helperTextId]
   );
+};
+
+// TODO: Add TS props for this
+export const useFormField = ({
+  onBlur,
+  onFocus,
+}: {
+  onBlur?: FocusEventHandler<HTMLDivElement>;
+  onFocus?: FocusEventHandler<HTMLDivElement>;
+}): [
+  { focused: boolean },
+  { setFocused: Dispatch<SetStateAction<boolean>> },
+  {
+    onBlur: FocusEventHandler<HTMLDivElement>;
+    onFocus: FocusEventHandler<HTMLDivElement>;
+  }
+] => {
+  const [focused, setFocused] = useState(false);
+  const handleBlur: FocusEventHandler<HTMLDivElement> = (event) => {
+    setFocused(false);
+    onBlur?.(event);
+  };
+  const handleFocus: FocusEventHandler<HTMLDivElement> = (event) => {
+    setFocused(true);
+    onFocus?.(event);
+  };
+  return [
+    {
+      focused,
+    },
+    {
+      setFocused,
+    },
+    {
+      onBlur: handleBlur,
+      onFocus: handleFocus,
+    },
+  ];
 };
 
 const withBaseName = makePrefixer(classBase);
