@@ -18,9 +18,13 @@
 
 /* Style applied to the root element */
 .saltInput {
+  --input-borderColor: var(--salt-editable-borderColor);
+
   align-items: center;
   background: var(--saltInput-background, var(--input-background));
-  border: var(--saltInput-border, none);
+  border-color: var(--saltInput-borderColor, var(--input-borderColor));
+  border-width: var(--saltInput-borderWidth, 0 0 var(--salt-size-border) 0);
+  border-style: var(--saltInput-borderStyle, var(--salt-editable-borderStyle));
   border-radius: var(--saltInput-borderRadius, 0);
   color: var(--saltInput-text-color, var(--salt-text-primary-foreground));
   cursor: var(--saltInput-cursor, default);
@@ -34,6 +38,14 @@
   padding: var(--saltInput-padding, 0 var(--salt-size-unit));
   position: var(--saltInput-position, relative);
   width: 100%;
+}
+
+.saltInput:hover {
+  --input-borderColor: var(--salt-editable-borderColor-hover);
+}
+
+.saltInput:active {
+  --input-borderColor: var(--salt-editable-borderColor-active);
 }
 
 /* Class applied if `variant="primary"` */

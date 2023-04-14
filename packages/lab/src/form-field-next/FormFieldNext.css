@@ -1,6 +1,4 @@
 .saltFormFieldNext {
-  --formFieldNext-borderColor: var(--salt-editable-borderColor);
-
   border: 0;
   display: inline-grid;
   font-size: var(--saltFormFieldNext-fontSize, var(--salt-text-fontSize));
@@ -60,22 +58,3 @@
     grid-column-start: 2;
     grid-column-end: 2;
 }  
-
-/* TODO: Replace with activation indicator */
-.saltFormFieldNext .saltInput, 
-.saltFormFieldNext .saltDropdown {
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--formFieldNext-borderColor);
-}
-
-/* 
-* TODO: This is probably going to be in HelperText and controls
-*
-.saltFormFieldNext-error {
-  --formFieldNext-borderColor: var(--salt-status-error-borderColor);
-  --saltInput-background: var(--salt-status-error-background-emphasize);
-}
-
-.saltFormFieldNext-warning {
-  --formFieldNext-borderColor: var(--salt-status-warning-borderColor);
-  --saltInput-background: var(--salt-status-warning-background-emphasize);
-} */
