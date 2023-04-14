@@ -37,7 +37,6 @@ export const useDropdownBase = ({
   });
 
   const {
-    inFormField,
     setFocused: setFormFieldFocused,
     a11yProps: { "aria-labelledby": ariaLabelledBy, ...restA11yProps } = {},
   } = useFormFieldProps();
@@ -116,7 +115,7 @@ export const useDropdownBase = ({
     [hideDropdown, isOpen, onKeyDownProp, showDropdown]
   );
 
-  const fullWidth = fullWidthProp ?? inFormField;
+  const fullWidth = fullWidthProp;
   const measurements = fullWidth ? WidthOnly : NO_OBSERVER;
   useResizeObserver(rootRef, measurements, setPopup, fullWidth);
 

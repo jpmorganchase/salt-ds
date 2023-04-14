@@ -1,5 +1,5 @@
 import { Checkbox, RadioButton, RadioButtonGroup } from "@salt-ds/core";
-import { Dropdown, FormFieldNext, InputNext } from "@salt-ds/lab";
+import { DropdownNext, FormFieldNext, InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -135,7 +135,7 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
         {...props}
       >
         <InputNext variant="secondary" defaultValue="2.5" />
-        <Dropdown
+        <DropdownNext
           variant="secondary"
           source={["From", "To"]}
           defaultSelected="From"

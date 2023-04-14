@@ -46,6 +46,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
       placement = "bottom-start",
       popupWidth,
       width,
+      variant = "primary",
       ...htmlAttributes
     },
     forwardedRef
@@ -143,7 +144,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
       return cloneElement(popupComponent, {
         ...ownProps,
         ...restComponentProps,
-        className: clsx(className, withBaseName("popup-component")),
+        className: clsx(withBaseName("popup-component"), className),
         id,
         width: ownWidth ?? width,
       });
@@ -152,7 +153,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
     return (
       <div
         {...htmlAttributes}
-        className={className}
+        className={clsx({[withBaseName(variant)]: variant}, className)}
         data-testid="dropdown"
         id={idProp}
         ref={handleRootRef}

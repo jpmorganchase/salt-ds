@@ -1,8 +1,7 @@
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
-import { ChevronDownIcon, IconProps, DEFAULT_ICON_SIZE } from "@salt-ds/icons";
-import { useFormFieldProps } from "../form-field-context";
 import { clsx } from "clsx";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
+import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { ChevronDownIcon, IconProps, DEFAULT_ICON_SIZE } from "@salt-ds/icons";
 
 import "./DropdownButton.css";
 
@@ -15,10 +14,6 @@ export interface DropdownButtonProps extends ButtonProps {
    * Whether the dropdown button should hide role='option' via 'aria-hidden'
    */
   ariaHideOptionRole?: boolean;
-  /**
-   * If, `true`, the Dropdown button will occupy the full width of it's container
-   */
-  fullWidth?: boolean;
   /**
    * Sets the size of the down arrow icon. If this is not specified, a default size based on density is used.
    */
@@ -64,7 +59,6 @@ export const DropdownButton = forwardRef(function DropdownButton(
     isOpen,
     label,
     labelId,
-    fullWidth,
     posInSet,
     setSize,
     labelAriaAttributes,
@@ -72,20 +66,12 @@ export const DropdownButton = forwardRef(function DropdownButton(
   }: DropdownButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
-  const { inFormField } = useFormFieldProps();
   // FIXME: use polymorphic button
   // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing
   // tool's false alarm on role of 'listbox'
   return (
     <Button
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName("fullwidth")]: fullWidth,
-          [withBaseName("formField")]: inFormField,
-        },
-        className
-      )}
+      className={clsx(withBaseName(), className)}
       data-testid="dropdown-button"
       disabled={disabled}
       variant="secondary"

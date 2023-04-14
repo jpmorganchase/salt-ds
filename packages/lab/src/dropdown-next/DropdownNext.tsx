@@ -22,8 +22,9 @@ import { ListProps } from "../list/listTypes";
 import { DropdownBase, MaybeChildProps } from "./DropdownBase";
 import { DropdownButton } from "./DropdownButton";
 import { DropdownBaseProps } from "./dropdownTypes";
-import { useDropdown } from "./useDropdown";
+import { useDropdownNext } from "./useDropdownNext";
 import { forwardCallbackProps } from "../utils";
+import { withBaseName } from "../pagination/utils";
 
 export interface DropdownProps<
   Item = string,
@@ -60,7 +61,8 @@ export const Dropdown = forwardRef(function Dropdown<
     triggerComponent,
     ListItem,
     ListProps,
-    width = 180,
+    width = "100%",
+    variant = "primary",
     ...props
   }: DropdownProps<Item, Selection>,
   forwardedRef: ForwardedRef<HTMLDivElement>
@@ -85,7 +87,7 @@ export const Dropdown = forwardRef(function Dropdown<
     listControlProps,
     selected,
     ...dropdownListHook
-  } = useDropdown<Item, Selection>({
+  } = useDropdownNext<Item, Selection>({
     collectionHook,
     defaultHighlightedIndex: ListProps?.defaultHighlightedIndex,
     defaultIsOpen,
@@ -161,6 +163,7 @@ export const Dropdown = forwardRef(function Dropdown<
         onOpenChange={dropdownListHook.onOpenChange}
         ref={forkedRef}
         width={width}
+        variant={variant}
       >
         {getTriggerComponent()}
         <List<Item, Selection>

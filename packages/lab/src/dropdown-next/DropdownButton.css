@@ -1,0 +1,54 @@
+.saltDropdownButton {
+  --saltButton-fontWeight: var(--salt-text-fontWeight);
+  --saltButton-textAlign: left;
+  --saltButton-textTransform: none;
+  --saltButton-width: 100%;
+}
+
+.saltDropdownButton:active {
+  --saltIcon-color: var(--salt-actionable-secondary-foreground);
+  --saltButton-text-color-active: var(--salt-actionable-secondary-foreground);
+}
+
+.saltDropdownButton-fullwidth {
+  width: 100%;
+}
+
+.saltDropdownButton-content {
+  align-items: center;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  white-space: nowrap;
+}
+
+.saltDropdownButton-buttonLabel {
+  display: inline-block;
+  letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.saltDropdownButton-formField.saltButton:focus,
+.saltDropdownButton-formField.saltButton:focus-visible {
+  outline: none;
+}
+
+.saltDropdown-primary .saltDropdownButton {
+  --saltButton-background:  var(--salt-editable-primary-background);
+  --saltButton-background-hover:  var(--salt-editable-primary-background-hover);
+  --saltButton-background-active:  var(--salt-editable-primary-background-active);
+}
+
+.saltDropdown-secondary .saltDropdownButton {
+  --saltButton-background:  var(--salt-editable-secondary-background);
+  --saltButton-background-hover:  var(--salt-editable-secondary-background-hover);
+  --saltButton-background-active:  var(--salt-editable-secondary-background-active);
+}
+
+.saltDropdown-tertiary .saltDropdownButton {
+  --saltButton-background:  var(--salt-editable-tertiary-background);
+  --saltButton-background-hover:  var(--salt-editable-tertiary-background-hover);
+  --saltButton-background-active:  var(--salt-editable-tertiary-background-active);
+}

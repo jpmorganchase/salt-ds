@@ -33,6 +33,7 @@ export * from "./deck-item";
 export * from "./deck-layout";
 export * from "./dialog";
 export * from "./dropdown";
+export { Dropdown as DropdownNext } from "./dropdown-next";
 export * from "./editable-label";
 export * from "./file-drop-zone";
 export * from "./form-field";
