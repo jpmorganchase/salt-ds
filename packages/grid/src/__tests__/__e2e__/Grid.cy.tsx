@@ -682,12 +682,14 @@ describe("Grid", () => {
         });
 
         return req.reply({ body: response });
-      });
+      }).as("getInvestors");
 
       cy.mount(<ServerSideSort />);
 
+      cy.wait("@getInvestors");
       // first click: sort in ascending order
       cy.findByRole("columnheader", { name: "Amount" }).realClick();
+      cy.wait("@getInvestors");
       cy.findByRole("columnheader", { name: "Amount" }).should(
         "have.attr",
         "aria-sort",
@@ -696,6 +698,7 @@ describe("Grid", () => {
 
       // second click: sort in descending order
       cy.findByRole("columnheader", { name: "Amount" }).realClick();
+      cy.wait("@getInvestors");
       cy.findByRole("columnheader", { name: "Amount" }).should(
         "have.attr",
         "aria-sort",
@@ -704,6 +707,7 @@ describe("Grid", () => {
 
       // third click: back to default order without sorting
       cy.findByRole("columnheader", { name: "Amount" }).realClick();
+      cy.wait("@getInvestors");
       cy.findByRole("columnheader", { name: "Amount" }).should(
         "have.attr",
         "aria-sort",
