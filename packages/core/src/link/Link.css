@@ -32,7 +32,7 @@
 
 /* External link's icon */
 .saltLink-icon {
-  margin-left: var(--salt-size-adornmentGap);
+  margin-left: var(--salt-size-adornment-gap);
   margin-bottom: -2px;
 }
 

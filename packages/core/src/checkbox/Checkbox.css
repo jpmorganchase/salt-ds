@@ -4,7 +4,7 @@
   cursor: var(--salt-selectable-cursor-hover);
   background: var(--saltCheckbox-background, none);
   display: flex;
-  gap: var(--saltCheckbox-gap, var(--salt-size-adornmentGap));
+  gap: var(--saltCheckbox-gap, var(--salt-size-adornment-gap));
   position: relative;
   width: fit-content;
 }

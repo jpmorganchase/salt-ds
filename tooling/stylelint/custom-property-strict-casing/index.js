@@ -1,10 +1,13 @@
 "use strict";
 
 const properties = require("known-css-properties").all;
+const propertiesCamelCase = properties.map(s => s.replace(/-./g, x=>x[1].toUpperCase()));
 const stylelint = require("stylelint");
 const valueParser = require("postcss-value-parser");
 
 const { report, ruleMessages } = stylelint.utils;
+
+const allowedStates = ["activeDisabled", "blurSelected", "partialDisabled", "selectedDisabled"]
 
 // A few stylelint utils are not exported
 // copied from https://github.com/stylelint/stylelint/tree/main/lib/utils
@@ -37,10 +40,10 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "salt/custom-property-attributes-kebab-case";
+const ruleName = "salt/custom-property-strict-casing";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) => `CSS attributes in tokens should be kebab case`, // Can encode option in error message if needed
+  expected: (pattern) => `Only CSS attributes and states in tokens should be camel case`, // Can encode option in error message if needed
 });
 
 const meta = {
@@ -52,22 +55,57 @@ const cssAttributes = properties
   .filter((x) => !x.startsWith("-")) /* e.g. -webkit- */
   .filter((x) =>
     x.includes("-")
-  ); /* only need to check properting needing kebab case */
+  ); /* only need to check properties needing camel case */
 
 /**
- * Test whether a property contains CSS attr
+ * Test whether a property contains CSS attr in kebab case
+ * 
+ * e.g. 
+ * --salt-editable-borderWidth is OK (returns false)
+ * --salt-editable-border-width is NOT OK (returns true)
  */
-const includesCssAttribute = function (property) {
+const includesCssAttributeInKebabCase = function (property) {
   return (
     property.startsWith("--") &&
     cssAttributes.find(
       (attr) =>
         property.includes(`-${attr}-`) ||
         (property.endsWith(`-${attr}`) &&
-          property !== `--salt-${attr}`) /* --salt-animation-duration */
+          property !== `--salt-${attr}`) /* allow for now e.g. --salt-`animation-duration` */
     )
   );
 };
+
+/**
+ * Test whether a property contains camel case word that's not CSS attr
+ * 
+ * e.g. 
+ * --input--borderWidth is OK (returns false)
+ * --input-secondary-color-blurSelected is OK (returns false)
+ * --input-myToken is NOT OK (returns true)
+ * --input-borderWidth-myToken is NOT OK (returns true)
+ */
+const includesCamelCaseNoCssAttribute = function (property) {
+  if (!property.startsWith("--")) {
+    return false;
+  }
+
+  const propertyNoDoubleDash = property.replace("--","");
+  const propertyNoPrefix = propertyNoDoubleDash.substring(propertyNoDoubleDash.indexOf("-")+1);
+
+  if (propertyNoPrefix.toLowerCase() === propertyNoPrefix) {
+    /* No camel case found */
+    return false;
+  }
+  
+  for (var part of propertyNoPrefix.split("-")) {
+    if (part.toLowerCase() !== part && !propertiesCamelCase.includes(part) && !allowedStates.includes(part)) {
+      return true;
+    }
+  }
+
+  return false;
+}
 
 module.exports = stylelint.createPlugin(
   ruleName,
@@ -76,7 +114,10 @@ module.exports = stylelint.createPlugin(
       const verboseLog = primary.logLevel === "verbose";
 
       function check(property) {
-        const checkResult = includesCssAttribute(property);
+        let checkResult = includesCssAttributeInKebabCase(property);
+        if (!checkResult) {
+          checkResult = includesCamelCaseNoCssAttribute(property);
+        }
         verboseLog && console.log("Checking", checkResult, property);
         return !checkResult;
       }

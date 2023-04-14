@@ -2,17 +2,20 @@
   --salt-focused-outlineColor: var(--salt-palette-interact-outline);
   --salt-focused-outlineStyle: dotted;
   --salt-focused-outlineWidth: 2px;
-  --salt-focused-outlineInset: 0;
+  --salt-focused-inset: 0;
   --salt-focused-outlineOffset: 0;
 
   --salt-focused-outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor); /* CSS shortcut token: not in Figma */
+
+  /* Deprecated */
+  --salt-focused-outlineInset: var(--salt-focused-inset);
 }
 
 .saltFocusVisible:after,
 .focused:focus:after,
 .focused:focus-visible:after {
   content: "";
-  inset: var(--salt-focused-outlineInset);
+  inset: var(--salt-focused-inset);
   outline-color: var(--salt-focused-outlineColor);
   outline-offset: var(--salt-focused-outlineOffset);
   outline-style: var(--salt-focused-outlineStyle);

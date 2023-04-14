@@ -5,7 +5,7 @@
 .salt-density-high {
   --salt-size-basis-unit: 4px;
 
-  --salt-size-adornmentGap: calc(0.75 * var(--salt-size-unit));
+  --salt-size-adornment-gap: calc(0.75 * var(--salt-size-unit));
   --salt-size-border: 1px;
   --salt-size-container-spacing: calc(3 * var(--salt-size-unit));
   --salt-size-separator-strokeWidth: 1px;
@@ -16,6 +16,7 @@
   --salt-size-stackable: calc(var(--salt-size-base) + var(--salt-size-unit));
 
   /* Deprecated */
+  --salt-size-adornmentGap: var(--salt-size-adornment-gap);
   --salt-size-selection: var(--salt-size-selectable);
   --salt-size-brandBar: 4px; /* Use --salt-size-accent */
   --salt-size-graphic-small: 12px;

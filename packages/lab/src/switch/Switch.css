@@ -38,9 +38,9 @@
   --switch-track-color-hover: var(--salt-selectable-borderColor-hover);
   --switch-track-color-disabled: var(--salt-selectable-borderColor-disabled);
   --switch-track-color-checked: var(--salt-selectable-borderColor-selected);
-  --switch-track-color-checked-disabled: var(--salt-selectable-borderColor-selectedDisabled);
+  --switch-track-color-checked-disabled: var(--salt-selectable-borderColor-selected-disabled);
   --switch-tick-color: var(--salt-selectable-borderColor-selected);
-  --switch-tick-color-disabled: var(--salt-selectable-borderColor-selectedDisabled);
+  --switch-tick-color-disabled: var(--salt-selectable-borderColor-selected-disabled);
 }
 
 .saltSwitch {
@@ -224,5 +224,5 @@
 .saltSwitch-disabled:hover .saltSwitch-checked .saltSwitch-icon,
 .saltSwitch-disabled,
 .saltSwitch-disabled:hover {
-  --switch-thumb-background: var(--salt-selectable-primary-foreground-selectedDisabled);
+  --switch-thumb-background: var(--salt-selectable-primary-foreground-selected-disabled);
 }

@@ -38,7 +38,7 @@
 .saltRadioButtonIcon-disabled.saltRadioButtonIcon-checked .saltRadioButtonIcon-circle,
 .saltRadioButton:hover .saltRadioButtonIcon-disabled.saltRadioButtonIcon-checked .saltRadioButtonIcon-circle {
   fill: var(--saltRadioButton-icon-checked-disabled-fill, var(--salt-container-primary-background-disabled));
-  stroke: var(--saltRadioButton-icon-checked-disabled-stroke, var(--salt-selectable-foreground-selectedDisabled));
+  stroke: var(--saltRadioButton-icon-checked-disabled-stroke, var(--salt-selectable-foreground-selected-disabled));
   stroke-width: calc(var(--salt-size-border) * 6.5);
 }
 
