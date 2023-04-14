@@ -632,28 +632,30 @@ describe("Grid", () => {
       cy.mount(<RowSelectionModes />);
 
       // first click: sort in ascending order
-      cy.findAllByTestId("column-header")
-        .eq(2)
-        .should("have.text", "B")
-        .click()
-        .should("have.attr", "aria-sort", "ascending");
+      cy.findByRole("columnheader", { name: "B" }).realClick();
+      cy.findByRole("columnheader", { name: "B" }).should(
+        "have.attr",
+        "aria-sort",
+        "ascending"
+      );
       findCell(1, 2).should("have.text", "100.00");
 
       // second click: sort in descending order
-      cy.findAllByTestId("column-header")
-        .eq(2)
-        .should("have.text", "B")
-        .dblclick()
-        .should("have.attr", "aria-sort", "descending");
+      cy.findByRole("columnheader", { name: "B" }).realClick();
+      cy.findByRole("columnheader", { name: "B" }).should(
+        "have.attr",
+        "aria-sort",
+        "descending"
+      );
       findCell(1, 2).should("have.text", "4800.00");
 
       // third click: back to default order without sorting
-      cy.findAllByTestId("column-header")
-        .eq(2)
-        .should("have.text", "B")
-        .dblclick()
-        .click()
-        .should("not.have.attr", "aria-sort", "none");
+      cy.findByRole("columnheader", { name: "B" }).realClick();
+      cy.findByRole("columnheader", { name: "B" }).should(
+        "have.attr",
+        "aria-sort",
+        "none"
+      );
       findCell(1, 2).should("have.text", "100.00");
     });
 
