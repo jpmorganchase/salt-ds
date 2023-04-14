@@ -1,5 +1,31 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.0
+
+### Minor Changes
+
+- 9bee69f4: Move `Checkbox` from lab to core
+
+### Patch Changes
+
+- 102501cb: Fix a bug where the Data Grid cell editor value is dismissed when the user clicks away
+- 3c740de4: Fix a bug where the Data Grid cell editor value is dismissed when the user clicks away
+- 3e7a1b0f: Checkbox
+
+  Removed `CheckboxBase` and replaced with `Checkbox`
+  Added `error` prop for error state styling.
+
+  CheckboxGroup
+
+  Removed `legend` and `LegendProps` prop; will be implemented by FormField.
+  Replaced `row` prop with `direction` prop.
+  Added `wrap` prop.
+
+  CheckboxIcon
+
+  Added `error` prop for error state styling.
+  Added `disabled` prop for disabled state styling.
+
 ## 1.0.3
 
 ### Patch Changes
