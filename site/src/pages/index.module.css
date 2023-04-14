@@ -1,28 +1,20 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
-.homepageContainer {
-  background-color: var(--salt-color-gray-900);
-  background-image: url(@site/static/img/background_gradient.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-}
-
 .heroBanner {
-  --ifm-hero-text-color: var(--salt-color-white);
-  --ifm-hero-background-color: none;
-  --ifm-h1-font-size: var(--salt-text-display1-fontSize);
-  --ifm-heading-font-weight: var(--salt-text-display1-fontWeight);
-  --ifm-heading-line-height: var(--salt-text-display1-lineHeight);
+  --heading-font-size: var(--salt-text-display1-fontSize);
+  --heading-font-weight: var(--salt-text-display1-fontWeight);
+  --heading-line-height: var(--salt-text-display1-lineHeight);
 }
 
 .heroBanner {
   flex: 2;
   padding: calc(var(--salt-size-unit) * 5);
+  align-items: center;
+  display: flex;
+}
+
+.heroBanner h1 {
+  font-size: var(--heading-font-size);
+  font-weight: var(--heading-font-weight);
+  line-height: var(--heading-line-height);
 }
 
 .heroContainer {
@@ -30,6 +22,11 @@
   padding: 0 calc(var(--salt-size-unit) * 5);
   max-width: var(--max-container-width);
   margin: auto;
+}
+
+.content {
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .heroBanner .heroLink {
@@ -95,8 +92,8 @@
 
 @media screen and (max-width: 1280px) {
   .heroTitle {
-    --ifm-heading-line-height: var(--salt-text-h1-lineHeight);
-    --ifm-h1-font-size: var(--salt-text-h1-fontSize);
+    --heading-line-height: var(--salt-text-h1-lineHeight);
+    --heading-font-size: var(--salt-text-h1-fontSize);
   }
 }
 
@@ -117,7 +114,7 @@
 
   .cardContainer {
     flex-direction: column;
-    padding: var(--salt-size-container-spacing) calc(var(--salt-size-unit) * 2);
+    padding: calc(var(--salt-size-unit) * 3) calc(var(--salt-size-unit) * 2);
     gap: calc(var(--salt-size-unit) * 2);
   }
 }

@@ -18,4 +18,4 @@ storybook-static
 /packages/ag-grid-theme/uitk-ag-theme.css
 /packages/ag-grid-theme/salt-ag-theme.css
 
-/mosaic-site/snapshots
+/site/snapshots
