@@ -24,7 +24,6 @@ import { DropdownButton } from "./DropdownButton";
 import { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdownNext } from "./useDropdownNext";
 import { forwardCallbackProps } from "../utils";
-import { withBaseName } from "../pagination/utils";
 
 export interface DropdownProps<
   Item = string,
