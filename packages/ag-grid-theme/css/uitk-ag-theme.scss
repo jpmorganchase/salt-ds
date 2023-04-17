@@ -13,14 +13,14 @@ div[class*="ag-theme-uitk-touch"] {
   --uitk-size-unit: 16px;
 }
 div[class^="ag-theme-uitk"] {
-  --uitk-container-padding: calc(var(--uitk-size-unit) * 3);
+  --uitk-container-spacing: calc(var(--uitk-size-unit) * 3);
 }
 
 .ag-theme-uitk-high-light,
 .ag-theme-uitk-medium-light,
 .ag-theme-uitk-low-light,
 .ag-theme-uitk-touch-light {
-  --agGrid-menu-padding: var(--uitk-container-padding);
+  --agGrid-menu-padding: var(--uitk-container-spacing);
 
   --agGrid-foreground: var(--saltAgGrid-foreground, #2a2c2f);
   --agGrid-foreground-disabled: var(--saltAgGrid-foreground-disabled, #161616);
