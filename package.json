@@ -10,18 +10,13 @@
     "tooling/**",
     "playground/**",
     "docs",
-    "site",
-    "mosaic-site"
+    "site"
   ],
   "modular": {
     "type": "root"
   },
   "scripts": {
     "start": "yarn storybook",
-    "start:site": "yarn workspace @salt-ds/site start",
-    "start:site:storybook": "yarn workspace @salt-ds/site storybook",
-    "build:site": "yarn workspace @salt-ds/site build",
-    "build:site:storybook": "yarn workspace @salt-ds/site build-storybook",
     "build": "yarn build:core && yarn build:lab && yarn build:icons && yarn build:countries && yarn build:theme && yarn build:grid && yarn build:ag-grid-theme",
     "build:core": "modular build @salt-ds/core",
     "build:icons": "modular build @salt-ds/icons",
@@ -48,8 +43,7 @@
     "typecheck:modular": "modular typecheck",
     "typecheck:toolkit:test": "tsc --noEmit --project packages/core/src/__tests__/tsconfig.json",
     "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json",
-    "chromatic": "chromatic",
-    "chromatic:site": "yarn workspace @salt-ds/site chromatic"
+    "chromatic": "chromatic"
   },
   "dependencies": {
     "@changesets/cli": "^2.25.2",
@@ -103,7 +97,6 @@
     "cypress-real-events": "^1.7.6",
     "deepmerge": "^4.2.2",
     "del": "^7.0.0",
-    "docusaurus-plugin-react-docgen-typescript": "^1.0.2",
     "dom-accessibility-api": "^0.5.10",
     "eslint": "^7.32.0",
     "eslint-config-modular-app": "3.0.2",
@@ -137,7 +130,6 @@
     "esbuild": "0.14.51",
     "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
-    "storybook-addon-docusaurus@^0.2.1": "patch:storybook-addon-docusaurus@npm%3A0.2.1#./.yarn/patches/storybook-addon-docusaurus-npm-0.2.1-ed15d70641.patch",
     "@jpmorganchase/mosaic-components/@salt-ds/lab": "1.0.0-alpha.1",
     "@jpmorganchase/mosaic-labs-components/@salt-ds/lab": "1.0.0-alpha.1",
     "@jpmorganchase/mosaic-layouts/@salt-ds/lab": "1.0.0-alpha.1",

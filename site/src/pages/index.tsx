@@ -1,40 +1,39 @@
-import clsx from "clsx";
-import Link from "@site/src/components/link/Link";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import Layout from "@theme/Layout";
-import HeroImage from "@site/static/img/hero_image.svg";
-import PencilIcon from "@site/static/img/pencil.svg";
-import CodeIcon from "@site/static/img/code.svg";
-import ArrowsIcon from "@site/static/img/arrows.svg";
-
+import React from "react";
+import { Link, Image } from "@jpmorganchase/mosaic-site-components";
+import Features from "src/_index/features/Features";
+import { Card, CardProps } from "src/components/card/Card";
+import HomepageAccordion from "src/_index/accordion/Accordion";
 import styles from "./index.module.css";
-import Features from "./_index/features/Features";
-import Card, { CardProps } from "../components/card/Card";
-import HomepageAccordion from "./_index/accordion/Accordion";
 
-function HomepageHeader() {
-  const { siteConfig } = useDocusaurusContext();
+const tagline = `Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. It offers you well-documented, accessible components as well as comprehensive design templates, style libraries and assets.
+Salt is the next-generation version of the established internal J.P. Morgan UI Toolkit design system, which has been used to build over 1,200 websites and applications to date.
+In time, as a full-service solution, Salt will be the vehicle for digital delivery of a universal design language—with best-in-class business patterns, content and accessibility guides, tooling and adoption resources.`;
 
-  const splitTagline = siteConfig.tagline.split("\n");
+const HomepageHeader = () => {
+  const splitTagline = tagline.split("\n");
 
   return (
     <div className={styles.heroContainer}>
-      <header className={clsx("hero hero--primary", styles.heroBanner)}>
-        <div className="container">
+      <header className={styles.heroBanner}>
+        <div className={styles.content}>
           <h1 className={styles.heroTitle}>Welcome to Salt</h1>
           {splitTagline.map((tagline, index) => (
             <p key={index}>{tagline}</p>
           ))}
-          <Link to="/getting-started" className={styles.heroLink}>
+          <Link href="./getting-started" className={styles.heroLink}>
             Start using Salt
           </Link>
         </div>
       </header>
 
-      <HeroImage className={styles.heroImage} role="presentation" />
+      <Image
+        className={styles.heroImage}
+        src="/img/hero_image.svg"
+        alt="hero image"
+      />
     </div>
   );
-}
+};
 
 const features = [
   "Step-by-step installation guides",
@@ -49,7 +48,7 @@ const features = [
 
 const cards: CardProps[] = [
   {
-    icon: <PencilIcon role="presentation" />,
+    icon: <Image src="/img/pencil.svg" alt="pencil icon" />,
     title: "Design and develop",
     description: (
       <p>
@@ -58,12 +57,12 @@ const cards: CardProps[] = [
         packages.
       </p>
     ),
-    url: "/getting-started",
+    url: "./getting-started",
     footerText: "Read the guides",
     keylineColor: "var(--site-tertiary-accent-purple)",
   },
   {
-    icon: <CodeIcon role="presentation" />,
+    icon: <Image src="/img/code.svg" alt="code brackets icon" />,
     title: "Browse our components",
     description: (
       <p>
@@ -72,12 +71,12 @@ const cards: CardProps[] = [
         use cases.
       </p>
     ),
-    url: "/components",
+    url: "./components",
     footerText: "Explore components",
     keylineColor: "var(--site-tertiary-accent-teal)",
   },
   {
-    icon: <ArrowsIcon role="presentation" />,
+    icon: <Image src="/img/arrows.svg" alt="circle with arrows icon" />,
     title: "Get involved",
     description: (
       <p>
@@ -86,7 +85,7 @@ const cards: CardProps[] = [
         email.
       </p>
     ),
-    url: "/support-and-contributions",
+    url: "./support-and-contributions",
     footerText: "Contact us",
     keylineColor: "var(--site-tertiary-accent-orange)",
   },
@@ -167,9 +166,9 @@ const homePageInfo = [
   },
 ];
 
-export default function Home(): JSX.Element {
+const Homepage = (): JSX.Element => {
   return (
-    <Layout>
+    <div>
       <main className={styles.homepageContainer}>
         <HomepageHeader />
         <Features heading="What to expect" listItems={features} />
@@ -192,6 +191,8 @@ export default function Home(): JSX.Element {
         </div>
         <HomepageAccordion homePageInfo={homePageInfo} />
       </main>
-    </Layout>
+    </div>
   );
-}
+};
+
+export default Homepage;
