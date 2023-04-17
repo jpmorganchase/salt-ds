@@ -77,7 +77,7 @@ const includesCssAttributeInKebabCase = function (property) {
 };
 
 /**
- * Test whether a property contains camel case word that's not CSS attr
+ * Test whether a property contains camel case word that's not CSS attr or state
  * 
  * e.g. 
  * --input--borderWidth is OK (returns false)
@@ -85,7 +85,7 @@ const includesCssAttributeInKebabCase = function (property) {
  * --input-myToken is NOT OK (returns true)
  * --input-borderWidth-myToken is NOT OK (returns true)
  */
-const includesCamelCaseNoCssAttribute = function (property) {
+const strictIncludesCamelCase = function (property) {
   if (!property.startsWith("--")) {
     return false;
   }
@@ -116,7 +116,7 @@ module.exports = stylelint.createPlugin(
       function check(property) {
         let checkResult = includesCssAttributeInKebabCase(property);
         if (!checkResult) {
-          checkResult = includesCamelCaseNoCssAttribute(property);
+          checkResult = strictIncludesCamelCase(property);
         }
         verboseLog && console.log("Checking", checkResult, property);
         return !checkResult;
