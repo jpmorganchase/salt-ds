@@ -122,7 +122,7 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
       <div style={{ height: 16 }} />
       <FormFieldNext
         label="Paired fields"
-        helperText="*User entry in either field will automatically poluate the corresponding field with the correct value"
+        helperText="*User entry in either field will automatically populate the corresponding field with the correct value"
         {...props}
       >
         <InputNext variant="secondary" defaultValue="123" />
