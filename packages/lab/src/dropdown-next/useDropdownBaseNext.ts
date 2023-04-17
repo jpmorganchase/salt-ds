@@ -8,7 +8,7 @@ import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
 
 const NO_OBSERVER: string[] = [];
 
-export const useDropdownBase = ({
+export const useDropdownBaseNext = ({
   ariaLabelledBy: ariaLabelledByProp,
   defaultIsOpen,
   disabled,

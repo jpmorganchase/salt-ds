@@ -7,7 +7,7 @@ export type DropdownPlacement =
   | "top-start"
   | "top-end"; // do any others make sense ?
 
-export interface DropdownBaseProps
+export interface DropdownBaseNextProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onSelect">,
     Pick<PortalProps, "disablePortal" | "container"> {
   defaultIsOpen?: boolean;
@@ -26,7 +26,7 @@ export interface DropdownBaseProps
 
 export interface DropdownHookProps
   extends Pick<
-    DropdownBaseProps,
+  DropdownBaseNextProps,
     | "defaultIsOpen"
     | "disabled"
     | "fullWidth"

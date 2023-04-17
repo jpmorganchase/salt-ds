@@ -1,20 +1,20 @@
-.saltDropdownButton {
+.saltDropdownButtonNext {
   --saltButton-fontWeight: var(--salt-text-fontWeight);
   --saltButton-textAlign: left;
   --saltButton-textTransform: none;
   --saltButton-width: 100%;
 }
 
-.saltDropdownButton:active {
+.saltDropdownButtonNext:active {
   --saltIcon-color: var(--salt-actionable-secondary-foreground);
   --saltButton-text-color-active: var(--salt-actionable-secondary-foreground);
 }
 
-.saltDropdownButton-fullwidth {
+.saltDropdownButtonNext-fullwidth {
   width: 100%;
 }
 
-.saltDropdownButton-content {
+.saltDropdownButtonNext-content {
   align-items: center;
   flex: 1;
   width: 100%;
@@ -22,7 +22,7 @@
   white-space: nowrap;
 }
 
-.saltDropdownButton-buttonLabel {
+.saltDropdownButtonNext-buttonLabel {
   display: inline-block;
   letter-spacing: 0;
   overflow: hidden;
@@ -30,24 +30,24 @@
   width: 100%;
 }
 
-.saltDropdownButton-formField.saltButton:focus,
-.saltDropdownButton-formField.saltButton:focus-visible {
+.saltDropdownButtonNext-formField.saltButton:focus,
+.saltDropdownButtonNext-formField.saltButton:focus-visible {
   outline: none;
 }
 
-.saltDropdown-primary .saltDropdownButton {
+.saltDropdown-primary .saltDropdownButtonNext {
   --saltButton-background:  var(--salt-editable-primary-background);
   --saltButton-background-hover:  var(--salt-editable-primary-background-hover);
   --saltButton-background-active:  var(--salt-editable-primary-background-active);
 }
 
-.saltDropdown-secondary .saltDropdownButton {
+.saltDropdown-secondary .saltDropdownButtonNext {
   --saltButton-background:  var(--salt-editable-secondary-background);
   --saltButton-background-hover:  var(--salt-editable-secondary-background-hover);
   --saltButton-background-active:  var(--salt-editable-secondary-background-active);
 }
 
-.saltDropdown-tertiary .saltDropdownButton {
+.saltDropdown-tertiary .saltDropdownButtonNext {
   --saltButton-background:  var(--salt-editable-tertiary-background);
   --saltButton-background-hover:  var(--salt-editable-tertiary-background-hover);
   --saltButton-background-active:  var(--salt-editable-tertiary-background-active);

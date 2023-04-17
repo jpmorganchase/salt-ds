@@ -8,10 +8,10 @@ import {
 import { clsx } from "clsx";
 import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { forwardCallbackProps } from "../utils";
-import { DropdownBaseProps } from "./dropdownTypes";
-import { useDropdownBase } from "./useDropdownBase";
 import { Portal } from "../portal";
 import { isDesktop, useWindow } from "../window";
+import { DropdownBaseNextProps } from "./dropdownTypes";
+import { useDropdownBaseNext } from "./useDropdownBaseNext";
 
 import "./DropdownNext.css";
 
@@ -27,7 +27,7 @@ export type MaybeChildProps = {
 
 const withBaseName = makePrefixer("saltDropdown");
 
-export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
+export const DropdownBaseNext = forwardRef<HTMLDivElement, DropdownBaseNextProps>(
   function Dropdown(
     {
       "aria-labelledby": ariaLabelledByProp,
@@ -62,7 +62,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
     const id = useId(idProp);
     const Window = useWindow();
 
-    const { componentProps, popperRef, isOpen, triggerProps } = useDropdownBase(
+    const { componentProps, popperRef, isOpen, triggerProps } = useDropdownBaseNext(
       {
         ariaLabelledBy: ariaLabelledByProp,
         defaultIsOpen,

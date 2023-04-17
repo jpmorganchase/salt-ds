@@ -19,16 +19,16 @@ import {
 } from "../common-hooks";
 import { List } from "../list/List";
 import { ListProps } from "../list/listTypes";
-import { DropdownBase, MaybeChildProps } from "./DropdownBase";
-import { DropdownButton } from "./DropdownButton";
-import { DropdownBaseProps } from "./dropdownTypes";
+import { DropdownBaseNext, MaybeChildProps } from "./DropdownBaseNext";
+import { DropdownButton } from "./DropdownButtonNext";
+import { DropdownBaseNextProps } from "./dropdownTypes";
 import { useDropdownNext } from "./useDropdownNext";
 import { forwardCallbackProps } from "../utils";
 
 export interface DropdownProps<
   Item = string,
   Selection extends SelectionStrategy = "default"
-> extends DropdownBaseProps,
+> extends DropdownBaseNextProps,
     Pick<
       ListProps<Item, Selection>,
       "ListItem" | "itemToString" | "source" | "width"
@@ -155,7 +155,7 @@ export const Dropdown = forwardRef(function Dropdown<
 
   return (
     <CollectionProvider<Item> collectionHook={collectionHook}>
-      <DropdownBase
+      <DropdownBaseNext
         {...props}
         id={id}
         isOpen={dropdownListHook.isOpen}
@@ -176,7 +176,7 @@ export const Dropdown = forwardRef(function Dropdown<
           selectionStrategy={selectionStrategy}
           data-testid="dropdown-list"
         />
-      </DropdownBase>
+      </DropdownBaseNext>
     </CollectionProvider>
   );
 }) as <Item, Selection extends SelectionStrategy = "default">(

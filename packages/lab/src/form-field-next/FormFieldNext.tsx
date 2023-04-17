@@ -132,7 +132,7 @@ export const FormField = forwardRef(
         >
           {label && <FormFieldLabel disabled={disabled} label={label} />}
           <div className={withBaseName("controls")}>{children}</div>
-          {helperText && <FormFieldHelperText helperText={helperText} />}
+          {helperText && <FormFieldHelperText  disabled={disabled} helperText={helperText} />}
         </FormFieldContextNext.Provider>
       </div>
     );

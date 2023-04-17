@@ -3,7 +3,7 @@ import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { ChevronDownIcon, IconProps, DEFAULT_ICON_SIZE } from "@salt-ds/icons";
 
-import "./DropdownButton.css";
+import "./DropdownButtonNext.css";
 
 export interface DropdownButtonProps extends ButtonProps {
   /**
@@ -47,7 +47,7 @@ export interface DropdownButtonProps extends ButtonProps {
   >;
 }
 
-const withBaseName = makePrefixer("saltDropdownButton");
+const withBaseName = makePrefixer("saltDropdownButtonNext");
 
 export const DropdownButton = forwardRef(function DropdownButton(
   {
