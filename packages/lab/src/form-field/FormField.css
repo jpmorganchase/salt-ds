@@ -134,12 +134,12 @@
 
 /* Error state styling when `variant="secondary"` */
 .saltFormField-secondary.saltFormField-error {
-  --formField-background: var(--salt-status-error-background-emphasize);
+  --formField-background: var(--salt-status-error-background);
 }
 
 /* Warning state styling when `variant="secondary"` */
 .saltFormField-secondary.saltFormField-warning {
-  --formField-background: var(--salt-status-warning-background-emphasize);
+  --formField-background: var(--salt-status-warning-background);
 }
 
 /* Class applied to the root element if `labelPlacement="left"` */

@@ -49,7 +49,7 @@
 }
 
 .saltRadioButton:hover .saltRadioButtonIcon-error .saltRadioButtonIcon-circle {
-  fill: var(--saltRadioButton-icon-error-hover-fill, var(--salt-status-error-background-emphasize));
+  fill: var(--saltRadioButton-icon-error-hover-fill, var(--salt-status-error-background));
 }
 
 /* Styles applied to radio button icon with error and disabled */
