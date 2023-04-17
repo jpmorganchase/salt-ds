@@ -85,6 +85,11 @@
   background: var(--saltInputNext-highlight-color, var(--salt-text-background-selected));
 }
 
+/* Style applied to selected input */
+.saltInputNext-disabled .saltInputNext-input::selection {
+  background: none;
+}
+
 /* Style applied to input if `disabled={true}` */
 .saltInputNext-disabled .saltInputNext-input, 
 .saltInputNext.saltInputNext-disabled,
