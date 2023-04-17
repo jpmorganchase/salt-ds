@@ -1,6 +1,7 @@
 .saltFormFieldHelperText {
   color: var(--saltFormField-helperText-color, var(--salt-text-secondary-foreground));
   font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
+  width: 100%;
 }
 
 .saltFormFieldHelperText-disabled {

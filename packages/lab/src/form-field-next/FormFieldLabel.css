@@ -2,7 +2,7 @@
   align-self: center;
   color: var(--saltFormField-label-text-color, var(--salt-text-secondary-foreground));
   display: block;
-  white-space: nowrap;
+  width: 100%;
 }
 
 .saltFormFieldLabel-disabled {

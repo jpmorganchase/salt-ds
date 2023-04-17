@@ -213,3 +213,28 @@ export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
     </div>
   );
 };
+
+
+export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (props) => {
+  return (
+    <div style={{width: "366px"}}>
+      <div style={{ height: 16 }} />
+    <FormFieldNext
+      readOnly
+      label="Form Field label that's extra long: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      {...props}
+    >
+      <InputNext defaultValue="Primary Input value" />
+    </FormFieldNext>
+      <div style={{ height: 16 }} />
+    <FormFieldNext
+      readOnly
+      label="Form Field label"
+      helperText="Helper text that's very long: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      {...props}
+    >
+      <InputNext defaultValue="Primary Input value" />
+    </FormFieldNext>
+    </div>
+  );
+};
