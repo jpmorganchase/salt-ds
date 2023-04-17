@@ -9,7 +9,6 @@ const withBaseName = makePrefixer("saltFormFieldHelperText");
 
 export interface FormFieldHelperTextProps extends HTMLAttributes<HTMLLabelElement> {
   helperText: FormFieldProps["helperText"];
-  // state?: "error" | "warning";
 }
 
 export const FormFieldHelperText = <E extends React.ElementType = "p">({
@@ -18,12 +17,7 @@ export const FormFieldHelperText = <E extends React.ElementType = "p">({
   ...restProps
 }: FormFieldHelperTextProps) => {
   return (
-    <Label className={clsx(withBaseName(), 
-      { 
-        // [withBaseName("error")]: state === "error", 
-        // [withBaseName("warning")]: state === "warning"
-      }
-  )} {...restProps}>
+    <Label className={withBaseName()} {...restProps}>
       {helperText}
     </Label>
   );

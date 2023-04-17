@@ -15,7 +15,7 @@ import {
   useState,
 } from "react";
 import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
-import { useFormFieldProps } from "../form-field-context";
+import { useFormFieldPropsNext } from "../form-field-context";
 import { useCursorOnFocus } from "./useCursorOnFocus";
 
 import "./InputNext.css";
@@ -87,7 +87,7 @@ export interface InputProps
 }
 
 function mergeA11yProps(
-  a11yProps: Partial<ReturnType<typeof useFormFieldProps>["a11yProps"]> = {},
+  a11yProps: Partial<ReturnType<typeof useFormFieldPropsNext>["a11yProps"]> = {},
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {
@@ -140,8 +140,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   },
   ref
 ) {
-  const { a11yProps: { disabled: a11yDisabled, ...restA11y } = {} } =
-    useFormFieldProps();
+  const { a11yProps: { disabled: a11yDisabled, ...restA11y } = {}, ...reste } =
+  useFormFieldPropsNext();
+
+  const isDisabled = disabled || a11yDisabled;
 
   const [focused, setFocused] = useState(false);
   const inputRef = useRef(null);
@@ -203,13 +205,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 
     onMouseDown?.(event);
   };
-
+  
   return (
     <div
       className={clsx(
         withBaseName(),
         {
-          [withBaseName("focused")]: focused,
+          [withBaseName("focused")]: !isDisabled && focused,
+          [withBaseName("disabled")]: isDisabled,
           [withBaseName(variant)]: variant,
         },
         classNameProp
@@ -222,13 +225,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         id={id}
         {...inputProps}
         className={clsx(withBaseName("input"), inputProps?.className)}
+        disabled={isDisabled}
         ref={handleRef}
         value={value}
         onBlur={handleBlur}
         onChange={handleChange}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
-        onFocus={handleFocus}
+        onFocus={!disabled && handleFocus}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}

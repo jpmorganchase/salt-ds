@@ -1,14 +1,8 @@
 .saltFormFieldHelperText {
   color: var(--saltFormField-helperText-color, var(--salt-text-secondary-foreground));
   font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
-  padding-left: var(--saltFormField-helperText-paddingLeft, 0);
-  padding-right: var(--saltFormField-helperText-paddingRight, var(--salt-size-unit));
 }
 
-/* .saltFormFieldHelperText-error {
-  color: var(--saltFormField-helperText-color-error, var(--salt-state-error-foreground));
+.saltFormFieldNext-disabled .saltFormFieldHelperText {
+  color: var(--saltFormField-helperText-color-disabled, var(--salt-text-secondary-foreground-disabled));
 }
-
-.saltFormFieldHelperText-warning {
-  color: var(--saltFormField-helperText-color-warning, var(--salt-state-warning-foreground));
-} */

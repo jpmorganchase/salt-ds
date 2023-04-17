@@ -146,25 +146,36 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
   );
 };
 
-// export const Validation: ComponentStory<typeof FormFieldNext> = (props) => {
-//   return (
-//     <div style={{width: "366px"}}>
-//       <div style={{ height: 16 }} />
-//       <FormFieldNext
-//         label="Default Form Field label"
-//         helperText="Default helper text"
-//         {...props}
-//       >
-//         <InputNext variant="secondary" defaultValue="123" />
-//       </FormFieldNext>
-//       <div style={{ height: 16 }} />
-//       <FormFieldNext
-//         label="Default Form Field label"
-//         helperText="Default helper text"
-//         {...props}
-//       >
-//         <InputNext variant="secondary" defaultValue="123" />
-//       </FormFieldNext>
-//     </div>
-//   );
-// };
+export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
+  return (
+    <div style={{width: "366px"}}>
+    <div style={{ height: 16 }} />
+    <FormFieldNext
+      disabled
+      label="Form Field label"
+      helperText="Default helper text"
+      {...props}
+    >
+      <InputNext defaultValue="Primary Input value" />
+    </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        disabled
+        label="Form Field label"
+        helperText="Default helper text"
+        {...props}
+      >
+        <InputNext variant="secondary" defaultValue="Secondary Input value" />
+      </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        disabled
+        label="Form Field label"
+        helperText="Default helper text"
+        {...props}
+      >
+        <InputNext variant="tertiary" defaultValue="Tertiary Input value" />
+      </FormFieldNext>
+    </div>
+  );
+};

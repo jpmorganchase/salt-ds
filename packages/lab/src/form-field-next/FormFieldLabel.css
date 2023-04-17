@@ -2,15 +2,11 @@
   align-self: center;
   color: var(--saltFormField-label-text-color, var(--salt-text-secondary-foreground));
   display: block;
-  padding-left: var(--saltFormField-label-paddingLeft, 0);
-  padding-right: var(--saltFormField-label-paddingRight, var(--salt-size-unit));
   white-space: nowrap;
 }
 
-/* Styles applied when `disabled={true}` */
 .saltFormFieldLabel-disabled {
   color: var(--saltFormField-label-color-disabled, var(--salt-text-secondary-foreground-disabled));
-  cursor: var(--salt-editable-cursor-disabled);
 }
 
 .saltFormFieldLabel.saltText {

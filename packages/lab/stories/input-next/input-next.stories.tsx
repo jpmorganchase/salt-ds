@@ -32,6 +32,34 @@ export const Tertiary: ComponentStory<typeof InputNext> = (args) => {
   );
 };
 
+export const Disabled: ComponentStory<typeof InputNext> = (args) => {
+  return (
+    <>
+<InputNext
+    disabled={true}
+      defaultValue={args.defaultValue ?? "Primary disabled"}
+      variant="primary"
+      {...args}
+    />
+    <div style={{ height: 16 }} />
+<InputNext
+    disabled={true}
+      defaultValue={args.defaultValue ?? "Secondary disabled"}
+      variant="secondary"
+      {...args}
+    />
+    <div style={{ height: 16 }} />
+    <InputNext
+    disabled={true}
+      defaultValue={args.defaultValue ?? "Tertiary disabled"}
+      variant="tertiary"
+      {...args}
+    />
+    </>
+    
+  );
+};
+
 export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
   return (
     <>
