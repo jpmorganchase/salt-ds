@@ -5403,7 +5403,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/icons@1.1.0, @salt-ds/icons@^1.0.0, @salt-ds/icons@workspace:packages/icons":
+"@salt-ds/icons@^1.0.0, @salt-ds/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@salt-ds/icons@workspace:packages/icons"
   dependencies:
@@ -5419,6 +5419,22 @@ __metadata:
       optional: true
   languageName: unknown
   linkType: soft
+
+"@salt-ds/icons@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@salt-ds/icons@npm:1.1.0"
+  dependencies:
+    clsx: ^1.2.1
+  peerDependencies:
+    "@types/react": ">=16.8.6"
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 37f9403383813ea0ca3f19be6198378ea639ca1d2ba47d95df9891e7da91f90dea121044303b0183bba355f07136d45182165ff38527b862526fbb73d6e5b8a4
+  languageName: node
+  linkType: hard
 
 "@salt-ds/lab@npm:1.0.0-alpha.1":
   version: 1.0.0-alpha.1
