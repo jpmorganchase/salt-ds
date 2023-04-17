@@ -1,14 +1,14 @@
 {
   "plugins": [
     "./tooling/stylelint/custom-property-no-foundations/index.js",
-    "./tooling/stylelint/only-custom-property-attributes-camel-case/index.js",
+    "./tooling/stylelint/custom-property-strict-casing/index.js",
     "./tooling/stylelint/custom-property-starts-with-component-name/index.js"
   ],
   "rules": {
     "salt/custom-property-no-foundations": {
       "logLevel": "default"
     },
-    "salt/only-custom-property-attributes-camel-case": {
+    "salt/custom-property-strict-casing": {
       "logLevel": "default"
     },
     "salt/custom-property-starts-with-component-name": {
