@@ -7,7 +7,7 @@ import "./FormFieldLabel.css";
 const withBaseName = makePrefixer("saltFormFieldLabel");
 export interface FormFieldLabelProps extends HTMLAttributes<HTMLLabelElement> {
   /**
-   * Whether the form field is disabled.
+   * Whether the Form Field is disabled.
    */
   disabled?: boolean;
   /**
@@ -17,9 +17,9 @@ export interface FormFieldLabelProps extends HTMLAttributes<HTMLLabelElement> {
 }
 
 export const FormFieldLabel = ({
-  label,
   className,
   disabled,
+  label,
   ...restProps
 }: FormFieldLabelProps) => (
   <Label

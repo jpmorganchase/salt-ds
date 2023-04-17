@@ -38,6 +38,10 @@ export interface FormFieldProps
    * Props to be applied to the FormFieldLabel
    */
   LabelProps?: Partial<FormFieldLabelProps>;
+  /**
+   * Readonly prop
+   */
+  readOnly?: boolean;
 }
 
 export interface A11yValueProps {
@@ -49,21 +53,27 @@ export interface A11yValueProps {
   helperText?: string;
   /** id of the label node */
   labelId?: string;
+  /**
+   * If `true`, the FormField will be readonly.
+   */
+  readOnly?: boolean;
 }
 export interface useA11yValueValue {
   "aria-labelledby": A11yValueProps["labelId"];
   "aria-describedby": A11yValueProps["helperText"] | undefined;
   disabled: A11yValueProps["disabled"];
+  readOnly: A11yValueProps["readOnly"];
 }
 
-const useA11yValue = ({ disabled, labelId, helperText }: A11yValueProps) => {
+const useA11yValue = ({ disabled, labelId, helperText, readOnly }: A11yValueProps) => {
   return useMemo(
     () => ({
       "aria-labelledby": labelId,
       "aria-describedby": helperText,
       disabled,
+      readOnly
     }),
-    [labelId, disabled, helperText]
+    [labelId, disabled, helperText, readOnly]
   );
 };
 
@@ -81,6 +91,7 @@ export const FormField = forwardRef(
       LabelProps = {},
       onBlur,
       onFocus,
+      readOnly = false,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -95,6 +106,7 @@ export const FormField = forwardRef(
       labelId,
       helperText,
       disabled,
+      readOnly
     });
 
     return (
@@ -104,9 +116,9 @@ export const FormField = forwardRef(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName("readOnly")]: readOnly,
             [withBaseName(`label${capitalize(labelPlacement)}`)]:
-              labelPlacement,
-            [withBaseName("withHelperText")]: helperText,
+              labelPlacement
           },
           className
         )}

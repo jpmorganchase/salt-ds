@@ -60,6 +60,34 @@ export const Disabled: ComponentStory<typeof InputNext> = (args) => {
   );
 };
 
+export const Readonly: ComponentStory<typeof InputNext> = (args) => {
+  return (
+    <>
+<InputNext
+    readOnly={true}
+      defaultValue={args.defaultValue ?? "Primary readonly"}
+      variant="primary"
+      {...args}
+    />
+    <div style={{ height: 16 }} />
+<InputNext
+    readOnly={true}
+      defaultValue={args.defaultValue ?? "Secondary readonly"}
+      variant="secondary"
+      {...args}
+    />
+    <div style={{ height: 16 }} />
+    <InputNext
+    readOnly={true}
+      defaultValue={args.defaultValue ?? "Tertiary readonly"}
+      variant="tertiary"
+      {...args}
+    />
+    </>
+    
+  );
+};
+
 export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
   return (
     <>

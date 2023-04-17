@@ -179,3 +179,37 @@ export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
     </div>
   );
 };
+
+export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
+  return (
+    <div style={{width: "366px"}}>
+    <div style={{ height: 16 }} />
+    <FormFieldNext
+      readOnly
+      label="Form Field label"
+      helperText="Default helper text"
+      {...props}
+    >
+      <InputNext defaultValue="Primary Input value" />
+    </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        readOnly
+        label="Form Field label"
+        helperText="Default helper text"
+        {...props}
+      >
+        <InputNext variant="secondary" defaultValue="Secondary Input value" />
+      </FormFieldNext>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        readOnly
+        label="Form Field label"
+        helperText="Default helper text"
+        {...props}
+      >
+        <InputNext variant="tertiary" defaultValue="Tertiary Input value" />
+      </FormFieldNext>
+    </div>
+  );
+};

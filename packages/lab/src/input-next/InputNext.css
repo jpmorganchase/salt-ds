@@ -1,12 +1,13 @@
 /* Style applied to the root element */
 .saltInputNext {
   --inputNext-borderColor: var(--salt-editable-borderColor);
+  --inputNext-borderStyle: var(--salt-editable-borderStyle);
 
   align-items: center;
   background: var(--saltInputNext-background, var(--inputNext-background));
   border-color: var(--saltInputNext-borderColor, var(--inputNext-borderColor));
   border-width: var(--saltInputNext-borderWidth, 0 0 var(--salt-size-border) 0);
-  border-style: var(--saltInputNext-borderStyle, var(--salt-editable-borderStyle));
+  border-style: var(--saltInputNext-borderStyle, var(--inputNext-borderStyle));
   border-radius: var(--saltInputNext-borderRadius, 0);
   color: var(--saltInputNext-color, var(--salt-text-primary-foreground));
   display: inline-flex;
@@ -22,29 +23,42 @@
 }
 
 .saltInputNext:hover {
+  --inputNext-background: var(--inputNext-background-hover);
   --inputNext-borderColor: var(--salt-editable-borderColor-hover);
+  --inputNext-borderStyle: var(--salt-editable-borderStyle-hover);
 }
 
 .saltInputNext:active {
+  --inputNext-background: var(--inputNext-background-active);
   --inputNext-borderColor: var(--salt-editable-borderColor-active);
+  --inputNext-borderStyle: var(--salt-editable-borderStyle-active);
 }
 
 /* Class applied if `variant="primary"` */
 .saltInputNext-primary {
   --inputNext-background: var(--salt-editable-primary-background);
+  --inputNext-background-active: var(--salt-editable-primary-background-active);
+  --inputNext-background-hover: var(--salt-editable-secondary-background-hover);
   --inputNext-background-disabled: var(--salt-editable-primary-background-disabled);
+  --inputNext-background-readonly: var(--salt-editable-primary-background-readonly);
 }
 
 /* Class applied if `variant="secondary"` */
 .saltInputNext-secondary {
   --inputNext-background: var(--salt-editable-secondary-background);
+  --inputNext-background-active: var(--salt-editable-secondary-background-active);
+  --inputNext-background-hover: var(--salt-editable-secondary-background-active);
   --inputNext-background-disabled: var(--salt-editable-secondary-background-disabled);
+  --inputNext-background-readonly: var(--salt-editable-secondary-background-readonly);
 }
 
 /* Class applied if `variant="tertiary"` */
 .saltInputNext-tertiary {
-  --inputNext-background:  var(--salt-editable-tertiary-background);
+  --inputNext-background: var(--salt-editable-tertiary-background);
+  --inputNext-background-active: var(--salt-editable-tertiary-background-active);
+  --inputNext-background-hover: var(--salt-editable-tertiary-background-hover);
   --inputNext-background-disabled: var(--salt-editable-tertiary-background-disabled);
+  --inputNext-background-readonly: var(--salt-editable-tertiary-background-readonly);
 }
 
 /* Style applied to inner input component */
@@ -67,12 +81,22 @@
   width: 100%;
 }
 
+/* Style applied if `readOnly={true}` */
+.saltInputNext.saltInputNext-readOnly {
+  --inputNext-background: var(--inputNext-background-readonly);
+  --inputNext-background-hover: var(--inputNext-background-readonly);
+  --inputNext-borderColor: var(--salt-editable-borderColor-readonly);
+  --inputNext-borderStyle: var(--salt-editable-borderStyle-readonly);
+
+  padding: var(--saltInputNext-padding, 0 var(--salt-size-unit) 0 0);
+}
+
 /* Reset in the next class */
 .saltInputNext-input:focus {
   outline: none;
 }
 
-/* Pseudo-class applied to the root element when focused */
+/* Styling when focused */
 .saltInputNext-focused {
   outline-style: var(--saltInputNext-focused-outlineStyle, var(--salt-focused-outlineStyle));
   outline-width: var(--saltInputNext-focused-outlineWidth, var(--salt-focused-outlineWidth));
@@ -80,12 +104,18 @@
   outline-offset: var(--saltInputNext-focused-outlineOffset, var(--salt-focused-outlineOffset));
 }
 
+/* Styling when focused if `disabled={true}` or `readOnly={true}` */
+.saltInputNext-focused.saltInputNext-readOnly, 
+.saltInputNext-disabled .saltInputNext-focused {
+  outline: none;
+}
+
 /* Style applied to selected input */
 .saltInputNext-input::selection {
   background: var(--saltInputNext-highlight-color, var(--salt-text-background-selected));
 }
 
-/* Style applied to selected input */
+/* Style applied to selected input if `disabled={true}` */
 .saltInputNext-disabled .saltInputNext-input::selection {
   background: none;
 }
@@ -97,10 +127,8 @@
 .saltInputNext.saltInputNext-disabled:active {
   --inputNext-background: var(--inputNext-background-disabled);
   --inputNext-borderColor: var(--salt-editable-borderColor-disabled);
+  --inputNext-borderStyle: var(--salt-editable-borderStyle-disabled);
 
   cursor: var(--salt-editable-cursor-disabled);
   color: var(--saltInputNext-text-color-disabled, var(--salt-text-primary-foreground-disabled));
-}
-.saltInputNext-disabled .saltInputNext-focused {
-  outline: none;
 }

@@ -140,10 +140,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   },
   ref
 ) {
-  const { a11yProps: { disabled: a11yDisabled, ...restA11y } = {}, ...reste } =
+  const { a11yProps: { disabled: a11yDisabled, readOnly: a11yReadOnly, ...restA11y } = {} } =
   useFormFieldPropsNext();
 
   const isDisabled = disabled || a11yDisabled;
+  const isReadOnly = readOnlyProp || a11yReadOnly;
 
   const [focused, setFocused] = useState(false);
   const inputRef = useRef(null);
@@ -213,6 +214,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         {
           [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
+          [withBaseName("readOnly")]: isReadOnly,
           [withBaseName(variant)]: variant,
         },
         classNameProp
@@ -226,13 +228,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         {...inputProps}
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
+        readOnly={isReadOnly}
         ref={handleRef}
         value={value}
+        tabIndex={isReadOnly || isDisabled ? -1 : 0}
         onBlur={handleBlur}
         onChange={handleChange}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
-        onFocus={!disabled && handleFocus}
+        onFocus={!isDisabled && handleFocus}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}

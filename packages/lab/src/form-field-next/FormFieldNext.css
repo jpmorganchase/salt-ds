@@ -20,11 +20,11 @@
 }
 
 .saltFormFieldNext-controls {
-    align-items: center;
-    display: grid;
-    grid-auto-columns: minmax(0,1fr);
-    grid-auto-flow: column;
-    grid-column-gap: calc(2 * var(--salt-size-unit));
+  align-items: center;
+  display: grid;
+  grid-auto-columns: minmax(0,1fr);
+  grid-auto-flow: column;
+  grid-column-gap: calc(2 * var(--salt-size-unit));
 }
 
 .saltFormFieldNext > * {
@@ -57,26 +57,6 @@
   grid-column-end: 2;
 }  
 
-.saltFormFieldNext-disabled .saltInputNext-primary {
-  --saltInputNext-primary-background: var(--salt-editable-primary-background-disabled);
-}
-.saltFormFieldNext-disabled .saltInputNext-secondary {
-  --saltInputNext-secondary-background: var(--salt-editable-secondary-background-disabled);
-}
-.saltFormFieldNext-disabled .saltInputNext-tertiary {
-  --saltInputNext-tertiary-background: var(--salt-editable-tertiary-background-disabled);
-}
-.saltFormFieldNext-disabled .saltInputNext {
-  --saltInputNext-color: var(--salt-text-primary-foreground-disabled);
-  --saltInputNext-cursor: var(--salt-editable-cursor-disabled);
-  --saltInputNext-borderColor: var(--salt-editable-borderColor-disabled);
-}
-.saltFormFieldNext-disabled .saltInputNext:hover {
-  --saltInputNext-borderColor: var(--salt-editable-borderColor-disabled);
-}
-.saltFormFieldNext-disabled .saltInputNext:active {
-  --saltInputNext-borderColor: var(--salt-editable-borderColor-disabled);
-}
 .saltFormFieldNext-disabled .saltInputNext-focused {
   outline: none;
 }
