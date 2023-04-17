@@ -122,7 +122,7 @@ div[class^="ag-theme-uitk"] {
 .ag-theme-uitk-medium-dark,
 .ag-theme-uitk-low-dark,
 .ag-theme-uitk-touch-dark {
-  --agGrid-menu-padding: var(--uitk-container-padding);
+  --agGrid-menu-padding: var(--uitk-container-spacing);
 
   --agGrid-foreground: var(--saltAgGrid-foreground, white);
   --agGrid-foreground-disabled: var(--saltAgGrid-foreground-disabled, white);
