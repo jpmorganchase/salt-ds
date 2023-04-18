@@ -87,8 +87,6 @@
   --inputNext-background-hover: var(--inputNext-background-readonly);
   --inputNext-borderColor: var(--salt-editable-borderColor-readonly);
   --inputNext-borderStyle: var(--salt-editable-borderStyle-readonly);
-
-  padding: var(--saltInputNext-padding, 0 var(--salt-size-unit) 0 0);
 }
 
 /* Reset in the next class */
