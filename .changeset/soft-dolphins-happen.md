@@ -8,6 +8,7 @@
 ---
 
 Deprecated text foreground tokens; replaced with the same tokens with `foreground` key removed
+Deprecated background selection; replaced with `highlight` token
 
 ```diff
 + --salt-text-primary: var(--salt-palette-neutral-primary-foreground);
