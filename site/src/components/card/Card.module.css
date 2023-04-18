@@ -36,7 +36,7 @@
 
 .card:hover,
 .inlineCardContent:hover {
-  box-shadow: var(--salt-overlayable-shadow-borderRegion);
+  box-shadow: var(--salt-overlayable-shadow-border);
 }
 
 .card:hover .icon,
