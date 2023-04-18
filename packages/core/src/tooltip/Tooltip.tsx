@@ -118,6 +118,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
         {open && !disabled && (
           <FloatingPortal>
+            {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
             <SaltProvider>
               <div
                 className={clsx(
