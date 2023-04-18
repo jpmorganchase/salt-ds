@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import { createChainedFunction } from "./createChainedFunction";
 
 interface Props {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export function mergeProps(
@@ -12,8 +12,8 @@ export function mergeProps(
   const props = { ...propsA };
 
   Object.keys(propsB).forEach((key) => {
-    let a = props[key];
-    let b = propsB[key];
+    const a: any = props[key];
+    const b: any = propsB[key];
 
     if (
       typeof a === "function" &&
