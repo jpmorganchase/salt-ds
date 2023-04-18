@@ -22,10 +22,6 @@
   --formField-helperText-height: 0px;
 }
 
-.saltFormField-tertiary.saltFormField {
-  --formField-background: var(--salt-editable-tertiary-background);
-}
-
 .saltFormField-secondary.saltFormField {
   --formField-background: var(--salt-editable-secondary-background);
 }
@@ -289,4 +285,9 @@
 
 .saltFormField-labelLeft > .saltFormLabel ~ :not(.saltFormFieldHelperText) {
   background: var(--saltFormField-background, var(--formField-background));
+}
+
+/* **Deprecated:** Tertiary variant no longer supported */
+.saltFormField-tertiary.saltFormField {
+  --formField-background: var(--salt-editable-tertiary-background);
 }
