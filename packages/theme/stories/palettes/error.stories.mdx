@@ -5,6 +5,7 @@ import {
   ColorPalette,
   ColorItem,
 } from "@storybook/addon-docs";
+import { ColorBlock } from "docs/components/ColorBlock";
 import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
@@ -34,11 +35,11 @@ Colors used to symbolise an error state.
       }}
     />
     <ColorItem
-      title="Background (emphasized)"
-      subtitle="--salt-palette-error-background-emphasize"
+      title="Background"
+      subtitle="--salt-palette-error-background"
       colors={{
-        "--salt-palette-error-background-emphasize":
-          "var(--salt-palette-error-background-emphasize)",
+        "--salt-palette-error-background":
+          "var(--salt-palette-error-background)",
       }}
     />
     <ColorItem
@@ -51,3 +52,16 @@ Colors used to symbolise an error state.
     />
   </ColorPalette>
 </ColorContainer>
+
+### **Deprecated:** The following should be replaced as noted
+
+<Canvas>
+  <Story name="Emphasized">
+    <DocGrid withNotes>
+      <ColorBlock
+        colorVar="--salt-palette-error-background-emphasize"
+        replacementToken="--salt-palette-error-background"
+      />
+    </DocGrid>
+  </Story>
+</Canvas>
