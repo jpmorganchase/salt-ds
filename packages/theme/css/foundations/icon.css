@@ -20,5 +20,5 @@
 
 .salt-theme {
   /* **Deprecated:** Replacement tokens should be used as noted */
-  --salt-size-icon-base: var(--salt-icon-size-base); 
+  --salt-size-icon-base: var(--salt-icon-size-base);
 }
