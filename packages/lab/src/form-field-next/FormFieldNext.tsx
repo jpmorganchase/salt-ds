@@ -65,13 +65,18 @@ export interface useA11yValueValue {
   readOnly: A11yValueProps["readOnly"];
 }
 
-const useA11yValue = ({ disabled, labelId, helperText, readOnly }: A11yValueProps) => {
+const useA11yValue = ({
+  disabled,
+  labelId,
+  helperText,
+  readOnly,
+}: A11yValueProps) => {
   return useMemo(
     () => ({
       "aria-labelledby": labelId,
       "aria-describedby": helperText,
       disabled,
-      readOnly
+      readOnly,
     }),
     [labelId, disabled, helperText, readOnly]
   );
@@ -106,7 +111,7 @@ export const FormField = forwardRef(
       labelId,
       helperText,
       disabled,
-      readOnly
+      readOnly,
     });
 
     return (
@@ -118,7 +123,7 @@ export const FormField = forwardRef(
             [withBaseName("disabled")]: disabled,
             [withBaseName("readOnly")]: readOnly,
             [withBaseName(`label${capitalize(labelPlacement)}`)]:
-              labelPlacement
+              labelPlacement,
           },
           className
         )}
@@ -132,7 +137,9 @@ export const FormField = forwardRef(
         >
           {label && <FormFieldLabel disabled={disabled} label={label} />}
           <div className={withBaseName("controls")}>{children}</div>
-          {helperText && <FormFieldHelperText  disabled={disabled} helperText={helperText} />}
+          {helperText && (
+            <FormFieldHelperText disabled={disabled} helperText={helperText} />
+          )}
         </FormFieldContextNext.Provider>
       </div>
     );

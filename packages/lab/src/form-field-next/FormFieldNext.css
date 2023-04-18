@@ -22,7 +22,7 @@
 .saltFormFieldNext-controls {
   align-items: center;
   display: grid;
-  grid-auto-columns: minmax(0,1fr);
+  grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
   grid-column-gap: calc(2 * var(--salt-size-unit));
 }
@@ -43,8 +43,8 @@
 }
 
 .saltFormFieldNext > .saltFormFieldHelperText {
-    grid-row-start: 3;
-    grid-row-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 4;
 }
 
 .saltFormFieldNext.saltFormFieldNext-labelLeft > .saltFormFieldHelperText {
@@ -55,7 +55,7 @@
 .saltFormFieldNext-labelLeft > .saltFormFieldLabel ~ * {
   grid-column-start: 2;
   grid-column-end: 2;
-}  
+}
 
 .saltFormFieldNext-disabled .saltInputNext-focused {
   outline: none;

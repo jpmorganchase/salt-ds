@@ -36,19 +36,19 @@
 }
 
 .saltDropdown-primary .saltDropdownButtonNext {
-  --saltButton-background:  var(--salt-editable-primary-background);
-  --saltButton-background-hover:  var(--salt-editable-primary-background-hover);
-  --saltButton-background-active:  var(--salt-editable-primary-background-active);
+  --saltButton-background: var(--salt-editable-primary-background);
+  --saltButton-background-hover: var(--salt-editable-primary-background-hover);
+  --saltButton-background-active: var(--salt-editable-primary-background-active);
 }
 
 .saltDropdown-secondary .saltDropdownButtonNext {
-  --saltButton-background:  var(--salt-editable-secondary-background);
-  --saltButton-background-hover:  var(--salt-editable-secondary-background-hover);
-  --saltButton-background-active:  var(--salt-editable-secondary-background-active);
+  --saltButton-background: var(--salt-editable-secondary-background);
+  --saltButton-background-hover: var(--salt-editable-secondary-background-hover);
+  --saltButton-background-active: var(--salt-editable-secondary-background-active);
 }
 
 .saltDropdown-tertiary .saltDropdownButtonNext {
-  --saltButton-background:  var(--salt-editable-tertiary-background);
-  --saltButton-background-hover:  var(--salt-editable-tertiary-background-hover);
-  --saltButton-background-active:  var(--salt-editable-tertiary-background-active);
+  --saltButton-background: var(--salt-editable-tertiary-background);
+  --saltButton-background-hover: var(--salt-editable-tertiary-background-hover);
+  --saltButton-background-active: var(--salt-editable-tertiary-background-active);
 }

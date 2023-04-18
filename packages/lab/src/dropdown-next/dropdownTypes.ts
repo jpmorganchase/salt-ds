@@ -26,7 +26,7 @@ export interface DropdownBaseNextProps
 
 export interface DropdownHookProps
   extends Pick<
-  DropdownBaseNextProps,
+    DropdownBaseNextProps,
     | "defaultIsOpen"
     | "disabled"
     | "fullWidth"

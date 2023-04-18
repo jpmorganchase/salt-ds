@@ -148,16 +148,16 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <div style={{width: "366px"}}>
-    <div style={{ height: 16 }} />
-    <FormFieldNext
-      disabled
-      label="Form Field label"
-      helperText="Default helper text"
-      {...props}
-    >
-      <InputNext defaultValue="Primary Input value" />
-    </FormFieldNext>
+    <div style={{ width: "366px" }}>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        disabled
+        label="Form Field label"
+        helperText="Default helper text"
+        {...props}
+      >
+        <InputNext defaultValue="Primary Input value" />
+      </FormFieldNext>
       <div style={{ height: 16 }} />
       <FormFieldNext
         disabled
@@ -182,16 +182,16 @@ export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <div style={{width: "366px"}}>
-    <div style={{ height: 16 }} />
-    <FormFieldNext
-      readOnly
-      label="Form Field label"
-      helperText="Default helper text"
-      {...props}
-    >
-      <InputNext defaultValue="Primary Input value" />
-    </FormFieldNext>
+    <div style={{ width: "366px" }}>
+      <div style={{ height: 16 }} />
+      <FormFieldNext
+        readOnly
+        label="Form Field label"
+        helperText="Default helper text"
+        {...props}
+      >
+        <InputNext defaultValue="Primary Input value" />
+      </FormFieldNext>
       <div style={{ height: 16 }} />
       <FormFieldNext
         readOnly
@@ -214,27 +214,28 @@ export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
   );
 };
 
-
-export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (props) => {
+export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
+  props
+) => {
   return (
-    <div style={{width: "366px"}}>
+    <div style={{ width: "366px" }}>
       <div style={{ height: 16 }} />
-    <FormFieldNext
-      readOnly
-      label="Form Field label that's extra long: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-      {...props}
-    >
-      <InputNext defaultValue="Primary Input value" />
-    </FormFieldNext>
+      <FormFieldNext
+        readOnly
+        label="Form Field label that's extra long: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        {...props}
+      >
+        <InputNext defaultValue="Primary Input value" />
+      </FormFieldNext>
       <div style={{ height: 16 }} />
-    <FormFieldNext
-      readOnly
-      label="Form Field label"
-      helperText="Helper text that's very long: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-      {...props}
-    >
-      <InputNext defaultValue="Primary Input value" />
-    </FormFieldNext>
+      <FormFieldNext
+        readOnly
+        label="Form Field label"
+        helperText="Helper text that's very long: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        {...props}
+      >
+        <InputNext defaultValue="Primary Input value" />
+      </FormFieldNext>
     </div>
   );
 };

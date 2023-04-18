@@ -87,7 +87,9 @@ export interface InputProps
 }
 
 function mergeA11yProps(
-  a11yProps: Partial<ReturnType<typeof useFormFieldPropsNext>["a11yProps"]> = {},
+  a11yProps: Partial<
+    ReturnType<typeof useFormFieldPropsNext>["a11yProps"]
+  > = {},
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {
@@ -140,8 +142,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   },
   ref
 ) {
-  const { a11yProps: { disabled: a11yDisabled, readOnly: a11yReadOnly, ...restA11y } = {} } =
-  useFormFieldPropsNext();
+  const {
+    a11yProps: {
+      disabled: a11yDisabled,
+      readOnly: a11yReadOnly,
+      ...restA11y
+    } = {},
+  } = useFormFieldPropsNext();
 
   const isDisabled = disabled || a11yDisabled;
   const isReadOnly = readOnlyProp || a11yReadOnly;
@@ -206,7 +213,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 
     onMouseDown?.(event);
   };
-  
+
   return (
     <div
       className={clsx(

@@ -105,7 +105,7 @@
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` */
-.saltInputNext-focused.saltInputNext-readOnly, 
+.saltInputNext-focused.saltInputNext-readOnly,
 .saltInputNext-disabled .saltInputNext-focused {
   outline: none;
 }
@@ -121,9 +121,9 @@
 }
 
 /* Style applied to input if `disabled={true}` */
-.saltInputNext-disabled .saltInputNext-input, 
+.saltInputNext-disabled .saltInputNext-input,
 .saltInputNext.saltInputNext-disabled,
-.saltInputNext.saltInputNext-disabled:hover, 
+.saltInputNext.saltInputNext-disabled:hover,
 .saltInputNext.saltInputNext-disabled:active {
   --inputNext-background: var(--inputNext-background-disabled);
   --inputNext-borderColor: var(--salt-editable-borderColor-disabled);

@@ -35,56 +35,54 @@ export const Tertiary: ComponentStory<typeof InputNext> = (args) => {
 export const Disabled: ComponentStory<typeof InputNext> = (args) => {
   return (
     <>
-<InputNext
-    disabled={true}
-      defaultValue={args.defaultValue ?? "Primary disabled"}
-      variant="primary"
-      {...args}
-    />
-    <div style={{ height: 16 }} />
-<InputNext
-    disabled={true}
-      defaultValue={args.defaultValue ?? "Secondary disabled"}
-      variant="secondary"
-      {...args}
-    />
-    <div style={{ height: 16 }} />
-    <InputNext
-    disabled={true}
-      defaultValue={args.defaultValue ?? "Tertiary disabled"}
-      variant="tertiary"
-      {...args}
-    />
+      <InputNext
+        disabled={true}
+        defaultValue={args.defaultValue ?? "Primary disabled"}
+        variant="primary"
+        {...args}
+      />
+      <div style={{ height: 16 }} />
+      <InputNext
+        disabled={true}
+        defaultValue={args.defaultValue ?? "Secondary disabled"}
+        variant="secondary"
+        {...args}
+      />
+      <div style={{ height: 16 }} />
+      <InputNext
+        disabled={true}
+        defaultValue={args.defaultValue ?? "Tertiary disabled"}
+        variant="tertiary"
+        {...args}
+      />
     </>
-    
   );
 };
 
 export const Readonly: ComponentStory<typeof InputNext> = (args) => {
   return (
     <>
-<InputNext
-    readOnly={true}
-      defaultValue={args.defaultValue ?? "Primary readonly"}
-      variant="primary"
-      {...args}
-    />
-    <div style={{ height: 16 }} />
-<InputNext
-    readOnly={true}
-      defaultValue={args.defaultValue ?? "Secondary readonly"}
-      variant="secondary"
-      {...args}
-    />
-    <div style={{ height: 16 }} />
-    <InputNext
-    readOnly={true}
-      defaultValue={args.defaultValue ?? "Tertiary readonly"}
-      variant="tertiary"
-      {...args}
-    />
+      <InputNext
+        readOnly={true}
+        defaultValue={args.defaultValue ?? "Primary readonly"}
+        variant="primary"
+        {...args}
+      />
+      <div style={{ height: 16 }} />
+      <InputNext
+        readOnly={true}
+        defaultValue={args.defaultValue ?? "Secondary readonly"}
+        variant="secondary"
+        {...args}
+      />
+      <div style={{ height: 16 }} />
+      <InputNext
+        readOnly={true}
+        defaultValue={args.defaultValue ?? "Tertiary readonly"}
+        variant="tertiary"
+        {...args}
+      />
     </>
-    
   );
 };
 

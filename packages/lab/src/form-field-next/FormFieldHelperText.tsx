@@ -7,7 +7,8 @@ import "./FormFieldHelperText.css";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
-export interface FormFieldHelperTextProps extends HTMLAttributes<HTMLLabelElement> {
+export interface FormFieldHelperTextProps
+  extends HTMLAttributes<HTMLLabelElement> {
   helperText: FormFieldProps["helperText"];
   disabled?: boolean;
 }
@@ -19,10 +20,12 @@ export const FormFieldHelperText = <E extends React.ElementType = "p">({
   ...restProps
 }: FormFieldHelperTextProps) => {
   return (
-    <Label 
-    className={clsx(withBaseName(), className, {
-      [withBaseName("disabled")]: disabled
-    })} {...restProps}>
+    <Label
+      className={clsx(withBaseName(), className, {
+        [withBaseName("disabled")]: disabled,
+      })}
+      {...restProps}
+    >
       {helperText}
     </Label>
   );
