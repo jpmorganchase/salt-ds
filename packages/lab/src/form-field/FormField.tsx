@@ -115,6 +115,8 @@ export interface FormFieldProps
   validationStatus?: FormFieldValidationStatus;
   /**
    * FormField variants; defaults to primary.
+   *
+   * **Deprecated:** The 'tertiary' variant has been deprecated
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

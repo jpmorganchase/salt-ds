@@ -29,11 +29,12 @@
   --salt-editable-secondary-background-hover: var(--salt-palette-neutral-secondary-background);
   --salt-editable-secondary-background-readonly: var(--salt-palette-neutral-secondary-background-readonly);
 
+  --salt-editable-help-fontStyle: italic;
+
+  /* **Deprecated:** Will be deleted on next breaking change */
   --salt-editable-tertiary-background: var(--salt-palette-neutral-tertiary-background);
   --salt-editable-tertiary-background-active: var(--salt-palette-neutral-tertiary-background);
   --salt-editable-tertiary-background-disabled: var(--salt-palette-neutral-tertiary-background-disabled);
   --salt-editable-tertiary-background-hover: var(--salt-palette-neutral-tertiary-background);
   --salt-editable-tertiary-background-readonly: var(--salt-palette-neutral-tertiary-background-readonly);
-
-  --salt-editable-help-fontStyle: italic;
 }
