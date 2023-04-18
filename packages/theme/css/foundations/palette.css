@@ -143,7 +143,6 @@
   --salt-palette-neutral-secondary-separator: var(--salt-color-black-fade-separatorOpacity-secondary);
   --salt-palette-neutral-tertiary-background: transparent;
   --salt-palette-neutral-tertiary-background-disabled: transparent;
-  --salt-palette-neutral-tertiary-background-readonly: transparent;
   --salt-palette-neutral-tertiary-border: transparent;
   --salt-palette-neutral-tertiary-border-disabled: transparent;
   --salt-palette-neutral-tertiary-separator: var(--salt-color-black-fade-separatorOpacity-tertiary);
@@ -283,7 +282,6 @@
   --salt-palette-neutral-secondary-separator: var(--salt-color-white-fade-separatorOpacity-secondary);
   --salt-palette-neutral-tertiary-background: transparent;
   --salt-palette-neutral-tertiary-background-disabled: transparent;
-  --salt-palette-neutral-tertiary-background-readonly: transparent;
   --salt-palette-neutral-tertiary-border: transparent;
   --salt-palette-neutral-tertiary-border-disabled: transparent;
   --salt-palette-neutral-tertiary-separator: var(--salt-color-white-fade-separatorOpacity-tertiary);
@@ -320,6 +318,9 @@
   --salt-palette-measured-background-disabled: var(--salt-color-gray-60-fade-background);
   --salt-palette-measured-border: var(--salt-color-gray-90);
   --salt-palette-measured-border-disabled: var(--salt-color-gray-90-fade-border);
+
+  /* Neutral */
+  --salt-palette-neutral-tertiary-background-readonly: transparent;
 }
 
 .salt-theme[data-mode="dark"] {
@@ -338,4 +339,7 @@
   --salt-palette-measured-background-disabled: var(--salt-color-gray-300-fade-background);
   --salt-palette-measured-border: var(--salt-color-gray-90);
   --salt-palette-measured-border-disabled: var(--salt-color-gray-90-fade-border);
+
+  /* Neutral */
+  --salt-palette-neutral-tertiary-background-readonly: transparent;
 }
