@@ -5,10 +5,16 @@ import {
   HTMLAttributes,
   ReactNode,
   isValidElement,
+  Ref,
 } from "react";
 import { FloatingArrow, FloatingPortal } from "@floating-ui/react";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
-import { UseFloatingUIProps, makePrefixer, useForkRef } from "../utils";
+import {
+  UseFloatingUIProps,
+  makePrefixer,
+  mergeProps,
+  useForkRef,
+} from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
 
@@ -99,11 +105,13 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       reference
     );
 
+    const floatingRef = useForkRef(floating, ref) as Ref<HTMLDivElement>;
+
     return (
       <>
         {isValidElement(children) &&
           cloneElement(children, {
-            ...getTriggerProps(),
+            ...mergeProps(getTriggerProps(), children.props),
             ref: triggerRef,
           })}
 
@@ -111,7 +119,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           <FloatingPortal>
             <div
               className={clsx(withBaseName(), withBaseName(status), className)}
-              ref={floating}
+              ref={floatingRef}
               {...getTooltipProps()}
             >
               <div className={withBaseName("container")}>

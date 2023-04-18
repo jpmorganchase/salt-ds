@@ -17,3 +17,4 @@ export * from "./useIsFocusVisible";
 export * from "./useIsomorphicLayoutEffect";
 export * from "./usePrevious";
 export * from "./useResponsiveProp";
+export * from "./mergeProps";
