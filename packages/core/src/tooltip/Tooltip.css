@@ -12,7 +12,7 @@
   border-width: var(--saltTooltip-borderWidth, var(--salt-size-border));
   border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
   box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));
-  color: var(--saltTooltip-text-color, var(--salt-text-primary-foreground));
+  color: var(--saltTooltip-text-color, var(--salt-text-primary));
   max-width: var(--saltTooltip-maxWidth, 230px);
   padding: var(--saltTooltip-padding, var(--salt-size-unit));
   position: relative;

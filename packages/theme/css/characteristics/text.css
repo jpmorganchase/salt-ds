@@ -59,23 +59,32 @@
   --salt-text-display3-fontWeight-small: var(--salt-typography-fontWeight-regular);
 
   /* Colors */
-  --salt-text-background-selected: var(--salt-palette-interact-background-active);
-
-  --salt-text-primary-foreground: var(--salt-palette-neutral-primary-foreground);
-  --salt-text-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
-  --salt-text-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
-  --salt-text-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
+  --salt-text-primary: var(--salt-palette-neutral-primary-foreground);
+  --salt-text-primary-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
+  --salt-text-secondary: var(--salt-palette-neutral-secondary-foreground);
+  --salt-text-secondary-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
+  --salt-text-highlight: var(--salt-palette-interact-background-active);
 
   /* Link */
-  --salt-text-link-foreground-hover: var(--salt-palette-navigate-foreground-hover);
-  --salt-text-link-foreground-active: var(--salt-palette-navigate-foreground-active);
-  --salt-text-link-foreground-visited: var(--salt-palette-navigate-foreground-visited);
+  --salt-text-link-hover: var(--salt-palette-navigate-foreground-hover);
+  --salt-text-link-active: var(--salt-palette-navigate-foreground-active);
+  --salt-text-link-visited: var(--salt-palette-navigate-foreground-visited);
   --salt-text-link-textDecoration: underline;
   --salt-text-link-textDecoration-hover: none;
   --salt-text-link-textDecoration-selected: underline;
 
   /* Code */
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-code);
+
+  /* **Deprecated:** Use replacements as defined */
+  --salt-text-primary-foreground: var(--salt-text-primary);
+  --salt-text-primary-foreground-disabled: var(--salt-text-primary-disabled);
+  --salt-text-secondary-foreground: var(--salt-text-secondary);
+  --salt-text-secondary-foreground-disabled: var(--salt-text-secondary-disabled);
+  --salt-text-link-foreground-hover: var(--salt-text-link-hover);
+  --salt-text-link-foreground-active: var(--salt-text-link-active);
+  --salt-text-link-foreground-visited: var(--salt-text-link-visited);
+  --salt-text-background-selected: var(--salt-text-highlight);
 }
 
 /* Sizes by density */

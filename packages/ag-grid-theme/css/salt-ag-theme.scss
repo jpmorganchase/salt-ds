@@ -43,16 +43,16 @@ div[class*="ag-theme-salt"] {
   );
   --agGrid-foreground: var(
     --saltAgGrid-foreground,
-    var(--salt-text-primary-foreground)
+    var(--salt-text-primary)
   );
   --agGrid-foreground-disabled: var(
     --saltAgGrid-foreground-disabled,
-    var(--salt-text-primary-foreground-disabled)
+    var(--salt-text-primary-disabled)
   );
 
   --agGrid-menu-color: var(
     --saltAgGrid-menu-color,
-    var(--salt-text-primary-foreground)
+    var(--salt-text-primary)
   );
 
   --agGrid-row-color-hover: var(
@@ -77,7 +77,7 @@ div[class*="ag-theme-salt"] {
 
   --agGrid-header-foreground: var(
     --saltAgGrid-header-foreground,
-    var(--salt-text-secondary-foreground)
+    var(--salt-text-secondary)
   );
 
   --agGrid-header-fontWeight: var(

@@ -12,7 +12,7 @@
 /* Styles applied to root component if `disabled={true}` */
 .saltCheckbox-disabled {
   pointer-events: visible;
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-text-primary-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 

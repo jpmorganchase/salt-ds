@@ -4,7 +4,7 @@
   --dialog-content-paddingTop: var(--saltDialog-content-paddingTop, calc(var(--salt-size-unit) * 2));
   --dialog-content-paddingBottom: var(--saltDialog-content-paddingBottom, var(--salt-size-container-spacing));
   --dialog-content-minHeight: var(--saltDialog-content-minHeight, var(--dialog-content-fontSize));
-  --dialog-content-color: var(--saltDialog-content-color, var(--salt-text-primary-foreground));
+  --dialog-content-color: var(--saltDialog-content-color, var(--salt-text-primary));
 }
 
 .saltDialogContent {

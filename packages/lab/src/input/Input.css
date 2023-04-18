@@ -22,7 +22,7 @@
   background: var(--saltInput-background, none);
   border: var(--saltInput-border, none);
   border-radius: var(--saltInput-borderRadius, 0);
-  color: var(--saltInput-text-color, var(--salt-text-primary-foreground));
+  color: var(--saltInput-text-color, var(--salt-text-primary));
   cursor: var(--saltInput-cursor, default);
   display: inline-flex;
   font-family: var(--saltInput-fontFamily, var(--salt-text-fontFamily));
@@ -51,7 +51,7 @@
 
 /* Style applied to selected input */
 .saltInput-input::selection {
-  background-color: var(--saltInput-highlight-color, var(--salt-text-background-selected));
+  background-color: var(--saltInput-highlight-color, var(--salt-text-highlight));
 }
 
 /* Style applied to inner input component */
@@ -75,7 +75,7 @@
 /* Style applied to input if `disabled={true}` */
 .saltInput-disabled .saltInput-input {
   cursor: var(--salt-editable-cursor-disabled);
-  color: var(--saltInput-text-color-disabled, var(--salt-text-primary-foreground-disabled));
+  color: var(--saltInput-text-color-disabled, var(--salt-text-primary-disabled));
 }
 
 /* Style applied to adornment containers */

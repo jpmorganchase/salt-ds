@@ -45,10 +45,10 @@
   --accordion-summary-background-disabled: var(--saltAccordion-summary-background-disabled, var(--salt-container-primary-background));
   --accordion-summary-background-hover: var(--saltAccordion-summary-background-hover, var(--salt-actionable-primary-background-hover));
 
-  --accordion-summary-text-color: var(--saltAccordion-summary-text-color, var(--salt-text-primary-foreground));
-  --accordion-summary-text-color-active: var(--saltAccordion-summary-text-color-active, var(--salt-text-primary-foreground));
-  --accordion-summary-text-color-disabled: var(--saltAccordion-summary-text-color-disabled, var(--salt-text-primary-foreground-disabled));
-  --accordion-summary-text-color-hover: var(--saltAccordion-summary-text-color-hover, var(--salt-text-primary-foreground));
+  --accordion-summary-text-color: var(--saltAccordion-summary-text-color, var(--salt-text-primary));
+  --accordion-summary-text-color-active: var(--saltAccordion-summary-text-color-active, var(--salt-text-primary));
+  --accordion-summary-text-color-disabled: var(--saltAccordion-summary-text-color-disabled, var(--salt-text-primary-disabled));
+  --accordion-summary-text-color-hover: var(--saltAccordion-summary-text-color-hover, var(--salt-text-primary));
 
   --accordion-summary-icon-transition-default: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --accordion-summary-icon-transform: var(--saltAccordion-summary-icon-expand-transform, rotate(90deg));

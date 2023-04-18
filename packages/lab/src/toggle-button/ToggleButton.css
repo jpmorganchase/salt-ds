@@ -19,17 +19,17 @@
 }
 
 .saltToggleButton {
-  --saltButton-text-color: var(--salt-text-primary-foreground);
-  --saltButton-text-color-disabled: var(--salt-text-primary-foreground-disabled);
+  --saltButton-text-color: var(--salt-text-primary);
+  --saltButton-text-color-disabled: var(--salt-text-primary-disabled);
 
-  --saltIcon-color: var(--salt-text-primary-foreground);
+  --saltIcon-color: var(--salt-text-primary);
 }
 
 .saltToggleButton-disabled.saltButton-disabled {
-  --saltButton-text-color-active: var(--salt-text-primary-foreground-disabled);
-  --saltButton-text-color-hover: var(--salt-text-primary-foreground-disabled);
+  --saltButton-text-color-active: var(--salt-text-primary-disabled);
+  --saltButton-text-color-hover: var(--salt-text-primary-disabled);
 
-  --saltIcon-color: var(--salt-text-primary-foreground-disabled);
+  --saltIcon-color: var(--salt-text-primary-disabled);
 }
 
 /* CTA */

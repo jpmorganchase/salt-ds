@@ -36,7 +36,7 @@
 .saltFormFieldHelperText {
   --formField-helperText-opacity: 1;
 
-  color: var(--saltFormField-helperText-color, var(--salt-text-secondary-foreground));
+  color: var(--saltFormField-helperText-color, var(--salt-text-secondary));
   font-size: var(--formField-helperText-fontSize);
   font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
   letter-spacing: var(--saltFormField-helperText-letterSpacing, 0);

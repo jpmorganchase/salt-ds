@@ -7,7 +7,7 @@
 
 .salt-theme .sbdocs.sbdocs-content {
   background: var(--salt-container-primary-background);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-text-primary);
   height: fit-content;
 }
 
@@ -39,7 +39,7 @@
 .salt-theme .sbdocs code {
   background-color: unset;
   border: none;
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-text-secondary);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
   padding: 0;
@@ -47,7 +47,7 @@
 
 .salt-theme .sbdocs th,
 .salt-theme .sbdocs td {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-text-primary);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
 }

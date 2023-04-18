@@ -4,7 +4,7 @@
   --banner-fontSize: var(--saltBanner-fontSize, var(--salt-text-fontSize));
   --banner-lineHeight: var(--saltBanner-lineHeight, var(--salt-text-lineHeight));
   --banner-padding: var(--saltBanner-padding, var(--salt-size-unit));
-  --banner-label-color: var(--saltBanner-label-color, var(--salt-text-primary-foreground));
+  --banner-label-color: var(--saltBanner-label-color, var(--salt-text-primary));
 }
 
 .saltBanner {

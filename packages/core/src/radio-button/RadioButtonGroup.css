@@ -31,6 +31,6 @@
 .saltRadioButtonGroup-legend {
   display: inline-block;
   font-size: var(--formField-label-fontSize);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-text-primary);
   margin-bottom: calc(var(--salt-size-unit) * 2);
 }

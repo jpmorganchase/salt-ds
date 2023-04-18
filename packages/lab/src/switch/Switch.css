@@ -32,7 +32,7 @@
 }
 
 .saltSwitch {
-  --switch-label-color: var(--salt-text-secondary-foreground);
+  --switch-label-color: var(--salt-text-secondary);
   --switch-thumb-background: var(--salt-selectable-primary-foreground-selected);
   --switch-track-color: var(--salt-selectable-borderColor);
   --switch-track-color-hover: var(--salt-selectable-borderColor-hover);

@@ -1,14 +1,14 @@
 .saltCircularProgress {
   --circularProgress-gradient-color: var(--salt-accent-background);
 
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-text-primary);
   display: inline-flex;
   position: relative;
 }
 
 .saltCircularProgress-disabled .saltCircularProgress-progressValue,
 .saltCircularProgress-disabled circle {
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-text-primary-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
@@ -31,7 +31,7 @@
 
 .saltCircularProgress-progressValue {
   align-items: center;
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-text-primary);
   display: flex;
   height: 100%;
   justify-content: center;

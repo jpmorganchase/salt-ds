@@ -28,7 +28,7 @@
   --controlLabel-marginLeft: 0;
   --controlLabel-marginRight: calc(var(--salt-size-unit) / 1.5);
 
-  color: var(--saltControlLabel-color, var(--salt-text-primary-foreground));
+  color: var(--saltControlLabel-color, var(--salt-text-primary));
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
@@ -53,5 +53,5 @@
 /* Styles applied to label if `disabled={true}` */
 .saltControlLabel-disabled .saltControlLabel-label {
   cursor: var(--salt-selectable-cursor-disabled);
-  color: var(--saltControlLabel-color-disabled, var(--salt-text-primary-foreground-disabled));
+  color: var(--saltControlLabel-color-disabled, var(--salt-text-primary-disabled));
 }

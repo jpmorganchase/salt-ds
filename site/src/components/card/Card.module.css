@@ -83,7 +83,7 @@
 }
 
 .cardDescription {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-text-secondary);
 }
 
 .inlineCardContent {
@@ -129,7 +129,7 @@
 }
 
 .cardFooter:hover {
-  color: var(--salt-text-link-foreground-hover);
+  color: var(--salt-text-link-hover);
 }
 
 .keyline {

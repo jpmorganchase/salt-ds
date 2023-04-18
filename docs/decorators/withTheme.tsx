@@ -35,7 +35,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
   const selector = viewMode === "docs" ? `.docs-story` : ".sb-show-main";
 
   useEffect(() => {
-    const color = getCharacteristicValue(theme, "text", "primary-foreground");
+    const color = getCharacteristicValue(theme, "text", "primary");
     const background = getCharacteristicValue(
       theme,
       "container",

@@ -11,5 +11,5 @@
 
 .accordion-story-details {
   padding: var(--salt-size-base);
-  border: solid 1px var(--salt-text-primary-foreground);
+  border: solid 1px var(--salt-text-primary);
 }

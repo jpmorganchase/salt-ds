@@ -21,7 +21,7 @@
   --dialog-title-lineHeight: var(--saltDialog-title-lineHeight, var(--salt-text-lineHeight));
   --dialog-title-fontWeight: var(--saltDialog-title-fontWeight, var(--salt-text-fontWeight-strong));
   --dialog-title-icon-marginRight: var(--saltDialog-title-icon-marginRight, 8px);
-  --dialog-title-color: var(--saltDialog-title-color, var(--salt-text-primary-foreground));
+  --dialog-title-color: var(--saltDialog-title-color, var(--salt-text-primary));
 }
 
 .saltDialogTitle {

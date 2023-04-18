@@ -17,18 +17,16 @@ All text examples are shown using the default `fontWeight` token.
 
 ## Tokens
 
-### Base
+### Colors
 
 <Canvas>
-  <Story name="Base">
+  <Story name="Colors">
     <DocGrid>
-      <ColorBlock colorVar="--salt-text-background" />
-      <ColorBlock colorVar="--salt-text-background-hover" />
-      <ColorBlock colorVar="--salt-text-background-selected" />
-      <ColorBlock colorVar="--salt-text-primary-foreground" />
-      <ColorBlock colorVar="--salt-text-primary-foreground-disabled" />
-      <ColorBlock colorVar="--salt-text-secondary-foreground" />
-      <ColorBlock colorVar="--salt-text-secondary-foreground-disabled" />
+      <ColorBlock colorVar="--salt-text-highlight" />
+      <ColorBlock colorVar="--salt-text-primary" />
+      <ColorBlock colorVar="--salt-text-primary-disabled" />
+      <ColorBlock colorVar="--salt-text-secondary" />
+      <ColorBlock colorVar="--salt-text-secondary-disabled" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -273,15 +271,56 @@ All text examples are shown using the default `fontWeight` token.
   <Story name="Links">
     <TextBlock
       textDecoration="--salt-text-link-textDecoration"
-      color="--salt-text-link-foreground-hover"
+      color="--salt-text-link-hover"
     />
     <DocGrid textExample={true}>
-      <ColorBlock colorVar="--salt-text-link-foreground-hover" />
-      <ColorBlock colorVar="--salt-text-link-foreground-active" />
-      <ColorBlock colorVar="--salt-text-link-foreground-visited" />
+      <ColorBlock colorVar="--salt-text-link-hover" />
+      <ColorBlock colorVar="--salt-text-link-active" />
+      <ColorBlock colorVar="--salt-text-link-visited" />
       <TextDecorationBlock textDecoration="--salt-text-link-textDecoration" />
       <TextDecorationBlock textDecoration="--salt-text-link-textDecoration-hover" />
       <TextDecorationBlock textDecoration="--salt-text-link-textDecoration-selected" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Deprecated
+
+<Canvas>
+  <Story name="Deprecated">
+    <DocGrid withNotes>
+      <ColorBlock
+        colorVar="--salt-text-background-selected"
+        replacementToken="--salt-text-highlight"
+      />
+      <ColorBlock
+        colorVar="--salt-text-primary-foreground"
+        replacementToken="--salt-text-primary"
+      />
+      <ColorBlock
+        colorVar="--salt-text-primary-foreground-disabled"
+        replacementToken="--salt-text-primary-disabled"
+      />
+      <ColorBlock
+        colorVar="--salt-text-secondary-foreground"
+        replacementToken="--salt-text-secondary"
+      />
+      <ColorBlock
+        colorVar="--salt-text-secondary-foreground-disabled"
+        replacementToken="--salt-text-secondary-disabled"
+      />
+      <ColorBlock
+        colorVar="--salt-text-link-foreground-hover"
+        replacementToken="--salt-text-link-hover"
+      />
+      <ColorBlock
+        colorVar="--salt-text-link-foreground-active"
+        replacementToken="--salt-text-link-active"
+      />
+      <ColorBlock
+        colorVar="--salt-text-link-foreground-visited"
+        replacementToken="--salt-text-link-visited"
+      />
     </DocGrid>
   </Story>
 </Canvas>

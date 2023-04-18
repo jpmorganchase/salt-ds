@@ -38,7 +38,7 @@
 }
 
 .table th {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-text-secondary);
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
