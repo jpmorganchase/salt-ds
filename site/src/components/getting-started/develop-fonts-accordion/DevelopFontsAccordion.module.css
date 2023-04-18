@@ -3,7 +3,7 @@
 }
 
 .accordionWrapper :global(.saltIcon) {
-  --salt-size-icon-base: var(--salt-size-unit);
+  --salt-icon-size-base: var(--salt-size-unit);
 }
 
 .accordionWrapper :global(.saltAccordionSection) {
