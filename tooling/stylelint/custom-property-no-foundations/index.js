@@ -83,6 +83,8 @@ const allAllowedKeys = [
   "delay", // TODO: **deprecated:** delete here
   "duration", // TODO: to be merged with animation
   "size",
+  // icon size
+  "icon-size",
   "zIndex",
   // palette opacity
   "palette-opacity",
