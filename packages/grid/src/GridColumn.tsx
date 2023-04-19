@@ -157,26 +157,26 @@ export const GridColumn = function GridColumn<T = any>(
 
   const grid = useGridContext();
 
+  const onWidthChanged = (w: number) => {
+    setWidth(w);
+  if (props.onWidthChanged) {
+      props.onWidthChanged(w);
+    }
+  };
+
+  const info: GridColumnInfo<T> = {
+    width,
+    onWidthChanged,
+    props,
+  };
+
   useEffect(() => {
-    const onWidthChanged = (w: number) => {
-      setWidth(w);
-      if (props.onWidthChanged) {
-        props.onWidthChanged(w);
-      }
-    };
-
-    const info: GridColumnInfo<T> = {
-      width,
-      onWidthChanged,
-      props,
-    };
-
     indexRef.current = grid.getChildIndex(props.id);
     grid.onColumnAdded(info);
     return () => {
       grid.onColumnRemoved(indexRef.current!, info);
     };
-  }, [grid, props.id, width]); // do not include `props` in dep array
+  }); 
 
   return (
     <>
