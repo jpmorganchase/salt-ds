@@ -438,10 +438,16 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const isSortMode = sortByColumnId && sortOrder !== SortOrder.NONE;
 
-  const sortedRowData = useMemo(() => {
-    const onSortOrderChange =
-      getColById(sortByColumnId)?.info.props.onSortOrderChange;
+  const onSortOrderChange =
+    getColById(sortByColumnId)?.info.props.onSortOrderChange;
 
+  const valueGetter =
+    getColById(sortByColumnId)?.info.props.getValue ||
+    ((r: T) => {
+      return r[sortByColumnId as keyof typeof r];
+    });
+
+  const sortedRowData = useMemo(() => {
     if (!isSortMode || onSortOrderChange) return rowData;
 
     const customSortingFn = getColById(sortByColumnId)?.info.props.customSort;
@@ -449,12 +455,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     if (customSortingFn) {
       return customSortingFn({ rowData, sortOrder });
     }
-
-    const valueGetter =
-      getColById(sortByColumnId)?.info.props.getValue ||
-      ((r: T) => {
-        return r[sortByColumnId as keyof typeof r];
-      });
 
     const sortedData = [...rowData].sort((a, b) =>
       valueGetter(a) < valueGetter(b) ? -1 : 1
@@ -465,7 +465,14 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }
 
     return sortedData;
-  }, [getColById, isSortMode, rowData, sortByColumnId, sortOrder]);
+  }, [
+    onSortOrderChange,
+    valueGetter,
+    isSortMode,
+    rowData,
+    sortByColumnId,
+    sortOrder,
+  ]);
 
   const onClickSortColumn = useCallback(
     (colHeaderId: GridColumnProps["id"]) => {
