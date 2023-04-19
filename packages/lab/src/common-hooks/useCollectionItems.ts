@@ -223,11 +223,11 @@ export const useCollectionItems = <Item>({
     (pattern = "") => {
       if (typeof pattern === "string") {
         filterPattern.current = pattern;
-        dataRef.current = collectVisibleItems(collectionItemsRef.current);
+        dataRef.current = collectVisibleItems(collectionItems);
         forceUpdate({});
       }
     },
-    [collectVisibleItems]
+    [collectionItems, collectVisibleItems]
   );
 
   const itemById = useCallback(
