@@ -447,10 +447,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       return r[sortByColumnId as keyof typeof r];
     });
 
+  const customSortingFn = getColById(sortByColumnId)?.info.props.customSort;
+
   const sortedRowData = useMemo(() => {
     if (!isSortMode || onSortOrderChange) return rowData;
-
-    const customSortingFn = getColById(sortByColumnId)?.info.props.customSort;
 
     if (customSortingFn) {
       return customSortingFn({ rowData, sortOrder });
@@ -468,6 +468,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   }, [
     onSortOrderChange,
     valueGetter,
+    customSortingFn,
     isSortMode,
     rowData,
     sortByColumnId,
