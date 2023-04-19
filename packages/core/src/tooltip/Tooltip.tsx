@@ -5,12 +5,19 @@ import {
   HTMLAttributes,
   ReactNode,
   isValidElement,
+  Ref,
 } from "react";
-import { FloatingArrow } from "@floating-ui/react";
+import { FloatingArrow, FloatingPortal } from "@floating-ui/react";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
-import { UseFloatingUIProps, makePrefixer, useForkRef } from "../utils";
+import {
+  UseFloatingUIProps,
+  makePrefixer,
+  mergeProps,
+  useForkRef,
+} from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import "./Tooltip.css";
+import { SaltProvider } from "../salt-provider";
 
 const withBaseName = makePrefixer("saltTooltip");
 
@@ -99,42 +106,53 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       reference
     );
 
+    const floatingRef = useForkRef(floating, ref) as Ref<HTMLDivElement>;
+
     return (
       <>
         {isValidElement(children) &&
           cloneElement(children, {
-            ...getTriggerProps(),
+            ...mergeProps(getTriggerProps(), children.props),
             ref: triggerRef,
           })}
 
         {open && !disabled && (
-          <div
-            className={clsx(withBaseName(), withBaseName(status), className)}
-            ref={floating}
-            {...getTooltipProps()}
-          >
-            <div className={withBaseName("container")}>
-              {!hideIcon && (
-                <StatusIndicator
-                  status={status}
-                  size={1}
-                  className={withBaseName("icon")}
-                />
-              )}
-              <span className={withBaseName("content")}>{content}</span>
-            </div>
-            {!hideArrow && (
-              <FloatingArrow
-                {...arrowProps}
-                className={withBaseName("arrow")}
-                strokeWidth={1}
-                fill="var(--salt-container-primary-background)"
-                stroke="var(--tooltip-status-borderColor)"
-                height={5}
-                width={10}
-              />
-            )}
-          </div>
+          <FloatingPortal>
+            {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
+            <SaltProvider>
+              <div
+                className={clsx(
+                  withBaseName(),
+                  withBaseName(status),
+                  className
+                )}
+                ref={floatingRef}
+                {...getTooltipProps()}
+              >
+                <div className={withBaseName("container")}>
+                  {!hideIcon && (
+                    <StatusIndicator
+                      status={status}
+                      size={1}
+                      className={withBaseName("icon")}
+                    />
+                  )}
+                  <span className={withBaseName("content")}>{content}</span>
+                </div>
+                {!hideArrow && (
+                  <FloatingArrow
+                    {...arrowProps}
+                    className={withBaseName("arrow")}
+                    strokeWidth={1}
+                    fill="var(--salt-container-primary-background)"
+                    stroke="var(--tooltip-status-borderColor)"
+                    height={5}
+                    width={10}
+                  />
+                )}
+              </div>
+            </SaltProvider>
+          </FloatingPortal>
         )}
       </>
     );

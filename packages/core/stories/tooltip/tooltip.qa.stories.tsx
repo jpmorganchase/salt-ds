@@ -29,6 +29,16 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       <IconWithTooltip
         content={<div style={{ background: "#ccc", width: 60, height: 20 }} />}
       />
+      <div
+        style={{
+          width: 10,
+          height: 10,
+          overflow: "hidden",
+          position: "absolute",
+        }}
+      >
+        <IconWithTooltip content="Hidden, World?" />
+      </div>
     </QAContainer>
   );
 };
