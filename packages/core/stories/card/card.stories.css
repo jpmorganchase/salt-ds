@@ -1,0 +1,17 @@
+.card-demo-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-demo-inner-content {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: calc(var(--salt-size-unit) * 2);
+  align-items: center;
+  padding: var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit);
+}
+
+.imageBackground {
+  width: 266px;
+  background-image: url("../assets/exampleImage.png");
+}
