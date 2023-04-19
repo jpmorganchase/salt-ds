@@ -5551,7 +5551,7 @@ __metadata:
     "@changesets/cli": ^2.25.2
     "@cypress/code-coverage": ^3.10.0
     "@faker-js/faker": ^7.6.0
-    "@floating-ui/react": ^0.20.0
+    "@floating-ui/react": ^0.23.0
     "@fontsource/open-sans": ^4.5.13
     "@internationalized/date": ^3.0.0
     "@jpmorganchase/mosaic-create-site": ^0.1.0-beta.19
