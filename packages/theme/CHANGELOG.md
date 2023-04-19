@@ -1,5 +1,53 @@
 # @salt-ds/theme
 
+## 1.3.0
+
+### Minor Changes
+
+- 6d2c3a32: Deprecate delay foundation; replace with duration
+- ea010ffa: New `--salt-size-container-spacing` and `--salt-size-adornmentGap` tokens
+
+  ```diff
+  +  --salt-size-container-spacing: calc(3 * var(--salt-size-unit));
+  +  --salt-size-adornmentGap: calc(0.75 * var(--salt-size-unit));
+  ```
+
+- d8f8b305: Added `--salt-accent-foreground-disabled`
+
+  ```diff
+  + --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled)
+  + --salt-palette-accent-foreground-disabled
+  ```
+
+- 7a025091: Bug fix
+
+  ```diff
+  - --salt-palette-interact-foreground-disabled: var(--salt-color-90-fade-foreground);
+  + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-fade-foreground);
+  ```
+
+- 91e7cbdf: Added `--salt-accent-borderColor-disabled`
+
+  ```diff
+  + --salt-accent-borderColor-disabled: var(--salt-palette-accent-border-disabled);
+  + --salt-palette-accent-border-disabled
+  ```
+
+### Patch Changes
+
+- 8d29c01f: New font family css variable for all text components which point to `--salt-typography-fontFamily`.
+
+  ```
+  --salt-text-display1-fontFamily
+  --salt-text-display2-fontFamily
+  --salt-text-display3-fontFamily
+  --salt-text-h1-fontFamily
+  --salt-text-h2-fontFamily
+  --salt-text-h3-fontFamily
+  --salt-text-h4-fontFamily
+  --salt-text-label-fontFamily
+  ```
+
 ## 1.2.0
 
 ### Minor Changes

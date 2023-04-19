@@ -1,25 +1,17 @@
 ---
-sidebar_position: 0
-sidebar_label: Overview
-hide_table_of_contents: true
+title: Getting started
+layout: DetailTechnical
+sidebar:
+  label: Overview
 ---
-
-import DesignIcon from "@site/static/img/design.svg";
-import DevelopIcon from "@site/static/img/develop.svg";
-import Content from "@site/src/layouts/content/Content.tsx";
-import OverviewCards, { OverviewCard } from "./_index/OverviewCards.tsx";
-
-# Getting started
-
-<Content>
 
 Follow our step-by-step guides to design and develop accessible, responsive, best-in-class user experiences with Salt.
 
 <OverviewCards>
   <OverviewCard
-    icon={<DesignIcon role="presentation" />}
+    icon={<Image src="/img/design.svg" alt="pen icon"  />}
     title="Designing"
-    url="/getting-started/designing"
+    url="./designing"
     footerText="Start designing"
     keylineColor="purple"
     >
@@ -29,9 +21,9 @@ components and apply styling to your designs.
 
   </OverviewCard>
   <OverviewCard
-    icon={<DevelopIcon role="presentation" />}
+    icon={<Image src="/img/develop.svg" alt="code bracket icon"  />}
     title="Developing"
-    url="/getting-started/developing"
+    url="./developing"
     footerText="Start developing"
     keylineColor="orange"
   >
@@ -41,5 +33,3 @@ project, add the web fonts you need and import components.
 
   </OverviewCard>
 </OverviewCards>
-
-</Content>

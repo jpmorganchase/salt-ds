@@ -25,7 +25,7 @@
   color: var(--card-color);
   display: flex;
   flex-direction: column;
-  gap: var(--salt-size-container-spacing);
+  gap: calc(var(--salt-size-unit) * 3);
   flex: 1;
 }
 
@@ -67,7 +67,10 @@
 
 .icon {
   transition: 0.5s all ease-in-out;
-  max-width: 160px;
+}
+
+.icon img {
+  transition: 0.5s all ease-in-out;
   max-height: 160px;
 }
 
@@ -85,7 +88,7 @@
 
 .inlineCardContent {
   display: flex;
-  margin-bottom: var(--salt-size-container-spacing);
+  margin-bottom: calc(var(--salt-size-unit) * 3);
 }
 
 .inlineCardContent .textContainer {
@@ -96,7 +99,7 @@
 }
 
 .inlineCard .cardText {
-  margin: var(--salt-size-container-spacing) calc(var(--salt-size-unit) * 5) var(--salt-size-unit) calc(var(--salt-size-unit) * 2);
+  margin: calc(var(--salt-size-unit) * 3) calc(var(--salt-size-unit) * 5) var(--salt-size-unit) calc(var(--salt-size-unit) * 2);
 }
 
 .inlineCard .cardDescription {

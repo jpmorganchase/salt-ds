@@ -108,8 +108,9 @@ export function useTooltip(props?: UseTooltipProps) {
     ref: arrowRef,
     context,
     style: {
-      left: arrowX ? `${arrowX}px` : "",
-      top: arrowY ? `${arrowY}px` : "",
+      position: strategy,
+      left: arrowX ?? 0,
+      top: arrowY ?? 0,
     },
   };
 
@@ -119,8 +120,8 @@ export function useTooltip(props?: UseTooltipProps) {
       "data-placement": placement,
       ref: floating,
       style: {
-        top: y ?? "",
-        left: x ?? "",
+        top: y ?? 0,
+        left: x ?? 0,
         position: strategy,
       },
     });

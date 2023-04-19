@@ -1,5 +1,33 @@
 # @salt-ds/icons
 
+## 1.2.0
+
+### Minor Changes
+
+- b1ab81f6: New icons available
+
+  - Accessible
+  - Cart
+  - Crops
+  - Github
+  - Hospital
+  - Man
+  - Man woman
+  - Map
+  - Marker
+  - Medical kit
+  - Picnic
+  - Pot food
+  - Signpost
+  - Stethoscope
+  - Storefront
+  - Success
+  - Tote
+  - Universal access
+  - Utensils
+  - Woman
+  - Woodland
+
 ## 1.1.0
 
 ### Minor Changes

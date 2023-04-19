@@ -1,13 +1,24 @@
 .salt-density-touch {
-  --salt-size-icon-base: 16px;
+  --salt-icon-size-base: 16px;
+  --salt-icon-size-status-adornment: 12px;
 }
 
 .salt-density-low {
-  --salt-size-icon-base: 14px;
+  --salt-icon-size-base: 14px;
+  --salt-icon-size-status-adornment: 10px;
 }
+
 .salt-density-medium {
-  --salt-size-icon-base: 12px;
+  --salt-icon-size-base: 12px;
+  --salt-icon-size-status-adornment: 8px;
 }
+
 .salt-density-high {
-  --salt-size-icon-base: 10px;
+  --salt-icon-size-base: 10px;
+  --salt-icon-size-status-adornment: 6px;
+}
+
+.salt-theme {
+  /* **Deprecated:** Replacement tokens should be used as noted */
+  --salt-size-icon-base: var(--salt-icon-size-base);
 }
