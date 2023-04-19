@@ -37,17 +37,16 @@ const getTotal = (r: RowExample) =>
   r.amount * r.price * discountMap.get(r.discount)!;
 
 const useExampleDataSource = () => {
-  const [rows, setRows] = useState<RowExample[]>(
-    () =>
-      [...new Array(10).keys()].map((i) => {
-        return {
-          id: `Row${i + 1}`,
-          name: randomText(1, 5, 10),
-          amount: randomInt(0, 100),
-          price: randomNumber(10, 100, 2),
-          discount: "-",
-        } as RowExample;
-      }) as RowExample[]
+  const [rows, setRows] = useState<RowExample[]>(() =>
+    [...new Array(10).keys()].map((i) => {
+      return {
+        id: `Row${i + 1}`,
+        name: randomText(1, 5, 10),
+        amount: randomInt(0, 100),
+        price: randomNumber(10, 100, 2),
+        discount: "-",
+      } as RowExample;
+    })
   );
 
   const setName = useCallback(
@@ -114,6 +113,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         name="Name"
         getValue={(r) => r.name}
         onChange={setName}
+        sortable
       >
         <CellEditor>
           <TextCellEditor />
@@ -125,6 +125,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         getValue={(r: RowExample) => r.amount}
         precision={0}
         onChange={setAmount}
+        sortable
       >
         <CellEditor>
           <NumericCellEditor />
@@ -136,6 +137,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         precision={2}
         getValue={(r: RowExample) => r.price}
         onChange={setPrice}
+        sortable
       >
         <CellEditor>
           <NumericCellEditor />
@@ -146,6 +148,7 @@ const EditableCellsTemplate: Story<{}> = () => {
         name="Discount"
         getValue={(r) => r.discount}
         onChange={setDiscount}
+        sortable
       >
         <CellEditor>
           <DropdownCellEditor options={discountOptions} />

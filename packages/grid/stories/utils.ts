@@ -1,4 +1,4 @@
-export function randomString(length: number = 20) {
+export function randomString(length = 20) {
   const abc = "abcdefghijklmnopqrstuvwxyz";
   const name: string[] = [];
   for (let i = 0; i < length; ++i) {
@@ -17,17 +17,13 @@ export function randomText(w: number, min: number, max: number) {
   return text;
 }
 
-export function randomNumber(min: number, max: number, precision: number = 2) {
+export function randomNumber(min: number, max: number, precision = 2) {
   const r = max - min;
   const m = 10 ** precision;
   return Math.round((Math.random() * r + min) * m) / m;
 }
 
-export function randomAmount(
-  min: number = 0,
-  max: number = 10000000,
-  precision: number = 2
-) {
+export function randomAmount(min = 0, max = 10000000, precision = 2) {
   const m = max * Math.pow(10, precision);
   const d = Math.pow(10, -precision);
   return Math.round(Math.random() * m) * d;
@@ -62,4 +58,10 @@ export function randomInt(min: number, max: number): number {
 
 export function randomCurrency(): string {
   return randomItem(["$", "£", "\u20AC"]);
+}
+
+export function randomDate(start: Date, end: Date) {
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
 }

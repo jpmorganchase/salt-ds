@@ -31,7 +31,7 @@ jobs:
       - name: Run build
         run: yarn build-storybook
         env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
+          NODE_OPTIONS: "--max_old_space_size=6144"
 
       - name: Publish
         uses: cloudflare/pages-action@v1
