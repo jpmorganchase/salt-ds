@@ -5,6 +5,18 @@
   --saltButton-width: 100%;
 }
 
+.saltDropdownButtonNext-primary {
+  --saltButton-background: var(--salt-editable-primary-background);
+  --saltButton-background-hover: var(--salt-editable-primary-background-hover);
+  --saltButton-background-active: var(--salt-editable-primary-background-active);
+}
+
+.saltDropdownButtonNext-secondary {
+  --saltButton-background: var(--salt-editable-secondary-background);
+  --saltButton-background-hover: var(--salt-editable-secondary-background-hover);
+  --saltButton-background-active: var(--salt-editable-secondary-background-active);
+}
+
 .saltDropdownButtonNext:active {
   --saltIcon-color: var(--salt-actionable-secondary-foreground);
   --saltButton-text-color-active: var(--salt-actionable-secondary-foreground);

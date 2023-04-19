@@ -45,6 +45,7 @@ export interface DropdownButtonProps extends ButtonProps {
     AriaAttributes,
     "aria-posinset" | "aria-setsize" | "aria-selected"
   >;
+  variant?: "primary" | "secondary";
 }
 
 const withBaseName = makePrefixer("saltDropdownButtonNext");
@@ -62,6 +63,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
     posInSet,
     setSize,
     labelAriaAttributes,
+    variant = "primary",
     ...rest
   }: DropdownButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
@@ -71,10 +73,13 @@ export const DropdownButton = forwardRef(function DropdownButton(
   // tool's false alarm on role of 'listbox'
   return (
     <Button
-      className={clsx(withBaseName(), className)}
+      className={clsx(withBaseName(), {
+        [
+          withBaseName("primary")]: variant === "primary", 
+          [withBaseName("secondary")]: variant === "secondary"
+        }, className)}
       data-testid="dropdown-button"
       disabled={disabled}
-      variant="secondary"
       {...rest}
       ref={ref}
     >

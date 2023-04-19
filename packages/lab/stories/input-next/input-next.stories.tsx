@@ -22,16 +22,6 @@ export const Secondary: ComponentStory<typeof InputNext> = (args) => {
   );
 };
 
-export const Tertiary: ComponentStory<typeof InputNext> = (args) => {
-  return (
-    <InputNext
-      defaultValue={args.defaultValue ?? "Value"}
-      variant="tertiary"
-      {...args}
-    />
-  );
-};
-
 export const Disabled: ComponentStory<typeof InputNext> = (args) => {
   return (
     <>

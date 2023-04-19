@@ -38,7 +38,7 @@
 .saltInputNext-primary {
   --inputNext-background: var(--salt-editable-primary-background);
   --inputNext-background-active: var(--salt-editable-primary-background-active);
-  --inputNext-background-hover: var(--salt-editable-secondary-background-hover);
+  --inputNext-background-hover: var(--salt-editable-primary-background-hover);
   --inputNext-background-disabled: var(--salt-editable-primary-background-disabled);
   --inputNext-background-readonly: var(--salt-editable-primary-background-readonly);
 }
@@ -50,15 +50,6 @@
   --inputNext-background-hover: var(--salt-editable-secondary-background-active);
   --inputNext-background-disabled: var(--salt-editable-secondary-background-disabled);
   --inputNext-background-readonly: var(--salt-editable-secondary-background-readonly);
-}
-
-/* Class applied if `variant="tertiary"` */
-.saltInputNext-tertiary {
-  --inputNext-background: var(--salt-editable-tertiary-background);
-  --inputNext-background-active: var(--salt-editable-tertiary-background-active);
-  --inputNext-background-hover: var(--salt-editable-tertiary-background-hover);
-  --inputNext-background-disabled: var(--salt-editable-tertiary-background-disabled);
-  --inputNext-background-readonly: var(--salt-editable-tertiary-background-readonly);
 }
 
 /* Style applied to inner input component */
