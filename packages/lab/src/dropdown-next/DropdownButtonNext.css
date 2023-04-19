@@ -58,9 +58,3 @@
   --saltButton-background-hover: var(--salt-editable-secondary-background-hover);
   --saltButton-background-active: var(--salt-editable-secondary-background-active);
 }
-
-.saltDropdown-tertiary .saltDropdownButtonNext {
-  --saltButton-background: var(--salt-editable-tertiary-background);
-  --saltButton-background-hover: var(--salt-editable-tertiary-background-hover);
-  --saltButton-background-active: var(--salt-editable-tertiary-background-active);
-}

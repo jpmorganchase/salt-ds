@@ -73,11 +73,14 @@ export const DropdownButton = forwardRef(function DropdownButton(
   // tool's false alarm on role of 'listbox'
   return (
     <Button
-      className={clsx(withBaseName(), {
-        [
-          withBaseName("primary")]: variant === "primary", 
-          [withBaseName("secondary")]: variant === "secondary"
-        }, className)}
+      className={clsx(
+        withBaseName(),
+        {
+          [withBaseName("primary")]: variant === "primary",
+          [withBaseName("secondary")]: variant === "secondary",
+        },
+        className
+      )}
       data-testid="dropdown-button"
       disabled={disabled}
       {...rest}

@@ -25,7 +25,6 @@ import { DropdownBaseNextProps } from "./dropdownTypes";
 import { useDropdownNext } from "./useDropdownNext";
 import { forwardCallbackProps } from "../utils";
 
-
 export interface DropdownProps<
   Item = string,
   Selection extends SelectionStrategy = "default"

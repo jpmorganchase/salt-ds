@@ -38,13 +38,6 @@ export const Disabled: ComponentStory<typeof InputNext> = (args) => {
         variant="secondary"
         {...args}
       />
-      <div style={{ height: 16 }} />
-      <InputNext
-        disabled={true}
-        defaultValue={args.defaultValue ?? "Tertiary disabled"}
-        variant="tertiary"
-        {...args}
-      />
     </>
   );
 };
@@ -65,13 +58,6 @@ export const Readonly: ComponentStory<typeof InputNext> = (args) => {
         variant="secondary"
         {...args}
       />
-      <div style={{ height: 16 }} />
-      <InputNext
-        readOnly={true}
-        defaultValue={args.defaultValue ?? "Tertiary readonly"}
-        variant="tertiary"
-        {...args}
-      />
     </>
   );
 };
@@ -82,24 +68,20 @@ export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
       <div className="demo alignCenter">
         <InputNext
           defaultValue={args.defaultValue ?? "Value 1"}
-          variant="tertiary"
           {...args}
         />
         <InputNext
           defaultValue={args.defaultValue ?? "Value 2"}
-          variant="tertiary"
           {...args}
         />
       </div>
       <div className="demo alignRight">
         <InputNext
           defaultValue={args.defaultValue ?? "Value 1"}
-          variant="tertiary"
           {...args}
         />
         <InputNext
           defaultValue={args.defaultValue ?? "Value 2"}
-          variant="tertiary"
           {...args}
         />
       </div>
