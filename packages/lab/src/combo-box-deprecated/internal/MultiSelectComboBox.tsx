@@ -117,8 +117,8 @@ export function MultiSelectComboBox<Item>(
         <Portal>
           <Window
             style={{
-              top: y ?? "",
-              left: x ?? "",
+              top: y ?? 0,
+              left: x ?? 0,
               position: strategy,
               maxHeight: maxListHeight ?? "",
             }}

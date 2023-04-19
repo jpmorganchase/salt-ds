@@ -99,8 +99,9 @@ export function useOverlay(props: UseOverlayProps) {
     const arrowProps = {
       ref: handleArrowRef,
       style: {
-        left: middlewareData.arrow?.x ?? "",
-        top: middlewareData.arrow?.y ?? "",
+        position: strategy,
+        left: middlewareData.arrow?.x ?? 0,
+        top: middlewareData.arrow?.y ?? 0,
       },
     };
 
@@ -113,8 +114,8 @@ export function useOverlay(props: UseOverlayProps) {
         "data-placement": placement,
         ...userProps,
         style: {
-          top: y ?? "",
-          left: x ?? "",
+          top: y ?? 0,
+          left: x ?? 0,
           position: strategy,
           ...(userProps?.style || {}),
         },
