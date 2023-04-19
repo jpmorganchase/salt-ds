@@ -159,7 +159,7 @@ export const GridColumn = function GridColumn<T = any>(
 
   const onWidthChanged = (w: number) => {
     setWidth(w);
-  if (props.onWidthChanged) {
+    if (props.onWidthChanged) {
       props.onWidthChanged(w);
     }
   };
@@ -176,7 +176,7 @@ export const GridColumn = function GridColumn<T = any>(
     return () => {
       grid.onColumnRemoved(indexRef.current!, info);
     };
-  }); 
+  });
 
   return (
     <>
