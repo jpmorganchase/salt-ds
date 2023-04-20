@@ -520,12 +520,10 @@ describe("Grid", () => {
         .get(`tr[data-row-index="2"]`)
         .should("have.class", "saltGridTableRow-selected");
 
-          cy.findAllByRole("grid")
-            .eq(1)
-            .get(`tr[data-row-index="3"]`)
-            .should("have.class", "saltGridTableRow-selected");
-        });
-      });
+      cy.findAllByRole("grid")
+        .eq(1)
+        .get(`tr[data-row-index="3"]`)
+        .should("have.class", "saltGridTableRow-selected");
     });
   });
 
