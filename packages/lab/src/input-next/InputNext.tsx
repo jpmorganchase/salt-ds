@@ -16,7 +16,6 @@ import {
 } from "react";
 import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context";
-import { useCursorOnFocus } from "./useCursorOnFocus";
 
 import "./InputNext.css";
 
@@ -27,14 +26,6 @@ const withBaseName = makePrefixer("saltInputNext");
 export interface InputProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
-   * Determines the position of the text cursor on focus of the input.
-   *
-   * start = place cursor at the beginning<br>
-   * end = place cursor at the end<br>
-   * \# = index to place the cursor<br>
-   */
-  cursorPositionOnFocus?: "start" | "end" | number;
-  /**
    * The value of the `input` element, required for an uncontrolled component.
    */
   defaultValue?: HTMLInputElement["defaultValue"];
@@ -42,14 +33,6 @@ export interface InputProps
    * If `true`, the component is disabled.
    */
   disabled?: HTMLInputElement["disabled"];
-  /**
-   * Determines what gets highlighted on focus of the input.
-   *
-   * If `true` all text will be highlighted.
-   * If an array text between those indices will be highlighted
-   * e.g. [0,1] will highlight the first character.
-   */
-  highlightOnFocus?: boolean | number[];
   /**
    * The HTML element to render the Input, e.g. 'input', a custom React component.
    */
@@ -79,9 +62,7 @@ export interface InputProps
    */
   value?: HTMLInputElement["value"];
   /**
-   * Styling variant
-   *
-   * Defaults to "primary"
+   * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
 }
@@ -115,9 +96,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     "aria-expanded": ariaExpanded,
     "aria-owns": ariaOwns,
     className: classNameProp,
-    cursorPositionOnFocus,
     disabled,
-    highlightOnFocus,
     id,
     inputComponent: InputComponent = "input",
     inputProps: inputPropsProp,
@@ -156,10 +135,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const [focused, setFocused] = useState(false);
   const inputRef = useRef(null);
   const handleRef = useForkRef(inputRef, ref);
-  const cursorOnFocusHelpers = useCursorOnFocus(inputRef, {
-    cursorPositionOnFocus,
-    highlightOnFocus,
-  });
 
   const misplacedAriaProps = {
     "aria-activedescendant": ariaActiveDescendant,
@@ -197,20 +172,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   };
 
   const handleMouseMove = (event: MouseEvent<HTMLInputElement>) => {
-    cursorOnFocusHelpers.handleMouseMove(event);
-
     onMouseMove?.(event);
   };
 
   const handleMouseUp = (event: MouseEvent<HTMLInputElement>) => {
-    cursorOnFocusHelpers.handleMouseUp();
-
     onMouseUp?.(event);
   };
 
   const handleMouseDown = (event: MouseEvent<HTMLInputElement>) => {
-    cursorOnFocusHelpers.handleMouseDown();
-
     onMouseDown?.(event);
   };
 
