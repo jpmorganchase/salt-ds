@@ -17,7 +17,7 @@ const { RowSelectionControlled } = composeStories(
   rowSelectionControlledStories
 );
 const { RowSelectionModes } = composeStories(rowSelectionModesStories);
-const { CellValidation } = composeStories(cellValidationStories);
+const { CellValidation, RowValidation } = composeStories(cellValidationStories);
 const {
   GridExample,
   LotsOfColumns,
@@ -782,6 +782,19 @@ describe("Grid", () => {
 
       findCell(3, 5).should("have.attr", "aria-invalid", "true");
       findCell(3, 5).find("svg").should("not.exist");
+    });
+  });
+
+  describe("row validation", () => {
+    it("should render an RowValidationColumn icon when the row has an validation status", () => {
+      cy.mount(<RowValidation />);
+      assertGridReady();
+
+      findCell(0, 1).find("svg").should("exist");
+      findCell(1, 1).find("svg").should("not.exist");
+      findCell(2, 1).find("svg").should("exist");
+      findCell(3, 1).find("svg").should("not.exist");
+      findCell(4, 1).find("svg").should("exist");
     });
   });
 });

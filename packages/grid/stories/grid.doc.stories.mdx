@@ -268,6 +268,22 @@ If you are validating editable cells, for the business logic, we recommend you u
   <Story id="data-grid-data-grid--cell-validation" decorators={[withFlexGap]} />
 </Canvas>
 
+### Row Validation
+
+Grid provides an api for row-level validation with the prop `getRowValidationStatus`. This function provides the row data as the argument, and expects a return value that is one of the cell validation states, "error", "warning", and "success".
+In most cases, it should be used together with the `RowValidationColumn` component to give the user a visual indicator of the validation state besides background color. This is important for accessibility.
+
+<Canvas>
+  <Story id="data-grid-data-grid--row-validation" decorators={[withFlexGap]} />
+</Canvas>
+
+<Canvas>
+  <Story
+    id="data-grid-data-grid--cell-and-row-validation"
+    decorators={[withFlexGap]}
+  />
+</Canvas>
+
 ### Pagination
 
 [Implement pagination](https://saltdesignsystem-storybook.pages.dev/?path=/story/lab-pagination--default-pagination) using the `Paginator` component. It is not a feature of the grid itself.
