@@ -15,7 +15,10 @@ import { GridColumnModel, GridRowModel, SortOrder } from "./Grid";
 
 export type GridColumnPin = "left" | "right" | null;
 
-export interface GridCellProps<T> {
+export type CellValidationState = "error" | "warning" | "success";
+type CellValidationType = "strong" | "light";
+
+export interface GridCellProps<T, U = any> {
   row: GridRowModel<T>;
   column: GridColumnModel<T>;
   className?: string;
@@ -24,6 +27,11 @@ export interface GridCellProps<T> {
   isSelected?: boolean;
   isEditable?: boolean;
   children?: ReactNode;
+  align?: GridColumnProps["align"];
+  value?: U;
+  validationStatus?: CellValidationState;
+  validationMessage?: string;
+  validationType?: CellValidationType;
 }
 
 export interface GridCellValueProps<T, U = any> {
@@ -31,6 +39,9 @@ export interface GridCellValueProps<T, U = any> {
   column: GridColumnModel<T>;
   isFocused?: boolean;
   value?: U;
+  validationStatus?: CellValidationState;
+  validationMessage?: string;
+  validationType?: CellValidationType;
 }
 
 export interface HeaderCellProps<T> {
@@ -112,6 +123,25 @@ export interface GridColumnProps<T = any> {
    * */
   getValue?: (rowData: T) => any;
   /**
+   * Cell validation status getter. Should return one of the known validation status names: "none" | "error" | "warning"
+   * If you require a custom validation status, you can achieve that by providing a custom cell component.
+   * */
+  getValidationStatus?: (
+    value: GridCellValueProps<T>
+  ) => CellValidationState | undefined;
+  /**
+   * Cell validation status message getter. Should return a string description of the validation state that can be used for the screen reader.
+   * This prop is optional but if you don't provide a function a default message will be used.
+   * */
+  getValidationMessage?: (value: GridCellValueProps<T>) => string | undefined;
+  /**
+   * Cell validation type. Determines the visual style of the validation. The available values are "strong" and "light". Strong will display the icon
+   * along side the background and border. Light will only affect border and background. Use light if you are validation the whole row, and optionally
+   * strong on one of the columns, and strong if you are validating user input on a particular cell.
+   * The default value is "light".
+   * */
+  validationType?: GridCellProps<T>["validationType"];
+  /**
    * CSS class to be applied to the column header.
    * Useful for minor customizations
    * */
@@ -138,6 +168,10 @@ export interface GridColumnProps<T = any> {
    * Children is optional, and accepts non-rendered elements i.e. `CellEditor`
    */
   children?: ReactNode;
+  /**
+   * aria-label is optional, and accepts any string value
+   */
+  "aria-label"?: string;
 }
 
 export interface GridColumnInfo<T> {

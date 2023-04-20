@@ -5,6 +5,7 @@ import "./MiddlePart.css";
 import { makePrefixer } from "@salt-ds/core";
 import { GridColumnModel, GridRowModel } from "../Grid";
 import { useActiveOnWheel } from "./gridHooks";
+import { CellValidationState } from "../GridColumn";
 
 const withBaseName = makePrefixer("saltGridMiddlePart");
 
@@ -17,6 +18,9 @@ export interface MiddlePartProps<T> {
   setHoverOverRowKey: (key: string | undefined) => void;
   midGap: number;
   zebra?: boolean;
+  getRowValidationStatus?: (
+    row: GridRowModel<T>
+  ) => CellValidationState | undefined;
 }
 
 export function MiddlePart<T>(props: MiddlePartProps<T>) {
@@ -29,6 +33,7 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
     setHoverOverRowKey,
     midGap,
     zebra,
+    getRowValidationStatus,
   } = props;
 
   const tableRef = useActiveOnWheel(onWheel);
@@ -49,6 +54,7 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
             setHoverRowKey={setHoverOverRowKey}
             gap={midGap}
             zebra={zebra}
+            getRowValidationStatus={getRowValidationStatus}
           />
         </table>
       </div>

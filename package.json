@@ -129,7 +129,8 @@
     "vite": "^3.1.0",
     "vite-plugin-istanbul": "^4.0.0",
     "vite-tsconfig-paths": "^4.0.3",
-    "webpack": "5.74.0"
+    "webpack": "5.74.0",
+    "yup": "^1.0.2"
   },
   "resolutions": {
     "esbuild": "0.14.51",

@@ -253,6 +253,37 @@ For server side sorting, we expose sort order (`asc | desc | none`) through `onS
   </Canvas>
 </LazyStoryCanvas>
 
+### Cell Validation
+
+To display a cell in one of the expected validation states, use the `getValidationState` prop on the `GridColumn` component. This prop is a function that provides row and column data and expects a return value of one of the known validation states, "error", "warning", and "success".
+Optionally, you can provide a custom accessibility label with the `getValidationMessage` prop. If you don't provide a custom message yourself, the default message will be `Cell validation state is ${status}`.
+
+Another optional prop to customize the validation is `validationType`. This can be either "strong" or "light". The default value is "light". Both options only apply visual styling. You will need to provide the validation logic yourself.
+The first validation type "light", applies a status color to the background and border,
+while the second type "strong" additionally displays a status icon. Light validation is supposed to be used with non-editable cells, and strong with editable cells.
+
+If you are validating editable cells, for the business logic, we recommend you use a 3rd party library like [yup](https://www.npmjs.com/package/yup) or [zod](https://www.npmjs.com/package/zod).
+
+<Canvas>
+  <Story id="data-grid-data-grid--cell-validation" decorators={[withFlexGap]} />
+</Canvas>
+
+### Row Validation
+
+Grid provides an api for row-level validation with the prop `getRowValidationStatus`. This function provides the row data as the argument, and expects a return value that is one of the cell validation states, "error", "warning", and "success".
+In most cases, it should be used together with the `RowValidationColumn` component to give the user a visual indicator of the validation state besides background color. This is important for accessibility.
+
+<Canvas>
+  <Story id="data-grid-data-grid--row-validation" decorators={[withFlexGap]} />
+</Canvas>
+
+<Canvas>
+  <Story
+    id="data-grid-data-grid--cell-and-row-validation"
+    decorators={[withFlexGap]}
+  />
+</Canvas>
+
 ### Pagination
 
 [Implement pagination](https://saltdesignsystem-storybook.pages.dev/?path=/story/lab-pagination--default-pagination) using the `Paginator` component. It is not a feature of the grid itself.
