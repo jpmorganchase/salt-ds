@@ -2,7 +2,6 @@ import { Story } from "@storybook/react";
 import {
   Grid,
   GridColumn,
-  GridProps,
   GridRowSelectionMode,
   NumericColumn,
   RowSelectionCheckboxColumn,
@@ -78,6 +77,7 @@ const RowSelectionModesTemplate: Story<{}> = () => {
           precision={2}
           getValue={(r: DummyRow) => r.b}
           align={"right"}
+          sortable
         />
         <GridColumn name="C" id="c" defaultWidth={50} getValue={(r) => r.c} />
       </Grid>

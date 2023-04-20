@@ -193,8 +193,8 @@ export const CascadingMenuList = forwardRef<
         className={`${baseClass}-popper`}
         id={menuId}
         style={{
-          top: y ?? "",
-          left: x ?? "",
+          top: y ?? 0,
+          left: x ?? 0,
           position: strategy,
         }}
         ref={floating}

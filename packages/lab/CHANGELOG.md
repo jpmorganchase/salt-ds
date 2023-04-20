@@ -1,5 +1,41 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.5
+
+### Minor Changes
+
+- 9bee69f4: Move `Checkbox` from lab to core
+- ea010ffa: New `--salt-size-container-spacing` and `--salt-size-adornmentGap` tokens
+
+  ```diff
+  +  --salt-size-container-spacing: calc(3 * var(--salt-size-unit));
+  +  --salt-size-adornmentGap: calc(0.75 * var(--salt-size-unit));
+  ```
+
+- 4a51e4c6: Remove Radio Button and Radio Button Group
+- 85647494: Move capitalize util from lab to core
+
+### Patch Changes
+
+- 139633d5: Improve Tabs alignment in AppHeader
+- 3e7a1b0f: Checkbox
+
+  Removed `CheckboxBase` and replaced with `Checkbox`
+  Added `error` prop for error state styling.
+
+  CheckboxGroup
+
+  Removed `legend` and `LegendProps` prop; will be implemented by FormField.
+  Replaced `row` prop with `direction` prop.
+  Added `wrap` prop.
+
+  CheckboxIcon
+
+  Added `error` prop for error state styling.
+  Added `disabled` prop for disabled state styling.
+
+- ae3c837e: Fix focus ring doesn't show up when Dropdown is wrapped in Form Field
+
 ## 1.0.0-alpha.4
 
 ### Minor Changes

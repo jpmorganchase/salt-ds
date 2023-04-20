@@ -52,7 +52,7 @@
 
 /* Styles applied if `isRejected={true}`  */
 .saltFileDropZone-error {
-  --fileDropZone-background: var(--salt-status-error-background-emphasize);
+  --fileDropZone-background: var(--salt-status-error-background);
   --fileDropZone-borderColor: var(--salt-status-error-borderColor);
   --fileDropZone-icon-color: var(--salt-status-error-foreground);
 }

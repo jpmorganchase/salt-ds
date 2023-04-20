@@ -1,4 +1,4 @@
-import { KeyboardEvent } from "react";
+import { KeyboardEvent, useCallback } from "react";
 import { RowSelectionCheckboxHeaderCellValue } from "./RowSelectionCheckboxHeaderCellValue";
 import { RowSelectionCheckboxCellValue } from "./RowSelectionCheckboxCellValue";
 import { GridColumn, GridColumnProps } from "./GridColumn";
@@ -15,16 +15,19 @@ export function RowSelectionCheckboxColumn<T>(
 ) {
   const { selectRows } = useSelectionContext();
 
-  const onKeyDown = (
-    event: KeyboardEvent<HTMLDivElement>,
-    rowIndex: number
-  ) => {
-    if (event.key === " ") {
-      selectRows({ rowIndex, incremental: true });
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  };
+  const onKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>, rowIndex: number) => {
+      if (event.key === " ") {
+        selectRows({
+          rowIndex,
+          incremental: true,
+        });
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    [selectRows]
+  );
 
   return (
     <GridColumn

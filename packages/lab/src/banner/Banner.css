@@ -74,17 +74,17 @@
 }
 
 .saltBanner-emphasize.saltBanner-info {
-  --banner-background: var(--salt-status-info-background-emphasize);
+  --banner-background: var(--salt-status-info-background);
 }
 
 .saltBanner-emphasize.saltBanner-error {
-  --banner-background: var(--salt-status-error-background-emphasize);
+  --banner-background: var(--salt-status-error-background);
 }
 
 .saltBanner-emphasize.saltBanner-warning {
-  --banner-background: var(--salt-status-warning-background-emphasize);
+  --banner-background: var(--salt-status-warning-background);
 }
 
 .saltBanner-emphasize.saltBanner-success {
-  --banner-background: var(--salt-status-success-background-emphasize);
+  --banner-background: var(--salt-status-success-background);
 }

@@ -1,26 +1,45 @@
 $icons: (
   aggregation: "\e974",
-  arrows: "\e90e",
+  arrows: "\e970",
   asc: "\e940",
   cancel: "\e90e",
+  chart: "\e904",
   columns: "\e910",
+  contracted: "\e91b",
   copy: "\e90d",
-  csv: "\e93f",
+  cross: "\e90e",
+  cut: "\e96d",
+  csv: "\e915",
   desc: "\e93f",
+  excel: "\e91a",
+  expanded: "\e950",
+  eye-slash: "\e966",
+  eye: "\e965",
   filter: "\e922",
   first: "\e934",
-  grip: "\e970",
   group: "\e929",
   last: "\e951",
+  left: "\e933",
+  linked: "\e935",
+  loading: "\e96f",
   menu: "\e969",
   next: "\e950",
+  none: "\e971",
+  not-allowed: "\e90e",
+  paste: "\e946",
   pin: "\e944",
   pivot: "\e979",
   previous: "\e933",
-  small-right: "\e950",
+  right: "\e950",
+  save: "\e953",
+  small-down: "\e983",
+  small-left: "\e981",
+  small-right: "\e980",
+  small-up: "\e982",
   tick: "\e95b",
   tree-closed: "\e950",
   tree-open: "\e91b",
+  unlinked: "\e95e",
 );
 
 @font-face {
@@ -45,4 +64,8 @@ $icons: (
 
 [class^="ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-checked::after {
   content: "\e95b";
+}
+
+[class^="ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-indeterminate::after {
+  content: "\e94e";
 }

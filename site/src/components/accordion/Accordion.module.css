@@ -41,7 +41,7 @@
 }
 
 .summary :global(.saltIcon) {
-  --salt-size-icon-base: calc(var(--salt-size-unit) * 2);
+  --salt-icon-size-base: calc(var(--salt-size-unit) * 2);
 }
 
 .accordion :global(.saltAccordionDetails .saltAccordionDetails-content) {
@@ -52,6 +52,6 @@
 
 @media screen and (max-width: 768px) {
   .summary :global(.saltIcon) {
-    --salt-size-icon-base: var(--salt-size-unit);
+    --salt-icon-size-base: var(--salt-size-unit);
   }
 }

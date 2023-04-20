@@ -19,3 +19,4 @@ storybook-static
 /packages/ag-grid-theme/salt-ag-theme.css
 
 /site/snapshots
+/docs/public/mockServiceWorker.js

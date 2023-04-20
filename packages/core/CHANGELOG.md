@@ -1,5 +1,61 @@
 # @salt-ds/core
 
+## 1.5.0
+
+### Minor Changes
+
+- 9bee69f4: Move `Checkbox` from lab to core
+- ea010ffa: New `--salt-size-container-spacing` and `--salt-size-adornmentGap` tokens
+
+  ```diff
+  +  --salt-size-container-spacing: calc(3 * var(--salt-size-unit));
+  +  --salt-size-adornmentGap: calc(0.75 * var(--salt-size-unit));
+  ```
+
+- 4a51e4c6: Add Radio Button and Radio Button Group
+- 9edfa980: Panel color css attribute changed from `inherit` to `initial`
+- 85647494: Move capitalize util from lab to core
+- f301f43c: Deprecated `interactable` and `disabled` props in Card
+  Created `InteractableCard` component for Cards which can perform an action, e.g. linking to a different page or content
+
+  To migrate from the previous to new implementation:
+
+  ```diff
+  -    import { Card } from "@salt-ds/core";
+  -
+  -    const MyInteractableCard = () => (
+  -        <Card interactable />
+  -    );
+
+  -    const MyInteractableDisabledCard = () => (
+  -        <Card interactable disabled />
+  -    );
+
+  +  import { InteractableCard } from "@salt-ds/core";
+  +
+  +   const MyInteractableCard = () => (
+  +       <InteractableCard />
+  +   );
+  +
+  +   const MyInteractableDisabledCard = () => (
+  +       <InteractableCard disabled />
+  +   );
+  ```
+
+- 8d54ce2a: Make hiding icons in external links easier
+
+  ```tsx
+  <Link IconComponent={null} href="#root" target="_blank">
+    This has no icon
+  </Link>
+  ```
+
+### Patch Changes
+
+- 0c33a60c: Fix Avatar fallback not working
+- 8d29c01f: - Fix Text components missing a font family.
+  - Apply new font family variables from `@salt-ds/theme` to Text components
+
 ## 1.4.0
 
 ### Minor Changes
