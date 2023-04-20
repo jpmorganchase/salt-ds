@@ -268,24 +268,84 @@ export const CellValidation: Story = () => {
 };
 
 export const RowValidation: Story = () => {
-  const { setPrice, setDiscount, rows, setAmount, setName } =
-    useExampleDataSource();
+  const { rows, setValue } = useExampleDataSource();
+
+  const setNumberValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value: Number.parseFloat(value) });
+  };
+
+  const setStringValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value });
+  };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100%",
-        width: "100%",
-      }}
+    <Grid
+      rowData={rows}
+      rowKeyGetter={(row) => row.id}
+      className="grid"
+      columnSeparators
+      rowSelectionMode="multi"
+      getRowValidationStatus={(row) => row.data.status}
     >
-      <StatusIndicator
-        aria-label={`Row ${validationStatus}`}
-        status={validationStatus}
+      <RowSelectionCheckboxColumn id="selection" />
+      <RowValidationStatusColumn
+        id="status"
+        aria-label="Row status"
+        defaultWidth={30}
       />
-    </div>
+      <GridColumn
+        id="name"
+        name="Name"
+        defaultWidth={180}
+        getValue={(r) => r.name}
+        onChange={setStringValue("name")}
+      >
+        <CellEditor>
+          <TextCellEditor />
+        </CellEditor>
+      </GridColumn>
+      <GridColumn
+        id="description"
+        name="Description"
+        defaultWidth={200}
+        getValue={(r) => r.description}
+        onChange={setStringValue("description")}
+      />
+
+      <NumericColumn
+        id="amount"
+        name="Amount"
+        getValue={(r: RowExample) => r.amount}
+        precision={0}
+        onChange={setNumberValue("amount")}
+      >
+        <CellEditor>
+          <NumericCellEditor />
+        </CellEditor>
+      </NumericColumn>
+      <NumericColumn
+        id="price"
+        name="Price"
+        precision={2}
+        getValue={(r: RowExample) => r.price}
+        onChange={setNumberValue("price")}
+      >
+        <CellEditor>
+          <NumericCellEditor />
+        </CellEditor>
+      </NumericColumn>
+      <GridColumn
+        id="discount"
+        name="Discount"
+        getValue={(r) => r.discount}
+        onChange={setStringValue("discount")}
+      >
+        <CellEditor>
+          <DropdownCellEditor options={discountOptions} />
+        </CellEditor>
+      </GridColumn>
+      <GridColumn id="total" name="Total" getValue={getTotal} align="left" />
+    </Grid>
   );
 };
 
