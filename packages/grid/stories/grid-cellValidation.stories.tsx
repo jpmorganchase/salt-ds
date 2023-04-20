@@ -308,8 +308,7 @@ export const RowValidation: Story = () => {
         id="description"
         name="Description"
         defaultWidth={200}
-        getValue={(r) => r.description}
-        onChange={setStringValue("description")}
+        getValue={(r: RowExample) => r.description}
       />
 
       <NumericColumn
