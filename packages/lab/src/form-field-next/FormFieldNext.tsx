@@ -38,6 +38,10 @@ export interface FormFieldProps
    * Readonly prop
    */
   readOnly?: boolean;
+  /**
+   * Optional id prop
+   */
+  id?: string;
 }
 
 export interface A11yValueProps {
@@ -92,6 +96,7 @@ export const FormField = forwardRef(
       onBlur,
       onFocus,
       readOnly = false,
+      id: idProp,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -100,10 +105,10 @@ export const FormField = forwardRef(
 
     const handleTriggerRef = useForkRef(rootRef, ref);
 
-    const labelId = useId();
+    const id = useId(idProp);
 
     const a11yValue = useA11yValue({
-      labelId,
+      labelId: id,
       helperText,
       disabled,
       readOnly,
