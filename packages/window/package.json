@@ -15,6 +15,6 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-core"
+    "directory": "../../dist/salt-ds-window"
   }
 }
