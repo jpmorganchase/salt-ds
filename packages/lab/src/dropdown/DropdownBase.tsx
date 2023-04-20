@@ -164,8 +164,8 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
               className={clsx(withBaseName("popup"), classNameProp)}
               id={`${id}-popup`}
               style={{
-                top: y ?? "",
-                left: x ?? "",
+                top: y ?? 0,
+                left: x ?? 0,
                 position: strategy,
                 maxHeight: maxPopupHeight ?? undefined,
               }}

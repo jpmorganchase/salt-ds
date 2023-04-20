@@ -1,0 +1,36 @@
+/* Styles applied to root element */
+.saltRadioButtonGroup {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Styles applied when direction is vertical */
+.saltRadioButtonGroup-vertical {
+  display: flex;
+  gap: var(--salt-size-unit);
+  flex-direction: column;
+}
+
+/* Styles applied when direction is horizontal */
+.saltRadioButtonGroup-horizontal {
+  display: flex;
+  gap: var(--salt-size-unit);
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.saltRadioButtonGroup-noWrap {
+  flex-wrap: nowrap;
+}
+.saltRadioButtonGroup-noWrap .saltRadioButton {
+  white-space: break-spaces;
+}
+
+/* Styles applied to radio group's legend */
+.saltRadioButtonGroup-legend {
+  display: inline-block;
+  font-size: var(--formField-label-fontSize);
+  color: var(--salt-text-primary-foreground);
+  margin-bottom: calc(var(--salt-size-unit) * 2);
+}

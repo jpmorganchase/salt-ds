@@ -7,9 +7,9 @@
   --saltAccordion-summary-background-hover: transparent;
   --accordion-padding-left: var(--salt-size-unit);
   --accordion-section-padding: calc(var(--salt-size-unit) * 2) 0;
-  --ifm-link-decoration: var(--salt-text-link-textDecoration);
-  --ifm-heading-margin-bottom: 0;
+}
 
+.accordion {
   height: calc(100% - var(--keyline-height));
 }
 
@@ -30,6 +30,10 @@
   justify-content: space-between;
 }
 
+.accordion a {
+  text-decoration: var(--salt-text-link-textDecoration);
+}
+
 /* Override Salt accordion styles */
 
 .summary :global(.saltAccordionSummary-icon:hover) {
@@ -37,7 +41,7 @@
 }
 
 .summary :global(.saltIcon) {
-  --salt-size-icon-base: calc(var(--salt-size-unit) * 2);
+  --salt-icon-size-base: calc(var(--salt-size-unit) * 2);
 }
 
 .accordion :global(.saltAccordionDetails .saltAccordionDetails-content) {
@@ -48,6 +52,6 @@
 
 @media screen and (max-width: 768px) {
   .summary :global(.saltIcon) {
-    --salt-size-icon-base: var(--salt-size-unit);
+    --salt-icon-size-base: var(--salt-size-unit);
   }
 }

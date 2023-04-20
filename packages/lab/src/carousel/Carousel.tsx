@@ -1,4 +1,11 @@
-import { Button, GridLayout, makePrefixer, useId } from "@salt-ds/core";
+import {
+  Button,
+  GridLayout,
+  makePrefixer,
+  RadioButtonGroup,
+  RadioButton,
+  useId,
+} from "@salt-ds/core";
 import {
   ChangeEventHandler,
   Children,
@@ -8,7 +15,6 @@ import {
   useEffect,
 } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
-import { RadioButtonGroup } from "../radio-button";
 import { DeckLayout } from "../deck-layout";
 import { clsx } from "clsx";
 import "./Carousel.css";
@@ -136,14 +142,17 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         </Button>
         <div className={withBaseName("dots")}>
           <RadioButtonGroup
-            row
             aria-label="Carousel buttons"
             onChange={handleRadioChange}
-            radios={Array.from({ length: slidesCount }, (_, index) => ({
-              value: `${index}`,
-            }))}
             value={`${selectedSlide}`}
-          />
+            direction={"horizontal"}
+          >
+            {Array.from({ length: slidesCount }, (_, index) => ({
+              value: `${index}`,
+            })).map((radio) => (
+              <RadioButton {...radio} />
+            ))}
+          </RadioButtonGroup>
         </div>
       </GridLayout>
     );

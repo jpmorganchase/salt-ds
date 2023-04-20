@@ -250,3 +250,16 @@ describe("GIVEN Text component with styleAs=display3", () => {
     });
   });
 });
+
+describe("GIVEN Text component within font family CSS var override", () => {
+  it("should have non-default font family applied", () => {
+    cy.mount(
+      <div style={{ "--salt-text-fontFamily": "Lato" } as React.CSSProperties}>
+        <Text>{textExample}</Text>
+      </div>
+    );
+    cy.get(".saltText")
+      .should("have.class", "saltText")
+      .and("have.css", "font-family", "Lato");
+  });
+});

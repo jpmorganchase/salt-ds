@@ -1,3 +1,4 @@
+export * from "./capitalize";
 export * from "./createChainedFunction";
 export * from "./createContext";
 export * from "./debounce";
@@ -16,3 +17,4 @@ export * from "./useIsFocusVisible";
 export * from "./useIsomorphicLayoutEffect";
 export * from "./usePrevious";
 export * from "./useResponsiveProp";
+export * from "./mergeProps";

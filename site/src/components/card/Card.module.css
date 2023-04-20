@@ -67,7 +67,10 @@
 
 .icon {
   transition: 0.5s all ease-in-out;
-  max-width: 160px;
+}
+
+.icon img {
+  transition: 0.5s all ease-in-out;
   max-height: 160px;
 }
 

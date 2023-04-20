@@ -1,4 +1,4 @@
-import { RadioButtonBase } from "@salt-ds/lab";
+import { RadioButton } from "@salt-ds/core";
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
 import "./CheckboxCell.css";
@@ -11,10 +11,10 @@ export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
 
   return (
     <div className="saltGridCheckboxContainer">
-      <RadioButtonBase
+      <RadioButton
         checked={isSelected}
-        tabIndex={isFocused ? 0 : -1}
         data-testid="grid-row-selection-radiobox"
+        tabIndex={isFocused ? 0 : -1}
       />
     </div>
   );

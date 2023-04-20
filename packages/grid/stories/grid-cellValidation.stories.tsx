@@ -7,9 +7,11 @@ import {
   NumericColumn,
   TextCellEditor,
   CellValidationState,
+  GridColumnProps,
   RowSelectionCheckboxColumn,
 } from "../src";
 import { Story } from "@storybook/react";
+import * as yup from "yup";
 import { faker } from "@faker-js/faker";
 import { useCallback, useState } from "react";
 import "./grid.stories.css";
@@ -91,57 +93,102 @@ const useExampleDataSource = () => {
     },
   ]);
 
-  const setName = useCallback(
-    (row: RowExample, rowIndex: number, value: string) => {
+  const setValue = useCallback(
+    ({
+      rowIndex,
+      name,
+      value,
+    }: {
+      rowIndex: number;
+      value: string | number;
+      name: EditableFieldKeys;
+    }) => {
       setRows((x) => {
         x = [...x];
-        x[rowIndex] = { ...x[rowIndex], name: value };
+        x[rowIndex] = { ...x[rowIndex], [name]: value };
         return x;
       });
     },
     [setRows]
   );
 
-  const setPrice = useCallback(
-    (row: RowExample, rowIndex: number, value: string) => {
-      setRows((x) => {
-        x = [...x];
-        x[rowIndex] = { ...x[rowIndex], price: Number.parseFloat(value) };
-        return x;
-      });
-    },
-    [setRows]
-  );
-
-  const setAmount = useCallback(
-    (row: RowExample, rowIndex: number, value: string) => {
-      setRows((x) => {
-        x = [...x];
-        x[rowIndex] = { ...x[rowIndex], amount: Number.parseInt(value) };
-        return x;
-      });
-    },
-    [setRows]
-  );
-
-  const setDiscount = useCallback(
-    (row: RowExample, rowIndex: number, value: string) => {
-      setRows((x) => {
-        x = [...x];
-        x[rowIndex] = { ...x[rowIndex], discount: value };
-        return x;
-      });
-    },
-    [setRows]
-  );
-
-  return { rows, setAmount, setName, setDiscount, setPrice };
+  return { rows, setValue };
 };
 
-export const CellValidation: Story = () => {
-  const { setPrice, setDiscount, rows, setAmount, setName } =
-    useExampleDataSource();
+const validationSchema = yup.object({
+  name: yup.string().required().min(3),
+  price: yup.number().required().min(10).max(2000),
+  amount: yup.number().required().min(10).max(2000),
+  total: yup.number().required().min(10).max(2000),
+  discount: yup.string(),
+});
 
+type EditableFieldKeys = "name" | "price" | "amount" | "total" | "discount";
+type CreateValueSetter = (
+  name: EditableFieldKeys
+) => GridColumnProps<RowExample>["onChange"];
+
+export const CellValidation: Story = () => {
+  const { rows, setValue } = useExampleDataSource();
+  const [validationStatus, setValidationStatus] = useState<
+    Array<{
+      price?: CellValidationState;
+      amount?: CellValidationState;
+      total?: CellValidationState;
+      name?: CellValidationState;
+      discount?: CellValidationState;
+    }>
+  >(() =>
+    rows.map((_, index) => {
+      if (index > 2) {
+        return {
+          price: "success",
+          amount: "warning",
+          total: "error",
+          name: "error",
+          discount: undefined,
+        };
+      }
+      return {};
+    })
+  );
+
+  const setNumberValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value: Number.parseFloat(value) });
+    asyncValidate({ value, index, name });
+  };
+
+  const setStringValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value });
+    asyncValidate({ value, index, name });
+  };
+
+  const asyncValidate = ({
+    value,
+    name,
+    index,
+  }: {
+    value: number | string;
+    index: number;
+    name: EditableFieldKeys;
+  }) => {
+    validationSchema
+      .validateAt(name, { [name]: value })
+      .then(() => {
+        setValidationStatus((s) => {
+          const copy = [...s];
+          copy[index][name] = "success";
+          return copy;
+        });
+      })
+      .catch(() => {
+        setValidationStatus((s) => {
+          const copy = [...s];
+          copy[index][name] = "error";
+          return copy;
+        });
+      });
+  };
   return (
     <Grid
       rowData={rows}
@@ -154,9 +201,9 @@ export const CellValidation: Story = () => {
         id="name"
         name="Name"
         defaultWidth={180}
-        getValue={(r) => r.name}
-        onChange={setName}
-        getValidationStatus={({ row }) => (row.index > 2 ? "error" : undefined)}
+        getValue={(r: RowExample) => r.name}
+        onChange={setStringValue("name")}
+        getValidationStatus={({ row }) => validationStatus[row.index].name}
         validationType="strong"
       >
         <CellEditor>
@@ -167,8 +214,7 @@ export const CellValidation: Story = () => {
         defaultWidth={200}
         id="description"
         name="Description"
-        getValue={(r) => r.description}
-        onChange={setName}
+        getValue={(r: RowExample) => r.description}
       />
 
       <NumericColumn
@@ -176,10 +222,8 @@ export const CellValidation: Story = () => {
         name="Amount"
         getValue={(r: RowExample) => r.amount}
         precision={0}
-        onChange={setAmount}
-        getValidationStatus={({ row }) =>
-          row.index > 2 ? "warning" : undefined
-        }
+        onChange={setNumberValue("amount")}
+        getValidationStatus={({ row }) => validationStatus[row.index].amount}
         validationType="strong"
       >
         <CellEditor>
@@ -191,13 +235,11 @@ export const CellValidation: Story = () => {
         name="Price"
         precision={2}
         getValue={(r: RowExample) => r.price}
-        onChange={setPrice}
+        onChange={setNumberValue("price")}
         getValidationMessage={() =>
           "This is a custom success validation message"
         }
-        getValidationStatus={({ row }) =>
-          row.index > 2 ? "success" : undefined
-        }
+        getValidationStatus={({ row }) => validationStatus[row.index].price}
         validationType="strong"
       >
         <CellEditor>
@@ -207,8 +249,8 @@ export const CellValidation: Story = () => {
       <GridColumn
         id="discount"
         name="Discount"
-        getValue={(r) => r.discount}
-        onChange={setDiscount}
+        getValue={(r: RowExample) => r.discount}
+        onChange={setStringValue("discount")}
       >
         <CellEditor>
           <DropdownCellEditor options={discountOptions} />
@@ -219,7 +261,7 @@ export const CellValidation: Story = () => {
         name="Total"
         getValue={getTotal}
         align="left"
-        getValidationStatus={({ row }) => (row.index > 2 ? "error" : undefined)}
+        getValidationStatus={({ row }) => validationStatus[row.index].total}
       />
     </Grid>
   );
@@ -230,79 +272,32 @@ export const RowValidation: Story = () => {
     useExampleDataSource();
 
   return (
-    <Grid
-      rowData={rows}
-      rowKeyGetter={(row) => row.id}
-      className="grid"
-      columnSeparators
-      rowSelectionMode="multi"
-      getRowValidationStatus={(row) => row.data.status}
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%",
+        width: "100%",
+      }}
     >
-      <RowSelectionCheckboxColumn id="selection" />
-      <RowValidationStatusColumn
-        id="status"
-        aria-label="Row status"
-        defaultWidth={30}
+      <StatusIndicator
+        aria-label={`Row ${validationStatus}`}
+        status={validationStatus}
       />
-      <GridColumn
-        id="name"
-        name="Name"
-        defaultWidth={180}
-        getValue={(r) => r.name}
-        onChange={setName}
-      >
-        <CellEditor>
-          <TextCellEditor />
-        </CellEditor>
-      </GridColumn>
-      <GridColumn
-        id="description"
-        name="Description"
-        defaultWidth={200}
-        getValue={(r) => r.description}
-        onChange={setName}
-      />
-
-      <NumericColumn
-        id="amount"
-        name="Amount"
-        getValue={(r: RowExample) => r.amount}
-        precision={0}
-        onChange={setAmount}
-      >
-        <CellEditor>
-          <NumericCellEditor />
-        </CellEditor>
-      </NumericColumn>
-      <NumericColumn
-        id="price"
-        name="Price"
-        precision={2}
-        getValue={(r: RowExample) => r.price}
-        onChange={setPrice}
-      >
-        <CellEditor>
-          <NumericCellEditor />
-        </CellEditor>
-      </NumericColumn>
-      <GridColumn
-        id="discount"
-        name="Discount"
-        getValue={(r) => r.discount}
-        onChange={setDiscount}
-      >
-        <CellEditor>
-          <DropdownCellEditor options={discountOptions} />
-        </CellEditor>
-      </GridColumn>
-      <GridColumn id="total" name="Total" getValue={getTotal} align="left" />
-    </Grid>
+    </div>
   );
 };
 
 export const CellAndRowValidation: Story = () => {
-  const { setPrice, setDiscount, rows, setAmount, setName } =
-    useExampleDataSource();
+  const { rows, setValue } = useExampleDataSource();
+  const setNumberValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value: Number.parseFloat(value) });
+  };
+
+  const setStringValue: CreateValueSetter = (name) => (_, index, value) => {
+    setValue({ name, rowIndex: index, value });
+  };
 
   return (
     <Grid
@@ -324,7 +319,7 @@ export const CellAndRowValidation: Story = () => {
         name="Name"
         defaultWidth={180}
         getValue={(r) => r.name}
-        onChange={setName}
+        onChange={setStringValue("name")}
       >
         <CellEditor>
           <TextCellEditor />
@@ -334,8 +329,7 @@ export const CellAndRowValidation: Story = () => {
         id="description"
         name="Description"
         defaultWidth={200}
-        getValue={(r) => r.description}
-        onChange={setName}
+        getValue={(r: RowExample) => r.description}
       />
 
       <NumericColumn
@@ -343,7 +337,7 @@ export const CellAndRowValidation: Story = () => {
         name="Amount"
         getValue={(r: RowExample) => r.amount}
         precision={0}
-        onChange={setAmount}
+        onChange={setNumberValue("amount")}
       >
         <CellEditor>
           <NumericCellEditor />
@@ -354,11 +348,7 @@ export const CellAndRowValidation: Story = () => {
         name="Price"
         precision={2}
         getValue={(r: RowExample) => r.price}
-        onChange={setPrice}
-        getValidationMessage={() =>
-          "This is a custom success validation message"
-        }
-        getValidationStatus={({ row }) => row.data.status}
+        onChange={setNumberValue("price")}
         validationType="strong"
       >
         <CellEditor>
@@ -369,7 +359,7 @@ export const CellAndRowValidation: Story = () => {
         id="discount"
         name="Discount"
         getValue={(r) => r.discount}
-        onChange={setDiscount}
+        onChange={setStringValue("discount")}
       >
         <CellEditor>
           <DropdownCellEditor options={discountOptions} />
@@ -381,7 +371,6 @@ export const CellAndRowValidation: Story = () => {
         getValue={getTotal}
         align="left"
         validationType="strong"
-        getValidationStatus={({ row }) => row.data.status}
       />
     </Grid>
   );

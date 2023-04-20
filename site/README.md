@@ -1,41 +1,29 @@
-# Website
+# Local development
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+Please follow these steps in order to setup your local environment.
 
-### Installation
+## Create a Github token
 
-```
-$ yarn
-```
+On your Github profile, select `Settings` &#8594; `Developer settings` &#8594; `Personal access tokens` &#8594; `Tokens (classic)`.
 
-### Local Development
+Generate a new token that has `repo` and `project` permissions.
 
-```
-$ yarn start
-```
+## Create a `.env.local` file
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
+Within the current directory, create a `.env.local` file and paste the following:
 
 ```
-$ yarn build
+MOSAIC_ACTIVE_MODE_URL=http://localhost:8080
+MOSAIC_DOCS_CLONE_CREDENTIALS=[your_github_username:your_token]
+MOSAIC_SNAPSHOT_DIR=snapshots/latest
+OPTIMIZE_IMAGES=false
+SNAPSHOT_MODE=active
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+## Run the local server
 
-### Deployment
-
-Using SSH:
+Run the following command and navigate to `http://localhost:3000/local/index`.
 
 ```
-$ USE_SSH=true yarn deploy
+yarn serve
 ```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.

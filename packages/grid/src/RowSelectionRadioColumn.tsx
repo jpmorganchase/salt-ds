@@ -2,7 +2,7 @@ import { RowSelectionRadioCellValue } from "./RowSelectionRadioCellValue";
 import { GridColumn, GridColumnProps } from "./GridColumn";
 import { RowSelectionRadioHeaderCell } from "./RowSelectionRadioHeaderCell";
 import { useSelectionContext } from "./SelectionContext";
-import { KeyboardEvent } from "react";
+import { KeyboardEvent, useCallback } from "react";
 
 export type RowSelectionRadioColumnProps<T> = Omit<
   GridColumnProps<T>,
@@ -14,16 +14,16 @@ export function RowSelectionRadioColumn<T>(
 ) {
   const { selectRows } = useSelectionContext();
 
-  const onKeyDown = (
-    event: KeyboardEvent<HTMLDivElement>,
-    rowIndex: number
-  ) => {
-    if (event.key === " ") {
-      selectRows({ rowIndex });
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  };
+  const onKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>, rowIndex: number) => {
+      if (event.key === " ") {
+        selectRows({ rowIndex });
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    [selectRows]
+  );
 
   return (
     <GridColumn

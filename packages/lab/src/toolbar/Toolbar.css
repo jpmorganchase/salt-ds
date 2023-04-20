@@ -20,7 +20,7 @@
 } */
 
 .saltToolbar > .Responsive-inner {
-  align-items: flex-start;
+  align-items: center;
   flex: 1;
   flex-wrap: wrap;
   justify-content: inherit;
@@ -45,8 +45,8 @@
 }
 
 .saltToolbar[aria-orientation="horizontal"] > .Responsive-inner > :not(.saltTooltray) {
-  margin-top: var(--salt-size-unit);
   margin-right: var(--salt-size-unit);
+  align-self: center;
 }
 
 .saltToolbar[aria-orientation="horizontal"] > .Responsive-inner > .saltTooltray > .Responsive-inner > * {

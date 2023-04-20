@@ -2,11 +2,7 @@ import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { TextAlignBlock } from "docs/components/TextAlignBlock";
-import {
-  LineBlock,
-  LineBlockCell,
-  LineBlockCode,
-} from "docs/components/LineBlock";
+import { LineBlock } from "docs/components/LineBlock";
 import { CornerBlock } from "docs/components/CornerBlock";
 
 <Meta title="Theme/Characteristics/Container" />
@@ -23,8 +19,10 @@ allow hierarchical organization.
 <Canvas>
   <Story name="Base">
     <DocGrid>
-      <LineBlockCell />
-      <LineBlockCode>--salt-container-borderStyle</LineBlockCode>
+      <LineBlock
+        token="--salt-container-borderStyle"
+        lineStyle="--salt-container-borderStyle"
+      />
     </DocGrid>
   </Story>
 </Canvas>

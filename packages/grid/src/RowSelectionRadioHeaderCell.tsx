@@ -1,5 +1,5 @@
 import { AutoSizeHeaderCell } from "./HeaderCell";
-import { RadioButtonIcon } from "@salt-ds/lab";
+import { RadioButtonIcon } from "@salt-ds/core";
 import "./CheckboxCell.css";
 import { clsx } from "clsx";
 import { HeaderCellProps } from "./GridColumn";

@@ -6,7 +6,8 @@
 /* Foundations (base values) */
 @import url(foundations/animation.css);
 @import url(foundations/color.css);
-@import url(foundations/delay.css);
+@import url(foundations/delay.css); /* **Deprecated:** replaced by duration */
+@import url(foundations/duration.css);
 @import url(foundations/fade.css);
 @import url(foundations/icon.css);
 @import url(foundations/opacity.css);
@@ -22,11 +23,12 @@
 @import url(characteristics/accent.css);
 @import url(characteristics/actionable.css);
 @import url(characteristics/container.css);
+@import url(characteristics/differential.css);
 @import url(characteristics/draggable.css);
 @import url(characteristics/target.css);
 @import url(characteristics/editable.css);
 @import url(characteristics/focused.css);
-@import url(characteristics/measured.css);
+@import url(characteristics/measured.css); /* **Deprecated:** replaced by track */
 @import url(characteristics/navigable.css);
 @import url(characteristics/overlayable.css);
 @import url(characteristics/selectable.css);
@@ -34,3 +36,4 @@
 @import url(characteristics/status.css);
 @import url(characteristics/taggable.css);
 @import url(characteristics/text.css);
+@import url(characteristics/track.css);

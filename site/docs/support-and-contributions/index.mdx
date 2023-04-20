@@ -1,27 +1,13 @@
 ---
-hide_table_of_contents: true
+title: Support and contributions
+layout: DetailContentOnly
 ---
-
-import SupportContributionsCards, {
-  SupportContributionsCard,
-} from "./SupportContributionsCards";
-import Content from "@site/src/layouts/content/Content.tsx";
-import {
-  DiamondIcon,
-  DocumentIcon,
-  FlagIcon,
-  MessageIcon,
-} from "@salt-ds/icons";
-
-# Support and contributions
-
-<Content>
 
 Help us shape the future of Salt by contributing not just code—but also your thoughts, requests, frustrations and successes.
 
 <SupportContributionsCards>
   <SupportContributionsCard
-    inlineIcon={<DocumentIcon size={1.7} />}
+    cardIcon="document"
     title="Provide feedback"
     url="https://github.com/jpmorganchase/salt-ds/discussions/categories/feedback"
     footerText="Share your thoughts on GitHub"
@@ -34,7 +20,7 @@ system.
   </SupportContributionsCard>
 
   <SupportContributionsCard
-    inlineIcon={<FlagIcon size={1.7} />}
+    cardIcon="flag"
     title="Raise a bug"
     url="https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+bug+%F0%9F%AA%B2%2Cstatus%3A+awaiting+triage&template=bug_report.yml"
     footerText="Report a bug on GitHub"
@@ -46,7 +32,7 @@ Let us know if you spot any issues with our components and we'll add them to our
   </SupportContributionsCard>
 
 <SupportContributionsCard
-    inlineIcon={<DiamondIcon size={1.7} />}
+    cardIcon="diamond"
     title="Request a feature"
     url="https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+enhancement+%F0%9F%92%A1%2Cstatus%3A+awaiting+triage&template=feature_request.yml"
     footerText="Ask on GitHub"
@@ -58,7 +44,7 @@ If your team needs a feature or functionality that’s not currently provided, w
   </SupportContributionsCard>
 
   <SupportContributionsCard
-    inlineIcon={<MessageIcon size={1.7} />}
+    cardIcon="message"
     title="Contact us directly"
     url="mailto:salt.design.system@jpmorgan.com"
     footerText="Send us an email"
@@ -70,5 +56,3 @@ Email us if you have a complex product or design-related query and we’ll do ou
   </SupportContributionsCard>
 
 </SupportContributionsCards>
-
-</Content>

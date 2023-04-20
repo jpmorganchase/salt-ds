@@ -1,59 +1,70 @@
-import { Story } from "@storybook/react";
-import { useCallback, useState } from "react";
-import { Investor } from "./dummyData";
-import { randomAmount } from "./utils";
+import { DecoratorFn, Story } from "@storybook/react";
 import {
-  Grid,
-  GridColumn,
-  RowKeyGetter,
-  RowSelectionCheckboxColumn,
-} from "../src";
+  useInfiniteQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { useCallback } from "react";
+import { rest } from "msw";
+import { db, Investor, investorKeyGetter } from "./dummyData";
+import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
 import "./grid.stories.css";
 
 export default {
   title: "Data Grid/Data Grid",
   component: Grid,
-  argTypes: {},
+  parameters: {
+    msw: {
+      handlers: [
+        rest.get("/api/investors", (req, res, ctx) => {
+          const startParam = req.url.searchParams.get("start");
+          const limitParam = req.url.searchParams.get("limit");
+          const start = startParam ? Number(startParam) : 0;
+          const limit = limitParam ? Number(limitParam) : 50;
+
+          const response = db.investor.findMany({
+            skip: start,
+            take: limit,
+          });
+
+          return res(ctx.json(response));
+        }),
+      ],
+    },
+  },
 };
 
-const serverSideDataRowKeyGetter: RowKeyGetter<Investor> = (row, index) =>
-  `Row${index}`;
-const serverSideRowCount = 200000;
-
-const ServerSideDataTemplate: Story<{}> = (props) => {
-  const [rows, setRows] = useState<Investor[]>(() => {
-    const rowData: Investor[] = [];
-    rowData.length = serverSideRowCount;
-    return rowData;
+const useInvestors = () => {
+  return useInfiniteQuery<Investor[]>({
+    queryKey: ["investors"],
+    queryFn: async ({ pageParam = 0 }) => {
+      const url = new URL("/api/investors", window.location.origin);
+      url.searchParams.set("start", pageParam.toString());
+      const res = await fetch(url.toString());
+      return await res.json();
+    },
+    keepPreviousData: true,
+    getNextPageParam: (_lastGroup, groups) => groups.flat().length,
   });
+};
 
-  const onVisibleRowRangeChange = useCallback((start: number, end: number) => {
-    setRows((oldRows) => {
-      const nextRows: Investor[] = [];
-      nextRows.length = serverSideRowCount;
-      for (let i = start; i < end; ++i) {
-        if (oldRows[i]) {
-          nextRows[i] = oldRows[i];
-        } else {
-          nextRows[i] = {
-            name: `Name ${i}`,
-            addedInvestors: [],
-            location: `Location ${i}`,
-            cohort: [`Cohort ${i}`],
-            strategy: [`Strategy ${i}`],
-            notes: "",
-            amount: randomAmount(100, 300, 4),
-          };
-        }
+const queryClient = new QueryClient();
+const ServerSideDataTemplate: Story<{}> = (props) => {
+  const { fetchNextPage, data } = useInvestors();
+  const rowData = data?.pages.flat() ?? [];
+  const lastRow = rowData.length + 1;
+  const onVisibleRowRangeChange = useCallback(
+    (start: number, end: number) => {
+      if (end + 10 > lastRow) {
+        fetchNextPage();
       }
-      return nextRows;
-    });
-  }, []);
-
+    },
+    [lastRow]
+  );
   return (
     <Grid
-      rowData={rows}
-      rowKeyGetter={serverSideDataRowKeyGetter}
+      rowData={rowData}
+      rowKeyGetter={investorKeyGetter}
       className="grid"
       zebra={true}
       columnSeparators={true}
@@ -83,7 +94,7 @@ const ServerSideDataTemplate: Story<{}> = (props) => {
         name="Amount"
         id="amount"
         defaultWidth={200}
-        getValue={(x) => x.amount.toFixed(4)}
+        getValue={(x) => x.amount}
         align="right"
       />
       <GridColumn
@@ -95,3 +106,10 @@ const ServerSideDataTemplate: Story<{}> = (props) => {
   );
 };
 export const ServerSideData = ServerSideDataTemplate.bind({});
+ServerSideData.decorators = [
+  ((Story) => (
+    <QueryClientProvider client={queryClient}>
+      <Story />
+    </QueryClientProvider>
+  )) as DecoratorFn,
+];

@@ -4,11 +4,7 @@ import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
 import { CornerBlock } from "docs/components/CornerBlock";
 import { TextAlignBlock } from "docs/components/TextAlignBlock";
-import {
-  LineBlock,
-  LineBlockCell,
-  LineBlockCode,
-} from "docs/components/LineBlock";
+import { LineBlock } from "docs/components/LineBlock";
 
 <Meta title="Theme/Characteristics/Selectable" />
 
@@ -28,14 +24,22 @@ trigger actions.
       <CursorBlock cursor="--salt-selectable-cursor-selected" />
       <CursorBlock cursor="--salt-selectable-cursor-blurSelected" />
       <CursorBlock cursor="--salt-selectable-cursor-disabled" />
-      <LineBlockCell />
-      <LineBlockCode>--salt-selectable-borderStyle</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-selectable-borderStyle-hover</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-selectable-borderStyle-selected</LineBlockCode>
-      <LineBlockCell />
-      <LineBlockCode>--salt-selectable-borderStyle-blurSelected</LineBlockCode>
+      <LineBlock
+        token="--salt-selectable-borderStyle"
+        lineStyle="--salt-selectable-borderStyle"
+      />
+      <LineBlock
+        token="--salt-selectable-borderStyle-hover"
+        lineStyle="--salt-selectable-borderStyle-hover"
+      />
+      <LineBlock
+        token="--salt-selectable-borderStyle-selected"
+        lineStyle="--salt-selectable-borderStyle-selected"
+      />
+      <LineBlock
+        token="--salt-selectable-borderStyle-blurSelected"
+        lineStyle="--salt-selectable-borderStyle-blurSelected"
+      />
       <ColorBlock colorVar="--salt-selectable-background" />
       <ColorBlock colorVar="--salt-selectable-background-blurSelected" />
       <ColorBlock colorVar="--salt-selectable-background-disabled" />
@@ -46,8 +50,21 @@ trigger actions.
       <ColorBlock colorVar="--salt-selectable-borderColor-hover" />
       <ColorBlock colorVar="--salt-selectable-borderColor-selected" />
       <ColorBlock colorVar="--salt-selectable-borderColor-selectedDisabled" />
-      <ColorBlock colorVar="--salt-selectable-foreground-partial" />
-      <ColorBlock colorVar="--salt-selectable-foreground-partialDisabled" />
+      <ColorBlock colorVar="--salt-selectable-foreground" />
+      <ColorBlock colorVar="--salt-selectable-foreground-disabled" />
+      <ColorBlock colorVar="--salt-selectable-foreground-hover" />
+      <ColorBlock colorVar="--salt-selectable-foreground-selected" />
+      <ColorBlock colorVar="--salt-selectable-foreground-selectedDisabled" />
+    </DocGrid>
+    <DocGrid withNotes>
+      <ColorBlock
+        colorVar="--salt-selectable-foreground-partial"
+        replacementToken="--salt-selectable-foreground-selected"
+      />
+      <ColorBlock
+        colorVar="--salt-selectable-foreground-partialDisabled"
+        replacementToken="--salt-selectable-foreground-selectedDisabled"
+      />
     </DocGrid>
   </Story>
 </Canvas>
@@ -62,11 +79,19 @@ trigger actions.
       <ColorBlock colorVar="--salt-selectable-cta-background-selected" />
       <ColorBlock colorVar="--salt-selectable-cta-background-selectedDisabled" />
       <ColorBlock colorVar="--salt-selectable-cta-background-disabled" />
-      <ColorBlock colorVar="--salt-selectable-cta-foreground" />
       <ColorBlock colorVar="--salt-selectable-cta-foreground-hover" />
       <ColorBlock colorVar="--salt-selectable-cta-foreground-selected" />
       <ColorBlock colorVar="--salt-selectable-cta-foreground-selectedDisabled" />
-      <ColorBlock colorVar="--salt-selectable-cta-foreground-disabled" />
+    </DocGrid>
+    <DocGrid withNotes>
+      <ColorBlock
+        colorVar="--salt-selectable-cta-foreground"
+        replacementToken="--salt-text-primary-foreground"
+      />
+      <ColorBlock
+        colorVar="--salt-selectable-cta-foreground-disabled"
+        replacementToken="--salt-text-primary-foreground-disabled"
+      />
     </DocGrid>
   </Story>
 </Canvas>
@@ -81,11 +106,19 @@ trigger actions.
       <ColorBlock colorVar="--salt-selectable-primary-background-selected" />
       <ColorBlock colorVar="--salt-selectable-primary-background-selectedDisabled" />
       <ColorBlock colorVar="--salt-selectable-primary-background-disabled" />
-      <ColorBlock colorVar="--salt-selectable-primary-foreground" />
       <ColorBlock colorVar="--salt-selectable-primary-foreground-hover" />
       <ColorBlock colorVar="--salt-selectable-primary-foreground-selected" />
       <ColorBlock colorVar="--salt-selectable-primary-foreground-selectedDisabled" />
-      <ColorBlock colorVar="--salt-selectable-primary-foreground-disabled" />
+    </DocGrid>
+    <DocGrid withNotes>
+      <ColorBlock
+        colorVar="--salt-selectable-primary-foreground"
+        replacementToken="--salt-text-primary-foreground"
+      />
+      <ColorBlock
+        colorVar="--salt-selectable-primary-foreground-disabled"
+        replacementToken="--salt-text-primary-foreground-disabled"
+      />
     </DocGrid>
   </Story>
 </Canvas>
@@ -100,11 +133,19 @@ trigger actions.
       <ColorBlock colorVar="--salt-selectable-secondary-background-selected" />
       <ColorBlock colorVar="--salt-selectable-secondary-background-selectedDisabled" />
       <ColorBlock colorVar="--salt-selectable-secondary-background-disabled" />
-      <ColorBlock colorVar="--salt-selectable-secondary-foreground" />
       <ColorBlock colorVar="--salt-selectable-secondary-foreground-hover" />
       <ColorBlock colorVar="--salt-selectable-secondary-foreground-selected" />
       <ColorBlock colorVar="--salt-selectable-secondary-foreground-selectedDisabled" />
-      <ColorBlock colorVar="--salt-selectable-secondary-foreground-disabled" />
+    </DocGrid>
+    <DocGrid withNotes>
+      <ColorBlock
+        colorVar="--salt-selectable-secondary-foreground"
+        replacementToken="--salt-text-primary-foreground"
+      />
+      <ColorBlock
+        colorVar="--salt-selectable-secondary-foreground-disabled"
+        replacementToken="--salt-text-primary-foreground-disabled"
+      />
     </DocGrid>
   </Story>
 </Canvas>

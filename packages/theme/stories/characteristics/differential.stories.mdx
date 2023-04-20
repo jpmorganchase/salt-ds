@@ -1,0 +1,25 @@
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
+import { Banner } from "@salt-ds/lab";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+
+<Meta title="Theme/Characteristics/Differential" />
+
+# Differential
+
+<Banner status="warning">Deprecated: Use Status characteristic instead.</Banner>
+
+Indicates a positive or negative change within a value or object.
+
+## Tokens
+
+### Base
+
+<Canvas>
+  <Story name="Base">
+    <DocGrid>
+      <ColorBlock colorVar="--salt-differential-positive-foreground" />
+      <ColorBlock colorVar="--salt-differential-negative-foreground" />
+    </DocGrid>
+  </Story>
+</Canvas>

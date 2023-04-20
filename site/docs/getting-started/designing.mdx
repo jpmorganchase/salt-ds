@@ -1,27 +1,9 @@
 ---
-sidebar_label: Designing
-hide_table_of_contents: true
+title: Designing with Salt
+layout: DetailTechnical
+sidebar:
+  label: Designing
 ---
-
-import JPMLogo from "@site/static/img/design-getting-started/jpmIcon.svg";
-import Globe from "@site/static/img/design-getting-started/globe.svg";
-import Assets1 from "@site/static/img/design-getting-started/assets1.png";
-import Assets2 from "@site/static/img/design-getting-started/assets2.png";
-import Assets3 from "@site/static/img/design-getting-started/assets3.png";
-import Assets4 from "@site/static/img/design-getting-started/assets4.png";
-import SelectIconImg from "@site/static/img/design-getting-started/SelectIconImg.png";
-import { InlineCard, CardProps } from "@site/src/components/card/Card";
-import Content from "@site/src/layouts/content/Content.tsx";
-import { PrintIcon } from "@salt-ds/icons";
-import { SaltProvider } from "@salt-ds/core";
-import DesignCards, { DesignCard } from "./_designing/DesignCards.tsx";
-import IconsTable, { DensityIcon } from "./_designing/IconsTable.tsx";
-
-import styles from "./_designing/designing.module.css";
-
-# Designing with Salt
-
-<Content toc={toc}>
 
 Salt provides a comprehensive set of components and styles, which include themes, typography, color palettes, iconography and more. Use the components as they are, out of the box, or adapt them to suit the needs of your business or application.
 
@@ -55,7 +37,7 @@ There are two ways of accessing the libraries—as a J.P. Morgan employee or as 
 Use the Salt Design System team space to view working files and our comprehensive component guides. You can also instantly add components and styling to your designs.
 
 <InlineCard
-  icon={<JPMLogo role="presentation" />}
+  icon={<Image src="/img/design-getting-started/jpmIcon.svg" alt="JPM logo" />}
   description={
     <p>
       To start using the Salt libraries, enable them directly from the “Assets”
@@ -75,12 +57,12 @@ If you’re not a J.P. Morgan employee, you can still use Salt components. Our a
 To use the libraries, duplicate them to your own Figma account. Once the libraries are in your drafts, publish the Salt components within your own team or organization space to use them in your design work. Read more about [Community files](https://help.figma.com/hc/en-us/articles/360038510873).
 
 <InlineCard
-  icon={<Globe role="presentation" />}
+  icon={<Image src="/img/design-getting-started/globe.svg" alt="globe" />}
   description={
     <p>
       To start using the Salt libraries, search for the{" "}
-      <span className={styles.strong}>@jpmorgan_salt</span> handle in the Figma
-      Community.
+      <span style={{ fontWeight: "bold" }}>@jpmorgan_salt</span> handle in the
+      Figma Community.
     </p>
   }
   url="https://www.figma.com/@jpmorgan_salt"
@@ -89,14 +71,15 @@ To use the libraries, duplicate them to your own Figma account. Once the librari
   keyLineAnimation={false}
 />
 
-:::info Migrating your workspace in Figma
+<Callout title="Migrating your workspace in Figma">
 
 If you’re a community user, you’ll need to follow a migration process once you’ve duplicated the Salt libraries to your Figma project. This involves relinking the components, from your drafts.
 
 To simplify this process, [install this relinker plugin](https://www.figma.com/community/plugin/981892464363185469/Component-Relinker). It automatically relinks components from one organization to another.
 
 For more guidance on migrating files, [watch this video from Figma](https://www.loom.com/share/c85f866041e146e3855c7db38a1ae4bc).
-:::
+
+</Callout>
 
 ### 2. Add components to your designs
 
@@ -105,8 +88,8 @@ To start using our components, follow the instructions below.
 <DesignCards>
 
 <DesignCard
-  img={Assets1}
-  altText="Screenshot of Figma's assets panel displaying the 'Salt: Components Light' library"
+      src="/img/design-getting-started/assets1.png"
+      alt="Screenshot of Figma's assets panel displaying the 'Salt: Components Light' library"
 >
 
 Access the components in the left-hand panel using the “Assets” tab. Click on
@@ -115,8 +98,8 @@ the book icon and search for “Salt” in Libraries.
 </DesignCard>
 
 <DesignCard
-  img={Assets2}
-  altText="Screenshot of a light mode Button component being dragged out of Figma's assets panel"
+      src="/img/design-getting-started/assets2.png"
+      alt="Screenshot of a light mode Button component being dragged out of Figma's assets panel"
 >
 
 Switch on the library you need, for example, Components (Light or Dark), Mode,
@@ -125,8 +108,8 @@ Theme Palette, Typography, Icons, Layout Grid, etc.
 </DesignCard>
 
 <DesignCard
-  img={Assets3}
-  altText="Screenshot of the word 'button' being searched for in the Figma assets panel and Salt components with matching names being displayed"
+      src="/img/design-getting-started/assets3.png"
+      alt="Screenshot of the word 'button' being searched for in the Figma assets panel and Salt components with matching names being displayed"
 >
 
 Use the search function to find the component you need and then drag it to
@@ -135,8 +118,8 @@ your canvas to use it.
 </DesignCard>
 
 <DesignCard
-  img={Assets4}
-  altText="Screenshot of the Figma's contextual panel for Salt's Button component"
+      src="/img/design-getting-started/assets4.png"
+      alt="Screenshot of the Figma's contextual panel for Salt's Button component"
 >
 
 To change density and further manipulate the setup, use the contextual panel
@@ -170,8 +153,8 @@ Icons are available in SVG format, in three sizes (large, medium and small) and 
 Although icons are embedded within all of our components, you can change an icon to one that’s more suitable to your specific use case. To do this directly from the icon library, swap the instance using the variants panel on the right-hand side.
 
 <DesignCard
-  img={SelectIconImg}
-  altText="Screenshot of Figma's swap instance menu displaying a list of Salt icons"
+      src="/img/design-getting-started/SelectIconImg.png"
+      alt="Screenshot of Figma's swap instance menu displaying a list of Salt icons"
 >
 
 Swapping an icon in Figma
@@ -188,19 +171,17 @@ The default icon set is 12px for both high and medium density, 14px for low dens
 
 <IconsTable caption="Example of an icon (print) in different densities and sizes">
 
-| Size                                                 | High Density (HD)                                                           | Medium Density (MD)                                                           | Low Density (LD)                                                           | Touch Density (TD)                                                           |
-| ---------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| 1X <span className={styles.colored}>(default)</span> | <DensityIcon density="high" icon={<PrintIcon />}>12px</DensityIcon>         | <DensityIcon density="medium" icon={<PrintIcon />}>12px</DensityIcon>         | <DensityIcon density="low" icon={<PrintIcon />}>14px</DensityIcon>         | <DensityIcon density="touch" icon={<PrintIcon />}>16px</DensityIcon>         |
-| 2X                                                   | <DensityIcon density="high" icon={<PrintIcon size={2}/>}>20px</DensityIcon> | <DensityIcon density="medium" icon={<PrintIcon size={2}/>}>24px</DensityIcon> | <DensityIcon density="low" icon={<PrintIcon size={2}/>}>28px</DensityIcon> | <DensityIcon density="touch" icon={<PrintIcon size={2}/>}>32px</DensityIcon> |
-| 3X                                                   | <DensityIcon density="high" icon={<PrintIcon size={3}/>}>30px</DensityIcon> | <DensityIcon density="medium" icon={<PrintIcon size={3}/>}>36px</DensityIcon> | <DensityIcon density="low" icon={<PrintIcon size={3}/>}>42px</DensityIcon> | <DensityIcon density="touch" icon={<PrintIcon size={3}/>}>48px</DensityIcon> |
+| Size                                                                            | High Density (HD)                                           | Medium Density (MD)                                           | Low Density (LD)                                           | Touch Density (TD)                                           |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+| 1X <span style={{color: "var(--site-tertiary-accent-purple)"}}>(default)</span> | <DensityIcon density="high">12px</DensityIcon>              | <DensityIcon density="medium">12px</DensityIcon>              | <DensityIcon density="low" >14px</DensityIcon>             | <DensityIcon density="touch" >16px</DensityIcon>             |
+| 2X                                                                              | <DensityIcon density="high" iconSize={2}>20px</DensityIcon> | <DensityIcon density="medium" iconSize={2}>24px</DensityIcon> | <DensityIcon density="low" iconSize={2}>28px</DensityIcon> | <DensityIcon density="touch" iconSize={2}>32px</DensityIcon> |
+| 3X                                                                              | <DensityIcon density="high" iconSize={3}>30px</DensityIcon> | <DensityIcon density="medium" iconSize={3}>36px</DensityIcon> | <DensityIcon density="low" iconSize={3}>42px</DensityIcon> | <DensityIcon density="touch" iconSize={3}>48px</DensityIcon> |
 
 </IconsTable>
 
-:::info Need support?
+<Callout title="Need support?">
 
 For help when manually installing Figma, visit the [Figma support page](https://help.figma.com/hc/en-us/articles/360041057214-Get-help-from-the-Figma-Support-team).
-If you have any questions about Salt’s libraries, please [contact us](/support-and-contributions/).
+If you have any questions about Salt’s libraries, please [contact us](./support-and-contributions/).
 
-:::
-
-</Content>
+</Callout>

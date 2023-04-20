@@ -15,15 +15,15 @@
 
   --calendar-day-selected-background: var(--salt-selectable-background-selected);
   --calendar-day-selected-text-color: var(--salt-text-primary-foreground);
-  --calendar-day-selected-focused-outlineColor: var(--salt-color-white);
+  /* --calendar-day-selected-focused-outlineColor: var(--salt-color-white); TODO: Check with design */
 
   --calendar-day-selectedStart-background: var(--salt-selectable-background-selected);
   --calendar-day-selectedStart-text-color: var(--salt-text-primary-foreground);
-  --calendar-day-selectedStart-focused-outlineColor: var(--salt-color-white);
+  /* --calendar-day-selectedStart-focused-outlineColor: var(--salt-color-white);  TODO: Check with design */
 
   --calendar-day-selectedEnd-background: var(--salt-selectable-background-selected);
   --calendar-day-selectedEnd-text-color: var(--salt-text-primary-foreground);
-  --calendar-day-selectedEnd-focused-outlineColor: var(--salt-color-white);
+  /* --calendar-day-selectedEnd-focused-outlineColor: var(--salt-color-white);  TODO: Check with design */
 
   --calendar-day-selectedSpan-background: var(--salt-selectable-background-blurSelected);
   --calendar-day-selectedSpan-text-color: var(--salt-text-primary-foreground);
