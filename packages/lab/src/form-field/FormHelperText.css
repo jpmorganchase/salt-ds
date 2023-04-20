@@ -33,7 +33,7 @@
 }
 
 /* Class applied to the helper text container */
-.saltFormHelperText {
+.saltFormFieldHelperText {
   --formField-helperText-opacity: 1;
 
   color: var(--saltFormField-helperText-color, var(--salt-text-secondary-foreground));
