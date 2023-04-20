@@ -198,8 +198,7 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
     <div style={{ width: "366px" }}>
       <div style={{ height: 16 }} />
       <FormFieldNext
-        readOnly
-        label="Form Field label that's extra long: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        label="Form Field label that's extra long. Showing that labels wrap around to the next line."
         {...props}
       >
         <InputNext defaultValue="Primary Input value" />
@@ -208,7 +207,7 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
       <FormFieldNext
         readOnly
         label="Form Field label"
-        helperText="Helper text that's very long: Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        helperText="Helper text that's very long. Additional text explaining that this is a readonly Form Field."
         {...props}
       >
         <InputNext defaultValue="Primary Input value" />
