@@ -1,0 +1,35 @@
+/* Styles applied to root component */
+
+.saltCheckbox {
+  cursor: var(--salt-selectable-cursor-hover);
+  background: var(--saltCheckbox-background, none);
+  display: flex;
+  gap: var(--saltCheckbox-gap, var(--salt-size-adornmentGap));
+  position: relative;
+  width: fit-content;
+}
+
+/* Styles applied to root component if `disabled={true}` */
+.saltCheckbox-disabled {
+  pointer-events: visible;
+  color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
+}
+
+/* Styles applied to the icon component if focused */
+.saltCheckbox-input:focus-visible + .saltCheckboxIcon {
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline: var(--salt-focused-outline);
+}
+
+/* Styles applied to input element */
+.saltCheckbox-input {
+  cursor: inherit;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  z-index: var(--salt-zIndex-default);
+}

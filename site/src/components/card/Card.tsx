@@ -3,9 +3,10 @@ import {
   useRef,
   cloneElement,
   CSSProperties,
+  ReactNode,
 } from "react";
 import clsx from "clsx";
-import Link from "@site/src/components/link/Link";
+import { Link } from "@jpmorganchase/mosaic-site-components";
 
 import { useTheme, useViewport } from "@salt-ds/core";
 
@@ -17,14 +18,14 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   icon?: JSX.Element;
   inlineIcon?: JSX.Element;
   title?: string;
-  description: JSX.Element;
+  description: JSX.Element | ReactNode;
   url: string;
   footerText: string;
   keylineColor: CSSProperties["color"];
   keyLineAnimation?: boolean;
 }
 
-const Card = ({
+export const Card = ({
   icon,
   inlineIcon,
   title,
@@ -34,7 +35,7 @@ const Card = ({
   keylineColor,
   keyLineAnimation = true,
 }: CardProps): JSX.Element => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
 
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-100px");
 
@@ -45,7 +46,7 @@ const Card = ({
   return (
     <Link
       className={clsx(styles.card, { [styles.lightTheme]: useLightTheme })}
-      to={url}
+      href={url}
     >
       {icon && (
         <div className={styles.iconContainer}>
@@ -75,8 +76,6 @@ const Card = ({
   );
 };
 
-export default Card;
-
 export const InlineCard = ({
   icon,
   description,
@@ -84,7 +83,7 @@ export const InlineCard = ({
   footerText,
   keylineColor,
 }: CardProps): JSX.Element => {
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
 
   const { mode } = useTheme();
 
@@ -111,12 +110,14 @@ export const InlineCard = ({
       className={clsx(styles.inlineCard, {
         [styles.lightTheme]: useLightTheme,
       })}
-      to={url}
+      href={url}
     >
       <div className={styles.inlineCardContent}>
-        <div className={styles.iconContainer}>
-          {cloneElement(icon, { ...icon.props, className: styles.icon })}
-        </div>
+        {icon && (
+          <div className={styles.iconContainer}>
+            {cloneElement(icon, { ...icon.props, className: styles.icon })}
+          </div>
+        )}
         <div className={styles.textContainer}>
           <div className={styles.cardText}>
             <div className={styles.cardDescription}>{description}</div>

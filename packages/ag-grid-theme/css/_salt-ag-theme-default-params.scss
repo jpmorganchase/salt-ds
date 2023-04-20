@@ -1,5 +1,4 @@
 @import "~ag-grid-community/src/styles/ag-theme-base/sass/ag-theme-base-default-params";
-@import "./salt-ag-theme-font-vars";
 
 $salt-ag-theme-default-params: (
   row-hover-color: var(--agGrid-row-color-hover),
@@ -13,9 +12,6 @@ $salt-ag-theme-default-params: (
       "Open Sans",
       sans-serif,
     ),
-  icon-font-family: $salt-ag-theme-icon-font-family,
-  icons-data: $salt-ag-theme-icons-data,
-  icons-font-codes: $salt-ag-theme-icons-font-codes,
 );
 
 $salt-ag-theme-default-params: map-merge(

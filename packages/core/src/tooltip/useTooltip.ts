@@ -50,7 +50,7 @@ export function useTooltip(props?: UseTooltipProps) {
     disableFocusListener,
   } = props || {};
 
-  const arrowRef = useRef<HTMLDivElement | null>(null);
+  const arrowRef = useRef<SVGSVGElement | null>(null);
 
   const [open, setOpen] = useControlled({
     controlled: openProp,
@@ -106,9 +106,11 @@ export function useTooltip(props?: UseTooltipProps) {
 
   const arrowProps = {
     ref: arrowRef,
+    context,
     style: {
-      left: arrowX ? `${arrowX}px` : "",
-      top: arrowY ? `${arrowY}px` : "",
+      position: strategy,
+      left: arrowX ?? 0,
+      top: arrowY ?? 0,
     },
   };
 
@@ -118,8 +120,8 @@ export function useTooltip(props?: UseTooltipProps) {
       "data-placement": placement,
       ref: floating,
       style: {
-        top: y ?? "",
-        left: x ?? "",
+        top: y ?? 0,
+        left: x ?? 0,
         position: strategy,
       },
     });

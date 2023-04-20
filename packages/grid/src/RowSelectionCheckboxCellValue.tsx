@@ -1,4 +1,4 @@
-import { CheckboxBase } from "@salt-ds/lab";
+import { Checkbox } from "@salt-ds/core";
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
 import "./CheckboxCell.css";
@@ -21,7 +21,7 @@ export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
 
   return (
     <div className="saltGridCheckboxContainer" onMouseDown={onMouseDown}>
-      <CheckboxBase
+      <Checkbox
         data-testid="grid-row-selection-checkbox"
         inputProps={{
           "aria-label": "Select Row",

@@ -7,6 +7,7 @@ export default {
   component: BorderLayout,
   subcomponents: { BorderItem },
   argTypes: {
+    as: { type: "string" },
     gap: {
       type: "number",
     },

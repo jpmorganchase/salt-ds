@@ -1,0 +1,143 @@
+# Based on https://github.com/Shopify/polaris/blob/e6157f13d146b3add9c7a227d2d5481278251fac/.github/workflows/snapit.yml
+name: Snapshot
+
+on:
+  issue_comment:
+    types:
+      - created
+
+permissions: write-all
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  snapshot:
+    name: Snapshot Release
+    if: |
+      github.event.issue.pull_request &&
+      (github.event.comment.body == '/release-pr' || github.event.comment.body == '/snapshot-release')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce write permissions
+        uses: actions/github-script@v6
+        env:
+          COMMENT_ID: ${{ github.event.comment.id }}
+        with:
+          script: |
+            const username = context.actor;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const response = await github.rest.repos.getCollaboratorPermissionLevel({
+              owner,
+              repo,
+              username,
+            });
+
+            const permission = response.data.permission
+
+            if (permission === "write" || permission === "admin") {
+              await github.rest.reactions.createForIssueComment({
+                owner,
+                repo,
+                comment_id: process.env.COMMENT_ID,
+                content: "eyes",
+              })
+            } else {
+              core.setFailed(
+              `🚨 Insufficient Permissions! ${username} does not have write permissions`
+              )
+            }
+      - name: Validate pull request
+        uses: actions/github-script@v6
+        id: pr_data
+        env:
+          FORK: ${{ github.event.pull_request.head.repo.fork }}
+        with:
+          script: |
+            try {
+              // Pull request from fork
+              if (process.env.FORK) {
+                const errorMessage = 'snapshot releases not supported on pull requests from forked repositories.'
+                await github.rest.issues.createComment({
+                  issue_number: context.issue.number,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: errorMessage,
+                })
+                core.setFailed(errorMessage)
+              }
+            } catch (err) {
+              core.setFailed(`Request failed with error ${err}`)
+            }
+      - name: Checkout pull request
+        uses: actions/checkout@v3
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/head
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "yarn"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: yarn install
+      - name: Create and publish snapshot release
+        uses: actions/github-script@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        with:
+          script: |
+
+            await exec.exec('yarn changeset version --snapshot snapshot');
+
+            await exec.exec('yarn build');
+
+            let output = ''
+
+            const options = {
+              listeners: {
+                stdout: (data) => {
+                  output += data.toString();
+                },
+              }
+            };
+
+            await exec.exec('yarn changeset publish --no-git-tag --snapshot --tag snapshot', [], options);
+
+            const { COMMENT_ID } = process.env
+            const newTags = Array
+              .from(output.matchAll(/New tag:\s+([^\s\n]+)/g))
+              .map(([_, tag]) => tag)
+            if (newTags.length) {
+              const multiple = newTags.length > 1
+              const body = (
+                `🫰✨ **Thanks @${context.actor}! ` +
+                `Your snapshot${multiple ? 's have' : ' has'} been published to npm.**\n\n` +
+                `Test the snapshot${multiple ? 's' : ''} by updating your \`package.json\` ` +
+                `with the newly published version${multiple ? 's' : ''}:\n` +
+                newTags.map(tag => (
+                  '```sh\n' +
+                  `yarn add ${tag}\n` +
+                  '```'
+                )).join('\n')
+              )
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body,
+              })
+
+              await github.rest.reactions.createForIssueComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: COMMENT_ID,
+                content: "rocket",
+              })
+            }

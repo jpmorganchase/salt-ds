@@ -233,6 +233,26 @@ To trigger edit mode on cells on your:
 - keyboard: press either the `backspace` _or_ `F2` key, _alternatively_ simply start typing
 - mouse: double click
 
+### Column sorting
+
+The grid allows you to sort individual columns on client side or server side, use `sortable`on `GridColumn` component to enable this.
+
+For client side sorting, user could use inbuilt default sort, or provide a custom sorting function through `customSort`, see "Score" column for example.
+
+For server side sorting, we expose sort order (`asc | desc | none`) through `onSortOrderChange`, see "Amount" column for example.
+
+<LazyStoryCanvas>
+  <Canvas>
+    <Story id="data-grid-data-grid--client-side-sort" />
+  </Canvas>
+</LazyStoryCanvas>
+
+<LazyStoryCanvas>
+  <Canvas>
+    <Story id="data-grid-data-grid--server-side-sort" />
+  </Canvas>
+</LazyStoryCanvas>
+
 ### Cell Validation
 
 To display a cell in one of the expected validation states, use the `getValidationState` prop on the `GridColumn` component. This prop is a function that provides row and column data and expects a return value of one of the known validation states, "error", "warning", and "success".

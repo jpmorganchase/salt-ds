@@ -1,4 +1,4 @@
-import { ComponentProps, memo } from "react";
+import { ComponentProps, memo, useEffect, useState } from "react";
 import {
   ComboBox,
   ComboBoxProps,
@@ -230,4 +230,17 @@ export const WithInitialSelection = FormFieldComboBoxTemplate.bind({});
 WithInitialSelection.args = {
   ...WithFormField.args,
   defaultValue: shortColorData[3],
+};
+
+export const TestSourceDelay = () => {
+  const [source, setSource] = useState<string[]>([]);
+  useEffect(() => {
+    const timeout = setTimeout(() => setSource(["a", "bb", "cc", "abc"]), 5000);
+    return () => void clearTimeout(timeout);
+  }, []);
+  return (
+    <FormField label="Select something" style={{ maxWidth: 292 }}>
+      <ComboBox source={source} />
+    </FormField>
+  );
 };

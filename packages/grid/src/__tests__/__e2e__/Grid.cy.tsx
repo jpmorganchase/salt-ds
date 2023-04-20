@@ -7,7 +7,9 @@ import * as cellValidationStories from "@stories/grid-cellValidation.stories";
 import * as rowSelectionControlledStories from "@stories/grid-rowSelectionControlled.stories";
 import * as cellCustomizationStories from "@stories/grid-cellCustomization.stories";
 import * as columnGroupsStories from "@stories/grid-columnGroups.stories";
-import { Grid, GridColumn, ColumnGroup } from "@salt-ds/data-grid";
+import * as sortColumnsStories from "@stories/grid-sortColumns.stories";
+import { Grid, GridColumn, ColumnGroup, SortOrder } from "@salt-ds/data-grid";
+import { db, Investor } from "@stories/dummyData";
 
 const { GridVariants } = composeStories(variantsStories);
 const { CellCustomization } = composeStories(cellCustomizationStories);
@@ -25,6 +27,7 @@ const {
 } = composeStories(gridStories);
 const { EditableCells } = composeStories(gridEditableStories);
 const { ColumnGroups } = composeStories(columnGroupsStories);
+const { ServerSideSort } = composeStories(sortColumnsStories);
 
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
@@ -240,7 +243,7 @@ describe("Grid", () => {
     cy.focused().realPress(["Home"]);
     checkCursorPos(1, 0);
     cy.focused().realPress(["ControlLeft", "End"]);
-    checkCursorPos(42, 5);
+    checkCursorPos(50, 5);
     cy.focused().realPress(["ControlLeft", "Home"]);
     checkCursorPos(1, 0);
     cy.focused().realPress(["PageDown"]);
@@ -366,6 +369,32 @@ describe("Grid", () => {
     checkCursorPos(0, 1);
   });
 
+  it("Arbitrary typing on an editable cell enters edit mode with the first key as value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realType("a");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "a");
+  });
+
+  it("Escape cancels edit and reverts cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("asd");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "asd")
+      .type("{Esc}");
+    findCell(0, 0).should("not.have.text", "a");
+    checkCursorPos(0, 0);
+  });
+
   it("Numeric cell editor", () => {
     cy.mount(<GridExample />);
 
@@ -376,6 +405,47 @@ describe("Grid", () => {
       .type("3.1415")
       .type("{Enter}");
     findCell(0, 4).should("have.text", "3.14");
+  });
+
+  it("Clicking on a different cell ends edit and confirms new cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("asd");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "asd");
+
+    clickCell(0, 1);
+    checkCursorPos(0, 1);
+    findCell(0, 0).should("have.text", "asd");
+  });
+
+  it("Clicking on a header or outside the grid ends edit and confirms new cell value", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("asd");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "asd");
+
+    cy.get("body").click();
+    findCell(0, 0).should("have.text", "asd");
+
+    clickCell(0, 0);
+    cy.focused().realPress("Enter");
+    cy.focused().realType("qwe");
+    cy.findByTestId("grid-cell-editor-input")
+      .should("exist")
+      .should("have.value", "qwe");
+
+    cy.get(".saltGridTopPart").click();
+    findCell(0, 0).should("have.text", "qwe");
   });
 
   // Docs Examples
@@ -420,83 +490,35 @@ describe("Grid", () => {
     });
   });
 
-  describe("Row Selection", () => {
-    describe("Uncontrolled & switching selection modes", () => {
-      it("Shows correct columns", () => {
-        cy.mount(<RowSelectionModes />);
+  describe("Row Selection Controlled Mode", () => {
+    it("Handles controlled mode", () => {
+      // This example used controlled selection mode to synchronise selection across two grids.
+      cy.mount(<RowSelectionControlled />);
 
-        cy.findByLabelText("multi").click();
-        cy.findAllByTestId("grid-row-selection-checkbox").should(
-          "have.length",
-          15
-        );
-        cy.findAllByTestId("grid-row-selection-radiobox").should(
-          "have.length",
-          0
-        );
-        cy.findAllByTestId("column-header").should("have.length", 4);
-        cy.findAllByTestId("column-header").eq(1).should("have.text", "A");
-        cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
-        cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
+      // check both are all unselected
+      cy.findAllByRole("grid").should("have.length", 2);
+      cy.findAllByRole("grid")
+        .findAllByTestId("grid-row-selection-checkbox")
+        .should("not.have.class", "saltGridTableRow-selected");
 
-        cy.findByLabelText("single").click();
-        cy.findAllByTestId("grid-row-selection-radiobox").should(
-          "have.length",
-          15
-        );
-        cy.findAllByTestId("grid-row-selection-checkbox").should(
-          "have.length",
-          0
-        );
-        cy.findAllByTestId("column-header").should("have.length", 4);
-        cy.findAllByTestId("column-header").eq(1).should("have.text", "A");
-        cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
-        cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
+      // select two rows on the first grid
+      cy.findAllByRole("grid")
+        .eq(0)
+        .findAllByTestId("grid-row-selection-checkbox")
+        .eq(2)
+        .click({ force: true });
 
-        cy.findByLabelText("none").click();
-        cy.findAllByTestId("grid-row-selection-checkbox").should(
-          "have.length",
-          0
-        );
-        cy.findAllByTestId("grid-row-selection-radiobox").should(
-          "have.length",
-          0
-        );
-        cy.findAllByTestId("column-header").should("have.length", 3);
-        cy.findAllByTestId("column-header").eq(0).should("have.text", "A");
-        cy.findAllByTestId("column-header").eq(1).should("have.text", "B");
-        cy.findAllByTestId("column-header").eq(2).should("have.text", "C");
-      });
+      cy.findAllByRole("grid")
+        .eq(0)
+        .findAllByTestId("grid-row-selection-checkbox")
+        .eq(3)
+        .click({ force: true });
 
-      describe("Controlled Mode", () => {
-        it("Handles controlled mode", () => {
-          // This example used controlled selection mode to synchronise selection across two grids.
-          cy.mount(<RowSelectionControlled />);
-
-          // check both are all unselected
-          cy.findAllByRole("grid").should("have.length", 2);
-          cy.findAllByRole("grid")
-            .findAllByTestId("grid-row-selection-checkbox")
-            .should("not.have.class", "saltGridTableRow-selected");
-
-          // select two rows on the first grid
-          cy.findAllByRole("grid")
-            .eq(0)
-            .findAllByTestId("grid-row-selection-checkbox")
-            .eq(2)
-            .click({ force: true });
-
-          cy.findAllByRole("grid")
-            .eq(0)
-            .findAllByTestId("grid-row-selection-checkbox")
-            .eq(3)
-            .click({ force: true });
-
-          // assert the second grid has the same rows selected
-          cy.findAllByRole("grid")
-            .eq(1)
-            .get(`tr[data-row-index="2"]`)
-            .should("have.class", "saltGridTableRow-selected");
+      // assert the second grid has the same rows selected
+      cy.findAllByRole("grid")
+        .eq(1)
+        .get(`tr[data-row-index="2"]`)
+        .should("have.class", "saltGridTableRow-selected");
 
           cy.findAllByRole("grid")
             .eq(1)
@@ -616,6 +638,97 @@ describe("Grid", () => {
     cy.focused().type(" ");
     checkRowSelected(2, true);
     checkRowSelected(3, true);
+  });
+
+  describe("Column Sorting", () => {
+    it("should sort column values when sorting is enabled", () => {
+      cy.mount(<RowSelectionModes />);
+
+      // first click: sort in ascending order
+      cy.findByRole("columnheader", { name: "B" }).realClick();
+      cy.findByRole("columnheader", { name: "B" }).should(
+        "have.attr",
+        "aria-sort",
+        "ascending"
+      );
+      findCell(1, 2).should("have.text", "100.00");
+
+      // second click: sort in descending order
+      cy.findByRole("columnheader", { name: "B" }).realClick();
+      cy.findByRole("columnheader", { name: "B" }).should(
+        "have.attr",
+        "aria-sort",
+        "descending"
+      );
+      findCell(1, 2).should("have.text", "4800.00");
+
+      // third click: back to default order without sorting
+      cy.findByRole("columnheader", { name: "B" }).realClick();
+      cy.findByRole("columnheader", { name: "B" }).should(
+        "have.attr",
+        "aria-sort",
+        "none"
+      );
+      findCell(1, 2).should("have.text", "100.00");
+    });
+
+    it("allows sorting on server side", () => {
+      cy.intercept("GET", "/api/investors*", (req) => {
+        const url = new URL(req.url);
+        const sortBy = url.searchParams.get("sort_by");
+
+        const orderBy =
+          sortBy
+            ?.split(",")
+            .map((s) => {
+              const [sortColumn, sortOrder] = s.split(".");
+              if (sortOrder && sortColumn) {
+                return {
+                  [sortColumn]: sortOrder,
+                } as Record<keyof Investor, SortOrder>;
+              }
+            })
+            .filter(Boolean) ?? [];
+
+        const response = db.investor.findMany({
+          // @ts-ignore
+          orderBy,
+          take: 50,
+        });
+
+        return req.reply({ body: response });
+      }).as("getInvestors");
+
+      cy.mount(<ServerSideSort />);
+
+      cy.wait("@getInvestors");
+      // first click: sort in ascending order
+      cy.findByRole("columnheader", { name: "Amount" }).realClick();
+      cy.wait("@getInvestors");
+      cy.findByRole("columnheader", { name: "Amount" }).should(
+        "have.attr",
+        "aria-sort",
+        "ascending"
+      );
+
+      // second click: sort in descending order
+      cy.findByRole("columnheader", { name: "Amount" }).realClick();
+      cy.wait("@getInvestors");
+      cy.findByRole("columnheader", { name: "Amount" }).should(
+        "have.attr",
+        "aria-sort",
+        "descending"
+      );
+
+      // third click: back to default order without sorting
+      cy.findByRole("columnheader", { name: "Amount" }).realClick();
+      cy.wait("@getInvestors");
+      cy.findByRole("columnheader", { name: "Amount" }).should(
+        "have.attr",
+        "aria-sort",
+        "none"
+      );
+    });
   });
 
   describe("cell validation", () => {

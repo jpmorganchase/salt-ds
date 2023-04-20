@@ -6,6 +6,7 @@ export default {
   title: "Core/Layout/Stack Layout",
   component: StackLayout,
   argTypes: {
+    as: { type: "string" },
     align: {
       options: [...FLEX_ALIGNMENT_BASE, "stretch", "baseline"],
       control: { type: "select" },

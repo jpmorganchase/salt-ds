@@ -1,0 +1,36 @@
+.root {
+  --site-sidebar-width: 300px;
+}
+
+.root {
+  display: grid;
+  align-items: start;
+  grid-template-areas: "layout-column-sidebar layout-column-main";
+  grid-template-columns: max-content calc(100vw - var(--site-sidebar-width));
+}
+
+.main {
+  grid-area: layout-column-main;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+}
+
+.main.showDrawer {
+  width: 100vw;
+}
+
+.sidebar {
+  grid-area: layout-column-sidebar;
+  position: sticky;
+  top: var(--navbar-height);
+  max-width: var(--site-sidebar-width);
+  height: 100vh;
+}
+
+.sidebar > aside {
+  margin-top: 0;
+  padding-top: 0;
+  height: 100%;
+  overflow-y: auto;
+}

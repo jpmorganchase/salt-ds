@@ -1,0 +1,29 @@
+/* Styles applied to root component */
+.saltCheckboxGroup {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Styles applied to root component if `direction={"horizontal"}` */
+.saltCheckboxGroup-horizontal {
+  display: flex;
+  gap: var(--salt-size-adornmentGap);
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Styles applied to root component if `direction={"vertical"}` */
+.saltCheckboxGroup-vertical {
+  display: flex;
+  gap: var(--salt-size-unit);
+  flex-direction: column;
+}
+
+.saltCheckboxGroup-noWrap {
+  flex-wrap: nowrap;
+}
+
+.saltCheckboxGroup-noWrap .saltCheckbox {
+  white-space: break-spaces;
+}

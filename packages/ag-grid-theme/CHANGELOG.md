@@ -1,5 +1,25 @@
 # @salt-ds/ag-grid-theme
 
+## 1.1.3
+
+### Patch Changes
+
+- fb92ab4b: Update the icon mappings
+- 09cc1177: Fix broken reference to font
+
+## 1.1.2
+
+### Patch Changes
+
+- 0c478a6b: Fix fonts not being published in the ag-grid-theme
+
+## 1.1.1
+
+### Patch Changes
+
+- 50370dec: Fixed some icons that were overridden incorrectly
+- 982da8e2: Fix ag-grid uitk theme floating filter input height in High density
+
 ## 1.1.0
 
 ### Minor Changes

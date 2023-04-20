@@ -1,0 +1,61 @@
+import { Meta, Canvas, Story } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+import { FontSizeBlock } from "docs/components/FontSizeBlock";
+import { FontWeightBlock } from "docs/components/FontWeightBlock";
+import { LineBlock } from "docs/components/LineBlock";
+
+<Meta title="Theme/Characteristics/Track" />
+
+# Track
+
+Components which have the ability to visually indicate progress, scale, or range along a defined track.
+
+## Tokens
+
+### Base
+
+<Canvas>
+  <Story name="Base">
+    <DocGrid>
+      <ColorBlock colorVar="--salt-track-background" />
+      <ColorBlock colorVar="--salt-track-background-disabled" />
+      <ColorBlock colorVar="--salt-track-borderColor" />
+      <ColorBlock colorVar="--salt-track-borderColor-disabled" />
+      <LineBlock
+        token="--salt-track-borderStyle"
+        lineStyle="--salt-track-borderStyle"
+      />
+      <LineBlock
+        token="--salt-track-borderStyle-active"
+        lineStyle="--salt-track-borderStyle-active"
+      />
+      <LineBlock
+        token="--salt-track-borderStyle-complete"
+        lineStyle="--salt-track-borderStyle-complete"
+      />
+      <LineBlock
+        token="--salt-track-borderStyle-incomplete"
+        lineStyle="--salt-track-borderStyle-incomplete"
+      />
+      <LineBlock
+        token="--salt-track-borderWidth"
+        lineWidth="--salt-track-borderWidth"
+      />
+      <LineBlock
+        token="--salt-track-borderWidth-active"
+        lineWidth="--salt-track-borderWidth-active"
+      />
+      <LineBlock
+        token="--salt-track-borderWidth-complete"
+        lineWidth="--salt-track-borderWidth-complete"
+      />
+      <LineBlock
+        token="--salt-track-borderWidth-incomplete"
+        lineWidth="--salt-track-borderWidth-incomplete"
+      />
+      <FontWeightBlock fontWeight="--salt-track-fontWeight" />
+      <FontWeightBlock fontWeight="--salt-track-textAlign" />
+    </DocGrid>
+  </Story>
+</Canvas>

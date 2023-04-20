@@ -26,6 +26,14 @@
   text-align: right;
 }
 
+.saltGridHeaderCell-alignRightWithSortOrder {
+  margin-left: calc(var(--salt-size-unit) * 2);
+}
+
+.saltGridHeaderCell-alignLeftWithSortOrder {
+  margin-right: calc(var(--salt-size-unit) * 2);
+}
+
 .saltGridHeaderCell-autosizeContainer {
   line-height: var(--grid-row-height);
   padding: 0;
@@ -87,4 +95,21 @@
   background: transparent;
   cursor: col-resize;
   z-index: 2;
+}
+
+.saltGridHeaderCell-sortable {
+  cursor: pointer;
+}
+
+.saltGridHeaderCell-sortingIcon {
+  display: flex;
+  margin: 0 var(--salt-size-unit);
+}
+
+.saltGridHeaderCell-sortingIconStart {
+  justify-content: start;
+}
+
+.saltGridHeaderCell-sortingIconEnd {
+  justify-content: end;
 }

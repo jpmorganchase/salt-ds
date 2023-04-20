@@ -1,0 +1,13 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_48_3120" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+<circle cx="36" cy="36" r="36" transform="matrix(1 0 0 -1 0 72)" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_48_3120)">
+<rect width="27" height="72" transform="matrix(-4.37114e-08 1 1 4.37114e-08 0 0)" fill="#DD2033"/>
+<rect width="27" height="72" transform="matrix(-4.37114e-08 1 1 4.37114e-08 0 45)" fill="#008259"/>
+<path d="M72 27H50.7998L14.7998 0H7.3999V72H14.7998L50.7998 45L72 45V27Z" fill="#31373D"/>
+<path d="M72 39H48.7998L4.7998 72V0L48.7998 33H72V39Z" fill="#F1B434"/>
+<path d="M21.6001 36C21.6001 38.2091 19.8092 40 17.6001 40C15.391 40 13.6001 38.2091 13.6001 36C13.6001 33.7909 15.391 32 17.6001 32C19.8092 32 21.6001 33.7909 21.6001 36Z" fill="#31373D"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M-4.3999 0L43.6001 36L-4.3999 72V0ZM27.6001 36C27.6001 41.5228 23.1229 46 17.6001 46C12.0772 46 7.6001 41.5228 7.6001 36C7.6001 30.4772 12.0772 26 17.6001 26C23.1229 26 27.6001 30.4772 27.6001 36Z" fill="#31373D"/>
+</g>
+</svg>

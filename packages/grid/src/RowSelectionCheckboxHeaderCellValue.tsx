@@ -1,6 +1,6 @@
 import { useSelectionContext } from "./SelectionContext";
 import { KeyboardEventHandler, MouseEventHandler } from "react";
-import { CheckboxBase } from "@salt-ds/lab";
+import { Checkbox } from "@salt-ds/core";
 import "./CheckboxCell.css";
 import { GridHeaderValueProps } from "./GridColumn";
 
@@ -38,7 +38,7 @@ export function RowSelectionCheckboxHeaderCellValue<T>(
       className="saltGridCheckboxContainer"
       onKeyDown={onKeyDown}
     >
-      <CheckboxBase
+      <Checkbox
         data-testid="grid-row-select-all-checkbox"
         inputProps={{
           "aria-label": "Select All",
