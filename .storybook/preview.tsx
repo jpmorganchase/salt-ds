@@ -23,10 +23,19 @@ import { withStrictMode } from "docs/decorators/withStrictMode";
 import { withScaffold } from "docs/decorators/withScaffold";
 import { SaltProvider } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
+import { initialize, mswDecorator } from "msw-storybook-addon";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
 const DEFAULT_MODE = "light";
+
+// @ts-ignore
+if (!window.Cypress) {
+  // Initialize MSW
+  initialize({
+    onUnhandledRequest: "bypass",
+  });
+}
 
 export const globalTypes: GlobalTypes = {
   mode: {
@@ -151,4 +160,5 @@ export const decorators = [
   withTheme,
   WithTextSpacingWrapper,
   withStrictMode,
+  mswDecorator,
 ];

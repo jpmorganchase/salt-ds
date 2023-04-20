@@ -40,7 +40,7 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         run: yarn build-storybook
         env:
-          NODE_OPTIONS: "--max_old_space_size=4096"
+          NODE_OPTIONS: "--max_old_space_size=6144"
       - name: Publish Storybook
         if: steps.changesets.outputs.published == 'true'
         uses: cloudflare/pages-action@v1
