@@ -1,6 +1,8 @@
 import * as tooltipStories from "@stories/tooltip/tooltip.stories";
 import { composeStories } from "@storybook/testing-react";
+import { InfoIcon } from "@salt-ds/icons";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import { Tooltip } from "@salt-ds/core";
 
 const composedStories = composeStories(tooltipStories);
 
@@ -154,6 +156,23 @@ describe("GIVEN a Tooltip", () => {
       cy.get("div").should("be.visible");
       cy.get("ul").should("be.visible");
       cy.get("li").should("be.visible");
+    });
+  });
+
+  describe("WHEN used in header tag", () => {
+    it("then tooltip displays default font weight and size", () => {
+      cy.mount(
+        <h3>
+          Header{" "}
+          <Tooltip open content="tooltip">
+            <InfoIcon />
+          </Tooltip>
+        </h3>
+      );
+      cy.findByText("tooltip")
+        .should("be.visible")
+        .should("have.css", "font-size", "12px")
+        .should("have.css", "font-weight", "400");
     });
   });
 });
