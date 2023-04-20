@@ -66,24 +66,12 @@ export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
   return (
     <>
       <div className="demo alignCenter">
-        <InputNext
-          defaultValue={args.defaultValue ?? "Value 1"}
-          {...args}
-        />
-        <InputNext
-          defaultValue={args.defaultValue ?? "Value 2"}
-          {...args}
-        />
+        <InputNext defaultValue={args.defaultValue ?? "Value 1"} {...args} />
+        <InputNext defaultValue={args.defaultValue ?? "Value 2"} {...args} />
       </div>
       <div className="demo alignRight">
-        <InputNext
-          defaultValue={args.defaultValue ?? "Value 1"}
-          {...args}
-        />
-        <InputNext
-          defaultValue={args.defaultValue ?? "Value 2"}
-          {...args}
-        />
+        <InputNext defaultValue={args.defaultValue ?? "Value 1"} {...args} />
+        <InputNext defaultValue={args.defaultValue ?? "Value 2"} {...args} />
       </div>
     </>
   );
