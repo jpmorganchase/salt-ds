@@ -56,7 +56,7 @@ const GridPaginationTemplate: Story<{}> = (props) => {
           name="Amount"
           id="amount"
           defaultWidth={200}
-          getValue={(x) => x.amount.toFixed(4)}
+          getValue={(x) => x.amount}
           align="right"
         />
       </Grid>
