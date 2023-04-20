@@ -6,7 +6,8 @@ import "./FormFieldHelperText.css";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
-export interface FormFieldHelperTextProps extends Omit<LabelProps, "variant" | "styleAs"> {
+export interface FormFieldHelperTextProps
+  extends Omit<LabelProps, "variant" | "styleAs"> {
   helperText: FormFieldProps["helperText"];
   disabled?: boolean;
 }
