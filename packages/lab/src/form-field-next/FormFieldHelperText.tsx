@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Label, LabelProps, makePrefixer } from "@salt-ds/core";
+import { Label, TextProps, makePrefixer } from "@salt-ds/core";
 import { FormFieldProps } from "./FormFieldNext";
 
 import "./FormFieldHelperText.css";
@@ -7,7 +7,7 @@ import "./FormFieldHelperText.css";
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
 export interface FormFieldHelperTextProps
-  extends Omit<LabelProps, "variant" | "styleAs"> {
+  extends Omit<TextProps<"label">, "variant" | "styleAs"> {
   helperText: FormFieldProps["helperText"];
   disabled?: boolean;
 }
