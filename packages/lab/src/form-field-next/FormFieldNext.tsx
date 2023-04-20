@@ -8,7 +8,7 @@ import {
 } from "react";
 import { makePrefixer, useId, useForkRef, capitalize } from "@salt-ds/core";
 import { FormFieldContextNext } from "../form-field-context";
-import { FormFieldLabel, FormFieldLabelProps } from "./FormFieldLabel";
+import { FormFieldLabel } from "./FormFieldLabel";
 import { FormFieldHelperText } from "./FormFieldHelperText";
 
 import "./FormFieldNext.css";
@@ -34,10 +34,6 @@ export interface FormFieldProps
    * Location the label, values: 'top' (default) or 'left'
    */
   labelPlacement?: FormFieldLabelPlacement;
-  /**
-   * Props to be applied to the FormFieldLabel
-   */
-  LabelProps?: Partial<FormFieldLabelProps>;
   /**
    * Readonly prop
    */
@@ -93,7 +89,6 @@ export const FormField = forwardRef(
       helperText,
       label,
       labelPlacement = "top",
-      LabelProps = {},
       onBlur,
       onFocus,
       readOnly = false,
@@ -105,7 +100,7 @@ export const FormField = forwardRef(
 
     const handleTriggerRef = useForkRef(rootRef, ref);
 
-    const labelId = useId(LabelProps?.id);
+    const labelId = useId();
 
     const a11yValue = useA11yValue({
       labelId,
