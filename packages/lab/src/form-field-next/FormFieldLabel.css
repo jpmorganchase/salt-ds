@@ -1,14 +1,5 @@
-.saltFormFieldLabel {
-  align-self: center;
-  color: var(--saltFormField-label-text-color, var(--salt-text-secondary-foreground));
-  display: block;
-  width: 100%;
-}
-
-.saltFormFieldLabel-disabled {
-  color: var(--saltFormField-label-color-disabled, var(--salt-text-secondary-foreground-disabled));
-}
-
 .saltFormFieldLabel.saltText {
-  font-weight: var(--saltFormField-helperText-fontWeight, var(--salt-text-fontWeight-strong));
+  align-self: center;
+  font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
+  width: 100%;
 }

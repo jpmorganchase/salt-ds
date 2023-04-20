@@ -1,19 +1,17 @@
 import clsx from "clsx";
-import { HTMLAttributes } from "react";
-import { Label, makePrefixer } from "@salt-ds/core";
+import { Label, LabelProps, makePrefixer } from "@salt-ds/core";
 import { FormFieldProps } from "./FormFieldNext";
 
 import "./FormFieldHelperText.css";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
-export interface FormFieldHelperTextProps
-  extends HTMLAttributes<HTMLLabelElement> {
+export interface FormFieldHelperTextProps extends Omit<LabelProps, "variant" | "styleAs"> {
   helperText: FormFieldProps["helperText"];
   disabled?: boolean;
 }
 
-export const FormFieldHelperText = <E extends React.ElementType = "p">({
+export const FormFieldHelperText = ({
   className,
   disabled,
   helperText,
@@ -21,9 +19,9 @@ export const FormFieldHelperText = <E extends React.ElementType = "p">({
 }: FormFieldHelperTextProps) => {
   return (
     <Label
-      className={clsx(withBaseName(), className, {
-        [withBaseName("disabled")]: disabled,
-      })}
+      className={clsx(withBaseName(), className)}
+      disabled={disabled}
+      variant="secondary"
       {...restProps}
     >
       {helperText}
