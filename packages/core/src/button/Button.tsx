@@ -57,7 +57,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
       id: "salt-button",
-      css: buttonCss,
+      css: buttonCss as string,
       window: targetWindow,
     });
 
