@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import {
   TableOfContents,
@@ -35,7 +35,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
       : push(`${newRoute}${tabs[0].name}`);
   }, []);
 
-  const updateTabWhenRouteChanges = useCallback(() => {
+  const updateTabWhenRouteChanges = useMemo(() => {
     const currentTab = tabs.find(({ name }) => route?.includes(name));
 
     const defaultTabAndRoute = () => {
@@ -52,7 +52,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     <DetailBase sidebar={<Sidebar sticky>{SecondarySidebar}</Sidebar>}>
       <p>{description}</p>
       <Tabs
-        activeTabIndex={updateTabWhenRouteChanges()}
+        activeTabIndex={updateTabWhenRouteChanges}
         onActiveChange={updateRouteWhenTabChanges}
       >
         {tabs.map(({ id, label }) => (
