@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
   TableOfContents,
@@ -23,39 +23,39 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const { push } = useRouter();
   const { route } = useRoute();
 
+  const newRoute = route?.substring(0, route.lastIndexOf("/") + 1);
+
   const useData = useStore((state: CustomSiteState) => state.data);
 
   const { descriptionRef } = useData || {};
 
+  const onActiveChange = useCallback((index: number) => {
+    // update route then the tab changes
+    const currentTab = tabs.find(({ id }) => index === id);
+
+    currentTab
+      ? push(`${newRoute}${currentTab.name}`)
+      : push(`${newRoute}${tabs[0].name}`);
+  }, []);
+
   useEffect(() => {
     // update tab when the route changes
-    if (route) {
-      const currentTab = tabs.find(({ name }) => route.includes(name));
+    const currentTab = tabs.find(({ name }) => route?.includes(name));
 
-      currentTab ? setActiveTabIndex(currentTab.id) : setActiveTabIndex(0);
-    }
+    const defaultTabAndRoute = () => {
+      setActiveTabIndex(0);
+      push(`${newRoute}${tabs[0].name}`);
+    };
+
+    currentTab ? setActiveTabIndex(currentTab.id) : defaultTabAndRoute();
   }, [route]);
-
-  useEffect(() => {
-    // update route then the tab changes
-    if (route) {
-      // remove everything from the last slash onwards
-      const newRoute = route.substring(0, route.lastIndexOf("/") + 1);
-
-      const currentTab = tabs.find(({ id }) => activeTabIndex === id);
-
-      currentTab
-        ? push(`${newRoute}${currentTab.name}`)
-        : push(`${newRoute}${tabs[0].name}`);
-    }
-  }, [route, activeTabIndex]);
 
   const SecondarySidebar = <TableOfContents />; // TODO: replace with custom component pages sidebar
 
   return (
     <DetailBase sidebar={<Sidebar sticky>{SecondarySidebar}</Sidebar>}>
       <p>{descriptionRef}</p>
-      <Tabs activeTabIndex={activeTabIndex} onActiveChange={setActiveTabIndex}>
+      <Tabs activeTabIndex={activeTabIndex} onActiveChange={onActiveChange}>
         {tabs.map(({ id, label }) => (
           <TabPanel key={id} label={label}>
             {children}
