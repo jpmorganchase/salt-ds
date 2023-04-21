@@ -133,8 +133,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     ...restProps,
   });
 
-  console.log('onClose', onClose);
-
   return (
     <div
       className={clsx(withBaseName(), withBaseName(status), className, {

@@ -15,21 +15,19 @@
   border-bottom: 2px solid var(--saltBanner-borderColor, var(--banner-status-borderColor));
   box-sizing: border-box;
   display: flex;
-  flex-direction: row;
+  gap: var(--salt-size-unit);
   padding: 0 var(--banner-padding);
   position: relative;
-  /*min-height: 36px;*/
   width: 100%;
-  align-items: center;
+  align-items: baseline;
 }
 
 .saltBanner-closeButton {
-  margin: calc(var(--salt-size-unit) * 0.5) auto calc(var(--salt-size-unit) * 0.5) var(--salt-size-unit);
+  padding: 0;
 }
 
 .saltBanner-label {
   flex: 1 0;
-  padding: calc(var(--banner-padding) + 2px) 0 calc(var(--banner-padding));
   font-weight: var(--salt-text-label-fontWeight);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
@@ -38,39 +36,27 @@
 
 /* Styles applied to status indicator */
 .saltBanner-icon {
-  color: var(--saltBanner-icon-color, var(--banner-status-icon-color));
-  fill: var(--saltBanner-icon-color, var(--banner-status-icon-color));
-  margin-right: var(--saltTooltip-icon-marginRight, 6px);
   flex: 0 0 auto;
-}
-
-.saltBanner-link {
-  font-weight: var(--salt-text-label-fontWeight);
-  margin-left: 1ch;
 }
 
 /* Styles applied when state = "info" */
 .saltBanner-info {
   --banner-status-borderColor: var(--salt-status-info-borderColor);
-  --banner-status-icon-color: var(--salt-status-info-foreground);
 }
 
 /* Styles applied when state = "error" */
 .saltBanner-error {
   --banner-status-borderColor: var(--salt-status-error-borderColor);
-  --banner-status-icon-color: var(--salt-status-error-foreground);
 }
 
 /* Styles applied when state = "warning" */
 .saltBanner-warning {
   --banner-status-borderColor: var(--salt-status-warning-borderColor);
-  --banner-status-icon-color: var(--salt-status-warning-foreground);
 }
 
 /* Styles applied when state = "success" */
 .saltBanner-success {
   --banner-status-borderColor: var(--salt-status-success-borderColor);
-  --banner-status-icon-color: var(--salt-status-success-foreground);
 }
 
 .saltBanner-emphasize.saltBanner-info {
