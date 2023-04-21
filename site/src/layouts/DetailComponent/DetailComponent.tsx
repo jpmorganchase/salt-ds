@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from "react";
+import React, { FC } from "react";
 import { useRouter } from "next/navigation";
 import {
   TableOfContents,
@@ -27,15 +27,15 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const { description } = useData || {};
 
-  const updateRouteWhenTabChanges = useCallback((index: number) => {
+  const updateRouteWhenTabChanges = (index: number) => {
     const currentTab = tabs.find(({ id }) => index === id);
 
     currentTab
       ? push(`${newRoute}${currentTab.name}`)
       : push(`${newRoute}${tabs[0].name}`);
-  }, []);
+  };
 
-  const updateTabWhenRouteChanges = useMemo(() => {
+  const updatedTabAfterRouteChange = () => {
     const currentTab = tabs.find(({ name }) => route?.includes(name));
 
     const defaultTabAndRoute = () => {
@@ -44,7 +44,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     };
 
     return currentTab ? currentTab.id : defaultTabAndRoute();
-  }, [route]);
+  };
 
   const SecondarySidebar = <TableOfContents />; // TODO: replace with custom component pages sidebar
 
@@ -52,7 +52,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     <DetailBase sidebar={<Sidebar sticky>{SecondarySidebar}</Sidebar>}>
       <p>{description}</p>
       <Tabs
-        activeTabIndex={updateTabWhenRouteChanges}
+        activeTabIndex={updatedTabAfterRouteChange()}
         onActiveChange={updateRouteWhenTabChanges}
       >
         {tabs.map(({ id, label }) => (
