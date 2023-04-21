@@ -248,8 +248,11 @@ export const componentDetails: ComponentDetails[] = [
     name: "Checkbox",
     description:
       "Enables the user to turn a specific value on or off. The value can be independent or a selection of one or more values from a given set of choices.",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.5.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-checkbox--page",
   },
   {
     name: "Color Chooser",
@@ -287,8 +290,11 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Country Symbol",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.0.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-country-symbols-country-symbol--page",
   },
   {
     name: "Data Grid",
@@ -512,8 +518,11 @@ export const componentDetails: ComponentDetails[] = [
     name: "Radio Button",
     description:
       "Allows the user to select one option at a time, from a set that’s vertically or horizontally aligned.",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
+    availableInCoreSince: "1.5.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-radio-button--page",
   },
   {
     name: "Salt Provider",
