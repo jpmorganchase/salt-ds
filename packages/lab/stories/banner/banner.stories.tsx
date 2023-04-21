@@ -15,7 +15,7 @@ interface ExampleRowProps {
 
 const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
   <Panel style={{ height: "unset" }}>
-    <h1>{name} - ( Touch, Low, Medium, High )</h1>
+    <h1>{name}</h1>
     <StackLayout gap={2}>
       Touch
       <SaltProvider density="touch">{children}</SaltProvider>
@@ -29,39 +29,9 @@ const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
   </Panel>
 );
 
-const Examples = () => (
-  <>
-    <ExampleRow name="Error">
-      <Error />
-    </ExampleRow>
-    <ExampleRow name="Success">
-      <Success />
-    </ExampleRow>
-    <ExampleRow name="Warning">
-      <Warning />
-    </ExampleRow>
-    <ExampleRow name="Info">
-      <Info />
-    </ExampleRow>
-  </>
-);
 
-export const All: ComponentStory<typeof Banner> = () => (
-  <div
-    style={{
-      height: "100%",
-      overflowY: "scroll",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-    }}
-  >
-    <Examples />
-  </div>
-);
-
-const ExampleBanner = ({ status, emphasize }: BannerProps) => {
+const ExampleBanner = (props: BannerProps) => {
+  const { status, emphasize, ...restProps } = props
   const [showBanner, setShowBanner] = useState(true);
 
   const handleClose = () => {
@@ -77,6 +47,7 @@ const ExampleBanner = ({ status, emphasize }: BannerProps) => {
           onClose={handleClose}
           status={status}
           emphasize={emphasize}
+          {...restProps}
         >
           Banners appear inline on the page
         </Banner>
@@ -85,49 +56,43 @@ const ExampleBanner = ({ status, emphasize }: BannerProps) => {
   );
 };
 
-export const Info: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"info"} />;
+
+export const All: ComponentStory<typeof Banner> = (props) => (
+  <div
+    style={{
+      height: "100%",
+      overflowY: "scroll",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+    }}
+  >
+    <ExampleRow name="Error">
+      <ExampleBanner {...props} />
+    </ExampleRow>
+  </div>
+);
+
+
+export const Emphasize: ComponentStory<typeof Banner> = (props) => {
+  return <ExampleBanner emphasize={true} {...props} />;
 };
 
-export const Error: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"error"} />;
-};
+export const HideIcon = (props: BannerProps) => (<ExampleBanner hideIcon {...props} />)
 
-export const Warning: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"warning"} />;
-};
-
-export const Success: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"success"} />;
-};
-
-export const Emphasize: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner emphasize={true} status={"success"} />;
-};
-
-export const HideIcon = (
-  props: JSX.IntrinsicAttributes & BannerProps & RefAttributes<HTMLDivElement>
-) => {
-  const [showBanner, setShowBanner] = useState(true);
-
-  const handleClose = () => {
-    setShowBanner(false);
-  };
+export const HideClose = (props: BannerProps) => {
+  const { onClose, ...restProps } = props
 
   return (
-    <div style={{ width: "95%", minWidth: "60vw" }}>
-      {showBanner && (
-        <Banner
-          onClose={handleClose}
-          status="success"
-          hideIcon
-          {...props}
-        >
-          <span>
-            Example custom renderer <Link href="#">link</Link>
-          </span>
-        </Banner>
-      )}
-    </div>
-  );
-};
+    <Banner {...restProps}>
+      Banner with no close icon
+    </Banner>
+  )
+}
+
+export const MultipleLines = (props: BannerProps) => (
+  <Banner {...props}>
+    Our guidance for hyphen and dash usage differs from that of the “AP Stylebook” and is aligned with the “J.P. Morgan Brand Guidelines” (also known as the Masterbrand guide).
+  </Banner>
+)
