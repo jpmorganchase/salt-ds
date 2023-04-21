@@ -23,6 +23,7 @@ export const FormFieldLabel = ({
   ...restProps
 }: FormFieldLabelProps) => (
   <Label
+    as="label"
     className={clsx(withBaseName(), className)}
     disabled={disabled}
     variant="secondary"
