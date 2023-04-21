@@ -23,7 +23,7 @@ export const FormFieldHelperText = ({
       className={clsx(withBaseName(), className)}
       disabled={disabled}
       variant="secondary"
-      as="label"
+      styleAs="label"
       {...restProps}
     >
       {helperText}
