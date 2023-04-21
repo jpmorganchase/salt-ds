@@ -27,7 +27,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const useData = useStore((state: CustomSiteState) => state.data);
 
-  const { descriptionRef } = useData || {};
+  const { description } = useData || {};
 
   const onActiveChange = useCallback((index: number) => {
     // update route then the tab changes
@@ -54,7 +54,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   return (
     <DetailBase sidebar={<Sidebar sticky>{SecondarySidebar}</Sidebar>}>
-      <p>{descriptionRef}</p>
+      <p>{description}</p>
       <Tabs activeTabIndex={activeTabIndex} onActiveChange={onActiveChange}>
         {tabs.map(({ id, label }) => (
           <TabPanel key={id} label={label}>
