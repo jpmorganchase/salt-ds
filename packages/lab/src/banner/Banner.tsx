@@ -72,13 +72,11 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   onClose?: (event: MouseEvent<HTMLButtonElement>) => void;
   /**
-   * render props callback (if children callback not supplied)
-   */
-  render?: (props: GetStateAndPropGetters) => ReactNode;
-  /**
    *  A string to determine the current state of the Banner
    */
   status?: BannerStatus;
+  hideIcon?: boolean
+  hideClose?: boolean
 }
 
 const withBaseName = makePrefixer("saltBanner");
@@ -94,8 +92,9 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     disableAnnouncer = false,
     emphasize = false,
     onClose,
-    render,
     status = "info",
+    hideIcon = false,
+    hideClose = false,
     ...rest
   },
   ref
@@ -134,26 +133,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     ...restProps,
   });
 
-  const getStateAndPropsGetters = (): GetStateAndPropGetters => ({
-    Icon: (props) => <StatusIndicator {...props} status={status} />,
-    getIconProps,
-    getLabelProps,
-    getLinkProps,
-  });
-
-  let contentElement;
-  if (!render) {
-    contentElement = (
-      <>
-        <StatusIndicator {...getIconProps()} status={status}></StatusIndicator>
-        <span {...getLabelProps()}>
-          {children} {LinkProps && <Link {...getLinkProps(LinkProps)} />}
-        </span>
-      </>
-    );
-  } else {
-    contentElement = render(getStateAndPropsGetters());
-  }
+  console.log('onClose', onClose);
 
   return (
     <div
@@ -163,7 +143,10 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       ref={handleRef}
       {...rest}
     >
-      {contentElement}
+      {!hideIcon && <StatusIndicator {...getIconProps()} status={status}></StatusIndicator>}
+      <span {...getLabelProps()}>
+        {children} {LinkProps && <Link {...getLinkProps(LinkProps)} />}
+      </span>
       {onClose && (
         <Button
           aria-label="close"

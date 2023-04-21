@@ -105,7 +105,7 @@ export const Emphasize: ComponentStory<typeof Banner> = () => {
   return <ExampleBanner emphasize={true} status={"success"} />;
 };
 
-export const Render = (
+export const HideIcon = (
   props: JSX.IntrinsicAttributes & BannerProps & RefAttributes<HTMLDivElement>
 ) => {
   const [showBanner, setShowBanner] = useState(true);
@@ -119,18 +119,14 @@ export const Render = (
       {showBanner && (
         <Banner
           onClose={handleClose}
-          render={({ Icon, getIconProps, getLabelProps, getLinkProps }) => (
-            <>
-              <Icon {...getIconProps()} aria-label={"Success"} />
-              <span {...getLabelProps()}>
-                Example custom renderer
-                <Link {...getLinkProps()}>link</Link>
-              </span>
-            </>
-          )}
           status="success"
+          hideIcon
           {...props}
-        />
+        >
+          <span>
+            Example custom renderer <Link href="#">link</Link>
+          </span>
+        </Banner>
       )}
     </div>
   );
