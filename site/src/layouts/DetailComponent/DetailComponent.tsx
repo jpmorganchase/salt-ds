@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
   TableOfContents,
@@ -18,8 +18,6 @@ const tabs = [
 type CustomSiteState = SiteState & { data?: Record<string, any> };
 
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-
   const { push } = useRouter();
   const { route } = useRoute();
 
@@ -29,8 +27,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const { description } = useData || {};
 
-  const onActiveChange = useCallback((index: number) => {
-    // update route then the tab changes
+  const updateRouteWhenTabChanges = useCallback((index: number) => {
     const currentTab = tabs.find(({ id }) => index === id);
 
     currentTab
@@ -38,16 +35,15 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
       : push(`${newRoute}${tabs[0].name}`);
   }, []);
 
-  useEffect(() => {
-    // update tab when the route changes
+  const updateTabWhenRouteChanges = useCallback(() => {
     const currentTab = tabs.find(({ name }) => route?.includes(name));
 
     const defaultTabAndRoute = () => {
-      setActiveTabIndex(0);
       push(`${newRoute}${tabs[0].name}`);
+      return 0;
     };
 
-    currentTab ? setActiveTabIndex(currentTab.id) : defaultTabAndRoute();
+    return currentTab ? currentTab.id : defaultTabAndRoute();
   }, [route]);
 
   const SecondarySidebar = <TableOfContents />; // TODO: replace with custom component pages sidebar
@@ -55,7 +51,10 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   return (
     <DetailBase sidebar={<Sidebar sticky>{SecondarySidebar}</Sidebar>}>
       <p>{description}</p>
-      <Tabs activeTabIndex={activeTabIndex} onActiveChange={onActiveChange}>
+      <Tabs
+        activeTabIndex={updateTabWhenRouteChanges()}
+        onActiveChange={updateRouteWhenTabChanges}
+      >
         {tabs.map(({ id, label }) => (
           <TabPanel key={id} label={label}>
             {children}
