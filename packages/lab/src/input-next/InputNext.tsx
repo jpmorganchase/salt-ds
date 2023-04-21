@@ -11,10 +11,9 @@ import {
   KeyboardEventHandler,
   MouseEvent,
   MouseEventHandler,
-  useRef,
   useState,
 } from "react";
-import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context";
 
 import "./InputNext.css";
@@ -133,8 +132,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const isReadOnly = readOnlyProp || a11yReadOnly;
 
   const [focused, setFocused] = useState(false);
-  const inputRef = useRef(null);
-  const handleRef = useForkRef(inputRef, ref);
 
   const misplacedAriaProps = {
     "aria-activedescendant": ariaActiveDescendant,
@@ -205,7 +202,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
         readOnly={isReadOnly}
-        ref={handleRef}
+        ref={ref}
         value={value}
         tabIndex={isReadOnly || isDisabled ? -1 : 0}
         onBlur={handleBlur}
