@@ -1,4 +1,4 @@
-import { Checkbox, RadioButton, RadioButtonGroup } from "@salt-ds/core";
+import { Checkbox, GridLayout, GridItem, RadioButton, RadioButtonGroup, FlexLayout, FlowLayout } from "@salt-ds/core";
 import { FormFieldNext, InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -9,27 +9,25 @@ export default {
 
 export const Skeleton: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <div style={{ width: "366px" }}>
-      <div style={{ height: 16 }} />
+    <FlowLayout>
       <FormFieldNext
         label="Default Form Field label"
         helperText="Default helper text"
         {...props}
       ></FormFieldNext>
-      <div style={{ height: 16 }} />
       <FormFieldNext
         labelPlacement="left"
         label="Default Form Field label"
         helperText="Default helper text"
         {...props}
       ></FormFieldNext>
-    </div>
+    </FlowLayout>
   );
 };
 
 export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <>
+    <FlowLayout style={{width: "366px"}}>
       <FormFieldNext
         helperText="Default helper text"
         label="Default Form Field label"
@@ -37,7 +35,6 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext defaultValue="Value" />
       </FormFieldNext>
-      <div style={{ height: 40 }} />
       <FormFieldNext
         labelPlacement="left"
         helperText="Default helper text"
@@ -46,7 +43,6 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext defaultValue="Value" />
       </FormFieldNext>
-      <div style={{ height: 40 }} />
       <FormFieldNext
         labelPlacement="left"
         label="Default Form Field label with more text"
@@ -55,15 +51,12 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext defaultValue="Value" />
       </FormFieldNext>
-      <div style={{ height: 40 }} />
       <FormFieldNext label="Default Form Field label" {...props}>
         <InputNext defaultValue="Value" />
       </FormFieldNext>
-      <div style={{ height: 40 }} />
       <FormFieldNext label="Default Form Field label" {...props}>
         <InputNext variant="secondary" defaultValue="Value" />
       </FormFieldNext>
-      <div style={{ height: 40 }} />
       <FormFieldNext
         labelPlacement="left"
         label="Default Form Field label"
@@ -72,13 +65,13 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext variant="secondary" defaultValue="Value" />
       </FormFieldNext>
-    </>
+    </FlowLayout>
   );
 };
 
 export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <>
+    <FlowLayout style={{width: "366px"}}>
       <FormFieldNext
         helperText="Default helper text"
         label="Default Form Field label"
@@ -88,7 +81,6 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
         <Checkbox label={"Checkbox"} />
         <RadioButton label={"Radio Button"} />
       </FormFieldNext>
-      <div style={{ height: 40 }} />
       <FormFieldNext
         labelPlacement="left"
         helperText="Default helper text"
@@ -98,7 +90,6 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
         <InputNext variant="secondary" defaultValue="Value" />
         <InputNext variant="secondary" defaultValue="Value 2" />
       </FormFieldNext>
-      <div style={{ height: 40 }} />
       <FormFieldNext
         helperText="Default helper text"
         label="Default Form Field label"
@@ -110,7 +101,7 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
           <RadioButton key="option3" label="Radio Option 3" value="option3" />
         </RadioButtonGroup>
       </FormFieldNext>
-    </>
+    </FlowLayout>
   );
 };
 
@@ -118,8 +109,7 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <div style={{ width: "366px" }}>
-      <div style={{ height: 16 }} />
+    <FlowLayout style={{width: "366px"}}>
       <FormFieldNext
         label="Paired fields"
         helperText="*User entry in either field will automatically populate the corresponding field with the correct value"
@@ -128,7 +118,6 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
         <InputNext variant="secondary" defaultValue="123" />
         <InputNext variant="secondary" defaultValue="35" />
       </FormFieldNext>
-      <div style={{ height: 16 }} />
       <FormFieldNext
         label="Multi criteria inputs"
         helperText="*User must enter all values in the string to complete the input"
@@ -137,14 +126,13 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
         <InputNext variant="secondary" defaultValue="2.5" />
         <InputNext variant="secondary" defaultValue="750" />
       </FormFieldNext>
-    </div>
+    </FlowLayout>
   );
 };
 
 export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <div style={{ width: "366px" }}>
-      <div style={{ height: 16 }} />
+    <FlowLayout style={{width: "366px"}}>
       <FormFieldNext
         disabled
         label="Form Field label"
@@ -153,7 +141,6 @@ export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext defaultValue="Primary Input value" />
       </FormFieldNext>
-      <div style={{ height: 16 }} />
       <FormFieldNext
         disabled
         label="Form Field label"
@@ -162,14 +149,13 @@ export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext variant="secondary" defaultValue="Secondary Input value" />
       </FormFieldNext>
-    </div>
+    </FlowLayout>
   );
 };
 
 export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <div style={{ width: "366px" }}>
-      <div style={{ height: 16 }} />
+    <FlowLayout style={{width: "366px"}}>
       <FormFieldNext
         readOnly
         label="Form Field label"
@@ -178,7 +164,6 @@ export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext defaultValue="Primary Input value" />
       </FormFieldNext>
-      <div style={{ height: 16 }} />
       <FormFieldNext
         readOnly
         label="Form Field label"
@@ -187,7 +172,7 @@ export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext variant="secondary" defaultValue="Secondary Input value" />
       </FormFieldNext>
-    </div>
+    </FlowLayout>
   );
 };
 
@@ -195,15 +180,13 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
   props
 ) => {
   return (
-    <div style={{ width: "366px" }}>
-      <div style={{ height: 16 }} />
+    <FlowLayout style={{width: "366px"}}>
       <FormFieldNext
         label="Form Field label that's extra long. Showing that labels wrap around to the next line."
         {...props}
       >
         <InputNext defaultValue="Primary Input value" />
       </FormFieldNext>
-      <div style={{ height: 16 }} />
       <FormFieldNext
         readOnly
         label="Form Field label"
@@ -212,6 +195,6 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
       >
         <InputNext defaultValue="Primary Input value" />
       </FormFieldNext>
-    </div>
+    </FlowLayout>
   );
 };

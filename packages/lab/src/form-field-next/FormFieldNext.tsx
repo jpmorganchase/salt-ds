@@ -3,10 +3,9 @@ import {
   ForwardedRef,
   forwardRef,
   HTMLAttributes,
-  useMemo,
-  useRef,
+  useMemo
 } from "react";
-import { makePrefixer, useId, useForkRef, capitalize } from "@salt-ds/core";
+import { makePrefixer, useId, capitalize } from "@salt-ds/core";
 import { FormFieldContextNext } from "../form-field-context";
 import { FormFieldLabel } from "./FormFieldLabel";
 import { FormFieldHelperText } from "./FormFieldHelperText";
@@ -101,10 +100,6 @@ export const FormField = forwardRef(
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const rootRef = useRef<HTMLDivElement>(null);
-
-    const handleTriggerRef = useForkRef(rootRef, ref);
-
     const labelId = useId();
     const helperTextId = useId();
 
@@ -117,7 +112,7 @@ export const FormField = forwardRef(
 
     return (
       <div
-        ref={handleTriggerRef}
+        ref={ref}
         className={clsx(
           withBaseName(),
           {
@@ -130,12 +125,7 @@ export const FormField = forwardRef(
         )}
         {...restProps}
       >
-        <FormFieldContextNext.Provider
-          value={{
-            a11yProps: a11yValue,
-            ref: rootRef,
-          }}
-        >
+        <FormFieldContextNext.Provider value={{ a11yProps: a11yValue }}>
           {label && <FormFieldLabel id={labelId} disabled={disabled} label={label} />}
           <div className={withBaseName("controls")}>{children}</div>
           {helperText && (
