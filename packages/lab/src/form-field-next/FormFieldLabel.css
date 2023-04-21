@@ -3,3 +3,7 @@
   font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
   width: 100%;
 }
+
+.saltFormFieldLabel:hover + .saltFormFieldNext-controls * {
+  --inputNext-borderColor: var(--salt-editable-borderColor-hover);
+}
