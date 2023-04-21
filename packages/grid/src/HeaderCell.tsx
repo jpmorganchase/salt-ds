@@ -123,6 +123,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       onClick={sortable ? onClick : undefined}
       onKeyDown={sortable ? onKeyDown : undefined}
       aria-sort={sortByColumnId === id && sortable ? ariaSort : undefined}
+      aria-label={column.info.props["aria-label"]}
     >
       {sortByColumnId === id && sortable && valueAlignRight && (
         <HeaderCellSortingIcon justify="start" />

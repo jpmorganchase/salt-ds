@@ -6,6 +6,7 @@ import "./RightPart.css";
 import { makePrefixer } from "@salt-ds/core";
 import { GridColumnModel, GridRowModel } from "../Grid";
 import { useActiveOnWheel } from "./gridHooks";
+import { CellValidationState } from "../GridColumn";
 
 const withBaseName = makePrefixer("saltGridRightPart");
 
@@ -18,6 +19,9 @@ export interface RightPartProps<T> {
   hoverOverRowKey?: string;
   setHoverOverRowKey: (key: string | undefined) => void;
   zebra?: boolean;
+  getRowValidationStatus?: (
+    row: GridRowModel<T>
+  ) => CellValidationState | undefined;
 }
 
 export function RightPart<T>(props: RightPartProps<T>) {
@@ -30,6 +34,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
     hoverOverRowKey,
     setHoverOverRowKey,
     zebra,
+    getRowValidationStatus,
   } = props;
 
   const tableRef = useActiveOnWheel(onWheel);
@@ -55,6 +60,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
             hoverRowKey={hoverOverRowKey}
             setHoverRowKey={setHoverOverRowKey}
             zebra={zebra}
+            getRowValidationStatus={getRowValidationStatus}
           />
         </table>
       </div>

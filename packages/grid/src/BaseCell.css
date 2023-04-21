@@ -27,3 +27,67 @@
 .saltGridCell-editable:focus .saltGridBaseCell-valueContainer {
   border-color: transparent;
 }
+
+.saltGridBaseCell-status-error {
+  --status-border-color: var(--salt-status-error-borderColor);
+  --status-background-color: var(--salt-status-error-background-emphasize);
+}
+
+.saltGridBaseCell-status-warning {
+  --status-border-color: var(--salt-status-warning-borderColor);
+  --status-background-color: var(--salt-status-warning-background-emphasize);
+}
+
+.saltGridBaseCell-status-success {
+  --status-border-color: var(--salt-status-success-borderColor);
+  --status-background-color: var(--salt-status-success-background-emphasize);
+}
+
+.saltGridCell-editable .saltGridBaseCell-valueContainer {
+  border-color: var(--status-border-color);
+}
+
+.saltGridBaseCell-hasValidation:focus .saltGridCursor {
+  border-color: var(--status-border-color);
+}
+
+.saltGridBaseCell-hasValidation:focus .saltGridCornerTag-focusOnly {
+  border-left-color: var(--status-border-color);
+}
+
+.saltGridBaseCell-valueContainer {
+  background-color: var(--status-background-color);
+}
+
+.salt-density-high {
+  --grid-statusIndicator-size: 5px;
+}
+
+.salt-density-medium {
+  --grid-statusIndicator-size: 6px;
+}
+
+.salt-density-low {
+  --grid-statusIndicator-size: 7px;
+}
+
+.salt-density-touch {
+  --grid-statusIndicator-size: 9px;
+}
+
+.saltGridBaseCell-statusContainer {
+  font-size: var(--saltGrid-statusIndicator-size, var(--grid-statusIndicator-size));
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+}
+
+.saltGridBaseCell-statusContainer svg {
+  display: block;
+  fill: var(--status-border-color);
+}
+
+.saltGridBaseCell-statusContainer.saltGridBaseCell-statusContainer-align-right {
+  right: auto;
+  left: 3px;
+}

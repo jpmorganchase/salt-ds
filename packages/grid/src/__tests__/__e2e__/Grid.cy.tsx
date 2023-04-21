@@ -3,6 +3,7 @@ import * as gridStories from "@stories/grid.stories";
 import * as gridEditableStories from "@stories/grid-editableCells.stories";
 import * as variantsStories from "@stories/grid-variants.stories";
 import * as rowSelectionModesStories from "@stories/grid-rowSelectionModes.stories";
+import * as cellValidationStories from "@stories/grid-cellValidation.stories";
 import * as rowSelectionControlledStories from "@stories/grid-rowSelectionControlled.stories";
 import * as cellCustomizationStories from "@stories/grid-cellCustomization.stories";
 import * as columnGroupsStories from "@stories/grid-columnGroups.stories";
@@ -16,6 +17,7 @@ const { RowSelectionControlled } = composeStories(
   rowSelectionControlledStories
 );
 const { RowSelectionModes } = composeStories(rowSelectionModesStories);
+const { CellValidation, RowValidation } = composeStories(cellValidationStories);
 const {
   GridExample,
   LotsOfColumns,
@@ -30,6 +32,15 @@ const { ServerSideSort } = composeStories(sortColumnsStories);
 const findCell = (row: number, col: number) => {
   return cy.get(`td[data-row-index="${row}"][data-column-index="${col}"]`);
 };
+
+function checkAriaDescription(
+  cell: Cypress.Chainable<JQuery<HTMLElement>>,
+  desc: string
+) {
+  cell.then(($el) => {
+    cy.get(`#${$el.attr("aria-describedby")!}`).should("have.text", desc);
+  });
+}
 
 const assertGridReady = () =>
   cy
@@ -715,6 +726,75 @@ describe("Grid", () => {
         "aria-sort",
         "none"
       );
+    });
+  });
+
+  describe("cell validation", () => {
+    it("error validation should set [aria-invalid] on the grid cell", () => {
+      cy.mount(<CellValidation />);
+      assertGridReady();
+
+      findCell(3, 0).should("have.attr", "aria-invalid", "true");
+    });
+
+    it("validation should have a default aria description of the validation state", () => {
+      cy.mount(<CellValidation />);
+      assertGridReady();
+
+      findCell(3, 0)
+        .should("have.attr", "aria-invalid", "true")
+        .should("have.attr", "aria-describedby");
+      checkAriaDescription(findCell(3, 0), "Cell validation state is error");
+    });
+
+    it("should render custom validation message as aria description", () => {
+      cy.mount(<CellValidation />);
+      assertGridReady();
+
+      checkAriaDescription(
+        findCell(3, 3),
+        "This is a custom success validation message"
+      );
+    });
+
+    it("should NOT add [aria-invalid] for non error validation states", () => {
+      cy.mount(<CellValidation />);
+      assertGridReady();
+
+      findCell(3, 2).should("not.have.attr", "aria-invalid", "true");
+      findCell(3, 3).should("not.have.attr", "aria-invalid", "true");
+    });
+
+    it("should render an svg icon when the validationType=strong ", () => {
+      cy.mount(<CellValidation />);
+      assertGridReady();
+
+      checkAriaDescription(
+        findCell(3, 3),
+        "This is a custom success validation message"
+      );
+      findCell(3, 3).find("svg").should("exist");
+    });
+
+    it("should NOT render an svg icon when the validationType=light ", () => {
+      cy.mount(<CellValidation />);
+      assertGridReady();
+
+      findCell(3, 5).should("have.attr", "aria-invalid", "true");
+      findCell(3, 5).find("svg").should("not.exist");
+    });
+  });
+
+  describe("row validation", () => {
+    it("should render an RowValidationColumn icon when the row has an validation status", () => {
+      cy.mount(<RowValidation />);
+      assertGridReady();
+
+      findCell(0, 1).find("svg").should("exist");
+      findCell(1, 1).find("svg").should("not.exist");
+      findCell(2, 1).find("svg").should("exist");
+      findCell(3, 1).find("svg").should("not.exist");
+      findCell(4, 1).find("svg").should("exist");
     });
   });
 });
