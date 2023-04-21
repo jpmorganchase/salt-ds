@@ -13,8 +13,8 @@ body:
     attributes:
       label: Description
       description: Please describe the request. 
-      validations:
-        required: true
+    validations:
+      required: true
         
   - type: checkboxes
     attributes: 
@@ -34,8 +34,8 @@ body:
     attributes:
       label: Existing research and/or data
       description: Describe any existing data sets or research
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: checkboxes
     attributes:
@@ -53,15 +53,13 @@ body:
       options:
         - "Yes"
         - "No"
-      validations:
-        required: true
+    validations:
+      required: true
         
   - type: textarea
     attributes:
-      label: Collaboration
+      label: Collaboration detail
       description: Describe any collaboration or resource you can offer
-      validations:
-        required:
         
   - type: dropdown
     attributes:
@@ -72,15 +70,15 @@ body:
         - "Within coming quarter"
         - "Within year"
         - "Flexible"
-      validations:
-        required: true
+    validations:
+      required: true
           
   - type: textarea
     attributes:
       label: Research impact
       description: Describe how you plan to use the findings and the impact you expect them to have
-      validations:
-        required: true
+    validations:
+      required: true
   
   - type: checkboxes
     attributes:
