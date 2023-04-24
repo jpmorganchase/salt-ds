@@ -7,29 +7,29 @@ body:
   - type: markdown
     attributes:
       value: |
-          ### ⚠️ Warning
-          This is a public repository, so **please don't include any internal company code or sensitive data** in your research request.
+        ### ⚠️ Warning
+        This is a public repository, so **please don't include any internal company code or sensitive data** in your research request.
   - type: textarea
     attributes:
       label: Description
-      description: Please describe the request. 
+      description: Please describe the request.
     validations:
       required: true
-        
+
   - type: checkboxes
-    attributes: 
-      label: Type 
+    attributes:
+      label: Type
       description: Indicate if any of the following statements are true of the intended research study
       options:
         - label: to understand more about a particular topic or domain
         - label: identify factors influence an outcome
         - label: understand how factors influence an outcome
-        - label: understand how a phenomena affects a topic or domain 
+        - label: understand how a phenomena affects a topic or domain
         - label: identify drivers and barriers to a behaviour
         - label: understand how factors influence a behavioural outcome
         - label: to know why something is the case
         - label: to evaluate the usability of a component, pattern, product or service
-    
+
   - type: textarea
     attributes:
       label: Existing research and/or data
@@ -40,12 +40,12 @@ body:
   - type: checkboxes
     attributes:
       label: Link to current initatives
-      description: Does the research request related to any of the following ongoing research initiatives? 
+      description: Does the research request related to any of the following ongoing research initiatives?
       options:
         - label: Design System Usability
         - label: Migration to Salt & Community
-        - label: Evaluative Surveys  
-          
+        - label: Evaluative Surveys
+
   - type: dropdown
     attributes:
       label: Collaboration
@@ -55,12 +55,12 @@ body:
         - "No"
     validations:
       required: true
-        
+
   - type: textarea
     attributes:
       label: Collaboration detail
       description: Describe any collaboration or resource you can offer
-        
+
   - type: dropdown
     attributes:
       label: Timeline
@@ -72,14 +72,14 @@ body:
         - "Flexible"
     validations:
       required: true
-          
+
   - type: textarea
     attributes:
       label: Research impact
       description: Describe how you plan to use the findings and the impact you expect them to have
     validations:
       required: true
-  
+
   - type: checkboxes
     attributes:
       label: Are you a JPMorgan Chase & Co. employee?
