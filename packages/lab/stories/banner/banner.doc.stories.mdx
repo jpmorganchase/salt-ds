@@ -1,4 +1,4 @@
-import { Canvas, Meta,Story } from "@storybook/addon-docs";
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Banner } from "@salt-ds/lab";
 import { Link } from "@salt-ds/core";
 import {
@@ -67,7 +67,6 @@ You should configure Banner to close when:
 - The user performs an action that fixes an issue, for example they correct a validation error.
 - The system status that triggered the notification is resolved, for example, a server connection is restored
 
-
 ## When to use Banner features
 
 ### Displaying general information
@@ -76,7 +75,8 @@ You should use the information Banner to draw attention to inform your user was 
 
 <Canvas>
   <Banner>
-    There has been an update to the terms and conditions <Link href="#">link</Link>
+    There has been an update to the terms and conditions{" "}
+    <Link href="#">link</Link>
   </Banner>
 </Canvas>
 
@@ -87,7 +87,7 @@ or technical failure, the error Banner will guide them to the right action to re
 
 <Canvas>
   <Banner>
-     Action failed <Link href="#">link</Link>
+    Action failed <Link href="#">link</Link>
   </Banner>
 </Canvas>
 
@@ -97,7 +97,7 @@ or current system status.
 
 <Canvas>
   <Banner status="warning">
-     System is under increased load <Link href="#">link</Link>
+    System is under increased load <Link href="#">link</Link>
   </Banner>
 </Canvas>
 
@@ -108,7 +108,7 @@ task has been successfully completed.
 
 <Canvas>
   <Banner status="success">
-     Database updated <Link href="#">link</Link>
+    Database updated <Link href="#">link</Link>
   </Banner>
 </Canvas>
 

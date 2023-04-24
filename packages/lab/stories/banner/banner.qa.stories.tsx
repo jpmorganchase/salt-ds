@@ -10,10 +10,7 @@ export default {
 
 const BasicBannerExample: FC<BannerProps> = ({ status }) => {
   return (
-    <Banner
-      onClose={() => console.log("close")}
-      status={status}
-    >
+    <Banner onClose={() => console.log("close")} status={status}>
       Example custom renderer <Link href={"#"}>link</Link>
     </Banner>
   );

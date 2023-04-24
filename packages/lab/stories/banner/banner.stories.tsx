@@ -7,18 +7,17 @@ export default {
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 
-
 export const Statuses: ComponentStory<typeof Banner> = (props) => {
-  const { status, ...restProps } = props
+  const { status, ...restProps } = props;
 
-  const statuses: ValidationStatus[] = ["info", "error", "warning", "success"]
+  const statuses: ValidationStatus[] = ["info", "error", "warning", "success"];
 
   return (
     <StackLayout style={{ width: "60vw" }}>
       {statuses.map((status) => (
         <Banner
           onClose={() => {
-            console.log('onClose triggered');
+            console.log("onClose triggered");
           }}
           status={status}
           {...restProps}
@@ -26,23 +25,22 @@ export const Statuses: ComponentStory<typeof Banner> = (props) => {
           Banners with status {status}.
         </Banner>
       ))}
-
     </StackLayout>
-  )
-}
+  );
+};
 
-
-export const Emphasized: ComponentStory<typeof Banner> = () => (<Statuses emphasize />)
-
+export const Emphasized: ComponentStory<typeof Banner> = () => (
+  <Statuses emphasize />
+);
 
 export const HideIcon = (props: BannerProps) => {
-  const { status, emphasize, ...restProps } = props
+  const { status, emphasize, ...restProps } = props;
 
   return (
     <div style={{ width: "60vw" }}>
       <Banner
         onClose={() => {
-          console.log('onClose triggered');
+          console.log("onClose triggered");
         }}
         status={status}
         emphasize={emphasize}
@@ -53,27 +51,27 @@ export const HideIcon = (props: BannerProps) => {
       </Banner>
     </div>
   );
-}
+};
 
 export const HideClose = (props: BannerProps) => {
-  const { onClose, ...restProps } = props
+  const { onClose, ...restProps } = props;
 
   return (
     <div style={{ width: "60vw" }}>
-      <Banner {...restProps}>
-        Banner with no close icon
-      </Banner>
-    </div >
-  )
-}
+      <Banner {...restProps}>Banner with no close icon</Banner>
+    </div>
+  );
+};
 
 export const MultipleLines = (props: BannerProps) => (
   <div style={{ width: "60vw" }}>
     <Banner {...props}>
       <div>
-        Our guidance for hyphen and dash usage differs from that of the “AP Stylebook” and is aligned with the “J.P. Morgan Brand Guidelines” (also known as the Masterbrand guide).
+        Our guidance for hyphen and dash usage differs from that of the “AP
+        Stylebook” and is aligned with the “J.P. Morgan Brand Guidelines” (also
+        known as the Masterbrand guide).
       </div>
       <Link href={"#"}>Read more...</Link>
     </Banner>
   </div>
-)
+);

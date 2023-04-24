@@ -1,4 +1,5 @@
 import { Banner } from "@salt-ds/lab";
+import { Link } from "@salt-ds/core";
 import { composeStories } from "@storybook/testing-react";
 import * as bannerStories from "@stories/banner/banner.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
@@ -53,8 +54,8 @@ describe("GIVEN a Banner", () => {
   describe("WHEN using additional LinkProps", () => {
     it("THEN they should be applied", () => {
       cy.mount(
-        <Banner LinkProps={{ href: "some-link", children: "Go to Dashboard" }}>
-          Default Banner State
+        <Banner>
+          Default Banner State <Link href="some-link">Go to Dashboard</Link>
         </Banner>
       );
 

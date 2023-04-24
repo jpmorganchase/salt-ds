@@ -65,11 +65,11 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Set to `false` when you don't want the status icon to be displayed.
    */
-  hideIcon?: boolean
+  hideIcon?: boolean;
   /**
    * Set to `false` when you don't want the close icon to be displayed.
    */
-  hideClose?: boolean
+  hideClose?: boolean;
   /**
    * onClose callback when the close icon is clicked, the dismiss button will not be rendered if this is
    * not defined
@@ -115,7 +115,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     }
   }, [announce, disableAnnouncer, containerNode, announcementProp]);
 
-
   return (
     <div
       className={clsx(withBaseName(), withBaseName(status), className, {
@@ -124,7 +123,12 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       ref={handleRef}
       {...rest}
     >
-      {!hideIcon && <StatusIndicator className={clsx(withBaseName("icon"), status, className)} status={status}></StatusIndicator>}
+      {!hideIcon && (
+        <StatusIndicator
+          className={clsx(withBaseName("icon"), status, className)}
+          status={status}
+        ></StatusIndicator>
+      )}
       <span className={clsx(withBaseName("content"), status, className)}>
         {children}
       </span>
