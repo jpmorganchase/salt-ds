@@ -34,10 +34,18 @@ export const BasicListItemExample: Story<BasicListProps> = (props) => {
   return (
     <BasicList
       {...props}
-      aria-label="Basic list item example"
+      aria-label="Basic list items example"
       width={292}
+      multiselect
     >
+      <BasicListItem selected>Alabama</BasicListItem>
+      <BasicListItem selected disabled>Alabama</BasicListItem>
       <BasicListItem>Alabama</BasicListItem>
+      <BasicListItem disabled>Alabama</BasicListItem>
+      <BasicListItem showCheckbox selected>Alabama</BasicListItem>
+      <BasicListItem showCheckbox selected disabled>Alabama</BasicListItem>
+      <BasicListItem showCheckbox>Alabama</BasicListItem>
+      <BasicListItem showCheckbox disabled>Alabama</BasicListItem>
     </BasicList>
   );
 };

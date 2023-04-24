@@ -3,6 +3,7 @@ import {clsx} from "clsx";
 import {Checkbox, makePrefixer, Text} from "@salt-ds/core";
 import {Highlighter} from "./Highlighter";
 import "./BasicListItem.css";
+import {SuccessTickIcon} from "@salt-ds/icons";
 
 const withBaseName = makePrefixer("saltBasicListItem");
 
@@ -10,10 +11,10 @@ export interface ListItemProps<T = unknown>
   extends HTMLAttributes<HTMLDivElement> {
   itemTextHighlightPattern?: RegExp | string;
   label?: string;
-  disabled: boolean,
-  selected: boolean,
-  showCheckbox: boolean,
-  role: string
+  disabled?: boolean,
+  selected?: boolean,
+  showCheckbox?: boolean,
+  role?: string
 }
 
 
@@ -21,29 +22,21 @@ export const BasicListItem = forwardRef<HTMLDivElement, ListItemProps>(
   function ListItem(
     {
       children,
-      disabled,
-      selected,
       className: classNameProp,
+      disabled,
       itemTextHighlightPattern,
       label,
-      style: styleProp,
-      role= 'option',
+      role = 'option',
+      selected,
       showCheckbox,
-      // itemRendered: BasicListItem
       ...props
     },
     forwardedRef
   ) {
     const className = clsx(withBaseName(), {
       [withBaseName("disabled")]: disabled,
-    },classNameProp);
-    const style = styleProp;
-      // itemHeight !== undefined
-      //   ? {
-      //     ...styleProp,
-      //     height: itemHeight,
-      //   }
-      //   : styleProp;
+      [withBaseName("checkbox")]: showCheckbox, // TODO: remove class once has is supported (june 2023ish)
+    }, classNameProp);
 
     return (
       <li
@@ -53,21 +46,22 @@ export const BasicListItem = forwardRef<HTMLDivElement, ListItemProps>(
         aria-selected={selected || undefined}
         role={role}
         ref={forwardedRef}
-        style={style}
       >
+        {/*{prefix}*/}
+        {showCheckbox && <Checkbox aria-hidden checked={selected} disabled={disabled}/>}
         {children && typeof children !== "string" ? (
           children
-        ) : itemTextHighlightPattern == null ? (<>
-            {showCheckbox && <Checkbox checked={selected}/> }
-          <Text className={withBaseName("textWrapper")}>
+        ) : itemTextHighlightPattern == null ? (
+          <Text className={withBaseName("textWrapper")} disabled={disabled}>
             {label || children}
-          </Text></>
+          </Text>
         ) : (
           <Highlighter
             matchPattern={itemTextHighlightPattern}
             text={label || (children as string)}
           />
         )}
+        {(!showCheckbox && selected) && <SuccessTickIcon/>}
       </li>
     );
   }

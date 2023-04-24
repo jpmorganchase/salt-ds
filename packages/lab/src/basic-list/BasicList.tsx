@@ -1,13 +1,14 @@
 import {makePrefixer} from "@salt-ds/core";
 import {
-  Children,
+  Children, cloneElement,
   FocusEventHandler,
   forwardRef,
   HTMLAttributes,
-  KeyboardEventHandler, MouseEventHandler, ReactNode
+  KeyboardEventHandler, MouseEventHandler, ReactElement, ReactNode
 } from "react";
 import "./BasicList.css";
 import {clsx} from "clsx";
+import {BasicListItem} from "./BasicListItem";
 
 const withBaseName = makePrefixer("saltList");
 const defaultEmptyMessage = "No data to display";
@@ -16,7 +17,7 @@ export interface BasicListProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
   emptyMessage?: string;
   multiselect?: boolean;
-  listItem?: ReactNode;
+  ListItem?: ReactElement;
 
 }
 export interface ListControlProps {
@@ -32,13 +33,14 @@ export const BasicList = forwardRef<HTMLDivElement, BasicListProps>(function Bas
                                                                                          children,
                                                                                          className,
                                                                                          disabled,
-                                                                                         listItem: BasicListItem,
+                                                                                         ListItem = BasicListItem,
                                                                                          emptyMessage,
+                                                                                         multiselect,
                                                                                          ...rest
                                                                                        }, ref) {
 
   function renderEmpty() {
-    return <li className={clsx(withBaseName("empty-message"), className)}>
+    return <li className={clsx(withBaseName("empty-message"), className)} role="presentation">
       {emptyMessage || defaultEmptyMessage}
     </li>
   }
@@ -47,8 +49,15 @@ export const BasicList = forwardRef<HTMLDivElement, BasicListProps>(function Bas
     // if (collectionHook.data.length) {
     //   return renderCollectionItems(collectionHook.data);
     // }
+    const childProps = {
+      multiselect: multiselect
+    }
     return children;
+    // return Children.map(children, (child) => {
+    //   cloneElement(child, childProps)
+    // })
   };
+  // TODO: add labelledby to ul?
   return (
     <ul ref={ref} className={clsx(withBaseName(), className)} role="listbox"
         tabIndex={disabled ? undefined : 0}>
