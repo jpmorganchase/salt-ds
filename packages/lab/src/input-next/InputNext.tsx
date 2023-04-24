@@ -29,10 +29,6 @@ export interface InputProps
    */
   disabled?: HTMLInputElement["disabled"];
   /**
-   * The HTML element to render the Input, e.g. 'input', a custom React component.
-   */
-  inputComponent?: ElementType;
-  /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
@@ -72,9 +68,9 @@ function mergeA11yProps(
     ...a11yProps,
     ...inputProps,
     // TODO: look at this - The weird filtering is due to TokenizedInputBase
-    "aria-labelledby": ariaLabelledBy
+    "aria-label": ariaLabelledBy
       ? Array.from(new Set(ariaLabelledBy.split(" "))).join(" ")
-      : null,
+      : undefined,
   };
 }
 
@@ -86,7 +82,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     className: classNameProp,
     disabled,
     id,
-    inputComponent: InputComponent = "input",
     inputProps: inputPropsProp,
     onChange,
     readOnly: readOnlyProp,
@@ -176,7 +171,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       style={style}
       {...other}
     >
-      <InputComponent
+      <input
         type={type}
         id={id}
         className={clsx(withBaseName("input"), inputProps?.className)}
