@@ -4,13 +4,9 @@ import {
   ChangeEvent,
   ElementType,
   FocusEvent,
-  FocusEventHandler,
   forwardRef,
   HTMLAttributes,
   InputHTMLAttributes,
-  KeyboardEventHandler,
-  MouseEvent,
-  MouseEventHandler,
   useState,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
@@ -40,6 +36,10 @@ export interface InputProps
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  /**
+   * Callback for change event.
+   */
+  onChange?: (event: ChangeEvent<HTMLInputElement>, value: string) => void;
   /**
    * If `true`, the component is read only.
    */
@@ -88,14 +88,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     id,
     inputComponent: InputComponent = "input",
     inputProps: inputPropsProp,
+    onChange,
+    readOnly: readOnlyProp,
     role,
     style,
+    type = "text",
     value: valueProp,
     // If we leave both value and defaultValue undefined, we will get a React warning on first edit
     // (uncontrolled to controlled warning) from the React input
     defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
-    readOnly: readOnlyProp,
-    type = "text",
     variant = "primary",
     ...other
   },
@@ -128,7 +129,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 
   const {
     onBlur,
-    onChange,
     onFocus,
     onKeyDown,
     onKeyUp,
