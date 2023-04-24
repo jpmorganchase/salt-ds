@@ -40,17 +40,6 @@ export interface InputProps
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
-  onBlur?: FocusEventHandler<HTMLInputElement>;
-  /**
-   * Callbacks for events.
-   */
-  onChange?: (event: ChangeEvent<HTMLInputElement>, value: string) => void;
-  onFocus?: FocusEventHandler<HTMLInputElement>;
-  onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
-  onKeyUp?: KeyboardEventHandler<HTMLInputElement>;
-  onMouseUp?: MouseEventHandler<HTMLInputElement>;
-  onMouseMove?: MouseEventHandler<HTMLInputElement>;
-  onMouseDown?: MouseEventHandler<HTMLInputElement>;
   /**
    * If `true`, the component is read only.
    */
@@ -105,14 +94,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     // If we leave both value and defaultValue undefined, we will get a React warning on first edit
     // (uncontrolled to controlled warning) from the React input
     defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
-    onBlur,
-    onChange,
-    onFocus,
-    onKeyDown,
-    onKeyUp,
-    onMouseUp,
-    onMouseMove,
-    onMouseDown,
     readOnly: readOnlyProp,
     type = "text",
     variant = "primary",
@@ -145,6 +126,18 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     misplacedAriaProps
   );
 
+  const {
+    onBlur,
+    onChange,
+    onFocus,
+    onKeyDown,
+    onKeyUp,
+    onMouseUp,
+    onMouseMove,
+    onMouseDown, 
+    ...restInputProps
+  } = inputProps;
+
   const [value, setValue] = useControlled({
     controlled: valueProp,
     default: defaultValueProp,
@@ -158,27 +151,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     onChange?.(event, value);
   };
 
-  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
-    onFocus?.(event);
-    setFocused(true);
-  };
-
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
     onBlur?.(event);
     setFocused(false);
   };
 
-  const handleMouseMove = (event: MouseEvent<HTMLInputElement>) => {
-    onMouseMove?.(event);
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    onFocus?.(event);
+    setFocused(true);
   };
 
-  const handleMouseUp = (event: MouseEvent<HTMLInputElement>) => {
-    onMouseUp?.(event);
-  };
-
-  const handleMouseDown = (event: MouseEvent<HTMLInputElement>) => {
-    onMouseDown?.(event);
-  };
 
   return (
     <div
@@ -198,7 +180,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <InputComponent
         type={type}
         id={id}
-        {...inputProps}
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
         readOnly={isReadOnly}
@@ -207,12 +188,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         tabIndex={isReadOnly || isDisabled ? -1 : 0}
         onBlur={handleBlur}
         onChange={handleChange}
-        onKeyDown={onKeyDown}
-        onKeyUp={onKeyUp}
         onFocus={!isDisabled ? handleFocus : undefined}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
+        {...restInputProps}
       />
     </div>
   );
