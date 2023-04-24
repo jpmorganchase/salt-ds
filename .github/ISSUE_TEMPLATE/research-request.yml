@@ -1,0 +1,88 @@
+name: Research Request
+description: Make a request for research.
+labels:
+  - "role: research 🔬"
+  - "status: awaiting triage"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### ⚠️ Warning
+        This is a public repository, so **please don't include any internal company code or sensitive data** in your research request.
+  - type: textarea
+    attributes:
+      label: Description
+      description: Please describe the request.
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: Type
+      description: Indicate if any of the following statements are true of the intended research study
+      options:
+        - label: to understand more about a particular topic or domain
+        - label: identify factors influence an outcome
+        - label: understand how factors influence an outcome
+        - label: understand how a phenomena affects a topic or domain
+        - label: identify drivers and barriers to a behaviour
+        - label: understand how factors influence a behavioural outcome
+        - label: to know why something is the case
+        - label: to evaluate the usability of a component, pattern, product or service
+
+  - type: textarea
+    attributes:
+      label: Existing research and/or data
+      description: Describe any existing data sets or research
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: Link to current initatives
+      description: Does the research request related to any of the following ongoing research initiatives?
+      options:
+        - label: Design System Usability
+        - label: Migration to Salt & Community
+        - label: Evaluative Surveys
+
+  - type: dropdown
+    attributes:
+      label: Collaboration
+      description: Can you offer any collaboration or resource to support the research?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Collaboration detail
+      description: Describe any collaboration or resource you can offer
+
+  - type: dropdown
+    attributes:
+      label: Timeline
+      description: Within what time period do you require the research findings and recommendations?
+      options:
+        - "Within coming month"
+        - "Within coming quarter"
+        - "Within year"
+        - "Flexible"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Research impact
+      description: Describe how you plan to use the findings and the impact you expect them to have
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: Are you a JPMorgan Chase & Co. employee?
+      description: We ask this in case we need to contact you directly via internal company systems. Leave the box unticked if this doesn’t apply to you.
+      options:
+        - label: I am an employee of JPMorgan Chase & Co.
