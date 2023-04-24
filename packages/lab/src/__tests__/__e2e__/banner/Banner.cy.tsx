@@ -5,32 +5,17 @@ import * as bannerStories from "@stories/banner/banner.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(bannerStories);
-const { Info, Success, Warning, Error } = composedStories;
+const { Statuses } = composedStories;
 
 describe("GIVEN a Banner", () => {
   checkAccessibility(composedStories);
 
-  it("THEN should render info", () => {
-    cy.mount(<Info />);
+  it("THEN should render status", () => {
+    cy.mount(<Statuses />);
 
     cy.findByTestId("InfoSolidIcon").should("exist");
-  });
-
-  it("THEN should render success", () => {
-    cy.mount(<Success />);
-
     cy.findByTestId("SuccessTickIcon").should("exist");
-  });
-
-  it("THEN should render warning", () => {
-    cy.mount(<Warning />);
-
     cy.findByTestId("WarningSolidIcon").should("exist");
-  });
-
-  it("THEN should render error", () => {
-    cy.mount(<Error />);
-
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
