@@ -194,9 +194,7 @@ export const DefaultWithButton: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const DefaultWithButtonAndImage: ComponentStory<
-  typeof Card
-> = () => (
+export const DefaultWithButtonAndImage: ComponentStory<typeof Card> = () => (
   <Card className="withImage">
     <img
       aria-label="The Skies by Dominik Schröder"
@@ -240,15 +238,13 @@ export const InteractableAll: ComponentStory<typeof Card> = () => (
 export const Interactable: ComponentStory<typeof Card> = () => (
   <InteractableCard style={{ width: "256px" }}>
     <H1 styleAs="h3">Card</H1>
-    <Text>
-      An entry point to more detailed information.
-    </Text>
+    <Text>An entry point to more detailed information.</Text>
   </InteractableCard>
 );
 
 export const InteractableDisabled: ComponentStory<typeof Card> = () => (
   <InteractableCard
-    style={{ width: "256px"}}
+    style={{ width: "256px" }}
     onClick={() => console.log("Clicked")}
     data-testid="card-disabled-example"
     disabled
