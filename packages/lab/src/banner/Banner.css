@@ -16,7 +16,7 @@
   box-sizing: border-box;
   display: flex;
   gap: var(--salt-size-unit);
-  padding: 0 var(--banner-padding);
+  padding: var(--banner-padding);
   position: relative;
   width: 100%;
   align-items: baseline;
@@ -24,19 +24,15 @@
 
 .saltBanner-closeButton {
   padding: 0;
+  height: var(--salt-text-lineHeight);
 }
 
-.saltBanner-label {
+.saltBanner-content {
   flex: 1 0;
   font-weight: var(--salt-text-label-fontWeight);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
   color: var(--banner-label-color);
-}
-
-/* Styles applied to status indicator */
-.saltBanner-icon {
-  flex: 0 0 auto;
 }
 
 /* Styles applied when state = "info" */

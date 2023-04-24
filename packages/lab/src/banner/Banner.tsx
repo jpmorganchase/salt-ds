@@ -43,17 +43,13 @@ export interface GetStateAndPropGetters {
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * THe props to be passed to the close button
-   */
-  CloseButtonProps?: ButtonProps;
-  /**
-   * Props to pass to Link, Link will not be rendered if this is undefined
-   */
-  LinkProps?: LinkProps;
-  /**
    * Announcement message for screen reader 250ms after the banner is mounted.
    */
   announcement?: string;
+  /**
+   * THe props to be passed to the close button
+   */
+  CloseButtonProps?: ButtonProps;
   /**
    * close button ref
    */
@@ -67,6 +63,14 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   emphasize?: boolean;
   /**
+   * Set to `false` when you don't want the status icon to be displayed.
+   */
+  hideIcon?: boolean
+  /**
+   * Set to `false` when you don't want the close icon to be displayed.
+   */
+  hideClose?: boolean
+  /**
    * onClose callback when the close icon is clicked, the dismiss button will not be rendered if this is
    * not defined
    */
@@ -75,8 +79,6 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    *  A string to determine the current state of the Banner
    */
   status?: BannerStatus;
-  hideIcon?: boolean
-  hideClose?: boolean
 }
 
 const withBaseName = makePrefixer("saltBanner");
@@ -84,7 +86,6 @@ const withBaseName = makePrefixer("saltBanner");
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   {
     CloseButtonProps,
-    LinkProps,
     announcement: announcementProp,
     children,
     className,
@@ -114,24 +115,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     }
   }, [announce, disableAnnouncer, containerNode, announcementProp]);
 
-  const getIconProps = ({ className, ...restProps }: IconProps = {}) => {
-    return {
-      className: clsx(withBaseName("icon"), status, className),
-      ...restProps,
-    };
-  };
-
-  const getLabelProps = ({ className, ...restProps }: LabelProps = {}) => ({
-    className: clsx(withBaseName("label"), status, className),
-    ...restProps,
-  });
-
-  const getLinkProps = ({ className, href, ...restProps }: LinkProps = {}) => ({
-    children: "Link",
-    className: clsx(withBaseName("link"), status, className),
-    href,
-    ...restProps,
-  });
 
   return (
     <div
@@ -141,9 +124,9 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       ref={handleRef}
       {...rest}
     >
-      {!hideIcon && <StatusIndicator {...getIconProps()} status={status}></StatusIndicator>}
-      <span {...getLabelProps()}>
-        {children} {LinkProps && <Link {...getLinkProps(LinkProps)} />}
+      {!hideIcon && <StatusIndicator className={clsx(withBaseName("icon"), status, className)} status={status}></StatusIndicator>}
+      <span className={clsx(withBaseName("content"), status, className)}>
+        {children}
       </span>
       {onClose && (
         <Button
