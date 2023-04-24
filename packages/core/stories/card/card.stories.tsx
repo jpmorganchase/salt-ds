@@ -241,8 +241,7 @@ export const Interactable: ComponentStory<typeof Card> = () => (
   <InteractableCard style={{ width: "256px" }}>
     <H1 styleAs="h3">Card</H1>
     <Text>
-      A card displays information about a single subject, and acts as entry
-      point to more detailed information.
+      An entry point to more detailed information.
     </Text>
   </InteractableCard>
 );
