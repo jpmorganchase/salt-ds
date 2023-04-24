@@ -134,7 +134,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     onKeyUp,
     onMouseUp,
     onMouseMove,
-    onMouseDown, 
+    onMouseDown,
     ...restInputProps
   } = inputProps;
 
@@ -160,7 +160,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     onFocus?.(event);
     setFocused(true);
   };
-
 
   return (
     <div

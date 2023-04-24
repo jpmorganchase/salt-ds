@@ -1,4 +1,12 @@
-import { Checkbox, GridLayout, GridItem, RadioButton, RadioButtonGroup, FlexLayout, FlowLayout } from "@salt-ds/core";
+import {
+  Checkbox,
+  GridLayout,
+  GridItem,
+  RadioButton,
+  RadioButtonGroup,
+  FlexLayout,
+  FlowLayout,
+} from "@salt-ds/core";
 import { FormFieldNext, InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -27,7 +35,7 @@ export const Skeleton: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <FlowLayout style={{width: "366px"}}>
+    <FlowLayout style={{ width: "366px" }}>
       <FormFieldNext
         helperText="Default helper text"
         label="Default Form Field label"
@@ -71,7 +79,7 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <FlowLayout style={{width: "366px"}}>
+    <FlowLayout style={{ width: "366px" }}>
       <FormFieldNext
         helperText="Default helper text"
         label="Default Form Field label"
@@ -109,7 +117,7 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <FlowLayout style={{width: "366px"}}>
+    <FlowLayout style={{ width: "366px" }}>
       <FormFieldNext
         label="Paired fields"
         helperText="*User entry in either field will automatically populate the corresponding field with the correct value"
@@ -132,7 +140,7 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <FlowLayout style={{width: "366px"}}>
+    <FlowLayout style={{ width: "366px" }}>
       <FormFieldNext
         disabled
         label="Form Field label"
@@ -155,7 +163,7 @@ export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <FlowLayout style={{width: "366px"}}>
+    <FlowLayout style={{ width: "366px" }}>
       <FormFieldNext
         readOnly
         label="Form Field label"
@@ -180,7 +188,7 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
   props
 ) => {
   return (
-    <FlowLayout style={{width: "366px"}}>
+    <FlowLayout style={{ width: "366px" }}>
       <FormFieldNext
         label="Form Field label that's extra long. Showing that labels wrap around to the next line."
         {...props}

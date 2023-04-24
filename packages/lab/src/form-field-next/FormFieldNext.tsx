@@ -1,10 +1,5 @@
 import { clsx } from "clsx";
-import {
-  ForwardedRef,
-  forwardRef,
-  HTMLAttributes,
-  useMemo
-} from "react";
+import { ForwardedRef, forwardRef, HTMLAttributes, useMemo } from "react";
 import { makePrefixer, useId, capitalize } from "@salt-ds/core";
 import { FormFieldContextNext } from "../form-field-context";
 import { FormFieldLabel } from "./FormFieldLabel";
@@ -126,10 +121,16 @@ export const FormField = forwardRef(
         {...restProps}
       >
         <FormFieldContextNext.Provider value={{ a11yProps: a11yValue }}>
-          {label && <FormFieldLabel id={labelId} disabled={disabled} label={label} />}
+          {label && (
+            <FormFieldLabel id={labelId} disabled={disabled} label={label} />
+          )}
           <div className={withBaseName("controls")}>{children}</div>
           {helperText && (
-            <FormFieldHelperText id={helperTextId} disabled={disabled} helperText={helperText} />
+            <FormFieldHelperText
+              id={helperTextId}
+              disabled={disabled}
+              helperText={helperText}
+            />
           )}
         </FormFieldContextNext.Provider>
       </div>
