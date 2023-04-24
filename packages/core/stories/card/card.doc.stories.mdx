@@ -30,7 +30,7 @@ Content in Cards should be well-written and easily scannable. Avoid overloading 
 
 ## Adding actions
 
-If you intend to add any links or buttons within your Card, only add them into a default Card, not an interactable Card, to ensure ADA compliancy.
+If you intend to add any links or buttons within your Card, only add them into a default Card, not an interactable Card. This will ensure ADA compliance.
 
 <Canvas>
   <Story id="core-card--default-with-link" />
@@ -46,7 +46,7 @@ Use the `InteractableCard` component to make the entire Card interactable. Do **
 
 To use as a link, wrap Card in a [Link](?path=/docs/documentation-core-link--page) component.
 
-Be advised to not overload Interactable Cards with too much content, as the entire contents of the Card will be read out by screenreaders.
+Avoid adding too much content to Interactable Cards. It should be easily readable by all users, and it should not take too long for a screen reader tool to read out the contents.
 
 <Canvas>
   <Story id="core-card--interactable-as-block-link" />
