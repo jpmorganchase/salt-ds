@@ -28,6 +28,9 @@
 
 .saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-checkbox) {
   --list-item-background: var(--salt-selectable-background-selected);
+}
+
+.saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-checkbox):not(.saltBasicListItem-disabled) {
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
 
@@ -39,5 +42,6 @@
 
 .saltBasicListItem-textWrapper {
   flex: 1;
+  overflow: hidden;
   /* TODO: check if we need to add stuff for truncation/ limited width*/
 }
