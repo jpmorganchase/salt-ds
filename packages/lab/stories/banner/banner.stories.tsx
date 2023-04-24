@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Link, StackLayout, ValidationStatus } from "@salt-ds/core";
 import { Banner, BannerProps } from "@salt-ds/lab";
@@ -33,29 +32,8 @@ export const Statuses: ComponentStory<typeof Banner> = (props) => {
 }
 
 
-export const Emphasize: ComponentStory<typeof Banner> = (props) => {
-  const { status, emphasize, ...restProps } = props
-  const [showBanner, setShowBanner] = useState(true);
+export const Emphasized: ComponentStory<typeof Banner> = () => (<Statuses emphasize />)
 
-  const handleClose = () => {
-    setShowBanner(false);
-  };
-
-  return (
-    <div style={{ width: "60vw" }}>
-      {showBanner && (
-        <Banner
-          onClose={handleClose}
-          status={status}
-          emphasize={emphasize}
-          {...restProps}
-        >
-          Banners appear inline on the page
-        </Banner>
-      )}
-    </div>
-  );
-}
 
 export const HideIcon = (props: BannerProps) => {
   const { status, emphasize, ...restProps } = props
