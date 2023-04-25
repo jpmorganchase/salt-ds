@@ -3,9 +3,3 @@
     --salt-typography-fontWeight-bold
   ); /* TODO: Check with design */
 }
-
-.saltHighlighter-textWrapper {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}

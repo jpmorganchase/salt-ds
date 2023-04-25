@@ -24,7 +24,7 @@ export const Highlighter = ({
     return <>{text}</>;
   }
   return (
-    <span className={withBaseName("textWrapper")}>
+    <>
       {text.split(matchRegex).map((part, index) =>
         part.match(matchRegex) ? (
           <strong
@@ -37,6 +37,6 @@ export const Highlighter = ({
           part
         )
       )}
-    </span>
+    </>
   );
 };

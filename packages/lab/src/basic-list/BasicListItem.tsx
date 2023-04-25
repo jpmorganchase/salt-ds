@@ -62,19 +62,21 @@ export const BasicListItem = forwardRef<HTMLDivElement, ListItemProps>(
           )}
           {children && typeof children !== "string" ? (
             children
-          ) : itemTextHighlightPattern == null ? (
+          ) : (
             <Text
               className={withBaseName("textWrapper")}
               disabled={disabled}
               ref={overflowRef}
             >
-              {content}
+              {itemTextHighlightPattern === null ? (
+                content
+              ) : (
+                <Highlighter
+                  matchPattern={itemTextHighlightPattern}
+                  text={label || (children as string)}
+                />
+              )}
             </Text>
-          ) : (
-            <Highlighter
-              matchPattern={itemTextHighlightPattern}
-              text={label || (children as string)}
-            />
           )}
           {!showCheckbox && selected && <SuccessTickIcon />}
         </li>
