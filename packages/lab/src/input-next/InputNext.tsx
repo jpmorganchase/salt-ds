@@ -168,8 +168,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         withBaseName(),
         {
           [withBaseName("focused")]: !isDisabled && focused,
-          [withBaseName("disabled")]: isDisabled,
-          [withBaseName("readOnly")]: isReadOnly,
+          [withBaseName("disabled")]: !validationStatus && isDisabled,
+          [withBaseName("readOnly")]: !validationStatus && isReadOnly,
           [withBaseName("warning")]: validationStatus === "warning",
           [withBaseName("error")]: validationStatus === "error",
           [withBaseName(variant)]: variant,

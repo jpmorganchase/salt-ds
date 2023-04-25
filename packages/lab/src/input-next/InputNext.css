@@ -143,6 +143,7 @@
   --inputNext-outlineColor: var(--salt-status-warning-borderColor);
 }
 
+/* Style applied to input if adornment provided */
 .saltInputNext-withAdornment {
   padding-right: var(--salt-size-adornmentGap);
 }

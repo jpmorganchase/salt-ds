@@ -206,3 +206,26 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
     </FlowLayout>
   );
 };
+
+export const WithValidation: ComponentStory<typeof FormFieldNext> = (
+  props
+) => {
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormFieldNext
+        label="Form Field label"
+        {...props}
+      >
+        <InputNext validationStatus="warning" defaultValue="Input value" />
+      </FormFieldNext>
+      <FormFieldNext
+        readOnly
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext validationStatus="error" defaultValue="Input value" />
+      </FormFieldNext>
+    </FlowLayout>
+  );
+};
