@@ -11,6 +11,8 @@ describe("Given a Card", () => {
   it("should render children", () => {
     cy.mount(<Default />);
     cy.findByText("Card").should("be.visible");
-    cy.findByText("A card displays information about a single subject, and acts as entry point to more detailed information.").should("be.visible");
+    cy.findByText(
+      "A card displays information about a single subject, and acts as entry point to more detailed information."
+    ).should("be.visible");
   });
 });
