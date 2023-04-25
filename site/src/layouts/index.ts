@@ -1,3 +1,4 @@
+export * from "./DetailComponent";
 export * from "./DetailContentOnly";
 export * from "./DetailTechnical";
 export * from "./Landing";
