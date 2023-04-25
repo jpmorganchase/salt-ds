@@ -8,8 +8,7 @@ import { useOverflowDetection } from "../utils";
 
 const withBaseName = makePrefixer("saltBasicListItem");
 
-export interface ListItemProps<T = unknown>
-  extends HTMLAttributes<HTMLDivElement> {
+export interface ListItemProps extends HTMLAttributes<HTMLLIElement> {
   itemTextHighlightPattern?: RegExp | string;
   label?: string;
   disabled?: boolean;
@@ -18,8 +17,8 @@ export interface ListItemProps<T = unknown>
   role?: string;
 }
 
-export const BasicListItem = forwardRef<HTMLDivElement, ListItemProps>(
-  function ListItem(
+export const BasicListItem = forwardRef<HTMLLIElement, ListItemProps>(
+  function BasicListItem(
     {
       children,
       className: classNameProp,
@@ -31,7 +30,7 @@ export const BasicListItem = forwardRef<HTMLDivElement, ListItemProps>(
       showCheckbox,
       ...props
     },
-    forwardedRef
+    ref
   ) {
     const className = clsx(
       withBaseName(),
@@ -49,14 +48,13 @@ export const BasicListItem = forwardRef<HTMLDivElement, ListItemProps>(
     return (
       <Tooltip disabled={!isOverflowed} content={content} hideIcon>
         <li
+          ref={ref}
           className={className}
           {...props}
           aria-disabled={disabled || undefined}
           aria-selected={selected || undefined}
           role={role}
-          ref={forwardedRef}
         >
-          {/*{prefix}*/}
           {showCheckbox && (
             <Checkbox aria-hidden checked={selected} disabled={disabled} />
           )}

@@ -46,6 +46,7 @@ export const BasicListItemExample: Story<BasicListProps> = (props) => {
       <BasicListItem showCheckbox selected disabled>Alabama</BasicListItem>
       <BasicListItem showCheckbox>Alabama</BasicListItem>
       <BasicListItem showCheckbox disabled>Alabama</BasicListItem>
+      <BasicListItem itemTextHighlightPattern="bama">Alabama</BasicListItem>
     </BasicList>
   );
 };

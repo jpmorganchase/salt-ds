@@ -16,7 +16,6 @@
   align-items: center;
   white-space: nowrap;
   --saltCheckbox-icon-stroke: var(--salt-selectable-foreground);
-  /*  TODO: should min-width take into account the space for the right tick?*/
 }
 
 .saltBasicListItem:hover,
@@ -27,13 +26,13 @@
   cursor: var(--saltBasicList-item-cursor, var(--salt-selectable-cursor-hover));
 }
 
-.saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-checkbox) {
+.saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-checkbox), /* TODO: remove class once :has is fully supported */
+.saltBasicListItem[aria-selected="true"]:not(:has(input[type='checkbox'])) {
+
   --list-item-background: var(--salt-selectable-background-selected);
 }
 
-.saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-checkbox):not(
-    .saltBasicListItem-disabled
-  ) {
+.saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-disabled) {
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
 
@@ -49,5 +48,4 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  /* TODO: check if we need to add stuff for truncation/ limited width*/
 }
