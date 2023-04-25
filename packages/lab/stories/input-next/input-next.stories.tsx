@@ -80,9 +80,17 @@ export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
 
 export const ValidationStatus: ComponentStory<typeof InputNext> = (args) => {
   return (
-  <FlowLayout>
-        <InputNext defaultValue={args.defaultValue ?? "Error value"} validationStatus="error" {...args} />
-        <InputNext defaultValue={args.defaultValue ?? "Warning value"} validationStatus="warning" {...args} />
+    <FlowLayout>
+      <InputNext
+        defaultValue={args.defaultValue ?? "Error value"}
+        validationStatus="error"
+        {...args}
+      />
+      <InputNext
+        defaultValue={args.defaultValue ?? "Warning value"}
+        validationStatus="warning"
+        {...args}
+      />
     </FlowLayout>
   );
 };

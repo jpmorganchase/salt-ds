@@ -182,7 +182,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <input
         type={type}
         id={id}
-        className={clsx(withBaseName("input"), {[withBaseName("withAdornment")]: validationStatus}, inputProps?.className)}
+        className={clsx(
+          withBaseName("input"),
+          { [withBaseName("withAdornment")]: validationStatus },
+          inputProps?.className
+        )}
         disabled={isDisabled}
         readOnly={isReadOnly}
         ref={ref}

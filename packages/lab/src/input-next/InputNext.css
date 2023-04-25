@@ -128,14 +128,16 @@
 }
 
 /* Style applied to input if `validationState="error"` */
-.saltInputNext-error, .saltInputNext-error:hover {
+.saltInputNext-error,
+.saltInputNext-error:hover {
   --inputNext-background: var(--salt-status-error-background);
   --inputNext-borderColor: var(--salt-status-error-borderColor);
   --inputNext-outlineColor: var(--salt-status-error-borderColor);
 }
 
 /* Style applied to input if `validationState="warning"` */
-.saltInputNext-warning, .saltInputNext-warning:hover {
+.saltInputNext-warning,
+.saltInputNext-warning:hover {
   --inputNext-background: var(--salt-status-warning-background);
   --inputNext-borderColor: var(--salt-status-warning-borderColor);
   --inputNext-outlineColor: var(--salt-status-warning-borderColor);
