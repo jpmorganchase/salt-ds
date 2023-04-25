@@ -1,6 +1,7 @@
 /* Style applied to the root element */
 .saltInputNext {
   --inputNext-borderColor: var(--salt-editable-borderColor);
+  --inputNext-borderColor-hover: var(--salt-editable-borderColor-hover);
   --inputNext-borderStyle: var(--salt-editable-borderStyle);
 
   align-items: center;
@@ -24,7 +25,7 @@
 
 .saltInputNext:hover {
   --inputNext-background: var(--inputNext-background-hover);
-  --inputNext-borderColor: var(--salt-editable-borderColor-hover);
+  --inputNext-borderColor: var(--inputNext-borderColor-hover);
   --inputNext-borderStyle: var(--salt-editable-borderStyle-hover);
   --inputNext-cursor: var(--salt-editable-cursor-hover);
 }
@@ -79,6 +80,7 @@
   --inputNext-background: var(--inputNext-background-readonly);
   --inputNext-background-hover: var(--inputNext-background-readonly);
   --inputNext-borderColor: var(--salt-editable-borderColor-readonly);
+  --inputNext-borderColor-hover: var(--salt-editable-borderColor-readonly);
   --inputNext-borderStyle: var(--salt-editable-borderStyle-readonly);
   --inputNext-cursor: var(--salt-editable-cursor-readonly);
 }
@@ -121,6 +123,7 @@
 .saltInputNext.saltInputNext-disabled:active {
   --inputNext-background: var(--inputNext-background-disabled);
   --inputNext-borderColor: var(--salt-editable-borderColor-disabled);
+  --inputNext-borderColor-hover: var(--salt-editable-borderColor-disabled);
   --inputNext-borderStyle: var(--salt-editable-borderStyle-disabled);
 
   cursor: var(--salt-editable-cursor-disabled);
@@ -131,16 +134,18 @@
 .saltInputNext-error,
 .saltInputNext-error:hover {
   --inputNext-background: var(--salt-status-error-background);
-  --inputNext-borderColor: var(--salt-status-error-borderColor);
   --inputNext-outlineColor: var(--salt-status-error-borderColor);
+  --inputNext-borderColor: var(--salt-status-error-borderColor);
+  --inputNext-borderColor-hover: var(--salt-status-error-borderColor);
 }
 
 /* Style applied to input if `validationState="warning"` */
 .saltInputNext-warning,
 .saltInputNext-warning:hover {
   --inputNext-background: var(--salt-status-warning-background);
-  --inputNext-borderColor: var(--salt-status-warning-borderColor);
   --inputNext-outlineColor: var(--salt-status-warning-borderColor);
+  --inputNext-borderColor: var(--salt-status-warning-borderColor);
+  --inputNext-borderColor-hover: var(--salt-status-warning-borderColor);
 }
 
 /* Style applied to input if adornment provided */
