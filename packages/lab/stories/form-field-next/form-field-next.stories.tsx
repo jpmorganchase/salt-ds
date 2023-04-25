@@ -212,12 +212,16 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (
 ) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext
-        label="Form Field label"
-        {...props}
-      >
-        <InputNext validationStatus="warning" defaultValue="Input value" />
-      </FormFieldNext>
+    <FormFieldNext
+      validationStatus="error"
+      label="Form Field label"
+      helperText="Helper text"
+      {...props}
+    >
+      <InputNext validationStatus="error" defaultValue="Input value" />
+    </FormFieldNext>
+      {/*  This would be possible. Is this ok?
+      
       <FormFieldNext
         readOnly
         label="Form Field label"
@@ -225,7 +229,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (
         {...props}
       >
         <InputNext validationStatus="error" defaultValue="Input value" />
-      </FormFieldNext>
+      </FormFieldNext> */}
     </FlowLayout>
   );
 };

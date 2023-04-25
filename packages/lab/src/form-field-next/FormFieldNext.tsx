@@ -51,6 +51,11 @@ export interface A11yValueProps {
    * If `true`, the FormField will be readonly.
    */
   readOnly?: boolean;
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning";
+
 }
 export interface useA11yValueValue {
   "aria-labelledby": A11yValueProps["labelId"];
@@ -91,6 +96,7 @@ export const FormField = forwardRef(
       onFocus,
       readOnly = false,
       id: idProp,
+      validationStatus,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -130,6 +136,7 @@ export const FormField = forwardRef(
               id={helperTextId}
               disabled={disabled}
               helperText={helperText}
+              validationStatus={validationStatus}
             />
           )}
         </FormFieldContextNext.Provider>
