@@ -1,0 +1,58 @@
+.saltFormFieldNext {
+  display: inline-grid;
+  position: relative;
+  column-gap: var(--salt-size-adornmentGap);
+  row-gap: var(--salt-size-adornmentGap);
+  vertical-align: top;
+  width: var(--saltFormFieldNext-width, 100%);
+}
+
+.saltFormFieldNext-labelLeft {
+  align-self: center;
+  grid-template-columns: auto 1fr;
+}
+
+.saltFormFieldNext-labelTop {
+}
+
+.saltFormFieldNext-controls {
+  align-items: center;
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  grid-column-gap: var(--salt-size-adornmentGap);
+}
+
+.saltFormFieldNext > * {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.saltFormFieldNext > .saltFormFieldLabel {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.saltFormFieldNext-labelLeft > * {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.saltFormFieldNext > .saltFormFieldHelperText {
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.saltFormFieldNext.saltFormFieldNext-labelLeft > .saltFormFieldHelperText {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.saltFormFieldNext-labelLeft > .saltFormFieldLabel ~ * {
+  grid-column-start: 2;
+  grid-column-end: 2;
+}
+
+.saltFormFieldNext-disabled .saltInputNext-focused {
+  outline: none;
+}
