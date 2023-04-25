@@ -13,6 +13,7 @@ import { makePrefixer, useControlled } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context";
 
 import "./InputNext.css";
+import { StatusAdornment } from "../status-adornment/StatusAdornment";
 
 const withBaseName = makePrefixer("saltInputNext");
 
@@ -41,6 +42,10 @@ export interface InputProps
    */
   readOnly?: boolean;
   type?: HTMLInputElement["type"];
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning";
   /**
    * The value of the `input` element, required for a controlled component.
    */
@@ -92,6 +97,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     // If we leave both value and defaultValue undefined, we will get a React warning on first edit
     // (uncontrolled to controlled warning) from the React input
     defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
+    validationStatus,
     variant = "primary",
     ...other
   },
@@ -164,6 +170,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
+          [withBaseName("warning")]: validationStatus === "warning",
+          [withBaseName("error")]: validationStatus === "error",
           [withBaseName(variant)]: variant,
         },
         classNameProp
@@ -174,7 +182,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <input
         type={type}
         id={id}
-        className={clsx(withBaseName("input"), inputProps?.className)}
+        className={clsx(withBaseName("input"), {[withBaseName("withAdornment")]: validationStatus}, inputProps?.className)}
         disabled={isDisabled}
         readOnly={isReadOnly}
         ref={ref}
@@ -185,6 +193,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         onFocus={!isDisabled ? handleFocus : undefined}
         {...restInputProps}
       />
+      {validationStatus && <StatusAdornment status={validationStatus} />}
     </div>
   );
 });
