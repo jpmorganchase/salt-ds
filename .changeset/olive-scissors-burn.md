@@ -3,6 +3,7 @@
 ---
 
 Banner
+
 - Remove `render` prop
 - Remove `Link` component from content
 - Add `hideIcon` prop

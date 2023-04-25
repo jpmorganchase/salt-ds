@@ -67,10 +67,6 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   hideIcon?: boolean;
   /**
-   * Set to `false` when you don't want the close icon to be displayed.
-   */
-  hideClose?: boolean;
-  /**
    * onClose callback when the close icon is clicked, the dismiss button will not be rendered if this is
    * not defined
    */
@@ -95,7 +91,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     onClose,
     status = "info",
     hideIcon = false,
-    hideClose = false,
     ...rest
   },
   ref
