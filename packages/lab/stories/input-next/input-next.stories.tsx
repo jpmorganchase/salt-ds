@@ -1,3 +1,4 @@
+import { FlowLayout } from "@salt-ds/core";
 import { InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -74,5 +75,14 @@ export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
         <InputNext defaultValue={args.defaultValue ?? "Value 2"} {...args} />
       </div>
     </>
+  );
+};
+
+export const ValidationStatus: ComponentStory<typeof InputNext> = (args) => {
+  return (
+  <FlowLayout>
+        <InputNext defaultValue={args.defaultValue ?? "Error value"} validationStatus="error" {...args} />
+        <InputNext defaultValue={args.defaultValue ?? "Warning value"} validationStatus="warning" {...args} />
+    </FlowLayout>
   );
 };
