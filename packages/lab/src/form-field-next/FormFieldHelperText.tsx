@@ -21,7 +21,13 @@ export const FormFieldHelperText = ({
   ...restProps
 }: FormFieldHelperTextProps) => {
   return (
-    <div className={clsx(withBaseName(), {[withBaseName("withValidation")]: validationStatus}, className)}>
+    <div
+      className={clsx(
+        withBaseName(),
+        { [withBaseName("withValidation")]: validationStatus },
+        className
+      )}
+    >
       {validationStatus && <StatusIndicator status={validationStatus} />}
       <Text
         disabled={disabled}

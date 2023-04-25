@@ -55,7 +55,6 @@ export interface A11yValueProps {
    * Validation status.
    */
   validationStatus?: "error" | "warning";
-
 }
 export interface useA11yValueValue {
   "aria-labelledby": A11yValueProps["labelId"];
