@@ -1,5 +1,40 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.1
+
+### Minor Changes
+
+- c4c9d4f3: Add column sorting to the Data Grid
+
+  ```tsx
+  <GridColumn
+    sortable
+    onSortOrderChange={({ sortOrder }) => {}}
+    customSort={({ rowData, sortOrder }) => {}}
+  />
+  ```
+
+- 3be48882: Add cell validation.
+
+  ```tsx
+  <GridColumn
+    getValidationStatus={({ row }) => validationStatus[row.index].name}
+    validationType="strong"
+  >
+  ```
+
+  Add row validation.
+
+  ```tsx
+  <Grid getRowValidationStatus={(row) => row.data.status}>
+    <RowValidationStatusColumn
+      id="status"
+      aria-label="Row status"
+      defaultWidth={30}
+    />
+  </Grid>
+  ```
+
 ## 1.0.4-alpha.0
 
 ### Minor Changes
