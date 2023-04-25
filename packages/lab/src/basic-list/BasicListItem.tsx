@@ -1,9 +1,10 @@
-import React, {forwardRef, HTMLAttributes} from "react";
-import {clsx} from "clsx";
-import {Checkbox, makePrefixer, Text} from "@salt-ds/core";
-import {Highlighter} from "./Highlighter";
+import React, { forwardRef, HTMLAttributes } from "react";
+import { clsx } from "clsx";
+import { Checkbox, makePrefixer, Text, Tooltip } from "@salt-ds/core";
+import { Highlighter } from "./Highlighter";
 import "./BasicListItem.css";
-import {SuccessTickIcon} from "@salt-ds/icons";
+import { SuccessTickIcon } from "@salt-ds/icons";
+import { useOverflowDetection } from "../utils";
 
 const withBaseName = makePrefixer("saltBasicListItem");
 
@@ -11,12 +12,11 @@ export interface ListItemProps<T = unknown>
   extends HTMLAttributes<HTMLDivElement> {
   itemTextHighlightPattern?: RegExp | string;
   label?: string;
-  disabled?: boolean,
-  selected?: boolean,
-  showCheckbox?: boolean,
-  role?: string
+  disabled?: boolean;
+  selected?: boolean;
+  showCheckbox?: boolean;
+  role?: string;
 }
-
 
 export const BasicListItem = forwardRef<HTMLDivElement, ListItemProps>(
   function ListItem(
@@ -26,43 +26,59 @@ export const BasicListItem = forwardRef<HTMLDivElement, ListItemProps>(
       disabled,
       itemTextHighlightPattern,
       label,
-      role = 'option',
+      role = "option",
       selected,
       showCheckbox,
       ...props
     },
     forwardedRef
   ) {
-    const className = clsx(withBaseName(), {
-      [withBaseName("disabled")]: disabled,
-      [withBaseName("checkbox")]: showCheckbox, // TODO: remove class once has is supported (june 2023ish)
-    }, classNameProp);
+    const className = clsx(
+      withBaseName(),
+      {
+        [withBaseName("disabled")]: disabled,
+        [withBaseName("checkbox")]: showCheckbox, // TODO: remove class once has is supported (june 2023ish)
+      },
+      classNameProp
+    );
+
+    const [overflowRef, isOverflowed] = useOverflowDetection<HTMLDivElement>();
+
+    const content = label || children;
 
     return (
-      <li
-        className={className}
-        {...props}
-        aria-disabled={disabled || undefined}
-        aria-selected={selected || undefined}
-        role={role}
-        ref={forwardedRef}
-      >
-        {/*{prefix}*/}
-        {showCheckbox && <Checkbox aria-hidden checked={selected} disabled={disabled}/>}
-        {children && typeof children !== "string" ? (
-          children
-        ) : itemTextHighlightPattern == null ? (
-          <Text className={withBaseName("textWrapper")} disabled={disabled}>
-            {label || children}
-          </Text>
-        ) : (
-          <Highlighter
-            matchPattern={itemTextHighlightPattern}
-            text={label || (children as string)}
-          />
-        )}
-        {(!showCheckbox && selected) && <SuccessTickIcon/>}
-      </li>
+      <Tooltip disabled={!isOverflowed} content={content} hideIcon>
+        <li
+          className={className}
+          {...props}
+          aria-disabled={disabled || undefined}
+          aria-selected={selected || undefined}
+          role={role}
+          ref={forwardedRef}
+        >
+          {/*{prefix}*/}
+          {showCheckbox && (
+            <Checkbox aria-hidden checked={selected} disabled={disabled} />
+          )}
+          {children && typeof children !== "string" ? (
+            children
+          ) : itemTextHighlightPattern == null ? (
+            <Text
+              className={withBaseName("textWrapper")}
+              disabled={disabled}
+              ref={overflowRef}
+            >
+              {content}
+            </Text>
+          ) : (
+            <Highlighter
+              matchPattern={itemTextHighlightPattern}
+              text={label || (children as string)}
+            />
+          )}
+          {!showCheckbox && selected && <SuccessTickIcon />}
+        </li>
+      </Tooltip>
     );
   }
 );

@@ -11,10 +11,10 @@ export interface HighlighterProps {
   text?: string;
 }
 
-export const Highlighter = (
-  { matchPattern, text = "" }: HighlighterProps
-): ReactElement<HighlighterProps> => {
-
+export const Highlighter = ({
+  matchPattern,
+  text = "",
+}: HighlighterProps): ReactElement<HighlighterProps> => {
   const matchRegex =
     typeof matchPattern === "string"
       ? new RegExp(`(${escapeRegExp(matchPattern)})`, "gi")
@@ -24,7 +24,7 @@ export const Highlighter = (
     return <>{text}</>;
   }
   return (
-    <span>
+    <span className={withBaseName("textWrapper")}>
       {text.split(matchRegex).map((part, index) =>
         part.match(matchRegex) ? (
           <strong

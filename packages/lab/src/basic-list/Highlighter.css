@@ -1,3 +1,11 @@
 .saltHighlighter-highlight {
-  font-weight: var(--salt-typography-fontWeight-bold); /* TODO: Check with design */
+  font-weight: var(
+    --salt-typography-fontWeight-bold
+  ); /* TODO: Check with design */
+}
+
+.saltHighlighter-textWrapper {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
