@@ -10,9 +10,10 @@ export const WarningAdornmentIcon = forwardRef<SVGSVGElement, WarningAdornmentIc
         className={className} 
         {...rest} 
         role="img" 
+        viewBox="0 0 9 8"
         ref={ref}
       >
-        <path d="M0 8L4.5 0L9 8H0Z" fill="#D65513"/>
+        <path d="M0 8L4.5 0L9 8H0Z" />
       </svg>
     );
   }

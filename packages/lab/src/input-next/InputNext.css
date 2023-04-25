@@ -140,3 +140,7 @@
   --inputNext-borderColor: var(--salt-status-warning-borderColor);
   --inputNext-outlineColor: var(--salt-status-warning-borderColor);
 }
+
+.saltInputNext-withAdornment {
+  padding-right: var(--salt-size-adornmentGap);
+}

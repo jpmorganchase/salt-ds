@@ -3,9 +3,7 @@
     fill: var(--saltStatusAdornment-color, var(--statusAdornment-color));
     display: inline-block;
     position: relative;
-    width: var(--salt-icon-size-status-adornment);
     height: var(--salt-icon-size-status-adornment);
-    min-width: var(--salt-icon-size-status-adornment);
     min-height: var(--salt-icon-size-status-adornment);
 }
 
