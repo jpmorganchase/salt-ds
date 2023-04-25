@@ -5,8 +5,6 @@ import "./FormFieldControlWrapper.css";
 
 const withBaseName = makePrefixer("saltFormFieldControlWrapper");
 
-export const FormFieldControlWrapper = ({
-  children
-}: PropsWithChildren) => (
-    <div className={withBaseName()}>{children}</div>
+export const FormFieldControlWrapper = ({ children }: PropsWithChildren) => (
+  <div className={withBaseName()}>{children}</div>
 );

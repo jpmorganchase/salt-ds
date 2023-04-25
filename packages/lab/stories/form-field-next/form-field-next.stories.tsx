@@ -4,7 +4,13 @@ import {
   RadioButtonGroup,
   FlowLayout,
 } from "@salt-ds/core";
-import { FormFieldControlWrapper as Controls, FormFieldHelperText as HelperText, FormFieldLabel as Label, FormFieldNext, InputNext } from "@salt-ds/lab";
+import {
+  FormFieldControlWrapper as Controls,
+  FormFieldHelperText as HelperText,
+  FormFieldLabel as Label,
+  FormFieldNext,
+  InputNext,
+} from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -33,14 +39,14 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
       <FormFieldNext {...props}>
         <Label>Default Form Field label</Label>
         <InputNext defaultValue="Value" />
-      <HelperText>Default helper text</HelperText>
+        <HelperText>Default helper text</HelperText>
       </FormFieldNext>
       <FormFieldNext labelPlacement="left" {...props}>
         <Label>Default Form Field label</Label>
         <InputNext defaultValue="Value" />
         <HelperText>Default helper text</HelperText>
       </FormFieldNext>
-      <FormFieldNext labelPlacement="left"{...props}>
+      <FormFieldNext labelPlacement="left" {...props}>
         <Label>Default Form Field label with more text</Label>
         <InputNext defaultValue="Value" />
         <HelperText>Default helper text</HelperText>
@@ -72,7 +78,9 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
           <Checkbox label={"Checkbox"} />
           <RadioButton label={"Radio Button"} />
         </Controls>
-        <HelperText>Default helper text that wraps over multiple columns</HelperText>
+        <HelperText>
+          Default helper text that wraps over multiple columns
+        </HelperText>
       </FormFieldNext>
       <FormFieldNext labelPlacement="left" {...props}>
         <Label>Default Form Field label</Label>
@@ -104,15 +112,20 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
           <InputNext variant="secondary" defaultValue="123" />
           <InputNext variant="secondary" defaultValue="35" />
         </Controls>
-        <HelperText>*User entry in either field will automatically populate the corresponding field with the correct value</HelperText>
+        <HelperText>
+          *User entry in either field will automatically populate the
+          corresponding field with the correct value
+        </HelperText>
       </FormFieldNext>
       <FormFieldNext {...props}>
         <Label>Multi criteria inputs</Label>
         <Controls>
           <InputNext variant="secondary" defaultValue="2.5" />
           <InputNext variant="secondary" defaultValue="750" />
-        </Controls> 
-        <HelperText>*User must enter all values in the string to complete the input</HelperText>
+        </Controls>
+        <HelperText>
+          *User must enter all values in the string to complete the input
+        </HelperText>
       </FormFieldNext>
     </FlowLayout>
   );
@@ -158,13 +171,19 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormFieldNext {...props}>
-      <Label>Form Field label that's extra long. Showing that labels wrap around to the next line.</Label>
+        <Label>
+          Form Field label that's extra long. Showing that labels wrap around to
+          the next line.
+        </Label>
         <InputNext defaultValue="Primary Input value" />
       </FormFieldNext>
       <FormFieldNext readOnly {...props}>
         <Label>Default Form Field label</Label>
         <InputNext defaultValue="Primary Input value" />
-        <HelperText>Helper text that's very long. Additional text explaining that this is a readonly Form Field.</HelperText>
+        <HelperText>
+          Helper text that's very long. Additional text explaining that this is
+          a readonly Form Field.
+        </HelperText>
       </FormFieldNext>
     </FlowLayout>
   );
