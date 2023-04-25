@@ -220,6 +220,14 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (
     >
       <InputNext validationStatus="error" defaultValue="Input value" />
     </FormFieldNext>
+    <FormFieldNext
+      validationStatus="warning"
+      label="Form Field label"
+      helperText="Helper text"
+      {...props}
+    >
+      <InputNext validationStatus="warning" defaultValue="Input value" />
+    </FormFieldNext>
       {/*  This would be possible. Is this ok?
       
       <FormFieldNext
