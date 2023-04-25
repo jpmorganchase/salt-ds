@@ -65,8 +65,6 @@ export const FormField = forwardRef(
       children,
       className,
       disabled = false,
-      helperText,
-      label,
       labelPlacement = "top",
       onBlur,
       onFocus,
@@ -106,11 +104,7 @@ export const FormField = forwardRef(
         <FormFieldContextNext.Provider
           value={{ a11yProps, disabled, readOnly, validationStatus }}
         >
-          {label && <FormFieldLabel id={labelId} label={label} />}
-          <div className={withBaseName("controls")}>{children}</div>
-          {helperText && (
-            <FormFieldHelperText id={helperTextId} helperText={helperText} />
-          )}
+          {children}
         </FormFieldContextNext.Provider>
       </div>
     );

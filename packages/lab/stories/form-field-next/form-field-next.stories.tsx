@@ -1,13 +1,10 @@
 import {
   Checkbox,
-  GridLayout,
-  GridItem,
   RadioButton,
   RadioButtonGroup,
-  FlexLayout,
   FlowLayout,
 } from "@salt-ds/core";
-import { FormFieldNext, InputNext } from "@salt-ds/lab";
+import { FormFieldControlWrapper as Controls, FormFieldHelperText as HelperText, FormFieldLabel as Label, FormFieldNext, InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -18,17 +15,14 @@ export default {
 export const Skeleton: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout>
-      <FormFieldNext
-        label="Default Form Field label"
-        helperText="Default helper text"
-        {...props}
-      ></FormFieldNext>
-      <FormFieldNext
-        labelPlacement="left"
-        label="Default Form Field label"
-        helperText="Default helper text"
-        {...props}
-      ></FormFieldNext>
+      <FormFieldNext {...props}>
+        <Label>Default Form Field label</Label>
+        <HelperText>Default helper text</HelperText>
+      </FormFieldNext>
+      <FormFieldNext labelPlacement="left" {...props}>
+        <Label>Default Form Field label</Label>
+        <HelperText>Default helper text</HelperText>
+      </FormFieldNext>
     </FlowLayout>
   );
 };
@@ -36,42 +30,33 @@ export const Skeleton: ComponentStory<typeof FormFieldNext> = (props) => {
 export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext
-        helperText="Default helper text"
-        label="Default Form Field label"
-        {...props}
-      >
+      <FormFieldNext {...props}>
+        <Label>Default Form Field label</Label>
+        <InputNext defaultValue="Value" />
+      <HelperText>Default helper text</HelperText>
+      </FormFieldNext>
+      <FormFieldNext labelPlacement="left" {...props}>
+        <Label>Default Form Field label</Label>
+        <InputNext defaultValue="Value" />
+        <HelperText>Default helper text</HelperText>
+      </FormFieldNext>
+      <FormFieldNext labelPlacement="left"{...props}>
+        <Label>Default Form Field label with more text</Label>
+        <InputNext defaultValue="Value" />
+        <HelperText>Default helper text</HelperText>
+      </FormFieldNext>
+      <FormFieldNext {...props}>
+        <Label>Default Form Field label</Label>
         <InputNext defaultValue="Value" />
       </FormFieldNext>
-      <FormFieldNext
-        labelPlacement="left"
-        helperText="Default helper text"
-        label="Default Form Field label"
-        {...props}
-      >
-        <InputNext defaultValue="Value" />
-      </FormFieldNext>
-      <FormFieldNext
-        labelPlacement="left"
-        label="Default Form Field label with more text"
-        helperText="Default helper text"
-        {...props}
-      >
-        <InputNext defaultValue="Value" />
-      </FormFieldNext>
-      <FormFieldNext label="Default Form Field label" {...props}>
-        <InputNext defaultValue="Value" />
-      </FormFieldNext>
-      <FormFieldNext label="Default Form Field label" {...props}>
+      <FormFieldNext {...props}>
+        <Label>Default Form Field label</Label>
         <InputNext variant="secondary" defaultValue="Value" />
       </FormFieldNext>
-      <FormFieldNext
-        labelPlacement="left"
-        label="Default Form Field label"
-        helperText="Default helper text"
-        {...props}
-      >
+      <FormFieldNext labelPlacement="left" {...props}>
+        <Label>Default Form Field label</Label>
         <InputNext variant="secondary" defaultValue="Value" />
+        <HelperText>Default helper text</HelperText>
       </FormFieldNext>
     </FlowLayout>
   );
@@ -80,29 +65,24 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
 export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext
-        helperText="Default helper text"
-        label="Default Form Field label"
-        {...props}
-      >
-        <InputNext defaultValue="Value" />
-        <Checkbox label={"Checkbox"} />
-        <RadioButton label={"Radio Button"} />
+      <FormFieldNext {...props}>
+        <Label>Default Form Field label</Label>
+        <Controls>
+          <InputNext defaultValue="Value" />
+          <Checkbox label={"Checkbox"} />
+          <RadioButton label={"Radio Button"} />
+        </Controls>
+        <HelperText>Default helper text that wraps over multiple columns</HelperText>
       </FormFieldNext>
-      <FormFieldNext
-        labelPlacement="left"
-        helperText="Default helper text"
-        label="Default Form Field label"
-        {...props}
-      >
-        <InputNext variant="secondary" defaultValue="Value" />
-        <InputNext variant="secondary" defaultValue="Value 2" />
+      <FormFieldNext labelPlacement="left" {...props}>
+        <Label>Default Form Field label</Label>
+        <Controls>
+          <InputNext variant="secondary" defaultValue="Value" />
+          <InputNext variant="secondary" defaultValue="Value 2" />
+        </Controls>
       </FormFieldNext>
-      <FormFieldNext
-        helperText="Default helper text"
-        label="Default Form Field label"
-        {...props}
-      >
+      <FormFieldNext {...props}>
+        <Label>Default Form Field label</Label>
         <RadioButtonGroup>
           <RadioButton key="option1" label="Radio Option 1" value="option1" />
           <RadioButton key="option2" label="Radio Option 2" value="option2" />
@@ -118,21 +98,21 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
 export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext
-        label="Paired fields"
-        helperText="*User entry in either field will automatically populate the corresponding field with the correct value"
-        {...props}
-      >
-        <InputNext variant="secondary" defaultValue="123" />
-        <InputNext variant="secondary" defaultValue="35" />
+      <FormFieldNext {...props}>
+        <Label>Paired fields</Label>
+        <Controls>
+          <InputNext variant="secondary" defaultValue="123" />
+          <InputNext variant="secondary" defaultValue="35" />
+        </Controls>
+        <HelperText>*User entry in either field will automatically populate the corresponding field with the correct value</HelperText>
       </FormFieldNext>
-      <FormFieldNext
-        label="Multi criteria inputs"
-        helperText="*User must enter all values in the string to complete the input"
-        {...props}
-      >
-        <InputNext variant="secondary" defaultValue="2.5" />
-        <InputNext variant="secondary" defaultValue="750" />
+      <FormFieldNext {...props}>
+        <Label>Multi criteria inputs</Label>
+        <Controls>
+          <InputNext variant="secondary" defaultValue="2.5" />
+          <InputNext variant="secondary" defaultValue="750" />
+        </Controls> 
+        <HelperText>*User must enter all values in the string to complete the input</HelperText>
       </FormFieldNext>
     </FlowLayout>
   );
@@ -141,21 +121,15 @@ export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
 export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext
-        disabled
-        label="Form Field label"
-        helperText="Default helper text"
-        {...props}
-      >
-        <InputNext defaultValue="Primary Input value" />
+      <FormFieldNext disabled {...props}>
+        <Label>Default Form Field label</Label>
+        <InputNext variant="secondary" defaultValue="Primary Input value" />
+        <HelperText>Default helper text</HelperText>
       </FormFieldNext>
-      <FormFieldNext
-        disabled
-        label="Form Field label"
-        helperText="Default helper text"
-        {...props}
-      >
+      <FormFieldNext disabled {...props}>
+        <Label>Default Form Field label</Label>
         <InputNext variant="secondary" defaultValue="Secondary Input value" />
+        <HelperText>Default helper text</HelperText>
       </FormFieldNext>
     </FlowLayout>
   );
@@ -164,21 +138,15 @@ export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
 export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext
-        readOnly
-        label="Form Field label"
-        helperText="Default helper text"
-        {...props}
-      >
+      <FormFieldNext readOnly {...props}>
+        <Label>Default Form Field label</Label>
         <InputNext defaultValue="Primary Input value" />
+        <HelperText>Default helper text</HelperText>
       </FormFieldNext>
-      <FormFieldNext
-        readOnly
-        label="Form Field label"
-        helperText="Default helper text"
-        {...props}
-      >
+      <FormFieldNext readOnly {...props}>
+        <Label>Default Form Field label</Label>
         <InputNext variant="secondary" defaultValue="Secondary Input value" />
+        <HelperText>Default helper text</HelperText>
       </FormFieldNext>
     </FlowLayout>
   );
@@ -189,19 +157,14 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
 ) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext
-        label="Form Field label that's extra long. Showing that labels wrap around to the next line."
-        {...props}
-      >
+      <FormFieldNext {...props}>
+      <Label>Form Field label that's extra long. Showing that labels wrap around to the next line.</Label>
         <InputNext defaultValue="Primary Input value" />
       </FormFieldNext>
-      <FormFieldNext
-        readOnly
-        label="Form Field label"
-        helperText="Helper text that's very long. Additional text explaining that this is a readonly Form Field."
-        {...props}
-      >
+      <FormFieldNext readOnly {...props}>
+        <Label>Default Form Field label</Label>
         <InputNext defaultValue="Primary Input value" />
+        <HelperText>Helper text that's very long. Additional text explaining that this is a readonly Form Field.</HelperText>
       </FormFieldNext>
     </FlowLayout>
   );
