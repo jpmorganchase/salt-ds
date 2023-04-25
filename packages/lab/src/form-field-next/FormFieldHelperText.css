@@ -1,0 +1,4 @@
+.saltFormFieldHelperText.saltText {
+  font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
+  width: 100%;
+}

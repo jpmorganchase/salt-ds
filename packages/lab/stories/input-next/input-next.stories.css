@@ -1,0 +1,14 @@
+.demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-size-unit);
+  padding: var(--salt-size-unit);
+}
+
+.alignCenter {
+  --saltInputNext-textAlign: center;
+}
+
+.alignRight {
+  --saltInputNext-textAlign: right;
+}
