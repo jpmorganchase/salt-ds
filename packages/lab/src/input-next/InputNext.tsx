@@ -109,13 +109,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       readOnly: a11yReadOnly,
       ...restA11y
     } = {},
-    validationStatus: formFieldValidationStatus
+    validationStatus: formFieldValidationStatus,
   } = useFormFieldPropsNext();
 
   const isDisabled = disabled || a11yDisabled;
   const isReadOnly = readOnlyProp || a11yReadOnly;
 
-  const validationStatus = isDisabled || isReadOnly ? undefined : formFieldValidationStatus ?? validationStatusProp;
+  const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
   const [focused, setFocused] = useState(false);
 
@@ -173,8 +173,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
-          [withBaseName("error")]: validationStatus === "error",
-          [withBaseName("warning")]: validationStatus === "warning",
+          [withBaseName(validationStatus || "")]: validationStatus,
           [withBaseName(variant)]: variant,
         },
         classNameProp

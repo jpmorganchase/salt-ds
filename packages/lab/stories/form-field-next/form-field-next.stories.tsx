@@ -210,7 +210,6 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
 export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      Error
       <FormFieldNext
         validationStatus="error"
         label="Form Field label"
@@ -219,7 +218,6 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext validationStatus="error" defaultValue="Input value" />
       </FormFieldNext>
-      Warning
       <FormFieldNext
         validationStatus="warning"
         label="Form Field label"
@@ -228,7 +226,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext validationStatus="warning" defaultValue="Input value" />
       </FormFieldNext>
-      Error readonly FF
+      {/* Error readonly FF
       <FormFieldNext
         readOnly
         validationStatus="error" 
@@ -264,7 +262,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
         {...props}
       >
         <InputNext disabled defaultValue="Input value" />
-      </FormFieldNext>
+      </FormFieldNext> */}
     </FlowLayout>
   );
 };

@@ -95,15 +95,13 @@ export const FormField = forwardRef(
       onFocus,
       readOnly = false,
       id: idProp,
-      validationStatus: validationStatusProp,
+      validationStatus,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const labelId = useId();
     const helperTextId = useId();
-
-    const validationStatus = readOnly || disabled ? undefined : validationStatusProp;
 
     const a11yValue = useA11yValue({
       labelId,
@@ -127,18 +125,15 @@ export const FormField = forwardRef(
         )}
         {...restProps}
       >
-        <FormFieldContextNext.Provider value={{ a11yProps: a11yValue, validationStatus: validationStatus }}>
+        <FormFieldContextNext.Provider
+          value={{ a11yProps: a11yValue, validationStatus: validationStatus }}
+        >
           {label && (
             <FormFieldLabel id={labelId} disabled={disabled} label={label} />
           )}
           <div className={withBaseName("controls")}>{children}</div>
           {helperText && (
-            <FormFieldHelperText
-              id={helperTextId}
-              disabled={disabled}
-              helperText={helperText}
-              validationStatus={validationStatus}
-            />
+            <FormFieldHelperText id={helperTextId} helperText={helperText} />
           )}
         </FormFieldContextNext.Provider>
       </div>

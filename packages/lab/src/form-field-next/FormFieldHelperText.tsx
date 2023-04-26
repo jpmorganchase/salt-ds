@@ -3,23 +3,25 @@ import { makePrefixer, StatusIndicator, Text, TextProps } from "@salt-ds/core";
 import { FormFieldProps } from "./FormFieldNext";
 
 import "./FormFieldHelperText.css";
+import { useFormFieldPropsNext } from "../form-field-context";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
 export interface FormFieldHelperTextProps
   extends Omit<TextProps<"label">, "variant" | "styleAs"> {
   helperText: FormFieldProps["helperText"];
-  disabled?: boolean;
-  validationStatus?: "error" | "warning";
 }
 
 export const FormFieldHelperText = ({
   className,
-  disabled,
   helperText,
-  validationStatus,
   ...restProps
 }: FormFieldHelperTextProps) => {
+  const {
+    a11yProps: { disabled, readOnly, ...restA11y } = {},
+    validationStatus,
+  } = useFormFieldPropsNext();
+
   return (
     <div
       className={clsx(

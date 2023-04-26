@@ -11,6 +11,3 @@
 .saltFormFieldHelperText-withValidation {
   column-gap: var(--salt-size-adornmentGap);
 }
-.saltFormFieldNext:has(.saltInputNext-disabled, .saltInputNext-readOnly) .saltStatusIndicator {
-  display: none;
-}
