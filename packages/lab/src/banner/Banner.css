@@ -16,7 +16,7 @@
 
 /* Styles applied to icon */
 .saltBanner-icon {
-  --saltIcon-margin: calc((var(--salt-text-lineHeight) - 12px)/2) 0 0 0;
+  --saltIcon-margin: calc((var(--salt-text-lineHeight) - 12px) / 2) 0 0 0;
 }
 
 /* Styles applied to close button */
