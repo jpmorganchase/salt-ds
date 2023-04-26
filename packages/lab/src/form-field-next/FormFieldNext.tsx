@@ -2,8 +2,6 @@ import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, HTMLAttributes, useMemo } from "react";
 import { makePrefixer, useId, capitalize } from "@salt-ds/core";
 import { FormFieldContextNext } from "../form-field-context";
-import { FormFieldLabel } from "./FormFieldLabel";
-import { FormFieldHelperText } from "./FormFieldHelperText";
 
 import "./FormFieldNext.css";
 
@@ -17,15 +15,7 @@ export interface FormFieldProps
    */
   disabled?: boolean;
   /**
-   * The helper text content
-   */
-  helperText?: string;
-  /**
-   * The label value for the FormField
-   */
-  label?: string;
-  /**
-   * Location the label, values: 'top' (default) or 'left'
+   * Location of the label, values: 'top' (default) or 'left'
    */
   labelPlacement?: FormFieldLabelPlacement;
   /**
