@@ -63,10 +63,6 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   emphasize?: boolean;
   /**
-   * Set to `false` when you don't want the status icon to be displayed.
-   */
-  hideIcon?: boolean;
-  /**
    * onClose callback when the close icon is clicked, the dismiss button will not be rendered if this is
    * not defined
    */
@@ -90,7 +86,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     emphasize = false,
     onClose,
     status = "info",
-    hideIcon = false,
     ...rest
   },
   ref
@@ -118,13 +113,11 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       ref={handleRef}
       {...rest}
     >
-      {!hideIcon && (
-        <StatusIndicator
-          className={clsx(withBaseName("icon"), status, className)}
-          status={status}
-        ></StatusIndicator>
-      )}
-      <span className={clsx(withBaseName("content"), status, className)}>
+      <StatusIndicator
+        className={clsx(withBaseName("icon"), className)}
+        status={status}
+      ></StatusIndicator>
+      <span className={clsx(withBaseName("content"), className)}>
         {children}
       </span>
       {onClose && (

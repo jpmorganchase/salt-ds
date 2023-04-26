@@ -33,26 +33,6 @@ export const Emphasized: ComponentStory<typeof Banner> = () => (
   <Statuses emphasize />
 );
 
-export const HideIcon = (props: BannerProps) => {
-  const { status, emphasize, ...restProps } = props;
-
-  return (
-    <div style={{ width: "60vw" }}>
-      <Banner
-        onClose={() => {
-          console.log("onClose triggered");
-        }}
-        status={status}
-        emphasize={emphasize}
-        hideIcon
-        {...restProps}
-      >
-        Banners appear inline on the page
-      </Banner>
-    </div>
-  );
-};
-
 export const HideClose = (props: BannerProps) => {
   const { onClose, ...restProps } = props;
 

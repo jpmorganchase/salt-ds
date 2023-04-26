@@ -1,38 +1,33 @@
 /* Styles applied to root component */
 .saltBanner {
-  --banner-background: var(--saltBanner-background, var(--salt-container-primary-background));
-  --banner-fontSize: var(--saltBanner-fontSize, var(--salt-text-fontSize));
-  --banner-lineHeight: var(--saltBanner-lineHeight, var(--salt-text-lineHeight));
-  --banner-padding: var(--saltBanner-padding, var(--salt-size-unit));
-  --banner-label-color: var(--saltBanner-label-color, var(--salt-text-primary-foreground));
-}
+  --banner-background: var(--salt-container-primary-background);
 
-.saltBanner {
-  background: var(--banner-background);
+  background: var(--saltBanner-background, var(--banner-background));
   border-color: var(--saltBanner-borderColor, var(--banner-status-borderColor));
   border-width: var(--saltBanner-borderWidth, var(--salt-size-border));
   border-style: var(--saltBanner-borderStyle, var(--salt-container-borderStyle));
-  border-bottom: 2px solid var(--saltBanner-borderColor, var(--banner-status-borderColor));
   box-sizing: border-box;
   display: flex;
   gap: var(--salt-size-unit);
-  padding: var(--banner-padding);
+  padding: var(--saltBanner-padding, var(--salt-size-unit));
   position: relative;
   width: 100%;
-  align-items: baseline;
 }
 
+/* Styles applied to icon */
+.saltBanner-icon {
+  --saltIcon-margin: calc((var(--salt-text-lineHeight) - 12px)/2) 0 0 0;
+}
+
+/* Styles applied to close button */
 .saltBanner-closeButton {
-  padding: 0;
-  height: var(--salt-text-lineHeight);
+  margin: calc(var(--salt-size-unit) * -0.5) auto calc(var(--salt-size-unit) * -0.5) var(--salt-size-unit);
 }
 
+/* Styles applied to content */
 .saltBanner-content {
   flex: 1 0;
-  font-weight: var(--salt-text-label-fontWeight);
-  font-size: var(--salt-text-fontSize);
-  line-height: var(--salt-text-lineHeight);
-  color: var(--banner-label-color);
+  align-self: center;
 }
 
 /* Styles applied when state = "info" */
