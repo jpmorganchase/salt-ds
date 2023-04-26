@@ -1,6 +1,7 @@
 import {ComponentMeta, Story} from "@storybook/react";
 import {BasicList, BasicListProps} from "../../src";
 import {BasicListItem} from "../../src/basic-list/BasicListItem";
+import {UserGroupSolidIcon} from "@salt-ds/icons";
 
 export default {
   title: "Lab/Basic-List",
@@ -19,16 +20,27 @@ const SimpleListExample = [
   'Florida',
   'Georgia',
 ]
-export const Default: Story<BasicListProps> = (props) => {
+export const Template: Story<BasicListProps> = (props) => {
   return (
     <BasicList
       {...props}
       aria-label="Listbox example"
       style={{ width: '200px' }}
-      emptyMessage="Empty list example with long empty message"
+
     />
   );
 };
+
+export const Default = Template.bind({});
+Default.args = {
+  source: SimpleListExample
+};
+
+export const Empty = Template.bind({});
+Empty.args = {
+  emptyMessage: "Empty list example with long empty message"
+};
+
 
 export const BasicListItemExample: Story<BasicListProps> = (props) => {
   return (
@@ -61,3 +73,20 @@ export const Declarative: Story<BasicListProps> = (props) => {
     </BasicList>
   );
 };
+
+
+
+// TODO: EXAMPLES
+// Default,
+// Borderless,
+// Declarative,
+// Deselectable
+// Controlled
+// Disabled
+// Multi Selection
+// with item renderer
+// with placeholder (empty)
+// with text truncation
+// with focus restored
+// with text highlight
+// extended selection (only for multiselect?)

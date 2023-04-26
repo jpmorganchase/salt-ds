@@ -1,4 +1,10 @@
-import React, { forwardRef, HTMLAttributes } from "react";
+import React, {
+  FocusEventHandler,
+  forwardRef,
+  HTMLAttributes,
+  useRef,
+  useState
+} from "react";
 import { clsx } from "clsx";
 import { Checkbox, makePrefixer, Text, Tooltip } from "@salt-ds/core";
 import { Highlighter } from "./Highlighter";
@@ -29,6 +35,7 @@ export const BasicListItem = forwardRef<HTMLLIElement, ListItemProps>(
       role = "option",
       selected,
       showCheckbox,
+      tabIndex,
       ...props
     },
     ref
@@ -41,11 +48,18 @@ export const BasicListItem = forwardRef<HTMLLIElement, ListItemProps>(
       },
       classNameProp
     );
+    const isFocusableContent = role === 'option' || !disabled;
 
     const [overflowRef, isOverflowed] = useOverflowDetection<HTMLDivElement>();
 
     const content = label || children;
 
+    const listItemControlProps = {
+      onFocus: () => {
+        // setIsFocused(true)
+        isFocusableContent && console.log('focus')}
+    }
+    // const [isFocused, setIsFocused] = useState(false);
     return (
       <Tooltip disabled={!isOverflowed} content={content} hideIcon>
         <li
@@ -55,6 +69,8 @@ export const BasicListItem = forwardRef<HTMLLIElement, ListItemProps>(
           aria-disabled={disabled || undefined}
           aria-selected={selected || undefined}
           role={role}
+          {...listItemControlProps}
+          tabIndex={tabIndex}
         >
           {showCheckbox && (
             <Checkbox aria-hidden checked={selected} disabled={disabled} />

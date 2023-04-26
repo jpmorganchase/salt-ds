@@ -22,6 +22,12 @@
   cursor: default;
 }
 
+/* Pseudo-class applied to the root element on focus */
+.saltBasicListItem:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+
 .saltBasicListItem:hover:not([role="presentation"]),
 .saltBasicListItem:focus-visible {
   --list-item-background: var(--salt-selectable-background-hover);

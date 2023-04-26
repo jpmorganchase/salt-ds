@@ -8,7 +8,7 @@ import {
   isValidElement,
   KeyboardEventHandler,
   MouseEventHandler,
-  ReactElement
+  ReactElement, useRef, useState
 } from "react";
 import "./BasicList.css";
 import {clsx} from "clsx";
@@ -52,37 +52,42 @@ export const BasicList = forwardRef<HTMLUListElement, BasicListProps>(
                      }, ref) {
     // const { } = useList({});
 
-    const emptyList = (source && !source.length) || Children.count(children) === 0;
-
+    const emptyList = (source && !source.length) || !source && Children.count(children) === 0; // this could look nicer
+    const [lastItemFocusedIndex, setLastItemFocusedIndex] = useState(0);
+    const listControlProps = {
+      onFocus: () => {
+        // if there is content => send it to the first, else focus on the list
+        console.log('focus')}
+    }
     function renderEmpty() {
       return <BasicListItem className={withBaseName("empty-message")}
-                 role="presentation">
+                            role="presentation">
         {emptyMessage || defaultEmptyMessage}
       </BasicListItem>
     }
 
     function renderContent() {
-      // if (collectionHook.data.length) {
-      //   return renderCollectionItems(collectionHook.data);
-      // }
-      const childProps = {
-        // showCheckbox: multiselect
-      }
-      //check if it is source, wrap and pass props else
-      // (children are assumed to be BasicListItem or custom component)
-      return Children.map(children, (child) => {
-        const isChildItem = isValidElement(child);
 
-        return cloneElement(child, childProps)
-      });
-    };
+      const childProps = {
+        showCheckbox: multiselect
+      }
+
+      return source && source.length ? source.map((listItem, index) => {
+        //add keys
+        // we need to pass tabindex, if item is 0 or last focused then 0 otherwise -1
+        const itemTabIndex = lastItemFocusedIndex === index ? 0 : -1
+        return <BasicListItem tabIndex={itemTabIndex} { ...childProps}>{listItem}</BasicListItem>
+      }) : Children.map(children, (child) => isValidElement(child) && cloneElement(child, childProps));
+    }
 
     // TODO: add labelledby to ul?
+
+    const isListFocusable = disabled || !emptyList;
     return (
       <ul ref={ref} className={clsx(withBaseName(), {
         [withBaseName('borderless')]: borderless
-      },className)} role="listbox"
-          tabIndex={disabled ? undefined : 0} {...rest}>
+      }, className)} role="listbox"
+          tabIndex={isListFocusable ? undefined : 0} {...rest} {...listControlProps}>
         {emptyList ? renderEmpty() : renderContent()}
       </ul>)
   });

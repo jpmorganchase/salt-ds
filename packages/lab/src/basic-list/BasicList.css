@@ -27,3 +27,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Pseudo-class applied to the root element on focus */
+.saltList:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(0 - var(--salt-focused-outlineWidth));
+}
