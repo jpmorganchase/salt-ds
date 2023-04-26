@@ -91,6 +91,11 @@ export const ValidationStatus: ComponentStory<typeof InputNext> = (args) => {
         validationStatus="warning"
         {...args}
       />
+      <InputNext
+        defaultValue={args.defaultValue ?? "Success value"}
+        validationStatus="success"
+        {...args}
+      />
     </FlowLayout>
   );
 };

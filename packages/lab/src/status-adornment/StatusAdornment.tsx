@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 import { makePrefixer, ValidationStatus } from "@salt-ds/core";
 import { IconProps } from "@salt-ds/icons";
 import { ErrorAdornmentIcon } from "./ErrorAdornment";
+import { SuccessAdornmentIcon } from "./SuccessAdornment";
 import { WarningAdornmentIcon } from "./WarningAdornment";
 
 import "./StatusAdornment.css";
@@ -10,9 +11,10 @@ import "./StatusAdornment.css";
 const icons = {
   error: ErrorAdornmentIcon,
   warning: WarningAdornmentIcon,
+  success: SuccessAdornmentIcon,
 };
 
-type AdornmentValidationStatus = Exclude<ValidationStatus, "success" | "info">;
+type AdornmentValidationStatus = Exclude<ValidationStatus, "info">;
 
 export interface StatusAdornmentProps extends IconProps {
   /**
@@ -24,6 +26,7 @@ export interface StatusAdornmentProps extends IconProps {
 const statusToAriaLabelMap: Record<AdornmentValidationStatus, string> = {
   error: "error",
   warning: "warning",
+  success: "success",
 };
 
 const withBaseName = makePrefixer("saltStatusAdornment");

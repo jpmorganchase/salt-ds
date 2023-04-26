@@ -216,7 +216,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
         helperText="Helper text"
         {...props}
       >
-        <InputNext validationStatus="error" defaultValue="Input value" />
+        <InputNext defaultValue="Input value" />
       </FormFieldNext>
       <FormFieldNext
         validationStatus="warning"
@@ -224,7 +224,15 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
         helperText="Helper text"
         {...props}
       >
-        <InputNext validationStatus="warning" defaultValue="Input value" />
+        <InputNext defaultValue="Input value" />
+      </FormFieldNext>
+      <FormFieldNext
+        validationStatus="success"
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext defaultValue="Input value" />
       </FormFieldNext>
       {/* Error readonly FF
       <FormFieldNext

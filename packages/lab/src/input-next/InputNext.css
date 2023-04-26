@@ -148,6 +148,15 @@
   --inputNext-borderColor-hover: var(--salt-status-warning-borderColor);
 }
 
+/* Style applied to input if `validationState="success"` */
+.saltInputNext-success,
+.saltInputNext-success:hover {
+  --inputNext-background: var(--salt-status-success-background);
+  --inputNext-outlineColor: var(--salt-status-success-borderColor);
+  --inputNext-borderColor: var(--salt-status-success-borderColor);
+  --inputNext-borderColor-hover: var(--salt-status-success-borderColor);
+}
+
 /* Style applied to input if adornment provided */
 .saltInputNext-withAdornment {
   padding-right: var(--salt-size-adornmentGap);

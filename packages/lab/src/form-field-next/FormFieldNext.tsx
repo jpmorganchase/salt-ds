@@ -54,7 +54,7 @@ export interface A11yValueProps {
   /**
    * Validation status.
    */
-  validationStatus?: "error" | "warning";
+  validationStatus?: "error" | "warning" | "success";
 }
 export interface useA11yValueValue {
   "aria-labelledby": A11yValueProps["labelId"];
@@ -128,9 +128,7 @@ export const FormField = forwardRef(
         <FormFieldContextNext.Provider
           value={{ a11yProps: a11yValue, validationStatus: validationStatus }}
         >
-          {label && (
-            <FormFieldLabel id={labelId} disabled={disabled} label={label} />
-          )}
+          {label && <FormFieldLabel id={labelId} label={label} />}
           <div className={withBaseName("controls")}>{children}</div>
           {helperText && (
             <FormFieldHelperText id={helperTextId} helperText={helperText} />

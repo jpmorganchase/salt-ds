@@ -45,7 +45,7 @@ export interface InputProps
   /**
    * Validation status.
    */
-  validationStatus?: "error" | "warning";
+  validationStatus?: "error" | "warning" | "success";
   /**
    * The value of the `input` element, required for a controlled component.
    */
