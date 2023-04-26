@@ -1,4 +1,11 @@
-import { FlowLayout } from "@salt-ds/core";
+import { FlowLayout, Text } from "@salt-ds/core";
+import {
+  CallIcon,
+  CopyIcon,
+  FilterClearIcon,
+  FilterIcon,
+  FlagIcon,
+} from "@salt-ds/icons";
 import { InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
@@ -102,6 +109,46 @@ export const ValidationStatus: ComponentStory<typeof InputNext> = (args) => {
       <InputNext
         defaultValue={args.defaultValue ?? "Success value"}
         validationStatus="success"
+        {...args}
+      />
+    </FlowLayout>
+  );
+};
+
+export const StaticAdornments: ComponentStory<typeof InputNext> = (args) => {
+  return (
+    <FlowLayout style={{ width: "266px" }}>
+      <InputNext
+        startAdornment={<FilterIcon />}
+        defaultValue={args.defaultValue ?? "Value 1"}
+        {...args}
+      />
+      <InputNext
+        variant="secondary"
+        startAdornment={
+          <>
+            <CallIcon />
+            <Text>+1</Text>
+          </>
+        }
+        defaultValue={args.defaultValue ?? "Value 2"}
+        {...args}
+      />
+      <InputNext
+        endAdornment={<Text>USD</Text>}
+        defaultValue={args.defaultValue ?? "Value 1"}
+        {...args}
+      />
+      <InputNext
+        variant="secondary"
+        startAdornment={<FlagIcon />}
+        endAdornment={
+          <>
+            <Text>%</Text>
+            <FilterClearIcon />
+          </>
+        }
+        defaultValue={args.defaultValue ?? "Value 2"}
         {...args}
       />
     </FlowLayout>
