@@ -125,7 +125,7 @@ export const FormField = forwardRef(
         )}
         {...restProps}
       >
-        <FormFieldContextNext.Provider value={{ a11yProps: a11yValue }}>
+        <FormFieldContextNext.Provider value={{ a11yProps: a11yValue, validationStatus: readOnly || disabled ? undefined : validationStatus }}>
           {label && (
             <FormFieldLabel id={labelId} disabled={disabled} label={label} />
           )}
@@ -135,7 +135,7 @@ export const FormField = forwardRef(
               id={helperTextId}
               disabled={disabled}
               helperText={helperText}
-              validationStatus={validationStatus}
+              validationStatus={readOnly || disabled ? undefined : validationStatus}
             />
           )}
         </FormFieldContextNext.Provider>

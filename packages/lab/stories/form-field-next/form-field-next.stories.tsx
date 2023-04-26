@@ -210,6 +210,7 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
 export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
+      Error
       <FormFieldNext
         validationStatus="error"
         label="Form Field label"
@@ -218,6 +219,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext validationStatus="error" defaultValue="Input value" />
       </FormFieldNext>
+      Warning
       <FormFieldNext
         validationStatus="warning"
         label="Form Field label"
@@ -226,16 +228,43 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext validationStatus="warning" defaultValue="Input value" />
       </FormFieldNext>
-      {/*  This would be possible. Is this ok?
-      
+      Error readonly FF
       <FormFieldNext
         readOnly
+        validationStatus="error" 
         label="Form Field label"
         helperText="Helper text"
         {...props}
       >
-        <InputNext validationStatus="error" defaultValue="Input value" />
-      </FormFieldNext> */}
+        <InputNext defaultValue="Input value" />
+      </FormFieldNext>
+      Warning disabled FF
+      <FormFieldNext
+        disabled
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext validationStatus="warning" defaultValue="Input value" />
+      </FormFieldNext>
+      Error readOnly Input
+      <FormFieldNext
+        validationStatus="error" 
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext readOnly defaultValue="Input value" />
+      </FormFieldNext>
+      Warning disabled Input
+      <FormFieldNext
+        validationStatus="warning" 
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext disabled defaultValue="Input value" />
+      </FormFieldNext>
     </FlowLayout>
   );
 };

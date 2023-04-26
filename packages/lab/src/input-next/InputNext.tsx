@@ -97,7 +97,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     // If we leave both value and defaultValue undefined, we will get a React warning on first edit
     // (uncontrolled to controlled warning) from the React input
     defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
-    validationStatus,
+    validationStatus: validationStatusProp,
     variant = "primary",
     ...other
   },
@@ -109,10 +109,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       readOnly: a11yReadOnly,
       ...restA11y
     } = {},
+    validationStatus: formFieldValidationStatus
   } = useFormFieldPropsNext();
 
   const isDisabled = disabled || a11yDisabled;
   const isReadOnly = readOnlyProp || a11yReadOnly;
+
+  const validationStatus = isDisabled || isReadOnly ? undefined : formFieldValidationStatus ?? validationStatusProp;
 
   const [focused, setFocused] = useState(false);
 
@@ -168,8 +171,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         withBaseName(),
         {
           [withBaseName("focused")]: !isDisabled && focused,
-          [withBaseName("disabled")]: !validationStatus && isDisabled,
-          [withBaseName("readOnly")]: !validationStatus && isReadOnly,
+          [withBaseName("disabled")]: isDisabled,
+          [withBaseName("readOnly")]: isReadOnly,
           [withBaseName("error")]: validationStatus === "error",
           [withBaseName("warning")]: validationStatus === "warning",
           [withBaseName(variant)]: variant,
