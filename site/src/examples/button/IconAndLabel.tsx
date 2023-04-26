@@ -1,14 +1,7 @@
 import { Button } from "@salt-ds/core";
 import { SearchIcon, SendIcon } from "@salt-ds/icons";
-import { ComponentExampleType } from "../../components";
 
-const exampleCopy = {
-  title: "Icon and label",
-  description:
-    "Add an icon before the text to reinforce the button label, or add an icon after the button label to suggest movement or a direction.",
-};
-
-const IconAndLabelExample = () => (
+export const IconAndLabel = () => (
   <>
     <Button variant="primary">
       <SearchIcon /> Search
@@ -18,8 +11,3 @@ const IconAndLabelExample = () => (
     </Button>
   </>
 );
-
-export const IconAndLabel: ComponentExampleType = {
-  example: IconAndLabelExample,
-  copy: exampleCopy,
-};

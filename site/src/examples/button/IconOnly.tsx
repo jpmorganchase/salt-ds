@@ -1,14 +1,7 @@
 import { Button } from "@salt-ds/core";
 import { SearchIcon, SendIcon, SettingsSolidIcon } from "@salt-ds/icons";
-import { ComponentExampleType } from "../../components";
 
-const exampleCopy = {
-  title: "Icon only",
-  description:
-    "Display an icon-only button with no label when you have limited on-screen space and the icon is globally understood.",
-};
-
-const IconOnlyExample = () => (
+export const IconOnly = () => (
   <>
     <Button variant="cta">
       <SendIcon />
@@ -21,8 +14,3 @@ const IconOnlyExample = () => (
     </Button>
   </>
 );
-
-export const IconOnly: ComponentExampleType = {
-  example: IconOnlyExample,
-  copy: exampleCopy,
-};

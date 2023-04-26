@@ -1,12 +1,6 @@
 import { Button } from "@salt-ds/core";
-import { ComponentExampleType } from "../../components";
 
-const exampleCopy = {
-  title: "Disabled",
-  description: "Indicates a button that the user can’t interact with.",
-};
-
-const DisabledExample = () => (
+export const Disabled = () => (
   <>
     <Button variant="primary" disabled>
       Disabled
@@ -16,8 +10,3 @@ const DisabledExample = () => (
     </Button>
   </>
 );
-
-export const Disabled: ComponentExampleType = {
-  example: DisabledExample,
-  copy: exampleCopy,
-};
