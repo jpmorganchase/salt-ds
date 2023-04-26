@@ -23,5 +23,5 @@ export const FormFieldLabel = ({
     >
       {children}
     </Label>
-  )
+  );
 };
