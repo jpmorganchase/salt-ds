@@ -1,23 +1,15 @@
 .saltList {
   --list-background: var(--salt-container-primary-background);
   --list-borderStyle: var(--salt-container-borderStyle);
-  /*--list-borderWidth: var(--salt-size-border);*/
-  --list-height: auto;
-  /*--list-item-height: var(--salt-size-stackable);*/
-  /*--list-item-gap: 0px;*/
-  --list-maxHeight: 100%;
-
+  --list-borderWidth: var(--salt-size-border);
   background: var(--list-background);
   border-color: var(--salt-container-primary-borderColor);
   border-style: var(--list-borderStyle);
-  /*border-width: var(--list-borderWidth);*/
-  height: var(--saltList-height, var(--list-height));
-  max-height: var(--list-maxHeight);
-  /*outline: none;*/
+  border-width: var(--list-borderWidth);
+  outline: none;
   overflow-y: auto;
   position: relative;
   user-select: none;
-  /*width: var(--saltList-width, auto);*/
   padding-inline-start: 0;
 }
 
@@ -25,65 +17,13 @@
   --list-borderStyle: none;
 }
 
-/*!* virtualised list *!*/
-/*.saltList-viewport {*/
-/*  --list-item-height: 30px;*/
-/*  max-height: calc(var(--list-maxHeight) - 2 * var(--list-borderWidth));*/
-/*  overflow: auto;*/
-/*}*/
-
-/*.saltListItemHeader {*/
-/*  --saltList-item-background: var(--list-item-header-background);*/
-/*  color: var(--list-item-header-color);*/
-/*}*/
-
-/*.saltListItemHeader[data-sticky="true"] {*/
-/*  --saltList-item-background: var(--list-background);*/
-/*  position: sticky;*/
-/*  top: 0;*/
-/*  z-index: 1;*/
-/*}*/
-
-/*.saltList-collapsible .saltListItemHeader:after {*/
-/*  border-width: var(--checkbox-borderWidth);*/
-/*  border-color: var(--checkbox-borderColor);*/
-/*  content: var(--list-item-header-twisty-content);*/
-/*  -webkit-mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;*/
-/*  mask: var(--list-svg-chevron-down) center center/12px 12px no-repeat;*/
-/*  background: var(--list-item-header-twisty-color);*/
-/*  height: 12px;*/
-/*  left: var(--list-item-header-twisty-left);*/
-/*  right: var(--list-item-header-twisty-right);*/
-/*  margin-top: -8px;*/
-/*  position: absolute;*/
-/*  top: var(--list-item-header-twisty-top);*/
-/*  transition: transform 0.3s;*/
-/*  width: 12px;*/
-/*}*/
-/*.saltListItemHeader[aria-expanded="false"]:after {*/
-/*  transform: rotate(-90deg);*/
-/*}*/
-
-/*!* Selection *!*/
-
-/*.saltList-scrollingContentContainer {*/
-/*  box-sizing: inherit;*/
-/*  position: relative;*/
-/*}*/
-
-/*.saltList-virtualized .saltListItem {*/
-/*  line-height: 30px;*/
-/*  position: absolute;*/
-/*  top: 0;*/
-/*  left: 0;*/
-/*  right: 0;*/
-/*  will-change: transform;*/
-/*}*/
-/*.saltList.saltFocusVisible:after {*/
-/*  inset: 2px;*/
-/*}*/
 .saltList-empty-message {
-  /*list-style-type: none;*/
-  padding-block: var(--salt-size-basis-unit); /* TODO: check with design */
-  padding-inline: var(--salt-size-basis-unit); /* TODO: check with design */
+  height: var(--saltBasicList-item-height, var(--list-item-height, auto));
+  padding-inline: var(--salt-size-unit);
+  position: relative;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

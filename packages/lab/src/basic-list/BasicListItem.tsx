@@ -23,6 +23,7 @@ export const BasicListItem = forwardRef<HTMLLIElement, ListItemProps>(
       children,
       className: classNameProp,
       disabled,
+      // TODO: add header prop, turn role into non clickable, presentation and styles
       itemTextHighlightPattern,
       label,
       role = "option",

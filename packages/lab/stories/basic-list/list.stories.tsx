@@ -23,9 +23,9 @@ export const Default: Story<BasicListProps> = (props) => {
   return (
     <BasicList
       {...props}
-      // aria-label="Listbox example"
-      // maxWidth={292}
-      // source={usa_states}
+      aria-label="Listbox example"
+      style={{ width: '200px' }}
+      emptyMessage="Empty list example with long empty message"
     />
   );
 };
@@ -35,18 +35,16 @@ export const BasicListItemExample: Story<BasicListProps> = (props) => {
     <BasicList
       {...props}
       aria-label="Basic list items example"
-      width={292}
-      multiselect
     >
       <BasicListItem selected>Alabama</BasicListItem>
-      <BasicListItem selected disabled>Alabama</BasicListItem>
       <BasicListItem>Alabama</BasicListItem>
-      <BasicListItem disabled>Alabama</BasicListItem>
       <BasicListItem showCheckbox selected>Alabama</BasicListItem>
-      <BasicListItem showCheckbox selected disabled>Alabama</BasicListItem>
       <BasicListItem showCheckbox>Alabama</BasicListItem>
-      <BasicListItem showCheckbox disabled>Alabama</BasicListItem>
       <BasicListItem itemTextHighlightPattern="bama">Alabama</BasicListItem>
+      <BasicListItem selected disabled>Alabama</BasicListItem>
+      <BasicListItem disabled>Alabama</BasicListItem>
+      <BasicListItem showCheckbox selected disabled>Alabama</BasicListItem>
+      <BasicListItem showCheckbox disabled>Alabama</BasicListItem>
     </BasicList>
   );
 };

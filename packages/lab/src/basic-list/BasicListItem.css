@@ -16,9 +16,13 @@
   align-items: center;
   white-space: nowrap;
   --saltCheckbox-icon-stroke: var(--salt-selectable-foreground);
+  transition: var(--salt-duration-instant) ease-in-out;
+}
+.saltBasicListItem[role="presentation"] {
+  cursor: default;
 }
 
-.saltBasicListItem:hover,
+.saltBasicListItem:hover:not([role="presentation"]),
 .saltBasicListItem:focus-visible {
   --list-item-background: var(--salt-selectable-background-hover);
   --saltCheckbox-icon-stroke: var(--salt-selectable-foreground-hover);
@@ -36,7 +40,7 @@
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
 
-.saltBasicListItem-disabled:hover,
+.saltBasicListItem-disabled:hover:not([role="presentation"]),
 .saltBasicListItem-disabled:focus-visible {
   --list-item-background: var(--salt-selectable-background-disabled);
   --saltCheckbox-icon-fill: var(--salt-selectable-background-disabled);
