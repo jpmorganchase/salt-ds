@@ -36,13 +36,13 @@ export interface FormFieldProps
    * Optional id prop
    */
   id?: string;
+  /**
+   * Validation status
+   */
+  validationStatus?: "error" | "warning" | "success";
 }
 
 export interface A11yValueProps {
-  /**
-   * If `true`, the FormField will be disabled
-   */
-  disabled?: boolean;
   /**
    * id for FormFieldHelperText
    */
@@ -51,32 +51,11 @@ export interface A11yValueProps {
    * id for FormFieldLabel
    */
   labelId?: string;
-  /**
-   * If `true`, the FormField will be readonly
-   */
-  readOnly?: boolean;
-  /**
-   * Validation status
-   */
-  validationStatus?: "error" | "warning" | "success";
 }
-export interface useA11yValueValue {
+export interface a11yValueAriaProps {
   "aria-labelledby": A11yValueProps["labelId"];
   "aria-describedby": A11yValueProps["helperTextId"] | undefined;
 }
-
-const useA11yValue = ({
-  labelId,
-  helperTextId
-}: A11yValueProps) => {
-  return useMemo(
-    () => ({
-      "aria-labelledby": labelId,
-      "aria-describedby": helperTextId
-    }),
-    [labelId, helperTextId]
-  );
-};
 
 const withBaseName = makePrefixer("saltFormFieldNext");
 
@@ -101,10 +80,13 @@ export const FormField = forwardRef(
     const labelId = useId();
     const helperTextId = useId();
 
-    const a11yValue = useA11yValue({
-      labelId,
-      helperTextId
-    });
+    const a11yProps = useMemo(
+      () => ({
+        "aria-labelledby": labelId,
+        "aria-describedby": helperTextId,
+      }),
+      [labelId, helperTextId]
+    );
 
     return (
       <div
@@ -122,7 +104,7 @@ export const FormField = forwardRef(
         {...restProps}
       >
         <FormFieldContextNext.Provider
-          value={{ a11yProps: a11yValue, disabled: disabled, readOnly: readOnly, validationStatus: validationStatus }}
+          value={{ a11yProps, disabled, readOnly, validationStatus }}
         >
           {label && <FormFieldLabel id={labelId} label={label} />}
           <div className={withBaseName("controls")}>{children}</div>

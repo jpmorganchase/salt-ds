@@ -4,7 +4,7 @@
 
 Added `validationStatus` to `InputNext` and `FormFieldNext`
 
-Added `StatusAdornment`, `ErrorAdornment` and `WarningAdornment` components
+Added `StatusAdornment`, `ErrorAdornment`, `SuccessAdornment` and `WarningAdornment` components
 
 Removed `disabled` prop from `FormFieldHelperText` and `FormFieldLabel`
 

@@ -234,7 +234,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
       >
         <InputNext defaultValue="Input value" />
       </FormFieldNext>
-      {/* Error readonly FF
+      Error readonly FF
       <FormFieldNext
         readOnly
         validationStatus="error" 
@@ -270,7 +270,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
         {...props}
       >
         <InputNext disabled defaultValue="Input value" />
-      </FormFieldNext> */}
+      </FormFieldNext>
     </FlowLayout>
   );
 };

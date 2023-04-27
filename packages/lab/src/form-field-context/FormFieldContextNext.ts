@@ -1,8 +1,8 @@
 import { createContext } from "@salt-ds/core";
-import { useA11yValueValue } from "../form-field-next";
+import { a11yValueAriaProps } from "../form-field-next";
 
 export interface FormFieldContextNextValue {
-  a11yProps: useA11yValueValue;
+  a11yProps: a11yValueAriaProps;
   disabled: boolean;
   readOnly: boolean;
   validationStatus: "error" | "warning" | "success" | undefined;

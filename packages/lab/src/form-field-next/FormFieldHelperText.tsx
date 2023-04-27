@@ -17,7 +17,7 @@ export const FormFieldHelperText = ({
   helperText,
   ...restProps
 }: FormFieldHelperTextProps) => {
-  const { disabled, readOnly, validationStatus, ...restFormFieldProps } = useFormFieldPropsNext();
+  const { disabled, validationStatus } = useFormFieldPropsNext();
 
   return (
     <div
