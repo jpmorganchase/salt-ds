@@ -95,20 +95,3 @@ export const ValidationStatus: ComponentStory<typeof InputNext> = (args) => {
     </FlowLayout>
   );
 };
-export const TestingOnChange: ComponentStory<typeof InputNext> = (args) => {
-  const handleChange = () => {
-    console.log("onChange on root triggered");
-  };
-  const handleChangeInputProps = () => {
-    console.log("onChange on inputProps triggered");
-  };
-  return (
-    <InputNext
-      defaultValue={args.defaultValue ?? "Value"}
-      variant="secondary"
-      inputProps={{ onChange: handleChangeInputProps }}
-      {...args}
-      onChange={handleChange}
-    />
-  );
-};

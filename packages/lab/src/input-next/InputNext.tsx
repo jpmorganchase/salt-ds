@@ -179,7 +179,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         onFocus={!isDisabled ? handleFocus : undefined}
         {...restInputProps}
       />
-      {validationStatus && <StatusAdornment status={validationStatus} />}
+      {!isDisabled && !isReadOnly && validationStatus && (
+        <StatusAdornment status={validationStatus} />
+      )}
     </div>
   );
 });

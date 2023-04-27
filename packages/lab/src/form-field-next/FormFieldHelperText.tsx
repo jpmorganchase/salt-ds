@@ -17,7 +17,7 @@ export const FormFieldHelperText = ({
   helperText,
   ...restProps
 }: FormFieldHelperTextProps) => {
-  const { disabled, validationStatus } = useFormFieldPropsNext();
+  const { disabled, readOnly, validationStatus } = useFormFieldPropsNext();
 
   return (
     <div
@@ -27,7 +27,9 @@ export const FormFieldHelperText = ({
         className
       )}
     >
-      {validationStatus && <StatusIndicator status={validationStatus} />}
+      {!disabled && !readOnly && validationStatus && (
+        <StatusIndicator status={validationStatus} />
+      )}
       <Text
         disabled={disabled}
         variant="secondary"
