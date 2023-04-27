@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import { makePrefixer, StatusIndicator, Text, TextProps } from "@salt-ds/core";
+import { useFormFieldPropsNext } from "../form-field-context";
 import { FormFieldProps } from "./FormFieldNext";
 
 import "./FormFieldHelperText.css";
-import { useFormFieldPropsNext } from "../form-field-context";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
@@ -17,10 +17,7 @@ export const FormFieldHelperText = ({
   helperText,
   ...restProps
 }: FormFieldHelperTextProps) => {
-  const {
-    a11yProps: { disabled, readOnly, ...restA11y } = {},
-    validationStatus,
-  } = useFormFieldPropsNext();
+  const { disabled, readOnly, validationStatus, ...restFormFieldProps } = useFormFieldPropsNext();
 
   return (
     <div

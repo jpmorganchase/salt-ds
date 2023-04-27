@@ -18,8 +18,7 @@ export const FormFieldLabel = ({
   label,
   ...restProps
 }: FormFieldLabelProps) => {
-  const { a11yProps: { disabled, readOnly, ...restA11y } = {}, ...rest } =
-    useFormFieldPropsNext();
+  const { disabled, ...restFormFieldProps } = useFormFieldPropsNext();
 
   return (
     <Label

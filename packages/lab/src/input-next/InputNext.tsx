@@ -2,7 +2,6 @@ import { clsx } from "clsx";
 import {
   AriaAttributes,
   ChangeEvent,
-  ElementType,
   FocusEvent,
   forwardRef,
   HTMLAttributes,
@@ -11,9 +10,9 @@ import {
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context";
+import { StatusAdornment } from "../status-adornment";
 
 import "./InputNext.css";
-import { StatusAdornment } from "../status-adornment/StatusAdornment";
 
 const withBaseName = makePrefixer("saltInputNext");
 
@@ -104,16 +103,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   ref
 ) {
   const {
-    a11yProps: {
-      disabled: a11yDisabled,
-      readOnly: a11yReadOnly,
-      ...restA11y
-    } = {},
+    disabled: formFieldDisabled,
+    readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
+    a11yProps
   } = useFormFieldPropsNext();
 
-  const isDisabled = disabled || a11yDisabled;
-  const isReadOnly = readOnlyProp || a11yReadOnly;
+  const isDisabled = disabled || formFieldDisabled;
+  const isReadOnly = readOnlyProp || formFieldReadOnly;
 
   const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
@@ -126,7 +123,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     role,
   };
   const inputProps = mergeA11yProps(
-    restA11y,
+    a11yProps,
     inputPropsProp,
     misplacedAriaProps
   );
