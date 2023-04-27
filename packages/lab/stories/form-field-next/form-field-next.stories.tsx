@@ -237,7 +237,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
       Error readonly FF
       <FormFieldNext
         readOnly
-        validationStatus="error" 
+        validationStatus="error"
         label="Form Field label"
         helperText="Helper text"
         {...props}
@@ -255,7 +255,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
       </FormFieldNext>
       Error readOnly Input
       <FormFieldNext
-        validationStatus="error" 
+        validationStatus="error"
         label="Form Field label"
         helperText="Helper text"
         {...props}
@@ -264,7 +264,7 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
       </FormFieldNext>
       Warning disabled Input
       <FormFieldNext
-        validationStatus="warning" 
+        validationStatus="warning"
         label="Form Field label"
         helperText="Helper text"
         {...props}

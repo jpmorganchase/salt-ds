@@ -47,7 +47,7 @@ export interface A11yValueProps {
    * id for FormFieldHelperText
    */
   helperTextId?: string;
-  /** 
+  /**
    * id for FormFieldLabel
    */
   labelId?: string;

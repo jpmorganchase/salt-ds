@@ -19,7 +19,7 @@ const withBaseName = makePrefixer("saltInputNext");
 // TODO: Double confirm whether this should be extending DivElement given root is `<div>`.
 // And forwarded ref is not assigned to the root like other components.
 export interface InputProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, "defaultValue"> {
   /**
    * The value of the `input` element, required for an uncontrolled component.
    */
@@ -33,14 +33,9 @@ export interface InputProps
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
-   * Callback for change event.
-   */
-  onChange?: (event: ChangeEvent<HTMLInputElement>, value: string) => void;
-  /**
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
-  type?: HTMLInputElement["type"];
   /**
    * Validation status.
    */
@@ -87,11 +82,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     disabled,
     id,
     inputProps: inputPropsProp,
-    onChange,
     readOnly: readOnlyProp,
     role,
     style,
-    type = "text",
     value: valueProp,
     // If we leave both value and defaultValue undefined, we will get a React warning on first edit
     // (uncontrolled to controlled warning) from the React input
@@ -106,7 +99,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
-    a11yProps
+    a11yProps,
   } = useFormFieldPropsNext();
 
   const isDisabled = disabled || formFieldDisabled;
@@ -128,16 +121,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     misplacedAriaProps
   );
 
-  const {
-    onBlur,
-    onFocus,
-    onKeyDown,
-    onKeyUp,
-    onMouseUp,
-    onMouseMove,
-    onMouseDown,
-    ...restInputProps
-  } = inputProps;
+  const { onBlur, onChange, onFocus, ...restInputProps } = inputProps;
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
@@ -149,7 +133,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setValue(value);
-    onChange?.(event, value);
+    onChange?.(event);
   };
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
@@ -179,7 +163,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {...other}
     >
       <input
-        type={type}
         id={id}
         className={clsx(
           withBaseName("input"),

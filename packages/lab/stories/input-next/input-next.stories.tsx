@@ -76,7 +76,7 @@ export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
 
 export const ValidationStatus: ComponentStory<typeof InputNext> = (args) => {
   return (
-    <FlowLayout style={{maxWidth: "266px"}}>
+    <FlowLayout style={{ maxWidth: "266px" }}>
       <InputNext
         defaultValue={args.defaultValue ?? "Error value"}
         validationStatus="error"
@@ -93,5 +93,22 @@ export const ValidationStatus: ComponentStory<typeof InputNext> = (args) => {
         {...args}
       />
     </FlowLayout>
+  );
+};
+export const TestingOnChange: ComponentStory<typeof InputNext> = (args) => {
+  const handleChange = () => {
+    console.log("onChange on root triggered");
+  };
+  const handleChangeInputProps = () => {
+    console.log("onChange on inputProps triggered");
+  };
+  return (
+    <InputNext
+      defaultValue={args.defaultValue ?? "Value"}
+      variant="secondary"
+      inputProps={{ onChange: handleChangeInputProps }}
+      {...args}
+      onChange={handleChange}
+    />
   );
 };
