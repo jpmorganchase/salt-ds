@@ -1,0 +1,22 @@
+[
+  { "title": "Salt Design System", "route": "/salt/index" },
+  { "title": "Components", "route": "/salt/components/index" },
+  {
+    "title": "Designing with Salt",
+    "route": "/salt/getting-started/designing"
+  },
+  {
+    "title": "Developing with Salt",
+    "route": "/salt/getting-started/developing"
+  },
+  { "title": "Getting started", "route": "/salt/getting-started/index" },
+  { "title": "Roadmap", "route": "/salt/getting-started/roadmap" },
+  {
+    "title": "Support and contributions",
+    "route": "/salt/support-and-contributions/index"
+  },
+  { "title": "Button", "route": "/salt/components/button/accessibility" },
+  { "title": "Button", "route": "/salt/components/button/examples" },
+  { "title": "Button", "route": "/salt/components/button/index" },
+  { "title": "Button", "route": "/salt/components/button/usage" }
+]
