@@ -46,7 +46,7 @@ export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
       id: "salt-status-indicator",
-      css: statusIndicatorCss as string,
+      css: statusIndicatorCss ,
       window: targetWindow,
     });
 

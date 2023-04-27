@@ -66,7 +66,7 @@ export const FlexItem: FlexItemComponent = forwardRef(
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
       id: "salt-flex-item",
-      css: flexItemCss as string,
+      css: flexItemCss ,
       window: targetWindow,
     });
 

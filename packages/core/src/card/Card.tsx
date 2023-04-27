@@ -33,7 +33,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     id: "salt-card",
-    css: cardCss as string,
+    css: cardCss ,
     window: targetWindow,
   });
 
