@@ -1,10 +1,10 @@
-import { forwardRef, ElementType, ReactElement, CSSProperties } from "react";
+import { CSSProperties, ElementType, forwardRef, ReactElement } from "react";
 import {
   makePrefixer,
-  ResponsiveProp,
-  useResponsiveProp,
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
+  ResponsiveProp,
+  useResponsiveProp,
 } from "../utils";
 import flexItemCss from "./FlexItem.css";
 import { clsx } from "clsx";
@@ -66,7 +66,7 @@ export const FlexItem: FlexItemComponent = forwardRef(
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
       id: "salt-flex-item",
-      css: flexItemCss as string,
+      css: flexItemCss,
       window: targetWindow,
     });
 

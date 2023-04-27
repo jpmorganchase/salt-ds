@@ -1,12 +1,12 @@
-import { forwardRef, ElementType, ReactElement } from "react";
+import { ElementType, forwardRef, ReactElement } from "react";
 import { clsx } from "clsx";
 
 import {
   makePrefixer,
+  PolymorphicComponentPropWithRef,
+  PolymorphicRef,
   ResponsiveProp,
   useResponsiveProp,
-  PolymorphicRef,
-  PolymorphicComponentPropWithRef,
 } from "../utils";
 import gridItemCss from "./GridItem.css";
 import { useWindow } from "@salt-ds/window";
@@ -74,7 +74,7 @@ export const GridItem: GridItemComponent = forwardRef(
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
       id: "salt-grid-item",
-      css: gridItemCss as string,
+      css: gridItemCss,
       window: targetWindow,
     });
 

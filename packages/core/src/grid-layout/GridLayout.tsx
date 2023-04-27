@@ -1,12 +1,12 @@
-import { forwardRef, ReactElement, ElementType } from "react";
+import { ElementType, forwardRef, ReactElement } from "react";
 import { clsx } from "clsx";
 
 import {
   makePrefixer,
-  ResponsiveProp,
-  useResponsiveProp,
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
+  ResponsiveProp,
+  useResponsiveProp,
 } from "../utils";
 
 import gridLayoutCss from "./GridLayout.css";
@@ -65,7 +65,7 @@ export const GridLayout: GridLayoutComponent = forwardRef(
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
       id: "salt-grid-layout",
-      css: gridLayoutCss as string,
+      css: gridLayoutCss,
       window: targetWindow,
     });
     const Component = as || "div";

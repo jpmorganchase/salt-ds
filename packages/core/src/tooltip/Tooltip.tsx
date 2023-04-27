@@ -3,8 +3,8 @@ import {
   cloneElement,
   forwardRef,
   HTMLAttributes,
-  ReactNode,
   isValidElement,
+  ReactNode,
   Ref,
 } from "react";
 import { FloatingArrow, FloatingPortal } from "@floating-ui/react";
@@ -13,9 +13,9 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import {
-  UseFloatingUIProps,
   makePrefixer,
   mergeProps,
+  UseFloatingUIProps,
   useForkRef,
 } from "../utils";
 import { SaltProvider } from "../salt-provider";
@@ -90,7 +90,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
       id: "salt-tooltip",
-      css: tooltipCss as string,
+      css: tooltipCss,
       window: targetWindow,
     });
 

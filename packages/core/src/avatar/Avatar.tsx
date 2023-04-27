@@ -62,7 +62,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     id: "salt-avatar",
-    css: avatarCss as string,
+    css: avatarCss,
     window: targetWindow,
   });
 
