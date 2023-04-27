@@ -1,10 +1,8 @@
-import { FC, ChangeEvent, useState, ReactNode, ReactElement } from "react";
+import { FC, ChangeEvent, useState, ReactNode } from "react";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import { Switch } from "@salt-ds/lab";
-import { components } from "@jpmorganchase/mosaic-site-components";
+import { Pre } from "../mdx/pre";
 import styles from "./LivePreview.module.css";
-
-const Pre = components.pre;
 
 type LivePreviewProps = {
   componentName: string;
@@ -49,11 +47,11 @@ export const LivePreview: FC<LivePreviewProps> = ({
         </div>
         {checked && (
           <Pre className={styles.codePreview}>
-            <>
+            <div className="language-tsx">
               {reactElementToJSXString(exampleJSX, {
                 showFunctions: true,
               })}
-            </>
+            </div>
           </Pre>
         )}
       </div>
