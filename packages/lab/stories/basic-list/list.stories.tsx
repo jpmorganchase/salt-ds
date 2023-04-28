@@ -36,6 +36,18 @@ Default.args = {
   source: SimpleListExample
 };
 
+export const Borderless = Template.bind({});
+Borderless.args = {
+  source: SimpleListExample,
+  borderless: true
+};
+
+export const Deselectable = Template.bind({});
+Deselectable.args = {
+  source: SimpleListExample,
+  deselectable: true
+};
+
 export const Empty = Template.bind({});
 Empty.args = {
   emptyMessage: "Empty list example with long empty message"

@@ -1,4 +1,4 @@
-import {makePrefixer} from "@salt-ds/core";
+import {makePrefixer, useForkRef} from "@salt-ds/core";
 import {
   Children,
   cloneElement,
@@ -8,12 +8,12 @@ import {
   isValidElement,
   KeyboardEventHandler,
   MouseEventHandler,
-  ReactElement, useRef, useState
+  ReactElement,
 } from "react";
 import "./BasicList.css";
 import {clsx} from "clsx";
 import {BasicListItem, BasicListItem as DefaultListItem} from "./BasicListItem";
-// import {useList} from "./useList";
+import {useList} from "./useList";
 
 const withBaseName = makePrefixer("saltList");
 const defaultEmptyMessage = "No data to display";
@@ -25,6 +25,7 @@ export interface BasicListProps extends HTMLAttributes<HTMLUListElement> {
   ListItem?: ReactElement;
   source?: ReadonlyArray<string>;
   borderless?: boolean,
+  deselectable?: boolean,
   maxWidth?: number
 }
 
@@ -43,22 +44,28 @@ export const BasicList = forwardRef<HTMLUListElement, BasicListProps>(
                        children,
                        className,
                        disabled,
+                       deselectable,
                        ListItem = DefaultListItem,
                        maxWidth,
                        emptyMessage,
                        multiselect,
+                       onSelect,
+                       onFocus,
                        source,
                        ...rest
                      }, ref) {
-    // const { } = useList({});
+    const emptyList = (source && !source.length) || !source && Children.count(children) === 0;
+    const listItems = source?.length ? source : children;
 
-    const emptyList = (source && !source.length) || !source && Children.count(children) === 0; // this could look nicer
-    const [lastItemFocusedIndex, setLastItemFocusedIndex] = useState(0);
-    const listControlProps = {
-      onFocus: () => {
-        // if there is content => send it to the first, else focus on the list
-        console.log('focus')}
-    }
+    // if source is items, we need to know what is selected, disabled...
+    const {selectedIndex, focusedIndex, listRef, handleClick} = useList({
+      items: listItems,
+      onSelect,
+      onFocus,
+      deselectable,
+    });
+    const forkedRef = useForkRef(ref, listRef);
+
     function renderEmpty() {
       return <BasicListItem className={withBaseName("empty-message")}
                             role="presentation">
@@ -67,27 +74,26 @@ export const BasicList = forwardRef<HTMLUListElement, BasicListProps>(
     }
 
     function renderContent() {
-
-      const childProps = {
-        showCheckbox: multiselect
-      }
-
-      return source && source.length ? source.map((listItem, index) => {
-        //add keys
+      return Children.map(listItems, (listItem, index) => {
         // we need to pass tabindex, if item is 0 or last focused then 0 otherwise -1
-        const itemTabIndex = lastItemFocusedIndex === index ? 0 : -1
-        return <BasicListItem tabIndex={itemTabIndex} { ...childProps}>{listItem}</BasicListItem>
-      }) : Children.map(children, (child) => isValidElement(child) && cloneElement(child, childProps));
+        const childProps = {
+          showCheckbox: multiselect,
+          onClick: (e) => handleClick(e, index),
+          selected: selectedIndex === index
+        }
+        // check isValidElement
+        return source?.length ? <BasicListItem { ...childProps}>{listItem}</BasicListItem> : cloneElement(listItem, childProps)
+      })
     }
 
     // TODO: add labelledby to ul?
-
-    const isListFocusable = disabled || !emptyList;
     return (
-      <ul ref={ref} className={clsx(withBaseName(), {
+      <ul ref={forkedRef} className={clsx(withBaseName(), {
         [withBaseName('borderless')]: borderless
       }, className)} role="listbox"
-          tabIndex={isListFocusable ? undefined : 0} {...rest} {...listControlProps}>
+          tabIndex={disabled || !emptyList ? undefined : 0}
+          {...rest}
+      >
         {emptyList ? renderEmpty() : renderContent()}
       </ul>)
   });

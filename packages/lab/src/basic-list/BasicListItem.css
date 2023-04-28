@@ -2,13 +2,13 @@
   /* Color */
   --list-item-text-color: var(--salt-text-primary-foreground);
   --list-item-height: var(--salt-size-stackable);
-  --list-item-background: var(--saltBasicList-item-background, none);
+  --list-item-background: none;
 }
 
 .saltBasicListItem {
   color: var(--list-item-text-color);
-  background: var(--saltBasicList-item-background, var(--list-item-background));
-  height: var(--saltBasicList-item-height, var(--list-item-height, auto));
+  background: var(--list-item-background);
+  height: var(--list-item-height, auto);
   padding-inline: var(--salt-size-unit);
   display: flex;
   gap: var(--salt-size-unit);
@@ -16,7 +16,7 @@
   align-items: center;
   white-space: nowrap;
   --saltCheckbox-icon-stroke: var(--salt-selectable-foreground);
-  transition: var(--salt-duration-instant) ease-in-out;
+  transition: background var(--salt-duration-perceptible) ease-in-out;
 }
 .saltBasicListItem[role="presentation"] {
   cursor: default;
@@ -33,13 +33,15 @@
   --list-item-background: var(--salt-selectable-background-hover);
   --saltCheckbox-icon-stroke: var(--salt-selectable-foreground-hover);
   --saltCheckbox-icon-fill: var(--salt-selectable-background-hover);
-  cursor: var(--saltBasicList-item-cursor, var(--salt-selectable-cursor-hover));
+  cursor: var(--salt-selectable-cursor-hover);
 }
-
-.saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-checkbox), /* TODO: remove class once :has is fully supported */
 .saltBasicListItem[aria-selected="true"]:not(:has(input[type='checkbox'])) {
-
   --list-item-background: var(--salt-selectable-background-selected);
+}
+@supports not selector(:has(*)) {
+  .saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-checkbox) {
+    --list-item-background: var(--salt-selectable-background-selected);
+  }
 }
 
 .saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-disabled) {

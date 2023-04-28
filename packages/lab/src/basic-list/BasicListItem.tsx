@@ -35,7 +35,6 @@ export const BasicListItem = forwardRef<HTMLLIElement, ListItemProps>(
       role = "option",
       selected,
       showCheckbox,
-      tabIndex,
       ...props
     },
     ref
@@ -70,7 +69,6 @@ export const BasicListItem = forwardRef<HTMLLIElement, ListItemProps>(
           aria-selected={selected || undefined}
           role={role}
           {...listItemControlProps}
-          tabIndex={tabIndex}
         >
           {showCheckbox && (
             <Checkbox aria-hidden checked={selected} disabled={disabled} />
