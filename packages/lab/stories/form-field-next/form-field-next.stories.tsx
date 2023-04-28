@@ -70,8 +70,8 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext {...props}>
+    <FlowLayout style={{ width: "50vw" }}>
+      <FormFieldNext labelPlacement="left" {...props}>
         <Label>Form Field label for multiple controls</Label>
         <Controls>
           <InputNext defaultValue="Value" />
@@ -89,7 +89,7 @@ export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
           <InputNext variant="secondary" defaultValue="Value 2" />
         </Controls>
       </FormFieldNext>
-      <FormFieldNext {...props}>
+      <FormFieldNext labelPlacement="left" {...props}>
         <Label>Form Field label for Radio controls</Label>
         <RadioButtonGroup>
           <RadioButton key="option1" label="Radio Option 1" value="option1" />
@@ -208,8 +208,8 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
         <HelperText>Helper text</HelperText>
       </FormFieldNext>
       {/* TODO: Guidance to explain that the following would produce broken design/behaviour
-      
-      
+
+
       Error readOnly Input
       <FormFieldNext
         validationStatus="error"
