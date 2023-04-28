@@ -1,22 +1,83 @@
 ---
 title: Typography
 layout: DetailTechnical
-lastModified: 1682603963931
+sidebar:
+  label: Typography
+lastModified: 1682675673915
 fullPath: /salt/foundations/typography.mdx
 route: /salt/foundations/typography
 readingTime:
-  text: 1 min read
-  minutes: 0.035
-  time: 2100
-  words: 7
-tableOfContents: []
+  text: 4 min read
+  minutes: 3.385
+  time: 203100
+  words: 677
+tableOfContents:
+  - level: 2
+    id: type-styles
+    text: Type styles
+  - level: 2
+    id: type-and-color
+    text: Type and color
+  - level: 3
+    id: primary-foreground
+    text: Primary foreground
+  - level: 3
+    id: secondary-foreground
+    text: Secondary foreground
+  - level: 2
+    id: designing-for-legibility-and-accessibility
+    text: Designing for legibility and accessibility
+  - level: 2
+    id: line-height
+    text: Line height
+  - level: 2
+    id: font-weight
+    text: Font weight
+  - level: 2
+    id: type-alignment
+    text: Type alignment
+  - level: 3
+    id: left-aligned
+    text: Left-aligned
+  - level: 3
+    id: right-aligned
+    text: Right-aligned
+  - level: 3
+    id: center-aligned
+    text: Center-aligned
+  - level: 2
+    id: type-case
+    text: Type case
+  - level: 3
+    id: sentence-case
+    text: Sentence case
+  - level: 3
+    id: title-case
+    text: Title case
+  - level: 3
+    id: all-capitals
+    text: All capitals
+  - level: 2
+    id: italicizing-text
+    text: Italicizing text
+navigation:
+  prev:
+    title: Density
+    route: /salt/foundations/density
 sidebarData:
   - id: /salt/foundations/index
     fullPath: /salt/foundations/index.mdx
-    name: Foundations
+    name: Overview
     data:
       level: 2
       link: /salt/foundations/index
+    childNodes: []
+  - id: /salt/foundations/density
+    fullPath: /salt/foundations/density.mdx
+    name: Density
+    data:
+      level: 2
+      link: /salt/foundations/density
     childNodes: []
   - id: /salt/foundations/typography
     fullPath: /salt/foundations/typography.mdx
@@ -27,4 +88,80 @@ sidebarData:
     childNodes: []
 ---
 
-This is where the content will go.
+Used well typography helps to enhance readability, establish hierarchy and set a visual tone, resulting in more effective communication.
+
+The design system uses the open-source sans serif typeface **Open Sans**. 
+
+**PT Mono** is used to represent code snippets only, and therefore should not be used in any other context. PT Mono is a Monospace typeface that displays all characters within the same width. 
+
+## Type styles
+
+#### Display
+Display styles are primarily reserved for representing key metrics and mastheads. 
+
+#### Headings
+Headings provide varying levels of typographic hierarchy.
+
+#### Body
+Body is the default style for most components and text blocks.
+
+#### Label
+Labels are used to display a small amount of text that helps people understand the current context of a component.
+
+#### Help
+Help text is used to provide additional information or instructions, such as accepted data formats for a input or file types for upload. 
+
+#### Code
+Code is used to highlight any text that represents code. 
+
+## Type and color
+Legibility and accessibility is a key consideration within the design system. with this in mind, each mode provides two color options; primary and secondary, both of which are selected from the neutral palette. These colors are consistently applied throughout the design system. 
+
+### Primary foreground
+The primary text color should be used by default and make up the majority of text within any composition. It provides the greatest level of contrast between foreground and background.
+
+### Secondary foreground
+Secondary text should be used sparingly. It is intended to only be used for supporting text or to provide contrast between labels and data.
+
+## Designing for legibility and accessibility
+All text within the design system meets WCAG 2.0 level AA requirements in order to ensure legibility. 
+
+WCAG 2.0 requires that the contrast ratio between text and the background it sits on is at least 4.5:1 for normal sized text and 3:1 for larger text. 
+
+## Line height
+As with most aspects of the design system, type conforms to density. Each style grows proportionately to align with the elements around it. Line height and the spaces between blocks of text also adhere to density. 
+
+Line height controls the amount of space between baselines within a block of text. THe height of a line of text is proportional to the text size. 
+
+In order to scale consistently across all styles, weights and densities, line height is set to a multiple of the font size. The multiple is set to 1.3x to balance the need for a moderate degree of information density with the need to create enough visual separation between lines of text to enable efficient line tracking when reading blocks of text.
+
+## Font weight
+Weight refers to the relative thickness of a font’s stroke. Each style includes three weights, enabling the default style to either be emphasised or de-emphasised to help create visual hiearachy. 
+
+## Type alignment
+Type alignment controls how text aligns in the space it appears. There are four types of alignment; left, right, centered and justified.
+
+### Left-aligned
+Text aligned to the left is the default configuration for left-to-right languages such as English.
+
+### Right-aligned
+Numeric values (including dates, times, and currency figures) should be right aligned if they are meant to be compared with each other, for instance within a data grid column. If a numeric value is displayed in isolation, and therefore not for comparison, it should be left aligned to fit in with the content around it.
+
+### Center-aligned
+Center aligned text should be reserved for short sentences or blocks of text included as a typographic element within a layout, such as a pull quote or key metric. It should never be used for long paragraphs or headings.
+
+## Type case
+There are three cases recommended within our content guidelines: sentence case, title case and all capitals.
+
+### Sentence case
+Use sentence case in most instances—for body copy, page titles, navigation, subheadings, form titles, field labels, and chart/data visualization titles and text.
+
+### Title case
+The only words you should capitalize or put in title case are proper nouns and job titles. A proper noun is an individual, company, product or object that’s one of a kind.
+
+### All capitals
+All caps are reserved for button labels to give them prominence and to differentiate them from other graphical elements. Never use all caps in general writing. 
+
+## Italicizing text
+Italics are primarily used for help text, to differentiate it from other text such as labels within an input. 
+

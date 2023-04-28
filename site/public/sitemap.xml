@@ -10,6 +10,11 @@
 		<priority>0.5</priority>
 	</url>
 	<url>
+		<loc>/salt/foundations/density.mdx</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
 		<loc>/salt/foundations/index.mdx</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
