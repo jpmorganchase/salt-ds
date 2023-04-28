@@ -3,7 +3,7 @@ import {
   CheckboxGroup,
   RadioButton,
   RadioButtonGroup,
-  FlowLayout
+  FlowLayout,
 } from "@salt-ds/core";
 import {
   FormFieldControlWrapper as Controls,
@@ -103,14 +103,16 @@ export const LongLabelPlacement: ComponentStory<typeof FormFieldNext> = (
         <Label>Default Form Field label</Label>
         <InputNext defaultValue="Primary Input value" />
         <HelperText>
-          Helper text that's very long. Additional text to give further context to the input requirements.
+          Helper text that's very long. Additional text to give further context
+          to the input requirements.
         </HelperText>
       </FormFieldNext>
       <FormFieldNext labelPlacement="left" {...props}>
         <Label>Default Form Field label</Label>
         <InputNext defaultValue="Primary Input value" />
         <HelperText>
-          Helper text that's very long. Additional text to give further context to the input requirements.
+          Helper text that's very long. Additional text to give further context
+          to the input requirements.
         </HelperText>
       </FormFieldNext>
     </FlowLayout>
@@ -164,40 +166,29 @@ export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
   );
 };
 
-export const WithFormControlExamples: ComponentStory<typeof FormFieldNext> = (props) => {
-  return (    
-  <FlowLayout style={{ width: "50vw" }}>
-    <FormFieldNext labelPlacement="left" {...props}>
+export const WithFormControlExamples: ComponentStory<typeof FormFieldNext> = (
+  props
+) => {
+  return (
+    <FlowLayout style={{ width: "50vw" }}>
+      <FormFieldNext labelPlacement="left" {...props}>
         <Label>Form Field label for Checkbox</Label>
-          <Checkbox label={"Checkbox"} />
-        <HelperText>
-          Helper text
-        </HelperText>
+        <Checkbox label={"Checkbox"} />
+        <HelperText>Helper text</HelperText>
       </FormFieldNext>
-    <FormFieldNext labelPlacement="left" {...props}>
+      <FormFieldNext labelPlacement="left" {...props}>
         <Label>Form Field label for Radio Button</Label>
-          <RadioButton label={"Radio Button"} />
-        <HelperText>
-          Helper text
-        </HelperText>
+        <RadioButton label={"Radio Button"} />
+        <HelperText>Helper text</HelperText>
       </FormFieldNext>
       <FormFieldNext {...props}>
         <Label>Form Field label for Checkbox Group</Label>
         <CheckboxGroup>
-        <Checkbox
-          label="Option 1"
-        />
-        <Checkbox
-          defaultChecked
-          label="Option 2"
-        />
-        <Checkbox
-          label="Option 3"
-        />
+          <Checkbox label="Option 1" />
+          <Checkbox defaultChecked label="Option 2" />
+          <Checkbox label="Option 3" />
         </CheckboxGroup>
-        <HelperText>
-          Helper text
-        </HelperText>
+        <HelperText>Helper text</HelperText>
       </FormFieldNext>
       <FormFieldNext {...props}>
         <Label>Form Field label for Radio Button Group</Label>
@@ -206,9 +197,7 @@ export const WithFormControlExamples: ComponentStory<typeof FormFieldNext> = (pr
           <RadioButton key="option2" label="Radio Option 2" value="option2" />
           <RadioButton key="option3" label="Radio Option 3" value="option3" />
         </RadioButtonGroup>
-        <HelperText>
-          Helper text
-        </HelperText>
+        <HelperText>Helper text</HelperText>
       </FormFieldNext>
     </FlowLayout>
   );
