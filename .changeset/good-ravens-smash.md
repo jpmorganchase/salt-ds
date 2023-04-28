@@ -11,3 +11,8 @@ Switch `FormFieldNext` to use a compositional based API
   <FormFieldHelperText>Helper text</FormFieldHelperText>
 </FormFieldNext>
 ```
+
+Removed `helperText`, `label` props from `FormFieldNext`
+
+Removed `FormFieldLabelProps`
+Removed `FormFieldHelperTextProps`
