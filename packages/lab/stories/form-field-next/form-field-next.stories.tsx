@@ -192,41 +192,20 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
 export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext
-        validationStatus="error"
-        {...props}
-      >
-        <Label>
-          Form Field label
-        </Label>
+      <FormFieldNext validationStatus="error" {...props}>
+        <Label>Form Field label</Label>
         <InputNext defaultValue="Input value" />
-        <HelperText>
-          Helper text
-        </HelperText>
+        <HelperText>Helper text</HelperText>
       </FormFieldNext>
-      <FormFieldNext
-        validationStatus="warning"
-        {...props}
-      >
-        <Label>
-          Form Field label
-        </Label>
+      <FormFieldNext validationStatus="warning" {...props}>
+        <Label>Form Field label</Label>
         <InputNext defaultValue="Input value" />
-        <HelperText>
-          Helper text
-        </HelperText>
+        <HelperText>Helper text</HelperText>
       </FormFieldNext>
-      <FormFieldNext
-        validationStatus="success"
-        {...props}
-      >
-        <Label>
-          Form Field label
-        </Label>
+      <FormFieldNext validationStatus="success" {...props}>
+        <Label>Form Field label</Label>
         <InputNext defaultValue="Input value" />
-        <HelperText>
-          Helper text
-        </HelperText>
+        <HelperText>Helper text</HelperText>
       </FormFieldNext>
       {/* TODO: Guidance to explain that the following would produce broken design/behaviour
       
