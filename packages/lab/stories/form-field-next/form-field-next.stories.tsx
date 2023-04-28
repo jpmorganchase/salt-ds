@@ -194,27 +194,39 @@ export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
     <FlowLayout style={{ width: "366px" }}>
       <FormFieldNext
         validationStatus="error"
-        label="Form Field label"
-        helperText="Helper text"
         {...props}
       >
+        <Label>
+          Form Field label
+        </Label>
         <InputNext defaultValue="Input value" />
+        <HelperText>
+          Helper text
+        </HelperText>
       </FormFieldNext>
       <FormFieldNext
         validationStatus="warning"
-        label="Form Field label"
-        helperText="Helper text"
         {...props}
       >
+        <Label>
+          Form Field label
+        </Label>
         <InputNext defaultValue="Input value" />
+        <HelperText>
+          Helper text
+        </HelperText>
       </FormFieldNext>
       <FormFieldNext
         validationStatus="success"
-        label="Form Field label"
-        helperText="Helper text"
         {...props}
       >
+        <Label>
+          Form Field label
+        </Label>
         <InputNext defaultValue="Input value" />
+        <HelperText>
+          Helper text
+        </HelperText>
       </FormFieldNext>
       {/* TODO: Guidance to explain that the following would produce broken design/behaviour
       
