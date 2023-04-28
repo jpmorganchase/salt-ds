@@ -36,45 +36,26 @@ export interface FormFieldProps
    * Optional id prop
    */
   id?: string;
+  /**
+   * Validation status
+   */
+  validationStatus?: "error" | "warning" | "success";
 }
 
 export interface A11yValueProps {
   /**
-   * If `true`, the FormField will be disabled.
+   * id for FormFieldHelperText
    */
-  disabled?: boolean;
-  /** Helper Text */
   helperTextId?: string;
-  /** id of the label node */
-  labelId?: string;
   /**
-   * If `true`, the FormField will be readonly.
+   * id for FormFieldLabel
    */
-  readOnly?: boolean;
+  labelId?: string;
 }
-export interface useA11yValueValue {
+export interface a11yValueAriaProps {
   "aria-labelledby": A11yValueProps["labelId"];
   "aria-describedby": A11yValueProps["helperTextId"] | undefined;
-  disabled: A11yValueProps["disabled"];
-  readOnly: A11yValueProps["readOnly"];
 }
-
-const useA11yValue = ({
-  disabled,
-  labelId,
-  helperTextId,
-  readOnly,
-}: A11yValueProps) => {
-  return useMemo(
-    () => ({
-      "aria-labelledby": labelId,
-      "aria-describedby": helperTextId,
-      disabled,
-      readOnly,
-    }),
-    [labelId, disabled, helperTextId, readOnly]
-  );
-};
 
 const withBaseName = makePrefixer("saltFormFieldNext");
 
@@ -91,6 +72,7 @@ export const FormField = forwardRef(
       onFocus,
       readOnly = false,
       id: idProp,
+      validationStatus,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
@@ -98,12 +80,13 @@ export const FormField = forwardRef(
     const labelId = useId();
     const helperTextId = useId();
 
-    const a11yValue = useA11yValue({
-      labelId,
-      helperTextId,
-      disabled,
-      readOnly,
-    });
+    const a11yProps = useMemo(
+      () => ({
+        "aria-labelledby": labelId,
+        "aria-describedby": helperTextId,
+      }),
+      [labelId, helperTextId]
+    );
 
     return (
       <div
@@ -120,17 +103,13 @@ export const FormField = forwardRef(
         )}
         {...restProps}
       >
-        <FormFieldContextNext.Provider value={{ a11yProps: a11yValue }}>
-          {label && (
-            <FormFieldLabel id={labelId} disabled={disabled} label={label} />
-          )}
+        <FormFieldContextNext.Provider
+          value={{ a11yProps, disabled, readOnly, validationStatus }}
+        >
+          {label && <FormFieldLabel id={labelId} label={label} />}
           <div className={withBaseName("controls")}>{children}</div>
           {helperText && (
-            <FormFieldHelperText
-              id={helperTextId}
-              disabled={disabled}
-              helperText={helperText}
-            />
+            <FormFieldHelperText id={helperTextId} helperText={helperText} />
           )}
         </FormFieldContextNext.Provider>
       </div>

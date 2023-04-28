@@ -1,3 +1,4 @@
+import { FlowLayout } from "@salt-ds/core";
 import { InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -24,55 +25,73 @@ export const Secondary: ComponentStory<typeof InputNext> = (args) => {
 
 export const Disabled: ComponentStory<typeof InputNext> = (args) => {
   return (
-    <>
+    <FlowLayout>
       <InputNext
         disabled={true}
         defaultValue={args.defaultValue ?? "Primary disabled"}
         variant="primary"
         {...args}
       />
-      <div style={{ height: 16 }} />
       <InputNext
         disabled={true}
         defaultValue={args.defaultValue ?? "Secondary disabled"}
         variant="secondary"
         {...args}
       />
-    </>
+    </FlowLayout>
   );
 };
 
 export const Readonly: ComponentStory<typeof InputNext> = (args) => {
   return (
-    <>
+    <FlowLayout>
       <InputNext
         readOnly={true}
         defaultValue={args.defaultValue ?? "Primary readonly"}
         variant="primary"
         {...args}
       />
-      <div style={{ height: 16 }} />
       <InputNext
         readOnly={true}
         defaultValue={args.defaultValue ?? "Secondary readonly"}
         variant="secondary"
         {...args}
       />
-    </>
+    </FlowLayout>
   );
 };
 
 export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
   return (
-    <>
-      <div className="demo alignCenter">
-        <InputNext defaultValue={args.defaultValue ?? "Value 1"} {...args} />
-        <InputNext defaultValue={args.defaultValue ?? "Value 2"} {...args} />
+    <FlowLayout>
+      <div className="alignCenter">
+        <InputNext defaultValue={args.defaultValue ?? "Value"} {...args} />
       </div>
-      <div className="demo alignRight">
-        <InputNext defaultValue={args.defaultValue ?? "Value 1"} {...args} />
-        <InputNext defaultValue={args.defaultValue ?? "Value 2"} {...args} />
+      <div className="alignRight">
+        <InputNext defaultValue={args.defaultValue ?? "Value"} {...args} />
       </div>
-    </>
+    </FlowLayout>
+  );
+};
+
+export const ValidationStatus: ComponentStory<typeof InputNext> = (args) => {
+  return (
+    <FlowLayout style={{ maxWidth: "266px" }}>
+      <InputNext
+        defaultValue={args.defaultValue ?? "Error value"}
+        validationStatus="error"
+        {...args}
+      />
+      <InputNext
+        defaultValue={args.defaultValue ?? "Warning value"}
+        validationStatus="warning"
+        {...args}
+      />
+      <InputNext
+        defaultValue={args.defaultValue ?? "Success value"}
+        validationStatus="success"
+        {...args}
+      />
+    </FlowLayout>
   );
 };

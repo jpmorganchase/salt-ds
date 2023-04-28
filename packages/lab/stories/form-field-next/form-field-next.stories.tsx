@@ -206,3 +206,55 @@ export const LongLabelsWithWrap: ComponentStory<typeof FormFieldNext> = (
     </FlowLayout>
   );
 };
+
+export const WithValidation: ComponentStory<typeof FormFieldNext> = (props) => {
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormFieldNext
+        validationStatus="error"
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext defaultValue="Input value" />
+      </FormFieldNext>
+      <FormFieldNext
+        validationStatus="warning"
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext defaultValue="Input value" />
+      </FormFieldNext>
+      <FormFieldNext
+        validationStatus="success"
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext defaultValue="Input value" />
+      </FormFieldNext>
+      {/* TODO: Guidance to explain that the following would produce broken design/behaviour
+      
+      
+      Error readOnly Input
+      <FormFieldNext
+        validationStatus="error"
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext readOnly defaultValue="Input value" />
+      </FormFieldNext>
+      Warning disabled Input
+      <FormFieldNext
+        validationStatus="warning"
+        label="Form Field label"
+        helperText="Helper text"
+        {...props}
+      >
+        <InputNext disabled defaultValue="Input value" />
+      </FormFieldNext> */}
+    </FlowLayout>
+  );
+};

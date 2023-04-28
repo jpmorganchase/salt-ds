@@ -5,5 +5,5 @@
 }
 
 .saltFormFieldLabel:hover + .saltFormFieldNext-controls * {
-  --inputNext-borderColor: var(--salt-editable-borderColor-hover);
+  --inputNext-borderColor: var(--inputNext-borderColor-hover);
 }
