@@ -69,9 +69,9 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
 };
 
 export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
-  return (
-    <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext {...props}>
+  return (    
+  <FlowLayout style={{ width: "50vw" }}>
+    <FormFieldNext labelPlacement="left" {...props}>
         <Label>Form Field label for multiple controls</Label>
         <Controls>
           <InputNext defaultValue="Value" />
