@@ -40,3 +40,24 @@ index 5587b7cda8a2841b4fd7c2950127cc3a102f3f19..e4ea664a9d0cc312d7b4c42c631aa8ec
      resolveModular('node_modules/.modular'),
    ],
    appTsConfig: resolveApp('tsconfig.json'),
+diff --git a/react-scripts/config/parts/styleLoadersConfig.js b/react-scripts/config/parts/styleLoadersConfig.js
+index ebd208fd1df2eb0f1dab4e32de678043e17b6155..d9887fdd4f5d5f70a8b3fb462bf45b0636ac2737 100644
+--- a/react-scripts/config/parts/styleLoadersConfig.js
++++ b/react-scripts/config/parts/styleLoadersConfig.js
+@@ -25,15 +25,7 @@ function createConfig({
+           options: { info, dependencyMap },
+         };
+       },
+-    isEnvDevelopment && require.resolve('style-loader'),
+-    isEnvProduction && {
+-      loader: MiniCssExtractPlugin.loader,
+-      // css is located in `static/css`, use '../../' to locate index.html folder
+-      // in production `paths.publicUrlOrPath` can be a relative path
+-      options: paths.publicUrlOrPath.startsWith('.')
+-        ? { publicPath: '../../' }
+-        : {},
+-    },
++    require.resolve('style-loader'),
+     {
+       loader: require.resolve('css-loader'),
+       options: cssOptions,

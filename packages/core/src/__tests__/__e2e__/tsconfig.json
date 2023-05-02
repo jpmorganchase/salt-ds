@@ -3,7 +3,8 @@
   "include": [
     "**/*.cy.*",
     "../../../../../cypress/**/*.ts",
-    "./declarations.d.ts"
+    "./declarations.d.ts",
+    "../../declarations.d.ts"
   ],
   "exclude": [],
   "compilerOptions": {
