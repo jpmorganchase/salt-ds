@@ -30,7 +30,7 @@ export interface InputProps
    */
   disabled?: HTMLInputElement["disabled"];
   /**
-   * End adornment components
+   * End adornment component
    */
   endAdornment?: ReactNode;
   /**
