@@ -6,6 +6,7 @@ import {
   forwardRef,
   HTMLAttributes,
   InputHTMLAttributes,
+  ReactNode,
   useState,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
@@ -29,6 +30,10 @@ export interface InputProps
    */
   disabled?: HTMLInputElement["disabled"];
   /**
+   * End adornment component
+   */
+  endAdornment?: ReactNode;
+  /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
@@ -36,6 +41,10 @@ export interface InputProps
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
+  /**
+   * Start adornment component
+   */
+  startAdornment?: ReactNode;
   /**
    * Validation status.
    */
@@ -80,10 +89,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     "aria-owns": ariaOwns,
     className: classNameProp,
     disabled,
+    endAdornment,
     id,
     inputProps: inputPropsProp,
     readOnly: readOnlyProp,
     role,
+    startAdornment,
     style,
     value: valueProp,
     // If we leave both value and defaultValue undefined, we will get a React warning on first edit
@@ -162,6 +173,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       style={style}
       {...other}
     >
+      {startAdornment && (
+        <div className={withBaseName("startAdornmentContainer")}>
+          {startAdornment}
+        </div>
+      )}
       <input
         id={id}
         className={clsx(
@@ -181,6 +197,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       />
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
+      )}
+      {endAdornment && (
+        <div className={withBaseName("endAdornmentContainer")}>
+          {endAdornment}
+        </div>
       )}
     </div>
   );
