@@ -10,24 +10,13 @@
   display: flex;
   gap: var(--salt-size-unit);
   padding: var(--saltBanner-padding, var(--salt-size-unit));
-  position: relative;
+  align-items: baseline;
   width: 100%;
 }
 
 /* Styles applied to icon */
 .saltBanner-icon {
   --saltIcon-margin: calc((var(--salt-text-lineHeight) - 12px) / 2) 0 0 0;
-}
-
-/* Styles applied to close button */
-.saltBanner-closeButton {
-  margin: calc(var(--salt-size-unit) * -0.5) auto calc(var(--salt-size-unit) * -0.5) var(--salt-size-unit);
-}
-
-/* Styles applied to content */
-.saltBanner-content {
-  flex: 1 0;
-  align-self: center;
 }
 
 /* Styles applied when state = "info" */
