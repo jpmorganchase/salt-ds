@@ -64,7 +64,7 @@ export const BorderItem: BorderItemComponent = forwardRef(
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
       id: "salt-border-item",
-      css: borderItemCss ,
+      css: borderItemCss,
       window: targetWindow,
     });
 
