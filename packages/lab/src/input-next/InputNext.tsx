@@ -42,7 +42,7 @@ export interface InputProps
    */
   readOnly?: boolean;
   /**
-   * Start adornment components
+   * Start adornment component
    */
   startAdornment?: ReactNode;
   /**
