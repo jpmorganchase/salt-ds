@@ -1,22 +1,16 @@
 import clsx from "clsx";
 import { makePrefixer, StatusIndicator, Text, TextProps } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context";
-import { FormFieldProps } from "./FormFieldNext";
 
 import "./FormFieldHelperText.css";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
-export interface FormFieldHelperTextProps
-  extends Omit<TextProps<"label">, "variant" | "styleAs"> {
-  helperText: FormFieldProps["helperText"];
-}
-
 export const FormFieldHelperText = ({
   className,
-  helperText,
+  children,
   ...restProps
-}: FormFieldHelperTextProps) => {
+}: Omit<TextProps<"label">, "variant" | "styleAs">) => {
   const { disabled, readOnly, validationStatus } = useFormFieldPropsNext();
 
   return (
@@ -36,7 +30,7 @@ export const FormFieldHelperText = ({
         styleAs="label"
         {...restProps}
       >
-        {helperText}
+        {children}
       </Text>
     </div>
   );
