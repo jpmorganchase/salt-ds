@@ -1,32 +1,37 @@
 import clsx from "clsx";
-import { makePrefixer, Text, TextProps } from "@salt-ds/core";
-import { FormFieldProps } from "./FormFieldNext";
+import { makePrefixer, StatusIndicator, Text, TextProps } from "@salt-ds/core";
+import { useFormFieldPropsNext } from "../form-field-context";
 
 import "./FormFieldHelperText.css";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
-export interface FormFieldHelperTextProps
-  extends Omit<TextProps<"label">, "variant" | "styleAs"> {
-  helperText: FormFieldProps["helperText"];
-  disabled?: boolean;
-}
-
 export const FormFieldHelperText = ({
   className,
-  disabled,
-  helperText,
+  children,
   ...restProps
-}: FormFieldHelperTextProps) => {
+}: Omit<TextProps<"label">, "variant" | "styleAs">) => {
+  const { disabled, readOnly, validationStatus } = useFormFieldPropsNext();
+
   return (
-    <Text
-      className={clsx(withBaseName(), className)}
-      disabled={disabled}
-      variant="secondary"
-      styleAs="label"
-      {...restProps}
+    <div
+      className={clsx(
+        withBaseName(),
+        { [withBaseName("withValidation")]: validationStatus },
+        className
+      )}
     >
-      {helperText}
-    </Text>
+      {!disabled && !readOnly && validationStatus && (
+        <StatusIndicator status={validationStatus} />
+      )}
+      <Text
+        disabled={disabled}
+        variant="secondary"
+        styleAs="label"
+        {...restProps}
+      >
+        {children}
+      </Text>
+    </div>
   );
 };

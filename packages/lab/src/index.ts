@@ -36,7 +36,12 @@ export * from "./dropdown";
 export * from "./editable-label";
 export * from "./file-drop-zone";
 export * from "./form-field";
-export { FormField as FormFieldNext } from "./form-field-next";
+export {
+  FormField as FormFieldNext,
+  FormFieldHelperText,
+  FormFieldLabel,
+  FormFieldControlWrapper,
+} from "./form-field-next";
 export * from "./form-field-context";
 export * from "./form-group";
 export * from "./formatted-input";

@@ -1,0 +1,15 @@
+.saltStatusAdornment {
+  fill: var(--saltStatusAdornment-color, var(--statusAdornment-color));
+  display: inline-block;
+  position: relative;
+  height: var(--salt-icon-size-status-adornment);
+  min-height: var(--salt-icon-size-status-adornment);
+}
+
+.saltStatusAdornment-error {
+  --statusAdornment-color: var(--salt-status-error-foreground);
+}
+
+.saltStatusAdornment-warning {
+  --statusAdornment-color: var(--salt-status-warning-foreground);
+}

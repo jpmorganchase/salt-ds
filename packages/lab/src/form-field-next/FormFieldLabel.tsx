@@ -1,34 +1,27 @@
 import { clsx } from "clsx";
 import { Label, makePrefixer, TextProps } from "@salt-ds/core";
+import { useFormFieldPropsNext } from "../form-field-context";
 
 import "./FormFieldLabel.css";
 
 const withBaseName = makePrefixer("saltFormFieldLabel");
-export interface FormFieldLabelProps
-  extends Omit<TextProps<"label">, "variant" | "styleAs"> {
-  /**
-   * Whether the Form Field is disabled.
-   */
-  disabled?: boolean;
-  /**
-   * The label value for the FormFieldLabel
-   */
-  label?: string;
-}
 
 export const FormFieldLabel = ({
   className,
-  disabled,
-  label,
+  children,
   ...restProps
-}: FormFieldLabelProps) => (
-  <Label
-    as="label"
-    className={clsx(withBaseName(), className)}
-    disabled={disabled}
-    variant="secondary"
-    {...restProps}
-  >
-    {label}
-  </Label>
-);
+}: Omit<TextProps<"label">, "variant" | "styleAs">) => {
+  const { disabled } = useFormFieldPropsNext();
+
+  return (
+    <Label
+      as="label"
+      className={clsx(withBaseName(), className)}
+      disabled={disabled}
+      variant="secondary"
+      {...restProps}
+    >
+      {children}
+    </Label>
+  );
+};
