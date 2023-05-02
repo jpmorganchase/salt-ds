@@ -35,7 +35,7 @@ export function mergeProps(
     ) {
       props[key] = clsx(a, b);
     } else {
-      props[key] = b ?? a;
+      props[key] = b !== undefined ? b : a;
     }
   });
 
