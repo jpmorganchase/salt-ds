@@ -1,7 +1,7 @@
 import { FlowLayout, Text } from "@salt-ds/core";
 import {
   CallIcon,
-  CopyIcon,
+  CreditCardIcon,
   FilterClearIcon,
   FilterIcon,
   FlagIcon,
@@ -150,6 +150,57 @@ export const StaticAdornments: ComponentStory<typeof InputNext> = (args) => {
         }
         defaultValue={args.defaultValue ?? "Value 2"}
         {...args}
+      />
+    </FlowLayout>
+  );
+};
+
+export const WithValidationAndAdornments: ComponentStory<typeof InputNext> = (
+  args
+) => {
+  const [firstValue, setFirstValue] = useState("1234567890");
+  const [secondValue, setSecondValue] = useState("");
+
+  const getFirstStatus = () => {
+    return !/^-?\d+$/.test(firstValue) || firstValue.length !== 11
+      ? "error"
+      : undefined;
+  };
+
+  const getSecondStatus = () => {
+    return !secondValue.length ? "warning" : undefined;
+  };
+
+  const handleFirstChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setFirstValue(value);
+  };
+
+  const handleSecondChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSecondValue(value);
+  };
+
+  return (
+    <FlowLayout style={{ maxWidth: "266px" }}>
+      <InputNext
+        startAdornment={
+          <>
+            <CallIcon />
+            <Text>+1</Text>
+          </>
+        }
+        validationStatus={getFirstStatus()}
+        {...args}
+        value={firstValue}
+        onChange={handleFirstChange}
+      />
+      <InputNext
+        validationStatus={getSecondStatus()}
+        {...args}
+        endAdornment={<CreditCardIcon />}
+        value={secondValue}
+        onChange={handleSecondChange}
       />
     </FlowLayout>
   );
