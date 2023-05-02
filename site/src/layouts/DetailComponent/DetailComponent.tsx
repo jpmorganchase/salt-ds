@@ -48,7 +48,8 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const SecondarySidebar = <TableOfContents />; // TODO: replace with custom component pages sidebar
 
   return (
-    <DetailBase sidebar={<Sidebar sticky>{SecondarySidebar}</Sidebar>}>
+    //  TODO: restore sidebar once table of contents has been fixed https://github.com/jpmorganchase/mosaic/pull/343
+    <DetailBase>
       <p>{description}</p>
       <Tabs
         activeTabIndex={currentTabIndex}
