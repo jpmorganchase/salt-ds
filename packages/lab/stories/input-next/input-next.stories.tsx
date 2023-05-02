@@ -32,13 +32,7 @@ export const Controlled: ComponentStory<typeof InputNext> = (args) => {
     setValue(value);
   };
 
-  return (
-    <InputNext
-      {...args}
-      value={value}
-      onChange={handleChange}
-    />
-  );
+  return <InputNext {...args} value={value} onChange={handleChange} />;
 };
 
 export const Disabled: ComponentStory<typeof InputNext> = (args) => {
