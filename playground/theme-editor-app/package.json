@@ -4,8 +4,5 @@
   "private": true,
   "modular": {
     "type": "app"
-  },
-  "dependencies": {
-    "@salt-ds/core": "^1.5.0"
   }
 }
