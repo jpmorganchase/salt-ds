@@ -1,3 +1,4 @@
+import { MouseEvent, useState } from 'react'
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Link, StackLayout, ValidationStatus } from "@salt-ds/core";
 import { Banner, BannerProps } from "@salt-ds/lab";
@@ -8,7 +9,7 @@ export default {
 } as ComponentMeta<typeof Banner>;
 
 export const Statuses: ComponentStory<typeof Banner> = (props) => {
-  const { status, ...restProps } = props;
+  const { status, onClose, ...restProps } = props;
 
   const statuses: ValidationStatus[] = ["info", "error", "warning", "success"];
 
@@ -16,9 +17,6 @@ export const Statuses: ComponentStory<typeof Banner> = (props) => {
     <StackLayout style={{ width: "60vw" }}>
       {statuses.map((status) => (
         <Banner
-          onClose={() => {
-            console.log("onClose triggered");
-          }}
           status={status}
           {...restProps}
         >
@@ -33,17 +31,26 @@ export const Emphasized: ComponentStory<typeof Banner> = () => (
   <Statuses emphasize />
 );
 
-export const HideClose = (props: BannerProps) => {
-  const { onClose, ...restProps } = props;
+export const ShowClose = (props: BannerProps) => {
+  const { onClose: onCloseProp, ...restProps } = props;
+
+  const [open, setOpen] = useState(true)
+
+  const onClose = (e: MouseEvent<HTMLButtonElement>) => {
+    setOpen(false)
+    onCloseProp?.(e)
+  }
 
   return (
     <div style={{ width: "60vw" }}>
-      <Banner {...restProps}>Banner with no close icon</Banner>
+      {open && (
+        <Banner {...restProps} onClose={onClose}>Banner with no close icon</Banner>
+      )}
     </div>
   );
 };
 
-export const MultipleLines = (props: BannerProps) => (
+export const MultipleLines = ({ onClose, ...props }: BannerProps) => (
   <div style={{ width: "60vw" }}>
     <Banner {...props}>
       <div>

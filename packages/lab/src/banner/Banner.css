@@ -3,7 +3,7 @@
   --banner-background: var(--salt-container-primary-background);
 
   background: var(--saltBanner-background, var(--banner-background));
-  border-color: var(--saltBanner-borderColor, var(--banner-status-borderColor));
+  border-color: var(--saltBanner-borderColor, var(--banner-borderColor));
   border-width: var(--saltBanner-borderWidth, var(--salt-size-border));
   border-style: var(--saltBanner-borderStyle, var(--salt-container-borderStyle));
   box-sizing: border-box;
@@ -32,22 +32,22 @@
 
 /* Styles applied when state = "info" */
 .saltBanner-info {
-  --banner-status-borderColor: var(--salt-status-info-borderColor);
+  --banner-borderColor: var(--salt-status-info-borderColor);
 }
 
 /* Styles applied when state = "error" */
 .saltBanner-error {
-  --banner-status-borderColor: var(--salt-status-error-borderColor);
+  --banner-borderColor: var(--salt-status-error-borderColor);
 }
 
 /* Styles applied when state = "warning" */
 .saltBanner-warning {
-  --banner-status-borderColor: var(--salt-status-warning-borderColor);
+  --banner-borderColor: var(--salt-status-warning-borderColor);
 }
 
 /* Styles applied when state = "success" */
 .saltBanner-success {
-  --banner-status-borderColor: var(--salt-status-success-borderColor);
+  --banner-borderColor: var(--salt-status-success-borderColor);
 }
 
 .saltBanner-emphasize.saltBanner-info {

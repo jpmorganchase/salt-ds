@@ -116,7 +116,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       <StatusIndicator
         className={clsx(withBaseName("icon"), className)}
         status={status}
-      ></StatusIndicator>
+      />
       <span className={clsx(withBaseName("content"), className)}>
         {children}
       </span>
