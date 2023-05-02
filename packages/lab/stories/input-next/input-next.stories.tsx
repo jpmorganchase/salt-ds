@@ -28,13 +28,13 @@ export const Controlled: ComponentStory<typeof InputNext> = (args) => {
   const [value, setValue] = useState("Value");
 
   return (
-      <InputNext
-        {...args}
-        value={value}
-        onChange={(event) => {
-          setValue(event.target.value);
-        }}
-      />
+    <InputNext
+      {...args}
+      value={value}
+      onChange={(event) => {
+        setValue(event.target.value);
+      }}
+    />
   );
 };
 
