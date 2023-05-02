@@ -1,7 +1,8 @@
+import { ReactElement } from "react";
 import { Button } from "@salt-ds/core";
 import { SearchIcon, SendIcon, SettingsSolidIcon } from "@salt-ds/icons";
 
-export const IconOnly = () => (
+export const IconOnly = (): ReactElement => (
   <>
     <Button variant="cta">
       <SendIcon />

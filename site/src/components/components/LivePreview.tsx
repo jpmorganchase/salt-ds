@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useState, ReactNode } from "react";
+import { FC, ChangeEvent, useState, ReactNode, ReactElement } from "react";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import { Switch } from "@salt-ds/lab";
 import { Pre } from "../mdx/pre";
@@ -17,11 +17,10 @@ export const LivePreview: FC<LivePreviewProps> = ({
 }) => {
   const [checked, setChecked] = useState(false);
 
-  const ComponentExample = require(`../../examples/${componentName}`)[
-    exampleName
-  ];
+  const ComponentExample: () => ReactElement =
+    require(`../../examples/${componentName}`)[exampleName];
 
-  const exampleJSX = ComponentExample && ComponentExample({});
+  const exampleJSX = ComponentExample && ComponentExample();
 
   const handleChange = (
     _: ChangeEvent<HTMLInputElement>,
