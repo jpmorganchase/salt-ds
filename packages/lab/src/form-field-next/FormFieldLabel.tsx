@@ -5,19 +5,12 @@ import { useFormFieldPropsNext } from "../form-field-context";
 import "./FormFieldLabel.css";
 
 const withBaseName = makePrefixer("saltFormFieldLabel");
-export interface FormFieldLabelProps
-  extends Omit<TextProps<"label">, "variant" | "styleAs"> {
-  /**
-   * The label value for the FormFieldLabel
-   */
-  label?: string;
-}
 
 export const FormFieldLabel = ({
   className,
-  label,
+  children,
   ...restProps
-}: FormFieldLabelProps) => {
+}: Omit<TextProps<"label">, "variant" | "styleAs">) => {
   const { disabled } = useFormFieldPropsNext();
 
   return (
@@ -28,7 +21,7 @@ export const FormFieldLabel = ({
       variant="secondary"
       {...restProps}
     >
-      {label}
+      {children}
     </Label>
   );
 };

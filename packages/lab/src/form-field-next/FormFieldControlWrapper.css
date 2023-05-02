@@ -1,0 +1,7 @@
+.saltFormFieldControlWrapper {
+  align-items: center;
+  display: grid;
+  grid-auto-columns: minmax(min-content, 1fr);
+  grid-auto-flow: column;
+  grid-column-gap: var(--salt-size-unit);
+}
