@@ -2,11 +2,13 @@ import { clsx } from "clsx";
 import {
   AriaAttributes,
   ChangeEvent,
+  ElementType,
   FocusEvent,
   forwardRef,
   HTMLAttributes,
   InputHTMLAttributes,
   ReactNode,
+  TextareaHTMLAttributes,
   useState,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
@@ -36,7 +38,11 @@ export interface InputProps
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  inputProps?: InputHTMLAttributes<HTMLInputElement> | TextareaHTMLAttributes<HTMLTextAreaElement>;
+  /**
+   * Input component
+   */
+  InputComponent?: ElementType;
   /**
    * If `true`, the component is read only.
    */
@@ -92,6 +98,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     endAdornment,
     id,
     inputProps: inputPropsProp,
+    InputComponent = "input",
     readOnly: readOnlyProp,
     role,
     startAdornment,
@@ -178,7 +185,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           {startAdornment}
         </div>
       )}
-      <input
+      <InputComponent
         id={id}
         className={clsx(
           withBaseName("input"),
