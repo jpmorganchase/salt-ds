@@ -2,11 +2,13 @@ import { clsx } from "clsx";
 import {
   ChangeEvent,
   ComponentPropsWithoutRef,
+  ElementType,
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
   ReactNode,
   Ref,
+  TextareaHTMLAttributes,
   useState,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -37,7 +39,11 @@ export interface InputProps
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  inputProps?: InputHTMLAttributes<HTMLInputElement> | TextareaHTMLAttributes<HTMLTextAreaElement>;
+  /**
+   * Input component
+   */
+  InputComponent?: ElementType;
   /**
    * Optional ref for the input component
    */
@@ -77,6 +83,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     inputProps = {},
     inputRef,
     placeholder,
+    InputComponent = "input",
     readOnly: readOnlyProp,
     role,
     startAdornment,
@@ -187,7 +194,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
           {startAdornment}
         </div>
       )}
-      <input
+      <InputComponent
         aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
         aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
         className={clsx(withBaseName("input"), inputProps?.className)}
