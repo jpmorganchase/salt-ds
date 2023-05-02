@@ -1,6 +1,7 @@
 import { FlowLayout } from "@salt-ds/core";
 import { InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ChangeEvent, useState } from "react";
 
 import "./input-next.stories.css";
 
@@ -21,6 +22,17 @@ export const Secondary: ComponentStory<typeof InputNext> = (args) => {
       {...args}
     />
   );
+};
+
+export const Controlled: ComponentStory<typeof InputNext> = (args) => {
+  const [value, setValue] = useState("Value");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  return <InputNext {...args} value={value} onChange={handleChange} />;
 };
 
 export const Disabled: ComponentStory<typeof InputNext> = (args) => {
