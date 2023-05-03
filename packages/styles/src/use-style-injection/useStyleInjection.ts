@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useInsertionPoint } from "./InsertionPointProvider";
 
 // eslint-disable-next-line -- Workaround for https://github.com/webpack/webpack/issues/14814
 const maybeUseInsertionEffect: typeof React.useLayoutEffect =
@@ -23,6 +24,8 @@ export function useComponentCssInjection({
   css,
   window: targetWindow,
 }: UseComponentCssInjection): void {
+  const insertionPoint = useInsertionPoint();
+
   maybeUseInsertionEffect(() => {
     let sheetsMap = windowSheetsMap.get(targetWindow) ?? new Map();
     let styleMap = sheetsMap.get(id) ?? { styleElement: null, count: 0 };
@@ -37,7 +40,7 @@ export function useComponentCssInjection({
 
       targetWindow.document.head.insertBefore(
         styleMap.styleElement,
-        targetWindow.document.head.firstChild
+        insertionPoint
       );
     } else {
       styleMap.styleElement.textContent = css;

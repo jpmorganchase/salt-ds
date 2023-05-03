@@ -1,0 +1,5 @@
+{
+  "extends": "../../../../tsconfig.json",
+  "include": ["**/*.test.*", "**/*.spec.*", "@typings", "../declarations.d.ts"],
+  "exclude": ["__e2e__"]
+}
