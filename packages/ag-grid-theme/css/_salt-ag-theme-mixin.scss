@@ -89,6 +89,23 @@
   .ag-picker-field-icon {
     margin-right: 5px;
   }
+
+  .ag-menu .ag-input-field-input[type="text"] {
+    height: var(--agGrid-input-height);
+    min-height: var(--agGrid-input-height);
+    line-height: var(--agGrid-input-height);
+    padding: 0;
+    font-size: inherit;
+    border: dotted 2px transparent;
+
+    &:focus {
+      border-color: var(--agGrid-color-focus);
+    }
+    &::placeholder {
+      color: var(--agGrid-placeholder-color);
+      opacity: 1;
+    }
+  }
   // end filter input
 
   .ag-menu-header {
