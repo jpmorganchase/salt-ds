@@ -16,5 +16,8 @@
   },
   "publishConfig": {
     "directory": "../../dist/salt-ds-styles"
+  },
+  "devDependencies": {
+    "react-frame-component": "^5.2.6"
   }
 }

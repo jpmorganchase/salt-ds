@@ -5597,6 +5597,8 @@ __metadata:
 "@salt-ds/styles@workspace:packages/styles":
   version: 0.0.0-use.local
   resolution: "@salt-ds/styles@workspace:packages/styles"
+  dependencies:
+    react-frame-component: ^5.2.6
   peerDependencies:
     "@types/react": ">=16.8.6"
     react: ">=16.8.0"
@@ -26299,6 +26301,17 @@ __metadata:
   version: 6.0.9
   resolution: "react-error-overlay@npm:6.0.9"
   checksum: 695853bc885e798008a00c10d8d94e5ac91626e8130802fea37345f9c037f41b80104345db2ee87f225feb4a4ef71b0df572b17c378a6d397b6815f6d4a84293
+  languageName: node
+  linkType: hard
+
+"react-frame-component@npm:^5.2.6":
+  version: 5.2.6
+  resolution: "react-frame-component@npm:5.2.6"
+  peerDependencies:
+    prop-types: ^15.5.9
+    react: ">= 16.3"
+    react-dom: ">= 16.3"
+  checksum: 6669a0acc1532b53e80b14688b06d64bfab88103a1e4377a386f4350a51d76494b48ac1b8f6818bd60ae2d37cce015314ce725d807be72e9fe9258e9303bb6ec
   languageName: node
   linkType: hard
 
