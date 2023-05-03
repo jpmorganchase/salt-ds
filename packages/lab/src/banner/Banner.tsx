@@ -1,10 +1,4 @@
-import {
-  forwardRef,
-  HTMLAttributes,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, HTMLAttributes, useEffect, useRef, useState } from "react";
 import {
   makePrefixer,
   StatusIndicator,
@@ -69,11 +63,11 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     }
   }, [announce, disableAnnouncer, containerNode, announcementProp]);
 
-  const [open, setOpen] = useState<boolean>(openProp)
+  const [open, setOpen] = useState<boolean>(openProp);
 
   const onClose = (openContext: boolean) => {
-    setOpen(openContext)
-  }
+    setOpen(openContext);
+  };
 
   return (
     <BannerContext.Provider value={{ onClose }}>

@@ -7,7 +7,7 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 const composedStories = composeStories(bannerStories);
 const { Statuses } = composedStories;
 
-xdescribe("GIVEN a Banner", () => {
+describe("GIVEN a Banner", () => {
   checkAccessibility(composedStories);
 
   it("THEN should render status", () => {
@@ -30,22 +30,20 @@ xdescribe("GIVEN a Banner", () => {
     cy.get("[aria-live]").contains(message);
   });
 
-  // describe("WHEN using additional LinkProps", () => {
-  //   it("THEN they should be applied", () => {
-  //     cy.mount(
-  //       <Banner>
-  //         <BannerContent>
-  //           Default Banner State <Link href="some-link">Go to Dashboard</Link>
-  //         </BannerContent>
-  //       </Banner>
-  //     );
+  describe("WHEN emphasize={true}", () => {
+    it("THEN class should be applied to the banner", () => {
+      cy.mount(
+        <Banner data-testid="bannerRoot" emphasize={true}>
+          <BannerContent> Default Banner State</BannerContent>
+        </Banner>
+      );
 
-  //     cy.findByText("Link").should("not.exist");
-  //     cy.findByText("Go to Dashboard").should("exist");
-  //   });
-  // });
-
-
+      cy.findByTestId("bannerRoot").should(
+        "have.class",
+        "saltBanner-emphasize"
+      );
+    });
+  });
 });
 
 describe("WHEN adding BannerCloseButton", () => {
@@ -57,46 +55,31 @@ describe("WHEN adding BannerCloseButton", () => {
         <BannerCloseButton onClick={clickSpy} />
       </Banner>
     );
-  })
+  });
   it("THEN should show the close button", () => {
-    cy.get('.saltBanner').should("exist");
+    cy.get(".saltBanner").should("exist");
     cy.findByRole("button").should("exist");
   });
 
   it("THEN should close the banner on CLICK", () => {
-    cy.get('.saltBanner').should("exist");
+    cy.get(".saltBanner").should("exist");
     cy.findByRole("button").realClick();
-    cy.get('.saltBanner').should("not.exist");
+    cy.get(".saltBanner").should("not.exist");
   });
 
-  // it("THEN should close the banner on ENTER", () => {
-  //   cy.get('.saltBanner').should("exist");
-  //   cy.realPress("Tab");
-  //   cy.realPress("Enter");
-  //   cy.get("@clickSpy").should("be.called");
-  //   cy.get('.saltBanner').should("not.exist");
-  // });
+  it("THEN should close the banner on ENTER", () => {
+    cy.get(".saltBanner").should("exist");
+    cy.realPress("Tab");
+    cy.realPress("Enter");
+    cy.get("@clickSpy").should("be.called");
+    cy.get(".saltBanner").should("not.exist");
+  });
 
-  // it("THEN should close the banner on SPACE", () => {
-  //   cy.get('.saltBanner').should("exist");
-  //   cy.realPress("Tab");
-  //   cy.realPress("Space");
-  //   cy.get("@clickSpy").should("be.called");
-  //   cy.get('.saltBanner').should("not.exist");
-  // });
-})
-
-xdescribe("WHEN emphasize={true}", () => {
-  it("THEN class should be applied to the banner", () => {
-    cy.mount(
-      <Banner data-testid="bannerRoot" emphasize={true}>
-        <BannerContent> Default Banner State</BannerContent>
-      </Banner>
-    );
-
-    cy.findByTestId("bannerRoot").should(
-      "have.class",
-      "saltBanner-emphasize"
-    );
+  it("THEN should close the banner on SPACE", () => {
+    cy.get(".saltBanner").should("exist");
+    cy.realPress("Tab");
+    cy.realPress("Space");
+    cy.get("@clickSpy").should("be.called");
+    cy.get(".saltBanner").should("not.exist");
   });
 });

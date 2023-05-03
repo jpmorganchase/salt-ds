@@ -28,8 +28,8 @@ export const Statuses: ComponentStory<typeof Banner> = (props) => {
 
   return (
     <StackLayout style={{ width: "60vw" }}>
-      {statuses.map((status) => (
-        <Banner status={status} {...restProps}>
+      {statuses.map((status, i) => (
+        <Banner status={status} {...restProps} key={i}>
           {" "}
           <BannerContent>Banners with status {status}.</BannerContent>
         </Banner>

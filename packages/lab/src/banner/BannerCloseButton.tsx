@@ -9,14 +9,14 @@ const withBaseName = makePrefixer("saltBannerClose");
 
 export const BannerCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
   function Banner(props, ref) {
-    const { onClick, ...restProps } = props
+    const { onClick, ...restProps } = props;
 
-    const { onClose } = useBannerContext()
+    const { onClose } = useBannerContext();
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-      onClose?.(false)
-      onClick?.(e)
-    }
+      onClose?.(false);
+      onClick?.(e);
+    };
 
     return (
       <Button
