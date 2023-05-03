@@ -95,6 +95,16 @@
     color: var(--agGrid-menu-color);
   }
 
+  // start filter input
+  .ag-picker-field-wrapper {
+    border-radius: 0;
+  }
+
+  .ag-picker-field-icon {
+    margin-right: 5px;
+  }
+  // end filter input
+
   .ag-menu-header {
     background-color: var(--agGrid-background);
     padding-top: 1px;

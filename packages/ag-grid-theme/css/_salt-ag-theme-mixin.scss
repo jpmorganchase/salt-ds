@@ -81,6 +81,16 @@
     color: var(--agGrid-menu-color);
   }
 
+  // start filter input
+  .ag-picker-field-wrapper {
+    border-radius: 0;
+  }
+
+  .ag-picker-field-icon {
+    margin-right: 5px;
+  }
+  // end filter input
+
   .ag-menu-header {
     background-color: var(--agGrid-background);
     padding-top: 1px;
@@ -101,6 +111,10 @@
     transition: color 0.4s;
     flex: 1 1 auto;
     height: var(--salt-size-stackable);
+  }
+
+  .ag-tab:only-child {
+    margin: 0;
   }
 
   .ag-tab-selected {
