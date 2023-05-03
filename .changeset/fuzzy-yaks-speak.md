@@ -2,4 +2,4 @@
 "@salt-ds/lab": minor
 ---
 
-Add `emptyReadonlyMarker` prop to `InputNext`
+Add `emptyReadOnlyMarker` prop to `InputNext`
