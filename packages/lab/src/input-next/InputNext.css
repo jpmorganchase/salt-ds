@@ -23,6 +23,7 @@
   min-height: var(--saltInputNext-minHeight, var(--salt-size-base));
   min-width: var(--saltInputNext-minWidth, 4em);
   padding-left: var(--saltInputNext-paddingLeft, var(--inputNext-paddingLeft));
+  padding-right: var(--saltInputNext-paddingRight, var(--salt-size-unit));
   position: relative;
   width: 100%;
 }
