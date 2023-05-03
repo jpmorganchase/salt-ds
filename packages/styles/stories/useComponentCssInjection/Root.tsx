@@ -16,15 +16,15 @@ const Root = ({ children }: Props) => {
 
   useComponentCssInjection({
     id: "theme",
-    css: themeCss as string,
+    css: themeCss,
     window: targetWindow,
   });
 
-  return (
+  return targetWindow ? (
     <WindowProvider window={targetWindow}>
       <SaltProvider>{children}</SaltProvider>
     </WindowProvider>
-  );
+  ) : null;
 };
 
 export default Root;

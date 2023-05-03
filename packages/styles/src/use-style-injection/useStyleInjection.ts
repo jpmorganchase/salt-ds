@@ -9,7 +9,7 @@ type WindowLike = Window & typeof globalThis;
 export interface UseComponentCssInjection {
   id?: string;
   css: string;
-  window: WindowLike;
+  window?: WindowLike;
 }
 
 type StyleElementMap = Map<
@@ -26,6 +26,10 @@ export function useComponentCssInjection({
   const id = css;
 
   maybeUseInsertionEffect(() => {
+    if (!targetWindow) {
+      return;
+    }
+
     let sheetsMap = windowSheetsMap.get(targetWindow) ?? new Map();
     let styleMap = sheetsMap.get(id) ?? { styleElement: null, count: 0 };
 
