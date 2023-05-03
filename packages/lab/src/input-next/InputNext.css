@@ -21,7 +21,7 @@
   height: var(--saltInputNext-height, var(--salt-size-base));
   line-height: var(--saltInputNext-lineHeight, var(--salt-text-lineHeight));
   min-height: var(--saltInputNext-minHeight, var(--salt-size-base));
-  min-width: var(--saltInputNext-minWidth, 8em);
+  min-width: var(--saltInputNext-minWidth, 4em);
   padding-left: var(--saltInputNext-paddingLeft, var(--inputNext-paddingLeft));
   position: relative;
   width: 100%;
