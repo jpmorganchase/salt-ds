@@ -1,21 +1,21 @@
 import {
   forwardRef,
   HTMLAttributes,
-  MouseEvent,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import {
   makePrefixer,
   StatusIndicator,
   useAriaAnnouncer,
-  useControlled,
   useForkRef,
   ValidationStatus,
 } from "@salt-ds/core";
 
 import getInnerText from "./internal/getInnerText";
 import { clsx } from "clsx";
+import { BannerContext } from "./BannerContext";
 
 import "./Banner.css";
 
@@ -33,11 +33,6 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   emphasize?: boolean;
   /**
-   * onClose callback when the close icon is clicked, the dismiss button will not be rendered if this is
-   * not defined
-   */
-  onClose?: (event: MouseEvent<HTMLButtonElement>) => void;
-  /**
    *  A string to determine the current state of the Banner
    */
   status?: ValidationStatus;
@@ -53,8 +48,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     className,
     disableAnnouncer = false,
     emphasize = false,
-    onClose: onCloseProp,
-    open = true,
+    open: openProp = true,
     status = "info",
     ...rest
   },
@@ -75,8 +69,14 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     }
   }, [announce, disableAnnouncer, containerNode, announcementProp]);
 
+  const [open, setOpen] = useState<boolean>(openProp)
+
+  const onClose = (openContext: boolean) => {
+    setOpen(openContext)
+  }
+
   return (
-    <>
+    <BannerContext.Provider value={{ onClose }}>
       {open && (
         <div
           className={clsx(withBaseName(), withBaseName(status), className, {
@@ -92,6 +92,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
           {children}
         </div>
       )}
-    </>
+    </BannerContext.Provider>
   );
 });

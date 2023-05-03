@@ -22,7 +22,7 @@ export const Default: ComponentStory<typeof Banner> = (props) => (
 );
 
 export const Statuses: ComponentStory<typeof Banner> = (props) => {
-  const { status, onClose, ...restProps } = props;
+  const { status, ...restProps } = props;
 
   const statuses: ValidationStatus[] = ["info", "error", "warning", "success"];
 
@@ -43,21 +43,17 @@ export const Emphasized: ComponentStory<typeof Banner> = () => (
 );
 
 export const WithClose = (props: BannerProps) => {
-  const [open, setOpen] = useState(true);
-  const handleClick = () => {
-    setOpen(false);
-  };
   return (
     <div style={{ width: "60vw" }}>
-      <Banner {...props} open={open}>
+      <Banner {...props}>
         <BannerContent>Banner with no close icon</BannerContent>
-        <BannerCloseButton onClick={handleClick} />
+        <BannerCloseButton />
       </Banner>
     </div>
   );
 };
 
-export const MultipleLines = ({ onClose, ...props }: BannerProps) => {
+export const MultipleLines = (props: BannerProps) => {
   const [open, setOpen] = useState(true);
   const handleClick = () => {
     setOpen(false);
