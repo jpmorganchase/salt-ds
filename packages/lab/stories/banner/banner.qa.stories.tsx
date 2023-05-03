@@ -1,6 +1,11 @@
 import { FC } from "react";
 import { Link, StackLayout, SaltProvider } from "@salt-ds/core";
-import { Banner, BannerProps } from "@salt-ds/lab";
+import {
+  Banner,
+  BannerProps,
+  BannerContent,
+  BannerCloseButton,
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 
 export default {
@@ -10,8 +15,11 @@ export default {
 
 const BasicBannerExample: FC<BannerProps> = ({ status }) => {
   return (
-    <Banner onClose={() => console.log("close")} status={status}>
-      Example custom renderer <Link href={"#"}>link</Link>
+    <Banner status={status}>
+      <BannerContent>
+        Example custom renderer <Link href={"#"}>link</Link>
+      </BannerContent>
+      <BannerCloseButton onClick={() => console.log("close")} />
     </Banner>
   );
 };

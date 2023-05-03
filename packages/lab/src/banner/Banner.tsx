@@ -1,13 +1,11 @@
-import { forwardRef, HTMLAttributes, useEffect, useRef, useState } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import {
   makePrefixer,
   StatusIndicator,
-  useAriaAnnouncer,
-  useForkRef,
+  useControlled,
   ValidationStatus,
 } from "@salt-ds/core";
 
-import getInnerText from "./internal/getInnerText";
 import { clsx } from "clsx";
 import { BannerContext } from "./BannerContext";
 
@@ -30,6 +28,9 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    *  A string to determine the current state of the Banner
    */
   status?: ValidationStatus;
+  /**
+   * Prop used to control visible state.
+   */
   open?: boolean;
 }
 
@@ -48,25 +49,15 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   },
   ref
 ) {
-  const { announce } = useAriaAnnouncer();
+  const [open, setOpen] = useControlled({
+    controlled: openProp,
+    default: Boolean(openProp),
+    name: "Banner",
+    state: "open",
+  });
 
-  const [containerNode, setContainerNode] = useState<HTMLDivElement | null>(
-    null
-  );
-
-  const handleRef = useForkRef<HTMLDivElement>(setContainerNode, ref);
-
-  useEffect(() => {
-    if (!disableAnnouncer && containerNode) {
-      const announcement = announcementProp || getInnerText(containerNode);
-      announce(announcement, 250);
-    }
-  }, [announce, disableAnnouncer, containerNode, announcementProp]);
-
-  const [open, setOpen] = useState<boolean>(openProp);
-
-  const onClose = (openContext: boolean) => {
-    setOpen(openContext);
+  const onClose = (value: boolean) => {
+    setOpen(value);
   };
 
   return (
@@ -76,8 +67,9 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
           className={clsx(withBaseName(), withBaseName(status), className, {
             [withBaseName("emphasize")]: emphasize,
           })}
-          ref={handleRef}
+          ref={ref}
           {...rest}
+          aria-live="polite"
         >
           <StatusIndicator
             className={clsx(withBaseName("icon"), className)}

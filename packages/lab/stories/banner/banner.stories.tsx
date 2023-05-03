@@ -46,7 +46,7 @@ export const WithClose = (props: BannerProps) => {
   return (
     <div style={{ width: "60vw" }}>
       <Banner {...props}>
-        <BannerContent>Banner with no close icon</BannerContent>
+        <BannerContent>Banner with close button</BannerContent>
         <BannerCloseButton />
       </Banner>
     </div>
