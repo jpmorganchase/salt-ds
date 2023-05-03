@@ -22,7 +22,7 @@ SNAPSHOT_MODE=active
 
 ## Run the local server
 
-Run the following command and navigate to `http://localhost:3000/local/index`.
+Run the following command and navigate to `http://localhost:3000/salt/index`.
 
 ```
 yarn serve
