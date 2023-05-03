@@ -7,7 +7,7 @@ const maybeUseInsertionEffect: typeof React.useLayoutEffect =
 type WindowLike = Window & typeof globalThis;
 
 export interface UseComponentCssInjection {
-  id: string;
+  id?: string;
   css: string;
   window: WindowLike;
 }
@@ -19,10 +19,12 @@ type StyleElementMap = Map<
 
 const windowSheetsMap = new WeakMap<WindowLike, StyleElementMap>();
 export function useComponentCssInjection({
-  id,
+  id: idProp,
   css,
   window: targetWindow,
 }: UseComponentCssInjection): void {
+  const id = css;
+
   maybeUseInsertionEffect(() => {
     let sheetsMap = windowSheetsMap.get(targetWindow) ?? new Map();
     let styleMap = sheetsMap.get(id) ?? { styleElement: null, count: 0 };
@@ -30,7 +32,7 @@ export function useComponentCssInjection({
     if (styleMap.styleElement == null) {
       styleMap.styleElement = targetWindow.document.createElement("style");
       styleMap.styleElement.setAttribute("type", "text/css");
-      styleMap.styleElement.setAttribute("data-salt-style", id);
+      styleMap.styleElement.setAttribute("data-salt-style", idProp || "");
       styleMap.styleElement.textContent = css;
 
       styleMap.count = 1;
