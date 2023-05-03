@@ -83,15 +83,8 @@ export const Readonly: ComponentStory<typeof InputNext> = (args) => {
 export const ReadonlyEmptyMarker: ComponentStory<typeof InputNext> = (args) => {
   return (
     <FlowLayout>
-      <InputNext
-        readOnly={true}
-        {...args}
-      />
-      <InputNext
-        readOnly={true}
-        emptyReadOnlyMarker="*"
-        {...args}
-      />
+      <InputNext readOnly={true} {...args} />
+      <InputNext readOnly={true} emptyReadOnlyMarker="*" {...args} />
     </FlowLayout>
   );
 };
