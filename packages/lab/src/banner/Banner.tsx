@@ -1,10 +1,5 @@
-import { forwardRef, HTMLAttributes, useState } from "react";
-import {
-  makePrefixer,
-  StatusIndicator,
-  useControlled,
-  ValidationStatus,
-} from "@salt-ds/core";
+import { forwardRef, HTMLAttributes, MouseEvent, useState } from "react";
+import { makePrefixer, StatusIndicator, ValidationStatus } from "@salt-ds/core";
 
 import { clsx } from "clsx";
 import { BannerContext } from "./BannerContext";
@@ -28,10 +23,6 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    *  A string to determine the current state of the Banner
    */
   status?: ValidationStatus;
-  /**
-   * Prop used to control visible state.
-   */
-  open?: boolean;
 }
 
 const withBaseName = makePrefixer("saltBanner");
@@ -43,29 +34,16 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     children,
     className,
     emphasize = false,
-    open: openProp = true,
     status = "info",
     ...rest
   },
   ref
 ) {
+  const [open, setOpen] = useState(true);
 
-  const [open, setOpen] = useState(openProp)
-  // useControlled({
-  //   controlled: openProp,
-  //   default: openProp,
-  //   name: "Banner",
-  //   state: "open",
-  // });
-
-
-
-  const onClose = () => {
+  const onClose = (e: MouseEvent<HTMLButtonElement>) => {
     setOpen(false);
   };
-
-  console.log('open', open);
-
 
   return (
     <BannerContext.Provider value={{ onClose }}>

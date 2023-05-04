@@ -1,12 +1,6 @@
 import { SyntheticEvent, useRef } from "react";
 import { ComponentMeta } from "@storybook/react";
-import { Link, StackLayout, ValidationStatus } from "@salt-ds/core";
-import {
-  Banner,
-  BannerCloseButton,
-  BannerContent,
-  BannerProps,
-} from "@salt-ds/lab";
+import { Banner, BannerCloseButton, BannerContent } from "@salt-ds/lab";
 
 import "./banner.ada.css";
 import { useState } from "@storybook/addons";
@@ -21,7 +15,6 @@ export const Form = () => {
   const name = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: SyntheticEvent) => {
-    console.log("name.current", `1${name.current?.value}2`);
     if (name.current?.value && name.current?.value.length > 0) {
       setInvalid(false);
     } else {
@@ -30,12 +23,18 @@ export const Form = () => {
     event.preventDefault();
   };
 
+  const handleClick = () => {
+    setInvalid(false);
+  };
+
   return (
     <div style={{ width: "60vw" }}>
-      <Banner open={invalid} status="error">
-        <BannerContent>The form is not valid</BannerContent>
-        <BannerCloseButton />
-      </Banner>
+      {invalid && (
+        <Banner status="error">
+          <BannerContent>The form is not valid</BannerContent>
+          <BannerCloseButton onClick={handleClick} />
+        </Banner>
+      )}
 
       <form action="" onSubmit={handleSubmit}>
         <fieldset>
