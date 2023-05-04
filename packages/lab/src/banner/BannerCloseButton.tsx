@@ -14,8 +14,10 @@ export const BannerCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
     const { onClose } = useBannerContext();
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-      onClose?.(false);
+      console.log('handleClick');
+      onClose?.();
       onClick?.(e);
+
     };
 
     return (

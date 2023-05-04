@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, useState } from "react";
 import {
   makePrefixer,
   StatusIndicator,
@@ -15,11 +15,11 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Announcement message for screen reader 250ms after the banner is mounted.
    */
-  announcement?: string;
+  // announcement?: string;
   /**
    * If true, the built-in ARIA announcer will be disabled
    */
-  disableAnnouncer?: boolean;
+  // disableAnnouncer?: boolean;
   /**
    * Emphasize the styling by applying a background color: defaults to false
    */
@@ -38,10 +38,10 @@ const withBaseName = makePrefixer("saltBanner");
 
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   {
-    announcement: announcementProp,
+    // announcement: announcementProp,
+    // disableAnnouncer = false,
     children,
     className,
-    disableAnnouncer = false,
     emphasize = false,
     open: openProp = true,
     status = "info",
@@ -49,16 +49,23 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   },
   ref
 ) {
-  const [open, setOpen] = useControlled({
-    controlled: openProp,
-    default: Boolean(openProp),
-    name: "Banner",
-    state: "open",
-  });
 
-  const onClose = (value: boolean) => {
-    setOpen(value);
+  const [open, setOpen] = useState(openProp)
+  // useControlled({
+  //   controlled: openProp,
+  //   default: openProp,
+  //   name: "Banner",
+  //   state: "open",
+  // });
+
+
+
+  const onClose = () => {
+    setOpen(false);
   };
+
+  console.log('open', open);
+
 
   return (
     <BannerContext.Provider value={{ onClose }}>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Link, StackLayout, ValidationStatus } from "@salt-ds/core";
+import { Button, Link, StackLayout, ValidationStatus } from "@salt-ds/core";
 import {
   Banner,
   BannerCloseButton,
@@ -54,13 +54,10 @@ export const WithClose = (props: BannerProps) => {
 };
 
 export const MultipleLines = (props: BannerProps) => {
-  const [open, setOpen] = useState(true);
-  const handleClick = () => {
-    setOpen(false);
-  };
+
   return (
     <div style={{ width: "60vw" }}>
-      <Banner {...props} open={open}>
+      <Banner {...props}>
         <BannerContent>
           <div>
             Our guidance for hyphen and dash usage differs from that of the “AP
@@ -69,8 +66,25 @@ export const MultipleLines = (props: BannerProps) => {
           </div>
           <Link href={"#"}>Read more...</Link>
         </BannerContent>
-        <BannerCloseButton onClick={handleClick} />
+        <BannerCloseButton />
       </Banner>
     </div>
   );
 };
+
+export const Controlled = () => {
+  const [open, setOpen] = useState(false)
+  const handleClick = () => {
+    setOpen(true)
+  }
+
+  return (
+    <div style={{ width: "60vw" }}>
+      <Button onClick={handleClick}>Show banner</Button>
+      <Banner open={open}>
+        <BannerContent>Controlled banner</BannerContent>
+        <BannerCloseButton />
+      </Banner>
+    </div>
+  )
+}

@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 export interface BannerContextValue {
-  onClose?: (open: boolean) => void;
+  onClose?: () => void;
 }
 
 export const BannerContext = createContext<BannerContextValue>({});
