@@ -1,7 +1,10 @@
 import { FC, ChangeEvent, useState, ReactNode, ReactElement } from "react";
 import reactElementToJSXString from "react-element-to-jsx-string";
+import clsx from "clsx";
 import { Switch } from "@salt-ds/lab";
+import { SaltProvider } from "@salt-ds/core";
 import { Pre } from "../mdx/pre";
+import { useLivePreviewControls } from "./useLivePreviewControls";
 import styles from "./LivePreview.module.css";
 
 type LivePreviewProps = {
@@ -29,20 +32,31 @@ export const LivePreview: FC<LivePreviewProps> = ({
     setChecked(isChecked);
   };
 
+  const { density, mode } = useLivePreviewControls();
+
   return (
     <>
       {children}
       <div className={styles.container}>
-        <div className={styles.componentPreview}>
+        <div
+          className={clsx(styles.componentPreview, {
+            [styles.darkMode]: mode === "dark",
+          })}
+        >
           <div className={styles.example}>
-            {ComponentExample && <ComponentExample />}
+            <SaltProvider mode={mode} density={density}>
+              {ComponentExample && <ComponentExample />}
+            </SaltProvider>
           </div>
-          <Switch
-            checked={checked}
-            onChange={handleChange}
-            className={styles.switch}
-            label="Show code"
-          />
+          {/* Separate SaltProvider so we change the mode for switch but not the density */}
+          <SaltProvider mode={mode}>
+            <Switch
+              checked={checked}
+              onChange={handleChange}
+              className={styles.switch}
+              label="Show code"
+            />
+          </SaltProvider>
         </div>
         {checked && (
           <Pre className={styles.codePreview}>

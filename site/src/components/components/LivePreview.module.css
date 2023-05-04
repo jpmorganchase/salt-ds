@@ -25,6 +25,11 @@
   align-items: center;
   justify-content: center;
   gap: calc(2 * var(--salt-size-unit));
+  flex-wrap: wrap;
+}
+
+.darkMode {
+  background-color: var(--salt-color-gray-900);
 }
 
 .switch {
