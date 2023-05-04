@@ -3,16 +3,16 @@ import {
   cloneElement,
   forwardRef,
   HTMLAttributes,
-  ReactNode,
   isValidElement,
+  ReactNode,
   Ref,
 } from "react";
 import { FloatingArrow, FloatingPortal } from "@floating-ui/react";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import {
-  UseFloatingUIProps,
   makePrefixer,
   mergeProps,
+  UseFloatingUIProps,
   useForkRef,
 } from "../utils";
 import { useTooltip, UseTooltipProps } from "./useTooltip";
@@ -22,8 +22,8 @@ import { SaltProvider } from "../salt-provider";
 const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
-  extends HTMLAttributes<HTMLDivElement>,
-    Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement"> {
+  extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
+    Omit<HTMLAttributes<HTMLDivElement>, "content"> {
   /**
    * The children will be the Tooltip's trigger.
    */
