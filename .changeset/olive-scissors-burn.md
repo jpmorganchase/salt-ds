@@ -6,4 +6,5 @@ Banner
 
 - Remove `render` prop
 - Remove `Link` component from content
-- Add `hideIcon` prop
+- Add `open` prop and controlled state
+- Create composable components `BannerContent` and `BannerCloseButton`
