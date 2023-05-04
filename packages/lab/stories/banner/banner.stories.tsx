@@ -43,20 +43,28 @@ export const Emphasized: ComponentStory<typeof Banner> = () => (
 );
 
 export const WithClose = (props: BannerProps) => {
+  const [open, setOpen] = useState(true);
+  const onClose = () => {
+    setOpen(false);
+  };
   return (
     <div style={{ width: "60vw" }}>
-      <Banner {...props}>
+      <Banner open={open} {...props}>
         <BannerContent>Banner with close button</BannerContent>
-        <BannerCloseButton />
+        <BannerCloseButton onClick={onClose} />
       </Banner>
     </div>
   );
 };
 
 export const MultipleLines = (props: BannerProps) => {
+  const [open, setOpen] = useState(true);
+  const onClose = () => {
+    setOpen(false);
+  };
   return (
     <div style={{ width: "60vw" }}>
-      <Banner {...props}>
+      <Banner open={open} {...props}>
         <BannerContent>
           <div>
             Our guidance for hyphen and dash usage differs from that of the “AP
@@ -65,7 +73,7 @@ export const MultipleLines = (props: BannerProps) => {
           </div>
           <Link href={"#"}>Read more...</Link>
         </BannerContent>
-        <BannerCloseButton />
+        <BannerCloseButton onClick={onClose} />
       </Banner>
     </div>
   );
@@ -84,12 +92,10 @@ export const Conditional = () => {
   return (
     <div style={{ width: "60vw" }}>
       <Button onClick={handleClick}>Show banner</Button>
-      {open && (
-        <Banner>
-          <BannerContent>Controlled banner</BannerContent>
-          <BannerCloseButton onClick={onClose} />
-        </Banner>
-      )}
+      <Banner open={open}>
+        <BannerContent>Controlled banner</BannerContent>
+        <BannerCloseButton onClick={onClose} />
+      </Banner>
     </div>
   );
 };

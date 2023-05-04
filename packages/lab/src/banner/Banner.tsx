@@ -1,8 +1,12 @@
 import { forwardRef, HTMLAttributes, MouseEvent, useState } from "react";
-import { makePrefixer, StatusIndicator, ValidationStatus } from "@salt-ds/core";
+import {
+  makePrefixer,
+  StatusIndicator,
+  useControlled,
+  ValidationStatus,
+} from "@salt-ds/core";
 
 import { clsx } from "clsx";
-import { BannerContext } from "./BannerContext";
 
 import "./Banner.css";
 
@@ -20,6 +24,10 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   emphasize?: boolean;
   /**
+   * Controlled prop to set visible state.
+   */
+  open?: boolean;
+  /**
    *  A string to determine the current state of the Banner
    */
   status?: ValidationStatus;
@@ -34,19 +42,21 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     children,
     className,
     emphasize = false,
+    open: openProp = true,
     status = "info",
     ...rest
   },
   ref
 ) {
-  const [open, setOpen] = useState(true);
-
-  const onClose = (e: MouseEvent<HTMLButtonElement>) => {
-    setOpen(false);
-  };
+  const [open] = useControlled({
+    controlled: openProp,
+    default: openProp,
+    name: "Banner",
+    state: "open",
+  });
 
   return (
-    <BannerContext.Provider value={{ onClose }}>
+    <>
       {open && (
         <div
           className={clsx(withBaseName(), withBaseName(status), className, {
@@ -63,6 +73,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
           {children}
         </div>
       )}
-    </BannerContext.Provider>
+    </>
   );
 });

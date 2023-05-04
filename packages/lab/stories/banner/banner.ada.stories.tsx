@@ -29,12 +29,10 @@ export const Form = () => {
 
   return (
     <div style={{ width: "60vw" }}>
-      {invalid && (
-        <Banner status="error">
-          <BannerContent>The form is not valid</BannerContent>
-          <BannerCloseButton onClick={handleClick} />
-        </Banner>
-      )}
+      <Banner open={invalid} status="error">
+        <BannerContent>The form is not valid</BannerContent>
+        <BannerCloseButton onClick={handleClick} />
+      </Banner>
 
       <form action="" onSubmit={handleSubmit}>
         <fieldset>
