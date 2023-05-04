@@ -105,33 +105,44 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     }
   }, [announce, disableAnnouncer, containerNode, announcementProp]);
 
+  const [open, setOpen] = useState(true);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setOpen(false);
+    onClose?.(event);
+  };
+
   return (
-    <div
-      className={clsx(withBaseName(), withBaseName(status), className, {
-        [withBaseName("emphasize")]: emphasize,
-      })}
-      ref={handleRef}
-      {...rest}
-    >
-      <StatusIndicator
-        className={clsx(withBaseName("icon"), className)}
-        status={status}
-      />
-      <span className={clsx(withBaseName("content"), className)}>
-        {children}
-      </span>
-      {onClose && (
-        <Button
-          aria-label="close"
-          {...CloseButtonProps}
-          className={withBaseName("closeButton")}
-          onClick={onClose}
-          ref={closeRef}
-          variant="secondary"
+    <>
+      {open && (
+        <div
+          className={clsx(withBaseName(), withBaseName(status), className, {
+            [withBaseName("emphasize")]: emphasize,
+          })}
+          ref={handleRef}
+          {...rest}
         >
-          <CloseIcon />
-        </Button>
+          <StatusIndicator
+            className={clsx(withBaseName("icon"), className)}
+            status={status}
+          />
+          <span className={clsx(withBaseName("content"), className)}>
+            {children}
+          </span>
+          {onClose && (
+            <Button
+              aria-label="close"
+              {...CloseButtonProps}
+              className={withBaseName("closeButton")}
+              onClick={handleClick}
+              ref={closeRef}
+              variant="secondary"
+            >
+              <CloseIcon />
+            </Button>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 });
