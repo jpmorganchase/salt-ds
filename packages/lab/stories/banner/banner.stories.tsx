@@ -79,7 +79,7 @@ export const MultipleLines = (props: BannerProps) => {
   );
 };
 
-export const Conditional = () => {
+export const Controlled = () => {
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     setOpen(true);
@@ -91,11 +91,11 @@ export const Conditional = () => {
 
   return (
     <div style={{ width: "60vw" }}>
-      <Button onClick={handleClick}>Show banner</Button>
       <Banner open={open}>
         <BannerContent>Controlled banner</BannerContent>
         <BannerCloseButton onClick={onClose} />
       </Banner>
+      <Button onClick={handleClick}>Show banner</Button>
     </div>
   );
 };
