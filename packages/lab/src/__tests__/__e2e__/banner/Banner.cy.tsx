@@ -26,29 +26,6 @@ describe("GIVEN a Banner", () => {
     cy.get("[aria-live]").contains(message);
   });
 
-  it("THEN should call onClose when interacted with", () => {
-    const clickSpy = cy.stub().as("clickSpy");
-    cy.mount(<Banner onClose={clickSpy}>On Close example</Banner>);
-    cy.realPress("Tab");
-    cy.realPress("Enter");
-    cy.get("@clickSpy").should("be.called");
-    cy.realPress("Space");
-    cy.get("@clickSpy").should("be.called");
-  });
-
-  describe("WHEN using additional LinkProps", () => {
-    it("THEN they should be applied", () => {
-      cy.mount(
-        <Banner>
-          Default Banner State <Link href="some-link">Go to Dashboard</Link>
-        </Banner>
-      );
-
-      cy.findByText("Link").should("not.exist");
-      cy.findByText("Go to Dashboard").should("exist");
-    });
-  });
-
   describe("WHEN emphasize={true}", () => {
     it("THEN class should be applied to the banner", () => {
       cy.mount(
@@ -62,5 +39,38 @@ describe("GIVEN a Banner", () => {
         "saltBanner-emphasize"
       );
     });
+  });
+});
+
+describe("WHEN adding BannerCloseButton", () => {
+  beforeEach(() => {
+    const clickSpy = cy.stub().as("clickSpy");
+    cy.mount(<Banner onClose={clickSpy}>On Close example</Banner>);
+  });
+  it("THEN should show the close button", () => {
+    cy.get(".saltBanner").should("exist");
+    cy.findByRole("button").should("exist");
+  });
+
+  it("THEN should close the banner on CLICK", () => {
+    cy.get(".saltBanner").should("exist");
+    cy.findByRole("button").realClick();
+    cy.get(".saltBanner").should("not.exist");
+  });
+
+  it("THEN should close the banner on ENTER", () => {
+    cy.get(".saltBanner").should("exist");
+    cy.realPress("Tab");
+    cy.realPress("Enter");
+    cy.get("@clickSpy").should("be.called");
+    cy.get(".saltBanner").should("not.exist");
+  });
+
+  it("THEN should close the banner on SPACE", () => {
+    cy.get(".saltBanner").should("exist");
+    cy.realPress("Tab");
+    cy.realPress("Space");
+    cy.get("@clickSpy").should("be.called");
+    cy.get(".saltBanner").should("not.exist");
   });
 });
