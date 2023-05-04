@@ -161,3 +161,19 @@
 .saltInputNext-withAdornment {
   padding-right: var(--salt-size-adornmentGap);
 }
+
+/* Style applied to start adornments */
+.saltInputNext-startAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-right: var(--salt-size-adornmentGap);
+  column-gap: var(--salt-size-adornmentGap);
+}
+
+/* Style applied to end adornments */
+.saltInputNext-endAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-left: var(--salt-size-adornmentGap);
+  column-gap: var(--salt-size-adornmentGap);
+}
