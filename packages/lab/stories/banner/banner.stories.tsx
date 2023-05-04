@@ -8,7 +8,10 @@ export default {
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 
-export const Default: ComponentStory<typeof Banner> = (props) => (
+export const Default: ComponentStory<typeof Banner> = ({
+  onClose,
+  ...props
+}) => (
   <div style={{ width: "60vw" }}>
     <Banner {...props}>Default banner</Banner>
   </div>
@@ -35,7 +38,7 @@ export const Emphasized: ComponentStory<typeof Banner> = () => (
 );
 
 export const ShowClose = (props: BannerProps) => {
-  const onClose = (e: MouseEvent<HTMLButtonElement>) => {
+  const onClose = () => {
     console.log("onClose was called");
   };
 

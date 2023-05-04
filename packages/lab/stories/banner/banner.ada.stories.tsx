@@ -16,7 +16,6 @@ export const Form = () => {
   const name = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: SyntheticEvent) => {
-    console.log("name.current", `1${name.current?.value}2`);
     if (name.current?.value && name.current?.value.length > 0) {
       setInvalid(false);
     } else {
@@ -27,7 +26,6 @@ export const Form = () => {
 
   const onClose = () => {
     setInvalid(false);
-    console.log("onClose was called");
   };
 
   return (
