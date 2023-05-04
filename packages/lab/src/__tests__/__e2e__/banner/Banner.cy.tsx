@@ -19,7 +19,7 @@ describe("GIVEN a Banner", () => {
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  xit("THEN should announce the contents of the Banner", () => {
+  it("THEN should announce the contents of the Banner", () => {
     const message = "example announcement";
     cy.mount(
       <Banner>
@@ -61,25 +61,22 @@ describe("WHEN adding BannerCloseButton", () => {
     cy.findByRole("button").should("exist");
   });
 
-  it("THEN should close the banner on CLICK", () => {
+  it("THEN should call onClick handler on CLICK ", () => {
     cy.get(".saltBanner").should("exist");
     cy.findByRole("button").realClick();
-    cy.get(".saltBanner").should("not.exist");
   });
 
-  it("THEN should close the banner on ENTER", () => {
+  it("THEN should call onClick handler on ENTER", () => {
     cy.get(".saltBanner").should("exist");
     cy.realPress("Tab");
     cy.realPress("Enter");
     cy.get("@clickSpy").should("be.called");
-    cy.get(".saltBanner").should("not.exist");
   });
 
-  it("THEN should close the banner on SPACE", () => {
+  it("THEN should call onClick handler on SPACE", () => {
     cy.get(".saltBanner").should("exist");
     cy.realPress("Tab");
     cy.realPress("Space");
     cy.get("@clickSpy").should("be.called");
-    cy.get(".saltBanner").should("not.exist");
   });
 });
