@@ -40,7 +40,7 @@ export function useComponentCssInjection({
 
       targetWindow.document.head.insertBefore(
         styleMap.styleElement,
-        insertionPoint
+        insertionPoint || targetWindow.document.head.firstChild
       );
     } else {
       styleMap.styleElement.textContent = css;

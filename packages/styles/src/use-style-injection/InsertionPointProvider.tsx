@@ -1,12 +1,10 @@
-import { createContext, ReactNode, useMemo, useContext } from "react";
+import { createContext, ReactNode, useContext, useMemo } from "react";
 
 export interface InsertionPointContextType {
   insertionPoint: ChildNode | null;
 }
 
-const insertionPointContext = createContext<ChildNode | null>(
-  window.document.head.firstChild
-);
+const insertionPointContext = createContext<ChildNode | null>(null);
 
 if (process.env.NODE_ENV !== "production") {
   insertionPointContext.displayName = "insertionPointContext";
