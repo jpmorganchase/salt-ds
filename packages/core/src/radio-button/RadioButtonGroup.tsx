@@ -7,7 +7,9 @@ import {
 import { makePrefixer, useControlled, useId } from "../utils";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 
-import "./RadioButtonGroup.css";
+import radioButtonGroupCss from "./RadioButtonGroup.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
@@ -54,6 +56,13 @@ export const RadioButtonGroup = forwardRef<
     value: valueProp,
     ...rest
   } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-radiobutton-group",
+    css: radioButtonGroupCss,
+    window: targetWindow,
+  });
 
   const [value, setStateValue] = useControlled({
     controlled: valueProp,
