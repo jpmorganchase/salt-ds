@@ -9,7 +9,7 @@
 
 .saltFormFieldNext-labelLeft {
   align-self: center;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 40% 1fr;
 }
 
 .saltFormFieldNext-labelTop {

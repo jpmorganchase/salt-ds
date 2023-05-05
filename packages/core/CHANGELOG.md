@@ -1,5 +1,17 @@
 # @salt-ds/core
 
+## 1.7.0
+
+### Minor Changes
+
+- d7ed50d5: Remove text decoration of inner text in Card when wrapped in a link
+
+### Patch Changes
+
+- 9f3800d2: Update Tooltip props to account for the new content attribute introduced in @types/react@18.2.4
+- 528aa923: Fix Checkbox having incorrect icon style when in the disabled state and hovered over
+- 7f83323a: Fix mergeProps not respecting null values
+
 ## 1.6.0
 
 ### Minor Changes
