@@ -29,10 +29,5 @@ export function InsertionPointProvider(props: InsertionPointProviderProps) {
 
 export function useInsertionPoint() {
   const value = useContext(insertionPointContext);
-  if (!value) {
-    throw new Error(
-      "useInsertionPoint must be used within a InsertionPointProvider"
-    );
-  }
   return value;
 }
