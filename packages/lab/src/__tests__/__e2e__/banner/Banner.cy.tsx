@@ -64,6 +64,7 @@ describe("WHEN adding BannerCloseButton", () => {
   it("THEN should call onClick handler on CLICK ", () => {
     cy.get(".saltBanner").should("exist");
     cy.findByRole("button").realClick();
+    cy.get("@clickSpy").should("be.called");
   });
 
   it("THEN should call onClick handler on ENTER", () => {

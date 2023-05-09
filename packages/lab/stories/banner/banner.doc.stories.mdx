@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Banner } from "@salt-ds/lab";
 import { Link } from "@salt-ds/core";
 import {
@@ -29,7 +29,7 @@ You should always position the Banner component in the main content area, direct
 the navigation or in the related container component.
 
 <Canvas>
-  <Banner>Banners appear inline on the page</Banner>
+  <Story id="lab-banner--default" />
 </Canvas>
 
 If you need to share multiple notifications of the same state with your users, you should summarize them in a single Banner
@@ -55,11 +55,10 @@ Banner can be emphasized by passing in `emphasize={true}`.
 
 ## Dismissible
 
-By default, the Banner is non-dismissible, If you want to make the Banner dismissible, then you should provide a function
-to the onClose prop.
+By default, the Banner is non-dismissible, If you want to make the Banner dismissible, then you should add the BannerCloseButton component.
 
 <Canvas>
-  <Story id="lab-banner--hide-close" />
+  <Story id="lab-banner--with-close" />
 </Canvas>
 
 You should configure Banner to close when:
@@ -75,8 +74,10 @@ You should use the information Banner to draw attention to inform your user was 
 
 <Canvas>
   <Banner>
-    There has been an update to the terms and conditions{" "}
-    <Link href="#">link</Link>
+    <BannerContent>
+      There has been an update to the terms and conditions{" "}
+      <Link href="#">link</Link>
+    </BannerContent>
   </Banner>
 </Canvas>
 
@@ -87,7 +88,9 @@ or technical failure, the error Banner will guide them to the right action to re
 
 <Canvas>
   <Banner status="error">
-    Action failed <Link href="#">link</Link>
+    <BannerContent>
+      Action failed <Link href="#">link</Link>
+    </BannerContent>
   </Banner>
 </Canvas>
 
@@ -97,7 +100,9 @@ or current system status.
 
 <Canvas>
   <Banner status="warning">
-    System is under increased load <Link href="#">link</Link>
+    <BannerContent>
+      System is under increased load <Link href="#">link</Link>
+    </BannerContent>
   </Banner>
 </Canvas>
 
@@ -108,7 +113,9 @@ task has been successfully completed.
 
 <Canvas>
   <Banner status="success">
-    Database updated <Link href="#">link</Link>
+    <BannerContent>
+      Database updated <Link href="#">link</Link>
+    </BannerContent>
   </Banner>
 </Canvas>
 

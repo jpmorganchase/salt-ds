@@ -30,7 +30,6 @@ export const Statuses: ComponentStory<typeof Banner> = (props) => {
     <StackLayout style={{ width: "60vw" }}>
       {statuses.map((status, i) => (
         <Banner status={status} {...restProps} key={i}>
-          {" "}
           <BannerContent>Banners with status {status}.</BannerContent>
         </Banner>
       ))}

@@ -6,12 +6,7 @@ import "./BannerCloseButton.css";
 const withBaseName = makePrefixer("saltBannerClose");
 
 export const BannerCloseButton = (props: ButtonProps) => (
-  <Button
-    {...props}
-    aria-label="close"
-    className={withBaseName()}
-    variant="secondary"
-  >
+  <Button {...props} className={withBaseName()} variant="secondary">
     <CloseIcon />
   </Button>
 );
