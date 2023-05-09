@@ -1,5 +1,37 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.7
+
+### Minor Changes
+
+- 562ddb0c: Added `endAdornment` and `startAdornment` props to `InputNext`
+- eeb45421: Switch `FormFieldNext` to use a compositional based API
+
+  ```jsx
+  <FormFieldNext {...props}>
+    <FormFieldLabel>My label</FormFieldLabel>
+    <InputNext defaultValue="Value" />
+    <FormFieldHelperText>Helper text</FormFieldHelperText>
+  </FormFieldNext>
+  ```
+
+  Removed `helperText`, `label` props from `FormFieldNext`
+
+  Removed `FormFieldLabelProps`
+  Removed `FormFieldHelperTextProps`
+
+- d0f97318: Added `validationStatus` to `InputNext`, `FormFieldNext`, `FormFieldContextNext`
+
+  Added `StatusAdornment`, `ErrorAdornment`, `SuccessAdornment`, `WarningAdornment` components
+
+  Removed `disabled` prop from `FormFieldHelperText`, `FormFieldLabel`
+
+  Renamed `useA11yValueValue` to `u11yValueAriaProps`
+  Removed `disabled` and `readOnly` out of `u11yValueAriaProps` and separated out `disabled`, `readOnly` within `FormFieldContextNext`
+  Removed `useA11yValue` hook
+
+  Removed `type`, `onChange` prop from InputNext
+
 ## 1.0.0-alpha.6
 
 ### Minor Changes
