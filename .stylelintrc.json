@@ -1,11 +1,11 @@
 {
   "plugins": [
-    "./tooling/stylelint/correct-theme-token-usages/index.js",
+    "./tooling/stylelint/correct-theme-token-usage/index.js",
     "./tooling/stylelint/custom-property-attributes-kebab-case/index.js",
     "./tooling/stylelint/custom-property-starts-with-component-name/index.js"
   ],
   "rules": {
-    "salt/correct-theme-token-usages": {
+    "salt/correct-theme-token-usage": {
       "logLevel": "default"
     },
     "salt/custom-property-attributes-kebab-case": {
