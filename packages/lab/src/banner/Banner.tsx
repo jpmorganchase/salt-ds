@@ -3,7 +3,6 @@ import {
   makePrefixer,
   StatusIndicator,
   useAriaAnnouncer,
-  useControlled,
   useForkRef,
   ValidationStatus,
 } from "@salt-ds/core";
@@ -44,7 +43,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     children,
     className,
     emphasize = false,
-    open: openProp = true,
+    open = true,
     status = "info",
     ...rest
   },
@@ -64,13 +63,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       announce(announcement, 250);
     }
   }, [announce, disableAnnouncer, containerNode, announcementProp]);
-
-  const [open] = useControlled({
-    controlled: openProp,
-    default: openProp,
-    name: "Banner",
-    state: "open",
-  });
 
   return (
     <>

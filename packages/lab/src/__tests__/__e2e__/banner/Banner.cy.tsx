@@ -47,7 +47,7 @@ describe("GIVEN a Banner", () => {
 });
 
 describe("WHEN adding BannerCloseButton", () => {
-  beforeEach(() => {
+  it("THEN should show the close button", () => {
     const clickSpy = cy.stub().as("clickSpy");
     cy.mount(
       <Banner>
@@ -55,19 +55,31 @@ describe("WHEN adding BannerCloseButton", () => {
         <BannerCloseButton onClick={clickSpy} />
       </Banner>
     );
-  });
-  it("THEN should show the close button", () => {
     cy.get(".saltBanner").should("exist");
     cy.findByRole("button").should("exist");
   });
 
   it("THEN should call onClick handler on CLICK ", () => {
+    const clickSpy = cy.stub().as("clickSpy");
+    cy.mount(
+      <Banner>
+        <BannerContent>On Close example</BannerContent>
+        <BannerCloseButton onClick={clickSpy} />
+      </Banner>
+    );
     cy.get(".saltBanner").should("exist");
     cy.findByRole("button").realClick();
     cy.get("@clickSpy").should("be.called");
   });
 
   it("THEN should call onClick handler on ENTER", () => {
+    const clickSpy = cy.stub().as("clickSpy");
+    cy.mount(
+      <Banner>
+        <BannerContent>On Close example</BannerContent>
+        <BannerCloseButton onClick={clickSpy} />
+      </Banner>
+    );
     cy.get(".saltBanner").should("exist");
     cy.realPress("Tab");
     cy.realPress("Enter");
@@ -75,6 +87,13 @@ describe("WHEN adding BannerCloseButton", () => {
   });
 
   it("THEN should call onClick handler on SPACE", () => {
+    const clickSpy = cy.stub().as("clickSpy");
+    cy.mount(
+      <Banner>
+        <BannerContent>On Close example</BannerContent>
+        <BannerCloseButton onClick={clickSpy} />
+      </Banner>
+    );
     cy.get(".saltBanner").should("exist");
     cy.realPress("Tab");
     cy.realPress("Space");
