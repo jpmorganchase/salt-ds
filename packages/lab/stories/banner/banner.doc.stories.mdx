@@ -55,10 +55,28 @@ Banner can be emphasized by passing in `emphasize={true}`.
 
 ## Dismissible
 
-By default, the Banner is non-dismissible, If you want to make the Banner dismissible, then you should add the BannerCloseButton component.
+By default, the Banner is non-dismissible, If you want to make the Banner dismissible, then you should display the Banner conditionally and add the BannerCloseButton component with an onClick handler that will update the conditional param.
+
+```js
+const [open, setOpen] = useState(false);
+const onClose = () => {
+  setOpen(false);
+};
+
+return (
+  <>
+    {open && (
+      <Banner>
+        <BannerContent>Dismissible banner.</BannerContent>
+        <BannerCloseButton onClick={onClose} />
+      </Banner>
+    )}
+  </>
+);
+```
 
 <Canvas>
-  <Story id="lab-banner--with-close" />
+  <Story id="lab-banner--controlled" />
 </Canvas>
 
 You should configure Banner to close when:

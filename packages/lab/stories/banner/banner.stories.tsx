@@ -41,18 +41,25 @@ export const Emphasized: ComponentStory<typeof Banner> = () => (
   <Statuses emphasize />
 );
 
-export const WithClose = (props: BannerProps) => {
-  const [open, setOpen] = useState(true);
+export const Controlled = () => {
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    setOpen(true);
+  };
+
   const onClose = () => {
     setOpen(false);
   };
+
   return (
-    <div style={{ width: "60vw" }}>
-      {open && (
-        <Banner {...props}>
-          <BannerContent>Banner with close button</BannerContent>
+    <div style={{ width: "50vw" }}>
+      {open ? (
+        <Banner>
+          <BannerContent>Controlled banner</BannerContent>
           <BannerCloseButton onClick={onClose} />
         </Banner>
+      ) : (
+        <Button onClick={handleClick}>Show banner</Button>
       )}
     </div>
   );
@@ -78,29 +85,6 @@ export const MultipleLines = (props: BannerProps) => {
           <BannerCloseButton onClick={onClose} />
         </Banner>
       )}
-    </div>
-  );
-};
-
-export const Controlled = () => {
-  const [open, setOpen] = useState(false);
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div style={{ width: "60vw" }}>
-      {open && (
-        <Banner>
-          <BannerContent>Controlled banner</BannerContent>
-          <BannerCloseButton onClick={onClose} />
-        </Banner>
-      )}
-      <Button onClick={handleClick}>Show banner</Button>
     </div>
   );
 };
