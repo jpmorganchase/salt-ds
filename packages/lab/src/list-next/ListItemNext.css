@@ -1,11 +1,11 @@
-.saltBasicListItem {
+.saltListItemNext {
   /* Color */
   --list-item-text-color: var(--salt-text-primary-foreground);
   --list-item-height: var(--salt-size-stackable);
   --list-item-background: none;
 }
 
-.saltBasicListItem {
+.saltListItemNext {
   color: var(--list-item-text-color);
   background: var(--list-item-background);
   height: var(--list-item-height, auto);
@@ -18,44 +18,53 @@
   --saltCheckbox-icon-stroke: var(--salt-selectable-foreground);
   transition: background var(--salt-duration-perceptible) ease-in-out;
 }
-.saltBasicListItem[role="presentation"] {
+
+.saltListItemNext > * {
+  pointer-events: none;
+}
+
+.saltListItemNext[role="presentation"] {
   cursor: default;
 }
 
 /* Pseudo-class applied to the root element on focus */
-.saltBasicListItem:focus-visible {
+.saltListItemNext:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
-.saltBasicListItem:hover:not([role="presentation"]),
-.saltBasicListItem:focus-visible {
+.saltListItemNext:hover:not([role="presentation"]),
+.saltListItemNext:focus-visible {
   --list-item-background: var(--salt-selectable-background-hover);
   --saltCheckbox-icon-stroke: var(--salt-selectable-foreground-hover);
   --saltCheckbox-icon-fill: var(--salt-selectable-background-hover);
   cursor: var(--salt-selectable-cursor-hover);
 }
-.saltBasicListItem[aria-selected="true"]:not(:has(input[type='checkbox'])) {
+
+.saltListItemNext[aria-selected="true"]:not(:has(input[type='checkbox'])) {
   --list-item-background: var(--salt-selectable-background-selected);
 }
-@supports not selector(:has(*)) {
-  .saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-checkbox) {
+
+@supports not selector(:has(*)
+
+) {
+  .saltListItemNext[aria-selected="true"]:not(.saltListItemNext-checkbox) {
     --list-item-background: var(--salt-selectable-background-selected);
   }
 }
 
-.saltBasicListItem[aria-selected="true"]:not(.saltBasicListItem-disabled) {
+.saltListItemNext[aria-selected="true"]:not(.saltListItemNext-disabled) {
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
 
-.saltBasicListItem-disabled:hover:not([role="presentation"]),
-.saltBasicListItem-disabled:focus-visible {
+.saltListItemNext-disabled:hover:not([role="presentation"]),
+.saltListItemNext-disabled:focus-visible {
   --list-item-background: var(--salt-selectable-background-disabled);
   --saltCheckbox-icon-fill: var(--salt-selectable-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.saltBasicListItem-textWrapper {
+.saltListItemNext-textWrapper {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;

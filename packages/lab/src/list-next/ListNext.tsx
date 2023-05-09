@@ -1,4 +1,4 @@
-import {makePrefixer, useForkRef} from "@salt-ds/core";
+import {makePrefixer, mergeProps, useForkRef} from "@salt-ds/core";
 import {
   Children,
   cloneElement,
@@ -10,26 +10,25 @@ import {
   MouseEventHandler,
   ReactElement,
 } from "react";
-import "./BasicList.css";
+import "./ListNext.css";
 import {clsx} from "clsx";
-import {BasicListItem, BasicListItem as DefaultListItem} from "./BasicListItem";
+import {ListItemNext, ListItemNext as DefaultListItem} from "./ListItemNext";
 import {useList} from "./useList";
 
 const withBaseName = makePrefixer("saltList");
 const defaultEmptyMessage = "No data to display";
 
-export interface BasicListProps extends HTMLAttributes<HTMLUListElement> {
+export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
   disabled?: boolean;
   emptyMessage?: string;
   multiselect?: boolean;
   ListItem?: ReactElement;
-  source?: ReadonlyArray<string>;
   borderless?: boolean,
   deselectable?: boolean,
   maxWidth?: number
 }
 
-export interface ListControlProps {
+export interface ListNextControlProps {
   "aria-activedescendant"?: string;
   onBlur: FocusEventHandler;
   onFocus: FocusEventHandler;
@@ -38,8 +37,8 @@ export interface ListControlProps {
   onMouseLeave: MouseEventHandler;
 }
 
-export const BasicList = forwardRef<HTMLUListElement, BasicListProps>(
-  function BasicList({
+export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
+  function ListNext({
                        borderless,
                        children,
                        className,
@@ -51,15 +50,11 @@ export const BasicList = forwardRef<HTMLUListElement, BasicListProps>(
                        multiselect,
                        onSelect,
                        onFocus,
-                       source,
                        ...rest
                      }, ref) {
-    const emptyList = (source && !source.length) || !source && Children.count(children) === 0;
-    const listItems = source?.length ? source : children;
-
-    // if source is items, we need to know what is selected, disabled...
+    const emptyList = Children.count(children) === 0;
     const {selectedIndex, focusedIndex, listRef, handleClick} = useList({
-      items: listItems,
+      items: children,
       onSelect,
       onFocus,
       deselectable,
@@ -67,31 +62,34 @@ export const BasicList = forwardRef<HTMLUListElement, BasicListProps>(
     const forkedRef = useForkRef(ref, listRef);
 
     function renderEmpty() {
-      return <BasicListItem className={withBaseName("empty-message")}
-                            role="presentation">
+      return <ListItemNext className={withBaseName("empty-message")}
+                           role="presentation">
         {emptyMessage || defaultEmptyMessage}
-      </BasicListItem>
+      </ListItemNext>
     }
 
     function renderContent() {
-      return Children.map(listItems, (listItem, index) => {
-        // we need to pass tabindex, if item is 0 or last focused then 0 otherwise -1
+      return Children.map(children, (listItem, index) => {
         const childProps = {
           showCheckbox: multiselect,
           onClick: (e) => handleClick(e, index),
-          selected: selectedIndex === index
+          selected: selectedIndex === index,
+          tabIndex: focusedIndex === index,
+          ...listItem.props
         }
-        // check isValidElement
-        return source?.length ? <BasicListItem { ...childProps}>{listItem}</BasicListItem> : cloneElement(listItem, childProps)
+        return isValidElement(listItem) &&
+        cloneElement(listItem, {
+          ...mergeProps(childProps, listItem.props),
+        })
       })
     }
 
-    // TODO: add labelledby to ul?
     return (
       <ul ref={forkedRef} className={clsx(withBaseName(), {
         [withBaseName('borderless')]: borderless
       }, className)} role="listbox"
           tabIndex={disabled || !emptyList ? undefined : 0}
+          aria-activedescendant={selectedIndex}
           {...rest}
       >
         {emptyList ? renderEmpty() : renderContent()}
