@@ -1,8 +1,0 @@
-{
-  "includeScore": true,
-  "includeMatches": true,
-  "maxPatternLength": 240,
-  "ignoreLocation": true,
-  "threshold": 0.3,
-  "keys": ["title", "route", "content"]
-}
