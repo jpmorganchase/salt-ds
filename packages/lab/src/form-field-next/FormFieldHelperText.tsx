@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { makePrefixer, StatusIndicator, Text, TextProps } from "@salt-ds/core";
-import { useFormFieldPropsNext } from "../form-field-context";
+import { useFormFieldPropsNext } from "../form-field-context-next";
 
 import "./FormFieldHelperText.css";
 
