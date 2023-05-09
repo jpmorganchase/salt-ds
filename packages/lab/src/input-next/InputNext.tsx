@@ -30,6 +30,11 @@ export interface InputProps
    */
   disabled?: HTMLInputElement["disabled"];
   /**
+   * The marker to use in an empty read only Input.
+   * Use `''` to disable this feature. Defaults to '—'.
+   */
+  emptyReadOnlyMarker?: string;
+  /**
    * End adornment component
    */
   endAdornment?: ReactNode;
@@ -89,6 +94,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     "aria-owns": ariaOwns,
     className: classNameProp,
     disabled,
+    emptyReadOnlyMarker = "—",
     endAdornment,
     id,
     inputProps: inputPropsProp,
@@ -131,12 +137,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     inputPropsProp,
     misplacedAriaProps
   );
+  const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
+  const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
 
   const { onBlur, onChange, onFocus, ...restInputProps } = inputProps;
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
-    default: defaultValueProp,
+    default: defaultValue,
     name: "Input",
     state: "value",
   });
