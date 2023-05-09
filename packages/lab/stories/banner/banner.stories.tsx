@@ -1,136 +1,89 @@
-import { FC, ReactNode, RefAttributes, useState } from "react";
+import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Link, StackLayout, SaltProvider, Panel } from "@salt-ds/core";
-import { Banner, BannerProps } from "@salt-ds/lab";
+import { Button, Link, StackLayout, ValidationStatus } from "@salt-ds/core";
+import {
+  Banner,
+  BannerCloseButton,
+  BannerContent,
+  BannerProps,
+} from "@salt-ds/lab";
 
 export default {
   title: "Lab/Banner",
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 
-interface ExampleRowProps {
-  children: ReactNode;
-  name: string;
-}
-
-const ExampleRow: FC<ExampleRowProps> = ({ name, children }) => (
-  <Panel style={{ height: "unset" }}>
-    <h1>{name} - ( Touch, Low, Medium, High )</h1>
-    <StackLayout gap={2}>
-      Touch
-      <SaltProvider density="touch">{children}</SaltProvider>
-      Low
-      <SaltProvider density="low">{children}</SaltProvider>
-      Medium
-      <SaltProvider density="medium">{children}</SaltProvider>
-      High
-      <SaltProvider density="high">{children}</SaltProvider>
-    </StackLayout>
-  </Panel>
-);
-
-const Examples = () => (
-  <>
-    <ExampleRow name="Error">
-      <Error />
-    </ExampleRow>
-    <ExampleRow name="Success">
-      <Success />
-    </ExampleRow>
-    <ExampleRow name="Warning">
-      <Warning />
-    </ExampleRow>
-    <ExampleRow name="Info">
-      <Info />
-    </ExampleRow>
-  </>
-);
-
-export const All: ComponentStory<typeof Banner> = () => (
-  <div
-    style={{
-      height: "100%",
-      overflowY: "scroll",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-    }}
-  >
-    <Examples />
+export const Default: ComponentStory<typeof Banner> = (props) => (
+  <div style={{ width: "60vw" }}>
+    <Banner {...props}>
+      <BannerContent>Default banner</BannerContent>
+    </Banner>
   </div>
 );
 
-const ExampleBanner = ({ status, emphasize }: BannerProps) => {
-  const [showBanner, setShowBanner] = useState(true);
+export const Statuses: ComponentStory<typeof Banner> = (props) => {
+  const { status, ...restProps } = props;
 
-  const handleClose = () => {
-    setShowBanner(false);
+  const statuses: ValidationStatus[] = ["info", "error", "warning", "success"];
+
+  return (
+    <StackLayout style={{ width: "60vw" }}>
+      {statuses.map((status, i) => (
+        <Banner status={status} {...restProps} key={i}>
+          <BannerContent>Banners with status {status}.</BannerContent>
+        </Banner>
+      ))}
+    </StackLayout>
+  );
+};
+
+export const Emphasized: ComponentStory<typeof Banner> = () => (
+  <Statuses emphasize />
+);
+
+export const Controlled = () => {
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
   };
 
   return (
-    <div style={{ width: "95%", minWidth: "60vw" }}>
-      {showBanner && (
-        <Banner
-          //eslint-disable-next-line no-script-url
-          LinkProps={{ href: "javascript:void(0)" }}
-          onClose={handleClose}
-          status={status}
-          emphasize={emphasize}
-        >
-          Banners appear inline on the page
+    <div style={{ width: "50vw" }}>
+      {open ? (
+        <Banner>
+          <BannerContent>Controlled banner</BannerContent>
+          <BannerCloseButton onClick={onClose} />
         </Banner>
+      ) : (
+        <Button onClick={handleClick}>Show banner</Button>
       )}
     </div>
   );
 };
 
-export const Info: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"info"} />;
-};
-
-export const Error: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"error"} />;
-};
-
-export const Warning: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"warning"} />;
-};
-
-export const Success: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner status={"success"} />;
-};
-
-export const Emphasize: ComponentStory<typeof Banner> = () => {
-  return <ExampleBanner emphasize={true} status={"success"} />;
-};
-
-export const Render = (
-  props: JSX.IntrinsicAttributes & BannerProps & RefAttributes<HTMLDivElement>
-) => {
-  const [showBanner, setShowBanner] = useState(true);
-
-  const handleClose = () => {
-    setShowBanner(false);
+export const MultipleLines = (props: BannerProps) => {
+  const [open, setOpen] = useState(true);
+  const onClose = () => {
+    setOpen(false);
   };
-
   return (
-    <div style={{ width: "95%", minWidth: "60vw" }}>
-      {showBanner && (
-        <Banner
-          onClose={handleClose}
-          render={({ Icon, getIconProps, getLabelProps, getLinkProps }) => (
-            <>
-              <Icon {...getIconProps()} aria-label={"Success"} />
-              <span {...getLabelProps()}>
-                Example custom renderer
-                <Link {...getLinkProps()}>link</Link>
-              </span>
-            </>
-          )}
-          status="success"
-          {...props}
-        />
+    <div style={{ width: "60vw" }}>
+      {open && (
+        <Banner {...props}>
+          <BannerContent>
+            <div>
+              Our guidance for hyphen and dash usage differs from that of the
+              “AP Stylebook” and is aligned with the “J.P. Morgan Brand
+              Guidelines” (also known as the Masterbrand guide).
+            </div>
+            <Link href={"#"}>Read more...</Link>
+          </BannerContent>
+          <BannerCloseButton onClick={onClose} />
+        </Banner>
       )}
     </div>
   );
