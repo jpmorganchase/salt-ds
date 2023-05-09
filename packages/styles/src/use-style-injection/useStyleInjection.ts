@@ -25,7 +25,10 @@ export function useComponentCssInjection({
   window: targetWindow,
 }: UseComponentCssInjection): void {
   const insertionPoint = useInsertionPoint();
-
+  // Don't inject if we don't have a provided window or if it is the main window.
+  if (!targetWindow || targetWindow === window) {
+    return;
+  }
   maybeUseInsertionEffect(() => {
     let sheetsMap = windowSheetsMap.get(targetWindow) ?? new Map();
     let styleMap = sheetsMap.get(id) ?? { styleElement: null, count: 0 };
