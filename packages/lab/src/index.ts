@@ -42,11 +42,11 @@ export {
   FormFieldLabel,
   FormFieldControlWrapper,
 } from "./form-field-next";
-export { 
-  type A11yValueProps as A11yValuePropsNext, 
-  type a11yValueAriaProps as a11yValueAriaPropsNext, 
-  type FormFieldContextNextValue, 
-  FormFieldContextNext
+export {
+  type A11yValueProps as A11yValuePropsNext,
+  type a11yValueAriaProps as a11yValueAriaPropsNext,
+  type FormFieldContextNextValue,
+  FormFieldContextNext,
 } from "./form-field-context";
 export * from "./form-group";
 export * from "./formatted-input";

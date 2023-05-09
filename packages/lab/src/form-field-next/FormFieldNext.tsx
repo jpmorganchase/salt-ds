@@ -1,7 +1,10 @@
 import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, HTMLAttributes, useMemo } from "react";
 import { makePrefixer, useId, capitalize } from "@salt-ds/core";
-import { A11yValueProps, FormFieldContextNext } from "../form-field-context-next";
+import {
+  A11yValueProps,
+  FormFieldContextNext,
+} from "../form-field-context-next";
 
 import "./FormFieldNext.css";
 
