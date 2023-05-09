@@ -11,18 +11,18 @@ export default {
 } as ComponentMeta<typeof Banner>;
 
 export const Form = () => {
-  let isValid = true;
+  const [isValid, setIsValid] = useState(true);
   const name = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: SyntheticEvent) => {
     if (!name.current?.value || name.current?.value.length === 0) {
-      isValid = false;
+      setIsValid(false);
     }
     event.preventDefault();
   };
 
   const handleClick = () => {
-    isValid = true;
+    setIsValid(true);
   };
 
   return (
