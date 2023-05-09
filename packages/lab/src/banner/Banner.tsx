@@ -25,10 +25,6 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   emphasize?: boolean;
   /**
-   * Controlled prop to set visible state.
-   */
-  open?: boolean;
-  /**
    *  A string to determine the current state of the Banner
    */
   status?: ValidationStatus;
@@ -43,7 +39,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     children,
     className,
     emphasize = false,
-    open = true,
     status = "info",
     ...rest
   },
@@ -65,23 +60,19 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   }, [announce, disableAnnouncer, containerNode, announcementProp]);
 
   return (
-    <>
-      {open && (
-        <div
-          className={clsx(withBaseName(), withBaseName(status), className, {
-            [withBaseName("emphasize")]: emphasize,
-          })}
-          ref={handleRef}
-          {...rest}
-          aria-live="polite"
-        >
-          <StatusIndicator
-            className={clsx(withBaseName("icon"), className)}
-            status={status}
-          />
-          {children}
-        </div>
-      )}
-    </>
+    <div
+      className={clsx(withBaseName(), withBaseName(status), className, {
+        [withBaseName("emphasize")]: emphasize,
+      })}
+      ref={handleRef}
+      {...rest}
+      aria-live="polite"
+    >
+      <StatusIndicator
+        className={clsx(withBaseName("icon"), className)}
+        status={status}
+      />
+      {children}
+    </div>
   );
 });

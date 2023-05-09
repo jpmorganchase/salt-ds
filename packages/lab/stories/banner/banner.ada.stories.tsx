@@ -11,28 +11,28 @@ export default {
 } as ComponentMeta<typeof Banner>;
 
 export const Form = () => {
-  const [invalid, setInvalid] = useState(false);
+  let isValid = true;
   const name = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (event: SyntheticEvent) => {
-    if (name.current?.value && name.current?.value.length > 0) {
-      setInvalid(false);
-    } else {
-      setInvalid(true);
+    if (!name.current?.value || name.current?.value.length === 0) {
+      isValid = false;
     }
     event.preventDefault();
   };
 
   const handleClick = () => {
-    setInvalid(false);
+    isValid = true;
   };
 
   return (
     <div style={{ width: "60vw" }}>
-      <Banner open={invalid} status="error">
-        <BannerContent>The form is not valid</BannerContent>
-        <BannerCloseButton onClick={handleClick} />
-      </Banner>
+      {!isValid && (
+        <Banner status="error">
+          <BannerContent>The form is not valid</BannerContent>
+          <BannerCloseButton onClick={handleClick} />
+        </Banner>
+      )}
 
       <form action="" onSubmit={handleSubmit}>
         <fieldset>

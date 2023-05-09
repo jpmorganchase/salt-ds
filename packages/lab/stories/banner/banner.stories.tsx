@@ -48,10 +48,12 @@ export const WithClose = (props: BannerProps) => {
   };
   return (
     <div style={{ width: "60vw" }}>
-      <Banner open={open} {...props}>
-        <BannerContent>Banner with close button</BannerContent>
-        <BannerCloseButton onClick={onClose} />
-      </Banner>
+      {open && (
+        <Banner {...props}>
+          <BannerContent>Banner with close button</BannerContent>
+          <BannerCloseButton onClick={onClose} />
+        </Banner>
+      )}
     </div>
   );
 };
@@ -63,17 +65,19 @@ export const MultipleLines = (props: BannerProps) => {
   };
   return (
     <div style={{ width: "60vw" }}>
-      <Banner open={open} {...props}>
-        <BannerContent>
-          <div>
-            Our guidance for hyphen and dash usage differs from that of the “AP
-            Stylebook” and is aligned with the “J.P. Morgan Brand Guidelines”
-            (also known as the Masterbrand guide).
-          </div>
-          <Link href={"#"}>Read more...</Link>
-        </BannerContent>
-        <BannerCloseButton onClick={onClose} />
-      </Banner>
+      {open && (
+        <Banner {...props}>
+          <BannerContent>
+            <div>
+              Our guidance for hyphen and dash usage differs from that of the
+              “AP Stylebook” and is aligned with the “J.P. Morgan Brand
+              Guidelines” (also known as the Masterbrand guide).
+            </div>
+            <Link href={"#"}>Read more...</Link>
+          </BannerContent>
+          <BannerCloseButton onClick={onClose} />
+        </Banner>
+      )}
     </div>
   );
 };
@@ -90,10 +94,12 @@ export const Controlled = () => {
 
   return (
     <div style={{ width: "60vw" }}>
-      <Banner open={open}>
-        <BannerContent>Controlled banner</BannerContent>
-        <BannerCloseButton onClick={onClose} />
-      </Banner>
+      {open && (
+        <Banner>
+          <BannerContent>Controlled banner</BannerContent>
+          <BannerCloseButton onClick={onClose} />
+        </Banner>
+      )}
       <Button onClick={handleClick}>Show banner</Button>
     </div>
   );

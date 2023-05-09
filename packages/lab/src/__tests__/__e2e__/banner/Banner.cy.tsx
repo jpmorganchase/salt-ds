@@ -1,5 +1,4 @@
 import { Banner, BannerCloseButton, BannerContent } from "@salt-ds/lab";
-import { Link } from "@salt-ds/core";
 import { composeStories } from "@storybook/testing-react";
 import * as bannerStories from "@stories/banner/banner.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
