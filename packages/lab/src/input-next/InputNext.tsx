@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
-import { useFormFieldPropsNext } from "../form-field-context";
+import { useFormFieldPropsNext } from "../form-field-context-next";
 import { StatusAdornment } from "../status-adornment";
 
 import "./InputNext.css";
