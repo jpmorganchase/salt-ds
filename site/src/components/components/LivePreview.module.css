@@ -1,13 +1,16 @@
 .container {
   border: 1px var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
-  margin-bottom: calc(3 * var(--salt-size-unit));
 }
 
 .componentPreview {
   min-height: 25vh;
   display: flex;
+  flex-direction: row;
+}
+
+.componentPreview.smallViewport {
+  min-height: 35vh;
   flex-direction: column;
-  background-color: var(--salt-actionable-primary-foreground-active);
 }
 
 .codePreview {
@@ -27,9 +30,17 @@
   justify-content: center;
   gap: calc(2 * var(--salt-size-unit));
   flex-wrap: wrap;
+  padding-top: calc(2 * var(--salt-size-unit));
 }
 
 .switch {
   align-self: flex-end;
   padding: var(--salt-size-unit);
+}
+
+.exampleWithSwitch {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: var(--salt-actionable-primary-foreground-active);
 }
