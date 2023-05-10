@@ -43,7 +43,7 @@ export const HorizontalGroup = () => {
           <li key={item}>
             <NavItem
               active={active === index}
-              href="#"
+              href="javascript:void 0"
               onClick={() => setActive(index)}
             >
               {item}
@@ -64,7 +64,7 @@ export const VerticalGroup = () => {
           <li key={item}>
             <NavItem
               active={active === index}
-              href="#"
+              href="javascript:void 0"
               orientation="vertical"
               onClick={() => setActive(index)}
             >
@@ -82,11 +82,14 @@ export const NestedGroup = () => {
 
   return (
     <nav>
-      <ul style={{ listStyle: "none", paddingLeft: 0, width: 500 }}>
+      <ul
+        style={{ listStyle: "none", paddingLeft: 0, width: 500, height: 500 }}
+      >
         {itemsWithSubNav.map(({ name, subNav }, index) => (
           <li key={name}>
             <NavItem
               active={active === name}
+              href="javascript:void 0"
               orientation="vertical"
               onClick={() => setActive(name)}
               onExpand={() => {
@@ -115,6 +118,7 @@ export const NestedGroup = () => {
                     <li key={itemValue}>
                       <NavItem
                         active={active === itemValue}
+                        href="javascript:void 0"
                         orientation="vertical"
                         onClick={() => setActive(itemValue)}
                         level={1}

@@ -1,5 +1,6 @@
 .saltNavItem {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   position: relative;
   min-height: var(--salt-size-stackable);
@@ -12,7 +13,6 @@
   font-family: var(--salt-text-fontFamily);
   padding-left: calc(var(--saltNavItem-level, 0) * var(--salt-size-unit) * 1.5);
   text-decoration: none;
-  flex: 1;
 }
 
 .saltNavItem-horizontal {
@@ -28,6 +28,7 @@
 }
 
 .saltNavItem-expandButton {
+  justify-self: end;
   margin: calc((var(--salt-size-stackable) - var(--salt-size-base)) / 2);
 }
 

@@ -1,9 +1,10 @@
-import React, {
+import {
   ComponentPropsWithoutRef,
   forwardRef,
   MouseEventHandler,
+  MouseEvent,
 } from "react";
-import { makePrefixer, Button } from "@salt-ds/core";
+import { makePrefixer, Button, Link } from "@salt-ds/core";
 import { ChevronRightIcon, ChevronDownIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import "./NavItem.css";
@@ -62,6 +63,11 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       "--saltNavItem-level": `${level}`,
     };
 
+    const handleExpand = (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      onExpand?.(event);
+    };
+
     return (
       <div
         className={clsx(
@@ -76,18 +82,18 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         style={style}
         {...rest}
       >
-        <a
+        <Link
           className={withBaseName("label")}
           aria-current={active ? "page" : undefined}
           href={href}
         >
           <span>{children}</span>
-        </a>
+        </Link>
         {parent && (
           <ExpansionButton
             className={withBaseName("expandButton")}
             expanded={expanded}
-            onClick={onExpand}
+            onClick={handleExpand}
           />
         )}
       </div>
