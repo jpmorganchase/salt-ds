@@ -2,7 +2,9 @@ import { SVGAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { FormFieldProps } from "./FormField";
 
-import "./FormActivationIndicator.css";
+import formActivationIndicatorCss from "./FormActivationIndicator.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const ErrorIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
   return (
@@ -55,6 +57,13 @@ export const FormActivationIndicator = ({
   hasIcon,
   validationStatus,
 }: FormActivationIndicatorProps) => {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-form-activation-indicator",
+    css: formActivationIndicatorCss,
+    window: targetWindow,
+  });
+
   const rootClass = "saltFormActivationIndicator";
 
   return (

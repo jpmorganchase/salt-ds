@@ -3,8 +3,10 @@ import { Toolbar } from "../toolbar";
 import { makePrefixer } from "@salt-ds/core";
 import { MenuIcon } from "@salt-ds/icons";
 
-import "./AppHeader.css";
+import appHeaderCss from "./AppHeader.css";
 import { forwardRef, HTMLAttributes } from "react";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltAppHeader");
 
@@ -12,6 +14,13 @@ export type AppHeaderProps = HTMLAttributes<HTMLDivElement>;
 
 export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
   ({ children, className, ...rest }, ref) => {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-app-header",
+      css: appHeaderCss,
+      window: targetWindow,
+    });
+
     // const [innerContainerRef, overflowedItems] = useOverflowObserver(
     //   "horizontal",
     //   null

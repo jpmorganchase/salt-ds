@@ -1,17 +1,19 @@
 import { clsx } from "clsx";
 import React, {
   ChangeEvent,
-  KeyboardEvent,
-  useCallback,
-  forwardRef,
   ForwardedRef,
+  forwardRef,
+  KeyboardEvent,
   ReactElement,
+  useCallback,
   useRef,
 } from "react";
 import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { Input } from "../input";
 
-import "./EditableLabel.css";
+import editableLabelCss from "./EditableLabel.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const classBase = "saltEditableLabel";
 
@@ -44,6 +46,13 @@ export const EditableLabel = forwardRef(function EditableLabel(
   }: EditableLabelProps,
   forwardedRef: ForwardedRef<HTMLDivElement>
 ): ReactElement<EditableLabelProps> {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-editable-label",
+    css: editableLabelCss,
+    window: targetWindow,
+  });
+
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const [value, setValue] = useControlled({

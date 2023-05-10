@@ -28,7 +28,9 @@ import { TreeProps } from "./treeTypes";
 
 import { useTree } from "./useTree";
 import { TreeNode } from "./TreeNode";
-import "./Tree.css";
+import treeCss from "./Tree.css";
+import {useWindow} from "@salt-ds/window";
+import {useComponentCssInjection} from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltTree");
 
@@ -82,6 +84,13 @@ export const Tree = forwardRef(function Tree<
   }: TreeProps<Item, Selection>,
   forwardedRef?: ForwardedRef<HTMLDivElement>
 ) {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-tree",
+    css: treeCss,
+    window: targetWindow,
+  });
+
   const id = useIdMemo(idProp);
   const rootRef = useRef(null);
   const contentRef = useRef(null);

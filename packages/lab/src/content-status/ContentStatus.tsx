@@ -1,9 +1,9 @@
 import {
   Button,
   makePrefixer,
+  Text,
   useAriaAnnouncer,
   useId,
-  Text,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, MouseEvent, Ref, useEffect } from "react";
@@ -13,7 +13,9 @@ import {
   StatusIndicatorProps,
 } from "./internal/StatusIndicator";
 
-import "./ContentStatus.css";
+import contentStatusCss from "./ContentStatus.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltContentStatus");
 
@@ -45,6 +47,13 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
     },
     ref
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-dialog-actions",
+      css: contentStatusCss,
+      window: targetWindow,
+    });
+
     const id = useId();
 
     const hasDefaultActionContent = actionLabel && onActionClick;

@@ -11,7 +11,9 @@ import { Button, useControlled, useForkRef } from "@salt-ds/core";
 import { Input, InputProps, StaticInputAdornment } from "../input";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 
-import "./SearchInput.css";
+import searchInputCss from "./SearchInput.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const baseName = "saltSearchInput";
 
@@ -53,6 +55,13 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     },
     ref
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-search-input",
+      css: searchInputCss,
+      window: targetWindow,
+    });
+
     const inputRef = useRef<HTMLInputElement>(null);
     const handleRef = useForkRef(inputRef, ref);
 

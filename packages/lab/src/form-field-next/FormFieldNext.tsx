@@ -1,9 +1,11 @@
 import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, HTMLAttributes, useMemo } from "react";
-import { makePrefixer, useId, capitalize } from "@salt-ds/core";
+import { capitalize, makePrefixer, useId } from "@salt-ds/core";
 import { FormFieldContextNext } from "../form-field-context";
 
-import "./FormFieldNext.css";
+import formFieldNextCss from "./FormFieldNext.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type FormFieldLabelPlacement = "top" | "left";
 
@@ -65,6 +67,13 @@ export const FormField = forwardRef(
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-form-field-next",
+      css: formFieldNextCss,
+      window: targetWindow,
+    });
+
     const labelId = useId();
     const helperTextId = useId();
 

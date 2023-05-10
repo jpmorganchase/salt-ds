@@ -1,17 +1,19 @@
 import {
   Children,
+  CSSProperties,
   forwardRef,
   HTMLAttributes,
-  useState,
   useCallback,
-  CSSProperties,
+  useState,
 } from "react";
 import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { DeckItem, DeckItemProps } from "../deck-item";
 import { useWidth } from "../responsive";
-import "./DeckLayout.css";
+import deckLayoutCss from "./DeckLayout.css";
 
 import { clsx } from "clsx";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type LayoutAnimation = "slide" | "fade";
 export type LayoutAnimationDirection = "horizontal" | "vertical";
@@ -52,6 +54,13 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
     },
     ref
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-deck-layout",
+      css: deckLayoutCss,
+      window: targetWindow,
+    });
+
     const [deckItemRef, deckItemWidth] = useWidth<HTMLDivElement>(true);
 
     const [deckItemHeight, setDeckItemHeight] = useState<number>(0);

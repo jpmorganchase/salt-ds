@@ -1,16 +1,18 @@
 import {
-  makePrefixer,
-  Text,
   Display1,
   Display2,
   Display3,
+  makePrefixer,
+  Text,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon, IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import { useMetricContext } from "./internal";
 
-import "./MetricContent.css";
+import metricContentCss from "./MetricContent.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface MetricContentProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -54,6 +56,13 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
     },
     ref
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-metric-content",
+      css: metricContentCss,
+      window: targetWindow,
+    });
+
     const {
       direction,
       showIndicator,

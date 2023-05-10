@@ -19,7 +19,9 @@ import {
   ToggleButtonGroupContext,
 } from "./internal/ToggleButtonGroupContext";
 
-import "./ToggleButtonGroup.css";
+import toggleButtonGroupCss from "./ToggleButtonGroup.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltToggleButtonGroup");
 
@@ -87,6 +89,12 @@ export const ToggleButtonGroup = forwardRef<
   },
   ref
 ) {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-toggle-button-group",
+    css: toggleButtonGroupCss,
+    window: targetWindow,
+  });
   const buttonRefs = useRef<Array<HTMLButtonElement | undefined>>([]);
 
   const [disableFocus, setDisableFocus] = useState(false);

@@ -1,6 +1,8 @@
 import { forwardRef } from "react";
 import { Button, ButtonProps } from "@salt-ds/core";
-import "./ToolbarButton.css";
+import toolbarButtonCss from "./ToolbarButton.css";
+import {useWindow} from "@salt-ds/window";
+import {useComponentCssInjection} from "@salt-ds/styles";
 
 export type ToolbarButtonProps = ButtonProps & {
   overflowLabel?: string;
@@ -9,6 +11,13 @@ export type ToolbarButtonProps = ButtonProps & {
 
 export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
   function ToolbarButton({ label, ...props }, forwardedRef) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-toolbar-button",
+      css: toolbarButtonCss,
+      window: targetWindow,
+    });
+
     return (
       <Button
         variant="secondary"

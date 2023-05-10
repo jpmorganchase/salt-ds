@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { clsx } from "clsx";
 import { Overlay, useOverlay } from "../overlay";
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
@@ -7,17 +7,19 @@ import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
 
 import {
-  hexValueWithoutAlpha,
-  getColorNameByHexValue,
   convertColorMapValueToHex,
+  getColorNameByHexValue,
   getHexValue,
+  hexValueWithoutAlpha,
 } from "./ColorHelpers";
 import { saltColorMap } from "./colorMap";
 import { ColorChooserTabs, DictTabs } from "./DictTabs";
 import { getColorPalettes } from "./GetColorPalettes";
 import { createTabsMapping } from "./createTabsMapping";
 
-import "./ColorChooser.css";
+import colorChooserCss from "./ColorChooser.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltColorChooser");
 
@@ -79,6 +81,13 @@ export const ColorChooser = ({
   readOnly = false,
   displayHexOnly = false,
 }: ColorChooserProps): JSX.Element => {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-color-picker",
+    css: colorChooserCss,
+    window: targetWindow,
+  });
+
   const [open, setOpen] = useState(false);
 
   const allColors: string[][] = saltColorOverrides

@@ -12,7 +12,9 @@ import {
 import { ListItem, ListItemProps } from "../list-deprecated";
 import { MenuDescriptor } from "./CascadingMenuProps";
 
-import "./CascadingMenuItem.css";
+import cascadingMenuItemCss from "./CascadingMenuItem.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const noop = () => undefined;
 const withBaseName = makePrefixer("saltMenuItem");
@@ -71,6 +73,13 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       tooltipLeaveDelay,
       ...restProps
     } = props;
+
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-rgba-input",
+      css: cascadingMenuItemCss,
+      window: targetWindow,
+    });
 
     const menuTextRef = useRef<HTMLDivElement>(null);
     const [hasTooltip, setHasTooltip] = useState(false);

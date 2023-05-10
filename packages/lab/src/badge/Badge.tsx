@@ -1,6 +1,6 @@
-import { makePrefixer, useId } from "@salt-ds/core";
-import { MessageIcon } from "@salt-ds/icons";
-import { clsx } from "clsx";
+import {makePrefixer, useId} from "@salt-ds/core";
+import {MessageIcon} from "@salt-ds/icons";
+import {clsx} from "clsx";
 import {
   cloneElement,
   forwardRef,
@@ -9,8 +9,9 @@ import {
   ReactElement,
   ReactText,
 } from "react";
-
-import "./Badge.css";
+import {useWindow} from "@salt-ds/window";
+import {useComponentCssInjection} from "@salt-ds/styles";
+import bannerCss from "../banner/Banner.css";
 
 /**
  * @example overriding density prop to fit a smaller denser space otherwise handled through context provider
@@ -51,6 +52,13 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   },
   ref
 ) {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-banner",
+    css: bannerCss,
+    window: targetWindow,
+  });
+
   const badgeId = useId();
   const childId = useId(
     isValidElement<HTMLAttributes<HTMLElement>>(children)

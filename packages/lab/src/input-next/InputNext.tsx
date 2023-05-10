@@ -13,7 +13,9 @@ import { makePrefixer, useControlled } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
 
-import "./InputNext.css";
+import inputNextCss from "./InputNext.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltInputNext");
 
@@ -66,6 +68,7 @@ function mergeA11yProps(
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {
+
   const ariaLabelledBy = clsx(
     a11yProps["aria-labelledby"],
     inputProps["aria-labelledby"]
@@ -106,6 +109,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   },
   ref
 ) {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-input-next",
+    css: inputNextCss,
+    window: targetWindow,
+  });
+
   const {
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,

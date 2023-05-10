@@ -1,10 +1,12 @@
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
-import { ChevronDownIcon, IconProps, DEFAULT_ICON_SIZE } from "@salt-ds/icons";
+import { ChevronDownIcon, DEFAULT_ICON_SIZE, IconProps } from "@salt-ds/icons";
 import { useFormFieldProps } from "../form-field-context";
 import { clsx } from "clsx";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 
-import "./DropdownButton.css";
+import dropdownButtonCss from "./DropdownButton.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface DropdownButtonProps extends ButtonProps {
   /**
@@ -72,6 +74,13 @@ export const DropdownButton = forwardRef(function DropdownButton(
   }: DropdownButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-dropdown-button",
+    css: dropdownButtonCss,
+    window: targetWindow,
+  });
+
   const { inFormField } = useFormFieldProps();
   // FIXME: use polymorphic button
   // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing

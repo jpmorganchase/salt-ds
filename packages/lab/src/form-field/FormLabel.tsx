@@ -8,7 +8,9 @@ import {
 } from "./NecessityIndicator";
 import { StatusIndicator, StatusIndicatorProps } from "./StatusIndicator";
 
-import "./FormLabel.css";
+import formLabelCss from "./FormLabel.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltFormLabel");
 export interface FormLabelProps
@@ -62,7 +64,15 @@ export const FormLabel = ({
   readOnly,
   tooltipText,
   ...restProps
-}: FormLabelProps) => (
+}: FormLabelProps) => {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-form-label",
+    css: formLabelCss,
+    window: targetWindow,
+  });
+
+  return(
   <label
     className={clsx(withBaseName(), className, {
       [withBaseName("disabled")]: disabled,
@@ -87,4 +97,4 @@ export const FormLabel = ({
       />
     )}
   </label>
-);
+);}

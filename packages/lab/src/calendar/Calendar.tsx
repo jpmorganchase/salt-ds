@@ -13,7 +13,9 @@ import {
 import { CalendarContext } from "./internal/CalendarContext";
 import { useCalendar, useCalendarProps } from "./useCalendar";
 
-import "./Calendar.css";
+import calendarCss from "./Calendar.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type CalendarProps = useCalendarProps & {
   className?: string;
@@ -34,6 +36,13 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       TooltipProps,
       ...rest
     } = props;
+
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-calendar",
+      css: calendarCss,
+      window: targetWindow,
+    });
 
     const { state, helpers } = useCalendar({ hideYearDropdown, ...rest });
 

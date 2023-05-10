@@ -4,9 +4,9 @@ import {
   HTMLAttributes,
   MouseEvent,
   ReactNode,
+  Ref,
   useEffect,
   useState,
-  Ref,
 } from "react";
 import {
   Button,
@@ -24,7 +24,9 @@ import getInnerText from "./internal/getInnerText";
 import { CloseIcon, IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 
-import "./Banner.css";
+import bannerCss from "./Banner.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type BannerStatus = ValidationStatus;
 
@@ -100,6 +102,13 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   },
   ref
 ) {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-banner",
+    css: bannerCss,
+    window: targetWindow,
+  });
+
   const { announce } = useAriaAnnouncer();
 
   const [containerNode, setContainerNode] = useState<HTMLDivElement | null>(

@@ -5,7 +5,9 @@ import { AlphaInput } from "./AlphaInputField";
 import { RGBAValue } from "./Color";
 import { RGBInput } from "./RGBAInputField";
 
-import "./RGBAInput.css";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import rgbaInputCss from "./RGBAInput.css";
+import { useWindow } from "@salt-ds/window";
 
 const withBaseName = makePrefixer("saltColorChooser");
 
@@ -27,6 +29,13 @@ export const RGBAInput = ({
   onSubmitAlpha,
   onSubmitRgb,
 }: RGBAInputProps): JSX.Element => {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-rgba-input",
+    css: rgbaInputCss,
+    window: targetWindow,
+  });
+
   return (
     <>
       <span className={clsx(withBaseName("textDivOverrides"))}>{rgbaText}</span>

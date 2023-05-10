@@ -1,10 +1,12 @@
 import { clsx } from "clsx";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { isValidHex } from "./ColorHelpers";
 import { Input } from "../input";
 
-import "./HexInput.css";
+import hexInputCss from "./HexInput.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltColorChooserHexInput");
 
@@ -19,6 +21,13 @@ export const HexInput = ({
   disableAlphaChooser,
   onSubmit,
 }: HexInputProps): JSX.Element => {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-color-picker-hex-input",
+    css: hexInputCss,
+    window: targetWindow,
+  });
+
   const [hexInputValue, setHexInputValue] = useState<string | undefined>(
     hexValue
   );

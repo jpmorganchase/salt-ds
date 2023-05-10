@@ -5,7 +5,9 @@ import { QueryInputBody, ValueSelector } from "./internal";
 import { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
 import { BooleanOperator, useQueryInput } from "./useQueryInput";
 
-import "./QueryInput.css";
+import queryInputCss from "./QueryInput.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltQueryInput");
 
@@ -41,6 +43,13 @@ export const QueryInput = forwardRef<HTMLDivElement, QueryInputProps>(
       className,
       ...restProps
     } = props;
+
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-query-input",
+      css: queryInputCss,
+      window: targetWindow,
+    });
 
     const {
       queryInputProps,

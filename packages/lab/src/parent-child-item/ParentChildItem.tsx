@@ -6,7 +6,9 @@ import {
   makePrefixer,
   ResponsiveProp,
 } from "@salt-ds/core";
-import "./ParentChildItem.css";
+import parentChildItemCss from "./ParentChildItem.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type SlideDirection = "top" | "bottom" | "left" | "right";
 
@@ -51,6 +53,14 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
     },
     ref
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-parent-child-item",
+      css: parentChildItemCss,
+      window: targetWindow,
+    });
+
+
     return (
       <FlexItem
         className={clsx(

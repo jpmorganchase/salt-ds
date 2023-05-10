@@ -1,6 +1,6 @@
-import { Button, makePrefixer, useId } from "@salt-ds/core";
-import { ErrorIcon, UploadIcon } from "@salt-ds/icons";
-import { clsx } from "clsx";
+import {Button, makePrefixer, useId} from "@salt-ds/core";
+import {ErrorIcon, UploadIcon} from "@salt-ds/icons";
+import {clsx} from "clsx";
 import {
   ChangeEventHandler,
   DragEvent,
@@ -16,10 +16,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { containsFiles, extractFiles, validateFiles } from "./internal/utils";
-import { FilesValidator } from "./validators";
+import {containsFiles, extractFiles, validateFiles} from "./internal/utils";
+import {FilesValidator} from "./validators";
 
-import "./FileDropZone.css";
+import fileDropZoneCss from "./FileDropZone.css";
+import {useWindow} from "@salt-ds/window";
+import {useComponentCssInjection} from "@salt-ds/styles";
 
 // Recommended button label by ADA review
 const buttonLabel = "Browse files";
@@ -111,6 +113,13 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
     },
     ref
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-file-drop-zone",
+      css: fileDropZoneCss,
+      window: targetWindow,
+    });
+
     const id = useId(idProp);
 
     const iconId = `${id}-icon`;

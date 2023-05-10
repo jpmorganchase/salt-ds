@@ -9,7 +9,9 @@ import {
   InputWithMaskProps,
 } from "./internal/InputWithMask";
 
-import "./FormattedInput.css";
+import formattedInputCss from "./FormattedInput.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type MaskFunction = (value: string | undefined) => boolean;
 
@@ -47,6 +49,13 @@ export const FormattedInput = forwardRef<HTMLInputElement, FormattedInputProps>(
     },
     ref
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-formatted-input",
+      css: formattedInputCss,
+      window: targetWindow,
+    });
+
     const [valueState, setValueState] = useControlled<string | undefined>({
       default: defaultValue,
       controlled: valueProp,

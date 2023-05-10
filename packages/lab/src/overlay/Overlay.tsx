@@ -3,9 +3,12 @@ import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
 import { Portal } from "../portal";
-import { useWindow } from "../window";
 
-import "./Overlay.css";
+import overlayCSS from "./Overlay.css";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+
+import { useWindow as usePortalWindow } from "../window";
 
 interface ADAExceptions {
   showClose?: boolean;
@@ -41,9 +44,17 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     },
     ref
   ) => {
+
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-overlay",
+      css: overlayCSS,
+      window: targetWindow,
+    });
+
     // Will need to figure out a better way to assign popper id's for the electron windows
     const id = useId();
-    const Window = useWindow();
+    const Window = usePortalWindow();
 
     const handleCloseButton = () => {
       onOpenChange?.(false);

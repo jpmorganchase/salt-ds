@@ -10,10 +10,12 @@ import {
 } from "react";
 import { DialogContext } from "./internal/DialogContext";
 import { Scrim, ScrimProps } from "../scrim";
-import { useWindow } from "../window";
+import { useWindow as usePortalWindow } from "../window";
 import { Portal } from "../portal";
 
-import "./Dialog.css";
+import dialogCss from "./Dialog.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   autoFocusRef?: ScrimProps["autoFocusRef"];
@@ -51,7 +53,14 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     ...rest
   } = props;
 
-  const Window = useWindow();
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-dialog",
+    css: dialogCss,
+    window: targetWindow,
+  });
+
+  const Window = usePortalWindow();
   const [open, setOpen] = useState(openProp);
 
   useEffect(() => {

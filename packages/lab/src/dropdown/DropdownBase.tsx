@@ -1,19 +1,20 @@
-import { flip, limitShift, shift, size } from "@floating-ui/react";
+import {flip, limitShift, shift, size} from "@floating-ui/react";
 import {
   makePrefixer,
   useFloatingUI,
   useForkRef,
   useIdMemo as useId,
 } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { Children, cloneElement, forwardRef, useRef, useState } from "react";
-import { forwardCallbackProps } from "../utils";
-import { DropdownBaseProps } from "./dropdownTypes";
-import { useDropdownBase } from "./useDropdownBase";
-import { Portal } from "../portal";
-import { isDesktop, useWindow } from "../window";
-
-import "./Dropdown.css";
+import {clsx} from "clsx";
+import {Children, cloneElement, forwardRef, useRef, useState} from "react";
+import {forwardCallbackProps} from "../utils";
+import {DropdownBaseProps} from "./dropdownTypes";
+import {useDropdownBase} from "./useDropdownBase";
+import {Portal} from "../portal";
+import {isDesktop, useWindow as usePortalWindow} from "../window";
+import {useComponentCssInjection} from "@salt-ds/styles";
+import dropdownCss from "./Dropdown.css";
+import {useWindow} from "@salt-ds/window";
 
 // Any component may be passed as our trigger or popup component.
 // Define the common props that we will act on, if present,
@@ -50,6 +51,13 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
     },
     forwardedRef
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-helper-text",
+      css: dropdownCss,
+      window: targetWindow,
+    });
+
     const rootRef = useRef<HTMLDivElement>(null);
     const className = clsx(withBaseName(), classNameProp, {
       [withBaseName("fullWidth")]: fullWidth,
@@ -59,7 +67,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
       children
     ) as JSX.Element[];
     const id = useId(idProp);
-    const Window = useWindow();
+    const Window = usePortalWindow();
 
     const { componentProps, popperRef, isOpen, triggerProps } = useDropdownBase(
       {

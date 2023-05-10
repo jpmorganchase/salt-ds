@@ -3,7 +3,9 @@ import { makePrefixer } from "@salt-ds/core";
 import { AlphaInput } from "./AlphaInputField";
 import { Color } from "./Color";
 import { SwatchesPicker } from "./SwatchesPicker";
-import "./Swatches.css";
+import swatchesCss from "./Swatches.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltColorChooserSwatches");
 
@@ -29,7 +31,14 @@ export const Swatches = ({
   displayColorName,
   placeholder,
   onDialogClosed,
-}: SwatchesTabProps): JSX.Element => (
+}: SwatchesTabProps): JSX.Element => {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-color-chooser-swatches",
+    css: swatchesCss,
+    window: targetWindow,
+  });
+  return(
   <div data-testid="swatches" className={clsx(withBaseName("pickerDiv"))}>
     <SwatchesPicker
       allColors={allColors}
@@ -58,4 +67,4 @@ export const Swatches = ({
       </div>
     </div>
   </div>
-);
+);}

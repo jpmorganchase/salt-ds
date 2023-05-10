@@ -9,7 +9,9 @@ import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
 import { FormFieldProps } from "../form-field";
 
-import "./Pagination.css";
+import paginationCss from "./Pagination.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   boundaryCount?: number;
@@ -30,6 +32,14 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
     },
     forwardedRef
   ) => {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-pagination",
+      css: paginationCss,
+      window: targetWindow,
+    });
+
+
     const { count, page, onPageChange, compact, setPaginatorElement } =
       usePaginationContext();
 

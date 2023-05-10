@@ -13,7 +13,9 @@ import { ControlLabel, ControlLabelProps } from "../control-label";
 import { useFormFieldProps } from "../form-field-context";
 import { CheckedIcon } from "./assets/CheckedIcon";
 
-import "./Switch.css";
+import switchCss from "./Switch.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface SwitchProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
@@ -43,6 +45,13 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     onFocus,
     ...rest
   } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-switch",
+    css: switchCss,
+    window: targetWindow,
+  });
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 

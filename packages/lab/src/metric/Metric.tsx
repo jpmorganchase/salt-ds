@@ -3,7 +3,9 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useMemo } from "react";
 import { MetricContextProvider, MetricContextValue } from "./internal";
 
-import "./Metric.css";
+import metricCSS from "./Metric.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltMetric");
 
@@ -40,6 +42,13 @@ export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
   },
   ref
 ) {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-metric",
+    css: metricCSS,
+    window: targetWindow,
+  });
+
   const id = useId(idProp);
   const titleId = `metric-title-${id}`;
   const subtitleId = `metric-subtitle-${id}`;

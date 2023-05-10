@@ -2,7 +2,9 @@
 import React, { forwardRef, LabelHTMLAttributes, ReactNode } from "react";
 import { clsx } from "clsx";
 
-import "./ControlLabel.css";
+import controlLabelCss from "./ControlLabel.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface ControlLabelProps
   extends LabelHTMLAttributes<HTMLLabelElement> {
@@ -18,6 +20,13 @@ export const ControlLabel = forwardRef<HTMLLabelElement, ControlLabelProps>(
     { children, className, disabled, label, labelPlacement = "left", ...other },
     ref
   ) => {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-control-label",
+      css: controlLabelCss,
+      window: targetWindow,
+    });
+
     return (
       <label
         className={clsx(

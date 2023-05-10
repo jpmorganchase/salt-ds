@@ -1,7 +1,9 @@
-import { forwardRef, SVGAttributes } from "react";
-import { clsx } from "clsx";
+import {forwardRef, SVGAttributes} from "react";
+import {clsx} from "clsx";
 
-import "./CountrySymbol.css";
+import countrySymbolCss from "./CountrySymbol.css";
+import {useWindow} from "@salt-ds/window";
+import {useComponentCssInjection} from "@salt-ds/styles";
 
 // Duplicate from core/util to avoid circular dependency
 export const makePrefixer =
@@ -31,6 +33,13 @@ export const CountrySymbol = forwardRef<SVGSVGElement, CountrySymbolProps>(
     },
     ref
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-country-symbol",
+      css: countrySymbolCss,
+      window: targetWindow,
+    });
+
     const style = {
       ...styleProp,
       "--saltCountrySymbol-size-multiplier": `${size}`,

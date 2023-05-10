@@ -1,13 +1,15 @@
 import { clsx } from "clsx";
 import React, { forwardRef, ReactNode, useRef } from "react";
-import { makePrefixer, Button, ButtonProps } from "@salt-ds/core";
+import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { Input, InputProps } from "../input";
 import { useStepperInput } from "./useStepperInput";
 
-import "./StepperInput.css";
+import stepperInputCss from "./StepperInput.css";
 
 import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltStepperInput");
 
@@ -39,6 +41,13 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       className,
       showRefreshButton = false,
     } = props;
+
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-stepper-input",
+      css: stepperInputCss,
+      window: targetWindow,
+    });
 
     const adornmentRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
