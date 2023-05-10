@@ -76,7 +76,7 @@ const cards: CardProps[] = [
     keylineColor: "var(--site-tertiary-accent-teal)",
   },
   {
-    icon: <Image src="/img/arrows.svg" alt="circle with arrows icon" />,
+    icon: <Image src="/img/roadmap.svg" alt="road icon" />,
     title: "Our roadmap",
     description: (
       <p>
