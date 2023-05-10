@@ -176,8 +176,8 @@ export const componentDetails: ComponentDetails[] = [
     name: "Banner",
     description:
       "Notifies the user of an error, a warning, a successfully-completed task or an information update. It spans the page or container width to give quick, non-disruptive feedback.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Border Layout",
@@ -404,8 +404,8 @@ export const componentDetails: ComponentDetails[] = [
     name: "Input",
     description:
       "Allows the user to enter arbitrary text and numeric values into an editable field, with no specific format defined.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Layer Layout",
@@ -645,8 +645,8 @@ export const componentDetails: ComponentDetails[] = [
     name: "Tabs",
     description:
       "Allows the user to switch between different panes of content.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Tile",
@@ -708,7 +708,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Displays an explanation or provides more information about an error or warning condition, when the user’s  mouse hovers over a target element.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-tooltip--page",
   },
@@ -740,4 +740,4 @@ export const componentDetails: ComponentDetails[] = [
     devStatus: ComponentStatus.IN_BACKLOG,
     designStatus: ComponentStatus.IN_BACKLOG,
   },
-];
+].filter((component) => component.devStatus !== ComponentStatus.IN_BACKLOG);
