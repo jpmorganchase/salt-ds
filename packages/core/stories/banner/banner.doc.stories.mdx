@@ -1,6 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Banner } from "@salt-ds/lab";
-import { Link } from "@salt-ds/core";
+import { Banner, Link } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -8,7 +7,7 @@ import {
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Banner"
+  title="Documentation/Core/Banner"
   component={Banner}
   parameters={{
     viewMode: "docs",
@@ -29,7 +28,7 @@ You should always position the Banner component in the main content area, direct
 the navigation or in the related container component.
 
 <Canvas>
-  <Story id="lab-banner--default" />
+  <Story id="core-banner--default" />
 </Canvas>
 
 If you need to share multiple notifications of the same state with your users, you should summarize them in a single Banner
@@ -42,7 +41,7 @@ int the following order: Information, Error, Warning, Success.
 Banner contains four statuses `info`, `warning`, `error` and `success`. If not specified, the default value is `info`.
 
 <Canvas>
-  <Story id="lab-banner--statuses" />
+  <Story id="core-banner--statuses" />
 </Canvas>
 
 ## Emphasized
@@ -50,7 +49,7 @@ Banner contains four statuses `info`, `warning`, `error` and `success`. If not s
 Banner can be emphasized by passing in `emphasize={true}`.
 
 <Canvas>
-  <Story id="lab-banner--emphasized" />
+  <Story id="core-banner--emphasized" />
 </Canvas>
 
 ## Dismissible
@@ -76,7 +75,7 @@ return (
 ```
 
 <Canvas>
-  <Story id="lab-banner--controlled" />
+  <Story id="core-banner--controlled" />
 </Canvas>
 
 You should configure Banner to close when:
