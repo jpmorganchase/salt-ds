@@ -1,4 +1,5 @@
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { Button, ButtonProps } from "../button";
+import { makePrefixer } from "../utils";
 import { CloseIcon } from "@salt-ds/icons";
 
 import "./BannerCloseButton.css";

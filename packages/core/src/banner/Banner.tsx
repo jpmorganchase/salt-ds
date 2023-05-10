@@ -1,11 +1,7 @@
 import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
-import {
-  makePrefixer,
-  StatusIndicator,
-  useAriaAnnouncer,
-  useForkRef,
-  ValidationStatus,
-} from "@salt-ds/core";
+import { makePrefixer, useForkRef } from "../utils";
+import { StatusIndicator, ValidationStatus } from "../status-indicator";
+import { useAriaAnnouncer } from "../aria-announcer";
 import { clsx } from "clsx";
 
 import getInnerText from "./internal/getInnerText";

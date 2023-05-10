@@ -1,11 +1,14 @@
 import { FC } from "react";
-import { Link, StackLayout, SaltProvider } from "@salt-ds/core";
 import {
   Banner,
   BannerProps,
   BannerContent,
   BannerCloseButton,
-} from "@salt-ds/lab";
+  Link,
+  StackLayout,
+  SaltProvider,
+} from "@salt-ds/core";
+
 import { ComponentMeta, Story } from "@storybook/react";
 
 export default {

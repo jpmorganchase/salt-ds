@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../utils";
 
 import "./BannerContent.css";
 

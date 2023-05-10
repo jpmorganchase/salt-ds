@@ -1,6 +1,6 @@
 import { SyntheticEvent, useRef } from "react";
 import { ComponentMeta } from "@storybook/react";
-import { Banner, BannerCloseButton, BannerContent } from "@salt-ds/lab";
+import { Banner, BannerCloseButton, BannerContent } from "@salt-ds/core";
 
 import "./banner.ada.css";
 import { useState } from "@storybook/addons";
