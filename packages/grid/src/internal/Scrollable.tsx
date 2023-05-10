@@ -1,6 +1,9 @@
 import { RefObject, UIEventHandler, useEffect } from "react";
-import "./Scrollable.css";
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import ScrollableCss from "./Scrollable.css";
 
 const withBaseName = makePrefixer("saltGridScrollable");
 
@@ -40,6 +43,13 @@ export function Scrollable<T>(props: ScrollableProps<T>) {
     scrollTop,
     scrollSource,
   } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-scrollable",
+    css: ScrollableCss,
+    window: targetWindow,
+  });
 
   const onScroll: UIEventHandler<HTMLDivElement> = (event) => {
     if (!scrollerRef.current) {

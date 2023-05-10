@@ -1,6 +1,8 @@
 import { clsx } from "clsx";
-import "./BaseCell.css";
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import { GridCellProps } from "./GridColumn";
 import { GridColumnModel } from "./Grid";
 import { Cell, Cursor, useFocusableContent } from "./internal";
@@ -10,6 +12,8 @@ import {
   CellSuccessIcon,
   CellWarningIcon,
 } from "./internal/CellStatusIcons";
+
+import BaseCellCss from "./BaseCell.css";
 
 const withBaseName = makePrefixer("saltGridBaseCell");
 
@@ -40,6 +44,13 @@ export function BaseCell<T>(props: GridCellProps<T>) {
     validationType = "light",
     align,
   } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-base-cell",
+    css: BaseCellCss,
+    window: targetWindow,
+  });
 
   const { ref, isFocusableContent, onFocus } =
     useFocusableContent<HTMLTableCellElement>();

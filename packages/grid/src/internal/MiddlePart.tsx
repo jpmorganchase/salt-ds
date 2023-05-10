@@ -1,11 +1,16 @@
 import { RefObject } from "react";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer } from "@salt-ds/core";
+
+import { GridColumnModel, GridRowModel } from "../Grid";
+import { CellValidationState } from "../GridColumn";
+
 import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
-import "./MiddlePart.css";
-import { makePrefixer } from "@salt-ds/core";
-import { GridColumnModel, GridRowModel } from "../Grid";
 import { useActiveOnWheel } from "./gridHooks";
-import { CellValidationState } from "../GridColumn";
+
+import MiddlePartCss from "./MiddlePart.css";
 
 const withBaseName = makePrefixer("saltGridMiddlePart");
 
@@ -35,6 +40,13 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
     zebra,
     getRowValidationStatus,
   } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-middle-part",
+    css: MiddlePartCss,
+    window: targetWindow,
+  });
 
   const tableRef = useActiveOnWheel(onWheel);
 

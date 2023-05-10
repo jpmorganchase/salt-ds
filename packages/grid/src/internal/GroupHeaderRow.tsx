@@ -1,9 +1,14 @@
-import "./GroupHeaderRow.css";
-import { GroupHeaderCell } from "../GroupHeaderCell";
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import { GroupHeaderCell } from "../GroupHeaderCell";
 import { GridColumnGroupModel } from "../Grid";
-import { FakeGroupCell } from "./FakeGroupCell";
 import { GroupHeaderCellValue } from "../GroupHeaderCellValue";
+
+import { FakeGroupCell } from "./FakeGroupCell";
+
+import GroupHeaderRowCss from "./GroupHeaderRow.css";
 
 const withBaseName = makePrefixer("saltGridGroupHeaderRow");
 
@@ -14,6 +19,13 @@ export interface GroupHeaderRowProps<T> {
 
 export function GroupHeaderRow<T>(props: GroupHeaderRowProps<T>) {
   const { groups, gap } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-group-header-row",
+    css: GroupHeaderRowCss,
+    window: targetWindow,
+  });
 
   if (groups.length === 0) {
     return null;

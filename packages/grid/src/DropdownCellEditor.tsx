@@ -1,12 +1,15 @@
-import { makePrefixer } from "@salt-ds/core";
-import { useEditorContext } from "./EditorContext";
-import { Dropdown, SelectionChangeHandler } from "@salt-ds/lab";
-import "./DropdownCellEditor.css";
 import { useEffect, useRef } from "react";
+import { makePrefixer } from "@salt-ds/core";
+import { Dropdown, SelectionChangeHandler } from "@salt-ds/lab";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
+import { useEditorContext } from "./EditorContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
 import { CornerTag } from "./CornerTag";
 import { Cell } from "./internal";
+
+import DropdownCellEditorCss from "./DropdownCellEditor.css";
 
 const withBaseName = makePrefixer("saltGridDropdownCellEditor");
 
@@ -19,6 +22,14 @@ export interface DropdownCellEditorProps<T> {
 
 export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
   const { options, column, row } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-dropdown-cell-editor",
+    css: DropdownCellEditorCss,
+    window: targetWindow,
+  });
+
   const triggerRef = useRef<HTMLDivElement>(null);
 
   const value = column!.info.props.getValue!(row!.data);

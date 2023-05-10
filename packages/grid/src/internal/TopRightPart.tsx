@@ -1,11 +1,16 @@
 import { TableColGroup } from "./TableColGroup";
 import { HeaderRow } from "./HeaderRow";
-import "./TopRightPart.css";
 import { makePrefixer } from "@salt-ds/core";
-import { GridColumnGroupModel, GridColumnModel } from "../Grid";
-import { GroupHeaderRow } from "./GroupHeaderRow";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 import { clsx } from "clsx";
+
+import { GridColumnGroupModel, GridColumnModel } from "../Grid";
+
+import { GroupHeaderRow } from "./GroupHeaderRow";
 import { useActiveOnWheel } from "./gridHooks";
+
+import TopRightPartCss from "./TopRightPart.css";
 
 const withBaseName = makePrefixer("saltGridTopRightPart");
 
@@ -19,6 +24,13 @@ export interface TopRightPartProps<T> {
 
 export function TopRightPart<T>(props: TopRightPartProps<T>) {
   const { onWheel, columns, columnGroups, leftShadow, bottomShadow } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-top-right-part",
+    css: TopRightPartCss,
+    window: targetWindow,
+  });
 
   const tableRef = useActiveOnWheel(onWheel);
 
