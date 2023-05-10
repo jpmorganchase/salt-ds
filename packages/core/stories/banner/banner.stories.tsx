@@ -12,7 +12,7 @@ import {
 } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Banner",
+  title: "Core/Banner",
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 

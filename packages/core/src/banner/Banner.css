@@ -6,6 +6,8 @@
   border-color: var(--saltBanner-borderColor, var(--banner-borderColor));
   border-width: var(--saltBanner-borderWidth, var(--salt-size-border));
   border-style: var(--saltBanner-borderStyle, var(--salt-container-borderStyle));
+  font-size: var(--saltBanner-fontSize, var(--salt-text-fontSize));
+  line-height: var(--saltBanner-lineHeight, var(--salt-text-lineHeight));
   box-sizing: border-box;
   display: inline-flex;
   gap: var(--salt-spacing-75);

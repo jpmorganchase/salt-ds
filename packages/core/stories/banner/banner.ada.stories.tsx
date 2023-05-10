@@ -6,7 +6,7 @@ import "./banner.ada.css";
 import { useState } from "@storybook/addons";
 
 export default {
-  title: "Lab/Banner/ADA",
+  title: "Core/Banner/ADA",
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 

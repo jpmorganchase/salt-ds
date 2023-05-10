@@ -12,7 +12,7 @@ import {
 import { ComponentMeta, Story } from "@storybook/react";
 
 export default {
-  title: "Lab/Banner/QA",
+  title: "Core/Banner/QA",
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 
