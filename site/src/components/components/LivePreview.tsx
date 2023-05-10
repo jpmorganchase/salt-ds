@@ -38,26 +38,21 @@ export const LivePreview: FC<LivePreviewProps> = ({
     <>
       {children}
       <div className={styles.container}>
-        <div
-          className={clsx(styles.componentPreview, {
-            [styles.darkMode]: mode === "dark",
-          })}
-        >
-          <div className={styles.example}>
-            <SaltProvider mode={mode} density={density}>
-              {ComponentExample && <ComponentExample />}
-            </SaltProvider>
-          </div>
-          {/* Separate SaltProvider so we change the mode for switch but not the density */}
-          <SaltProvider mode={mode}>
+        <SaltProvider mode={mode}>
+          <div className={styles.componentPreview}>
+            <div className={styles.example}>
+              <SaltProvider density={density}>
+                {ComponentExample && <ComponentExample />}
+              </SaltProvider>
+            </div>
             <Switch
               checked={checked}
               onChange={handleChange}
               className={styles.switch}
               label="Show code"
             />
-          </SaltProvider>
-        </div>
+          </div>
+        </SaltProvider>
         {checked && (
           <Pre className={styles.codePreview}>
             <div className="language-tsx">
