@@ -1,7 +1,7 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Grid, GridColumn } from "@salt-ds/data-grid";
 import { withFlexGap } from "docs/decorators/withFlexGap";
-import { Banner } from "@salt-ds/lab";
+import { Banner, BannerContent } from "@salt-ds/core";
 import { LazyStoryCanvas } from "./LazyStoryCanvas";
 import {
   CharacteristicUsage,
@@ -49,9 +49,12 @@ import { Grid, GridColumn } from "@salt-ds/data-grid";
 ```
 
 <Banner disableAnnouncer>
-  Note: ensure the CSS `height` property for the grid element has been set
-  appropriately to see grid on screen. You can do so by passing a custom class
-  name, using a style prop, or by targeting the default `.saltGrid` class name.
+  <BannerContent>
+    Note: ensure the CSS `height` property for the grid element has been set
+    appropriately to see grid on screen. You can do so by passing a custom class
+    name, using a style prop, or by targeting the default `.saltGrid` class
+    name.
+  </BannerContent>
 </Banner>
 
 <LazyStoryCanvas>
