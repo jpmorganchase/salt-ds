@@ -8,15 +8,11 @@
   border-style: var(--saltBanner-borderStyle, var(--salt-container-borderStyle));
   box-sizing: border-box;
   display: flex;
-  gap: var(--salt-size-unit);
-  padding: var(--saltBanner-padding, var(--salt-size-unit));
+  gap: var(--salt-spacing-75);
+  padding: var(--saltBanner-padding, var(--salt-spacing-50) var(--salt-spacing-100));
   align-items: baseline;
   width: 100%;
-}
-
-/* Styles applied to icon */
-.saltBanner-icon {
-  --saltIcon-margin: calc((var(--salt-text-lineHeight) - 12px) / 2) 0 0 0;
+  min-height: var(--salt-size-base);
 }
 
 /* Styles applied when state = "info" */
