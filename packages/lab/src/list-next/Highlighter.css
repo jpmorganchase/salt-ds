@@ -1,5 +1,3 @@
 .saltHighlighter-highlight {
-  font-weight: var(
-    --salt-typography-fontWeight-bold
-  ); /* TODO: Check with design */
+  font-weight: var(--salt-typography-fontWeight-bold); /* TODO: Check with design */
 }

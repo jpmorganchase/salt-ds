@@ -28,26 +28,26 @@
 }
 
 /* Pseudo-class applied to the root element on focus */
-.saltListItemNext:focus-visible {
+.saltListItemNext:focus-visible,
+.saltListItemNext-focused {
   outline: var(--salt-focused-outline);
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
 .saltListItemNext:hover:not([role="presentation"]),
-.saltListItemNext:focus-visible {
+/* TODO: do we need to add the role exception to the below classes? */
+.saltListItemNext:focus-visible, .saltListItemNext-focused {
   --list-item-background: var(--salt-selectable-background-hover);
   --saltCheckbox-icon-stroke: var(--salt-selectable-foreground-hover);
   --saltCheckbox-icon-fill: var(--salt-selectable-background-hover);
   cursor: var(--salt-selectable-cursor-hover);
 }
 
-.saltListItemNext[aria-selected="true"]:not(:has(input[type='checkbox'])) {
+.saltListItemNext[aria-selected="true"]:not(:has(input[type="checkbox"])) {
   --list-item-background: var(--salt-selectable-background-selected);
 }
 
-@supports not selector(:has(*)
-
-) {
+@supports not selector(:has(*)) {
   .saltListItemNext[aria-selected="true"]:not(.saltListItemNext-checkbox) {
     --list-item-background: var(--salt-selectable-background-selected);
   }
