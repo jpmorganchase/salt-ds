@@ -12724,6 +12724,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-inline-plugin@workspace:tooling/css-inline-plugin":
+  version: 0.0.0-use.local
+  resolution: "css-inline-plugin@workspace:tooling/css-inline-plugin"
+  peerDependencies:
+    vite: ">2.0.0-0"
+  languageName: unknown
+  linkType: soft
+
 "css-loader@npm:6.7.1":
   version: 6.7.1
   resolution: "css-loader@npm:6.7.1"
