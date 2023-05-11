@@ -22757,7 +22757,7 @@ __metadata:
 
 "modular-scripts@patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch::locator=%40salt-ds%2Froot%40workspace%3A.":
   version: 3.6.0
-  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch::version=3.6.0&hash=f7c4be&locator=%40salt-ds%2Froot%40workspace%3A."
+  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch::version=3.6.0&hash=843c18&locator=%40salt-ds%2Froot%40workspace%3A."
   dependencies:
     "@babel/code-frame": 7.18.6
     "@modular-scripts/workspace-resolver": 1.2.0
@@ -22868,7 +22868,7 @@ __metadata:
     typescript: ^4.3.5
   bin:
     modular: dist-cjs/cli.js
-  checksum: 693682a9c967e932d8f12acb3ab737ccab2fda30ca7db75e998256541ea4bac036270f3ffa33f1342b3610a6fb5c1ca030ae37650522841618edea043e19b7f7
+  checksum: 880a6709beaf57c4a08d1282661652147bcec5694e5aa9679f293334089ff3ce6863ff253d0b15bdca8ac6d294ae7e209b6c905dc77e60481e0e94d3d7ef2862
   languageName: node
   linkType: hard
 
