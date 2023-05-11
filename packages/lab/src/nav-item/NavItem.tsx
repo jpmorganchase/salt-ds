@@ -91,6 +91,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         </Link>
         {parent && (
           <ExpansionButton
+            aria-expanded={expanded}
             className={withBaseName("expandButton")}
             expanded={expanded}
             onClick={handleExpand}
