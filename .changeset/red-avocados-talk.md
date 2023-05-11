@@ -5,6 +5,7 @@
 Added size tokens
 
 ```diff
++ --salt-size-adornment
 + --salt-size-bar
 + --salt-size-selectable
 + --salt-size-icon

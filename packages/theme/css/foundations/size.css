@@ -30,6 +30,7 @@
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 0.5);
 
   /* New size work */
+  --salt-size-adornment: 6px;
   --salt-size-bar: 2px;
   --salt-size-base: 20px;
   --salt-size-border: 1px;
@@ -45,6 +46,7 @@
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 1);
 
   /* New size work */
+  --salt-size-adornment: 8px;
   --salt-size-bar: 4px;
   --salt-size-base: 28px;
   --salt-size-border: 1px;
@@ -60,6 +62,7 @@
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 1.5);
 
   /* New size work */
+  --salt-size-adornment: 10px;
   --salt-size-bar: 6px;
   --salt-size-base: 36px;
   --salt-size-border: 1px;
@@ -75,6 +78,7 @@
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 2);
 
   /* New size work */
+  --salt-size-adornment: 12px;
   --salt-size-bar: 8px;
   --salt-size-base: 44px;
   --salt-size-border: 1px;
