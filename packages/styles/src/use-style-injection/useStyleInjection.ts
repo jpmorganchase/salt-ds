@@ -1,16 +1,17 @@
 import * as React from "react";
 import { useInsertionPoint } from "./InsertionPointProvider";
 
-// eslint-disable-next-line -- Workaround for https://github.com/webpack/webpack/issues/14814
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment -- Workaround for https://github.com/webpack/webpack/issues/14814 */
 const maybeUseInsertionEffect: typeof React.useLayoutEffect =
   (React as any)[`${"useInsertionEffect"}${""}`] ?? React.useLayoutEffect;
+/* eslint-enable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
 
 type WindowLike = Window & typeof globalThis;
 
 export interface UseComponentCssInjection {
-  id: string;
+  id?: string;
   css: string;
-  window: WindowLike;
+  window?: WindowLike;
 }
 
 type StyleElementMap = Map<
@@ -27,13 +28,22 @@ export function useComponentCssInjection({
   const insertionPoint = useInsertionPoint();
 
   maybeUseInsertionEffect(() => {
-    let sheetsMap = windowSheetsMap.get(targetWindow) ?? new Map();
-    let styleMap = sheetsMap.get(id) ?? { styleElement: null, count: 0 };
+    if (!targetWindow) {
+      return;
+    }
+
+    const sheetsMap =
+      windowSheetsMap.get(targetWindow) ??
+      new Map<
+        string,
+        { styleElement: HTMLStyleElement | null; count: number }
+      >();
+    const styleMap = sheetsMap.get(css) ?? { styleElement: null, count: 0 };
 
     if (styleMap.styleElement == null) {
       styleMap.styleElement = targetWindow.document.createElement("style");
       styleMap.styleElement.setAttribute("type", "text/css");
-      styleMap.styleElement.setAttribute("data-salt-style", id);
+      styleMap.styleElement.setAttribute("data-salt-style", id || "");
       styleMap.styleElement.textContent = css;
 
       styleMap.count = 1;
@@ -46,18 +56,18 @@ export function useComponentCssInjection({
       styleMap.styleElement.textContent = css;
       styleMap.count++;
     }
-    sheetsMap.set(id, styleMap);
+    sheetsMap.set(css, styleMap);
     windowSheetsMap.set(targetWindow, sheetsMap);
 
     return () => {
       const sheetsMap = windowSheetsMap.get(targetWindow);
-      const styleMap = sheetsMap?.get(id);
+      const styleMap = sheetsMap?.get(css);
       if (styleMap?.styleElement) {
         styleMap.count--;
         if (styleMap.count < 1) {
           targetWindow.document.head.removeChild(styleMap.styleElement);
           styleMap.styleElement = null;
-          sheetsMap?.delete(id);
+          sheetsMap?.delete(css);
         }
       }
     };
