@@ -1,0 +1,31 @@
+.salt-density-touch {
+  --salt-spacing-100: 16px;
+}
+
+.salt-density-low {
+  --salt-spacing-100: 12px;
+}
+
+.salt-density-medium {
+  --salt-spacing-100: 8px;
+}
+
+.salt-density-high {
+  --salt-spacing-100: 4px;
+}
+
+.salt-density-touch,
+.salt-density-low,
+.salt-density-medium,
+.salt-density-high {
+  --salt-spacing-25: calc(0.25 * var(--salt-spacing-100));
+  --salt-spacing-50: calc(0.5 * var(--salt-spacing-100));
+  --salt-spacing-75: calc(0.75 * var(--salt-spacing-100));
+
+  --salt-spacing-150: calc(1.5 * var(--salt-spacing-100));
+  --salt-spacing-200: calc(2 * var(--salt-spacing-100));
+  --salt-spacing-250: calc(2.5 * var(--salt-spacing-100));
+  --salt-spacing-300: calc(3 * var(--salt-spacing-100));
+  --salt-spacing-350: calc(3.5 * var(--salt-spacing-100));
+  --salt-spacing-400: calc(4 * var(--salt-spacing-100));
+}
