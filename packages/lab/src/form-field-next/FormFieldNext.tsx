@@ -1,7 +1,10 @@
 import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, HTMLAttributes, useMemo } from "react";
 import { makePrefixer, useId, capitalize } from "@salt-ds/core";
-import { FormFieldContextNext } from "../form-field-context";
+import {
+  A11yValueProps,
+  FormFieldContextNext,
+} from "../form-field-context-next";
 
 import "./FormFieldNext.css";
 
@@ -30,21 +33,6 @@ export interface FormFieldProps
    * Validation status
    */
   validationStatus?: "error" | "warning" | "success";
-}
-
-export interface A11yValueProps {
-  /**
-   * id for FormFieldHelperText
-   */
-  helperTextId?: string;
-  /**
-   * id for FormFieldLabel
-   */
-  labelId?: string;
-}
-export interface a11yValueAriaProps {
-  "aria-labelledby": A11yValueProps["labelId"];
-  "aria-describedby": A11yValueProps["helperTextId"] | undefined;
 }
 
 const withBaseName = makePrefixer("saltFormFieldNext");

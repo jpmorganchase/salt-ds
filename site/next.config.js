@@ -60,6 +60,9 @@ module.exports = {
     } else {
       config.resolve.fallback = { fs: false };
     }
+
+    config.optimization.minimize = false;
+
     return config;
   },
   env: {},
