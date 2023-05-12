@@ -1,0 +1,63 @@
+/* Component class applied to the root element */
+.saltTabstripNext {
+  --tabs-tabstrip-display: var(--saltTabs-tabstrip-display, inline-flex);
+  --tabs-tabstrip-background: var(--saltTabs-tabstrip-background, transparent);
+  --tabs-tab-spacing: var(--salt-spacing-100);
+
+  align-items: flex-start;
+  align-self: var(--saltTabs-tabstrip-alignSelf, stretch);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  position: relative;
+  background: var(--tabs-tabstrip-background);
+  display: var(--tabs-tabstrip-display);
+  min-width: var(--salt-spacing-400);
+  width: 100%;
+}
+
+.saltTabstripNext::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--saltTabs-borderWidth, var(--salt-size-border));
+  background: var(--saltTabs-borderColor, var(--salt-container-primary-borderColor));
+}
+
+.saltTabstripNext-overflowMenu {
+  position: relative;
+  align-self: stretch;
+  padding-right: 2px; /* prevents the focus ring from being clipped on the right */
+  display: flex;
+  align-items: center;
+}
+
+.saltTabstripNext-overflowMenu-popup {
+  background: var(--salt-container-primary-background);
+  overflow-y: auto;
+  z-index: calc(var(--salt-zIndex-flyover) - 1);
+  margin-top: 5px;
+}
+
+.saltTabstripNext-inner {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  min-width: 0;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.saltTabstripNext-centered .saltTabstripNext-inner {
+  justify-content: center;
+}
+
+/* We use this to wrap each tab to create space*/
+.saltTabstripNext-tabWrapper {
+  padding-right: var(--tabs-tab-spacing);
+}
+
+.saltButton.saltTabstripNext-overflowMenu-button-open {
+  --saltIcon-color: var(--salt-actionable-primary-foreground-active);
+  background: var(--salt-actionable-primary-background-active);
+}

@@ -1,0 +1,122 @@
+/* Class applied to root Tab element */
+.saltTabNext {
+  --tabs-tab-background: var(--salt-navigable-primary-background);
+  --tabs-tab-background-hover: rgba(0, 0, 0);
+  --tabs-tab-backgroundOpacity-hover: 0.08;
+  --tabs-tab-color: var(--salt-text-primary-foreground);
+  --tabs-tab-letterSpacing: 0;
+  --tabs-tab-cursor: pointer;
+  --tabs-tab-position: relative;
+}
+
+.salt-theme[data-mode="dark"] .saltTabNext {
+  --tabs-tab-background-hover: rgba(255, 255, 255);
+}
+
+.saltTabNext {
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  justify-content: center;
+  background: var(--saltTabs-tab-background, var(--tabs-tab-background));
+  border: none;
+  border-radius: 0;
+  color: var(--saltTabs-tab-color, var(--tabs-tab-color));
+  cursor: var(--saltTabs-tab-cursor, var(--tabs-tab-cursor));
+  display: inline-flex;
+  letter-spacing: var(--saltTabs-tab-letterSpacing, var(--tabs-tab-letterSpacing));
+  min-width: var(--saltTabs-tab-minWidth, var(--salt-spacing-400));
+  outline: none;
+  position: var(--saltTabs-tab-position, var(--tabs-tab-position));
+  border-bottom-width: var(--saltTabs-tab-borderWidth, var(--salt-size-bar));
+  border-bottom-color: transparent;
+  border-bottom-style: solid;
+  user-select: none;
+}
+
+.saltTabNext:focus-visible::after {
+  content: "";
+  inset: 2px 2px 2px 2px;
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  position: absolute;
+}
+
+.saltTabNext[aria-selected="true"] {
+  color: var(--salt-text-primary-foreground);
+  font-weight: var(--salt-navigable-fontWeight-active);
+}
+
+.saltTabNext-dragAway {
+  display: none;
+}
+
+/* main content aria of Tab */
+.saltTabNext-main {
+  border: none;
+  color: inherit;
+  cursor: inherit;
+  align-items: center;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  height: var(--salt-size-base);
+  margin-top: var(--salt-spacing-50);
+  outline: none;
+  padding: 0 var(--tabs-tab-spacing);
+  position: relative;
+  min-width: 0;
+  display: flex;
+}
+
+.saltTabNext .saltTabNext-text {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  text-align: var(--salt-text-textAlign-embedded);
+  text-overflow: ellipsis;
+  top: var(--saltTabs-tab-top, var(--tabs-tab-top, auto));
+  white-space: nowrap;
+  /* ensure content sits above focus ring */
+  z-index: var(--salt-zIndex-default);
+}
+
+/* 
+  We insert a hidden bold text so that we can prevent a layout shift when activating a tab.
+  Active tabs have font weight bold, and therefore a different size to inactive tabs.
+*/
+.saltTabNext .saltTabNext-text:before {
+  height: 0;
+  content: attr(data-text);
+  display: block;
+  visibility: hidden;
+  font-weight: var(--salt-navigable-fontWeight-active);
+}
+
+/* Hover styling */
+.saltTabNext:not([aria-selected="true"]):focus-visible:not(.saltTabNext-disabled),
+.saltTabNext:hover:not([aria-selected="true"]):not(.saltTabNext-disabled) {
+  border-bottom-color: var(--salt-navigable-indicator-hover);
+}
+
+.saltTabNext:hover:not(.saltTabNext-disabled)::before,
+.saltTabNext:focus-visible::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--saltTabs-tab-background-hover, var(--tabs-tab-background-hover));
+  opacity: var(--saltTabs-tab-backgroundOpacity-hover, var(--tabs-tab-backgroundOpacity-hover));
+  z-index: 0;
+}
+
+/* Active styling */
+.saltTabNext[aria-selected="true"] {
+  border-bottom-color: var(--salt-navigable-indicator-active);
+}
+
+.saltTabNext-disabled {
+  color: var(--salt-selectable-foreground-disabled);
+  cursor: var(--salt-navigable-cursor-disabled);
+}
