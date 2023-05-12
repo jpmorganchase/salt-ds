@@ -3,7 +3,6 @@
   position: relative;
   column-gap: var(--salt-size-adornmentGap);
   row-gap: var(--salt-size-adornmentGap);
-  vertical-align: top;
   width: var(--saltFormFieldNext-width, 100%);
 }
 
