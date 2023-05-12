@@ -1,9 +1,10 @@
 import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 
-import formGroupCss from "./FormGroup.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formGroupCss from "./FormGroup.css";
 
 export interface FormGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**

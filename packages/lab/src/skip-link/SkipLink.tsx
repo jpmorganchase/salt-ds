@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
 import skipLinkCss from "./SkipLink.css";
 
 interface SkipLinkProps extends LinkProps {

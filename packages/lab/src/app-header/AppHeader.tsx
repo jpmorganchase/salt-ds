@@ -3,10 +3,11 @@ import { Toolbar } from "../toolbar";
 import { makePrefixer } from "@salt-ds/core";
 import { MenuIcon } from "@salt-ds/icons";
 
-import appHeaderCss from "./AppHeader.css";
 import { forwardRef, HTMLAttributes } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import appHeaderCss from "./AppHeader.css";
 
 const withBaseName = makePrefixer("saltAppHeader");
 

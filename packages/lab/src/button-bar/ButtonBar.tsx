@@ -12,9 +12,10 @@ import { DescendantProvider } from "./internal/DescendantContext";
 import { useDescendants } from "./internal/useDescendants";
 import { ButtonVariant, makePrefixer } from "@salt-ds/core";
 
-import buttonBarCss from "./ButtonBar.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import buttonBarCss from "./ButtonBar.css";
 
 export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>;
 

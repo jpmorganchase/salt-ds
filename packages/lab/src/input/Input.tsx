@@ -19,9 +19,10 @@ import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { useFormFieldProps } from "../form-field-context";
 import { useCursorOnFocus } from "./useCursorOnFocus";
 
-import inputCss from "./Input.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import inputCss from "./Input.css";
 
 const withBaseName = makePrefixer("saltInput");
 

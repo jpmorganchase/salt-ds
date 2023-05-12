@@ -16,9 +16,10 @@ import {
 import { TabProps } from "./TabsTypes";
 import { EditableLabel, EditableLabelProps } from "../editable-label";
 
-import tabCss from "./Tab.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import tabCss from "./Tab.css";
 
 const noop = () => undefined;
 

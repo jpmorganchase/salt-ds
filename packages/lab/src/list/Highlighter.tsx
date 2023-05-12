@@ -2,9 +2,10 @@ import { makePrefixer } from "@salt-ds/core";
 import { ReactElement } from "react";
 import { escapeRegExp } from "../utils";
 
-import highligherCss from "./Highlighter.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import highligherCss from "./Highlighter.css";
 
 const withBaseName = makePrefixer("saltHighlighter");
 

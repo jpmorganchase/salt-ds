@@ -12,9 +12,10 @@ import { BreadcrumbsCollapsed } from "./internal/BreadcrumbsCollapsed";
 import { BreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import { BreadcrumbsSeparator } from "./internal/BreadcrumbsSeparator";
 
-import breadcrumbsCss from "./Breadcrumbs.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import breadcrumbsCss from "./Breadcrumbs.css";
 
 const iconWidth = 12;
 

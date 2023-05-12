@@ -4,9 +4,10 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, SyntheticEvent, useContext } from "react";
 import { DialogContext } from "./internal/DialogContext";
 
-import dialogTitleCss from "./DialogTitle.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import dialogTitleCss from "./DialogTitle.css";
 
 export interface DialogTitleProps extends HTMLAttributes<HTMLDivElement> {
   /**

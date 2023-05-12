@@ -7,11 +7,12 @@ import {
 } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
-import linearProgressCss from "./LinearProgress.css";
 
 import { Info as DefaultInfo } from "../Info";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import linearProgressCss from "./LinearProgress.css";
 
 const withBaseName = makePrefixer("saltLinearProgress");
 

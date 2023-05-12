@@ -13,9 +13,10 @@ import {
   StatusIndicatorProps,
 } from "./internal/StatusIndicator";
 
-import contentStatusCss from "./ContentStatus.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import contentStatusCss from "./ContentStatus.css";
 
 const withBaseName = makePrefixer("saltContentStatus");
 
@@ -49,7 +50,7 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
   ) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-dialog-actions",
+      id: "salt-content-status",
       css: contentStatusCss,
       window: targetWindow,
     });

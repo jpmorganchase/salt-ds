@@ -2,9 +2,10 @@ import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
-import skipLinksCss from "./SkipLinks.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import skipLinksCss from "./SkipLinks.css";
 
 const withBaseName = makePrefixer("saltSkipLinks");
 

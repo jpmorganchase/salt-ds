@@ -2,9 +2,11 @@ import { forwardRef, ReactNode } from "react";
 import { clsx } from "clsx";
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { ChevronDownIcon } from "@salt-ds/icons";
-import menuButtonTrigger from "./MenuButtonTrigger.css";
+
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import menuButtonTrigger from "./MenuButtonTrigger.css";
 
 const withBaseName = makePrefixer("saltMenuButtonTrigger");
 

@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Input } from "../input";
 import { isValidHex } from "./ColorHelpers";
 
-import colorPickerCss from "./ColorPicker.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import colorPickerCss from "./ColorPicker.css";
 
 interface HexInputProps {
   hexValue: string | undefined;

@@ -4,6 +4,7 @@ import { CascadingMenu, CascadingMenuProps } from "../cascading-menu";
 import { MenuButtonTrigger } from "./MenuButtonTrigger";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
 import menuButtonCss from "./MenuButton.css";
 
 export interface MenuButtonProps extends ButtonProps {

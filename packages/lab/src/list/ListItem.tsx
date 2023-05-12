@@ -4,6 +4,11 @@ import { CheckboxIcon, makePrefixer } from "@salt-ds/core";
 import { ListItemProps, ListItemType } from "./listTypes";
 import { Highlighter } from "./Highlighter";
 
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import listItemCss from "./ListItem.css";
+
 const withBaseName = makePrefixer("saltListItem");
 
 // A dummy ListItem rendered once and not visible. We measure this to
@@ -45,6 +50,13 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     },
     forwardedRef
   ) {
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-list-item",
+      css: listItemCss,
+      window: targetWindow,
+    });
+
     const className = clsx(withBaseName(), classNameProp, {
       saltDisabled: disabled,
       [withBaseName("checkbox")]: showCheckbox,

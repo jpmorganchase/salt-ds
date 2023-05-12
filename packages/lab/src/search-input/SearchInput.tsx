@@ -11,9 +11,10 @@ import { Button, useControlled, useForkRef } from "@salt-ds/core";
 import { Input, InputProps, StaticInputAdornment } from "../input";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 
-import searchInputCss from "./SearchInput.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import searchInputCss from "./SearchInput.css";
 
 const baseName = "saltSearchInput";
 

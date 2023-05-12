@@ -6,9 +6,10 @@ import { ErrorAdornmentIcon } from "./ErrorAdornment";
 import { SuccessAdornmentIcon } from "./SuccessAdornment";
 import { WarningAdornmentIcon } from "./WarningAdornment";
 
-import statusAdornmentCss from "./StatusAdornment.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import statusAdornmentCss from "./StatusAdornment.css";
 
 const icons = {
   error: ErrorAdornmentIcon,

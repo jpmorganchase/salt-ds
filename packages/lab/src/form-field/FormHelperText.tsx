@@ -1,9 +1,10 @@
 import { ComponentPropsWithoutRef } from "react";
 import { FormFieldProps } from "./FormField";
 
-import formHelperTextCss from "./FormHelperText.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formHelperTextCss from "./FormHelperText.css";
 
 export type FormHelperTextProps<E extends React.ElementType = "p"> =
   ComponentPropsWithoutRef<E> & {
@@ -18,7 +19,7 @@ export const FormHelperText = <E extends React.ElementType = "p">({
 }: FormHelperTextProps<E>) => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-helper-text",
+    id: "salt-form-helper-text",
     css: formHelperTextCss,
     window: targetWindow,
   });

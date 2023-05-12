@@ -3,9 +3,10 @@ import React, { useRef } from "react";
 
 import { useActivationIndicator } from "./useActivationIndicator";
 
-import tabActivationIndicatorCss from "./TabActivationIndicator.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import tabActivationIndicatorCss from "./TabActivationIndicator.css";
 
 interface TabActivationIndicatorProps {
   hideThumb?: boolean;

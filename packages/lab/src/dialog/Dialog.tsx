@@ -13,9 +13,10 @@ import { Scrim, ScrimProps } from "../scrim";
 import { useWindow as usePortalWindow } from "../window";
 import { Portal } from "../portal";
 
-import dialogCss from "./Dialog.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import dialogCss from "./Dialog.css";
 
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   autoFocusRef?: ScrimProps["autoFocusRef"];

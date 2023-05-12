@@ -11,7 +11,8 @@ import {
 } from "react";
 import {useWindow} from "@salt-ds/window";
 import {useComponentCssInjection} from "@salt-ds/styles";
-import bannerCss from "../banner/Banner.css";
+
+import badgeCss from "./Badge.css";
 
 /**
  * @example overriding density prop to fit a smaller denser space otherwise handled through context provider
@@ -54,8 +55,8 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-banner",
-    css: bannerCss,
+    id: "salt-badge",
+    css: badgeCss,
     window: targetWindow,
   });
 

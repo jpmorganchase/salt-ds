@@ -13,9 +13,10 @@ import { makePrefixer, useControlled } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
 
-import inputNextCss from "./InputNext.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import inputNextCss from "./InputNext.css";
 
 const withBaseName = makePrefixer("saltInputNext");
 

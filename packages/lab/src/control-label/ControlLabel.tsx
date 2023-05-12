@@ -2,9 +2,10 @@
 import React, { forwardRef, LabelHTMLAttributes, ReactNode } from "react";
 import { clsx } from "clsx";
 
-import controlLabelCss from "./ControlLabel.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import controlLabelCss from "./ControlLabel.css";
 
 export interface ControlLabelProps
   extends LabelHTMLAttributes<HTMLLabelElement> {

@@ -3,9 +3,10 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useContext } from "react";
 import { DialogContext } from "./internal/DialogContext";
 
-import dialogContentCss from "./DialogContent.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import dialogContentCss from "./DialogContent.css";
 
 export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {}
 

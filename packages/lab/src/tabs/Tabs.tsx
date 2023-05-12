@@ -11,9 +11,10 @@ import { useTabs } from "./useTabs";
 import { Tabstrip } from "./Tabstrip";
 import { FocusAPI, TabstripProps } from "./TabsTypes";
 
-import tabsCss from "./Tabs.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import tabsCss from "./Tabs.css";
 
 const withBaseName = makePrefixer("saltTabs");
 

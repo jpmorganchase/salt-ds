@@ -5,9 +5,10 @@ import {ForwardedRef, forwardRef, HTMLAttributes, memo, useRef} from "react";
 import {useOverflowDetection} from "../utils";
 import {Highlighter} from "./internal/Highlighter";
 
-import listItemCss from "./ListItem.css";
 import {useWindow} from "@salt-ds/window";
 import {useComponentCssInjection} from "@salt-ds/styles";
+
+import listItemCss from "./ListItem.css";
 
 //TODO does this need to be generic <Item?
 export interface ListItemBaseProps extends HTMLAttributes<HTMLDivElement> {

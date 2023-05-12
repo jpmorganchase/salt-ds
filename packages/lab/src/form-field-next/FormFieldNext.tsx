@@ -3,9 +3,10 @@ import { ForwardedRef, forwardRef, HTMLAttributes, useMemo } from "react";
 import { capitalize, makePrefixer, useId } from "@salt-ds/core";
 import { FormFieldContextNext } from "../form-field-context";
 
-import formFieldNextCss from "./FormFieldNext.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formFieldNextCss from "./FormFieldNext.css";
 
 export type FormFieldLabelPlacement = "top" | "left";
 

@@ -14,9 +14,10 @@ import { FocusManager, FocusManagerProps } from "../focus-manager";
 import { preventFocusOthers } from "./internal/PreventFocus";
 import { ScrimContext } from "./ScrimContext";
 
-import scrimCss from "./Scrim.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import scrimCss from "./Scrim.css";
 
 const scrims = new Set();
 

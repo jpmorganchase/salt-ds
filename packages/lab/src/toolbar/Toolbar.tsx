@@ -21,9 +21,10 @@ import { ToolbarProps } from "./ToolbarProps";
 import { Tooltray } from "./Tooltray";
 import { TooltrayProps } from "./TooltrayProps";
 
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import toolbarCss from "./Toolbar.css";
-import {useWindow} from "@salt-ds/window";
-import {useComponentCssInjection} from "@salt-ds/styles";
 
 const classBase = "saltToolbar";
 

@@ -9,9 +9,10 @@ import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
 import { FormFieldProps } from "../form-field";
 
-import paginationCss from "./Pagination.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import paginationCss from "./Pagination.css";
 
 export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   boundaryCount?: number;

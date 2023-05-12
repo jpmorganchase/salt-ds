@@ -9,9 +9,10 @@ import {
   InputWithMaskProps,
 } from "./internal/InputWithMask";
 
-import formattedInputCss from "./FormattedInput.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formattedInputCss from "./FormattedInput.css";
 
 export type MaskFunction = (value: string | undefined) => boolean;
 

@@ -4,11 +4,12 @@ import { clsx } from "clsx";
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
 import { Portal } from "../portal";
 
-import overlayCSS from "./Overlay.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
 import { useWindow as usePortalWindow } from "../window";
+
+import overlayCSS from "./Overlay.css";
 
 interface ADAExceptions {
   showClose?: boolean;

@@ -9,6 +9,7 @@ import { RGBAInput } from "./RGBAInput";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
 import colorPickerCss from "./ColorPicker.css";
 
 const withBaseName = makePrefixer("saltColorChooserPicker");

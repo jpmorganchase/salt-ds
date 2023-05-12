@@ -5,9 +5,10 @@ import { QueryInputBody, ValueSelector } from "./internal";
 import { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
 import { BooleanOperator, useQueryInput } from "./useQueryInput";
 
-import queryInputCss from "./QueryInput.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import queryInputCss from "./QueryInput.css";
 
 const withBaseName = makePrefixer("saltQueryInput");
 

@@ -31,9 +31,10 @@ import { ListBaseProps } from "./ListProps";
 import { useListStateContext } from "./ListStateContext";
 import { useListItem, useVirtualizedListItem } from "./useListItem";
 
-import listCss from "./List.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import listCss from "./List.css";
 
 const withBaseName = makePrefixer("saltListDeprecated");
 

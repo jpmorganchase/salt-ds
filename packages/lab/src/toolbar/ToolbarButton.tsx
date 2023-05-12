@@ -1,8 +1,10 @@
 import { forwardRef } from "react";
 import { Button, ButtonProps } from "@salt-ds/core";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import toolbarButtonCss from "./ToolbarButton.css";
-import {useWindow} from "@salt-ds/window";
-import {useComponentCssInjection} from "@salt-ds/styles";
 
 export type ToolbarButtonProps = ButtonProps & {
   overflowLabel?: string;

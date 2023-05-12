@@ -2,9 +2,10 @@ import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
-import dialogActionsCss from "./DialogActions.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import dialogActionsCss from "./DialogActions.css";
 
 export interface DialogActionsProps extends HTMLAttributes<HTMLDivElement> {}
 

@@ -40,10 +40,11 @@ import {
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
 
-import tabstripCss from "./Tabstrip.css";
-import themeTabstripCss from "./ThemeTabstrip.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import themeTabstripCss from "./ThemeTabstrip.css";
+import tabstripCss from "./Tabstrip.css";
 
 const withBaseName = makePrefixer("saltTabstrip");
 

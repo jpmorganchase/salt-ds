@@ -19,9 +19,11 @@ import {
 import {containsFiles, extractFiles, validateFiles} from "./internal/utils";
 import {FilesValidator} from "./validators";
 
-import fileDropZoneCss from "./FileDropZone.css";
+
 import {useWindow} from "@salt-ds/window";
 import {useComponentCssInjection} from "@salt-ds/styles";
+
+import fileDropZoneCss from "./FileDropZone.css";
 
 // Recommended button label by ADA review
 const buttonLabel = "Browse files";

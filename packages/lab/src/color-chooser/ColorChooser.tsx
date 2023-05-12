@@ -17,9 +17,10 @@ import { ColorChooserTabs, DictTabs } from "./DictTabs";
 import { getColorPalettes } from "./GetColorPalettes";
 import { createTabsMapping } from "./createTabsMapping";
 
-import colorChooserCss from "./ColorChooser.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import colorChooserCss from "./ColorChooser.css";
 
 const withBaseName = makePrefixer("saltColorChooser");
 

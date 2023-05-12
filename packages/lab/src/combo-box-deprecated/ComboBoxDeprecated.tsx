@@ -12,9 +12,11 @@ import {
 } from "./internal/MultiSelectComboBox";
 import { useWidth } from "../list-deprecated/internal/useWidth";
 import { useFormFieldProps } from "../form-field-context";
-import comboBoxCss from "./ComboBox.css";
+
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import comboBoxCss from "./ComboBox.css";
 
 const withBaseName = makePrefixer("saltComboBox");
 

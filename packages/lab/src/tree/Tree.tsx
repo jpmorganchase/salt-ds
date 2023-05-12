@@ -1,36 +1,38 @@
 import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
-  forwardRef,
   ForwardedRef,
+  forwardRef,
   isValidElement,
+  MouseEvent,
   ReactElement,
   useCallback,
   useRef,
-  MouseEvent,
 } from "react";
 
 import {
   calcPreferredHeight,
   closestListItemIndex,
-  isSelected,
   CollectionIndexer,
-  useCollectionItems,
-  GROUP_SELECTION_NONE,
   CollectionItem,
+  GROUP_SELECTION_NONE,
+  isSelected,
   SelectHandler,
   SelectionChangeHandler,
   SelectionStrategy,
-  useAutoSizer,
   SingleSelectionStrategy,
+  useAutoSizer,
+  useCollectionItems,
 } from "../common-hooks";
 import { TreeProps } from "./treeTypes";
 
 import { useTree } from "./useTree";
 import { TreeNode } from "./TreeNode";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import treeCss from "./Tree.css";
-import {useWindow} from "@salt-ds/window";
-import {useComponentCssInjection} from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltTree");
 

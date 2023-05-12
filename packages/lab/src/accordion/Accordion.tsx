@@ -7,11 +7,13 @@ import {
   useState,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
-import accordionCss from "./Accordion.css";
+
 import { clsx } from "clsx";
 import { AccordionContext } from "./AccordionContext";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import accordionCss from "./Accordion.css";
 
 const withBaseName = makePrefixer("saltAccordion");
 

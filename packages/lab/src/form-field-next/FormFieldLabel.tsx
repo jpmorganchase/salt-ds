@@ -2,9 +2,10 @@ import { clsx } from "clsx";
 import { Label, makePrefixer, TextProps } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context";
 
-import formFieldLabelCss from "./FormFieldLabel.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formFieldLabelCss from "./FormFieldLabel.css";
 
 const withBaseName = makePrefixer("saltFormFieldLabel");
 

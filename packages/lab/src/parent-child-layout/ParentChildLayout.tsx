@@ -10,9 +10,10 @@ import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { ParentChildItem, SlideDirection } from "../parent-child-item";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
-import parentChildLayoutCss from "./ParentChildLayout.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import parentChildLayoutCss from "./ParentChildLayout.css";
 
 export type StackedViewElement = "parent" | "child";
 

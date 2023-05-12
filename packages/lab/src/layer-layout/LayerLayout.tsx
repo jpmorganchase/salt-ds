@@ -2,11 +2,13 @@ import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
 import { clsx } from "clsx";
 
 import { Scrim, ScrimProps } from "../scrim";
-import layerLayoutCss from "./LayerLayout.css";
+
 import { Breakpoints, makePrefixer, usePrevious } from "@salt-ds/core";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import layerLayoutCss from "./LayerLayout.css";
 
 export const LAYER_POSITIONS = [
   "center",

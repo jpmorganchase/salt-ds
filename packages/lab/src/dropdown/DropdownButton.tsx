@@ -4,9 +4,10 @@ import { useFormFieldProps } from "../form-field-context";
 import { clsx } from "clsx";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 
-import dropdownButtonCss from "./DropdownButton.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import dropdownButtonCss from "./DropdownButton.css";
 
 export interface DropdownButtonProps extends ButtonProps {
   /**

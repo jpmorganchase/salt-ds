@@ -11,9 +11,10 @@ import {
 } from "react";
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
 
-import toggleButtonCss from "./ToggleButton.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import toggleButtonCss from "./ToggleButton.css";
 
 const withBaseName = makePrefixer("saltToggleButton");
 

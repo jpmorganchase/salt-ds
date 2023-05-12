@@ -1,10 +1,11 @@
 import {forwardRef, SVGAttributes} from "react";
 import {clsx} from "clsx";
 
-import countrySymbolCss from "./CountrySymbol.css";
+
 import {useWindow} from "@salt-ds/window";
 import {useComponentCssInjection} from "@salt-ds/styles";
 
+import countrySymbolCss from "./CountrySymbol.css";
 // Duplicate from core/util to avoid circular dependency
 export const makePrefixer =
   (prefix: string): ((...names: string[]) => string) =>

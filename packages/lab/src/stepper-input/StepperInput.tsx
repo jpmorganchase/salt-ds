@@ -5,11 +5,11 @@ import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { Input, InputProps } from "../input";
 import { useStepperInput } from "./useStepperInput";
 
-import stepperInputCss from "./StepperInput.css";
-
 import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import stepperInputCss from "./StepperInput.css";
 
 const withBaseName = makePrefixer("saltStepperInput");
 

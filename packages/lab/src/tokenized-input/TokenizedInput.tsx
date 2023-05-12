@@ -6,9 +6,10 @@ import {
 } from "./TokenizedInputBase";
 import { useTokenizedInput } from "./useTokenizedInput";
 
-import tokenizedInputCss from "./TokenizedInput.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import tokenizedInputCss from "./TokenizedInput.css";
 
 export type StringToItem<Item> = (
   selectedItems: Array<Item>,

@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
 import tabPanelCss from "./TabPanel.css";
 
 const withBaseName = makePrefixer("saltTabPanel");

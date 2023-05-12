@@ -3,9 +3,11 @@ import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
 import { LogoTitle, LogoTitleProps } from "./internal/LogoTitle";
-import logoCss from "./Logo.css";
+
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import logoCss from "./Logo.css";
 
 export interface LogoProps extends ComponentPropsWithoutRef<"span"> {
   /**

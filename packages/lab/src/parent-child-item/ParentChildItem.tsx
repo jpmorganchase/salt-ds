@@ -6,9 +6,11 @@ import {
   makePrefixer,
   ResponsiveProp,
 } from "@salt-ds/core";
-import parentChildItemCss from "./ParentChildItem.css";
+
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import parentChildItemCss from "./ParentChildItem.css";
 
 export type SlideDirection = "top" | "bottom" | "left" | "right";
 

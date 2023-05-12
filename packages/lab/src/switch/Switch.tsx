@@ -13,9 +13,10 @@ import { ControlLabel, ControlLabelProps } from "../control-label";
 import { useFormFieldProps } from "../form-field-context";
 import { CheckedIcon } from "./assets/CheckedIcon";
 
-import switchCss from "./Switch.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import switchCss from "./Switch.css";
 
 export interface SwitchProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {

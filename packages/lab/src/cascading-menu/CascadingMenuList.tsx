@@ -23,9 +23,10 @@ import { refsManager } from "./internal/useRefsManager";
 import { stateChangeTypes } from "./stateChangeTypes";
 import { useWindow as usePortalWindow } from "../window";
 
-import cascadingMenuListCss from "./CascadingMenuList.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+
+import cascadingMenuListCss from "./CascadingMenuList.css";
 
 export interface CascadingMenuListProps {
   className?: string;
@@ -88,7 +89,7 @@ export const CascadingMenuList = forwardRef<
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-cascading-menu",
+    id: "salt-cascading-menu-list",
     css: cascadingMenuListCss,
     window: targetWindow,
   });

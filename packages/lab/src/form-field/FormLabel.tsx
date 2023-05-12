@@ -8,9 +8,10 @@ import {
 } from "./NecessityIndicator";
 import { StatusIndicator, StatusIndicatorProps } from "./StatusIndicator";
 
-import formLabelCss from "./FormLabel.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formLabelCss from "./FormLabel.css";
 
 const withBaseName = makePrefixer("saltFormLabel");
 export interface FormLabelProps

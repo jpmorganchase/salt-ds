@@ -3,9 +3,10 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useMemo } from "react";
 import { MetricContextProvider, MetricContextValue } from "./internal";
 
-import metricCSS from "./Metric.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import metricCSS from "./Metric.css";
 
 const withBaseName = makePrefixer("saltMetric");
 

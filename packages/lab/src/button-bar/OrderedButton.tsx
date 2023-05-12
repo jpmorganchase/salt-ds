@@ -5,9 +5,10 @@ import { Button, ButtonProps, capitalize, makePrefixer } from "@salt-ds/core";
 import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { useDescendant } from "./internal/useDescendant";
 
-import orderedButtonCss from "./OrderedButton.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import orderedButtonCss from "./OrderedButton.css";
 
 export interface OrderedButtonProps extends ButtonProps {
   /**

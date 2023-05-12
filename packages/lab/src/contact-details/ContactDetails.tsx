@@ -3,9 +3,10 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useState } from "react";
 import { ContactDetailsContext, useComponentSize } from "./internal";
 
-import contactDetailsCss from "./ContactDetails.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import contactDetailsCss from "./ContactDetails.css";
 
 const withBaseName = makePrefixer("saltContactDetails");
 

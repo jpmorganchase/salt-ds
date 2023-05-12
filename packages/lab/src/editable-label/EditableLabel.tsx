@@ -11,9 +11,10 @@ import React, {
 import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { Input } from "../input";
 
-import editableLabelCss from "./EditableLabel.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import editableLabelCss from "./EditableLabel.css";
 
 const classBase = "saltEditableLabel";
 

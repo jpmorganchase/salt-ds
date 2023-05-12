@@ -3,9 +3,11 @@ import { makePrefixer } from "@salt-ds/core";
 import { AlphaInput } from "./AlphaInputField";
 import { Color } from "./Color";
 import { SwatchesPicker } from "./SwatchesPicker";
-import swatchesCss from "./Swatches.css";
+
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import swatchesCss from "./Swatches.css";
 
 const withBaseName = makePrefixer("saltColorChooserSwatches");
 

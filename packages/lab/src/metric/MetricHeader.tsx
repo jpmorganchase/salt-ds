@@ -2,9 +2,11 @@ import { Link, LinkProps, makePrefixer, Text } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { useMetricContext } from "./internal";
-import metricHeaderCss from "./MetricHeader.css";
+
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import metricHeaderCss from "./MetricHeader.css";
 
 export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
   /**

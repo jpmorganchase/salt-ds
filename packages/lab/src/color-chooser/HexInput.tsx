@@ -4,9 +4,10 @@ import { makePrefixer } from "@salt-ds/core";
 import { isValidHex } from "./ColorHelpers";
 import { Input } from "../input";
 
-import hexInputCss from "./HexInput.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import hexInputCss from "./HexInput.css";
 
 const withBaseName = makePrefixer("saltColorChooserHexInput");
 

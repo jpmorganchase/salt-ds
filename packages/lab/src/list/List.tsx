@@ -25,9 +25,10 @@ import { ListItemProps, ListProps } from "./listTypes";
 import { useList } from "./useList";
 import { useListHeight } from "./useListHeight";
 
-import listCss from "./List.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import listCss from "./List.css";
 
 const defaultEmptyMessage = "No data to display";
 

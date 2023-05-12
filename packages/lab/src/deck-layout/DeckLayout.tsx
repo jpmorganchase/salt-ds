@@ -9,11 +9,12 @@ import {
 import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { DeckItem, DeckItemProps } from "../deck-item";
 import { useWidth } from "../responsive";
-import deckLayoutCss from "./DeckLayout.css";
 
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import deckLayoutCss from "./DeckLayout.css";
 
 export type LayoutAnimation = "slide" | "fade";
 export type LayoutAnimationDirection = "horizontal" | "vertical";

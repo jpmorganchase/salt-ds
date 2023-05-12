@@ -24,9 +24,10 @@ import getInnerText from "./internal/getInnerText";
 import { CloseIcon, IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 
-import bannerCss from "./Banner.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import bannerCss from "./Banner.css";
 
 export type BannerStatus = ValidationStatus;
 

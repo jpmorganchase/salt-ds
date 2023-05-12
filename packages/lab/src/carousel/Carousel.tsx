@@ -17,11 +17,13 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { DeckLayout } from "../deck-layout";
 import { clsx } from "clsx";
-import carouselCss from "./Carousel.css";
+
 import { useSlideSelection } from "../utils";
 import { CarouselSlideProps } from "./CarouselSlide";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import carouselCss from "./Carousel.css";
 
 const withBaseName = makePrefixer("saltCarousel");
 

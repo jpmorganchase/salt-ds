@@ -10,9 +10,10 @@ import { clsx } from "clsx";
 import { ComponentType, forwardRef, HTMLAttributes } from "react";
 import { useMetricContext } from "./internal";
 
-import metricContentCss from "./MetricContent.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import metricContentCss from "./MetricContent.css";
 
 export interface MetricContentProps extends HTMLAttributes<HTMLDivElement> {
   /**

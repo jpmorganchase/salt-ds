@@ -2,9 +2,10 @@ import clsx from "clsx";
 import { makePrefixer, StatusIndicator, Text, TextProps } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context";
 
-import formFieldHelperTextCss from "./FormFieldHelperText.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formFieldHelperTextCss from "./FormFieldHelperText.css";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 

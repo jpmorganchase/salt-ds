@@ -3,9 +3,10 @@ import { Swatch } from "./Swatch";
 import { convertColorMapValueToHex } from "./ColorHelpers";
 import { isTransparent } from "./color-utils";
 
-import swatchCSS from "./Swatch.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import swatchCSS from "./Swatch.css";
 
 interface SwatchesPickerProps {
   allColors: string[][];

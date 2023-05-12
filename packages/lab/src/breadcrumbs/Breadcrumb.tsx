@@ -6,6 +6,7 @@ import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
 import breadcrumbCss from "./Breadcrumb.css";
 
 const withBaseName = makePrefixer("saltBreadcrumb");

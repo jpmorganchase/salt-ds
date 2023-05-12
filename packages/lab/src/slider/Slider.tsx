@@ -18,9 +18,10 @@ import { useSliderMouseDown } from "./internal/useSliderMouseDown";
 import { useValueUpdater } from "./internal/utils";
 import { SliderChangeHandler, SliderValue } from "./types";
 
-import sliderCss from "./Slider.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import sliderCss from "./Slider.css";
 
 const withBaseName = makePrefixer("saltSlider");
 

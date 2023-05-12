@@ -5,6 +5,7 @@ import { Input } from "../input";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
 import rgbaInputCss from "./RGBAInput.css";
 
 const withBaseName = makePrefixer("saltColorChooser");

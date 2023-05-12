@@ -13,9 +13,11 @@ import {useDropdownBase} from "./useDropdownBase";
 import {Portal} from "../portal";
 import {isDesktop, useWindow as usePortalWindow} from "../window";
 import {useComponentCssInjection} from "@salt-ds/styles";
-import dropdownCss from "./Dropdown.css";
+
 import {useWindow} from "@salt-ds/window";
 
+
+import dropdownCss from "./Dropdown.css";
 // Any component may be passed as our trigger or popup component.
 // Define the common props that we will act on, if present,
 // so we can type them.
