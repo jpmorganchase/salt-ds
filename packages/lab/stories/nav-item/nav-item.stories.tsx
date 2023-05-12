@@ -21,7 +21,6 @@ Default.args = {
 const itemsWithSubNav = [
   {
     name: "Nav Item 1",
-    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
   },
   {
     name: "Nav Item 2",
@@ -29,6 +28,7 @@ const itemsWithSubNav = [
   },
   {
     name: "Nav Item 3",
+    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
   },
 ];
 
@@ -226,7 +226,7 @@ export const HorizontalExpandableGroup = () => {
   const [active, setActive] = useState(itemsWithSubNav[0].name);
   const [expanded, setExpanded] = useState<string | null>(null);
   const currentSubNav = itemsWithSubNav.find(
-    (item) => item.name === expanded
+    (item) => item.name === expanded || item.name === active
   )?.subNav;
   return (
     <div className="container" style={{ width: "80vw" }}>
@@ -243,20 +243,11 @@ export const HorizontalExpandableGroup = () => {
                   setActive(name);
                 }}
                 onExpand={() => {
-                  setExpanded((old) => {
-                    if (old === name) {
-                      return null;
-                    }
-                    return name;
-                  });
+                  setActive(name);
                 }}
-                expanded={expanded === name}
-                aria-haspopup={expanded === name}
-                parent={
-                  subNav &&
-                  subNav.length > 0 &&
-                  name === itemsWithSubNav[0].name
-                }
+                expanded={expanded === name || active === name}
+                aria-haspopup={expanded === name || active === name}
+                parent={subNav && subNav.length > 0}
               >
                 {name}
               </NavItem>
@@ -267,7 +258,7 @@ export const HorizontalExpandableGroup = () => {
       <div className="content">
         <LayerLayout
           position="top"
-          isOpen={expanded !== null}
+          isOpen={currentSubNav !== undefined}
           fullScreenAtBreakpoint={"sm"}
         >
           <ul
