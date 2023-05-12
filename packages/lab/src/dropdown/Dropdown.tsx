@@ -137,7 +137,7 @@ export const Dropdown = forwardRef(function Dropdown<
       return cloneElement(
         triggerComponent,
         forwardCallbackProps(ownProps, {
-          ...listControlProps,
+          ...(dropdownListHook.isOpen ? listControlProps : {}),
           ...ariaProps,
         })
       );
@@ -145,7 +145,7 @@ export const Dropdown = forwardRef(function Dropdown<
       return (
         <DropdownButton
           label={triggerLabel}
-          {...listControlProps}
+          {...(dropdownListHook.isOpen ? listControlProps : {})}
           {...ariaProps}
         />
       );
