@@ -1,6 +1,4 @@
 nav {
-  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
-  z-index: var(--salt-zIndex-appHeader);
   position: relative;
 }
 
@@ -19,6 +17,23 @@ ul {
   display: flex;
 }
 
+.cardList {
+  padding: var(--salt-spacing-200);
+}
+
+.cardItem {
+  padding: var(--salt-spacing-100);
+}
+
+.cardItem .saltLink {
+  text-decoration: none;
+}
+
+.linkCard {
+  --saltCard-padding: calc(var(--salt-size-unit) * 2);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
+}
+
 .container {
   width: 80vw;
   display: flex;
@@ -30,6 +45,8 @@ ul {
 
 .container nav {
   background: var(--salt-container-secondary-background);
+  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  z-index: var(--salt-zIndex-appHeader);
 }
 
 .content {
@@ -44,7 +61,7 @@ ul {
 }
 
 .content .saltLayerLayout {
-  padding-top: var(--salt-size-unit);
+  padding-top: var(--salt-spacing-100);
 }
 
 .container .saltScrim {
@@ -53,7 +70,11 @@ ul {
 
 .menu {
   list-style: none;
-
   margin: 0;
   width: 500px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
 }

@@ -4,12 +4,12 @@
   align-items: center;
   position: relative;
   background: var(--salt-navigable-primary-background);
-  gap: var(--salt-size-adornmentGap);
+  gap: var(--salt-spacing-75);
 }
 
 .saltNavItem-horizontal {
-  min-height: calc(var(--salt-size-stackable) + var(--salt-size-accent) + var(--salt-size-unit));
-  padding: var(--salt-size-unit);
+  min-height: calc(var(--salt-size-stackable) + var(--salt-size-accent) + var(--salt-spacing-100));
+  padding: var(--salt-spacing-100);
 }
 
 .saltNavItem-vertical {
@@ -20,7 +20,7 @@
   color: var(--salt-text-primary-foreground);
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
-  padding-left: calc(var(--saltNavItem-level, 0) * var(--salt-size-unit) * 1.5);
+  padding-left: calc(var(--saltNavItem-level, 0) * var(--salt-spacing-150));
   text-decoration: none;
 }
 
@@ -30,11 +30,11 @@
 }
 
 .saltNavItem-horizontal {
-  padding-top: calc(var(--salt-size-unit) + var(--salt-size-accent));
+  padding-top: calc(var(--salt-spacing-100) + var(--salt-size-accent));
 }
 
 .saltNavItem-vertical {
-  padding-left: calc(var(--salt-size-unit) * 2 + var(--salt-size-accent));
+  padding-left: calc(var(--salt-spacing-200) + var(--salt-size-accent));
 }
 
 .saltNavItem:hover,

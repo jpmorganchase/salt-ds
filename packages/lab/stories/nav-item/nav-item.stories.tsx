@@ -185,31 +185,15 @@ export const NestedCardGroup = () => {
               {name}
             </NavItem>
             {expanded.includes(name) && (
-              <ul
-                style={{
-                  padding: "calc(var(--salt-size-unit) * 2)",
-                }}
-              >
+              <ul className="cardList">
                 {subNav?.map((item) => (
-                  <li key={item} style={{ padding: "var(--salt-size-unit)" }}>
+                  <li key={item} className="cardItem">
                     <Link
-                      style={{ textDecoration: "none" }}
                       href="https://saltdesignsystem.com/"
                       IconComponent={null}
                       target="_blank"
                     >
-                      <Card
-                        style={
-                          {
-                            "--saltCard-padding":
-                              "calc(var(--salt-size-unit) * 2)",
-                            border:
-                              "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
-                          } as CSSProperties
-                        }
-                      >
-                        {item}
-                      </Card>
+                      <Card className="linkCard">{item}</Card>
                     </Link>
                   </li>
                 ))}
@@ -229,8 +213,8 @@ export const HorizontalExpandableGroup = () => {
     (item) => item.name === expanded
   )?.subNav;
   return (
-    <div className="container" style={{ width: "80vw" }}>
-      <nav style={{ display: "flex", justifyContent: "center" }}>
+    <div className="container">
+      <nav className="center">
         <ul className="horizontal">
           {itemsWithSubNav.map(({ name, subNav }) => (
             <li key={name}>
@@ -276,25 +260,13 @@ export const HorizontalExpandableGroup = () => {
             <H2>{expanded}</H2>
             {currentSubNav?.map((item) => {
               return (
-                <li key={item} style={{ padding: "var(--salt-size-unit)" }}>
+                <li key={item} className="cardItem">
                   <Link
-                    style={{ textDecoration: "none" }}
                     href="https://saltdesignsystem.com/"
                     IconComponent={null}
                     target="_blank"
                   >
-                    <Card
-                      style={
-                        {
-                          "--saltCard-padding":
-                            "calc(var(--salt-size-unit) * 2)",
-                          border:
-                            "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
-                        } as CSSProperties
-                      }
-                    >
-                      {item}
-                    </Card>
+                    <Card className="linkCard">{item}</Card>
                   </Link>
                 </li>
               );
