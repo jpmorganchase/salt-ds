@@ -1,5 +1,4 @@
 nav {
-  background: var(--salt-container-secondary-background);
   border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
   z-index: var(--salt-zIndex-appHeader);
   position: relative;
@@ -29,6 +28,10 @@ ul {
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
 }
 
+.container nav {
+  background: var(--salt-container-secondary-background);
+}
+
 .content {
   position: relative;
   flex: 1;
@@ -40,6 +43,17 @@ ul {
   align-items: flex-start;
 }
 
+.content .saltLayerLayout {
+  padding-top: var(--salt-size-unit);
+}
+
 .container .saltScrim {
   z-index: calc(var(--salt-zIndex-appHeader) - 1);
+}
+
+.menu {
+  list-style: none;
+
+  margin: 0;
+  width: 500px;
 }

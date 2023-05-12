@@ -1,7 +1,7 @@
 import { LayerLayout, NavItem, NavItemProps } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { CSSProperties, useState } from "react";
-import { Card, Link } from "@salt-ds/core";
+import { Card, H2, Link } from "@salt-ds/core";
 
 import "./nav-item.stories.css";
 
@@ -226,7 +226,7 @@ export const HorizontalExpandableGroup = () => {
   const [active, setActive] = useState(itemsWithSubNav[0].name);
   const [expanded, setExpanded] = useState<string | null>(null);
   const currentSubNav = itemsWithSubNav.find(
-    (item) => item.name === expanded || item.name === active
+    (item) => item.name === expanded
   )?.subNav;
   return (
     <div className="container" style={{ width: "80vw" }}>
@@ -241,12 +241,23 @@ export const HorizontalExpandableGroup = () => {
                   // Prevent default to avoid navigation
                   event.preventDefault();
                   setActive(name);
+                  setExpanded((old) => {
+                    if (old === name) {
+                      return null;
+                    }
+                    return name;
+                  });
                 }}
                 onExpand={() => {
-                  setActive(name);
+                  setExpanded((old) => {
+                    if (old === name) {
+                      return null;
+                    }
+                    return name;
+                  });
                 }}
-                expanded={expanded === name || active === name}
-                aria-haspopup={expanded === name || active === name}
+                expanded={expanded === name}
+                aria-haspopup={expanded === name}
                 parent={subNav && subNav.length > 0}
               >
                 {name}
@@ -261,13 +272,8 @@ export const HorizontalExpandableGroup = () => {
           isOpen={currentSubNav !== undefined}
           fullScreenAtBreakpoint={"sm"}
         >
-          <ul
-            style={{
-              listStyle: "none",
-              padding: "calc(var(--salt-size-unit) * 2)",
-              width: 500,
-            }}
-          >
+          <ul className="menu">
+            <H2>{expanded}</H2>
             {currentSubNav?.map((item) => {
               return (
                 <li key={item} style={{ padding: "var(--salt-size-unit)" }}>
