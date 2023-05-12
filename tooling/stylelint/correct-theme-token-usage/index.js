@@ -36,7 +36,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
 // ---- Start of plugin ----
 
-const ruleName = "salt/custom-property-no-foundations";
+const ruleName = "salt/correct-theme-token-usage";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>
@@ -83,6 +83,7 @@ const allAllowedKeys = [
   "delay", // TODO: **deprecated:** delete here
   "duration", // TODO: to be merged with animation
   "size",
+  "spacing",
   // icon size
   "icon-size",
   "zIndex",
