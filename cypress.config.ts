@@ -27,7 +27,7 @@ let viteConfig: UserConfig = {
     },
   },
 };
-if (isCI) {
+if (isCI || true) {
   viteConfig = mergeConfig(viteConfig, {
     resolve: {
       alias: {
