@@ -77,8 +77,25 @@
 
   .ag-menu {
     background-color: var(--agGrid-background);
-    padding: var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit);
+    padding: calc(var(--salt-size-unit) * 2);
     color: var(--agGrid-menu-color);
+  }
+
+  .ag-menu .ag-tabs-body {
+    padding: 0;
+    padding-top: var(--salt-size-unit);
+  }
+
+  // start filter input
+  .ag-menu .ag-filter-body-wrapper {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--salt-size-unit);
+  }
+
+  .ag-menu .ag-filter-body-wrapper > * {
+    margin: 0;
   }
 
   // start filter input
@@ -87,14 +104,19 @@
   }
 
   .ag-picker-field-icon {
-    margin-right: 5px;
+    margin-right: var(--salt-size-unit);
+  }
+
+  .ag-select .ag-picker-field-display {
+    margin: 0;
+    padding-left: var(--salt-size-unit);
   }
 
   .ag-menu .ag-input-field-input[type="text"] {
     height: var(--agGrid-input-height);
     min-height: var(--agGrid-input-height);
     line-height: var(--agGrid-input-height);
-    padding: 0;
+    padding: 0 var(--salt-size-unit);
     font-size: inherit;
     border: dotted 2px transparent;
 
