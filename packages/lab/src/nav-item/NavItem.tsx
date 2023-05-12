@@ -4,9 +4,9 @@ import {
   MouseEventHandler,
   MouseEvent,
 } from "react";
-import { makePrefixer, Button, Link } from "@salt-ds/core";
-import { ChevronRightIcon, ChevronDownIcon } from "@salt-ds/icons";
+import { makePrefixer, Link } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { ExpansionButton } from "./ExpansionButton";
 import "./NavItem.css";
 
 export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
@@ -27,31 +27,16 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltNavItem");
 
-function ExpansionButton({
-  expanded,
-  ...rest
-}: { expanded?: boolean } & ComponentPropsWithoutRef<"button">) {
-  return (
-    <Button variant="secondary" {...rest}>
-      {expanded ? (
-        <ChevronDownIcon aria-hidden="true" />
-      ) : (
-        <ChevronRightIcon aria-hidden="true" />
-      )}
-    </Button>
-  );
-}
-
 export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
   function NavItem(props, ref) {
     const {
       active,
       children,
       className,
-      expanded,
+      expanded = false,
       orientation = "horizontal",
       parent,
-      level,
+      level = 0,
       onExpand,
       href,
       style: styleProp,
@@ -95,6 +80,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
             className={withBaseName("expandButton")}
             expanded={expanded}
             onClick={handleExpand}
+            orientation={orientation}
           />
         )}
       </div>

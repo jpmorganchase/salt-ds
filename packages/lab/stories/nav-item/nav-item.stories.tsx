@@ -1,7 +1,9 @@
-import { NavItem, NavItemProps } from "@salt-ds/lab";
+import { LayerLayout, NavItem, NavItemProps } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { CSSProperties, useState } from "react";
 import { Card, Link } from "@salt-ds/core";
+
+import "./nav-item.stories.css";
 
 export default {
   title: "Lab/Nav Item",
@@ -27,27 +29,26 @@ const itemsWithSubNav = [
   },
   {
     name: "Nav Item 3",
-    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
   },
 ];
 
 const items = itemsWithSubNav.map((item) => item.name);
 
 export const HorizontalGroup = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(items[0]);
 
   return (
     <nav>
-      <ul style={{ listStyle: "none", paddingLeft: 0, display: "flex" }}>
-        {items.map((item, index) => (
+      <ul className="horizontal">
+        {items.map((item) => (
           <li key={item}>
             <NavItem
-              active={active === index}
+              active={active === item}
               href="#"
               onClick={(event) => {
                 // Prevent default to avoid navigation
                 event.preventDefault();
-                setActive(index);
+                setActive(item);
               }}
             >
               {item}
@@ -60,20 +61,20 @@ export const HorizontalGroup = () => {
 };
 
 export const VerticalGroup = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(items[0]);
   return (
     <nav>
-      <ul style={{ listStyle: "none", paddingLeft: 0, width: 500 }}>
-        {items.map((item, index) => (
+      <ul className="vertical">
+        {items.map((item) => (
           <li key={item}>
             <NavItem
-              active={active === index}
+              active={active === item}
               href="#"
               orientation="vertical"
               onClick={(event) => {
                 // Prevent default to avoid navigation
                 event.preventDefault();
-                setActive(index);
+                setActive(item);
               }}
             >
               {item}
@@ -90,16 +91,14 @@ export const NestedGroup = () => {
 
   return (
     <nav>
-      <ul
-        style={{ listStyle: "none", paddingLeft: 0, width: 500, height: 500 }}
-      >
+      <ul className="vertical">
         {itemsWithSubNav.map(({ name, subNav }) => (
           <li key={name}>
             <NavItem
               active={
                 active === name ||
                 (!expanded.includes(name) &&
-                  subNav.some((item) => active === `${name} - ${item}`))
+                  subNav?.some((item) => active === `${name} - ${item}`))
               }
               href="#"
               orientation="vertical"
@@ -115,20 +114,14 @@ export const NestedGroup = () => {
                   setExpanded([...expanded, name]);
                 }
               }}
-              parent={subNav?.length > 0}
+              parent={subNav && subNav.length > 0}
               expanded={expanded.includes(name)}
             >
               {name}
             </NavItem>
             {expanded.includes(name) && (
-              <ul
-                style={{
-                  listStyle: "none",
-                  paddingLeft: 0,
-                  width: 500,
-                }}
-              >
-                {subNav.map((item) => {
+              <ul>
+                {subNav?.map((item) => {
                   const itemValue = `${name} - ${item}`;
                   return (
                     <li key={itemValue}>
@@ -163,16 +156,14 @@ export const NestedCardGroup = () => {
 
   return (
     <nav>
-      <ul
-        style={{ listStyle: "none", paddingLeft: 0, width: 500, height: 500 }}
-      >
+      <ul className="vertical">
         {itemsWithSubNav.map(({ name, subNav }) => (
           <li key={name}>
             <NavItem
               active={
                 active === name ||
                 (!expanded.includes(name) &&
-                  subNav.some((item) => active === `${name} - ${item}`))
+                  subNav?.some((item) => active === `${name} - ${item}`))
               }
               href="#"
               orientation="vertical"
@@ -188,7 +179,7 @@ export const NestedCardGroup = () => {
                   setExpanded([...expanded, name]);
                 }
               }}
-              parent={subNav?.length > 0}
+              parent={subNav && subNav.length > 0}
               expanded={expanded.includes(name)}
             >
               {name}
@@ -196,45 +187,124 @@ export const NestedCardGroup = () => {
             {expanded.includes(name) && (
               <ul
                 style={{
-                  listStyle: "none",
                   padding: "calc(var(--salt-size-unit) * 2)",
-                  width: 500,
                 }}
               >
-                {subNav.map((item) => {
-                  const itemValue = `${name} - ${item}`;
-                  return (
-                    <li
-                      key={itemValue}
-                      style={{ padding: "var(--salt-size-unit)" }}
+                {subNav?.map((item) => (
+                  <li key={item} style={{ padding: "var(--salt-size-unit)" }}>
+                    <Link
+                      style={{ textDecoration: "none" }}
+                      href="https://saltdesignsystem.com/"
+                      IconComponent={null}
+                      target="_blank"
                     >
-                      <Link
-                        style={{ textDecoration: "none" }}
-                        href="https://saltdesignsystem.com/"
-                        IconComponent={null}
-                        target="_blank"
+                      <Card
+                        style={
+                          {
+                            "--saltCard-padding":
+                              "calc(var(--salt-size-unit) * 2)",
+                            border:
+                              "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
+                          } as CSSProperties
+                        }
                       >
-                        <Card
-                          style={
-                            {
-                              "--saltCard-padding":
-                                "calc(var(--salt-size-unit) * 2)",
-                              border:
-                                "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
-                            } as CSSProperties
-                          }
-                        >
-                          {item}
-                        </Card>
-                      </Link>
-                    </li>
-                  );
-                })}
+                        {item}
+                      </Card>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             )}
           </li>
         ))}
       </ul>
     </nav>
+  );
+};
+
+export const HorizontalExpandableGroup = () => {
+  const [active, setActive] = useState(itemsWithSubNav[0].name);
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const currentSubNav = itemsWithSubNav.find(
+    (item) => item.name === expanded
+  )?.subNav;
+  return (
+    <div className="container" style={{ width: "80vw" }}>
+      <nav style={{ display: "flex", justifyContent: "center" }}>
+        <ul className="horizontal">
+          {itemsWithSubNav.map(({ name, subNav }) => (
+            <li key={name}>
+              <NavItem
+                active={active === name}
+                href="#"
+                onClick={(event) => {
+                  // Prevent default to avoid navigation
+                  event.preventDefault();
+                  setActive(name);
+                }}
+                onExpand={() => {
+                  setExpanded((old) => {
+                    if (old === name) {
+                      return null;
+                    }
+                    return name;
+                  });
+                }}
+                expanded={expanded === name}
+                aria-haspopup={expanded === name}
+                parent={
+                  subNav &&
+                  subNav.length > 0 &&
+                  name === itemsWithSubNav[0].name
+                }
+              >
+                {name}
+              </NavItem>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div className="content">
+        <LayerLayout
+          position="top"
+          isOpen={expanded !== null}
+          fullScreenAtBreakpoint={"sm"}
+        >
+          <ul
+            style={{
+              listStyle: "none",
+              padding: "calc(var(--salt-size-unit) * 2)",
+              width: 500,
+            }}
+          >
+            {currentSubNav?.map((item) => {
+              return (
+                <li key={item} style={{ padding: "var(--salt-size-unit)" }}>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    href="https://saltdesignsystem.com/"
+                    IconComponent={null}
+                    target="_blank"
+                  >
+                    <Card
+                      style={
+                        {
+                          "--saltCard-padding":
+                            "calc(var(--salt-size-unit) * 2)",
+                          border:
+                            "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
+                        } as CSSProperties
+                      }
+                    >
+                      {item}
+                    </Card>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </LayerLayout>
+      </div>
+    </div>
   );
 };

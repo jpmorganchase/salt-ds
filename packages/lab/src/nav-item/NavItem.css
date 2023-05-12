@@ -3,8 +3,17 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  min-height: var(--salt-size-stackable);
   background: var(--salt-navigable-primary-background);
+  gap: var(--salt-size-adornmentGap);
+}
+
+.saltNavItem-horizontal {
+  min-height: calc(var(--salt-size-stackable) + var(--salt-size-accent) + var(--salt-size-unit));
+  padding: var(--salt-size-unit);
+}
+
+.saltNavItem-vertical {
+  min-height: var(--salt-size-stackable);
 }
 
 .saltNavItem-label {
@@ -15,19 +24,7 @@
   text-decoration: none;
 }
 
-.saltNavItem-horizontal {
-  padding: calc(var(--salt-size-unit));
-}
-
-.saltNavItem-vertical {
-  padding-left: calc(var(--salt-size-unit) * 2);
-}
-
-.saltNavItem-vertical .saltNavItem-label {
-  margin-right: calc(var(--salt-size-unit) * 2);
-}
-
-.saltNavItem-expandButton {
+.saltNavItem-vertical .saltNavItem-expandButton {
   justify-self: end;
   margin: calc((var(--salt-size-stackable) - var(--salt-size-base)) / 2);
 }
@@ -79,5 +76,5 @@
 .saltNavItem.saltNavItem-active::after,
 .saltNavItem.saltNavItem-active:hover::after,
 .saltNavItem.saltNavItem-active:focus::after {
-  background: var(--salt-navigable-indicator-active);
+  background: var(--saltNavItem-indicator-color, var(--salt-navigable-indicator-active));
 }
