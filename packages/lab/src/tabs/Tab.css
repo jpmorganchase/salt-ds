@@ -11,6 +11,7 @@
 }
 
 .saltTab {
+  flex-shrink: 0;
   align-items: center;
   align-self: stretch;
   background: var(--saltTabs-tab-background, var(--tabs-tab-background));
@@ -27,9 +28,14 @@
   user-select: none;
 }
 
-/* Overrides characteristic used in saltFocusVisible */
-.saltTab.saltFocusVisible:after {
+.saltTab:focus-visible::after {
+  content: "";
   inset: 2px 2px 4px 2px;
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  position: absolute;
 }
 
 .saltTab:not(.saltTab-vertical) {
@@ -128,14 +134,14 @@
   bottom: 0;
 }
 
-.saltTab-vertical .saltFocusVisible:not([aria-selected="true"]):before {
+.saltTab-vertical .saltTab:focus-visible:not([aria-selected="true"]):before {
   left: auto;
   height: auto;
   top: 0;
   width: 2px;
 }
 
-.saltTab.saltFocusVisible {
+.saltTab:focus-visible {
   background: var(--saltTabs-tab-hover-background, var(--salt-navigable-primary-background-hover));
 }
 
@@ -158,7 +164,7 @@
 }
 
 /* Hover styling */
-.saltTab:not([aria-selected="true"]).saltFocusVisible:before,
+.saltTab:not([aria-selected="true"]):focus-visible::before,
 .saltTab:hover:not([aria-selected="true"]):before {
   --tabs-tab-before-content: "";
   --tabs-tab-before-background: var(--salt-navigable-indicator-hover);

@@ -4,3 +4,4 @@ export * from "./Tab";
 export * from "./TabPanel";
 export * from "./Tabs";
 export * from "./TabsTypes";
+export * from "./drag-drop";

@@ -42,13 +42,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 const withBaseName = makePrefixer("saltBadge");
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
-  {
-    badgeContent = 0,
-    max = 1000,
-    className,
-    children = <MessageIcon />,
-    ...rest
-  },
+  { badgeContent = 0, max = 1000, className, children, ...rest },
   ref
 ) {
   const badgeId = useId();

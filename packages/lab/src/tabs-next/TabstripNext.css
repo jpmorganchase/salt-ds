@@ -1,0 +1,103 @@
+/* Component class applied to the root element */
+.saltTabstripNext {
+  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
+  --tabs-tabstrip-dragging-display: none;
+  --tabs-tabstrip-display: inline-flex;
+  --tabs-tabstrip-background: transparent;
+
+  align-items: flex-start;
+  align-self: var(--saltTabs-tabstrip-alignSelf, stretch);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  min-width: 28px;
+  width: 100%;
+  height: var(--tabs-tabstrip-height);
+}
+
+.saltTabstripNext-scrollable {
+  overflow-x: auto;
+}
+
+.saltTabstripNext-scrollable .saltTabstripNext-inner {
+  flex-wrap: nowrap;
+}
+
+.saltTabstripNext-scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+.saltTabstripNext-draggingTab {
+  --saltTabs-activationIndicator-transition: none;
+}
+
+.saltTabstripNext-draggingTab .saltTab {
+  pointer-events: none;
+}
+
+.saltTabstripNext-inner {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  line-height: var(--tabs-tabstrip-height);
+}
+
+.saltTabstripNext-centered .saltTabstripNext-inner {
+  justify-content: center;
+}
+
+/* Styling applied to Draggable wrapper when used to drag a Tab */
+.saltDraggable[class*="tabstrip"] {
+  --tabs-tabstrip-display: flex;
+  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
+  --tabs-tabstrip-dragging-display: block;
+
+  --tabs-tab-background: var(--salt-navigable-primary-background-hover);
+  --tabs-tab-before-content: "";
+  --tabs-tab-before-background: var(--salt-navigable-indicator-hover);
+  --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
+  --tabs-tab-before-inset: var(--tabs-activationIndicator-inset);
+  --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
+  --tabs-tab-cursor: var(--salt-draggable-grab-cursor-active);
+  --tabs-tab-position: static;
+
+  font-size: 12px;
+}
+
+.saltDraggable-tabstrip-horizontal {
+  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
+  --tabs-activationIndicator-thumb-height: 2px;
+  --tabs-activationIndicator-inset: auto 0px 0px 0px;
+
+  line-height: var(--tabs-tabstrip-height);
+}
+
+.saltDraggable[class*="tabstrip"] .saltTab[aria-selected="true"]:before {
+  --tabs-tab-before-background: var(--salt-navigable-indicator-active);
+}
+
+.saltDraggable[class*="tabstrip"] .saltTab {
+  box-shadow: var(--salt-overlayable-shadow-drag);
+}
+
+[data-overflowed] {
+  order: 99;
+  visibility: hidden;
+}
+
+.saltTabstripNext-overflowMenu-dropTarget:after {
+  background: var(--salt-selectable-background-selected);
+  content: "";
+  position: absolute;
+  height: 2px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
