@@ -33,7 +33,6 @@ export const ColorPicker = ({
   onChange,
   onDialogClosed,
 }: ColorPickerProps): JSX.Element => {
-
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     id: "salt-color-picker",

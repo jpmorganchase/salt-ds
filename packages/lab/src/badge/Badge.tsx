@@ -1,6 +1,6 @@
-import {makePrefixer, useId} from "@salt-ds/core";
-import {MessageIcon} from "@salt-ds/icons";
-import {clsx} from "clsx";
+import { makePrefixer, useId } from "@salt-ds/core";
+import { MessageIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
 import {
   cloneElement,
   forwardRef,
@@ -9,8 +9,8 @@ import {
   ReactElement,
   ReactText,
 } from "react";
-import {useWindow} from "@salt-ds/window";
-import {useComponentCssInjection} from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 import badgeCss from "./Badge.css";
 

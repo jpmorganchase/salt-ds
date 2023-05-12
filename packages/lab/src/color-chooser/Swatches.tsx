@@ -40,33 +40,34 @@ export const Swatches = ({
     css: swatchesCss,
     window: targetWindow,
   });
-  return(
-  <div data-testid="swatches" className={clsx(withBaseName("pickerDiv"))}>
-    <SwatchesPicker
-      allColors={allColors}
-      color={color}
-      onChange={handleColorChange}
-      alpha={alpha}
-      onDialogClosed={onDialogClosed}
-    />
-    <div className={clsx(withBaseName("textDiv"))}>
-      <div>
-        <span className={clsx(withBaseName("colorTextDiv"))}>Color:</span>
-        <span className={clsx(withBaseName("colorNameTextDiv"))}>
-          {displayColorName ?? placeholder}
-        </span>
-      </div>
-      <div>
-        <span className={clsx(withBaseName("alphaTextDiv"))}>Opacity:</span>
-        <AlphaInput
-          alphaValue={color?.rgba.a === 0 ? 0 : alpha}
-          showAsOpacity={true}
-          onSubmit={(alpha: number, e?: React.ChangeEvent): void => {
-            const newColor = color?.setAlpha(alpha);
-            handleColorChange(newColor, false, e);
-          }}
-        />
+  return (
+    <div data-testid="swatches" className={clsx(withBaseName("pickerDiv"))}>
+      <SwatchesPicker
+        allColors={allColors}
+        color={color}
+        onChange={handleColorChange}
+        alpha={alpha}
+        onDialogClosed={onDialogClosed}
+      />
+      <div className={clsx(withBaseName("textDiv"))}>
+        <div>
+          <span className={clsx(withBaseName("colorTextDiv"))}>Color:</span>
+          <span className={clsx(withBaseName("colorNameTextDiv"))}>
+            {displayColorName ?? placeholder}
+          </span>
+        </div>
+        <div>
+          <span className={clsx(withBaseName("alphaTextDiv"))}>Opacity:</span>
+          <AlphaInput
+            alphaValue={color?.rgba.a === 0 ? 0 : alpha}
+            showAsOpacity={true}
+            onSubmit={(alpha: number, e?: React.ChangeEvent): void => {
+              const newColor = color?.setAlpha(alpha);
+              handleColorChange(newColor, false, e);
+            }}
+          />
+        </div>
       </div>
     </div>
-  </div>
-);}
+  );
+};

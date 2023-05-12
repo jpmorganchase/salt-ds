@@ -61,7 +61,6 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
     window: targetWindow,
   });
 
-
   // TODO check if we need ImageProps and TitleProps classNames interface.
   return (
     <span

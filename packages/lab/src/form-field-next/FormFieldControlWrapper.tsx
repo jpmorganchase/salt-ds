@@ -15,7 +15,5 @@ export const FormFieldControlWrapper = ({ children }: PropsWithChildren) => {
     css: formFieldControlWrapper,
     window: targetWindow,
   });
-  return (
-    <div className={withBaseName()}>{children}</div>
-  );
-}
+  return <div className={withBaseName()}>{children}</div>;
+};

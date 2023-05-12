@@ -25,7 +25,6 @@ export const Highlighter = (
     window: targetWindow,
   });
 
-
   const matchRegex =
     typeof matchPattern === "string"
       ? new RegExp(`(${escapeRegExp(matchPattern)})`, "gi")

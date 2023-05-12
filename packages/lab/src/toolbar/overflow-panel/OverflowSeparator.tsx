@@ -2,8 +2,8 @@ import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { HTMLAttributes, ReactElement } from "react";
 import overflowSeparatorCss from "./OverflowSeparator.css";
-import {useWindow} from "@salt-ds/window";
-import {useComponentCssInjection} from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltOverflowSeparator");
 

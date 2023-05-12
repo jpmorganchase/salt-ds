@@ -1,21 +1,20 @@
-import {flip, limitShift, shift, size} from "@floating-ui/react";
+import { flip, limitShift, shift, size } from "@floating-ui/react";
 import {
   makePrefixer,
   useFloatingUI,
   useForkRef,
   useIdMemo as useId,
 } from "@salt-ds/core";
-import {clsx} from "clsx";
-import {Children, cloneElement, forwardRef, useRef, useState} from "react";
-import {forwardCallbackProps} from "../utils";
-import {DropdownBaseProps} from "./dropdownTypes";
-import {useDropdownBase} from "./useDropdownBase";
-import {Portal} from "../portal";
-import {isDesktop, useWindow as usePortalWindow} from "../window";
-import {useComponentCssInjection} from "@salt-ds/styles";
+import { clsx } from "clsx";
+import { Children, cloneElement, forwardRef, useRef, useState } from "react";
+import { forwardCallbackProps } from "../utils";
+import { DropdownBaseProps } from "./dropdownTypes";
+import { useDropdownBase } from "./useDropdownBase";
+import { Portal } from "../portal";
+import { isDesktop, useWindow as usePortalWindow } from "../window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
-import {useWindow} from "@salt-ds/window";
-
+import { useWindow } from "@salt-ds/window";
 
 import dropdownCss from "./Dropdown.css";
 // Any component may be passed as our trigger or popup component.

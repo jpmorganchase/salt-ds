@@ -37,12 +37,12 @@ export const LinearGradient = () => {
   return (
     <defs>
       <linearGradient gradientTransform="rotate(90)" id={circularGradientId}>
-        <stop className="saltCircularProgress-gradientStart" offset="0%"/>
-        <stop className="saltCircularProgress-gradientStop" offset="100%"/>
+        <stop className="saltCircularProgress-gradientStart" offset="0%" />
+        <stop className="saltCircularProgress-gradientStop" offset="100%" />
       </linearGradient>
     </defs>
   );
-}
+};
 
 export interface CircleProps {
   strokeWidth: number;

@@ -1,6 +1,6 @@
-import {Button, makePrefixer, useId} from "@salt-ds/core";
-import {ErrorIcon, UploadIcon} from "@salt-ds/icons";
-import {clsx} from "clsx";
+import { Button, makePrefixer, useId } from "@salt-ds/core";
+import { ErrorIcon, UploadIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
 import {
   ChangeEventHandler,
   DragEvent,
@@ -16,12 +16,11 @@ import {
   useRef,
   useState,
 } from "react";
-import {containsFiles, extractFiles, validateFiles} from "./internal/utils";
-import {FilesValidator} from "./validators";
+import { containsFiles, extractFiles, validateFiles } from "./internal/utils";
+import { FilesValidator } from "./validators";
 
-
-import {useWindow} from "@salt-ds/window";
-import {useComponentCssInjection} from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 import fileDropZoneCss from "./FileDropZone.css";
 

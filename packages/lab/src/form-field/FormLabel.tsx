@@ -73,29 +73,30 @@ export const FormLabel = ({
     window: targetWindow,
   });
 
-  return(
-  <label
-    className={clsx(withBaseName(), className, {
-      [withBaseName("disabled")]: disabled,
-    })}
-    {...restProps}
-  >
-    {label}
+  return (
+    <label
+      className={clsx(withBaseName(), className, {
+        [withBaseName("disabled")]: disabled,
+      })}
+      {...restProps}
+    >
+      {label}
 
-    <NecessityIndicator
-      required={required}
-      displayedNecessity={displayedNecessity}
-      necessityText={necessityText}
-      className={withBaseName("necessityIndicator")}
-    />
-    {hasStatusIndicator && (
-      <StatusIndicator
-        className={withBaseName("statusIndicator")}
-        status={validationStatus}
-        tooltipText={tooltipText}
-        hasTooltip
-        {...StatusIndicatorProps}
+      <NecessityIndicator
+        required={required}
+        displayedNecessity={displayedNecessity}
+        necessityText={necessityText}
+        className={withBaseName("necessityIndicator")}
       />
-    )}
-  </label>
-);}
+      {hasStatusIndicator && (
+        <StatusIndicator
+          className={withBaseName("statusIndicator")}
+          status={validationStatus}
+          tooltipText={tooltipText}
+          hasTooltip
+          {...StatusIndicatorProps}
+        />
+      )}
+    </label>
+  );
+};

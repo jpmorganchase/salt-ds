@@ -62,7 +62,6 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
       window: targetWindow,
     });
 
-
     return (
       <FlexItem
         className={clsx(

@@ -40,7 +40,6 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
       window: targetWindow,
     });
 
-
     const { count, page, onPageChange, compact, setPaginatorElement } =
       usePaginationContext();
 
