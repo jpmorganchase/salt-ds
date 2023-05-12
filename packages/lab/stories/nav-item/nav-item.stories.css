@@ -54,7 +54,8 @@ ul {
   flex: 1;
 }
 
-.content :where(.saltLayerLayout, .saltScrim) {
+.content .saltLayerLayout,
+.content .saltScrim {
   position: relative;
   width: 80vw;
   align-items: flex-start;
