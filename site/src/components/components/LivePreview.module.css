@@ -7,6 +7,7 @@
   min-height: 25vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--salt-actionable-primary-foreground-active);
 }
 
 .codePreview {
@@ -25,6 +26,7 @@
   align-items: center;
   justify-content: center;
   gap: calc(2 * var(--salt-size-unit));
+  flex-wrap: wrap;
 }
 
 .switch {
