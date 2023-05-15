@@ -10,8 +10,6 @@ import { InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
 
-import "./input-next.stories.css";
-
 export default {
   title: "Lab/Input Next",
   component: InputNext,
