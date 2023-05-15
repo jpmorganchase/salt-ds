@@ -6,11 +6,6 @@ import {
 } from "./TokenizedInputBase";
 import { useTokenizedInput } from "./useTokenizedInput";
 
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-
-import tokenizedInputCss from "./TokenizedInput.css";
-
 export type StringToItem<Item> = (
   selectedItems: Array<Item>,
   value: string
@@ -45,13 +40,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const { inputRef: inputRefProp, ...restProps } = props;
-
-  const { window: targetWindow } = useWindow();
-  useComponentCssInjection({
-    id: "salt-tokenized-input",
-    css: tokenizedInputCss,
-    window: targetWindow,
-  });
 
   const { inputRef, helpers, inputProps } = useTokenizedInput(restProps);
 
