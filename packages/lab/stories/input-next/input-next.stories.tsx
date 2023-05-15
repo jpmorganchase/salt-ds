@@ -91,13 +91,10 @@ export const ReadonlyEmptyMarker: ComponentStory<typeof InputNext> = (args) => {
 
 export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
   return (
-    <FlowLayout>
-      <div className="alignCenter">
+    <FlowLayout style={{ maxWidth: "266px" }}>
         <InputNext defaultValue={args.defaultValue ?? "Value"} {...args} />
-      </div>
-      <div className="alignRight">
-        <InputNext defaultValue={args.defaultValue ?? "Value"} {...args} />
-      </div>
+        <InputNext textAlignment="center" defaultValue={args.defaultValue ?? "Value"} {...args} />
+        <InputNext textAlignment="right" defaultValue={args.defaultValue ?? "Value"} {...args} />
     </FlowLayout>
   );
 };

@@ -117,8 +117,20 @@
   min-width: 0;
   overflow: hidden;
   padding: 0;
-  text-align: var(--saltInputNext-textAlign, left);
+  text-align: var(--inputNext-textAlign);
   width: 100%;
+}
+
+.saltInputNext-textAlignLeft {
+  --inputNext-textAlign: left;
+}
+
+.saltInputNext-textAlignCenter {
+  --inputNext-textAlign: center;
+}
+
+.saltInputNext-textAlignRight {
+  --inputNext-textAlign: right;
 }
 
 /* Reset in the next class */
