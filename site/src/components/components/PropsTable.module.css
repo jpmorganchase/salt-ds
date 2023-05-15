@@ -1,0 +1,7 @@
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.tableWrapper td > * {
+  margin-bottom: 0;
+}
