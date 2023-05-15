@@ -211,6 +211,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           {endAdornment}
         </div>
       )}
+      <div className={withBaseName("activationIndicator")} />
     </div>
   );
 });
