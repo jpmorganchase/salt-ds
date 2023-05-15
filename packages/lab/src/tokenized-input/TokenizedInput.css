@@ -74,6 +74,7 @@
 }
 
 /* Styles applied to Input and Clear Button if `expanded={false}` */
+.saltTokenizedInput-hidden,
 .saltTokenizedInput-input.saltTokenizedInput-hidden,
 .saltButton.saltTokenizedInput-hidden {
   display: none;
