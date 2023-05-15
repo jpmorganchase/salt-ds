@@ -78,7 +78,9 @@ export const useList = ({
     const { disabled } = items[index]?.props;
 
     const targetIsClickable =
-      itemClicked.getAttribute("role") === "option" && !disabled;
+      (itemClicked.getAttribute("role") === "option" && !disabled) ||
+      (itemClicked.getAttribute("type") === "checkbox" && !disabled);
+
     if (!targetIsClickable) return;
 
     evt.preventDefault();

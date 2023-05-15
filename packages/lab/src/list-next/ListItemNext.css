@@ -23,6 +23,15 @@
   pointer-events: none;
 }
 
+.saltCheckbox-input {
+  pointer-events: auto;
+}
+
+.saltCheckbox:hover {
+  --saltCheckbox-icon-stroke: var(--salt-selectable-foreground-hover);
+  --saltCheckbox-icon-fill: var(--salt-selectable-background-hover);
+}
+
 .saltListItemNext[role="presentation"] {
   cursor: default;
 }
@@ -34,23 +43,27 @@
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
-.saltListItemNext:hover:not([role="presentation"]),
+.saltListItemNext:hover:not([role="presentation"]):not(.saltListItemNext-disabled),
 /* TODO: do we need to add the role exception to the below classes? */
 .saltListItemNext:focus-visible, .saltListItemNext-focused {
   --list-item-background: var(--salt-selectable-background-hover);
-  --saltCheckbox-icon-stroke: var(--salt-selectable-foreground-hover);
-  --saltCheckbox-icon-fill: var(--salt-selectable-background-hover);
   cursor: var(--salt-selectable-cursor-hover);
 }
 
-.saltListItemNext[aria-selected="true"]:not(:has(input[type="checkbox"])) {
+.saltListItemNext[aria-selected="true"] {
   --list-item-background: var(--salt-selectable-background-selected);
+  outline: var(--salt-size-border) var(--salt-container-borderStyle)
+    var(--salt-selectable-borderColor-selected);
 }
 
-@supports not selector(:has(*)) {
-  .saltListItemNext[aria-selected="true"]:not(.saltListItemNext-checkbox) {
-    --list-item-background: var(--salt-selectable-background-selected);
-  }
+.saltListItemNext[aria-selected="true"]:first-child {
+  border-top: var(--salt-size-border) var(--salt-container-borderStyle)
+    var(--salt-selectable-borderColor-selected);
+}
+
+.saltListItemNext[aria-selected="true"]:last-child {
+  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle)
+    var(--salt-selectable-borderColor-selected);
 }
 
 .saltListItemNext[aria-selected="true"]:not(.saltListItemNext-disabled) {
@@ -59,9 +72,11 @@
 
 .saltListItemNext-disabled:hover:not([role="presentation"]),
 .saltListItemNext-disabled:focus-visible {
-  --list-item-background: var(--salt-selectable-background-disabled);
-  --saltCheckbox-icon-fill: var(--salt-selectable-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
+}
+
+.saltListItemNext-disabled > .saltCheckbox:hover {
+  --saltCheckbox-icon-fill: var(--list-item-background);
 }
 
 .saltListItemNext-textWrapper {
