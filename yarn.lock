@@ -5460,9 +5460,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/data-grid@workspace:packages/grid":
+"@salt-ds/data-grid@workspace:packages/data-grid":
   version: 0.0.0-use.local
-  resolution: "@salt-ds/data-grid@workspace:packages/grid"
+  resolution: "@salt-ds/data-grid@workspace:packages/data-grid"
   peerDependencies:
     "@types/react": ">=16.8.6"
     react: ">=16.8.0"
