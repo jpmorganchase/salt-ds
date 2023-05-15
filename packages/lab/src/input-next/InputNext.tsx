@@ -178,9 +178,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
-          [withBaseName(`textAlign${capitalize(textAlignment)}`)]: textAlignment,
+          [withBaseName(`textAlign${capitalize(textAlignment)}`)]:
+            textAlignment,
           [withBaseName(validationStatus || "")]: validationStatus,
-          [withBaseName(variant)]: variant
+          [withBaseName(variant)]: variant,
         },
         classNameProp
       )}
