@@ -183,10 +183,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     >
       <input
         id={id}
-        className={clsx(
-          withBaseName("input"),
-          inputProps?.className
-        )}
+        className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
         readOnly={isReadOnly}
         ref={ref}
