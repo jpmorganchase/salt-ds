@@ -1,12 +1,17 @@
 import { RefObject } from "react";
-import { TableColGroup } from "./TableColGroup";
-import "./TopPart.css";
+import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import { GridColumnGroupModel, GridColumnModel } from "../Grid";
+
 import { HeaderRow } from "./HeaderRow";
 import { GroupHeaderRow } from "./GroupHeaderRow";
+import { TableColGroup } from "./TableColGroup";
 import { useActiveOnWheel } from "./gridHooks";
-import { clsx } from "clsx";
+
+import TopPartCss from "./TopPart.css";
 
 const withBaseName = makePrefixer("saltGridTopPart");
 
@@ -22,6 +27,13 @@ export interface TopPartProps<T> {
 export function TopPart<T>(props: TopPartProps<T>) {
   const { topRef, onWheel, columns, columnGroups, midGap, bottomShadow } =
     props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-top-part",
+    css: TopPartCss,
+    window: targetWindow,
+  });
 
   const tableRef = useActiveOnWheel(onWheel);
 

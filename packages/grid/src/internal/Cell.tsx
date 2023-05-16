@@ -1,8 +1,12 @@
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
-import "./Cell.css";
+
 import { ColumnSeparatorType } from "../Grid";
+
+import CellCss from "./Cell.css";
 
 export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
   isSelected?: boolean;
@@ -22,6 +26,14 @@ export const Cell = forwardRef<HTMLTableCellElement, CellProps>(
       className,
       ...tdProps
     } = props;
+
+    const { window: targetWindow } = useWindow();
+    useComponentCssInjection({
+      id: "salt-cell",
+      css: CellCss,
+      window: targetWindow,
+    });
+
     return (
       <td
         ref={ref}

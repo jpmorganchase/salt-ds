@@ -1,6 +1,9 @@
 import { useMemo } from "react";
-import "./ColumnDropTarget.css";
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import ColumDropTargetCss from "./ColumnDropTarget.css";
 
 const withBaseName = makePrefixer("saltGridColumnDropTarget");
 
@@ -11,6 +14,13 @@ export interface ColumnDropTargetProps {
 // When the user drags a column, this component is used to show the potential
 // drop target. Experimental feature. No UX yet.
 export function ColumnDropTarget(props: ColumnDropTargetProps) {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-column-drop-target",
+    css: ColumDropTargetCss,
+    window: targetWindow,
+  });
+
   const { x = 0 } = props;
 
   const style = useMemo(() => {

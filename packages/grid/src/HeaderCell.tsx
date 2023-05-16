@@ -1,18 +1,22 @@
-import "./HeaderCell.css";
 import { KeyboardEventHandler, useRef } from "react";
+import { clsx } from "clsx";
 import {
   FlexContentAlignment,
   makePrefixer,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { clsx } from "clsx";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
+
 import { ColumnSeparatorType, SortOrder } from "./Grid";
 import { useSizingContext } from "./SizingContext";
 import { useColumnDragContext } from "./ColumnDragContext";
 import { Cursor, useFocusableContent } from "./internal";
 import { HeaderCellProps } from "./GridColumn";
 import { useColumnSortContext } from "./ColumnSortContext";
-import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
+
+import HeaderCellCss from "./HeaderCell.css";
 
 const withBaseName = makePrefixer("saltGridHeaderCell");
 
@@ -29,6 +33,14 @@ type AriaSortProps = "none" | "ascending" | "descending";
 
 export function HeaderCell<T>(props: HeaderCellProps<T>) {
   const { column, children, isFocused } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-header-cell",
+    css: HeaderCellCss,
+    window: targetWindow,
+  });
+
   const { separator } = column;
   const { align, id, headerClassName, sortable, onSortOrderChange } =
     column.info.props;

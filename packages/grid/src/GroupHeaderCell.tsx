@@ -1,9 +1,13 @@
-import { clsx } from "clsx";
-import "./GroupHeaderCell.css";
-import { makePrefixer } from "@salt-ds/core";
-import { GridColumnGroupModel } from "./Grid";
 import { ReactNode } from "react";
+import { clsx } from "clsx";
+import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import { GridColumnGroupModel } from "./Grid";
 import { useColumnDataContext } from "./ColumnDataContext";
+
+import GroupHeaderCellCss from "./GroupHeaderCell.css";
 
 const withBaseName = makePrefixer("saltGridGroupHeaderCell");
 
@@ -14,6 +18,14 @@ export interface GroupHeaderCellProps {
 
 export function GroupHeaderCell(props: GroupHeaderCellProps) {
   const { group } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-group-header-cell",
+    css: GroupHeaderCellCss,
+    window: targetWindow,
+  });
+
   const { colSpan, columnSeparator, rowSeparator } = group;
   const { getColById } = useColumnDataContext();
   const firstChild = getColById(group.childrenIds[0]);

@@ -1,8 +1,12 @@
 import { ReactNode } from "react";
-import { GridCellValueProps } from "../GridColumn";
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import "./DefaultCellValue.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import { GridCellValueProps } from "../GridColumn";
+
+import DefaultCellValueCss from "./DefaultCellValue.css";
 
 const withBaseName = makePrefixer("saltGridDefaultCellValue");
 
@@ -10,6 +14,14 @@ const withBaseName = makePrefixer("saltGridDefaultCellValue");
 // components (<td>s)
 export function DefaultCellValue<T>(props: GridCellValueProps<T>) {
   const { value } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-default-cell-value",
+    css: DefaultCellValueCss,
+    window: targetWindow,
+  });
+
   return (
     <div
       className={clsx(withBaseName(), {

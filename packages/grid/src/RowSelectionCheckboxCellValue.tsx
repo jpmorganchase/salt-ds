@@ -1,12 +1,24 @@
 import { Checkbox } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
-import "./CheckboxCell.css";
 import { MouseEventHandler } from "react";
 import { useCursorContext } from "./CursorContext";
 
+import CheckboxCellCss from "./CheckboxCell.css";
+
 export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
   const { row, column, isFocused } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-checkbox-cell",
+    css: CheckboxCellCss,
+    window: targetWindow,
+  });
+
   const { selRowIdxs, selectRows } = useSelectionContext();
   const { moveCursor } = useCursorContext();
 
