@@ -1,5 +1,24 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.8
+
+### Minor Changes
+
+- 2e04f9bc: Moved `useFormFieldPropsNext` and `FormFieldContextNext` to `./form-field-context-next`
+  Move `a11yValueAriaProps`, `A11yValueProps` to `FormFieldContextNext`
+- b8ef52a3: Add `emptyReadOnlyMarker` prop to `InputNext`
+- c3b945f0: Removed `startAdornment` and `endAdornment` props in InputNext; adornments will come in Input v2
+
+### Patch Changes
+
+- ebf58d26: Banner
+
+  - Remove `render` prop
+  - Remove `Link` component from content
+  - Create composable components `BannerContent` and `BannerCloseButton`
+
+- 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
+
 ## 1.0.0-alpha.7
 
 ### Minor Changes
