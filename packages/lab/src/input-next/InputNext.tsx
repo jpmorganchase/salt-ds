@@ -181,18 +181,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       style={style}
       {...other}
     >
-      {startAdornment && (
-        <div className={withBaseName("startAdornmentContainer")}>
-          {startAdornment}
-        </div>
-      )}
       <input
         id={id}
-        className={clsx(
-          withBaseName("input"),
-          { [withBaseName("withAdornment")]: validationStatus },
-          inputProps?.className
-        )}
+        className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
         readOnly={isReadOnly}
         ref={ref}
@@ -205,11 +196,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       />
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
-      )}
-      {endAdornment && (
-        <div className={withBaseName("endAdornmentContainer")}>
-          {endAdornment}
-        </div>
       )}
       <div className={withBaseName("activationIndicator")} />
     </div>

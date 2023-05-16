@@ -172,27 +172,4 @@
   cursor: var(--salt-editable-cursor-disabled);
   color: var(--saltInputNext-color-disabled, var(--salt-text-primary-foreground-disabled));
 }
-
-/* Style applied to start adornments */
-.saltInputNext-startAdornmentContainer {
-  align-items: center;
-  display: inline-flex;
-  padding-right: var(--salt-size-adornmentGap);
-  column-gap: var(--salt-size-adornmentGap);
-}
-
-/* Style applied to end adornments */
-.saltInputNext-endAdornmentContainer {
-  align-items: center;
-  display: inline-flex;
-  padding-left: var(--salt-size-adornmentGap);
-  column-gap: var(--salt-size-adornmentGap);
-}
-
-.saltInputNext-activationIndicator {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  position: absolute;
-  border-bottom: var(--inputNext-borderWidth) var(--inputNext-borderStyle) var(--inputNext-borderColor);
-}
+<<<<<<< HEAD
