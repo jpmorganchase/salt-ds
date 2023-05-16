@@ -9,7 +9,7 @@ import {
   ReactNode,
   useState,
 } from "react";
-import { capitalize, makePrefixer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useControlled } from "@salt-ds/core";
 import { useFormFieldPropsNext } from "../form-field-context-next";
 import { StatusAdornment } from "../status-adornment";
 
