@@ -131,7 +131,7 @@
 .saltInputNext-focused {
   --inputNext-borderColor: var(--inputNext-borderColor-focused);
   --inputNext-borderWidth: var(--salt-editable-borderWidth-active);
-  
+
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--saltInputNext-outlineColor, var(--inputNext-outlineColor));
