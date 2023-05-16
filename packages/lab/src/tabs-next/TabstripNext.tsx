@@ -1,5 +1,15 @@
-import { Button, makePrefixer, useControlled } from "@salt-ds/core";
-import { OverflowMenuIcon } from "@salt-ds/icons";
+import {
+  Button,
+  FlexLayout,
+  makePrefixer,
+  useControlled,
+  useId,
+} from "@salt-ds/core";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  OverflowMenuIcon,
+} from "@salt-ds/icons";
 import clsx from "clsx";
 import {
   Children,
@@ -7,6 +17,7 @@ import {
   isValidElement,
   PropsWithChildren,
   ReactNode,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -49,16 +60,29 @@ export const TabstripNext = ({
   scrollable,
   tabMaxWidth,
 }: TabstripNextProps) => {
+  const [enableRightArrow, setEnableRightArrow] = useState(false);
+  const [enableLeftArrow, setEnableLeftArrow] = useState(false);
+  const uniqueId = useId();
+  const getTabId = useCallback(
+    (index: number) => {
+      return `tab-${uniqueId ?? "unknown"}-${index}`;
+    },
+    [uniqueId]
+  );
+
   const [activeTabIndex, setActiveTabIndex] = useControlled({
     controlled: activeTabIndexProp,
     default: defaultActiveTabIndex,
     name: "useTabs",
     state: "activeTabIndex",
   });
+  // TODO: fix clashes with multiple tabs on page
   const activeTabId =
-    activeTabIndex !== undefined ? `tab-${activeTabIndex}` : undefined;
+    activeTabIndex !== undefined ? getTabId(activeTabIndex) : undefined;
   const outerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
+  const firstSpy = useRef<HTMLDivElement>(null);
+  const lastSpy = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
   const [overflowTabsLength, setOverflowTabsLength] = useState(0);
   const [keyboardFocusedIndex, setKeyboardFocusedIndex] = useState(-1);
@@ -66,18 +90,40 @@ export const TabstripNext = ({
 
   useEffect(() => {
     if (!outerRef.current || !innerRef.current) return;
+    let intersect: IntersectionObserver;
     const resize = new ResizeObserver(
       ([{ contentRect: outerRect }, { contentRect: innerRect }]) => {
         if (!outerRef.current || !innerRef.current) return;
         if (scrollable) {
-          const diff = innerRect.width - outerRect.width;
-          if (diff > 1) {
-            // TODO: do something with scroll overflow
+          const hasOverflowingContent = innerRect.width - outerRect.width > 1;
+          if (hasOverflowingContent) {
+            intersect = new IntersectionObserver(([firstTab, lastTab]) => {
+              if (firstTab) {
+                if (firstTab.target === firstSpy.current) {
+                  setEnableLeftArrow(!firstTab.isIntersecting);
+                } else {
+                  setEnableRightArrow(!firstTab.isIntersecting);
+                }
+              }
+              if (lastTab) {
+                setEnableRightArrow(!lastTab.isIntersecting);
+                if (lastTab.target === lastSpy.current) {
+                  setEnableRightArrow(!lastTab.isIntersecting);
+                } else {
+                  setEnableLeftArrow(!lastTab.isIntersecting);
+                }
+              }
+            });
+            if (firstSpy.current) {
+              intersect.observe(firstSpy.current);
+            }
+            if (lastSpy.current) {
+              intersect.observe(lastSpy.current);
+            }
           }
         } else {
-          const diff = innerRect.height - outerRect.height;
-          const shouldOverflow = diff > 0;
-          setHasOverflow(shouldOverflow);
+          const hasOverflowingContent = innerRect.height - outerRect.height > 0;
+          setHasOverflow(hasOverflowingContent);
           const tabsTopOffset = innerRef.current.getBoundingClientRect().top;
           const overflowLength = [
             ...outerRef.current.querySelectorAll(
@@ -94,6 +140,9 @@ export const TabstripNext = ({
     resize.observe(innerRef.current);
 
     return () => {
+      if (intersect) {
+        intersect.disconnect();
+      }
       resize.disconnect();
     };
   }, [scrollable]);
@@ -101,134 +150,156 @@ export const TabstripNext = ({
   const tabs = Children.toArray(children);
 
   return (
-    <div
-      className={clsx(withBaseName(), withBaseName("horizontal"), {
-        [withBaseName("centered")]: align === "center",
-        [withBaseName("scrollable")]: scrollable,
-      })}
-      ref={outerRef}
-    >
-      <div className={withBaseName("inner")} ref={innerRef}>
-        {tabs.map((child, index) => {
-          if (!isTab(child)) return child;
-          const id = `tab-${index}`;
-          return cloneElement<TabProps>(child, {
-            draggable: true,
-            id: id,
-            style: {
-              maxWidth: tabMaxWidth,
-            },
-            tabIndex: index === activeTabIndex ? 0 : -1,
-            selected: index === activeTabIndex,
-            index: index,
-            onClick: () => {
-              setActiveTabIndex(index);
-              onActiveChange?.(index);
-            },
-            onKeyUp: noop,
-            onKeyDown: (e) => {
-              let nextId;
-              if (e.key === "ArrowRight") {
-                const nextIsOverflowed =
-                  index + 1 >= tabs.length - overflowTabsLength;
-                if (nextIsOverflowed) {
-                  outerRef?.current
-                    ?.querySelector<HTMLDivElement>(`.saltDropdown .saltButton`)
-                    ?.focus();
-                  return;
-                } else {
-                  nextId = `#tab-${index + 1}`;
-                  setKeyboardFocusedIndex(index + 1);
-                }
-              }
-              if (e.key === "ArrowLeft") {
-                nextId = `#tab-${index - 1}`;
-                setKeyboardFocusedIndex(index - 1);
-              }
-              if (nextId && innerRef.current) {
-                innerRef.current.querySelector<HTMLDivElement>(nextId)?.focus();
-              }
-              if (e.key === "Enter" || e.key === " ") {
-                const nextIndex =
-                  keyboardFocusedIndex < 0
-                    ? activeTabIndex
-                    : keyboardFocusedIndex;
-                setActiveTabIndex(nextIndex);
-                onActiveChange?.(nextIndex);
-              }
-            },
-          });
-        })}
-      </div>
-      {hasOverflow ? (
-        <Dropdown
-          data-overflow-indicator
-          data-priority={0}
-          isOpen={showOverflow}
-          key="overflow"
-          onOpenChange={(open) => {
-            setShowOverflow(open);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "ArrowLeft") {
-              const nextIndex = tabs.length - overflowTabsLength - 1;
-              setActiveTabIndex(nextIndex);
-              innerRef?.current
-                ?.querySelector<HTMLDivElement>(`#tab-${nextIndex}`)
-                ?.focus();
-              setShowOverflow(false);
-            }
-          }}
-          onSelectionChange={(e) => {
-            console.log("onSelectionChange", e.currentTarget as HTMLDivElement);
-          }}
-          placement="bottom-end"
-          source={tabs
-            .slice(tabs.length - overflowTabsLength, tabs.length)
-            .map((tab, index) => {
-              if (!isTab(tab)) return tab;
-              return (
-                <ListItem
-                  data-index={index}
-                  label={tab.props.label}
-                  onClick={() => {
-                    if (onMoveTab) {
-                      const from = tabs.length - overflowTabsLength + index;
-                      const to = tabs.length - overflowTabsLength - 1;
-                      onMoveTab(from, to);
-                      onActiveChange?.(to);
-                      setActiveTabIndex(to);
-                    } else {
-                      const nextIndex =
-                        tabs.length - overflowTabsLength + index;
-                      setActiveTabIndex(nextIndex);
-                      onActiveChange?.(nextIndex);
-                    }
-                  }}
-                >
-                  {tab.props.children}
-                </ListItem>
-              );
-            })}
-          selected={null}
-          style={{ alignSelf: "center" }}
-          triggerComponent={
-            <Button
-              aria-label={`Tabs overflow menu ${overflowTabsLength} item${
-                overflowTabsLength === 1 ? "" : "s"
-              }`}
-              variant="secondary"
-              tabIndex={-1}
-            >
-              <OverflowMenuIcon style={{ margin: 0 }} />
-            </Button>
-          }
-          width="auto"
-        />
+    <FlexLayout gap={1} align="center">
+      {scrollable ? (
+        <Button disabled={!enableLeftArrow}>
+          <ChevronLeftIcon />
+        </Button>
       ) : null}
+      <div
+        className={clsx(withBaseName(), withBaseName("horizontal"), {
+          [withBaseName("centered")]: align === "center",
+          [withBaseName("scrollable")]: scrollable,
+        })}
+        ref={outerRef}
+      >
+        <div className={withBaseName("inner")} ref={innerRef}>
+          <div ref={firstSpy} style={{ width: 1, height: 1 }}></div>
+          {tabs.map((child, index) => {
+            if (!isTab(child)) return child;
+            const id = getTabId(index);
+            return cloneElement<TabProps>(child, {
+              // draggable: true,
+              id: id,
+              style: {
+                maxWidth: tabMaxWidth,
+              },
+              tabIndex: index === activeTabIndex ? 0 : -1,
+              selected: index === activeTabIndex,
+              index: index,
+              onClick: () => {
+                setActiveTabIndex(index);
+                onActiveChange?.(index);
+              },
+              onKeyUp: noop,
+              onKeyDown: (e) => {
+                let nextId;
+                if (e.key === "ArrowRight") {
+                  const nextIsOverflowed =
+                    index + 1 >= tabs.length - overflowTabsLength;
+                  if (nextIsOverflowed) {
+                    outerRef?.current
+                      ?.querySelector<HTMLDivElement>(
+                        `.saltDropdown .saltButton`
+                      )
+                      ?.focus();
+                    return;
+                  } else {
+                    nextId = getTabId(index + 1);
+                    setKeyboardFocusedIndex(index + 1);
+                  }
+                }
+                if (e.key === "ArrowLeft") {
+                  nextId = getTabId(index - 1);
+                  setKeyboardFocusedIndex(index - 1);
+                }
+                if (nextId && innerRef.current) {
+                  innerRef.current
+                    .querySelector<HTMLDivElement>(nextId)
+                    ?.focus();
+                }
+                if (e.key === "Enter" || e.key === " ") {
+                  const nextIndex =
+                    keyboardFocusedIndex < 0
+                      ? activeTabIndex
+                      : keyboardFocusedIndex;
+                  setActiveTabIndex(nextIndex);
+                  onActiveChange?.(nextIndex);
+                }
+              },
+            });
+          })}
+          <div ref={lastSpy} style={{ width: 1, height: 1 }}></div>
+        </div>
 
-      <TabActivationIndicator orientation="horizontal" tabId={activeTabId} />
-    </div>
+        {hasOverflow ? (
+          <Dropdown
+            data-overflow-indicator
+            data-priority={0}
+            isOpen={showOverflow}
+            key="overflow"
+            onOpenChange={(open) => {
+              setShowOverflow(open);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowLeft") {
+                const nextIndex = tabs.length - overflowTabsLength - 1;
+                setActiveTabIndex(nextIndex);
+                innerRef?.current
+                  ?.querySelector<HTMLDivElement>(getTabId(nextIndex))
+                  ?.focus();
+                setShowOverflow(false);
+              }
+            }}
+            onSelectionChange={(e) => {
+              console.log(
+                "onSelectionChange",
+                e.currentTarget as HTMLDivElement
+              );
+            }}
+            placement="bottom-end"
+            source={tabs
+              .slice(tabs.length - overflowTabsLength, tabs.length)
+              .map((tab, index) => {
+                if (!isTab(tab)) return tab;
+                return (
+                  <ListItem
+                    data-index={index}
+                    label={tab.props.label}
+                    onClick={() => {
+                      if (onMoveTab) {
+                        const from = tabs.length - overflowTabsLength + index;
+                        const to = tabs.length - overflowTabsLength - 1;
+                        onMoveTab(from, to);
+                        onActiveChange?.(to);
+                        setActiveTabIndex(to);
+                      } else {
+                        const nextIndex =
+                          tabs.length - overflowTabsLength + index;
+                        setActiveTabIndex(nextIndex);
+                        onActiveChange?.(nextIndex);
+                      }
+                    }}
+                  >
+                    {tab.props.children}
+                  </ListItem>
+                );
+              })}
+            selected={null}
+            style={{ alignSelf: "center" }}
+            triggerComponent={
+              <Button
+                aria-label={`Tabs overflow menu ${overflowTabsLength} item${
+                  overflowTabsLength === 1 ? "" : "s"
+                }`}
+                variant="secondary"
+                tabIndex={-1}
+              >
+                <OverflowMenuIcon style={{ margin: 0 }} />
+              </Button>
+            }
+            width="auto"
+          />
+        ) : null}
+
+        <TabActivationIndicator orientation="horizontal" tabId={activeTabId} />
+      </div>
+      {scrollable ? (
+        <Button disabled={!enableRightArrow}>
+          <ChevronRightIcon />
+        </Button>
+      ) : null}
+    </FlexLayout>
   );
 };
 

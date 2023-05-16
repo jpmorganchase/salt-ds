@@ -5,6 +5,14 @@
   --tabs-tabstrip-display: inline-flex;
   --tabs-tabstrip-background: transparent;
 
+  --saltTabs-activationIndicator-height: 1px;
+  --saltTabs-activationIndicator-thumb-inset: -1px 0 0 0;
+
+  --tabs-activationIndicator-borderStyle: none none solid none;
+  --tabs-activationIndicator-inset: auto 0px 0px 0px;
+  --tabs-activationIndicator-transitionProperty: left;
+  --tabs-activationIndicator-thumb-height: 2px;
+
   align-items: flex-start;
   align-self: var(--saltTabs-tabstrip-alignSelf, stretch);
   font-size: var(--salt-text-fontSize);
@@ -23,6 +31,7 @@
 
 .saltTabstripNext-scrollable .saltTabstripNext-inner {
   flex-wrap: nowrap;
+  width: auto;
 }
 
 .saltTabstripNext-scrollable::-webkit-scrollbar {
