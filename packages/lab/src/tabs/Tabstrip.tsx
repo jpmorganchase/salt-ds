@@ -40,8 +40,11 @@ import {
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
 
-import "./Tabstrip.css";
-import "./ThemeTabstrip.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import themeTabstripCss from "./ThemeTabstrip.css";
+import tabstripCss from "./Tabstrip.css";
 
 const withBaseName = makePrefixer("saltTabstrip");
 
@@ -89,6 +92,18 @@ export const Tabstrip = forwardRef(function Tabstrip(
   }: TabstripProps,
   forwardedRef: ForwardedRef<FocusAPI>
 ) {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-tab-strip",
+    css: tabstripCss,
+    window: targetWindow,
+  });
+  useComponentCssInjection({
+    id: "salt-theme-tab-strip",
+    css: themeTabstripCss,
+    window: targetWindow,
+  });
+
   const root = useRef<HTMLDivElement>(null);
   // can't use forwardedRef here, can we ?
   // const setForkRef = useForkRef(root, forwardedRef);

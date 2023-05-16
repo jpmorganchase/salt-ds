@@ -6,8 +6,6 @@ import {
 } from "./TokenizedInputBase";
 import { useTokenizedInput } from "./useTokenizedInput";
 
-import "./TokenizedInput.css";
-
 export type StringToItem<Item> = (
   selectedItems: Array<Item>,
   value: string

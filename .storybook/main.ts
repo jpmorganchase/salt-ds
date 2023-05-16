@@ -3,6 +3,7 @@ import type { UserConfig } from "vite";
 import { mergeConfig } from "vite";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
+import { cssInline } from "../tooling/css-inline-plugin";
 
 type ViteFinalOptions = {
   configType: "DEVELOPMENT" | "PRODUCTION";
@@ -48,7 +49,7 @@ const config: ExtendedConfig = {
     // customize the Vite config here
 
     const customConfig: UserConfig = {
-      plugins: [cssVariableDocgen()],
+      plugins: [cssInline(), cssVariableDocgen()],
     };
 
     if (configType === "PRODUCTION") {

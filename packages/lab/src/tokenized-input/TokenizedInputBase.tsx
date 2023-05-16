@@ -38,6 +38,10 @@ import {
   TokenizedInputState,
 } from "./useTokenizedInput";
 import { Input, InputProps } from "../input";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import tokenizedInputCss from "./TokenizedInput.css";
 
 export type RemoveItemHandler = (itemIndex: number) => void;
 export type ItemToString<Item> = (item: Item) => string;
@@ -127,6 +131,13 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     "aria-labelledby": ariaLabelledBy,
     ...restProps
   } = props;
+
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-tokenized-input",
+    css: tokenizedInputCss,
+    window: targetWindow,
+  });
 
   const density = useDensity();
 
