@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.2
+
+### Patch Changes
+
+- 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
+
 ## 1.0.4-alpha.1
 
 ### Minor Changes
