@@ -65,10 +65,13 @@ export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const HelperText: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <FormFieldNext style={{width: "200px"}} {...props}>
+    <FormFieldNext style={{ width: "200px" }} {...props}>
       <FormLabel>Form Field label</FormLabel>
       <InputNext variant="secondary" defaultValue="Value" />
-      <FormHelperText>Helper text to give more information on the field that wraps over two lines</FormHelperText>
+      <FormHelperText>
+        Helper text to give more information on the field that wraps over two
+        lines
+      </FormHelperText>
     </FormFieldNext>
   );
 };
@@ -90,9 +93,7 @@ export const Label: ComponentStory<typeof FormFieldNext> = (props) => {
   );
 };
 
-export const LongLabel: ComponentStory<typeof FormFieldNext> = (
-  props
-) => {
+export const LongLabel: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormFieldNext {...props}>
@@ -133,7 +134,6 @@ export const LongLabel: ComponentStory<typeof FormFieldNext> = (
 
 Commenting out as it's possible but not supported until V3
 */
-
 
 // export const MultiInput: ComponentStory<typeof FormFieldNext> = (props) => {
 //   return (
@@ -180,9 +180,7 @@ export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
   );
 };
 
-export const WithControls: ComponentStory<typeof FormFieldNext> = (
-  props
-) => {
+export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "50vw" }}>
       <FormFieldNext labelPlacement="left" {...props}>
