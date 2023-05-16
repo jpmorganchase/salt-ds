@@ -67,10 +67,10 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
           className={className}
           {...props}
           aria-disabled={disabled || undefined}
-          aria-selected={selected || undefined}
+          // aria-selected={selected || undefined}
           role={role}
           id={id}
-          tabIndex={tabIndex}
+          // tabIndex={tabIndex}
           {...listItemControlProps}
         >
           {showCheckbox && (

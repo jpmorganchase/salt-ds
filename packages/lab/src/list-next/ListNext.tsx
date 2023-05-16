@@ -56,12 +56,13 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     ref
   ) {
     const emptyList = Children.count(children) === 0;
-    const { selectedIdxs, focusedIndex, listRef, handleClick } = useList({
-      items: children,
-      onSelect,
-      onFocus,
+
+    // const { selectedIdxs, focusedIndex, listRef, handleClick } = useList({
+    const { listRef } = useList({
+      children,
       deselectable,
       multiselect,
+      onFocus
     });
     const forkedRef = useForkRef(ref, listRef);
 
@@ -80,9 +81,9 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       return Children.map(children, (listItem, index) => {
         const childProps = {
           showCheckbox: multiselect,
-          onClick: (e) => handleClick(e, index),
-          focused: focusedIndex === index,
-          selected: selectedIdxs.includes(index),
+          // onClick: (e) => handleClick(e, index),
+          // focused: focusedIndex === index,
+          // selected: selectedIdxs.includes(index),
           // tabIndex: focusedIndex === index,
           id: index, // TODO: Check this
           ...listItem.props,
@@ -107,7 +108,8 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           className
         )}
         role="listbox"
-        tabIndex={disabled || !emptyList ? undefined : 0}
+        tabIndex={0}
+        // tabIndex={disabled || !emptyList ? undefined : 0}
         // aria-activedescendant={selectedIndex}
         {...rest}
       >

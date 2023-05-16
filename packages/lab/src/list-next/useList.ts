@@ -1,136 +1,259 @@
+import {useEffect, useRef, useState} from "react";
 import {
-  KeyboardEvent,
-  MouseEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-
-export interface UseListProps {
-  items: array;
-  onSelect: () => void;
-  onFocus: () => void;
-  deselectable: boolean;
-}
+  ArrowDown,
+  ArrowUp,
+  End,
+  Home,
+  PageDown,
+  PageUp,
+  Shift,
+  Space
+} from "../common-hooks";
 
 export const useList = ({
-  items,
-  onSelect,
-  onFocus,
-  deselectable,
-  multiselect,
-}: UseListProps) => {
-  // State
-  const [activeDescendant, setActiveDescendant] = useState(null);
-  const [focusedIndex, setItemFocusedIndex] = useState(null);
-  const [selectedIdxs, setSelectedIdxs] = useState([]);
-
-  //Refs
+                          children,
+                          deselectable,
+                          multiselect,
+                          onFocus
+                        }) => {
   const listRef = useRef(null);
-
-  // Functions
-
-  const defocusActiveDescendant = () => {
-    const currentFocusedItem = document.getElementById(
-      listRef.current?.activeDescendant
-    );
-    if (!currentFocusedItem) return;
-    if (!multiselect) {
-      setSelectedIdxs([]);
-    }
-    currentFocusedItem.classList.remove("focused");
-  };
-
-  const focusListItem = (itemClicked, index) => {
-    defocusActiveDescendant();
-
-    if (!multiselect && !deselectable) {
-      setSelectedIdxs([index]);
-    }
-    itemClicked.classList.add("focused");
-    listRef.current.activeDescendant = index;
-    setActiveDescendant(index);
-
-    // handleFocusChange
-  };
-
-  const toggleSelect = (index) => {
-    if (multiselect || deselectable) {
-      const itemIsSelected = selectedIdxs.indexOf(index) !== -1;
-
-      const toggleFilter = deselectable
-        ? []
-        : selectedIdxs.filter((i) => i !== index);
-      const toggleAdd = deselectable ? [index] : [...selectedIdxs, index];
-
-      const newSelection = itemIsSelected ? toggleFilter : toggleAdd;
-      setSelectedIdxs(newSelection);
-    }
-  };
-
-  const handleKeyDown = useCallback((evt: KeyboardEvent) => {}, []);
-
-  // Key/ click / focus Handlers
-  const handleClick = (evt: MouseEvent, index: number) => {
-    // TODO: should this be wrapped in a callback?
-    const itemClicked = evt.target;
-    const { disabled } = items[index]?.props;
-
-    const targetIsClickable =
-      (itemClicked.getAttribute("role") === "option" && !disabled) ||
-      (itemClicked.getAttribute("type") === "checkbox" && !disabled);
-
-    if (!targetIsClickable) return;
-
-    evt.preventDefault();
-    focusListItem(itemClicked, index);
-    toggleSelect(index);
-    //  TODO: we will have to handle scroll on our own for active descendant
-    // scroll();
-    //  TODO: handle multi select with shift
-    if (multiselect && evt.shiftKey) {
-      setSelectedIdxs();
-    }
-  };
-
-  const handleFocus = () => {
-    if (listRef.current?.activeDescendant) return;
-  };
-
-  const handleMouseDown = (evt: MouseEvent) => {
-    if (
-      multiselect &&
-      evt.shiftKey &&
-      evt.target.getAttribute("role") === "option"
-    ) {
-      evt.preventDefault();
-    }
-  };
+  const activeDescendant = useRef(null);
+  const [startRangeIndex, setStartRangeIndex] = useState(0);
 
   useEffect(() => {
     const list = listRef.current;
-
     if (list) {
-      list.addEventListener("focus", handleFocus);
-      // list.addEventListener('keydown', handleKeyDown);
-      if (multiselect) {
-        list.addEventListener("mousedown", handleMouseDown);
-      }
+      list.addEventListener('keydown', handleKeyDown);
+      list.addEventListener('click', handleClick);
       return () => {
-        list.removeEventListener("focus", handleFocus);
-        // list.removeEventListener('keydown', handleKeyDown);
-        if (multiselect) {
-          list.removeEventListener("mousedown", handleMouseDown);
-        }
+        list.removeEventListener('keydown', handleKeyDown);
+        list.addEventListener('click', handleClick);
+
       };
     }
   }, []);
 
-  return {
-    selectedIdxs,
-    focusedIndex,
-    listRef,
-    handleClick,
+
+  const focusFirstItem = () => {
+    const firstItem = listRef.current.querySelector('[role="option"]');
+    if (firstItem) {
+      focusItem(firstItem);
+    }
   };
+  const focusLastItem = () => {
+    const itemList = listRef.current.querySelectorAll('[role="option"]');
+    const lastItem = itemList[itemList.length - 1];
+
+    if (lastItem) {
+      focusItem(lastItem);
+    }
+  };
+
+  const handleKeyDown = (evt) => {
+    const {key, shiftKey, ctrlKey, metaKey} = evt;
+    var lastActiveId = activeDescendant.current;
+    const allOptions = [...listRef.current.querySelectorAll('[role="option"]')];
+    const currentItem =
+      document.getElementById(activeDescendant.current) || allOptions[0];
+    let nextItem = currentItem;
+
+    if (!currentItem) {
+      return;
+    }
+
+    switch (key) {
+      case PageUp:
+        // TODO: moveUpCountItems();
+        break;
+      case PageDown:
+        // TODO: moveDownCountItems();
+        break;
+      case ArrowUp:
+      case ArrowDown:
+        if (!activeDescendant.current) {
+          // focus first option if no option was previously focused, and perform no other actions
+          focusItem(currentItem);
+          break;
+        }
+        nextItem =
+          key === ArrowUp
+            ? findPreviousOption(currentItem)
+            : findNextOption(currentItem);
+
+        if (nextItem && multiselect && shiftKey) {
+          selectRange(startRangeIndex, nextItem);
+        }
+
+        if (nextItem) {
+          focusItem(nextItem);
+          evt.preventDefault();
+        }
+
+        break;
+      case Home:
+        evt.preventDefault();
+        focusFirstItem();
+
+        if (multiselect && shiftKey && ctrlKey) {
+          selectRange(startRangeIndex, 0);
+        }
+        break;
+      case End:
+        evt.preventDefault();
+        focusLastItem();
+
+        if (multiselect && shiftKey && ctrlKey) {
+          selectRange(startRangeIndex, allOptions.length - 1);
+        }
+        break;
+      case Shift:
+        setStartRangeIndex(getElementIndex(currentItem, allOptions));
+        break;
+      case Space:
+        evt.preventDefault();
+        toggleSelectItem(nextItem);
+        break;
+      case "a":
+        // handle control + A
+        if (multiselect && (ctrlKey || metaKey)) {
+          evt.preventDefault();
+          selectRange(0, allOptions.length - 1);
+          break;
+        }
+      // fall through
+      default:
+        break;
+    }
+
+    if (activeDescendant.current !== lastActiveId) {
+      scrollToSelected();
+    }
+  };
+
+
+  const getElementIndex = (option, options) => {
+    const allOptions = Array.from(options); // convert to array
+    const optionIndex = allOptions.indexOf(option);
+
+    return typeof optionIndex === "number" ? optionIndex : null;
+  };
+
+  const findNextOption = (currentOption) => {
+    const allOptions = Array.from(
+      listRef.current.querySelectorAll('[role="option"]')
+    ); // get options array
+    const currentOptionIndex = allOptions.indexOf(currentOption);
+
+    return allOptions[currentOptionIndex + 1];
+  };
+
+  // Return the previous listbox option, if it exists; otherwise, returns null
+  const findPreviousOption = (currentOption) => {
+    const allOptions = Array.from(
+      listRef.current.querySelectorAll('[role="option"]')
+    ); // get options array
+    const currentOptionIndex = allOptions.indexOf(currentOption);
+
+    return allOptions[currentOptionIndex - 1];
+  };
+
+
+  //
+  const handleClick = ({target, shiftKey}) => {
+
+    const nonClickableTarget = target.getAttribute("role") !== "option" || target.getAttribute("aria-disabled") === "true";
+    if (nonClickableTarget) {
+      return;
+    }
+    focusAndToggleSelectItem(target);
+    scrollToSelected();
+
+    if (multiselect && shiftKey) {
+      selectRange(startRangeIndex, target);
+    }
+  };
+
+  const focusAndToggleSelectItem = (element) => {
+    focusItem(element);
+    toggleSelectItem(element);
+  };
+
+  const toggleSelectItem = (element) => {
+    if (multiselect || deselectable) {
+      const currentSelected = element.getAttribute("aria-selected") === "true";
+      const newSelected = currentSelected ? "false" : "true";
+      element.setAttribute("aria-selected", newSelected);
+    }
+  };
+
+
+  const defocusItem = (element) => {
+    if (!element) {
+      return;
+    }
+
+    if (!multiselect) {
+      element.removeAttribute("aria-selected");
+    }
+
+    element.classList.remove("focused");
+  };
+
+
+  const focusItem = (element) => {
+    const currentActive = document.getElementById(activeDescendant.current);
+    defocusItem(currentActive);
+    if (!multiselect && !deselectable) {
+      element.setAttribute("aria-selected", "true");
+    }
+
+    element.classList.add("focused");
+    listRef.current.setAttribute("aria-activedescendant", element.id);
+    activeDescendant.current = element.id;
+
+    if (onFocus) {
+      onFocus(element)
+    }
+    ;
+  };
+
+
+  const checkInRange = (index, start, end) => {
+    const [rangeStart, rangeEnd] = start < end ? [start, end] : [end, start];
+    return index >= rangeStart && index <= rangeEnd;
+  };
+
+  const selectRange = (start, end) => {
+    const allOptions = Array.from(
+      listRef.current.querySelectorAll('[role="option"]')
+    );
+    const startIndex =
+      typeof start === "number" ? start : getElementIndex(start, allOptions);
+    const endIndex =
+      typeof end === "number" ? end : getElementIndex(end, allOptions);
+
+    for (let index = 0; index < allOptions.length; index++) {
+      const selected = checkInRange(index, startIndex, endIndex);
+      allOptions[index].setAttribute("aria-selected", `${selected}`);
+    }
+
+  };
+
+  // Check if the selected option is in view, and scroll if not
+  const scrollToSelected = () => {
+    const selectedOption = document.getElementById(activeDescendant.current);
+    const {clientHeight, scrollTop, scrollHeight} = listRef;
+
+    if (selectedOption && scrollHeight > clientHeight) {
+      const {offsetTop, offsetHeight} = selectedOption;
+      const scrollBottom = clientHeight + scrollTop;
+
+      if (offsetTop + offsetHeight > scrollBottom) {
+        listRef.current.scrollTop = `${offsetTop + offsetHeight - clientHeight}px`;
+      } else if (offsetTop < scrollTop) {
+        listRef.current.scrollTop = `${offsetTop}px`;
+      }
+    }
+  };
+  return {listRef}
 };

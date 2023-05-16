@@ -41,7 +41,7 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
     <ListNext
       {...rest}
       aria-label="Declarative List example"
-      style={{ width: "200px" }}
+      style={{ width: "200px", maxHeight: '150px'}}
     >
       {children || listItems}
     </ListNext>
