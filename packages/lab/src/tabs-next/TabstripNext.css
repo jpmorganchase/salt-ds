@@ -25,6 +25,18 @@
   height: var(--tabs-tabstrip-height);
 }
 
+.saltTabstripNext-overflowMenu {
+  position: relative;
+  align-self: center;
+  margin-right: 2px;
+}
+
+.saltTabstripNext-overflowMenu-popup {
+  background: var(--salt-container-primary-background);
+  overflow-y: auto;
+  z-index: calc(var(--salt-zIndex-flyover) - 1);
+}
+
 .saltTabstripNext-scrollable {
   overflow-x: auto;
 }

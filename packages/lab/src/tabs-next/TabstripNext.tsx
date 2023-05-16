@@ -1,7 +1,23 @@
 import {
+  autoUpdate,
+  flip,
+  FloatingFocusManager,
+  FloatingPortal,
+  limitShift,
+  shift,
+  size,
+  useClick,
+  useDismiss,
+  useFloating,
+  useInteractions,
+  useListNavigation,
+  useRole,
+} from "@floating-ui/react";
+import {
   Button,
   FlexLayout,
   makePrefixer,
+  SaltProvider,
   useControlled,
   useId,
 } from "@salt-ds/core";
@@ -22,11 +38,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { Dropdown } from "../dropdown";
 import { ListItem } from "../list";
 import { Tab } from "../tabs/Tab";
 import { TabActivationIndicator } from "../tabs/TabActivationIndicator";
 import { TabElement, TabProps } from "../tabs/TabsTypes";
+import { isDesktop } from "../window";
 import "./TabstripNext.css";
 
 const noop = () => undefined;
@@ -76,7 +92,6 @@ export const TabstripNext = ({
     name: "useTabs",
     state: "activeTabIndex",
   });
-  // TODO: fix clashes with multiple tabs on page
   const activeTabId =
     activeTabIndex !== undefined ? getTabId(activeTabIndex) : undefined;
   const outerRef = useRef<HTMLDivElement>(null);
@@ -86,56 +101,55 @@ export const TabstripNext = ({
   const [hasOverflow, setHasOverflow] = useState(false);
   const [overflowTabsLength, setOverflowTabsLength] = useState(0);
   const [keyboardFocusedIndex, setKeyboardFocusedIndex] = useState(-1);
-  const [showOverflow, setShowOverflow] = useState(false);
 
   useEffect(() => {
     if (!outerRef.current || !innerRef.current) return;
     let intersect: IntersectionObserver;
-    const resize = new ResizeObserver(
-      ([{ contentRect: outerRect }, { contentRect: innerRect }]) => {
-        if (!outerRef.current || !innerRef.current) return;
-        if (scrollable) {
-          const hasOverflowingContent = innerRect.width - outerRect.width > 1;
-          if (hasOverflowingContent) {
-            intersect = new IntersectionObserver(([firstTab, lastTab]) => {
-              if (firstTab) {
-                if (firstTab.target === firstSpy.current) {
-                  setEnableLeftArrow(!firstTab.isIntersecting);
-                } else {
-                  setEnableRightArrow(!firstTab.isIntersecting);
-                }
+    const resize = new ResizeObserver((arg) => {
+      if (arg.length < 2) return;
+      const [{ contentRect: outerRect }, { contentRect: innerRect }] = arg;
+      if (!outerRef.current || !innerRef.current) return;
+      if (scrollable) {
+        const hasOverflowingContent = innerRect.width - outerRect.width > 1;
+        if (hasOverflowingContent) {
+          intersect = new IntersectionObserver(([firstTab, lastTab]) => {
+            if (firstTab) {
+              if (firstTab.target === firstSpy.current) {
+                setEnableLeftArrow(!firstTab.isIntersecting);
+              } else {
+                setEnableRightArrow(!firstTab.isIntersecting);
               }
-              if (lastTab) {
+            }
+            if (lastTab) {
+              setEnableRightArrow(!lastTab.isIntersecting);
+              if (lastTab.target === lastSpy.current) {
                 setEnableRightArrow(!lastTab.isIntersecting);
-                if (lastTab.target === lastSpy.current) {
-                  setEnableRightArrow(!lastTab.isIntersecting);
-                } else {
-                  setEnableLeftArrow(!lastTab.isIntersecting);
-                }
+              } else {
+                setEnableLeftArrow(!lastTab.isIntersecting);
               }
-            });
-            if (firstSpy.current) {
-              intersect.observe(firstSpy.current);
             }
-            if (lastSpy.current) {
-              intersect.observe(lastSpy.current);
-            }
+          });
+          if (firstSpy.current) {
+            intersect.observe(firstSpy.current);
           }
-        } else {
-          const hasOverflowingContent = innerRect.height - outerRect.height > 0;
-          setHasOverflow(hasOverflowingContent);
-          const tabsTopOffset = innerRef.current.getBoundingClientRect().top;
-          const overflowLength = [
-            ...outerRef.current.querySelectorAll(
-              `.${withBaseName("inner")} > *`
-            ),
-          ].filter((el) => {
-            return el.getBoundingClientRect().top - tabsTopOffset > 0;
-          }).length;
-          setOverflowTabsLength(overflowLength);
+          if (lastSpy.current) {
+            intersect.observe(lastSpy.current);
+          }
         }
+      } else {
+        const hasOverflowingContent = innerRect.height - outerRect.height > 0;
+        setHasOverflow(hasOverflowingContent);
+        const tabsTopOffset = innerRef.current.getBoundingClientRect().top;
+        const overflowLength = [
+          ...outerRef.current.querySelectorAll(
+            `.${withBaseName("inner")} > *:not(:first-child):not(:last-child)`
+          ),
+        ].filter((el) => {
+          return el.getBoundingClientRect().top - tabsTopOffset > 0;
+        }).length;
+        setOverflowTabsLength(overflowLength);
       }
-    );
+    });
     resize.observe(outerRef.current);
     resize.observe(innerRef.current);
 
@@ -190,7 +204,7 @@ export const TabstripNext = ({
                   if (nextIsOverflowed) {
                     outerRef?.current
                       ?.querySelector<HTMLDivElement>(
-                        `.saltDropdown .saltButton`
+                        `.${withBaseName("overflowMenu")} .saltButton`
                       )
                       ?.focus();
                     return;
@@ -204,9 +218,7 @@ export const TabstripNext = ({
                   setKeyboardFocusedIndex(index - 1);
                 }
                 if (nextId && innerRef.current) {
-                  innerRef.current
-                    .querySelector<HTMLDivElement>(nextId)
-                    ?.focus();
+                  document.getElementById<HTMLDivElement>(nextId)?.focus();
                 }
                 if (e.key === "Enter" || e.key === " ") {
                   const nextIndex =
@@ -223,72 +235,15 @@ export const TabstripNext = ({
         </div>
 
         {hasOverflow ? (
-          <Dropdown
-            data-overflow-indicator
-            data-priority={0}
-            isOpen={showOverflow}
-            key="overflow"
-            onOpenChange={(open) => {
-              setShowOverflow(open);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowLeft") {
-                const nextIndex = tabs.length - overflowTabsLength - 1;
-                setActiveTabIndex(nextIndex);
-                innerRef?.current
-                  ?.querySelector<HTMLDivElement>(getTabId(nextIndex))
-                  ?.focus();
-                setShowOverflow(false);
-              }
-            }}
-            onSelectionChange={(e) => {
-              console.log(
-                "onSelectionChange",
-                e.currentTarget as HTMLDivElement
-              );
-            }}
-            placement="bottom-end"
-            source={tabs
-              .slice(tabs.length - overflowTabsLength, tabs.length)
-              .map((tab, index) => {
-                if (!isTab(tab)) return tab;
-                return (
-                  <ListItem
-                    data-index={index}
-                    label={tab.props.label}
-                    onClick={() => {
-                      if (onMoveTab) {
-                        const from = tabs.length - overflowTabsLength + index;
-                        const to = tabs.length - overflowTabsLength - 1;
-                        onMoveTab(from, to);
-                        onActiveChange?.(to);
-                        setActiveTabIndex(to);
-                      } else {
-                        const nextIndex =
-                          tabs.length - overflowTabsLength + index;
-                        setActiveTabIndex(nextIndex);
-                        onActiveChange?.(nextIndex);
-                      }
-                    }}
-                  >
-                    {tab.props.children}
-                  </ListItem>
-                );
-              })}
-            selected={null}
-            style={{ alignSelf: "center" }}
-            triggerComponent={
-              <Button
-                aria-label={`Tabs overflow menu ${overflowTabsLength} item${
-                  overflowTabsLength === 1 ? "" : "s"
-                }`}
-                variant="secondary"
-                tabIndex={-1}
-              >
-                <OverflowMenuIcon style={{ margin: 0 }} />
-              </Button>
-            }
-            width="auto"
+          <OverflowMenu
+            tabs={tabs}
+            activeTabIndex={activeTabIndex}
+            overflowTabsLength={overflowTabsLength}
+            onMoveTab={onMoveTab}
+            onActiveChange={onActiveChange}
+            setActiveTabIndex={setActiveTabIndex}
+            getTabId={getTabId}
+            setKeyboardFocusedIndex={setKeyboardFocusedIndex}
           />
         ) : null}
 
@@ -302,5 +257,182 @@ export const TabstripNext = ({
     </FlexLayout>
   );
 };
+
+function OverflowMenu({
+  tabs,
+  overflowTabsLength,
+  onMoveTab,
+  activeTabIndex,
+  onActiveChange,
+  setActiveTabIndex,
+  getTabId,
+  setKeyboardFocusedIndex,
+}: {
+  tabs: TabElement[];
+  overflowTabsLength: number;
+  onMoveTab?: (from: number, to: number) => void;
+  activeTabIndex?: number;
+  onActiveChange?: (index: number) => void;
+  setActiveTabIndex: (index: number) => void;
+  getTabId: (index: number) => string;
+  setKeyboardFocusedIndex: (index: number) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(0);
+
+  useEffect(() => {
+    if (open) return;
+    setHighlightedIndex(0);
+  }, [open]);
+
+  const [maxPopupHeight, setMaxPopupHeight] = useState<number | undefined>();
+  const indexToSelect = tabs.length - overflowTabsLength + highlightedIndex!;
+
+  const middleware = isDesktop
+    ? []
+    : [
+        flip({
+          fallbackPlacements: ["bottom-start", "top-start"],
+        }),
+        shift({ limiter: limitShift() }),
+        size({
+          apply({ availableHeight }) {
+            setMaxPopupHeight(availableHeight);
+          },
+        }),
+      ];
+
+  const { refs, x, y, strategy, context } = useFloating({
+    open,
+    middleware,
+    onOpenChange: setOpen,
+    whileElementsMounted: autoUpdate,
+    placement: "bottom-end",
+  });
+  const listRef = useRef<Array<HTMLDivElement | null>>([]);
+  const click = useClick(context, { event: "mousedown" });
+  const dismiss = useDismiss(context);
+  const role = useRole(context, { role: "listbox" });
+
+  const listNavigation = useListNavigation(context, {
+    listRef,
+    activeIndex: highlightedIndex,
+    selectedIndex: activeTabIndex,
+    onNavigate: setHighlightedIndex,
+    virtual: true,
+  });
+
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
+    [listNavigation, dismiss, click, role]
+  );
+
+  function select() {
+    const nextIndex = tabs.length - overflowTabsLength - 1;
+    setActiveTabIndex(nextIndex);
+    onActiveChange?.(nextIndex);
+    onMoveTab?.(indexToSelect, nextIndex);
+    setOpen(false);
+
+    // we are battling the floating ui here
+    setTimeout(() => {
+      moveBackToTabs();
+    }, 10);
+  }
+
+  function moveBackToTabs() {
+    const moveToIndex = tabs.length - overflowTabsLength - 1;
+    setKeyboardFocusedIndex(moveToIndex);
+    document.getElementById(getTabId(moveToIndex))?.focus();
+  }
+
+  return (
+    <div className={withBaseName("overflowMenu")}>
+      {open ? (
+        <FloatingPortal>
+          <FloatingFocusManager context={context} modal={false}>
+            <SaltProvider>
+              <div
+                style={{
+                  top: y ?? 0,
+                  left: x ?? 0,
+                  position: strategy,
+                  maxHeight: maxPopupHeight ?? undefined,
+                }}
+                ref={refs.setFloating}
+                {...getFloatingProps({
+                  onKeyDown(event) {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      select();
+                    }
+
+                    if (event.key === " ") {
+                      event.preventDefault();
+                      select();
+                    }
+
+                    if (event.key === "ArrowLeft") {
+                      moveBackToTabs();
+                    }
+                  },
+                })}
+                className={clsx(withBaseName("overflowMenu-popup"), "saltList")}
+              >
+                {tabs
+                  .slice(tabs.length - overflowTabsLength, tabs.length)
+                  .map((tab, index) => {
+                    if (!isTab(tab)) return tab;
+                    return (
+                      <ListItem
+                        key={tab.props.label}
+                        ref={(node) => {
+                          listRef.current[index] = node;
+                        }}
+                        role="option"
+                        selected={
+                          activeTabIndex ===
+                          tabs.length - overflowTabsLength + index
+                        }
+                        className={clsx(`saltListItem`, {
+                          saltHighlighted: highlightedIndex === index,
+                        })}
+                        label={tab.props.label}
+                        tabIndex={-1}
+                        {...getItemProps({
+                          onClick: select,
+                        })}
+                        id={`${getTabId()}${tab.props.label}-option`}
+                      >
+                        {tab.props.children}
+                      </ListItem>
+                    );
+                  })}
+              </div>
+            </SaltProvider>
+          </FloatingFocusManager>
+        </FloatingPortal>
+      ) : null}
+
+      <Button
+        tabIndex={-1}
+        ref={refs.setReference}
+        aria-autocomplete="none"
+        {...getReferenceProps({
+          onKeyDown: (e) => {
+            if (e.key === "ArrowLeft") {
+              moveBackToTabs();
+            }
+          },
+        })}
+        aria-label={`Tabs overflow menu ${overflowTabsLength} item${
+          overflowTabsLength === 1 ? "" : "s"
+        }`}
+        variant="secondary"
+      >
+        <OverflowMenuIcon style={{ margin: 0 }} />
+      </Button>
+    </div>
+  );
+}
 
 export const TabNext = Tab;

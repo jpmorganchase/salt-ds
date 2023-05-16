@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Story } from "@storybook/react";
 import { Button, FlexLayout } from "@salt-ds/core";
 import { TabstripNextProps, TabstripNext, Tab } from "@salt-ds/lab";
-import { AddIcon, CloseIcon } from "@salt-ds/icons";
+import { AddIcon } from "@salt-ds/icons";
+import "./tabstrip-next.stories.css";
 
 export default {
   title: "Lab/TabsNext/TabstripNext",
@@ -17,7 +18,7 @@ export const SimpleTabstrip: TabstripStory = ({
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
   return (
-    <div style={{ width: 600, maxWidth: "100%" }}>
+    <div style={{ width: 600, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext defaultActiveTabIndex={0} {...tabstripProps}>
         {tabs.map((label) => (
           <Tab key={label}>{label}</Tab>
@@ -33,7 +34,7 @@ export const CenteredTabstrip: TabstripStory = ({
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
   return (
-    <div style={{ width: 600, maxWidth: "100%" }}>
+    <div style={{ width: 600, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext defaultActiveTabIndex={0} {...tabstripProps} align="center">
         {tabs.map((label) => (
           <Tab key={label}>{label}</Tab>
@@ -50,7 +51,7 @@ export const ControlledTabstrip: TabstripStory = ({
   const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
 
   return (
-    <div style={{ width: 600, maxWidth: "100%" }}>
+    <div style={{ width: 600, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext
         {...tabstripProps}
         activeTabIndex={activeTabIndex}
@@ -80,7 +81,7 @@ export const AddTabTabstrip: TabstripStory = ({
   };
 
   return (
-    <div style={{ width: 600, maxWidth: "100%" }}>
+    <div style={{ width: 600, minWidth: 0, maxWidth: "100%" }}>
       <FlexLayout align="center">
         <TabstripNext
           {...tabstripProps}
@@ -111,7 +112,7 @@ export const CloseTabTabstrip: TabstripStory = ({
   ]);
   const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
   return (
-    <div style={{ width: 600, maxWidth: "100%" }}>
+    <div style={{ width: 600, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext
         {...tabstripProps}
         activeTabIndex={activeTabIndex}
