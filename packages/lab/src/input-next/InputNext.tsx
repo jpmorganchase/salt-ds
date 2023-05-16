@@ -53,7 +53,7 @@ export interface InputProps
   /**
    * Alignment of text within container. Defaults to "left"
    */
-  textAlignment?: "left" | "center" | "right";
+  textAlign?: "left" | "center" | "right";
   /**
    * Validation status.
    */
@@ -106,7 +106,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     role,
     startAdornment,
     style,
-    textAlignment = "left",
+    textAlign = "left",
     value: valueProp,
     // If we leave both value and defaultValue undefined, we will get a React warning on first edit
     // (uncontrolled to controlled warning) from the React input
@@ -171,7 +171,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   };
 
   const inputStyle = {
-    "--inputNext-textAlign": textAlignment,
+    "--inputNext-textAlign": textAlign,
     ...style,
   };
 
@@ -183,8 +183,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
-          [withBaseName(`textAlign${capitalize(textAlignment)}`)]:
-            textAlignment,
           [withBaseName(validationStatus || "")]: validationStatus,
           [withBaseName(variant)]: variant,
         },
