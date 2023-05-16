@@ -170,6 +170,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     setFocused(true);
   };
 
+  const inputStyle = {
+    "--inputNext-textAlign": textAlignment,
+    ...style,
+  };
+
   return (
     <div
       className={clsx(
@@ -185,7 +190,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         },
         classNameProp
       )}
-      style={style}
+      style={inputStyle}
       {...other}
     >
       {startAdornment && (
