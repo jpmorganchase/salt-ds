@@ -10,12 +10,14 @@
   display: inline-flex;
   gap: var(--salt-spacing-75);
   padding: var(--saltBanner-padding, var(--salt-spacing-50) var(--salt-spacing-100));
-  align-items: center;
+  align-items: baseline;
   width: 100%;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
 .saltBanner-icon {
-  min-height: var(--salt-size-base);
+  margin-top: calc(var(--salt-spacing-75));
+  /* min-height: var(--salt-size-base); */
 }
 
 /* Styles applied when state = "info" */
