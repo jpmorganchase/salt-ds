@@ -11,9 +11,13 @@ export interface WindowContextType {
   Component?: ComponentType;
 }
 
-const WindowContext = createContext<WindowContextType | null>({
-  window: window,
-});
+const WindowContext = createContext<WindowContextType | null>(
+  typeof window !== "undefined"
+    ? {
+        window,
+      }
+    : null
+);
 
 if (process.env.NODE_ENV !== "production") {
   WindowContext.displayName = "WindowContext";
@@ -27,7 +31,7 @@ export function WindowProvider(props: WindowProviderProps) {
   const { window: windowProp, Component, children } = props;
   const value = useMemo(
     () => ({ window: windowProp, Component }),
-    [window, Component]
+    [windowProp, Component]
   );
 
   return (
