@@ -76,7 +76,9 @@ export const MultipleLines = (props: BannerProps) => {
         <Banner {...props}>
           <BannerContent>
             <div>
-              Banner example containing multiple lines. This is supposed to showcase the alignment of the status icon, content and close button within the Banner.
+              Banner example containing multiple lines. This is supposed to
+              showcase the alignment of the status icon, content and close
+              button within the Banner.
             </div>
             <Link href={"#"}>Link example...</Link>
           </BannerContent>
