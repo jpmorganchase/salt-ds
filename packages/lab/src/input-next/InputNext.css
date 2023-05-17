@@ -1,19 +1,13 @@
 /* Style applied to the root element */
 .saltInputNext {
   --inputNext-borderColor: var(--salt-editable-borderColor);
-  --inputNext-borderColor-active: var(--salt-editable-borderColor-active);
-  --inputNext-borderColor-hover: var(--salt-editable-borderColor-hover);
-  --inputNext-borderColor-focused: var(--salt-editable-borderColor-active);
   --inputNext-borderStyle: var(--salt-editable-borderStyle);
   --inputNext-outlineColor: var(--salt-focused-outlineColor);
+  --inputNext-borderWidth: var(--salt-size-border);
   --inputNext-paddingLeft: var(--salt-size-unit);
 
   align-items: center;
   background: var(--saltInputNext-background, var(--inputNext-background));
-  border-color: var(--saltInputNext-borderColor, var(--inputNext-borderColor));
-  border-width: var(--saltInputNext-borderWidth, 0 0 var(--salt-size-border) 0);
-  border-style: var(--saltInputNext-borderStyle, var(--inputNext-borderStyle));
-  border-radius: var(--saltInputNext-borderRadius, 0);
   color: var(--saltInputNext-color, var(--salt-text-primary-foreground));
   display: inline-flex;
   font-family: var(--salt-text-fontFamily);
@@ -30,17 +24,18 @@
 
 .saltInputNext:hover {
   --inputNext-borderStyle: var(--salt-editable-borderStyle-hover);
+  --inputNext-borderColor: var(--salt-editable-borderColor-hover);
 
   background: var(--saltInputNext-background-hover, var(--inputNext-background-hover));
-  border-color: var(--saltInputNext-borderColor-hover, var(--inputNext-borderColor-hover));
   cursor: var(--salt-editable-cursor-hover);
 }
 
 .saltInputNext:active {
+  --inputNext-borderColor: var(--salt-editable-borderColor-active);
   --inputNext-borderStyle: var(--salt-editable-borderStyle-active);
+  --inputNext-borderWidth: var(--salt-editable-borderWidth-active);
 
   background: var(--saltInputNext-background-active, var(--inputNext-background-active));
-  border-color: var(--saltInputNext-borderColor-active, var(--inputNext-borderColor-active));
   cursor: var(--salt-editable-cursor-active);
 }
 
@@ -69,9 +64,6 @@
   --inputNext-background-active: var(--salt-status-error-background);
   --inputNext-background-hover: var(--salt-status-error-background);
   --inputNext-borderColor: var(--salt-status-error-borderColor);
-  --inputNext-borderColor-active: var(--salt-status-error-borderColor);
-  --inputNext-borderColor-hover: var(--salt-status-error-borderColor);
-  --inputNext-borderColor-focused: var(--salt-status-error-borderColor);
   --inputNext-outlineColor: var(--salt-status-error-borderColor);
 }
 
@@ -82,9 +74,6 @@
   --inputNext-background-active: var(--salt-status-warning-background);
   --inputNext-background-hover: var(--salt-status-warning-background);
   --inputNext-borderColor: var(--salt-status-warning-borderColor);
-  --inputNext-borderColor-active: var(--salt-status-warning-borderColor);
-  --inputNext-borderColor-hover: var(--salt-status-warning-borderColor);
-  --inputNext-borderColor-focused: var(--salt-status-warning-borderColor);
   --inputNext-outlineColor: var(--salt-status-warning-borderColor);
 }
 
@@ -95,9 +84,6 @@
   --inputNext-background-active: var(--salt-status-success-background);
   --inputNext-background-hover: var(--salt-status-success-background);
   --inputNext-borderColor: var(--salt-status-success-borderColor);
-  --inputNext-borderColor-active: var(--salt-status-success-borderColor);
-  --inputNext-borderColor-hover: var(--salt-status-success-borderColor);
-  --inputNext-borderColor-focused: var(--salt-status-success-borderColor);
   --inputNext-outlineColor: var(--salt-status-success-borderColor);
 }
 
@@ -107,7 +93,7 @@
   border: none;
   box-sizing: content-box;
   color: inherit;
-  cursor: var(--saltInputNext-cursor, var(--inputNext-cursor));
+  cursor: inherit;
   display: block;
   flex: 1;
   font: inherit;
@@ -133,7 +119,9 @@
 
 /* Styling when focused */
 .saltInputNext-focused {
-  border-color: var(--saltInputNext-borderColor-focused, var(--inputNext-borderColor-focused));
+  --inputNext-borderColor: var(--inputNext-outlineColor);
+  --inputNext-borderWidth: var(--salt-editable-borderWidth-active);
+
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--saltInputNext-outlineColor, var(--inputNext-outlineColor));
@@ -142,17 +130,18 @@
 
 /* Style applied if `readOnly={true}` */
 .saltInputNext.saltInputNext-readOnly {
+  --inputNext-borderColor: var(--salt-editable-borderColor-readonly);
   --inputNext-borderStyle: var(--salt-editable-borderStyle-readonly);
   --inputNext-paddingLeft: 0;
 
   background: var(--inputNext-background-readonly);
-  border-color: var(--salt-editable-borderColor-readonly);
   cursor: var(--salt-editable-cursor-readonly);
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` */
 .saltInputNext-focused.saltInputNext-readOnly,
-.saltInputNext-disabled .saltInputNext-focused {
+.saltInputNext-focused.saltInputNext-disabled {
+  --inputNext-borderWidth: var(--salt-size-border);
   outline: none;
 }
 
@@ -162,14 +151,22 @@
 }
 
 /* Style applied to input if `disabled={true}` */
-.saltInputNext-disabled .saltInputNext-input,
 .saltInputNext.saltInputNext-disabled,
 .saltInputNext.saltInputNext-disabled:hover,
 .saltInputNext.saltInputNext-disabled:active {
+  --inputNext-borderColor: var(--salt-editable-borderColor-disabled);
   --inputNext-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --inputNext-borderWidth: var(--salt-size-border);
 
   background: var(--inputNext-background-disabled);
-  border-color: var(--inputNext-borderColor-disabled);
   cursor: var(--salt-editable-cursor-disabled);
   color: var(--saltInputNext-color-disabled, var(--salt-text-primary-foreground-disabled));
+}
+
+.saltInputNext-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--inputNext-borderWidth) var(--inputNext-borderStyle) var(--inputNext-borderColor);
 }
