@@ -92,12 +92,10 @@ export const Label: ComponentStory<typeof FormFieldNext> = (props) => {
       <FormFieldNext {...props}>
         <FormLabel>Form Field label top (default)</FormLabel>
         <InputNext defaultValue="Value" />
-        <FormHelperText>Helper text</FormHelperText>
       </FormFieldNext>
       <FormFieldNext labelPlacement="left" {...props}>
         <FormLabel>Form Field label left</FormLabel>
         <InputNext defaultValue="Value" />
-        <FormHelperText>Helper text</FormHelperText>
       </FormFieldNext>
       <FormFieldNext {...props}>
         <FormLabel>
@@ -170,12 +168,12 @@ export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
 export const WithControls: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext labelPlacement="left" {...props}>
+      <FormFieldNext {...props}>
         <FormLabel>Form Field label</FormLabel>
         <Checkbox label={"Checkbox"} />
         <FormHelperText>Helper text</FormHelperText>
       </FormFieldNext>
-      <FormFieldNext labelPlacement="left" {...props}>
+      <FormFieldNext {...props}>
         <FormLabel>Form Field label</FormLabel>
         <RadioButton label={"Radio Button"} />
         <FormHelperText>Helper text</FormHelperText>
