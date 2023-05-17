@@ -24,17 +24,16 @@
 
 .saltFormFieldNext {
   grid-template-areas:
-                  "label"
-                  "controls"
-                  "helperText";
+    "label"
+    "controls"
+    "helperText";
 }
 
 .saltFormFieldNext-labelLeft {
   grid-template-areas:
-                  "label controls"
-                  "auto helperText";
+    "label controls"
+    "auto helperText";
 }
-
 
 .saltFormFieldNext > *,
 .saltFormFieldControlWrapper {
