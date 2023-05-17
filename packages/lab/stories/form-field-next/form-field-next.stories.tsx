@@ -48,11 +48,11 @@ export const Default: ComponentStory<typeof FormFieldNext> = (props) => {
 
 export const Disabled: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-      <FormFieldNext style={{ width: "366px" }} disabled {...props}>
-        <FormLabel>Disabled Form Field</FormLabel>
-        <InputNext defaultValue="Primary Input value" />
-        <FormHelperText>This field has been disabled</FormHelperText>
-      </FormFieldNext>
+    <FormFieldNext style={{ width: "366px" }} disabled {...props}>
+      <FormLabel>Disabled Form Field</FormLabel>
+      <InputNext defaultValue="Primary Input value" />
+      <FormHelperText>This field has been disabled</FormHelperText>
+    </FormFieldNext>
   );
 };
 
@@ -62,26 +62,24 @@ export const HelperText: ComponentStory<typeof FormFieldNext> = (props) => {
       <FormFieldNext {...props}>
         <FormLabel>Form Field label</FormLabel>
         <InputNext defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormFieldNext>
+      <FormFieldNext {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <InputNext defaultValue="Primary Input value" />
         <FormHelperText>
-          Helper text
+          Helper text that's very long. Additional text to give further context
+          to the input requirements.
         </FormHelperText>
       </FormFieldNext>
-        <FormFieldNext {...props}>
-          <FormLabel>Form Field label</FormLabel>
-          <InputNext defaultValue="Primary Input value" />
-          <FormHelperText>
-            Helper text that's very long. Additional text to give further context
-            to the input requirements.
-          </FormHelperText>
-        </FormFieldNext>
-        <FormFieldNext labelPlacement="left" {...props}>
-          <FormLabel>Form Field label</FormLabel>
-          <InputNext defaultValue="Primary Input value" />
-          <FormHelperText>
-            Helper text that's very long. Additional text to give further context
-            to the input requirements.
-          </FormHelperText>
-        </FormFieldNext>
+      <FormFieldNext labelPlacement="left" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <InputNext defaultValue="Primary Input value" />
+        <FormHelperText>
+          Helper text that's very long. Additional text to give further context
+          to the input requirements.
+        </FormHelperText>
+      </FormFieldNext>
     </FlowLayout>
   );
 };
