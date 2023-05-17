@@ -1,4 +1,4 @@
-import { Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
+import { Grid, GridColumn, SortOrder } from "../";
 import { DecoratorFn } from "@storybook/react";
 import {
   Investor,
