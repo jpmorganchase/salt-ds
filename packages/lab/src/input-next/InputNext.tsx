@@ -207,6 +207,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
       )}
+      <div className={withBaseName("activationIndicator")} />
     </div>
   );
 });
