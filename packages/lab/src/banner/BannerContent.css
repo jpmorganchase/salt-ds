@@ -1,5 +1,5 @@
 /* Styles applied to BannerContent */
 .saltBannerContent {
   flex: 1 0;
-  align-self: center;
+  margin-top: calc(var(--salt-spacing-75));
 }

@@ -15,11 +15,6 @@
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-.saltBanner-icon {
-  margin-top: calc(var(--salt-spacing-75));
-  /* min-height: var(--salt-size-base); */
-}
-
 /* Styles applied when state = "info" */
 .saltBanner-info {
   --banner-borderColor: var(--salt-status-info-borderColor);
