@@ -1,4 +1,6 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
+import {
+  Meta
+} from "@storybook/addon-docs";
 
 <Meta title="Theme/About the Salt Theme" />
 
@@ -242,3 +244,38 @@ We have already mentioned that components will reference Theme variables, the ex
 In the Button example above, font-size is being set to whatever value has been assigned to the variable `--saltButton-fontSize`. If this variable has not been defined, or is not in scope at the point where this Button element is rendered, then the fallback value will be taken from `--salt-text-fontSize`. Providing that a Salt theme is in scope at this point, this will have a value. If neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
 
 Note the naming convention for the first variable `--saltButton-fontSize`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a _CSS API variable_. These are not actually assigned any value anywhere in Salt code. They are a customization mechanism intended for use by consumers of Salt components. A default (or fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the documentation for each component (as are the CSS class names).
+
+## Component style injection
+
+In order to support uses of Salt that utilize external windows. We have created a custom hook that injects component CSS into a given window
+
+Below is an example component  illustrating some important concepts:
+
+```tsx
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import exampleCss from "./Example.css";
+
+const Example = (props) => {
+  const { window: targetWindow } = useWindow();
+  useComponentCssInjection({
+    id: "salt-example",
+    css: exampleCss,
+    window: targetWindow,
+  });
+
+  return (
+    <svg
+      className="saltExample-svg"
+    >
+      {props.children}
+    </svg>
+  );
+};
+```
+
+- All Salt component CSS must be imported using the default export, the imported CSS should be injected by calling `useComponentCssInjection`
+- Only one component should be stored per typescript jsx file, however a component may import and inject multiple css files.
+
+In the above example, the call to `useComponentCssInjection` passing in an ID which is used to keep track of if component CSS has already been injected before,
+the CSS string itself and the window to inject the css into. Internally, the hook uses a Map of Map objects to store if a CSS string has been injected into a given window.
