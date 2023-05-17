@@ -72,14 +72,6 @@ export const HelperText: ComponentStory<typeof FormFieldNext> = (props) => {
           to the input requirements.
         </FormHelperText>
       </FormFieldNext>
-      <FormFieldNext labelPlacement="left" {...props}>
-        <FormLabel>Form Field label</FormLabel>
-        <InputNext defaultValue="Primary Input value" />
-        <FormHelperText>
-          Helper text that's very long. Additional text to give further context
-          to the input requirements.
-        </FormHelperText>
-      </FormFieldNext>
     </FlowLayout>
   );
 };
@@ -91,16 +83,23 @@ export const Label: ComponentStory<typeof FormFieldNext> = (props) => {
         <FormLabel>Form Field label top (default)</FormLabel>
         <InputNext defaultValue="Value" />
       </FormFieldNext>
-      <FormFieldNext labelPlacement="left" {...props}>
-        <FormLabel>Form Field label left</FormLabel>
-        <InputNext defaultValue="Value" />
-      </FormFieldNext>
       <FormFieldNext {...props}>
         <FormLabel>
           Form Field label that's extra long. Showing that labels wrap around to
           the next line.
         </FormLabel>
         <InputNext defaultValue="Primary Input value" />
+      </FormFieldNext>
+    </FlowLayout>
+  );
+};
+
+export const LabelLeft: ComponentStory<typeof FormFieldNext> = (props) => {
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormFieldNext labelPlacement="left" {...props}>
+        <FormLabel>Form Field label left</FormLabel>
+        <InputNext defaultValue="Value" />
       </FormFieldNext>
       <FormFieldNext labelPlacement="left" {...props}>
         <FormLabel>
