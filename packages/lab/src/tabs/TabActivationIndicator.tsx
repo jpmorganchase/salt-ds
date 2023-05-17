@@ -9,7 +9,7 @@ interface TabActivationIndicatorProps {
   hideThumb?: boolean;
   orientation?: "horizontal" | "vertical";
   disableAnimation?: boolean;
-  tabId?: string;
+  tabId?: string | null;
 }
 
 const withBaseName = makePrefixer("saltTabActivationIndicator");
@@ -28,7 +28,7 @@ export const TabActivationIndicator = ({
 
   return (
     <div className={withBaseName()} ref={rootRef}>
-      {hideThumb === false ? (
+      {hideThumb === false && tabId !== null ? (
         <div className={withBaseName("thumb")} style={style} />
       ) : null}
     </div>
