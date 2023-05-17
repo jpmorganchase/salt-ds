@@ -172,3 +172,11 @@
   cursor: var(--salt-editable-cursor-disabled);
   color: var(--saltInputNext-color-disabled, var(--salt-text-primary-foreground-disabled));
 }
+
+.saltInputNext-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--inputNext-borderWidth) var(--inputNext-borderStyle) var(--inputNext-borderColor);
+}
