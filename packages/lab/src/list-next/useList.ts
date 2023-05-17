@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowUp,
@@ -7,15 +7,10 @@ import {
   PageDown,
   PageUp,
   Shift,
-  Space
+  Space,
 } from "../common-hooks";
 
-export const useList = ({
-                          children,
-                          deselectable,
-                          multiselect,
-                          onFocus
-                        }) => {
+export const useList = ({ children, deselectable, multiselect, onFocus }) => {
   const listRef = useRef(null);
   const activeDescendant = useRef(null);
   const [startRangeIndex, setStartRangeIndex] = useState(0);
@@ -23,16 +18,14 @@ export const useList = ({
   useEffect(() => {
     const list = listRef.current;
     if (list) {
-      list.addEventListener('keydown', handleKeyDown);
-      list.addEventListener('click', handleClick);
+      list.addEventListener("keydown", handleKeyDown);
+      list.addEventListener("click", handleClick);
       return () => {
-        list.removeEventListener('keydown', handleKeyDown);
-        list.addEventListener('click', handleClick);
-
+        list.removeEventListener("keydown", handleKeyDown);
+        list.addEventListener("click", handleClick);
       };
     }
   }, []);
-
 
   const focusFirstItem = () => {
     const firstItem = listRef.current.querySelector('[role="option"]');
@@ -50,7 +43,7 @@ export const useList = ({
   };
 
   const handleKeyDown = (evt) => {
-    const {key, shiftKey, ctrlKey, metaKey} = evt;
+    const { key, shiftKey, ctrlKey, metaKey } = evt;
     var lastActiveId = activeDescendant.current;
     const allOptions = [...listRef.current.querySelectorAll('[role="option"]')];
     const currentItem =
@@ -130,7 +123,6 @@ export const useList = ({
     }
   };
 
-
   const getElementIndex = (option, options) => {
     const allOptions = Array.from(options); // convert to array
     const optionIndex = allOptions.indexOf(option);
@@ -157,11 +149,11 @@ export const useList = ({
     return allOptions[currentOptionIndex - 1];
   };
 
-
   //
-  const handleClick = ({target, shiftKey}) => {
-
-    const nonClickableTarget = target.getAttribute("role") !== "option" || target.getAttribute("aria-disabled") === "true";
+  const handleClick = ({ target, shiftKey }) => {
+    const nonClickableTarget =
+      target.getAttribute("role") !== "option" ||
+      target.getAttribute("aria-disabled") === "true";
     if (nonClickableTarget) {
       return;
     }
@@ -186,7 +178,6 @@ export const useList = ({
     }
   };
 
-
   const defocusItem = (element) => {
     if (!element) {
       return;
@@ -198,7 +189,6 @@ export const useList = ({
 
     element.classList.remove("focused");
   };
-
 
   const focusItem = (element) => {
     const currentActive = document.getElementById(activeDescendant.current);
@@ -212,11 +202,9 @@ export const useList = ({
     activeDescendant.current = element.id;
 
     if (onFocus) {
-      onFocus(element)
+      onFocus(element);
     }
-    ;
   };
-
 
   const checkInRange = (index, start, end) => {
     const [rangeStart, rangeEnd] = start < end ? [start, end] : [end, start];
@@ -233,27 +221,30 @@ export const useList = ({
       typeof end === "number" ? end : getElementIndex(end, allOptions);
 
     for (let index = 0; index < allOptions.length; index++) {
-      const selected = checkInRange(index, startIndex, endIndex);
+      const disabled =
+        allOptions[index].getAttribute("aria-disabled") === "true";
+      const selected = checkInRange(index, startIndex, endIndex) && !disabled; // check item in range and not disabled
       allOptions[index].setAttribute("aria-selected", `${selected}`);
     }
-
   };
 
   // Check if the selected option is in view, and scroll if not
   const scrollToSelected = () => {
     const selectedOption = document.getElementById(activeDescendant.current);
-    const {clientHeight, scrollTop, scrollHeight} = listRef;
+    const { clientHeight, scrollTop, scrollHeight } = listRef;
 
     if (selectedOption && scrollHeight > clientHeight) {
-      const {offsetTop, offsetHeight} = selectedOption;
+      const { offsetTop, offsetHeight } = selectedOption;
       const scrollBottom = clientHeight + scrollTop;
 
       if (offsetTop + offsetHeight > scrollBottom) {
-        listRef.current.scrollTop = `${offsetTop + offsetHeight - clientHeight}px`;
+        listRef.current.scrollTop = `${
+          offsetTop + offsetHeight - clientHeight
+        }px`;
       } else if (offsetTop < scrollTop) {
         listRef.current.scrollTop = `${offsetTop}px`;
       }
     }
   };
-  return {listRef}
+  return { listRef };
 };
