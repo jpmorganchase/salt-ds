@@ -15,29 +15,12 @@ export default {
 
 const BasicBannerExample: FC<BannerProps> = ({ status }) => {
   return (
-    <>
-      <Banner status={status}>
-        <BannerContent>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </BannerContent>
-      </Banner>
-      <Banner status={status}>
-        <BannerContent>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </BannerContent>
-        <BannerCloseButton onClick={() => console.log("close")} />
-      </Banner>
-    </>
+    <Banner status={status}>
+      <BannerContent>
+        Example custom renderer <Link href={"#"}>link</Link>
+      </BannerContent>
+      <BannerCloseButton onClick={() => console.log("close")} />
+    </Banner>
   );
 };
 
