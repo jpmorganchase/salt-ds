@@ -147,18 +147,11 @@ Commenting out as it's possible but not supported until V3
 
 export const Readonly: ComponentStory<typeof FormFieldNext> = (props) => {
   return (
-    <FlowLayout style={{ width: "366px" }}>
-      <FormFieldNext readOnly {...props}>
-        <FormLabel>Readonly Form Field</FormLabel>
-        <InputNext defaultValue="Primary Input value" />
-        <FormHelperText>This Form Field is readonly</FormHelperText>
-      </FormFieldNext>
-      <FormFieldNext readOnly {...props}>
-        <FormLabel>Readonly Form Field</FormLabel>
-        <InputNext defaultValue="Secondary Input value" />
-        <FormHelperText>This Form Field is readonly</FormHelperText>
-      </FormFieldNext>
-    </FlowLayout>
+    <FormFieldNext style={{ width: "366px" }} readOnly {...props}>
+      <FormLabel>Readonly Form Field</FormLabel>
+      <InputNext defaultValue="Primary Input value" />
+      <FormHelperText>This Form Field is readonly</FormHelperText>
+    </FormFieldNext>
   );
 };
 
