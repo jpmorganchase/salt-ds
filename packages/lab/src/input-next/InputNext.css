@@ -2,7 +2,6 @@
 .saltInputNext {
   --inputNext-borderColor: var(--salt-editable-borderColor);
   --inputNext-borderStyle: var(--salt-editable-borderStyle);
-  --inputNext-borderColor-focused: var(--salt-editable-borderColor-active);
   --inputNext-outlineColor: var(--salt-focused-outlineColor);
   --inputNext-borderWidth: var(--salt-size-border);
   --inputNext-paddingLeft: var(--salt-size-unit);
@@ -65,9 +64,6 @@
   --inputNext-background-active: var(--salt-status-error-background);
   --inputNext-background-hover: var(--salt-status-error-background);
   --inputNext-borderColor: var(--salt-status-error-borderColor);
-  --inputNext-borderColor-active: var(--salt-status-error-borderColor);
-  --inputNext-borderColor-hover: var(--salt-status-error-borderColor);
-  --inputNext-borderColor-focused: var(--salt-status-error-borderColor);
   --inputNext-outlineColor: var(--salt-status-error-borderColor);
 }
 
@@ -78,9 +74,6 @@
   --inputNext-background-active: var(--salt-status-warning-background);
   --inputNext-background-hover: var(--salt-status-warning-background);
   --inputNext-borderColor: var(--salt-status-warning-borderColor);
-  --inputNext-borderColor-active: var(--salt-status-warning-borderColor);
-  --inputNext-borderColor-hover: var(--salt-status-warning-borderColor);
-  --inputNext-borderColor-focused: var(--salt-status-warning-borderColor);
   --inputNext-outlineColor: var(--salt-status-warning-borderColor);
 }
 
@@ -91,9 +84,6 @@
   --inputNext-background-active: var(--salt-status-success-background);
   --inputNext-background-hover: var(--salt-status-success-background);
   --inputNext-borderColor: var(--salt-status-success-borderColor);
-  --inputNext-borderColor-active: var(--salt-status-success-borderColor);
-  --inputNext-borderColor-hover: var(--salt-status-success-borderColor);
-  --inputNext-borderColor-focused: var(--salt-status-success-borderColor);
   --inputNext-outlineColor: var(--salt-status-success-borderColor);
 }
 
@@ -129,7 +119,7 @@
 
 /* Styling when focused */
 .saltInputNext-focused {
-  --inputNext-borderColor: var(--inputNext-borderColor-focused);
+  --inputNext-borderColor: var(--inputNext-outlineColor);
   --inputNext-borderWidth: var(--salt-editable-borderWidth-active);
 
   outline-style: var(--salt-focused-outlineStyle);
