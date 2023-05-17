@@ -10,8 +10,6 @@ import { InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
 
-import "./input-next.stories.css";
-
 export default {
   title: "Lab/Input Next",
   component: InputNext,
@@ -89,15 +87,20 @@ export const ReadonlyEmptyMarker: ComponentStory<typeof InputNext> = (args) => {
   );
 };
 
-export const TextAlignments: ComponentStory<typeof InputNext> = (args) => {
+export const TextAlignment: ComponentStory<typeof InputNext> = (args) => {
   return (
-    <FlowLayout>
-      <div className="alignCenter">
-        <InputNext defaultValue={args.defaultValue ?? "Value"} {...args} />
-      </div>
-      <div className="alignRight">
-        <InputNext defaultValue={args.defaultValue ?? "Value"} {...args} />
-      </div>
+    <FlowLayout style={{ maxWidth: "266px" }}>
+      <InputNext defaultValue={args.defaultValue ?? "Value"} {...args} />
+      <InputNext
+        textAlign="center"
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+      <InputNext
+        textAlign="right"
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
     </FlowLayout>
   );
 };
