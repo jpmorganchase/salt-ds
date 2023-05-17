@@ -3,7 +3,6 @@ import { clsx } from "clsx";
 import { Checkbox, makePrefixer, Text, Tooltip } from "@salt-ds/core";
 import { Highlighter } from "./Highlighter";
 import "./ListItemNext.css";
-import { SuccessTickIcon } from "@salt-ds/icons";
 import { useOverflowDetection } from "../utils";
 
 const withBaseName = makePrefixer("saltListItemNext");

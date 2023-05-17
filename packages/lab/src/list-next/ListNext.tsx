@@ -25,7 +25,6 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
   ListItem?: ReactElement;
   borderless?: boolean;
   deselectable?: boolean;
-  maxWidth?: number;
 }
 
 export interface ListNextControlProps {
@@ -44,9 +43,9 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       className,
       disabled,
+      displayedItemCount,
       deselectable,
       ListItem = DefaultListItem,
-      maxWidth,
       emptyMessage,
       multiselect,
       onSelect,
@@ -62,6 +61,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       deselectable,
       multiselect,
+      displayedItemCount,
       onFocus
     });
     const forkedRef = useForkRef(ref, listRef);
@@ -79,20 +79,20 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
     function renderContent() {
       return Children.map(children, (listItem, index) => {
+        const { disabled: propDisabled, ...rest} = listItem.props;
         const childProps = {
           showCheckbox: multiselect,
+          disabled: propDisabled || disabled,
           // onClick: (e) => handleClick(e, index),
           // focused: focusedIndex === index,
           // selected: selectedIdxs.includes(index),
           // tabIndex: focusedIndex === index,
           id: index, // TODO: Check this
-          ...listItem.props,
+          ...rest,
         };
         return (
           isValidElement(listItem) &&
-          cloneElement(listItem, {
-            ...mergeProps(childProps, listItem.props),
-          })
+          cloneElement(listItem, childProps)
         );
       });
     }
@@ -108,9 +108,9 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           className
         )}
         role="listbox"
-        tabIndex={0}
-        // tabIndex={disabled || !emptyList ? undefined : 0}
+        tabIndex={disabled? undefined : 0}
         // aria-activedescendant={selectedIndex}
+        style={{}}
         {...rest}
       >
         {emptyList ? renderEmpty() : renderContent()}
