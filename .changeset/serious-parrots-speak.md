@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-Banner style changes to use spacing foundation
+Updated Banner to use the new spacing foundation
