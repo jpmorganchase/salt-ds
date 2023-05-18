@@ -54,9 +54,6 @@ Display the label via the `FormFieldLabel` component.
 - Use the label to describe the information/data the field is collecting (e.g., Name, Location, Currency).
 - Use `FormFieldHelperText` to provide additional information and context to help the user complete the field. See the ‘Helper Text’ section below.
 
-### Coming soon!
-
-Guidance for displaying Form Fields with larger question text styling for when users must respond to a questionnaire type form.
 
 ## Left Form Field Label Placement
 
@@ -121,7 +118,7 @@ Form Fields can show validation states (warning, success, error) with the prop `
 
 ### Guidance
 
-- The prop should be applied to the field, not control, for expected results.
+- The prop should be applied to the field, not the control(s) it contains, for expected results.
 - Use the error state to alert the user of a critical issue that’s related to the field entry. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
 - Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
 - Validation Text should reiterate and reinforce what was stated in the Helper Text, as it won’t be visible. Make the messaging as specific as possible to help the user resolve the issue.
@@ -130,9 +127,9 @@ Form Fields can show validation states (warning, success, error) with the prop `
 
 ### When to use Form Field
 
+- Use Form Field as a wrapper for editable components in a form layout—such as a simple form, filter panel or cash ticket.
 - We highly recommend using the Form Field Label and Form Field Helper Text components within Form Field to provide your form elements with the descriptive label and validation feedback required to ensure ADA compliance.
 - Align the Form Field to the correct Salt layout grid for your density and viewport size. Set the width of the form control to the number of columns that best reflects the length of the control’s expected value. The form control width can be set independently of the Label and Helper Text if required.
-- Use Form Field as a wrapper for editable components in a form layout—such as a simple form, filter panel or cash ticket.
 
 # API
 
