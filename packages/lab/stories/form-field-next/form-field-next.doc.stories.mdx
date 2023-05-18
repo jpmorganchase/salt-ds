@@ -132,7 +132,7 @@ Form Fields can show validation states (warning, success, error) with the prop `
 
 - We highly recommend using the Form Field Label and Form Field Helper Text components within Form Field to provide your form elements with the descriptive label and validation feedback required to ensure ADA compliance.
 - Align the Form Field to the correct Salt layout grid for your density and viewport size. Set the width of the form control to the number of columns that best reflects the length of the control’s expected value. The form control width can be set independently of the Label and Helper Text if required.
-- Follow the UITK Form’s pattern, for guidance using Form Fields in forms.
+- Use Form Field as a wrapper for editable components in a form layout—such as a simple form, filter panel or cash ticket.
 
 # API
 
@@ -156,9 +156,9 @@ import { FormFieldNext } from "@salt-ds/lab";
 
 All keyboard interactions are supplied by the underlying wrapped components, rather than the Form Field component.
 
-FormField itself exposes two props which are important for accessibility: labelId and helperTextId
+FormField exposes two props which are important for accessibility: labelId and helperTextId
 
-- `aria-describedby` uses `helperTextId` to be prepended to the form control
-- `aria-labelledby` uses `labelId` to be prepended to the form control
+- `helperTextId` used by `aria-describedby` for the form control
+- `labelId` used by `aria-labelledby` for the form control
 
 <HelpAndSupport />
