@@ -104,157 +104,111 @@ export const TabstripNext = ({
 
   useEffect(() => {
     if (!outerRef.current || !innerRef.current) return;
-    let intersect: IntersectionObserver;
     const resize = new ResizeObserver((arg) => {
       if (arg.length < 2) return;
       const [{ contentRect: outerRect }, { contentRect: innerRect }] = arg;
       if (!outerRef.current || !innerRef.current) return;
-      if (scrollable) {
-        const hasOverflowingContent = innerRect.width - outerRect.width > 1;
-        if (hasOverflowingContent) {
-          intersect = new IntersectionObserver(([firstTab, lastTab]) => {
-            if (firstTab) {
-              if (firstTab.target === firstSpy.current) {
-                setEnableLeftArrow(!firstTab.isIntersecting);
-              } else {
-                setEnableRightArrow(!firstTab.isIntersecting);
-              }
-            }
-            if (lastTab) {
-              setEnableRightArrow(!lastTab.isIntersecting);
-              if (lastTab.target === lastSpy.current) {
-                setEnableRightArrow(!lastTab.isIntersecting);
-              } else {
-                setEnableLeftArrow(!lastTab.isIntersecting);
-              }
-            }
-          });
-          if (firstSpy.current) {
-            intersect.observe(firstSpy.current);
-          }
-          if (lastSpy.current) {
-            intersect.observe(lastSpy.current);
-          }
-        }
-      } else {
-        const hasOverflowingContent = innerRect.height - outerRect.height > 0;
-        setHasOverflow(hasOverflowingContent);
-        const tabsTopOffset = innerRef.current.getBoundingClientRect().top;
-        const overflowLength = [
-          ...outerRef.current.querySelectorAll(
-            `.${withBaseName("inner")} > *:not(:first-child):not(:last-child)`
-          ),
-        ].filter((el) => {
-          return el.getBoundingClientRect().top - tabsTopOffset > 0;
-        }).length;
-        setOverflowTabsLength(overflowLength);
-      }
+      const hasOverflowingContent = innerRect.height - outerRect.height > 0;
+      setHasOverflow(hasOverflowingContent);
+      const tabsTopOffset = innerRef.current.getBoundingClientRect().top;
+      const overflowLength = [
+        ...outerRef.current.querySelectorAll(
+          `.${withBaseName("inner")} > *:not(:first-child):not(:last-child)`
+        ),
+      ].filter((el) => {
+        return el.getBoundingClientRect().top - tabsTopOffset > 0;
+      }).length;
+      setOverflowTabsLength(overflowLength);
     });
     resize.observe(outerRef.current);
     resize.observe(innerRef.current);
 
     return () => {
-      if (intersect) {
-        intersect.disconnect();
-      }
       resize.disconnect();
     };
-  }, [scrollable]);
+  }, []);
 
   const tabs = Children.toArray(children);
 
   return (
-    <FlexLayout gap={1} align="center">
-      {scrollable ? (
-        <Button disabled={!enableLeftArrow}>
-          <ChevronLeftIcon />
-        </Button>
-      ) : null}
-      <div
-        className={clsx(withBaseName(), withBaseName("horizontal"), {
-          [withBaseName("centered")]: align === "center",
-          [withBaseName("scrollable")]: scrollable,
+    <div
+      className={clsx(withBaseName(), withBaseName("horizontal"), {
+        [withBaseName("centered")]: align === "center",
+      })}
+      ref={outerRef}
+    >
+      <div className={withBaseName("inner")} ref={innerRef}>
+        <div ref={firstSpy} style={{ width: 1, height: 1 }}></div>
+        {tabs.map((child, index) => {
+          if (!isTab(child)) return child;
+          const id = getTabId(index);
+          return cloneElement<TabProps>(child, {
+            // draggable: true,
+            id: id,
+            style: {
+              maxWidth: tabMaxWidth,
+            },
+            tabIndex: index === activeTabIndex ? 0 : -1,
+            selected: index === activeTabIndex,
+            index: index,
+            onClick: () => {
+              setActiveTabIndex(index);
+              onActiveChange?.(index);
+            },
+            onKeyUp: noop,
+            onKeyDown: (e) => {
+              let nextId;
+              if (e.key === "ArrowRight") {
+                const nextIsOverflowed =
+                  index + 1 >= tabs.length - overflowTabsLength;
+                if (nextIsOverflowed) {
+                  outerRef?.current
+                    ?.querySelector<HTMLDivElement>(
+                      `.${withBaseName("overflowMenu")} .saltButton`
+                    )
+                    ?.focus();
+                  return;
+                } else {
+                  nextId = getTabId(index + 1);
+                  setKeyboardFocusedIndex(index + 1);
+                }
+              }
+              if (e.key === "ArrowLeft") {
+                nextId = getTabId(index - 1);
+                setKeyboardFocusedIndex(index - 1);
+              }
+              if (nextId && innerRef.current) {
+                (document.getElementById(nextId) as HTMLDivElement)?.focus();
+              }
+              if (e.key === "Enter" || e.key === " ") {
+                const nextIndex =
+                  keyboardFocusedIndex < 0
+                    ? activeTabIndex
+                    : keyboardFocusedIndex;
+                setActiveTabIndex(nextIndex);
+                onActiveChange?.(nextIndex);
+              }
+            },
+          });
         })}
-        ref={outerRef}
-      >
-        <div className={withBaseName("inner")} ref={innerRef}>
-          <div ref={firstSpy} style={{ width: 1, height: 1 }}></div>
-          {tabs.map((child, index) => {
-            if (!isTab(child)) return child;
-            const id = getTabId(index);
-            return cloneElement<TabProps>(child, {
-              // draggable: true,
-              id: id,
-              style: {
-                maxWidth: tabMaxWidth,
-              },
-              tabIndex: index === activeTabIndex ? 0 : -1,
-              selected: index === activeTabIndex,
-              index: index,
-              onClick: () => {
-                setActiveTabIndex(index);
-                onActiveChange?.(index);
-              },
-              onKeyUp: noop,
-              onKeyDown: (e) => {
-                let nextId;
-                if (e.key === "ArrowRight") {
-                  const nextIsOverflowed =
-                    index + 1 >= tabs.length - overflowTabsLength;
-                  if (nextIsOverflowed) {
-                    outerRef?.current
-                      ?.querySelector<HTMLDivElement>(
-                        `.${withBaseName("overflowMenu")} .saltButton`
-                      )
-                      ?.focus();
-                    return;
-                  } else {
-                    nextId = getTabId(index + 1);
-                    setKeyboardFocusedIndex(index + 1);
-                  }
-                }
-                if (e.key === "ArrowLeft") {
-                  nextId = getTabId(index - 1);
-                  setKeyboardFocusedIndex(index - 1);
-                }
-                if (nextId && innerRef.current) {
-                  document.getElementById<HTMLDivElement>(nextId)?.focus();
-                }
-                if (e.key === "Enter" || e.key === " ") {
-                  const nextIndex =
-                    keyboardFocusedIndex < 0
-                      ? activeTabIndex
-                      : keyboardFocusedIndex;
-                  setActiveTabIndex(nextIndex);
-                  onActiveChange?.(nextIndex);
-                }
-              },
-            });
-          })}
-          <div ref={lastSpy} style={{ width: 1, height: 1 }}></div>
-        </div>
-
-        {hasOverflow ? (
-          <OverflowMenu
-            tabs={tabs}
-            activeTabIndex={activeTabIndex}
-            overflowTabsLength={overflowTabsLength}
-            onMoveTab={onMoveTab}
-            onActiveChange={onActiveChange}
-            setActiveTabIndex={setActiveTabIndex}
-            getTabId={getTabId}
-            setKeyboardFocusedIndex={setKeyboardFocusedIndex}
-          />
-        ) : null}
-
-        <TabActivationIndicator orientation="horizontal" tabId={activeTabId} />
+        <div ref={lastSpy} style={{ width: 1, height: 1 }}></div>
       </div>
-      {scrollable ? (
-        <Button disabled={!enableRightArrow}>
-          <ChevronRightIcon />
-        </Button>
+
+      {hasOverflow ? (
+        <OverflowMenu
+          tabs={tabs}
+          activeTabIndex={activeTabIndex}
+          overflowTabsLength={overflowTabsLength}
+          onMoveTab={onMoveTab}
+          onActiveChange={onActiveChange}
+          setActiveTabIndex={setActiveTabIndex}
+          getTabId={getTabId}
+          setKeyboardFocusedIndex={setKeyboardFocusedIndex}
+        />
       ) : null}
-    </FlexLayout>
+
+      <TabActivationIndicator orientation="horizontal" tabId={activeTabId} />
+    </div>
   );
 };
 
