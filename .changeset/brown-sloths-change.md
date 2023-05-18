@@ -2,4 +2,4 @@
 "@salt-ds/lab": minor
 ---
 
-Fix Tabstrip crashes when setting `activeTabIndex` to null
+Fix Tabstrip crashing when `activeTabIndex` is set to null
