@@ -48,7 +48,9 @@ export const ControlledTabstrip: TabstripStory = ({
   ...tabstripProps
 }: TabstripNextProps) => {
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
-  const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
+  const [activeTabIndex, setActiveTabIndex] = useState<
+    number | null | undefined
+  >(0);
 
   return (
     <div style={{ width: 600, minWidth: 0, maxWidth: "100%" }}>
@@ -75,7 +77,9 @@ export const AddTabTabstrip: TabstripStory = ({
     "Checks",
     "Liquidity",
   ]);
-  const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
+  const [activeTabIndex, setActiveTabIndex] = useState<
+    number | null | undefined
+  >(0);
   const handleAddTab = () => {
     setTabs((t) => [...t, `Tab ${t.length + 1}`]);
   };
@@ -110,7 +114,9 @@ export const CloseTabTabstrip: TabstripStory = ({
     "Checks",
     "Liquidity",
   ]);
-  const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
+  const [activeTabIndex, setActiveTabIndex] = useState<
+    number | null | undefined
+  >(0);
   return (
     <div style={{ width: 600, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext
@@ -138,7 +144,9 @@ export const ActiveIndexNull: TabstripStory = ({
   ...tabstripProps
 }: TabstripNextProps) => {
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
-  const [activeTabIndex, setActiveTabIndex] = useState<number | null>(null);
+  const [activeTabIndex, setActiveTabIndex] = useState<
+    number | null | undefined
+  >(null);
 
   return (
     <div style={{ width: 600, minWidth: 0, maxWidth: "100%" }}>
