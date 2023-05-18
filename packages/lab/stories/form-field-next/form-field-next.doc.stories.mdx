@@ -16,7 +16,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Form Field Next
 
-Form Field is a wrapper for UI controls that are typically found in a form (e.g., Input, Combobox, Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements.
+Form Field is a wrapper for UI controls that are typically found in a form (for example, Input, Combobox or Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements.
 
 <Canvas>
   <Story id="lab-form-field-next--default" />
@@ -36,7 +36,7 @@ Form field can wrap any Salt UI control that is typically found in a form, such 
 
 ### Guidance
 
-- Form Field doesn’t have primary and secondary variants itself. These variants can be displayed if they are supported by the form control displayed inside the field.
+- Form Field doesn’t have primary and secondary variants. Any variants apply to the field controls contained within Form Field and can be displayed via the components `variant` prop if supported.
 
 ## Form Field Label
 
@@ -52,7 +52,7 @@ Display the label via the `FormFieldLabel` component.
 
 - The label should be easy to scan and be no more than 3 words long.
 - Use the label to describe the information/data the field is collecting (e.g., Name, Location, Currency).
-- Use ‘Helper Text’ to provide additional information and context to help the user complete the field.
+- Use `FormFieldHelperText` to provide additional information and context to help the user complete the field. See the ‘Helper Text’ section below.
 
 ### Coming soon!
 
@@ -81,7 +81,7 @@ Form Field can display Helper Text using the `FormFieldHelperText` component.
 ### Guidance
 
 - Use Form Field Helper Text to provide additional guidance to users, such as an instruction (when it’s not obvious what action the user must take), or if you need to show an example of acceptable formats to increase the likelihood of successful entry.
-- Keep your Form Field Label short and succinct by moving guidance to the Helper Text.
+- Keep your Form Field Label short by moving guidance to the Helper Text.
 
 ## Disabled
 
@@ -93,7 +93,7 @@ Form Field can be disabled via the prop ‘disabled’.
 
 ### Guidance
 
-- The prop should be applied to the field, not control, for expected results.
+- The prop should be applied to the field, not the control(s) it contains, for expected results.
 - Fields are typically disabled if the context or required permissions prevent the user from interacting with a field.
 - Text contrast is not WCAG AA compliant; an editable field is only disabled if the field is not relevant at the current time.
 
@@ -107,7 +107,7 @@ Form Field can be set as read-only via the prop ‘readOnly’.
 
 ### Guidance
 
-- The prop should be applied to the field, not control, for expected results.
+- The prop should be applied to the field, not the control(s) it contains, for expected results.
 - Set the field to read-only if you’re displaying values that are predefined and not editable, e.g., entry that’s populated and fixed by template selection.
 - Adheres to WCAG AA text contrast for legibility; read-only field content is always relevant to the form, but cannot be changed.
 
