@@ -7,16 +7,15 @@
   border-width: var(--saltBanner-borderWidth, var(--salt-size-border));
   border-style: var(--saltBanner-borderStyle, var(--salt-container-borderStyle));
   box-sizing: border-box;
-  display: flex;
-  gap: var(--salt-size-unit);
-  padding: var(--saltBanner-padding, var(--salt-size-unit));
-  align-items: baseline;
+  display: inline-flex;
+  gap: var(--salt-spacing-75);
+  padding: var(--saltBanner-padding, var(--salt-spacing-50) var(--salt-spacing-100));
   width: 100%;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-/* Styles applied to icon */
 .saltBanner-icon {
-  --saltIcon-margin: calc((var(--salt-text-lineHeight) - 12px) / 2) 0 0 0;
+  min-height: var(--salt-size-base);
 }
 
 /* Styles applied when state = "info" */

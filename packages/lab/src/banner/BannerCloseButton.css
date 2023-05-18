@@ -1,4 +1,0 @@
-/* Styles applied to BannerCloseButton */
-.saltBannerCloseButton {
-  margin: calc(var(--salt-size-unit) * -0.5) auto calc(var(--salt-size-unit) * -0.5) var(--salt-size-unit);
-}
