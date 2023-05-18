@@ -34,6 +34,7 @@ export type TabstripNextProps = PropsWithChildren<{
   onMoveTab?: (from: number, to: number) => void;
   /* Set a tab max-width in order to enable tab truncation */
   tabMaxWidth?: number;
+  variant?: "primary" | "secondary";
 }>;
 
 export const TabstripNext = ({
@@ -44,6 +45,7 @@ export const TabstripNext = ({
   align,
   onMoveTab,
   tabMaxWidth,
+  variant = "primary",
 }: TabstripNextProps) => {
   const uniqueId = useId();
   const getTabId = useCallback(
@@ -98,9 +100,14 @@ export const TabstripNext = ({
   return (
     <div
       role="tablist"
-      className={clsx(withBaseName(), withBaseName("horizontal"), {
-        [withBaseName("centered")]: align === "center",
-      })}
+      className={clsx(
+        withBaseName(),
+        withBaseName("horizontal"),
+        [withBaseName(`variant-${variant}`)],
+        {
+          [withBaseName("centered")]: align === "center",
+        }
+      )}
       ref={outerRef}
     >
       <div className={withBaseName("inner")} ref={innerRef}>
