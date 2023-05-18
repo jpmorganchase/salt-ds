@@ -92,7 +92,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   const root = useRef<HTMLDivElement>(null);
   // can't use forwardedRef here, can we ?
   // const setForkRef = useForkRef(root, forwardedRef);
-  const activeRef = useRef<number>(
+  const activeRef = useRef<number | null>(
     activeTabIndexProp || defaultActiveTabIndex || 0
   );
 
@@ -293,7 +293,11 @@ export const Tabstrip = forwardRef(function Tabstrip(
   }, [children]);
 
   useIsomorphicLayoutEffect(() => {
-    if (focusedTabIndex !== activeTabIndex && focusedTabIndex !== -1) {
+    if (
+      activeTabIndex !== null &&
+      focusedTabIndex !== activeTabIndex &&
+      focusedTabIndex !== -1
+    ) {
       tabstripHook.focusTab(activeTabIndex);
     }
 
@@ -463,7 +467,8 @@ export const Tabstrip = forwardRef(function Tabstrip(
     }
   );
 
-  const { id: selectedTabId } = collectionHook.data[activeTabIndex];
+  const selectedTabId =
+    activeTabIndex !== null ? collectionHook.data[activeTabIndex].id : null;
 
   return (
     <div
