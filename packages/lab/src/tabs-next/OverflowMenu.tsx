@@ -41,7 +41,7 @@ export function OverflowMenu({
   tabs: ReactNode[];
   overflowTabsLength: number;
   onMoveTab?: (from: number, to: number) => void;
-  activeTabIndex?: number;
+  activeTabIndex?: number | null;
   onActiveChange?: (index: number) => void;
   setActiveTabIndex: (index: number) => void;
   getTabId: (index?: number) => string;

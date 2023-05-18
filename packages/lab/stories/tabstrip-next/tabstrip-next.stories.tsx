@@ -133,3 +133,24 @@ export const CloseTabTabstrip: TabstripStory = ({
     </div>
   );
 };
+
+export const ActiveIndexNull: TabstripStory = ({
+  ...tabstripProps
+}: TabstripNextProps) => {
+  const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
+  const [activeTabIndex, setActiveTabIndex] = useState<number | null>(null);
+
+  return (
+    <div style={{ width: 600, minWidth: 0, maxWidth: "100%" }}>
+      <TabstripNext
+        {...tabstripProps}
+        activeTabIndex={activeTabIndex}
+        onActiveChange={setActiveTabIndex}
+      >
+        {tabs.map((label) => (
+          <Tab key={label}>{label}</Tab>
+        ))}
+      </TabstripNext>
+    </div>
+  );
+};

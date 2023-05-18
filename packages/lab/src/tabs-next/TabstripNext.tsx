@@ -26,8 +26,8 @@ function isTab(child: ReactNode | TabElement): child is TabElement {
 }
 
 export type TabstripNextProps = PropsWithChildren<{
-  activeTabIndex?: number;
-  onActiveChange?: (index?: number) => void;
+  activeTabIndex?: number | null;
+  onActiveChange?: (index?: number | null) => void;
   defaultActiveTabIndex?: number;
   align?: "center";
   /* Triggered when tabs should be reordered to make the overflowed tab visible */
@@ -60,7 +60,9 @@ export const TabstripNext = ({
     state: "activeTabIndex",
   });
   const activeTabId =
-    activeTabIndex !== undefined ? getTabId(activeTabIndex) : undefined;
+    activeTabIndex !== undefined && activeTabIndex !== null
+      ? getTabId(activeTabIndex)
+      : undefined;
   const outerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const firstSpy = useRef<HTMLDivElement>(null);
