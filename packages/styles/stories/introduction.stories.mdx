@@ -2,11 +2,20 @@ import { Meta } from "@storybook/addon-docs";
 
 <Meta title="Styles/About the Style injection system" />
 
-# About the Salt Theme
+# About the Style injection system
 
 ## Component style injection
 
-In order to support uses of Salt that utilize multiple external windows such as desktop applications. We offer two packages that contain hooks to facilitate this: `@salt-ds/window` and `@salt-ds/styles`.
+Style injection is the act of adding CSS styles dynamically to a document rather than statically linking them. Typically, CSS-in-JS libraries do this but there are standalone libraries that do this are:
+
+- style-inject
+- emotion
+- TSS
+- Tailwind CSS
+
+In order to support uses of Salt in a desktop application where pop-out elements such as tooltips are rendered into separate windows with no added CSS prior.
+We offer a style injection system for those developers looking to inject CSS into a given window.
+There are two packages that contain hooks to facilitate this: `@salt-ds/window` and `@salt-ds/styles`.
 `@salt-ds/styles` contains the `useComponentCssInjection` hook while `@salt-ds/window` contains the `useWindow` hook.
 
 Below is an example component illustrating some important concepts:
@@ -19,7 +28,6 @@ import exampleCss from "./Example.css";
 const Example = (props) => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-example",
     css: exampleCss,
     window: targetWindow,
   });
@@ -30,14 +38,16 @@ const Example = (props) => {
 
 - All Salt component CSS must be imported using the default export, the imported CSS should be injected by calling the `useComponentCssInjection` hook.
 - The current window the component is being rendered into is retrieved using the `useWindow` hook.
-- Only one component should be stored per typescript jsx file, however a component may import and inject multiple css files.
 
-In the above example, `useComponentCssInjection` is called with an ID which is used to keep track of if component CSS has already been injected before,
-the CSS string itself and the window to inject the css into. Internally, the hook uses a Map of Map objects to store if a CSS string has been injected into a given window.
+In the above example, `useComponentCssInjection` is called with CSS string itself and the window to inject the css into.
+Internally, the hook uses a Map of Map objects to store if a CSS string has been injected into a given window.
 
 ## Insertion Point
 
-the element where `useComponentCssInjection` inserts the styles can be controlled using an `InsertionPointProvider`. The hook will then insert the given CSS string before the provided insertion point
+Developers may want to control where the CSS is injected into the document, such as if a component library's styles are injected at the bottom of the head element
+and overriding an application's styles.
+
+the location where `useComponentCssInjection` inserts the styles can be controlled using an `InsertionPointProvider`. The hook will then insert the given CSS string before the provided insertion point
 
 ```tsx
 import { useRef } from "react";
