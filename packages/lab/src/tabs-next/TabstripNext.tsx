@@ -27,7 +27,7 @@ function isTab(child: ReactNode | TabElement): child is TabElement {
 
 export type TabstripNextProps = PropsWithChildren<{
   activeTabIndex?: number | null;
-  onActiveChange?: (index?: number | null) => void;
+  onActiveChange?: (index?: number) => void;
   defaultActiveTabIndex?: number;
   align?: "center";
   /* Triggered when tabs should be reordered to make the overflowed tab visible. This prop can only be used with controlled tabstrip. */
@@ -152,7 +152,7 @@ export const TabstripNext = ({
                     ? activeTabIndex
                     : keyboardFocusedIndex;
                 setActiveTabIndex(nextIndex);
-                onActiveChange?.(nextIndex);
+                onActiveChange?.(nextIndex as number);
               }
             },
           });
