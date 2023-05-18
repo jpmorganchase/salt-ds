@@ -44,7 +44,7 @@ describe("Responsive rendering, Given a Tabstrip", () => {
   });
 });
 
-describe.only("Tab selection, Given a Tabstrip", () => {
+describe("Tab selection, Given a Tabstrip", () => {
   describe("WHEN initial size is sufficient to display all contents", () => {
     describe("WHEN it initially renders", () => {
       describe("WHEN the selected Tab has not been specified", () => {
@@ -59,7 +59,7 @@ describe.only("Tab selection, Given a Tabstrip", () => {
   });
 });
 
-describe.only("Navigation, Given a Tabstrip", () => {
+describe("Navigation, Given a Tabstrip", () => {
   describe("WHEN initial size is sufficient to display all contents", () => {
     describe("WHEN the tabstrip is first rendered", () => {
       describe("WHEN the tabstrip receives keyboard focus", () => {
