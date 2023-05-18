@@ -2,7 +2,7 @@ import { composeStories } from "@storybook/testing-react";
 import * as tabstripStories from "@stories/tabstrip-next/tabstrip-next.stories";
 import { StackLayout } from "@salt-ds/core";
 
-const { SimpleTabstrip } = composeStories(tabstripStories);
+const { SimpleTabstrip, AutoReorderTabstrip } = composeStories(tabstripStories);
 
 describe("Responsive rendering, Given a Tabstrip", () => {
   describe("WHEN initial size is sufficient to display all contents", () => {
@@ -218,6 +218,80 @@ describe("Navigation, Given a Tabstrip", () => {
         cy.realPress("ArrowRight");
         cy.findByRole("combobox").should("be.focused");
       });
+
+      it("THEN overflow indicator opens overflow menu", () => {
+        cy.mount(<SimpleTabstrip width={320} />);
+        cy.findByRole("combobox").focus().realPress("Enter");
+        cy.findByRole("listbox");
+      });
+    });
+  });
+  describe("WHEN overflow is opened", () => {
+    it("THEN overflow menu can be navigated up and down", () => {
+      cy.mount(<SimpleTabstrip width={100} />);
+      cy.findByRole("combobox").click();
+      cy.findByRole("listbox");
+      cy.focused().realPress("ArrowDown");
+      cy.findAllByRole("option")
+        .should("have.length", 4)
+        .eq(1)
+        .should("have.class", "saltHighlighted");
+      cy.focused().then(($container) => {
+        cy.findAllByRole("option")
+          .should("have.length", 4)
+          .eq(1)
+          .then(($el) => {
+            expect($container.attr("aria-activedescendant")).to.equal(
+              $el.attr("id")
+            );
+          });
+      });
+      cy.focused().realPress("ArrowUp");
+      cy.findAllByRole("option")
+        .should("have.length", 4)
+        .eq(0)
+        .should("have.class", "saltHighlighted");
+    });
+    it("THEN overflow menu can be closed with Escape", () => {
+      cy.mount(<SimpleTabstrip width={100} />);
+      cy.findByRole("combobox").click();
+      cy.findByRole("listbox").should("exist");
+      cy.focused().realPress("Escape");
+      cy.findByRole("listbox").should("not.exist");
+    });
+    it("THEN overflow menu can be closed with ArrowLeft and focus is returned to last visible tab", () => {
+      cy.mount(<SimpleTabstrip width={120} />);
+      cy.findByRole("combobox").click();
+      cy.findByRole("listbox").should("exist");
+      cy.focused().realPress("ArrowLeft");
+      cy.findByRole("listbox").should("not.exist");
+      cy.focused().should("have.attr", "role", "tab");
+    });
+    it("THEN overflow menu item can be selected with Enter", () => {
+      cy.mount(
+        <SimpleTabstrip width={120} onMoveTab={cy.spy().as("onMoveTab")} />
+      );
+      cy.findByRole("combobox").click();
+      cy.findByRole("listbox").should("exist");
+      cy.focused().realPress("ArrowDown").realPress("Enter");
+      cy.get("@onMoveTab").should("be.calledOnce");
+    });
+  });
+});
+
+describe("WHEN onTabMove is provided and tabstrip is controlled", () => {
+  describe("WHEN overflow item is selected", () => {
+    it("THEN overflow menu item is moved to the end of visible tabs", () => {
+      cy.mount(<AutoReorderTabstrip width={200} />);
+      cy.findByRole("combobox").click();
+      cy.findByRole("listbox").should("exist");
+      cy.focused().realPress("ArrowDown").realPress("Enter");
+      cy.findByRole("listbox").should("not.exist");
+      cy.findByRole("tablist")
+        .findAllByRole("tab")
+        .filter(":visible")
+        .eq(1)
+        .should("have.text", "Checks");
     });
   });
 });
