@@ -5,6 +5,7 @@ import {
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
+  ReactNode,
   Ref,
   useState,
 } from "react";
@@ -30,6 +31,10 @@ export interface InputProps
    */
   emptyReadOnlyMarker?: string;
   /**
+   * End adornment component
+   */
+  endAdornment?: ReactNode;
+  /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
@@ -41,6 +46,10 @@ export interface InputProps
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
+  /**
+   * Start adornment component
+   */
+  startAdornment?: ReactNode;
   /**
    * Alignment of text within container. Defaults to "left"
    */
@@ -63,11 +72,13 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     className: classNameProp,
     disabled,
     emptyReadOnlyMarker = "—",
+    endAdornment,
     id,
     inputProps = {},
     inputRef,
     readOnly: readOnlyProp,
     role,
+    startAdornment,
     style,
     textAlign = "left",
     value: valueProp,
@@ -165,6 +176,11 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
       style={inputStyle}
       {...other}
     >
+      {startAdornment && (
+        <div className={withBaseName("startAdornmentContainer")}>
+          {startAdornment}
+        </div>
+      )}
       <input
         aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
         className={clsx(withBaseName("input"), inputProps?.className)}
@@ -183,6 +199,11 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
       />
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
+      )}      
+      {endAdornment && (
+        <div className={withBaseName("endAdornmentContainer")}>
+          {endAdornment}
+        </div>
       )}
       <div className={withBaseName("activationIndicator")} />
     </div>

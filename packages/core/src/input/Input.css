@@ -170,3 +170,19 @@
   position: absolute;
   border-bottom: var(--input-borderWidth) var(--input-borderStyle) var(--input-borderColor);
 }
+
+/* Style applied to start adornments */
+.saltInput-startAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-right: var(--salt-size-adornmentGap);
+  column-gap: var(--salt-size-adornmentGap);
+}
+
+/* Style applied to end adornments */
+.saltInput-endAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-left: var(--salt-size-adornmentGap);
+  column-gap: var(--salt-size-adornmentGap);
+}
