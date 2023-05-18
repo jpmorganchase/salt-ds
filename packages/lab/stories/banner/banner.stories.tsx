@@ -42,7 +42,7 @@ export const Emphasized: ComponentStory<typeof Banner> = () => (
 );
 
 export const Controlled = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const handleClick = () => {
     setOpen(true);
   };
@@ -76,11 +76,11 @@ export const MultipleLines = (props: BannerProps) => {
         <Banner {...props}>
           <BannerContent>
             <div>
-              Our guidance for hyphen and dash usage differs from that of the
-              “AP Stylebook” and is aligned with the “J.P. Morgan Brand
-              Guidelines” (also known as the Masterbrand guide).
+              Banner example containing multiple lines. This is supposed to
+              showcase the alignment of the status icon, content and close
+              button within the Banner.
             </div>
-            <Link href={"#"}>Read more...</Link>
+            <Link href={"#"}>Link example...</Link>
           </BannerContent>
           <BannerCloseButton onClick={onClose} />
         </Banner>
