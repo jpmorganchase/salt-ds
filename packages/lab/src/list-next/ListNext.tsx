@@ -25,6 +25,7 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
   ListItem?: ReactElement;
   borderless?: boolean;
   deselectable?: boolean;
+  displayedItemCount?: number;
 }
 
 export interface ListNextControlProps {
@@ -50,6 +51,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       multiselect,
       onSelect,
       onFocus,
+      style,
       ...rest
     },
     ref
@@ -61,14 +63,14 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       deselectable,
       multiselect,
       displayedItemCount,
-      onFocus
+      onFocus,
     });
     const forkedRef = useForkRef(ref, listRef);
 
     function renderEmpty() {
       return (
         <ListItemNext
-          className={withBaseName("empty-message")}
+          className={withBaseName("emptyMessage")}
           role="presentation"
         >
           {emptyMessage || defaultEmptyMessage}
@@ -78,7 +80,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
     function renderContent() {
       return Children.map(children, (listItem, index) => {
-        const { disabled: propDisabled, ...rest} = listItem.props;
+        const { disabled: propDisabled, ...rest } = listItem.props;
         const childProps = {
           showCheckbox: multiselect,
           disabled: propDisabled || disabled,
@@ -89,12 +91,22 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           id: index, // TODO: Check this
           ...rest,
         };
-        return (
-          isValidElement(listItem) &&
-          cloneElement(listItem, childProps)
-        );
+
+        return isValidElement(listItem) && cloneElement(listItem, childProps);
       });
     }
+
+    const childrenCount = Children.count(children);
+    const getDisplayedItemCount = () => {
+      // if no children, display empty message
+      if (emptyList) return 1;
+
+      // displayedItemCount takes precedence over childrenCount
+      if (displayedItemCount) return displayedItemCount;
+
+      // if more than 4 children, display 4 tops
+      return childrenCount > 4 ? 4 : childrenCount;
+    };
 
     return (
       <ul
@@ -103,13 +115,17 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           withBaseName(),
           {
             [withBaseName("borderless")]: borderless,
+            [withBaseName("focusable")]: !childrenCount,
           },
           className
         )}
         role="listbox"
-        tabIndex={disabled? undefined : 0}
+        tabIndex={disabled ? undefined : 0}
         // aria-activedescendant={selectedIndex}
-        style={{}}
+        style={{
+          ...style,
+          "--list-displayedItemCount": getDisplayedItemCount(),
+        }}
         {...rest}
       >
         {emptyList ? renderEmpty() : renderContent()}

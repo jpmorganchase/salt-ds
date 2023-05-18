@@ -41,7 +41,7 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
     <ListNext
       {...rest}
       aria-label="Declarative List example"
-      style={{ width: "200px", maxHeight: '150px'}}
+      style={{ width: "200px" }}
     >
       {children || listItems}
     </ListNext>
@@ -66,6 +66,7 @@ Deselectable.args = {
 export const Disabled = Default.bind({});
 Disabled.args = {
   disabled: true,
+  displayedItemCount: 3,
 };
 
 export const Empty = Default.bind({});
@@ -76,7 +77,11 @@ Empty.args = {
 
 export const ListItemNextExample: Story<ListNextProps> = (props) => {
   return (
-    <ListNext {...props} aria-label="Basic list items example">
+    <ListNext
+      {...props}
+      aria-label="Basic list items example"
+      displayedItemCount={6}
+    >
       <ListItemNext selected role={'presentation'}>Selected Item</ListItemNext>
       <ListItemNext>Basic list item</ListItemNext>
       <ListItemNext showCheckbox selected>

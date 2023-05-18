@@ -2,10 +2,16 @@
   --list-background: var(--salt-container-primary-background);
   --list-borderStyle: var(--salt-container-borderStyle);
   --list-borderWidth: var(--salt-size-border);
+  /* calc includes 1px for top border and 1px for bottom border */
+  --list-height: calc(
+    (2 * var(--salt-size-border)) + var(--list-item-height) *
+      var(--list-displayedItemCount)
+  );
   background: var(--list-background);
   border-color: var(--salt-container-primary-borderColor);
   border-style: var(--list-borderStyle);
   border-width: var(--list-borderWidth);
+  height: var(--list-height);
   outline: none;
   overflow-y: auto;
   position: relative;
@@ -15,21 +21,17 @@
 
 .saltList-borderless {
   --list-borderStyle: none;
-}
-
-.saltList-empty-message {
-  height: var(--saltBasicList-item-height, var(--list-item-height, auto));
-  padding-inline: var(--salt-size-unit);
-  position: relative;
-  align-items: center;
-  overflow: hidden;
-  width: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  --list-height: calc(var(--list-item-height) * var(--list-displayedItemCount));
 }
 
 /* Pseudo-class applied to the root element on focus */
-.saltList:focus-visible {
+.saltList-focusable:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(0 - var(--salt-focused-outlineWidth));
+}
+
+.saltList-emptyMessage {
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
 }
