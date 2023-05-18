@@ -63,6 +63,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       ref={handleRef}
       {...rest}
       aria-live="polite"
+      role="alert"
     >
       <StatusIndicator status={status} className={withBaseName("icon")} />
       {children}
