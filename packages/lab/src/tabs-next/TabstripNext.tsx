@@ -65,8 +65,6 @@ export const TabstripNext = ({
       : undefined;
   const outerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const firstSpy = useRef<HTMLDivElement>(null);
-  const lastSpy = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
   const [overflowTabsLength, setOverflowTabsLength] = useState(0);
   const [keyboardFocusedIndex, setKeyboardFocusedIndex] = useState(-1);
@@ -99,22 +97,25 @@ export const TabstripNext = ({
 
   return (
     <div
+      role="tablist"
       className={clsx(withBaseName(), withBaseName("horizontal"), {
         [withBaseName("centered")]: align === "center",
       })}
       ref={outerRef}
     >
       <div className={withBaseName("inner")} ref={innerRef}>
-        <div ref={firstSpy} style={{ width: 1, height: 1 }}></div>
         {tabs.map((child, index) => {
           if (!isTab(child)) return child;
           const id = getTabId(index);
+          const isOverflowed = index >= tabs.length - overflowTabsLength;
           return cloneElement<TabProps>(child, {
             id: id,
             style: {
               maxWidth: tabMaxWidth,
+              visibility: isOverflowed ? "hidden" : undefined,
             },
-            tabIndex: index === activeTabIndex ? 0 : -1,
+            "aria-hidden": isOverflowed,
+            tabIndex: index === activeTabIndex && !isOverflowed ? 0 : -1,
             selected: index === activeTabIndex,
             index: index,
             onClick: () => {
@@ -157,7 +158,6 @@ export const TabstripNext = ({
             },
           });
         })}
-        <div ref={lastSpy} style={{ width: 1, height: 1 }}></div>
       </div>
 
       {hasOverflow ? (
