@@ -77,7 +77,7 @@ Empty.args = {
 export const ListItemNextExample: Story<ListNextProps> = (props) => {
   return (
     <ListNext {...props} aria-label="Basic list items example">
-      <ListItemNext selected>Selected Item</ListItemNext>
+      <ListItemNext selected role={'presentation'}>Selected Item</ListItemNext>
       <ListItemNext>Basic list item</ListItemNext>
       <ListItemNext showCheckbox selected>
         with checkbox selected

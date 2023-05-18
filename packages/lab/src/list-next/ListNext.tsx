@@ -56,8 +56,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
   ) {
     const emptyList = Children.count(children) === 0;
 
-    // const { selectedIdxs, focusedIndex, listRef, handleClick } = useList({
-    const { listRef } = useList({
+    const { listRef, focusedIndex, selectedIndexes, handleClick } = useList({
       children,
       deselectable,
       multiselect,
@@ -83,9 +82,9 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         const childProps = {
           showCheckbox: multiselect,
           disabled: propDisabled || disabled,
-          // onClick: (e) => handleClick(e, index),
-          // focused: focusedIndex === index,
-          // selected: selectedIdxs.includes(index),
+          onClick: (e) => handleClick(e, index),
+          focused: focusedIndex === index,
+          selected: selectedIndexes.includes(index),
           // tabIndex: focusedIndex === index,
           id: index, // TODO: Check this
           ...rest,

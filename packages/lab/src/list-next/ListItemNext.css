@@ -27,11 +27,6 @@
   pointer-events: auto;
 }
 
-.saltCheckbox:hover {
-  --saltCheckbox-icon-stroke: var(--salt-selectable-foreground-hover);
-  --saltCheckbox-icon-fill: var(--salt-selectable-background-hover);
-}
-
 .saltListItemNext[role="presentation"] {
   cursor: default;
 }
@@ -50,10 +45,13 @@
   cursor: var(--salt-selectable-cursor-hover);
 }
 
+.saltListItemNext[aria-selected="true"]:not(.saltListItemNext-focused) {
+  outline: var(--salt-size-border) var(--salt-container-borderStyle)
+  var(--salt-selectable-borderColor-selected);
+}
+
 .saltListItemNext[aria-selected="true"] {
   --list-item-background: var(--salt-selectable-background-selected);
-  outline: var(--salt-size-border) var(--salt-container-borderStyle)
-    var(--salt-selectable-borderColor-selected);
 }
 
 .saltListItemNext[aria-selected="true"]:first-child {
@@ -73,10 +71,6 @@
 .saltListItemNext-disabled:hover:not([role="presentation"]),
 .saltListItemNext-disabled:focus-visible {
   cursor: var(--salt-selectable-cursor-disabled);
-}
-
-.saltListItemNext-disabled > .saltCheckbox:hover {
-  --saltCheckbox-icon-fill: var(--list-item-background);
 }
 
 .saltListItemNext-textWrapper {
