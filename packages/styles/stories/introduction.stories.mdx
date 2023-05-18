@@ -47,18 +47,15 @@ Internally, the hook uses a Map of Map objects to store if a CSS string has been
 ## Insertion Point
 
 Developers may want to control where the CSS is injected into the document, such as if a component library's styles are injected at the bottom of the head element
-and overriding an application's styles.
+and overriding an application's styles or injecting styles into a shadow dom.
 
 the location where `useComponentCssInjection` inserts the styles can be controlled using an `InsertionPointProvider`. The hook will then insert the given CSS string before the provided insertion point
 
 ```tsx
-import { useRef } from "react";
 import { Button } from "@salt-ds/core";
 import { InsertionPointProvider } from "@salt-ds/styles";
 
-const insertionPointRef = useRef<HTMLElement>();
-
-<InsertionPointProvider insertionPoint={insertionPointRef.current}>
+<InsertionPointProvider insertionPoint={document.head.lastElementChild}>
   <Button>Example</Button>
 </InsertionPointProvider>;
 ```
