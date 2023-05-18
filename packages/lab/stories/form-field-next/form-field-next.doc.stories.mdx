@@ -1,5 +1,5 @@
 import { FormFieldNext } from "@salt-ds/lab";
-import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { Meta, Canvas, ArgsTable, Story } from "@storybook/addon-docs";
 import {
   CSSClassTable,
   CharacteristicUsage,
@@ -16,80 +16,119 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Form Field Next
 
-Form Field is a wrapper for UI controls that are typically found in a form (e.g., Input, Combobox, Radio Button). It is required to make these controls accessible and provides them with a visible label, validation control and descriptive text elements.
+Form Field is a wrapper for UI controls that are typically found in a form (e.g., Input, Combobox, Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements.
 
 <Canvas>
   <Story id="lab-form-field-next--default" />
 </Canvas>
 
-## Form Field Label and Helper Text
+# Examples
 
-Form Field provides Form Field Label and Form Field Helper Text components which can be used within a Form Field. Use the Helper Text to provide additional guidance to users, such as when it’s not obvious what action the user must take, or if you need to show an example of acceptable formats to increase the likelihood of successful entry.
+All examples demonstrate Salt form controls inside the Form Field, including Input, Checkbox and Radio Button. These components are available as part of the Salt component library in addition to Form Field.
+
+## Form Controls
+
+Form field can wrap any Salt UI control that is typically found in a form, such as Input, Checkbox and Radio Button components.
+
+<Canvas>
+  <Story id="lab-form-field-next--with-controls" />
+</Canvas>
+### Guidance{" "}
+
+- Form Field doesn’t have primary and secondary variants itself. These variants can be displayed if they are supported by the form control displayed inside the field.
+
+## Form Field Label
+
+Form Field provides a visible label which should be used to describe the form control in the field. The label is placed above the form control by default.
+
+Display the label via the `FormFieldLabel` component.
 
 <Canvas>
   <Story id="lab-form-field-next--skeleton" />
 </Canvas>
 
-## Used with controls
+### Guidance
 
-Form Field shown with Input control component inside with default label placement.
+- The label should be easy to scan and be no more than 3 words long.
+- Use the label to describe the information/data the field is collecting (e.g., Name, Location, Currency).
+- Use ‘Helper Text’ to provide additional information and context to help the user complete the field.
+
+### Coming soon!
+
+Guidance for displaying Form Fields with larger question text styling for when users must respond to a questionnaire type form.
+
+## Left Form Field Label Placement
+
+The Form Field Label can be positioned to the left of the form control via the prop ‘labelPlacement’.
 
 <Canvas>
-  <Story id="lab-form-field-next--default" />
+  <Story id="lab-form-field-next--label-left" />
 </Canvas>
+
+### Guidance
+
+Place your label to the left of the control if your application is limited in vertical real estate or if you have a very data heavy, dense form, where it’s preferable to have as many fields visible as possible without scrolling.
+
+## Form Field Helper Text
+
+Form Field can display Helper Text using the `FormFieldHelperText` component.
+
+<Canvas>
+  <Story id="lab-form-field-next--label-left" />
+</Canvas>
+### Guidance{" "}
+
+- Use Form Field Helper Text to provide additional guidance to users, such as an instruction (when it’s not obvious what action the user must take), or if you need to show an example of acceptable formats to increase the likelihood of successful entry.
+- Keep your Form Field Label short and succinct by moving guidance to the Helper Text.
 
 ## Disabled
 
-Form Field can be disabled if the context or required permissions prevent the user from interacting with a field.
+Form Field can be disabled via the prop ‘disabled’.
 
 <Canvas>
   <Story id="lab-form-field-next--disabled" />
 </Canvas>
+### Guidance{" "}
 
-## Multiple Inputs
-
-When using multiple controls in a single Form Field, use the Form Field Control Wrapper component for structure.
-
-<Canvas>
-  <Story id="lab-form-field-next--multi-input" />
-</Canvas>
+- The prop should be applied to the field, not control, for expected results.
+- Fields are typically disabled if the context or required permissions prevent the user from interacting with a field.
+- Text contrast is not WCAG AA compliant; an editable field is only disabled if the field is not relevant at the current time.
 
 ## Readonly
 
-Form Field can be set as readonly if you’re displaying values that are predefined and not editable, e.g., entry that’s populated and fixed by template selection.
+Form Field can be set as read-only via the prop ‘readOnly’.
 
 <Canvas>
   <Story id="lab-form-field-next--readonly" />
-</Canvas>
+</Canvas>{" "}
 
-## Label placement
+### Guidance
 
-Form Field Label placement can be positioned above the controls (default) or to the left via the prop `labelPlacement`.
+- The prop should be applied to the field, not control, for expected results.
+- Set the field to read-only if you’re displaying values that are predefined and not editable, e.g., entry that’s populated and fixed by template selection.
+- Adheres to WCAG AA text contrast for legibility; read-only field content is always relevant to the form, but cannot be changed.
 
-<Canvas>
-  <Story id="lab-form-field-next--label-placement" />
-</Canvas>
+## Field Validation
 
-- If your application is limited in vertical real estate, you can configure Form Field to display left-aligned labels.
-
-## Validation
-
-Form Fields can show validation states (warning, success, error) with the prop `validationStatus`.
+Form Fields can show validation states (warning, success, error) with the prop `validationStatus`. When the field displays a validation state, the Helper Text is replaced by Validation Text.
 
 <Canvas>
   <Story id="lab-form-field-next--with-validation" />
 </Canvas>
+### Guidance{" "}
 
+- The prop should be applied to the field, not control, for expected results.
 - Use the error state to alert the user of a critical issue that’s related to the field entry. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
-
 - Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
+- Validation Text should reiterate and reinforce what was stated in the Helper Text, as it won’t be visible. Make the messaging as specific as possible to help the user resolve the issue.
 
 ## How to use
 
 ### When to use Form Field
 
-- Use Form Field when you need to display editable components in a form layout—such as a simple form, filter panel or cash ticket.
 - We highly recommend using the Form Field Label and Form Field Helper Text components within Form Field to provide your form elements with the descriptive label and validation feedback required to ensure ADA compliance.
+- Align the Form Field to the correct Salt layout grid for your density and viewport size. Set the width of the form control to the number of columns that best reflects the length of the control’s expected value. The form control width can be set independently of the Label and Helper Text if required.
+- Follow the UITK Form’s pattern, for guidance using Form Fields in forms.
 
 # API
 
@@ -112,5 +151,10 @@ import { FormFieldNext } from "@salt-ds/lab";
 ## Accessibility
 
 All keyboard interactions are supplied by the underlying wrapped components, rather than the Form Field component.
+
+FormField itself exposes two props which are important for accessibility: labelId and helperTextId
+
+- `aria-describedby` uses `helperTextId` to be prepended to the form control
+- `aria-labelledby` uses `labelId` to be prepended to the form control
 
 <HelpAndSupport />
