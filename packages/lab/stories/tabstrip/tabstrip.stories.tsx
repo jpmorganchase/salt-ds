@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Link, SaltProvider, Text } from "@salt-ds/core";
+import { Button, FlexLayout, Link, SaltProvider, Text } from "@salt-ds/core";
 import {
   EditableLabel,
   Tab,
@@ -1037,5 +1037,30 @@ export const DraggableTabsWithOverflow = () => {
         activeTabIndex={activeTabIndex}
       />
     </div>
+  );
+};
+
+export const NullTabIndex = () => {
+  const [activeTabIndex, setActiveTabIndex] = useState<null | number>(1);
+  return (
+    <SaltProvider>
+      <FlexLayout align="center">
+        <Text>Set active index to</Text>
+        <Button onClick={() => setActiveTabIndex(null)}>Null</Button>
+        <Button onClick={() => setActiveTabIndex(0)}>0</Button>
+        <Button onClick={() => setActiveTabIndex(1)}>1</Button>
+      </FlexLayout>
+      <Tabstrip
+        // @ts-expect-error We don't officially support `null` for activeTabIndex, but we want to test `null` won't crash the app
+        activeTabIndex={activeTabIndex}
+        style={{ width: 600 }}
+        id="ts"
+        onActiveChange={setActiveTabIndex}
+      >
+        {_colours.map((label) => (
+          <Tab key={`tab-${label}`} label={label} />
+        ))}
+      </Tabstrip>
+    </SaltProvider>
   );
 };

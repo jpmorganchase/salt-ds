@@ -463,7 +463,9 @@ export const Tabstrip = forwardRef(function Tabstrip(
     }
   );
 
-  const { id: selectedTabId } = collectionHook.data[activeTabIndex];
+  // We don't want the component to crash when `activeTabIndex` is set up null
+  const selectedTabId =
+    activeTabIndex !== null ? collectionHook.data[activeTabIndex].id : null;
 
   return (
     <div
@@ -479,9 +481,13 @@ export const Tabstrip = forwardRef(function Tabstrip(
       </div>
       {showActivationIndicator ? (
         <TabActivationIndicator
-          hideThumb={selectedTabOverflowed || tabstripHook.isDragging}
+          hideThumb={
+            selectedTabOverflowed ||
+            tabstripHook.isDragging ||
+            selectedTabId === null
+          }
           orientation={orientation}
-          tabId={selectedTabId}
+          tabId={selectedTabId || collectionHook.data[0].id}
         />
       ) : null}
       {tabstripHook.draggable}
