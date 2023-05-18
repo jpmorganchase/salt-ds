@@ -71,17 +71,15 @@ export const TabstripNext = ({
 
   useEffect(() => {
     if (!outerRef.current || !innerRef.current) return;
-    const resize = new ResizeObserver((arg) => {
-      if (arg.length < 2) return;
-      const [{ contentRect: outerRect }, { contentRect: innerRect }] = arg;
+    const resize = new ResizeObserver(() => {
+      // we don't use resize observer results because they come in random order and we have refs anyways
       if (!outerRef.current || !innerRef.current) return;
-      const hasOverflowingContent = innerRect.height - outerRect.height > 0;
+      const hasOverflowingContent =
+        innerRef.current.clientHeight - outerRef.current.clientHeight > 0;
       setHasOverflow(hasOverflowingContent);
       const tabsTopOffset = innerRef.current.getBoundingClientRect().top;
       const overflowLength = [
-        ...outerRef.current.querySelectorAll(
-          `.${withBaseName("inner")} > *:not(:first-child):not(:last-child)`
-        ),
+        ...outerRef.current.querySelectorAll(`.${withBaseName("inner")} > *`),
       ].filter((el) => {
         return el.getBoundingClientRect().top - tabsTopOffset > 0;
       }).length;
