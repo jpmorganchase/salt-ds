@@ -1,6 +1,4 @@
-import {
-  Meta
-} from "@storybook/addon-docs";
+import { Meta } from "@storybook/addon-docs";
 
 <Meta title="Theme/About the Salt Theme" />
 
@@ -247,9 +245,9 @@ Note the naming convention for the first variable `--saltButton-fontSize`. The p
 
 ## Component style injection
 
-In order to support uses of Salt that utilize external windows. We have created a custom hook that injects component CSS into a given window
+In order to support uses of Salt that utilize external windows. We have created a custom hook that injects component CSS into a provided window.
 
-Below is an example component  illustrating some important concepts:
+Below is an example component illustrating some important concepts:
 
 ```tsx
 import { useWindow } from "@salt-ds/window";
@@ -264,18 +262,13 @@ const Example = (props) => {
     window: targetWindow,
   });
 
-  return (
-    <svg
-      className="saltExample-svg"
-    >
-      {props.children}
-    </svg>
-  );
+  return <svg className="saltExample-svg">{props.children}</svg>;
 };
 ```
 
-- All Salt component CSS must be imported using the default export, the imported CSS should be injected by calling `useComponentCssInjection`
+- All Salt component CSS must be imported using the default export, the imported CSS should be injected by calling the `useComponentCssInjection` hook.
+- The current window the component is being rendered into is retrieved using the `useWindow` hook.
 - Only one component should be stored per typescript jsx file, however a component may import and inject multiple css files.
 
-In the above example, the call to `useComponentCssInjection` passing in an ID which is used to keep track of if component CSS has already been injected before,
+In the above example, `useComponentCssInjection` is called with an ID which is used to keep track of if component CSS has already been injected before,
 the CSS string itself and the window to inject the css into. Internally, the hook uses a Map of Map objects to store if a CSS string has been injected into a given window.
