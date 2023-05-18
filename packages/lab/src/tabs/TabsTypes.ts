@@ -75,9 +75,9 @@ export interface TabstripProps extends HTMLAttributes<HTMLDivElement> {
   showActivationIndicator?: boolean;
   source?: TabsSource;
   /**
-   *  index value of Active Tab, used in controlled mode
+   *  index value of Active Tab, used in controlled mode. Set to `null` for no active tab.
    */
-  activeTabIndex?: number;
+  activeTabIndex?: number | null;
   /**
    * Set variant - defaults 'primary'
    */

@@ -85,7 +85,7 @@ interface TabstripNavigationHookProps {
   indexPositions: OverflowItem[];
   keyBoardActivation?: "manual" | "automatic";
   orientation: orientationType;
-  selectedIndex: number;
+  selectedIndex: number | null;
 }
 
 interface TabstripNavigationHookResult {
@@ -179,7 +179,7 @@ export const useKeyboardNavigation = ({
       } else {
         setTimeout(() => {
           // The selected tab will have tabIndex 0 make sure our internal state is aligned.
-          if (focusedRef.current === -1) {
+          if (focusedRef.current === -1 && selectedTabIndex !== null) {
             setHighlightedIdx(selectedTabIndex);
           }
         }, 200);
@@ -307,7 +307,11 @@ export const useKeyboardNavigation = ({
   };
 
   useIsomorphicLayoutEffect(() => {
-    if (hasFocus && selectedTabIndex !== undefined) {
+    if (
+      hasFocus &&
+      selectedTabIndex !== undefined &&
+      selectedTabIndex !== null
+    ) {
       focusTab(selectedTabIndex);
     }
   }, [focusTab, hasFocus, selectedTabIndex]);
