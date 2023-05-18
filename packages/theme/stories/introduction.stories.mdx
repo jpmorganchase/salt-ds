@@ -245,7 +245,8 @@ Note the naming convention for the first variable `--saltButton-fontSize`. The p
 
 ## Component style injection
 
-In order to support uses of Salt that utilize external windows. We have created a custom hook that injects component CSS into a provided window.
+In order to support uses of Salt that utilize external windows. We offer two packages that contain hooks to facilitate this: `@salt-ds/window` and `@salt-ds/styles`.
+`@salt-ds/styles` contains the `useComponentCssInjection` hook while `@salt-ds/window` contains the `useWindow` hook.
 
 Below is an example component illustrating some important concepts:
 
