@@ -56,7 +56,7 @@ Display the label via the `FormFieldLabel` component.
 
 ## Left Form Field Label Placement
 
-The Form Field Label can be positioned to the left of the form control via the prop ‘labelPlacement’.
+The Form Field Label can be positioned to the left of the form control via the prop `labelPlacement`.
 
 <Canvas>
   <Story id="lab-form-field-next--label-left" />
@@ -71,7 +71,7 @@ Place your label to the left of the control if your application is limited in ve
 Form Field can display Helper Text using the `FormFieldHelperText` component.
 
 <Canvas>
-  <Story id="lab-form-field-next--label-left" />
+  <Story id="lab-form-field-next--helper-text" />
 </Canvas>
 
 ### Guidance
@@ -81,7 +81,7 @@ Form Field can display Helper Text using the `FormFieldHelperText` component.
 
 ## Disabled
 
-Form Field can be disabled via the prop ‘disabled’.
+Form Field can be disabled via the prop `disabled`.
 
 <Canvas>
   <Story id="lab-form-field-next--disabled" />
@@ -95,7 +95,7 @@ Form Field can be disabled via the prop ‘disabled’.
 
 ## Readonly
 
-Form Field can be set as read-only via the prop ‘readOnly’.
+Form Field can be set as read-only via the prop `readOnly`.
 
 <Canvas>
   <Story id="lab-form-field-next--readonly" />
@@ -109,7 +109,7 @@ Form Field can be set as read-only via the prop ‘readOnly’.
 
 ## Field Validation
 
-Form Fields can show validation states (warning, success, error) with the prop `validationStatus`. When the field displays a validation state, the Helper Text is replaced by Validation Text.
+Form Fields can show validation states (warning, success, error) with the prop `validationStatus`. When the field displays a validation state, the helper text is replaced by validation text.
 
 <Canvas>
   <Story id="lab-form-field-next--with-validation" />
@@ -151,10 +151,5 @@ import { FormFieldNext } from "@salt-ds/lab";
 ## Accessibility
 
 All keyboard interactions are supplied by the underlying wrapped components, rather than the Form Field component.
-
-FormField exposes two props which are important for accessibility: labelId and helperTextId
-
-- `helperTextId` used by `aria-describedby` for the form control
-- `labelId` used by `aria-labelledby` for the form control
 
 <HelpAndSupport />

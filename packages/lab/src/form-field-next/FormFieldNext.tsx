@@ -47,7 +47,6 @@ export const FormField = forwardRef(
       onBlur,
       onFocus,
       readOnly = false,
-      id: idProp,
       validationStatus,
       ...restProps
     }: FormFieldProps,
