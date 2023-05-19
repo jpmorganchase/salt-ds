@@ -10,7 +10,8 @@ import {
   useMemo,
 } from "react";
 
-import { ToggleButton, ToggleButtonGroup } from "../../toggle-button";
+import { ToggleButton } from "../../toggle-button";
+import { ToggleButtonGroup } from "../../toggle-button-group";
 import {
   ChangeHandler,
   StringToItem,

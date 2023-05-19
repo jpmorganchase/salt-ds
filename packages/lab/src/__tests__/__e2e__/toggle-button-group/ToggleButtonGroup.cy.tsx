@@ -79,10 +79,19 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
 
   it("THEN should fire onSelectionChange on toggle button click", () => {
     const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+
+    const handleSelectionChange = (
+      event: SyntheticEvent<HTMLButtonElement>
+    ) => {
+      // React 16 backwards compatibility
+      event.persist();
+      selectionChangeSpy(event);
+    };
+
     cy.mount(
       <ToggleButtonGroup
         defaultSelected="alert"
-        onSelectionChange={selectionChangeSpy}
+        onSelectionChange={handleSelectionChange}
       >
         <ToggleButton value="alert">
           <NotificationIcon aria-hidden />
@@ -166,7 +175,7 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
   it("THEN should respect `selected` prop", () => {
     const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     const ControlledToggleGroupExample = () => {
-      const [selected, setSelected] = useState<string>("home");
+      const [selected, setSelected] = useState<string>("print");
 
       const handleChange = (event: SyntheticEvent<HTMLButtonElement>) => {
         setSelected(event.currentTarget.value);
@@ -207,7 +216,7 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
 
     cy.findAllByRole("radio").eq(1).should("have.text", "Home");
     cy.findAllByRole("radio").eq(1).should("have.attr", "aria-checked", "true");
-    cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "0");
+    cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "-1");
 
     cy.findAllByRole("radio").eq(2).should("have.text", "Search");
     cy.findAllByRole("radio")
@@ -219,7 +228,7 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
     cy.findAllByRole("radio")
       .eq(3)
       .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(3).should("have.attr", "tabindex", "-1");
+    cy.findAllByRole("radio").eq(3).should("have.attr", "tabindex", "0");
 
     cy.findAllByRole("radio").eq(0).realClick();
     cy.get("@changeSpy").should("have.been.calledOnce");
@@ -230,7 +239,7 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
     });
     cy.findAllByRole("radio").eq(0).should("have.attr", "aria-checked", "true");
     cy.findAllByRole("radio").eq(0).should("have.attr", "tabindex", "0");
-    cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "-1");
+    cy.findAllByRole("radio").eq(3).should("have.attr", "tabindex", "-1");
   });
 
   it("THEN should NOT deselect a toggled button", () => {
@@ -277,12 +286,14 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
 });
 
 describe("GIVEN a disabled ToggleButtonGroup ", () => {
-  it("THEN should respect `selectedIndex` prop", () => {
+  it("THEN should respect `selected` prop", () => {
     const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     const ControlledToggleGroupExample = () => {
       const [selected, setSelected] = useState<string>("search");
 
       const handleChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+        // React 16 backwards compatibility
+        event.persist();
         setSelected(event.currentTarget.value);
         selectionChangeSpy(event);
       };
@@ -325,14 +336,14 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     cy.findAllByRole("radio").eq(0).should("be.disabled");
 
     cy.findAllByRole("radio").eq(1).should("have.text", "Home");
-    cy.findAllByRole("radio").eq(1).should("have.attr", "aria-checked", "true");
+    cy.findAllByRole("radio")
+      .eq(1)
+      .should("have.attr", "aria-checked", "false");
     cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "-1");
     cy.findAllByRole("radio").eq(1).should("be.disabled");
 
     cy.findAllByRole("radio").eq(2).should("have.text", "Search");
-    cy.findAllByRole("radio")
-      .eq(2)
-      .should("have.attr", "aria-checked", "false");
+    cy.findAllByRole("radio").eq(2).should("have.attr", "aria-checked", "true");
     cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "-1");
     cy.findAllByRole("radio").eq(2).should("be.disabled");
 

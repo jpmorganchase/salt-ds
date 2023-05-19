@@ -8,7 +8,6 @@
   border-radius: 0;
   white-space: pre;
   height: calc(var(--salt-size-base) - var(--salt-spacing-75));
-  width: 100%;
   color: var(--salt-text-primary-foreground);
   text-transform: var(--salt-actionable-textTransform);
   font-weight: var(--salt-actionable-primary-fontWeight);
