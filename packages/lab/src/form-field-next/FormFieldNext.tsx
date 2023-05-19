@@ -27,6 +27,9 @@ export interface FormFieldProps
   readOnly?: boolean;
   /**
    * Optional id prop
+   * 
+   * Used as suffix of FormFieldLabel id: `label-{id}`
+   * Used as suffix of FormFieldHelperText id: `helperText-{id}`
    */
   id?: string;
   /**
