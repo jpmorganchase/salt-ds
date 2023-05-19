@@ -75,10 +75,7 @@ function mergeA11yProps(
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {
-  const ariaLabelledBy = clsx(
-    a11yProps["aria-labelledby"],
-    inputProps["aria-labelledby"]
-  );
+  const ariaLabelledBy = clsx(a11yProps.labelId, inputProps["aria-labelledby"]);
 
   return {
     ...misplacedAriaProps,

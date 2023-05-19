@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { ForwardedRef, forwardRef, HTMLAttributes, useMemo } from "react";
+import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { makePrefixer, useId, capitalize } from "@salt-ds/core";
 import {
   A11yValueProps,
@@ -27,6 +27,9 @@ export interface FormFieldProps
   readOnly?: boolean;
   /**
    * Optional id prop
+   *
+   * Used as suffix of FormFieldLabel id: `label-{id}`
+   * Used as suffix of FormFieldHelperText id: `helperText-{id}`
    */
   id?: string;
   /**
@@ -43,26 +46,20 @@ export const FormField = forwardRef(
       children,
       className,
       disabled = false,
+      id: idProp,
       labelPlacement = "top",
       onBlur,
       onFocus,
       readOnly = false,
-      id: idProp,
       validationStatus,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const labelId = useId();
-    const helperTextId = useId();
+    const formId = useId(idProp);
 
-    const a11yProps = useMemo(
-      () => ({
-        "aria-labelledby": labelId,
-        "aria-describedby": helperTextId,
-      }),
-      [labelId, helperTextId]
-    );
+    const labelId = formId ? `label-${formId}` : undefined;
+    const helperTextId = formId ? `helperText-${formId}` : undefined;
 
     return (
       <div
@@ -80,7 +77,12 @@ export const FormField = forwardRef(
         {...restProps}
       >
         <FormFieldContextNext.Provider
-          value={{ a11yProps, disabled, readOnly, validationStatus }}
+          value={{
+            a11yProps: { labelId, helperTextId },
+            disabled,
+            readOnly,
+            validationStatus,
+          }}
         >
           {children}
         </FormFieldContextNext.Provider>
