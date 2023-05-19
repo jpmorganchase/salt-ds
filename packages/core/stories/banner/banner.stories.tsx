@@ -55,8 +55,8 @@ export const Controlled = () => {
   };
 
   const toggleButton = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
   return (
     <div style={{ width: "50vw" }}>
       {open && (
