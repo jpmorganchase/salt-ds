@@ -61,8 +61,8 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
         [withBaseName("emphasize")]: emphasize,
       })}
       ref={handleRef}
+      role="banner"
       {...rest}
-      role="alert"
     >
       <StatusIndicator status={status} className={withBaseName("icon")} />
       {children}
