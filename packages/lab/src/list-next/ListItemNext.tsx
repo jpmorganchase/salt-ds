@@ -1,9 +1,9 @@
-import React, {forwardRef, HTMLAttributes} from "react";
-import {clsx} from "clsx";
-import {Checkbox, makePrefixer, Text, Tooltip} from "@salt-ds/core";
-import {Highlighter} from "./Highlighter";
+import React, { forwardRef, HTMLAttributes } from "react";
+import { clsx } from "clsx";
+import { Checkbox, makePrefixer, Text, Tooltip } from "@salt-ds/core";
+import { Highlighter } from "./Highlighter";
 import "./ListItemNext.css";
-import {useOverflowDetection} from "../utils";
+import { useOverflowDetection } from "../utils";
 
 const withBaseName = makePrefixer("saltListItemNext");
 
@@ -74,7 +74,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         {...listItemControlProps}
       >
         {showCheckbox && (
-          <Checkbox aria-hidden checked={selected} disabled={disabled}/>
+          <Checkbox aria-hidden checked={selected} disabled={disabled} />
         )}
         {children && typeof children !== "string" ? (
           children
@@ -98,12 +98,17 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       </li>
     );
 
-    return isOverflowed
-      ? <Tooltip disabled={!isOverflowed}
-                 content={content}
-                 hideIcon>
+    return isOverflowed ? (
+      <Tooltip
+        disabled={!isOverflowed}
+        open={focused}
+        content={content}
+        hideIcon
+      >
         {renderListItem()}
       </Tooltip>
-      : renderListItem();
+    ) : (
+      renderListItem()
+    );
   }
 );

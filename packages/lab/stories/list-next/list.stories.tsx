@@ -38,19 +38,23 @@ const listItems = SimpleListExample.map((item, index) => (
 
 export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
   return (
-    <ListNext
-      {...rest}
-      aria-label="Declarative List example"
-      style={{ width: "200px" }}
-    >
+    <ListNext {...rest} aria-label="Declarative List example">
       {children || listItems}
     </ListNext>
   );
 };
-
+Default.args = {
+  style: { width: "200px" },
+  displayedItemCount: 15,
+};
 export const Borderless = Default.bind({});
 Borderless.args = {
   borderless: true,
+};
+
+export const Truncation = Default.bind({});
+Truncation.args = {
+  style: { width: "80px" },
 };
 
 export const MultiSelect = Default.bind({});
@@ -82,7 +86,9 @@ export const ListItemNextExample: Story<ListNextProps> = (props) => {
       aria-label="Basic list items example"
       displayedItemCount={6}
     >
-      <ListItemNext selected role={'presentation'}>Selected Item</ListItemNext>
+      <ListItemNext selected role={"presentation"}>
+        Selected Item
+      </ListItemNext>
       <ListItemNext>Basic list item</ListItemNext>
       <ListItemNext showCheckbox selected>
         with checkbox selected

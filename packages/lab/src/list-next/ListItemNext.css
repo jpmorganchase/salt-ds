@@ -1,3 +1,4 @@
+/* Default variables applied to the root element */
 .saltListItemNext {
   /* Color */
   --list-item-text-color: var(--salt-text-primary-foreground);
@@ -5,6 +6,7 @@
   --list-item-background: none;
 }
 
+/* Style applied to the root element */
 .saltListItemNext {
   color: var(--list-item-text-color);
   background: var(--list-item-background);
@@ -15,16 +17,17 @@
   position: relative;
   align-items: center;
   white-space: nowrap;
-  --saltCheckbox-icon-stroke: var(--salt-selectable-foreground);
   transition: background var(--salt-duration-perceptible) ease-in-out;
 }
 
-.saltListItemNext > * {
+.saltListItemNext > *:not(:has(input[type="checkbox"])) {
   pointer-events: none;
 }
 
-.saltCheckbox-input {
-  pointer-events: auto;
+@supports not selector(:has(*)) {
+  .saltListItemNext > *:not(.saltListItemNext-checkbox) {
+    pointer-events: none;
+  }
 }
 
 .saltListItemNext[role="presentation"] {
@@ -45,8 +48,7 @@
 }
 
 .saltListItemNext[aria-selected="true"]:not(.saltListItemNext-focused) {
-  outline: var(--salt-size-border) var(--salt-container-borderStyle)
-  var(--salt-selectable-borderColor-selected);
+  outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
 }
 
 .saltListItemNext[aria-selected="true"] {
@@ -54,13 +56,11 @@
 }
 
 .saltListItemNext[aria-selected="true"]:first-child {
-  border-top: var(--salt-size-border) var(--salt-container-borderStyle)
-    var(--salt-selectable-borderColor-selected);
+  border-top: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
 }
 
 .saltListItemNext[aria-selected="true"]:last-child {
-  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle)
-    var(--salt-selectable-borderColor-selected);
+  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
 }
 
 .saltListItemNext[aria-selected="true"]:not(.saltListItemNext-disabled) {

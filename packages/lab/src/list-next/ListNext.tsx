@@ -58,7 +58,13 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
   ) {
     const emptyList = Children.count(children) === 0;
 
-    const { listRef, focusedIndex, selectedIndexes, activeDescendant, handleClick } = useList({
+    const {
+      listRef,
+      focusedIndex,
+      selectedIndexes,
+      activeDescendant,
+      handleClick,
+    } = useList({
       children,
       deselectable,
       multiselect,
@@ -102,7 +108,10 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       if (emptyList) return 1;
 
       // displayedItemCount takes precedence over childrenCount
-      if (displayedItemCount) return displayedItemCount;
+      if (displayedItemCount)
+        return displayedItemCount <= childrenCount
+          ? displayedItemCount
+          : childrenCount;
 
       // if more than 4 children, display 4 tops
       return childrenCount > 4 ? 4 : childrenCount;
