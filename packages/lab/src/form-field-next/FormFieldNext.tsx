@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { ForwardedRef, forwardRef, HTMLAttributes, useMemo } from "react";
+import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { makePrefixer, useId, capitalize } from "@salt-ds/core";
 import {
   A11yValueProps,
