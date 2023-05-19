@@ -28,7 +28,7 @@ export const Form = () => {
   return (
     <div style={{ width: "60vw" }}>
       {!isValid && (
-        <Banner status="error">
+        <Banner status="error" role="alert">
           <BannerContent>The form is not valid</BannerContent>
           <BannerCloseButton onClick={handleClick} />
         </Banner>
