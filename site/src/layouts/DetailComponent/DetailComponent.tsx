@@ -1,13 +1,11 @@
 import React, { FC, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import {
-  TableOfContents,
-  Sidebar,
-} from "@jpmorganchase/mosaic-site-components";
+import { Sidebar } from "@jpmorganchase/mosaic-site-components";
 import { useRoute, useStore, SiteState } from "@jpmorganchase/mosaic-store";
 import { TabPanel, Tabs } from "@salt-ds/lab";
 import { LayoutProps } from "../types/index";
 import { DetailBase } from "../DetailBase";
+import SecondarySidebar from "./SecondarySidebar";
 
 const tabs = [
   { id: 0, name: "examples", label: "Examples" },
@@ -15,7 +13,25 @@ const tabs = [
   { id: 2, name: "accessibility", label: "Accessibility" },
 ];
 
-type CustomSiteState = SiteState & { data?: Record<string, any> };
+export type Relationship = "similarTo" | "contains";
+
+type RelatedComponent = {
+  name: string;
+  relationship: Relationship;
+};
+
+export type Data = {
+  description: string;
+  alsoKnownAs: string[];
+  relatedComponents: RelatedComponent[];
+  sourceCodeUrl: string;
+  componentGuide: string;
+  bugReport: string;
+  featureRequest: string;
+  askQuestion: string;
+};
+
+type CustomSiteState = SiteState & { data?: Data };
 
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const { push } = useRouter();
@@ -45,10 +61,14 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const currentTabIndex = currentTab?.id ?? 0;
 
-  const SecondarySidebar = <TableOfContents />; // TODO: replace with custom component pages sidebar
-
   return (
-    <DetailBase sidebar={<Sidebar sticky>{SecondarySidebar}</Sidebar>}>
+    <DetailBase
+      sidebar={
+        <Sidebar sticky>
+          {<SecondarySidebar additionalData={useData} />}
+        </Sidebar>
+      }
+    >
       <p>{description}</p>
       <Tabs
         activeTabIndex={currentTabIndex}
