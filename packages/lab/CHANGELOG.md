@@ -1,5 +1,36 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.9
+
+### Minor Changes
+
+- 4bd407b6: Fix Tabstrip crashing when `activeTabIndex` is set to null
+- 3aba7cc0: Fixed id in `FormFieldNext`, and ids in `FormFieldLabel` and `FormFieldHelperText` from useFormFieldPropsNext
+  Deleted `a11yValueAriaProps`, replaced `a11yProps` type with `A11yValueProps` in `FormFieldContextNext`
+- e7230ade: Added `textAlign` prop to `InputNext` with possible configurations: "left" (default), "right", "center"
+- 2d63d305: Changes to Form Field and Input CSS:
+
+  - fixes background color when disabled
+  - fixes cursor on helper text
+  - fixes activation indicator width on active state
+  - usage of `grid-template-areas`
+
+  Removes CSS API variables:
+
+  ```diff
+  - --saltInputNext-borderColor-active
+  - --saltInputNext-borderColor-hover
+  - --saltInputNext-borderColor-focused
+  - --saltInputNext-borderWidth
+  - --saltInputNext-borderStyle
+  - --saltInputNext-borderRadius
+  - --saltInputNext-cursor
+  ```
+
+### Patch Changes
+
+- 922b1fb8: Updated Banner to use the new spacing foundation
+
 ## 1.0.0-alpha.8
 
 ### Minor Changes
