@@ -54,16 +54,18 @@ export const Controlled = () => {
     setOpen(false);
   };
 
+  const toggleButton = () => {
+    setOpen(!open)
+  }
   return (
     <div style={{ width: "50vw" }}>
-      {open ? (
+      {open && (
         <Banner>
           <BannerContent>Controlled banner</BannerContent>
           <BannerCloseButton onClick={onClose} />
         </Banner>
-      ) : (
-        <Button onClick={handleClick}>Show banner</Button>
       )}
+      <Button onClick={toggleButton}>toggle banner</Button>
     </div>
   );
 };
