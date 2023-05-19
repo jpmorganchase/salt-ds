@@ -76,7 +76,7 @@ function mergeA11yProps(
   misplacedAriaProps: AriaAttributes
 ) {
   const ariaLabelledBy = clsx(
-    a11yProps["aria-labelledby"],
+    a11yProps.labelId,
     inputProps["aria-labelledby"]
   );
 
