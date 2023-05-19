@@ -7,7 +7,7 @@ import {
 } from "react";
 import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { useToggleButtonGroup } from "./ToggleButtonGroupContext";
+import { useToggleButtonGroup } from "../toggle-button-group";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
