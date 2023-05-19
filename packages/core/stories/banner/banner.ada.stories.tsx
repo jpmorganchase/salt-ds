@@ -1,5 +1,10 @@
 import { ComponentMeta } from "@storybook/react";
-import { Banner, BannerCloseButton, BannerContent, Button } from "@salt-ds/core";
+import {
+  Banner,
+  BannerCloseButton,
+  BannerContent,
+  Button,
+} from "@salt-ds/core";
 
 import "./banner.ada.css";
 import { useState } from "@storybook/addons";
