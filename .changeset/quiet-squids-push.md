@@ -3,5 +3,5 @@
 "@salt-ds/lab": patch
 ---
 
-Remove `announcement` and `disableAnnouncer` props
+Remove `announcement` and `disableAnnouncer` props from Banner
 Move Banner to core
