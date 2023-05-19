@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Banner, Link } from "@salt-ds/core";
+import { Banner, BannerContent, Link } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -152,6 +152,6 @@ task has been successfully completed.
 
 ## Accessibility
 
-Banner is accessible by assistive technologies like screen readers, and provides full WAI-ARIA support.
+To make sure the dynamic/conditional Banner is accessible you have to add `role="alert"`, so the announcement will happen instaltly when Banner gets mounted. By default the Banner has a role `banner`.
 
 <HelpAndSupport />
