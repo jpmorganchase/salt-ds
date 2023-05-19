@@ -1,17 +1,11 @@
 import {
   Grid,
   GridColumn,
-  GridProps,
   NumericColumn,
-  RowKeyGetter,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { ChangeEvent, useState } from "react";
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
 import { Checkbox, FlexItem, FlexLayout, useDensity } from "@salt-ds/core";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
@@ -24,19 +18,17 @@ export default {
   argTypes: {},
 };
 
+type Variant = "primary" | "secondary" | "zebra";
+
 const GridVariantsTemplate: Story<{}> = () => {
   const [separators, setSeparators] = useState(false);
   const [uhd, setUhd] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [variant, setVariant] = useState<Variant>("primary");
 
   const density = useDensity();
 
-  const onChange: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index,
-    toggled
-  ) => {
-    setIndex(index);
+  const onVariantChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setVariant(event.currentTarget.value as Variant);
   };
 
   const onUhdChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -52,16 +44,13 @@ const GridVariantsTemplate: Story<{}> = () => {
       <FlexItem>
         <FlexLayout direction="row">
           <FlexItem>
-            <ToggleButtonGroup onChange={onChange} selectedIndex={index}>
-              <ToggleButton aria-label="primary" tooltipText="Primary">
-                Primary
-              </ToggleButton>
-              <ToggleButton aria-label="secondary" tooltipText="Secondary">
-                Secondary
-              </ToggleButton>
-              <ToggleButton aria-label="zebra" tooltipText="Zebra">
-                Zebra
-              </ToggleButton>
+            <ToggleButtonGroup
+              onSelectionChange={onVariantChange}
+              selected={variant}
+            >
+              <ToggleButton value="primary">Primary</ToggleButton>
+              <ToggleButton value="secondary">Secondary</ToggleButton>
+              <ToggleButton value="zebra">Zebra</ToggleButton>
             </ToggleButtonGroup>
           </FlexItem>
           <FlexItem>
@@ -85,8 +74,8 @@ const GridVariantsTemplate: Story<{}> = () => {
         rowData={rowData}
         rowKeyGetter={dummyRowKeyGetter}
         className={clsx("grid", { ["grid-uhd"]: uhd })}
-        variant={index === 1 ? "secondary" : "primary"}
-        zebra={index === 2 ? true : false}
+        variant={variant !== "zebra" ? variant : "primary"}
+        zebra={variant === "zebra"}
         columnSeparators={separators}
         headerIsFocusable={true}
       >

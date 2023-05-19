@@ -1,225 +1,158 @@
-import { ButtonVariant, makePrefixer, useControlled } from "@salt-ds/core";
-import { clsx } from "clsx";
 import {
-  Children,
-  cloneElement,
-  FocusEventHandler,
+  ComponentPropsWithoutRef,
   forwardRef,
-  HTMLAttributes,
   KeyboardEvent,
-  ReactElement,
   SyntheticEvent,
-  useCallback,
   useMemo,
   useRef,
   useState,
 } from "react";
-import {
-  Orientation,
-  ToggleButtonGroupContext,
-} from "./internal/ToggleButtonGroupContext";
-
+import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
+import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
+import { ToggleButtonGroupContext } from "./ToggleButtonGroupContext";
 import toggleButtonGroupCss from "./ToggleButtonGroup.css";
 
-const withBaseName = makePrefixer("saltToggleButtonGroup");
-
-export type ToggleButtonGroupChangeEventHandler = (
-  event: SyntheticEvent<HTMLButtonElement>,
-  index: number,
-  toggled: boolean
-) => void;
 
 export interface ToggleButtonGroupProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
-  "aria-label"?: string;
+  extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The default selected value. Use when the component is not controlled.
+   */
+  defaultSelected?: string | ReadonlyArray<string> | number | undefined;
+  /**
+   * If `true`, the Toggle Button Group will be disabled.
+   */
   disabled?: boolean;
-  disableTooltip?: boolean;
-  defaultSelectedIndex?: number;
-  focusableWhenDisabled?: boolean;
-  selectedIndex?: number;
-  orientation?: Orientation;
-  variant?: ButtonVariant;
-  width?: number;
-  children: Array<ReactElement>;
-  onChange?: ToggleButtonGroupChangeEventHandler;
+  /**
+   * The selected value. Use when the component is controlled.
+   */
+  selected?: string | ReadonlyArray<string> | number | undefined;
+  /**
+   * Callback fired when the selection changes.
+   * @param event
+   */
+  onSelectionChange?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  /**
+   * The orientation of the toggle buttons.
+   */
+  orientation?: "horizontal" | "vertical";
 }
 
-const getNextIndex = (
-  nodes: Array<HTMLButtonElement | undefined>,
-  index: number,
-  increment: number
-) => (index + nodes.length + increment) % nodes.length;
-
-const getNextActive = (
-  nodes: Array<HTMLButtonElement | undefined>,
-  index: number,
-  increment: number
-) => {
-  let nextIndex = getNextIndex(nodes, index, increment);
-
-  while (nextIndex !== index && !nodes[nextIndex]) {
-    nextIndex = getNextIndex(nodes, nextIndex, increment);
-  }
-
-  return nodes[nextIndex];
-};
+const withBaseName = makePrefixer("saltToggleButtonGroup");
 
 export const ToggleButtonGroup = forwardRef<
   HTMLDivElement,
   ToggleButtonGroupProps
->(function ToggleButtonGroup(
-  {
-    "aria-label": ariaLabel = "Toggle options",
+>(function ToggleButtonGroup(props, ref) {
+  const {
     children,
     className,
+    selected: selectedProp,
+    defaultSelected,
     disabled,
-    disableTooltip,
-    defaultSelectedIndex = 0,
-    focusableWhenDisabled,
-    selectedIndex: selectedIndexProp,
+    onSelectionChange,
+    onKeyDown,
     orientation = "horizontal",
-    variant = "primary",
-    width,
-    onChange,
-    onFocus,
-    onBlur,
-    ...restProps
-  },
-  ref
-) {
+    style: styleProp,
+    ...rest
+  } = props;
+
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-toggle-button-group",
     css: toggleButtonGroupCss,
     window: targetWindow,
   });
-  const buttonRefs = useRef<Array<HTMLButtonElement | undefined>>([]);
 
-  const [disableFocus, setDisableFocus] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useControlled({
-    controlled: selectedIndexProp,
-    default: defaultSelectedIndex,
+  const groupRef = useRef<HTMLDivElement>(null);
+  const handleRef = useForkRef(ref, groupRef);
+
+  const [selected, setSelected] = useControlled({
+    default: defaultSelected,
+    controlled: selectedProp,
     name: "ToggleButtonGroup",
-    state: "selectedIndex",
+    state: "selected",
   });
+  const [focused, setFocused] = useState<
+    string | ReadonlyArray<string> | number | undefined
+  >(selected);
 
-  const register = useCallback(
-    (node: HTMLButtonElement | null, index: number) => {
-      buttonRefs.current[index] = node || undefined;
-    },
-    []
-  );
-
-  const unregister = useCallback((index: number) => {
-    buttonRefs.current[index] = undefined;
-  }, []);
-
-  // When focus is not on the active button and when you tab out
-  // It should leave the toggle button group
-  // It should not go to active button
-  const handleFocus: FocusEventHandler<HTMLDivElement> = (event) => {
-    setDisableFocus(true);
-    onFocus?.(event);
+  const select = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setSelected(event.currentTarget.value);
+    onSelectionChange?.(event);
   };
 
-  // When you tab out from toggle button group, it should restore tab index of active button
-  // When you tab back in, focus should go to active button
-  const handleBlur: FocusEventHandler<HTMLDivElement> = (event) => {
-    setDisableFocus(false);
-    onBlur?.(event);
-  };
-
-  const handleToggle: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index,
-    newValue
+  const isSelected = (
+    id: string | ReadonlyArray<string> | number | undefined
   ) => {
-    if (!newValue) {
-      return;
-    }
-    setSelectedIndex(index);
-    onChange?.(event, index, newValue);
+    return selected === id;
   };
 
-  const handleKeyDown = (
-    event: KeyboardEvent<HTMLButtonElement>,
-    index: number
+  const focus = (id: string | ReadonlyArray<string> | number | undefined) => {
+    setFocused(id);
+  };
+
+  const isFocused = (
+    id: string | ReadonlyArray<string> | number | undefined
   ) => {
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      getNextActive(buttonRefs.current, index, 1)?.focus();
-    }
-
-    if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      getNextActive(buttonRefs.current, index, -1)?.focus();
-    }
+    return focused === id || !focused;
   };
 
-  const groupContext = useMemo(
+  const value = useMemo(
     () => ({
+      select,
+      isSelected,
+      focus,
+      isFocused,
       disabled,
-      disableFocus,
-      disableTooltip,
-      focusableWhenDisabled,
-      orientation,
-      register,
-      unregister,
-      variant,
     }),
-    [
-      disabled,
-      disableFocus,
-      disableTooltip,
-      focusableWhenDisabled,
-      orientation,
-      register,
-      unregister,
-      variant,
-    ]
+    [select, isSelected, focus, disabled]
   );
 
-  const childrenCount = Children.count(children);
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const elements: HTMLElement[] = Array.from(
+      groupRef.current?.querySelectorAll("button:not([disabled])") ?? []
+    );
+    const currentIndex = elements.findIndex(
+      (element) => element === document.activeElement
+    );
+    switch (event.key) {
+      case "ArrowDown":
+      case "ArrowRight":
+        elements[(currentIndex + 1) % elements.length]?.focus();
+        break;
+      case "ArrowUp":
+      case "ArrowLeft":
+        elements[
+          (currentIndex - 1 + elements.length) % elements.length
+        ]?.focus();
+        break;
+    }
 
-  const getToggleButtonItem = (child: ReactElement, index: number) => {
-    return cloneElement(child, {
-      ...child.props,
-      "data-button-index": index,
-      "aria-setsize": childrenCount + 1,
-      key: `button-${index}`,
-      toggled: selectedIndex === index,
-      onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) =>
-        handleKeyDown(event, index),
-      onToggle: (event: SyntheticEvent<HTMLButtonElement>, newValue: boolean) =>
-        handleToggle(event, index, newValue),
-    });
+    onKeyDown?.(event);
+  };
+
+  const style = {
+    "--saltToggleButtonGroup-flexDirection":
+      orientation === "vertical" ? "column" : "row",
+    ...styleProp,
   };
 
   return (
-    <div
-      {...restProps}
-      aria-label={ariaLabel}
-      className={clsx(
-        withBaseName(),
-        withBaseName(orientation),
-        {
-          [withBaseName("cta")]: variant === "cta",
-          [withBaseName("secondary")]: variant === "secondary",
-          [withBaseName("primary")]: variant === "primary",
-        },
-        className
-      )}
-      ref={ref}
-      role="radiogroup"
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      // TODO: Make this responsive?
-      style={{ width }}
-    >
-      <ToggleButtonGroupContext.Provider value={groupContext}>
-        {children && children.map(getToggleButtonItem)}
-      </ToggleButtonGroupContext.Provider>
-    </div>
+    <ToggleButtonGroupContext.Provider value={value}>
+      <div
+        className={clsx(withBaseName(), className)}
+        role="radiogroup"
+        ref={handleRef}
+        onKeyDown={handleKeyDown}
+        style={style}
+        {...rest}
+      >
+        {children}
+      </div>
+    </ToggleButtonGroupContext.Provider>
   );
 });

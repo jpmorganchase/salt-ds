@@ -6,16 +6,14 @@ import {
   RowKeyGetter,
   TextCellEditor,
 } from "../src";
-import { ChangeEvent, useMemo, useState } from "react";
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
+import { ChangeEvent, SyntheticEvent, useMemo, useState } from "react";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
 import { Button, Checkbox, FlexItem, FlexLayout } from "@salt-ds/core";
 import { DeleteIcon, UndoIcon } from "@salt-ds/icons";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
+
+type Variant = "primary" | "secondary" | "zebra";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -32,10 +30,9 @@ interface GridCssVar {
 const cssVarKeyGetter: RowKeyGetter<GridCssVar> = (row: GridCssVar) => row.name;
 
 const CssVariablesTemplate: Story<{}> = () => {
-  const variants = [`primary`, `secondary`, `zebra`];
   const [separators, setSeparators] = useState(false);
   const [pinnedSeparators, setPinnedSeparators] = useState(true);
-  const [index, setIndex] = useState(0);
+  const [variant, setVariant] = useState<Variant>("primary");
   const [changes, setChanges] = useState<Array<() => void>>([]);
 
   const [cssVars, setCssVars] = useState<GridCssVar[]>([
@@ -240,12 +237,8 @@ const CssVariablesTemplate: Story<{}> = () => {
     return Object.fromEntries(cssVars.map((v) => [v.name, v.value]));
   }, [cssVars]);
 
-  const onVariantChange: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index,
-    toggled
-  ) => {
-    setIndex(index);
+  const onVariantChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setVariant(event.currentTarget.value as Variant);
   };
 
   const onSeparatorsChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -263,16 +256,13 @@ const CssVariablesTemplate: Story<{}> = () => {
       <FlexItem>
         <FlexLayout direction="row">
           <FlexItem>
-            <ToggleButtonGroup onChange={onVariantChange} selectedIndex={index}>
-              <ToggleButton aria-label="primary" tooltipText="Primary">
-                Primary
-              </ToggleButton>
-              <ToggleButton aria-label="secondary" tooltipText="Secondary">
-                Secondary
-              </ToggleButton>
-              <ToggleButton aria-label="zebra" tooltipText="Zebra">
-                Zebra
-              </ToggleButton>
+            <ToggleButtonGroup
+              onSelectionChange={onVariantChange}
+              selected={variant}
+            >
+              <ToggleButton value="primary">Primary</ToggleButton>
+              <ToggleButton value="secondary">Secondary</ToggleButton>
+              <ToggleButton value="zebra">Zebra</ToggleButton>
             </ToggleButtonGroup>
           </FlexItem>
           <FlexItem>
@@ -311,8 +301,8 @@ const CssVariablesTemplate: Story<{}> = () => {
         rowData={cssVars}
         rowKeyGetter={cssVarKeyGetter}
         className="grid-css-customization"
-        variant={index === 1 ? "secondary" : "primary"}
-        zebra={index === 2 ? true : false}
+        variant={variant !== "zebra" ? variant : "primary"}
+        zebra={variant === "zebra"}
         columnSeparators={separators}
         pinnedSeparators={pinnedSeparators}
         style={style}

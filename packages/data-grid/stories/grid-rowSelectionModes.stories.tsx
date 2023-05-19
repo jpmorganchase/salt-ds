@@ -8,12 +8,8 @@ import {
   RowSelectionRadioColumn,
 } from "../src";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
-import { useState } from "react";
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
+import { SyntheticEvent, useState } from "react";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
 import { FlexItem, FlexLayout } from "@salt-ds/core";
 import "./grid.stories.css";
 
@@ -24,32 +20,23 @@ export default {
 };
 
 const RowSelectionModesTemplate: Story<{}> = () => {
-  const rowSelectionModes: GridRowSelectionMode[] = ["multi", "single", "none"];
-  const [index, setIndex] = useState<number>(0);
+  const [rowSelectionMode, setRowSelectionMode] =
+    useState<GridRowSelectionMode>("multi");
 
-  const onChange: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index,
-    toggled
-  ) => {
-    setIndex(index);
+  const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setRowSelectionMode(event.currentTarget.value as GridRowSelectionMode);
   };
-
-  const rowSelectionMode = rowSelectionModes[index];
 
   return (
     <FlexLayout direction="column">
       <FlexItem>
-        <ToggleButtonGroup onChange={onChange} selectedIndex={index}>
-          <ToggleButton aria-label="multi" tooltipText="Multi">
-            Multi
-          </ToggleButton>
-          <ToggleButton aria-label="single" tooltipText="Single">
-            Single
-          </ToggleButton>
-          <ToggleButton aria-label="none" tooltipText="None">
-            None
-          </ToggleButton>
+        <ToggleButtonGroup
+          onSelectionChange={onChange}
+          selected={rowSelectionMode}
+        >
+          <ToggleButton value="multi">Multi</ToggleButton>
+          <ToggleButton value="single">Single</ToggleButton>
+          <ToggleButton value="none">None</ToggleButton>
         </ToggleButtonGroup>
       </FlexItem>
       <Grid

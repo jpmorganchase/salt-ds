@@ -1,5 +1,6 @@
 import {
   createContext,
+  SyntheticEvent,
   useCallback,
   useContext,
   useMemo,
@@ -14,12 +15,7 @@ import {
   GridHeaderValueProps,
   NumericColumn,
 } from "../src";
-import {
-  MenuButton,
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
+import { MenuButton, ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
 import { FlexItem, FlexLayout } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon, MenuIcon, HomeIcon } from "@salt-ds/icons";
 import { randomInt, randomNumber } from "./utils";
@@ -72,21 +68,20 @@ const SalesGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
   const { group } = props;
   const { viewMode, setViewMode } = useContext(SalesGridContext)!;
 
-  const onChange: ToggleButtonGroupChangeEventHandler = (e, index, toggled) => {
-    setViewMode(viewModes[index]);
+  const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setViewMode(event.currentTarget.value as SalesViewMode);
   };
 
   return (
     <FlexLayout direction="row" wrap={false} align={"center"}>
       <span>{group.data.name}</span>
       <ToggleButtonGroup
-        variant="secondary"
-        onChange={onChange}
-        selectedIndex={viewModes.indexOf(viewMode)}
+        onSelectionChange={onChange}
+        selected={viewModes.indexOf(viewMode)}
       >
         {viewModes.map((m) => {
           return (
-            <ToggleButton aria-label={m} tooltipText={m} key={m}>
+            <ToggleButton aria-label={m} value={m} key={m}>
               {m[0]}
             </ToggleButton>
           );

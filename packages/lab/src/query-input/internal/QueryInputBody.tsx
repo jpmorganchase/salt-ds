@@ -10,11 +10,7 @@ import {
   useMemo,
 } from "react";
 
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "../../toggle-button";
+import { ToggleButton, ToggleButtonGroup } from "../../toggle-button";
 import {
   ChangeHandler,
   StringToItem,
@@ -82,8 +78,8 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
       };
     };
 
-    const onChange: ToggleButtonGroupChangeEventHandler = (event, index) => {
-      const newBooleanOperator = index === 0 ? "and" : "or";
+    const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+      const newBooleanOperator = event.currentTarget.value as BooleanOperator;
       onBooleanOperatorChange(newBooleanOperator);
     };
 
@@ -109,11 +105,10 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
         />
         <div className={withBaseName("separator")} />
         <ToggleButtonGroup
-          variant="secondary"
           className={withBaseName("buttonGroup")}
           data-testid="boolean-selector"
-          selectedIndex={booleanOperator === "and" ? 0 : 1}
-          onChange={onChange}
+          selected={booleanOperator}
+          onSelectionChange={onChange}
         >
           <ToggleButton value="and">And</ToggleButton>
           <ToggleButton value="or">Or</ToggleButton>

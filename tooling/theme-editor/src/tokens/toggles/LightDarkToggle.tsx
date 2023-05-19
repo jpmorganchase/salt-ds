@@ -1,11 +1,6 @@
-import { ReactElement, useCallback, useState } from "react";
-import { clsx } from "clsx";
+import { ReactElement, SyntheticEvent, useCallback, useState } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
 import { ThemeMode } from "../../header/ScopeSelector";
 import "./LightDarkToggle.css";
 
@@ -15,24 +10,22 @@ export const LightDarkToggle = (props: {
   mode: ThemeMode;
   onModeChanged: (mode: ThemeMode) => void;
 }): ReactElement => {
-  const [selectedIndex, setSelectedIndex] = useState(
-    props.mode === ThemeMode.LIGHT ? 0 : 1
-  );
+  const [selected, setSelected] = useState(props.mode);
 
-  const onModeChanged: ToggleButtonGroupChangeEventHandler = useCallback(
-    (e, index) => {
-      const mode = index === 0 ? ThemeMode.LIGHT : ThemeMode.DARK;
+  const onModeChanged = useCallback(
+    (event: SyntheticEvent<HTMLButtonElement>) => {
+      const mode = event.currentTarget.value as unknown as ThemeMode;
       props.onModeChanged(mode);
-      setSelectedIndex(index);
+      setSelected(mode);
     },
     []
   );
 
   return (
-    <div className={clsx(withBaseName())}>
-      <ToggleButtonGroup onChange={onModeChanged} selectedIndex={selectedIndex}>
-        <ToggleButton>Light</ToggleButton>
-        <ToggleButton>Dark</ToggleButton>
+    <div className={withBaseName()}>
+      <ToggleButtonGroup onSelectionChange={onModeChanged} selected={selected}>
+        <ToggleButton value={ThemeMode.LIGHT}>Light</ToggleButton>
+        <ToggleButton value={ThemeMode.DARK}>Dark</ToggleButton>
       </ToggleButtonGroup>
     </div>
   );

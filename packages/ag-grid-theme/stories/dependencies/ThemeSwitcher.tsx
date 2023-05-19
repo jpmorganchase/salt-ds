@@ -1,10 +1,5 @@
-import { useState } from "react";
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
-import { StackLayout, Text } from "@salt-ds/core";
+import { SyntheticEvent, useState } from "react";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
 
 export const useAgGridThemeSwitcher = () => {
   const [themeName, setThemeName] = useState("salt");
@@ -20,22 +15,22 @@ export const AgGridThemeSwitcher = ({
 }: {
   onThemeSelect: (themeName: string) => void;
 }) => {
-  const [index, setIndex] = useState(0);
+  const [theme, setTheme] = useState("salt");
 
-  const onChange: ToggleButtonGroupChangeEventHandler = (_, index) => {
-    setIndex(index);
-    onThemeSelect(index === 0 ? "salt" : "uitk");
+  const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setTheme(event.currentTarget.value);
+    onThemeSelect(event.currentTarget.value);
   };
 
   return (
     <div>
-      <ToggleButtonGroup onChange={onChange} selectedIndex={index}>
-        <ToggleButton aria-label="primary" tooltipText="Salt">
-          Salt
-        </ToggleButton>
-        <ToggleButton aria-label="secondary" tooltipText="UITK">
-          UITK
-        </ToggleButton>
+      <ToggleButtonGroup
+        aria-label="Theme Selection"
+        onSelectionChange={onChange}
+        selected={theme}
+      >
+        <ToggleButton value="salt">Salt</ToggleButton>
+        <ToggleButton value="uitk">UITK</ToggleButton>
       </ToggleButtonGroup>
     </div>
   );

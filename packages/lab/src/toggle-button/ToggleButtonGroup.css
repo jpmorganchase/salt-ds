@@ -1,49 +1,10 @@
-.salt-density-high {
-  --toggleButton-group-height: calc(var(--salt-size-base) - var(--salt-size-unit) + 2px);
-}
-.salt-density-medium {
-  --toggleButton-group-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 0.5) + 2px);
-}
-.salt-density-low {
-  --toggleButton-group-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 2 / 3) + 2px);
-}
-.salt-density-touch {
-  --toggleButton-group-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 0.5) + 2px);
-}
-
-.saltToggleButtonGroup.saltToggleButtonGroup-cta {
-  --toggleButton-group-borderColor: var(--saltToggleButton-group-cta-borderColor, var(--salt-container-secondary-borderColor));
-}
-.saltToggleButtonGroup.saltToggleButtonGroup-primary {
-  --toggleButton-group-borderColor: var(--saltToggleButton-group-primary-borderColor, var(--salt-container-primary-borderColor));
-}
-
 .saltToggleButtonGroup {
-  --toggleButton-group-borderWidth: var(--saltToggleButton-group-borderWidth, var(--salt-size-border));
-  --toggleButton-group-borderStyle: var(--saltToggleButton-group-borderWidth, var(--salt-container-borderStyle));
-
-  display: inline-flex;
-  overflow: hidden;
-  padding: 2px;
-  border: var(--toggleButton-group-borderWidth) var(--toggleButton-group-borderStyle) var(--toggleButton-group-borderColor);
-}
-
-.saltToggleButtonGroup.saltToggleButtonGroup-secondary {
-  --toggleButton-group-borderColor: var(--saltToggleButton-group-secondary-borderColor, var(--salt-container-tertiary-borderColor));
-}
-
-.saltToggleButtonGroup-horizontal .saltToggleButton {
-  height: var(--toggleButton-group-height);
-}
-
-.saltToggleButtonGroup-horizontal .saltToggleButton:not(:first-child) {
-  margin-left: 2px;
-}
-
-.saltToggleButtonGroup-vertical {
-  flex-direction: column;
-}
-
-.saltToggleButtonGroup-vertical .saltToggleButton:not(:first-child) {
-  margin-top: 2px;
+  display: flex;
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-width: 1px;
+  align-items: center;
+  width: fit-content;
+  gap: var(--salt-spacing-50);
+  padding: var(--salt-spacing-50);
+  flex-direction: var(--saltToggleButtonGroup-flexDirection, row);
 }

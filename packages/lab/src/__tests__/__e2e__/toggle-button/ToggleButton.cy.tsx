@@ -3,22 +3,21 @@ import { ToggleButton, ToggleButtonProps } from "@salt-ds/lab";
 import { useState } from "react";
 
 describe("GIVEN a ToggleButton with Icon and Text", () => {
-  it("THEN it should render correctly", () => {
-    const toggleSpy = cy.stub().as("toggleSpy");
+  it("THEN it should toggle", () => {
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     const ControlledToggleButtonExample = () => {
       const [toggled, setToggled] = useState(true);
-      const handleToggle: ToggleButtonProps["onToggle"] = (event, state) => {
-        setToggled(state);
-        toggleSpy(event, state);
+      const handleToggle: ToggleButtonProps["onSelectionChange"] = (event) => {
+        setToggled((old) => !old);
+        selectionChangeSpy(event);
       };
       return (
         <ToggleButton
-          aria-label="home"
-          onToggle={handleToggle}
-          toggled={toggled}
-          tooltipText="Home"
+          onSelectionChange={handleToggle}
+          selected={toggled}
+          value="home"
         >
-          <HomeIcon />
+          <HomeIcon aria-hidden />
           Home
         </ToggleButton>
       );
@@ -32,50 +31,29 @@ describe("GIVEN a ToggleButton with Icon and Text", () => {
     // untoggle
     cy.findByRole("checkbox").realClick();
     cy.findByRole("checkbox").should("have.attr", "aria-checked", "false");
-    cy.get("@toggleSpy").should("have.been.calledOnce");
-
-    cy.get("@toggleSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      false
-    );
+    cy.get("@selectionChangeSpy").should("have.been.calledOnce");
 
     // toggle
     cy.findByRole("checkbox").realClick();
     cy.findByRole("checkbox").should("have.attr", "aria-checked", "true");
     cy.get("@toggleSpy").should("have.been.calledTwice");
-
-    cy.get("@toggleSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      true
-    );
   });
 });
 
 describe("GIVEN a disabled ToggleButton with Icon and Text", () => {
   it("THEN it should not toggle", () => {
-    const toggleSpy = cy.stub().as("toggleSpy");
-    const ControlledToggleButtonExample = () => {
-      const [toggled, setToggled] = useState(false);
-      const handleToggle: ToggleButtonProps["onToggle"] = (event, state) => {
-        setToggled(state);
-        toggleSpy(event, state);
-      };
-      return (
-        <ToggleButton
-          aria-label="home"
-          disabled
-          onToggle={handleToggle}
-          toggled={toggled}
-          tooltipText="Home"
-        >
-          <HomeIcon />
-          Home
-        </ToggleButton>
-      );
-    };
-    cy.mount(<ControlledToggleButtonExample />);
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+
+    cy.mount(
+      <ToggleButton
+        disabled
+        value="home"
+        onSelectionChange={selectionChangeSpy}
+      >
+        <HomeIcon aria-hidden />
+        Home
+      </ToggleButton>
+    );
 
     cy.findByRole("checkbox").should("have.text", "Home");
     cy.findByRole("checkbox").should("have.attr", "aria-checked", "false");
@@ -83,6 +61,6 @@ describe("GIVEN a disabled ToggleButton with Icon and Text", () => {
 
     // try to toggle
     cy.findByRole("checkbox").realClick();
-    cy.get("@toggleSpy").should("not.have.been.called");
+    cy.get("@selectionChangeSpy").should("not.have.been.called");
   });
 });

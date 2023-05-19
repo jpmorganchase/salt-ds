@@ -1,4 +1,4 @@
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, SyntheticEvent } from "react";
 import "./ResponsiveContainer.css";
 import {
   Slider,
@@ -6,13 +6,13 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/lab";
+import { Tooltip } from "@salt-ds/core";
 
 export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
   const [containerWidth, setWidth] = useState(90);
   const [containerHeight, setHeight] = useState(70);
-  const [selectedIndex, setSelectedIndex] = useState<number>(1);
-  const units = ["pixel", "viewport"];
-  const inPixels = units[selectedIndex] === "pixel";
+  const [selected, setSelected] = useState<string>("vw/vh");
+  const inPixels = selected === "px";
   const maxUnits = inPixels ? 1000 : 100;
   return (
     <div className="StoryContainer">
@@ -20,11 +20,17 @@ export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
         <ToggleButtonGroup
           className="StoryContainer-toggle"
           orientation="vertical"
-          onChange={(v, i) => setSelectedIndex(i)}
-          selectedIndex={selectedIndex}
+          onSelectionChange={(event: SyntheticEvent<HTMLButtonElement>) =>
+            setSelected(event.currentTarget.value)
+          }
+          selected={selected}
         >
-          <ToggleButton tooltipText="Pixels">px</ToggleButton>
-          <ToggleButton tooltipText="Viewport units">vw/vh</ToggleButton>
+          <Tooltip content="Pixels">
+            <ToggleButton value="px">px</ToggleButton>
+          </Tooltip>
+          <Tooltip content="Viewport units">
+            <ToggleButton value="vw/vh">vw/vh</ToggleButton>
+          </Tooltip>
         </ToggleButtonGroup>
         <StepperInput
           value={containerWidth}

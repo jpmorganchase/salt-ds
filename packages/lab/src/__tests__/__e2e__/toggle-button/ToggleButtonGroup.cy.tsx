@@ -4,32 +4,24 @@ import {
   PrintIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
-import { useState } from "react";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
+import { SyntheticEvent, useState } from "react";
 
 describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (uncontrolled)", () => {
   it("THEN it should have radiogroup as role", () => {
     cy.mount(
-      <ToggleButtonGroup>
-        <ToggleButton aria-label="home" tooltipText="Home">
-          <HomeIcon />
-          Home
+      <ToggleButtonGroup aria-label="Toggle options">
+        <ToggleButton value="alert">
+          <NotificationIcon aria-hidden /> Alert
         </ToggleButton>
-        <ToggleButton aria-label="search" tooltipText="Search">
-          <SearchIcon />
-          Search
+        <ToggleButton disabled value="home">
+          <HomeIcon aria-hidden /> Home
         </ToggleButton>
-        <ToggleButton aria-label="print" tooltipText="Print">
-          <PrintIcon />
-          Print
+        <ToggleButton value="search">
+          <SearchIcon aria-hidden /> Search
         </ToggleButton>
-        <ToggleButton aria-label="alert" tooltipText="Alert">
-          <NotificationIcon />
-          Alert
+        <ToggleButton value="print">
+          <PrintIcon aria-hidden /> Print
         </ToggleButton>
       </ToggleButtonGroup>
     );
@@ -42,197 +34,111 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
     );
   });
 
-  it("THEN it should respect to `aria-label` prop", () => {
+  it("SHOULD respect `defaultSelected` prop", () => {
     cy.mount(
-      <ToggleButtonGroup aria-label="My Toggle Button Group">
-        <ToggleButton aria-label="home" tooltipText="Home">
-          <HomeIcon />
-          Home
+      <ToggleButtonGroup aria-label="Toggle options" defaultSelected="home">
+        <ToggleButton value="alert">
+          <NotificationIcon aria-hidden /> Alert
         </ToggleButton>
-        <ToggleButton aria-label="search" tooltipText="Search">
-          <SearchIcon />
-          Search
+        <ToggleButton value="home">
+          <HomeIcon aria-hidden /> Home
         </ToggleButton>
-        <ToggleButton aria-label="print" tooltipText="Print">
-          <PrintIcon />
-          Print
+        <ToggleButton value="search">
+          <SearchIcon aria-hidden /> Search
         </ToggleButton>
-        <ToggleButton aria-label="alert" tooltipText="Alert">
-          <NotificationIcon />
-          Alert
+        <ToggleButton value="print">
+          <PrintIcon aria-hidden /> Print
         </ToggleButton>
       </ToggleButtonGroup>
     );
 
-    cy.findByRole("radiogroup").should(
-      "have.attr",
-      "aria-label",
-      "My Toggle Button Group"
-    );
-  });
+    cy.findByRole("radio", { name: "Alert" })
+      .should("have.attr", "aria-checked", "false")
+      .and("have.attr", "tabindex", "-1");
 
-  it("THEN it should toggle the first item as `defaultSelectedIndex` prop", () => {
-    cy.mount(
-      <ToggleButtonGroup>
-        <ToggleButton aria-label="home" tooltipText="Home">
-          <HomeIcon />
-          Home
-        </ToggleButton>
-        <ToggleButton aria-label="search" tooltipText="Search">
-          <SearchIcon />
-          Search
-        </ToggleButton>
-        <ToggleButton aria-label="print" tooltipText="Print">
-          <PrintIcon />
-          Print
-        </ToggleButton>
-        <ToggleButton aria-label="alert" tooltipText="Alert">
-          <NotificationIcon />
-          Alert
-        </ToggleButton>
-      </ToggleButtonGroup>
-    );
+    cy.findByRole("radio", { name: "Home" })
+      .should("have.attr", "aria-checked", "true")
+      .and("have.attr", "tabindex", "0");
 
-    cy.findAllByRole("radio").should("have.length", 4);
+    cy.findByRole("radio", { name: "Search" })
+      .should("have.attr", "aria-checked", "false")
+      .and("have.attr", "tabindex", "-1");
 
-    cy.findAllByRole("radio").eq(0).should("have.text", "Home");
-    cy.findAllByRole("radio").eq(0).should("have.attr", "aria-checked", "true");
-    cy.findAllByRole("radio").eq(0).should("have.attr", "tabindex", "0");
-
-    cy.findAllByRole("radio").eq(1).should("have.text", "Search");
-    cy.findAllByRole("radio")
-      .eq(1)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "-1");
-
-    cy.findAllByRole("radio").eq(2).should("have.text", "Print");
-    cy.findAllByRole("radio")
-      .eq(2)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "-1");
-
-    cy.findAllByRole("radio").eq(3).should("have.text", "Alert");
-    cy.findAllByRole("radio")
-      .eq(3)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(3).should("have.attr", "tabindex", "-1");
-  });
-
-  it("THEN should respect `defaultSelectedIndex` prop", () => {
-    cy.mount(
-      <ToggleButtonGroup defaultSelectedIndex={1}>
-        <ToggleButton aria-label="home" tooltipText="Home">
-          <HomeIcon />
-          Home
-        </ToggleButton>
-        <ToggleButton aria-label="search" tooltipText="Search">
-          <SearchIcon />
-          Search
-        </ToggleButton>
-        <ToggleButton aria-label="print" tooltipText="Print">
-          <PrintIcon />
-          Print
-        </ToggleButton>
-        <ToggleButton aria-label="alert" tooltipText="Alert">
-          <NotificationIcon />
-          Alert
-        </ToggleButton>
-      </ToggleButtonGroup>
-    );
-
-    cy.findAllByRole("radio")
-      .eq(0)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(0).should("have.attr", "tabindex", "-1");
-
-    cy.findAllByRole("radio").eq(1).should("have.attr", "aria-checked", "true");
-    cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "0");
-
-    cy.findAllByRole("radio")
-      .eq(2)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "-1");
-
-    cy.findAllByRole("radio")
-      .eq(3)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(3).should("have.attr", "tabindex", "-1");
+    cy.findByRole("radio", { name: "Print" })
+      .should("have.attr", "aria-checked", "false")
+      .and("have.attr", "tabindex", "-1");
   });
 
   it("THEN should fire onChangeSpy on toggle button click", () => {
-    const changeSpy = cy.stub().as("changeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
-      <ToggleButtonGroup onChange={changeSpy}>
-        <ToggleButton aria-label="home" tooltipText="Home">
-          <HomeIcon />
-          Home
+      <ToggleButtonGroup
+        defaultSelected="alert"
+        onSelectionChange={selectionChangeSpy}
+      >
+        <ToggleButton value="alert">
+          <NotificationIcon aria-hidden /> Alert
         </ToggleButton>
-        <ToggleButton aria-label="search" tooltipText="Search">
-          <SearchIcon />
-          Search
+        <ToggleButton disabled value="home">
+          <HomeIcon aria-hidden /> Home
         </ToggleButton>
-        <ToggleButton aria-label="print" tooltipText="Print">
-          <PrintIcon />
-          Print
+        <ToggleButton value="search">
+          <SearchIcon aria-hidden /> Search
         </ToggleButton>
-        <ToggleButton aria-label="alert" tooltipText="Alert">
-          <NotificationIcon />
-          Alert
+        <ToggleButton value="print">
+          <PrintIcon aria-hidden /> Print
         </ToggleButton>
       </ToggleButtonGroup>
     );
 
-    cy.findByRole("radio", { name: "search" }).realClick();
+    cy.findByRole("radio", { name: "Search" }).realClick();
 
-    cy.get("@changeSpy").should("have.been.calledOnce");
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      1,
-      true
-    );
+    cy.get("@selectionChangeSpy").should("have.been.calledOnce");
+    cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", {
+      target: {
+        value: "search",
+      },
+    });
 
     // Click another toggle button
-    cy.findByRole("radio", { name: "print" }).realClick();
-    cy.get("@changeSpy").should("have.been.calledTwice");
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      2,
-      true
-    );
+    cy.findByRole("radio", { name: "Print" }).realClick();
+    cy.get("@selectionChangeSpy").should("have.been.calledTwice");
+    cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", {
+      target: {
+        value: "print",
+      },
+    });
   });
 
   it("THEN should NOT deselect a button if it's clicked after being toggled", () => {
-    const changeSpy = cy.stub().as("changeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
-      <ToggleButtonGroup defaultSelectedIndex={2} onChange={changeSpy}>
-        <ToggleButton aria-label="home" tooltipText="Home">
-          <HomeIcon />
-          Home
+      <ToggleButtonGroup
+        defaultSelected="print"
+        onSelectionChange={selectionChangeSpy}
+      >
+        <ToggleButton value="alert">
+          <NotificationIcon aria-hidden /> Alert
         </ToggleButton>
-        <ToggleButton aria-label="search" tooltipText="Search">
-          <SearchIcon />
-          Search
+        <ToggleButton disabled value="home">
+          <HomeIcon aria-hidden /> Home
         </ToggleButton>
-        <ToggleButton aria-label="print" tooltipText="Print">
-          <PrintIcon />
-          Print
+        <ToggleButton value="search">
+          <SearchIcon aria-hidden /> Search
         </ToggleButton>
-        <ToggleButton aria-label="alert" tooltipText="Alert">
-          <NotificationIcon />
-          Alert
+        <ToggleButton value="print">
+          <PrintIcon aria-hidden /> Print
         </ToggleButton>
       </ToggleButtonGroup>
     );
 
     // Click toggled button
-    cy.findByRole("radio", { name: "print" });
+    cy.findByRole("radio", { name: "Print" });
 
     // It should not call onChange
-    cy.get("@changeSpy").should("not.have.been.called");
+    cy.get("@selectionChangeSpy").should("not.have.been.called");
     // It should not deselect the toggled button
-    cy.findByRole("radio", { name: "print" }).should(
+    cy.findByRole("radio", { name: "Print" }).should(
       "have.attr",
       "aria-checked",
       "true"
@@ -242,39 +148,28 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
 
 describe("GIVEN a ToggleButtonGroup (controlled)", () => {
   it("THEN should respect `selectedIndex` prop", () => {
-    const changeSpy = cy.stub().as("changeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     const ControlledToggleGroupExample = () => {
-      const [selectedIndex, setSelectedIndex] = useState<number>(1);
+      const [selected, setSelected] = useState<string>("home");
 
-      const handleChange: ToggleButtonGroupChangeEventHandler = (
-        event,
-        index,
-        toggled
-      ) => {
-        setSelectedIndex(index);
-        changeSpy(event, index, toggled);
+      const handleChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+        setSelected(event.currentTarget.value);
+        selectionChangeSpy(event);
       };
 
       return (
-        <ToggleButtonGroup
-          selectedIndex={selectedIndex}
-          onChange={handleChange}
-        >
-          <ToggleButton aria-label="home" tooltipText="Home">
-            <HomeIcon />
-            Home
+        <ToggleButtonGroup selected={selected} onSelectionChange={handleChange}>
+          <ToggleButton value="alert">
+            <NotificationIcon aria-hidden /> Alert
           </ToggleButton>
-          <ToggleButton aria-label="search" tooltipText="Search">
-            <SearchIcon />
-            Search
+          <ToggleButton disabled value="home">
+            <HomeIcon aria-hidden /> Home
           </ToggleButton>
-          <ToggleButton aria-label="print" tooltipText="Print">
-            <PrintIcon />
-            Print
+          <ToggleButton value="search">
+            <SearchIcon aria-hidden /> Search
           </ToggleButton>
-          <ToggleButton aria-label="alert" tooltipText="Alert">
-            <NotificationIcon />
-            Alert
+          <ToggleButton value="print">
+            <PrintIcon aria-hidden /> Print
           </ToggleButton>
         </ToggleButtonGroup>
       );
@@ -284,23 +179,23 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
     // 4 toggle buttons
     cy.findAllByRole("radio").should("have.length", 4);
 
-    cy.findAllByRole("radio").eq(0).should("have.text", "Home");
+    cy.findAllByRole("radio").eq(0).should("have.text", "Alert");
     cy.findAllByRole("radio")
       .eq(0)
       .should("have.attr", "aria-checked", "false");
     cy.findAllByRole("radio").eq(0).should("have.attr", "tabindex", "-1");
 
-    cy.findAllByRole("radio").eq(1).should("have.text", "Search");
+    cy.findAllByRole("radio").eq(1).should("have.text", "Home");
     cy.findAllByRole("radio").eq(1).should("have.attr", "aria-checked", "true");
     cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "0");
 
-    cy.findAllByRole("radio").eq(2).should("have.text", "Print");
+    cy.findAllByRole("radio").eq(2).should("have.text", "Search");
     cy.findAllByRole("radio")
       .eq(2)
       .should("have.attr", "aria-checked", "false");
     cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "-1");
 
-    cy.findAllByRole("radio").eq(3).should("have.text", "Alert");
+    cy.findAllByRole("radio").eq(3).should("have.text", "Print");
     cy.findAllByRole("radio")
       .eq(3)
       .should("have.attr", "aria-checked", "false");
@@ -308,51 +203,39 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
 
     cy.findAllByRole("radio").eq(0).realClick();
     cy.get("@changeSpy").should("have.been.calledOnce");
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      0,
-      true
-    );
+    cy.get("@changeSpy").should("have.been.calledWithMatch", {
+      target: {
+        value: "alert",
+      },
+    });
     cy.findAllByRole("radio").eq(0).should("have.attr", "aria-checked", "true");
     cy.findAllByRole("radio").eq(0).should("have.attr", "tabindex", "0");
     cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "-1");
   });
 
   it("THEN should NOT deselect a toggled button", () => {
-    const changeSpy = cy.stub().as("changeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     const ControlledToggleGroupExample = () => {
-      const [selectedIndex, setSelectedIndex] = useState<number>(2);
+      const [selected, setSelected] = useState<string>("search");
 
-      const handleChange: ToggleButtonGroupChangeEventHandler = (
-        event,
-        index,
-        toggled
-      ) => {
-        setSelectedIndex(index);
-        changeSpy(event, index, toggled);
+      const handleChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+        setSelected(event.currentTarget.value);
+        selectionChangeSpy(event);
       };
 
       return (
-        <ToggleButtonGroup
-          selectedIndex={selectedIndex}
-          onChange={handleChange}
-        >
-          <ToggleButton aria-label="home" tooltipText="Home">
-            <HomeIcon />
-            Home
+        <ToggleButtonGroup selected={selected} onSelectionChange={handleChange}>
+          <ToggleButton value="alert">
+            <NotificationIcon aria-hidden /> Alert
           </ToggleButton>
-          <ToggleButton aria-label="search" tooltipText="Search">
-            <SearchIcon />
-            Search
+          <ToggleButton disabled value="home">
+            <HomeIcon aria-hidden /> Home
           </ToggleButton>
-          <ToggleButton aria-label="print" tooltipText="Print">
-            <PrintIcon />
-            Print
+          <ToggleButton value="search">
+            <SearchIcon aria-hidden /> Search
           </ToggleButton>
-          <ToggleButton aria-label="alert" tooltipText="Alert">
-            <NotificationIcon />
-            Alert
+          <ToggleButton value="print">
+            <PrintIcon aria-hidden /> Print
           </ToggleButton>
         </ToggleButtonGroup>
       );
@@ -363,7 +246,7 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
     cy.findAllByRole("radio").eq(2).realClick();
 
     // It should not call onChange
-    cy.get("@changeSpy").should("not.have.been.called");
+    cy.get("@selectionChangeSpy").should("not.have.been.called");
     // It should not deselect the toggled button
     cy.findAllByRole("radio").eq(2).should("have.attr", "aria-checked", "true");
   });
@@ -371,40 +254,32 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
 
 describe("GIVEN a disabled ToggleButtonGroup ", () => {
   it("THEN should respect `selectedIndex` prop", () => {
-    const changeSpy = cy.stub().as("changeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     const ControlledToggleGroupExample = () => {
-      const [selectedIndex, setSelectedIndex] = useState<number>(1);
+      const [selected, setSelected] = useState<string>("search");
 
-      const handleChange: ToggleButtonGroupChangeEventHandler = (
-        event,
-        index,
-        toggled
-      ) => {
-        setSelectedIndex(index);
-        changeSpy(event, index, toggled);
+      const handleChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+        setSelected(event.currentTarget.value);
+        selectionChangeSpy(event);
       };
 
       return (
         <ToggleButtonGroup
           disabled
-          selectedIndex={selectedIndex}
-          onChange={handleChange}
+          selected={selected}
+          onSelectionChange={handleChange}
         >
-          <ToggleButton aria-label="home" tooltipText="Home">
-            <HomeIcon />
-            Home
+          <ToggleButton value="alert">
+            <NotificationIcon aria-hidden /> Alert
           </ToggleButton>
-          <ToggleButton aria-label="search" tooltipText="Search">
-            <SearchIcon />
-            Search
+          <ToggleButton disabled value="home">
+            <HomeIcon aria-hidden /> Home
           </ToggleButton>
-          <ToggleButton aria-label="print" tooltipText="Print">
-            <PrintIcon />
-            Print
+          <ToggleButton value="search">
+            <SearchIcon aria-hidden /> Search
           </ToggleButton>
-          <ToggleButton aria-label="alert" tooltipText="Alert">
-            <NotificationIcon />
-            Alert
+          <ToggleButton value="print">
+            <PrintIcon aria-hidden /> Print
           </ToggleButton>
         </ToggleButtonGroup>
       );
@@ -414,26 +289,26 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     // 4 toggle buttons
     cy.findAllByRole("radio").should("have.length", 4);
 
-    cy.findAllByRole("radio").eq(0).should("have.text", "Home");
+    cy.findAllByRole("radio").eq(0).should("have.text", "Alert");
     cy.findAllByRole("radio")
       .eq(0)
       .should("have.attr", "aria-checked", "false");
     cy.findAllByRole("radio").eq(0).should("have.attr", "tabindex", "-1");
     cy.findAllByRole("radio").eq(0).should("be.disabled");
 
-    cy.findAllByRole("radio").eq(1).should("have.text", "Search");
+    cy.findAllByRole("radio").eq(1).should("have.text", "Home");
     cy.findAllByRole("radio").eq(1).should("have.attr", "aria-checked", "true");
     cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "-1");
     cy.findAllByRole("radio").eq(1).should("be.disabled");
 
-    cy.findAllByRole("radio").eq(2).should("have.text", "Print");
+    cy.findAllByRole("radio").eq(2).should("have.text", "Search");
     cy.findAllByRole("radio")
       .eq(2)
       .should("have.attr", "aria-checked", "false");
     cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "-1");
     cy.findAllByRole("radio").eq(2).should("be.disabled");
 
-    cy.findAllByRole("radio").eq(3).should("have.text", "Alert");
+    cy.findAllByRole("radio").eq(3).should("have.text", "Print");
     cy.findAllByRole("radio")
       .eq(3)
       .should("have.attr", "aria-checked", "false");

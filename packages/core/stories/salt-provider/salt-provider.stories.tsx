@@ -1,17 +1,13 @@
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import {
   Button,
   Card,
   Checkbox,
   Density,
-  ModeValues,
+  Mode,
   SaltProvider,
 } from "@salt-ds/core";
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
 
 import "docs/story.css";
 
@@ -19,12 +15,6 @@ export default {
   title: "Core/Salt Provider",
   component: SaltProvider,
 };
-
-const LIGHT = 0;
-const DARK = 1;
-
-const HIGH = 0;
-const NO_DENSITY = 4;
 
 const DENSITIES: Density[] = ["high", "medium", "low", "touch"];
 
@@ -42,25 +32,29 @@ export const Default = () => {
 };
 
 export const ToggleTheme = () => {
-  const [mode, setMode] = useState(LIGHT);
+  const [mode, setMode] = useState<Mode>("light");
 
-  const handleChangeTheme: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index
-  ) => {
-    setMode(index);
+  const handleChangeTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setMode(event.currentTarget.value as Mode);
   };
 
   return (
-    <SaltProvider mode={ModeValues[mode]}>
+    <SaltProvider mode={mode}>
       <Card>
         <div>
           <h1>This Card is wrapped with a SaltProvider</h1>
-          <ToggleButtonGroup onChange={handleChangeTheme} selectedIndex={mode}>
-            <ToggleButton aria-label="light theme">Light</ToggleButton>
-            <ToggleButton aria-label="dark theme">Dark</ToggleButton>
+          <ToggleButtonGroup
+            onSelectionChange={handleChangeTheme}
+            selected={mode}
+          >
+            <ToggleButton aria-label="light theme" value="light">
+              Light
+            </ToggleButton>
+            <ToggleButton aria-label="dark theme" value="dark">
+              Dark
+            </ToggleButton>
           </ToggleButtonGroup>
-          <p>{`This Card is wrapped with a SaltProvider, mode is ${ModeValues[mode]}`}</p>
+          <p>{`This Card is wrapped with a SaltProvider, mode is ${mode}`}</p>
 
           <Checkbox label="Example Choice 1" />
           <Checkbox defaultChecked label="Example Choice 2" />
@@ -86,63 +80,57 @@ export const ToggleTheme = () => {
 };
 
 export const NestedProviders = () => {
-  const [outerMode, setOuterMode] = useState(LIGHT);
-  const [outerDensity, setOuterDensity] = useState(HIGH);
-  const [innerMode, setInnerMode] = useState(DARK);
-  const [innerDensity, setInnerDensity] = useState(NO_DENSITY);
+  const [outerMode, setOuterMode] = useState<Mode | "unset">("light");
+  const [outerDensity, setOuterDensity] = useState<Density | "unset">("high");
+  const [innerMode, setInnerMode] = useState<Mode | "unset">("dark");
+  const [innerDensity, setInnerDensity] = useState<Density | "unset">("unset");
 
-  const handleChangeOuterTheme: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index
-  ) => {
-    setOuterMode(index);
+  const handleChangeOuterTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setOuterMode(event.currentTarget.value as Mode);
   };
 
-  const handleChangeOuterDensity: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index
+  const handleChangeOuterDensity = (
+    event: SyntheticEvent<HTMLButtonElement>
   ) => {
-    setOuterDensity(index);
+    setOuterDensity(event.currentTarget.value as Density);
   };
 
-  const handleChangeInnerTheme: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index
-  ) => {
-    setInnerMode(index);
+  const handleChangeInnerTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setInnerMode(event.currentTarget.value as Mode);
   };
-  const handleChangeInnerDensity: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index
+  const handleChangeInnerDensity = (
+    event: SyntheticEvent<HTMLButtonElement>
   ) => {
-    setInnerDensity(index);
+    setInnerDensity(event.currentTarget.value as Density);
   };
 
   return (
     <SaltProvider
-      density={DENSITIES[outerDensity]}
-      mode={ModeValues[outerMode]}
+      density={outerDensity === "unset" ? undefined : outerDensity}
+      mode={outerMode === "unset" ? undefined : outerMode}
     >
       <Card>
         <div>
           <h1>This Card is wrapped with a SaltProvider</h1>
           <ToggleButtonGroup
-            onChange={handleChangeOuterTheme}
-            selectedIndex={outerMode}
+            aria-label="Outer theme selection"
+            onSelectionChange={handleChangeOuterTheme}
+            selected={outerMode}
           >
-            <ToggleButton aria-label="light theme">Light</ToggleButton>
-            <ToggleButton aria-label="dark theme">Dark</ToggleButton>
-            <ToggleButton aria-label="no theme">Not set</ToggleButton>
+            <ToggleButton value="light">Light</ToggleButton>
+            <ToggleButton value="dark">Dark</ToggleButton>
+            <ToggleButton value="unset">Not set</ToggleButton>
           </ToggleButtonGroup>
           <ToggleButtonGroup
-            onChange={handleChangeOuterDensity}
-            selectedIndex={outerDensity}
+            aria-label="Outer density selection"
+            onSelectionChange={handleChangeOuterDensity}
+            selected={outerDensity}
           >
-            <ToggleButton aria-label="high density">High</ToggleButton>
-            <ToggleButton aria-label="medium density">Medium</ToggleButton>
-            <ToggleButton aria-label="low density">Low</ToggleButton>
-            <ToggleButton aria-label="touch density">Touch</ToggleButton>
-            <ToggleButton aria-label="not set">Not set</ToggleButton>
+            <ToggleButton value="high">High</ToggleButton>
+            <ToggleButton value="medium">Medium</ToggleButton>
+            <ToggleButton value="low">Low</ToggleButton>
+            <ToggleButton value="touch">Touch</ToggleButton>
+            <ToggleButton value="unset">Not set</ToggleButton>
           </ToggleButtonGroup>
           <p>
             This Card is wrapped with a SaltProvider, theme is light, density is
@@ -151,30 +139,32 @@ export const NestedProviders = () => {
         </div>
         <br />
         <SaltProvider
-          mode={ModeValues[innerMode]}
-          density={DENSITIES[innerDensity]}
+          mode={innerMode === "unset" ? undefined : innerMode}
+          density={innerDensity === "unset" ? undefined : innerDensity}
         >
           <Card>
             <div>
               <h1>Nested Card</h1>
               <ToggleButtonGroup
-                onChange={handleChangeInnerTheme}
-                selectedIndex={innerMode}
+                aria-label="Inner theme selection"
+                onSelectionChange={handleChangeInnerTheme}
+                selected={innerMode}
               >
-                <ToggleButton aria-label="light theme">Light</ToggleButton>
-                <ToggleButton aria-label="dark theme">Dark</ToggleButton>
-                <ToggleButton aria-label="dark theme">Not set</ToggleButton>
+                <ToggleButton value="light">Light</ToggleButton>
+                <ToggleButton value="dark">Dark</ToggleButton>
+                <ToggleButton value="unset">Not set</ToggleButton>
               </ToggleButtonGroup>
 
               <ToggleButtonGroup
-                onChange={handleChangeInnerDensity}
-                selectedIndex={innerDensity}
+                aria-label="Inner density selection"
+                onSelectionChange={handleChangeInnerDensity}
+                selected={innerDensity}
               >
-                <ToggleButton aria-label="high density">High</ToggleButton>
-                <ToggleButton aria-label="medium density">Medium</ToggleButton>
-                <ToggleButton aria-label="low density">Low</ToggleButton>
-                <ToggleButton aria-label="touch density">Touch</ToggleButton>
-                <ToggleButton aria-label="not set">Not set</ToggleButton>
+                <ToggleButton value="high">High</ToggleButton>
+                <ToggleButton value="medium">Medium</ToggleButton>
+                <ToggleButton value="low">Low</ToggleButton>
+                <ToggleButton value="touch">Touch</ToggleButton>
+                <ToggleButton value="unset">Not set</ToggleButton>
               </ToggleButtonGroup>
 
               <p>
