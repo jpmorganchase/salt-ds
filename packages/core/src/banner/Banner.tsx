@@ -19,16 +19,9 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltBanner");
 
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
-  {
-    children,
-    className,
-    emphasize = false,
-    status = "info",
-    ...rest
-  },
+  { children, className, emphasize = false, status = "info", ...rest },
   ref
 ) {
-
   return (
     <div
       className={clsx(withBaseName(), withBaseName(status), className, {
