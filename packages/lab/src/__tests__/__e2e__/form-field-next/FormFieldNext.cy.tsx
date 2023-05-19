@@ -40,6 +40,28 @@ describe("GIVEN a FormFieldNext", () => {
     });
   });
 
+
+  describe("WHEN an id is provided", () => {
+    it("THEN the label and helper text should have the corresponding ids", () => {
+      cy.mount(
+        <FormFieldNext id={"test-id"}>
+          <MockChildren />
+        </FormFieldNext>
+      );
+
+      cy.findByText("Label").should(
+        "have.attr",
+        "aria-labelledby",
+        "label-test-id"
+      );
+      cy.findByText("Helper text").should(
+        "have.attr",
+        "aria-labelledby",
+        "helperText-test-id"
+      );
+    });
+  });
+
   describe("WHEN disabled", () => {
     it("THEN inner components should have disabled set from useFormFieldNextProps.a11yProps", () => {
       cy.mount(
