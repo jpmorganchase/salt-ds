@@ -28,7 +28,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
         [withBaseName("emphasize")]: emphasize,
       })}
       ref={ref}
-      role="banner"
       {...rest}
     >
       <StatusIndicator status={status} className={withBaseName("icon")} />
