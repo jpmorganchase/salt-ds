@@ -1,15 +1,16 @@
-import { FormFieldNext, FormFieldLabel, FormFieldHelperText, InputNext } from "@salt-ds/lab";
+import {
+  FormFieldNext,
+  FormFieldLabel,
+  FormFieldHelperText,
+  InputNext,
+} from "@salt-ds/lab";
 
 const MockChildren = () => {
   return (
     <>
-      <FormFieldLabel>
-        Label
-      </FormFieldLabel>
+      <FormFieldLabel>Label</FormFieldLabel>
       <div />
-      <FormFieldHelperText>
-        Helper text
-      </FormFieldHelperText>
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
     </>
   );
 };
@@ -142,13 +143,9 @@ describe("GIVEN a FormFieldNext", () => {
     it("SHOULD have no a11y violations on load", () => {
       cy.mount(
         <FormFieldNext>
-          <FormFieldLabel>
-            Label
-          </FormFieldLabel>
+          <FormFieldLabel>Label</FormFieldLabel>
           <InputNext defaultValue="Value" data-testid="test-id-1" />
-          <FormFieldHelperText>
-            Helper text
-          </FormFieldHelperText>
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
         </FormFieldNext>
       );
 
