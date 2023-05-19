@@ -6,7 +6,6 @@ import {
   Button,
 } from "@salt-ds/core";
 
-import "./banner.ada.css";
 import { useState } from "@storybook/addons";
 
 export default {
