@@ -12,16 +12,20 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
     cy.mount(
       <ToggleButtonGroup aria-label="Toggle options">
         <ToggleButton value="alert">
-          <NotificationIcon aria-hidden /> Alert
+          <NotificationIcon aria-hidden />
+          Alert
         </ToggleButton>
         <ToggleButton disabled value="home">
-          <HomeIcon aria-hidden /> Home
+          <HomeIcon aria-hidden />
+          Home
         </ToggleButton>
         <ToggleButton value="search">
-          <SearchIcon aria-hidden /> Search
+          <SearchIcon aria-hidden />
+          Search
         </ToggleButton>
         <ToggleButton value="print">
-          <PrintIcon aria-hidden /> Print
+          <PrintIcon aria-hidden />
+          Print
         </ToggleButton>
       </ToggleButtonGroup>
     );
@@ -38,16 +42,20 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
     cy.mount(
       <ToggleButtonGroup aria-label="Toggle options" defaultSelected="home">
         <ToggleButton value="alert">
-          <NotificationIcon aria-hidden /> Alert
+          <NotificationIcon aria-hidden />
+          Alert
         </ToggleButton>
         <ToggleButton value="home">
-          <HomeIcon aria-hidden /> Home
+          <HomeIcon aria-hidden />
+          Home
         </ToggleButton>
         <ToggleButton value="search">
-          <SearchIcon aria-hidden /> Search
+          <SearchIcon aria-hidden />
+          Search
         </ToggleButton>
         <ToggleButton value="print">
-          <PrintIcon aria-hidden /> Print
+          <PrintIcon aria-hidden />
+          Print
         </ToggleButton>
       </ToggleButtonGroup>
     );
@@ -69,7 +77,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
       .and("have.attr", "tabindex", "-1");
   });
 
-  it("THEN should fire onChangeSpy on toggle button click", () => {
+  it("THEN should fire onSelectionChange on toggle button click", () => {
     const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
       <ToggleButtonGroup
@@ -77,16 +85,20 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
         onSelectionChange={selectionChangeSpy}
       >
         <ToggleButton value="alert">
-          <NotificationIcon aria-hidden /> Alert
+          <NotificationIcon aria-hidden />
+          Alert
         </ToggleButton>
         <ToggleButton disabled value="home">
-          <HomeIcon aria-hidden /> Home
+          <HomeIcon aria-hidden />
+          Home
         </ToggleButton>
         <ToggleButton value="search">
-          <SearchIcon aria-hidden /> Search
+          <SearchIcon aria-hidden />
+          Search
         </ToggleButton>
         <ToggleButton value="print">
-          <PrintIcon aria-hidden /> Print
+          <PrintIcon aria-hidden />
+          Print
         </ToggleButton>
       </ToggleButtonGroup>
     );
@@ -95,7 +107,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
 
     cy.get("@selectionChangeSpy").should("have.been.calledOnce");
     cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", {
-      target: {
+      currentTarget: {
         value: "search",
       },
     });
@@ -104,7 +116,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
     cy.findByRole("radio", { name: "Print" }).realClick();
     cy.get("@selectionChangeSpy").should("have.been.calledTwice");
     cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", {
-      target: {
+      currentTarget: {
         value: "print",
       },
     });
@@ -118,16 +130,20 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
         onSelectionChange={selectionChangeSpy}
       >
         <ToggleButton value="alert">
-          <NotificationIcon aria-hidden /> Alert
+          <NotificationIcon aria-hidden />
+          Alert
         </ToggleButton>
         <ToggleButton disabled value="home">
-          <HomeIcon aria-hidden /> Home
+          <HomeIcon aria-hidden />
+          Home
         </ToggleButton>
         <ToggleButton value="search">
-          <SearchIcon aria-hidden /> Search
+          <SearchIcon aria-hidden />
+          Search
         </ToggleButton>
         <ToggleButton value="print">
-          <PrintIcon aria-hidden /> Print
+          <PrintIcon aria-hidden />
+          Print
         </ToggleButton>
       </ToggleButtonGroup>
     );
@@ -147,7 +163,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
 });
 
 describe("GIVEN a ToggleButtonGroup (controlled)", () => {
-  it("THEN should respect `selectedIndex` prop", () => {
+  it("THEN should respect `selected` prop", () => {
     const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     const ControlledToggleGroupExample = () => {
       const [selected, setSelected] = useState<string>("home");
@@ -160,16 +176,20 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
       return (
         <ToggleButtonGroup selected={selected} onSelectionChange={handleChange}>
           <ToggleButton value="alert">
-            <NotificationIcon aria-hidden /> Alert
+            <NotificationIcon aria-hidden />
+            Alert
           </ToggleButton>
           <ToggleButton disabled value="home">
-            <HomeIcon aria-hidden /> Home
+            <HomeIcon aria-hidden />
+            Home
           </ToggleButton>
           <ToggleButton value="search">
-            <SearchIcon aria-hidden /> Search
+            <SearchIcon aria-hidden />
+            Search
           </ToggleButton>
           <ToggleButton value="print">
-            <PrintIcon aria-hidden /> Print
+            <PrintIcon aria-hidden />
+            Print
           </ToggleButton>
         </ToggleButtonGroup>
       );
@@ -204,7 +224,7 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
     cy.findAllByRole("radio").eq(0).realClick();
     cy.get("@changeSpy").should("have.been.calledOnce");
     cy.get("@changeSpy").should("have.been.calledWithMatch", {
-      target: {
+      currentTarget: {
         value: "alert",
       },
     });
@@ -226,16 +246,20 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
       return (
         <ToggleButtonGroup selected={selected} onSelectionChange={handleChange}>
           <ToggleButton value="alert">
-            <NotificationIcon aria-hidden /> Alert
+            <NotificationIcon aria-hidden />
+            Alert
           </ToggleButton>
           <ToggleButton disabled value="home">
-            <HomeIcon aria-hidden /> Home
+            <HomeIcon aria-hidden />
+            Home
           </ToggleButton>
           <ToggleButton value="search">
-            <SearchIcon aria-hidden /> Search
+            <SearchIcon aria-hidden />
+            Search
           </ToggleButton>
           <ToggleButton value="print">
-            <PrintIcon aria-hidden /> Print
+            <PrintIcon aria-hidden />
+            Print
           </ToggleButton>
         </ToggleButtonGroup>
       );
@@ -270,16 +294,20 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
           onSelectionChange={handleChange}
         >
           <ToggleButton value="alert">
-            <NotificationIcon aria-hidden /> Alert
+            <NotificationIcon aria-hidden />
+            Alert
           </ToggleButton>
           <ToggleButton disabled value="home">
-            <HomeIcon aria-hidden /> Home
+            <HomeIcon aria-hidden />
+            Home
           </ToggleButton>
           <ToggleButton value="search">
-            <SearchIcon aria-hidden /> Search
+            <SearchIcon aria-hidden />
+            Search
           </ToggleButton>
           <ToggleButton value="print">
-            <PrintIcon aria-hidden /> Print
+            <PrintIcon aria-hidden />
+            Print
           </ToggleButton>
         </ToggleButtonGroup>
       );

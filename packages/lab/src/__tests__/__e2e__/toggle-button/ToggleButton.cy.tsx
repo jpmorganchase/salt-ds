@@ -36,7 +36,7 @@ describe("GIVEN a ToggleButton with Icon and Text", () => {
     // toggle
     cy.findByRole("checkbox").realClick();
     cy.findByRole("checkbox").should("have.attr", "aria-checked", "true");
-    cy.get("@toggleSpy").should("have.been.calledTwice");
+    cy.get("@selectionChangeSpy").should("have.been.calledTwice");
   });
 });
 
