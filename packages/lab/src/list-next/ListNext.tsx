@@ -58,7 +58,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
   ) {
     const emptyList = Children.count(children) === 0;
 
-    const { listRef, focusedIndex, selectedIndexes, handleClick } = useList({
+    const { listRef, focusedIndex, selectedIndexes, activeDescendant, handleClick } = useList({
       children,
       deselectable,
       multiselect,
@@ -121,7 +121,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         )}
         role="listbox"
         tabIndex={disabled ? undefined : 0}
-        // aria-activedescendant={selectedIndex}
+        aria-activedescendant={activeDescendant}
         style={{
           ...style,
           "--list-displayedItemCount": getDisplayedItemCount(),

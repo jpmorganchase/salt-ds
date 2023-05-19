@@ -17,17 +17,6 @@ export const useList = ({ children, deselectable, multiselect, onFocus }) => {
   const [focusedIndex, setFocusedIndex] = useState<number>(null);
   const [startRangeIndex, setStartRangeIndex] = useState(0);
 
-  useEffect(() => {
-    const list = listRef.current;
-    if (list) {
-      list.addEventListener("keydown", handleKeyDown);
-      list.addEventListener("click", handleClick);
-      return () => {
-        list.removeEventListener("keydown", handleKeyDown);
-        list.addEventListener("click", handleClick);
-      };
-    }
-  }, []);
 
   const focusFirstItem = () => {
     const firstItem = listRef.current.querySelector('[role="option"]');
@@ -259,5 +248,17 @@ export const useList = ({ children, deselectable, multiselect, onFocus }) => {
       }
     }
   };
-  return { listRef, focusedIndex, selectedIndexes: selectedIndexesRef.current, handleClick };
+
+
+  useEffect(() => {
+    const list = listRef.current;
+    if (list) {
+      list.addEventListener("keydown", handleKeyDown);
+      return () => {
+        list.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [handleKeyDown]);
+
+  return { listRef, focusedIndex, selectedIndexes: selectedIndexesRef.current,activeDescendant: activeDescendantRef.current, handleClick };
 };

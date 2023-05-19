@@ -21,7 +21,7 @@ export const Highlighter = ({
       : matchPattern;
 
   if (matchRegex === undefined) {
-    return <>{text}</>;
+    return text;
   }
   return (
     <>

@@ -1,9 +1,9 @@
-import React, { forwardRef, HTMLAttributes } from "react";
-import { clsx } from "clsx";
-import { Checkbox, makePrefixer, Text, Tooltip } from "@salt-ds/core";
-import { Highlighter } from "./Highlighter";
+import React, {forwardRef, HTMLAttributes} from "react";
+import {clsx} from "clsx";
+import {Checkbox, makePrefixer, Text, Tooltip} from "@salt-ds/core";
+import {Highlighter} from "./Highlighter";
 import "./ListItemNext.css";
-import { useOverflowDetection } from "../utils";
+import {useOverflowDetection} from "../utils";
 
 const withBaseName = makePrefixer("saltListItemNext");
 
@@ -60,44 +60,50 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       },
     };
     // const [isFocused, setIsFocused] = useState(false);
-    return (
-      <Tooltip disabled={!isOverflowed} content={content} hideIcon>
-        <li
-          ref={ref}
-          className={className}
-          {...props}
-          aria-disabled={disabled || undefined}
-          aria-selected={selected || undefined}
-          role={role}
-          id={id}
-          onClick={onClick}
-          // tabIndex={tabIndex}
-          {...listItemControlProps}
-        >
-          {showCheckbox && (
-            <Checkbox aria-hidden checked={selected} disabled={disabled}/>
-          )}
-          {children && typeof children !== "string" ? (
-            children
-          ) : (
-            <Text
-              as="p"
-              className={withBaseName("textWrapper")}
-              disabled={disabled}
-              ref={overflowRef}
-            >
-              {itemTextHighlightPattern === null ? (
-                content
-              ) : (
-                <Highlighter
-                  matchPattern={itemTextHighlightPattern}
-                  text={label || (children as string)}
-                />
-              )}
-            </Text>
-          )}
-        </li>
-      </Tooltip>
+    const renderListItem = () => (
+      <li
+        ref={ref}
+        className={className}
+        {...props}
+        aria-disabled={disabled || undefined}
+        aria-selected={selected || undefined}
+        role={role}
+        id={id}
+        onClick={onClick}
+        // tabIndex={tabIndex}
+        {...listItemControlProps}
+      >
+        {showCheckbox && (
+          <Checkbox aria-hidden checked={selected} disabled={disabled}/>
+        )}
+        {children && typeof children !== "string" ? (
+          children
+        ) : (
+          <Text
+            as="p"
+            className={withBaseName("textWrapper")}
+            disabled={disabled}
+            ref={overflowRef}
+          >
+            {itemTextHighlightPattern === null ? (
+              content
+            ) : (
+              <Highlighter
+                matchPattern={itemTextHighlightPattern}
+                text={label || (children as string)}
+              />
+            )}
+          </Text>
+        )}
+      </li>
     );
+
+    return isOverflowed
+      ? <Tooltip disabled={!isOverflowed}
+                 content={content}
+                 hideIcon>
+        {renderListItem()}
+      </Tooltip>
+      : renderListItem();
   }
 );
