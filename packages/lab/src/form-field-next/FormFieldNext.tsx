@@ -43,6 +43,7 @@ export const FormField = forwardRef(
       children,
       className,
       disabled = false,
+      id: idProp,
       labelPlacement = "top",
       onBlur,
       onFocus,
@@ -53,16 +54,10 @@ export const FormField = forwardRef(
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const labelId = useId();
-    const helperTextId = useId();
+    const formId = useId(idProp);
 
-    const a11yProps = useMemo(
-      () => ({
-        "aria-labelledby": labelId,
-        "aria-describedby": helperTextId,
-      }),
-      [labelId, helperTextId]
-    );
+    const labelId = formId ? `label-${formId}` : undefined;
+    const helperTextId = formId ? `helperText-${formId}` : undefined;
 
     return (
       <div
@@ -80,7 +75,7 @@ export const FormField = forwardRef(
         {...restProps}
       >
         <FormFieldContextNext.Provider
-          value={{ a11yProps, disabled, readOnly, validationStatus }}
+          value={{ a11yProps: { labelId, helperTextId }, disabled, readOnly, validationStatus }}
         >
           {children}
         </FormFieldContextNext.Provider>

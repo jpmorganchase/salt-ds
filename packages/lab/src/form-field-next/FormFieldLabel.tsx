@@ -20,7 +20,7 @@ export const FormFieldLabel = ({
       className={clsx(withBaseName(), className)}
       disabled={disabled}
       variant="secondary"
-      id={a11yProps?.["aria-labelledby"]}
+      id={a11yProps?.labelId}
     >
       {children}
     </Label>

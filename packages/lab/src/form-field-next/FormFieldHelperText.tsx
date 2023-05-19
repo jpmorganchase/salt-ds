@@ -20,7 +20,7 @@ export const FormFieldHelperText = ({
         { [withBaseName("withValidation")]: validationStatus },
         className
       )}
-      id={a11yProps?.["aria-describedby"]}
+      id={a11yProps?.helperTextId}
     >
       {!disabled && !readOnly && validationStatus && (
         <StatusIndicator status={validationStatus} />
