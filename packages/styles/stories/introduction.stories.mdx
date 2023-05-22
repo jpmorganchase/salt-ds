@@ -16,7 +16,7 @@ Typically, this is done by CSS-in-JS libraries such as:
 - Tailwind CSS.
 
 We offer a style injection system for those developers looking to inject CSS into a given window.
-This is in order to support uses of Salt in a desktop application where pop-out elements—such as tooltips—are rendered into separate windows with no previously added CSS.
+This is in order to support uses of Salt in a desktop application where pop-out elements such as tooltips are rendered into separate windows with no previously added CSS.
 There are two packages that contain hooks to facilitate this: `@salt-ds/window` and `@salt-ds/styles`.
 `@salt-ds/styles` contains the `useComponentCssInjection` hook while `@salt-ds/window` contains the `useWindow` hook.
 
@@ -48,7 +48,7 @@ Internally, the hook uses a Map of Map objects to store if a CSS string has been
 
 Developers may want to control where the CSS is injected into the document, such as if a component library's styles are overriding an application's styles or if a developer wanted to inject styles into a shadow DOM.
 
-the location where `useComponentCssInjection` inserts the styles can be controlled using an `InsertionPointProvider`. The hook will then insert the given CSS string before the provided insertion point
+The location where `useComponentCssInjection` inserts the styles can be controlled using an `InsertionPointProvider`. The hook will then insert the given CSS string before the provided insertion point
 
 The following example shows how a developer would use an InsertionPointProvider to set the insertion point for the CSS to be the bottom of the head element. By default, the hook injects the CSS at the top of the head element.
 
