@@ -15,12 +15,13 @@ export const FormFieldLabel = ({
 
   return (
     <Label
+      aria-labelledby={a11yProps?.labelId}
       as="label"
-      {...restProps}
       className={clsx(withBaseName(), className)}
+      id={a11yProps?.labelId}
       disabled={disabled}
       variant="secondary"
-      id={a11yProps?.labelId}
+      {...restProps}
     >
       {children}
     </Label>

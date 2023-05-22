@@ -107,10 +107,7 @@ describe("GIVEN a FormFieldNext", () => {
           </FormFieldNext>
         );
 
-        cy.get(".saltStatusIndicator").should(
-          "not.have.class",
-          "saltStatusIndicator-error"
-        );
+        cy.get(".saltFormFieldHelperText").find(".saltStatusIndicator").should("not.exist");
       });
     });
 
@@ -122,17 +119,14 @@ describe("GIVEN a FormFieldNext", () => {
           </FormFieldNext>
         );
 
-        cy.get(".saltStatusIndicator").should(
-          "not.have.class",
-          "saltStatusIndicator-error"
-        );
+        cy.get(".saltFormFieldHelperText").find(".saltStatusIndicator").should("not.exist");
       });
     });
 
     describe("OR is success state", () => {
       it("THEN the success variant should show", () => {
         cy.mount(
-          <FormFieldNext readOnly validationStatus="success">
+          <FormFieldNext validationStatus="success">
             <MockChildren />
           </FormFieldNext>
         );
@@ -147,7 +141,7 @@ describe("GIVEN a FormFieldNext", () => {
     describe("OR is warning state", () => {
       it("THEN the warning variant should show", () => {
         cy.mount(
-          <FormFieldNext readOnly validationStatus="warning">
+          <FormFieldNext validationStatus="warning">
             <MockChildren />
           </FormFieldNext>
         );

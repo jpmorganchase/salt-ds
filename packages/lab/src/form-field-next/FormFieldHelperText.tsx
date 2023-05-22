@@ -16,6 +16,7 @@ export const FormFieldHelperText = ({
 
   return (
     <div
+      aria-describedby={a11yProps?.helperTextId}
       className={clsx(
         withBaseName(),
         { [withBaseName("withValidation")]: validationStatus },
