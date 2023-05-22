@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
-import { useFormFieldPropsNext } from "../form-field-context";
+import { useFormFieldPropsNext } from "../form-field-context-next";
 import { StatusAdornment } from "../status-adornment";
 
 import { useWindow } from "@salt-ds/window";
@@ -33,6 +33,11 @@ export interface InputProps
    */
   disabled?: HTMLInputElement["disabled"];
   /**
+   * The marker to use in an empty read only Input.
+   * Use `''` to disable this feature. Defaults to '—'.
+   */
+  emptyReadOnlyMarker?: string;
+  /**
    * End adornment component
    */
   endAdornment?: ReactNode;
@@ -48,6 +53,10 @@ export interface InputProps
    * Start adornment component
    */
   startAdornment?: ReactNode;
+  /**
+   * Alignment of text within container. Defaults to "left"
+   */
+  textAlign?: "left" | "center" | "right";
   /**
    * Validation status.
    */
@@ -69,10 +78,7 @@ function mergeA11yProps(
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {
-  const ariaLabelledBy = clsx(
-    a11yProps["aria-labelledby"],
-    inputProps["aria-labelledby"]
-  );
+  const ariaLabelledBy = clsx(a11yProps.labelId, inputProps["aria-labelledby"]);
 
   return {
     ...misplacedAriaProps,
@@ -92,6 +98,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     "aria-owns": ariaOwns,
     className: classNameProp,
     disabled,
+    emptyReadOnlyMarker = "—",
     endAdornment,
     id,
     inputProps: inputPropsProp,
@@ -99,6 +106,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     role,
     startAdornment,
     style,
+    textAlign = "left",
     value: valueProp,
     // If we leave both value and defaultValue undefined, we will get a React warning on first edit
     // (uncontrolled to controlled warning) from the React input
@@ -141,12 +149,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     inputPropsProp,
     misplacedAriaProps
   );
+  const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
+  const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
 
   const { onBlur, onChange, onFocus, ...restInputProps } = inputProps;
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
-    default: defaultValueProp,
+    default: defaultValue,
     name: "Input",
     state: "value",
   });
@@ -167,6 +177,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     setFocused(true);
   };
 
+  const inputStyle = {
+    "--inputNext-textAlign": textAlign,
+    ...style,
+  };
+
   return (
     <div
       className={clsx(
@@ -180,21 +195,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         },
         classNameProp
       )}
-      style={style}
+      style={inputStyle}
       {...other}
     >
-      {startAdornment && (
-        <div className={withBaseName("startAdornmentContainer")}>
-          {startAdornment}
-        </div>
-      )}
       <input
         id={id}
-        className={clsx(
-          withBaseName("input"),
-          { [withBaseName("withAdornment")]: validationStatus },
-          inputProps?.className
-        )}
+        className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
         readOnly={isReadOnly}
         ref={ref}
@@ -208,11 +214,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
       )}
-      {endAdornment && (
-        <div className={withBaseName("endAdornmentContainer")}>
-          {endAdornment}
-        </div>
-      )}
+      <div className={withBaseName("activationIndicator")} />
     </div>
   );
 });

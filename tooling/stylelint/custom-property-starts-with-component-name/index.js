@@ -94,7 +94,7 @@ const getFilesRecursively = (directorys) => {
 const allowedNames = getFilesRecursively([
   `./packages/core/src`,
   `./packages/icons/src`,
-  `./packages/grid/src`,
+  `./packages/data-grid/src`,
   `./packages/lab/src`,
 ]);
 const allowedNamesFormatted = allowedNames.map(

@@ -16,13 +16,13 @@ export const useSelection = ({
   defaultSelected?: number;
   highlightedIdx: number;
   onSelectionChange?: (tabIndex: number) => void;
-  selected?: number;
+  selected?: number | null;
 }): {
   activateTab: (tabIndex: number) => void;
   isControlled: boolean;
   onClick: (evt: MouseEvent<Element>, tabIndex: number) => void;
   onKeyDown: (evt: KeyboardEvent) => void;
-  selected: number;
+  selected: number | null;
 } => {
   const [selected, setSelected, isControlled] = useControlled({
     controlled: selectedProp,

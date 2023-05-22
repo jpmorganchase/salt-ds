@@ -1,5 +1,87 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.9
+
+### Minor Changes
+
+- 4bd407b6: Fix Tabstrip crashing when `activeTabIndex` is set to null
+- 3aba7cc0: Fixed id in `FormFieldNext`, and ids in `FormFieldLabel` and `FormFieldHelperText` from useFormFieldPropsNext
+  Deleted `a11yValueAriaProps`, replaced `a11yProps` type with `A11yValueProps` in `FormFieldContextNext`
+- e7230ade: Added `textAlign` prop to `InputNext` with possible configurations: "left" (default), "right", "center"
+- 2d63d305: Changes to Form Field and Input CSS:
+
+  - fixes background color when disabled
+  - fixes cursor on helper text
+  - fixes activation indicator width on active state
+  - usage of `grid-template-areas`
+
+  Removes CSS API variables:
+
+  ```diff
+  - --saltInputNext-borderColor-active
+  - --saltInputNext-borderColor-hover
+  - --saltInputNext-borderColor-focused
+  - --saltInputNext-borderWidth
+  - --saltInputNext-borderStyle
+  - --saltInputNext-borderRadius
+  - --saltInputNext-cursor
+  ```
+
+### Patch Changes
+
+- 922b1fb8: Updated Banner to use the new spacing foundation
+
+## 1.0.0-alpha.8
+
+### Minor Changes
+
+- 2e04f9bc: Moved `useFormFieldPropsNext` and `FormFieldContextNext` to `./form-field-context-next`
+  Move `a11yValueAriaProps`, `A11yValueProps` to `FormFieldContextNext`
+- b8ef52a3: Add `emptyReadOnlyMarker` prop to `InputNext`
+- c3b945f0: Removed `startAdornment` and `endAdornment` props in InputNext; adornments will come in Input v2
+
+### Patch Changes
+
+- ebf58d26: Banner
+
+  - Remove `render` prop
+  - Remove `Link` component from content
+  - Create composable components `BannerContent` and `BannerCloseButton`
+
+- 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
+
+## 1.0.0-alpha.7
+
+### Minor Changes
+
+- 562ddb0c: Added `endAdornment` and `startAdornment` props to `InputNext`
+- eeb45421: Switch `FormFieldNext` to use a compositional based API
+
+  ```jsx
+  <FormFieldNext {...props}>
+    <FormFieldLabel>My label</FormFieldLabel>
+    <InputNext defaultValue="Value" />
+    <FormFieldHelperText>Helper text</FormFieldHelperText>
+  </FormFieldNext>
+  ```
+
+  Removed `helperText`, `label` props from `FormFieldNext`
+
+  Removed `FormFieldLabelProps`
+  Removed `FormFieldHelperTextProps`
+
+- d0f97318: Added `validationStatus` to `InputNext`, `FormFieldNext`, `FormFieldContextNext`
+
+  Added `StatusAdornment`, `ErrorAdornment`, `SuccessAdornment`, `WarningAdornment` components
+
+  Removed `disabled` prop from `FormFieldHelperText`, `FormFieldLabel`
+
+  Renamed `useA11yValueValue` to `u11yValueAriaProps`
+  Removed `disabled` and `readOnly` out of `u11yValueAriaProps` and separated out `disabled`, `readOnly` within `FormFieldContextNext`
+  Removed `useA11yValue` hook
+
+  Removed `type`, `onChange` prop from InputNext
+
 ## 1.0.0-alpha.6
 
 ### Minor Changes

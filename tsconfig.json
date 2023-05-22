@@ -8,7 +8,7 @@
       "@stories/*": [
         "packages/ag-grid-theme/stories/*",
         "packages/core/stories/*",
-        "packages/grid/stories/*",
+        "packages/data-grid/stories/*",
         "packages/icons/stories/*",
         "packages/lab/stories/*",
         "packages/theme/stories/*"

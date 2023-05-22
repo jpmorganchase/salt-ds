@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { Label, makePrefixer, TextProps } from "@salt-ds/core";
-import { useFormFieldPropsNext } from "../form-field-context";
+import { useFormFieldPropsNext } from "../form-field-context-next";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -21,15 +21,16 @@ export const FormFieldLabel = ({
     window: targetWindow,
   });
 
-  const { disabled } = useFormFieldPropsNext();
+  const { a11yProps, disabled } = useFormFieldPropsNext();
 
   return (
     <Label
       as="label"
+      {...restProps}
       className={clsx(withBaseName(), className)}
       disabled={disabled}
       variant="secondary"
-      {...restProps}
+      id={a11yProps?.labelId}
     >
       {children}
     </Label>

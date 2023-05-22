@@ -1,7 +1,10 @@
 import { clsx } from "clsx";
-import { ForwardedRef, forwardRef, HTMLAttributes, useMemo } from "react";
-import { capitalize, makePrefixer, useId } from "@salt-ds/core";
-import { FormFieldContextNext } from "../form-field-context";
+import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
+import { makePrefixer, useId, capitalize } from "@salt-ds/core";
+import {
+  A11yValueProps,
+  FormFieldContextNext,
+} from "../form-field-context-next";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -27,27 +30,15 @@ export interface FormFieldProps
   readOnly?: boolean;
   /**
    * Optional id prop
+   *
+   * Used as suffix of FormFieldLabel id: `label-{id}`
+   * Used as suffix of FormFieldHelperText id: `helperText-{id}`
    */
   id?: string;
   /**
    * Validation status
    */
   validationStatus?: "error" | "warning" | "success";
-}
-
-export interface A11yValueProps {
-  /**
-   * id for FormFieldHelperText
-   */
-  helperTextId?: string;
-  /**
-   * id for FormFieldLabel
-   */
-  labelId?: string;
-}
-export interface a11yValueAriaProps {
-  "aria-labelledby": A11yValueProps["labelId"];
-  "aria-describedby": A11yValueProps["helperTextId"] | undefined;
 }
 
 const withBaseName = makePrefixer("saltFormFieldNext");
@@ -58,11 +49,11 @@ export const FormField = forwardRef(
       children,
       className,
       disabled = false,
+      id: idProp,
       labelPlacement = "top",
       onBlur,
       onFocus,
       readOnly = false,
-      id: idProp,
       validationStatus,
       ...restProps
     }: FormFieldProps,
@@ -75,16 +66,10 @@ export const FormField = forwardRef(
       window: targetWindow,
     });
 
-    const labelId = useId();
-    const helperTextId = useId();
+    const formId = useId(idProp);
 
-    const a11yProps = useMemo(
-      () => ({
-        "aria-labelledby": labelId,
-        "aria-describedby": helperTextId,
-      }),
-      [labelId, helperTextId]
-    );
+    const labelId = formId ? `label-${formId}` : undefined;
+    const helperTextId = formId ? `helperText-${formId}` : undefined;
 
     return (
       <div
@@ -102,7 +87,12 @@ export const FormField = forwardRef(
         {...restProps}
       >
         <FormFieldContextNext.Provider
-          value={{ a11yProps, disabled, readOnly, validationStatus }}
+          value={{
+            a11yProps: { labelId, helperTextId },
+            disabled,
+            readOnly,
+            validationStatus,
+          }}
         >
           {children}
         </FormFieldContextNext.Provider>
