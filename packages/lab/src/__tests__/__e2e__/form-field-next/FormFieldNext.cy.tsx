@@ -48,11 +48,7 @@ describe("GIVEN a FormFieldNext", () => {
         </FormFieldNext>
       );
 
-      cy.findByText("Label").should(
-        "have.attr",
-        "id",
-        "label-test-id"
-      );
+      cy.findByText("Label").should("have.attr", "id", "label-test-id");
       cy.findByText("Helper text").should(
         "have.attr",
         "id",
@@ -87,7 +83,7 @@ describe("GIVEN a FormFieldNext", () => {
       );
       // cy.get(".saltIcon").should(
       //   "have.css",
-      //   "fill", 
+      //   "fill",
       //   "rgb(227, 43, 22)"
       // );
     });
@@ -100,7 +96,9 @@ describe("GIVEN a FormFieldNext", () => {
           </FormFieldNext>
         );
 
-        cy.get(".saltFormFieldHelperText").find(".saltStatusIndicator").should("not.exist");
+        cy.get(".saltFormFieldHelperText")
+          .find(".saltStatusIndicator")
+          .should("not.exist");
       });
     });
 
@@ -112,7 +110,9 @@ describe("GIVEN a FormFieldNext", () => {
           </FormFieldNext>
         );
 
-        cy.get(".saltFormFieldHelperText").find(".saltStatusIndicator").should("not.exist");
+        cy.get(".saltFormFieldHelperText")
+          .find(".saltStatusIndicator")
+          .should("not.exist");
       });
     });
 
