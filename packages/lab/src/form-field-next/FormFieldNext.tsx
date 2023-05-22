@@ -78,7 +78,7 @@ export const FormField = forwardRef(
       >
         <FormFieldContextNext.Provider
           value={{
-            a11yProps: { labelId, helperTextId },
+            a11yProps: { "aria-labelledby": labelId, "aria-describedby": helperTextId },
             disabled,
             readOnly,
             validationStatus,

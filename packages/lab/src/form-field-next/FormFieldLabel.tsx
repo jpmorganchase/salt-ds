@@ -15,10 +15,9 @@ export const FormFieldLabel = ({
 
   return (
     <Label
-      aria-labelledby={a11yProps?.labelId}
       as="label"
       className={clsx(withBaseName(), className)}
-      id={a11yProps?.labelId}
+      id={a11yProps?.["aria-labelledby"]}
       disabled={disabled}
       variant="secondary"
       {...restProps}

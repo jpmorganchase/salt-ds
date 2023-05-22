@@ -50,12 +50,12 @@ describe("GIVEN a FormFieldNext", () => {
 
       cy.findByText("Label").should(
         "have.attr",
-        "aria-labelledby",
+        "id",
         "label-test-id"
       );
       cy.findByText("Helper text").should(
         "have.attr",
-        "aria-labelledby",
+        "id",
         "helperText-test-id"
       );
     });
@@ -68,8 +68,8 @@ describe("GIVEN a FormFieldNext", () => {
           <MockChildren />
         </FormFieldNext>
       );
-      cy.findByText("Label").should("have.attr", "disabled");
-      cy.findByText("Helper text").should("have.attr", "disabled");
+      cy.findByText("Label").should("have.class", ".saltText-disabled");
+      cy.findByText("Helper text").should("have.class", ".saltText-disabled");
     });
   });
 
@@ -97,6 +97,11 @@ describe("GIVEN a FormFieldNext", () => {
         "have.class",
         "saltStatusIndicator-error"
       );
+      // cy.get(".saltIcon").should(
+      //   "have.css",
+      //   "fill", 
+      //   "rgb(227, 43, 22)"
+      // );
     });
 
     describe("AND is disabled", () => {

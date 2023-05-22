@@ -75,7 +75,7 @@ function mergeA11yProps(
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {
-  const ariaLabelledBy = clsx(a11yProps.labelId, inputProps["aria-labelledby"]);
+  const ariaLabelledBy = clsx(a11yProps["aria-labelledby"], inputProps["aria-labelledby"]);
 
   return {
     ...misplacedAriaProps,
@@ -171,7 +171,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     "--inputNext-textAlign": textAlign,
     ...style,
   };
-
+console.log(restInputProps)
   return (
     <div
       className={clsx(
