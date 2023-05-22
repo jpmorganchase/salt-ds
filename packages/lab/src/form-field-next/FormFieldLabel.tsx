@@ -11,15 +11,16 @@ export const FormFieldLabel = ({
   children,
   ...restProps
 }: Omit<TextProps<"label">, "variant" | "styleAs">) => {
-  const { disabled } = useFormFieldPropsNext();
+  const { a11yProps, disabled } = useFormFieldPropsNext();
 
   return (
     <Label
       as="label"
+      {...restProps}
       className={clsx(withBaseName(), className)}
       disabled={disabled}
       variant="secondary"
-      {...restProps}
+      id={a11yProps?.labelId}
     >
       {children}
     </Label>
