@@ -40,7 +40,6 @@ describe("GIVEN a FormFieldNext", () => {
     });
   });
 
-
   describe("WHEN an id is provided", () => {
     it("THEN the label and helper text should have the corresponding ids", () => {
       cy.mount(
@@ -82,7 +81,7 @@ describe("GIVEN a FormFieldNext", () => {
         </FormFieldNext>
       );
 
-      cy.findByTestId("form-field-test").should("have.attr", "readonly");
+      cy.findByText("Helper text").should("have.attr", "readonly");
     });
   });
 
@@ -171,7 +170,7 @@ describe("GIVEN a FormFieldNext", () => {
         </FormFieldNext>
       );
 
-      cy.findByRole("textbox").focus();
+      cy.findByLabelText("Value").focus();
       cy.checkAxeComponent();
     });
   });
