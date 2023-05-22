@@ -70,7 +70,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-slider",
+    testId: "salt-slider",
     css: sliderCss,
     window: targetWindow,
   });

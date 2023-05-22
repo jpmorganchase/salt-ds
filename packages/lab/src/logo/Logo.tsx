@@ -56,7 +56,7 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
   } = props;
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-logo",
+    testId: "salt-logo",
     css: logoCss,
     window: targetWindow,
   });

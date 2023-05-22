@@ -23,7 +23,7 @@ export function HeaderRow<T>(props: HeaderRowProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-header-row",
+    testId: "salt-header-row",
     css: HeaderRowCss,
     window: targetWindow,
   });

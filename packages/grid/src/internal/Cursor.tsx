@@ -12,7 +12,7 @@ export interface CursorProps {}
 export function Cursor(props: CursorProps) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-cursor",
+    testId: "salt-cursor",
     css: CursorCss,
     window: targetWindow,
   });

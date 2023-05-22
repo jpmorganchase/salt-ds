@@ -31,7 +31,7 @@ export const CheckboxIcon = ({
 }: CheckboxIconProps): JSX.Element => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-checkbox-icon",
+    testId: "salt-checkbox-icon",
     css: checkboxIconCss,
     window: targetWindow,
   });

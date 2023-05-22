@@ -19,7 +19,7 @@ export const TabPanel = forwardRef(function TabPanel(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-tab-panel",
+    testId: "salt-tab-panel",
     css: tabPanelCss,
     window: targetWindow,
   });

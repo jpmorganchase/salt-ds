@@ -24,7 +24,7 @@ export const TabActivationIndicator = ({
 }: TabActivationIndicatorProps) => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-tab-activation-indicator",
+    testId: "salt-tab-activation-indicator",
     css: tabActivationIndicatorCss,
     window: targetWindow,
   });

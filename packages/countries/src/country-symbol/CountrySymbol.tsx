@@ -35,7 +35,7 @@ export const CountrySymbol = forwardRef<SVGSVGElement, CountrySymbolProps>(
   ) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-country-symbol",
+      testId: "salt-country-symbol",
       css: countrySymbolCss,
       window: targetWindow,
     });

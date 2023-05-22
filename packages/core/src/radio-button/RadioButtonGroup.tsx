@@ -59,7 +59,7 @@ export const RadioButtonGroup = forwardRef<
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-radiobutton-group",
+    testId: "salt-radiobutton-group",
     css: radioButtonGroupCss,
     window: targetWindow,
   });

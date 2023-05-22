@@ -34,7 +34,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
   ) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-metric-header",
+      testId: "salt-metric-header",
       css: metricHeaderCss,
       window: targetWindow,
     });

@@ -33,7 +33,7 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-panel",
+    testId: "salt-panel",
     css: panelCss,
     window: targetWindow,
   });

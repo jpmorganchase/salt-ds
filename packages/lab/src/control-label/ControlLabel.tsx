@@ -23,7 +23,7 @@ export const ControlLabel = forwardRef<HTMLLabelElement, ControlLabelProps>(
   ) => {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-control-label",
+      testId: "salt-control-label",
       css: controlLabelCss,
       window: targetWindow,
     });

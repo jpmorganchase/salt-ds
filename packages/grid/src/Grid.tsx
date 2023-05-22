@@ -214,7 +214,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-grid",
+    testId: "salt-grid",
     css: GridCss,
     window: targetWindow,
   });

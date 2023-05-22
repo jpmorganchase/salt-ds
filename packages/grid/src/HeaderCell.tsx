@@ -36,7 +36,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-header-cell",
+    testId: "salt-header-cell",
     css: HeaderCellCss,
     window: targetWindow,
   });

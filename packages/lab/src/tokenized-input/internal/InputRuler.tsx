@@ -18,7 +18,7 @@ export const InputRuler = forwardRef(function InputRuler(
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-input-ruler",
+    testId: "salt-input-ruler",
     css: inputRuler,
     window: targetWindow,
   });

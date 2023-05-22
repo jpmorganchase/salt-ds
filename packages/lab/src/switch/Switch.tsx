@@ -49,7 +49,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-switch",
+    testId: "salt-switch",
     css: switchCss,
     window: targetWindow,
   });

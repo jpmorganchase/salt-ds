@@ -10,7 +10,7 @@ export interface CornerTagProps {
 export function CornerTag(props: CornerTagProps) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-corner-tag",
+    testId: "salt-corner-tag",
     css: CornerTagCss,
     window: targetWindow,
   });

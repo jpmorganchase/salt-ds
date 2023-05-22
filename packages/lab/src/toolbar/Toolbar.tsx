@@ -51,7 +51,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
 
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-toolbar",
+      testId: "salt-toolbar",
       css: toolbarCss,
       window: targetWindow,
     });

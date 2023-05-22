@@ -15,7 +15,7 @@ export const DialogActions = forwardRef<HTMLDivElement, DialogActionsProps>(
   function DialogActions(props, ref) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-dialog-actions",
+      testId: "salt-dialog-actions",
       css: dialogActionsCss,
       window: targetWindow,
     });

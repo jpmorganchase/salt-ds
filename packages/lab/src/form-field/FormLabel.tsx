@@ -68,7 +68,7 @@ export const FormLabel = ({
 }: FormLabelProps) => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-form-label",
+    testId: "salt-form-label",
     css: formLabelCss,
     window: targetWindow,
   });

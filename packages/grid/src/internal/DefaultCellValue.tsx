@@ -17,7 +17,7 @@ export function DefaultCellValue<T>(props: GridCellValueProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-default-cell-value",
+    testId: "salt-default-cell-value",
     css: DefaultCellValueCss,
     window: targetWindow,
   });

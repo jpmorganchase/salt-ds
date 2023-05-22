@@ -93,7 +93,7 @@ export const ParentChildLayout = forwardRef<
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-parent-child-layout",
+    testId: "salt-parent-child-layout",
     css: parentChildLayoutCss,
     window: targetWindow,
   });

@@ -35,7 +35,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
   ) => {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-pagination",
+      testId: "salt-pagination",
       css: paginationCss,
       window: targetWindow,
     });

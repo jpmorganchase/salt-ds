@@ -35,7 +35,7 @@ export const ColorPicker = ({
 }: ColorPickerProps): JSX.Element => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-color-picker",
+    testId: "salt-color-picker",
     css: colorPickerCss,
     window: targetWindow,
   });

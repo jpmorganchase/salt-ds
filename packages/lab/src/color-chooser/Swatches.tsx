@@ -36,7 +36,7 @@ export const Swatches = ({
 }: SwatchesTabProps): JSX.Element => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-color-chooser-swatches",
+    testId: "salt-color-chooser-swatches",
     css: swatchesCss,
     window: targetWindow,
   });

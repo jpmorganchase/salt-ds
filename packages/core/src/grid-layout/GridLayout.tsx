@@ -64,7 +64,7 @@ export const GridLayout: GridLayoutComponent = forwardRef(
   ) => {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-grid-layout",
+      testId: "salt-grid-layout",
       css: gridLayoutCss,
       window: targetWindow,
     });

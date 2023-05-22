@@ -23,7 +23,7 @@ export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(
   function DialogTitle(props, ref) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-dialog-title",
+      testId: "salt-dialog-title",
       css: dialogTitleCss,
       window: targetWindow,
     });

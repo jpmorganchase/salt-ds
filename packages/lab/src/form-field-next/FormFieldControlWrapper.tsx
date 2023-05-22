@@ -11,7 +11,7 @@ const withBaseName = makePrefixer("saltFormFieldControlWrapper");
 export const FormFieldControlWrapper = ({ children }: PropsWithChildren) => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-form-field-control-wrapper",
+    testId: "salt-form-field-control-wrapper",
     css: formFieldControlWrapper,
     window: targetWindow,
   });

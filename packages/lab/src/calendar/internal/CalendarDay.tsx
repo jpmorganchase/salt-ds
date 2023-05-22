@@ -30,7 +30,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       props;
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-calendar-day",
+      testId: "salt-calendar-day",
       css: calendarDayCss,
       window: targetWindow,
     });

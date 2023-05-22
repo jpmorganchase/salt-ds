@@ -50,7 +50,7 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
   ) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-content-status",
+      testId: "salt-content-status",
       css: contentStatusCss,
       window: targetWindow,
     });

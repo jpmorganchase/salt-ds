@@ -15,7 +15,7 @@ export function RowSelectionCheckboxHeaderCellValue<T>(
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-checkbox-cell",
+    testId: "salt-checkbox-cell",
     css: CheckboxCellCss,
     window: targetWindow,
   });

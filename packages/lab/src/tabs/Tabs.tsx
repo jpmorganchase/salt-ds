@@ -46,7 +46,7 @@ export const Tabs = forwardRef(function Tabs(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-tabs",
+    testId: "salt-tabs",
     css: tabsCss,
     window: targetWindow,
   });

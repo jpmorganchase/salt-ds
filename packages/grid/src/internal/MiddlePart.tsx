@@ -43,7 +43,7 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-middle-part",
+    testId: "salt-middle-part",
     css: MiddlePartCss,
     window: targetWindow,
   });

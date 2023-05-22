@@ -73,7 +73,7 @@ export const GridItem: GridItemComponent = forwardRef(
   ) => {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-grid-item",
+      testId: "salt-grid-item",
       css: gridItemCss,
       window: targetWindow,
     });

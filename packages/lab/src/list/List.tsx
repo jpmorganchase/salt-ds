@@ -89,7 +89,7 @@ export const List = forwardRef(function List<
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-list",
+    testId: "salt-list",
     css: listCss,
     window: targetWindow,
   });

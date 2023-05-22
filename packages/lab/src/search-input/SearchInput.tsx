@@ -58,7 +58,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   ) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-search-input",
+      testId: "salt-search-input",
       css: searchInputCss,
       window: targetWindow,
     });

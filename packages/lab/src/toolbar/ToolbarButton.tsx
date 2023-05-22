@@ -15,7 +15,7 @@ export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
   function ToolbarButton({ label, ...props }, forwardedRef) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-toolbar-button",
+      testId: "salt-toolbar-button",
       css: toolbarButtonCss,
       window: targetWindow,
     });

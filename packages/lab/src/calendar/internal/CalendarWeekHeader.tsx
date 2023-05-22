@@ -20,7 +20,7 @@ export const CalendarWeekHeader = forwardRef<
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-calendar",
+    testId: "salt-calendar",
     css: calendarWeekHeaderCss,
     window: targetWindow,
   });

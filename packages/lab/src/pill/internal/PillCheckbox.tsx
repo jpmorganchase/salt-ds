@@ -11,7 +11,7 @@ const withBaseName = makePrefixer(`${pillBaseName}-checkbox`);
 export const PillCheckbox = (props: { checked?: boolean }): JSX.Element => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-pill-checkbox",
+    testId: "salt-pill-checkbox",
     css: pillCheckboxCss,
     window: targetWindow,
   });

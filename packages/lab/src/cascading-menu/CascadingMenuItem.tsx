@@ -77,7 +77,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-cascading-menu-item",
+      testId: "salt-cascading-menu-item",
       css: cascadingMenuItemCss,
       window: targetWindow,
     });

@@ -16,7 +16,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-dialog-content",
+      testId: "salt-dialog-content",
       css: dialogContentCss,
       window: targetWindow,
     });

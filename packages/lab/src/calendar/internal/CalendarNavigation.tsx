@@ -143,7 +143,7 @@ export const CalendarNavigation = forwardRef<
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-calendar-navigation",
+    testId: "salt-calendar-navigation",
     css: calendarNavigationCss,
     window: targetWindow,
   });

@@ -25,7 +25,7 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
   function SkipLink({ className, targetRef, ...rest }, ref) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-skip-link",
+      testId: "salt-skip-link",
       css: skipLinkCss,
       window: targetWindow,
     });

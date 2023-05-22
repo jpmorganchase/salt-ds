@@ -119,7 +119,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
   ) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-linear-progress",
+      testId: "salt-linear-progress",
       css: linearProgressCss,
       window: targetWindow,
     });
