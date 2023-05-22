@@ -295,4 +295,3 @@ describe("WHEN onTabMove is provided and tabstrip is controlled", () => {
     });
   });
 });
-
