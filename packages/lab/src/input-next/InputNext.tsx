@@ -171,7 +171,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     "--inputNext-textAlign": textAlign,
     ...style,
   };
-  
+
   return (
     <div
       className={clsx(

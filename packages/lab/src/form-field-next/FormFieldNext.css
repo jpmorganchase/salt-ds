@@ -11,9 +11,6 @@
   grid-template-columns: 40% 1fr;
 }
 
-.saltFormFieldNext-labelTop {
-}
-
 .saltFormFieldNext-controls {
   align-items: center;
   display: grid;

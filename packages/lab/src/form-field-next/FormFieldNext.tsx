@@ -68,7 +68,6 @@ export const FormField = forwardRef(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName("readOnly")]: readOnly,
             [withBaseName(`label${capitalize(labelPlacement)}`)]:
               labelPlacement,
           },

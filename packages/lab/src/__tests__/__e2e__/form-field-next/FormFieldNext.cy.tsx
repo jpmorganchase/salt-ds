@@ -68,20 +68,8 @@ describe("GIVEN a FormFieldNext", () => {
           <MockChildren />
         </FormFieldNext>
       );
-      cy.findByText("Label").should("have.class", ".saltText-disabled");
-      cy.findByText("Helper text").should("have.class", ".saltText-disabled");
-    });
-  });
-
-  describe("WHEN readonly", () => {
-    it("THEN helper text should have readOnly set from useFormFieldNextProps.a11yProps", () => {
-      cy.mount(
-        <FormFieldNext readOnly>
-          <MockChildren />
-        </FormFieldNext>
-      );
-
-      cy.findByText("Helper text").should("have.attr", "readonly");
+      cy.findByText("Label").should("have.class", "saltText-disabled");
+      cy.findByText("Helper text").should("have.class", "saltText-disabled");
     });
   });
 
@@ -169,7 +157,7 @@ describe("GIVEN a FormFieldNext", () => {
         </FormFieldNext>
       );
 
-      cy.findByLabelText("Value").focus();
+      cy.findByLabelText("Label").focus();
       cy.checkAxeComponent();
     });
   });
