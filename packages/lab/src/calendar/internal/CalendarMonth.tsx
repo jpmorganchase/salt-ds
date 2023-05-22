@@ -40,7 +40,7 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
 
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-calendar-month",
+      testId: "salt-calendar-month",
       css: calendarMonthCss,
       window: targetWindow,
     });

@@ -57,7 +57,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-table-row",
+    testId: "salt-table-row",
     css: TableRowCss,
     window: targetWindow,
   });

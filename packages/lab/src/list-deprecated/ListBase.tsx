@@ -144,7 +144,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-list-deprecated",
+    testId: "salt-list-deprecated",
     css: listCss,
     window: targetWindow,
   });

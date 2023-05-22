@@ -20,7 +20,7 @@ export const Highlighter = (
   const { matchPattern, text = "" } = props;
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-hightligher",
+    testId: "salt-hightligher",
     css: highligherCss,
     window: targetWindow,
   });

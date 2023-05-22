@@ -26,7 +26,7 @@ export const AccordionSummary = forwardRef<
 >(function AccordionSummary({ className, children, icon, ...restProps }, ref) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-accordion",
+    testId: "salt-accordion",
     css: accordionCss,
     window: targetWindow,
   });

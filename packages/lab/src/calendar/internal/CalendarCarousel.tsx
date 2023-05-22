@@ -40,7 +40,7 @@ export const CalendarCarousel = forwardRef<
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-calendar-carousel",
+    testId: "salt-calendar-carousel",
     css: calendarCarouselCss,
     window: targetWindow,
   });

@@ -11,7 +11,7 @@ export const Highlighter = (props) => {
   const { matchPattern, text = "" } = props;
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-highligher-deprecated",
+    testId: "salt-highligher-deprecated",
     css: highlighterCss,
     window: targetWindow,
   });

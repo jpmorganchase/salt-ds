@@ -111,7 +111,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-input-next",
+    testId: "salt-input-next",
     css: inputNextCss,
     window: targetWindow,
   });

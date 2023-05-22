@@ -41,7 +41,7 @@ export const StatusAdornment = forwardRef<SVGSVGElement, StatusAdornmentProps>(
 
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-status-adornment",
+      testId: "salt-status-adornment",
       css: statusAdornmentCss,
       window: targetWindow,
     });

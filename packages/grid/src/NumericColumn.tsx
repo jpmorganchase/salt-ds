@@ -30,7 +30,7 @@ export function NumericCellValue<T>(props: GridCellValueProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-numeric-column",
+    testId: "salt-numeric-column",
     css: NumericColumnCss,
     window: targetWindow,
   });

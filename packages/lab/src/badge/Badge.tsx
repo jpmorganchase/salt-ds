@@ -55,7 +55,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-badge",
+    testId: "salt-badge",
     css: badgeCss,
     window: targetWindow,
   });

@@ -89,7 +89,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-tooltip",
+      testId: "salt-tooltip",
       css: tooltipCss,
       window: targetWindow,
     });

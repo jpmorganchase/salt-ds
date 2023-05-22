@@ -88,7 +88,7 @@ export const Tree = forwardRef(function Tree<
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-tree",
+    testId: "salt-tree",
     css: treeCss,
     window: targetWindow,
   });

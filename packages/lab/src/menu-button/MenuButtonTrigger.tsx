@@ -26,7 +26,7 @@ export const MenuButtonTrigger = forwardRef<
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-menu-button-trigger",
+    testId: "salt-menu-button-trigger",
     css: menuButtonTrigger,
     window: targetWindow,
   });

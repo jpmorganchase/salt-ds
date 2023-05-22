@@ -151,7 +151,7 @@ export function SaltProvider({
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-provider",
+    testId: "salt-provider",
     css: saltProviderCss,
     window: targetWindow,
   });

@@ -28,7 +28,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-icon",
+    testId: "salt-icon",
     css: iconCss,
     window: targetWindow,
   });

@@ -63,7 +63,7 @@ export const Text: TextComponent = forwardRef(
   ) => {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-text",
+      testId: "salt-text",
       css: textCss,
       window: targetWindow,
     });

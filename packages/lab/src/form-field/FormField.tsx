@@ -223,7 +223,7 @@ export const FormField = forwardRef(
   ) => {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-form-field",
+      testId: "salt-form-field",
       css: formFieldCss,
       window: targetWindow,
     });

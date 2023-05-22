@@ -44,7 +44,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-right-part",
+    testId: "salt-right-part",
     css: RightPartCss,
     window: targetWindow,
   });

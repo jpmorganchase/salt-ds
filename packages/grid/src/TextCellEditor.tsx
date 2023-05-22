@@ -28,7 +28,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-text-cell-editor",
+    testId: "salt-text-cell-editor",
     css: TextCellEditorCss,
     window: targetWindow,
   });

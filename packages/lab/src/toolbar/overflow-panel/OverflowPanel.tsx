@@ -56,7 +56,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-overflow-panel",
+    testId: "salt-overflow-panel",
     css: overflowPanelCss,
     window: targetWindow,
   });

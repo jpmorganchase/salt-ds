@@ -18,7 +18,7 @@ export const OverflowSeparator = (
   const { className, focusable, ...rest } = props;
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-overflow-separator",
+    testId: "salt-overflow-separator",
     css: overflowSeparatorCss,
     window: targetWindow,
   });

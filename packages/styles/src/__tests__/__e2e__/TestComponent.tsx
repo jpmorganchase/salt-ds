@@ -18,7 +18,7 @@ const TestComponent = ({
   const { window: targetWindow } = useWindow();
 
   useComponentCssInjection({
-    id: injectionId,
+    testId: injectionId,
     css: injectionCss,
     window: targetWindow,
   });

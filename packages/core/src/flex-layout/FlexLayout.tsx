@@ -85,7 +85,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
   ) => {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-flex-layout",
+      testId: "salt-flex-layout",
       css: flexLayoutCss,
       window: targetWindow,
     });

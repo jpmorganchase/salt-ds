@@ -16,7 +16,7 @@ export interface ColumnDropTargetProps {
 export function ColumnDropTarget(props: ColumnDropTargetProps) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-column-drop-target",
+    testId: "salt-column-drop-target",
     css: ColumDropTargetCss,
     window: targetWindow,
   });

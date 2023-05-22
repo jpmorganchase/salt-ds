@@ -59,7 +59,7 @@ export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
   ) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-metric-content",
+      testId: "salt-metric-content",
       css: metricContentCss,
       window: targetWindow,
     });

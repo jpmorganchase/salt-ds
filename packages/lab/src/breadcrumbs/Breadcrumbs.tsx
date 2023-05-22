@@ -81,7 +81,7 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
 
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-breadcrumbs",
+      testId: "salt-breadcrumbs",
       css: breadcrumbsCss,
       window: targetWindow,
     });

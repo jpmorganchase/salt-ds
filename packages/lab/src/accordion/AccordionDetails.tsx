@@ -47,7 +47,7 @@ export const AccordionDetails = forwardRef<
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-accordion",
+    testId: "salt-accordion",
     css: accordionCss,
     window: targetWindow,
   });

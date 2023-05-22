@@ -89,7 +89,7 @@ export const CascadingMenuList = forwardRef<
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-cascading-menu-list",
+    testId: "salt-cascading-menu-list",
     css: cascadingMenuListCss,
     window: targetWindow,
   });

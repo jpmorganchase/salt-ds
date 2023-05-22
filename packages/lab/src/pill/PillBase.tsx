@@ -127,7 +127,7 @@ export const PillBase = forwardRef(function PillBase(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-pill",
+    testId: "salt-pill",
     css: pillCss,
     window: targetWindow,
   });

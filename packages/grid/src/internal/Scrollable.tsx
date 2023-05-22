@@ -46,7 +46,7 @@ export function Scrollable<T>(props: ScrollableProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-scrollable",
+    testId: "salt-scrollable",
     css: ScrollableCss,
     window: targetWindow,
   });

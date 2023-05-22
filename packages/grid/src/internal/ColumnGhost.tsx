@@ -26,7 +26,7 @@ export interface ColumnGhostProps<T> {
 export function ColumnGhost<T = any>(props: ColumnGhostProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-column-ghost",
+    testId: "salt-column-ghost",
     css: ColumnGhostCss,
     window: targetWindow,
   });

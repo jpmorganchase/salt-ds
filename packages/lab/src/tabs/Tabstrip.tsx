@@ -94,12 +94,12 @@ export const Tabstrip = forwardRef(function Tabstrip(
 ) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-tab-strip",
+    testId: "salt-tab-strip",
     css: tabstripCss,
     window: targetWindow,
   });
   useComponentCssInjection({
-    id: "salt-theme-tab-strip",
+    testId: "salt-theme-tab-strip",
     css: themeTabstripCss,
     window: targetWindow,
   });

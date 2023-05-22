@@ -82,7 +82,7 @@ export const Tab = forwardRef(function Tab(
   }
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-tab",
+    testId: "salt-tab",
     css: tabCss,
     window: targetWindow,
   });

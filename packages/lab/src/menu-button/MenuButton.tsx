@@ -28,7 +28,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
 
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-menu-button",
+      testId: "salt-menu-button",
       css: menuButtonCss,
       window: targetWindow,
     });

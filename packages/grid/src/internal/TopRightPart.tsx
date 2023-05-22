@@ -27,7 +27,7 @@ export function TopRightPart<T>(props: TopRightPartProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-top-right-part",
+    testId: "salt-top-right-part",
     css: TopRightPartCss,
     window: targetWindow,
   });

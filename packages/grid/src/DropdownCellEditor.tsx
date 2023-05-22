@@ -25,7 +25,7 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-dropdown-cell-editor",
+    testId: "salt-dropdown-cell-editor",
     css: DropdownCellEditorCss,
     window: targetWindow,
   });

@@ -30,7 +30,7 @@ export function TopPart<T>(props: TopPartProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-top-part",
+    testId: "salt-top-part",
     css: TopPartCss,
     window: targetWindow,
   });

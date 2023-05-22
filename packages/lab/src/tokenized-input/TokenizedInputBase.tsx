@@ -134,7 +134,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-tokenized-input",
+    testId: "salt-tokenized-input",
     css: tokenizedInputCss,
     window: targetWindow,
   });

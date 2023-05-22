@@ -47,7 +47,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-base-cell",
+    testId: "salt-base-cell",
     css: BaseCellCss,
     window: targetWindow,
   });

@@ -44,7 +44,7 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-left-part",
+    testId: "salt-left-part",
     css: LeftPartCss,
     window: targetWindow,
   });

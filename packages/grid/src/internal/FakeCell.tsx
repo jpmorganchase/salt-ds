@@ -18,7 +18,7 @@ export function FakeCell<T>(props: FakeCellProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-fake-cell",
+    testId: "salt-fake-cell",
     css: FakeCellCss,
     window: targetWindow,
   });

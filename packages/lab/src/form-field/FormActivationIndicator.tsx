@@ -60,7 +60,7 @@ export const FormActivationIndicator = ({
 }: FormActivationIndicatorProps) => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-form-activation-indicator",
+    testId: "salt-form-activation-indicator",
     css: formActivationIndicatorCss,
     window: targetWindow,
   });

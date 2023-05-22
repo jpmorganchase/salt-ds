@@ -16,7 +16,7 @@ export const SkipLinks = forwardRef<
   const { className, children, ...restProps } = props;
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-skip-links",
+    testId: "salt-skip-links",
     css: skipLinksCss,
     window: targetWindow,
   });

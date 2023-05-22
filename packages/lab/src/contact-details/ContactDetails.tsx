@@ -35,7 +35,7 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
 
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-contact-details",
+      testId: "salt-contact-details",
       css: contactDetailsCss,
       window: targetWindow,
     });

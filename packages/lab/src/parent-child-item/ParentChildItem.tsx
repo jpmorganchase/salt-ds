@@ -57,7 +57,7 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
   ) {
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
-      id: "salt-parent-child-item",
+      testId: "salt-parent-child-item",
       css: parentChildItemCss,
       window: targetWindow,
     });

@@ -22,7 +22,7 @@ export function GroupHeaderRow<T>(props: GroupHeaderRowProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-group-header-row",
+    testId: "salt-group-header-row",
     css: GroupHeaderRowCss,
     window: targetWindow,
   });

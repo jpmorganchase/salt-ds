@@ -21,7 +21,7 @@ export const RGBInput = ({
 }: RGBInputProps): JSX.Element => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-rgba-input",
+    testId: "salt-rgba-input",
     css: rgbaInputCss,
     window: targetWindow,
   });

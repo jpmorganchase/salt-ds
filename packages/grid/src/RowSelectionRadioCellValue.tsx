@@ -12,7 +12,7 @@ export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
 
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    id: "salt-checkbox-cell",
+    testId: "salt-checkbox-cell",
     css: CheckboxCellCss,
     window: targetWindow,
   });

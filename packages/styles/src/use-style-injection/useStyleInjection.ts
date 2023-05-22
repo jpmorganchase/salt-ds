@@ -9,7 +9,7 @@ const maybeUseInsertionEffect: typeof React.useLayoutEffect =
 type WindowLike = Window & typeof globalThis;
 
 export interface UseComponentCssInjection {
-  id?: string;
+  testId?: string;
   css: string;
   window?: WindowLike;
 }
@@ -21,7 +21,7 @@ type StyleElementMap = Map<
 
 const windowSheetsMap = new WeakMap<WindowLike, StyleElementMap>();
 export function useComponentCssInjection({
-  id,
+  testId,
   css,
   window: targetWindow,
 }: UseComponentCssInjection): void {
@@ -43,7 +43,7 @@ export function useComponentCssInjection({
     if (styleMap.styleElement == null) {
       styleMap.styleElement = targetWindow.document.createElement("style");
       styleMap.styleElement.setAttribute("type", "text/css");
-      styleMap.styleElement.setAttribute("data-salt-style", id || "");
+      styleMap.styleElement.setAttribute("data-salt-style", testId || "");
       styleMap.styleElement.textContent = css;
 
       styleMap.count = 1;
@@ -71,5 +71,5 @@ export function useComponentCssInjection({
         }
       }
     };
-  }, [id, css, targetWindow]);
+  }, [testId, css, targetWindow]);
 }
