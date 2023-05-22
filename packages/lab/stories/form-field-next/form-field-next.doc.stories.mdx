@@ -87,7 +87,7 @@ Form Field can be disabled via the prop `disabled`.
 
 - The prop should be applied to the field, not the control it contains, for expected results.
 - Fields are typically disabled if the context or required permissions prevent the user from interacting with a field.
-- Text contrast is not WCAG AA compliant; an editable field is only disabled if the field is not relevant at the current time.
+- Dsabled fields do not need to meet WCAG text contrast requirements.
 
 ## Readonly
 
@@ -122,7 +122,7 @@ Form Fields can show validation states (warning, success, error) with the prop `
 ### When to use Form Field
 
 - Use Form Field as a wrapper for editable components in a form layout—such as a simple form, filter panel or cash ticket.
-- We highly recommend using the Form Field Label and Form Field Helper Text components within Form Field to provide your form elements with the descriptive label and validation feedback required to ensure ADA compliance.
+- We highly recommend using the Form Field Label and Form Field Helper Text components within Form Field to provide your form elements with the descriptive label and validation feedback required to ensure accessibility compliance.
 - Align the Form Field to the correct Salt layout grid for your density and viewport size. Set the width of the form control to the number of columns that best reflects the length of the control’s expected value. The form control width can be set independently of the Label and Helper Text if required.
 
 # API
