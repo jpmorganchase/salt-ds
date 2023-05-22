@@ -22,34 +22,30 @@
   grid-column-gap: var(--salt-size-adornmentGap);
 }
 
-.saltFormFieldNext > * {
-  grid-row-start: 2;
-  grid-row-end: 3;
+.saltFormFieldNext {
+  grid-template-areas:
+    "label"
+    "controls"
+    "helperText";
 }
 
-.saltFormFieldNext > .saltFormFieldLabel {
-  grid-row-start: 1;
-  grid-row-end: 2;
+.saltFormFieldNext-labelLeft {
+  grid-template-areas:
+    "label controls"
+    "auto helperText";
 }
 
-.saltFormFieldNext-labelLeft > * {
-  grid-row-start: 1;
-  grid-row-end: 2;
+.saltFormFieldNext > *,
+.saltFormFieldControlWrapper {
+  grid-area: controls;
 }
 
-.saltFormFieldNext > .saltFormFieldHelperText {
-  grid-row-start: 3;
-  grid-row-end: 4;
+.saltFormFieldLabel {
+  grid-area: label;
 }
 
-.saltFormFieldNext.saltFormFieldNext-labelLeft > .saltFormFieldHelperText {
-  grid-row-start: 2;
-  grid-row-end: 3;
-}
-
-.saltFormFieldNext-labelLeft > .saltFormFieldLabel ~ * {
-  grid-column-start: 2;
-  grid-column-end: 2;
+.saltFormFieldHelperText {
+  grid-area: helperText;
 }
 
 .saltFormFieldNext-disabled .saltInputNext-focused {

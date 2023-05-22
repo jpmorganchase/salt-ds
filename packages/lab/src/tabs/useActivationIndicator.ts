@@ -28,7 +28,7 @@ export function useActivationIndicator({
   orientation,
 }: {
   rootRef: RefObject<HTMLDivElement | null>;
-  tabId?: string;
+  tabId?: string | null;
   orientation: orientationType;
 }): activationIndicatorStyles {
   const [style, setStyle] = useState<activationIndicatorStyles>({

@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState, createContext } from "react";
+import { FC, ReactElement, useState, createContext, ChangeEvent } from "react";
 import clsx from "clsx";
 import {
   Switch,
@@ -8,12 +8,13 @@ import {
 } from "@salt-ds/lab";
 import { LightIcon, DarkIcon } from "@salt-ds/icons";
 import { SaltProvider, Density, Mode } from "@salt-ds/core";
+import ExamplesListView from "./ExamplesListView";
 import useIsMobileView from "../../utils/useIsMobileView";
 
 import styles from "./LivePreviewControls.module.css";
 
 type LivePreviewControlsProps = {
-  children?: ReactNode;
+  children: ReactElement[];
 };
 
 const densities: Density[] = ["high", "medium", "low", "touch"];
@@ -38,6 +39,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
 
   const [mode, setMode] = useState<Mode>(defaultMode);
 
+  const [listView, setListView] = useState(true);
+
   const isMobileView = useIsMobileView();
 
   const handleDensityChange: ToggleButtonGroupChangeEventHandler = (
@@ -55,12 +58,24 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     setMode(mode ?? defaultMode);
   };
 
+  const handleListViewChange = (
+    _: ChangeEvent<HTMLInputElement>,
+    isChecked: boolean
+  ) => {
+    setListView(isChecked);
+  };
+
   return (
     <>
       <SaltProvider density="medium">
         <div className={styles.controls}>
-          {/*  TODO: add examples list view */}
-          {!isMobileView && <Switch label="All examples" />}
+          {!isMobileView && (
+            <Switch
+              label="All examples"
+              checked={listView}
+              onChange={handleListViewChange}
+            />
+          )}
           <div className={styles.toggleButtonGroups}>
             <div
               className={clsx(styles.density, {
@@ -108,7 +123,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
         </div>
       </SaltProvider>
       <LivePreviewContext.Provider value={{ density, mode }}>
-        {children}
+        {listView ? <ExamplesListView examples={children} /> : children}
       </LivePreviewContext.Provider>
     </>
   );

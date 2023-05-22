@@ -1,5 +1,40 @@
 # @salt-ds/theme
 
+## 1.5.0
+
+### Minor Changes
+
+- b6f304f9: Added size tokens
+
+  ```diff
+  + --salt-size-adornment
+  + --salt-size-bar
+  + --salt-size-selectable
+  + --salt-size-icon
+  ```
+
+  `--salt-size-base ` changed from a calculation on the basis unit to hardcoded values per density
+  `--salt-size-border` defined as 1px per density rather than set globally
+
+- e8b146a5: Add new spacing tokens and a spacing foundation.
+
+  ```css
+  --salt-spacing-25
+  --salt-spacing-50
+  --salt-spacing-75
+  --salt-spacing-100
+  --salt-spacing-150
+  --salt-spacing-200
+  --salt-spacing-250
+  --salt-spacing-300
+  --salt-spacing-350
+  --salt-spacing-400
+  ```
+
+### Patch Changes
+
+- 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
+
 ## 1.4.0
 
 ### Minor Changes

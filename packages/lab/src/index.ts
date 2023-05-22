@@ -45,7 +45,6 @@ export {
 export * from "./form-field-context";
 export {
   type A11yValueProps as A11yValuePropsNext,
-  type a11yValueAriaProps as a11yValueAriaPropsNext,
   type FormFieldContextNextValue,
   FormFieldContextNext,
 } from "./form-field-context-next";
