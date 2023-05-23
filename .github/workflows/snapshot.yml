@@ -115,7 +115,7 @@ jobs:
             const [_, packagesStdin] = output.split("success packages published successfully:\n")
 
             const newTags = packagesStdin ? packagesStdin.split("\n").flatMap(package => Array.from(package.matchAll(/\s+(.*)/g),m => m[1])) : [];
-              .map(([_, tag]) => tag)
+
             if (newTags.length) {
               const multiple = newTags.length > 1
               const body = (

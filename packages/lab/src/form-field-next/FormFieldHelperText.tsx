@@ -11,7 +11,8 @@ export const FormFieldHelperText = ({
   children,
   ...restProps
 }: Omit<TextProps<"label">, "variant" | "styleAs">) => {
-  const { disabled, readOnly, validationStatus } = useFormFieldPropsNext();
+  const { a11yProps, disabled, readOnly, validationStatus } =
+    useFormFieldPropsNext();
 
   return (
     <div
@@ -26,6 +27,7 @@ export const FormFieldHelperText = ({
       )}
       <Text
         disabled={disabled}
+        id={a11yProps?.["aria-describedby"]}
         variant="secondary"
         styleAs="label"
         {...restProps}
