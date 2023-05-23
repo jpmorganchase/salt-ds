@@ -1,4 +1,4 @@
-.saltGridCell {
+.saltGridCellFrame {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -11,11 +11,11 @@
   outline: 0;
 }
 
-.saltGridCell-selected {
+.saltGridCellFrame-selected {
   background: var(--grid-cell-background-selected);
 }
 
-.saltGridCell-rowSeparator {
+.saltGridCellFrame-rowSeparator {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -24,7 +24,7 @@
   background-color: var(--grid-row-borderColor);
 }
 
-.saltGridCell-topSeparator {
+.saltGridCellFrame-topSeparator {
   position: absolute;
   top: 0;
   right: 0;
@@ -34,11 +34,11 @@
   display: none;
 }
 
-.saltGridTableRow-first .saltGridCell-topSeparator {
+.saltGridTableRow-first .saltGridCellFrame-topSeparator {
   display: unset;
 }
 
-.saltGridCell-columnSeparator {
+.saltGridCellFrame-columnSeparator {
   position: absolute;
   top: 0;
   right: 0;
@@ -47,23 +47,23 @@
   background-color: var(--grid-row-background);
 }
 
-.saltGrid-columnSeparators .saltGridCell-regularSeparator .saltGridCell-columnSeparator {
+.saltGrid-columnSeparators .saltGridCellFrame-regularSeparator .saltGridCellFrame-columnSeparator {
   background-color: var(--grid-columnSeparator-color);
 }
 
-.saltGrid-columnSeparators .saltGridCell-pinnedSeparator .saltGridCell-columnSeparator {
+.saltGrid-columnSeparators .saltGridCellFrame-pinnedSeparator .saltGridCellFrame-columnSeparator {
   background-color: var(--grid-columnSeparator-color);
 }
 
-.saltGrid-pinnedSeparators .saltGridCell-pinnedSeparator .saltGridCell-columnSeparator {
+.saltGrid-pinnedSeparators .saltGridCellFrame-pinnedSeparator .saltGridCellFrame-columnSeparator {
   background-color: var(--grid-pinnedSeparator-color);
 }
 
-.saltGridTableRow-selected.saltGridTableRow-first .saltGridCell-topSeparator {
+.saltGridTableRow-selected.saltGridTableRow-first .saltGridCellFrame-topSeparator {
   background-color: var(--grid-row-borderColor);
 }
 
-.saltGridCell-body {
+.saltGridCellFrame-body {
   box-sizing: border-box;
   position: absolute;
   top: 0;
@@ -74,6 +74,6 @@
   border-right: solid 1px transparent;
 }
 
-.saltGridTableRow-first .saltGridCell-body {
+.saltGridTableRow-first .saltGridCellFrame-body {
   top: 1px;
 }

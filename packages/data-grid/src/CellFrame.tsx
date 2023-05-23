@@ -1,22 +1,23 @@
 import { makePrefixer } from "@salt-ds/core";
-import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
-import "./Cell.css";
+import { forwardRef, HTMLAttributes } from "react";
 import { ColumnSeparatorType } from "./Grid";
 
-export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
+import "./CellFrame.css";
+
+export interface CellFrameProps extends HTMLAttributes<HTMLTableCellElement> {
   isSelected?: boolean;
   isEditable?: boolean;
   separator?: ColumnSeparatorType;
 }
 
-const withBaseName = makePrefixer("saltGridCell");
+const withBaseName = makePrefixer("saltGridCellFrame");
 
 /**
  * Frame around a cell, containing styles of states (e.g. selected), different cell types (e.g. editable, separator), etc.
  * This is useful to implement a custom type of cell / cell editor.
  * */
-export const CellFrame = forwardRef<HTMLTableCellElement, CellProps>(
+export const CellFrame = forwardRef<HTMLTableCellElement, CellFrameProps>(
   function CellFrame(props, ref) {
     const {
       children,
