@@ -83,7 +83,7 @@ export const Label: ComponentStory<typeof FormField> = (props) => {
       <FormField {...props}>
         <FormLabel>
           Form Field label that's extra long. Showing that labels wrap around to
-          the  line.
+          the line.
         </FormLabel>
         <InputNext defaultValue="Primary Input value" />
       </FormField>
@@ -101,7 +101,7 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
       <FormField labelPlacement="left" {...props}>
         <FormLabel>
           Form Field label that's extra long. Showing that labels wrap around to
-          the  line.
+          the line.
         </FormLabel>
         <InputNext defaultValue="Primary Input value" />
       </FormField>

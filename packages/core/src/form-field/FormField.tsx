@@ -1,9 +1,6 @@
 import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
-import {
-  A11yValueProps,
-  FormFieldContext,
-} from "../form-field-context";
+import { A11yValueProps, FormFieldContext } from "../form-field-context";
 import { makePrefixer, useId, capitalize } from "../utils";
 
 import "./FormField.css";

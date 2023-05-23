@@ -1,4 +1,4 @@
-import { createContext } from "@salt-ds/core";
+import { createContext } from "../utils";
 
 export interface A11yValueProps {
   /**

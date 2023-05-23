@@ -1,11 +1,5 @@
-import {
-  FormField,
-  FormFieldLabel,
-  FormFieldHelperText
-} from "@salt-ds/core";
-import {
-  InputNext,
-} from "@salt-ds/lab";
+import { FormField, FormFieldLabel, FormFieldHelperText } from "@salt-ds/core";
+import { InputNext } from "@salt-ds/lab";
 
 const MockChildren = () => {
   return (
