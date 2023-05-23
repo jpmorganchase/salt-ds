@@ -15,7 +15,7 @@ import "./InputNext.css";
 const withBaseName = makePrefixer("saltInputNext");
 
 export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "defaultValue"> {
+  extends Omit<InputHTMLAttributes<HTMLDivElement>, "defaultValue"> {
   /**
    * The value of the `input` element, required for an uncontrolled component.
    */
