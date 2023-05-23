@@ -147,6 +147,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         },
         classNameProp
       )}
+      ref={ref}
       style={inputStyle}
       {...other}
     >
@@ -156,7 +157,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
         readOnly={isReadOnly}
-        ref={ref}
         value={value}
         tabIndex={isReadOnly || isDisabled ? -1 : 0}
         onBlur={handleBlur}
