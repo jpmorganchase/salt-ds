@@ -17,7 +17,7 @@ const MockChildren = () => {
 
 describe("GIVEN a FormFieldNext", () => {
   describe("WHEN FormFieldLabel is provided", () => {
-    it("THEN the helperText is rendered", () => {
+    it("THEN the label is rendered", () => {
       cy.mount(
         <FormFieldNext>
           <MockChildren />
@@ -29,7 +29,7 @@ describe("GIVEN a FormFieldNext", () => {
   });
 
   describe("WHEN FormFieldHelperText is provided", () => {
-    it("THEN the helperText is rendered", () => {
+    it("THEN the helper text is rendered", () => {
       cy.mount(
         <FormFieldNext>
           <MockChildren />
@@ -81,11 +81,6 @@ describe("GIVEN a FormFieldNext", () => {
         "have.class",
         "saltStatusIndicator-error"
       );
-      // cy.get(".saltIcon").should(
-      //   "have.css",
-      //   "fill",
-      //   "rgb(227, 43, 22)"
-      // );
     });
 
     describe("AND is disabled", () => {
