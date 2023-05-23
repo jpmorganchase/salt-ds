@@ -63,7 +63,7 @@ export interface InputProps
   variant?: "primary" | "secondary";
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   {
     "aria-activedescendant": ariaActiveDescendant,
     "aria-expanded": ariaExpanded,
