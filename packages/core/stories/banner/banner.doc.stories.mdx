@@ -16,20 +16,27 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Banner
 
-The Banner component lets your users know about an error, warning, a successfully completed process or an information update. The banner should relate to the current workflow
-and span the page or container horizontally to give quick and non-disruptive feedback.
+The Banner component lets your users know about an error, warning, a successfully completed process or an information update. The banner should relate to the current workflow and span the page or container horizontally to give quick and non-disruptive feedback.
 
 ## How you can use Banner
 
-The Banner itself is only a presentational component, it does not provide the logic for deciding whether to render
-or not. You will need to provide state management for deciding when to render a Banner.
+The Banner itself is only a presentational component, it does not provide the logic for deciding whether to render or not. You will need to provide state management for deciding when to render a Banner.
 
-You should always position the Banner component in the main content area, directly below
-the navigation or in the related container component.
+You should always position the Banner component in the main content area, directly below the navigation or in the related container component.
 
 <Canvas>
   <Story id="core-banner--default" />
 </Canvas>
+
+## Banner composition components
+
+### BannerContent
+
+It is recommended to use `BannerContent` component instead of `children` for styling purposes.
+
+### BannerCloseButton
+
+Use `BannerCloseButton` when you want to make your Banner dismissible. See Dismissible section bellow.
 
 ## Banner Status
 
@@ -41,8 +48,7 @@ Banner contains four statuses `info`, `warning`, `error` and `success`. If not s
 
 If you need to share multiple notifications of the same state with your users, you should summarize them in a single Banner
 
-If you have multiple notifications of different states, you should stack the respective banners from top to bottom,
-in the following order: Information, Error, Warning, Success.
+If you have multiple notifications of different states, you should stack the respective banners from top to bottom, in the following order: Information, Error, Warning, Success.
 
 ## Emphasized
 
@@ -147,8 +153,6 @@ task has been successfully completed.
 <CSSClassTable of={Banner} />
 
 ### Characteristics Used
-
-<CharacteristicUsage of={Banner} />
 
 ## Accessibility
 
