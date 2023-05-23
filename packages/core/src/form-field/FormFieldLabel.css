@@ -4,6 +4,6 @@
   width: 100%;
 }
 
-.saltFormFieldLabel:hover + .saltFormFieldNext-controls * {
+.saltFormFieldLabel:hover + .saltFormField-controls * {
   --inputNext-borderColor: var(--inputNext-borderColor-hover);
 }

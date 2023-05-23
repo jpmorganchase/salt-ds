@@ -40,18 +40,7 @@ export {
   type FormFieldLegacyProps as FormFieldProps,
   FormLabel,
 } from "./form-field-legacy";
-export {
-  FormField as FormFieldNext,
-  FormFieldHelperText,
-  FormFieldLabel,
-  FormFieldControlWrapper,
-} from "./form-field-next";
 export * from "./form-field-context-legacy";
-export {
-  type A11yValueProps as A11yValuePropsNext,
-  type FormFieldContextNextValue,
-  FormFieldContextNext,
-} from "./form-field-context-next";
 export * from "./form-group";
 export * from "./formatted-input";
 export * from "./input";

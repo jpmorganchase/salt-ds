@@ -9,8 +9,7 @@ import {
   ReactNode,
   useState,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
-import { useFormFieldPropsNext } from "../form-field-context-next";
+import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
 import { StatusAdornment } from "../status-adornment";
 
 import "./InputNext.css";
@@ -70,7 +69,7 @@ export interface InputProps
 
 function mergeA11yProps(
   a11yProps: Partial<
-    ReturnType<typeof useFormFieldPropsNext>["a11yProps"]
+    ReturnType<typeof useFormFieldProps>["a11yProps"]
   > = {},
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
@@ -122,7 +121,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
     a11yProps,
-  } = useFormFieldPropsNext();
+  } = useFormFieldProps();
 
   const isDisabled = disabled || formFieldDisabled;
   const isReadOnly = readOnlyProp || formFieldReadOnly;
