@@ -152,7 +152,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {...other}
     >
       <input
-        aria-label={clsx(a11yProps?.["aria-labelledby"], inputProps["aria-labelledby"])}
+        aria-label={clsx(
+          a11yProps?.["aria-labelledby"],
+          inputProps["aria-labelledby"]
+        )}
         id={id}
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
