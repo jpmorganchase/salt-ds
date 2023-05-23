@@ -68,7 +68,6 @@ export const FormField = forwardRef(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName("readOnly")]: readOnly,
             [withBaseName(`label${capitalize(labelPlacement)}`)]:
               labelPlacement,
           },
@@ -78,7 +77,10 @@ export const FormField = forwardRef(
       >
         <FormFieldContextNext.Provider
           value={{
-            a11yProps: { labelId, helperTextId },
+            a11yProps: {
+              "aria-labelledby": labelId,
+              "aria-describedby": helperTextId,
+            },
             disabled,
             readOnly,
             validationStatus,
