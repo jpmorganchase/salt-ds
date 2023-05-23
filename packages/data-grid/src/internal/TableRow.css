@@ -32,7 +32,7 @@
   --grid-row-background: var(--grid-row-background-selected);
 }
 
-.saltGridTableRow-selected .saltGridCell:before {
+.saltGridTableRow-selected .saltGridCellFrame:before {
   content: "";
   position: absolute;
   top: -1px;

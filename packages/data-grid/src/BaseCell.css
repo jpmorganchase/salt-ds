@@ -14,17 +14,17 @@
   --grid-cell-padding: 0 calc(var(--grid-padding) - 1px);
 }
 
-.saltGridCell-editable .saltGridBaseCell-valueContainer {
+.saltGridCellFrame-editable .saltGridBaseCell-valueContainer {
   border-style: solid;
   border-width: 1px;
   border-color: var(--grid-editableCell-borderColor);
 }
 
-.saltGridCell-editable:hover .saltGridBaseCell-valueContainer {
+.saltGridCellFrame-editable:hover .saltGridBaseCell-valueContainer {
   border-color: var(--grid-editableCell-borderColor-hover);
 }
 
-.saltGridCell-editable:focus .saltGridBaseCell-valueContainer {
+.saltGridCellFrame-editable:focus .saltGridBaseCell-valueContainer {
   border-color: transparent;
 }
 
@@ -43,7 +43,7 @@
   --status-background-color: var(--salt-status-success-background-emphasize);
 }
 
-.saltGridCell-editable .saltGridBaseCell-valueContainer {
+.saltGridCellFrame-editable .saltGridBaseCell-valueContainer {
   border-color: var(--status-border-color);
 }
 
