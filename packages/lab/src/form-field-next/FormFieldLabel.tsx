@@ -26,11 +26,11 @@ export const FormFieldLabel = ({
   return (
     <Label
       as="label"
-      {...restProps}
       className={clsx(withBaseName(), className)}
+      id={a11yProps?.["aria-labelledby"]}
       disabled={disabled}
       variant="secondary"
-      id={a11yProps?.labelId}
+      {...restProps}
     >
       {children}
     </Label>
