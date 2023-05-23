@@ -1,10 +1,8 @@
 import { clsx } from "clsx";
 import {
-  AriaAttributes,
   ChangeEvent,
   FocusEvent,
   forwardRef,
-  HTMLAttributes,
   InputHTMLAttributes,
   ReactNode,
   useState,
@@ -16,10 +14,8 @@ import "./InputNext.css";
 
 const withBaseName = makePrefixer("saltInputNext");
 
-// TODO: Double confirm whether this should be extending DivElement given root is `<div>`.
-// And forwarded ref is not assigned to the root like other components.
 export interface InputProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "defaultValue"> {
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "defaultValue"> {
   /**
    * The value of the `input` element, required for an uncontrolled component.
    */
@@ -67,27 +63,6 @@ export interface InputProps
   variant?: "primary" | "secondary";
 }
 
-function mergeA11yProps(
-  a11yProps: Partial<ReturnType<typeof useFormFieldProps>["a11yProps"]> = {},
-  inputProps: InputProps["inputProps"] = {},
-  misplacedAriaProps: AriaAttributes
-) {
-  const ariaLabelledBy = clsx(
-    a11yProps["aria-labelledby"],
-    inputProps["aria-labelledby"]
-  );
-
-  return {
-    ...misplacedAriaProps,
-    ...a11yProps,
-    ...inputProps,
-    // TODO: look at this - The weird filtering is due to TokenizedInputBase
-    "aria-label": ariaLabelledBy
-      ? Array.from(new Set(ariaLabelledBy.split(" "))).join(" ")
-      : undefined,
-  };
-}
-
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   {
     "aria-activedescendant": ariaActiveDescendant,
@@ -98,15 +73,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     emptyReadOnlyMarker = "—",
     endAdornment,
     id,
-    inputProps: inputPropsProp,
+    inputProps = {},
     readOnly: readOnlyProp,
     role,
     startAdornment,
     style,
     textAlign = "left",
     value: valueProp,
-    // If we leave both value and defaultValue undefined, we will get a React warning on first edit
-    // (uncontrolled to controlled warning) from the React input
     defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
     validationStatus: validationStatusProp,
     variant = "primary",
@@ -128,17 +101,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 
   const [focused, setFocused] = useState(false);
 
-  const misplacedAriaProps = {
-    "aria-activedescendant": ariaActiveDescendant,
-    "aria-expanded": ariaExpanded,
-    "aria-owns": ariaOwns,
-    role,
-  };
-  const inputProps = mergeA11yProps(
-    a11yProps,
-    inputPropsProp,
-    misplacedAriaProps
-  );
   const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
   const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
 
@@ -189,6 +151,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {...other}
     >
       <input
+        aria-label={clsx(a11yProps?.["aria-labelledby"], inputProps["aria-labelledby"])}
         id={id}
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
@@ -199,6 +162,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         onBlur={handleBlur}
         onChange={handleChange}
         onFocus={!isDisabled ? handleFocus : undefined}
+        {...a11yProps}
         {...restInputProps}
       />
       {!isDisabled && !isReadOnly && validationStatus && (
