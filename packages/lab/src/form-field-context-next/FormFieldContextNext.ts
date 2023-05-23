@@ -9,8 +9,14 @@ export interface A11yValueProps {
    */
   labelId?: string;
 }
+
+export interface a11yValueAriaProps {
+  "aria-labelledby": A11yValueProps["labelId"];
+  "aria-describedby": A11yValueProps["helperTextId"] | undefined;
+}
+
 export interface FormFieldContextNextValue {
-  a11yProps: A11yValueProps;
+  a11yProps: a11yValueAriaProps;
   disabled: boolean;
   readOnly: boolean;
   validationStatus: "error" | "warning" | "success" | undefined;
