@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 import "./Cell.css";
-import { ColumnSeparatorType } from "../Grid";
+import { ColumnSeparatorType } from "./Grid";
 
 export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
   isSelected?: boolean;
@@ -12,7 +12,11 @@ export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
 
 const withBaseName = makePrefixer("saltGridCell");
 
-export const Cell = forwardRef<HTMLTableCellElement, CellProps>(
+/**
+ * Frame around a cell, containing styles of states (e.g. selected), different cell types (e.g. editable, separator), etc.
+ * This is useful to implement a custom type of cell / cell editor.
+ * */
+export const CellFrame = forwardRef<HTMLTableCellElement, CellProps>(
   function CellFrame(props, ref) {
     const {
       children,

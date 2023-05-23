@@ -1,15 +1,17 @@
-import { clsx } from "clsx";
-import "./BaseCell.css";
 import { makePrefixer } from "@salt-ds/core";
-import { GridCellProps } from "./GridColumn";
-import { GridColumnModel } from "./Grid";
-import { Cell, Cursor, useFocusableContent } from "./internal";
+import { clsx } from "clsx";
+import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
+import { GridColumnModel } from "./Grid";
+import { GridCellProps } from "./GridColumn";
+import { Cursor, useFocusableContent } from "./internal";
 import {
   CellErrorIcon,
   CellSuccessIcon,
   CellWarningIcon,
 } from "./internal/CellStatusIcons";
+
+import "./BaseCell.css";
 
 const withBaseName = makePrefixer("saltGridBaseCell");
 
@@ -48,7 +50,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
   const hasValidationMessage = !!validationMessage || hasValidation;
   const validationMessageId = `${cellId}-statusMessage`;
   return (
-    <Cell
+    <CellFrame
       ref={ref}
       id={cellId}
       data-row-index={row.index}
@@ -95,6 +97,6 @@ export function BaseCell<T>(props: GridCellProps<T>) {
       ) : null}
       {isFocused && isEditable && <CornerTag focusOnly={true} />}
       {isFocused && !isFocusableContent && <Cursor />}
-    </Cell>
+    </CellFrame>
   );
 }

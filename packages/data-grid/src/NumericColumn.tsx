@@ -1,6 +1,3 @@
-import { GridCellValueProps, GridColumn, GridColumnProps } from "./GridColumn";
-import "./NumericColumn.css";
-import { GridColumnModel, GridRowModel } from "./Grid";
 import {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -9,9 +6,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { useEditorContext } from "./EditorContext";
+import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
-import { Cell } from "./internal";
+import { useEditorContext } from "./EditorContext";
+import { GridColumnModel, GridRowModel } from "./Grid";
+import { GridCellValueProps, GridColumn, GridColumnProps } from "./GridColumn";
+
+import "./NumericColumn.css";
 
 export interface NumericColumnProps<T> extends GridColumnProps<T> {
   precision: number;
@@ -92,7 +93,10 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   }, [endEditMode, editorText]);
 
   return (
-    <Cell separator={column?.separator} className="saltGridNumericCellEditor">
+    <CellFrame
+      separator={column?.separator}
+      className="saltGridNumericCellEditor"
+    >
       <div className="saltGridNumericCellEditor-inputContainer">
         <input
           ref={inputRef}
@@ -104,7 +108,7 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
         />
       </div>
       <CornerTag />
-    </Cell>
+    </CellFrame>
   );
 }
 

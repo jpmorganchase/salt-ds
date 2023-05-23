@@ -1,12 +1,12 @@
 import { makePrefixer } from "@salt-ds/core";
-import { useEditorContext } from "./EditorContext";
 import { Dropdown, SelectionChangeHandler } from "@salt-ds/lab";
-import "./DropdownCellEditor.css";
 import { useEffect, useRef } from "react";
-
-import { GridColumnModel, GridRowModel } from "./Grid";
+import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
-import { Cell } from "./internal";
+import { useEditorContext } from "./EditorContext";
+import { GridColumnModel, GridRowModel } from "./Grid";
+
+import "./DropdownCellEditor.css";
 
 const withBaseName = makePrefixer("saltGridDropdownCellEditor");
 
@@ -49,7 +49,7 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
   );
 
   return (
-    <Cell separator={column?.separator} className={withBaseName()}>
+    <CellFrame separator={column?.separator} className={withBaseName()}>
       <div className={withBaseName("dropdownContainer")}>
         <Dropdown
           isOpen={true}
@@ -61,6 +61,6 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
         />
       </div>
       <CornerTag />
-    </Cell>
+    </CellFrame>
   );
 }
