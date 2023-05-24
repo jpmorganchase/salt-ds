@@ -2,9 +2,11 @@ import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
   Banner,
+  BannerActions,
+  BannerContent,
   BannerProps,
   Button,
-  SplitLayout,
+  Link,
   StackLayout,
   Text,
   ValidationStatus,
@@ -18,18 +20,22 @@ export default {
 
 export const Default: ComponentStory<typeof Banner> = (props) => (
   <div style={{ width: "500px" }}>
-    <Banner {...props}>Default banner</Banner>
+    <Banner {...props}>
+      <BannerContent>Default banner</BannerContent>
+    </Banner>
   </div>
 );
 
 export const Inline: ComponentStory<typeof Banner> = (props) => (
-  <StackLayout gap={3}>
+  <StackLayout gap={3} style={{ width: 800 }}>
     <Text styleAs="h3">
       <strong>Terms and conditions</strong>
     </Text>
     <div style={{ width: 500 }}>
       <Banner {...props}>
-        There has been an update to the terms and conditions
+        <BannerContent>
+          There has been an update to the terms and conditions
+        </BannerContent>
       </Banner>
     </div>
     <Text>
@@ -55,23 +61,19 @@ export const Inline: ComponentStory<typeof Banner> = (props) => (
 
 export const Issue: ComponentStory<typeof Banner> = () => {
   return (
-    <StackLayout gap={3}>
-      <Banner status="error" role="alert">
-        <SplitLayout
-          startItem={
-            <>
-              <Text>
-                <strong>Failed to connect to the server</strong>
-              </Text>
-              Error connecting to the server. Please refresh
-            </>
-          }
-          endItem={
-            <Button aria-label="refresh" variant="secondary">
-              <RefreshIcon />
-            </Button>
-          }
-        />
+    <StackLayout gap={3} style={{ width: 800 }}>
+      <Banner status="error">
+        <BannerContent role="alert">
+          <Text>
+            <strong>Failed to connect to the server</strong>
+          </Text>
+          Error connecting to the server. Please refresh
+        </BannerContent>
+        <BannerActions>
+          <Button aria-label="refresh" variant="secondary">
+            <RefreshIcon />
+          </Button>
+        </BannerActions>
       </Banner>
       <Text styleAs="h1">Title</Text>
       <Text>
@@ -89,16 +91,16 @@ export const Issue: ComponentStory<typeof Banner> = () => {
 
 export const Warning: ComponentStory<typeof Banner> = () => {
   return (
-    <StackLayout gap={3}>
-      <Banner status="warning" role="status">
-        <SplitLayout
-          startItem={"System is under increased load"}
-          endItem={
-            <Button aria-label="refresh" variant="secondary">
-              <RefreshIcon />
-            </Button>
-          }
-        />
+    <StackLayout gap={3} style={{ width: 800 }}>
+      <Banner status="warning">
+        <BannerContent role="status">
+          System is under increased load
+        </BannerContent>
+        <BannerActions>
+          <Button aria-label="refresh" variant="secondary">
+            <RefreshIcon />
+          </Button>
+        </BannerActions>
       </Banner>
       <Text styleAs="h1">Title</Text>
       <Text>
@@ -116,8 +118,8 @@ export const Warning: ComponentStory<typeof Banner> = () => {
 
 export const Success: ComponentStory<typeof Banner> = () => {
   return (
-    <Banner status="success" role="status">
-      Database updated
+    <Banner status="success" style={{ width: 500 }}>
+      <BannerContent role="status">Database updated</BannerContent>
     </Banner>
   );
 };
@@ -131,7 +133,7 @@ export const StatusesPrimary: ComponentStory<typeof Banner> = (props) => {
     <StackLayout style={{ width: "500px" }}>
       {statuses.map((status, i) => (
         <Banner status={status} {...restProps} key={i}>
-          Banners with status {status}.
+          <BannerContent>Banners with status {status}.</BannerContent>
         </Banner>
       ))}
     </StackLayout>
@@ -157,14 +159,16 @@ export const Dismissible = () => {
       {!open && <Button onClick={reset}>Reset</Button>}
       {open && (
         <Banner>
-          Controlled banner
-          <Button
-            aria-label="close banner"
-            variant="secondary"
-            onClick={onClose}
-          >
-            <CloseIcon />
-          </Button>
+          <BannerContent>Controlled banner</BannerContent>
+          <BannerActions>
+            <Button
+              aria-label="close banner"
+              variant="secondary"
+              onClick={onClose}
+            >
+              <CloseIcon />
+            </Button>
+          </BannerActions>
         </Banner>
       )}
     </div>
@@ -175,15 +179,17 @@ export const MultipleLines = (props: BannerProps) => {
   return (
     <div style={{ width: 500 }}>
       <Banner status="error" {...props}>
-        <Text>
-          <strong>Invalid Form</strong>
-        </Text>
-        <div>
-          <ul style={{ paddingLeft: 0 }}>
-            <li>Missing username</li>
-            <li>Missing password</li>
-          </ul>
-        </div>
+        <BannerContent>
+          <Text>
+            <strong>Invalid Form</strong>
+          </Text>
+          <div>
+            <ul style={{ paddingLeft: 0 }}>
+              <li>Missing username</li>
+              <li>Missing password</li>
+            </ul>
+          </div>
+        </BannerContent>
       </Banner>
     </div>
   );
@@ -191,11 +197,19 @@ export const MultipleLines = (props: BannerProps) => {
 
 export const MultipleBanners: ComponentStory<typeof Banner> = () => {
   return (
-    <StackLayout gap={3}>
-      <Banner status="info">This is an info banner</Banner>
-      <Banner status="error">This is an error banner</Banner>
-      <Banner status="warning">This is an warning banner</Banner>
-      <Banner status="success">This is an success banner</Banner>
+    <StackLayout gap={3} style={{ width: 800 }}>
+      <Banner status="info">
+        <BannerContent>This is an info banner</BannerContent>
+      </Banner>
+      <Banner status="error">
+        <BannerContent>This is an error banner</BannerContent>
+      </Banner>
+      <Banner status="warning">
+        <BannerContent>This is an warning banner</BannerContent>
+      </Banner>
+      <Banner status="success">
+        <BannerContent>This is an success banner</BannerContent>
+      </Banner>
       <Text styleAs="h1">Title</Text>
       <Text>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -207,5 +221,19 @@ export const MultipleBanners: ComponentStory<typeof Banner> = () => {
         mollit anim id est laborum.
       </Text>
     </StackLayout>
+  );
+};
+
+export const MultipleActions: ComponentStory<typeof Banner> = (args) => {
+  return (
+    <Banner {...args} style={{ width: 500 }}>
+      <BannerContent>This is a banner</BannerContent>
+      <BannerActions>
+        <Link>See more</Link>
+        <Button aria-label="refresh" variant="secondary">
+          <RefreshIcon />
+        </Button>
+      </BannerActions>
+    </Banner>
   );
 };

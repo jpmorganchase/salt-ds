@@ -34,7 +34,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       {...rest}
     >
       <StatusIndicator status={status} className={withBaseName("icon")} />
-      <div className={withBaseName("content")}>{children}</div>
+      {children}
     </div>
   );
 });
