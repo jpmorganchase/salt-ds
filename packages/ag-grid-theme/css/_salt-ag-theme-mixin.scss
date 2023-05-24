@@ -77,9 +77,58 @@
 
   .ag-menu {
     background-color: var(--agGrid-background);
-    padding: var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit);
+    padding: var(--salt-spacing-200);
     color: var(--agGrid-menu-color);
   }
+
+  .ag-menu .ag-tabs-body {
+    padding: 0;
+    padding-top: var(--salt-size-unit);
+  }
+
+  // start filter input
+  .ag-menu .ag-filter-body-wrapper {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--salt-spacing-100);
+  }
+
+  .ag-menu .ag-filter-body-wrapper > * {
+    margin: 0;
+  }
+
+  // start filter input
+  .ag-picker-field-wrapper {
+    border-radius: 0;
+  }
+
+  .ag-picker-field-icon {
+    margin-right: var(--salt-spacing-100);
+  }
+
+  .ag-select .ag-picker-field-display {
+    margin: 0;
+    padding-left: var(--salt-spacing-100);
+  }
+
+  .ag-menu .ag-input-field-input[type="text"] {
+    height: var(--agGrid-input-height);
+    min-height: var(--agGrid-input-height);
+    line-height: var(--agGrid-input-height);
+    padding: 0 var(--salt-spacing-100);
+    font-size: inherit;
+    border: dotted 2px transparent;
+
+    &:focus {
+      border-color: var(--agGrid-color-focus);
+    }
+    &::placeholder {
+      color: var(--agGrid-placeholder-color);
+      opacity: 1;
+    }
+  }
+  // end filter input
 
   .ag-menu-header {
     background-color: var(--agGrid-background);
@@ -103,8 +152,14 @@
     height: var(--salt-size-stackable);
   }
 
+  .ag-tab:only-child {
+    margin: 0;
+  }
+
   .ag-tab-selected {
-    border-bottom: solid 2px var(--agGrid-tab-borderColor-active);
+    border-bottom: var(--salt-editable-borderStyle)
+      var(--salt-editable-borderWidth-active)
+      var(--agGrid-tab-borderColor-active);
   }
 
   .ag-menu-option-part {

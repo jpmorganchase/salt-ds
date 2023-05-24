@@ -1,9 +1,27 @@
 @import "./uitk-ag-theme-mixin";
 
+div[class*="ag-theme-uitk-high"] {
+  --uitk-size-unit: 4px;
+}
+div[class*="ag-theme-uitk-medium"] {
+  --uitk-size-unit: 8px;
+}
+div[class*="ag-theme-uitk-low"] {
+  --uitk-size-unit: 12px;
+}
+div[class*="ag-theme-uitk-touch"] {
+  --uitk-size-unit: 16px;
+}
+div[class^="ag-theme-uitk"] {
+  --uitk-container-spacing: calc(var(--uitk-size-unit) * 2);
+}
+
 .ag-theme-uitk-high-light,
 .ag-theme-uitk-medium-light,
 .ag-theme-uitk-low-light,
 .ag-theme-uitk-touch-light {
+  --agGrid-menu-padding: var(--uitk-container-spacing);
+
   --agGrid-foreground: var(--saltAgGrid-foreground, #2a2c2f);
   --agGrid-foreground-disabled: var(--saltAgGrid-foreground-disabled, #161616);
   --agGrid-header-foreground: var(--saltAgGrid-header-foreground, #61656e);
@@ -104,6 +122,8 @@
 .ag-theme-uitk-medium-dark,
 .ag-theme-uitk-low-dark,
 .ag-theme-uitk-touch-dark {
+  --agGrid-menu-padding: var(--uitk-container-spacing);
+
   --agGrid-foreground: var(--saltAgGrid-foreground, white);
   --agGrid-foreground-disabled: var(--saltAgGrid-foreground-disabled, white);
   --agGrid-header-foreground: var(--saltAgGrid-header-foreground, white);
