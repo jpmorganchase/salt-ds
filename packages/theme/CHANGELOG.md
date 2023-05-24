@@ -1,5 +1,61 @@
 # @salt-ds/theme
 
+## 1.5.0
+
+### Minor Changes
+
+- b6f304f9: Added size tokens
+
+  ```diff
+  + --salt-size-adornment
+  + --salt-size-bar
+  + --salt-size-selectable
+  + --salt-size-icon
+  ```
+
+  `--salt-size-base ` changed from a calculation on the basis unit to hardcoded values per density
+  `--salt-size-border` defined as 1px per density rather than set globally
+
+- e8b146a5: Add new spacing tokens and a spacing foundation.
+
+  ```css
+  --salt-spacing-25
+  --salt-spacing-50
+  --salt-spacing-75
+  --salt-spacing-100
+  --salt-spacing-150
+  --salt-spacing-200
+  --salt-spacing-250
+  --salt-spacing-300
+  --salt-spacing-350
+  --salt-spacing-400
+  ```
+
+### Patch Changes
+
+- 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
+
+## 1.4.0
+
+### Minor Changes
+
+- 8bcc9d04: Deprecated tertiary editable tokens
+  Deprecated `tertiary` variant in FormField
+- bf66b578: Deprecated -emphasize tokens in status and palette; replaced with default tokens
+
+  `--salt-status-error-background-emphasize` replaced with `--salt-status-error-background`
+  `--salt-status-info-background-emphasize` replaced with `--salt-status-info-background`
+  `--salt-status-success-background-emphasize` replaced with `--salt-status-success-background`
+  `--salt-status-warning-background-emphasize` replaced with `--salt-status-warning-background`
+
+  `--salt-palette-error-background-emphasize` replaced with `--salt-palette-error-background`
+  `--salt-palette-info-background-emphasize` replaced with `--salt-palette-info-background`
+  `--salt-palette-success-background-emphasize` replaced with `--salt-palette-success-background`
+  `--salt-palette-warning-background-emphasize` replaced with `--salt-palette-warning-background`
+
+- ea857f24: Deprecated `--salt-size-icon-base`, replaced with `--salt-icon-size-base`
+  Added `--salt-icon-size-status-adornment`
+
 ## 1.3.0
 
 ### Minor Changes

@@ -40,6 +40,10 @@ a:focus-visible .saltInteractableCard,
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
+a:link .saltInteractableCard * {
+  text-decoration: none;
+}
+
 /* Styles applied on active state to InteractableCard */
 .saltInteractableCard:active {
   cursor: var(--saltCard-interactable-cursor-active, var(--salt-selectable-cursor-active));

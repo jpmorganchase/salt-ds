@@ -1,15 +1,14 @@
 import { useState } from "react";
 import {
   componentDetails,
-  ComponentStatus,
   ComponentDetails,
+  ComponentStatus,
 } from "./components-list";
 import clsx from "clsx";
 import { Image } from "@jpmorganchase/mosaic-site-components";
 import { Table } from "../mdx/table";
-import { Link } from "@salt-ds/core";
-import { StepActiveIcon, ArrowUpIcon, ArrowDownIcon } from "@salt-ds/icons";
-import { Button } from "@salt-ds/core";
+import { Button, Link } from "@salt-ds/core";
+import { ArrowDownIcon, ArrowUpIcon, StepActiveIcon } from "@salt-ds/icons";
 import useIsMobileView from "../../../src/utils/useIsMobileView";
 
 import styles from "./ComponentsList.module.css";
@@ -130,7 +129,7 @@ const ComponentHeader = ({
 
 export const ComponentsList = () => {
   const [componentsList, setComponentsList] = useState(
-    componentsListSorting("devStatus", true)
+    componentsListSorting("devStatus", false)
   );
 
   const [isSortedBy, setIsSortedBy] = useState<SortedBy>("devStatus");

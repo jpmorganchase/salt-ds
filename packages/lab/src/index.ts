@@ -36,10 +36,22 @@ export * from "./dropdown";
 export * from "./editable-label";
 export * from "./file-drop-zone";
 export * from "./form-field";
+export {
+  FormField as FormFieldNext,
+  FormFieldHelperText,
+  FormFieldLabel,
+  FormFieldControlWrapper,
+} from "./form-field-next";
 export * from "./form-field-context";
+export {
+  type A11yValueProps as A11yValuePropsNext,
+  type FormFieldContextNextValue,
+  FormFieldContextNext,
+} from "./form-field-context-next";
 export * from "./form-group";
 export * from "./formatted-input";
 export * from "./input";
+export { Input as InputNext } from "./input-next";
 export * from "./layer-layout";
 export * from "./list";
 export * from "./list-next";

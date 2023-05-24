@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/theme",
-  "version": "1.3.0",
+  "version": "1.5.0",
   "license": "Apache-2.0",
   "style": "index.css",
   "files": [

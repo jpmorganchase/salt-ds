@@ -4,7 +4,7 @@ import { TabDescriptor } from "./TabsTypes";
 import { useItemsWithIds } from "./useItemsWithIds";
 
 export interface TabsHookProps {
-  activeTabIndex?: number;
+  activeTabIndex?: number | null;
   children: ReactNode;
   defaultActiveTabIndex?: number;
   id?: string;
@@ -12,7 +12,7 @@ export interface TabsHookProps {
 }
 
 export interface TabsHookResult {
-  activeTabIndex?: number;
+  activeTabIndex?: number | null;
   id: string;
   onActiveChange?: (tabIndex: number) => void;
   tabPanel?: ReactNode;
@@ -44,13 +44,14 @@ export const useTabs = ({
     [onActiveChange, setActiveTabIndex]
   );
 
-  const contentItem = itemsWithIds[activeTabIndex];
-
   return {
     id,
     onActiveChange: handleTabActivated,
     activeTabIndex,
     tabs: itemsWithIds,
-    tabPanel: contentItem?.element ?? null,
+    tabPanel:
+      activeTabIndex === null
+        ? null
+        : itemsWithIds[activeTabIndex]?.element ?? null,
   };
 };

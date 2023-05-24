@@ -1,5 +1,11 @@
 # @salt-ds/countries
 
+## 1.0.1
+
+### Patch Changes
+
+- 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
+
 ## 1.0.0
 
 ### Major Changes

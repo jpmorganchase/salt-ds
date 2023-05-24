@@ -1,5 +1,7 @@
 const deepmerge = require("deepmerge");
 const mosaicConfig = require("@jpmorganchase/mosaic-standard-generator/dist/fs.config.js");
+const dotenvLoad = require("dotenv-load");
+dotenvLoad();
 
 /** Enhance/modify your Mosaic core fs
  * pageExtensions: supported file extensions which can be stored in the Virtual File System (VFS) created by Core FS

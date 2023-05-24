@@ -91,6 +91,7 @@ jobs:
           COMMENT_ID: ${{ github.event.comment.id }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
         with:
           script: |
 
@@ -111,9 +112,10 @@ jobs:
             await exec.exec('yarn changeset publish --no-git-tag --snapshot --tag snapshot', [], options);
 
             const { COMMENT_ID } = process.env
-            const newTags = Array
-              .from(output.matchAll(/New tag:\s+([^\s\n]+)/g))
-              .map(([_, tag]) => tag)
+            const [_, packagesStdin] = output.split("success packages published successfully:\n")
+
+            const newTags = packagesStdin ? packagesStdin.split("\n").flatMap(package => Array.from(package.matchAll(/\s+(.*)/g),m => m[1])) : [];
+
             if (newTags.length) {
               const multiple = newTags.length > 1
               const body = (

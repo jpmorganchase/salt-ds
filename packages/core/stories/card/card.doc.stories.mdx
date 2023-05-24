@@ -22,16 +22,34 @@ A Card is a visually distinct container that displays a snapshot of information 
 
 This default example is intended to show the way the Card component’s content can be implemented.
 
+Content in Cards should be well-written and easily scannable. Avoid overloading a Card with too much content.
+
 <Canvas>
   <Story id="core-card--default" />
 </Canvas>
 
-## Interactable Card
+## Adding actions
 
-To apply actions to Cards use the `InteractableCard` component. We discourage the use of any focusable elements within interactable Cards.
+If you intend to add any links or buttons within your Card, only add them into a default Card, not an interactable Card. This will ensure ADA compliance.
 
 <Canvas>
-  <Story id="core-card--interactable-as-link" />
+  <Story id="core-card--default-with-link" />
+</Canvas>
+
+<Canvas>
+  <Story id="core-card--default-with-button-and-image" />
+</Canvas>
+
+## Interactable Card
+
+Use the `InteractableCard` component to make the entire Card interactable. Do **not** use any focusable elements within Interactable Card.
+
+To use as a link, wrap Card in a [Link](?path=/docs/documentation-core-link--page) component.
+
+Avoid adding too much content to Interactable Cards. It should be easily readable by all users, and it should not take too long for a screen reader tool to read out the contents.
+
+<Canvas>
+  <Story id="core-card--interactable-as-block-link" />
 </Canvas>
 
 ## Disabled Interactable Card
@@ -42,6 +60,14 @@ Make sure to also apply `disabled={true}` to any nested components, such as Text
 
 <Canvas>
   <Story id="core-card--interactable-disabled" />
+</Canvas>
+
+## Accent Variations
+
+Use the `accentPlacement` prop to position the accent bar left, right, top, or bottom of an Interactable Card.
+
+<Canvas>
+  <Story id="core-card--interactable-accent-variations" />
 </Canvas>
 
 ## Multiple Cards

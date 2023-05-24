@@ -1,5 +1,18 @@
 # @salt-ds/icons
 
+## 1.3.1
+
+### Patch Changes
+
+- 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
+
+## 1.3.0
+
+### Minor Changes
+
+- ea857f24: Deprecated `--salt-size-icon-base`, replaced with `--salt-icon-size-base`
+  Added `--salt-icon-size-status-adornment`
+
 ## 1.2.0
 
 ### Minor Changes

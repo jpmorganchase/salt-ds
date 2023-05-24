@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, ReactNode } from "react";
+import { ReactNode } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
   Button,
@@ -10,11 +10,12 @@ import {
   Text,
   FlexLayout,
   GridLayout,
-  Label,
   Link,
 } from "@salt-ds/core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
-import stockPhoto from "./../assets/stockPhoto.png";
+import exampleImage from "./../assets/exampleImage1x.png";
+
+import "./card.stories.css";
 
 export default {
   title: "Core/Card",
@@ -62,7 +63,7 @@ const InteractableExamples = () => (
   </ExampleRow>
 );
 
-export const All: ComponentStory<typeof Card> = () => (
+export const AllDefault: ComponentStory<typeof Card> = () => (
   <div>
     <SaltProvider mode="light">
       <Examples />
@@ -74,11 +75,12 @@ export const All: ComponentStory<typeof Card> = () => (
 );
 
 export const Default: ComponentStory<typeof Card> = () => (
-  <Card>
-    <div>
-      <H1>This is Card</H1>
-      <Text>Using Nested DOM Elements</Text>
-    </div>
+  <Card style={{ width: "256px" }}>
+    <H1 styleAs="h3">Card</H1>
+    <Text>
+      A card displays information about a single subject, and acts as entry
+      point to more detailed information.
+    </Text>
   </Card>
 );
 
@@ -86,10 +88,11 @@ export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
   <FlexLayout>
     {Array.from({ length: 4 }, (_, index) => (
       <Card key={index}>
-        <div>
-          <H1>This is Card</H1>
-          <Text>Seen in FlexLayout</Text>
-        </div>
+        <H1 styleAs="h3">Card</H1>
+        <Text>
+          A card displays information about a single subject, and acts as entry
+          point to more detailed information.
+        </Text>
       </Card>
     ))}
   </FlexLayout>
@@ -97,11 +100,128 @@ export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
 
 export const CardsInGridLayout: ComponentStory<typeof Card> = () => (
   <GridLayout style={{ maxWidth: "700px" }} rows={2} columns={2}>
-    <Default />
-    <Default />
-    <Default />
-    <Default />
+    {Array.from({ length: 4 }, (_, index) => (
+      <Card key={index}>
+        <H1 styleAs="h3">Card</H1>
+        <Text>
+          A card displays information about a single subject, and acts as entry
+          point to more detailed information.
+        </Text>
+      </Card>
+    ))}
   </GridLayout>
+);
+
+export const DefaultWithImage: ComponentStory<typeof Card> = () => (
+  <Card style={{ width: "256px" }}>
+    <img
+      alt=""
+      src={exampleImage}
+      className="card-demo-image"
+      style={{ width: "-webkit-fill-available" }}
+    />
+    <H1 styleAs="h3">Card</H1>
+    <Text>
+      A card displays information about a single subject, and acts as entry
+      point to more detailed information.
+    </Text>
+  </Card>
+);
+
+export const DefaultWithLink: ComponentStory<typeof Card> = () => (
+  <Card style={{ width: "256px" }}>
+    <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+      <H1 styleAs="h3">Card</H1>
+      <Text>
+        A card displays information about a single subject, and acts as entry
+        point to more detailed information.
+      </Text>
+    </div>
+    <Link
+      href="https://www.figma.com/@jpmorgan_salt"
+      IconComponent={null}
+      target="_blank"
+    >
+      Visit Specs
+    </Link>
+  </Card>
+);
+
+export const DefaultWithLinkAndImage: ComponentStory<typeof Card> = () => (
+  <Card className="withImage">
+    <img
+      aria-label="The Skies by Dominik Schröder"
+      src={exampleImage}
+      className="card-demo-image"
+      style={{ width: "-webkit-fill-available" }}
+    />
+    <div
+      style={{
+        padding:
+          "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
+      }}
+    >
+      <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+        <H1 styleAs="h3">Card</H1>
+        <Text>
+          A card displays information about a single subject, and acts as entry
+          point to more detailed information.
+        </Text>
+      </div>
+      <Link
+        href="https://www.figma.com/@jpmorgan_salt"
+        IconComponent={null}
+        target="_blank"
+      >
+        Visit Specs
+      </Link>
+    </div>
+  </Card>
+);
+
+export const DefaultWithButton: ComponentStory<typeof Card> = () => (
+  <Card style={{ width: "256px" }}>
+    <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+      <H1 styleAs="h3">Card</H1>
+      <Text>
+        A card displays information about a single subject, and acts as entry
+        point to more detailed information.
+      </Text>
+    </div>
+    <Button onClick={() => window.open("https://www.figma.com/@jpmorgan_salt")}>
+      Visit Specs
+    </Button>
+  </Card>
+);
+
+export const DefaultWithButtonAndImage: ComponentStory<typeof Card> = () => (
+  <Card className="withImage">
+    <img
+      aria-label="The Skies by Dominik Schröder"
+      src={exampleImage}
+      className="card-demo-image"
+      style={{ width: "-webkit-fill-available" }}
+    />
+    <div
+      style={{
+        padding:
+          "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
+      }}
+    >
+      <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+        <H1 styleAs="h3">Card</H1>
+        <Text>
+          A card displays information about a single subject, and acts as entry
+          point to more detailed information.
+        </Text>
+      </div>
+      <Button
+        onClick={() => window.open("https://www.figma.com/@jpmorgan_salt")}
+      >
+        Visit Specs
+      </Button>
+    </div>
+  </Card>
 );
 
 export const InteractableAll: ComponentStory<typeof Card> = () => (
@@ -115,100 +235,140 @@ export const InteractableAll: ComponentStory<typeof Card> = () => (
   </div>
 );
 
-export const InteractableAsLink: ComponentStory<typeof Card> = () => {
+export const Interactable: ComponentStory<typeof Card> = () => (
+  <InteractableCard style={{ width: "256px" }}>
+    <H1 styleAs="h3">Card</H1>
+    <Text>An entry point to more detailed information.</Text>
+  </InteractableCard>
+);
+
+export const InteractableDisabled: ComponentStory<typeof Card> = () => (
+  <InteractableCard
+    style={{ width: "256px" }}
+    onClick={() => console.log("Clicked")}
+    data-testid="card-disabled-example"
+    disabled
+  >
+    <H1 styleAs="h3" disabled>
+      Card
+    </H1>
+    <Text disabled>This component has been disabled.</Text>
+  </InteractableCard>
+);
+
+export const InteractableAccentVariations: ComponentStory<typeof Card> = () => (
+  <div
+    style={{
+      display: "grid",
+      gap: "calc(2 * var(--salt-size-unit))",
+      width: "266px",
+    }}
+  >
+    <InteractableCard>
+      <H1 styleAs="h3">Card</H1>
+      <Text>
+        A card displays information about a single subject, and acts as entry
+        point to more detailed information.
+      </Text>
+    </InteractableCard>
+    <InteractableCard accentPlacement="left">
+      <H1 styleAs="h3">Card</H1>
+      <Text>
+        A card displays information about a single subject, and acts as entry
+        point to more detailed information.
+      </Text>
+    </InteractableCard>
+    <InteractableCard accentPlacement="top">
+      <H1 styleAs="h3">Card</H1>
+      <Text>
+        A card displays information about a single subject, and acts as entry
+        point to more detailed information.
+      </Text>
+    </InteractableCard>
+    <InteractableCard accentPlacement="right">
+      <H1 styleAs="h3">Card</H1>
+      <Text>
+        A card displays information about a single subject, and acts as entry
+        point to more detailed information.
+      </Text>
+    </InteractableCard>
+  </div>
+);
+
+export const InteractableAsBlockLink: ComponentStory<typeof Card> = () => {
   return (
     <Link
+      style={{ textDecoration: "none" }}
       href="https://saltdesignsystem.com/"
       IconComponent={null}
       target="_blank"
     >
-      <InteractableCard style={{ maxWidth: "500px" }}>
-        <div style={{ textAlign: "center" }}>
-          <div>Visit Salt</div>
+      <InteractableCard style={{ width: "266px" }}>
+        <H1 styleAs="h3">Card</H1>
+        <Text>
+          A card displays information about a single subject, and acts as entry
+          point to more detailed information.
+        </Text>
+      </InteractableCard>
+    </Link>
+  );
+};
+
+export const InteractableAsBlockLinkWithImage: ComponentStory<
+  typeof Card
+> = () => {
+  return (
+    <Link
+      style={{ textDecoration: "none" }}
+      href="https://saltdesignsystem.com/"
+      IconComponent={null}
+      target="_blank"
+    >
+      <InteractableCard className="withImage">
+        <img
+          aria-label="The Skies by Dominik Schröder"
+          src={exampleImage}
+          className="card-demo-image"
+          style={{ width: "-webkit-fill-available" }}
+        />
+        <div
+          style={{
+            padding:
+              "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
+          }}
+        >
+          <H1 styleAs="h3">Card</H1>
+          <Text>
+            A card displays information about a single subject, and acts as
+            entry point to more detailed information.
+          </Text>
         </div>
       </InteractableCard>
     </Link>
   );
 };
 
-export const InteractableDisabled: ComponentStory<typeof Card> = () => (
-  <InteractableCard
-    onClick={() => console.log("Clicked")}
-    data-testid="card-disabled-example"
-    disabled
-  >
-    <div>
-      <H1 disabled>Interactable Card</H1>
-      <Text disabled>This Card has been disabled</Text>
-    </div>
-  </InteractableCard>
-);
-
-export const InteractableVariations: ComponentStory<typeof Card> = () => (
-  <div style={{ display: "grid", gap: "calc(2 * var(--salt-size-unit))" }}>
-    <InteractableCard>
-      <div>
-        <H1 style={{ margin: "0" }}>This is Card</H1>
-        <Text>Using Nested DOM Elements</Text>
-      </div>
-    </InteractableCard>
-    <InteractableCard accentPlacement="left">
-      <div>
-        <H1 style={{ margin: "0" }}>This is Card</H1>
-        <Text>Using Nested DOM Elements</Text>
-      </div>
-    </InteractableCard>
-    <InteractableCard accentPlacement="top">
-      <div>
-        <H1 style={{ margin: "0" }}>This is Card</H1>
-        <Text>Using Nested DOM Elements</Text>
-      </div>
-    </InteractableCard>
-    <InteractableCard accentPlacement="right">
-      <div>
-        <H1 style={{ margin: "0" }}>This is Card</H1>
-        <Text>Using Nested DOM Elements</Text>
-      </div>
-    </InteractableCard>
-  </div>
-);
-
-export const WithImageAndButton: ComponentStory<typeof Card> = () => (
-  <Card>
-    <img
-      src={stockPhoto}
-      alt="Image from unsplash"
-      style={{
-        maxWidth: "100%",
-        maxHeight: "100%",
-        paddingBottom: "var(--salt-size-unit)",
-      }}
-    />
-    <div
-      style={{
-        borderTop:
-          "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor)",
-        display: "grid",
-        gridTemplateColumns: "repeat(2, auto)",
-        gap: "calc(var(--salt-size-unit) * 2)",
-        alignItems: "center",
-        padding:
-          "var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit)",
-      }}
+export const InteractableAsBlockLinkWithImageBackground: ComponentStory<
+  typeof Card
+> = () => {
+  return (
+    <Link
+      style={{ textDecoration: "none" }}
+      href="https://saltdesignsystem.com/"
+      IconComponent={null}
+      target="_blank"
     >
-      <div
-        style={{
-          display: "grid",
-          alignItems: "flex-start",
-          gap: "var(--salt-size-unit)",
-        }}
-      >
-        <Label>
-          <strong>The Skies</strong>
-        </Label>
-        <Label>Art by Dominik Schröder</Label>
-      </div>
-      <Button onClick={() => console.log("Clicked")}>See more</Button>
-    </div>
-  </Card>
-);
+      <InteractableCard className="imageBackground">
+        <div
+          style={{ paddingTop: "calc(3 * var(--salt-size-container-spacing))" }}
+        >
+          <H1 styleAs="h3">Card</H1>
+          <Text>
+            A card displays information about a single subject, and acts as
+            entry point to more detailed information.
+          </Text>
+        </div>
+      </InteractableCard>
+    </Link>
+  );
+};
