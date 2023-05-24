@@ -4,13 +4,13 @@ import * as bannerStories from "@stories/banner/banner.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(bannerStories);
-const { Statuses } = composedStories;
+const { StatusesPrimary } = composedStories;
 
 describe("GIVEN a Banner", () => {
   checkAccessibility(composedStories);
 
   it("THEN should render status", () => {
-    cy.mount(<Statuses />);
+    cy.mount(<StatusesPrimary />);
 
     cy.findByTestId("InfoSolidIcon").should("exist");
     cy.findByTestId("SuccessTickIcon").should("exist");
