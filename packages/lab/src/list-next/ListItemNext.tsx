@@ -104,12 +104,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
     );
 
     return isOverflowed ? (
-      <Tooltip
-        disabled={!isOverflowed}
-        open={focused}
-        content={content}
-        hideIcon
-      >
+      <Tooltip disabled={!isOverflowed} content={content} hideIcon>
         {renderListItem()}
       </Tooltip>
     ) : (
