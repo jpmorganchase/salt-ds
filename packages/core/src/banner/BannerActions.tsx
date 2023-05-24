@@ -10,6 +10,8 @@ export interface BannerActionsProps extends ComponentPropsWithoutRef<"div"> {}
 export const BannerActions = forwardRef<HTMLDivElement, BannerActionsProps>(
   function BannerActions(props, ref) {
     const { className, ...rest } = props;
-    return <div className={clsx(withBaseName(), className)} {...rest} />;
+    return (
+      <div className={clsx(withBaseName(), className)} {...rest} ref={ref} />
+    );
   }
 );
