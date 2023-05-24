@@ -3576,19 +3576,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@floating-ui/core@npm:1.2.1"
-  checksum: 7a263e15abad4cd98ce3938075c90f76bafef71c67964c83dd7cf1e1916c92ccfa46a4f2b95b403bb180f70b3e7ded118db1cbc3426269ec70e948edf0d19ae2
+"@floating-ui/core@npm:^1.2.6":
+  version: 1.2.6
+  resolution: "@floating-ui/core@npm:1.2.6"
+  checksum: e4aa96c435277f1720d4bc939e17a79b1e1eebd589c20b622d3c646a5273590ff889b8c6e126f7be61873cf8c4d7db7d418895986ea19b8b0d0530de32504c3a
   languageName: node
   linkType: hard
 
-"@floating-ui/dom@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@floating-ui/dom@npm:1.2.1"
+"@floating-ui/dom@npm:^1.2.1, @floating-ui/dom@npm:^1.2.7":
+  version: 1.2.8
+  resolution: "@floating-ui/dom@npm:1.2.8"
   dependencies:
-    "@floating-ui/core": ^1.2.1
-  checksum: ad6928d5dd934ca8b3dcffdfcacde9d147afc0db4db0c0294b23d5f897224d73c7f0ae578b46d813f0d7ae22a86e7a3f8914fdbcdf4a8d42a1b430d0518f45be
+    "@floating-ui/core": ^1.2.6
+  checksum: 02894774475a17baa498c86cd25d2825598e7de0734b8c08f7b8797b19c0bec13c4c726e529feb8bf26c6dee219c153ac1f90d8530a93534f765b3c04cfa3b4a
   languageName: node
   linkType: hard
 
@@ -3604,6 +3604,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@floating-ui/react-dom@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@floating-ui/react-dom@npm:2.0.0"
+  dependencies:
+    "@floating-ui/dom": ^1.2.7
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: c5dd02b7babf9c26d5e11b8ebe58411131b37844f7d6362a767cd1eedfb506ca6db3228fb192e0a5822c9289a5b500e2ef31e069dce28a0fbec4722f22bcdd95
+  languageName: node
+  linkType: hard
+
 "@floating-ui/react@npm:^0.23.0":
   version: 0.23.0
   resolution: "@floating-ui/react@npm:0.23.0"
@@ -3615,6 +3627,20 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   checksum: 3b9e9b4f5ae970fceefe6aa363326d7abe9a1a3e6b15735c316a3dc6e69c201abe86d636b67e029f8ef434dd5688381bf9df41acd396a3dca8987f2db05ff7f1
+  languageName: node
+  linkType: hard
+
+"@floating-ui/react@npm:^0.24.0":
+  version: 0.24.1
+  resolution: "@floating-ui/react@npm:0.24.1"
+  dependencies:
+    "@floating-ui/react-dom": ^2.0.0
+    aria-hidden: ^1.1.3
+    tabbable: ^6.0.1
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 89e525412a5f71be1437ce74a3a76f4a6c771074e1dca62dddf11062dd9eca7b967091906c369427a0c8f9c9a7c6c7ae06525917e6809d60d832443a4acfc3f3
   languageName: node
   linkType: hard
 
@@ -5519,7 +5545,7 @@ __metadata:
     "@changesets/cli": ^2.25.2
     "@cypress/code-coverage": ^3.10.0
     "@faker-js/faker": ^8.0.0
-    "@floating-ui/react": ^0.23.0
+    "@floating-ui/react": ^0.24.0
     "@fontsource/open-sans": ^4.5.13
     "@internationalized/date": ^3.0.0
     "@jpmorganchase/mosaic-create-site": ^0.1.0-beta.32
