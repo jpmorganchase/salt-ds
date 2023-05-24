@@ -7,3 +7,7 @@
   padding: var(--salt-spacing-50);
   flex-direction: var(--saltToggleButtonGroup-flexDirection, row);
 }
+
+.saltToggleButtonGroup > .saltToggleButton {
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+}
