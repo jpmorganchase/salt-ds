@@ -18,17 +18,17 @@ describe("GIVEN a Banner", () => {
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  describe("WHEN emphasize={true}", () => {
+  describe("WHEN variant = secondary", () => {
     it("THEN class should be applied to the banner", () => {
       cy.mount(
-        <Banner data-testid="bannerRoot" emphasize={true}>
+        <Banner data-testid="bannerRoot" variant={"secondary"}>
           <BannerContent> Default Banner State</BannerContent>
         </Banner>
       );
 
       cy.findByTestId("bannerRoot").should(
         "have.class",
-        "saltBanner-emphasize"
+        "saltBanner-secondary"
       );
     });
   });

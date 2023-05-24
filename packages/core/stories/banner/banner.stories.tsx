@@ -24,7 +24,7 @@ export const Default: ComponentStory<typeof Banner> = (props) => (
   </div>
 );
 
-export const Statuses: ComponentStory<typeof Banner> = (props) => {
+export const StatusesPrimary: ComponentStory<typeof Banner> = (props) => {
   const { status, ...restProps } = props;
 
   const statuses: ValidationStatus[] = ["info", "error", "warning", "success"];
@@ -40,15 +40,12 @@ export const Statuses: ComponentStory<typeof Banner> = (props) => {
   );
 };
 
-export const Emphasized: ComponentStory<typeof Banner> = () => (
-  <Statuses emphasize />
+export const StatusesSecondary: ComponentStory<typeof Banner> = () => (
+  <StatusesPrimary variant="secondary" />
 );
 
 export const Controlled = () => {
   const [open, setOpen] = useState(true);
-  const handleClick = () => {
-    setOpen(true);
-  };
 
   const onClose = () => {
     setOpen(false);
