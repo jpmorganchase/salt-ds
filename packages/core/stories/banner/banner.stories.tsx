@@ -2,14 +2,13 @@ import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
   Banner,
-  BannerCloseButton,
-  BannerContent,
   BannerProps,
   Button,
   Link,
   StackLayout,
   ValidationStatus,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Banner",
@@ -17,10 +16,8 @@ export default {
 } as ComponentMeta<typeof Banner>;
 
 export const Default: ComponentStory<typeof Banner> = (props) => (
-  <div style={{ width: "60vw" }}>
-    <Banner {...props}>
-      <BannerContent>Default banner</BannerContent>
-    </Banner>
+  <div style={{ width: "100%" }}>
+    <Banner {...props}>Default banner</Banner>
   </div>
 );
 
@@ -30,10 +27,10 @@ export const StatusesPrimary: ComponentStory<typeof Banner> = (props) => {
   const statuses: ValidationStatus[] = ["info", "error", "warning", "success"];
 
   return (
-    <StackLayout style={{ width: "60vw" }}>
+    <StackLayout style={{ width: "100%" }}>
       {statuses.map((status, i) => (
         <Banner status={status} {...restProps} key={i}>
-          <BannerContent>Banners with status {status}.</BannerContent>
+          Banners with status {status}.
         </Banner>
       ))}
     </StackLayout>
@@ -55,11 +52,22 @@ export const Controlled = () => {
     setOpen(!open);
   };
   return (
-    <div style={{ width: "50vw" }}>
+    <div style={{ width: "100%" }}>
       {open && (
         <Banner>
-          <BannerContent>Controlled banner</BannerContent>
-          <BannerCloseButton onClick={onClose} />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            Controlled banner
+            <Button variant="secondary" onClick={onClose}>
+              <CloseIcon />
+            </Button>
+          </div>
         </Banner>
       )}
       <Button onClick={toggleButton}>toggle banner</Button>
@@ -73,18 +81,29 @@ export const MultipleLines = (props: BannerProps) => {
     setOpen(false);
   };
   return (
-    <div style={{ width: "60vw" }}>
+    <div style={{ width: "100%" }}>
       {open && (
         <Banner {...props}>
-          <BannerContent>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
             <div>
-              Banner example containing multiple lines. This is supposed to
-              showcase the alignment of the status icon, content and close
-              button within the Banner.
+              <div>
+                Banner example containing multiple lines. This is supposed to
+                showcase the alignment of the status icon, content and close
+                button within the Banner.
+              </div>
+              <Link href={"#"}>Link example...</Link>
             </div>
-            <Link href={"#"}>Link example...</Link>
-          </BannerContent>
-          <BannerCloseButton onClick={onClose} />
+            <Button variant="secondary" onClick={onClose}>
+              <CloseIcon />
+            </Button>
+          </div>
         </Banner>
       )}
     </div>

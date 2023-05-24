@@ -2,8 +2,6 @@ import { FC } from "react";
 import {
   Banner,
   BannerProps,
-  BannerContent,
-  BannerCloseButton,
   Link,
   StackLayout,
   SaltProvider,
@@ -19,10 +17,7 @@ export default {
 const BasicBannerExample: FC<BannerProps> = ({ status }) => {
   return (
     <Banner status={status}>
-      <BannerContent>
-        Example custom renderer <Link href={"#"}>link</Link>
-      </BannerContent>
-      <BannerCloseButton onClick={() => console.log("close")} />
+      Example custom renderer <Link href={"#"}>link</Link>
     </Banner>
   );
 };

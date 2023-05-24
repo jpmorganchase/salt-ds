@@ -1,4 +1,5 @@
-import { Banner, BannerCloseButton, BannerContent } from "@salt-ds/core";
+import { Banner, Button } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/testing-react";
 import * as bannerStories from "@stories/banner/banner.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
@@ -22,7 +23,7 @@ describe("GIVEN a Banner", () => {
     it("THEN class should be applied to the banner", () => {
       cy.mount(
         <Banner data-testid="bannerRoot" variant={"secondary"}>
-          <BannerContent> Default Banner State</BannerContent>
+          Default Banner State
         </Banner>
       );
 
@@ -39,8 +40,10 @@ describe("WHEN adding BannerCloseButton", () => {
     const clickSpy = cy.stub().as("clickSpy");
     const Component = (
       <Banner>
-        <BannerContent>On Close example</BannerContent>
-        <BannerCloseButton onClick={clickSpy} />
+        On Close example
+        <Button variant="secondary" onClick={clickSpy}>
+          <CloseIcon />
+        </Button>
       </Banner>
     );
     cy.mount(Component);

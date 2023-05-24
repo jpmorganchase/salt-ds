@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Banner, BannerContent, Link } from "@salt-ds/core";
+import { Banner, Link } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -27,16 +27,6 @@ You should always position the Banner component in the main content area, direct
 <Canvas>
   <Story id="core-banner--default" />
 </Canvas>
-
-## Banner composition components
-
-### BannerContent
-
-It is recommended to use `BannerContent` component instead of `children` for styling purposes.
-
-### BannerCloseButton
-
-Use `BannerCloseButton` when you want to make your Banner dismissible. See Dismissible section bellow.
 
 ## Banner Status
 
@@ -72,8 +62,10 @@ return (
   <>
     {open && (
       <Banner>
-        <BannerContent>Dismissible banner.</BannerContent>
-        <BannerCloseButton onClick={onClose} />
+        Dismissible banner.
+        <Button variant="secondary" onClick={onClose}>
+          <CloseIcon />
+        </Button>
       </Banner>
     )}
   </>
@@ -97,10 +89,8 @@ You should use the information Banner to draw attention to something your user m
 
 <Canvas>
   <Banner>
-    <BannerContent>
-      There has been an update to the terms and conditions{" "}
-      <Link href="#">link</Link>
-    </BannerContent>
+    There has been an update to the terms and conditions{" "}
+    <Link href="#">link</Link>
   </Banner>
 </Canvas>
 
@@ -111,9 +101,7 @@ or technical failure, use the error Banner to tell them how to resolve it.
 
 <Canvas>
   <Banner status="error">
-    <BannerContent>
-      Action failed <Link href="#">link</Link>
-    </BannerContent>
+    Action failed <Link href="#">link</Link>
   </Banner>
 </Canvas>
 
@@ -123,9 +111,7 @@ or current system status.
 
 <Canvas>
   <Banner status="warning">
-    <BannerContent>
-      System is under increased load <Link href="#">link</Link>
-    </BannerContent>
+    System is under increased load <Link href="#">link</Link>
   </Banner>
 </Canvas>
 
@@ -136,9 +122,7 @@ task has been successfully completed.
 
 <Canvas>
   <Banner status="success">
-    <BannerContent>
-      Database updated <Link href="#">link</Link>
-    </BannerContent>
+    Database updated <Link href="#">link</Link>
   </Banner>
 </Canvas>
 

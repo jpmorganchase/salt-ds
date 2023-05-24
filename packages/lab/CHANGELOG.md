@@ -46,7 +46,6 @@
 
   - Remove `render` prop
   - Remove `Link` component from content
-  - Create composable components `BannerContent` and `BannerCloseButton`
 
 - 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
 
