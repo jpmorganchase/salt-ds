@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  ReactNode,
+  MouseEvent,
+  KeyboardEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   ArrowDown,
   ArrowUp,
@@ -11,7 +19,7 @@ import {
 } from "../common-hooks";
 
 interface UseListProps {
-  children: React.ReactNode;
+  children: ReactNode;
   deselectable: boolean;
   multiselect: boolean;
   onFocus: (element: HTMLElement) => void;
@@ -30,9 +38,14 @@ export const useList = ({
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [startRangeIndex, setStartRangeIndex] = useState<number>(0);
 
-  const getAllOptions = () =>
-    Array.from(listRef.current.querySelectorAll('[role="option"]')) ?? [];
-
+  const getAllOptions = (): Element[] => {
+    const list = listRef.current;
+    return (
+      Array.from(list?.children).filter(
+        (child) => child.getAttribute("role") === "option"
+      ) ?? []
+    );
+  };
   const getAllActiveOptions = () =>
     getAllOptions().filter(
       (option) => option.getAttribute("aria-disabled") !== "true"
@@ -60,44 +73,45 @@ export const useList = ({
 
   const getElementIndex = (option): number => {
     const optionIndex = getAllOptions().indexOf(option);
-
-    return typeof optionIndex === "number" ? optionIndex : -1;
+    return optionIndex !== -1 ? optionIndex : -1;
   };
 
   /* finds next active option */
-  const findNextOption = (currentOption: Element | null) => {
+  const findNextOption = (currentOption: Element | null): Element | null => {
     const allActiveOptions = getAllActiveOptions();
     // Returns next item, if no current option it will return 0
     const nextOptionIndex = allActiveOptions.indexOf(currentOption) + 1;
-    return allActiveOptions[nextOptionIndex];
+    return allActiveOptions[nextOptionIndex] || null;
   };
 
   /**/
-  const findPreviousOption = (currentOption: Element) => {
+  const findPreviousOption = (currentOption: Element): Element | null => {
     // Return the previous option if it exists; otherwise, returns null
     const allActiveOptions = getAllActiveOptions();
     const currentOptionIndex = allActiveOptions.indexOf(currentOption);
-    return allActiveOptions[currentOptionIndex - 1];
+    return allActiveOptions[currentOptionIndex - 1] || null;
   };
 
-  const toggleSelectItem = (element, index) => {
-    const selectedIndexes = selectedRef.current;
-    const itemIsSelected = selectedIndexes.indexOf(index) !== -1;
-    let newSelection;
-    if (multiselect) {
-      newSelection = itemIsSelected
-        ? selectedIndexes.filter((i) => i !== index)
-        : [...selectedIndexes, index];
-    } else {
-      newSelection =
-        deselectable && itemIsSelected ? [] : [getElementIndex(element)];
-    }
-    //  TODO: This is sending back the right selection, but it is not being updated on time
-    selectedRef.current = newSelection;
-  };
+  const toggleSelectItem = useCallback(
+    (element: HTMLElement, index: number) => {
+      const selectedIndexes = selectedRef.current;
+      const itemIsSelected = selectedIndexes.includes(index);
+      let newSelection;
+      if (multiselect) {
+        newSelection = itemIsSelected
+          ? selectedIndexes.filter((i) => i !== index)
+          : [...selectedIndexes, index];
+      } else {
+        newSelection =
+          deselectable && itemIsSelected ? [] : [getElementIndex(element)];
+      }
+      //  TODO: This is sending back the right selection, but it is not being updated on time
+      selectedRef.current = newSelection;
+    },
+    []
+  );
 
-  // TODO: rename this, it should convey that it focuses and handles seelcts/
-  const focusAndSelect = (element) => {
+  const focusAndSelect = (element: HTMLElement) => {
     if (!multiselect) {
       selectedRef.current = [getElementIndex(element)];
     }
@@ -110,7 +124,7 @@ export const useList = ({
     activeDescendantRef.current = element.id;
   };
 
-  const justFocusItem = (element) => {
+  const justFocusItem = (element: HTMLElement) => {
     setFocusedIndex(getElementIndex(element));
 
     if (onFocus) {
@@ -119,7 +133,7 @@ export const useList = ({
     activeDescendantRef.current = element.id;
   };
 
-  const checkInRange = (index, start, end) => {
+  const checkInRange = (index: number, start: number, end: number) => {
     const [rangeStart, rangeEnd] = start < end ? [start, end] : [end, start];
     return index >= rangeStart && index <= rangeEnd;
   };
@@ -131,11 +145,10 @@ export const useList = ({
       typeof start === "number" ? start : getElementIndex(start);
     const endIndex = typeof end === "number" ? end : getElementIndex(end);
 
-    const newRange = [];
+    const newRange: number[] = [];
     allOptions.forEach((option, index) => {
       // Check item is in range and not disabled
-      const isDisabled =
-        allOptions[index].getAttribute("aria-disabled") === "true";
+      const isDisabled = option.getAttribute("aria-disabled") === "true";
       const selected = checkInRange(index, startIndex, endIndex) && !isDisabled;
       if (selected) {
         newRange.push(index);
@@ -151,7 +164,10 @@ export const useList = ({
       // Focus on first active option if no option was previously focused
       focusFirstItem();
     } else {
-      justFocusItem(document.getElementById(activeDescendantRef.current));
+      const element = document.getElementById(activeDescendantRef.current);
+      if (element) {
+        justFocusItem(element);
+      }
     }
   }, []);
 
@@ -239,7 +255,8 @@ export const useList = ({
   }, []);
 
   const handleClick = useCallback(
-    ({ target, shiftKey }: MouseEvent<HTMLUListElement>, index) => {
+    (evt: MouseEvent<HTMLUListElement>, index: number) => {
+      const { target, shiftKey } = evt;
       const activeOptions = getAllActiveOptions();
       const nonClickableTarget = activeOptions.indexOf(target) === -1;
       if (nonClickableTarget) {
@@ -255,6 +272,7 @@ export const useList = ({
     []
   );
 
+  // Effects
   /*
    * Check if the focused index is in view, and scroll to it if not.
    */
@@ -262,9 +280,7 @@ export const useList = ({
     const list = listRef.current;
     if (!list || focusedIndex === null) return;
 
-    const allOptions = Array.from(list?.children).filter(
-      (child) => child.getAttribute("role") === "option"
-    );
+    const allOptions = getAllOptions();
 
     const focusedOption = allOptions[focusedIndex];
     if (!focusedOption) return;
