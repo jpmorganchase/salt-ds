@@ -188,7 +188,7 @@
   grid-row-end: 4;
 }
 
-.saltFormField > .saltFormFieldHelperText {
+.saltFormField > .saltFormHelperText {
   grid-row-start: 4;
   grid-row-end: 5;
 }
@@ -258,7 +258,7 @@
   z-index: -1;
 }
 
-.saltFormField-labelLeft.saltFormField-focused > :is(.saltFormActivationIndicator, .saltFormFieldHelperText, .saltFormLabel):before {
+.saltFormField-labelLeft.saltFormField-focused > :is(.saltFormActivationIndicator, .saltFormHelperText, .saltFormLabel):before {
   content: none;
 }
 
@@ -283,7 +283,7 @@
   background: var(--saltFormField-background, var(--formField-background));
 } */
 
-.saltFormField-labelLeft > .saltFormLabel ~ :not(.saltFormFieldHelperText) {
+.saltFormField-labelLeft > .saltFormLabel ~ :not(.saltFormHelperText) {
   background: var(--saltFormField-background, var(--formField-background));
 }
 

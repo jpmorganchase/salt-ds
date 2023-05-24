@@ -68,7 +68,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       deselectable,
       multiselect,
-      displayedItemCount,
+      displayedItemCount, // TODO: we are sending what comes from the props, but we might want to use our other func to pass this.
       onFocus,
     });
     const forkedRef = useForkRef(ref, listRef);
@@ -93,12 +93,14 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           onClick: (e) => handleClick(e, index),
           focused: focusedIndex === index,
           selected: selectedIndexes.includes(index),
-          // tabIndex: focusedIndex === index,
           id: index, // TODO: Check this
           ...rest,
         };
 
-        return isValidElement(listItem) && cloneElement(listItem, childProps);
+        return (
+          isValidElement(listItem) &&
+          cloneElement(listItem, { ...mergeProps(childProps, listItem.props) })
+        );
       });
     }
 

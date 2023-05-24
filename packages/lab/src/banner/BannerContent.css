@@ -1,0 +1,5 @@
+/* Styles applied to BannerContent */
+.saltBannerContent {
+  flex: 1 0;
+  margin: var(--salt-spacing-75) 0;
+}

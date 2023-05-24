@@ -37,7 +37,7 @@
 /* Pseudo-class applied to the root element on focus */
 .saltListItemNext-focused {
   outline: var(--salt-focused-outline);
-  outline-offset: var(--salt-focused-outlineOffset);
+  outline-offset: calc(var(--salt-focused-outlineWidth) * -1);
 }
 
 .saltListItemNext:hover:not([role="presentation"]):not(.saltListItemNext-disabled),
@@ -47,28 +47,13 @@
   cursor: var(--salt-selectable-cursor-hover);
 }
 
-.saltListItemNext[aria-selected="true"]:not(.saltListItemNext-focused) {
-  outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
-}
-
 .saltListItemNext[aria-selected="true"] {
+  border-block: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
   --list-item-background: var(--salt-selectable-background-selected);
-}
-
-.saltListItemNext[aria-selected="true"]:first-child {
-  border-top: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
-}
-
-.saltListItemNext[aria-selected="true"]:last-child {
-  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
-}
-
-.saltListItemNext[aria-selected="true"]:not(.saltListItemNext-disabled) {
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
 
-.saltListItemNext-disabled:hover:not([role="presentation"]),
-.saltListItemNext-disabled:focus-visible {
+.saltListItemNext-disabled:hover:not([role="presentation"]) {
   cursor: var(--salt-selectable-cursor-disabled);
 }
 

@@ -1,5 +1,54 @@
 # @salt-ds/core
 
+## 1.7.1
+
+### Patch Changes
+
+- 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
+
+## 1.7.0
+
+### Minor Changes
+
+- d7ed50d5: Remove text decoration of inner text in Card when wrapped in a link
+
+### Patch Changes
+
+- 9f3800d2: Update Tooltip props to account for the new content attribute introduced in @types/react@18.2.4
+- 528aa923: Fix Checkbox having incorrect icon style when in the disabled state and hovered over
+- 7f83323a: Fix mergeProps not respecting null values
+
+## 1.6.0
+
+### Minor Changes
+
+- bf66b578: Deprecated -emphasize tokens in status and palette; replaced with default tokens
+
+  `--salt-status-error-background-emphasize` replaced with `--salt-status-error-background`
+  `--salt-status-info-background-emphasize` replaced with `--salt-status-info-background`
+  `--salt-status-success-background-emphasize` replaced with `--salt-status-success-background`
+  `--salt-status-warning-background-emphasize` replaced with `--salt-status-warning-background`
+
+  `--salt-palette-error-background-emphasize` replaced with `--salt-palette-error-background`
+  `--salt-palette-info-background-emphasize` replaced with `--salt-palette-info-background`
+  `--salt-palette-success-background-emphasize` replaced with `--salt-palette-success-background`
+  `--salt-palette-warning-background-emphasize` replaced with `--salt-palette-warning-background`
+
+- ea857f24: Deprecated `--salt-size-icon-base`, replaced with `--salt-icon-size-base`
+  Added `--salt-icon-size-status-adornment`
+- 47132c22: Added `FormFieldNext` component with associated `FormFieldLabel` and `FormFieldHelperText` components
+  Added `FormFieldContextNext`, `useFormFieldPropsNext`
+  Added `InputNext` component
+- a6ede40d: Render Tooltip in a portal to avoid it being cut off
+
+  Add mergeProps to utils.
+
+  Upgraded @floating-ui//react to v0.23.0
+
+### Patch Changes
+
+- fe818c66: Fix Tooltip having incorrect text styles when being nested in elements with custom text styles.
+
 ## 1.5.0
 
 ### Minor Changes

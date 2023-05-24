@@ -30,7 +30,7 @@ import {
 } from "./TabsTypes";
 
 interface tabstripHookProps {
-  activeTabIndex?: number;
+  activeTabIndex?: number | null;
   allowDragDrop?: boolean | dragStrategy;
   collectionHook: OverflowCollectionHookResult;
   defaultActiveTabIndex?: number;
@@ -54,7 +54,7 @@ interface tabstripHookResult
   extends DragHookResult,
     Pick<EditableItemHookResult, "editing"> {
   activateTab: (tabIndex: number) => void;
-  activeTabIndex: number;
+  activeTabIndex: number | null;
   addTab: (indexPosition?: number) => void;
   closeTab: (indexPosition: number) => void;
   containerProps: ContainerNavigationProps;
@@ -85,7 +85,9 @@ export const useTabstrip = ({
   promptForNewTabName,
 }: tabstripHookProps): tabstripHookResult & DragHookResult => {
   const lastSelection = useRef(
-    activeTabIndexProp || defaultActiveTabIndex || 0
+    activeTabIndexProp === null
+      ? null
+      : activeTabIndexProp || defaultActiveTabIndex || 0
   );
   const pendingNewTab = useRef<string | null>(null);
 
@@ -114,7 +116,9 @@ export const useTabstrip = ({
       if (toIndex === -1) {
         // nothing to do
       } else {
-        if (selectionHook.selected === fromIndex) {
+        if (selectionHook.selected === null) {
+          // do thing
+        } else if (selectionHook.selected === fromIndex) {
           selectionHook.activateTab(toIndex);
         } else if (
           fromIndex > selectionHook.selected &&
@@ -267,7 +271,10 @@ export const useTabstrip = ({
           }
           // does this have to be here ?
           onCloseTab?.(indexPosition);
-          if (indexPosition < selectionHook.selected) {
+          if (
+            selectionHook.selected !== null &&
+            indexPosition < selectionHook.selected
+          ) {
             selectionHook.activateTab(selectionHook.selected - 1);
           }
         }

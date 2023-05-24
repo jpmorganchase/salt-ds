@@ -48,11 +48,11 @@
   "dependencies": {
     "@changesets/cli": "^2.25.2",
     "@cypress/code-coverage": "^3.10.0",
-    "@faker-js/faker": "^7.6.0",
+    "@faker-js/faker": "^8.0.0",
     "@floating-ui/react": "^0.23.0",
     "@fontsource/open-sans": "^4.5.13",
     "@internationalized/date": "^3.0.0",
-    "@jpmorganchase/mosaic-create-site": "^0.1.0-beta.19",
+    "@jpmorganchase/mosaic-create-site": "^0.1.0-beta.32",
     "@mswjs/data": "^0.12.0",
     "@storybook/addon-a11y": "^6.5.16",
     "@storybook/addon-actions": "^6.5.16",
@@ -136,10 +136,6 @@
     "esbuild": "0.14.51",
     "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
-    "@jpmorganchase/mosaic-components/@salt-ds/lab": "1.0.0-alpha.1",
-    "@jpmorganchase/mosaic-labs-components/@salt-ds/lab": "1.0.0-alpha.1",
-    "@jpmorganchase/mosaic-layouts/@salt-ds/lab": "1.0.0-alpha.1",
-    "@jpmorganchase/mosaic-site-components/@salt-ds/lab": "1.0.0-alpha.1",
     "rollup": "2.79.1"
   },
   "browserslist": {
@@ -161,7 +157,7 @@
       "<rootDir>/node_modules/csstree-validator"
     ]
   },
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@3.5.1",
   "msw": {
     "workerDirectory": "docs/public"
   }
