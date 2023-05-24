@@ -5570,7 +5570,7 @@ __metadata:
     cypress-real-events: ^1.7.6
     deepmerge: ^4.2.2
     del: ^7.0.0
-    dom-accessibility-api: ^0.5.10
+    dom-accessibility-api: ^0.6.0
     eslint: ^7.32.0
     eslint-config-modular-app: 3.0.2
     eslint-plugin-cypress: ^2.12.1
@@ -14016,10 +14016,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dom-accessibility-api@npm:^0.5.10, dom-accessibility-api@npm:^0.5.6, dom-accessibility-api@npm:^0.5.9":
+"dom-accessibility-api@npm:^0.5.6, dom-accessibility-api@npm:^0.5.9":
   version: 0.5.11
   resolution: "dom-accessibility-api@npm:0.5.11"
   checksum: 6928436f384e34f6c9279a887c7417fd0bf3c881b491f60a44b24eec37ce7318124f1440fcd4110b4cffc6dd0668548fde2837627eb76e3b75f840884c6bd7df
+  languageName: node
+  linkType: hard
+
+"dom-accessibility-api@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "dom-accessibility-api@npm:0.6.0"
+  checksum: d8aa38abf06f6f4cfa43b1757abc4cc0b46b09b87a9a970cc7b50a211b783a9317bba85cc76dde65179e1a2e28e3e422b202a22c7ceebd2b121746aa6eec5791
   languageName: node
   linkType: hard
 
