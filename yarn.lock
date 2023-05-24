@@ -3618,10 +3618,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/open-sans@npm:^4.5.13":
-  version: 4.5.13
-  resolution: "@fontsource/open-sans@npm:4.5.13"
-  checksum: f3bebdc1b274c48281e382ff76058fc2e5d45b946f5dcde36151423735b96e381c5152c875433a48667396ccce1c4e179cc33d55f26ec2ce9646fca89478653c
+"@fontsource/open-sans@npm:^5.0.0":
+  version: 5.0.1
+  resolution: "@fontsource/open-sans@npm:5.0.1"
+  checksum: 58edb9872c9ff34128407e92443c42ea49ba7a079bc2c169a7ef36a41a340fd5a8f58fa59799099f449b6d4dbe17f664a8b9b443ff120a1a52cf5e8cf9602df6
   languageName: node
   linkType: hard
 
@@ -5520,7 +5520,7 @@ __metadata:
     "@cypress/code-coverage": ^3.10.0
     "@faker-js/faker": ^8.0.0
     "@floating-ui/react": ^0.23.0
-    "@fontsource/open-sans": ^4.5.13
+    "@fontsource/open-sans": ^5.0.0
     "@internationalized/date": ^3.0.0
     "@jpmorganchase/mosaic-create-site": ^0.1.0-beta.32
     "@mswjs/data": ^0.12.0
