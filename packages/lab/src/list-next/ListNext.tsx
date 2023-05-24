@@ -68,7 +68,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       deselectable,
       multiselect,
-      displayedItemCount,
+      displayedItemCount, // TODO: we are sending what comes from the props, but we might want to use our other func to pass this.
       onFocus,
     });
     const forkedRef = useForkRef(ref, listRef);
