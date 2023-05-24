@@ -1,4 +1,4 @@
-import React, { forwardRef, HTMLAttributes } from "react";
+import React, { forwardRef, HTMLAttributes, MouseEvent } from "react";
 import { clsx } from "clsx";
 import { Checkbox, makePrefixer, Text, Tooltip } from "@salt-ds/core";
 import { Highlighter } from "./Highlighter";
@@ -31,8 +31,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       role = "option",
       selected,
       showCheckbox,
-      tabIndex,
-      id,
+      id, //TODO: this should not be plain numbers
       onClick,
       ...props
     },
@@ -47,19 +46,20 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       },
       classNameProp
     );
-    const isFocusableContent = role === "option" || !disabled;
 
     const [overflowRef, isOverflowed] = useOverflowDetection<HTMLDivElement>();
 
     const content = label || children;
 
     const listItemControlProps = {
-      onFocus: () => {
-        // setIsFocused(true)
-        isFocusableContent && console.log("focus");
-      },
+      // onFocus,
     };
-    // const [isFocused, setIsFocused] = useState(false);
+
+    const handleClick = (e: MouseEvent<HTMLLIElement | HTMLLabelElement>) => {
+      if (onClick) {
+        onClick(e);
+      }
+    };
     const renderListItem = () => (
       <li
         ref={ref}
@@ -74,7 +74,12 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         {...listItemControlProps}
       >
         {showCheckbox && (
-          <Checkbox aria-hidden checked={selected} disabled={disabled} />
+          <Checkbox
+            aria-hidden
+            checked={selected}
+            disabled={disabled}
+            onClick={onClick}
+          />
         )}
         {children && typeof children !== "string" ? (
           children

@@ -45,7 +45,7 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
 };
 Default.args = {
   style: { width: "200px" },
-  displayedItemCount: 15,
+  displayedItemCount: 4,
 };
 export const Borderless = Default.bind({});
 Borderless.args = {
