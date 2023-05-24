@@ -2,8 +2,7 @@
   --list-background: var(--salt-container-primary-background);
   --list-borderStyle: var(--salt-container-borderStyle);
   --list-borderWidth: var(--salt-size-border);
-  /* calc includes 1px for top border and 1px for bottom border */
-  --list-height: calc((2 * var(--salt-size-border)) + var(--list-item-height) * var(--list-displayedItemCount));
+  --list-height: calc(var(--list-item-height) * var(--list-displayedItemCount));
 }
 
 .saltList {
@@ -18,7 +17,6 @@
   position: relative;
   user-select: none;
   padding-inline-start: 0;
-  width: calc(100% + var(--salt-focused-outlineWidth));
 }
 
 .saltList-borderless {

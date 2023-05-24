@@ -71,8 +71,8 @@ export const useList = ({
     }
   };
 
-  const getElementIndex = (option): number => {
-    const optionIndex = getAllOptions().indexOf(option);
+  const getListItemIndex = (item): number => {
+    const optionIndex = getAllOptions().indexOf(item);
     return optionIndex !== -1 ? optionIndex : -1;
   };
 
@@ -103,7 +103,7 @@ export const useList = ({
           : [...selectedIndexes, index];
       } else {
         newSelection =
-          deselectable && itemIsSelected ? [] : [getElementIndex(element)];
+          deselectable && itemIsSelected ? [] : [getListItemIndex(element)];
       }
       //  TODO: This is sending back the right selection, but it is not being updated on time
       selectedRef.current = newSelection;
@@ -113,10 +113,10 @@ export const useList = ({
 
   const focusAndSelect = (element: HTMLElement) => {
     if (!multiselect) {
-      selectedRef.current = [getElementIndex(element)];
+      selectedRef.current = [getListItemIndex(element)];
     }
 
-    setFocusedIndex(getElementIndex(element));
+    setFocusedIndex(getListItemIndex(element));
 
     if (onFocus) {
       onFocus(element);
@@ -125,7 +125,7 @@ export const useList = ({
   };
 
   const justFocusItem = (element: HTMLElement) => {
-    setFocusedIndex(getElementIndex(element));
+    setFocusedIndex(getListItemIndex(element));
 
     if (onFocus) {
       onFocus(element);
@@ -142,8 +142,8 @@ export const useList = ({
   const selectRange = (start, end) => {
     const allOptions = getAllOptions();
     const startIndex =
-      typeof start === "number" ? start : getElementIndex(start);
-    const endIndex = typeof end === "number" ? end : getElementIndex(end);
+      typeof start === "number" ? start : getListItemIndex(start);
+    const endIndex = typeof end === "number" ? end : getListItemIndex(end);
 
     const newRange: number[] = [];
     allOptions.forEach((option, index) => {
@@ -164,9 +164,9 @@ export const useList = ({
       // Focus on first active option if no option was previously focused
       focusFirstItem();
     } else {
-      const element = document.getElementById(activeDescendantRef.current);
-      if (element) {
-        justFocusItem(element);
+      const activeDescendant = document.getElementById(activeDescendantRef.current);
+      if (activeDescendant) {
+        justFocusItem(activeDescendant);
       }
     }
   }, []);
@@ -204,7 +204,7 @@ export const useList = ({
             : findNextOption(currentItem);
 
         if (nextItem && multiselect && shiftKey) {
-          selectRange(startRangeIndex, getElementIndex(nextItem));
+          selectRange(startRangeIndex, getListItemIndex(nextItem));
         }
 
         if (nextItem) {
@@ -230,7 +230,7 @@ export const useList = ({
         }
         break;
       case Shift:
-        setStartRangeIndex(getElementIndex(currentItem));
+        setStartRangeIndex(getListItemIndex(currentItem));
         break;
       case Space:
         evt.preventDefault();
