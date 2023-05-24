@@ -16,7 +16,7 @@ export default {
 } as ComponentMeta<typeof Banner>;
 
 export const Default: ComponentStory<typeof Banner> = (props) => (
-  <div style={{ width: "100%" }}>
+  <div style={{ width: "500px" }}>
     <Banner {...props}>Default banner</Banner>
   </div>
 );
@@ -27,7 +27,7 @@ export const StatusesPrimary: ComponentStory<typeof Banner> = (props) => {
   const statuses: ValidationStatus[] = ["info", "error", "warning", "success"];
 
   return (
-    <StackLayout style={{ width: "100%" }}>
+    <StackLayout style={{ width: "500px" }}>
       {statuses.map((status, i) => (
         <Banner status={status} {...restProps} key={i}>
           Banners with status {status}.
@@ -52,7 +52,7 @@ export const Controlled = () => {
     setOpen(!open);
   };
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "500px" }}>
       {open && (
         <Banner>
           <div
@@ -81,7 +81,7 @@ export const MultipleLines = (props: BannerProps) => {
     setOpen(false);
   };
   return (
-    <div style={{ width: "100%" }}>
+    <div style={{ width: "500px" }}>
       {open && (
         <Banner {...props}>
           <div
