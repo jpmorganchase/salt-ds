@@ -43,7 +43,7 @@ export const useList = ({
     return (
       Array.from(list?.children).filter(
         (child) => child.getAttribute("role") === "option"
-      ) ?? []
+      ) || []
     );
   };
   const getAllActiveOptions = () =>
@@ -256,17 +256,17 @@ export const useList = ({
 
   const handleClick = useCallback(
     (evt: MouseEvent<HTMLUListElement>, index: number) => {
-      const { target, shiftKey } = evt;
+      const { currentTarget, shiftKey } = evt;
       const activeOptions = getAllActiveOptions();
-      const nonClickableTarget = activeOptions.indexOf(target) === -1;
+      const nonClickableTarget = activeOptions.indexOf(currentTarget) === -1;
       if (nonClickableTarget) {
         return;
       }
-      justFocusItem(target);
-      toggleSelectItem(target, index);
+      justFocusItem(currentTarget);
+      toggleSelectItem(currentTarget, index);
 
       if (multiselect && shiftKey) {
-        selectRange(startRangeIndex, target);
+        selectRange(startRangeIndex, currentTarget);
       }
     },
     []
