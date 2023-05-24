@@ -12,7 +12,7 @@ import { InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Lab/Form Field",
+  title: "Core/Form Field",
   component: FormField,
 } as ComponentMeta<typeof FormField>;
 
