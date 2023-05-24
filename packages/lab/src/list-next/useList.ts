@@ -164,7 +164,9 @@ export const useList = ({
       // Focus on first active option if no option was previously focused
       focusFirstItem();
     } else {
-      const activeDescendant = document.getElementById(activeDescendantRef.current);
+      const activeDescendant = document.getElementById(
+        activeDescendantRef.current
+      );
       if (activeDescendant) {
         justFocusItem(activeDescendant);
       }
