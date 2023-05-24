@@ -284,15 +284,14 @@ export const useList = ({
 
     const focusedOption = allOptions[focusedIndex];
     if (!focusedOption) return;
-    const outlineWidth = 2; // --salt-focused-outlineWidth TODO: check if this will work without focus ring (clicks)
     const { offsetTop, offsetHeight } = focusedOption;
     const listHeight = list.clientHeight;
     const listScrollTop = list.scrollTop;
 
     if (offsetTop < listScrollTop) {
-      list.scrollTop = offsetTop - outlineWidth;
+      list.scrollTop = offsetTop;
     } else if (offsetTop + offsetHeight > listScrollTop + listHeight) {
-      list.scrollTop = offsetTop + offsetHeight - listHeight + outlineWidth;
+      list.scrollTop = offsetTop + offsetHeight - listHeight;
     }
   }, [focusedIndex]);
 
