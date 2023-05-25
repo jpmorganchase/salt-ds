@@ -116,7 +116,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
 
     cy.get("@selectionChangeSpy").should("have.been.calledOnce");
     cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", {
-      currentTarget: {
+      target: {
         value: "search",
       },
     });
@@ -125,7 +125,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
     cy.findByRole("radio", { name: "Print" }).realClick();
     cy.get("@selectionChangeSpy").should("have.been.calledTwice");
     cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", {
-      currentTarget: {
+      target: {
         value: "print",
       },
     });
@@ -178,6 +178,8 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
       const [selected, setSelected] = useState<string>("print");
 
       const handleChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+        // React 16 backwards compatibility
+        event.persist();
         setSelected(event.currentTarget.value);
         selectionChangeSpy(event);
       };
@@ -215,7 +217,9 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
     cy.findAllByRole("radio").eq(0).should("have.attr", "tabindex", "-1");
 
     cy.findAllByRole("radio").eq(1).should("have.text", "Home");
-    cy.findAllByRole("radio").eq(1).should("have.attr", "aria-checked", "true");
+    cy.findAllByRole("radio")
+      .eq(1)
+      .should("have.attr", "aria-checked", "false");
     cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "-1");
 
     cy.findAllByRole("radio").eq(2).should("have.text", "Search");
@@ -225,15 +229,13 @@ describe("GIVEN a ToggleButtonGroup (controlled)", () => {
     cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "-1");
 
     cy.findAllByRole("radio").eq(3).should("have.text", "Print");
-    cy.findAllByRole("radio")
-      .eq(3)
-      .should("have.attr", "aria-checked", "false");
+    cy.findAllByRole("radio").eq(3).should("have.attr", "aria-checked", "true");
     cy.findAllByRole("radio").eq(3).should("have.attr", "tabindex", "0");
 
     cy.findAllByRole("radio").eq(0).realClick();
-    cy.get("@changeSpy").should("have.been.calledOnce");
-    cy.get("@changeSpy").should("have.been.calledWithMatch", {
-      currentTarget: {
+    cy.get("@selectionChangeSpy").should("have.been.calledOnce");
+    cy.get("@selectionChangeSpy").should("have.been.calledWithMatch", {
+      target: {
         value: "alert",
       },
     });
@@ -356,6 +358,6 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
 
     cy.findAllByRole("radio").eq(0).realClick();
     // It should not fire onChange event
-    cy.get("@changeSpy").should("not.have.been.called");
+    cy.get("@selectionChangeSpy").should("not.have.been.called");
   });
 });
