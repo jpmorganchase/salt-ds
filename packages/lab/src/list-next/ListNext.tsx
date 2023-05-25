@@ -99,7 +99,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
         return (
           isValidElement(listItem) &&
-          cloneElement(listItem, { ...mergeProps(childProps, listItem.props) })
+          cloneElement(listItem, { ...mergeProps(listItem.props, childProps) })
         );
       });
     }
