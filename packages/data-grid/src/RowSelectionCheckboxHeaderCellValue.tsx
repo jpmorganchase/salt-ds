@@ -13,7 +13,7 @@ export function RowSelectionCheckboxHeaderCellValue<T>(
 ) {
   const { isFocused } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-checkbox-cell",
     css: checkboxCellCss,

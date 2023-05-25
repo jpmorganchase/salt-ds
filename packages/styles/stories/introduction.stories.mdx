@@ -31,7 +31,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import exampleCss from "./Example.css";
 
 const Example = (props) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     css: exampleCss,
     window: targetWindow,

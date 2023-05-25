@@ -40,7 +40,7 @@ export const InteractableCard = forwardRef<
     ...rest
   } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-interactable-card",
     css: interactableCardCss,

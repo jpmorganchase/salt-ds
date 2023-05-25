@@ -34,7 +34,7 @@ type AriaSortProps = "none" | "ascending" | "descending";
 export function HeaderCell<T>(props: HeaderCellProps<T>) {
   const { column, children, isFocused } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-header-cell",
     css: headerCellCss,

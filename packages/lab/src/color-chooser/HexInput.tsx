@@ -22,7 +22,7 @@ export const HexInput = ({
   disableAlphaChooser,
   onSubmit,
 }: HexInputProps): JSX.Element => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-hex-input",
     css: hexInputCss,

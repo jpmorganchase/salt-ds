@@ -45,7 +45,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     },
     ref
   ) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-overlay",
       css: overlayCSS,

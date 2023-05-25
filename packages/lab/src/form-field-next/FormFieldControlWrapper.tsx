@@ -9,7 +9,7 @@ import formFieldControlWrapper from "./FormFieldControlWrapper.css";
 const withBaseName = makePrefixer("saltFormFieldControlWrapper");
 
 export const FormFieldControlWrapper = ({ children }: PropsWithChildren) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-control-wrapper",
     css: formFieldControlWrapper,

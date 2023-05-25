@@ -41,7 +41,7 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
     getRowValidationStatus,
   } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-middle-part",
     css: middlePartCss,

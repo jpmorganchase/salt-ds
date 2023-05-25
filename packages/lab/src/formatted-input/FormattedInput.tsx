@@ -50,7 +50,7 @@ export const FormattedInput = forwardRef<HTMLInputElement, FormattedInputProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-formatted-input",
       css: formattedInputCss,

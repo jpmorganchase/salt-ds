@@ -53,7 +53,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-accordion",
       css: accordionCss,

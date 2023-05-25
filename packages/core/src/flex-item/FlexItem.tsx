@@ -63,7 +63,7 @@ export const FlexItem: FlexItemComponent = forwardRef(
     }: FlexItemProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-flex-item",
       css: flexItemCss,

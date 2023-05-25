@@ -75,7 +75,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel",
       css: carouselCss,

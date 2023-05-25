@@ -28,7 +28,7 @@ function isNumber(value: any): value is number {
 export function NumericCellValue<T>(props: GridCellValueProps<T>) {
   const { column, value } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-numeric-column",
     css: numericColumnCss,

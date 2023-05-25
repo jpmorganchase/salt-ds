@@ -142,7 +142,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
   props: ListBaseProps<Item>,
   ref: ForwardedRef<ListScrollHandles<Item>>
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-list-deprecated",
     css: listCss,

@@ -14,7 +14,7 @@ export const FormFieldLabel = ({
   children,
   ...restProps
 }: Omit<TextProps<"label">, "variant" | "styleAs">) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-label",
     css: formFieldLabelCss,

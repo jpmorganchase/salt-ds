@@ -30,7 +30,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
 ) {
   const { className, disabled, interactable, children, ...rest } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-card",
     css: cardCss,

@@ -36,7 +36,7 @@ export const Pill = forwardRef(function Pill(
   { variant: variantProp, ...restProps }: PillProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-pill",
     css: pillCss,

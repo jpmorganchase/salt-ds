@@ -23,7 +23,7 @@ const withBaseName = makePrefixer("saltSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
   function SkipLink({ className, targetRef, ...rest }, ref) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-skip-link",
       css: skipLinkCss,

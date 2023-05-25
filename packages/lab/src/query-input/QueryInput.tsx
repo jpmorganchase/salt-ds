@@ -45,7 +45,7 @@ export const QueryInput = forwardRef<HTMLDivElement, QueryInputProps>(
       ...restProps
     } = props;
 
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-query-input",
       css: queryInputCss,

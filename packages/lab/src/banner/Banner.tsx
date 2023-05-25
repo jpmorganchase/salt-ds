@@ -48,7 +48,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   },
   ref
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-banner",
     css: bannerCss,

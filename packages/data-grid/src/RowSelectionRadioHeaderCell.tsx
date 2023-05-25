@@ -10,7 +10,7 @@ import { HeaderCellProps } from "./GridColumn";
 import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionRadioHeaderCell<T>(props: HeaderCellProps<T>) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-checkbox-cell",
     css: checkboxCellCss,

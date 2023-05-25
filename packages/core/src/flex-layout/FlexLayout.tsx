@@ -83,7 +83,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
     }: FlexLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-flex-layout",
       css: flexLayoutCss,

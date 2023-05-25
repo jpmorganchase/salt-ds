@@ -32,7 +32,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   },
   ref
 ): ReactElement<LinkProps> {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-link",
     css: linkCss,

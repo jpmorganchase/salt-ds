@@ -81,7 +81,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       ...rest
     } = props;
 
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-radio-button",
       css: radioButtonCss,

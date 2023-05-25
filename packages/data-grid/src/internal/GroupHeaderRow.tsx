@@ -20,7 +20,7 @@ export interface GroupHeaderRowProps<T> {
 export function GroupHeaderRow<T>(props: GroupHeaderRowProps<T>) {
   const { groups, gap } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-group-header-row",
     css: groupHeaderRowCss,

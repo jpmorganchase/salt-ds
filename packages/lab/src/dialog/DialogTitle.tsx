@@ -21,7 +21,7 @@ const withBaseName = makePrefixer("saltDialogTitle");
 
 export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(
   function DialogTitle(props, ref) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-dialog-title",
       css: dialogTitleCss,

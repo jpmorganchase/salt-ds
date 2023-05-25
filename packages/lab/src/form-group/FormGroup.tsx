@@ -17,7 +17,7 @@ const baseName = "saltFormGroup";
 
 export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>(
   function FormGroup({ className, row, ...other }, ref) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-form-group",
       css: formGroupCss,

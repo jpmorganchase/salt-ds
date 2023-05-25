@@ -14,7 +14,7 @@ export const FormFieldHelperText = ({
   children,
   ...restProps
 }: Omit<TextProps<"label">, "variant" | "styleAs">) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-helper-text",
     css: formFieldHelperTextCss,

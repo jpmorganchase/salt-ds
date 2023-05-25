@@ -121,7 +121,7 @@ export const CircularProgress = forwardRef<
   },
   ref
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-circular-progress",
     css: circularProgressCSS,

@@ -34,7 +34,7 @@ export const Swatches = ({
   placeholder,
   onDialogClosed,
 }: SwatchesTabProps): JSX.Element => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-swatches",
     css: swatchesCss,

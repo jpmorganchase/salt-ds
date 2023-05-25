@@ -32,7 +32,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
     { SubtitleLinkProps, className, title, subtitle, ...restProps },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-metric-header",
       css: metricHeaderCss,

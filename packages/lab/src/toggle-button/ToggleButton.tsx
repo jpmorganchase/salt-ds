@@ -48,7 +48,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       ...restProps
     } = props;
 
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-toggle-button",
       css: toggleButtonCss,

@@ -33,7 +33,7 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
       ...restProps
     } = props;
 
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-contact-details",
       css: contactDetailsCss,

@@ -75,7 +75,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
   }: DropdownButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-dropdown-button",
     css: dropdownButtonCss,

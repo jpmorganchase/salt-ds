@@ -71,7 +71,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
     ref
   ) {
     const id = useId(idProp);
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-spinner",
       css: spinnerCss,

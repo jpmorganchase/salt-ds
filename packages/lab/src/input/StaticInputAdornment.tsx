@@ -16,7 +16,7 @@ export const StaticInputAdornment = forwardRef<
 >(function StaticInputAdornment(props, ref) {
   const { children, className, ...other } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-static-input-adornments",
     css: staticInputAdornmentCss,

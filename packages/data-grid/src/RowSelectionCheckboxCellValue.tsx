@@ -12,7 +12,7 @@ import checkboxCellCss from "./CheckboxCell.css";
 export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
   const { row, column, isFocused } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-checkbox-cell",
     css: checkboxCellCss,

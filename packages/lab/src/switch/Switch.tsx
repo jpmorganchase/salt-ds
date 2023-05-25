@@ -47,7 +47,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     ...rest
   } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-switch",
     css: switchCss,

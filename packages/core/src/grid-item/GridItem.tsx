@@ -71,7 +71,7 @@ export const GridItem: GridItemComponent = forwardRef(
     }: GridItemProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-grid-item",
       css: gridItemCss,

@@ -8,7 +8,7 @@ import { useWindow } from "@salt-ds/window";
 const withBaseName = makePrefixer("saltBannerContent");
 
 export const BannerContent = ({ children }: { children: ReactNode }) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-banner",
     css: bannerCss,

@@ -66,7 +66,7 @@ export const FormLabel = ({
   tooltipText,
   ...restProps
 }: FormLabelProps) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-label",
     css: formLabelCss,

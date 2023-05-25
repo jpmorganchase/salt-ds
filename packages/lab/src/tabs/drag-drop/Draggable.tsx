@@ -17,7 +17,7 @@ export const Draggable = forwardRef<
   { wrapperClassName, element, rect, scale = 1 },
   forwardedRef
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-draggable",
     css: draggableCss,

@@ -18,7 +18,7 @@ export const Highlighter = (
   props: HighlighterProps
 ): ReactElement<HighlighterProps> => {
   const { matchPattern, text = "" } = props;
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-hightligher",
     css: highligherCss,

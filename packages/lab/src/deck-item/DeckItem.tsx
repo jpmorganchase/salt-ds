@@ -31,7 +31,7 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-deck-item",
       css: deckItemCss,

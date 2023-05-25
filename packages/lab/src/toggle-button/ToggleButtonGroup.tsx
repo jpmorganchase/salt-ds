@@ -90,7 +90,7 @@ export const ToggleButtonGroup = forwardRef<
   },
   ref
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-toggle-button-group",
     css: toggleButtonGroupCss,

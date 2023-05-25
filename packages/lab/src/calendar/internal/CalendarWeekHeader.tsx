@@ -18,7 +18,7 @@ export const CalendarWeekHeader = forwardRef<
   const weekdaysShort = daysForLocale("narrow");
   const weekdaysLong = daysForLocale("long");
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-calendar",
     css: calendarWeekHeaderCss,

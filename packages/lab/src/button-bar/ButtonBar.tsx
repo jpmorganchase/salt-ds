@@ -184,7 +184,7 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-button-bar",
       css: buttonBarCss,

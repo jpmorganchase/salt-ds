@@ -141,7 +141,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   },
   ref
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-scrim",
     css: scrimCss,

@@ -1,22 +1,9 @@
-import {
-  createContext,
-  ComponentType,
-  ReactNode,
-  useMemo,
-  useContext,
-} from "react";
+import { createContext, ReactNode, useContext } from "react";
 
-export interface WindowContextType {
-  window: Window & typeof globalThis;
-  Component?: ComponentType;
-}
+export type WindowContextType = Window;
 
 const WindowContext = createContext<WindowContextType | null>(
-  typeof window !== "undefined"
-    ? {
-        window,
-      }
-    : null
+  typeof window !== "undefined" ? window : null
 );
 
 if (process.env.NODE_ENV !== "production") {
@@ -28,14 +15,12 @@ export interface WindowProviderProps extends WindowContextType {
 }
 
 export function WindowProvider(props: WindowProviderProps) {
-  const { window: windowProp, Component, children } = props;
-  const value = useMemo(
-    () => ({ window: windowProp, Component }),
-    [windowProp, Component]
-  );
+  const { window: targetWindow, children } = props;
 
   return (
-    <WindowContext.Provider value={value}>{children}</WindowContext.Provider>
+    <WindowContext.Provider value={targetWindow}>
+      {children}
+    </WindowContext.Provider>
   );
 }
 

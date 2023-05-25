@@ -87,7 +87,7 @@ export const CascadingMenuList = forwardRef<
     rootPlacement = "bottom-start",
   } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-cascading-menu-list",
     css: cascadingMenuListCss,

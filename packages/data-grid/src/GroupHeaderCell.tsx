@@ -19,7 +19,7 @@ export interface GroupHeaderCellProps {
 export function GroupHeaderCell(props: GroupHeaderCellProps) {
   const { group } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-group-header-cell",
     css: groupHeaderCellCss,

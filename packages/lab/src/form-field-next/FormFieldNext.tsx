@@ -59,7 +59,7 @@ export const FormField = forwardRef(
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-form-field-next",
       css: formFieldNextCss,

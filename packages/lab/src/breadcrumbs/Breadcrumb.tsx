@@ -44,7 +44,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-breadcrumb",
       css: breadcrumbCss,
