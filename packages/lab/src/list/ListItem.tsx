@@ -50,7 +50,7 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     },
     forwardedRef
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-list-item",
       css: listItemCss,

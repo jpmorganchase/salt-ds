@@ -55,7 +55,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
     validationStatus: rowValidationStatus,
   } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-table-row",
     css: tableRowCss,

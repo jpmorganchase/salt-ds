@@ -15,7 +15,7 @@ const withBaseName = makePrefixer("saltGridDefaultCellValue");
 export function DefaultCellValue<T>(props: GridCellValueProps<T>) {
   const { value } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-default-cell-value",
     css: defaultCellValueCss,

@@ -47,7 +47,7 @@ export const EditableLabel = forwardRef(function EditableLabel(
   }: EditableLabelProps,
   forwardedRef: ForwardedRef<HTMLDivElement>
 ): ReactElement<EditableLabelProps> {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-editable-label",
     css: editableLabelCss,

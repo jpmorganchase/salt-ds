@@ -80,7 +80,7 @@ export const Tab = forwardRef(function Tab(
       "index, onClick, onKeyUp, onKeyDown are required props, they would nornally be injected by Tabstrip, are you creating a Tab outside of a Tabstrip"
     );
   }
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tab",
     css: tabCss,

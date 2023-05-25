@@ -54,7 +54,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
   }: DropdownPanelProps,
   forwardedRef?: ForwardedRef<HTMLDivElement>
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-overflow-panel",
     css: overflowPanelCss,

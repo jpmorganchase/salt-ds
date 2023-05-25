@@ -10,7 +10,7 @@ export interface CursorProps {}
 
 // This is probably obsolete. Cursor is rendered using cell borders now.
 export function Cursor(props: CursorProps) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-cursor",
     css: CursorCss,

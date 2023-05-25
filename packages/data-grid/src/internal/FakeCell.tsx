@@ -16,7 +16,7 @@ export type FakeCellProps<T> = Pick<GridCellProps<T>, "row">;
 export function FakeCell<T>(props: FakeCellProps<T>) {
   const { row } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-fake-cell",
     css: fakeCellCss,

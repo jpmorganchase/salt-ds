@@ -14,7 +14,7 @@ export interface ColumnDropTargetProps {
 // When the user drags a column, this component is used to show the potential
 // drop target. Experimental feature. No UX yet.
 export function ColumnDropTarget(props: ColumnDropTargetProps) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-column-drop-target",
     css: columDropTargetCss,

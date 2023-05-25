@@ -14,7 +14,7 @@ const withBaseName = makePrefixer("saltDialogContent");
 
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-dialog-content",
       css: dialogContentCss,

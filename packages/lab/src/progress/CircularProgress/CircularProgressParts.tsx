@@ -9,7 +9,7 @@ export const SIZE = 44;
 export const circularGradientId = "salt-circular-progress-gradient";
 
 export const ViewBox = (props: { children?: ReactNode }) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-circular-progress",
     css: circularProgressCSS,
@@ -27,7 +27,7 @@ export const ViewBox = (props: { children?: ReactNode }) => {
 };
 
 export const LinearGradient = () => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-circular-progress",
     css: circularProgressCSS,
@@ -51,7 +51,7 @@ export interface CircleProps {
 }
 
 export const Circle = ({ strokeWidth, style, className }: CircleProps) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-circular-progress",
     css: circularProgressCSS,

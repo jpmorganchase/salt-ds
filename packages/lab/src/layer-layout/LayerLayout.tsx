@@ -65,7 +65,7 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       ...rest
     } = props;
 
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-layer-layout",
       css: layerLayoutCss,

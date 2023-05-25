@@ -24,7 +24,7 @@ export interface ColumnGhostProps<T> {
 // When the user drags a column this component renders a partially transparent
 // copy of the dragged column.
 export function ColumnGhost<T = any>(props: ColumnGhostProps<T>) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-column-ghost",
     css: columnGhostCss,

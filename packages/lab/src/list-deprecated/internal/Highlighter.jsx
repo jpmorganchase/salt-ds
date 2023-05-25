@@ -9,7 +9,7 @@ const baseName = "saltHighlighter";
 
 export const Highlighter = (props) => {
   const { matchPattern, text = "" } = props;
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-highligher-deprecated",
     css: highlighterCss,

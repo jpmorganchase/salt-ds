@@ -28,7 +28,7 @@ export function TopPart<T>(props: TopPartProps<T>) {
   const { topRef, onWheel, columns, columnGroups, midGap, bottomShadow } =
     props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-top-part",
     css: topPartCss,

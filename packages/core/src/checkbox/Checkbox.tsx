@@ -94,7 +94,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-checkbox",
       css: checkboxCss,

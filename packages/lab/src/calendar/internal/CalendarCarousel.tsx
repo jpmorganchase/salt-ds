@@ -38,7 +38,7 @@ export const CalendarCarousel = forwardRef<
 >(function CalendarCarousel(props, ref) {
   const { ...rest } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-calendar-carousel",
     css: calendarCarouselCss,

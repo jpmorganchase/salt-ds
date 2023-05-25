@@ -13,7 +13,7 @@ export type ToolbarButtonProps = ButtonProps & {
 
 export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
   function ToolbarButton({ label, ...props }, forwardedRef) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-toolbar-button",
       css: toolbarButtonCss,

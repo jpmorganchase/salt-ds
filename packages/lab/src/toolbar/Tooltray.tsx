@@ -36,7 +36,7 @@ export const Tooltray = (props: TooltrayProps) => {
     ...rest
   } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tooltray",
     css: tooltrayCss,

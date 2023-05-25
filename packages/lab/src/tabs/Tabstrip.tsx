@@ -92,7 +92,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   }: TabstripProps,
   forwardedRef: ForwardedRef<FocusAPI>
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tab-strip",
     css: tabstripCss,

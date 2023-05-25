@@ -62,7 +62,7 @@ export const GridLayout: GridLayoutComponent = forwardRef(
     }: GridLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-grid-layout",
       css: gridLayoutCss,

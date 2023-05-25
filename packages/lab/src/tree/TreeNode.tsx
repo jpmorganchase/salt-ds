@@ -35,7 +35,7 @@ export const TreeNode = ({
   selected,
   ...props
 }: TreeNodeProps) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tree-node",
     css: treeNodeCss,

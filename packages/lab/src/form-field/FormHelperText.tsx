@@ -17,7 +17,7 @@ export const FormHelperText = <E extends React.ElementType = "p">({
   helperTextPlacement,
   ...restProps
 }: FormHelperTextProps<E>) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-helper-text",
     css: formHelperTextCss,

@@ -42,7 +42,7 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
     getRowValidationStatus,
   } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-left-part",
     css: leftPartCss,

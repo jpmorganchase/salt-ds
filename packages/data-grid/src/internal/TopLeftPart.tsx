@@ -25,7 +25,7 @@ export interface TopLeftPartProps<T> {
 export function TopLeftPart<T>(props: TopLeftPartProps<T>) {
   const { onWheel, columns, columnGroups, rightShadow, bottomShadow } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-top-left-part",
     css: topLeftPartCss,

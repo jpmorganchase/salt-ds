@@ -59,7 +59,7 @@ export const StackLayout: StackLayoutComponent = forwardRef(
     }: StackLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-stack-layout",
       css: stackLayoutCss,

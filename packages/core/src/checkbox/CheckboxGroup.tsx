@@ -60,7 +60,7 @@ export const CheckboxGroup = forwardRef<
   },
   ref
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-checkbox-group",
     css: checkboxGroupCss,

@@ -58,7 +58,7 @@ export const FormActivationIndicator = ({
   hasIcon,
   validationStatus,
 }: FormActivationIndicatorProps) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-activation-indicator",
     css: formActivationIndicatorCss,

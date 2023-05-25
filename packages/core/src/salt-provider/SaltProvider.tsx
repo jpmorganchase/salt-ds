@@ -149,7 +149,7 @@ export function SaltProvider({
     applyClassesTo
   );
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-provider",
     css: saltProviderCss,

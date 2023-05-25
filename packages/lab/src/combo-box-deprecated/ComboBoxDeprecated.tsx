@@ -62,7 +62,7 @@ export const ComboBoxDeprecated = forwardRef<
   HTMLDivElement,
   ComboBoxDeprecatedProps
 >(function ComboBox(props, ref) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-combo-box-deprecated",
     css: comboBoxCss,

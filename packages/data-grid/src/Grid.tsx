@@ -212,7 +212,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     getRowValidationStatus,
   } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-grid",
     css: gridCss,

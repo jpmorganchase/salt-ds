@@ -132,7 +132,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     ...restProps
   } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tokenized-input",
     css: tokenizedInputCss,

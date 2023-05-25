@@ -44,7 +44,7 @@ export const Tabs = forwardRef(function Tabs(
   }: TabsProps,
   forwardedRef: ForwardedRef<FocusAPI>
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tabs",
     css: tabsCss,

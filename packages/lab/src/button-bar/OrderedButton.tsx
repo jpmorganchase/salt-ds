@@ -55,7 +55,7 @@ export const OrderedButton = forwardRef<HTMLButtonElement, OrderedButtonProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-ordered-button",
       css: orderedButtonCss,

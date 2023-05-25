@@ -82,7 +82,7 @@ export const ColorChooser = ({
   readOnly = false,
   displayHexOnly = false,
 }: ColorChooserProps): JSX.Element => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-color-picker",
     css: colorChooserCss,

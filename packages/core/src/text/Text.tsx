@@ -61,7 +61,7 @@ export const Text: TextComponent = forwardRef(
     }: TextProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-text",
       css: textCss,

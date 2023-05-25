@@ -114,7 +114,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-file-drop-zone",
       css: fileDropZoneCss,

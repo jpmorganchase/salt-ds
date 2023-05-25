@@ -14,7 +14,7 @@ export interface CellMeasureProps<T> {
 // Renders a cell in invisible location, measures its height and provides it to
 // the grid.
 export function CellMeasure<T>(props: CellMeasureProps<T>) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-cell-measure",
     css: CellMeasureCss,

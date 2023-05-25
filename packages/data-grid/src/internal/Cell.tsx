@@ -27,7 +27,7 @@ export const Cell = forwardRef<HTMLTableCellElement, CellProps>(
       ...tdProps
     } = props;
 
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-cell",
       css: cellCss,

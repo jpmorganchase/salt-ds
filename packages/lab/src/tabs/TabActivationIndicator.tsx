@@ -22,7 +22,7 @@ export const TabActivationIndicator = ({
   orientation = "horizontal",
   tabId,
 }: TabActivationIndicatorProps) => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tab-activation-indicator",
     css: tabActivationIndicatorCss,

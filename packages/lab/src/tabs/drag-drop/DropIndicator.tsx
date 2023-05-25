@@ -10,7 +10,7 @@ export const DropIndicator = forwardRef<
   HTMLDivElement,
   { className?: string; rect: Rect }
 >(function DropIndicator({ rect }, forwardedRef) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-drop-indicator",
     css: dropIndicatorCss,

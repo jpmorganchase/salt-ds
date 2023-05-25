@@ -43,7 +43,7 @@ export const ListItemBase = memo(
       ...restProps
     } = props;
 
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-list-item-deprecated",
       css: listItemCss,

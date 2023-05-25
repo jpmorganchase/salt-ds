@@ -21,7 +21,7 @@ export interface HeaderRowProps<T> {
 export function HeaderRow<T>(props: HeaderRowProps<T>) {
   const { columns, gap } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-header-row",
     css: headerRowCss,

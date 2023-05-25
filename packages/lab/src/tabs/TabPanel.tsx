@@ -17,7 +17,7 @@ export const TabPanel = forwardRef(function TabPanel(
   { children, className, enableClose, ...htmlAttributes }: TabPanelProps,
   forwardedRef: ForwardedRef<HTMLDivElement>
 ) {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tab-panel",
     css: tabPanelCss,

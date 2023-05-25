@@ -21,7 +21,7 @@ export const AlphaInput = ({
   onSubmit,
   showAsOpacity = false,
 }: AlphaInputProps): JSX.Element => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-rgba-input",
     css: rgbaInputCss,

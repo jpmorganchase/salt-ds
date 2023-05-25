@@ -15,7 +15,7 @@ export type AppHeaderProps = HTMLAttributes<HTMLDivElement>;
 
 export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
   ({ children, className, ...rest }, ref) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-app-header",
       css: appHeaderCss,

@@ -23,7 +23,7 @@ export interface DropdownCellEditorProps<T> {
 export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
   const { options, column, row } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-dropdown-cell-editor",
     css: dropdownCellEditorCss,

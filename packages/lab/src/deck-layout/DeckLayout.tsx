@@ -55,7 +55,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
     },
     ref
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-deck-layout",
       css: deckLayoutCss,

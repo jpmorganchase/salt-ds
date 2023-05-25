@@ -52,7 +52,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
     },
     forwardedRef
   ) {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-helper-text",
       css: dropdownCss,

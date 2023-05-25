@@ -39,7 +39,7 @@ const SwatchesGroup = ({
   selectedColor,
   alpha,
 }: SwatchesGroupProps): JSX.Element => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-color-chooser-swatche",
     css: swatchCSS,

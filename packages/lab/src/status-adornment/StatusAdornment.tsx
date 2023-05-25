@@ -39,7 +39,7 @@ export const StatusAdornment = forwardRef<SVGSVGElement, StatusAdornmentProps>(
     const AdornmentComponent = icons[status];
     const ariaLabel = statusToAriaLabelMap[status];
 
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-status-adornment",
       css: statusAdornmentCss,

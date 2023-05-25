@@ -9,7 +9,7 @@ import pillCheckboxCss from "./PillCheckbox.css";
 const withBaseName = makePrefixer(`${pillBaseName}-checkbox`);
 
 export const PillCheckbox = (props: { checked?: boolean }): JSX.Element => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-pill-checkbox",
     css: pillCheckboxCss,

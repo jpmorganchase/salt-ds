@@ -26,7 +26,7 @@ export interface TextCellEditorProps<T> {
 export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   const { column, row } = props;
 
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-text-cell-editor",
     css: TextCellEditorCss,

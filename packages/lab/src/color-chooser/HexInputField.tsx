@@ -18,7 +18,7 @@ export const HexInput = ({
   disableAlphaChooser,
   onSubmit,
 }: HexInputProps): JSX.Element => {
-  const { window: targetWindow } = useWindow();
+  const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-color-picker",
     css: colorPickerCss,

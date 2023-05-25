@@ -61,7 +61,7 @@ export const BorderItem: BorderItemComponent = forwardRef(
     }: BorderItemProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-border-item",
       css: borderItemCss,

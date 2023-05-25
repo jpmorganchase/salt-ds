@@ -42,7 +42,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       showRefreshButton = false,
     } = props;
 
-    const { window: targetWindow } = useWindow();
+    const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-stepper-input",
       css: stepperInputCss,
