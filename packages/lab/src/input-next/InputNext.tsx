@@ -65,9 +65,6 @@ export interface InputProps
 
 export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   {
-    "aria-activedescendant": ariaActiveDescendant,
-    "aria-expanded": ariaExpanded,
-    "aria-owns": ariaOwns,
     className: classNameProp,
     disabled,
     emptyReadOnlyMarker = "—",
