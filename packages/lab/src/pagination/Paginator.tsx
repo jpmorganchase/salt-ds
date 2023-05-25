@@ -62,7 +62,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
             count={count}
             page={page}
             onPageChange={onPageChange}
-            FormFieldProps={FormFieldLegacyProps}
+            FormFieldProps={FormFieldProps}
           />
         ) : (
           <RegularControls

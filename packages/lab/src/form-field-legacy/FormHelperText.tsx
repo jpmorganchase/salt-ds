@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from "react";
-import { FormFieldProps } from "./FormFieldLegacy";
+import { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
 
 import "./FormHelperText.css";
 

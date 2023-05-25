@@ -22,7 +22,7 @@ export const CompactControls = ({
         page={page}
         count={count}
         onPageChange={onPageChange}
-        FormFieldProps={FormFieldLegacyProps}
+        FormFieldProps={FormFieldProps}
       />
       <span className={withBaseName("compactSeparator")}>of</span>
       <PageButton
