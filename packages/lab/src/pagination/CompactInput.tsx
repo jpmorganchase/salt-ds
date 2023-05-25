@@ -5,7 +5,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { FormFieldLegacy as FormField, FormFieldLegacyProps as FormFieldProps } from "../form-field-legacy";
+import {
+  FormFieldLegacy as FormField,
+  FormFieldLegacyProps as FormFieldProps,
+} from "../form-field-legacy";
 import { Input } from "../input";
 import { withBaseName } from "./utils";
 

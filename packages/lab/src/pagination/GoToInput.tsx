@@ -12,7 +12,10 @@ import {
 import { useForkRef, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
-import { FormFieldLegacy as FormField, FormFieldLegacyProps as FormFieldProps } from "../form-field-legacy";
+import {
+  FormFieldLegacy as FormField,
+  FormFieldLegacyProps as FormFieldProps,
+} from "../form-field-legacy";
 import { Input } from "../input";
 
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
