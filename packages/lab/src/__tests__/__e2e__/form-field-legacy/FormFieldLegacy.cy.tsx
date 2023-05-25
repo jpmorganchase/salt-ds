@@ -1,13 +1,13 @@
-import { Input, FormField, useFormFieldProps } from "@salt-ds/lab";
+import { Input, FormFieldLegacy, useFormFieldLegacyProps } from "@salt-ds/lab";
 
 const MockControl = ({ ...rest }: any) => {
-  const formFieldProps = useFormFieldProps();
+  const FormFieldLegacyProps = useFormFieldLegacyProps();
 
   return (
     <div
       tabIndex={1}
       {...rest}
-      {...formFieldProps.a11yProps}
+      {...FormFieldLegacyProps.a11yProps}
       id="child-component"
     >
       Child Component
@@ -15,13 +15,13 @@ const MockControl = ({ ...rest }: any) => {
   );
 };
 
-describe("GIVEN a FormField", () => {
+describe("GIVEN a FormFieldLegacy", () => {
   describe("WHEN a label is provided", () => {
     it("THEN the label is rendered", () => {
       cy.mount(
-        <FormField label="A label" LabelProps={{ id: "label-id" }}>
+        <FormFieldLegacy label="A label" LabelProps={{ id: "label-id" }}>
           <MockControl />
-        </FormField>
+        </FormFieldLegacy>
       );
 
       cy.findByLabelText("A label").should("exist");
@@ -34,11 +34,11 @@ describe("GIVEN a FormField", () => {
   });
 
   describe("WHEN disabled", () => {
-    it("THEN inner component should have disabled set from useFormFieldProps.a11yProps", () => {
+    it("THEN inner component should have disabled set from useFormFieldLegacyProps.a11yProps", () => {
       cy.mount(
-        <FormField label="Disabled form field" disabled>
+        <FormFieldLegacy label="Disabled form field" disabled>
           <MockControl />
-        </FormField>
+        </FormFieldLegacy>
       );
       cy.findByText("Child Component").should("have.attr", "disabled");
     });
@@ -47,14 +47,14 @@ describe("GIVEN a FormField", () => {
   describe("WHEN helperText is provided", () => {
     it("THEN the helperText is rendered", () => {
       cy.mount(
-        <FormField
+        <FormFieldLegacy
           label="A label"
           LabelProps={{ id: "label-id" }}
           helperText="Helper Text"
           HelperTextProps={{ id: "helper-text" }}
         >
           <MockControl />
-        </FormField>
+        </FormFieldLegacy>
       );
 
       cy.findByText("Helper Text").should("exist");
@@ -67,32 +67,32 @@ describe("GIVEN a FormField", () => {
   describe("WHEN helperText is NOT provided", () => {
     it("THEN the helperText is NOT rendered", () => {
       cy.mount(
-        <FormField label="A label">
+        <FormFieldLegacy label="A label">
           <MockControl />
-        </FormField>
+        </FormFieldLegacy>
       );
       cy.findByText("Helper Text").should("not.exist");
     });
   });
 
   describe("WHEN readonly", () => {
-    it("THEN inner component should have readOnly set from useFormFieldProps.a11yProps", () => {
+    it("THEN inner component should have readOnly set from useFormFieldLegacyProps.a11yProps", () => {
       cy.mount(
-        <FormField label="Readonly form field" readOnly>
+        <FormFieldLegacy label="Readonly form field" readOnly>
           <MockControl />
-        </FormField>
+        </FormFieldLegacy>
       );
 
       cy.findByText("Child Component").should("have.attr", "readonly");
     });
   });
 
-  describe("When the FormField is required", () => {
+  describe("When the FormFieldLegacy is required", () => {
     it("THEN the child should have aria-required=true", () => {
       cy.mount(
-        <FormField label="Required form field" required>
+        <FormFieldLegacy label="Required form field" required>
           <MockControl />
-        </FormField>
+        </FormFieldLegacy>
       );
       cy.findByText("Child Component").should(
         "have.attr",
@@ -103,12 +103,12 @@ describe("GIVEN a FormField", () => {
     });
   });
 
-  describe("When the FormField is not required", () => {
+  describe("When the FormFieldLegacy is not required", () => {
     it("THEN the child should not have be labelled with required", () => {
       cy.mount(
-        <FormField label="Form field label" required={false}>
+        <FormFieldLegacy label="Form field label" required={false}>
           <MockControl />
-        </FormField>
+        </FormFieldLegacy>
       );
       cy.findByLabelText(/Required/i).should("not.exist");
     });
@@ -116,13 +116,13 @@ describe("GIVEN a FormField", () => {
     describe("AND displayedNecessity is optional", () => {
       it("THEN the child should have be labelled with optional", () => {
         cy.mount(
-          <FormField
+          <FormFieldLegacy
             label="Form field label"
             required={false}
             LabelProps={{ displayedNecessity: "optional" }}
           >
             <MockControl />
-          </FormField>
+          </FormFieldLegacy>
         );
         cy.findByLabelText(/Optional/i).should(
           "contain.text",
@@ -135,9 +135,9 @@ describe("GIVEN a FormField", () => {
   describe("WHEN validation status is warning", () => {
     it("THEN it should render warning icon", () => {
       cy.mount(
-        <FormField label="Warning validation status" validationStatus="warning">
+        <FormFieldLegacy label="Warning validation status" validationStatus="warning">
           <Input defaultValue="Value" />
-        </FormField>
+        </FormFieldLegacy>
       );
       cy.findByTestId("WarningIndicatorIcon").should(
         "have.class",
@@ -147,13 +147,13 @@ describe("GIVEN a FormField", () => {
 
     it("THEN warning indicator icon should not be rendered if hasStatusIndicator", () => {
       cy.mount(
-        <FormField
+        <FormFieldLegacy
           label="Warning validation status"
           validationStatus="warning"
           hasStatusIndicator
         >
           <Input defaultValue="Value" />
-        </FormField>
+        </FormFieldLegacy>
       );
       cy.findByTestId("WarningIndicatorIcon").should("not.exist");
     });
@@ -162,9 +162,9 @@ describe("GIVEN a FormField", () => {
   describe("WHEN validation status is error", () => {
     it("THEN it should render error icon", () => {
       cy.mount(
-        <FormField label="Error validation status" validationStatus="error">
+        <FormFieldLegacy label="Error validation status" validationStatus="error">
           <Input defaultValue="Value" />
-        </FormField>
+        </FormFieldLegacy>
       );
       cy.findByTestId("ErrorIndicatorIcon").should(
         "have.class",
@@ -174,13 +174,13 @@ describe("GIVEN a FormField", () => {
 
     it("THEN error indicator icon should not be rendered if hasStatusIndicator", () => {
       cy.mount(
-        <FormField
+        <FormFieldLegacy
           label="Error validation status"
           validationStatus="error"
           hasStatusIndicator
         >
           <Input defaultValue="Value" />
-        </FormField>
+        </FormFieldLegacy>
       );
       cy.findByTestId("ErrorIndicatorIcon").should("not.exist");
     });
@@ -189,9 +189,9 @@ describe("GIVEN a FormField", () => {
   describe("WITH a nested Input", () => {
     it("SHOULD have no a11y violations on load", () => {
       cy.mount(
-        <FormField label="Warning validation status">
+        <FormFieldLegacy label="Warning validation status">
           <Input defaultValue="Value" data-testid="test-id-1" />
-        </FormField>
+        </FormFieldLegacy>
       );
 
       cy.findByRole("textbox").focus();
@@ -201,13 +201,13 @@ describe("GIVEN a FormField", () => {
     describe("WHEN input is focused", () => {
       it("SHOULD put focus ring on form field and not the input", () => {
         cy.mount(
-          <FormField label="Warning validation status">
+          <FormFieldLegacy label="Warning validation status">
             <Input defaultValue="Value" data-testid="test-id-1" />
-          </FormField>
+          </FormFieldLegacy>
         );
 
         cy.findByRole("textbox").focus();
-        cy.get(".saltFormField-focused").should("exist");
+        cy.get(".saltFormFieldLegacy-focused").should("exist");
         cy.findByTestId("test-id-1").should(
           "not.have.class",
           "saltInput-focused"

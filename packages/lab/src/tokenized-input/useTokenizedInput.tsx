@@ -21,7 +21,7 @@ import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
 import { TokenizedInputProps } from "./TokenizedInput";
 import { TokenizedInputBaseProps } from "./TokenizedInputBase";
-import { useFormFieldProps } from "../form-field-context";
+import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 
 export interface TokenizedInputState<Item> {
   activeIndices: Array<number>;
@@ -103,7 +103,7 @@ export function useTokenizedInput<Item>(
       "aria-labelledby": ariaLabelledBy,
       disabled: formFieldDisabled,
     } = {},
-  } = useFormFieldProps(); // FIXME: FormField Props
+  } = useFormFieldLegacyProps(); // FIXME: FormField Props
 
   const density = useDensity();
 

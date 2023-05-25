@@ -3,7 +3,7 @@ import {
   ComboBox,
   ComboBoxProps,
   escapeRegExp,
-  FormField,
+  FormFieldLegacy,
   Highlighter,
   ListItem,
   ListItemProps,
@@ -145,10 +145,10 @@ const ComboBoxTemplate: Story<ComboBoxProps> = (args) => {
   return <ComboBox {...args} />;
 };
 
-const FormFieldComboBoxTemplate: Story<
+const FormFieldLegacyComboBoxTemplate: Story<
   ComponentProps<typeof ComboBox> &
     Pick<
-      ComponentProps<typeof FormField>,
+      ComponentProps<typeof FormFieldLegacy>,
       "labelPlacement" | "label" | "required" | "LabelProps" | "helperText"
     >
 > = (args) => {
@@ -163,7 +163,7 @@ const FormFieldComboBoxTemplate: Story<
     ...rest
   } = args;
   return (
-    <FormField
+    <FormFieldLegacy
       label={label}
       labelPlacement={labelPlacement}
       helperText={helperText}
@@ -172,7 +172,7 @@ const FormFieldComboBoxTemplate: Story<
       LabelProps={LabelProps}
     >
       <ComboBox source={source} width={width} {...rest} />
-    </FormField>
+    </FormFieldLegacy>
   );
 };
 
@@ -194,9 +194,9 @@ WithCustomizedFilter.args = {
 
 export const ItemRenderer: Story<ComboBoxProps<LargeCity>> = (args) => {
   return (
-    <FormField label="Select a large city" style={{ maxWidth: 292 }}>
+    <FormFieldLegacy label="Select a large city" style={{ maxWidth: 292 }}>
       <ComboBox {...args} />
-    </FormField>
+    </FormFieldLegacy>
   );
 };
 
@@ -210,8 +210,8 @@ ItemRenderer.args = {
   source: largestCities,
 };
 
-export const WithFormField = FormFieldComboBoxTemplate.bind({});
-WithFormField.args = {
+export const WithFormFieldLegacy = FormFieldLegacyComboBoxTemplate.bind({});
+WithFormFieldLegacy.args = {
   label: "Select",
   helperText: "Select a color",
   width: 292,
@@ -219,16 +219,16 @@ WithFormField.args = {
   labelPlacement: "top",
 };
 
-export const WithFreeText = FormFieldComboBoxTemplate.bind({});
+export const WithFreeText = FormFieldLegacyComboBoxTemplate.bind({});
 WithFreeText.args = {
-  ...WithFormField.args,
+  ...WithFormFieldLegacy.args,
   label: "Enter a value",
   allowFreeText: true,
 };
 
-export const WithInitialSelection = FormFieldComboBoxTemplate.bind({});
+export const WithInitialSelection = FormFieldLegacyComboBoxTemplate.bind({});
 WithInitialSelection.args = {
-  ...WithFormField.args,
+  ...WithFormFieldLegacy.args,
   defaultValue: shortColorData[3],
 };
 
@@ -239,8 +239,8 @@ export const TestSourceDelay = () => {
     return () => void clearTimeout(timeout);
   }, []);
   return (
-    <FormField label="Select something" style={{ maxWidth: 292 }}>
+    <FormFieldLegacy label="Select something" style={{ maxWidth: 292 }}>
       <ComboBox source={source} />
-    </FormField>
+    </FormFieldLegacy>
   );
 };

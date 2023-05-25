@@ -1,4 +1,4 @@
-import { FormField, FormattedInput, FormattedInputProps } from "@salt-ds/lab";
+import { FormFieldLegacy, FormattedInput, FormattedInputProps } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { useState } from "react";
 
@@ -128,14 +128,14 @@ export const DefaultValue: Story<FormattedInputProps> = (props) => (
   />
 );
 
-export const WithFormField: Story<FormattedInputProps> = (props) => (
-  <FormField label="ADA compliant label" style={{ width: 292 }}>
+export const WithFormFieldLegacy: Story<FormattedInputProps> = (props) => (
+  <FormFieldLegacy label="ADA compliant label" style={{ width: 292 }}>
     <FormattedInput defaultValue="Value" {...props} />
-  </FormField>
+  </FormFieldLegacy>
 );
 
-export const WithFormFieldAndMask: Story<FormattedInputProps> = (props) => (
-  <FormField label="ADA compliant label" style={{ width: 292 }}>
+export const WithFormFieldLegacyAndMask: Story<FormattedInputProps> = (props) => (
+  <FormFieldLegacy label="ADA compliant label" style={{ width: 292 }}>
     <FormattedInput
       defaultValue="123"
       mask="XXX-XXX-XXX"
@@ -147,5 +147,5 @@ export const WithFormFieldAndMask: Story<FormattedInputProps> = (props) => (
       }}
       {...props}
     />
-  </FormField>
+  </FormFieldLegacy>
 );

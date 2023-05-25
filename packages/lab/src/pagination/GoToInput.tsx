@@ -12,12 +12,12 @@ import {
 import { useForkRef, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
-import { FormField, FormFieldProps } from "../form-field";
+import { FormFieldLegacy, FormFieldLegacyProps } from "../form-field-legacy";
 import { Input } from "../input";
 
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   label?: string;
-  FormFieldProps?: Partial<FormFieldProps>;
+  FormFieldLegacyProps?: Partial<FormFieldLegacyProps>;
 }
 
 export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
@@ -26,7 +26,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
       className,
       id: idProp,
       label = "Go to",
-      FormFieldProps: { ...restFormFieldProps } = {},
+      FormFieldLegacyProps: { ...restFormFieldLegacyProps } = {},
       ...restProps
     },
 
@@ -102,12 +102,12 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
         )}
         ref={forkedRef}
       >
-        <FormField
+        <FormFieldLegacy
           className={withBaseName("goToInputField")}
           fullWidth={false}
           label={label}
           labelPlacement="left"
-          {...restFormFieldProps}
+          {...restFormFieldLegacyProps}
         >
           <Input
             className={clsx(withBaseName("goToInput"), {
@@ -125,7 +125,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
             value={inputValue}
             textAlign={"center"}
           />
-        </FormField>
+        </FormFieldLegacy>
       </span>
     );
   }

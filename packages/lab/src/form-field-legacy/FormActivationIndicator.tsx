@@ -1,6 +1,6 @@
 import { SVGAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { FormFieldProps } from "./FormField";
+import { FormFieldLegacyProps } from "./FormFieldLegacy";
 
 import "./FormActivationIndicator.css";
 
@@ -35,7 +35,7 @@ const withBaseName = makePrefixer("saltFormActivationIndicator");
 const ActivationIndicatorIcon = ({
   validationStatus,
   ...restSvgProps
-}: Pick<FormFieldProps, "validationStatus"> & SVGAttributes<SVGSVGElement>) => {
+}: Pick<FormFieldLegacyProps, "validationStatus"> & SVGAttributes<SVGSVGElement>) => {
   if (validationStatus === "error") {
     return <ErrorIndicatorIcon {...restSvgProps} />;
   } else if (validationStatus === "warning") {
@@ -47,7 +47,7 @@ const ActivationIndicatorIcon = ({
 
 // Removed `enabled` prop, it's better to let parent to control render
 export interface FormActivationIndicatorProps
-  extends Pick<FormFieldProps, "validationStatus"> {
+  extends Pick<FormFieldLegacyProps, "validationStatus"> {
   hasIcon?: boolean;
 }
 

@@ -7,7 +7,7 @@ import { CompactControls } from "./CompactControls";
 import { RegularControls } from "./RegularControls";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
-import { FormFieldProps } from "../form-field";
+import { FormFieldLegacyProps } from "../form-field-legacy";
 
 import "./Pagination.css";
 
@@ -15,7 +15,7 @@ export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   boundaryCount?: number;
   siblingCount?: number;
   showPreviousNext?: boolean;
-  FormFieldProps?: Partial<FormFieldProps>;
+  FormFieldLegacyProps?: Partial<FormFieldLegacyProps>;
 }
 
 export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
@@ -25,7 +25,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
       boundaryCount,
       siblingCount,
       showPreviousNext = true,
-      FormFieldProps,
+      FormFieldLegacyProps,
       ...restProps
     },
     forwardedRef
@@ -62,7 +62,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
             count={count}
             page={page}
             onPageChange={onPageChange}
-            FormFieldProps={FormFieldProps}
+            FormFieldLegacyProps={FormFieldLegacyProps}
           />
         ) : (
           <RegularControls

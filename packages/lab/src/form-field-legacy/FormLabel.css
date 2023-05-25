@@ -1,0 +1,72 @@
+/* Styles applied to root element */
+.salt-density-touch {
+  --formFieldLegacy-label-default-top: 11px;
+  --formFieldLegacy-label-left-top: 16px;
+  --formFieldLegacy-label-minHeight: 16px;
+}
+.salt-density-low {
+  --formFieldLegacy-label-default-top: 7px;
+  --formFieldLegacy-label-left-top: 12px;
+}
+.salt-density-medium {
+  --formFieldLegacy-label-default-top: 5px;
+  --formFieldLegacy-label-left-top: 8px;
+}
+.salt-density-high {
+  --formFieldLegacy-label-default-top: 3px;
+  --formFieldLegacy-label-left-top: 4px;
+}
+
+.saltFormLabel {
+  --formFieldLegacy-label-fontSize: var(--saltFormFieldLegacy-label-fontSize, var(--salt-text-label-fontSize));
+  --formFieldLegacy-label-top: var(--formFieldLegacy-label-default-top);
+  --formFieldLegacy-label-width: 100%;
+}
+
+.saltFormFieldLegacy-labelLeft .saltFormLabel {
+  --formFieldLegacy-label-top: var(--formFieldLegacy-label-left-top);
+  --formFieldLegacy-label-width: auto;
+}
+
+.saltFormLabel {
+  align-items: center;
+  color: var(--saltFormFieldLegacy-label-text-color, var(--salt-text-secondary-foreground));
+  display: block;
+  font-size: var(--formFieldLegacy-label-fontSize);
+  margin-bottom: var(--saltFormFieldLegacy-label-marginBottom, var(--formFieldLegacy-label-marginBottom));
+  min-height: var(--saltFormFieldLegacy-label-minHeight, var(--formFieldLegacy-label-minHeight, var(--salt-text-label-minHeight)));
+  margin-top: var(--saltFormFieldLegacy-label-marginTop, 0px);
+  line-height: var(--saltFormFieldLegacy-label-lineHeight, var(--salt-text-label-lineHeight));
+  overflow: hidden;
+  padding-left: var(--saltFormFieldLegacy-label-paddingLeft, var(--formFieldLegacy-label-paddingLeft));
+  padding-right: var(--saltFormFieldLegacy-label-paddingRight, var(--formFieldLegacy-label-paddingRight));
+  padding-top: var(--saltFormFieldLegacy-label-paddingTop, 0);
+  padding-bottom: var(--saltFormFieldLegacy-label-paddingBottom, 0);
+  text-overflow: ellipsis;
+  top: var(--saltFormFieldLegacy-label-top, var(--formFieldLegacy-label-top));
+  transform: translate(var(--saltFormFieldLegacy-label-transform-x, 0), var(--saltFormFieldLegacy-label-transform-y, var(--formFieldLegacy-label-top)));
+  white-space: nowrap;
+  width: var(--saltFormFieldLegacy-label-width, var(--formFieldLegacy-label-width, 100%));
+}
+
+.saltFormLabel ~ * {
+  z-index: 1;
+}
+
+/* Styles applied when `disabled={true}` */
+.saltFormLabel-disabled {
+  color: var(--saltFormFieldLegacy-label-text-color-disabled, var(--salt-text-secondary-foreground-disabled));
+  cursor: var(--salt-editable-cursor-disabled);
+}
+
+/* Styles applied when displayedNecessity or necessityText provided */
+.saltFormLabel-necessityIndicator {
+  font-style: var(--saltFormFieldLegacy-label-necessityIndicator-fontStyle, var(--salt-editable-help-fontStyle));
+  margin-left: 1ch;
+}
+
+/* Styles applied if `hasStatusIndicator={true}` */
+.saltFormLabel-statusIndicator {
+  margin-left: 6px;
+  vertical-align: top;
+}

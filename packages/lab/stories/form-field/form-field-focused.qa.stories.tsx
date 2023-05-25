@@ -1,89 +1,89 @@
-import { FormField, Input } from "@salt-ds/lab";
+import { FormFieldLegacy, Input } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Form Field/QA",
-  component: FormField,
-} as ComponentMeta<typeof FormField>;
+  component: FormFieldLegacy,
+} as ComponentMeta<typeof FormFieldLegacy>;
 
-export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
+export const FormFieldLegacyWithFocus: Story<QAContainerProps> = (props) => {
   return (
     <QAContainer {...props} itemPadding={6}>
-      <FormField
+      <FormFieldLegacy
         label="Default Form Field description label"
-        className="saltFormField-focused"
+        className="saltFormFieldLegacy-focused"
       >
         <Input value="Value" />
-      </FormField>
+      </FormFieldLegacy>
 
-      <FormField
-        className="saltFormField-secondary saltFormField-focused"
+      <FormFieldLegacy
+        className="saltFormFieldLegacy-secondary saltFormFieldLegacy-focused"
         label="Default Form Field description label"
       >
         <Input value="Value" />
-      </FormField>
-      <FormField
-        className="saltFormField-focused"
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className="saltFormFieldLegacy-focused"
         label="Label aligned left"
         labelPlacement="left"
       >
         <Input value="Value" />
-      </FormField>
-      <FormField
-        className="saltFormField-focused"
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className="saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
       >
         <Input />
-      </FormField>
-      <FormField
-        className="saltFormField-secondary saltFormField-focused"
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className="saltFormFieldLegacy-secondary saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
       >
         <Input />
-      </FormField>
-      <FormField
-        className="saltFormField-tertiary saltFormField-focused"
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className="saltFormFieldLegacy-tertiary saltFormFieldLegacy-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
       >
         <Input />
-      </FormField>
-      <FormField
-        className="saltFormField-tertiary saltFormField-focused"
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className="saltFormFieldLegacy-tertiary saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
       >
         <Input />
-      </FormField>
-      <FormField
-        className="saltFormField-secondary saltFormField-focused"
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className="saltFormFieldLegacy-secondary saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
       >
         <Input />
-      </FormField>
-      <FormField
-        className="saltFormField-tertiary saltFormField-focused"
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className="saltFormFieldLegacy-tertiary saltFormFieldLegacy-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
       >
         <Input />
-      </FormField>
+      </FormFieldLegacy>
     </QAContainer>
   );
 };
 
-FormFieldWithFocus.parameters = {
+FormFieldLegacyWithFocus.parameters = {
   chromatic: { disableSnapshot: false },
 };

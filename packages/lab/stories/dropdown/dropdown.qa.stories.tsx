@@ -1,6 +1,6 @@
 import { Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { Dropdown, FormField } from "@salt-ds/lab";
+import { Dropdown, FormFieldLegacy } from "@salt-ds/lab";
 
 import { usa_states } from "../list/list.data";
 
@@ -20,7 +20,7 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
     width={1200}
   >
     <div style={{ height: 300 }}>
-      <FormField
+      <FormFieldLegacy
         helperText="This is some help text"
         label="ADA compliant label"
       >
@@ -33,7 +33,7 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
           defaultSelected={usa_states[1]}
           source={usa_states.slice(0, 4)}
         />
-      </FormField>
+      </FormFieldLegacy>
     </div>
 
     <Dropdown
@@ -44,7 +44,7 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
       defaultSelected={usa_states[2]}
       source={usa_states}
     />
-    <FormField helperText="This is some help text" label="ADA compliant label">
+    <FormFieldLegacy helperText="This is some help text" label="ADA compliant label">
       <Dropdown
         ListProps={{
           displayedItemCount: 4,
@@ -52,7 +52,7 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
         aria-label="Listbox example"
         source={usa_states.slice(0, 4)}
       />
-    </FormField>
+    </FormFieldLegacy>
   </QAContainer>
 );
 

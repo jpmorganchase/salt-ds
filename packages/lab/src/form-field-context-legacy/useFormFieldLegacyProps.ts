@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { FormFieldContext, FormFieldContextValue } from "./FormFieldContext";
+import { FormFieldLegacyContext, FormFieldLegacyContextValue } from "./FormFieldLegacyContext";
 
-interface useFormFieldPropsProps {
+interface useFormFieldLegacyPropsProps {
   focusVisible?: boolean;
 }
 
-export function useFormFieldProps({
+export function useFormFieldLegacyProps({
   focusVisible,
-}: useFormFieldPropsProps = {}): Partial<FormFieldContextValue> {
+}: useFormFieldLegacyPropsProps = {}): Partial<FormFieldLegacyContextValue> {
   // TODO should this be a separate value for FocusVisible
-  const { setFocused, ...formFieldProps } = useContext(FormFieldContext) || {};
+  const { setFocused, ...formFieldProps } = useContext(FormFieldLegacyContext) || {};
 
   useIsomorphicLayoutEffect(() => {
     if (focusVisible !== undefined && setFocused) {

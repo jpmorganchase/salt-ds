@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { ComboBox, FormField } from "@salt-ds/lab";
+import { ComboBox, FormFieldLegacy } from "@salt-ds/lab";
 
 import { usa_states } from "../list/list.data";
 
@@ -19,7 +19,7 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
     width={1200}
   >
     <div style={{ height: 300 }}>
-      <FormField
+      <FormFieldLegacy
         helperText="This is some help text"
         label="ADA compliant label"
       >
@@ -33,7 +33,7 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
           defaultValue="al"
           source={usa_states}
         />
-      </FormField>
+      </FormFieldLegacy>
     </div>
     <ComboBox
       ListProps={{
@@ -43,7 +43,7 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
       aria-label="Listbox example"
       source={usa_states}
     />
-    <FormField helperText="This is some help text" label="ADA compliant label">
+    <FormFieldLegacy helperText="This is some help text" label="ADA compliant label">
       <ComboBox
         ListProps={{
           displayedItemCount: 4,
@@ -51,7 +51,7 @@ export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
         aria-label="Listbox example"
         source={usa_states}
       />
-    </FormField>
+    </FormFieldLegacy>
   </QAContainer>
 );
 

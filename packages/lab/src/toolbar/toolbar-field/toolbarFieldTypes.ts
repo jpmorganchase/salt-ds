@@ -1,5 +1,5 @@
-import { FormFieldProps } from "../../form-field";
+import { FormFieldLegacyProps } from "../../form-field-legacy";
 
-export interface ToolbarFieldProps extends FormFieldProps {
+export interface ToolbarFieldProps extends FormFieldLegacyProps {
   inOverflowPanel?: undefined | true;
 }

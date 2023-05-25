@@ -7,7 +7,7 @@ import {
   FlexItem,
   FlexLayout,
 } from "@salt-ds/core";
-import { FormField, Input, LayerLayout, LAYER_POSITIONS } from "@salt-ds/lab";
+import { FormFieldLegacy, Input, LayerLayout, LAYER_POSITIONS } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "../layout/layout.stories.css";
 
@@ -293,10 +293,10 @@ CenterSimpleUsage.args = {
   position: "center",
 };
 
-const FormFieldExample = () => (
-  <FormField label="Label" helperText="Help text appears here">
+const FormFieldLegacyExample = () => (
+  <FormFieldLegacy label="Label" helperText="Help text appears here">
     <Input />
-  </FormField>
+  </FormFieldLegacy>
 );
 
 const LayerLayoutLeftExample: ComponentStory<typeof LayerLayout> = (args) => {
@@ -324,7 +324,7 @@ const LayerLayoutLeftExample: ComponentStory<typeof LayerLayout> = (args) => {
             reprehenderit nostrud eu aute voluptate quis quis.
           </p>
           {Array.from({ length: 7 }, (_, index) => (
-            <FormFieldExample key={index} />
+            <FormFieldLegacyExample key={index} />
           ))}
           <FlexItem align="end">
             <Button onClick={hide}>Close layer</Button>
@@ -361,7 +361,7 @@ const LayerLayoutTopExample: ComponentStory<typeof LayerLayout> = (args) => {
           </p>
           <FlexLayout>
             {Array.from({ length: 4 }, (_, index) => (
-              <FormFieldExample key={index} />
+              <FormFieldLegacyExample key={index} />
             ))}
           </FlexLayout>
           <FlexItem align="end">
@@ -403,7 +403,7 @@ const LayerLayoutRightExample: ComponentStory<typeof LayerLayout> = (args) => {
             reprehenderit nostrud eu aute voluptate quis quis.
           </p>
           {Array.from({ length: 7 }, (_, index) => (
-            <FormFieldExample key={index} />
+            <FormFieldLegacyExample key={index} />
           ))}
           <FlexItem align="end">
             <Button onClick={hide}>Close layer</Button>

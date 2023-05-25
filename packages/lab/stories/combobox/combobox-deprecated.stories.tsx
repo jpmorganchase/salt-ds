@@ -3,7 +3,7 @@ import { Button } from "@salt-ds/core";
 
 import {
   ComboBoxDeprecated,
-  FormField,
+  FormFieldLegacy,
   escapeRegExp,
   GetFilterRegex,
   ListChangeHandlerDeprecated,
@@ -148,10 +148,10 @@ const ComboBoxTemplate: ComponentStory<typeof ComboBoxDeprecated> = (args) => {
   return <ComboBoxDeprecated {...args} />;
 };
 
-const FormFieldComboBoxTemplate: Story<
+const FormFieldLegacyComboBoxTemplate: Story<
   ComponentProps<typeof ComboBoxDeprecated> &
     Pick<
-      ComponentProps<typeof FormField>,
+      ComponentProps<typeof FormFieldLegacy>,
       "labelPlacement" | "label" | "required" | "LabelProps"
     >
 > = (args) => {
@@ -165,7 +165,7 @@ const FormFieldComboBoxTemplate: Story<
     ...rest
   } = args;
   return (
-    <FormField
+    <FormFieldLegacy
       label={label}
       labelPlacement={labelPlacement}
       required={required}
@@ -173,7 +173,7 @@ const FormFieldComboBoxTemplate: Story<
       LabelProps={LabelProps}
     >
       <ComboBoxDeprecated source={source} width={width} {...rest} />
-    </FormField>
+    </FormFieldLegacy>
   );
 };
 
@@ -204,7 +204,7 @@ const ControlledComboBoxTemplate: ComponentStory<typeof ComboBoxDeprecated> = (
   };
 
   return (
-    <FormField label="Select" style={{ maxWidth: 292 }}>
+    <FormFieldLegacy label="Select" style={{ maxWidth: 292 }}>
       <ComboBoxDeprecated
         source={source}
         width={width}
@@ -213,7 +213,7 @@ const ControlledComboBoxTemplate: ComponentStory<typeof ComboBoxDeprecated> = (
         onSelect={handleSelect}
         {...rest}
       />
-    </FormField>
+    </FormFieldLegacy>
   );
 };
 
@@ -265,9 +265,9 @@ export const ItemRenderer: ComponentStory<typeof ComboBoxDeprecated> = (
   args
 ) => {
   return (
-    <FormField label="Select a large city" style={{ maxWidth: 292 }}>
+    <FormFieldLegacy label="Select a large city" style={{ maxWidth: 292 }}>
       <ComboBoxDeprecated {...args} />
-    </FormField>
+    </FormFieldLegacy>
   );
 };
 
@@ -316,58 +316,58 @@ export const ControlledSelection: ComponentStory<typeof ComboBoxDeprecated> = ({
   return (
     <div>
       <Button onClick={shuffleSelection}>Shuffle Selection</Button>
-      <FormField label="Single Select" style={{ maxWidth: 292 }}>
+      <FormFieldLegacy label="Single Select" style={{ maxWidth: 292 }}>
         <ComboBoxDeprecated
           source={shortColorData}
           selectedItem={selectedItem}
           onChange={handleChange}
         />
-      </FormField>
-      <FormField label="Multi Select" style={{ maxWidth: 292 }}>
+      </FormFieldLegacy>
+      <FormFieldLegacy label="Multi Select" style={{ maxWidth: 292 }}>
         <ComboBoxDeprecated
           multiSelect
           source={shortColorData}
           selectedItem={multiSelectedItems}
           onChange={handleMultiChange}
         />
-      </FormField>
+      </FormFieldLegacy>
     </div>
   );
 };
 
-export const WithFormField = FormFieldComboBoxTemplate.bind({});
-WithFormField.args = {
+export const WithFormFieldLegacy = FormFieldLegacyComboBoxTemplate.bind({});
+WithFormFieldLegacy.args = {
   label: "Select",
   width: 292,
   source: shortColorData,
   labelPlacement: "top",
 };
-export const WithFormFieldLabelLeft = FormFieldComboBoxTemplate.bind({});
-WithFormFieldLabelLeft.args = {
-  ...WithFormField.args,
+export const WithFormFieldLegacyLabelLeft = FormFieldLegacyComboBoxTemplate.bind({});
+WithFormFieldLegacyLabelLeft.args = {
+  ...WithFormFieldLegacy.args,
   labelPlacement: "left",
 };
-export const WithFreeText = FormFieldComboBoxTemplate.bind({});
+export const WithFreeText = FormFieldLegacyComboBoxTemplate.bind({});
 WithFreeText.args = {
-  ...WithFormField.args,
+  ...WithFormFieldLegacy.args,
   label: "Enter a value",
   allowFreeText: true,
 };
-export const WithInitialSelection = FormFieldComboBoxTemplate.bind({});
+export const WithInitialSelection = FormFieldLegacyComboBoxTemplate.bind({});
 WithInitialSelection.args = {
-  ...WithFormField.args,
+  ...WithFormFieldLegacy.args,
   initialSelectedItem: shortColorData[3],
 };
 
-export const WithCustomizedWidth = FormFieldComboBoxTemplate.bind({});
+export const WithCustomizedWidth = FormFieldLegacyComboBoxTemplate.bind({});
 WithCustomizedWidth.args = {
-  ...WithFormField.args,
+  ...WithFormFieldLegacy.args,
   listWidth: 400,
 };
 
-export const WithInitialOpen = FormFieldComboBoxTemplate.bind({});
+export const WithInitialOpen = FormFieldLegacyComboBoxTemplate.bind({});
 WithInitialOpen.args = {
-  ...WithFormField.args,
+  ...WithFormFieldLegacy.args,
   initialOpen: true,
 };
 
@@ -413,9 +413,9 @@ export const Scrolling: ComponentStory<typeof ComboBoxDeprecated> = (args) => {
         ))}
       </div>
       <div ref={containerEl} style={{ position: "absolute", top: offsetTop }}>
-        <FormField label="Select" style={{ maxWidth: 292 }}>
+        <FormFieldLegacy label="Select" style={{ maxWidth: 292 }}>
           <ComboBoxDeprecated key={key.current} {...args} />
-        </FormField>
+        </FormFieldLegacy>
       </div>
     </div>
   );
@@ -431,28 +431,28 @@ MultiSelectDisabled.args = {
   disabled: true,
 };
 
-export const MultiSelectWithFormField = FormFieldComboBoxTemplate.bind({});
-MultiSelectWithFormField.args = {
-  ...WithFormField.args,
+export const MultiSelectWithFormFieldLegacy = FormFieldLegacyComboBoxTemplate.bind({});
+MultiSelectWithFormFieldLegacy.args = {
+  ...WithFormFieldLegacy.args,
   ...MultiSelect.args,
 };
 
-export const MultiSelectWithFormFieldLabelLeft = FormFieldComboBoxTemplate.bind(
+export const MultiSelectWithFormFieldLegacyLabelLeft = FormFieldLegacyComboBoxTemplate.bind(
   {}
 );
-MultiSelectWithFormFieldLabelLeft.args = {
-  ...WithFormFieldLabelLeft.args,
+MultiSelectWithFormFieldLegacyLabelLeft.args = {
+  ...WithFormFieldLegacyLabelLeft.args,
   ...MultiSelect.args,
 };
 
-export const MultiSelectWithFormFieldWithInitialSelection =
-  FormFieldComboBoxTemplate.bind({});
-MultiSelectWithFormFieldWithInitialSelection.args = {
-  ...MultiSelectWithFormField.args,
+export const MultiSelectWithFormFieldLegacyWithInitialSelection =
+  FormFieldLegacyComboBoxTemplate.bind({});
+MultiSelectWithFormFieldLegacyWithInitialSelection.args = {
+  ...MultiSelectWithFormFieldLegacy.args,
   ...MultiSelectWithInitialSelection.args,
 };
 
-export const MultiSelectControlled = FormFieldComboBoxTemplate.bind({});
+export const MultiSelectControlled = FormFieldLegacyComboBoxTemplate.bind({});
 MultiSelectControlled.args = {
   ...Controlled.args,
   multiSelect: true,
@@ -498,7 +498,7 @@ export const Autocomplete: ComponentStory<typeof ComboBoxDeprecated> = (
   };
 
   return (
-    <FormField label="Autocomplete" style={{ maxWidth: 292 }}>
+    <FormFieldLegacy label="Autocomplete" style={{ maxWidth: 292 }}>
       <ComboBoxDeprecated
         {...restArgs}
         allowFreeText
@@ -516,7 +516,7 @@ export const Autocomplete: ComponentStory<typeof ComboBoxDeprecated> = (
         onSelect={handleSelect}
         source={filteredData}
       />
-    </FormField>
+    </FormFieldLegacy>
   );
 };
 

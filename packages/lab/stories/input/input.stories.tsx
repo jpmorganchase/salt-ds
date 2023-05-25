@@ -8,7 +8,7 @@ import {
   SendIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import { Dropdown, FormField, Input, StaticInputAdornment } from "@salt-ds/lab";
+import { Dropdown, FormFieldLegacy, Input, StaticInputAdornment } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -76,19 +76,19 @@ export const ReadOnly: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const WithFormField: ComponentStory<typeof Input> = () => {
+export const WithFormFieldLegacy: ComponentStory<typeof Input> = () => {
   return (
-    <FormField label="ADA compliant label" style={{ width: 292 }}>
+    <FormFieldLegacy label="ADA compliant label" style={{ width: 292 }}>
       <Input defaultValue="Value" />
-    </FormField>
+    </FormFieldLegacy>
   );
 };
 
-export const WithFormFieldNoInitialValue: ComponentStory<typeof Input> = () => {
+export const WithFormFieldLegacyNoInitialValue: ComponentStory<typeof Input> = () => {
   return (
-    <FormField label="ADA compliant label" style={{ width: 292 }}>
+    <FormFieldLegacy label="ADA compliant label" style={{ width: 292 }}>
       <Input />
-    </FormField>
+    </FormFieldLegacy>
   );
 };
 

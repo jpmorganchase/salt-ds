@@ -1,87 +1,87 @@
 import { clsx } from "clsx";
-import { FormField, Input } from "@salt-ds/lab";
+import { FormFieldLegacy, Input } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Form Field/QA",
-  component: FormField,
-} as ComponentMeta<typeof FormField>;
+  component: FormFieldLegacy,
+} as ComponentMeta<typeof FormFieldLegacy>;
 
 export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
   const { imgSrc, className } = props;
   return (
     <QAContainer imgSrc={imgSrc}>
-      <FormField
+      <FormFieldLegacy
         className={clsx(className)}
         label="Default Form Field description label"
       >
         <Input value="Value" />
-      </FormField>
+      </FormFieldLegacy>
 
-      <FormField
-        className={clsx("saltFormField-secondary", className)}
+      <FormFieldLegacy
+        className={clsx("saltFormFieldLegacy-secondary", className)}
         label="Default Form Field description label"
       >
         <Input value="Value" />
-      </FormField>
-      <FormField
+      </FormFieldLegacy>
+      <FormFieldLegacy
         className={clsx(className)}
         label="Label aligned left"
         labelPlacement="left"
       >
         <Input value="Value" />
-      </FormField>
-      <FormField
+      </FormFieldLegacy>
+      <FormFieldLegacy
         className={clsx(className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
       >
         <Input />
-      </FormField>
-      <FormField
-        className={clsx("saltFormField-secondary", className)}
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className={clsx("saltFormFieldLegacy-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
       >
         <Input />
-      </FormField>
-      <FormField
-        className={clsx("saltFormField-tertiary", className)}
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className={clsx("saltFormFieldLegacy-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
       >
         <Input />
-      </FormField>
-      <FormField
+      </FormFieldLegacy>
+      <FormFieldLegacy
         className={clsx(className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
       >
         <Input />
-      </FormField>
-      <FormField
-        className={clsx("saltFormField-secondary", className)}
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className={clsx("saltFormFieldLegacy-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
       >
         <Input />
-      </FormField>
-      <FormField
-        className={clsx("saltFormField-tertiary", className)}
+      </FormFieldLegacy>
+      <FormFieldLegacy
+        className={clsx("saltFormFieldLegacy-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
       >
         <Input />
-      </FormField>
+      </FormFieldLegacy>
     </QAContainer>
   );
 };

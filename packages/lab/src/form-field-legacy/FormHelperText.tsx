@@ -1,12 +1,12 @@
 import { ComponentPropsWithoutRef } from "react";
-import { FormFieldProps } from "./FormField";
+import { FormFieldLegacyProps } from "./FormFieldLegacy";
 
 import "./FormHelperText.css";
 
 export type FormHelperTextProps<E extends React.ElementType = "p"> =
   ComponentPropsWithoutRef<E> & {
-    helperText: FormFieldProps["helperText"];
-    helperTextPlacement: FormFieldProps["helperTextPlacement"];
+    helperText: FormFieldLegacyProps["helperText"];
+    helperTextPlacement: FormFieldLegacyProps["helperTextPlacement"];
   };
 
 export const FormHelperText = <E extends React.ElementType = "p">({

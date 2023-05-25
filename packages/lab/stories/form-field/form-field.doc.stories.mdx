@@ -1,4 +1,4 @@
-import { FormField, Input } from "@salt-ds/lab";
+import { Banner, FormFieldLegacy, Input } from "@salt-ds/lab";
 import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
 import {
   CSSClassTable,
@@ -7,7 +7,7 @@ import {
 
 <Meta
   title="Documentation/Lab/Form Field"
-  component={FormField}
+  component={FormFieldLegacy}
   parameters={{
     viewMode: "docs",
   }}
@@ -15,20 +15,25 @@ import {
 
 # Form Field
 
+<Banner status="warning">
+  This component has been deprecated. The new [Form
+  Field](?path=/docs/documentation-lab-form-field-next--page) is a current WIP.
+</Banner>
+
 # API
 
 ```
-import { FormField } from "@salt-ds/lab";
+import { FormFieldLegacy } from "@salt-ds/lab";
 ```
 
 ## Props
 
-<ArgsTable of={FormField} />
+<ArgsTable of={FormFieldLegacy} />
 
 ## CSS Class
 
-<CSSClassTable of={FormField} />
+<CSSClassTable of={FormFieldLegacy} />
 
 ## Characteristics Used
 
-<CharacteristicUsage of={FormField} />
+<CharacteristicUsage of={FormFieldLegacy} />
