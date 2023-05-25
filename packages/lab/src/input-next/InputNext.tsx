@@ -152,10 +152,6 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
       {...other}
     >
       <input
-        aria-label={clsx(
-          a11yProps?.["aria-labelledby"],
-          inputProps["aria-labelledby"]
-        )}
         id={id}
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
@@ -167,6 +163,10 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         onFocus={!isDisabled ? handleFocus : undefined}
         {...a11yProps}
         {...restInputProps}
+        aria-labelledby={clsx(
+          a11yProps?.["aria-labelledby"],
+          inputProps["aria-labelledby"]
+        )}
       />
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
