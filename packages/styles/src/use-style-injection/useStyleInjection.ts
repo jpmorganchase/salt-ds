@@ -6,12 +6,10 @@ const maybeUseInsertionEffect: typeof React.useLayoutEffect =
   (React as any)[`${"useInsertionEffect"}${""}`] ?? React.useLayoutEffect;
 /* eslint-enable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
 
-type WindowLike = Window & typeof globalThis;
-
 export interface UseComponentCssInjection {
   testId?: string;
   css: string;
-  window?: WindowLike;
+  window?: Window;
 }
 
 type StyleElementMap = Map<
@@ -19,7 +17,7 @@ type StyleElementMap = Map<
   { styleElement: HTMLStyleElement | null; count: number }
 >;
 
-const windowSheetsMap = new WeakMap<WindowLike, StyleElementMap>();
+const windowSheetsMap = new WeakMap<Window, StyleElementMap>();
 export function useComponentCssInjection({
   testId,
   css,
