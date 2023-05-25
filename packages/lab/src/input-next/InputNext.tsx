@@ -75,7 +75,6 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     id,
     inputProps = {},
     readOnly: readOnlyProp,
-    role,
     startAdornment,
     style,
     textAlign = "left",
