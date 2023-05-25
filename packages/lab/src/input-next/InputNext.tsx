@@ -1,10 +1,12 @@
 import { clsx } from "clsx";
 import {
   ChangeEvent,
+  ComponentPropsWithoutRef,
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
   ReactNode,
+  Ref,
   useState,
 } from "react";
 import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
@@ -37,6 +39,10 @@ export interface InputProps
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  /**
+   * Optional ref for the input component
+   */
+   inputRef?: Ref<HTMLInputElement>;
   /**
    * If `true`, the component is read only.
    */
@@ -71,6 +77,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     endAdornment,
     id,
     inputProps = {},
+    inputRef,
     readOnly: readOnlyProp,
     startAdornment,
     style,
@@ -87,7 +94,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
-    a11yProps,
+    a11yProps: { "aria-labelledby": formFieldLabelledBy, ...restA11yProps } = {}
   } = useFormFieldProps();
 
   const isDisabled = disabled || formFieldDisabled;
@@ -100,7 +107,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
   const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
 
-  const { onBlur, onChange, onFocus, ...restInputProps } = inputProps;
+  const { "aria-labelledby": inputLabelledBy, onBlur, onChange, onFocus, ...restInputProps } = inputProps;
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
@@ -148,21 +155,22 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
       {...other}
     >
       <input
-        id={id}
+        aria-labelledby={clsx(
+          formFieldLabelledBy,
+          inputLabelledBy
+        )}
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
+        id={id}
         readOnly={isReadOnly}
-        value={value}
+        ref={inputRef}
         tabIndex={isReadOnly || isDisabled ? -1 : 0}
         onBlur={handleBlur}
         onChange={handleChange}
         onFocus={!isDisabled ? handleFocus : undefined}
-        {...a11yProps}
+        value={value}
+        {...restA11yProps}
         {...restInputProps}
-        aria-labelledby={clsx(
-          a11yProps?.["aria-labelledby"],
-          inputProps["aria-labelledby"]
-        )}
       />
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
