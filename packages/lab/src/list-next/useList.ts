@@ -160,7 +160,7 @@ export const useList = ({
   // Handlers
 
   const handleFocus = useCallback(() => {
-    if (!activeDescendantRef.current) {
+    if (!activeDescendantRef.current && !selectedRef.current) {
       // Focus on first active option if no option was previously focused
       focusFirstItem();
     } else {
