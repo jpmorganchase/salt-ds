@@ -16,7 +16,7 @@ import { Cursor, useFocusableContent } from "./internal";
 import { HeaderCellProps } from "./GridColumn";
 import { useColumnSortContext } from "./ColumnSortContext";
 
-import HeaderCellCss from "./HeaderCell.css";
+import headerCellCss from "./HeaderCell.css";
 
 const withBaseName = makePrefixer("saltGridHeaderCell");
 

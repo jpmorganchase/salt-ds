@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import CursorCss from "./Cursor.css";
+import cursorCss from "./Cursor.css";
 
 const withBaseName = makePrefixer("saltGridCursor");
 

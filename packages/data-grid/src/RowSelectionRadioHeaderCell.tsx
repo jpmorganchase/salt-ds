@@ -7,7 +7,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { AutoSizeHeaderCell } from "./HeaderCell";
 import { HeaderCellProps } from "./GridColumn";
 
-import CheckboxCellCss from "./CheckboxCell.css";
+import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionRadioHeaderCell<T>(props: HeaderCellProps<T>) {
   const { window: targetWindow } = useWindow();

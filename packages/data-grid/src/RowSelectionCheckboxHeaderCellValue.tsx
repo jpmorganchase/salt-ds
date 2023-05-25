@@ -6,7 +6,7 @@ import { Checkbox } from "@salt-ds/core";
 import { useSelectionContext } from "./SelectionContext";
 import { GridHeaderValueProps } from "./GridColumn";
 
-import CheckboxCellCss from "./CheckboxCell.css";
+import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionCheckboxHeaderCellValue<T>(
   props: GridHeaderValueProps<T>

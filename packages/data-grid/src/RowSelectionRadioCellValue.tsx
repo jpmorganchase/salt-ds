@@ -5,7 +5,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
 
-import CheckboxCellCss from "./CheckboxCell.css";
+import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionRadioCellValue<T>(props: GridCellValueProps<T>) {
   const { row, isFocused } = props;

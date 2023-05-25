@@ -15,7 +15,7 @@ import { useEditorContext } from "./EditorContext";
 import { CornerTag } from "./CornerTag";
 import { Cell } from "./internal";
 
-import NumericColumnCss from "./NumericColumn.css";
+import numericColumnCss from "./NumericColumn.css";
 
 export interface NumericColumnProps<T> extends GridColumnProps<T> {
   precision: number;
