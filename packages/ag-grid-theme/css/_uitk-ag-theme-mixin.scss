@@ -91,9 +91,41 @@
 
   .ag-menu {
     background-color: var(--agGrid-background);
-    padding: 20px 20px 0 20px;
+    padding: var(--agGrid-menu-padding);
     color: var(--agGrid-menu-color);
   }
+
+  .ag-menu .ag-tabs-body {
+    padding: 0;
+    padding-top: 8px;
+  }
+
+  // start filter input
+  .ag-menu .ag-filter-body-wrapper {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--uitk-size-unit);
+  }
+
+  .ag-menu .ag-filter-body-wrapper > * {
+    margin: 0;
+  }
+
+  .ag-picker-field-wrapper {
+    border-radius: 0;
+  }
+
+  .ag-picker-field-icon {
+    margin-right: var(--uitk-size-unit);
+  }
+
+  .ag-select .ag-picker-field-display {
+    margin: 0;
+    padding-left: var(--uitk-size-unit);
+  }
+
+  // end filter input
 
   .ag-menu-header {
     background-color: var(--agGrid-background);
@@ -492,15 +524,18 @@
     }
   }
 
-  .ag-ltr input.ag-input-field-input[type="text"] {
+  .ag-menu .ag-input-field-input[type="text"] {
     border-style: none;
     height: var(--agGrid-input-height);
     min-height: var(--agGrid-input-height);
     line-height: var(--agGrid-input-height);
-    padding: 0;
+    padding: 0 var(--salt-size-unit);
     font-size: inherit;
+    border: dotted 2px transparent;
+    border-bottom-style: dotted !important;
+
     &:focus {
-      outline: dotted 2px var(--agGrid-color-focus);
+      border-color: var(--agGrid-color-focus);
     }
     &::placeholder {
       color: var(--agGrid-placeholder-color);
