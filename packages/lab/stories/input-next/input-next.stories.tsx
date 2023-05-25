@@ -40,7 +40,6 @@ export const Variants: ComponentStory<typeof InputNext> = (args) => {
   );
 };
 
-
 export const Disabled: ComponentStory<typeof InputNext> = (args) => {
   return (
     <FlowLayout>
