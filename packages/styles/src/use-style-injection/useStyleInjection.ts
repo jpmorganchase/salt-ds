@@ -19,7 +19,7 @@ type StyleElementMap = Map<
 
 // windowSheetsMap maps window objects to StyleElementMaps
 // A StyleElementMap maps css strings to style element tags
-const windowSheetsMap = new WeakMap<WindowLike, StyleElementMap>();
+const windowSheetsMap = new WeakMap<Window, StyleElementMap>();
 
 export function useComponentCssInjection({
   testId,
