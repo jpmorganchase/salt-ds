@@ -42,7 +42,7 @@ export interface InputProps
   /**
    * Optional ref for the input component
    */
-   inputRef?: Ref<HTMLInputElement>;
+  inputRef?: Ref<HTMLInputElement>;
   /**
    * If `true`, the component is read only.
    */
@@ -94,7 +94,10 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
-    a11yProps: { "aria-labelledby": formFieldLabelledBy, ...restA11yProps } = {}
+    a11yProps: {
+      "aria-labelledby": formFieldLabelledBy,
+      ...restA11yProps
+    } = {},
   } = useFormFieldProps();
 
   const isDisabled = disabled || formFieldDisabled;
@@ -107,7 +110,13 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
   const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
 
-  const { "aria-labelledby": inputLabelledBy, onBlur, onChange, onFocus, ...restInputProps } = inputProps;
+  const {
+    "aria-labelledby": inputLabelledBy,
+    onBlur,
+    onChange,
+    onFocus,
+    ...restInputProps
+  } = inputProps;
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
@@ -155,10 +164,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
       {...other}
     >
       <input
-        aria-labelledby={clsx(
-          formFieldLabelledBy,
-          inputLabelledBy
-        )}
+        aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
         id={id}
