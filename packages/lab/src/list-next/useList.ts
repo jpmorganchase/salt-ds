@@ -29,7 +29,6 @@ export const useList = ({
   children,
   deselectable,
   multiselect,
-  displayedItemCount,
   onFocus,
 }: UseListProps) => {
   const listRef = useRef<HTMLUListElement | null>(null);
@@ -37,6 +36,14 @@ export const useList = ({
   const selectedRef = useRef<number[]>([]);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [startRangeIndex, setStartRangeIndex] = useState<number>(0);
+  const [isSpaceClicked, setSpaceClicked] = useState(false);
+
+  // triggers a rerender and update selected items when using SPACE to select. TODO: is there a better way?
+  useEffect(() => {
+    if (isSpaceClicked) {
+      setSpaceClicked(false);
+    }
+  }, [isSpaceClicked, setSpaceClicked]);
 
   const getAllOptions = (): Element[] => {
     const list = listRef.current;
@@ -95,18 +102,22 @@ export const useList = ({
   const toggleSelectItem = useCallback(
     (element: HTMLElement, index: number) => {
       const selectedIndexes = selectedRef.current;
-      const itemIsSelected = selectedIndexes.includes(index);
+      const itemAlreadySelected = selectedIndexes.includes(index);
       let newSelection;
+
       if (multiselect) {
-        newSelection = itemIsSelected
+        newSelection = itemAlreadySelected
           ? selectedIndexes.filter((i) => i !== index)
           : [...selectedIndexes, index];
+        selectedRef.current = newSelection;
       } else {
+        // deselectable and single select only
         newSelection =
-          deselectable && itemIsSelected ? [] : [getListItemIndex(element)];
+          deselectable && itemAlreadySelected
+            ? []
+            : [getListItemIndex(element)];
+        selectedRef.current = newSelection;
       }
-      //  TODO: This is sending back the right selection, but it is not being updated on time
-      selectedRef.current = newSelection;
     },
     []
   );
@@ -186,11 +197,12 @@ export const useList = ({
     const allOptions = getAllOptions();
     const currentItem =
       document.getElementById(activeDescendantRef.current) || allOptions[0];
-    let nextItem = currentItem;
+    let nextItem = currentItem as HTMLElement;
 
     if (!currentItem) {
       return;
     }
+
     switch (key) {
       case PageUp:
         // TODO: moveUpCountItems();
@@ -211,7 +223,7 @@ export const useList = ({
 
         if (nextItem) {
           justFocusItem(nextItem);
-          evt.preventDefault();
+          // evt.preventDefault(); // TODO: check if needed
         }
 
         break;
@@ -235,8 +247,9 @@ export const useList = ({
         setStartRangeIndex(getListItemIndex(currentItem));
         break;
       case Space:
-        evt.preventDefault();
-        toggleSelectItem(nextItem);
+        evt.preventDefault(); // ensure list items dont move down on space key
+        toggleSelectItem(nextItem, getListItemIndex(nextItem));
+        setSpaceClicked(isSpaceClicked === true ? false : true);
         break;
       case "a":
       case "A":
