@@ -15,7 +15,7 @@ export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-checkbox-cell",
-    css: CheckboxCellCss,
+    css: checkboxCellCss,
     window: targetWindow,
   });
 

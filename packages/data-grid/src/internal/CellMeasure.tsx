@@ -17,7 +17,7 @@ export function CellMeasure<T>(props: CellMeasureProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-cell-measure",
-    css: CellMeasureCss,
+    css: cellMeasureCss,
     window: targetWindow,
   });
 

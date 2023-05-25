@@ -44,6 +44,8 @@ const Example = (props) => {
 In the above example, `useComponentCssInjection` is called with CSS string itself and the window to inject the css into.
 Internally, the hook uses a Map of Map objects to store if a CSS string has been injected into a given window before.
 
+Optionally, a `testId` can be passed to the hook, the injected style tag will contain a data attribute with the given id.
+
 ## Insertion Point
 
 Developers may want to control where the CSS is injected into the document, such as if a component library's styles are overriding an application's styles or if a developer wanted to inject styles into a shadow DOM.

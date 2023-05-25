@@ -18,7 +18,8 @@ type StyleElementMap = Map<
   string,
   { styleElement: HTMLStyleElement | null; count: number }
 >;
-
+// windowSheetsMap maps window objects to StyleElementMaps
+// A StyleElementMap maps css strings to style element tags
 const windowSheetsMap = new WeakMap<WindowLike, StyleElementMap>();
 export function useComponentCssInjection({
   testId,
