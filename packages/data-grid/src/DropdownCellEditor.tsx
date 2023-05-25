@@ -11,7 +11,7 @@ import { Cell } from "./internal";
 const withBaseName = makePrefixer("saltGridDropdownCellEditor");
 
 export interface DropdownCellEditorProps<T> {
-  options: string[];
+  options: ReadonlyArray<string>;
   // Row and column are provided by the grid. See TableRow.tsx
   row?: GridRowModel<T>;
   column?: GridColumnModel<T>;
