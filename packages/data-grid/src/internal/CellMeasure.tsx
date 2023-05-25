@@ -3,7 +3,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import CellMeasureCss from "./CellMeasure.css";
+import cellMeasureCss from "./CellMeasure.css";
 
 const withBaseName = makePrefixer("saltGridCellMeasure");
 
@@ -17,7 +17,7 @@ export function CellMeasure<T>(props: CellMeasureProps<T>) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-cell-measure",
-    css: CellMeasureCss,
+    css: cellMeasureCss,
     window: targetWindow,
   });
 

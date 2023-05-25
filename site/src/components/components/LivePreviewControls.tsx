@@ -39,7 +39,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
 
   const [mode, setMode] = useState<Mode>(defaultMode);
 
-  const [listView, setListView] = useState(true);
+  const [allExamplesView, setAllExamplesView] = useState(false);
 
   const isMobileView = useIsMobileView();
 
@@ -58,11 +58,11 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     setMode(mode ?? defaultMode);
   };
 
-  const handleListViewChange = (
+  const handleAllExamplesChange = (
     _: ChangeEvent<HTMLInputElement>,
     isChecked: boolean
   ) => {
-    setListView(isChecked);
+    setAllExamplesView(isChecked);
   };
 
   return (
@@ -72,8 +72,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
           {!isMobileView && (
             <Switch
               label="All examples"
-              checked={listView}
-              onChange={handleListViewChange}
+              checked={allExamplesView}
+              onChange={handleAllExamplesChange}
             />
           )}
           <div className={styles.toggleButtonGroups}>
@@ -123,7 +123,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
         </div>
       </SaltProvider>
       <LivePreviewContext.Provider value={{ density, mode }}>
-        {listView ? <ExamplesListView examples={children} /> : children}
+        {allExamplesView ? children : <ExamplesListView examples={children} />}
       </LivePreviewContext.Provider>
     </>
   );

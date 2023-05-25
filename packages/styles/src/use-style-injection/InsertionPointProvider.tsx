@@ -4,10 +4,10 @@ export interface InsertionPointContextType {
   insertionPoint: ChildNode | null;
 }
 
-const insertionPointContext = createContext<ChildNode | null>(null);
+const InsertionPointContext = createContext<ChildNode | null>(null);
 
 if (process.env.NODE_ENV !== "production") {
-  insertionPointContext.displayName = "insertionPointContext";
+  InsertionPointContext.displayName = "InsertionPointContext";
 }
 
 export interface InsertionPointProviderProps extends InsertionPointContextType {
@@ -19,13 +19,13 @@ export function InsertionPointProvider(props: InsertionPointProviderProps) {
   const value = useMemo(() => insertionPointProp, [insertionPointProp]);
 
   return (
-    <insertionPointContext.Provider value={value}>
+    <InsertionPointContext.Provider value={value}>
       {children}
-    </insertionPointContext.Provider>
+    </InsertionPointContext.Provider>
   );
 }
 
 export function useInsertionPoint() {
-  const value = useContext(insertionPointContext);
+  const value = useContext(InsertionPointContext);
   return value;
 }

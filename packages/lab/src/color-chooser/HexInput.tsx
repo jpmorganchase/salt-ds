@@ -24,7 +24,7 @@ export const HexInput = ({
 }: HexInputProps): JSX.Element => {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-color-picker-hex-input",
+    testId: "salt-hex-input",
     css: hexInputCss,
     window: targetWindow,
   });

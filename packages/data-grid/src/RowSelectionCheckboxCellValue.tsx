@@ -7,7 +7,7 @@ import { useSelectionContext } from "./SelectionContext";
 import { MouseEventHandler } from "react";
 import { useCursorContext } from "./CursorContext";
 
-import CheckboxCellCss from "./CheckboxCell.css";
+import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
   const { row, column, isFocused } = props;
@@ -15,7 +15,7 @@ export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-checkbox-cell",
-    css: CheckboxCellCss,
+    css: checkboxCellCss,
     window: targetWindow,
   });
 

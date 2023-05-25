@@ -14,7 +14,7 @@ import { GridColumnModel, GridRowModel } from "./Grid";
 import { CornerTag } from "./CornerTag";
 import { Cell } from "./internal";
 
-import TextCellEditorCss from "./TextCellEditor.css";
+import textCellEditorCss from "./TextCellEditor.css";
 
 const withBaseName = makePrefixer("saltGridTextCellEditor");
 
@@ -29,7 +29,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-text-cell-editor",
-    css: TextCellEditorCss,
+    css: textCellEditorCss,
     window: targetWindow,
   });
 

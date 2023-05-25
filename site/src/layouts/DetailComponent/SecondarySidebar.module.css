@@ -1,0 +1,29 @@
+.sidebar {
+  max-width: 90%;
+}
+
+.wrapper,
+.tableOfContents {
+  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+}
+
+.wrapper {
+  padding-top: var(--salt-size-unit);
+  padding-bottom: var(--salt-size-container-spacing);
+}
+
+.pills,
+.list,
+.link {
+  display: flex;
+  gap: var(--salt-size-unit);
+  flex-wrap: wrap;
+}
+
+.list {
+  flex-direction: column;
+}
+
+.link {
+  flex-direction: row;
+}
