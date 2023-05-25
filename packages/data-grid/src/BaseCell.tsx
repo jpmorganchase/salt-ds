@@ -13,7 +13,7 @@ import {
   CellWarningIcon,
 } from "./internal/CellStatusIcons";
 
-import BaseCellCss from "./BaseCell.css";
+import baseCellCss from "./BaseCell.css";
 
 const withBaseName = makePrefixer("saltGridBaseCell");
 
@@ -48,7 +48,7 @@ export function BaseCell<T>(props: GridCellProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-base-cell",
-    css: BaseCellCss,
+    css: baseCellCss,
     window: targetWindow,
   });
 

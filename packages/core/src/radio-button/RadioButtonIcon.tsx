@@ -22,7 +22,7 @@ export const RadioButtonIcon = ({
 }: RadioButtonIconProps) => {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
-    testId: "salt-radiobutton-icon",
+    testId: "salt-radio-button-icon",
     css: radioButtonIconCss,
     window: targetWindow,
   });
