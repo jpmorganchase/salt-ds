@@ -1,4 +1,4 @@
-import { StepperInput, FormFieldLegacy } from "@salt-ds/lab";
+import { StepperInput, FormField } from "@salt-ds/lab";
 import { useState } from "react";
 
 describe("Stepper Input - Accessibility", () => {
@@ -18,11 +18,11 @@ describe("Stepper Input - Accessibility", () => {
     cy.findByRole("spinbutton").should("have.attr", "aria-invalid", "false");
   });
 
-  it("has the correct labelling when wrapped in a `FormFieldLegacy`", () => {
+  it("has the correct labelling when wrapped in a `FormField`", () => {
     cy.mount(
-      <FormFieldLegacy helperText="please enter a value" label="stepper input">
+      <FormField helperText="please enter a value" label="stepper input">
         <StepperInput defaultValue={-10} min={0} />
-      </FormFieldLegacy>
+      </FormField>
     );
 
     cy.findByRole("spinbutton").should("have.accessibleName", "stepper input");
@@ -38,9 +38,9 @@ describe("Stepper Input - Accessibility", () => {
 
       return (
         <>
-          <FormFieldLegacy helperText="please enter a value" label="stepper input">
+          <FormField helperText="please enter a value" label="stepper input">
             <StepperInput defaultValue={10} liveValue={liveValue} />
-          </FormFieldLegacy>
+          </FormField>
           <button
             onClick={() => setLiveValue((prev) => prev + 1)}
             type="button"
@@ -77,9 +77,9 @@ describe("Stepper Input - Accessibility", () => {
 
       return (
         <>
-          <FormFieldLegacy helperText="please enter a value" label="stepper input">
+          <FormField helperText="please enter a value" label="stepper input">
             <StepperInput defaultValue={10} liveValue={liveValue} />
-          </FormFieldLegacy>
+          </FormField>
           <button
             onClick={() => setLiveValue((prev) => prev + 1)}
             type="button"

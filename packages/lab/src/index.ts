@@ -35,7 +35,11 @@ export * from "./dialog";
 export * from "./dropdown";
 export * from "./editable-label";
 export * from "./file-drop-zone";
-export * from "./form-field-legacy";
+export {
+  FormFieldLegacy as FormField,
+  type FormFieldLegacyProps as FormFieldProps,
+  FormLabel,
+} from "./form-field-legacy";
 export {
   FormField as FormFieldNext,
   FormFieldHelperText,

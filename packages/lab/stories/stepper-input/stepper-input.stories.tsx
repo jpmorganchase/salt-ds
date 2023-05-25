@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { SaltProvider, Panel } from "@salt-ds/core";
-import { StepperInput, FormFieldLegacy } from "@salt-ds/lab";
+import { StepperInput, FormField } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 
@@ -41,7 +41,7 @@ const ExampleRow = ({ name, children }: ExampleRowProps) => (
 const Examples = () => (
   <>
     <ExampleRow name="Default">
-      <FormFieldLegacy
+      <FormField
         helperText="Please enter a number between -5 and 10"
         label="Default Stepper Input"
       >
@@ -53,7 +53,7 @@ const Examples = () => (
           showRefreshButton
           step={0.5}
         />
-      </FormFieldLegacy>
+      </FormField>
     </ExampleRow>
   </>
 );
@@ -80,7 +80,7 @@ export const Default: Story = () => {
 
   return (
     <SaltProvider>
-      <FormFieldLegacy
+      <FormField
         helperText={`Please enter a number between ${min} and ${max}`}
         label="Default Stepper Input"
         style={{ width: 292 }}
@@ -92,34 +92,34 @@ export const Default: Story = () => {
           min={min}
           onChange={handleChange}
         />
-      </FormFieldLegacy>
+      </FormField>
     </SaltProvider>
   );
 };
 
 export const Alignment: Story = () => (
   <SaltProvider>
-    <FormFieldLegacy
+    <FormField
       helperText="Please enter a number"
       label="Left-aligned value"
       style={{ display: "block", marginBottom: 80, width: 292 }}
     >
       <StepperInput />
-    </FormFieldLegacy>
-    <FormFieldLegacy
+    </FormField>
+    <FormField
       helperText="Please enter a number"
       label="Centered value"
       style={{ display: "block", marginBottom: 80, width: 292 }}
     >
       <StepperInput textAlign="center" />
-    </FormFieldLegacy>
-    <FormFieldLegacy
+    </FormField>
+    <FormField
       helperText="Please enter a number"
       label="Right-aligned value"
       style={{ width: 292 }}
     >
       <StepperInput textAlign="right" />
-    </FormFieldLegacy>
+    </FormField>
   </SaltProvider>
 );
 
@@ -136,7 +136,7 @@ export const Controlled: Story = () => {
 
   return (
     <SaltProvider>
-      <FormFieldLegacy
+      <FormField
         helperText="Please enter a number"
         label="Controlled Stepper Input"
         style={{ width: 292 }}
@@ -151,7 +151,7 @@ export const Controlled: Story = () => {
           step={step}
           value={value}
         />
-      </FormFieldLegacy>
+      </FormField>
 
       {/* TODO uncomment when <Slider/> has been migrated */}
       {/*<div style={{ marginTop: 80, width: 292 }}>*/}
@@ -171,25 +171,25 @@ export const Controlled: Story = () => {
 
 export const CustomValues: Story = () => (
   <SaltProvider>
-    <FormFieldLegacy
+    <FormField
       helperText="Please enter a number"
       label="Custom values"
       style={{ width: 292 }}
     >
       <StepperInput defaultValue={1000} step={100} />
-    </FormFieldLegacy>
+    </FormField>
   </SaltProvider>
 );
 
 export const Decimals: Story = () => (
   <SaltProvider>
-    <FormFieldLegacy
+    <FormField
       helperText="Please enter a currency value"
       label="U.S. Dollars ($)"
       style={{ width: 292 }}
     >
       <StepperInput decimalPlaces={2} defaultValue={0.99} step={0.01} />
-    </FormFieldLegacy>
+    </FormField>
   </SaltProvider>
 );
 
@@ -218,7 +218,7 @@ export const Error: Story = () => {
 
   return (
     <SaltProvider>
-      <FormFieldLegacy
+      <FormField
         helperText={`Please enter a number between ${min} and ${max}`}
         label="Error validation state"
         style={{ width: 292 }}
@@ -234,7 +234,7 @@ export const Error: Story = () => {
           showRefreshButton
           step={0.001}
         />
-      </FormFieldLegacy>
+      </FormField>
     </SaltProvider>
   );
 };
@@ -267,7 +267,7 @@ export const LiveDefaultValue: Story = () => {
 
   return (
     <SaltProvider>
-      <FormFieldLegacy
+      <FormField
         helperText={`Current live 'value' prop: ${formatValue(value)}`}
         label="Live Default Value"
         style={{ width: 292 }}
@@ -282,42 +282,42 @@ export const LiveDefaultValue: Story = () => {
           onChange={handleChange}
           step={0.01}
         />
-      </FormFieldLegacy>
+      </FormField>
     </SaltProvider>
   );
 };
 
 export const NumericLimits: Story = () => (
   <SaltProvider>
-    <FormFieldLegacy
+    <FormField
       helperText="Must be below 1000"
       label="Maximum limit"
       style={{ display: "block", marginBottom: 80, width: 292 }}
     >
       <StepperInput defaultValue={999} max={1000} />
-    </FormFieldLegacy>
+    </FormField>
 
-    <FormFieldLegacy
+    <FormField
       helperText="Must be above 0"
       label="Minimum limit"
       style={{ display: "block", marginBottom: 80, width: 292 }}
     >
       <StepperInput defaultValue={1} min={0} />
-    </FormFieldLegacy>
+    </FormField>
 
-    <FormFieldLegacy
+    <FormField
       helperText="Must be between 0 and 1000"
       label="Maximum and minimum limits"
       style={{ width: 292 }}
     >
       <StepperInput defaultValue={500} max={1000} min={0} />
-    </FormFieldLegacy>
+    </FormField>
   </SaltProvider>
 );
 
 export const RefreshButton: Story = () => (
   <SaltProvider>
-    <FormFieldLegacy
+    <FormField
       helperText="Please enter a number"
       label="Refresh Button"
       style={{ width: 292 }}
@@ -332,6 +332,6 @@ export const RefreshButton: Story = () => (
         step={0.5}
         textAlign="center"
       />
-    </FormFieldLegacy>
+    </FormField>
   </SaltProvider>
 );

@@ -2,7 +2,7 @@
 //  - multiline is implemented for Input
 
 import { NotificationIcon } from "@salt-ds/icons";
-import { FormFieldLegacy, SearchInput } from "@salt-ds/lab";
+import { FormField, SearchInput } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { SyntheticEvent, useState } from "react";
 
@@ -64,24 +64,24 @@ export const Controlled: ComponentStory<typeof SearchInput> = ({
   );
 };
 
-export const WithFormFieldLegacy: ComponentStory<typeof SearchInput> = (args) => {
+export const WithFormField: ComponentStory<typeof SearchInput> = (args) => {
   return (
-    <FormFieldLegacy label="ADA compliant label" style={{ width: "292px" }}>
+    <FormField label="ADA compliant label" style={{ width: "292px" }}>
       <SearchInput inputProps={{ autoComplete: "off" }} {...args} />
-    </FormFieldLegacy>
+    </FormField>
   );
 };
 
-export const WithFormFieldLegacyNoIcon: ComponentStory<typeof SearchInput> = (
+export const WithFormFieldNoIcon: ComponentStory<typeof SearchInput> = (
   args
 ) => {
   return (
-    <FormFieldLegacy label="ADA compliant label" style={{ width: "292px" }}>
+    <FormField label="ADA compliant label" style={{ width: "292px" }}>
       <SearchInput
         IconComponent={null}
         inputProps={{ autoComplete: "off" }}
         {...args}
       />
-    </FormFieldLegacy>
+    </FormField>
   );
 };

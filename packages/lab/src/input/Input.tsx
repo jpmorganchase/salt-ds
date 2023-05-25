@@ -102,7 +102,9 @@ export interface InputProps
 }
 
 function mergeA11yProps(
-  a11yProps: Partial<ReturnType<typeof useFormFieldLegacyProps>["a11yProps"]> = {},
+  a11yProps: Partial<
+    ReturnType<typeof useFormFieldLegacyProps>["a11yProps"]
+  > = {},
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {

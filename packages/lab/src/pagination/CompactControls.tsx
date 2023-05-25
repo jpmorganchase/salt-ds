@@ -1,4 +1,4 @@
-import { FormFieldLegacyProps } from "../form-field-legacy";
+import { FormFieldLegacyProps as FormFieldProps } from "../form-field-legacy";
 import { CompactInput } from "./CompactInput";
 import { PageButton } from "./PageButton";
 import { withBaseName } from "./utils";
@@ -7,14 +7,14 @@ export interface CompactControlsProps {
   count: number;
   page: number;
   onPageChange: (page: number) => void;
-  FormFieldLegacyProps?: Partial<FormFieldLegacyProps>;
+  FormFieldProps?: Partial<FormFieldProps>;
 }
 
 export const CompactControls = ({
   page,
   count,
   onPageChange,
-  FormFieldLegacyProps,
+  FormFieldProps,
 }: CompactControlsProps) => {
   return (
     <>
@@ -22,7 +22,7 @@ export const CompactControls = ({
         page={page}
         count={count}
         onPageChange={onPageChange}
-        FormFieldLegacyProps={FormFieldLegacyProps}
+        FormFieldProps={FormFieldLegacyProps}
       />
       <span className={withBaseName("compactSeparator")}>of</span>
       <PageButton

@@ -1,5 +1,5 @@
 import { Button } from "@salt-ds/core";
-import { ChangeHandler, TokenizedInput, FormFieldLegacy, Input } from "@salt-ds/lab";
+import { ChangeHandler, TokenizedInput, FormField, Input } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
   ChangeEventHandler,
@@ -118,7 +118,7 @@ export const Controlled: ComponentStory<typeof TokenizedInput> = () => {
           <Button onClick={handleAddRandomOption}>Add {option}</Button>
         </div>
         <div style={{ height: `calc(100% - ${offsetHeight}px)` }}>
-          <FormFieldLegacy label="Natural numbers only">
+          <FormField label="Natural numbers only">
             <TokenizedInput
               onChange={handleChange}
               onClear={handleClear}
@@ -126,7 +126,7 @@ export const Controlled: ComponentStory<typeof TokenizedInput> = () => {
               selectedItems={selectedItems}
               value={inputValue}
             />
-          </FormFieldLegacy>
+          </FormField>
         </div>
       </div>
     </div>
@@ -142,11 +142,11 @@ export const Disabled: ComponentStory<typeof TokenizedInput> = () => {
         justifyContent: "center",
       }}
     >
-      <FormFieldLegacy disabled label="Enter a value" style={{ maxWidth: 292 }}>
+      <FormField disabled label="Enter a value" style={{ maxWidth: 292 }}>
         <TokenizedInput
           initialSelectedItems={["Value 1", "Value 2", "Value 3"]}
         />
-      </FormFieldLegacy>
+      </FormField>
     </div>
   );
 };
@@ -210,7 +210,7 @@ export const WithValidation: ComponentStory<typeof TokenizedInput> = () => {
         justifyContent: "center",
       }}
     >
-      <FormFieldLegacy
+      <FormField
         helperText={exceptions.join(", ")}
         label="No duplication"
         style={{ maxWidth: 292 }}
@@ -223,7 +223,7 @@ export const WithValidation: ComponentStory<typeof TokenizedInput> = () => {
           selectedItems={selectedItems}
           value={inputValue}
         />
-      </FormFieldLegacy>
+      </FormField>
     </div>
   );
 };
@@ -302,7 +302,7 @@ export const WithCustomizedDelimiter: ComponentStory<
             {isLocked ? "Modify" : "Save"}
           </Button>
         </div>
-        <FormFieldLegacy
+        <FormField
           label="Enter a value"
           style={{ height: `calc(100% - ${offsetHeight}px)` }}
         >
@@ -313,7 +313,7 @@ export const WithCustomizedDelimiter: ComponentStory<
             key={`input-delimiter-${savedDelimiter.current}`}
             onChange={handleChange}
           />
-        </FormFieldLegacy>
+        </FormField>
       </div>
     </div>
   );

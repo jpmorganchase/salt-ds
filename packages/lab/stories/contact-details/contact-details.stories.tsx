@@ -24,7 +24,7 @@ import {
   SelectionChangeHandler,
   useOverlay,
   ValueComponentProps,
-  FormFieldLegacy,
+  FormField,
 } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { forwardRef, Fragment, ReactNode } from "react";
@@ -583,7 +583,7 @@ const WithinComboBoxTooltip: Story = () => {
   };
 
   return (
-    <FormFieldLegacy label="Select a person" style={{ maxWidth: 292 }}>
+    <FormField label="Select a person" style={{ maxWidth: 292 }}>
       <ComboBox
         ListItem={ItemWithContactDetailsTooltip}
         itemToString={contactToString}
@@ -591,7 +591,7 @@ const WithinComboBoxTooltip: Story = () => {
         source={tooltipContacts}
         width={200}
       />
-    </FormFieldLegacy>
+    </FormField>
   );
 };
 

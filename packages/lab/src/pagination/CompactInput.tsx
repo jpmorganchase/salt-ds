@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { FormFieldLegacy, FormFieldLegacyProps } from "../form-field-legacy";
+import { FormFieldLegacy as FormField, FormFieldLegacyProps as FormFieldProps } from "../form-field-legacy";
 import { Input } from "../input";
 import { withBaseName } from "./utils";
 
@@ -13,14 +13,14 @@ export interface CompactInputProps {
   count: number;
   page: number;
   onPageChange: (page: number) => void;
-  FormFieldLegacyProps?: Partial<FormFieldLegacyProps>;
+  FormFieldProps?: Partial<FormFieldProps>;
 }
 
 export const CompactInput = ({
   page,
   count,
   onPageChange,
-  FormFieldLegacyProps: { className, ...restFormFieldLegacyProps } = {},
+  FormFieldProps: { className, ...restFormFieldLegacyProps } = {},
 }: CompactInputProps) => {
   const [inputValue, setInputValue] = useState(`${page}`);
 
@@ -49,7 +49,7 @@ export const CompactInput = ({
 
   return (
     <span>
-      <FormFieldLegacy
+      <FormField
         className={clsx(withBaseName("compactInputField"), className)}
         fullWidth={false}
         {...restFormFieldLegacyProps}
@@ -70,7 +70,7 @@ export const CompactInput = ({
           value={inputValue}
           textAlign={"center"}
         />
-      </FormFieldLegacy>
+      </FormField>
     </span>
   );
 };

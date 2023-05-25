@@ -1,91 +1,89 @@
-import { clsx } from "clsx";
-import { FormFieldLegacy, Input } from "@salt-ds/lab";
+import { FormField, Input } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Form Field/QA",
-  component: FormFieldLegacy,
-} as ComponentMeta<typeof FormFieldLegacy>;
+  title: "Lab/Form Field Legacy/QA",
+  component: FormField,
+} as ComponentMeta<typeof FormField>;
 
-export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
-  const { imgSrc, className } = props;
+export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
   return (
-    <QAContainer imgSrc={imgSrc}>
-      <FormFieldLegacy
-        className={clsx(className)}
+    <QAContainer {...props} itemPadding={6}>
+      <FormField
         label="Default Form Field description label"
+        className="saltFormFieldLegacy-focused"
       >
         <Input value="Value" />
-      </FormFieldLegacy>
+      </FormField>
 
-      <FormFieldLegacy
-        className={clsx("saltFormFieldLegacy-secondary", className)}
+      <FormField
+        className="saltFormFieldLegacy-secondary saltFormFieldLegacy-focused"
         label="Default Form Field description label"
       >
         <Input value="Value" />
-      </FormFieldLegacy>
-      <FormFieldLegacy
-        className={clsx(className)}
+      </FormField>
+      <FormField
+        className="saltFormFieldLegacy-focused"
         label="Label aligned left"
         labelPlacement="left"
       >
         <Input value="Value" />
-      </FormFieldLegacy>
-      <FormFieldLegacy
-        className={clsx(className)}
+      </FormField>
+      <FormField
+        className="saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
       >
         <Input />
-      </FormFieldLegacy>
-      <FormFieldLegacy
-        className={clsx("saltFormFieldLegacy-secondary", className)}
+      </FormField>
+      <FormField
+        className="saltFormFieldLegacy-secondary saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
       >
         <Input />
-      </FormFieldLegacy>
-      <FormFieldLegacy
-        className={clsx("saltFormFieldLegacy-tertiary", className)}
+      </FormField>
+      <FormField
+        className="saltFormFieldLegacy-tertiary saltFormFieldLegacy-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
       >
         <Input />
-      </FormFieldLegacy>
-      <FormFieldLegacy
-        className={clsx(className)}
+      </FormField>
+      <FormField
+        className="saltFormFieldLegacy-tertiary saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
       >
         <Input />
-      </FormFieldLegacy>
-      <FormFieldLegacy
-        className={clsx("saltFormFieldLegacy-secondary", className)}
+      </FormField>
+      <FormField
+        className="saltFormFieldLegacy-secondary saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
       >
         <Input />
-      </FormFieldLegacy>
-      <FormFieldLegacy
-        className={clsx("saltFormFieldLegacy-tertiary", className)}
+      </FormField>
+      <FormField
+        className="saltFormFieldLegacy-tertiary saltFormFieldLegacy-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
       >
         <Input />
-      </FormFieldLegacy>
+      </FormField>
     </QAContainer>
   );
 };
 
-AllExamplesGrid.parameters = {
+FormFieldWithFocus.parameters = {
   chromatic: { disableSnapshot: false },
 };

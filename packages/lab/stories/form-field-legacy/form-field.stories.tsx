@@ -1,33 +1,33 @@
 import { SaltProvider } from "@salt-ds/core";
-import { Dropdown, FormFieldLegacy, FormFieldLegacyProps, Input } from "@salt-ds/lab";
+import { Dropdown, FormField, FormFieldProps, Input } from "@salt-ds/lab";
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
-  title: "Lab/Form Field",
-  component: FormFieldLegacy,
-} as ComponentMeta<typeof FormFieldLegacy>;
+  title: "Lab/Form Field Legacy",
+  component: FormField,
+} as ComponentMeta<typeof FormField>;
 
-export const Primary: ComponentStory<typeof FormFieldLegacy> = (props) => {
+export const Primary: ComponentStory<typeof FormField> = (props) => {
   return (
     <>
-      <FormFieldLegacy label="Default Form Field label" {...props}>
+      <FormField label="Default Form Field label" {...props}>
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
       <div style={{ height: 40 }} />
-      <FormFieldLegacy
+      <FormField
         labelPlacement="left"
         label="Default Form Field label"
         {...props}
       >
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
     </>
   );
 };
 
-export const Secondary: ComponentStory<typeof FormFieldLegacy> = () => (
+export const Secondary: ComponentStory<typeof FormField> = () => (
   <div
     style={{
       display: "grid",
@@ -39,70 +39,70 @@ export const Secondary: ComponentStory<typeof FormFieldLegacy> = () => (
   >
     <div style={{ width: "200px" }}>
       <h3>Secondary</h3>
-      <FormFieldLegacy
+      <FormField
         label="Secondary form field"
         helperText="Helper text value"
         variant="secondary"
       >
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
     </div>
     <div style={{ width: "200px" }}>
       <h3>Secondary with disabled outer ring</h3>
-      <FormFieldLegacy
+      <FormField
         label="Secondary form field"
         helperText="Helper text value"
         disableFocusRing
         variant="secondary"
       >
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
     </div>
   </div>
 );
 
-export const Tertiary: ComponentStory<typeof FormFieldLegacy> = () => (
+export const Tertiary: ComponentStory<typeof FormField> = () => (
   <div style={{ width: "200px" }}>
     <h3>Tertiary</h3>
-    <FormFieldLegacy
+    <FormField
       label="Tertiary form field"
       helperText="Helper text value"
       variant="tertiary"
     >
       <Input defaultValue="Value" />
-    </FormFieldLegacy>
+    </FormField>
   </div>
 );
 
-export const Disabled: ComponentStory<typeof FormFieldLegacy> = () => (
+export const Disabled: ComponentStory<typeof FormField> = () => (
   <div style={{ width: "300px" }}>
-    <FormFieldLegacy
+    <FormField
       label="Default Form Field description label"
       helperText="Helper text value"
       disabled
     >
       <Input defaultValue="Value" />
-    </FormFieldLegacy>
+    </FormField>
   </div>
 );
 
-export const Readonly: ComponentStory<typeof FormFieldLegacy> = () => (
+export const Readonly: ComponentStory<typeof FormField> = () => (
   <div style={{ width: "300px" }}>
-    <FormFieldLegacy label="Read Only Form Field" readOnly>
+    <FormField label="Read Only Form Field" readOnly>
       <Input defaultValue="Value" />
-    </FormFieldLegacy>
+    </FormField>
   </div>
 );
 
-export const HelperText: ComponentStory<typeof FormFieldLegacy> = () => (
+export const HelperText: ComponentStory<typeof FormField> = () => (
   <div style={{ width: "300px" }}>
-    <FormFieldLegacy label="Helper Text Form Field" helperText="Helper text value">
+    <FormField label="Helper Text Form Field" helperText="Helper text value">
       <Input defaultValue="Value" />
-    </FormFieldLegacy>
+    </FormField>
   </div>
 );
 
-export const ValidationStatus: ComponentStory<typeof FormFieldLegacy> = () => (
+export const ValidationStatus: ComponentStory<typeof FormField> = () => (
   <div
     style={{
       columnGap: 20,
@@ -113,61 +113,61 @@ export const ValidationStatus: ComponentStory<typeof FormFieldLegacy> = () => (
     }}
   >
     <div>
-      <FormFieldLegacy label="No validation status" helperText="Helper text value">
+      <FormField label="No validation status" helperText="Helper text value">
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
     </div>
     <div>
-      <FormFieldLegacy
+      <FormField
         label="No validation status"
         helperText="Helper text value"
         variant="secondary"
       >
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
     </div>
     <div>
-      <FormFieldLegacy
+      <FormField
         label="Warning validation status"
         helperText="Helper text value"
         validationStatus="warning"
       >
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
     </div>
     <div>
-      <FormFieldLegacy
+      <FormField
         label="Warning validation status"
         helperText="Helper text value"
         validationStatus="warning"
         variant="secondary"
       >
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
     </div>
     <div>
-      <FormFieldLegacy
+      <FormField
         label="Error validation status"
         helperText="Helper text value"
         validationStatus="error"
       >
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
     </div>
     <div>
-      <FormFieldLegacy
+      <FormField
         label="Error validation status"
         helperText="Helper text value"
         validationStatus="error"
         variant="secondary"
       >
         <Input defaultValue="Value" />
-      </FormFieldLegacy>
+      </FormField>
     </div>
   </div>
 );
 
-export const LabelAlignments: ComponentStory<typeof FormFieldLegacy> = () => (
+export const LabelAlignments: ComponentStory<typeof FormField> = () => (
   <div
     style={{
       display: "grid",
@@ -177,35 +177,35 @@ export const LabelAlignments: ComponentStory<typeof FormFieldLegacy> = () => (
       padding: "20px 20px",
     }}
   >
-    <FormFieldLegacy
+    <FormField
       label="Input in form field"
       helperText="Helper text value"
       labelPlacement="left"
     >
       <Input defaultValue="Value" />
-    </FormFieldLegacy>
-    <FormFieldLegacy label="Dropdown in form field" helperText="Helper text value">
+    </FormField>
+    <FormField label="Dropdown in form field" helperText="Helper text value">
       <Dropdown
         defaultSelected={usStateExampleData[0]}
         source={usStateExampleData}
       />
-    </FormFieldLegacy>
+    </FormField>
   </div>
 );
 
-const renderFormFieldLegacy = (props?: Partial<FormFieldLegacyProps>) => (
+const renderFormFieldLegacy = (props?: Partial<FormFieldProps>) => (
   <div>
-    <FormFieldLegacy
+    <FormField
       label="Helper Text Form Field"
       helperText="Helper text value"
       {...props}
     >
       <Input defaultValue="Value" />
-    </FormFieldLegacy>
+    </FormField>
   </div>
 );
 
-const renderAllDensities = (props?: Partial<FormFieldLegacyProps>) => (
+const renderAllDensities = (props?: Partial<FormFieldProps>) => (
   <div
     style={{
       display: "grid",
@@ -234,7 +234,7 @@ const renderAllDensities = (props?: Partial<FormFieldLegacyProps>) => (
 );
 
 // We can't use SB controls here, otherwise SB crashes with circular JSON conversion error (iframe works)
-export const AllDensitiesTwoThemes: ComponentStory<typeof FormFieldLegacy> = () => {
+export const AllDensitiesTwoThemes: ComponentStory<typeof FormField> = () => {
   return (
     <div style={{ display: "flex" }}>
       <SaltProvider mode="light">{renderAllDensities()}</SaltProvider>
@@ -248,7 +248,7 @@ const Optional = () => {
 
   return (
     <div style={{ width: "300px" }}>
-      <FormFieldLegacy
+      <FormField
         LabelProps={{
           displayedNecessity: "optional",
         }}
@@ -261,7 +261,7 @@ const Optional = () => {
           }}
           value={value}
         />
-      </FormFieldLegacy>
+      </FormField>
     </div>
   );
 };
@@ -271,32 +271,32 @@ const Required = () => {
 
   return (
     <div style={{ width: "300px", marginLeft: 16 }}>
-      <FormFieldLegacy label="Required Form Field" labelPlacement="top" required>
+      <FormField label="Required Form Field" labelPlacement="top" required>
         <Input
           onChange={(e) => {
             setValue(e.target.value);
           }}
           value={value}
         />
-      </FormFieldLegacy>
+      </FormField>
     </div>
   );
 };
 
-export const Necessity: ComponentStory<typeof FormFieldLegacy> = () => (
+export const Necessity: ComponentStory<typeof FormField> = () => (
   <div style={{ display: "flex", flexDirection: "row" }}>
     <Optional />
     <Required />
   </div>
 );
 
-const ErrorState = (props?: Partial<FormFieldLegacyProps>) => {
+const ErrorState = (props?: Partial<FormFieldProps>) => {
   const [value, setValue] = useState("Value");
 
   return (
-    <FormFieldLegacy
+    <FormField
       helperText="helperText"
-      label="Error status FormFieldLegacy"
+      label="Error status FormField"
       labelPlacement="top"
       validationStatus="error"
       // statusIndicatorContent={['Error']}
@@ -311,17 +311,17 @@ const ErrorState = (props?: Partial<FormFieldLegacyProps>) => {
         }}
         value={value}
       />
-    </FormFieldLegacy>
+    </FormField>
   );
 };
 
-const WarningState = (props?: Partial<FormFieldLegacyProps>) => {
+const WarningState = (props?: Partial<FormFieldProps>) => {
   const [value, setValue] = useState("Value");
 
   return (
-    <FormFieldLegacy
+    <FormField
       helperText="helperText"
-      label="Warning status FormFieldLegacy"
+      label="Warning status FormField"
       labelPlacement="top"
       validationStatus="warning"
       // statusIndicatorContent={['Warning']}
@@ -336,17 +336,17 @@ const WarningState = (props?: Partial<FormFieldLegacyProps>) => {
         }}
         value={value}
       />
-    </FormFieldLegacy>
+    </FormField>
   );
 };
 
-const DefaultState = (props?: Partial<FormFieldLegacyProps>) => {
+const DefaultState = (props?: Partial<FormFieldProps>) => {
   const [value, setValue] = useState("Value");
 
   return (
-    <FormFieldLegacy
+    <FormField
       helperText="helperText"
-      label="Default status FormFieldLegacy"
+      label="Default status FormField"
       labelPlacement="top"
       // statusIndicatorContent={['Default']}
       StatusIndicatorProps={{
@@ -360,15 +360,15 @@ const DefaultState = (props?: Partial<FormFieldLegacyProps>) => {
         }}
         value={value}
       />
-    </FormFieldLegacy>
+    </FormField>
   );
 };
 
-const HelperTextAsTooltip = (props: Partial<FormFieldLegacyProps>) => {
+const HelperTextAsTooltip = (props: Partial<FormFieldProps>) => {
   const [value, setValue] = useState("Value");
 
   return (
-    <FormFieldLegacy
+    <FormField
       helperText="helperText"
       helperTextPlacement="tooltip"
       label="HelperText as tooltip with status indicator"
@@ -381,18 +381,18 @@ const HelperTextAsTooltip = (props: Partial<FormFieldLegacyProps>) => {
         }}
         value={value}
       />
-    </FormFieldLegacy>
+    </FormField>
   );
 };
 
-const MultipleMessagesStatusIndicator = (props?: Partial<FormFieldLegacyProps>) => {
+const MultipleMessagesStatusIndicator = (props?: Partial<FormFieldProps>) => {
   const [value, setValue] = useState("Value");
 
   return (
-    <FormFieldLegacy
+    <FormField
       hasStatusIndicator
       helperText="helperText"
-      label="Multiple Messages FormFieldLegacy"
+      label="Multiple Messages FormField"
       labelPlacement="top"
       // statusIndicatorContent={['Message 1', 'Message 2']}
       StatusIndicatorProps={{
@@ -414,11 +414,11 @@ const MultipleMessagesStatusIndicator = (props?: Partial<FormFieldLegacyProps>) 
         }}
         value={value}
       />
-    </FormFieldLegacy>
+    </FormField>
   );
 };
 
-export const StatusIndicator: ComponentStory<typeof FormFieldLegacy> = () => (
+export const StatusIndicator: ComponentStory<typeof FormField> = () => (
   <>
     <div
       style={{
@@ -472,175 +472,175 @@ export const StatusIndicator: ComponentStory<typeof FormFieldLegacy> = () => (
   </>
 );
 
-export const Variants: ComponentStory<typeof FormFieldLegacy> = () => (
+export const Variants: ComponentStory<typeof FormField> = () => (
   <>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>
         <h3>Default</h3>
-        <FormFieldLegacy label="Default Form Field label">
+        <FormField label="Default Form Field label">
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
         <h3>Secondary</h3>
-        <FormFieldLegacy label="Default Form Field label" variant="secondary">
+        <FormField label="Default Form Field label" variant="secondary">
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
         <h3>Tertiary</h3>
-        <FormFieldLegacy label="Default Form Field label" variant="tertiary">
+        <FormField label="Default Form Field label" variant="tertiary">
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
     </div>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>
-        <FormFieldLegacy
+        <FormField
           label="Form Field label with helper text"
           helperText="some helper text"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <FormFieldLegacy
+        <FormField
           label="Form Field label with helper text"
           variant="secondary"
           helperText="some helper text"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <FormFieldLegacy
+        <FormField
           label="Form Field label with helper text"
           variant="tertiary"
           helperText="some helper text"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
     </div>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>
-        <FormFieldLegacy
+        <FormField
           disableFocusRing
           helperText="some helper text"
           label="Form field with disabled outer ring"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <FormFieldLegacy
+        <FormField
           disableFocusRing
           variant="secondary"
           label="Form field with disabled outer ring"
           helperText="some helper text"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <FormFieldLegacy
+        <FormField
           disableFocusRing
           variant="tertiary"
           helperText="some helper text"
           label="Form field with disabled outer ring"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
     </div>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>
         <h3>Default</h3>
-        <FormFieldLegacy label="Default Form Field label" labelPlacement="left">
+        <FormField label="Default Form Field label" labelPlacement="left">
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
         <h3>Secondary</h3>
-        <FormFieldLegacy
+        <FormField
           label="Default Form Field label"
           labelPlacement="left"
           variant="secondary"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
         <h3>Tertiary</h3>
-        <FormFieldLegacy
+        <FormField
           label="Default Form Field label"
           labelPlacement="left"
           variant="tertiary"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
     </div>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>
-        <FormFieldLegacy
+        <FormField
           helperText="some helper text"
           label="Label with helper text"
           labelPlacement="left"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <FormFieldLegacy
+        <FormField
           helperText="some helper text"
           label="Label with helper text"
           labelPlacement="left"
           variant="secondary"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <FormFieldLegacy
+        <FormField
           helperText="some helper text"
           label="Label with helper text"
           labelPlacement="left"
           variant="tertiary"
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
     </div>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>
-        <FormFieldLegacy
+        <FormField
           label="Disabled outer ring"
           labelPlacement="left"
           disableFocusRing
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <FormFieldLegacy
+        <FormField
           label="Disabled outer ring"
           labelPlacement="left"
           variant="secondary"
           disableFocusRing
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
       <div style={{ width: "250px", marginLeft: 16 }}>
-        <FormFieldLegacy
+        <FormField
           label="Disabled outer ring"
           labelPlacement="left"
           variant="tertiary"
           disableFocusRing
         >
           <Input defaultValue="Value" />
-        </FormFieldLegacy>
+        </FormField>
       </div>
     </div>
   </>

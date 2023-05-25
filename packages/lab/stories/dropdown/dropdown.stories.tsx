@@ -10,7 +10,7 @@ import {
 } from "@salt-ds/icons";
 
 import {
-  FormFieldLegacy,
+  FormField,
   Dropdown,
   DropdownButton,
   DropdownProps,
@@ -164,26 +164,26 @@ export const CustomRowRendererWithTooltip: Story<DropdownProps> = (props) => (
   />
 );
 
-export const WithFormFieldLegacyLabelTop: Story<DropdownProps> = () => {
+export const WithFormFieldLabelTop: Story<DropdownProps> = () => {
   return (
     <div style={{ width: 250 }}>
-      <FormFieldLegacy helperText="Select a value" label="ADA compliant label">
+      <FormField helperText="Select a value" label="ADA compliant label">
         <Dropdown defaultSelected={usa_states[2]} source={usa_states} />
-      </FormFieldLegacy>
+      </FormField>
     </div>
   );
 };
 
-export const WithFormFieldLegacyLabelLeft: Story<DropdownProps> = () => {
+export const WithFormFieldLabelLeft: Story<DropdownProps> = () => {
   return (
     <div style={{ width: 250 }}>
-      <FormFieldLegacy
+      <FormField
         helperText="This is some help text"
         label="ADA compliant label"
         labelPlacement="left"
       >
         <Dropdown defaultSelected={usa_states[2]} source={usa_states} />
-      </FormFieldLegacy>
+      </FormField>
     </div>
   );
 };
@@ -193,7 +193,7 @@ export const WithFormFieldLegacyLabelLeft: Story<DropdownProps> = () => {
 export const InitialIsOpen: Story<DropdownProps> = (props) => {
   return (
     <div style={{ width: 250, height: 500 }}>
-      <FormFieldLegacy
+      <FormField
         helperText="This is some help text"
         label="ADA compliant label"
       >
@@ -203,7 +203,7 @@ export const InitialIsOpen: Story<DropdownProps> = (props) => {
           defaultIsOpen
           source={usa_states}
         />
-      </FormFieldLegacy>
+      </FormField>
     </div>
   );
 };

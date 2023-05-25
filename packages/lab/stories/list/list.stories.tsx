@@ -30,7 +30,7 @@ import {
   ListScrollHandles,
   VirtualizedList,
   SelectionChangeHandler,
-  FormFieldLegacy,
+  FormField,
   Input,
   SelectHandler,
 } from "@salt-ds/lab";
@@ -423,7 +423,7 @@ export const ScrollToIndex: Story<ListProps> = () => {
 
   return (
     <StackLayout style={{ width: 292 * 2 }}>
-      <FormFieldLegacy label="Type an index to scroll to" ref={inputFieldRef}>
+      <FormField label="Type an index to scroll to" ref={inputFieldRef}>
         <Input
           inputProps={{
             min: 0,
@@ -432,7 +432,7 @@ export const ScrollToIndex: Story<ListProps> = () => {
           onChange={handleInputChange}
           type="number"
         />
-      </FormFieldLegacy>
+      </FormField>
       <FlexLayout>
         <List
           aria-label="ScrollToIndex List example"
@@ -684,9 +684,9 @@ export const WithTextHighlight: Story<ListProps> = () => {
       }}
     >
       <FlexItem>
-        <FormFieldLegacy label="Type to highlight" ref={inputFieldRef}>
+        <FormField label="Type to highlight" ref={inputFieldRef}>
           <Input defaultValue="" onChange={handleInputChange} />
-        </FormFieldLegacy>
+        </FormField>
         <List
           disableFocus
           itemTextHighlightPattern={highlightRegex}
@@ -757,9 +757,9 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
           maxWidth: 292,
         }}
       >
-        <FormFieldLegacy label="Type to highlight" ref={inputFieldRef}>
+        <FormField label="Type to highlight" ref={inputFieldRef}>
           <Input defaultValue="" onChange={handleInputChange} />
-        </FormFieldLegacy>
+        </FormField>
         <div style={{ height: `calc(100% - ${offsetHeight}px)` }}>
           <List disableFocus itemTextHighlightPattern={highlightRegex}>
             <ListItem>

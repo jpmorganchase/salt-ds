@@ -68,7 +68,9 @@
 /* Class applied if `fullWidth={true}` and helper text is provided */
 .saltFormFieldLegacy-fullWidth.saltFormFieldLegacy-withHelperText {
   --formFieldLegacy-helperText-marginTop: var(--formFieldLegacy-helperText-marginTop-fullWidth);
-  --formFieldLegacy-activationIndicator-offsetBottom: calc(var(--formFieldLegacy-helperText-marginTop-fullWidth) + var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height)));
+  --formFieldLegacy-activationIndicator-offsetBottom: calc(
+    var(--formFieldLegacy-helperText-marginTop-fullWidth) + var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height))
+  );
 }
 
 /* Class applied when helper text is provided */
@@ -157,7 +159,11 @@
   /* Uses density invariant value unless helper text provided */
   --formFieldLegacy-background-offset-height: calc(var(--formFieldLegacy-helperText-marginTop, 0px) + var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height)));
 
-  background: linear-gradient(to top, transparent var(--formFieldLegacy-background-offset-height), var(--saltFormFieldLegacy-background, var(--formFieldLegacy-background)) var(--formFieldLegacy-background-offset-height));
+  background: linear-gradient(
+    to top,
+    transparent var(--formFieldLegacy-background-offset-height),
+    var(--saltFormFieldLegacy-background, var(--formFieldLegacy-background)) var(--formFieldLegacy-background-offset-height)
+  );
 }
 
 /* Class applied if `labelPlacement="top"` and helper text is provided */

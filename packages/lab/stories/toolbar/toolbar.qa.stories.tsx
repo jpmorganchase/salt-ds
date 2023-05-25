@@ -18,7 +18,7 @@ import {
   Toolbar,
   ToolbarButton,
   Tooltray,
-  FormFieldLegacy,
+  FormField,
   Input,
   Pill,
   StaticInputAdornment,
@@ -45,20 +45,20 @@ const typeData = ["Open", "Close", "Discarted", "Resolved"];
 export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
   <QAContainer cols={1} itemPadding={3} imgSrc={imgSrc} itemWidthAuto>
     <Toolbar aria-label="Default toolbar" style={{ minWidth: "100px" }}>
-      <FormFieldLegacy data-close-on-click={false} label="Range">
+      <FormField data-close-on-click={false} label="Range">
         <Dropdown
           defaultSelected={rangeData[0]}
           source={rangeData}
           style={{ width: 100 }}
         />
-      </FormFieldLegacy>
-      <FormFieldLegacy data-close-on-click={false} label="Type">
+      </FormField>
+      <FormField data-close-on-click={false} label="Type">
         <Dropdown
           defaultSelected={typeData[0]}
           source={typeData}
           style={{ width: 90 }}
         />
-      </FormFieldLegacy>
+      </FormField>
       <ToolbarButton label="Export" variant="secondary">
         <ExportIcon />
       </ToolbarButton>
@@ -76,7 +76,7 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
       aria-label="Tooltray alignment toolbar"
       style={{ minWidth: "100px" }}
     >
-      <FormFieldLegacy data-close-on-click={false}>
+      <FormField data-close-on-click={false}>
         <Input
           startAdornment={
             <StaticInputAdornment>
@@ -86,7 +86,7 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
           style={{ width: 180 }}
           value=""
         />
-      </FormFieldLegacy>
+      </FormField>
       <Tooltray aria-label="filters tooltray">
         <ToggleButton
           aria-label=" AND"
@@ -95,15 +95,15 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
         >
           <SwapIcon /> AND
         </ToggleButton>
-        <FormFieldLegacy>
+        <FormField>
           <Pill label="LOREM" onClick={() => console.log("lorem.")} />
-        </FormFieldLegacy>
-        <FormFieldLegacy>
+        </FormField>
+        <FormField>
           <Pill label="IPSUM" onClick={() => console.log("ipsum.")} />
-        </FormFieldLegacy>
-        <FormFieldLegacy>
+        </FormField>
+        <FormField>
           <Pill label="DOLAR" onClick={() => console.log("dolar.")} />
-        </FormFieldLegacy>
+        </FormField>
       </Tooltray>
       <Tooltray aria-label="status tooltray" data-pad-end>
         <Button variant="secondary">CLEAR</Button>
@@ -111,13 +111,13 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
           <AddIcon />
         </Button>
       </Tooltray>
-      <FormFieldLegacy
+      <FormField
         data-close-on-click={false}
         label="Status"
         style={{ width: "95px " }}
       >
         <Dropdown defaultSelected={statusData[1]} source={statusData} />
-      </FormFieldLegacy>
+      </FormField>
       <Tooltray aria-label="search tooltray">
         <Button variant="primary">
           <AddIcon />
