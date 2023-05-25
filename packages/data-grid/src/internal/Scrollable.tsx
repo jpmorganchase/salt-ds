@@ -3,7 +3,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import ScrollableCss from "./Scrollable.css";
+import scrollableCss from "./Scrollable.css";
 
 const withBaseName = makePrefixer("saltGridScrollable");
 
@@ -47,7 +47,7 @@ export function Scrollable<T>(props: ScrollableProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-scrollable",
-    css: ScrollableCss,
+    css: scrollableCss,
     window: targetWindow,
   });
 

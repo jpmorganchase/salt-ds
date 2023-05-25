@@ -10,7 +10,7 @@ import { HeaderRow } from "./HeaderRow";
 import { TableBody } from "./TableBody";
 import { ColumnDragState } from "./gridHooks";
 
-import ColumnGhostCss from "./ColumnGhost.css";
+import columnGhostCss from "./ColumnGhost.css";
 
 const withBaseName = makePrefixer("saltGridColumnGhost");
 
@@ -27,7 +27,7 @@ export function ColumnGhost<T = any>(props: ColumnGhostProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-column-ghost",
-    css: ColumnGhostCss,
+    css: columnGhostCss,
     window: targetWindow,
   });
 

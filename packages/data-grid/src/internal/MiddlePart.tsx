@@ -10,7 +10,7 @@ import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
 import { useActiveOnWheel } from "./gridHooks";
 
-import MiddlePartCss from "./MiddlePart.css";
+import middlePartCss from "./MiddlePart.css";
 
 const withBaseName = makePrefixer("saltGridMiddlePart");
 
@@ -44,7 +44,7 @@ export function MiddlePart<T>(props: MiddlePartProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-middle-part",
-    css: MiddlePartCss,
+    css: middlePartCss,
     window: targetWindow,
   });
 

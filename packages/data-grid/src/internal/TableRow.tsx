@@ -18,7 +18,7 @@ import { RowValidationStatusContext } from "../RowValidationStatus";
 import { FakeCell } from "./FakeCell";
 import { DefaultCellValue } from "./DefaultCellValue";
 
-import TableRowCss from "./TableRow.css";
+import tableRowCss from "./TableRow.css";
 
 const withBaseName = makePrefixer("saltGridTableRow");
 
@@ -58,7 +58,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-table-row",
-    css: TableRowCss,
+    css: tableRowCss,
     window: targetWindow,
   });
 

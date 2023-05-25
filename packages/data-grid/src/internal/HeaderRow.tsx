@@ -9,7 +9,7 @@ import { useCursorContext } from "../CursorContext";
 
 import { FakeHeaderCell } from "./FakeHeaderCell";
 
-import HeaderRowCss from "./HeaderRow.css";
+import headerRowCss from "./HeaderRow.css";
 
 const withBaseName = makePrefixer("saltGridHeaderRow");
 
@@ -24,7 +24,7 @@ export function HeaderRow<T>(props: HeaderRowProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-header-row",
-    css: HeaderRowCss,
+    css: headerRowCss,
     window: targetWindow,
   });
 

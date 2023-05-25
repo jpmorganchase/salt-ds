@@ -5,7 +5,7 @@ import { GridCellProps } from "../GridColumn";
 
 import { Cell } from "./Cell";
 
-import FakeCellCss from "./FakeCell.css";
+import fakeCellCss from "./FakeCell.css";
 
 export type FakeCellProps<T> = Pick<GridCellProps<T>, "row">;
 
@@ -19,7 +19,7 @@ export function FakeCell<T>(props: FakeCellProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-fake-cell",
-    css: FakeCellCss,
+    css: fakeCellCss,
     window: targetWindow,
   });
 

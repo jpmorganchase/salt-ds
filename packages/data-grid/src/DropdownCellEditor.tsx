@@ -9,7 +9,7 @@ import { GridColumnModel, GridRowModel } from "./Grid";
 import { CornerTag } from "./CornerTag";
 import { Cell } from "./internal";
 
-import DropdownCellEditorCss from "./DropdownCellEditor.css";
+import dropdownCellEditorCss from "./DropdownCellEditor.css";
 
 const withBaseName = makePrefixer("saltGridDropdownCellEditor");
 
@@ -26,7 +26,7 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-dropdown-cell-editor",
-    css: DropdownCellEditorCss,
+    css: dropdownCellEditorCss,
     window: targetWindow,
   });
 

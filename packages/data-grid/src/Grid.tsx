@@ -64,7 +64,7 @@ import { ColumnDropTarget } from "./internal/ColumnDropTarget";
 import { ColumnDataContext } from "./ColumnDataContext";
 import { ColumnSortContext } from "./ColumnSortContext";
 
-import GridCss from "./Grid.css";
+import gridCss from "./Grid.css";
 
 const withBaseName = makePrefixer("saltGrid");
 
@@ -215,7 +215,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-grid",
-    css: GridCss,
+    css: gridCss,
     window: targetWindow,
   });
 

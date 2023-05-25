@@ -7,7 +7,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { GridColumnGroupModel } from "./Grid";
 import { useColumnDataContext } from "./ColumnDataContext";
 
-import GroupHeaderCellCss from "./GroupHeaderCell.css";
+import groupHeaderCellCss from "./GroupHeaderCell.css";
 
 const withBaseName = makePrefixer("saltGridGroupHeaderCell");
 
@@ -22,7 +22,7 @@ export function GroupHeaderCell(props: GroupHeaderCellProps) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-group-header-cell",
-    css: GroupHeaderCellCss,
+    css: groupHeaderCellCss,
     window: targetWindow,
   });
 

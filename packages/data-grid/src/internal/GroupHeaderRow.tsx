@@ -8,7 +8,7 @@ import { GroupHeaderCellValue } from "../GroupHeaderCellValue";
 
 import { FakeGroupCell } from "./FakeGroupCell";
 
-import GroupHeaderRowCss from "./GroupHeaderRow.css";
+import groupHeaderRowCss from "./GroupHeaderRow.css";
 
 const withBaseName = makePrefixer("saltGridGroupHeaderRow");
 
@@ -23,7 +23,7 @@ export function GroupHeaderRow<T>(props: GroupHeaderRowProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-group-header-row",
-    css: GroupHeaderRowCss,
+    css: groupHeaderRowCss,
     window: targetWindow,
   });
 

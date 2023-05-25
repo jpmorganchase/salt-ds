@@ -10,7 +10,7 @@ import { TableColGroup } from "./TableColGroup";
 import { HeaderRow } from "./HeaderRow";
 import { useActiveOnWheel } from "./gridHooks";
 
-import TopLeftPartCss from "./TopLeftPart.css";
+import topLeftPartCss from "./TopLeftPart.css";
 
 const withBaseName = makePrefixer("saltGridTopLeftPart");
 
@@ -28,7 +28,7 @@ export function TopLeftPart<T>(props: TopLeftPartProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-top-left-part",
-    css: TopLeftPartCss,
+    css: topLeftPartCss,
     window: targetWindow,
   });
 

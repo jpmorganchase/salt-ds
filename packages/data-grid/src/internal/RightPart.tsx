@@ -11,7 +11,7 @@ import { useActiveOnWheel } from "./gridHooks";
 import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
 
-import RightPartCss from "./RightPart.css";
+import rightPartCss from "./RightPart.css";
 
 const withBaseName = makePrefixer("saltGridRightPart");
 
@@ -45,7 +45,7 @@ export function RightPart<T>(props: RightPartProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-right-part",
-    css: RightPartCss,
+    css: rightPartCss,
     window: targetWindow,
   });
 

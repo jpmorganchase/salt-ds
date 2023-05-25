@@ -6,7 +6,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import { GridCellValueProps } from "../GridColumn";
 
-import DefaultCellValueCss from "./DefaultCellValue.css";
+import defaultCellValueCss from "./DefaultCellValue.css";
 
 const withBaseName = makePrefixer("saltGridDefaultCellValue");
 
@@ -18,7 +18,7 @@ export function DefaultCellValue<T>(props: GridCellValueProps<T>) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-default-cell-value",
-    css: DefaultCellValueCss,
+    css: defaultCellValueCss,
     window: targetWindow,
   });
 

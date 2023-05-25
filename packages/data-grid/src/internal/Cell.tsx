@@ -6,7 +6,7 @@ import { clsx } from "clsx";
 
 import { ColumnSeparatorType } from "../Grid";
 
-import CellCss from "./Cell.css";
+import cellCss from "./Cell.css";
 
 export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
   isSelected?: boolean;
@@ -30,7 +30,7 @@ export const Cell = forwardRef<HTMLTableCellElement, CellProps>(
     const { window: targetWindow } = useWindow();
     useComponentCssInjection({
       testId: "salt-cell",
-      css: CellCss,
+      css: cellCss,
       window: targetWindow,
     });
 

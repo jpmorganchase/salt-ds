@@ -3,7 +3,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import ColumDropTargetCss from "./ColumnDropTarget.css";
+import columDropTargetCss from "./ColumnDropTarget.css";
 
 const withBaseName = makePrefixer("saltGridColumnDropTarget");
 
@@ -17,7 +17,7 @@ export function ColumnDropTarget(props: ColumnDropTargetProps) {
   const { window: targetWindow } = useWindow();
   useComponentCssInjection({
     testId: "salt-column-drop-target",
-    css: ColumDropTargetCss,
+    css: columDropTargetCss,
     window: targetWindow,
   });
 
