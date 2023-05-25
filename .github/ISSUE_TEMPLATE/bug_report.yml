@@ -3,6 +3,7 @@ description: Report bugs in our code.
 labels:
   - "type: bug 🪲"
   - "status: awaiting triage"
+  - "community"
 body:
   - type: markdown
     attributes:
