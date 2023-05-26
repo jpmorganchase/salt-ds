@@ -1,15 +1,12 @@
 import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
-import { makePrefixer, useId, capitalize } from "@salt-ds/core";
-import {
-  A11yValueProps,
-  FormFieldContextNext,
-} from "../form-field-context-next";
+import { A11yValueProps, FormFieldContext } from "../form-field-context";
+import { makePrefixer, useId, capitalize } from "../utils";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import formFieldNextCss from "./FormFieldNext.css";
+import formFieldCss from "./FormField.css";
 
 export type FormFieldLabelPlacement = "top" | "left";
 
@@ -41,7 +38,7 @@ export interface FormFieldProps
   validationStatus?: "error" | "warning" | "success";
 }
 
-const withBaseName = makePrefixer("saltFormFieldNext");
+const withBaseName = makePrefixer("saltFormField");
 
 export const FormField = forwardRef(
   (
@@ -61,8 +58,8 @@ export const FormField = forwardRef(
   ) => {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-form-field-next",
-      css: formFieldNextCss,
+      testId: "salt-form-field",
+      css: formFieldCss,
       window: targetWindow,
     });
 
@@ -85,7 +82,7 @@ export const FormField = forwardRef(
         )}
         {...restProps}
       >
-        <FormFieldContextNext.Provider
+        <FormFieldContext.Provider
           value={{
             a11yProps: {
               "aria-labelledby": labelId,
@@ -97,7 +94,7 @@ export const FormField = forwardRef(
           }}
         >
           {children}
-        </FormFieldContextNext.Provider>
+        </FormFieldContext.Provider>
       </div>
     );
   }

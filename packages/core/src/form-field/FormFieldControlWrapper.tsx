@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../utils";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
