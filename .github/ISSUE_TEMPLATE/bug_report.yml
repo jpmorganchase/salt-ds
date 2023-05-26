@@ -18,23 +18,18 @@ body:
         We only accept bug reports for packages shown in the menu below. If a package isn’t listed, then it’s not one that we support.
       multiple: true
       options:
-        - "Core v1.4.0 (@salt-ds/core)"
-        - "Core v1.3.0 (@salt-ds/core)"
-        - "Core v1.2.0 (@salt-ds/core)"
-        - "Icons v1.1.0 (@salt-ds/icons)"
-        - "Icons v1.0.0 (@salt-ds/icons)"
-        - "Theme v1.2.0 (@salt-ds/theme)"
-        - "Theme v1.1.0 (@salt-ds/theme)"
-        - "Theme v1.0.0 (@salt-ds/theme)"
-        - "Lab v1.0.0-alpha.4 (@salt-ds/lab)"
-        - "Lab v1.0.0-alpha.3 (@salt-ds/lab)"
-        - "Lab v1.0.0-alpha.2 (@salt-ds/lab)"
-        - "Data Grid v1.0.3 (@salt-ds/data-grid)"
-        - "Data Grid v1.0.2 (@salt-ds/data-grid)"
-        - "Data Grid v1.0.1 (@salt-ds/data-grid)"
-        - "AG Grid Theme v1.1.2 (@salt-ds/ag-grid-theme)"
-        - "AG Grid Theme v1.1.1 (@salt-ds/ag-grid-theme)"
-        - "AG Grid Theme v1.1.0 (@salt-ds/ag-grid-theme)"
+        - "Core (@salt-ds/core)"
+        - "Icons (@salt-ds/icons)"
+        - "Theme (@salt-ds/theme)"
+        - "Lab (@salt-ds/lab)"
+        - "Data Grid (@salt-ds/data-grid)"
+        - "AG Grid Theme (@salt-ds/ag-grid-theme)"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Package version(s)
+      description: Which version(s) did you observe the bug?
     validations:
       required: true
   - type: textarea

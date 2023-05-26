@@ -11,7 +11,10 @@ describe("GIVEN a Dropdown component", () => {
         </FormField>
       );
       cy.findByLabelText("Dropdown").focus();
-      cy.get(".saltFormField").should("have.class", "saltFormField-focused");
+      cy.get(".saltFormFieldLegacy").should(
+        "have.class",
+        "saltFormFieldLegacy-focused"
+      );
     });
   });
 });

@@ -1,5 +1,12 @@
 # @salt-ds/ag-grid-theme
 
+## 1.1.4
+
+### Patch Changes
+
+- f0f5f8e3: Update the icon font
+- 1e9ef1a2: Fix duplicate Salt libraries being installed when multiple libraries are installed
+
 ## 1.1.3
 
 ### Patch Changes

@@ -9,8 +9,7 @@ import {
   ReactNode,
   useState,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
-import { useFormFieldPropsNext } from "../form-field-context-next";
+import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
 import { StatusAdornment } from "../status-adornment";
 
 import "./InputNext.css";
@@ -51,6 +50,10 @@ export interface InputProps
    */
   startAdornment?: ReactNode;
   /**
+   * Alignment of text within container. Defaults to "left"
+   */
+  textAlign?: "left" | "center" | "right";
+  /**
    * Validation status.
    */
   validationStatus?: "error" | "warning" | "success";
@@ -65,9 +68,7 @@ export interface InputProps
 }
 
 function mergeA11yProps(
-  a11yProps: Partial<
-    ReturnType<typeof useFormFieldPropsNext>["a11yProps"]
-  > = {},
+  a11yProps: Partial<ReturnType<typeof useFormFieldProps>["a11yProps"]> = {},
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {
@@ -102,6 +103,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     role,
     startAdornment,
     style,
+    textAlign = "left",
     value: valueProp,
     // If we leave both value and defaultValue undefined, we will get a React warning on first edit
     // (uncontrolled to controlled warning) from the React input
@@ -117,7 +119,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
     a11yProps,
-  } = useFormFieldPropsNext();
+  } = useFormFieldProps();
 
   const isDisabled = disabled || formFieldDisabled;
   const isReadOnly = readOnlyProp || formFieldReadOnly;
@@ -165,6 +167,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     setFocused(true);
   };
 
+  const inputStyle = {
+    "--inputNext-textAlign": textAlign,
+    ...style,
+  };
+
   return (
     <div
       className={clsx(
@@ -178,21 +185,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         },
         classNameProp
       )}
-      style={style}
+      style={inputStyle}
       {...other}
     >
-      {startAdornment && (
-        <div className={withBaseName("startAdornmentContainer")}>
-          {startAdornment}
-        </div>
-      )}
       <input
         id={id}
-        className={clsx(
-          withBaseName("input"),
-          { [withBaseName("withAdornment")]: validationStatus },
-          inputProps?.className
-        )}
+        className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
         readOnly={isReadOnly}
         ref={ref}
@@ -206,11 +204,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
       )}
-      {endAdornment && (
-        <div className={withBaseName("endAdornmentContainer")}>
-          {endAdornment}
-        </div>
-      )}
+      <div className={withBaseName("activationIndicator")} />
     </div>
   );
 });

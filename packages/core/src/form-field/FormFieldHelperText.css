@@ -1,0 +1,14 @@
+.saltFormFieldHelperText {
+  cursor: default;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.saltFormFieldHelperText .saltText {
+  font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
+}
+
+.saltFormFieldHelperText-withValidation {
+  column-gap: var(--salt-size-adornmentGap);
+}

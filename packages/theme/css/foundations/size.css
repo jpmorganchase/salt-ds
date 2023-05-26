@@ -6,7 +6,6 @@
   --salt-size-basis-unit: 4px;
 
   --salt-size-adornmentGap: calc(0.75 * var(--salt-size-unit));
-  --salt-size-border: 1px;
   --salt-size-container-spacing: calc(3 * var(--salt-size-unit));
   --salt-size-separator-strokeWidth: 1px;
   --salt-size-selectable: calc(var(--salt-size-base) - (1.5 * var(--salt-size-unit)) - (0.5 * var(--salt-size-basis-unit)));
@@ -28,8 +27,15 @@
 .salt-density-high {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 1);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 1.5);
-  --salt-size-base: calc(var(--salt-size-basis-unit) * 5);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 0.5);
+
+  /* New size work */
+  --salt-size-adornment: 6px;
+  --salt-size-bar: 2px;
+  --salt-size-base: 20px;
+  --salt-size-border: 1px;
+  --salt-size-selectable: 12px;
+  --salt-size-icon: 12px;
 
   /* Deprecated */
   --salt-size-detail: var(--salt-size-compact);
@@ -37,8 +43,15 @@
 .salt-density-medium {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 2);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 2);
-  --salt-size-base: calc(var(--salt-size-basis-unit) * 7);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 1);
+
+  /* New size work */
+  --salt-size-adornment: 8px;
+  --salt-size-bar: 4px;
+  --salt-size-base: 28px;
+  --salt-size-border: 1px;
+  --salt-size-selectable: 14px;
+  --salt-size-icon: 12px;
 
   /* Deprecated */
   --salt-size-detail: var(--salt-size-compact);
@@ -46,8 +59,15 @@
 .salt-density-low {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 3);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 2.5);
-  --salt-size-base: calc(var(--salt-size-basis-unit) * 9);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 1.5);
+
+  /* New size work */
+  --salt-size-adornment: 10px;
+  --salt-size-bar: 6px;
+  --salt-size-base: 36px;
+  --salt-size-border: 1px;
+  --salt-size-selectable: 16px;
+  --salt-size-icon: 14px;
 
   /* Deprecated */
   --salt-size-detail: var(--salt-size-compact);
@@ -55,8 +75,15 @@
 .salt-density-touch {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 4);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 3);
-  --salt-size-base: calc(var(--salt-size-basis-unit) * 11);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 2);
+
+  /* New size work */
+  --salt-size-adornment: 12px;
+  --salt-size-bar: 8px;
+  --salt-size-base: 44px;
+  --salt-size-border: 1px;
+  --salt-size-selectable: 18px;
+  --salt-size-icon: 16px;
 
   /* Deprecated */
   --salt-size-detail: var(--salt-size-compact);

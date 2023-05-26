@@ -76,17 +76,17 @@ const cards: CardProps[] = [
     keylineColor: "var(--site-tertiary-accent-teal)",
   },
   {
-    icon: <Image src="/img/arrows.svg" alt="circle with arrows icon" />,
-    title: "Get involved",
+    icon: <Image src="/img/roadmap.svg" alt="road icon" />,
+    title: "Our roadmap",
     description: (
       <p>
-        We welcome bug reports, fixes and other contributions—and would love to
-        receive your feedback and suggestions. Reach out to us on GitHub or via
-        email.
+        Find out how we prioritize our work, see which components and patterns
+        are planned for delivery in the coming months, and get updates about the
+        Salt site and legacy UI Toolkit.
       </p>
     ),
-    url: "./support-and-contributions",
-    footerText: "Contact us",
+    url: "./getting-started/roadmap",
+    footerText: "View our planning schedule",
     keylineColor: "var(--site-tertiary-accent-orange)",
   },
 ];

@@ -10,7 +10,7 @@ import {
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { ControlLabel, ControlLabelProps } from "../control-label";
-import { useFormFieldProps } from "../form-field-context";
+import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 import { CheckedIcon } from "./assets/CheckedIcon";
 
 import "./Switch.css";
@@ -28,7 +28,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   props,
   ref
 ) {
-  const { a11yProps } = useFormFieldProps();
+  const { a11yProps } = useFormFieldLegacyProps();
 
   const {
     checked: checkedProp,
