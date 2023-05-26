@@ -1,4 +1,4 @@
-import { FormFieldProps } from "../form-field";
+import { FormFieldLegacyProps as FormFieldProps } from "../form-field-legacy";
 import { CompactInput } from "./CompactInput";
 import { PageButton } from "./PageButton";
 import { withBaseName } from "./utils";

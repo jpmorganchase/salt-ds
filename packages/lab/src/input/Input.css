@@ -132,6 +132,6 @@
 
 /* Style applied if `inFormField={true}` */
 .saltInput-formField {
-  min-width: var(--saltFormField-input-minWidth, 0px);
+  min-width: var(--saltFormFieldLegacy-input-minWidth, 0px);
   width: 100%;
 }

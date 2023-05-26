@@ -1,5 +1,5 @@
 import { useDensity, useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { useFormFieldProps } from "../../form-field-context";
+import { useFormFieldLegacyProps } from "../../form-field-context-legacy";
 import { MutableRefObject } from "react";
 
 const refreshButtonWidth = {
@@ -17,7 +17,7 @@ export function useActivationIndicatorPosition(
   adornmentRef: MutableRefObject<HTMLDivElement | null>,
   refreshButtonVisible: boolean
 ) {
-  const formFieldProps = useFormFieldProps();
+  const formFieldProps = useFormFieldLegacyProps();
   const { ref: formFieldRef } = formFieldProps;
   const density = useDensity();
 

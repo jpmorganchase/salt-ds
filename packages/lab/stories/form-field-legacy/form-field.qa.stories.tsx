@@ -4,7 +4,7 @@ import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Form Field/QA",
+  title: "Lab/Form Field Legacy/QA",
   component: FormField,
 } as ComponentMeta<typeof FormField>;
 
@@ -18,9 +18,8 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       >
         <Input value="Value" />
       </FormField>
-
       <FormField
-        className={clsx("saltFormField-secondary", className)}
+        className={clsx("saltFormFieldLegacy-secondary", className)}
         label="Default Form Field description label"
       >
         <Input value="Value" />
@@ -41,7 +40,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={clsx("saltFormField-secondary", className)}
+        className={clsx("saltFormFieldLegacy-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -49,7 +48,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={clsx("saltFormField-tertiary", className)}
+        className={clsx("saltFormFieldLegacy-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -66,7 +65,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={clsx("saltFormField-secondary", className)}
+        className={clsx("saltFormFieldLegacy-secondary", className)}
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -74,7 +73,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className={clsx("saltFormField-tertiary", className)}
+        className={clsx("saltFormFieldLegacy-tertiary", className)}
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"

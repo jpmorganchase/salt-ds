@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import { ElementType, HTMLAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { FormFieldValidationStatus } from "./FormField";
+import { FormFieldValidationStatus } from "./FormFieldLegacy";
 import {
   NecessityIndicator as DefaultNecessityIndicator,
   NecessityIndicatorOptions,

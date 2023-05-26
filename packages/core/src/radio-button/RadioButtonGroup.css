@@ -30,7 +30,7 @@
 /* Styles applied to radio group's legend */
 .saltRadioButtonGroup-legend {
   display: inline-block;
-  font-size: var(--formField-label-fontSize);
+  font-size: var(--formFieldLegacy-label-fontSize); /* TODO: V2 Form Field work */
   color: var(--salt-text-primary-foreground);
   margin-bottom: calc(var(--salt-size-unit) * 2);
 }

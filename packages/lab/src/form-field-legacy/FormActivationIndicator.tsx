@@ -1,6 +1,6 @@
 import { SVGAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { FormFieldProps } from "./FormField";
+import { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
 
 import "./FormActivationIndicator.css";
 
