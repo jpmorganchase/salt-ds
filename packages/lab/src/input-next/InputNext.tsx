@@ -96,7 +96,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     } = {},
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
-    validationStatus: formFieldValidationStatus
+    validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
 
   const isDisabled = disabled || formFieldDisabled;
