@@ -12,7 +12,7 @@ import {
   useState,
 } from "react";
 import { makePrefixer, Tooltip, useForkRef, useId } from "@salt-ds/core";
-import { FormFieldContext } from "../form-field-context";
+import { FormFieldLegacyContext } from "../form-field-context-legacy";
 import { classBase } from "./constant";
 import {
   FormActivationIndicator,
@@ -26,7 +26,7 @@ import { StatusIndicatorProps } from "./StatusIndicator";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import formFieldCss from "./FormField.css";
+import formFieldLegacyCss from "./FormFieldLegacy.css";
 
 export type FormFieldLabelPlacement = "top" | "left";
 export type FormFieldHelperTextPlacement = "bottom" | "tooltip";
@@ -53,7 +53,7 @@ export interface A11yValueProps
   renderHelperText?: boolean;
 }
 
-export interface FormFieldProps
+export interface FormFieldLegacyProps
   extends HTMLAttributes<HTMLDivElement>,
     A11yValueProps {
   /**
@@ -153,7 +153,7 @@ const useA11yValue = ({
 };
 
 // TODO: Add TS props for this
-export const useFormField = ({
+export const useFormFieldLegacy = ({
   onBlur,
   onFocus,
 }: {
@@ -192,7 +192,7 @@ export const useFormField = ({
 
 const withBaseName = makePrefixer(classBase);
 
-export const FormField = forwardRef(
+export const FormFieldLegacy = forwardRef(
   (
     {
       ActivationIndicatorComponent = FormActivationIndicator,
@@ -218,13 +218,13 @@ export const FormField = forwardRef(
       validationStatus,
       variant = "primary",
       ...restProps
-    }: FormFieldProps,
+    }: FormFieldLegacyProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-form-field",
-      css: formFieldCss,
+      testId: "salt-form-field-legacy",
+      css: formFieldLegacyCss,
       window: targetWindow,
     });
 
@@ -243,7 +243,7 @@ export const FormField = forwardRef(
       renderHelperText,
     });
 
-    const [states, dispatchers, eventHandlers] = useFormField({
+    const [states, dispatchers, eventHandlers] = useFormFieldLegacy({
       onBlur,
       onFocus,
     });
@@ -288,7 +288,7 @@ export const FormField = forwardRef(
           {...eventHandlers}
           {...restProps}
         >
-          <FormFieldContext.Provider
+          <FormFieldLegacyContext.Provider
             value={{
               ...states,
               ...dispatchers,
@@ -326,7 +326,7 @@ export const FormField = forwardRef(
                 id={helperTextId}
               />
             )}
-          </FormFieldContext.Provider>
+          </FormFieldLegacyContext.Provider>
         </div>
       </Tooltip>
     );

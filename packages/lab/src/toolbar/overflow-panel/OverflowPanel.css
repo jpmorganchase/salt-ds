@@ -26,6 +26,6 @@
   --saltIcon-margin: 2px 0 0 0px;
 }
 
-.saltOverflowPanel.saltDropdown-popup .saltFormField:not(.saltFormField-toolbarButton) {
-  --saltFormField-margin: 0 12px 8px 12px;
+.saltOverflowPanel.saltDropdown-popup .saltFormFieldLegacy:not(.saltFormFieldLegacy-toolbarButton) {
+  --saltFormFieldLegacy-margin: 0 12px 8px 12px;
 }

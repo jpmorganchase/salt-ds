@@ -5,7 +5,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
-  title: "Lab/Form Field",
+  title: "Lab/Form Field Legacy",
   component: FormField,
 } as ComponentMeta<typeof FormField>;
 
@@ -193,7 +193,7 @@ export const LabelAlignments: ComponentStory<typeof FormField> = () => (
   </div>
 );
 
-const renderFormField = (props?: Partial<FormFieldProps>) => (
+const renderFormFieldLegacy = (props?: Partial<FormFieldProps>) => (
   <div>
     <FormField
       label="Helper Text Form Field"
@@ -214,21 +214,21 @@ const renderAllDensities = (props?: Partial<FormFieldProps>) => (
       background: "var(--salt-container-primary-background)",
     }}
   >
-    <SaltProvider density="touch">{renderFormField(props)}</SaltProvider>
-    <SaltProvider density="low"> {renderFormField(props)}</SaltProvider>
-    <SaltProvider density="medium">{renderFormField(props)}</SaltProvider>
-    <SaltProvider density="high"> {renderFormField(props)}</SaltProvider>
+    <SaltProvider density="touch">{renderFormFieldLegacy(props)}</SaltProvider>
+    <SaltProvider density="low"> {renderFormFieldLegacy(props)}</SaltProvider>
+    <SaltProvider density="medium">{renderFormFieldLegacy(props)}</SaltProvider>
+    <SaltProvider density="high"> {renderFormFieldLegacy(props)}</SaltProvider>
     <SaltProvider density="touch">
-      {renderFormField({ ...props, labelPlacement: "left" })}
+      {renderFormFieldLegacy({ ...props, labelPlacement: "left" })}
     </SaltProvider>
     <SaltProvider density="low">
-      {renderFormField({ ...props, labelPlacement: "left" })}
+      {renderFormFieldLegacy({ ...props, labelPlacement: "left" })}
     </SaltProvider>
     <SaltProvider density="medium">
-      {renderFormField({ ...props, labelPlacement: "left" })}
+      {renderFormFieldLegacy({ ...props, labelPlacement: "left" })}
     </SaltProvider>
     <SaltProvider density="high">
-      {renderFormField({ ...props, labelPlacement: "left" })}
+      {renderFormFieldLegacy({ ...props, labelPlacement: "left" })}
     </SaltProvider>
   </div>
 );

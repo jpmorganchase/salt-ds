@@ -1,0 +1,51 @@
+/* Styles applied to the root element dependent on density */
+.salt-density-high {
+  --formFieldLegacy-helperText-marginTop-default: 2px;
+  --formFieldLegacy-helperText-marginTop-fullWidth: 3px;
+
+  --formFieldLegacy-helperText-background-offset-height: 17px;
+}
+.salt-density-medium {
+  --formFieldLegacy-helperText-marginTop-default: 2px;
+  --formFieldLegacy-helperText-marginTop-fullWidth: 3px;
+  --formFieldLegacy-helperText-transform: translate(0, 2px);
+
+  --formFieldLegacy-helperText-background-offset-height: 19px;
+}
+.salt-density-touch {
+  --formFieldLegacy-helperText-marginTop-default: 8px;
+  --formFieldLegacy-helperText-marginTop-fullWidth: 5px;
+  --formFieldLegacy-helperText-transform: translate(0, -3px);
+
+  --formFieldLegacy-helperText-background-offset-height: 21px;
+}
+.salt-density-low {
+  --formFieldLegacy-helperText-marginTop-default: 4px;
+  --formFieldLegacy-helperText-marginTop-fullWidth: 5px;
+  --formFieldLegacy-helperText-transform: translate(0, 1px);
+
+  --formFieldLegacy-helperText-background-offset-height: 21px;
+}
+
+/* Class applied if `fullWidth={true}` */
+.saltFormFieldLegacy-fullWidth {
+  --formFieldLegacy-helperText-transform: none;
+}
+
+/* Class applied to the helper text container */
+.saltFormHelperText {
+  --formFieldLegacy-helperText-opacity: 1;
+
+  color: var(--saltFormFieldLegacy-helperText-color, var(--salt-text-secondary-foreground));
+  font-size: var(--formFieldLegacy-helperText-fontSize);
+  font-style: var(--saltFormFieldLegacy-helperText-fontStyle, var(--salt-editable-help-fontStyle));
+  letter-spacing: var(--saltFormFieldLegacy-helperText-letterSpacing, 0);
+  line-height: var(--saltFormFieldLegacy-helperText-lineHeight, var(--salt-text-lineHeight));
+  min-height: var(--saltFormFieldLegacy-helperText-minHeight, var(--salt-text-label-minHeight));
+  margin-bottom: var(--saltFormFieldLegacy-helperText-marginBottom, 0);
+  margin-top: var(--saltFormFieldLegacy-helperText-marginTop, var(--formFieldLegacy-helperText-marginTop));
+  opacity: var(--saltFormFieldLegacy-helperText-opacity, var(--formFieldLegacy-helperText-opacity));
+  padding-left: var(--saltFormFieldLegacy-helperText-paddingLeft, var(--salt-size-unit));
+  padding-right: var(--saltFormFieldLegacy-helperText-paddingRight, var(--salt-size-unit));
+  transform: var(--saltFormFieldLegacy-helperText-transform, var(--formFieldLegacy-helperText-transform, none));
+}

@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from "react";
-import { FormFieldProps } from "./FormField";
+import { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";

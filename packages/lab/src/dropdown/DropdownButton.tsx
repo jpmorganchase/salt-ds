@@ -1,6 +1,6 @@
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
-import { ChevronDownIcon, DEFAULT_ICON_SIZE, IconProps } from "@salt-ds/icons";
-import { useFormFieldProps } from "../form-field-context";
+import { ChevronDownIcon, IconProps, DEFAULT_ICON_SIZE } from "@salt-ds/icons";
+import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 import { clsx } from "clsx";
 import { AriaAttributes, ComponentType, ForwardedRef, forwardRef } from "react";
 
@@ -82,7 +82,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
     window: targetWindow,
   });
 
-  const { inFormField } = useFormFieldProps();
+  const { inFormField } = useFormFieldLegacyProps();
   // FIXME: use polymorphic button
   // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing
   // tool's false alarm on role of 'listbox'

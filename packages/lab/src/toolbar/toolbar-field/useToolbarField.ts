@@ -59,9 +59,9 @@ export const getToolbarFormFieldProps = (
   return {
     ActivationIndicatorComponent: activationIndicator,
     className: clsx({
-      "saltFormField-toolbarButton":
+      "saltFormFieldLegacy-toolbarButton":
         isOverflowPanel && isToolbarButton(element),
-      [`saltFormField-${variant}`]: variant,
+      [`saltFormFieldLegacy-${variant}`]: variant,
     }),
     fullWidth: false,
   };

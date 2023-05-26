@@ -16,7 +16,7 @@ import {
   useState,
 } from "react";
 import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
-import { useFormFieldProps } from "../form-field-context";
+import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 import { useCursorOnFocus } from "./useCursorOnFocus";
 
 import { useWindow } from "@salt-ds/window";
@@ -105,7 +105,9 @@ export interface InputProps
 }
 
 function mergeA11yProps(
-  a11yProps: Partial<ReturnType<typeof useFormFieldProps>["a11yProps"]> = {},
+  a11yProps: Partial<
+    ReturnType<typeof useFormFieldLegacyProps>["a11yProps"]
+  > = {},
   inputProps: InputProps["inputProps"] = {},
   misplacedAriaProps: AriaAttributes
 ) {
@@ -177,7 +179,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     } = {},
     setFocused: setFormFieldFocused,
     inFormField,
-  } = useFormFieldProps();
+  } = useFormFieldLegacyProps();
 
   const [focused, setFocused] = useState(false);
   const inputRef = useRef(null);

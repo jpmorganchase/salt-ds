@@ -3,7 +3,7 @@ import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Form Field/QA",
+  title: "Lab/Form Field Legacy/QA",
   component: FormField,
 } as ComponentMeta<typeof FormField>;
 
@@ -12,26 +12,26 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
     <QAContainer {...props} itemPadding={6}>
       <FormField
         label="Default Form Field description label"
-        className="saltFormField-focused"
+        className="saltFormFieldLegacy-focused"
       >
         <Input value="Value" />
       </FormField>
 
       <FormField
-        className="saltFormField-secondary saltFormField-focused"
+        className="saltFormFieldLegacy-secondary saltFormFieldLegacy-focused"
         label="Default Form Field description label"
       >
         <Input value="Value" />
       </FormField>
       <FormField
-        className="saltFormField-focused"
+        className="saltFormFieldLegacy-focused"
         label="Label aligned left"
         labelPlacement="left"
       >
         <Input value="Value" />
       </FormField>
       <FormField
-        className="saltFormField-focused"
+        className="saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -39,7 +39,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="saltFormField-secondary saltFormField-focused"
+        className="saltFormFieldLegacy-secondary saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="warning"
@@ -47,7 +47,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="saltFormField-tertiary saltFormField-focused"
+        className="saltFormFieldLegacy-tertiary saltFormFieldLegacy-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"
@@ -56,7 +56,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="saltFormField-tertiary saltFormField-focused"
+        className="saltFormFieldLegacy-tertiary saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -64,7 +64,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="saltFormField-secondary saltFormField-focused"
+        className="saltFormFieldLegacy-secondary saltFormFieldLegacy-focused"
         helperText="Warning helper text"
         label="Warning Form Field"
         validationStatus="error"
@@ -72,7 +72,7 @@ export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
         <Input />
       </FormField>
       <FormField
-        className="saltFormField-tertiary saltFormField-focused"
+        className="saltFormFieldLegacy-tertiary saltFormFieldLegacy-focused"
         hasStatusIndicator
         helperText="Warning helper text"
         label="Warning Form Field"

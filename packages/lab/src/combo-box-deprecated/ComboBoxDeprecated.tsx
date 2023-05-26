@@ -11,7 +11,7 @@ import {
   MultiSelectComboBoxProps,
 } from "./internal/MultiSelectComboBox";
 import { useWidth } from "../list-deprecated/internal/useWidth";
-import { useFormFieldProps } from "../form-field-context";
+import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -76,7 +76,7 @@ export const ComboBoxDeprecated = forwardRef<
       "aria-required": ariaRequired,
       disabled: formFieldDisabled,
     } = {},
-  } = useFormFieldProps();
+  } = useFormFieldLegacyProps();
 
   const { current: isMultiSelect } = useRef(getMultiSelect(props));
   validateProps({ isMultiSelect, ...props });

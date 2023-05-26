@@ -1,13 +1,13 @@
-import { Input, FormField, useFormFieldProps } from "@salt-ds/lab";
+import { Input, FormField, useFormFieldLegacyProps } from "@salt-ds/lab";
 
 const MockControl = ({ ...rest }: any) => {
-  const formFieldProps = useFormFieldProps();
+  const FormFieldLegacyProps = useFormFieldLegacyProps();
 
   return (
     <div
       tabIndex={1}
       {...rest}
-      {...formFieldProps.a11yProps}
+      {...FormFieldLegacyProps.a11yProps}
       id="child-component"
     >
       Child Component
@@ -34,7 +34,7 @@ describe("GIVEN a FormField", () => {
   });
 
   describe("WHEN disabled", () => {
-    it("THEN inner component should have disabled set from useFormFieldProps.a11yProps", () => {
+    it("THEN inner component should have disabled set from useFormFieldLegacyProps.a11yProps", () => {
       cy.mount(
         <FormField label="Disabled form field" disabled>
           <MockControl />
@@ -76,7 +76,7 @@ describe("GIVEN a FormField", () => {
   });
 
   describe("WHEN readonly", () => {
-    it("THEN inner component should have readOnly set from useFormFieldProps.a11yProps", () => {
+    it("THEN inner component should have readOnly set from useFormFieldLegacyProps.a11yProps", () => {
       cy.mount(
         <FormField label="Readonly form field" readOnly>
           <MockControl />
@@ -207,7 +207,7 @@ describe("GIVEN a FormField", () => {
         );
 
         cy.findByRole("textbox").focus();
-        cy.get(".saltFormField-focused").should("exist");
+        cy.get(".saltFormFieldLegacy-focused").should("exist");
         cy.findByTestId("test-id-1").should(
           "not.have.class",
           "saltInput-focused"

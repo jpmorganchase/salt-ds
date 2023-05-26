@@ -1,6 +1,6 @@
 .saltFormFieldLabel.saltText {
   align-self: center;
-  font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
+  font-weight: var(--saltFormFieldNext-label-fontWeight, var(--salt-text-fontWeight-strong));
   width: 100%;
 }
 
