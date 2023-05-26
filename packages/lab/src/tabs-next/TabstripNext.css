@@ -36,10 +36,11 @@
   margin-right: 2px; /* prevents the focus ring from being clipped on the right */
   display: flex;
   align-items: center;
+  border-bottom: var(--tabs-activationIndicator-thumb-height) solid transparent;
 }
 
 .saltTabstripNext-overflowMenu-active {
-  border-bottom: var(--tabs-activationIndicator-thumb-height) solid var(--salt-navigable-indicator-active);
+  border-bottom-color: var(--salt-navigable-indicator-active);
 }
 
 .saltTabstripNext-overflowMenu-popup {

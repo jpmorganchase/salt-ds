@@ -48,6 +48,7 @@ export const TabstripNext = ({
   getTabId: getTabIdProp,
   variant = "primary",
 }: TabstripNextProps) => {
+  const tabs = Children.toArray(children).filter(isTab);
   const uniqueId = useId();
   const _getTabId = useCallback(
     (index?: number) => {
@@ -79,21 +80,30 @@ export const TabstripNext = ({
         innerRef.current.clientHeight - outerRef.current.clientHeight > 0;
       setHasOverflow(hasOverflowingContent);
       const tabsTopOffset = innerRef.current.getBoundingClientRect().top;
-      const overflowLength = [
-        ...outerRef.current.querySelectorAll(`.${withBaseName("inner")} > *`),
-      ].filter((el) => {
+      const tabElements = [
+        ...outerRef.current.querySelectorAll(
+          `.${withBaseName("inner")} > [role="tab"]`
+        ),
+      ];
+      const overflowLength = tabElements.filter((el) => {
         return el.getBoundingClientRect().top - tabsTopOffset > 0;
       }).length;
       setOverflowTabsLength(overflowLength);
     });
     resize.observe(outerRef.current);
     resize.observe(innerRef.current);
+    const tabElements = outerRef.current.querySelectorAll<HTMLDivElement>(
+      `.${withBaseName("inner")} > [role="tab]`
+    );
+    const lastTab = tabElements[tabElements.length - 1];
+    if (lastTab) {
+      resize.observe(lastTab);
+    }
 
     return () => {
       resize.disconnect();
     };
-  }, []);
-  const tabs = Children.toArray(children).filter(isTab);
+  }, [tabs.length]);
 
   return (
     <div
