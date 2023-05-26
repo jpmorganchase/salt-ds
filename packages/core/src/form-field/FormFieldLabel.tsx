@@ -23,7 +23,6 @@ export const FormFieldLabel = ({
     window: targetWindow,
   });
 
-
   return (
     <Label
       as="label"
