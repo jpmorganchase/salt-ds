@@ -7,7 +7,6 @@ import {
 } from "react";
 
 import { orientationType, OverflowSource } from "../responsive";
-import { EditableLabelProps } from "../editable-label";
 
 export interface FocusAPI {
   focus: () => void;
@@ -21,10 +20,7 @@ export type TabsSource = string[] | TabDescriptor[];
 export type navigationProps = Pick<TabProps, "onFocus" | "onKeyDown">;
 
 export type composableTabProps = navigationProps &
-  Pick<
-    TabProps,
-    "onClick" | "onEnterEditMode" | "onExitEditMode" | "onMouseDown"
-  >;
+  Pick<TabProps, "onClick" | "onMouseDown">;
 
 export type TabstripVariant = "primary" | "tertiary";
 
@@ -103,21 +99,12 @@ export type TabProps = Omit<
   closeable?: boolean;
   draggable?: boolean;
   dragging?: boolean;
-  editable?: boolean;
-  editing?: EditableLabelProps["editing"];
-  focused?: boolean;
-  // DO we need this as well as focussed ?
-  focusVisible?: boolean;
-  focusedChildIndex?: number;
   selected?: boolean;
   index?: number;
-  label?: EditableLabelProps["defaultValue"];
+  label?: string;
   onClick?: (e: MouseEvent, index: number) => void;
   onClose?: (index: number) => void;
-  onEnterEditMode?: () => void;
-  onExitEditMode?: exitEditHandler;
   onKeyUp?: (e: KeyboardEvent, index: number) => void;
-  orientation?: "horizontal" | "vertical";
   tabChildIndex?: number;
 };
 

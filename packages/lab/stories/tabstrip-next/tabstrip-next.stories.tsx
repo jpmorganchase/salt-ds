@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Story } from "@storybook/react";
 import { Button, FlexLayout } from "@salt-ds/core";
-import { TabstripNextProps, TabstripNext, Tab } from "@salt-ds/lab";
+import { TabstripNextProps, TabstripNext, TabNext } from "@salt-ds/lab";
 import { AddIcon } from "@salt-ds/icons";
 import "./tabstrip-next.stories.css";
 
@@ -26,7 +26,7 @@ export const SimpleTabstrip: TabstripStory = ({
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext defaultActiveTabIndex={0} {...tabstripProps}>
         {tabs.map((label) => (
-          <Tab key={label}>{label}</Tab>
+          <TabNext key={label}>{label}</TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -43,7 +43,7 @@ export const CenteredTabstrip: TabstripStory = ({
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext defaultActiveTabIndex={0} {...tabstripProps} align="center">
         {tabs.map((label) => (
-          <Tab key={label}>{label}</Tab>
+          <TabNext key={label}>{label}</TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -65,7 +65,7 @@ export const ControlledTabstrip: TabstripStory = ({
         onActiveChange={setActiveTabIndex}
       >
         {tabs.map((label) => (
-          <Tab key={label}>{label}</Tab>
+          <TabNext key={label}>{label}</TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -97,7 +97,7 @@ export const AddTabTabstrip: TabstripStory = ({
           onActiveChange={setActiveTabIndex}
         >
           {tabs.map((label) => (
-            <Tab key={label}>{label}</Tab>
+            <TabNext key={label}>{label}</TabNext>
           ))}
         </TabstripNext>
         <Button onClick={handleAddTab}>
@@ -128,7 +128,7 @@ export const CloseTabTabstrip: TabstripStory = ({
         onActiveChange={setActiveTabIndex}
       >
         {tabs.map((label) => (
-          <Tab
+          <TabNext
             key={label}
             closeable
             onClose={(tabIndex) => {
@@ -136,7 +136,7 @@ export const CloseTabTabstrip: TabstripStory = ({
             }}
           >
             {label}
-          </Tab>
+          </TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -160,7 +160,7 @@ export const ActiveIndexNull: TabstripStory = ({
         onActiveChange={setActiveTabIndex}
       >
         {tabs.map((label) => (
-          <Tab key={label}>{label}</Tab>
+          <TabNext key={label}>{label}</TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -198,7 +198,7 @@ export const AutoReorderTabstrip: TabstripStory = ({
         }}
       >
         {tabs.map((label) => (
-          <Tab key={label}>{label}</Tab>
+          <TabNext key={label}>{label}</TabNext>
         ))}
       </TabstripNext>
     </div>

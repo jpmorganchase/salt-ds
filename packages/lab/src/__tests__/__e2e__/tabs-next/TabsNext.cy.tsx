@@ -111,7 +111,7 @@ describe("Navigation, Given a Tabstrip", () => {
           );
           cy.findByTestId("tabstop-1").focus();
           cy.get(".saltTabstripNext-inner > *:first-child").realClick();
-          cy.get(".saltTab").eq(0).should("be.focused");
+          cy.get('[role="tab"]').eq(0).should("be.focused");
         });
 
         describe("WHEN the left arrow key is pressed (from first tab)", () => {
@@ -267,31 +267,14 @@ describe("Navigation, Given a Tabstrip", () => {
       cy.findByRole("listbox").should("not.exist");
       cy.focused().should("have.attr", "role", "tab");
     });
-    it("THEN overflow menu item can be selected with Enter", () => {
-      cy.mount(
-        <SimpleTabstrip width={120} onMoveTab={cy.spy().as("onMoveTab")} />
-      );
+    it("THEN overflow menu item can be selected with Enter and focus is returned to the overflow button", () => {
+      cy.mount(<SimpleTabstrip width={120} />);
       cy.findByRole("combobox").click();
       cy.findByRole("listbox").should("exist");
       cy.focused().realPress("ArrowDown").realPress("Enter");
-      cy.get("@onMoveTab").should("be.calledOnce");
-    });
-  });
-});
-
-describe("WHEN onTabMove is provided and tabstrip is controlled", () => {
-  describe("WHEN overflow item is selected", () => {
-    it("THEN overflow menu item is moved to the end of visible tabs", () => {
-      cy.mount(<AutoReorderTabstrip width={200} />);
-      cy.findByRole("combobox").click();
-      cy.findByRole("listbox").should("exist");
-      cy.focused().realPress("ArrowDown").realPress("Enter");
-      cy.findByRole("listbox").should("not.exist");
-      cy.findByRole("tablist")
-        .findAllByRole("tab")
-        .filter(":visible")
-        .eq(1)
-        .should("have.text", "Checks");
+      cy.focused()
+        .should("have.attr", "role", "combobox")
+        .should("have.attr", "aria-selected", "true");
     });
   });
 });

@@ -104,6 +104,7 @@ export function OverflowMenu({
 
   function select() {
     if (!indexToSelect) return;
+    setOpen(false);
     onSelectIndex(indexToSelect);
   }
 
