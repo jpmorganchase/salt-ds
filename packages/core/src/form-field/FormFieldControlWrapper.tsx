@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../utils";
 
 import "./FormFieldControlWrapper.css";
 

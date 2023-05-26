@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
-import { Label, makePrefixer, TextProps } from "@salt-ds/core";
-import { useFormFieldPropsNext } from "../form-field-context-next";
+import { useFormFieldProps } from "../form-field-context";
+import { Label, TextProps } from "../text";
+import { makePrefixer } from "../utils";
 
 import "./FormFieldLabel.css";
 
@@ -11,7 +12,7 @@ export const FormFieldLabel = ({
   children,
   ...restProps
 }: Omit<TextProps<"label">, "variant" | "styleAs">) => {
-  const { a11yProps, disabled } = useFormFieldPropsNext();
+  const { a11yProps, disabled } = useFormFieldProps();
 
   return (
     <Label

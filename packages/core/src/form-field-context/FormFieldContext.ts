@@ -1,4 +1,5 @@
-import { createContext } from "@salt-ds/core";
+import { createContext } from "../utils";
+
 export interface A11yValueProps {
   /**
    * id for FormFieldHelperText
@@ -15,14 +16,14 @@ export interface a11yValueAriaProps {
   "aria-describedby": A11yValueProps["helperTextId"] | undefined;
 }
 
-export interface FormFieldContextNextValue {
+export interface FormFieldContextValue {
   a11yProps: a11yValueAriaProps;
   disabled: boolean;
   readOnly: boolean;
   validationStatus: "error" | "warning" | "success" | undefined;
 }
 
-export const FormFieldContextNext = createContext(
+export const FormFieldContext = createContext(
   "FormFieldContext",
-  {} as FormFieldContextNextValue
+  {} as FormFieldContextValue
 );
