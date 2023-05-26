@@ -4,7 +4,9 @@ import { IconProps, TearOutIcon } from "@salt-ds/icons";
 import { makePrefixer } from "../utils";
 import { Text, TextProps } from "../text";
 
-import "./Link.css";
+import linkCss from "./Link.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltLink");
 
@@ -30,6 +32,13 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   },
   ref
 ): ReactElement<LinkProps> {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-link",
+    css: linkCss,
+    window: targetWindow,
+  });
+
   return (
     <Text
       as="a"

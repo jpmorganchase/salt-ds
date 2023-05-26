@@ -14,7 +14,10 @@ import { FocusManager, FocusManagerProps } from "../focus-manager";
 import { preventFocusOthers } from "./internal/PreventFocus";
 import { ScrimContext } from "./ScrimContext";
 
-import "./Scrim.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import scrimCss from "./Scrim.css";
 
 const scrims = new Set();
 
@@ -138,6 +141,13 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-scrim",
+    css: scrimCss,
+    window: targetWindow,
+  });
+
   const scrimRef = useRef<HTMLDivElement>(null);
   const setWrapperRef = useForkRef(ref, scrimRef);
   const undoAria = useRef(noop);

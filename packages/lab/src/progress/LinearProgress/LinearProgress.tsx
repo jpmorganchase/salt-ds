@@ -7,9 +7,12 @@ import {
 } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
-import "./LinearProgress.css";
 
 import { Info as DefaultInfo } from "../Info";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import linearProgressCss from "./LinearProgress.css";
 
 const withBaseName = makePrefixer("saltLinearProgress");
 
@@ -114,6 +117,13 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-linear-progress",
+      css: linearProgressCss,
+      window: targetWindow,
+    });
+
     let progressInfo: ReactNode = null;
 
     const progressUnit = withBaseName("progressUnit");

@@ -21,7 +21,10 @@ import { ToolbarProps } from "./ToolbarProps";
 import { Tooltray } from "./Tooltray";
 import { TooltrayProps } from "./TooltrayProps";
 
-import "./Toolbar.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import toolbarCss from "./Toolbar.css";
 
 const classBase = "saltToolbar";
 
@@ -45,6 +48,13 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       orientation = "horizontal",
       ...restProp
     } = props;
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-toolbar",
+      css: toolbarCss,
+      window: targetWindow,
+    });
 
     const toolbarId = useIdMemo(idProp);
     const containerRef = useRef<HTMLDivElement>(null);

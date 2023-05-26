@@ -24,7 +24,9 @@ import {
 
 import { DropdownBase, DropdownBaseProps } from "../../dropdown";
 
-import "./OverflowPanel.css";
+import overflowPanelCss from "./OverflowPanel.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltOverflowPanel");
 
@@ -52,6 +54,13 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
   }: DropdownPanelProps,
   forwardedRef?: ForwardedRef<HTMLDivElement>
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-overflow-panel",
+    css: overflowPanelCss,
+    window: targetWindow,
+  });
+
   const id = useId();
   const collectionHook = useCollectionItems<ReactElement>({
     id,

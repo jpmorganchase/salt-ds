@@ -1,6 +1,8 @@
 import { makePrefixer } from "../utils";
 import { clsx } from "clsx";
-import "./RadioButtonIcon.css";
+import radioButtonIconCss from "./RadioButtonIcon.css";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 const withBaseName = makePrefixer("saltRadioButtonIcon");
 
@@ -18,6 +20,12 @@ export const RadioButtonIcon = ({
   error,
   disabled,
 }: RadioButtonIconProps) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-radio-button-icon",
+    css: radioButtonIconCss,
+    window: targetWindow,
+  });
   return (
     <svg
       className={clsx(withBaseName(), {

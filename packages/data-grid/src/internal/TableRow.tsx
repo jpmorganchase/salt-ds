@@ -4,16 +4,21 @@ import {
   isValidElement,
   MouseEventHandler,
 } from "react";
-import "./TableRow.css";
-import { BaseCell } from "../BaseCell";
-import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer } from "@salt-ds/core";
+
+import { BaseCell } from "../BaseCell";
 import { GridColumnModel, GridRowModel } from "../Grid";
-import { FakeCell } from "./FakeCell";
-import { DefaultCellValue } from "./DefaultCellValue";
 import { useGridContext } from "../GridContext";
 import { CellValidationState } from "../GridColumn";
 import { RowValidationStatusContext } from "../RowValidationStatus";
+
+import { FakeCell } from "./FakeCell";
+import { DefaultCellValue } from "./DefaultCellValue";
+
+import tableRowCss from "./TableRow.css";
 
 const withBaseName = makePrefixer("saltGridTableRow");
 
@@ -49,6 +54,13 @@ export function TableRow<T>(props: TableRowProps<T>) {
     headerIsFocusable,
     validationStatus: rowValidationStatus,
   } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-table-row",
+    css: tableRowCss,
+    window: targetWindow,
+  });
 
   const grid = useGridContext();
 

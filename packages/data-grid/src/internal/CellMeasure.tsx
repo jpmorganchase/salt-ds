@@ -1,6 +1,9 @@
-import "./CellMeasure.css";
 import { useEffect, useRef } from "react";
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import cellMeasureCss from "./CellMeasure.css";
 
 const withBaseName = makePrefixer("saltGridCellMeasure");
 
@@ -11,6 +14,13 @@ export interface CellMeasureProps<T> {
 // Renders a cell in invisible location, measures its height and provides it to
 // the grid.
 export function CellMeasure<T>(props: CellMeasureProps<T>) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-cell-measure",
+    css: cellMeasureCss,
+    window: targetWindow,
+  });
+
   const rowRef = useRef<HTMLTableRowElement>(null);
   const heightRef = useRef<number>(-1);
 

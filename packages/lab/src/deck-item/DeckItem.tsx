@@ -2,7 +2,11 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { LayoutAnimation } from "../deck-layout";
-import "./DeckItem.css";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import deckItemCss from "./DeckItem.css";
 
 const withBaseName = makePrefixer("saltDeckItem");
 
@@ -27,6 +31,13 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-deck-item",
+      css: deckItemCss,
+      window: targetWindow,
+    });
+
     const sliderRef = useRef<HTMLDivElement | null>(null);
 
     const isCurrent = activeIndex === index;

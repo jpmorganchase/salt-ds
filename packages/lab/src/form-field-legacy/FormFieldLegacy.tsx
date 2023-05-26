@@ -23,7 +23,10 @@ import { FormLabel, FormLabelProps } from "./FormLabel";
 import { NecessityIndicatorOptions } from "./NecessityIndicator";
 import { StatusIndicatorProps } from "./StatusIndicator";
 
-import "./FormFieldLegacy.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formFieldLegacyCss from "./FormFieldLegacy.css";
 
 export type FormFieldLabelPlacement = "top" | "left";
 export type FormFieldHelperTextPlacement = "bottom" | "tooltip";
@@ -218,6 +221,13 @@ export const FormFieldLegacy = forwardRef(
     }: FormFieldLegacyProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-form-field-legacy",
+      css: formFieldLegacyCss,
+      window: targetWindow,
+    });
+
     const labelId = useId(LabelProps?.id);
     const helperTextId = useId(HelperTextProps?.id);
     const rootRef = useRef<HTMLDivElement>(null);

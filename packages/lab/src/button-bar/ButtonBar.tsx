@@ -1,18 +1,21 @@
 import {
-  forwardRef,
   Children,
-  useMemo,
+  forwardRef,
   HTMLAttributes,
   ReactNode,
+  useMemo,
 } from "react";
 import { clsx } from "clsx";
 
 import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { DescendantProvider } from "./internal/DescendantContext";
 import { useDescendants } from "./internal/useDescendants";
-import { makePrefixer, ButtonVariant } from "@salt-ds/core";
+import { ButtonVariant, makePrefixer } from "@salt-ds/core";
 
-import "./ButtonBar.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import buttonBarCss from "./ButtonBar.css";
 
 export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>;
 
@@ -181,6 +184,13 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-button-bar",
+      css: buttonBarCss,
+      window: targetWindow,
+    });
+
     const [childrenData, setChildrenData] = useDescendants<OrderedButtonData>();
     // TODO: we need a mechanism to work with breakpoints.
     const matches = false;

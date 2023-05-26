@@ -10,9 +10,12 @@ import { makePrefixer } from "@salt-ds/core";
 import { useLayoutEffectSkipFirst } from "../utils";
 import { AccordionSectionContext } from "./AccordionSectionContext";
 import { clsx } from "clsx";
-import "./Accordion.css";
 import { useAccordionContext } from "./AccordionContext";
 import { isNotProduction } from "./utils";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import accordionCss from "./Accordion.css";
 
 const withBaseName = makePrefixer("saltAccordionSection");
 
@@ -41,6 +44,13 @@ export const AccordionSection = forwardRef<
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-accordion",
+    css: accordionCss,
+    window: targetWindow,
+  });
+
   const [id, setId] = useState(() =>
     idProp != null ? idProp : `salt-${Math.round(Math.random() * 1e5)}`
   );

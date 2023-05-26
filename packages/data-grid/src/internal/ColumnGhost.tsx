@@ -1,11 +1,16 @@
 import { CSSProperties } from "react";
-import "./ColumnGhost.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer } from "@salt-ds/core";
+
+import { GridColumnModel, GridRowModel } from "../Grid";
+
 import { TableColGroup } from "./TableColGroup";
 import { HeaderRow } from "./HeaderRow";
 import { TableBody } from "./TableBody";
-import { makePrefixer } from "@salt-ds/core";
 import { ColumnDragState } from "./gridHooks";
-import { GridColumnModel, GridRowModel } from "../Grid";
+
+import columnGhostCss from "./ColumnGhost.css";
 
 const withBaseName = makePrefixer("saltGridColumnGhost");
 
@@ -19,6 +24,13 @@ export interface ColumnGhostProps<T> {
 // When the user drags a column this component renders a partially transparent
 // copy of the dragged column.
 export function ColumnGhost<T = any>(props: ColumnGhostProps<T>) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-column-ghost",
+    css: columnGhostCss,
+    window: targetWindow,
+  });
+
   if (!props.dragState) {
     return null;
   }

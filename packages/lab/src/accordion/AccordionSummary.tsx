@@ -9,7 +9,10 @@ import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { useAccordionSectionContext } from "./AccordionSectionContext";
-import "./Accordion.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import accordionCss from "./Accordion.css";
 
 const withBaseName = makePrefixer("saltAccordionSummary");
 
@@ -21,6 +24,13 @@ export const AccordionSummary = forwardRef<
   HTMLDivElement,
   AccordionSummaryProps
 >(function AccordionSummary({ className, children, icon, ...restProps }, ref) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-accordion",
+    css: accordionCss,
+    window: targetWindow,
+  });
+
   const { isDisabled, isExpanded, onToggle } = useAccordionSectionContext();
 
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(

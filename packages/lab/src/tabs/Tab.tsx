@@ -3,9 +3,9 @@ import { Button, ButtonProps, makePrefixer, useForkRef } from "@salt-ds/core";
 import { CloseIcon, CloseSmallIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
-  forwardRef,
   FocusEvent,
   ForwardedRef,
+  forwardRef,
   KeyboardEvent,
   MouseEvent,
   ReactElement,
@@ -16,7 +16,10 @@ import {
 import { TabProps } from "./TabsTypes";
 import { EditableLabel, EditableLabelProps } from "../editable-label";
 
-import "./Tab.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import tabCss from "./Tab.css";
 
 const noop = () => undefined;
 
@@ -77,6 +80,13 @@ export const Tab = forwardRef(function Tab(
       "index, onClick, onKeyUp, onKeyDown are required props, they would nornally be injected by Tabstrip, are you creating a Tab outside of a Tabstrip"
     );
   }
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tab",
+    css: tabCss,
+    window: targetWindow,
+  });
+
   const root = useRef<HTMLDivElement>(null);
   const editableRef = useRef<HTMLDivElement>(null);
   const setForkRef = useForkRef(ref, root);

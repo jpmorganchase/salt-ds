@@ -12,7 +12,10 @@ import { BreadcrumbsCollapsed } from "./internal/BreadcrumbsCollapsed";
 import { BreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import { BreadcrumbsSeparator } from "./internal/BreadcrumbsSeparator";
 
-import "./Breadcrumbs.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import breadcrumbsCss from "./Breadcrumbs.css";
 
 const iconWidth = 12;
 
@@ -75,6 +78,13 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
       SeparatorProps = {},
       ...other
     } = props;
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-breadcrumbs",
+      css: breadcrumbsCss,
+      window: targetWindow,
+    });
 
     const itemsMinWidth =
       itemsMinWidthProp != null ? itemsMinWidthProp : iconWidth;

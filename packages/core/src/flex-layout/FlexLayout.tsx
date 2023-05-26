@@ -9,7 +9,9 @@ import {
   PolymorphicRef,
 } from "../utils";
 
-import "./FlexLayout.css";
+import flexLayoutCss from "./FlexLayout.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltFlexLayout");
 
@@ -81,6 +83,13 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
     }: FlexLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-flex-layout",
+      css: flexLayoutCss,
+      window: targetWindow,
+    });
+
     const Component = as || "div";
     const separatorAlignment = separators === true ? "center" : separators;
     const addPrefix = (style: string) => {

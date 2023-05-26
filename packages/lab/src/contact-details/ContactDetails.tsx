@@ -3,7 +3,10 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useState } from "react";
 import { ContactDetailsContext, useComponentSize } from "./internal";
 
-import "./ContactDetails.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import contactDetailsCss from "./ContactDetails.css";
 
 const withBaseName = makePrefixer("saltContactDetails");
 
@@ -29,6 +32,13 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
       embedded,
       ...restProps
     } = props;
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-contact-details",
+      css: contactDetailsCss,
+      window: targetWindow,
+    });
 
     const [hasAvatar, setHasAvatar] = useState<boolean>(false);
     const [primary, setPrimary] = useState<string>();

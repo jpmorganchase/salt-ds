@@ -3,7 +3,10 @@ import { useFormFieldProps } from "../form-field-context";
 import { Label, TextProps } from "../text";
 import { makePrefixer } from "../utils";
 
-import "./FormFieldLabel.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formFieldLabelCss from "./FormFieldLabel.css";
 
 const withBaseName = makePrefixer("saltFormFieldLabel");
 
@@ -13,6 +16,12 @@ export const FormFieldLabel = ({
   ...restProps
 }: Omit<TextProps<"label">, "variant" | "styleAs">) => {
   const { a11yProps, disabled } = useFormFieldProps();
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-form-field-label",
+    css: formFieldLabelCss,
+    window: targetWindow,
+  });
 
   return (
     <Label

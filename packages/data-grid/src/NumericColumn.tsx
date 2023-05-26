@@ -1,6 +1,3 @@
-import { GridCellValueProps, GridColumn, GridColumnProps } from "./GridColumn";
-import "./NumericColumn.css";
-import { GridColumnModel, GridRowModel } from "./Grid";
 import {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -9,9 +6,16 @@ import {
   useRef,
   useState,
 } from "react";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import { GridCellValueProps, GridColumn, GridColumnProps } from "./GridColumn";
+import { GridColumnModel, GridRowModel } from "./Grid";
 import { useEditorContext } from "./EditorContext";
 import { CornerTag } from "./CornerTag";
 import { Cell } from "./internal";
+
+import numericColumnCss from "./NumericColumn.css";
 
 export interface NumericColumnProps<T> extends GridColumnProps<T> {
   precision: number;
@@ -23,6 +27,14 @@ function isNumber(value: any): value is number {
 
 export function NumericCellValue<T>(props: GridCellValueProps<T>) {
   const { column, value } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-numeric-column",
+    css: numericColumnCss,
+    window: targetWindow,
+  });
+
   const columnProps = column.info.props as NumericColumnProps<T>;
   const { precision } = columnProps;
   const text = isNumber(value) ? value.toFixed(precision) : "";

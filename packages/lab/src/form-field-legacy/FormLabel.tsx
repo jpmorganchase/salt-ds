@@ -8,7 +8,10 @@ import {
 } from "./NecessityIndicator";
 import { StatusIndicator, StatusIndicatorProps } from "./StatusIndicator";
 
-import "./FormLabel.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formLabelCss from "./FormLabel.css";
 
 const withBaseName = makePrefixer("saltFormLabel");
 export interface FormLabelProps
@@ -62,29 +65,38 @@ export const FormLabel = ({
   readOnly,
   tooltipText,
   ...restProps
-}: FormLabelProps) => (
-  <label
-    className={clsx(withBaseName(), className, {
-      [withBaseName("disabled")]: disabled,
-    })}
-    {...restProps}
-  >
-    {label}
+}: FormLabelProps) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-form-label",
+    css: formLabelCss,
+    window: targetWindow,
+  });
 
-    <NecessityIndicator
-      required={required}
-      displayedNecessity={displayedNecessity}
-      necessityText={necessityText}
-      className={withBaseName("necessityIndicator")}
-    />
-    {hasStatusIndicator && (
-      <StatusIndicator
-        className={withBaseName("statusIndicator")}
-        status={validationStatus}
-        tooltipText={tooltipText}
-        hasTooltip
-        {...StatusIndicatorProps}
+  return (
+    <label
+      className={clsx(withBaseName(), className, {
+        [withBaseName("disabled")]: disabled,
+      })}
+      {...restProps}
+    >
+      {label}
+
+      <NecessityIndicator
+        required={required}
+        displayedNecessity={displayedNecessity}
+        necessityText={necessityText}
+        className={withBaseName("necessityIndicator")}
       />
-    )}
-  </label>
-);
+      {hasStatusIndicator && (
+        <StatusIndicator
+          className={withBaseName("statusIndicator")}
+          status={validationStatus}
+          tooltipText={tooltipText}
+          hasTooltip
+          {...StatusIndicatorProps}
+        />
+      )}
+    </label>
+  );
+};

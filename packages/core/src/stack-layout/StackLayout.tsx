@@ -13,7 +13,9 @@ import {
   useResponsiveProp,
 } from "../utils";
 import { clsx } from "clsx";
-import "./StackLayout.css";
+import stackLayoutCss from "./StackLayout.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltStackLayout");
 
@@ -57,6 +59,13 @@ export const StackLayout: StackLayoutComponent = forwardRef(
     }: StackLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-stack-layout",
+      css: stackLayoutCss,
+      window: targetWindow,
+    });
+
     const flexGap = useResponsiveProp(gap, 3);
     const separatorAlignment = separators === true ? "center" : separators;
     const flexDirection = useResponsiveProp(direction, "column");

@@ -11,7 +11,11 @@ import { makePrefixer } from "@salt-ds/core";
 import { Info as DefaultInfo } from "../Info";
 import { Circle, LinearGradient, SIZE, ViewBox } from "./CircularProgressParts";
 import { InfoRendererProps } from "../LinearProgress/LinearProgress";
-import "./CircularProgress.css";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import circularProgressCSS from "./CircularProgress.css";
 
 const MAX = 100;
 const MIN = 0;
@@ -117,6 +121,13 @@ export const CircularProgress = forwardRef<
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-circular-progress",
+    css: circularProgressCSS,
+    window: targetWindow,
+  });
+
   const circleStyle: CSSProperties = {};
   const rootStyle: CSSProperties = {};
   const rootProps: HTMLAttributes<any> = {};
