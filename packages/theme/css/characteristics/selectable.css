@@ -10,59 +10,140 @@
   --salt-selectable-borderStyle-blurSelected: solid;
 
   --salt-selectable-borderColor: var(--salt-palette-interact-border);
-  --salt-selectable-borderColor-hover: var(--salt-palette-interact-border-hover);
-  --salt-selectable-borderColor-selected: var(--salt-palette-interact-border-active);
-  --salt-selectable-borderColor-selectedDisabled: var(--salt-palette-interact-border-activeDisabled);
-  --salt-selectable-borderColor-disabled: var(--salt-palette-interact-border-disabled);
+  --salt-selectable-borderColor-hover: var(
+    --salt-palette-interact-border-hover
+  );
+  --salt-selectable-borderColor-selected: var(
+    --salt-palette-interact-border-active
+  );
+  --salt-selectable-borderColor-selectedDisabled: var(
+    --salt-palette-interact-border-activeDisabled
+  );
+  --salt-selectable-borderColor-disabled: var(
+    --salt-palette-interact-border-disabled
+  );
 
   --salt-selectable-foreground: var(--salt-palette-interact-foreground);
-  --salt-selectable-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
-  --salt-selectable-foreground-hover: var(--salt-palette-interact-foreground-hover);
-  --salt-selectable-foreground-selected: var(--salt-palette-interact-foreground-active);
-  --salt-selectable-foreground-selectedDisabled: var(--salt-palette-interact-foreground-activeDisabled);
+  --salt-selectable-foreground-disabled: var(
+    --salt-palette-interact-foreground-disabled
+  );
+  --salt-selectable-foreground-hover: var(
+    --salt-palette-interact-foreground-hover
+  );
+  --salt-selectable-foreground-selected: var(
+    --salt-palette-interact-foreground-active
+  );
+  --salt-selectable-foreground-selectedDisabled: var(
+    --salt-palette-interact-foreground-activeDisabled
+  );
 
   --salt-selectable-background: var(--salt-palette-interact-background);
-  --salt-selectable-background-hover: var(--salt-palette-interact-background-hover);
-  --salt-selectable-background-selected: var(--salt-palette-interact-background-active);
-  --salt-selectable-background-blurSelected: var(--salt-palette-interact-background-blurSelected);
-  --salt-selectable-background-disabled: var(--salt-palette-interact-background-disabled);
+  --salt-selectable-background-hover: var(
+    --salt-palette-interact-background-hover
+  );
+  --salt-selectable-background-selected: var(
+    --salt-palette-interact-background-active
+  );
+  --salt-selectable-background-selectedDisabled: #a4d5f466;
+  --salt-selectable-background-blurSelected: var(
+    --salt-palette-interact-background-blurSelected
+  );
+  --salt-selectable-background-disabled: var(
+    --salt-palette-interact-background-disabled
+  );
 
-  --salt-selectable-cta-foreground-hover: var(--salt-palette-interact-cta-foreground-hover);
-  --salt-selectable-cta-foreground-selected: var(--salt-palette-interact-cta-foreground-active);
-  --salt-selectable-cta-foreground-selectedDisabled: var(--salt-palette-interact-cta-foreground-activeDisabled);
+  --salt-selectable-cta-foreground-hover: var(
+    --salt-palette-interact-cta-foreground-hover
+  );
+  --salt-selectable-cta-foreground-selected: var(
+    --salt-palette-interact-cta-foreground-active
+  );
+  --salt-selectable-cta-foreground-selectedDisabled: var(
+    --salt-palette-interact-cta-foreground-activeDisabled
+  );
   --salt-selectable-cta-background: var(--salt-palette-interact-background);
-  --salt-selectable-cta-background-disabled: var(--salt-palette-interact-background-disabled);
-  --salt-selectable-cta-background-hover: var(--salt-palette-interact-cta-background-hover);
-  --salt-selectable-cta-background-selected: var(--salt-palette-interact-cta-background-active);
-  --salt-selectable-cta-background-selectedDisabled: var(--salt-palette-interact-cta-background-activeDisabled);
+  --salt-selectable-cta-background-disabled: var(
+    --salt-palette-interact-background-disabled
+  );
+  --salt-selectable-cta-background-hover: var(
+    --salt-palette-interact-cta-background-hover
+  );
+  --salt-selectable-cta-background-selected: var(
+    --salt-palette-interact-cta-background-active
+  );
+  --salt-selectable-cta-background-selectedDisabled: var(
+    --salt-palette-interact-cta-background-activeDisabled
+  );
 
-  --salt-selectable-primary-foreground-hover: var(--salt-palette-interact-primary-foreground-hover);
-  --salt-selectable-primary-foreground-selected: var(--salt-palette-interact-primary-foreground-active);
-  --salt-selectable-primary-foreground-selectedDisabled: var(--salt-palette-interact-primary-foreground-activeDisabled);
+  --salt-selectable-primary-foreground-hover: var(
+    --salt-palette-interact-primary-foreground-hover
+  );
+  --salt-selectable-primary-foreground-selected: var(
+    --salt-palette-interact-primary-foreground-active
+  );
+  --salt-selectable-primary-foreground-selectedDisabled: var(
+    --salt-palette-interact-primary-foreground-activeDisabled
+  );
   --salt-selectable-primary-background: var(--salt-palette-interact-background);
-  --salt-selectable-primary-background-disabled: var(--salt-palette-interact-background-disabled);
-  --salt-selectable-primary-background-hover: var(--salt-palette-interact-primary-background-hover);
-  --salt-selectable-primary-background-selected: var(--salt-palette-interact-primary-background-active);
-  --salt-selectable-primary-background-selectedDisabled: var(--salt-palette-interact-primary-background-activeDisabled);
+  --salt-selectable-primary-background-disabled: var(
+    --salt-palette-interact-background-disabled
+  );
+  --salt-selectable-primary-background-hover: var(
+    --salt-palette-interact-primary-background-hover
+  );
+  --salt-selectable-primary-background-selected: var(
+    --salt-palette-interact-primary-background-active
+  );
+  --salt-selectable-primary-background-selectedDisabled: var(
+    --salt-palette-interact-primary-background-activeDisabled
+  );
 
-  --salt-selectable-secondary-foreground-hover: var(--salt-palette-interact-secondary-foreground-hover);
-  --salt-selectable-secondary-foreground-selected: var(--salt-palette-interact-secondary-foreground-active);
-  --salt-selectable-secondary-foreground-selectedDisabled: var(--salt-palette-interact-secondary-foreground-activeDisabled);
-  --salt-selectable-secondary-background: var(--salt-palette-interact-background);
-  --salt-selectable-secondary-background-disabled: var(--salt-palette-interact-background-disabled);
-  --salt-selectable-secondary-background-hover: var(--salt-palette-interact-secondary-background-hover);
-  --salt-selectable-secondary-background-selected: var(--salt-palette-interact-secondary-background-active);
-  --salt-selectable-secondary-background-selectedDisabled: var(--salt-palette-interact-secondary-background-activeDisabled);
+  --salt-selectable-secondary-foreground-hover: var(
+    --salt-palette-interact-secondary-foreground-hover
+  );
+  --salt-selectable-secondary-foreground-selected: var(
+    --salt-palette-interact-secondary-foreground-active
+  );
+  --salt-selectable-secondary-foreground-selectedDisabled: var(
+    --salt-palette-interact-secondary-foreground-activeDisabled
+  );
+  --salt-selectable-secondary-background: var(
+    --salt-palette-interact-background
+  );
+  --salt-selectable-secondary-background-disabled: var(
+    --salt-palette-interact-background-disabled
+  );
+  --salt-selectable-secondary-background-hover: var(
+    --salt-palette-interact-secondary-background-hover
+  );
+  --salt-selectable-secondary-background-selected: var(
+    --salt-palette-interact-secondary-background-active
+  );
+  --salt-selectable-secondary-background-selectedDisabled: var(
+    --salt-palette-interact-secondary-background-activeDisabled
+  );
 
   /* **Deprecated:** use --salt-selectable-foreground-selected instead */
-  --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
-  --salt-selectable-foreground-partialDisabled: var(--salt-palette-interact-foreground-partialDisabled);
+  --salt-selectable-foreground-partial: var(
+    --salt-palette-interact-foreground-partial
+  );
+  --salt-selectable-foreground-partialDisabled: var(
+    --salt-palette-interact-foreground-partialDisabled
+  );
 
   /* **Deprecated:** use --salt-text-foreground, --salt-text-foreground-disabled instead */
   --salt-selectable-cta-foreground: var(--salt-palette-interact-foreground);
-  --salt-selectable-cta-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
+  --salt-selectable-cta-foreground-disabled: var(
+    --salt-palette-interact-foreground-disabled
+  );
   --salt-selectable-primary-foreground: var(--salt-palette-interact-foreground);
-  --salt-selectable-primary-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
-  --salt-selectable-secondary-foreground: var(--salt-palette-interact-foreground);
-  --salt-selectable-secondary-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
+  --salt-selectable-primary-foreground-disabled: var(
+    --salt-palette-interact-foreground-disabled
+  );
+  --salt-selectable-secondary-foreground: var(
+    --salt-palette-interact-foreground
+  );
+  --salt-selectable-secondary-foreground-disabled: var(
+    --salt-palette-interact-foreground-disabled
+  );
 }
