@@ -1,9 +1,5 @@
-import {
-  FormFieldNext,
-  FormFieldLabel,
-  FormFieldHelperText,
-  InputNext,
-} from "@salt-ds/lab";
+import { FormField, FormFieldLabel, FormFieldHelperText } from "@salt-ds/core";
+import { InputNext } from "@salt-ds/lab";
 
 const MockChildren = () => {
   return (
@@ -15,13 +11,13 @@ const MockChildren = () => {
   );
 };
 
-describe("GIVEN a FormFieldNext", () => {
+describe("GIVEN a FormField", () => {
   describe("WHEN FormFieldLabel is provided", () => {
     it("THEN the label is rendered", () => {
       cy.mount(
-        <FormFieldNext>
+        <FormField>
           <MockChildren />
-        </FormFieldNext>
+        </FormField>
       );
 
       cy.findByText("Label").should("exist");
@@ -31,9 +27,9 @@ describe("GIVEN a FormFieldNext", () => {
   describe("WHEN FormFieldHelperText is provided", () => {
     it("THEN the helper text is rendered", () => {
       cy.mount(
-        <FormFieldNext>
+        <FormField>
           <MockChildren />
-        </FormFieldNext>
+        </FormField>
       );
 
       cy.findByText("Helper text").should("exist");
@@ -43,9 +39,9 @@ describe("GIVEN a FormFieldNext", () => {
   describe("WHEN an id is provided", () => {
     it("THEN the label and helper text should have the corresponding ids", () => {
       cy.mount(
-        <FormFieldNext id={"test-id"}>
+        <FormField id={"test-id"}>
           <MockChildren />
-        </FormFieldNext>
+        </FormField>
       );
 
       cy.findByText("Label").should("have.attr", "id", "label-test-id");
@@ -58,11 +54,11 @@ describe("GIVEN a FormFieldNext", () => {
   });
 
   describe("WHEN disabled", () => {
-    it("THEN inner components should have disabled set from useFormFieldNextProps.a11yProps", () => {
+    it("THEN inner components should have disabled set from useFormFieldProps.a11yProps", () => {
       cy.mount(
-        <FormFieldNext disabled>
+        <FormField disabled>
           <MockChildren />
-        </FormFieldNext>
+        </FormField>
       );
       cy.findByText("Label").should("have.class", "saltText-disabled");
       cy.findByText("Helper text").should("have.class", "saltText-disabled");
@@ -72,9 +68,9 @@ describe("GIVEN a FormFieldNext", () => {
   describe("WHEN has error validationStatus", () => {
     it("THEN StatusIndicator should show within Helper Text", () => {
       cy.mount(
-        <FormFieldNext validationStatus="error">
+        <FormField validationStatus="error">
           <MockChildren />
-        </FormFieldNext>
+        </FormField>
       );
 
       cy.get(".saltStatusIndicator").should(
@@ -86,9 +82,9 @@ describe("GIVEN a FormFieldNext", () => {
     describe("AND is disabled", () => {
       it("THEN the StatusIndicator should not show", () => {
         cy.mount(
-          <FormFieldNext disabled validationStatus="error">
+          <FormField disabled validationStatus="error">
             <MockChildren />
-          </FormFieldNext>
+          </FormField>
         );
 
         cy.get(".saltFormFieldHelperText")
@@ -100,9 +96,9 @@ describe("GIVEN a FormFieldNext", () => {
     describe("AND is readonly", () => {
       it("THEN the StatusIndicator should not show", () => {
         cy.mount(
-          <FormFieldNext readOnly validationStatus="error">
+          <FormField readOnly validationStatus="error">
             <MockChildren />
-          </FormFieldNext>
+          </FormField>
         );
 
         cy.get(".saltFormFieldHelperText")
@@ -114,9 +110,9 @@ describe("GIVEN a FormFieldNext", () => {
     describe("OR is success state", () => {
       it("THEN the success variant should show", () => {
         cy.mount(
-          <FormFieldNext validationStatus="success">
+          <FormField validationStatus="success">
             <MockChildren />
-          </FormFieldNext>
+          </FormField>
         );
 
         cy.get(".saltStatusIndicator").should(
@@ -129,9 +125,9 @@ describe("GIVEN a FormFieldNext", () => {
     describe("OR is warning state", () => {
       it("THEN the warning variant should show", () => {
         cy.mount(
-          <FormFieldNext validationStatus="warning">
+          <FormField validationStatus="warning">
             <MockChildren />
-          </FormFieldNext>
+          </FormField>
         );
 
         cy.get(".saltStatusIndicator").should(
@@ -145,11 +141,11 @@ describe("GIVEN a FormFieldNext", () => {
   describe("WITH a nested InputNext", () => {
     it("SHOULD have no a11y violations on load", () => {
       cy.mount(
-        <FormFieldNext>
+        <FormField>
           <FormFieldLabel>Label</FormFieldLabel>
           <InputNext defaultValue="Value" data-testid="test-id-1" />
           <FormFieldHelperText>Helper text</FormFieldHelperText>
-        </FormFieldNext>
+        </FormField>
       );
 
       cy.findByLabelText("Label").focus();

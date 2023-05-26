@@ -1,4 +1,4 @@
-import { FormFieldNext } from "@salt-ds/lab";
+import { FormField } from "@salt-ds/core";
 import { Meta, Canvas, ArgsTable, Story } from "@storybook/addon-docs";
 import {
   CSSClassTable,
@@ -7,19 +7,19 @@ import {
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Form Field Next"
-  component={FormFieldNext}
+  title="Documentation/Core/Form Field"
+  component={FormField}
   parameters={{
     viewMode: "docs",
   }}
 />
 
-# Form Field Next
+# Form Field
 
 Form Field is a wrapper for UI controls that are typically found in a form (for example, Input, Combobox or Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements.
 
 <Canvas>
-  <Story id="lab-form-field-next--default" />
+  <Story id="core-form-field--default" />
 </Canvas>
 
 # Examples
@@ -31,7 +31,7 @@ All examples demonstrate Salt form controls inside the Form Field, including Inp
 Form field can wrap any Salt UI control that is typically found in a form, such as Input, Checkbox and Radio Button components.
 
 <Canvas>
-  <Story id="lab-form-field-next--with-controls" />
+  <Story id="core-form-field--with-controls" />
 </Canvas>
 
 ## Form Field Label
@@ -41,7 +41,7 @@ Form Field provides a visible label which should be used to describe the form co
 Display the label via the `FormFieldLabel` component.
 
 <Canvas>
-  <Story id="lab-form-field-next--skeleton" />
+  <Story id="core-form-field--skeleton" />
 </Canvas>
 
 ### Guidance
@@ -55,7 +55,7 @@ Display the label via the `FormFieldLabel` component.
 The Form Field Label can be positioned to the left of the form control via the prop `labelPlacement`.
 
 <Canvas>
-  <Story id="lab-form-field-next--label-left" />
+  <Story id="core-form-field--label-left" />
 </Canvas>
 
 ### Guidance
@@ -67,7 +67,7 @@ Place your label to the left of the control if your application is limited in ve
 Form Field can display Helper Text using the `FormFieldHelperText` component.
 
 <Canvas>
-  <Story id="lab-form-field-next--helper-text" />
+  <Story id="core-form-field--helper-text" />
 </Canvas>
 
 ### Guidance
@@ -80,7 +80,7 @@ Form Field can display Helper Text using the `FormFieldHelperText` component.
 Form Field can be disabled via the prop `disabled`.
 
 <Canvas>
-  <Story id="lab-form-field-next--disabled" />
+  <Story id="core-form-field--disabled" />
 </Canvas>
 
 ### Guidance
@@ -94,7 +94,7 @@ Form Field can be disabled via the prop `disabled`.
 Form Field can be set as read-only via the prop `readOnly`.
 
 <Canvas>
-  <Story id="lab-form-field-next--readonly" />
+  <Story id="core-form-field--readonly" />
 </Canvas>
 
 ### Guidance
@@ -108,7 +108,7 @@ Form Field can be set as read-only via the prop `readOnly`.
 Form Fields can show validation states (warning, success, error) with the prop `validationStatus`.
 
 <Canvas>
-  <Story id="lab-form-field-next--with-validation" />
+  <Story id="core-form-field--with-validation" />
 </Canvas>
 
 ### Guidance
@@ -128,20 +128,20 @@ Form Fields can show validation states (warning, success, error) with the prop `
 # API
 
 ```
-import { FormFieldNext } from "@salt-ds/lab";
+import { FormField } from "@salt-ds/core";
 ```
 
 ## Props
 
-<ArgsTable of={FormFieldNext} />
+<ArgsTable of={FormField} />
 
 ## CSS Class
 
-<CSSClassTable of={FormFieldNext} />
+<CSSClassTable of={FormField} />
 
 ## Characteristics Used
 
-<CharacteristicUsage of={FormFieldNext} />
+<CharacteristicUsage of={FormField} />
 
 ## Accessibility
 
