@@ -60,7 +60,6 @@ export function OverflowMenu({
     typeof highlightedIndex !== "number"
       ? activeTabIndex
       : visibleTabsLength + highlightedIndex;
-  console.log({ open, activeTabIndex, indexToSelect, highlightedIndex });
 
   const middleware = isDesktop
     ? []
@@ -93,7 +92,7 @@ export function OverflowMenu({
     activeIndex: highlightedIndex,
     selectedIndex: overflowHasActiveTab
       ? activeTabIndex - visibleTabsLength
-      : activeTabIndex,
+      : null,
     onNavigate: setHighlightedIndex,
     virtual: true,
   });
