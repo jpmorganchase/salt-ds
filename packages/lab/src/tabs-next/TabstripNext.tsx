@@ -11,8 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Tab } from "../tabs/Tab";
-import { TabActivationIndicator } from "../tabs/TabActivationIndicator";
+import { TabNext } from "./TabNext";
 import { TabElement, TabProps } from "../tabs/TabsTypes";
 import { OverflowMenu } from "./OverflowMenu";
 import "./TabstripNext.css";
@@ -22,7 +21,7 @@ const noop = () => undefined;
 const withBaseName = makePrefixer("saltTabstripNext");
 
 function isTab(child: ReactNode | TabElement): child is TabElement {
-  return isValidElement(child) && child.type === Tab;
+  return isValidElement(child) && child.type === TabNext;
 }
 
 export type TabstripNextProps = PropsWithChildren<{
@@ -35,6 +34,7 @@ export type TabstripNextProps = PropsWithChildren<{
   /* Set a tab max-width in order to enable tab truncation */
   tabMaxWidth?: number;
   variant?: "primary" | "secondary";
+  getTabId?: (index?: number) => string;
 }>;
 
 export const TabstripNext = ({
@@ -45,15 +45,17 @@ export const TabstripNext = ({
   align,
   onMoveTab,
   tabMaxWidth,
+  getTabId: getTabIdProp,
   variant = "primary",
 }: TabstripNextProps) => {
   const uniqueId = useId();
-  const getTabId = useCallback(
+  const _getTabId = useCallback(
     (index?: number) => {
       return `tab-${uniqueId ?? "unknown"}-${index ?? ""}`;
     },
     [uniqueId]
   );
+  const getTabId = getTabIdProp || _getTabId;
 
   const [activeTabIndex, setActiveTabIndex] = useControlled({
     controlled: activeTabIndexProp,
@@ -61,16 +63,13 @@ export const TabstripNext = ({
     name: "useTabs",
     state: "activeTabIndex",
   });
-  const activeTabId =
-    activeTabIndex !== undefined && activeTabIndex !== null
-      ? getTabId(activeTabIndex)
-      : undefined;
   const outerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [hasOverflow, setHasOverflow] = useState(false);
   const [overflowTabsLength, setOverflowTabsLength] = useState(0);
   const [keyboardFocusedIndex, setKeyboardFocusedIndex] = useState(-1);
 
+  // figure out if overflow menu is necessary
   useEffect(() => {
     if (!outerRef.current || !innerRef.current) return;
     const resize = new ResizeObserver(() => {
@@ -94,8 +93,7 @@ export const TabstripNext = ({
       resize.disconnect();
     };
   }, []);
-
-  const tabs = Children.toArray(children);
+  const tabs = Children.toArray(children).filter(isTab);
 
   return (
     <div
@@ -112,7 +110,12 @@ export const TabstripNext = ({
     >
       <div className={withBaseName("inner")} ref={innerRef}>
         {tabs.map((child, index) => {
-          if (!isTab(child)) return child;
+          const label =
+            typeof child.props.children === "string"
+              ? child.props.children
+              : child.props.label;
+
+          const isActive = activeTabIndex === index;
           const id = getTabId(index);
           const isOverflowed = index >= tabs.length - overflowTabsLength;
           return cloneElement<TabProps>(child, {
@@ -121,10 +124,11 @@ export const TabstripNext = ({
               maxWidth: tabMaxWidth,
               visibility: isOverflowed ? "hidden" : undefined,
             },
+            label,
             "aria-hidden": isOverflowed,
-            tabIndex: index === activeTabIndex && !isOverflowed ? 0 : -1,
-            selected: index === activeTabIndex,
-            index: index,
+            tabIndex: isActive && !isOverflowed ? 0 : -1,
+            selected: isActive,
+            index,
             onClick: () => {
               setActiveTabIndex(index);
               onActiveChange?.(index);
@@ -173,16 +177,14 @@ export const TabstripNext = ({
           activeTabIndex={activeTabIndex}
           overflowTabsLength={overflowTabsLength}
           onMoveTab={onMoveTab}
-          onActiveChange={onActiveChange}
-          setActiveTabIndex={setActiveTabIndex}
+          onSelectIndex={(index: number) => {
+            onActiveChange?.(index);
+            setActiveTabIndex(index);
+          }}
           getTabId={getTabId}
           setKeyboardFocusedIndex={setKeyboardFocusedIndex}
         />
       ) : null}
-
-      <TabActivationIndicator orientation="horizontal" tabId={activeTabId} />
     </div>
   );
 };
-
-export const TabNext = Tab;

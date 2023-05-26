@@ -20,21 +20,19 @@ import { OverflowMenuIcon } from "@salt-ds/icons";
 import { ListItem } from "../list";
 import { isDesktop } from "../window";
 import { TabElement } from "../tabs/TabsTypes";
-import { Tab } from "../tabs/Tab";
+import { TabNext } from "./TabNext";
 
 const withBaseName = makePrefixer("saltTabstripNext");
 
 function isTab(child: ReactNode | TabElement): child is TabElement {
-  return isValidElement(child) && child.type === Tab;
+  return isValidElement(child) && child.type === TabNext;
 }
 
 export function OverflowMenu({
   tabs,
   overflowTabsLength,
-  onMoveTab,
   activeTabIndex,
-  onActiveChange,
-  setActiveTabIndex,
+  onSelectIndex,
   getTabId,
   setKeyboardFocusedIndex,
 }: {
@@ -42,11 +40,13 @@ export function OverflowMenu({
   overflowTabsLength: number;
   onMoveTab?: (from: number, to: number) => void;
   activeTabIndex?: number | null;
-  onActiveChange?: (index: number) => void;
-  setActiveTabIndex: (index: number) => void;
+  onSelectIndex: (index: number) => void;
   getTabId: (index?: number) => string;
   setKeyboardFocusedIndex: (index: number) => void;
 }) {
+  const visibleTabsLength = tabs.length - overflowTabsLength;
+  const overflowHasActiveTab =
+    activeTabIndex && activeTabIndex >= visibleTabsLength;
   const [open, setOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number | null>(0);
 
@@ -56,7 +56,11 @@ export function OverflowMenu({
   }, [open]);
 
   const [maxPopupHeight, setMaxPopupHeight] = useState<number | undefined>();
-  const indexToSelect = tabs.length - overflowTabsLength + highlightedIndex!;
+  const indexToSelect =
+    typeof highlightedIndex !== "number"
+      ? activeTabIndex
+      : visibleTabsLength + highlightedIndex;
+  console.log({ open, activeTabIndex, indexToSelect, highlightedIndex });
 
   const middleware = isDesktop
     ? []
@@ -87,7 +91,9 @@ export function OverflowMenu({
   const listNavigation = useListNavigation(context, {
     listRef,
     activeIndex: highlightedIndex,
-    selectedIndex: activeTabIndex,
+    selectedIndex: overflowHasActiveTab
+      ? activeTabIndex - visibleTabsLength
+      : activeTabIndex,
     onNavigate: setHighlightedIndex,
     virtual: true,
   });
@@ -97,26 +103,24 @@ export function OverflowMenu({
   );
 
   function select() {
-    const nextIndex = tabs.length - overflowTabsLength - 1;
-    setActiveTabIndex(nextIndex);
-    onActiveChange?.(nextIndex);
-    onMoveTab?.(indexToSelect, nextIndex);
-    setOpen(false);
-
-    // we are battling the floating ui here
-    setTimeout(() => {
-      moveBackToTabs();
-    }, 10);
+    if (!indexToSelect) return;
+    onSelectIndex(indexToSelect);
   }
 
   function moveBackToTabs() {
-    const moveToIndex = tabs.length - overflowTabsLength - 1;
+    const moveToIndex = visibleTabsLength - 1;
     setKeyboardFocusedIndex(moveToIndex);
-    document.getElementById(getTabId(moveToIndex))?.focus();
+    document
+      .getElementById(getTabId(moveToIndex))
+      ?.focus({ preventScroll: true });
   }
 
   return (
-    <div className={withBaseName("overflowMenu")}>
+    <div
+      className={clsx(withBaseName("overflowMenu"), {
+        [withBaseName("overflowMenu-active")]: overflowHasActiveTab,
+      })}
+    >
       {open ? (
         <FloatingPortal>
           <FloatingFocusManager context={context} modal={false}>
@@ -149,7 +153,7 @@ export function OverflowMenu({
                 className={clsx(withBaseName("overflowMenu-popup"), "saltList")}
               >
                 {tabs
-                  .slice(tabs.length - overflowTabsLength, tabs.length)
+                  .slice(visibleTabsLength, tabs.length)
                   .map((tab, index) => {
                     if (!isTab(tab)) return tab;
                     const label =
@@ -168,10 +172,7 @@ export function OverflowMenu({
                           listRef.current[index] = node;
                         }}
                         role="option"
-                        selected={
-                          activeTabIndex ===
-                          tabs.length - overflowTabsLength + index
-                        }
+                        selected={activeTabIndex === visibleTabsLength + index}
                         className={clsx(`saltListItem`, {
                           saltHighlighted: highlightedIndex === index,
                         })}
@@ -193,7 +194,7 @@ export function OverflowMenu({
       ) : null}
 
       <Button
-        tabIndex={-1}
+        tabIndex={!open && overflowHasActiveTab ? 0 : -1}
         ref={refs.setReference}
         aria-autocomplete="none"
         {...getReferenceProps({

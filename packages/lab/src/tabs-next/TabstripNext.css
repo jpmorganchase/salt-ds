@@ -6,12 +6,9 @@
   --tabs-tabstrip-background: transparent;
 
   --saltTabs-activationIndicator-height: 1px;
-  --saltTabs-activationIndicator-thumb-inset: -1px 0 0 0;
-
-  --tabs-activationIndicator-borderStyle: none none solid none;
-  --tabs-activationIndicator-inset: auto 0px 0px 0px;
-  --tabs-activationIndicator-transitionProperty: left;
+  --tabs-activationIndicator-background: var(--salt-container-primary-borderColor);
   --tabs-activationIndicator-thumb-height: 2px;
+  --tabs-tab-spacing: var(--salt-size-unit);
 
   align-items: flex-start;
   align-self: var(--saltTabs-tabstrip-alignSelf, stretch);
@@ -25,16 +22,31 @@
   height: var(--tabs-tabstrip-height);
 }
 
+.saltTabstripNext::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--saltTabs-activationIndicator-height);
+  background: var(--tabs-activationIndicator-background);
+}
+
 .saltTabstripNext-overflowMenu {
   position: relative;
-  align-self: center;
-  margin-right: 2px;
+  align-self: stretch;
+  margin-right: 2px; /* prevents the focus ring from being clipped on the right */
+  display: flex;
+  align-items: center;
+}
+
+.saltTabstripNext-overflowMenu-active {
+  border-bottom: var(--tabs-activationIndicator-thumb-height) solid var(--salt-navigable-indicator-active);
 }
 
 .saltTabstripNext-overflowMenu-popup {
   background: var(--salt-container-primary-background);
   overflow-y: auto;
   z-index: calc(var(--salt-zIndex-flyover) - 1);
+  margin-top: 4px;
 }
 
 .saltTabstripNext-scrollable {
@@ -62,6 +74,7 @@
   width: 100%;
   align-items: center;
   display: flex;
+  gap: var(--tabs-tab-spacing);
   flex-basis: auto;
   flex-grow: 0;
   flex-shrink: 1;
