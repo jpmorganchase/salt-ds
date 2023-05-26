@@ -17,7 +17,11 @@ import "./InputNext.css";
 const withBaseName = makePrefixer("saltInputNext");
 
 export interface InputProps
-extends Omit<ComponentPropsWithoutRef<"div">,"defaultValue">, Pick<ComponentPropsWithoutRef<"input">, "disabled" | "value" | "defaultValue"> {
+  extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
+    Pick<
+      ComponentPropsWithoutRef<"input">,
+      "disabled" | "value" | "defaultValue"
+    > {
   /**
    * The marker to use in an empty read only Input.
    * Use `''` to disable this feature. Defaults to '—'.
@@ -58,7 +62,7 @@ extends Omit<ComponentPropsWithoutRef<"div">,"defaultValue">, Pick<ComponentProp
 }
 
 export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
-  {    
+  {
     "aria-activedescendant": ariaActiveDescendant,
     "aria-expanded": ariaExpanded,
     "aria-owns": ariaOwns,
@@ -93,12 +97,12 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   } = useFormFieldProps();
 
   const restA11yProps = {
-    ariaActiveDescendant, 
-    ariaExpanded, 
-    ariaOwns, 
-    ...restFormFieldA11yProps
+    ariaActiveDescendant,
+    ariaExpanded,
+    ariaOwns,
+    ...restFormFieldA11yProps,
   };
-  
+
   const isDisabled = disabled || formFieldDisabled;
   const isReadOnly = readOnlyProp || formFieldReadOnly;
 
