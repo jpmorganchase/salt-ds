@@ -135,6 +135,45 @@ export const AddTabTabstrip: TabstripStory = ({
   );
 };
 
+export const LotsOfTabsTabstrip: TabstripStory = ({
+  width = 600,
+  ...tabstripProps
+}) => {
+  const [tabs] = useState([
+    "Home",
+    "Transactions",
+    "Loans",
+    "Checks",
+    "Liquidity",
+    "With",
+    "Lots",
+    "More",
+    "Additional",
+    "Tabs",
+    "Added",
+    "In order to",
+    "Showcase overflow",
+    "Menu",
+    "On",
+    "Larger",
+    "Screens",
+  ]);
+  const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
+  return (
+    <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
+      <TabstripNext
+        {...tabstripProps}
+        activeTabIndex={activeTabIndex}
+        onActiveChange={setActiveTabIndex}
+      >
+        {tabs.map((label) => (
+          <TabNext key={label}>{label}</TabNext>
+        ))}
+      </TabstripNext>
+    </div>
+  );
+};
+
 export const CloseTabTabstrip: TabstripStory = ({
   width = 600,
   ...tabstripProps
