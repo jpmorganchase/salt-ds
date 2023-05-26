@@ -18,7 +18,10 @@ import { useSliderMouseDown } from "./internal/useSliderMouseDown";
 import { useValueUpdater } from "./internal/utils";
 import { SliderChangeHandler, SliderValue } from "./types";
 
-import "./Slider.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import sliderCss from "./Slider.css";
 
 const withBaseName = makePrefixer("saltSlider");
 
@@ -65,6 +68,13 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-slider",
+    css: sliderCss,
+    window: targetWindow,
+  });
+
   const trackRef = useRef<HTMLDivElement>(null);
 
   const [value, setValue] = useControlled<SliderValue>({

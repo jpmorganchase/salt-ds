@@ -5574,6 +5574,7 @@ __metadata:
     eslint: ^7.32.0
     eslint-config-modular-app: 3.0.2
     eslint-plugin-cypress: ^2.12.1
+    eslint-plugin-local-rules: ^1.3.2
     eslint-plugin-storybook: ^0.6.10
     glob: ^8.0.0
     modular-scripts: "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch"
@@ -5635,6 +5636,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/styles@workspace:packages/styles":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/styles@workspace:packages/styles"
+  peerDependencies:
+    "@types/react": ">=16.8.6"
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/theme-editor-app@workspace:playground/theme-editor-app":
   version: 0.0.0-use.local
   resolution: "@salt-ds/theme-editor-app@workspace:playground/theme-editor-app"
@@ -5653,6 +5667,19 @@ __metadata:
 "@salt-ds/theme@^1.4.0, @salt-ds/theme@workspace:packages/theme":
   version: 0.0.0-use.local
   resolution: "@salt-ds/theme@workspace:packages/theme"
+  languageName: unknown
+  linkType: soft
+
+"@salt-ds/window@workspace:packages/window":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/window@workspace:packages/window"
+  peerDependencies:
+    "@types/react": ">=16.8.6"
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -12660,6 +12687,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-inline-plugin@workspace:tooling/css-inline-plugin":
+  version: 0.0.0-use.local
+  resolution: "css-inline-plugin@workspace:tooling/css-inline-plugin"
+  peerDependencies:
+    vite: ">2.0.0-0"
+  languageName: unknown
+  linkType: soft
+
 "css-loader@npm:6.7.1":
   version: 6.7.1
   resolution: "css-loader@npm:6.7.1"
@@ -15172,6 +15207,13 @@ __metadata:
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
   checksum: f166dd5fe7257c7b891c6692e6a3ede6f237a14043ae3d97581daf318fc5833ddc6b4871aa34ab7656187430170500f6d806895747ea17ecdf8231a666c3c2fd
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-local-rules@npm:^1.3.2":
+  version: 1.3.2
+  resolution: "eslint-plugin-local-rules@npm:1.3.2"
+  checksum: d1d94c0832d7a5e1686c4d685614c407998e7a60318893a405fb8c97c3856b05a8d9479c20ad2799667a59ebfebc4c4f3268528d21d849d2062dee2041b9e909
   languageName: node
   linkType: hard
 
@@ -22720,7 +22762,7 @@ __metadata:
 
 "modular-scripts@patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch::locator=%40salt-ds%2Froot%40workspace%3A.":
   version: 3.6.0
-  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch::version=3.6.0&hash=b486d4&locator=%40salt-ds%2Froot%40workspace%3A."
+  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.6.0#.yarn/patches/modular-scripts-npm-3.4.0-8cdb747f13.patch::version=3.6.0&hash=47e300&locator=%40salt-ds%2Froot%40workspace%3A."
   dependencies:
     "@babel/code-frame": 7.18.6
     "@modular-scripts/workspace-resolver": 1.2.0
@@ -22831,7 +22873,7 @@ __metadata:
     typescript: ^4.3.5
   bin:
     modular: dist-cjs/cli.js
-  checksum: b2ebcdd16fea3ae651f574ddd6a2694f133b573f1c35eaaa7f6d1b320fb51a6aa1b7bcf02f41cc6b0d936cf91a22f12473426c8d66707a53144288176be34ff8
+  checksum: f63cdd72b97566281d76950e671e2686a552a2fc8cea1bcc8c13008e43903b0a6de4f62b93ee252df24fe7aa7b0892acbb65dd3cf1fe4cd02e0cffd3f7c5041e
   languageName: node
   linkType: hard
 

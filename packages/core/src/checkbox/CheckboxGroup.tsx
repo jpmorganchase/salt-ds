@@ -8,7 +8,9 @@ import {
 import { makePrefixer, useControlled } from "../utils";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
-import "./CheckboxGroup.css";
+import checkboxGroupCss from "./CheckboxGroup.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface CheckboxGroupProps
   extends Omit<ComponentPropsWithoutRef<"fieldset">, "onChange"> {
@@ -58,6 +60,13 @@ export const CheckboxGroup = forwardRef<
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-checkbox-group",
+    css: checkboxGroupCss,
+    window: targetWindow,
+  });
+
   const [checkedValues, setCheckedValues] = useControlled({
     controlled: checkedValuesProp,
     default: defaultCheckedValues,

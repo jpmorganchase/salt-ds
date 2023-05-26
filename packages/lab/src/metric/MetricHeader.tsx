@@ -1,8 +1,12 @@
-import { LinkProps, Link, makePrefixer, Text } from "@salt-ds/core";
+import { Link, LinkProps, makePrefixer, Text } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { useMetricContext } from "./internal";
-import "./MetricHeader.css";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import metricHeaderCss from "./MetricHeader.css";
 
 export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -28,6 +32,13 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
     { SubtitleLinkProps, className, title, subtitle, ...restProps },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-metric-header",
+      css: metricHeaderCss,
+      window: targetWindow,
+    });
+
     const { titleId, subtitleId, headingAriaLevel } = useMetricContext();
 
     const renderSubtitle = useCallback(() => {

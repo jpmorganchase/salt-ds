@@ -1,6 +1,6 @@
 import {
-  forwardRef,
   ForwardedRef,
+  forwardRef,
   useCallback,
   useImperativeHandle,
   useRef,
@@ -11,7 +11,10 @@ import { useTabs } from "./useTabs";
 import { Tabstrip } from "./Tabstrip";
 import { FocusAPI, TabstripProps } from "./TabsTypes";
 
-import "./Tabs.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import tabsCss from "./Tabs.css";
 
 const withBaseName = makePrefixer("saltTabs");
 
@@ -41,6 +44,13 @@ export const Tabs = forwardRef(function Tabs(
   }: TabsProps,
   forwardedRef: ForwardedRef<FocusAPI>
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tabs",
+    css: tabsCss,
+    window: targetWindow,
+  });
+
   const tabstripRef = useRef<HTMLDivElement>(null);
   useImperativeHandle(
     forwardedRef,

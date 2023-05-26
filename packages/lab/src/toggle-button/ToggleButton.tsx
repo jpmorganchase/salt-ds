@@ -11,7 +11,10 @@ import {
 } from "react";
 import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
 
-import "./ToggleButton.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import toggleButtonCss from "./ToggleButton.css";
 
 const withBaseName = makePrefixer("saltToggleButton");
 
@@ -44,6 +47,13 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       "data-button-index": index,
       ...restProps
     } = props;
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-toggle-button",
+      css: toggleButtonCss,
+      window: targetWindow,
+    });
 
     const [iconOnly, setIconOnly] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);

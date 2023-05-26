@@ -4,7 +4,10 @@ import { TriangleRightIcon } from "@salt-ds/icons";
 
 import { makePrefixer } from "@salt-ds/core";
 
-import "./TreeNode.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import treeNodeCss from "./TreeNode.css";
 
 const withBaseName = makePrefixer("saltTreeNode");
 export interface TreeNodeProps
@@ -32,6 +35,13 @@ export const TreeNode = ({
   selected,
   ...props
 }: TreeNodeProps) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tree-node",
+    css: treeNodeCss,
+    window: targetWindow,
+  });
+
   const className = clsx(withBaseName(), classNameProp, {
     [withBaseName("highlighted")]: highlighted,
   });

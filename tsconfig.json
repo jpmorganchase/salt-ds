@@ -21,7 +21,8 @@
     "integration/toolkit",
     "docs",
     "tooling",
-    "playground"
+    "playground",
+    "./declarations.d.ts"
   ],
   "exclude": ["**/*.cy.*", "**/*.spec.*", "**/*.test.*"]
 }

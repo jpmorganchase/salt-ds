@@ -12,7 +12,10 @@ import {
 import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
 import { StatusAdornment } from "../status-adornment";
 
-import "./InputNext.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import inputNextCss from "./InputNext.css";
 
 const withBaseName = makePrefixer("saltInputNext");
 
@@ -86,6 +89,13 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-input-next",
+    css: inputNextCss,
+    window: targetWindow,
+  });
+
   const {
     a11yProps: {
       "aria-labelledby": formFieldLabelledBy,

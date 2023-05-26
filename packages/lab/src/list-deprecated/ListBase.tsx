@@ -31,7 +31,10 @@ import { ListBaseProps } from "./ListProps";
 import { useListStateContext } from "./ListStateContext";
 import { useListItem, useVirtualizedListItem } from "./useListItem";
 
-import "./List.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import listCss from "./List.css";
 
 const withBaseName = makePrefixer("saltListDeprecated");
 
@@ -139,6 +142,13 @@ export const ListBase = forwardRef(function ListBase<Item>(
   props: ListBaseProps<Item>,
   ref: ForwardedRef<ListScrollHandles<Item>>
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-list-deprecated",
+    css: listCss,
+    window: targetWindow,
+  });
+
   const { state } = useListStateContext();
 
   // Getting list id in the following order:

@@ -4,7 +4,9 @@ import { ClosablePill, ClosablePillProps } from "./ClosablePill";
 import { PillBase, PillBaseProps } from "./PillBase";
 import { SelectablePill, SelectablePillProps } from "./SelectablePill";
 
-import "./Pill.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import pillCss from "./Pill.css";
 
 export type PillVariant = "basic" | "closable" | "selectable";
 
@@ -34,6 +36,12 @@ export const Pill = forwardRef(function Pill(
   { variant: variantProp, ...restProps }: PillProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-pill",
+    css: pillCss,
+    window: targetWindow,
+  });
   const variant = getVariant(restProps.deletable, variantProp);
   if (variant === "selectable") {
     return <SelectablePill {...(restProps as SelectablePillProps)} ref={ref} />;

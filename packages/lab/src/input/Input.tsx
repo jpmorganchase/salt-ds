@@ -19,7 +19,10 @@ import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 import { useCursorOnFocus } from "./useCursorOnFocus";
 
-import "./Input.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import inputCss from "./Input.css";
 
 const withBaseName = makePrefixer("saltInput");
 
@@ -161,6 +164,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-input",
+    css: inputCss,
+    window: targetWindow,
+  });
+
   const {
     a11yProps: {
       readOnly: a11yReadOnly,

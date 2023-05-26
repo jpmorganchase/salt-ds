@@ -8,7 +8,9 @@ import {
   PolymorphicRef,
   PolymorphicComponentPropWithRef,
 } from "../utils";
-import "./GridItem.css";
+import gridItemCss from "./GridItem.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export const GRID_ALIGNMENT_BASE = [
   "start",
@@ -69,6 +71,13 @@ export const GridItem: GridItemComponent = forwardRef(
     }: GridItemProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-grid-item",
+      css: gridItemCss,
+      window: targetWindow,
+    });
+
     const Component = as || "div";
     const gridItemColSpan = useResponsiveProp(colSpan, "auto");
 

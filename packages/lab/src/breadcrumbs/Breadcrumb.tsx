@@ -4,7 +4,10 @@ import { clsx } from "clsx";
 import { Children, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 
-import "./Breadcrumb.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import breadcrumbCss from "./Breadcrumb.css";
 
 const withBaseName = makePrefixer("saltBreadcrumb");
 
@@ -41,6 +44,13 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-breadcrumb",
+      css: breadcrumbCss,
+      window: targetWindow,
+    });
+
     const { itemsMaxWidth, itemsMinWidth, liClass } = useBreadcrumbsContext();
 
     const hasChildren = Children.count(children) !== 0;

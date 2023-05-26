@@ -6,8 +6,10 @@ import {
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
 } from "../utils";
-import "./FlexItem.css";
+import flexItemCss from "./FlexItem.css";
 import { clsx } from "clsx";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = [
@@ -61,6 +63,13 @@ export const FlexItem: FlexItemComponent = forwardRef(
     }: FlexItemProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-flex-item",
+      css: flexItemCss,
+      window: targetWindow,
+    });
+
     const Component = as || "div";
     const flexItemShrink = useResponsiveProp(shrink, 1);
     const flexItemGrow = useResponsiveProp(grow, 0);

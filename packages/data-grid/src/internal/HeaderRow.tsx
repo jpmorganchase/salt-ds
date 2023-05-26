@@ -1,10 +1,15 @@
-import "./HeaderRow.css";
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import { GridColumnModel } from "../Grid";
 import { HeaderCell } from "../HeaderCell";
 import { HeaderCellValue } from "../HeaderCellValue";
-import { FakeHeaderCell } from "./FakeHeaderCell";
 import { useCursorContext } from "../CursorContext";
+
+import { FakeHeaderCell } from "./FakeHeaderCell";
+
+import headerRowCss from "./HeaderRow.css";
 
 const withBaseName = makePrefixer("saltGridHeaderRow");
 
@@ -15,6 +20,14 @@ export interface HeaderRowProps<T> {
 
 export function HeaderRow<T>(props: HeaderRowProps<T>) {
   const { columns, gap } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-header-row",
+    css: headerRowCss,
+    window: targetWindow,
+  });
+
   const { cursorColIdx, focusedPart, headerIsFocusable } = useCursorContext();
 
   const ariaRowIndex = headerIsFocusable ? 1 : undefined;

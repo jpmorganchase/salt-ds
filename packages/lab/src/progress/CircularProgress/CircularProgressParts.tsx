@@ -1,11 +1,21 @@
 import { CSSProperties, ReactNode } from "react";
 import "./CircularProgress.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import circularProgressCSS from "./CircularProgress.css";
 
 export const SIZE = 44;
 
 export const circularGradientId = "salt-circular-progress-gradient";
 
 export const ViewBox = (props: { children?: ReactNode }) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-circular-progress",
+    css: circularProgressCSS,
+    window: targetWindow,
+  });
+
   return (
     <svg
       className="saltCircularProgress-svg"
@@ -16,14 +26,23 @@ export const ViewBox = (props: { children?: ReactNode }) => {
   );
 };
 
-export const LinearGradient = () => (
-  <defs>
-    <linearGradient gradientTransform="rotate(90)" id={circularGradientId}>
-      <stop className="saltCircularProgress-gradientStart" offset="0%" />
-      <stop className="saltCircularProgress-gradientStop" offset="100%" />
-    </linearGradient>
-  </defs>
-);
+export const LinearGradient = () => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-circular-progress",
+    css: circularProgressCSS,
+    window: targetWindow,
+  });
+
+  return (
+    <defs>
+      <linearGradient gradientTransform="rotate(90)" id={circularGradientId}>
+        <stop className="saltCircularProgress-gradientStart" offset="0%" />
+        <stop className="saltCircularProgress-gradientStop" offset="100%" />
+      </linearGradient>
+    </defs>
+  );
+};
 
 export interface CircleProps {
   strokeWidth: number;
@@ -32,6 +51,13 @@ export interface CircleProps {
 }
 
 export const Circle = ({ strokeWidth, style, className }: CircleProps) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-circular-progress",
+    css: circularProgressCSS,
+    window: targetWindow,
+  });
+
   return (
     <circle
       cx={SIZE}

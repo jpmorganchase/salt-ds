@@ -5,12 +5,16 @@ import {
   useRef,
   useState,
 } from "react";
-import "./TextCellEditor.css";
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import { useEditorContext } from "./EditorContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
 import { CornerTag } from "./CornerTag";
 import { Cell } from "./internal";
+
+import textCellEditorCss from "./TextCellEditor.css";
 
 const withBaseName = makePrefixer("saltGridTextCellEditor");
 
@@ -21,6 +25,14 @@ export interface TextCellEditorProps<T> {
 
 export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   const { column, row } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-text-cell-editor",
+    css: textCellEditorCss,
+    window: targetWindow,
+  });
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { endEditMode, cancelEditMode, initialText } = useEditorContext();
