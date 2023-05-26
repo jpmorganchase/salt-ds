@@ -1,7 +1,6 @@
 import { clsx } from "clsx";
 import {
   ChangeEvent,
-  ComponentPropsWithoutRef,
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
@@ -91,13 +90,13 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   ref
 ) {
   const {
-    disabled: formFieldDisabled,
-    readOnly: formFieldReadOnly,
-    validationStatus: formFieldValidationStatus,
     a11yProps: {
       "aria-labelledby": formFieldLabelledBy,
       ...restA11yProps
     } = {},
+    disabled: formFieldDisabled,
+    readOnly: formFieldReadOnly,
+    validationStatus: formFieldValidationStatus
   } = useFormFieldProps();
 
   const isDisabled = disabled || formFieldDisabled;
