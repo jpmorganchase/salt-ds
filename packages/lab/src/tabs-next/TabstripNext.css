@@ -8,7 +8,7 @@
   --saltTabs-activationIndicator-height: 1px;
   --tabs-activationIndicator-background: var(--salt-container-primary-borderColor);
   --tabs-activationIndicator-thumb-height: 2px;
-  --tabs-tab-spacing: var(--salt-size-unit);
+  --tabs-tab-spacing: var(--salt-spacing-100);
 
   align-items: flex-start;
   align-self: var(--saltTabs-tabstrip-alignSelf, stretch);

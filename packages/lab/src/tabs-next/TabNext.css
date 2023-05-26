@@ -62,6 +62,8 @@
   outline: none;
   padding: 0 var(--tabs-tab-spacing);
   position: relative;
+  min-width: 0;
+  display: flex;
 }
 
 .saltTabNext-closeable .saltTabNext-main {

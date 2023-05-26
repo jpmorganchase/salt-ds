@@ -33,6 +33,33 @@ export const SimpleTabstrip: TabstripStory = ({
   );
 };
 
+export const TruncatedTabs: TabstripStory = ({
+  width = 600,
+  ...tabstripProps
+}) => {
+  const tabs = [
+    "Home",
+    "Transactions with long text",
+    "Loans",
+    "Checks",
+    "Liquidity",
+  ];
+
+  return (
+    <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
+      <TabstripNext
+        tabMaxWidth={100}
+        defaultActiveTabIndex={0}
+        {...tabstripProps}
+      >
+        {tabs.map((label) => (
+          <TabNext key={label}>{label}</TabNext>
+        ))}
+      </TabstripNext>
+    </div>
+  );
+};
+
 export const CenteredTabstrip: TabstripStory = ({
   width = 600,
   ...tabstripProps
