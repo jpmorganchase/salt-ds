@@ -1,11 +1,23 @@
-import { Children, isValidElement, ReactElement, ReactNode } from "react";
-import { StackLayout, useControlled } from "@salt-ds/core";
-import { TabNext, TabstripNext, TabstripNextProps } from "./TabstripNext";
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  ReactElement,
+  ReactNode,
+  useCallback,
+} from "react";
+import { StackLayout, useControlled, useId } from "@salt-ds/core";
+import { TabstripNext, TabstripNextProps } from "./TabstripNext";
+import { TabNext } from "./TabNext";
 import { TabPanel } from "../tabs/TabPanel";
 
 export type TabsNextProps = TabstripNextProps;
 
-type TabElement = ReactElement<{ label: string }>;
+type TabElement = ReactElement<{
+  label: string;
+  id: string;
+  "aria-labelledby": string;
+}>;
 function isTabPanel(child: ReactNode | TabElement): child is TabElement {
   return isValidElement(child) && child.type === TabPanel;
 }
@@ -15,33 +27,58 @@ export const TabsNext = ({
   activeTabIndex: activeTabIndexProp,
   defaultActiveTabIndex,
   onActiveChange,
+  onMoveTab,
   ...props
 }: TabsNextProps) => {
+  const tabs = Children.toArray(children).filter(isTabPanel);
+
   const [activeTabIndex, setActiveTabIndex] = useControlled({
     controlled: activeTabIndexProp,
-    default: defaultActiveTabIndex,
+    default: defaultActiveTabIndex ?? 0,
     name: "useTabs",
     state: "activeTabIndex",
   });
-  const tabs = Children.toArray(children).filter(isTabPanel);
+
+  const uniqueId = useId();
+  const getTabId = useCallback(
+    (index?: number | null) => {
+      return `tab-${uniqueId ?? "unknown"}-${index ?? ""}`;
+    },
+    [uniqueId]
+  );
+  const getTabpanelId = useCallback(
+    (index?: number | null) => {
+      return `tabpanel-${uniqueId ?? "unknown"}-${index ?? ""}`;
+    },
+    [uniqueId]
+  );
 
   return (
-    <StackLayout>
+    <StackLayout gap={0}>
       <TabstripNext
         {...props}
+        getTabId={getTabId}
         activeTabIndex={activeTabIndex}
         onActiveChange={(index) => {
-          setActiveTabIndex(index);
+          setActiveTabIndex(index!);
           onActiveChange?.(index);
         }}
       >
-        {tabs.map((tab) => {
-          return <TabNext label={tab.props.label}>{tab.props.label}</TabNext>;
+        {tabs.map((tabPanel) => {
+          const label = tabPanel.props.label;
+          return (
+            <TabNext ariaControls={getTabpanelId(activeTabIndex)} label={label}>
+              {label}
+            </TabNext>
+          );
         })}
       </TabstripNext>
-      {tabs.map((tab) => {
-        return <TabPanel label={tab.props.label}>{tab.props.label}</TabPanel>;
-      })}
+      {typeof activeTabIndex === "number"
+        ? cloneElement(tabs[activeTabIndex], {
+            id: getTabpanelId(activeTabIndex),
+            "aria-labelledby": getTabId(activeTabIndex),
+          })
+        : null}
     </StackLayout>
   );
 };
