@@ -46,7 +46,7 @@
   background: var(--salt-container-primary-background);
   overflow-y: auto;
   z-index: calc(var(--salt-zIndex-flyover) - 1);
-  margin-top: 4px;
+  margin-top: 5px;
 }
 
 .saltTabstripNext-scrollable {

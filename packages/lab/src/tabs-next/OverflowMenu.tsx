@@ -197,6 +197,7 @@ export function OverflowMenu({
       <Button
         tabIndex={!open && overflowHasActiveTab ? 0 : -1}
         ref={refs.setReference}
+        aria-selected={overflowHasActiveTab ? true : undefined}
         aria-autocomplete="none"
         {...getReferenceProps({
           onKeyDown: (e) => {

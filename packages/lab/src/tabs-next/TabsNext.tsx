@@ -9,7 +9,7 @@ import {
 import { StackLayout, useControlled, useId } from "@salt-ds/core";
 import { TabstripNext, TabstripNextProps } from "./TabstripNext";
 import { TabNext } from "./TabNext";
-import { TabPanel } from "../tabs/TabPanel";
+import { TabPanelNext } from "./TabPanelNext";
 
 export type TabsNextProps = TabstripNextProps;
 
@@ -19,7 +19,7 @@ type TabElement = ReactElement<{
   "aria-labelledby": string;
 }>;
 function isTabPanel(child: ReactNode | TabElement): child is TabElement {
-  return isValidElement(child) && child.type === TabPanel;
+  return isValidElement(child) && child.type === TabPanelNext;
 }
 
 export const TabsNext = ({
