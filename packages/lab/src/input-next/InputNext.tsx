@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import {
   ChangeEvent,
+  ComponentPropsWithoutRef,
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
@@ -16,15 +17,7 @@ import "./InputNext.css";
 const withBaseName = makePrefixer("saltInputNext");
 
 export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLDivElement>, "defaultValue"> {
-  /**
-   * The value of the `input` element, required for an uncontrolled component.
-   */
-  defaultValue?: HTMLInputElement["defaultValue"];
-  /**
-   * If `true`, the component is disabled.
-   */
-  disabled?: HTMLInputElement["disabled"];
+extends Omit<ComponentPropsWithoutRef<"div">,"defaultValue">, Pick<ComponentPropsWithoutRef<"input">, "disabled" | "value" | "defaultValue"> {
   /**
    * The marker to use in an empty read only Input.
    * Use `''` to disable this feature. Defaults to '—'.
@@ -59,17 +52,16 @@ export interface InputProps
    */
   validationStatus?: "error" | "warning" | "success";
   /**
-   * The value of the `input` element, required for a controlled component.
-   */
-  value?: HTMLInputElement["value"];
-  /**
    * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
 }
 
 export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
-  {
+  {    
+    "aria-activedescendant": ariaActiveDescendant,
+    "aria-expanded": ariaExpanded,
+    "aria-owns": ariaOwns,
     className: classNameProp,
     disabled,
     emptyReadOnlyMarker = "—",
@@ -78,6 +70,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     inputProps = {},
     inputRef,
     readOnly: readOnlyProp,
+    role,
     startAdornment,
     style,
     textAlign = "left",
@@ -92,13 +85,20 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   const {
     a11yProps: {
       "aria-labelledby": formFieldLabelledBy,
-      ...restA11yProps
+      ...restFormFieldA11yProps
     } = {},
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
 
+  const restA11yProps = {
+    ariaActiveDescendant, 
+    ariaExpanded, 
+    ariaOwns, 
+    ...restFormFieldA11yProps
+  };
+  
   const isDisabled = disabled || formFieldDisabled;
   const isReadOnly = readOnlyProp || formFieldReadOnly;
 
@@ -169,6 +169,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         id={id}
         readOnly={isReadOnly}
         ref={inputRef}
+        role={role}
         tabIndex={isReadOnly || isDisabled ? -1 : 0}
         onBlur={handleBlur}
         onChange={handleChange}
