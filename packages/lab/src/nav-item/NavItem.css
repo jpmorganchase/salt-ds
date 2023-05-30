@@ -16,7 +16,8 @@
   min-height: var(--salt-size-stackable);
 }
 
-.saltNavItem-label {
+.saltNavItem-label,
+.saltNavItem-label:hover {
   color: var(--salt-text-primary-foreground);
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);

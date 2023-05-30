@@ -7,7 +7,10 @@ import {
 import { makePrefixer, Link } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { ExpansionButton } from "./ExpansionButton";
-import "./NavItem.css";
+
+import navItemCss from "./NavItem.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -42,6 +45,13 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       style: styleProp,
       ...rest
     } = props;
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-nav-item",
+      css: navItemCss,
+      window: targetWindow,
+    });
 
     const style = {
       ...styleProp,

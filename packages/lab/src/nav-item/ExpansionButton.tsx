@@ -27,7 +27,7 @@ export function ExpansionButton({
   const Icon =
     iconExpansionMap[orientation][expanded ? "expanded" : "collapsed"];
   return (
-    <Button variant="secondary" {...rest}>
+    <Button aria-label="expand" variant="secondary" {...rest}>
       <Icon aria-hidden="true" />
     </Button>
   );
