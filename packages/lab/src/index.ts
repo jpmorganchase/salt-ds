@@ -44,7 +44,6 @@ export * from "./form-field-context-legacy";
 export * from "./form-group";
 export * from "./formatted-input";
 export * from "./input";
-export { Input as InputNext } from "./input-next";
 export * from "./layer-layout";
 export * from "./list";
 export * from "./logo";

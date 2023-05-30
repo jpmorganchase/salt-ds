@@ -1,21 +1,20 @@
-import { InputNext } from "@salt-ds/lab";
+import { Input, Link } from "@salt-ds/core";
 import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
 import {
   CSSClassTable,
   CharacteristicUsage,
 } from "css-variable-docgen-components";
-import { Link } from "@salt-ds/core";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Input Next"
-  component={InputNext}
+  title="Documentation/Core/Input "
+  component={Input}
   parameters={{
     viewMode: "docs",
   }}
 />
 
-# Input Next
+# Input
 
 Input provides an editable field in which users can enter arbitrary text and numeric values.
 
@@ -26,7 +25,7 @@ Input provides an editable field in which users can enter arbitrary text and num
 Input comprises value text and a focus ring. The component is initially empty and then, once it has focus, it accepts text on a single line only.
 
 <Canvas>
-  <Story id="lab-input-next--default" />
+  <Story id="core-input---default" />
 </Canvas>
 
 ## Controlled
@@ -34,7 +33,7 @@ Input comprises value text and a focus ring. The component is initially empty an
 You can control Input with the `value` and `onChange` props. Learn more about <Link href="https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components">controlled vs uncontrolled components in the official React docs</Link>.
 
 <Canvas>
-  <Story id="lab-input-next--controlled" />
+  <Story id="core-input---controlled" />
 </Canvas>
 
 ## Variants
@@ -42,7 +41,7 @@ You can control Input with the `value` and `onChange` props. Learn more about <L
 Input has two variants, primary (default) and secondary.
 
 <Canvas>
-  <Story id="lab-input-next--variants" />
+  <Story id="core-input---variants" />
 </Canvas>
 
 ## Disabled
@@ -50,7 +49,7 @@ Input has two variants, primary (default) and secondary.
 You can set Input to a disabled state, with no resultant action when the user interacts with it.
 
 <Canvas>
-  <Story id="lab-input-next--disabled" />
+  <Story id="core-input---disabled" />
 </Canvas>
 
 ## Readonly
@@ -58,13 +57,13 @@ You can set Input to a disabled state, with no resultant action when the user in
 You can set Input to a read-only state. The value text can’t be edited in this state, but it can be highlighted and copied.
 
 <Canvas>
-  <Story id="lab-input-next--readonly" />
+  <Story id="core-input---readonly" />
 </Canvas>
 
 For accessibility purposes, it is recommended that you add a marker for empty read only fields via the `emptyReadOnlyMarker` prop.
 
 <Canvas>
-  <Story id="lab-input—next--empty-readonly-marker" />
+  <Story id="core-input—--empty-readonly-marker" />
 </Canvas>
 
 ## Text Alignment
@@ -72,7 +71,7 @@ For accessibility purposes, it is recommended that you add a marker for empty re
 Text alignment is left by default. This can be changed via the `textAlign` prop to “center” or “right”.
 
 <Canvas>
-  <Story id="lab-input—next--text-alignment" />
+  <Story id="core-input—--text-alignment" />
 </Canvas>
 
 ## Validation
@@ -80,7 +79,7 @@ Text alignment is left by default. This can be changed via the `textAlign` prop 
 Input can show validation states (warning, success, error) with the prop `validationStatus`.
 
 <Canvas>
-  <Story id="lab-input-next--validation" />
+  <Story id="core-input---validation" />
 </Canvas>
 
 - Use the error state to alert the user of a critical issue that’s related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
@@ -89,20 +88,20 @@ Input can show validation states (warning, success, error) with the prop `valida
 # API
 
 ```
-import { InputNext } from "@salt-ds/lab";
+import { Input } from "@salt-ds/core";
 ```
 
 ## Props
 
-<ArgsTable of={InputNext} />
+<ArgsTable of={Input} />
 
 ## CSS Class
 
-<CSSClassTable of={InputNext} />
+<CSSClassTable of={Input} />
 
 ## Characteristics Used
 
-<CharacteristicUsage of={InputNext} />
+<CharacteristicUsage of={Input} />
 
 ## Accessibility
 

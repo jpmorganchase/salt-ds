@@ -10,14 +10,13 @@ import {
   useState,
 } from "react";
 import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { StatusAdornment } from "../status-adornment";
 
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
+import inputCss from "./Input.css";
 
-import inputNextCss from "./InputNext.css";
-
-const withBaseName = makePrefixer("saltInputNext");
+const withBaseName = makePrefixer("saltInput");
 
 export interface InputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
@@ -91,8 +90,8 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-input-next",
-    css: inputNextCss,
+    testId: "salt-input",
+    css: inputCss,
     window: targetWindow,
   });
 
@@ -155,7 +154,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   };
 
   const inputStyle = {
-    "--inputNext-textAlign": textAlign,
+    "--input-textAlign": textAlign,
     ...style,
   };
 
