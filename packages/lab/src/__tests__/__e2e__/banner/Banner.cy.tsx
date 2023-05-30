@@ -31,7 +31,7 @@ describe("GIVEN a Banner", () => {
     cy.get("[aria-live]").contains(message);
   });
 
-  describe("WHEN emphasize={true}", () => {
+  describe("WHEN variant=secondary", () => {
     it("THEN class should be applied to the banner", () => {
       cy.mount(
         <Banner data-testid="bannerRoot" variant="secondary">
@@ -41,7 +41,7 @@ describe("GIVEN a Banner", () => {
 
       cy.findByTestId("bannerRoot").should(
         "have.class",
-        "saltBanner-emphasize"
+        "saltBanner-secondary"
       );
     });
   });

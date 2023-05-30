@@ -21,25 +21,23 @@ export default {
 } as ComponentMeta<typeof Banner>;
 
 export const Default: ComponentStory<typeof Banner> = (props) => (
-  <div style={{ width: "500px" }}>
+  <div style={{ width: 500 }}>
     <Banner {...props}>
       <BannerContent>Default banner</BannerContent>
     </Banner>
   </div>
 );
 
-export const Inline: ComponentStory<typeof Banner> = (props) => (
+export const Static: ComponentStory<typeof Banner> = (props) => (
   <StackLayout gap={3} style={{ width: 800 }}>
     <Text styleAs="h3">
       <strong>Terms and conditions</strong>
     </Text>
-    <div style={{ width: 500 }}>
-      <Banner {...props}>
-        <BannerContent>
-          There has been an update to the terms and conditions
-        </BannerContent>
-      </Banner>
-    </div>
+    <Banner {...props}>
+      <BannerContent>
+        There has been an update to the terms and conditions
+      </BannerContent>
+    </Banner>
     <Text>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -61,7 +59,7 @@ export const Inline: ComponentStory<typeof Banner> = (props) => (
   </StackLayout>
 );
 
-export const Issue: ComponentStory<typeof Banner> = () => {
+export const Interactive: ComponentStory<typeof Banner> = () => {
   return (
     <StackLayout gap={3} style={{ width: 800 }}>
       <Banner status="error" role="alert">
@@ -91,46 +89,13 @@ export const Issue: ComponentStory<typeof Banner> = () => {
   );
 };
 
-export const Warning: ComponentStory<typeof Banner> = () => {
-  return (
-    <StackLayout gap={3} style={{ width: 800 }}>
-      <Banner status="warning" role="status">
-        <BannerContent>System is under increased load</BannerContent>
-        <BannerActions>
-          <Button aria-label="refresh" variant="secondary">
-            <RefreshIcon />
-          </Button>
-        </BannerActions>
-      </Banner>
-      <Text styleAs="h1">Title</Text>
-      <Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </Text>
-    </StackLayout>
-  );
-};
-
-export const Success: ComponentStory<typeof Banner> = () => {
-  return (
-    <Banner status="success" style={{ width: 500 }} role="status">
-      <BannerContent>Database updated</BannerContent>
-    </Banner>
-  );
-};
-
 export const StatusesPrimary: ComponentStory<typeof Banner> = (props) => {
   const { status, ...restProps } = props;
 
   const statuses: ValidationStatus[] = ["info", "error", "warning", "success"];
 
   return (
-    <StackLayout style={{ width: "500px" }}>
+    <StackLayout style={{ width: 500 }}>
       {statuses.map((status, i) => (
         <Banner status={status} {...restProps} key={i}>
           <BannerContent>Banners with status {status}.</BannerContent>
@@ -155,7 +120,7 @@ export const Dismissible = () => {
     setOpen(true);
   };
   return (
-    <div style={{ width: "500px" }}>
+    <div style={{ width: 500 }}>
       {!open && <Button onClick={reset}>Reset</Button>}
       {open && (
         <Banner>
