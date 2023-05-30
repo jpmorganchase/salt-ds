@@ -12,7 +12,7 @@ import {
   BannerActions,
   BannerContent,
   BannerProps,
-} from '@salt-ds/lab'
+} from "@salt-ds/lab";
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
 
 export default {
@@ -95,9 +95,7 @@ export const Warning: ComponentStory<typeof Banner> = () => {
   return (
     <StackLayout gap={3} style={{ width: 800 }}>
       <Banner status="warning" role="status">
-        <BannerContent>
-          System is under increased load
-        </BannerContent>
+        <BannerContent>System is under increased load</BannerContent>
         <BannerActions>
           <Button aria-label="refresh" variant="secondary">
             <RefreshIcon />

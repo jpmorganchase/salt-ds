@@ -27,7 +27,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Emphasize the styling by applying a background color: defaults to false
    */
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
   /**
    *  A string to determine the current state of the Banner
    */
@@ -42,7 +42,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     disableAnnouncer = true,
     children,
     className,
-    variant = 'primary',
+    variant = "primary",
     status = "info",
     ...rest
   },
@@ -72,7 +72,12 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
 
   return (
     <div
-      className={clsx(withBaseName(), withBaseName(status), withBaseName(variant), className)}
+      className={clsx(
+        withBaseName(),
+        withBaseName(status),
+        withBaseName(variant),
+        className
+      )}
       ref={handleRef}
       {...rest}
       aria-live="polite"
