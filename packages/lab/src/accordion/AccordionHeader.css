@@ -1,0 +1,42 @@
+.saltAccordionHeader {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  padding-block: var(--salt-spacing-50);
+  padding-inline: var(--salt-spacing-100);
+  align-items: center;
+  border: 0;
+  width: 100%;
+  min-height: var(--salt-size-base);
+  background: var(--salt-actionable-secondary-background);
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  color: var(--salt-text-primary-foreground);
+  --saltIcon-color: var(--salt-text-primary-foreground);
+  text-align: left;
+}
+
+.saltAccordionHeader:focus-visible {
+  background: var(--salt-actionable-primary-background-hover);
+  outline: var(--salt-focused-outline);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .saltAccordionHeader:hover {
+    background: var(--salt-actionable-primary-background-hover);
+  }
+}
+
+.saltAccordionHeader:disabled {
+  background: var(--salt-actionable-secondary-background);
+  color: var(--salt-text-primary-foreground-disabled);
+  --saltIcon-fill: var(--salt-text-primary-foreground-disabled);
+}
+
+.saltAccordionHeader-icon {
+  transition: transform var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.saltAccordionHeader[aria-expanded="true"] > .saltAccordionHeader-icon {
+  transform: rotate(90deg);
+}
