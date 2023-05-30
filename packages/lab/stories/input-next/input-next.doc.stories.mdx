@@ -17,13 +17,13 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Input Next
 
-Input provides an editable field in which users can enter arbitrary text and numeric values.
+Input provides an editable field in which users can enter text and numeric values.
 
 # Examples
 
 ## Default
 
-Input comprises value text and a focus ring. The component is initially empty and then, once it has focus, it accepts text on a single line only.
+Input comprises value text and a focus ring. The component is initially empty and then, once it has focus, it accepts text on a single line.
 
 <Canvas>
   <Story id="lab-input-next--default" />
@@ -31,7 +31,7 @@ Input comprises value text and a focus ring. The component is initially empty an
 
 ## Controlled
 
-You can control Input with the `value` and `onChange` props. Learn more about <Link href="https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components">controlled vs uncontrolled components in the official React docs</Link>.
+You can control Input with the `value` and `onChange` props. Learn more about <Link href="https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components">controlled vs. uncontrolled components in the official React docs</Link>.
 
 <Canvas>
   <Story id="lab-input-next--controlled" />
@@ -53,7 +53,7 @@ You can set Input to a disabled state, with no resultant action when the user in
   <Story id="lab-input-next--disabled" />
 </Canvas>
 
-## Readonly
+## Read-only
 
 You can set Input to a read-only state. The value text can’t be edited in this state, but it can be highlighted and copied.
 
@@ -61,7 +61,7 @@ You can set Input to a read-only state. The value text can’t be edited in this
   <Story id="lab-input-next--readonly" />
 </Canvas>
 
-For accessibility purposes, it is recommended that you add a marker for empty read only fields via the `emptyReadOnlyMarker` prop.
+For accessibility purposes, we recommend that you add a marker for empty read-only fields via the `emptyReadOnlyMarker` prop.
 
 <Canvas>
   <Story id="lab-input—next--empty-readonly-marker" />
@@ -83,8 +83,8 @@ Input can show validation states (warning, success, error) with the prop `valida
   <Story id="lab-input-next--validation" />
 </Canvas>
 
-- Use the error state to alert the user of a critical issue that’s related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
-- Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
+- Use the error state to alert the user of a critical issue that’s related to the input. Issues highlighted by an error state may jeopardize completion of the task and usually require action from the user to resolve the error.
+- Display the warning state to alert the user of a potential issue that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
 
 # API
 
