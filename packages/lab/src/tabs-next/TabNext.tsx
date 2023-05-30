@@ -12,9 +12,11 @@ import {
   useRef,
   useState,
 } from "react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { TabProps } from "./TabsNextTypes";
 
-import "./TabNext.css";
+import tabCss from "./TabNext.css";
 
 const withBaseName = makePrefixer("saltTabNext");
 
@@ -62,6 +64,12 @@ export const TabNext = forwardRef(function Tab(
   }: TabProps,
   ref: ForwardedRef<HTMLDivElement>
 ): ReactElement<TabProps> {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tab-next",
+    css: tabCss,
+    window: targetWindow,
+  });
   if (index === undefined || onClick === undefined || onKeyDown === undefined) {
     throw Error(
       "index, onClick, onKeyUp, onKeyDown are required props, they would nornally be injected by Tabstrip, are you creating a Tab outside of a Tabstrip"

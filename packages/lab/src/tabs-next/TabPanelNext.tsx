@@ -1,8 +1,10 @@
 import { forwardRef, ForwardedRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
-import "./TabPanelNext.css";
+import tabPanelCss from "./TabPanelNext.css";
 
 const withBaseName = makePrefixer("saltTabPanelNext");
 
@@ -15,6 +17,13 @@ export const TabPanelNext = forwardRef(function TabPanel(
   { children, className, enableClose, ...htmlAttributes }: TabPanelNextProps,
   forwardedRef: ForwardedRef<HTMLDivElement>
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tabpanel-next",
+    css: tabPanelCss,
+    window: targetWindow,
+  });
+
   return (
     <div
       {...htmlAttributes}

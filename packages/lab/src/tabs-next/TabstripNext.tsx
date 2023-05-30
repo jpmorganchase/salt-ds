@@ -11,10 +11,12 @@ import {
   useRef,
   useState,
 } from "react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { TabNext } from "./TabNext";
 import { TabElement, TabProps } from "../tabs/TabsTypes";
 import { OverflowMenu } from "./OverflowMenu";
-import "./TabstripNext.css";
+import tabstripCss from "./TabstripNext.css";
 
 const noop = () => undefined;
 
@@ -48,6 +50,12 @@ export const TabstripNext = ({
   getTabId: getTabIdProp,
   variant = "primary",
 }: TabstripNextProps) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tabstrip-next",
+    css: tabstripCss,
+    window: targetWindow,
+  });
   const tabs = Children.toArray(children).filter(isTab);
   const uniqueId = useId();
   const _getTabId = useCallback(
