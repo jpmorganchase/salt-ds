@@ -54,7 +54,7 @@ describe("WHEN adding BannerActions", () => {
       <Banner>
         <BannerContent>On Close example</BannerContent>
         <BannerActions>
-          <Button aria-label="refresh" variant="secondary">
+          <Button aria-label="refresh" variant="secondary" onClick={clickSpy}>
             <RefreshIcon />
           </Button>
         </BannerActions>
