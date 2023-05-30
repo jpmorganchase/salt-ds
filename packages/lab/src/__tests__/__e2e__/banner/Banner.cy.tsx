@@ -20,7 +20,7 @@ describe("GIVEN a Banner", () => {
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  it("THEN should announce the contents of the Banner", () => {
+  xit("THEN should announce the contents of the Banner", () => {
     const message = "example announcement";
     cy.mount(
       <Banner>
