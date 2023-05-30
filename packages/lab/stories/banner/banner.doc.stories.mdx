@@ -55,7 +55,7 @@ Banner can be emphasized by passing in `emphasize={true}`.
 
 ## Dismissible
 
-By default, the Banner is non-dismissible, If you want to make the Banner dismissible, then you should display the Banner conditionally and add the BannerCloseButton component with an onClick handler that will update the conditional param.
+By default, the Banner is non-dismissible, If you want to make the Banner dismissible, then you should display the Banner conditionally and add the BannerActions component with an onClick handler that will update the conditional param.
 
 ```js
 const [open, setOpen] = useState(false);
@@ -68,7 +68,11 @@ return (
     {open && (
       <Banner>
         <BannerContent>Dismissible banner.</BannerContent>
-        <BannerCloseButton onClick={onClose} />
+        <BannerActions>
+          <Button aria-label="refresh" variant="secondary">
+            <RefreshIcon />
+          </Button>
+        </BannerActions>
       </Banner>
     )}
   </>
