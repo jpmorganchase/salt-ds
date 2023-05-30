@@ -2,14 +2,16 @@ import { NavItem } from "@salt-ds/lab";
 
 describe("GIVEN a NavItem", () => {
   describe("AND `href` is passed", () => {
-    cy.mount(
-      <NavItem href="https://www.saltdesignsystem.com">NavItem</NavItem>
-    );
-    cy.findByRole("link").should(
-      "have.attr",
-      "href",
-      "https://www.saltdesignsystem.com"
-    );
+    it("should render a link with a href", () => {
+      cy.mount(
+        <NavItem href="https://www.saltdesignsystem.com">NavItem</NavItem>
+      );
+      cy.findByRole("link").should(
+        "have.attr",
+        "href",
+        "https://www.saltdesignsystem.com"
+      );
+    });
   });
 
   describe("AND it is active", () => {
@@ -54,16 +56,18 @@ describe("GIVEN a NavItem", () => {
     });
 
     describe("AND it is expanded", () => {
-      cy.mount(
-        <NavItem parent={true} expanded={true}>
-          NavItem
-        </NavItem>
-      );
-      cy.findByRole("button", { name: "expand" }).should(
-        "have.attr",
-        "aria-expanded",
-        "true"
-      );
+      it("should set `aria-expanded` to `true`", () => {
+        cy.mount(
+          <NavItem parent={true} expanded={true}>
+            NavItem
+          </NavItem>
+        );
+        cy.findByRole("button", { name: "expand" }).should(
+          "have.attr",
+          "aria-expanded",
+          "true"
+        );
+      });
     });
   });
 });
