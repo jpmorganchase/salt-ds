@@ -56,6 +56,12 @@
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
 
+/* consecutively selected list items to display bottom border only, no double borders */
+.saltListItemNext[aria-selected="true"]
+  + .saltListItemNext[aria-selected="true"] {
+  border-top: none;
+}
+
 /* disabled list item when selected */
 .saltListItemNext-disabled[aria-selected="true"]:not([role="presentation"]) {
   border-block: var(--salt-size-border) var(--salt-container-borderStyle)
