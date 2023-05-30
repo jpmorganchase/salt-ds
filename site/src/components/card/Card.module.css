@@ -78,7 +78,6 @@
   padding: 0 calc(var(--salt-size-unit) * 2);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   flex: 1;
 }
 
@@ -111,6 +110,7 @@
 }
 
 .cardFooter {
+  margin-top: auto;
   display: flex;
 }
 
