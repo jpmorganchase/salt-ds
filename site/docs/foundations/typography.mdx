@@ -15,7 +15,7 @@ The design system uses the open-source sans serif typeface **Open Sans**.
 
 **PT Mono** is used to represent code snippets only, and therefore should not be used in any other context. PT Mono is a Monospace typeface that displays all characters within the same width. 
 
-## Type styles
+## Styles
 
 <Image src="/img/foundations/typography-style-display.svg" alt="Graphical representation of Display styles" />
 
@@ -41,7 +41,7 @@ Help text is used to provide additional information or instructions, such as acc
 Code is used to highlight any text that represents code.
 
 
-## Type and color
+## Color
 Legibility and accessibility is a key consideration within the design system. with this in mind, each mode provides two color options; primary and secondary, both of which are selected from the neutral palette. These colors are consistently applied throughout the design system.
 
 <Image src="/img/foundations/typography-colors.svg" alt="Example of type color options" />
@@ -74,8 +74,6 @@ Secondary text used for labels to ensure data has greater prominence, without th
 
 </DesignCards>
 
-
-### Legibility and accessibility
 All text within the design system meets WCAG 2.0 level AA requirements in order to ensure legibility. 
 
 WCAG 2.0 requires that the contrast ratio between text and the background it sits on is at least 4.5:1 for normal sized text and 3:1 for larger text. 
@@ -87,7 +85,7 @@ Line height controls the amount of space between baselines within a block of tex
 
 In order to scale consistently across all styles, weights and densities, line height is set to a multiple of the font size. The multiple is set to 1.3x to balance the need for a moderate degree of information density with the need to create enough visual separation between lines of text to enable efficient line tracking when reading blocks of text.
 
-## Font weight
+## Weight
 Weight refers to the relative thickness of a font’s stroke. Each style includes three weights, enabling the default style to either be emphasised or de-emphasised to help create visual hiearachy. 
 
 <DesignCards>
@@ -121,17 +119,20 @@ The strong weight provides the ability for each font style to be emphasised. Thi
 
 </DesignCards>
 
-## Type alignment
+## Alignment
 Type alignment controls how text aligns in the space it appears. There are four types of alignment; left, right, centered and justified.
 
 ### Left-aligned
-Text aligned to the left is the default configuration for left-to-right languages such as English.
+Text aligned to the left is the default configuration for left-to-right (LTR) languages, such as English.
 
 ### Right-aligned
-Numeric values (including dates, times, and currency figures) should be right aligned if they are meant to be compared with each other, for instance within a data grid column. If a numeric value is displayed in isolation, and therefore not for comparison, it should be left aligned to fit in with the content around it.
+Right align text for right-to-left (RTL) languages, such as Arabic or Hebrew. It should also be used for Numeric values (including dates, times, and currency figures) when the intention is to carry out comparisons within a data set, for instance within a data grid column. If a numeric value is displayed in isolation, and therefore not for comparison, it should be left aligned to fit in with the content around it. 
 
 ### Center-aligned
-Center aligned text should be reserved for short sentences or blocks of text included as a typographic element within a layout, such as a pull quote or key metric. It should never be used for long paragraphs or headings.
+Center aligned text should be reserved for short sentences or blocks of text included as a typographic element, such as a pull quote or key metric. Avoid center-aligning large blocks of text or headings. When longer text is centered, readers are forced into additional eye movements on both sides of the text, resulting in unnecessary eye fatigue and lower reading accuracy.
+
+### Justified text
+The use of justified text is not encouraged, but if required for a more formal aesthetic or to align to print materials consider enabling hyphenation to balance negative space and avoid large gaps between words. 
 
 ## Line length
 When including paragraphs of text within a design it should be laid-out in a way that accommodates the intended reader. Shorter line lengths are typically more comfortable for the majority of readers and scenarios. With longer line lengths a readers eyes have to travel further from the end of one line to the start of the next, which can be hard to track progress and has been shown to cause fatigue.  
@@ -151,7 +152,7 @@ We recommend that no block of text exceeds **a maximum of 100 CPL**.
 Within the design system, the columns defined in ‘layouts’ have been designed to accommodate these recommendations across all densities.
 
 
-## Type case
+## Case
 There are three cases recommended within our content guidelines: sentence case, title case and all capitals.
 
 ### Sentence case
@@ -163,7 +164,7 @@ The only words you should capitalize or put in title case are proper nouns and j
 ### All capitals
 All caps are reserved for button labels to give them prominence and to differentiate them from other graphical elements. Never use all caps in general writing. 
 
-## Italicizing text
+## Italics
 Italics are primarily used for help text, to differentiate it from other text such as labels within an input. 
 
 <Image src="/img/foundations/typography-italics.svg" alt="Example of italicized text" />
