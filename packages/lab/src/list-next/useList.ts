@@ -53,10 +53,40 @@ export const useList = ({
       ) || []
     );
   };
+
   const getAllActiveOptions = () =>
     getAllOptions().filter(
       (option) => option.getAttribute("aria-disabled") !== "true"
     );
+
+  // disabledSelectedOnly
+  const getDisabledSelectedOptions = () =>
+    getAllOptions().filter(
+      (option) =>
+        option.getAttribute("aria-disabled") === "true" &&
+        option.getAttribute("aria-selected") === "true"
+    );
+
+  // focusable options: non disabled, disabled selected, and all others
+  const getKeyboardFocusableOptions = () => {
+    const disabledSelectedOnly = getDisabledSelectedOptions();
+
+    const options = [...getAllActiveOptions(), ...disabledSelectedOnly];
+
+    const sortedOptions = options.sort((a, b) => {
+      const idA = a.getAttribute("id");
+      const idB = b.getAttribute("id");
+
+      if (!idA || !idB) return;
+      if (idA < idB) {
+        return -1;
+      } else if (idB > idA) {
+        return 1;
+      }
+    });
+
+    return sortedOptions;
+  };
 
   // debugger;
 
@@ -85,7 +115,7 @@ export const useList = ({
 
   /* finds next active option */
   const findNextOption = (currentOption: Element | null): Element | null => {
-    const allActiveOptions = getAllActiveOptions();
+    const allActiveOptions = getKeyboardFocusableOptions(); // keyboard should be able to focus on disabledSelected options too
     // Returns next item, if no current option it will return 0
     const nextOptionIndex = allActiveOptions.indexOf(currentOption) + 1;
     return allActiveOptions[nextOptionIndex] || null;
@@ -94,7 +124,7 @@ export const useList = ({
   /**/
   const findPreviousOption = (currentOption: Element): Element | null => {
     // Return the previous option if it exists; otherwise, returns null
-    const allActiveOptions = getAllActiveOptions();
+    const allActiveOptions = getKeyboardFocusableOptions(); // keyboard should be able to focus on disabledSelected options too
     const currentOptionIndex = allActiveOptions.indexOf(currentOption);
     return allActiveOptions[currentOptionIndex - 1] || null;
   };
@@ -194,7 +224,7 @@ export const useList = ({
 
   const handleKeyDown = useCallback((evt: KeyboardEvent<HTMLUListElement>) => {
     const { key, shiftKey, ctrlKey, metaKey } = evt;
-    const allOptions = getAllOptions();
+    const allOptions = getKeyboardFocusableOptions(); // keyboard should be able to focus on disabledSelected options too
     const currentItem =
       document.getElementById(activeDescendantRef.current) || allOptions[0];
     let nextItem = currentItem as HTMLElement;
