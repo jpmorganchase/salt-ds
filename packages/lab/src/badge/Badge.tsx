@@ -9,8 +9,10 @@ import {
   ReactElement,
   ReactText,
 } from "react";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
-import "./Badge.css";
+import badgeCss from "./Badge.css";
 
 /**
  * @example overriding density prop to fit a smaller denser space otherwise handled through context provider
@@ -51,6 +53,13 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-badge",
+    css: badgeCss,
+    window: targetWindow,
+  });
+
   const badgeId = useId();
   const childId = useId(
     isValidElement<HTMLAttributes<HTMLElement>>(children)

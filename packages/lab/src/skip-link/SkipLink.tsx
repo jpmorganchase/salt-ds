@@ -1,8 +1,11 @@
 import { forwardRef, RefObject } from "react";
-import { LinkProps, Link, makePrefixer } from "@salt-ds/core";
-import "./SkipLink.css";
+import { Link, LinkProps, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import skipLinkCss from "./SkipLink.css";
 
 interface SkipLinkProps extends LinkProps {
   /**
@@ -20,6 +23,13 @@ const withBaseName = makePrefixer("saltSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
   function SkipLink({ className, targetRef, ...rest }, ref) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-skip-link",
+      css: skipLinkCss,
+      window: targetWindow,
+    });
+
     const targetClass = clsx(withBaseName("target"), className);
 
     const eventHandlers = useManageFocusOnTarget({ targetRef, targetClass });

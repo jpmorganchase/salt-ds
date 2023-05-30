@@ -9,7 +9,9 @@ import {
   PolymorphicRef,
 } from "../utils";
 
-import "./GridLayout.css";
+import gridLayoutCss from "./GridLayout.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type GridLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -60,6 +62,12 @@ export const GridLayout: GridLayoutComponent = forwardRef(
     }: GridLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-grid-layout",
+      css: gridLayoutCss,
+      window: targetWindow,
+    });
     const Component = as || "div";
 
     const gridColumns = useResponsiveProp(columns, 12);

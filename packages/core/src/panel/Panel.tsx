@@ -2,7 +2,9 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes } from "react";
 import { makePrefixer } from "../utils";
 
-import "./Panel.css";
+import panelCss from "./Panel.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 /**
  * Panel component that acts as wrapper around a node
@@ -29,6 +31,13 @@ export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
   { className, children, variant = "primary", ...restProps },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-panel",
+    css: panelCss,
+    window: targetWindow,
+  });
+
   return (
     <div
       className={clsx(withBaseName(), withBaseName(variant), className)}

@@ -3,7 +3,10 @@ import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { A11yValueProps, FormFieldContext } from "../form-field-context";
 import { makePrefixer, useId, capitalize } from "../utils";
 
-import "./FormField.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formFieldCss from "./FormField.css";
 
 export type FormFieldLabelPlacement = "top" | "left";
 
@@ -53,6 +56,13 @@ export const FormField = forwardRef(
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-form-field",
+      css: formFieldCss,
+      window: targetWindow,
+    });
+
     const formId = useId(idProp);
 
     const labelId = formId ? `label-${formId}` : undefined;

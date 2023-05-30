@@ -11,12 +11,8 @@ import React, {
   useState,
 } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import {
-  CellValidationState,
-  GridColumnInfo,
-  GridColumnProps,
-} from "./GridColumn";
-import { GridContext } from "./GridContext";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 import { clsx } from "clsx";
 import {
   CellMeasure,
@@ -50,7 +46,12 @@ import {
   useVisibleColumnGroupRange,
   useVisibleRowRange,
 } from "./internal";
-import "./Grid.css";
+import {
+  CellValidationState,
+  GridColumnInfo,
+  GridColumnProps,
+} from "./GridColumn";
+import { GridContext } from "./GridContext";
 import { SelectionContext } from "./SelectionContext";
 import { SizingContext } from "./SizingContext";
 import { LayoutContext } from "./LayoutContext";
@@ -62,6 +63,8 @@ import { ColumnGhost } from "./internal/ColumnGhost";
 import { ColumnDropTarget } from "./internal/ColumnDropTarget";
 import { ColumnDataContext } from "./ColumnDataContext";
 import { ColumnSortContext } from "./ColumnSortContext";
+
+import gridCss from "./Grid.css";
 
 const withBaseName = makePrefixer("saltGrid");
 
@@ -208,6 +211,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     headerIsFocusable,
     getRowValidationStatus,
   } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-grid",
+    css: gridCss,
+    window: targetWindow,
+  });
 
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollableRef = useRef<HTMLDivElement>(null);

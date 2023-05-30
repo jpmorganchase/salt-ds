@@ -2,7 +2,10 @@ import { makePrefixer } from "@salt-ds/core";
 import { ReactElement } from "react";
 import { escapeRegExp } from "../utils";
 
-import "./Highlighter.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import highligherCss from "./Highlighter.css";
 
 const withBaseName = makePrefixer("saltHighlighter");
 
@@ -15,6 +18,13 @@ export const Highlighter = (
   props: HighlighterProps
 ): ReactElement<HighlighterProps> => {
   const { matchPattern, text = "" } = props;
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-hightligher",
+    css: highligherCss,
+    window: targetWindow,
+  });
+
   const matchRegex =
     typeof matchPattern === "string"
       ? new RegExp(`(${escapeRegExp(matchPattern)})`, "gi")

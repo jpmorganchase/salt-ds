@@ -8,6 +8,9 @@ import {
   Ref,
 } from "react";
 import { FloatingArrow, FloatingPortal } from "@floating-ui/react";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import {
   makePrefixer,
@@ -15,9 +18,10 @@ import {
   UseFloatingUIProps,
   useForkRef,
 } from "../utils";
-import { useTooltip, UseTooltipProps } from "./useTooltip";
-import "./Tooltip.css";
 import { SaltProvider } from "../salt-provider";
+
+import { useTooltip, UseTooltipProps } from "./useTooltip";
+import tooltipCss from "./Tooltip.css";
 
 const withBaseName = makePrefixer("saltTooltip");
 
@@ -82,6 +86,13 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       leaveDelay = 0,
       ...rest
     } = props;
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-tooltip",
+      css: tooltipCss,
+      window: targetWindow,
+    });
 
     const hookProps: UseTooltipProps = {
       open: openProp,

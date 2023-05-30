@@ -11,7 +11,9 @@ import { forwardRef } from "react";
 import { makePrefixer } from "../utils";
 import { ValidationStatus } from "./ValidationStatus";
 
-import "./StatusIndicator.css";
+import statusIndicatorCss from "./StatusIndicator.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const icons = {
   error: ErrorSolidIcon,
@@ -41,6 +43,13 @@ export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
     { className, status, size = DEFAULT_ICON_SIZE, ...restProps },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-status-indicator",
+      css: statusIndicatorCss,
+      window: targetWindow,
+    });
+
     const IconComponent = icons[status];
     const ariaLabel = statusToAriaLabelMap[status];
 

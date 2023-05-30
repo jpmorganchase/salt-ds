@@ -125,6 +125,12 @@
   background: var(--salt-actionable-secondary-background-active) !important;
 }
 
+/* copied over from Tabstrip.css */
+[data-overflowed] {
+  order: 99;
+  visibility: hidden;
+}
+
 /* .Responsive-inner > [data-collapsed='true'] {
   background: brown;
 }

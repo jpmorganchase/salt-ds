@@ -1,7 +1,10 @@
 import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 
-import "./FormGroup.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formGroupCss from "./FormGroup.css";
 
 export interface FormGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -14,6 +17,12 @@ const baseName = "saltFormGroup";
 
 export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>(
   function FormGroup({ className, row, ...other }, ref) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-form-group",
+      css: formGroupCss,
+      window: targetWindow,
+    });
     return (
       <div
         className={clsx(baseName, { [`${baseName}-row`]: row }, className)}

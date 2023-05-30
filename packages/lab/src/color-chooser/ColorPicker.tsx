@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { SketchPicker, ColorResult } from "react-color";
+import { ColorResult, SketchPicker } from "react-color";
 import { clsx } from "clsx";
 import { Button, makePrefixer } from "@salt-ds/core";
 import { Color, RGBAValue } from "./Color";
@@ -7,7 +7,10 @@ import { hexValueWithoutAlpha } from "./ColorHelpers";
 import { HexInput } from "./HexInput";
 import { RGBAInput } from "./RGBAInput";
 
-import "./ColorPicker.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import colorPickerCss from "./ColorPicker.css";
 
 const withBaseName = makePrefixer("saltColorChooserPicker");
 
@@ -30,6 +33,13 @@ export const ColorPicker = ({
   onChange,
   onDialogClosed,
 }: ColorPickerProps): JSX.Element => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-color-picker",
+    css: colorPickerCss,
+    window: targetWindow,
+  });
+
   const rgbaValue: RGBAValue =
     color?.rgba ?? Color.makeColorFromRGB(0, 0, 0, alpha).rgba;
   const rgbaText = disableAlphaChooser ? "RGB" : "RGBA";

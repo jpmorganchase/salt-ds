@@ -24,7 +24,9 @@ import { DeleteButton } from "./internal/DeleteButton";
 import { DivButton } from "./internal/DivButton";
 import { pillBaseName } from "./constants";
 
-import "./Pill.css";
+import pillCss from "./Pill.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const useEllipsisIsActive = (): [
   MutableRefObject<HTMLDivElement | null>,
@@ -123,6 +125,13 @@ export const PillBase = forwardRef(function PillBase(
   }: PillBaseProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-pill",
+    css: pillCss,
+    window: targetWindow,
+  });
+
   const [active, setActive] = useState(false);
   const [labelRef, ellipsis] = useEllipsisIsActive();
   const clickKeys = ["Enter", " "];

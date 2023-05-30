@@ -9,8 +9,10 @@ import {
 import { makePrefixer, useControlled } from "../utils";
 import { CheckboxIcon } from "./CheckboxIcon";
 
-import "./Checkbox.css";
+import checkboxCss from "./Checkbox.css";
 import { useCheckboxGroup } from "./internal/useCheckboxGroup";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 const withBaseName = makePrefixer("saltCheckbox");
 
@@ -92,6 +94,12 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-checkbox",
+      css: checkboxCss,
+      window: targetWindow,
+    });
     const checkboxGroup = useCheckboxGroup();
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {

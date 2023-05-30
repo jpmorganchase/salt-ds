@@ -5,7 +5,10 @@ import { Button, ButtonProps, capitalize, makePrefixer } from "@salt-ds/core";
 import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { useDescendant } from "./internal/useDescendant";
 
-import "./OrderedButton.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import orderedButtonCss from "./OrderedButton.css";
 
 export interface OrderedButtonProps extends ButtonProps {
   /**
@@ -52,6 +55,13 @@ export const OrderedButton = forwardRef<HTMLButtonElement, OrderedButtonProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-ordered-button",
+      css: orderedButtonCss,
+      window: targetWindow,
+    });
+
     const index = useDescendant({ order, stackOrder, alignLeftOrder, variant });
     const {
       matches,

@@ -9,7 +9,11 @@ import {
 import { clsx } from "clsx";
 
 import getInnerText from "./internal/getInnerText";
-import "./Banner.css";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import bannerCss from "./Banner.css";
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -44,6 +48,13 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-banner",
+    css: bannerCss,
+    window: targetWindow,
+  });
+
   const { announce } = useAriaAnnouncer();
 
   const [containerNode, setContainerNode] = useState<HTMLDivElement | null>(

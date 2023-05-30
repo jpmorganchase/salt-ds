@@ -2,9 +2,13 @@ import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
 import { clsx } from "clsx";
 
 import { Scrim, ScrimProps } from "../scrim";
-import "./LayerLayout.css";
+
 import { Breakpoints, makePrefixer, usePrevious } from "@salt-ds/core";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import layerLayoutCss from "./LayerLayout.css";
 
 export const LAYER_POSITIONS = [
   "center",
@@ -60,6 +64,13 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       isOpen = true,
       ...rest
     } = props;
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-layer-layout",
+      css: layerLayoutCss,
+      window: targetWindow,
+    });
 
     const previousDisableAnimationsProp = usePrevious(
       disableAnimations,

@@ -1,9 +1,13 @@
-import { ComponentType, forwardRef, ComponentPropsWithoutRef } from "react";
+import { ComponentPropsWithoutRef, ComponentType, forwardRef } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
 import { LogoTitle, LogoTitleProps } from "./internal/LogoTitle";
-import "./Logo.css";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import logoCss from "./Logo.css";
 
 export interface LogoProps extends ComponentPropsWithoutRef<"span"> {
   /**
@@ -50,6 +54,12 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
     TitleProps,
     ...rest
   } = props;
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-logo",
+    css: logoCss,
+    window: targetWindow,
+  });
 
   // TODO check if we need ImageProps and TitleProps classNames interface.
   return (
