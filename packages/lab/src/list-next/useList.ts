@@ -224,7 +224,7 @@ export const useList = ({
 
   const handleKeyDown = useCallback((evt: KeyboardEvent<HTMLUListElement>) => {
     const { key, shiftKey, ctrlKey, metaKey } = evt;
-    const allOptions = getKeyboardFocusableOptions(); // keyboard should be able to focus on disabledSelected options too
+    const allOptions = getAllOptions();
     const currentItem =
       document.getElementById(activeDescendantRef.current) || allOptions[0];
     let nextItem = currentItem as HTMLElement;
