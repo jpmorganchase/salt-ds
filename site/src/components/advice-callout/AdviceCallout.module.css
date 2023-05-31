@@ -1,0 +1,24 @@
+.root {
+  padding: calc(2 * var(--salt-size-unit)); /* var(--salt-size-container-spacing); */
+  background-color: var(--salt-container-secondary-background);
+}
+
+.root + :not(.root) {
+  margin-top: calc(2 * var(--salt-size-unit));
+}
+
+.iconPositive {
+  color: var(--salt-status-success-foreground); /* var(--salt-status-positive-foreground); */
+}
+
+.iconNegative {
+  color: var(--salt-status-error-foreground); /* var(--salt-status-negative-foreground); */
+}
+
+.content > :first-child {
+  margin-top: 0;
+}
+
+.content > :last-child {
+  margin-bottom: 0;
+}
