@@ -2,7 +2,10 @@ import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { useRifm } from "rifm";
 import { useControlled } from "@salt-ds/core";
-import { Input, InputProps } from "../input";
+import {
+  InputLegacy as Input,
+  InputLegacyProps as InputProps,
+} from "../input-legacy";
 import {
   baseName,
   InputWithMask,

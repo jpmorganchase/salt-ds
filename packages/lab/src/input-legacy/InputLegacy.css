@@ -1,0 +1,137 @@
+/* Styles applied to the root element dependent on density */
+.salt-density-touch {
+  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit) * 0.5);
+  --inputLegacy-button-inset: 4px;
+}
+.salt-density-low {
+  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit) * 2 / 3);
+  --inputLegacy-button-inset: 4px;
+}
+.salt-density-medium {
+  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit) * 0.5);
+  --inputLegacy-button-inset: 2px;
+}
+.salt-density-high {
+  --inputLegacy-adornment-height: calc(var(--salt-size-base) + var(--salt-size-unit));
+  --inputLegacy-button-inset: 2px;
+}
+
+/* Style applied to the root element */
+.saltInputLegacy {
+  align-items: center;
+  background: var(--saltInputLegacy-background, none);
+  border: var(--saltInputLegacy-border, none);
+  border-radius: var(--saltInputLegacy-borderRadius, 0);
+  color: var(--saltInputLegacy-text-color, var(--salt-text-primary-foreground));
+  cursor: var(--saltInputLegacy-cursor, default);
+  display: inline-flex;
+  font-family: var(--saltInputLegacy-fontFamily, var(--salt-text-fontFamily));
+  font-size: var(--saltInputLegacy-fontSize, var(--salt-text-fontSize));
+  height: var(--saltInputLegacy-height, var(--salt-size-base));
+  line-height: var(--salt-text-lineHeight);
+  min-height: var(--saltInputLegacy-minHeight, var(--salt-size-base));
+  min-width: var(--saltInputLegacy-minWidth, 8em);
+  padding: var(--saltInputLegacy-padding, 0 var(--salt-size-unit));
+  position: var(--saltInputLegacy-position, relative);
+  width: 100%;
+}
+
+/* Reset in the next class */
+.saltInputLegacy-input:focus {
+  outline: none;
+}
+
+/* Pseudo-class applied to the root element when focused */
+.saltInputLegacy-focused {
+  outline-style: var(--saltInputLegacy-focused-outlineStyle, var(--salt-focused-outlineStyle));
+  outline-width: var(--saltInputLegacy-focused-outlineWidth, var(--salt-focused-outlineWidth));
+  outline-color: var(--saltInputLegacy-focused-outlineColor, var(--salt-focused-outlineColor));
+  outline-offset: var(--saltInputLegacy-focused-outlineOffset, var(--salt-focused-outlineOffset));
+}
+
+/* Style applied to selected input */
+.saltInputLegacy-input::selection {
+  background-color: var(--saltInputLegacy-highlight-color, var(--salt-text-background-selected));
+}
+
+/* Style applied to inner input component */
+.saltInputLegacy-input {
+  background: var(--saltInputLegacy-background, none);
+  border: none;
+  box-sizing: content-box;
+  color: inherit;
+  display: block;
+  flex: 1;
+  font: inherit;
+  letter-spacing: var(--saltInputLegacy-letterSpacing, 0);
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Style applied to input if `disabled={true}` */
+.saltInputLegacy-disabled .saltInputLegacy-input {
+  cursor: var(--salt-editable-cursor-disabled);
+  color: var(--saltInputLegacy-text-color-disabled, var(--salt-text-primary-foreground-disabled));
+}
+
+/* Style applied to adornment containers */
+.saltInputLegacy-suffixContainer,
+.saltInputLegacy-prefixContainer {
+  display: flex;
+  align-items: center;
+
+  height: var(--inputLegacy-adornment-height);
+}
+
+/* Style applied to root element with start adornment */
+.saltInputLegacy-inputAdornedStart {
+  padding-left: var(--saltInputLegacy-adornedStart-padding, 0);
+}
+
+/* Style applied to inner input element with start adornment */
+.saltInputLegacy-inputAdornedStart .saltInputLegacy-input {
+  padding-left: var(--saltInputLegacy-adornedStart-input-padding, var(--salt-size-unit));
+}
+
+/* Style applied to root element with end adornment */
+.saltInputLegacy-inputAdornedEnd {
+  padding-right: var(--saltInputLegacy-adornedEnd-padding, 0);
+}
+
+/* Style applied to inner input element with end adornment */
+.saltInputLegacy-inputAdornedEnd .saltInputLegacy-input {
+  padding-right: var(--saltInputLegacy-adornedEnd-input-padding, var(--salt-size-unit));
+}
+
+/* Style applied to salt Button used within Input component adornments */
+.saltInputLegacy .saltInputLegacy-suffixContainer > .saltButton,
+.saltInputLegacy .saltInputLegacy-prefixContainer > .saltButton {
+  height: calc(var(--saltButton-height, var(--salt-size-base)) - (var(--inputLegacy-button-inset) * 2));
+  margin: var(--inputLegacy-button-inset);
+  padding: 0 calc(var(--salt-size-unit) - var(--inputLegacy-button-inset));
+}
+
+/* Style applied if `textAlign={"left"}` */
+.saltInputLegacy-leftTextAlign .saltInputLegacy-input {
+  text-align: left;
+}
+
+/* Style applied if `textAlign={"center"}` */
+.saltInputLegacy-centerTextAlign .saltInputLegacy-input {
+  text-align: center;
+}
+
+/* Style applied if `textAlign={"right"}` */
+.saltInputLegacy-rightTextAlign .saltInputLegacy-input {
+  text-align: right;
+}
+
+/* Style applied if `inFormField={true}` */
+.saltInputLegacy-formField {
+  min-width: var(--saltFormFieldLegacy-input-minWidth, 0px);
+  width: 100%;
+}
