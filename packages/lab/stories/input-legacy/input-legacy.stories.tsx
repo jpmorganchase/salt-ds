@@ -8,15 +8,20 @@ import {
   SendIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import { Dropdown, FormField, Input, StaticInputAdornment } from "@salt-ds/lab";
+import {
+  Dropdown,
+  FormField,
+  Input as InputLegacy,
+  StaticInputAdornment,
+} from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Lab/Input",
-  component: Input,
-} as ComponentMeta<typeof Input>;
+  title: "Lab/Input Legacy",
+  component: InputLegacy,
+} as ComponentMeta<typeof InputLegacy>;
 
-const Template: ComponentStory<typeof Input> = (args) => {
+const Template: ComponentStory<typeof InputLegacy> = (args) => {
   // let text;
   // @ts-ignore
   // if (args.multiline) {
@@ -27,7 +32,7 @@ const Template: ComponentStory<typeof Input> = (args) => {
   // }
 
   return (
-    <Input
+    <InputLegacy
       defaultValue={args.defaultValue ?? "Value"}
       style={{ width: "292px" }}
       {...args}
@@ -62,39 +67,41 @@ FeatureInput.args = {
   textAlign: "left",
 };
 
-export const ReadOnly: ComponentStory<typeof Input> = () => {
+export const ReadOnly: ComponentStory<typeof InputLegacy> = () => {
   return (
     <>
-      <Input
+      <InputLegacy
         defaultValue={"Read Only Input"} // Read Only isn't currently a prop
         readOnly
         style={{ width: "292px" }}
       />
       <div style={{ height: "15px" }} />
-      <Input readOnly style={{ width: "292px" }} />
+      <InputLegacy readOnly style={{ width: "292px" }} />
     </>
   );
 };
 
-export const WithFormField: ComponentStory<typeof Input> = () => {
+export const WithFormField: ComponentStory<typeof InputLegacy> = () => {
   return (
     <FormField label="ADA compliant label" style={{ width: 292 }}>
-      <Input defaultValue="Value" />
+      <InputLegacy defaultValue="Value" />
     </FormField>
   );
 };
 
-export const WithFormFieldNoInitialValue: ComponentStory<typeof Input> = () => {
+export const WithFormFieldNoInitialValue: ComponentStory<
+  typeof InputLegacy
+> = () => {
   return (
     <FormField label="ADA compliant label" style={{ width: 292 }}>
-      <Input />
+      <InputLegacy />
     </FormField>
   );
 };
 
-export const Spellcheck: ComponentStory<typeof Input> = () => {
+export const Spellcheck: ComponentStory<typeof InputLegacy> = () => {
   return (
-    <Input
+    <InputLegacy
       defaultValue="This is a comment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
       style={{ width: "292px" }}
       inputProps={{ spellCheck: true }}
@@ -102,31 +109,40 @@ export const Spellcheck: ComponentStory<typeof Input> = () => {
   );
 };
 
-export const TouchDensityInput: ComponentStory<typeof Input> = () => {
+export const TouchDensityInput: ComponentStory<typeof InputLegacy> = () => {
   return (
     <SaltProvider density="touch">
-      <Input defaultValue="Touch Density Input" style={{ width: "292px" }} />
+      <InputLegacy
+        defaultValue="Touch Density Input"
+        style={{ width: "292px" }}
+      />
     </SaltProvider>
   );
 };
 
-export const LowDensityInput: ComponentStory<typeof Input> = () => {
+export const LowDensityInput: ComponentStory<typeof InputLegacy> = () => {
   return (
     <SaltProvider density="low">
-      <Input defaultValue="Low Density Input" style={{ width: "292px" }} />
+      <InputLegacy
+        defaultValue="Low Density Input"
+        style={{ width: "292px" }}
+      />
     </SaltProvider>
   );
 };
 
-export const HighDensityInput: ComponentStory<typeof Input> = () => {
+export const HighDensityInput: ComponentStory<typeof InputLegacy> = () => {
   return (
     <SaltProvider density="high">
-      <Input defaultValue="High Density Input" style={{ width: "292px" }} />
+      <InputLegacy
+        defaultValue="High Density Input"
+        style={{ width: "292px" }}
+      />
     </SaltProvider>
   );
 };
 
-export const Adornments: ComponentStory<typeof Input> = (args) => {
+export const Adornments: ComponentStory<typeof InputLegacy> = (args) => {
   const styles = {
     input: {
       width: 292,
@@ -147,7 +163,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
 
   return (
     <>
-      <Input
+      <InputLegacy
         defaultValue="Prefix: Icon"
         style={styles.input}
         {...args}
@@ -158,14 +174,14 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue="Prefix: Text"
         style={styles.input}
         {...args}
         startAdornment={<StaticInputAdornment>+1</StaticInputAdornment>}
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Icon"
         style={styles.input}
         {...args}
@@ -176,14 +192,14 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Text"
         style={styles.input}
         {...args}
         endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Button"
         style={styles.input}
         {...args}
@@ -194,7 +210,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue="Prefix: Icon + Text"
         style={styles.input}
         {...args}
@@ -209,7 +225,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue="Prefix: Interactive Component"
         style={styles.input}
         {...args}
@@ -218,7 +234,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Text + Button"
         style={styles.input}
         {...args}
@@ -232,7 +248,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Interactive Component"
         style={styles.input}
         {...args}
@@ -245,7 +261,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Button + Button"
         style={styles.input}
         {...args}
@@ -261,7 +277,7 @@ export const Adornments: ComponentStory<typeof Input> = (args) => {
         }
       />
       <div style={{ height: "15px" }} />
-      <Input
+      <InputLegacy
         defaultValue={"Suffix: Static + Button\n\n"}
         style={styles.input}
         {...args}

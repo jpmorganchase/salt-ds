@@ -43,7 +43,11 @@ export {
 export * from "./form-field-context-legacy";
 export * from "./form-group";
 export * from "./formatted-input";
-export * from "./input";
+export {
+  InputLegacy as Input,
+  type InputLegacyProps as InputProps,
+  StaticInputAdornment,
+} from "./input-legacy";
 export { Input as InputNext } from "./input-next";
 export * from "./layer-layout";
 export * from "./list";

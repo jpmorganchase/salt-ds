@@ -89,7 +89,7 @@
   width: 70%;
 }
 
-.border-layout-custom-form .saltInput-suffixContainer {
+.border-layout-custom-form .saltInputLegacy-suffixContainer {
   margin-right: var(--salt-size-unit);
 }
 

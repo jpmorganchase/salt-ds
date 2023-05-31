@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Input } from "../input";
-import { isValidHex } from "./ColorHelpers";
-
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { InputLegacy as Input } from "../input-legacy";
+import { isValidHex } from "./ColorHelpers";
 
 import colorPickerCss from "./ColorPicker.css";
 
