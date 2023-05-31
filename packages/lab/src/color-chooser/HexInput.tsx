@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import { useEffect, useState } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { isValidHex } from "./ColorHelpers";
-import { Input } from "../input";
+import { InputLegacy as Input } from "../input-legacy";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";

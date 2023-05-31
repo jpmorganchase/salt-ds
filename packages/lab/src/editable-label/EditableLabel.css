@@ -1,6 +1,6 @@
 .saltEditableLabel {
-  --saltInput-minWidth: 14px;
-  --saltInput-position: absolute;
+  --saltInputLegacy-minWidth: 14px;
+  --saltInputLegacy-position: absolute;
   --editableLabel-padding: var(--saltEditableLabel-padding, 6px);
   --editableLabel-height: var(--saltEditableLabel-height, 26px);
   color: inherit;

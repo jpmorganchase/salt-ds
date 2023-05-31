@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { Input } from "../../../input";
+import { InputLegacy as Input } from "../../../input-legacy";
 
 describe("GIVEN an Input", () => {
   it("SHOULD have no a11y violations on load", () => {
