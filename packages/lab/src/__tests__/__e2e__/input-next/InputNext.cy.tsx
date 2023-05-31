@@ -99,14 +99,15 @@ describe("GIVEN an Input", () => {
     });
   });
 
-
   describe("WHEN used in Formfield", () => {
     describe("AND empty", () => {
       it("THEN input within should be disabled", () => {
-        cy.mount(<FormField disabled>
-          <FormFieldLabel>Disabled form field</FormFieldLabel>
-          <Input defaultValue="Value" />
-        </FormField>);
+        cy.mount(
+          <FormField disabled>
+            <FormFieldLabel>Disabled form field</FormFieldLabel>
+            <Input defaultValue="Value" />
+          </FormField>
+        );
         cy.findByLabelText("Disabled form field").should(
           "have.attr",
           "disabled"
@@ -116,15 +117,17 @@ describe("GIVEN an Input", () => {
 
     describe("AND readonly", () => {
       it("THEN input within should be readonly", () => {
-        cy.mount( <FormField readOnly>
-          <FormFieldLabel>Readonly form field</FormFieldLabel>
-          <Input defaultValue="Value" />
-        </FormField>);
-        
-      cy.findByLabelText("Readonly form field").should(
-        "have.attr",
-        "readonly"
-      );
+        cy.mount(
+          <FormField readOnly>
+            <FormFieldLabel>Readonly form field</FormFieldLabel>
+            <Input defaultValue="Value" />
+          </FormField>
+        );
+
+        cy.findByLabelText("Readonly form field").should(
+          "have.attr",
+          "readonly"
+        );
       });
     });
   });
