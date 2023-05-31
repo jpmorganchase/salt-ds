@@ -50,7 +50,7 @@ export function OverflowMenu({
       onSelectionChange={onSelectionChange}
       source={tabList}
       width="auto"
-      key={tabList.length}
+      key={tabList.map((tab) => tab.id).join("-")}
     />
   );
 }
