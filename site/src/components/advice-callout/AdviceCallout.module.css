@@ -3,6 +3,12 @@
   background-color: var(--salt-container-secondary-background);
 }
 
+/*
+  .root intentionally doens't have top or bottom margin, so that adjacent
+  <AdviceCallout>s have no gap between them (and thus visually look like a
+  single unit). However, the should be some space betweeen an <AdviceCallout>
+  and other content (e.g. paragraphs) below. This selector achieves that:
+*/
 .root + :not(.root) {
   margin-top: calc(2 * var(--salt-size-unit));
 }
