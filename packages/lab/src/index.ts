@@ -46,7 +46,7 @@ export * from "./formatted-input";
 export {
   InputLegacy as Input,
   type InputLegacyProps as InputProps,
-  StaticInputAdornment
+  StaticInputAdornment,
 } from "./input-legacy";
 export { Input as InputNext } from "./input-next";
 export * from "./layer-layout";

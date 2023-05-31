@@ -6,7 +6,11 @@ import {
   SendIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import { Dropdown, Input as InputLegacy, StaticInputAdornment } from "@salt-ds/lab";
+import {
+  Dropdown,
+  Input as InputLegacy,
+  StaticInputAdornment,
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 

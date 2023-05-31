@@ -22,7 +22,7 @@
   white-space: pre-wrap;
 }
 
-.saltEditableLabel .saltInput {
+.saltEditableLabel .saltInputLegacy {
   font-weight: var(--salt-text-fontWeight);
   left: var(--editableLabel-padding, 0);
   padding: 0;

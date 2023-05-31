@@ -7,10 +7,10 @@
   align-items: center;
 }
 
-.saltInput-prefixContainer .saltStaticInputAdornment {
+.saltInputLegacy-prefixContainer .saltStaticInputAdornment {
   padding-left: var(--inputLegacy-staticAdornment-padding);
 }
 
-.saltInput-suffixContainer .saltStaticInputAdornment {
+.saltInputLegacy-suffixContainer .saltStaticInputAdornment {
   padding-right: var(--inputLegacy-staticAdornment-padding);
 }
