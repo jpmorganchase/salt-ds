@@ -16,7 +16,7 @@ import {
   FormFieldLegacy as FormField,
   FormFieldLegacyProps as FormFieldProps,
 } from "../form-field-legacy";
-import { Input } from "../input";
+import { InputLegacy as Input } from "../input-legacy";
 
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   label?: string;

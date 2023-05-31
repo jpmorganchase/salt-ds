@@ -9,7 +9,7 @@ import {
   FormFieldLegacy as FormField,
   FormFieldLegacyProps as FormFieldProps,
 } from "../form-field-legacy";
-import { Input } from "../input";
+import { InputLegacy as Input } from "../input-legacy";
 import { withBaseName } from "./utils";
 
 export interface CompactInputProps {
