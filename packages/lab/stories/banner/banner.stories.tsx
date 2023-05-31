@@ -41,9 +41,9 @@ export const Interactive: ComponentStory<typeof Banner> = (props) => (
     <Banner status="warning" {...props}>
       <BannerContent>
         Unfortunately this release contains some serious bugs in the List
-        Builder component. These have been fixed in{' '}
-        <a href="./32.1.0">v32.1.0</a> so we recommend skipping this release
-        and upgrading directly to v32.1.0 or later.
+        Builder component. These have been fixed in{" "}
+        <a href="./32.1.0">v32.1.0</a> so we recommend skipping this release and
+        upgrading directly to v32.1.0 or later.
       </BannerContent>
       <BannerActions>
         <Button aria-label="close" variant="secondary">
