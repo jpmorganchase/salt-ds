@@ -108,6 +108,7 @@ describe("GIVEN an Input", () => {
             <Input defaultValue="Value" />
           </FormField>
         );
+        cy.wait(2000);
         cy.findByLabelText("Disabled form field").should(
           "have.attr",
           "disabled"
@@ -123,7 +124,7 @@ describe("GIVEN an Input", () => {
             <Input defaultValue="Value" />
           </FormField>
         );
-
+        cy.wait(2000);
         cy.findByLabelText("Readonly form field").should(
           "have.attr",
           "readonly"
