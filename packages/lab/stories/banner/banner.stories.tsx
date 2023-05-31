@@ -231,10 +231,10 @@ export const MultipleBanners: ComponentStory<typeof Banner> = () => {
         <BannerContent>This is an error banner</BannerContent>
       </Banner>
       <Banner status="warning">
-        <BannerContent>This is an warning banner</BannerContent>
+        <BannerContent>This is a warning banner</BannerContent>
       </Banner>
       <Banner status="success">
-        <BannerContent>This is an success banner</BannerContent>
+        <BannerContent>This is a success banner</BannerContent>
       </Banner>
       <Text styleAs="h1">Title</Text>
       <Text>
