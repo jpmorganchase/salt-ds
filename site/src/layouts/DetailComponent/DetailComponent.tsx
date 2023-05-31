@@ -1,4 +1,11 @@
-import React, { FC, useEffect } from "react";
+import React, {
+  FC,
+  useEffect,
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@jpmorganchase/mosaic-site-components";
 import { useRoute, useStore, SiteState } from "@jpmorganchase/mosaic-store";
@@ -33,9 +40,20 @@ export type Data = {
 
 type CustomSiteState = SiteState & { data?: Data };
 
+export type AllExamplesViewContextType = {
+  allExamplesView?: boolean;
+  setAllExamplesView: Dispatch<SetStateAction<boolean>>;
+};
+
+export const AllExamplesViewContext = createContext<AllExamplesViewContextType>(
+  { allExamplesView: false, setAllExamplesView: () => {} }
+);
+
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const { push } = useRouter();
   const { route } = useRoute();
+
+  const [allExamplesView, setAllExamplesView] = useState(false);
 
   const newRoute = route?.substring(0, route.lastIndexOf("/") + 1);
 
@@ -62,24 +80,29 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const currentTabIndex = currentTab?.id ?? 0;
 
   return (
-    <DetailBase
-      sidebar={
-        <Sidebar sticky>
-          {<SecondarySidebar additionalData={useData} />}
-        </Sidebar>
-      }
+    <AllExamplesViewContext.Provider
+      value={{ allExamplesView, setAllExamplesView }}
     >
-      <p>{description}</p>
-      <Tabs
-        activeTabIndex={currentTabIndex}
-        onActiveChange={updateRouteWhenTabChanges}
+      <DetailBase
+        sidebar={
+          <Sidebar sticky>
+            {<SecondarySidebar additionalData={useData} />}
+          </Sidebar>
+        }
       >
-        {tabs.map(({ id, label }) => (
-          <TabPanel key={id} label={label}>
-            {children}
-          </TabPanel>
-        ))}
-      </Tabs>
-    </DetailBase>
+        <p>{description}</p>
+
+        <Tabs
+          activeTabIndex={currentTabIndex}
+          onActiveChange={updateRouteWhenTabChanges}
+        >
+          {tabs.map(({ id, label }) => (
+            <TabPanel key={id} label={label}>
+              {children}
+            </TabPanel>
+          ))}
+        </Tabs>
+      </DetailBase>
+    </AllExamplesViewContext.Provider>
   );
 };

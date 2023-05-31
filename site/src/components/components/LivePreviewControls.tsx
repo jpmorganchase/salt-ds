@@ -10,6 +10,7 @@ import { LightIcon, DarkIcon } from "@salt-ds/icons";
 import { SaltProvider, Density, Mode } from "@salt-ds/core";
 import ExamplesListView from "./ExamplesListView";
 import useIsMobileView from "../../utils/useIsMobileView";
+import { useAllExamplesView } from "../../layouts/DetailComponent";
 
 import styles from "./LivePreviewControls.module.css";
 
@@ -39,7 +40,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
 
   const [mode, setMode] = useState<Mode>(defaultMode);
 
-  const [allExamplesView, setAllExamplesView] = useState(false);
+  const { allExamplesView, setAllExamplesView } = useAllExamplesView();
 
   const isMobileView = useIsMobileView();
 

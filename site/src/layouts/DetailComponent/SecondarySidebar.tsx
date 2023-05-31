@@ -4,6 +4,7 @@ import { Pill } from "@salt-ds/lab";
 import { Link } from "@salt-ds/core";
 import { Heading4 } from "../../components/mdx/h4";
 import { Data, Relationship } from "./DetailComponent";
+import { useAllExamplesView } from "./useAllExamplesView";
 
 import styles from "./SecondarySidebar.module.css";
 
@@ -34,6 +35,8 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({ additionalData }) => {
     featureRequest,
     askQuestion,
   } = additionalData || {};
+
+  const { allExamplesView } = useAllExamplesView();
 
   const alsoKnownAsPills = alsoKnownAs && (
     <>
@@ -112,9 +115,11 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({ additionalData }) => {
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.tableOfContents}>
-        <TableOfContents />
-      </div>
+      {allExamplesView && (
+        <div className={styles.tableOfContents}>
+          <TableOfContents />
+        </div>
+      )}
       <div className={styles.wrapper}>
         {alsoKnownAsPills}
         {relatedComponentsPills("similarTo", "Similar to")}
