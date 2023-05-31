@@ -20,7 +20,7 @@ import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
 import { SessionProvider } from "next-auth/react";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
 import "@jpmorganchase/mosaic-site-preset-styles/index.css";
-import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
+import { SaltProvider, useCurrentBreakpoint, GridLayout } from "@salt-ds/core";
 import { PT_Mono, Open_Sans } from "next/font/google";
 
 import "../css/index.css";
@@ -34,6 +34,7 @@ import clsx from "clsx";
 const components = {
   ...mosaicComponents,
   ...saltComponents,
+  GridLayout, // importing this in MDX file didn't work, so adding here instead
   Homepage,
   Image,
 };
