@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { Input } from "../../../input";
+import { InputLegacy as Input } from "../../../input-legacy";
 
 describe("GIVEN an Input", () => {
   it("SHOULD have no a11y violations on load", () => {
@@ -76,7 +76,7 @@ describe("GIVEN an Input", () => {
         );
         cy.findByTestId("parent").should(
           "have.class",
-          "saltInput-leftTextAlign"
+          "saltInputLegacy-leftTextAlign"
         );
       });
     });
@@ -92,7 +92,7 @@ describe("GIVEN an Input", () => {
         );
         cy.findByTestId("parent").should(
           "have.class",
-          "saltInput-rightTextAlign"
+          "saltInputLegacy-rightTextAlign"
         );
       });
     });

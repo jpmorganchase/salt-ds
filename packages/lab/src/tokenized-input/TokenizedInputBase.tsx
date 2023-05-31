@@ -37,7 +37,10 @@ import {
   TokenizedInputHelpers,
   TokenizedInputState,
 } from "./useTokenizedInput";
-import { Input, InputProps } from "../input";
+import {
+  InputLegacy as Input,
+  InputLegacyProps as InputProps,
+} from "../input-legacy";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 

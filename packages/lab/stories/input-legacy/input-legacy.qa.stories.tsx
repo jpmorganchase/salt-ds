@@ -6,14 +6,18 @@ import {
   SendIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import { Dropdown, Input, StaticInputAdornment } from "@salt-ds/lab";
+import {
+  Dropdown,
+  Input as InputLegacy,
+  StaticInputAdornment,
+} from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Input/QA",
-  component: Input,
-} as ComponentMeta<typeof Input>;
+  title: "Lab/Input Legacy/QA",
+  component: InputLegacy,
+} as ComponentMeta<typeof InputLegacy>;
 
 const data = [
   "Alabama",
@@ -28,7 +32,7 @@ const data = [
 const suffixData = ["KG", "lbs", "g"];
 
 const Default = () => (
-  <Input
+  <InputLegacy
     data-jpmui-test="input-example"
     defaultValue="Value"
     style={{ width: "292px" }}
@@ -36,7 +40,7 @@ const Default = () => (
 );
 
 const Disabled = () => (
-  <Input
+  <InputLegacy
     data-jpmui-test="input-example"
     defaultValue="Disabled"
     disabled
@@ -46,7 +50,7 @@ const Disabled = () => (
 
 const ReadOnly = () => {
   return (
-    <Input
+    <InputLegacy
       defaultValue={"Read Only Input"} // Read Only isn't currently a prop
       readOnly
       style={{ width: "292px" }}
@@ -60,7 +64,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
       <Default />
       <Disabled />
       <ReadOnly />
-      <Input
+      <InputLegacy
         defaultValue="Prefix: Icon"
         startAdornment={
           <StaticInputAdornment>
@@ -68,11 +72,11 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           </StaticInputAdornment>
         }
       />
-      <Input
+      <InputLegacy
         defaultValue="Prefix: Text"
         startAdornment={<StaticInputAdornment>+1</StaticInputAdornment>}
       />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Icon"
         endAdornment={
           <StaticInputAdornment>
@@ -80,11 +84,11 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           </StaticInputAdornment>
         }
       />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Text"
         endAdornment={<StaticInputAdornment>KG</StaticInputAdornment>}
       />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Button"
         endAdornment={
           <Button variant="secondary">
@@ -92,7 +96,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           </Button>
         }
       />
-      <Input
+      <InputLegacy
         defaultValue="Prefix: Icon + Text"
         startAdornment={
           <>
@@ -104,13 +108,13 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           </>
         }
       />
-      <Input
+      <InputLegacy
         defaultValue="Prefix: Interactive Component"
         startAdornment={
           <Dropdown defaultSelected={data[0]} source={data} width={90} />
         }
       />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Text + Button"
         endAdornment={
           <>
@@ -121,7 +125,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           </>
         }
       />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Interactive Component"
         endAdornment={
           <Dropdown
@@ -131,7 +135,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           />
         }
       />
-      <Input
+      <InputLegacy
         defaultValue="Suffix: Button + Button"
         endAdornment={
           <>
@@ -144,7 +148,7 @@ export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
           </>
         }
       />
-      <Input
+      <InputLegacy
         defaultValue={"Suffix: Static + Button\n\n"}
         endAdornment={
           <>

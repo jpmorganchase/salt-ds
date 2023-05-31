@@ -210,7 +210,7 @@ describe("GIVEN a FormField", () => {
         cy.get(".saltFormFieldLegacy-focused").should("exist");
         cy.findByTestId("test-id-1").should(
           "not.have.class",
-          "saltInput-focused"
+          "saltInputLegacy-focused"
         );
       });
     });

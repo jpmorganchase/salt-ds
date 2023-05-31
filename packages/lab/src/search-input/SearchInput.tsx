@@ -8,7 +8,11 @@ import {
 } from "react";
 import { clsx } from "clsx";
 import { Button, useControlled, useForkRef } from "@salt-ds/core";
-import { Input, InputProps, StaticInputAdornment } from "../input";
+import {
+  InputLegacy as Input,
+  InputLegacyProps as InputProps,
+  StaticInputAdornment,
+} from "../input-legacy";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 
 import { useWindow } from "@salt-ds/window";

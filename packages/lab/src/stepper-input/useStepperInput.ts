@@ -1,6 +1,6 @@
 import { KeyboardEvent, MouseEvent, MutableRefObject } from "react";
 import { ButtonProps, useControlled, useId } from "@salt-ds/core";
-import { InputProps } from "../input";
+import { InputLegacyProps as InputProps } from "../input-legacy";
 import { useDynamicAriaLabel } from "./internal/useDynamicAriaLabel";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
