@@ -7,15 +7,35 @@ import {
   Breadcrumbs,
   PageNavigation,
 } from "@jpmorganchase/mosaic-site-components";
+import { useStore, SiteState } from "@jpmorganchase/mosaic-store";
 import { Footer } from "../../components/footer";
 import { AppHeader } from "../../components/app-header";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
 import { LayoutColumns } from "../LayoutColumns/LayoutColumns";
 import { SaltProvider } from "@salt-ds/core";
+import { Pill } from "@salt-ds/lab";
 import { useMeta } from "@jpmorganchase/mosaic-store";
 import { LayoutProps } from "../types/index";
 import layoutStyles from "../index.module.css";
 import styles from "./DetailBase.module.css";
+
+type Data = {
+  status: string;
+};
+
+type CustomSiteState = SiteState & { data?: Data };
+
+type PageHeadingWithPillProps = { title?: string; pageStatus: string };
+
+const PageHeadingWithPill: FC<PageHeadingWithPillProps> = ({
+  title,
+  pageStatus,
+}) => (
+  <div className={styles.headingContainer}>
+    <h1>{title}</h1>
+    {pageStatus && <Pill label={pageStatus} className={styles.pill} />}
+  </div>
+);
 
 export const DetailBase: FC<LayoutProps> = ({
   BackLinkProps,
@@ -46,12 +66,18 @@ export const DetailBase: FC<LayoutProps> = ({
     meta: { title },
   } = useMeta();
 
+  const pageStatus = useStore((state: CustomSiteState) => state.data?.status);
+
   return (
     <LayoutBase Header={Header} className={layoutStyles.base}>
       <div className={clsx(layoutStyles.docsWrapper, styles.docsWrapper)}>
         <LayoutColumns PrimarySidebar={PrimarySidebar}>
           <Breadcrumbs />
-          <h1 className={layoutStyles.title}>{title}</h1>
+          {pageStatus ? (
+            <PageHeadingWithPill title={title} pageStatus={pageStatus} />
+          ) : (
+            <h1 className={layoutStyles.title}>{title}</h1>
+          )}
           <SaltProvider mode="light">
             <div className={layoutStyles.docsPageContainer}>
               <div
