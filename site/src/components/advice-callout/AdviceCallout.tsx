@@ -7,18 +7,30 @@ export interface AdviceCalloutProps {
   children: ReactNode;
   as: ElementType<any>;
   type: "positive" | "negative";
+  iconLabel?: string;
 }
 
 export const AdviceCallout: FC<AdviceCalloutProps> = ({
   children,
   as,
   type,
+  iconLabel,
 }) => (
   <FlexLayout as={as} className={styles.root}>
     {type === "positive" ? (
-      <SuccessTickIcon size={1.5} className={styles.iconPositive} />
+      <SuccessTickIcon
+        aria-hidden={iconLabel === undefined}
+        aria-label={iconLabel}
+        size={1.5}
+        className={styles.iconPositive}
+      />
     ) : (
-      <CloseIcon size={1.5} className={styles.iconNegative} />
+      <CloseIcon
+        aria-hidden={iconLabel === undefined}
+        aria-label={iconLabel}
+        size={1.5}
+        className={styles.iconNegative}
+      />
     )}
     <FlexItem grow={1} className={styles.content}>
       {children}
