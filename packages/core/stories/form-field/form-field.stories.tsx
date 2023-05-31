@@ -7,7 +7,7 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
   FormField,
-  Input
+  Input,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 

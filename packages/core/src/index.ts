@@ -6,7 +6,6 @@ export * from "./breakpoints";
 export * from "./button";
 export * from "./card";
 export * from "./checkbox";
-export * from "./input";
 export * from "./flex-item";
 export * from "./flex-layout";
 export * from "./flow-layout";

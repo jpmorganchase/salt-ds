@@ -8,7 +8,6 @@ import { ErrorAdornmentIcon } from "./ErrorAdornment";
 import { SuccessAdornmentIcon } from "./SuccessAdornment";
 import { WarningAdornmentIcon } from "./WarningAdornment";
 
-
 import statusAdornmentCss from "./StatusAdornment.css";
 
 const icons = {

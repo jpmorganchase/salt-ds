@@ -1,4 +1,9 @@
-import { FormField, FormFieldLabel, FormFieldHelperText, Input } from "@salt-ds/core";
+import {
+  FormField,
+  FormFieldLabel,
+  FormFieldHelperText,
+  Input,
+} from "@salt-ds/core";
 
 const MockChildren = () => {
   return (

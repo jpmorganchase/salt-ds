@@ -1,5 +1,5 @@
-import { Input, FormField, FormFieldLabel } from "packages/core/src";
 import { ChangeEvent, useState } from "react";
+import { Input, FormField, FormFieldLabel } from "@salt-ds/core";
 
 describe("GIVEN an Input", () => {
   it("SHOULD have no a11y violations on load", () => {
@@ -99,7 +99,7 @@ describe("GIVEN an Input", () => {
   });
 
   describe("WHEN used in Formfield", () => {
-    describe("AND empty", () => {
+    describe("AND disabled", () => {
       it("THEN input within should be disabled", () => {
         cy.mount(
           <FormField disabled>

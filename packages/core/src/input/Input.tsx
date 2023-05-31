@@ -9,9 +9,10 @@ import {
   Ref,
   useState,
 } from "react";
-import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { useFormFieldProps } from "../form-field-context";
+import { makePrefixer, useControlled } from "../utils";
 import { StatusAdornment } from "../status-adornment";
 
 import inputCss from "./Input.css";
