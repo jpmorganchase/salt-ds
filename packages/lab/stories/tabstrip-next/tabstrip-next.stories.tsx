@@ -24,9 +24,11 @@ export const SimpleTabstrip: TabstripStory = ({
 
   return (
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
-      <TabstripNext defaultActiveTabIndex={0} {...tabstripProps}>
+      <TabstripNext defaultActiveTab={"home"} {...tabstripProps}>
         {tabs.map((label) => (
-          <TabNext key={label}>{label}</TabNext>
+          <TabNext id={label.toLowerCase()} key={label}>
+            {label}
+          </TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -49,11 +51,13 @@ export const TruncatedTabs: TabstripStory = ({
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext
         tabMaxWidth={100}
-        defaultActiveTabIndex={0}
+        defaultActiveTab={"home"}
         {...tabstripProps}
       >
         {tabs.map((label) => (
-          <TabNext key={label}>{label}</TabNext>
+          <TabNext key={label} id={label.toLowerCase()}>
+            {label}
+          </TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -68,9 +72,11 @@ export const CenteredTabstrip: TabstripStory = ({
 
   return (
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
-      <TabstripNext defaultActiveTabIndex={0} {...tabstripProps} align="center">
+      <TabstripNext defaultActiveTab={"home"} {...tabstripProps} align="center">
         {tabs.map((label) => (
-          <TabNext key={label}>{label}</TabNext>
+          <TabNext key={label} id={label.toLowerCase()}>
+            {label}
+          </TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -82,17 +88,19 @@ export const ControlledTabstrip: TabstripStory = ({
   ...tabstripProps
 }) => {
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
-  const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
+  const [activeTab, setActiveTab] = useState<string | undefined>("home");
 
   return (
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext
         {...tabstripProps}
-        activeTabIndex={activeTabIndex}
-        onActiveChange={setActiveTabIndex}
+        activeTab={activeTab}
+        onActiveChange={setActiveTab}
       >
         {tabs.map((label) => (
-          <TabNext key={label}>{label}</TabNext>
+          <TabNext key={label} id={label.toLowerCase()}>
+            {label}
+          </TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -110,7 +118,7 @@ export const AddTabTabstrip: TabstripStory = ({
     "Checks",
     "Liquidity",
   ]);
-  const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
+  const [activeTab, setActiveTab] = useState<string | undefined>("home");
   const handleAddTab = () => {
     setTabs((t) => [...t, `Tab ${t.length + 1}`]);
   };
@@ -120,11 +128,13 @@ export const AddTabTabstrip: TabstripStory = ({
       <FlexLayout align="center">
         <TabstripNext
           {...tabstripProps}
-          activeTabIndex={activeTabIndex}
-          onActiveChange={setActiveTabIndex}
+          activeTab={activeTab}
+          onActiveChange={setActiveTab}
         >
           {tabs.map((label) => (
-            <TabNext key={label}>{label}</TabNext>
+            <TabNext key={label} id={label.toLowerCase()}>
+              {label}
+            </TabNext>
           ))}
         </TabstripNext>
         <Button onClick={handleAddTab}>
@@ -140,34 +150,36 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
   ...tabstripProps
 }) => {
   const [tabs] = useState([
-    "Home",
-    "Transactions",
-    "Loans",
-    "Checks",
-    "Liquidity",
-    "With",
-    "Lots",
-    "More",
-    "Additional",
-    "Tabs",
-    "Added",
-    "In order to",
-    "Showcase overflow",
-    "Menu",
-    "On",
-    "Larger",
-    "Screens",
+    { label: "Home", id: "home" },
+    { label: "Transactions", id: "transactions" },
+    { label: "Loans", id: "loans" },
+    { label: "Checks", id: "checks" },
+    { label: "Liquidity", id: "liquidity" },
+    { label: "With", id: "with" },
+    { label: "Lots", id: "lots" },
+    { label: "More", id: "more" },
+    { label: "Additional", id: "additional" },
+    { label: "Tabs", id: "tabs" },
+    { label: "Added", id: "added" },
+    { label: "In order to", id: "in-order-to" },
+    { label: "Showcase overflow", id: "showcase-overflow" },
+    { label: "Menu", id: "menu" },
+    { label: "On", id: "on" },
+    { label: "Larger", id: "larger" },
+    { label: "Screens", id: "screens" },
   ]);
-  const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
+  const [activeTab, setActiveTab] = useState<string | undefined>("home");
   return (
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext
         {...tabstripProps}
-        activeTabIndex={activeTabIndex}
-        onActiveChange={setActiveTabIndex}
+        activeTab={activeTab}
+        onActiveChange={setActiveTab}
       >
-        {tabs.map((label) => (
-          <TabNext key={label}>{label}</TabNext>
+        {tabs.map(({ label, id }) => (
+          <TabNext key={label} id={id}>
+            {label}
+          </TabNext>
         ))}
       </TabstripNext>
     </div>
@@ -185,13 +197,13 @@ export const CloseTabTabstrip: TabstripStory = ({
     "Checks",
     "Liquidity",
   ]);
-  const [activeTabIndex, setActiveTabIndex] = useState<number | undefined>(0);
+  const [activeTab, setActiveTab] = useState<string | undefined>("home");
   return (
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext
         {...tabstripProps}
-        activeTabIndex={activeTabIndex}
-        onActiveChange={setActiveTabIndex}
+        activeTab={activeTab}
+        onActiveChange={setActiveTab}
       >
         {tabs.map((label) => (
           <TabNext
@@ -200,6 +212,7 @@ export const CloseTabTabstrip: TabstripStory = ({
             onClose={(tabIndex) => {
               setTabs((s) => s.filter((t, index) => index !== tabIndex));
             }}
+            id={label.toLowerCase()}
           >
             {label}
           </TabNext>
@@ -214,16 +227,14 @@ export const ActiveIndexNull: TabstripStory = ({
   ...tabstripProps
 }) => {
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
-  const [activeTabIndex, setActiveTabIndex] = useState<
-    number | undefined | null
-  >(null);
+  const [activeTab, setActiveTab] = useState<string | undefined | null>(null);
 
   return (
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext
         {...tabstripProps}
-        activeTabIndex={activeTabIndex}
-        onActiveChange={setActiveTabIndex}
+        activeTab={activeTab}
+        onActiveChange={setActiveTab}
       >
         {tabs.map((label) => (
           <TabNext key={label}>{label}</TabNext>

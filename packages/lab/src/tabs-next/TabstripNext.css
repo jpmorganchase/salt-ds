@@ -10,7 +10,7 @@
   --tabs-activationIndicator-thumb-height: 2px;
   --tabs-tab-spacing: var(--salt-spacing-100);
 
-  align-items: flex-start;
+  align-items: center;
   align-self: var(--saltTabs-tabstrip-alignSelf, stretch);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
@@ -20,6 +20,7 @@
   min-width: 28px;
   width: 100%;
   height: var(--tabs-tabstrip-height);
+  line-height: var(--tabs-tabstrip-height);
 }
 
 .saltTabstripNext::before {

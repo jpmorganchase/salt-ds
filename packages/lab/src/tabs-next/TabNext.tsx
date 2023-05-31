@@ -70,11 +70,11 @@ export const TabNext = forwardRef(function Tab(
     css: tabCss,
     window: targetWindow,
   });
-  if (index === undefined || onClick === undefined || onKeyDown === undefined) {
-    throw Error(
-      "index, onClick, onKeyUp, onKeyDown are required props, they would nornally be injected by Tabstrip, are you creating a Tab outside of a Tabstrip"
-    );
-  }
+  // if (index === undefined || onClick === undefined || onKeyDown === undefined) {
+  //   throw Error(
+  //     "index, onClick, onKeyUp, onKeyDown are required props, they would nornally be injected by Tabstrip, are you creating a Tab outside of a Tabstrip"
+  //   );
+  // }
   const root = useRef<HTMLDivElement>(null);
   const setForkRef = useForkRef(ref, root);
   const [closeHover, setCloseHover] = useState(false);

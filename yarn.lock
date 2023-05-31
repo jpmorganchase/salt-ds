@@ -2767,6 +2767,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.1.2":
+  version: 7.22.3
+  resolution: "@babel/runtime@npm:7.22.3"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: 8fc50785ca4cba749fed90bffca7e6fd52d4709755654e95b8d2a945fc034b56fb8c2e8a0183fea7c4abb86bf5fa77678c0ea35163b6920649833d180c34c234
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.12.7, @babel/template@npm:^7.18.10, @babel/template@npm:^7.20.7, @babel/template@npm:^7.3.3":
   version: 7.20.7
   resolution: "@babel/template@npm:7.20.7"
@@ -3618,6 +3627,92 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fluentui/keyboard-keys@npm:^9.0.3":
+  version: 9.0.3
+  resolution: "@fluentui/keyboard-keys@npm:9.0.3"
+  dependencies:
+    "@swc/helpers": ^0.4.14
+  checksum: ab723fb9580d71f83861189cc3447d8f1500b2d76f7f71c915ab8f23591bd47d9b8626ae98dcb22f1f8e815f6c350a93553158fa465e2d40a5febd5b722a88ea
+  languageName: node
+  linkType: hard
+
+"@fluentui/priority-overflow@npm:^9.0.3":
+  version: 9.0.3
+  resolution: "@fluentui/priority-overflow@npm:9.0.3"
+  dependencies:
+    "@swc/helpers": ^0.4.14
+  checksum: c758327d65f4c84849202e2708aabb0c4f0300b548b097abf259d71180c050779b2687996d0ede3a7ba4df12d4f813c32fbcfe258d291444b7ae33a08ae773c1
+  languageName: node
+  linkType: hard
+
+"@fluentui/react-context-selector@npm:^9.1.22":
+  version: 9.1.22
+  resolution: "@fluentui/react-context-selector@npm:9.1.22"
+  dependencies:
+    "@fluentui/react-utilities": ^9.9.2
+    "@swc/helpers": ^0.4.14
+  peerDependencies:
+    "@types/react": ">=16.8.0 <19.0.0"
+    "@types/react-dom": ">=16.8.0 <19.0.0"
+    react: ">=16.8.0 <19.0.0"
+    react-dom: ">=16.8.0 <19.0.0"
+    scheduler: ^0.19.0 || ^0.20.0
+  checksum: 6bcdc4e7c5337115bed8fee3a507d43b7039f3ea5a5d2f3f6ceb6030e8353ac8157514695e63d0196bf465a2ead7512e79d6be44413433bddf8a5780239af219
+  languageName: node
+  linkType: hard
+
+"@fluentui/react-overflow@npm:^9.0.19":
+  version: 9.0.19
+  resolution: "@fluentui/react-overflow@npm:9.0.19"
+  dependencies:
+    "@fluentui/priority-overflow": ^9.0.3
+    "@fluentui/react-context-selector": ^9.1.22
+    "@fluentui/react-theme": ^9.1.8
+    "@fluentui/react-utilities": ^9.9.2
+    "@griffel/react": ^1.5.7
+    "@swc/helpers": ^0.4.14
+  peerDependencies:
+    "@types/react": ">=16.8.0 <19.0.0"
+    "@types/react-dom": ">=16.8.0 <19.0.0"
+    react: ">=16.8.0 <19.0.0"
+    react-dom: ">=16.8.0 <19.0.0"
+    scheduler: ^0.19.0 || ^0.20.0
+  checksum: a453fa9e1e39168d7660c4cc15a07c0bcd7819a578e6a50c1f8af28d66f03e6114ece744d9b7101b105e6097c47ef43eccdc408fc95ef741ce3fd350fa652d9d
+  languageName: node
+  linkType: hard
+
+"@fluentui/react-theme@npm:^9.1.8":
+  version: 9.1.8
+  resolution: "@fluentui/react-theme@npm:9.1.8"
+  dependencies:
+    "@fluentui/tokens": 1.0.0-alpha.5
+    "@swc/helpers": ^0.4.14
+  checksum: 35a20d06e7bf0d3912d9c04627068a1f0f590d271663a68bbe95aaac49f768ab0183ed6b9a3357ee1b34518c9f70916ba67ae9ad83f4908a8e3697b97a4643a2
+  languageName: node
+  linkType: hard
+
+"@fluentui/react-utilities@npm:^9.9.2":
+  version: 9.9.2
+  resolution: "@fluentui/react-utilities@npm:9.9.2"
+  dependencies:
+    "@fluentui/keyboard-keys": ^9.0.3
+    "@swc/helpers": ^0.4.14
+  peerDependencies:
+    "@types/react": ">=16.8.0 <19.0.0"
+    react: ">=16.8.0 <19.0.0"
+  checksum: 6e4c094aafb98f783081a366ae6a86199b527e28d0b4eb703d52816bcfb4c9b17512dd105d68c809b60b2490afd3d0e134dc55c90befd800cc72ed161d6e491a
+  languageName: node
+  linkType: hard
+
+"@fluentui/tokens@npm:1.0.0-alpha.5":
+  version: 1.0.0-alpha.5
+  resolution: "@fluentui/tokens@npm:1.0.0-alpha.5"
+  dependencies:
+    "@swc/helpers": ^0.4.14
+  checksum: 4d635b2f54364ddcf49433f808967766103253214b088c1485495643eb0eed4f94a2bf4f6caf72475182356eb477d9b224f2a93f92e064fe8bf31de70e50c482
+  languageName: node
+  linkType: hard
+
 "@fontsource/open-sans@npm:^4.5.13":
   version: 4.5.13
   resolution: "@fontsource/open-sans@npm:4.5.13"
@@ -3629,6 +3724,31 @@ __metadata:
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
   checksum: 4059f790e2d07bf3c3ff3e0fec0daa8144fe35c1f6e0111c9921bd32106adaa97a4ab096ad7dab1e28ee6a9060083c4d1a4ada42a7f5f3f7a96b8812e2b757c1
+  languageName: node
+  linkType: hard
+
+"@griffel/core@npm:^1.11.0":
+  version: 1.11.0
+  resolution: "@griffel/core@npm:1.11.0"
+  dependencies:
+    "@emotion/hash": ^0.9.0
+    csstype: ^3.1.2
+    rtl-css-js: ^1.16.1
+    stylis: ^4.0.13
+    tslib: ^2.1.0
+  checksum: 61c4c3ee5d0b802829a99381d747e490114c901a5c52701c9d779da4f6473323ef2ad0916c72b7b360539ef15841653a9c29977ae81950afed6bc1b0d2322d17
+  languageName: node
+  linkType: hard
+
+"@griffel/react@npm:^1.5.7":
+  version: 1.5.7
+  resolution: "@griffel/react@npm:1.5.7"
+  dependencies:
+    "@griffel/core": ^1.11.0
+    tslib: ^2.1.0
+  peerDependencies:
+    react: ">=16.8.0 <19.0.0"
+  checksum: a9f70486f058b10dfafbe34c43b509333983dd39d2d7b7ca8af01c38cd2680a336d53e5858cbc063ea3a597458a50f870afb5de90fbd65ea83c8772f429207f2
   languageName: node
   linkType: hard
 
@@ -5520,6 +5640,7 @@ __metadata:
     "@cypress/code-coverage": ^3.10.0
     "@faker-js/faker": ^8.0.0
     "@floating-ui/react": ^0.23.0
+    "@fluentui/react-overflow": ^9.0.19
     "@fontsource/open-sans": ^4.5.13
     "@internationalized/date": ^3.0.0
     "@jpmorganchase/mosaic-create-site": ^0.1.0-beta.32
@@ -7212,6 +7333,15 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: 71e0e27234590435e4c62b97ef5e796f88e786841a38c7116a5e27a3eafa7b9ead7cdec5249b32165902076de78446945311c973e59bddf77c1e24f33a8f272a
+  languageName: node
+  linkType: hard
+
+"@swc/helpers@npm:^0.4.14":
+  version: 0.4.14
+  resolution: "@swc/helpers@npm:0.4.14"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 273fd3f3fc461a92f3790cc551ea054745c6d6959afbe1232e6d7aa1c722bbc114d308aab96bef5c78fc0303c85c7b472ef00e2253251cc89737f3b1af56e5a5
   languageName: node
   linkType: hard
 
@@ -13029,6 +13159,13 @@ __metadata:
   version: 3.1.1
   resolution: "csstype@npm:3.1.1"
   checksum: 1f7b4f5fdd955b7444b18ebdddf3f5c699159f13e9cf8ac9027ae4a60ae226aef9bbb14a6e12ca7dba3358b007cee6354b116e720262867c398de6c955ea451d
+  languageName: node
+  linkType: hard
+
+"csstype@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "csstype@npm:3.1.2"
+  checksum: e1a52e6c25c1314d6beef5168da704ab29c5186b877c07d822bd0806717d9a265e8493a2e35ca7e68d0f5d472d43fac1cdce70fd79fd0853dff81f3028d857b5
   languageName: node
   linkType: hard
 
@@ -27977,6 +28114,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rtl-css-js@npm:^1.16.1":
+  version: 1.16.1
+  resolution: "rtl-css-js@npm:1.16.1"
+  dependencies:
+    "@babel/runtime": ^7.1.2
+  checksum: 7d9ab942098eee565784ccf957f6b7dfa78ea1eec7c6bffedc6641575d274189e90752537c7bdba1f43ae6534648144f467fd6d581527455ba626a4300e62c7a
+  languageName: node
+  linkType: hard
+
 "run-async@npm:^2.4.0":
   version: 2.4.1
   resolution: "run-async@npm:2.4.1"
@@ -29639,6 +29785,13 @@ __metadata:
   version: 4.1.3
   resolution: "stylis@npm:4.1.3"
   checksum: d04dbffcb9bf2c5ca8d8dc09534203c75df3bf711d33973ea22038a99cc475412a350b661ebd99cbc01daa50d7eedcf0d130d121800eb7318759a197023442a6
+  languageName: node
+  linkType: hard
+
+"stylis@npm:^4.0.13":
+  version: 4.2.0
+  resolution: "stylis@npm:4.2.0"
+  checksum: 0eb6cc1b866dc17a6037d0a82ac7fa877eba6a757443e79e7c4f35bacedbf6421fadcab4363b39667b43355cbaaa570a3cde850f776498e5450f32ed2f9b7584
   languageName: node
   linkType: hard
 

@@ -24,28 +24,20 @@ function isTabPanel(child: ReactNode | TabElement): child is TabElement {
 
 export const TabsNext = ({
   children,
-  activeTabIndex: activeTabIndexProp,
-  defaultActiveTabIndex,
+  activeTab: activeTabProp,
+  defaultActiveTab,
   onActiveChange,
-  onMoveTab,
   ...props
 }: TabsNextProps) => {
   const tabs = Children.toArray(children).filter(isTabPanel);
 
-  const [activeTabIndex, setActiveTabIndex] = useControlled({
-    controlled: activeTabIndexProp,
-    default: defaultActiveTabIndex ?? 0,
+  const [activeTab, setActiveTab] = useControlled({
+    controlled: activeTabProp,
+    default: defaultActiveTab ?? tabs[0]?.props.id,
     name: "useTabs",
     state: "activeTabIndex",
   });
 
-  const uniqueId = useId();
-  const getTabId = useCallback(
-    (index?: number | null) => {
-      return `tab-${uniqueId ?? "unknown"}-${index ?? ""}`;
-    },
-    [uniqueId]
-  );
   const getTabpanelId = useCallback(
     (index?: number | null) => {
       return `tabpanel-${uniqueId ?? "unknown"}-${index ?? ""}`;
@@ -57,11 +49,12 @@ export const TabsNext = ({
     <StackLayout gap={0}>
       <TabstripNext
         {...props}
-        getTabId={getTabId}
-        activeTabIndex={activeTabIndex}
-        onActiveChange={(index) => {
-          setActiveTabIndex(index!);
-          onActiveChange?.(index);
+        activeTab={activeTab}
+        onActiveChange={(id) => {
+          if (id) {
+            setActiveTab(id);
+            onActiveChange?.(id);
+          }
         }}
       >
         {tabs.map((tabPanel) => {
