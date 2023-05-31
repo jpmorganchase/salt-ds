@@ -1,18 +1,34 @@
+<<<<<<< HEAD:packages/core/stories/input-next/input-next.doc.stories.mdx
 import { Input, Link } from "@salt-ds/core";
-import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
-import {
-  CSSClassTable,
-  CharacteristicUsage,
-} from "css-variable-docgen-components";
-import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+=======
+import { InputNext } from "@salt-ds/lab";
+
+> > > > > > > origin/main:packages/lab/stories/input-next/input-next.doc.stories.mdx
+> > > > > > > import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
+> > > > > > > import {
+> > > > > > > CSSClassTable,
+> > > > > > > CharacteristicUsage,
+> > > > > > > } from "css-variable-docgen-components";
+> > > > > > > <<<<<<< HEAD:packages/core/stories/input-next/input-next.doc.stories.mdx
+> > > > > > > import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
   title="Documentation/Core/Input "
   component={Input}
+=======
+import { Link } from "@salt-ds/core";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Lab/Input Next"
+  component={InputNext}
+>>>>>>> origin/main:packages/lab/stories/input-next/input-next.doc.stories.mdx
   parameters={{
     viewMode: "docs",
   }}
 />
+
+<<<<<<< HEAD:packages/core/stories/input-next/input-next.doc.stories.mdx
 
 # Input
 
@@ -38,25 +54,74 @@ You can control Input with the `value` and `onChange` props. Learn more about <L
 
 ## Variants
 
+=======
+
+# Input Next
+
+Input provides an editable field in which users can enter text and numeric values.
+
+## Examples
+
+### Default
+
+Input comprises value text and a focus ring. The component is initially empty and then, once it has focus, it accepts text on a single line.
+
+<Canvas>
+  <Story id="lab-input-next--default" />
+</Canvas>
+
+### Controlled
+
+You can control Input with the `value` and `onChange` props. Learn more about <Link href="https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components">controlled vs. uncontrolled components</Link> in the official React docs.
+
+<Canvas>
+  <Story id="lab-input-next--controlled" />
+</Canvas>
+
+### Variants
+
+> > > > > > > origin/main:packages/lab/stories/input-next/input-next.doc.stories.mdx
+
 Input has two variants, primary (default) and secondary.
 
 <Canvas>
+<<<<<<< HEAD:packages/core/stories/input-next/input-next.doc.stories.mdx
   <Story id="core-input---variants" />
 </Canvas>
 
 ## Disabled
 
+=======
+
+  <Story id="lab-input-next--variants" />
+</Canvas>
+
+### Disabled
+
+> > > > > > > origin/main:packages/lab/stories/input-next/input-next.doc.stories.mdx
+
 You can set Input to a disabled state, with no resultant action when the user interacts with it.
 
 <Canvas>
+<<<<<<< HEAD:packages/core/stories/input-next/input-next.doc.stories.mdx
   <Story id="core-input---disabled" />
 </Canvas>
 
 ## Readonly
 
+=======
+
+  <Story id="lab-input-next--disabled" />
+</Canvas>
+
+### Read-only
+
+> > > > > > > origin/main:packages/lab/stories/input-next/input-next.doc.stories.mdx
+
 You can set Input to a read-only state. The value text can’t be edited in this state, but it can be highlighted and copied.
 
 <Canvas>
+<<<<<<< HEAD:packages/core/stories/input-next/input-next.doc.stories.mdx
   <Story id="core-input---readonly" />
 </Canvas>
 
@@ -76,9 +141,33 @@ Text alignment is left by default. This can be changed via the `textAlign` prop 
 
 ## Validation
 
+=======
+
+  <Story id="lab-input-next--readonly" />
+</Canvas>
+
+For accessibility purposes, we recommend that you add a marker for empty read-only fields via the `emptyReadOnlyMarker` prop.
+
+<Canvas>
+  <Story id="lab-input—next--empty-readonly-marker" />
+</Canvas>
+
+### Text Alignment
+
+Text is aligned to the left by default. Use the `textAlign` prop to change to “center” or “right”.
+
+<Canvas>
+  <Story id="lab-input—next--text-alignment" />
+</Canvas>
+
+### Validation
+
+> > > > > > > origin/main:packages/lab/stories/input-next/input-next.doc.stories.mdx
+
 Input can show validation states (warning, success, error) with the prop `validationStatus`.
 
 <Canvas>
+<<<<<<< HEAD:packages/core/stories/input-next/input-next.doc.stories.mdx
   <Story id="core-input---validation" />
 </Canvas>
 
@@ -104,5 +193,35 @@ import { Input } from "@salt-ds/core";
 <CharacteristicUsage of={Input} />
 
 ## Accessibility
+
+=======
+
+  <Story id="lab-input-next--validation" />
+</Canvas>
+
+- Use the error state to alert the user of a critical issue that’s related to the input. Issues highlighted by an error state may jeopardize completion of the task and usually require action from the user to resolve the error.
+- Display the warning state to alert the user of a potential issue that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
+
+## API
+
+```
+import { InputNext } from "@salt-ds/lab";
+```
+
+### Props
+
+<ArgsTable of={InputNext} />
+
+### CSS Class
+
+<CSSClassTable of={InputNext} />
+
+### Characteristics Used
+
+<CharacteristicUsage of={InputNext} />
+
+### Accessibility
+
+> > > > > > > origin/main:packages/lab/stories/input-next/input-next.doc.stories.mdx
 
 <HelpAndSupport />

@@ -1,13 +1,15 @@
 import { clsx } from "clsx";
 import React, { forwardRef, ReactNode, useRef } from "react";
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
-import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
-import { Input, InputProps } from "../input";
-import { useStepperInput } from "./useStepperInput";
-
-import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
+import {
+  InputLegacy as Input,
+  InputLegacyProps as InputProps,
+} from "../input-legacy";
+import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
+import { useStepperInput } from "./useStepperInput";
 
 import stepperInputCss from "./StepperInput.css";
 

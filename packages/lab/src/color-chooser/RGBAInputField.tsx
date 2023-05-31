@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { RGBAValue } from "./Color";
-import { Input } from "../input";
+import { InputLegacy as Input } from "../input-legacy";
 
 import rgbaInputCss from "./RGBAInput.css";
 import { useWindow } from "@salt-ds/window";

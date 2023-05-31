@@ -9,7 +9,7 @@ import React, {
   useRef,
 } from "react";
 import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { Input } from "../input";
+import { InputLegacy as Input } from "../input-legacy";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
