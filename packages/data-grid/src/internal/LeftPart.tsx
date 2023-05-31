@@ -1,12 +1,17 @@
-import { clsx } from "clsx";
-import { TableColGroup } from "./TableColGroup";
-import { TableBody } from "./TableBody";
 import { RefObject } from "react";
-import "./LeftPart.css";
+import { clsx } from "clsx";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer } from "@salt-ds/core";
+
 import { GridColumnModel, GridRowModel } from "../Grid";
-import { useActiveOnWheel } from "./gridHooks";
 import { CellValidationState } from "../GridColumn";
+
+import { useActiveOnWheel } from "./gridHooks";
+import { TableBody } from "./TableBody";
+import { TableColGroup } from "./TableColGroup";
+
+import leftPartCss from "./LeftPart.css";
 
 const withBaseName = makePrefixer("saltGridLeftPart");
 
@@ -36,6 +41,13 @@ export function LeftPart<T>(props: LeftPartProps<T>) {
     zebra,
     getRowValidationStatus,
   } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-left-part",
+    css: leftPartCss,
+    window: targetWindow,
+  });
 
   const tableRef = useActiveOnWheel(onWheel);
 

@@ -1,12 +1,14 @@
 import { forwardRef, ElementType, ReactElement } from "react";
 import { clsx } from "clsx";
 import { GridItem, GridItemProps } from "../grid-item";
-import "./BorderItem.css";
+import borderItemCss from "./BorderItem.css";
 import {
   makePrefixer,
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
 } from "../utils";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export const BORDER_POSITION = [
   "north",
@@ -59,6 +61,13 @@ export const BorderItem: BorderItemComponent = forwardRef(
     }: BorderItemProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-border-item",
+      css: borderItemCss,
+      window: targetWindow,
+    });
+
     const gridItemStyles = {
       ...style,
       "--gridItem-gridArea": position,

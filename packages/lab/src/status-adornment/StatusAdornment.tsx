@@ -6,7 +6,10 @@ import { ErrorAdornmentIcon } from "./ErrorAdornment";
 import { SuccessAdornmentIcon } from "./SuccessAdornment";
 import { WarningAdornmentIcon } from "./WarningAdornment";
 
-import "./StatusAdornment.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import statusAdornmentCss from "./StatusAdornment.css";
 
 const icons = {
   error: ErrorAdornmentIcon,
@@ -35,6 +38,13 @@ export const StatusAdornment = forwardRef<SVGSVGElement, StatusAdornmentProps>(
   function StatusAdornment({ className, status, ...restProps }, ref) {
     const AdornmentComponent = icons[status];
     const ariaLabel = statusToAriaLabelMap[status];
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-status-adornment",
+      css: statusAdornmentCss,
+      window: targetWindow,
+    });
 
     return (
       <AdornmentComponent

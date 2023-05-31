@@ -6,7 +6,9 @@ import {
 import { clsx } from "clsx";
 import { ElementType, forwardRef, ReactElement } from "react";
 
-import "./Text.css";
+import textCss from "./Text.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   T,
@@ -59,6 +61,13 @@ export const Text: TextComponent = forwardRef(
     }: TextProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-text",
+      css: textCss,
+      window: targetWindow,
+    });
+
     const Component = as || "div";
 
     const textStyles = { "--text-max-rows": maxRows, ...style };

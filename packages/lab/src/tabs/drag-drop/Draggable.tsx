@@ -4,7 +4,9 @@ import { forwardRef, MutableRefObject, useCallback } from "react";
 import { Rect } from "./dragDropTypes";
 import { Portal } from "../../portal";
 
-import "./Draggable.css";
+import draggableCss from "./Draggable.css";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 const makeClassNames = (classNames: string) =>
   classNames.split(" ").map((className) => `saltDraggable-${className}`);
@@ -15,6 +17,13 @@ export const Draggable = forwardRef<
   { wrapperClassName, element, rect, scale = 1 },
   forwardedRef
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-draggable",
+    css: draggableCss,
+    window: targetWindow,
+  });
+
   const callbackRef = useCallback(
     (el: HTMLDivElement) => {
       if (el) {

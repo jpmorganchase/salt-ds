@@ -1,12 +1,20 @@
 import React from "react";
 import { escapeRegExp } from "../../utils";
 
-import "./Highlighter.css";
+import highlighterCss from "./Highlighter.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const baseName = "saltHighlighter";
 
 export const Highlighter = (props) => {
   const { matchPattern, text = "" } = props;
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-highligher-deprecated",
+    css: highlighterCss,
+    window: targetWindow,
+  });
   const matchRegex =
     typeof matchPattern === "string"
       ? new RegExp(`(${escapeRegExp(matchPattern)})`, "gi")

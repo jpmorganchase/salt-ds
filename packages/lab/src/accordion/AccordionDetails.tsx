@@ -7,7 +7,9 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useRef, useState } from "react";
 import { useAccordionSectionContext } from "./AccordionSectionContext";
 
-import "./Accordion.css";
+import accordionCss from "./Accordion.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltAccordionDetails");
 
@@ -43,6 +45,13 @@ export const AccordionDetails = forwardRef<
   { children, className, preventUnmountOnCollapse, ...restProps },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-accordion",
+    css: accordionCss,
+    window: targetWindow,
+  });
+
   const { isDisabled, isExpanded } = useAccordionSectionContext();
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);

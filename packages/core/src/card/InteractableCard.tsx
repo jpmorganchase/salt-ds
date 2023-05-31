@@ -1,10 +1,13 @@
 import { clsx } from "clsx";
 import { forwardRef } from "react";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import { Card, CardProps } from "./Card";
 import { capitalize, makePrefixer } from "../utils";
 import { useInteractableCard } from "./useInteractableCard";
 
-import "./InteractableCard.css";
+import interactableCardCss from "./InteractableCard.css";
 
 const withBaseName = makePrefixer("saltInteractableCard");
 
@@ -36,6 +39,13 @@ export const InteractableCard = forwardRef<
     onKeyDown,
     ...rest
   } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-interactable-card",
+    css: interactableCardCss,
+    window: targetWindow,
+  });
 
   const { active, cardProps } = useInteractableCard({
     disabled,

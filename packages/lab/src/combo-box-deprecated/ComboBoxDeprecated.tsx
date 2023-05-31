@@ -11,8 +11,12 @@ import {
   MultiSelectComboBoxProps,
 } from "./internal/MultiSelectComboBox";
 import { useWidth } from "../list-deprecated/internal/useWidth";
-import { useFormFieldProps } from "../form-field-context";
-import "./ComboBox.css";
+import { useFormFieldLegacyProps } from "../form-field-context-legacy";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import comboBoxCss from "./ComboBox.css";
 
 const withBaseName = makePrefixer("saltComboBox");
 
@@ -58,6 +62,13 @@ export const ComboBoxDeprecated = forwardRef<
   HTMLDivElement,
   ComboBoxDeprecatedProps
 >(function ComboBox(props, ref) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-combo-box-deprecated",
+    css: comboBoxCss,
+    window: targetWindow,
+  });
+
   const {
     inFormField,
     a11yProps: {
@@ -65,7 +76,7 @@ export const ComboBoxDeprecated = forwardRef<
       "aria-required": ariaRequired,
       disabled: formFieldDisabled,
     } = {},
-  } = useFormFieldProps();
+  } = useFormFieldLegacyProps();
 
   const { current: isMultiSelect } = useRef(getMultiSelect(props));
   validateProps({ isMultiSelect, ...props });

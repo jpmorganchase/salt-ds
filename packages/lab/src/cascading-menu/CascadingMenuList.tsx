@@ -21,9 +21,12 @@ import { hasIcon, hasSubMenu, menuState } from "./internal/stateUtils";
 import { useMouseHandlers } from "./internal/useMouseHandlers";
 import { refsManager } from "./internal/useRefsManager";
 import { stateChangeTypes } from "./stateChangeTypes";
-import { useWindow } from "../window";
+import { useWindow as usePortalWindow } from "../window";
 
-import "./CascadingMenuList.css";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+
+import cascadingMenuListCss from "./CascadingMenuList.css";
 
 export interface CascadingMenuListProps {
   className?: string;
@@ -83,6 +86,13 @@ export const CascadingMenuList = forwardRef<
     rootPlacementOffset,
     rootPlacement = "bottom-start",
   } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-cascading-menu-list",
+    css: cascadingMenuListCss,
+    window: targetWindow,
+  });
 
   const baseClass = "saltCascadingMenuList";
 
@@ -165,7 +175,7 @@ export const CascadingMenuList = forwardRef<
 
   // menu container size is 2px larger than the list to include the border
   const menuContainerHeight = menuHeight + 2;
-  const Window = useWindow();
+  const Window = usePortalWindow();
   const { reference, floating, x, y, strategy } = useFloatingUI({
     placement: isRoot ? rootPlacement : "right-start",
   });

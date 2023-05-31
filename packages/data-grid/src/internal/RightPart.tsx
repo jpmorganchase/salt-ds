@@ -1,12 +1,17 @@
 import { RefObject } from "react";
 import { clsx } from "clsx";
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+
+import { CellValidationState } from "../GridColumn";
+import { GridColumnModel, GridRowModel } from "../Grid";
+
+import { useActiveOnWheel } from "./gridHooks";
 import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
-import "./RightPart.css";
-import { makePrefixer } from "@salt-ds/core";
-import { GridColumnModel, GridRowModel } from "../Grid";
-import { useActiveOnWheel } from "./gridHooks";
-import { CellValidationState } from "../GridColumn";
+
+import rightPartCss from "./RightPart.css";
 
 const withBaseName = makePrefixer("saltGridRightPart");
 
@@ -36,6 +41,13 @@ export function RightPart<T>(props: RightPartProps<T>) {
     zebra,
     getRowValidationStatus,
   } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-right-part",
+    css: rightPartCss,
+    window: targetWindow,
+  });
 
   const tableRef = useActiveOnWheel(onWheel);
 

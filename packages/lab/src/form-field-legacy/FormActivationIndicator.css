@@ -1,0 +1,46 @@
+/* Styles applied to the root element dependent on density */
+.salt-density-touch {
+  --formFieldLegacy-activationIndicator-icon-size: 7px;
+}
+.salt-density-low {
+  --formFieldLegacy-activationIndicator-icon-size: 5px;
+}
+.salt-density-medium {
+  --formFieldLegacy-activationIndicator-icon-size: 5px;
+}
+.salt-density-high {
+  --formFieldLegacy-activationIndicator-icon-size: 3px;
+}
+
+.saltFormActivationIndicator {
+  height: 0px;
+  width: 100%;
+  position: relative;
+}
+
+/* Styles applied to the indication bar */
+.saltFormActivationIndicator-bar {
+  bottom: 0px;
+  border-color: var(--saltFormFieldLegacy-activationIndicator-borderColor, var(--formFieldLegacy-activationIndicator-color));
+  border-bottom-width: var(--saltFormFieldLegacy-activationIndicator-borderWidth, var(--formFieldLegacy-activationIndicator-size));
+  border-bottom-style: var(--saltFormFieldLegacy-activationIndicator-borderStyle, var(--formFieldLegacy-activationIndicator-style));
+  height: 0;
+  opacity: var(--saltFormFieldLegacy-activationIndicator-opacity, 1);
+  position: absolute;
+  width: 100%;
+}
+
+/* Styles applied to the indication icon */
+.saltFormActivationIndicator-icon {
+  width: var(--saltFormFieldLegacy-activationIndicator-icon-size, var(--formFieldLegacy-activationIndicator-icon-size));
+  height: var(--saltFormFieldLegacy-activationIndicator-icon-size, var(--formFieldLegacy-activationIndicator-icon-size));
+  fill: var(--saltFormFieldLegacy-activationIndicator-icon-color, var(--formFieldLegacy-activationIndicator-color));
+  /**
+ * It's only a solid icon showing different color for validation states.
+ * Applying opacity instead of re-defining all colors.
+ */
+  opacity: var(--saltFormFieldLegacy-activationIndicator-opacity, 1);
+  position: absolute;
+  bottom: 3px;
+  right: 2px;
+}

@@ -35,19 +35,12 @@ export * from "./dialog";
 export * from "./dropdown";
 export * from "./editable-label";
 export * from "./file-drop-zone";
-export * from "./form-field";
 export {
-  FormField as FormFieldNext,
-  FormFieldHelperText,
-  FormFieldLabel,
-  FormFieldControlWrapper,
-} from "./form-field-next";
-export * from "./form-field-context";
-export {
-  type A11yValueProps as A11yValuePropsNext,
-  type FormFieldContextNextValue,
-  FormFieldContextNext,
-} from "./form-field-context-next";
+  FormFieldLegacy as FormField,
+  type FormFieldLegacyProps as FormFieldProps,
+  FormLabel,
+} from "./form-field-legacy";
+export * from "./form-field-context-legacy";
 export * from "./form-group";
 export * from "./formatted-input";
 export * from "./input";

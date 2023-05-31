@@ -10,7 +10,10 @@ import { useOverflowLayout } from "../responsive/useOverflowLayout";
 
 import { renderTrayTools } from "./internal/renderTrayTools";
 
-import "./Tooltray.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import tooltrayCss from "./Tooltray.css";
 
 export const Tooltray = (props: TooltrayProps) => {
   const {
@@ -33,6 +36,12 @@ export const Tooltray = (props: TooltrayProps) => {
     ...rest
   } = props;
 
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tooltray",
+    css: tooltrayCss,
+    window: targetWindow,
+  });
   const tooltrayId = useIdMemo(idProp);
 
   const className = clsx(

@@ -3,7 +3,10 @@ import React, { useRef } from "react";
 
 import { useActivationIndicator } from "./useActivationIndicator";
 
-import "./TabActivationIndicator.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import tabActivationIndicatorCss from "./TabActivationIndicator.css";
 
 interface TabActivationIndicatorProps {
   hideThumb?: boolean;
@@ -19,6 +22,13 @@ export const TabActivationIndicator = ({
   orientation = "horizontal",
   tabId,
 }: TabActivationIndicatorProps) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tab-activation-indicator",
+    css: tabActivationIndicatorCss,
+    window: targetWindow,
+  });
+
   const rootRef = useRef<HTMLDivElement | null>(null);
   const style = useActivationIndicator({
     rootRef,
