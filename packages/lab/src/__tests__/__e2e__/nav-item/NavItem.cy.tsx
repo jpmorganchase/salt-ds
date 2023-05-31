@@ -16,12 +16,20 @@ describe("GIVEN a NavItem", () => {
 
   describe("AND it is active", () => {
     it('sets `aria-current="page"` when `active` is true', () => {
-      cy.mount(<NavItem active={true}>NavItem</NavItem>);
+      cy.mount(
+        <NavItem href="#" active={true}>
+          NavItem
+        </NavItem>
+      );
       cy.findByRole("link").should("have.attr", "aria-current", "page");
     });
 
     it("should not have `aria-current` when `active` is false", () => {
-      cy.mount(<NavItem active={false}>NavItem</NavItem>);
+      cy.mount(
+        <NavItem href="#" active={false}>
+          NavItem
+        </NavItem>
+      );
       cy.findByRole("link").should("not.have.attr", "aria-current");
     });
   });
