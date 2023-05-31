@@ -1,11 +1,4 @@
-import { FlowLayout, Text } from "@salt-ds/core";
-import {
-  CallIcon,
-  CreditCardIcon,
-  FilterClearIcon,
-  FilterIcon,
-  FlagIcon,
-} from "@salt-ds/icons";
+import { FlowLayout } from "@salt-ds/core";
 import { InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
@@ -15,18 +8,8 @@ export default {
   component: InputNext,
 } as ComponentMeta<typeof InputNext>;
 
-export const Primary: ComponentStory<typeof InputNext> = (args) => {
+export const Default: ComponentStory<typeof InputNext> = (args) => {
   return <InputNext defaultValue={args.defaultValue ?? "Value"} {...args} />;
-};
-
-export const Secondary: ComponentStory<typeof InputNext> = (args) => {
-  return (
-    <InputNext
-      defaultValue={args.defaultValue ?? "Value"}
-      variant="secondary"
-      {...args}
-    />
-  );
 };
 
 export const Controlled: ComponentStory<typeof InputNext> = (args) => {
@@ -38,6 +21,23 @@ export const Controlled: ComponentStory<typeof InputNext> = (args) => {
   };
 
   return <InputNext {...args} value={value} onChange={handleChange} />;
+};
+
+export const Variants: ComponentStory<typeof InputNext> = (args) => {
+  return (
+    <FlowLayout>
+      <InputNext
+        defaultValue={args.defaultValue ?? "Value"}
+        variant="primary"
+        {...args}
+      />
+      <InputNext
+        defaultValue={args.defaultValue ?? "Value"}
+        variant="secondary"
+        {...args}
+      />
+    </FlowLayout>
+  );
 };
 
 export const Disabled: ComponentStory<typeof InputNext> = (args) => {
@@ -78,7 +78,7 @@ export const Readonly: ComponentStory<typeof InputNext> = (args) => {
   );
 };
 
-export const ReadonlyEmptyMarker: ComponentStory<typeof InputNext> = (args) => {
+export const EmptyReadonlyMarker: ComponentStory<typeof InputNext> = (args) => {
   return (
     <FlowLayout>
       <InputNext readOnly={true} {...args} />
@@ -105,7 +105,7 @@ export const TextAlignment: ComponentStory<typeof InputNext> = (args) => {
   );
 };
 
-export const ValidationStatus: ComponentStory<typeof InputNext> = (args) => {
+export const Validation: ComponentStory<typeof InputNext> = (args) => {
   return (
     <FlowLayout style={{ maxWidth: "266px" }}>
       <InputNext
