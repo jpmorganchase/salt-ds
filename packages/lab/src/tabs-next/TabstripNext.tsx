@@ -142,6 +142,7 @@ export const TabstripNext = ({
           );
         })}
         <OverflowMenu
+          className={withBaseName("overflowMenu")}
           tabs={tabs}
           onSelectionChange={handleOverflowMenuSelectionChange}
         />

@@ -29,27 +29,21 @@ export interface TabstripProps extends HTMLAttributes<HTMLDivElement> {
    */
   enableCloseTab?: boolean;
   onActiveChange?: (tabIndex: number) => void;
-  onCloseTab?: (tabIndex: number) => void;
-  onMoveTab?: (fromIndex: number, toIndex: number) => void;
+  onCloseTab?: (index: string) => void;
   /**
    *  index value of Active Tab, used in controlled mode
    */
   activeTabIndex?: number;
 }
-export type TabProps = Omit<
-  HTMLAttributes<HTMLElement>,
-  "onClick" | "onKeyUp"
-> & {
+export type TabProps = HTMLAttributes<HTMLElement> & {
   ariaControls?: AriaAttributes["aria-controls"];
   closeable?: boolean;
   draggable?: boolean;
   dragging?: boolean;
   selected?: boolean;
-  index?: number;
   label?: string;
-  onClick?: (e: MouseEvent, index: number) => void;
-  onClose?: (index: number) => void;
-  onKeyUp?: (e: KeyboardEvent, index: number) => void;
+  id: string;
+  onClose?: (id: string) => void;
   tabChildIndex?: number;
 };
 

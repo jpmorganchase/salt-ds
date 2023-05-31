@@ -1,19 +1,20 @@
 import { Button } from "@salt-ds/core";
-import { Dropdown } from "../dropdown";
+import { Dropdown, DropdownProps } from "../dropdown";
 import { OverflowMenuIcon } from "@salt-ds/icons";
 import { TabElement } from "../tabs/TabsTypes";
 import { useOverflowContext, useOverflowMenu } from "@fluentui/react-overflow";
-import { SelectionChangeHandler } from "../common-hooks";
 
 type TabItem = { label: string; id: string };
+
+export interface OverflowMenuProps extends DropdownProps<TabItem> {
+  tabs: TabElement[];
+}
 
 export function OverflowMenu({
   tabs,
   onSelectionChange,
-}: {
-  tabs: TabElement[];
-  onSelectionChange: SelectionChangeHandler<TabItem, "default">;
-}) {
+  ...rest
+}: OverflowMenuProps) {
   const { ref, isOverflowing, overflowCount } =
     useOverflowMenu<HTMLButtonElement>();
   const itemVisibility = useOverflowContext(
@@ -51,6 +52,7 @@ export function OverflowMenu({
       source={tabList}
       width="auto"
       key={tabList.map((tab) => tab.id).join("-")}
+      {...rest}
     />
   );
 }

@@ -32,12 +32,7 @@
 }
 
 .saltTabstripNext-overflowMenu {
-  position: relative;
-  align-self: stretch;
-  margin-right: 2px; /* prevents the focus ring from being clipped on the right */
-  display: flex;
-  align-items: center;
-  border-bottom: var(--tabs-activationIndicator-thumb-height) solid transparent;
+  margin-left: auto;
 }
 
 .saltTabstripNext-overflowMenu-active {

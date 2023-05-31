@@ -8,7 +8,6 @@ import {
   KeyboardEvent,
   MouseEvent,
   ReactElement,
-  useCallback,
   useRef,
   useState,
 } from "react";
@@ -49,7 +48,6 @@ export const TabNext = forwardRef(function Tab(
     className,
     closeable,
     dragging,
-    index,
     label,
     onClick,
     onClose,
@@ -60,6 +58,7 @@ export const TabNext = forwardRef(function Tab(
     selected,
     tabChildIndex = 0,
     tabIndex,
+    id,
     ...props
   }: TabProps,
   ref: ForwardedRef<HTMLDivElement>
@@ -78,31 +77,24 @@ export const TabNext = forwardRef(function Tab(
   const root = useRef<HTMLDivElement>(null);
   const setForkRef = useForkRef(ref, root);
   const [closeHover, setCloseHover] = useState(false);
-  const handleClick = useCallback(
-    (e: MouseEvent) => {
-      e.preventDefault();
-      onClick(e, index);
-    },
-    [index, onClick]
-  );
 
-  const handleKeyUp = (e: KeyboardEvent) => {
+  const handleKeyUp = (e: KeyboardEvent<HTMLElement>) => {
     switch (e.key) {
       case "Backspace":
       case "Delete":
         if (closeable) {
           e.stopPropagation();
-          onClose && onClose(index);
+          onClose && onClose(id);
         }
         break;
       default:
-        onKeyUp && onKeyUp(e, index);
+        onKeyUp && onKeyUp(e);
     }
   };
 
   const handleCloseButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    onClose && onClose(index);
+    onClose && onClose(id);
   };
 
   const handleCloseButtonEnter = () => {
@@ -123,7 +115,7 @@ export const TabNext = forwardRef(function Tab(
         [withBaseName("closeHover")]: closeHover,
         [withBaseName("dragAway")]: dragging,
       })}
-      onClick={handleClick}
+      onClick={onClick}
       onFocus={onFocusProp}
       onKeyDown={onKeyDown}
       onKeyUp={handleKeyUp}
