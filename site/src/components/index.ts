@@ -1,3 +1,6 @@
+// importing this directly in MDX file didn't work, so adding here instead
+export { GridLayout } from "@salt-ds/core";
+
 export * from "./accordion";
 export * from "./app-header";
 export * from "./callout";
