@@ -4,9 +4,9 @@
 }
 
 /*
-  .root intentionally doens't have top or bottom margin, so that adjacent
+  .root intentionally doesn't have top or bottom margins, so that adjacent
   <AdviceCallout>s have no gap between them (and thus visually look like a
-  single unit). However, the should be some space betweeen an <AdviceCallout>
+  single unit). However, there should be some space betweeen an <AdviceCallout>
   and other content (e.g. paragraphs) below. This selector achieves that:
 */
 .root + :not(.root) {
