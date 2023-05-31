@@ -14,7 +14,8 @@
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-.saltIcon.saltBanner-icon {
+/* Styles applied to icon */
+.saltBanner-icon.saltIcon {
   min-height: var(--salt-size-base);
 }
 
