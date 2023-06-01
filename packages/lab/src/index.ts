@@ -48,7 +48,6 @@ export {
   type InputLegacyProps as InputProps,
   StaticInputAdornment,
 } from "./input-legacy";
-export { Input as InputNext } from "./input-next";
 export * from "./layer-layout";
 export * from "./list";
 export * from "./logo";

@@ -1,0 +1,172 @@
+/* Style applied to the root element */
+.saltInput {
+  --input-borderColor: var(--salt-editable-borderColor);
+  --input-borderStyle: var(--salt-editable-borderStyle);
+  --input-outlineColor: var(--salt-focused-outlineColor);
+  --input-borderWidth: var(--salt-size-border);
+  --input-paddingLeft: var(--salt-size-unit);
+
+  align-items: center;
+  background: var(--saltInput-background, var(--input-background));
+  color: var(--saltInput-color, var(--salt-text-primary-foreground));
+  display: inline-flex;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--saltInput-fontSize, var(--salt-text-fontSize));
+  height: var(--saltInput-height, var(--salt-size-base));
+  line-height: var(--saltInput-lineHeight, var(--salt-text-lineHeight));
+  min-height: var(--saltInput-minHeight, var(--salt-size-base));
+  min-width: var(--saltInput-minWidth, 4em);
+  padding-left: var(--saltInput-paddingLeft, var(--input-paddingLeft));
+  padding-right: var(--saltInput-paddingRight, var(--salt-size-unit));
+  position: relative;
+  width: 100%;
+}
+
+.saltInput:hover {
+  --input-borderStyle: var(--salt-editable-borderStyle-hover);
+  --input-borderColor: var(--salt-editable-borderColor-hover);
+
+  background: var(--saltInput-background-hover, var(--input-background-hover));
+  cursor: var(--salt-editable-cursor-hover);
+}
+
+.saltInput:active {
+  --input-borderColor: var(--salt-editable-borderColor-active);
+  --input-borderStyle: var(--salt-editable-borderStyle-active);
+  --input-borderWidth: var(--salt-editable-borderWidth-active);
+
+  background: var(--saltInput-background-active, var(--input-background-active));
+  cursor: var(--salt-editable-cursor-active);
+}
+
+/* Class applied if `variant="primary"` */
+.saltInput-primary {
+  --input-background: var(--salt-editable-primary-background);
+  --input-background-active: var(--salt-editable-primary-background-active);
+  --input-background-hover: var(--salt-editable-primary-background-hover);
+  --input-background-disabled: var(--salt-editable-primary-background-disabled);
+  --input-background-readonly: var(--salt-editable-primary-background-readonly);
+}
+
+/* Class applied if `variant="secondary"` */
+.saltInput-secondary {
+  --input-background: var(--salt-editable-secondary-background);
+  --input-background-active: var(--salt-editable-secondary-background-active);
+  --input-background-hover: var(--salt-editable-secondary-background-active);
+  --input-background-disabled: var(--salt-editable-secondary-background-disabled);
+  --input-background-readonly: var(--salt-editable-secondary-background-readonly);
+}
+
+/* Style applied to input if `validationState="error"` */
+.saltInput-error,
+.saltInput-error:hover {
+  --input-background: var(--salt-status-error-background);
+  --input-background-active: var(--salt-status-error-background);
+  --input-background-hover: var(--salt-status-error-background);
+  --input-borderColor: var(--salt-status-error-borderColor);
+  --input-outlineColor: var(--salt-status-error-borderColor);
+}
+
+/* Style applied to input if `validationState="warning"` */
+.saltInput-warning,
+.saltInput-warning:hover {
+  --input-background: var(--salt-status-warning-background);
+  --input-background-active: var(--salt-status-warning-background);
+  --input-background-hover: var(--salt-status-warning-background);
+  --input-borderColor: var(--salt-status-warning-borderColor);
+  --input-outlineColor: var(--salt-status-warning-borderColor);
+}
+
+/* Style applied to input if `validationState="success"` */
+.saltInput-success,
+.saltInput-success:hover {
+  --input-background: var(--salt-status-success-background);
+  --input-background-active: var(--salt-status-success-background);
+  --input-background-hover: var(--salt-status-success-background);
+  --input-borderColor: var(--salt-status-success-borderColor);
+  --input-outlineColor: var(--salt-status-success-borderColor);
+}
+
+/* Style applied to inner input component */
+.saltInput-input {
+  background: none;
+  border: none;
+  box-sizing: content-box;
+  color: inherit;
+  cursor: inherit;
+  display: block;
+  flex: 1;
+  font: inherit;
+  height: 100%;
+  letter-spacing: var(--saltInput-letterSpacing, 0);
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  text-align: var(--input-textAlign);
+  width: 100%;
+}
+
+/* Reset in the  class */
+.saltInput-input:focus {
+  outline: none;
+}
+
+/* Style applied to selected input */
+.saltInput-input::selection {
+  background: var(--salt-text-background-selected);
+}
+
+/* Styling when focused */
+.saltInput-focused {
+  --input-borderColor: var(--input-outlineColor);
+  --input-borderWidth: var(--salt-editable-borderWidth-active);
+
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--saltInput-outlineColor, var(--input-outlineColor));
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+
+/* Style applied if `readOnly={true}` */
+.saltInput.saltInput-readOnly {
+  --input-borderColor: var(--salt-editable-borderColor-readonly);
+  --input-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --input-paddingLeft: 0;
+
+  background: var(--input-background-readonly);
+  cursor: var(--salt-editable-cursor-readonly);
+}
+
+/* Styling when focused if `disabled={true}` or `readOnly={true}` */
+.saltInput-focused.saltInput-readOnly,
+.saltInput-focused.saltInput-disabled {
+  --input-borderWidth: var(--salt-size-border);
+  outline: none;
+}
+
+/* Style applied to selected input if `disabled={true}` */
+.saltInput-disabled .saltInput-input::selection {
+  background: none;
+}
+
+/* Style applied to input if `disabled={true}` */
+.saltInput.saltInput-disabled,
+.saltInput.saltInput-disabled:hover,
+.saltInput.saltInput-disabled:active {
+  --input-borderColor: var(--salt-editable-borderColor-disabled);
+  --input-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --input-borderWidth: var(--salt-size-border);
+
+  background: var(--input-background-disabled);
+  cursor: var(--salt-editable-cursor-disabled);
+  color: var(--saltInput-color-disabled, var(--salt-text-primary-foreground-disabled));
+}
+
+.saltInput-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--input-borderWidth) var(--input-borderStyle) var(--input-borderColor);
+}

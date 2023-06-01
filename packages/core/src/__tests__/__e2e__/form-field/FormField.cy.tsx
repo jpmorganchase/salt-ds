@@ -1,5 +1,9 @@
-import { FormField, FormFieldLabel, FormFieldHelperText } from "@salt-ds/core";
-import { InputNext } from "@salt-ds/lab";
+import {
+  FormField,
+  FormFieldLabel,
+  FormFieldHelperText,
+  Input,
+} from "@salt-ds/core";
 
 const MockChildren = () => {
   return (
@@ -138,12 +142,12 @@ describe("GIVEN a FormField", () => {
     });
   });
 
-  describe("WITH a nested InputNext", () => {
+  describe("WITH a nested Input", () => {
     it("SHOULD have no a11y violations on load", () => {
       cy.mount(
         <FormField>
           <FormFieldLabel>Label</FormFieldLabel>
-          <InputNext defaultValue="Value" data-testid="test-id-1" />
+          <Input defaultValue="Value" data-testid="test-id-1" />
           <FormFieldHelperText>Helper text</FormFieldHelperText>
         </FormField>
       );
