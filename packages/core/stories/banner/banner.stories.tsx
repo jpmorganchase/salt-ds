@@ -14,7 +14,7 @@ import {
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/Banner",
+  title: "Core/Banner",
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 
