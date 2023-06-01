@@ -8,6 +8,7 @@ import {
   FormFieldLabel as FormLabel,
   FormField,
   Input,
+  Tooltip,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -70,6 +71,17 @@ export const HelperText: ComponentStory<typeof FormField> = (props) => {
         </FormHelperText>
       </FormField>
     </FlowLayout>
+  );
+};
+
+export const HelperTextAsTooltip: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <FormField {...props}>
+      <FormLabel>Form Field label</FormLabel>
+      <Tooltip content="Helper text">
+        <Input defaultValue="Value" />
+      </Tooltip>
+    </FormField>
   );
 };
 
@@ -204,6 +216,25 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
         <FormLabel>Success Form Field</FormLabel>
         <Input defaultValue="Input value" />
         <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+
+      <FormField validationStatus="error" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Tooltip content="Helper text indicating error">
+          <Input defaultValue="Value" />
+        </Tooltip>
+      </FormField>
+      <FormField validationStatus="warning" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Tooltip content="Helper text indicating warning">
+          <Input defaultValue="Value" />
+        </Tooltip>
+      </FormField>
+      <FormField validationStatus="success" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Tooltip content="Helper text indicating success">
+          <Input defaultValue="Value" />
+        </Tooltip>
       </FormField>
       {/* TODO: Guidance to explain that the following would produce broken design/behaviour
       

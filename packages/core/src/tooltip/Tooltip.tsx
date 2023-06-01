@@ -22,6 +22,7 @@ import { SaltProvider } from "../salt-provider";
 
 import { useTooltip, UseTooltipProps } from "./useTooltip";
 import tooltipCss from "./Tooltip.css";
+import { useFormFieldProps } from "../form-field-context";
 
 const withBaseName = makePrefixer("saltTooltip");
 
@@ -75,17 +76,26 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const {
       children,
       className,
-      disabled,
+      disabled: disabledProp,
       hideArrow = false,
       hideIcon = false,
       open: openProp,
       content,
-      status = "info",
+      status: statusProp = "info",
       placement = "right",
       enterDelay = 300,
       leaveDelay = 0,
       ...rest
     } = props;
+
+  const {
+    a11yProps,
+    disabled: formFieldDisabled,
+    validationStatus: formFieldValidationStatus,
+  } = useFormFieldProps();
+
+  const disabled = formFieldDisabled ?? disabledProp;
+  const status = formFieldValidationStatus ?? statusProp;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -148,7 +158,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
                       className={withBaseName("icon")}
                     />
                   )}
-                  <span className={withBaseName("content")}>{content}</span>
+                  <span id={a11yProps?.["aria-describedby"]} className={withBaseName("content")}>{content}</span>
                 </div>
                 {!hideArrow && (
                   <FloatingArrow

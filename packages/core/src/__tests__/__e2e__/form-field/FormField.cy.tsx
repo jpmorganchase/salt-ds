@@ -3,6 +3,7 @@ import {
   FormFieldLabel,
   FormFieldHelperText,
   Input,
+  Tooltip,
 } from "@salt-ds/core";
 
 const MockChildren = () => {
@@ -154,6 +155,72 @@ describe("GIVEN a FormField", () => {
 
       cy.findByLabelText("Label").focus();
       cy.checkAxeComponent();
+    });
+
+    describe("AND has tooltip helper text", () => {
+      it("THEN tooltip should be visible on input hover", () => {
+        cy.mount(
+          <FormField>
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Tooltip content="Helper text">
+                <Input defaultValue="Value" data-testid="test-id-2" />
+            </Tooltip>
+          </FormField>
+        );
+        cy.findByLabelText("Label").realHover();
+  
+        cy.findByRole("tooltip").should("be.visible");
+      });
+
+      it("THEN should have the corresponding id", () => {
+        cy.mount(
+          <FormField id={"test-id"}>
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Tooltip content="Helper text">
+                <Input defaultValue="Value" data-testid="test-id-2" />
+            </Tooltip>
+          </FormField>
+        );
+  
+        cy.findByLabelText("Label").realHover();
+        cy.findByText("Helper text").should(
+          "have.attr",
+          "id",
+          "helperText-test-id"
+        );
+      });
+
+      describe("AND is disabled", () => {
+        it("THEN tooltip should not be visible on input hover", () => {
+          cy.mount(
+            <FormField disabled>
+              <FormFieldLabel>Label</FormFieldLabel>
+              <Tooltip content="Helper text">
+                  <Input defaultValue="Value" data-testid="test-id-2" />
+              </Tooltip>
+            </FormField>
+          );
+          cy.findByLabelText("Label").realHover();
+    
+          cy.findByRole("tooltip").should("not.exist");
+        });
+      });
+
+      describe("AND has validation status", () => {
+        it("THEN tooltip should reflect status", () => {
+          cy.mount(
+            <FormField validationStatus="error">
+              <FormFieldLabel>Label</FormFieldLabel>
+              <Tooltip content="Helper text">
+                  <Input defaultValue="Value" data-testid="test-id-2" />
+              </Tooltip>
+            </FormField>
+          );
+          cy.findByLabelText("Label").realHover();
+    
+          cy.findByRole("tooltip").should("have.class", "saltTooltip-error");
+        });
+      });
     });
   });
 });
