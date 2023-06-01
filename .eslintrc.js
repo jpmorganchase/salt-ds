@@ -3,7 +3,7 @@ module.exports = {
   plugins: ["eslint-plugin-local-rules"],
   overrides: [
     {
-      files: ["packages/**/*.ts", "packages/**/*.tsx"],
+      files: ["packages/**/src/**/*.ts", "packages/**/src/**/*.tsx"],
       rules: {
         "local-rules/must-inject-css": 2,
       },
