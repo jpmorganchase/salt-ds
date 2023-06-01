@@ -202,7 +202,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
       />
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
-      )}      
+      )}
       {endAdornment && (
         <div className={withBaseName("endAdornmentContainer")}>
           {endAdornment}

@@ -191,7 +191,7 @@
 .saltInput:has(.saltInput-startAdornmentContainer):has(.saltAdornmentButton) {
   --saltInput-paddingLeft: calc(0.25 * var(--salt-size-unit));
 }
-.saltInput-endAdornmentContainer:has(.saltAdornmentButton) .saltAdornmentButton ,
+.saltInput-endAdornmentContainer:has(.saltAdornmentButton) .saltAdornmentButton,
 .saltInput-startAdornmentContainer:has(.saltAdornmentButton) .saltAdornmentButton {
   --saltButton-height: calc(var(--salt-size-base) - 0.5 * var(--salt-size-unit));
   --saltButton-width: calc(var(--salt-size-base) - 0.5 * var(--salt-size-unit));

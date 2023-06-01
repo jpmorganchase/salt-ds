@@ -5,17 +5,12 @@ import { useWindow } from "@salt-ds/window";
 
 import AdornmentButtonCss from "./AdornmentButton.css";
 
-export type AdornmentButtonProps = ButtonProps
+export type AdornmentButtonProps = ButtonProps;
 
 const withBaseName = makePrefixer("saltAdornmentButton");
 
 export const AdornmentButton = forwardRef(function AdornmentButton(
-  {
-    children,
-    disabled,
-    variant,
-    ...rest
-  }: AdornmentButtonProps,
+  { children, disabled, variant, ...rest }: AdornmentButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
   const targetWindow = useWindow();
@@ -24,7 +19,7 @@ export const AdornmentButton = forwardRef(function AdornmentButton(
     css: AdornmentButtonCss,
     window: targetWindow,
   });
-  
+
   return (
     <Button
       className={withBaseName()}
