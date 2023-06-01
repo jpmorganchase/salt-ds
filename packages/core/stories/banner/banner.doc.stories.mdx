@@ -1,6 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Link } from "@salt-ds/core";
-import { Banner } from "@salt-ds/lab";
+import { Banner, Link } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -8,7 +7,7 @@ import {
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Banner"
+  title="Documentation/Core/Banner"
   component={Banner}
   parameters={{
     viewMode: "docs",
@@ -18,7 +17,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 # Banner
 
 <Canvas>
-  <Story id="lab-banner--default" />
+  <Story id="core-banner--default" />
 </Canvas>
 
 There are two ways to use Banner:
@@ -35,7 +34,7 @@ The Banner should relate to the current workflow and span the page or container 
 Static banners display information to the user and is non-functional, there are no interactive elements contained inside the Banner.
 
 <Canvas>
-  <Story id="lab-banner--static" />
+  <Story id="core-banner--static" />
 </Canvas>
 
 ### Interactive
@@ -43,7 +42,7 @@ Static banners display information to the user and is non-functional, there are 
 The interactive banner includes at least one function allowing users to dismiss or resolve it. However, it can include additional functions as needed (ie, links, buttons, etc)
 
 <Canvas>
-  <Story id="lab-banner--interactive" />
+  <Story id="core-banner--interactive" />
 </Canvas>
 
 ## Examples
@@ -53,7 +52,7 @@ The interactive banner includes at least one function allowing users to dismiss 
 You should use the information Banner to draw attention to something your user may be unaware of; for example a link to updated terms and conditions.
 
 <Canvas>
-  <Story id="lab-banner--inline" />
+  <Story id="core-banner--inline" />
 </Canvas>
 
 ### Letting users know about an issue
@@ -62,7 +61,7 @@ If your users have a problem that prevents them from completing a task, such as 
 or technical failure, use the error Banner to tell them how to resolve it.
 
 <Canvas>
-  <Story id="lab-banner--issue" />
+  <Story id="core-banner--issue" />
 </Canvas>
 
 Use the warning Banner to let users know about an issue that won't prevent them from
@@ -70,7 +69,7 @@ continuing the task, but may cause errors if it's not addressed, such as a restr
 or current system status.
 
 <Canvas>
-  <Story id="lab-banner--warning" />
+  <Story id="core-banner--warning" />
 </Canvas>
 
 #### Guidance
@@ -88,7 +87,7 @@ Use the success Banner to reassure your users that an event or process related t
 task has been successfully completed.
 
 <Canvas>
-  <Story id="lab-banner--success" />
+  <Story id="core-banner--success" />
 </Canvas>
 
 #### Guidance
@@ -100,7 +99,7 @@ When using Banner to notify the user `role="status"` should be applied.
 If you need to share multiple notifications of the same state with your users, you should summarize them in a single Banner.
 
 <Canvas>
-  <Story id="lab-banner--multiple-lines" />
+  <Story id="core-banner--multiple-lines" />
 </Canvas>
 
 ### Multiple Banners
@@ -109,7 +108,7 @@ If you have multiple notifications of different states, you should stack the res
 in the following order: Information, Error, Warning, Success.
 
 <Canvas>
-  <Story id="lab-banner--multiple-banners" />
+  <Story id="core-banner--multiple-banners" />
 </Canvas>
 
 ### Secondary
@@ -117,7 +116,7 @@ in the following order: Information, Error, Warning, Success.
 You can make the banner more prominent by passing `variant="secondary"` which will apply a background to the component.
 
 <Canvas>
-  <Story id="lab-banner--statuses-secondary" />
+  <Story id="core-banner--statuses-secondary" />
 </Canvas>
 
 ### Dismissible
@@ -125,10 +124,14 @@ You can make the banner more prominent by passing `variant="secondary"` which wi
 By default, the Banner is non-dismissible, If you want to make the Banner dismissible, then you should display the Banner conditionally and add the BannerActions component containing a close button with an onClick handler that will update the conditional param.
 
 <Canvas>
-  <Story id="lab-banner--dismissible" />
+  <Story id="core-banner--dismissible" />
 </Canvas>
 
 ## Configuring Banner
+
+```
+import {Banner, BannerContent, BannerActions } from '@salt-ds/core';
+```
 
 ### Props
 
