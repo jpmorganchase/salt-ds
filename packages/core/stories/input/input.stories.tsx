@@ -58,6 +58,15 @@ export const Disabled: ComponentStory<typeof Input> = (args) => {
   );
 };
 
+export const Placeholder: ComponentStory<typeof Input> = (args) => {
+  return (
+      <Input
+        placeholder={"Enter a value"}
+        {...args}
+      />
+  );
+};
+
 export const Readonly: ComponentStory<typeof Input> = (args) => {
   return (
     <FlowLayout>
@@ -85,6 +94,7 @@ export const EmptyReadonlyMarker: ComponentStory<typeof Input> = (args) => {
     </FlowLayout>
   );
 };
+
 
 export const TextAlignment: ComponentStory<typeof Input> = (args) => {
   return (
