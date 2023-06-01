@@ -3,10 +3,7 @@
   "version": "1.7.1",
   "license": "Apache-2.0",
   "main": "src/index.ts",
-  "sideEffects": [
-    "**/*.css",
-    "**/*.css.js"
-  ],
+  "sideEffects": false,
   "peerDependencies": {
     "@types/react": ">=16.8.6",
     "react": ">=16.8.0",
