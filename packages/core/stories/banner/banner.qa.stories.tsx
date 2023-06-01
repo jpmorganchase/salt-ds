@@ -1,16 +1,19 @@
 import { FC } from "react";
-import { Button, Link, StackLayout, SaltProvider } from "@salt-ds/core";
 import {
   Banner,
   BannerProps,
   BannerContent,
   BannerActions,
-} from "@salt-ds/lab";
+  Button,
+  Link,
+  StackLayout,
+  SaltProvider,
+} from "@salt-ds/core";
 import { ComponentMeta, Story } from "@storybook/react";
 import { CloseIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/Banner/QA",
+  title: "Core/Banner/QA",
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 

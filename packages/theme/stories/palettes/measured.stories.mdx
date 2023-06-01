@@ -5,7 +5,7 @@ import {
   ColorPalette,
   ColorItem,
 } from "@storybook/addon-docs";
-import { Banner } from "@salt-ds/lab";
+import { Banner, BannerContent } from "@salt-ds/core";
 import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
 
@@ -14,7 +14,9 @@ import { DocGrid } from "docs/components/DocGrid";
 # Measured
 
 <Banner status="warning">
-  Deprecated: Track characteristic should be used instead.
+  <BannerContent>
+    Deprecated: Track characteristic should be used instead.
+  </BannerContent>
 </Banner>
 
 Colors used to represent a measurement, value or progression.

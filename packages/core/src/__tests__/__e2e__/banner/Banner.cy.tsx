@@ -1,6 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import { Banner, BannerActions, BannerContent } from "@salt-ds/lab";
-import { Button } from "@salt-ds/core";
+import { Banner, BannerActions, BannerContent, Button } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import * as bannerStories from "@stories/banner/banner.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";

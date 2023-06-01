@@ -1,5 +1,5 @@
 import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { Banner } from "@salt-ds/lab";
+import { Banner, BannerContent } from "@salt-ds/core";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { FontSizeBlock } from "docs/components/FontSizeBlock";
@@ -10,7 +10,9 @@ import { LineBlock } from "docs/components/LineBlock";
 
 # Measured
 
-<Banner status="warning">Deprecated: Use Track characteristic instead.</Banner>
+<Banner status="warning">
+  <BannerContent>Deprecated: Use Track characteristic instead.</BannerContent>
+</Banner>
 
 Components which have the ability to visually indicate progress, scale, or range along a defined track.
 
