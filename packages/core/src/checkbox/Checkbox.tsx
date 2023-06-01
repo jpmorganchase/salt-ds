@@ -13,6 +13,7 @@ import checkboxCss from "./Checkbox.css";
 import { useCheckboxGroup } from "./internal/useCheckboxGroup";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { useFormFieldProps } from "../form-field-context";
 
 const withBaseName = makePrefixer("saltCheckbox");
 
@@ -85,10 +86,10 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       checked: checkedProp,
       className,
       defaultChecked,
-      disabled,
-      error,
+      disabled: disabledProp,
+      error: errorProp,
       indeterminate,
-      inputProps,
+      inputProps = {},
       label,
       name,
       onBlur,
@@ -107,6 +108,24 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       window: targetWindow,
     });
     const checkboxGroup = useCheckboxGroup();
+
+    const {
+      "aria-describedby": inputDescribedBy,
+      "aria-labelledby": inputLabelledBy,
+      ...restInputProps
+    } = inputProps;
+
+    const {
+      a11yProps: {
+        "aria-describedby": formFieldDescribedBy,
+        "aria-labelledby": formFieldLabelledBy,
+      } = {},
+      disabled: formFieldDisabled,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
+
+    const disabled = formFieldDisabled ?? disabledProp;
+    const error = formFieldValidationStatus === "error" ?? errorProp;
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       // Workaround for https://github.com/facebook/react/issues/9023
@@ -152,9 +171,11 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <input
           // aria-checked only needed when indeterminate since native indeterminate behaviour is not used
           aria-checked={indeterminate ? "mixed" : undefined}
+          aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
+          aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
           name={name}
           value={value}
-          {...inputProps}
+          {...restInputProps}
           checked={checked}
           className={withBaseName("input")}
           data-indeterminate={indeterminate}
