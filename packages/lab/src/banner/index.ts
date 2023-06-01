@@ -1,3 +1,3 @@
 export * from "./Banner";
-export * from "./BannerCloseButton";
+export * from "./BannerActions";
 export * from "./BannerContent";

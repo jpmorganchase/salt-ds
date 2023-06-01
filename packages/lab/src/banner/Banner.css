@@ -14,7 +14,8 @@
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-.saltBanner-icon {
+/* Styles applied to icon */
+.saltBanner-icon.saltIcon {
   min-height: var(--salt-size-base);
 }
 
@@ -38,18 +39,18 @@
   --banner-borderColor: var(--salt-status-success-borderColor);
 }
 
-.saltBanner-emphasize.saltBanner-info {
+.saltBanner-secondary.saltBanner-info {
   --banner-background: var(--salt-status-info-background);
 }
 
-.saltBanner-emphasize.saltBanner-error {
+.saltBanner-secondary.saltBanner-error {
   --banner-background: var(--salt-status-error-background);
 }
 
-.saltBanner-emphasize.saltBanner-warning {
+.saltBanner-secondary.saltBanner-warning {
   --banner-background: var(--salt-status-warning-background);
 }
 
-.saltBanner-emphasize.saltBanner-success {
+.saltBanner-secondary.saltBanner-success {
   --banner-background: var(--salt-status-success-background);
 }
