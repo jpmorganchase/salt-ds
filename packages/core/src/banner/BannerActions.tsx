@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../utils";
 
 import bannerActionsCss from "./BannerActions.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
