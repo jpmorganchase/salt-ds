@@ -4,9 +4,7 @@ import {
   ToggleButtonGroup,
   ToggleButtonGroupChangeEventHandler,
 } from "@salt-ds/lab";
-import {
-  Banner, BannerContent, FlexItem, FlexLayout
-} from "@salt-ds/core";
+import { Banner, BannerContent, FlexItem, FlexLayout } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
@@ -44,9 +42,7 @@ const Variants = (props: AgGridReactProps) => {
   return (
     <FlexLayout direction="column">
       <Banner status="info">
-        <BannerContent>
-          Variants are available in Salt theme only
-        </BannerContent>
+        <BannerContent>Variants are available in Salt theme only</BannerContent>
       </Banner>
       <FlexItem>
         <FlexLayout direction="row">

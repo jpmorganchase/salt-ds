@@ -3,7 +3,11 @@ import {
   Banner,
   BannerProps,
   BannerContent,
-  BannerActions, Button, Link, StackLayout, SaltProvider
+  BannerActions,
+  Button,
+  Link,
+  StackLayout,
+  SaltProvider,
 } from "@salt-ds/core";
 import { ComponentMeta, Story } from "@storybook/react";
 import { CloseIcon } from "@salt-ds/icons";
