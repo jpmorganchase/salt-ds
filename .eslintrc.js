@@ -4,6 +4,7 @@ module.exports = {
   overrides: [
     {
       files: ["packages/**/*.ts", "packages/**/*.tsx"],
+      excludedFiles: ["**/*.stories.*"],
       rules: {
         "local-rules/must-inject-css": 2,
       },
