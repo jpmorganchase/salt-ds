@@ -163,12 +163,12 @@ describe("GIVEN a FormField", () => {
           <FormField>
             <FormFieldLabel>Label</FormFieldLabel>
             <Tooltip content="Helper text">
-                <Input defaultValue="Value" data-testid="test-id-2" />
+              <Input defaultValue="Value" data-testid="test-id-2" />
             </Tooltip>
           </FormField>
         );
         cy.findByLabelText("Label").realHover();
-  
+
         cy.findByRole("tooltip").should("be.visible");
       });
 
@@ -177,11 +177,11 @@ describe("GIVEN a FormField", () => {
           <FormField id={"test-id"}>
             <FormFieldLabel>Label</FormFieldLabel>
             <Tooltip content="Helper text">
-                <Input defaultValue="Value" data-testid="test-id-2" />
+              <Input defaultValue="Value" data-testid="test-id-2" />
             </Tooltip>
           </FormField>
         );
-  
+
         cy.findByLabelText("Label").realHover();
         cy.findByText("Helper text").should(
           "have.attr",
@@ -196,12 +196,12 @@ describe("GIVEN a FormField", () => {
             <FormField disabled>
               <FormFieldLabel>Label</FormFieldLabel>
               <Tooltip content="Helper text">
-                  <Input defaultValue="Value" data-testid="test-id-2" />
+                <Input defaultValue="Value" data-testid="test-id-2" />
               </Tooltip>
             </FormField>
           );
           cy.findByLabelText("Label").realHover();
-    
+
           cy.findByRole("tooltip").should("not.exist");
         });
       });
@@ -212,12 +212,12 @@ describe("GIVEN a FormField", () => {
             <FormField validationStatus="error">
               <FormFieldLabel>Label</FormFieldLabel>
               <Tooltip content="Helper text">
-                  <Input defaultValue="Value" data-testid="test-id-2" />
+                <Input defaultValue="Value" data-testid="test-id-2" />
               </Tooltip>
             </FormField>
           );
           cy.findByLabelText("Label").realHover();
-    
+
           cy.findByRole("tooltip").should("have.class", "saltTooltip-error");
         });
       });

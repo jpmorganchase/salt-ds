@@ -88,14 +88,14 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       ...rest
     } = props;
 
-  const {
-    a11yProps,
-    disabled: formFieldDisabled,
-    validationStatus: formFieldValidationStatus,
-  } = useFormFieldProps();
+    const {
+      a11yProps,
+      disabled: formFieldDisabled,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
 
-  const disabled = formFieldDisabled ?? disabledProp;
-  const status = formFieldValidationStatus ?? statusProp;
+    const disabled = formFieldDisabled ?? disabledProp;
+    const status = formFieldValidationStatus ?? statusProp;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -158,7 +158,12 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
                       className={withBaseName("icon")}
                     />
                   )}
-                  <span id={a11yProps?.["aria-describedby"]} className={withBaseName("content")}>{content}</span>
+                  <span
+                    id={a11yProps?.["aria-describedby"]}
+                    className={withBaseName("content")}
+                  >
+                    {content}
+                  </span>
                 </div>
                 {!hideArrow && (
                   <FloatingArrow

@@ -74,7 +74,9 @@ export const HelperText: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const HelperTextAsTooltip: ComponentStory<typeof FormField> = (props) => {
+export const HelperTextAsTooltip: ComponentStory<typeof FormField> = (
+  props
+) => {
   return (
     <FormField {...props}>
       <FormLabel>Form Field label</FormLabel>
