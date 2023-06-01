@@ -186,3 +186,16 @@
   padding-left: var(--salt-spacing-75);
   column-gap: var(--salt-spacing-75);
 }
+
+/* TODO: Firefox fix */
+.saltInput:has(.saltInput-startAdornmentContainer):has(.saltAdornmentButton) {
+  --saltInput-paddingLeft: calc(0.25 * var(--salt-size-unit));
+}
+.saltInput-endAdornmentContainer:has(.saltAdornmentButton) .saltAdornmentButton ,
+.saltInput-startAdornmentContainer:has(.saltAdornmentButton) .saltAdornmentButton {
+  --saltButton-height: calc(var(--salt-size-base) - 0.5 * var(--salt-size-unit));
+  --saltButton-width: calc(var(--salt-size-base) - 0.5 * var(--salt-size-unit));
+}
+.saltInput:has(.saltInput-endAdornmentContainer):has(.saltAdornmentButton) {
+  --saltInput-paddingRight: calc(0.25 * var(--salt-size-unit));
+}

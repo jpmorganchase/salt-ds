@@ -185,7 +185,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
       <input
         aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
         aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
-        className={clsx(withBaseName("input"), inputProps?.className)}
+        className={clsx(withBaseName("input"), { [withBaseName("withAdornment")]: validationStatus }, inputProps?.className)}
         disabled={isDisabled}
         id={id}
         readOnly={isReadOnly}
