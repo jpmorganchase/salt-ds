@@ -1,5 +1,11 @@
 import { Input, FlowLayout, Text } from "@salt-ds/core";
-import { CallIcon, CreditCardIcon, FilterClearIcon, FilterIcon, FlagIcon } from "@salt-ds/icons";
+import {
+  CallIcon,
+  CreditCardIcon,
+  FilterClearIcon,
+  FilterIcon,
+  FlagIcon,
+} from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
 
@@ -126,7 +132,6 @@ export const Validation: ComponentStory<typeof Input> = (args) => {
     </FlowLayout>
   );
 };
-
 
 export const StaticAdornments: ComponentStory<typeof Input> = (args) => {
   return (
