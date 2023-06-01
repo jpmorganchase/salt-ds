@@ -22,8 +22,8 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 There are two ways to use Banner:
 
-- To let users know about important information.
-- To provide feedback about an error, warning, a successfully completed process or an information update.
+- To let users know about important information
+- To provide feedback about an error, warning, a successfully completed process or an information update
 
 The Banner should relate to the current workflow and span the page or container horizontally to give quick and non-disruptive feedback.
 
@@ -31,7 +31,7 @@ The Banner should relate to the current workflow and span the page or container 
 
 ### Static
 
-Static banners display information to the user and is non-functional, there are no interactive elements contained inside the Banner.
+Static banners display information to the user and are non-functional. These types of Banner have no interactive elements.
 
 <Canvas>
   <Story id="core-banner--static" />
@@ -39,7 +39,7 @@ Static banners display information to the user and is non-functional, there are 
 
 ### Interactive
 
-The interactive banner includes at least one function allowing users to dismiss or resolve it. However, it can include additional functions as needed (ie, links, buttons, etc)
+The interactive banner includes at least one function allowing users to dismiss or resolve it. However, it can include additional functions as needed (i.e., links, buttons, etc).
 
 <Canvas>
   <Story id="core-banner--interactive" />
@@ -79,7 +79,7 @@ When using Banner to alert the user `role="alert"` should be applied.
 The Banner should close when:
 
 - The user performs an action that fixes an issue, for example they correct a validation error.
-- The system status that triggered the notification is resolved, for example, a server connection is restored
+- The system status that triggered the notification is resolved, for example, a server connection is restored.
 
 ### When you need to reassure your users
 
@@ -92,7 +92,7 @@ task has been successfully completed.
 
 #### Guidance
 
-When using Banner to notify the user `role="status"` should be applied.
+When using Banner to notify the user, `role="status"` should be applied.
 
 ### Multiple Notifications
 
@@ -113,7 +113,7 @@ in the following order: Information, Error, Warning, Success.
 
 ### Secondary
 
-You can make the banner more prominent by passing `variant="secondary"` which will apply a background to the component.
+You can make Banner more prominent by passing `variant="secondary"`. This will apply a background to the component.
 
 <Canvas>
   <Story id="core-banner--statuses-secondary" />
@@ -121,7 +121,7 @@ You can make the banner more prominent by passing `variant="secondary"` which wi
 
 ### Dismissible
 
-By default, the Banner is non-dismissible, If you want to make the Banner dismissible, then you should display the Banner conditionally and add the BannerActions component containing a close button with an onClick handler that will update the conditional param.
+By default, Banner is non-dismissible, If you want to make Banner dismissible, then you should display Banner conditionally and add the BannerActions component containing a close button with an onClick handler that will update the conditional parameter.
 
 <Canvas>
   <Story id="core-banner--dismissible" />
