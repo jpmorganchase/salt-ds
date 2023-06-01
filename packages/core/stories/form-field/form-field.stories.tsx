@@ -7,8 +7,8 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
   FormField,
+  Input,
 } from "@salt-ds/core";
-import { InputNext } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 export default {
@@ -36,7 +36,7 @@ export const Default: ComponentStory<typeof FormField> = (props) => {
     <FlowLayout style={{ width: "366px" }}>
       <FormField {...props}>
         <FormLabel>Form Field label</FormLabel>
-        <InputNext defaultValue="Value" />
+        <Input defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
     </FlowLayout>
@@ -47,7 +47,7 @@ export const Disabled: ComponentStory<typeof FormField> = (props) => {
   return (
     <FormField style={{ width: "366px" }} disabled {...props}>
       <FormLabel>Disabled Form Field</FormLabel>
-      <InputNext defaultValue="Primary Input value" />
+      <Input defaultValue="Primary Input value" />
       <FormHelperText>This field has been disabled</FormHelperText>
     </FormField>
   );
@@ -58,12 +58,12 @@ export const HelperText: ComponentStory<typeof FormField> = (props) => {
     <FlowLayout style={{ width: "366px" }}>
       <FormField {...props}>
         <FormLabel>Form Field label</FormLabel>
-        <InputNext defaultValue="Value" />
+        <Input defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
       <FormField {...props}>
         <FormLabel>Form Field label</FormLabel>
-        <InputNext defaultValue="Primary Input value" />
+        <Input defaultValue="Primary Input value" />
         <FormHelperText>
           Helper text that's very long. Additional text to give further context
           to the input requirements.
@@ -78,14 +78,14 @@ export const Label: ComponentStory<typeof FormField> = (props) => {
     <FlowLayout style={{ width: "366px" }}>
       <FormField {...props}>
         <FormLabel>Form Field label top (default)</FormLabel>
-        <InputNext defaultValue="Value" />
+        <Input defaultValue="Value" />
       </FormField>
       <FormField {...props}>
         <FormLabel>
           Form Field label that's extra long. Showing that labels wrap around to
           the line.
         </FormLabel>
-        <InputNext defaultValue="Primary Input value" />
+        <Input defaultValue="Primary Input value" />
       </FormField>
     </FlowLayout>
   );
@@ -96,14 +96,14 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
     <FlowLayout style={{ width: "366px" }}>
       <FormField labelPlacement="left" {...props}>
         <FormLabel>Form Field label left</FormLabel>
-        <InputNext defaultValue="Value" />
+        <Input defaultValue="Value" />
       </FormField>
       <FormField labelPlacement="left" {...props}>
         <FormLabel>
           Form Field label that's extra long. Showing that labels wrap around to
           the line.
         </FormLabel>
-        <InputNext defaultValue="Primary Input value" />
+        <Input defaultValue="Primary Input value" />
       </FormField>
     </FlowLayout>
   );
@@ -114,14 +114,14 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
 Commenting out as it's possible but not supported until V3
 */
 
-// export const MultiInputNext: ComponentStory<typeof FormField> = (props) => {
+// export const MultiInput: ComponentStory<typeof FormField> = (props) => {
 //   return (
 //     <FlowLayout style={{ width: "366px" }}>
 //       <FormField {...props}>
 //         <FormLabel>Paired fields</FormLabel>
 //         <Controls>
-//           <InputNext defaultValue="123" />
-//           <InputNext defaultValue="35" />
+//           <Input defaultValue="123" />
+//           <Input defaultValue="35" />
 //         </Controls>
 //         <FormHelperText>
 //           *User entry in either field will automatically populate the
@@ -131,8 +131,8 @@ Commenting out as it's possible but not supported until V3
 //       <FormField {...props}>
 //         <FormLabel>Multi criteria inputs</FormLabel>
 //         <Controls>
-//           <InputNext defaultValue="2.5" />
-//           <InputNext defaultValue="750" />
+//           <Input defaultValue="2.5" />
+//           <Input defaultValue="750" />
 //         </Controls>
 //         <FormHelperText>
 //           *User must enter all values in the string to complete the input
@@ -146,7 +146,7 @@ export const Readonly: ComponentStory<typeof FormField> = (props) => {
   return (
     <FormField style={{ width: "366px" }} readOnly {...props}>
       <FormLabel>Readonly Form Field</FormLabel>
-      <InputNext defaultValue="Primary Input value" />
+      <Input defaultValue="Primary Input value" />
       <FormHelperText>This Form Field is readonly</FormHelperText>
     </FormField>
   );
@@ -192,17 +192,17 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
     <FlowLayout style={{ width: "366px" }}>
       <FormField validationStatus="error" {...props}>
         <FormLabel>Error Form Field</FormLabel>
-        <InputNext defaultValue="InputNext value" />
+        <Input defaultValue="Input value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
       <FormField validationStatus="warning" {...props}>
         <FormLabel>Warning Form Field</FormLabel>
-        <InputNext defaultValue="InputNext value" />
+        <Input defaultValue="Input value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
       <FormField validationStatus="success" {...props}>
         <FormLabel>Success Form Field</FormLabel>
-        <InputNext defaultValue="InputNext value" />
+        <Input defaultValue="Input value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
       {/* TODO: Guidance to explain that the following would produce broken design/behaviour
@@ -215,7 +215,7 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
         helperText="Helper text"
         {...props}
       >
-        <InputNext readOnly defaultValue="InputNext value" />
+        <Input readOnly defaultValue="Input value" />
       </FormField>
       Warning disabled Input
       <FormField
@@ -224,7 +224,7 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
         helperText="Helper text"
         {...props}
       >
-        <InputNext disabled defaultValue="InputNext value" />
+        <Input disabled defaultValue="Input value" />
       </FormField> */}
     </FlowLayout>
   );

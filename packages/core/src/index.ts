@@ -14,6 +14,7 @@ export * from "./form-field";
 export * from "./form-field-context";
 export * from "./grid-item";
 export * from "./grid-layout";
+export * from "./input";
 export * from "./link";
 export * from "./panel";
 export * from "./radio-button";

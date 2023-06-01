@@ -45,6 +45,6 @@
   grid-area: helperText;
 }
 
-.saltFormField-disabled .saltInputNext-focused {
+.saltFormField-disabled .saltInput-focused {
   outline: none;
 }
