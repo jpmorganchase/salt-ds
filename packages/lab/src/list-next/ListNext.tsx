@@ -106,14 +106,14 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
     const renderContent = () => {
       return Children.map(children, (listItem, index) => {
-        const { disabled: propDisabled, ...rest } = listItem.props;
+        const { disabled: propDisabled, ...restListItemProps } = listItem.props;
         const childProps = {
           disabled: propDisabled || disabled,
           onClick: (e: MouseEvent<HTMLUListElement>) => handleClick(e),
           focused: focusedIndex === index,
           selected: selectedIndexes.includes(index),
           id: `list-item--${index}`,
-          ...rest,
+          ...restListItemProps,
         };
 
         return (
