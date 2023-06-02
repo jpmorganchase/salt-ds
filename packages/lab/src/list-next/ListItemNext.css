@@ -20,14 +20,8 @@
   transition: background var(--salt-duration-perceptible) ease-in-out;
 }
 
-.saltListItemNext > *:not(:has(input[type="checkbox"])) {
+.saltListItemNext > * {
   pointer-events: none;
-}
-
-@supports not selector(:has(*)) {
-  .saltListItemNext > *:not(.saltListItemNext-checkbox) {
-    pointer-events: none;
-  }
 }
 
 .saltListItemNext[role="presentation"] {
@@ -41,7 +35,6 @@
 }
 
 .saltListItemNext:hover:not([role="presentation"]):not(.saltListItemNext-disabled),
-/* TODO: do we need to add the role exception to the below classes? */
 .saltListItemNext-focused {
   --list-item-background: var(--salt-selectable-background-hover);
   cursor: var(--salt-selectable-cursor-hover);
@@ -53,7 +46,8 @@
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
 
-.saltListItemNext-disabled:hover:not([role="presentation"]) {
+.saltListItemNext-disabled {
+  --list-item-text-color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 

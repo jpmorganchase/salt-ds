@@ -7,13 +7,16 @@ import {
   HTMLAttributes,
   isValidElement,
   KeyboardEventHandler,
-  MouseEventHandler,
+  MouseEvent,
   ReactElement,
+  useMemo,
 } from "react";
-import "./ListNext.css";
 import { clsx } from "clsx";
 import { ListItemNext, ListItemNext as DefaultListItem } from "./ListItemNext";
 import { useList } from "./useList";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import listNextCss from "./ListNext.css";
 
 const withBaseName = makePrefixer("saltList");
 const defaultEmptyMessage = "No data to display";
@@ -21,7 +24,6 @@ const defaultEmptyMessage = "No data to display";
 export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
   disabled?: boolean;
   emptyMessage?: string;
-  multiselect?: boolean;
   ListItem?: ReactElement;
   borderless?: boolean;
   deselectable?: boolean;
@@ -29,12 +31,9 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
 }
 
 export interface ListNextControlProps {
-  "aria-activedescendant"?: string;
   onBlur: FocusEventHandler;
   onFocus: FocusEventHandler;
   onKeyDown: KeyboardEventHandler;
-  onMouseDownCapture: MouseEventHandler;
-  onMouseLeave: MouseEventHandler;
 }
 
 export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
@@ -44,19 +43,42 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       className,
       disabled,
-      displayedItemCount,
-      deselectable,
+      displayedItemCount: displayedItemCountProp,
+      deselectable = false,
       ListItem = DefaultListItem,
       emptyMessage,
-      multiselect,
       onSelect,
       onFocus,
+      onBlur,
+      onKeyDown,
       style,
       ...rest
     },
     ref
   ) {
-    const emptyList = Children.count(children) === 0;
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-hightligher",
+      css: listNextCss,
+      window: targetWindow,
+    });
+
+    const childrenCount = Children.count(children);
+    const emptyList = childrenCount === 0;
+
+    const displayedItemCount = useMemo((): number => {
+      // if no children, display empty message
+      if (emptyList) return 1;
+
+      // displayedItemCount takes precedence over childrenCount
+      if (displayedItemCountProp)
+        return displayedItemCountProp <= childrenCount
+          ? displayedItemCountProp
+          : childrenCount;
+
+      // if more than 4 children, display 4 tops
+      return childrenCount > 4 ? 4 : childrenCount;
+    }, [displayedItemCountProp, children]);
 
     const {
       listRef,
@@ -67,56 +89,38 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     } = useList({
       children,
       deselectable,
-      multiselect,
-      displayedItemCount, // TODO: we are sending what comes from the props, but we might want to use our other func to pass this.
+      displayedItemCount,
       onFocus,
+      onKeyDown,
+      onBlur,
     });
     const forkedRef = useForkRef(ref, listRef);
 
     function renderEmpty() {
       return (
-        <ListItemNext
-          className={withBaseName("emptyMessage")}
-          role="presentation"
-        >
+        <ListItemNext role="presentation">
           {emptyMessage || defaultEmptyMessage}
         </ListItemNext>
       );
     }
 
-    function renderContent() {
+    const renderContent = () => {
       return Children.map(children, (listItem, index) => {
         const { disabled: propDisabled, ...rest } = listItem.props;
         const childProps = {
-          showCheckbox: multiselect,
           disabled: propDisabled || disabled,
-          onClick: (e) => handleClick(e, index),
+          onClick: (e: MouseEvent<HTMLUListElement>) => handleClick(e),
           focused: focusedIndex === index,
           selected: selectedIndexes.includes(index),
-          id: index, // TODO: Check this
+          id: `list-item--${index}`,
           ...rest,
         };
 
         return (
           isValidElement(listItem) &&
-          cloneElement(listItem, { ...mergeProps(childProps, listItem.props) })
+          cloneElement(listItem, { ...mergeProps(listItem.props, childProps) })
         );
       });
-    }
-
-    const childrenCount = Children.count(children);
-    const getDisplayedItemCount = () => {
-      // if no children, display empty message
-      if (emptyList) return 1;
-
-      // displayedItemCount takes precedence over childrenCount
-      if (displayedItemCount)
-        return displayedItemCount <= childrenCount
-          ? displayedItemCount
-          : childrenCount;
-
-      // if more than 4 children, display 4 tops
-      return childrenCount > 4 ? 4 : childrenCount;
     };
 
     return (
@@ -135,7 +139,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         aria-activedescendant={activeDescendant}
         style={{
           ...style,
-          "--list-displayedItemCount": getDisplayedItemCount(),
+          "--list-displayedItemCount": displayedItemCount,
         }}
         {...rest}
       >

@@ -2,7 +2,7 @@
   --list-background: var(--salt-container-primary-background);
   --list-borderStyle: var(--salt-container-borderStyle);
   --list-borderWidth: var(--salt-size-border);
-  --list-height: calc(var(--list-item-height) * var(--list-displayedItemCount));
+  --list-height: calc(var(--salt-size-stackable) * var(--list-displayedItemCount));
 }
 
 .saltList {
@@ -17,21 +17,15 @@
   position: relative;
   user-select: none;
   padding-inline-start: 0;
+  box-sizing: content-box;
 }
 
 .saltList-borderless {
   --list-borderStyle: none;
-  --list-height: calc(var(--list-item-height) * var(--list-displayedItemCount));
 }
 
 /* Pseudo-class applied to the root element on focus */
 .saltList-focusable:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(0 - var(--salt-focused-outlineWidth));
-}
-
-.saltList-emptyMessage {
-  overflow: hidden;
-  width: 100%;
-  text-overflow: ellipsis;
 }

@@ -20,16 +20,6 @@ const SimpleListExample = [
   "Georgia",
 ];
 
-// TODO: behaviours to show in examples.
-// Controlled
-// Multi Selection
-// with item renderer (custom item)
-// with text truncation
-// with focus restored
-// with text highlight
-// extended selection (only for multiselect?)
-// inside a combobox
-
 const listItems = SimpleListExample.map((item, index) => (
   <ListItemNext key={index} disabled={[1, 5].includes(index)}>
     {item}
@@ -57,11 +47,6 @@ Truncation.args = {
   style: { width: "80px" },
 };
 
-export const MultiSelect = Default.bind({});
-MultiSelect.args = {
-  multiselect: true,
-};
-
 export const Deselectable = Default.bind({});
 Deselectable.args = {
   deselectable: true,
@@ -77,36 +62,4 @@ export const Empty = Default.bind({});
 Empty.args = {
   children: [],
   emptyMessage: "Empty list example with long empty message",
-};
-
-export const ListItemNextExample: Story<ListNextProps> = (props) => {
-  return (
-    <ListNext
-      {...props}
-      aria-label="Basic list items example"
-      displayedItemCount={6}
-    >
-      <ListItemNext selected role={"presentation"}>
-        Selected Item
-      </ListItemNext>
-      <ListItemNext>Basic list item</ListItemNext>
-      <ListItemNext showCheckbox selected>
-        with checkbox selected
-      </ListItemNext>
-      <ListItemNext showCheckbox>with checkbox</ListItemNext>
-      <ListItemNext itemTextHighlightPattern="bama">
-        with highlight
-      </ListItemNext>
-      <ListItemNext selected disabled>
-        selected disabled
-      </ListItemNext>
-      <ListItemNext disabled>disabled</ListItemNext>
-      <ListItemNext showCheckbox selected disabled>
-        with checkbox disabled selected
-      </ListItemNext>
-      <ListItemNext showCheckbox disabled>
-        with checkbox disabled
-      </ListItemNext>
-    </ListNext>
-  );
 };

@@ -1,8 +1,8 @@
 import {
-  ReactNode,
+  Children,
+  isValidElement,
   MouseEvent,
-  KeyboardEvent,
-  useCallback,
+  ReactNode,
   useEffect,
   useRef,
   useState,
@@ -14,49 +14,69 @@ import {
   Home,
   PageDown,
   PageUp,
-  Shift,
   Space,
 } from "../common-hooks";
+import { useEventCallback } from "../utils";
 
 interface UseListProps {
   children: ReactNode;
   deselectable: boolean;
-  multiselect: boolean;
-  onFocus: (element: HTMLElement) => void;
+  displayedItemCount: number;
+  onFocus: (element: Element) => void;
+  onKeyDown: (element: Element) => void;
+  onBlur: () => void;
 }
+
+const getSelected = (children: ReactNode): number[] =>
+  Children.toArray(children).reduce(
+    (selectedItems: number[], child: ReactNode, index) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (isValidElement(child) && child.props?.selected) {
+        selectedItems.push(index);
+      }
+      return selectedItems;
+    },
+    []
+  );
 
 export const useList = ({
   children,
   deselectable,
-  multiselect,
   displayedItemCount,
   onFocus,
+  onKeyDown,
+  onBlur,
 }: UseListProps) => {
   const listRef = useRef<HTMLUListElement | null>(null);
-  const activeDescendantRef = useRef<string>("");
-  const selectedRef = useRef<number[]>([]);
+  let list = listRef.current;
+
+  const [activeDescendant, setActiveDescendant] = useState<string>("");
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const [startRangeIndex, setStartRangeIndex] = useState<number>(0);
+  const [selectedIndexes, setSelectedIndexes] = useState<number[]>(
+    getSelected(children)
+  );
+  const [allOptions, setAllOptions] = useState<Element[]>([]);
+  const [activeOptions, setActiveOptions] = useState<Element[]>([]);
 
-  const getAllOptions = (): Element[] => {
-    const list = listRef.current;
-    return (
-      Array.from(list?.children).filter(
-        (child) => child.getAttribute("role") === "option"
-      ) || []
-    );
+  const getListItemIndex = (item: Element): number => {
+    const optionIndex = allOptions.indexOf(item);
+    return optionIndex !== -1 ? optionIndex : -1;
   };
-  const getAllActiveOptions = () =>
-    getAllOptions().filter(
-      (option) => option.getAttribute("aria-disabled") !== "true"
-    );
 
-  // debugger;
+  const focusAndSelect = (element: Element) => {
+    setSelectedIndexes([getListItemIndex(element)]);
+    setActiveDescendant(element.id);
+    setFocusedIndex(getListItemIndex(element));
+    updateScroll(element);
 
-  /**/
+    if (onFocus) {
+      onFocus(element);
+    }
+  };
+
   const focusFirstItem = () => {
     // Find first active item
-    const firstItem = findNextOption(null);
+    const firstItem = activeOptions[0];
     if (firstItem) {
       focusAndSelect(firstItem);
     }
@@ -64,246 +84,165 @@ export const useList = ({
 
   const focusLastItem = () => {
     // Find last active item
-    const allActiveOptions = getAllActiveOptions();
-    const lastItem = allActiveOptions[allActiveOptions.length - 1];
+    const lastItem = activeOptions[activeOptions.length - 1];
     if (lastItem) {
       focusAndSelect(lastItem);
     }
   };
 
-  const getListItemIndex = (item): number => {
-    const optionIndex = getAllOptions().indexOf(item);
-    return optionIndex !== -1 ? optionIndex : -1;
+  const toggleSelectItem = (element: Element) => {
+    const elementIndex = getListItemIndex(element);
+    const itemIsSelected = selectedIndexes.includes(elementIndex);
+    const newSelection = deselectable && itemIsSelected ? [] : [elementIndex];
+    setSelectedIndexes(newSelection);
   };
 
-  /* finds next active option */
-  const findNextOption = (currentOption: Element | null): Element | null => {
-    const allActiveOptions = getAllActiveOptions();
+  const justFocusItem = (element: Element) => {
+    if (onFocus) {
+      onFocus(element);
+    }
+    setActiveDescendant(element.id);
+    setFocusedIndex(getListItemIndex(element));
+    updateScroll(element);
+  };
+
+  const findNextOption = (
+    currentOption: Element | null,
+    moves: number
+  ): Element => {
     // Returns next item, if no current option it will return 0
-    const nextOptionIndex = allActiveOptions.indexOf(currentOption) + 1;
-    return allActiveOptions[nextOptionIndex] || null;
+    const nextOptionIndex = currentOption
+      ? activeOptions.indexOf(currentOption) + moves
+      : 0;
+    return (
+      activeOptions[nextOptionIndex] || activeOptions[activeOptions.length - 1]
+    );
   };
 
-  /**/
-  const findPreviousOption = (currentOption: Element): Element | null => {
-    // Return the previous option if it exists; otherwise, returns null
-    const allActiveOptions = getAllActiveOptions();
-    const currentOptionIndex = allActiveOptions.indexOf(currentOption);
-    return allActiveOptions[currentOptionIndex - 1] || null;
+  const findPreviousOption = (
+    currentOption: Element,
+    moves: number
+  ): Element => {
+    // Return the previous option if it exists; otherwise, returns first option
+    const currentOptionIndex = activeOptions.indexOf(currentOption);
+    return activeOptions[currentOptionIndex - moves] || activeOptions[0];
   };
 
-  const toggleSelectItem = useCallback(
-    (element: HTMLElement, index: number) => {
-      const selectedIndexes = selectedRef.current;
-      const itemIsSelected = selectedIndexes.includes(index);
-      let newSelection;
-      if (multiselect) {
-        newSelection = itemIsSelected
-          ? selectedIndexes.filter((i) => i !== index)
-          : [...selectedIndexes, index];
-      } else {
-        newSelection =
-          deselectable && itemIsSelected ? [] : [getListItemIndex(element)];
-      }
-      //  TODO: This is sending back the right selection, but it is not being updated on time
-      selectedRef.current = newSelection;
-    },
-    []
-  );
-
-  const focusAndSelect = (element: HTMLElement) => {
-    if (!multiselect) {
-      selectedRef.current = [getListItemIndex(element)];
-    }
-
-    setFocusedIndex(getListItemIndex(element));
-
-    if (onFocus) {
-      onFocus(element);
-    }
-    activeDescendantRef.current = element.id;
-  };
-
-  const justFocusItem = (element: HTMLElement) => {
-    setFocusedIndex(getListItemIndex(element));
-
-    if (onFocus) {
-      onFocus(element);
-    }
-    activeDescendantRef.current = element.id;
-  };
-
-  const checkInRange = (index: number, start: number, end: number) => {
-    const [rangeStart, rangeEnd] = start < end ? [start, end] : [end, start];
-    return index >= rangeStart && index <= rangeEnd;
-  };
-
-  // TODO: selectrange currently can take indexes or elements, let's use just one or the other
-  const selectRange = (start, end) => {
-    const allOptions = getAllOptions();
-    const startIndex =
-      typeof start === "number" ? start : getListItemIndex(start);
-    const endIndex = typeof end === "number" ? end : getListItemIndex(end);
-
-    const newRange: number[] = [];
-    allOptions.forEach((option, index) => {
-      // Check item is in range and not disabled
-      const isDisabled = option.getAttribute("aria-disabled") === "true";
-      const selected = checkInRange(index, startIndex, endIndex) && !isDisabled;
-      if (selected) {
-        newRange.push(index);
-      }
-    });
-    selectedRef.current = newRange;
-  };
-
-  // Handlers
-
-  const handleFocus = useCallback(() => {
-    if (!activeDescendantRef.current) {
-      // Focus on first active option if no option was previously focused
-      focusFirstItem();
-    } else {
-      const activeDescendant = document.getElementById(
-        activeDescendantRef.current
-      );
-      if (activeDescendant) {
-        justFocusItem(activeDescendant);
-      }
-    }
-  }, []);
-
-  const handleBlur = useCallback(() => {
-    setFocusedIndex(null);
-
-    // if (onBlur) {
-    //   onBlur();
-    // }
-  }, []);
-
-  const handleKeyDown = useCallback((evt: KeyboardEvent<HTMLUListElement>) => {
-    const { key, shiftKey, ctrlKey, metaKey } = evt;
-    const allOptions = getAllOptions();
-    const currentItem =
-      document.getElementById(activeDescendantRef.current) || allOptions[0];
-    let nextItem = currentItem;
-
-    if (!currentItem) {
-      return;
-    }
-    switch (key) {
-      case PageUp:
-        // TODO: moveUpCountItems();
-        break;
-      case PageDown:
-        // TODO: moveDownCountItems();
-        break;
-      case ArrowUp:
-      case ArrowDown:
-        nextItem =
-          key === ArrowUp
-            ? findPreviousOption(currentItem)
-            : findNextOption(currentItem);
-
-        if (nextItem && multiselect && shiftKey) {
-          selectRange(startRangeIndex, getListItemIndex(nextItem));
-        }
-
-        if (nextItem) {
-          justFocusItem(nextItem);
-          evt.preventDefault();
-        }
-
-        break;
-      case Home:
-        evt.preventDefault();
-        focusFirstItem();
-
-        if (multiselect && shiftKey && ctrlKey) {
-          selectRange(startRangeIndex, 0);
-        }
-        break;
-      case End:
-        evt.preventDefault();
-        focusLastItem();
-
-        if (multiselect && shiftKey && ctrlKey) {
-          selectRange(startRangeIndex, allOptions.length - 1);
-        }
-        break;
-      case Shift:
-        setStartRangeIndex(getListItemIndex(currentItem));
-        break;
-      case Space:
-        evt.preventDefault();
-        toggleSelectItem(nextItem);
-        break;
-      case "a":
-      case "A":
-        // handle control + A
-        if (multiselect && (ctrlKey || metaKey)) {
-          evt.preventDefault();
-          if (shiftKey) {
-            selectedRef.current = [];
-            break;
-          }
-          selectRange(0, allOptions.length - 1);
-          break;
-        }
-      // fall through
-      default:
-        break;
-    }
-  }, []);
-
-  const handleClick = useCallback(
-    (evt: MouseEvent<HTMLUListElement>, index: number) => {
-      const { currentTarget, shiftKey } = evt;
-      const activeOptions = getAllActiveOptions();
-      const nonClickableTarget = activeOptions.indexOf(currentTarget) === -1;
-      if (nonClickableTarget) {
-        return;
-      }
-      justFocusItem(currentTarget);
-      toggleSelectItem(currentTarget, index);
-
-      if (multiselect && shiftKey) {
-        selectRange(startRangeIndex, currentTarget);
-      }
-    },
-    []
-  );
-
-  // Effects
-  /*
-   * Check if the focused index is in view, and scroll to it if not.
-   */
-  useEffect(() => {
-    const list = listRef.current;
-    if (!list || focusedIndex === null) return;
-
-    const allOptions = getAllOptions();
-
-    const focusedOption = allOptions[focusedIndex];
-    if (!focusedOption) return;
-    const { offsetTop, offsetHeight } = focusedOption;
-    const listHeight = list.clientHeight;
-    const listScrollTop = list.scrollTop;
-
+  const updateScroll = (currentTarget: Element) => {
+    if (!list || !currentTarget) return;
+    const { offsetTop, offsetHeight } = currentTarget;
+    const listHeight = list?.clientHeight;
+    const listScrollTop = list?.scrollTop;
     if (offsetTop < listScrollTop) {
       list.scrollTop = offsetTop;
     } else if (offsetTop + offsetHeight > listScrollTop + listHeight) {
       list.scrollTop = offsetTop + offsetHeight - listHeight;
     }
-  }, [focusedIndex]);
+  };
 
-  /*
-   * add listeners to list on first render.
-   */
-  // TODO: the handlers could also be passed up if we dont want to do this...
+  // Handlers
+  const handleClick = ({ currentTarget }: MouseEvent<HTMLUListElement>) => {
+    const nonClickableTarget = activeOptions.indexOf(currentTarget) === -1;
+    if (nonClickableTarget) {
+      return;
+    }
+    toggleSelectItem(currentTarget);
+    setActiveDescendant(currentTarget.id);
+    setFocusedIndex(null);
+    updateScroll(currentTarget);
+  };
+
+  const handleBlur = useEventCallback(() => {
+    setFocusedIndex(null);
+    if (onBlur) {
+      onBlur();
+    }
+  });
+
+  const handleFocus = useEventCallback(() => {
+    if (!activeDescendant) {
+      // Focus on first active option if no option was previously focused
+      focusFirstItem();
+    } else {
+      const activeElement = document.getElementById(activeDescendant);
+      if (activeElement) {
+        justFocusItem(activeElement);
+      }
+    }
+  });
+
+  const handleKeyDown = useEventCallback((evt: KeyboardEvent) => {
+    const { key } = evt;
+    const currentItem =
+      document.getElementById(activeDescendant) || activeOptions[0];
+    let nextItem = currentItem;
+    if (!currentItem) {
+      return;
+    }
+    switch (key) {
+      case PageUp:
+      case PageDown:
+        nextItem =
+          key === PageUp
+            ? findPreviousOption(currentItem, displayedItemCount)
+            : findNextOption(currentItem, displayedItemCount);
+
+        if (nextItem && nextItem !== currentItem) {
+          evt.preventDefault();
+          justFocusItem(nextItem);
+        }
+        break;
+      case ArrowUp:
+      case ArrowDown:
+        nextItem =
+          key === ArrowUp
+            ? findPreviousOption(currentItem, 1)
+            : findNextOption(currentItem, 1);
+
+        if (nextItem && nextItem !== currentItem) {
+          evt.preventDefault();
+          justFocusItem(nextItem);
+        }
+        break;
+      case Home:
+        evt.preventDefault();
+        focusFirstItem();
+        break;
+      case End:
+        evt.preventDefault();
+        focusLastItem();
+        break;
+      case Space:
+        evt.preventDefault();
+        toggleSelectItem(nextItem);
+        break;
+      default:
+        break;
+    }
+    if (onKeyDown) {
+      onKeyDown(currentItem);
+    }
+    return;
+  });
+
+  // Effects
   useEffect(() => {
-    const list = listRef.current;
+    // sets list in first render
+    list = listRef.current;
+  }, []);
+
+  useEffect(() => {
     if (list) {
+      setAllOptions(
+        Array.from(list.children).filter(
+          (child) => child.getAttribute("role") === "option"
+        )
+      );
+      setActiveOptions(
+        Array.from(list.children)
+          .filter((child) => child.getAttribute("role") === "option")
+          .filter((option) => option.getAttribute("aria-disabled") !== "true")
+      );
       list.addEventListener("keydown", handleKeyDown);
       list.addEventListener("focus", handleFocus);
       list.addEventListener("blur", handleBlur);
@@ -314,13 +253,13 @@ export const useList = ({
         list.removeEventListener("blur", handleBlur);
       };
     }
-  }, []);
+  }, [list]);
 
   return {
     listRef,
     focusedIndex,
-    selectedIndexes: selectedRef.current,
-    activeDescendant: activeDescendantRef.current,
+    selectedIndexes,
+    activeDescendant,
     handleClick,
   };
 };

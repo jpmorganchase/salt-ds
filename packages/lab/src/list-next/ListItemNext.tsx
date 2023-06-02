@@ -1,8 +1,12 @@
-import React, { forwardRef, HTMLAttributes, MouseEvent } from "react";
+import React, { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
-import { Checkbox, makePrefixer, Text, Tooltip } from "@salt-ds/core";
+import { makePrefixer, Text, Tooltip } from "@salt-ds/core";
 import { Highlighter } from "./Highlighter";
-import "./ListItemNext.css";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import listItemNextCss from "./ListItemNext.css";
+
 import { useOverflowDetection } from "../utils";
 
 const withBaseName = makePrefixer("saltListItemNext");
@@ -25,24 +29,28 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       className: classNameProp,
       disabled,
       focused,
-      // TODO: add header prop, turn role into non clickable, presentation and styles
       itemTextHighlightPattern,
       label,
       role = "option",
       selected,
-      showCheckbox,
-      id, //TODO: this should not be plain numbers
+      id,
       onClick,
       ...props
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-hightligher",
+      css: listItemNextCss,
+      window: targetWindow,
+    });
+
     const className = clsx(
       withBaseName(),
       {
         [withBaseName("disabled")]: disabled,
         [withBaseName("focused")]: focused,
-        [withBaseName("checkbox")]: showCheckbox, // TODO: remove class once has is supported (june 2023ish)
       },
       classNameProp
     );
@@ -51,15 +59,6 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
 
     const content = label || children;
 
-    const listItemControlProps = {
-      // onFocus,
-    };
-
-    const handleClick = (e: MouseEvent<HTMLLIElement | HTMLLabelElement>) => {
-      if (onClick) {
-        onClick(e);
-      }
-    };
     const renderListItem = () => (
       <li
         ref={ref}
@@ -70,17 +69,8 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         role={role}
         id={id}
         onClick={onClick}
-        // tabIndex={tabIndex}
-        {...listItemControlProps}
       >
-        {showCheckbox && (
-          <Checkbox
-            aria-hidden
-            checked={selected}
-            disabled={disabled}
-            onClick={onClick}
-          />
-        )}
+        {/*// if the user sends something that is not a string, they would have to handle disabled and overflow */}
         {children && typeof children !== "string" ? (
           children
         ) : (
@@ -106,7 +96,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
     return isOverflowed ? (
       <Tooltip
         disabled={!isOverflowed}
-        open={focused}
+        open={focused} // TODO: this needs to be on hover, not on focus!
         content={content}
         hideIcon
       >
