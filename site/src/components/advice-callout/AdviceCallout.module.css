@@ -13,6 +13,10 @@
   margin-top: calc(2 * var(--salt-size-unit));
 }
 
+.icon.icon {
+  margin-top: 0.15em; /* nudge the icon slightly to better align with the first line of text */
+}
+
 .iconPositive {
   color: var(--salt-status-success-foreground); /* var(--salt-status-positive-foreground); */
 }

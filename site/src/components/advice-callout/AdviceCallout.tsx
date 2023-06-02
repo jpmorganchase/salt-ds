@@ -1,6 +1,7 @@
 import { ElementType, FC, ReactNode } from "react";
+import clsx from "clsx";
 import { FlexItem, FlexLayout } from "@salt-ds/core";
-import { CloseIcon, SuccessTickIcon } from "@salt-ds/icons";
+import { CloseIcon, SuccessTickIcon, IconProps } from "@salt-ds/icons";
 import styles from "./AdviceCallout.module.css";
 
 export interface AdviceCalloutProps {
@@ -15,25 +16,29 @@ export const AdviceCallout: FC<AdviceCalloutProps> = ({
   as,
   type,
   iconLabel,
-}) => (
-  <FlexLayout as={as} className={styles.root}>
-    {type === "positive" ? (
-      <SuccessTickIcon
-        aria-hidden={iconLabel === undefined}
-        aria-label={iconLabel}
-        size={1.5}
-        className={styles.iconPositive}
-      />
-    ) : (
-      <CloseIcon
-        aria-hidden={iconLabel === undefined}
-        aria-label={iconLabel}
-        size={1.5}
-        className={styles.iconNegative}
-      />
-    )}
-    <FlexItem grow={1} className={styles.content}>
-      {children}
-    </FlexItem>
-  </FlexLayout>
-);
+}) => {
+  const iconProps: Partial<IconProps> = {
+    "aria-hidden": iconLabel === undefined,
+    "aria-label": iconLabel,
+    size: 1,
+  };
+
+  return (
+    <FlexLayout as={as} className={styles.root}>
+      {type === "positive" ? (
+        <SuccessTickIcon
+          {...iconProps}
+          className={clsx(styles.icon, styles.iconPositive)}
+        />
+      ) : (
+        <CloseIcon
+          {...iconProps}
+          className={clsx(styles.icon, styles.iconNegative)}
+        />
+      )}
+      <FlexItem grow={1} className={styles.content}>
+        {children}
+      </FlexItem>
+    </FlexLayout>
+  );
+};
