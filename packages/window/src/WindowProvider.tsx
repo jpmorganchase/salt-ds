@@ -10,8 +10,9 @@ if (process.env.NODE_ENV !== "production") {
   WindowContext.displayName = "WindowContext";
 }
 
-export interface WindowProviderProps extends WindowContextType {
+export interface WindowProviderProps {
   children: ReactNode;
+  window: WindowContextType;
 }
 
 export function WindowProvider(props: WindowProviderProps) {
