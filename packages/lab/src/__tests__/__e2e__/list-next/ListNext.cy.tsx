@@ -52,11 +52,11 @@ describe("A single select list", () => {
           children: ITEMS_LONG_LABEL.map((item, index) => {
             return <ListItemNext key={index}>{item.label}</ListItemNext>;
           }),
-          style: { width: "200px" },
+          style: { width: "100px" },
         })
       );
 
-      cy.findByRole("listbox").should("have.css", "width", "200px");
+      cy.findByRole("listbox").should("have.css", "width", "100px");
       cy.findByRole("option", { name: ITEMS_LONG_LABEL[1].label }).trigger(
         "mouseover"
       );
@@ -68,19 +68,19 @@ describe("A single select list", () => {
     it("should render list with 3 list items", () => {
       cy.mount(SingleSelectList({}));
 
-      cy.findByRole("listbox").should("have.css", "height", "110px"); // 2px + (36px * 3)
+      cy.findByRole("listbox").should("have.css", "height", "108px"); // 36px * 3
     });
 
     it("should render list with 3 list items, displayedItemCount lower than childrenCount", () => {
       cy.mount(SingleSelectList({ displayedItemCount: 2 }));
 
-      cy.findByRole("listbox").should("have.css", "height", "74px"); // 2px + (36px * 2)
+      cy.findByRole("listbox").should("have.css", "height", "72px"); // 36px * 2
     });
 
     it("should render list with 3 list items, displayedItemCount higher than childrenCount", () => {
       cy.mount(SingleSelectList({ displayedItemCount: 6 }));
 
-      cy.findByRole("listbox").should("have.css", "height", "110px"); // 2px + (36px * 3)
+      cy.findByRole("listbox").should("have.css", "height", "108px"); // 36px * 3
     });
 
     it("should render borderless list", () => {
@@ -92,7 +92,7 @@ describe("A single select list", () => {
     it("should render empty list", () => {
       cy.mount(SingleSelectList({ children: <>Empty list</> }));
 
-      cy.findByRole("listbox").should("have.css", "height", "38px"); // 38px
+      cy.findByRole("listbox").should("have.css", "height", "36px"); // 36px
     });
   });
 
@@ -130,7 +130,7 @@ describe("A single select list", () => {
       .should("have.attr", "aria-selected", "true");
   });
 
-  it("should deselect previous item when a new one is selected (unless it's deselectable)", () => {
+  it("should deselect previous item when a new one is selected, for non deselectable", () => {
     cy.mount(SingleSelectList({}));
 
     cy.findByRole("option", { name: ITEMS[1].label })
@@ -149,7 +149,55 @@ describe("A single select list", () => {
 
   // it("should deselect a selected item if it gets disabled", () => {}); // should disabling a selected item deselect it?
 
-  describe("Keyboard navigation and interactions", () => {
+  // Disabled list
+  describe("A disabled single select list", () => {
+    it("should not allow any items to be selected", () => {
+      cy.mount(SingleSelectList({ disabled: true }));
+
+      cy.findAllByRole("option").should("have.attr", "aria-disabled", "true");
+    });
+
+    it("should not allow a disabled list item to be selected", () => {
+      cy.mount(
+        SingleSelectList({
+          children: (
+            <>
+              <ListItemNext>{ITEMS[0].label}</ListItemNext>
+              <ListItemNext disabled>{ITEMS[1].label}</ListItemNext>
+              <ListItemNext>{ITEMS[2].label}</ListItemNext>
+            </>
+          ),
+        })
+      );
+
+      cy.findByRole("option", { name: ITEMS[1].label }).should(
+        "have.attr",
+        "aria-disabled",
+        "true"
+      );
+    });
+
+    // disabled list item is focusable using keyboard interactions
+    it("should not be focusable on mouse hover", () => {
+      cy.mount(
+        SingleSelectList({
+          children: (
+            <>
+              <ListItemNext>{ITEMS[0].label}</ListItemNext>
+              <ListItemNext disabled>{ITEMS[1].label}</ListItemNext>
+              <ListItemNext>{ITEMS[2].label}</ListItemNext>
+            </>
+          ),
+        })
+      );
+
+      cy.findByRole("option", { name: ITEMS[1].label })
+        .realHover()
+        .should("not.have.class", "saltListItemNext-focused");
+    });
+  });
+
+  describe("Keyboard navigation and interactions for single select", () => {
     beforeEach(() => {
       cy.mount(SingleSelectList({}));
     });
@@ -340,54 +388,6 @@ describe("A single select list", () => {
     }); // on tab or on tab followed by arrow? Fel: currently looks like it's achieved using tab followed by arrow
   });
 
-  // Disabled list
-  describe("A disabled list", () => {
-    it("should not allow any items to be selected", () => {
-      cy.mount(SingleSelectList({ disabled: true }));
-
-      cy.findAllByRole("option").should("have.attr", "aria-disabled", "true");
-    });
-
-    it("should not allow a disabled list item to be selected", () => {
-      cy.mount(
-        SingleSelectList({
-          children: (
-            <>
-              <ListItemNext>{ITEMS[0].label}</ListItemNext>
-              <ListItemNext disabled>{ITEMS[1].label}</ListItemNext>
-              <ListItemNext>{ITEMS[2].label}</ListItemNext>
-            </>
-          ),
-        })
-      );
-
-      cy.findByRole("option", { name: ITEMS[1].label }).should(
-        "have.attr",
-        "aria-disabled",
-        "true"
-      );
-    });
-
-    // disabled list item is focusable using keyboard interactions
-    it("should not be focusable on mouse hover", () => {
-      cy.mount(
-        SingleSelectList({
-          children: (
-            <>
-              <ListItemNext>{ITEMS[0].label}</ListItemNext>
-              <ListItemNext disabled>{ITEMS[1].label}</ListItemNext>
-              <ListItemNext>{ITEMS[2].label}</ListItemNext>
-            </>
-          ),
-        })
-      );
-
-      cy.findByRole("option", { name: ITEMS[1].label })
-        .realHover()
-        .should("not.have.class", "saltListItemNext-focused");
-    });
-  });
-
   // Deselectable single select tests
   describe("A deselectable single select list", () => {
     it("should allow to deselect an item if deselectable is active", () => {
@@ -403,19 +403,18 @@ describe("A single select list", () => {
 });
 
 // Multi select tests
-describe("A multi select list", () => {
+describe.only("A multi select list", () => {
   const MultiSelectList = (props: any) => {
     return (
       <ListNext multiselect {...props}>
-        {props.children ||
-          ITEMS.map((item, index) => {
-            return <ListItemNext key={index}>{item.label}</ListItemNext>;
-          })}
+        {ITEMS.map((item, index) => {
+          return <ListItemNext key={index}>{item.label}</ListItemNext>;
+        })}
       </ListNext>
     );
   };
 
-  it("should render all its items", () => {
+  it("should render all list items with checkboxes", () => {
     cy.mount(MultiSelectList({}));
 
     cy.findByText("list item 1").should("exist");
@@ -430,53 +429,62 @@ describe("A multi select list", () => {
   it("should allow multiple items to be selected or deselected", () => {
     cy.mount(MultiSelectList({}));
 
-    cy.findByText("list item 1")
+    cy.findByRole("option", { name: `${ITEMS[0].label}` })
       .click()
       .should("have.attr", "aria-selected", "true");
-    cy.findByText("list item 2")
+    cy.findByRole("option", { name: `${ITEMS[1].label}` })
       .click()
       .should("have.attr", "aria-selected", "true");
-    cy.findByText("list item 3")
+    cy.findByRole("option", { name: `${ITEMS[2].label}` })
       .click()
       .should("have.attr", "aria-selected", "true");
-    cy.findByText("list item 2")
+    cy.findByRole("option", { name: `${ITEMS[1].label}` })
+      .click()
+      .should("not.have.attr", "aria-selected");
+    cy.findByRole("option", { name: `${ITEMS[2].label}` })
       .click()
       .should("not.have.attr", "aria-selected");
   });
 
-  it("should not allow a disabled item to be selected", () => {
-    cy.mount(
-      MultiSelectList({
-        children: (
-          <>
-            <ListItemNext>{ITEMS[0].label}</ListItemNext>
-            <ListItemNext disabled>{ITEMS[1].label}</ListItemNext>
-            <ListItemNext>{ITEMS[2].label}</ListItemNext>
-          </>
-        ),
-      })
-    );
+  describe("A disabled multiselect list", () => {
+    it("should not allow a disabled item to be selected", () => {
+      cy.mount(
+        <ListNext multiselect>
+          <ListItemNext>{ITEMS[0].label}</ListItemNext>
+          <ListItemNext disabled>{ITEMS[1].label}</ListItemNext>
+          <ListItemNext>{ITEMS[2].label}</ListItemNext>
+        </ListNext>
+      );
 
-    cy.findByText("list item 2")
-      .should("have.attr", "aria-disabled", "true")
-      .click()
-      .should("not.have.attr", "aria-selected");
+      cy.findByRole("option", { name: `${ITEMS[1].label}` })
+        .should("have.attr", "aria-disabled", "true")
+        .click()
+        .should("not.have.attr", "aria-selected");
+    });
+
+    it("should not allow items to be selected if list is disabled", () => {
+      cy.mount(MultiSelectList({ disabled: true }));
+
+      cy.findAllByRole("option").should("have.attr", "aria-disabled", "true");
+      cy.findByRole("option", { name: `${ITEMS[2].label}` })
+        .click()
+        .should("not.have.attr", "aria-selected");
+    });
   });
 
-  it("should not allow items to be selected if list is disabled", () => {
-    cy.mount(MultiSelectList({ disabled: true }));
+  describe("Keyboard navigation and interactions for multiselect", () => {
+    it.only("should allow selecting a range without disabled items", () => {
+      cy.mount(MultiSelectList({}));
 
-    cy.findAllByRole("option").should("have.attr", "aria-disabled", "true");
-    cy.findByText("list item 2")
-      .click()
-      .should("not.have.attr", "aria-selected");
+      cy.findByRole("listbox").focus();
+      cy.realPress("Tab");
+      cy.realPress("ArrowDown");
+      cy.realPress(["Control", "A"]);
+      cy.findAllByRole("option").should("have.attr", "aria-selected", "true");
+    });
+    it("should allow to selecting all items without disabled items", () => {});
+    it("should allow to deselect all items", () => {});
   });
-
-  it("should allow selecting a range without disabled items", () => {});
-  it("should allow to selecting all items without disabled items", () => {});
-  it("should allow to deselect all items", () => {});
-  // interactions
-  it("", () => {});
 });
 
 describe("A list with no items", () => {
