@@ -1,6 +1,5 @@
 .root {
-  padding: calc(2 * var(--salt-size-unit)); /* var(--salt-size-container-spacing); */
-  background-color: var(--salt-container-secondary-background);
+  padding: calc(2 * var(--salt-size-unit)) 0; /* var(--salt-size-container-spacing); */
 }
 
 /*

@@ -24,7 +24,7 @@ export const AdviceCallout: FC<AdviceCalloutProps> = ({
   };
 
   return (
-    <FlexLayout as={as} className={styles.root}>
+    <FlexLayout as={as} className={styles.root} gap={1}>
       {type === "positive" ? (
         <SuccessTickIcon
           {...iconProps}
