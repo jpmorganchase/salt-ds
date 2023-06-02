@@ -88,7 +88,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   const {
     a11yProps: {
       "aria-describedby": formFieldDescribedBy,
-      "aria-labelledby": formFieldLabelledBy
+      "aria-labelledby": formFieldLabelledBy,
     } = {},
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
@@ -98,7 +98,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   const restA11yProps = {
     ariaActiveDescendant,
     ariaExpanded,
-    ariaOwns
+    ariaOwns,
   };
 
   const isDisabled = disabled || formFieldDisabled;
