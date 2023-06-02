@@ -141,7 +141,13 @@
   display: flex;
   align-items: center;
   gap: var(--salt-size-unit);
-  margin: calc(var(--salt-size-unit) * 8) var(--salt-size-container-spacing) calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing);
+  /*
+    Mosaic's still using Salt 1.1, so --salt-size-container-spacing is not available yet.
+
+    TODO: Replace line below with the commented-out one underneath once we upgrade Mosaic
+  */
+  margin: calc(var(--salt-size-unit) * 8) calc(3 * var(--salt-size-unit)) calc(var(--salt-size-unit) * 2) calc(3 * var(--salt-size-unit));
+  /* margin: calc(var(--salt-size-unit) * 8) var(--salt-size-container-spacing) calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing); */
 }
 
 .headingContainer h1 {
