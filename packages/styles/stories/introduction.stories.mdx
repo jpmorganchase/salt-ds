@@ -1,0 +1,64 @@
+import { Meta } from "@storybook/addon-docs";
+
+<Meta title="Documentation/Styles/About the Style injection system" />
+
+# About the Style injection system
+
+## Component style injection
+
+Style injection is the act of adding CSS styles dynamically to a document rather than statically linking them.
+Typically, this is done by CSS-in-JS libraries such as:
+
+- Styled Components.
+- vanilla-extract.
+- Emotion.
+- TSS.
+- Tailwind CSS.
+
+We offer a style injection system for those developers looking to inject CSS into a given window.
+This is in order to support uses of Salt in a desktop application where pop-out elements such as tooltips are rendered into separate windows with no previously added CSS.
+There are two packages that contain hooks to facilitate this: `@salt-ds/window` and `@salt-ds/styles`.
+`@salt-ds/styles` contains the `useComponentCssInjection` hook while `@salt-ds/window` contains the `useWindow` hook.
+
+Below is an example component demonstrating how these hooks should be used:
+
+- All Salt component CSS must be imported using the default export, the imported CSS should be injected by calling the `useComponentCssInjection` hook.
+- The current window the component is being rendered into is retrieved using the `useWindow` hook.
+
+```tsx
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import exampleCss from "./Example.css";
+
+const Example = (props) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    css: exampleCss,
+    window: targetWindow,
+  });
+
+  return <svg className="saltExample-svg">{props.children}</svg>;
+};
+```
+
+In the above example, `useComponentCssInjection` is called with CSS string itself and the window to inject the css into.
+Internally, the hook uses a Map of Map objects to store if a CSS string has been injected into a given window before.
+
+Optionally, a `testId` can be passed to the hook, the injected style tag will contain a data attribute with the given id.
+
+## Insertion Point
+
+Developers may want to control where the CSS is injected into the document, such as if a component library's styles are overriding an application's styles or if a developer wanted to inject styles into a shadow DOM.
+
+The location where `useComponentCssInjection` inserts the styles can be controlled using an `InsertionPointProvider`. The hook will then insert the given CSS string before the provided insertion point
+
+The following example shows how a developer would use an InsertionPointProvider to set the insertion point for the CSS to be the bottom of the head element. By default, the hook injects the CSS at the top of the head element.
+
+```tsx
+import { Button } from "@salt-ds/core";
+import { InsertionPointProvider } from "@salt-ds/styles";
+
+<InsertionPointProvider insertionPoint={document.head.lastElementChild}>
+  <Button>Example</Button>
+</InsertionPointProvider>;
+```

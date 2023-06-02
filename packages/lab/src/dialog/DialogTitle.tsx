@@ -4,7 +4,11 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, SyntheticEvent, useContext } from "react";
 import { DialogContext } from "./internal/DialogContext";
 
-import "./DialogTitle.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import dialogTitleCss from "./DialogTitle.css";
+
 export interface DialogTitleProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Disable the built-in ARIA heading attributes.
@@ -17,6 +21,13 @@ const withBaseName = makePrefixer("saltDialogTitle");
 
 export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(
   function DialogTitle(props, ref) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-dialog-title",
+      css: dialogTitleCss,
+      window: targetWindow,
+    });
+
     const { children, className, onClose, ...rest } = props;
     const { status, dialogId } = useContext(DialogContext);
 

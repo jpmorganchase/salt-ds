@@ -1,10 +1,13 @@
-import { forwardRef, ForwardedRef, HTMLAttributes, memo } from "react";
+import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 import { CheckboxIcon, makePrefixer } from "@salt-ds/core";
-import { ListItemType, ListItemProps } from "./listTypes";
+import { ListItemProps, ListItemType } from "./listTypes";
 import { Highlighter } from "./Highlighter";
 
-import "./ListItem.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import listItemCss from "./ListItem.css";
 
 const withBaseName = makePrefixer("saltListItem");
 
@@ -47,6 +50,13 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     },
     forwardedRef
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-list-item",
+      css: listItemCss,
+      window: targetWindow,
+    });
+
     const className = clsx(withBaseName(), classNameProp, {
       saltDisabled: disabled,
       [withBaseName("checkbox")]: showCheckbox,

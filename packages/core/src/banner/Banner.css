@@ -1,0 +1,56 @@
+/* Styles applied to root component */
+.saltBanner {
+  --banner-background: var(--salt-container-primary-background);
+
+  background: var(--saltBanner-background, var(--banner-background));
+  border-color: var(--saltBanner-borderColor, var(--banner-borderColor));
+  border-width: var(--saltBanner-borderWidth, var(--salt-size-border));
+  border-style: var(--saltBanner-borderStyle, var(--salt-container-borderStyle));
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: var(--salt-spacing-75);
+  padding: var(--saltBanner-padding, var(--salt-spacing-50) var(--salt-spacing-100));
+  width: 100%;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+/* Styles applied to icon */
+.saltBanner-icon.saltIcon {
+  min-height: var(--salt-size-base);
+}
+
+/* Styles applied when state = "info" */
+.saltBanner-info {
+  --banner-borderColor: var(--salt-status-info-borderColor);
+}
+
+/* Styles applied when state = "error" */
+.saltBanner-error {
+  --banner-borderColor: var(--salt-status-error-borderColor);
+}
+
+/* Styles applied when state = "warning" */
+.saltBanner-warning {
+  --banner-borderColor: var(--salt-status-warning-borderColor);
+}
+
+/* Styles applied when state = "success" */
+.saltBanner-success {
+  --banner-borderColor: var(--salt-status-success-borderColor);
+}
+
+.saltBanner-secondary.saltBanner-info {
+  --banner-background: var(--salt-status-info-background);
+}
+
+.saltBanner-secondary.saltBanner-error {
+  --banner-background: var(--salt-status-error-background);
+}
+
+.saltBanner-secondary.saltBanner-warning {
+  --banner-background: var(--salt-status-warning-background);
+}
+
+.saltBanner-secondary.saltBanner-success {
+  --banner-background: var(--salt-status-success-background);
+}

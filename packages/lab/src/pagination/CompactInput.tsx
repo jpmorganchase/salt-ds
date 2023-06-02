@@ -5,8 +5,11 @@ import {
   useEffect,
   useState,
 } from "react";
-import { FormField, FormFieldProps } from "../form-field";
-import { Input } from "../input";
+import {
+  FormFieldLegacy as FormField,
+  FormFieldLegacyProps as FormFieldProps,
+} from "../form-field-legacy";
+import { InputLegacy as Input } from "../input-legacy";
 import { withBaseName } from "./utils";
 
 export interface CompactInputProps {
@@ -20,7 +23,7 @@ export const CompactInput = ({
   page,
   count,
   onPageChange,
-  FormFieldProps: { className, ...restFormFieldProps } = {},
+  FormFieldProps: { className, ...restFormFieldLegacyProps } = {},
 }: CompactInputProps) => {
   const [inputValue, setInputValue] = useState(`${page}`);
 
@@ -52,7 +55,7 @@ export const CompactInput = ({
       <FormField
         className={clsx(withBaseName("compactInputField"), className)}
         fullWidth={false}
-        {...restFormFieldProps}
+        {...restFormFieldLegacyProps}
       >
         <Input
           className={clsx(withBaseName("compactInput"), {

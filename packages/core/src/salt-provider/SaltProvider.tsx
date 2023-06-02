@@ -13,7 +13,9 @@ import { Density, Mode, ThemeName } from "../theme";
 import { ViewportProvider } from "../viewport";
 import { useIsomorphicLayoutEffect } from "../utils";
 
-import "./SaltProvider.css";
+import saltProviderCss from "./SaltProvider.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -147,19 +149,26 @@ export function SaltProvider({
     applyClassesTo
   );
 
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-provider",
+    css: saltProviderCss,
+    window: targetWindow,
+  });
+
   useIsomorphicLayoutEffect(() => {
     const themeNames =
       themeName === DEFAULT_THEME_NAME
         ? [DEFAULT_THEME_NAME]
         : [DEFAULT_THEME_NAME, themeName];
-    if (applyClassesTo === "root") {
+    if (applyClassesTo === "root" && targetWindow) {
       if (isRoot) {
         // add the styles we want to apply
-        document.documentElement.classList.add(
+        targetWindow.document.documentElement.classList.add(
           ...themeNames,
           `salt-density-${density}`
         );
-        document.documentElement.dataset.mode = mode;
+        targetWindow.document.documentElement.dataset.mode = mode;
       } else {
         console.warn(
           "\nSaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
@@ -167,16 +176,16 @@ export function SaltProvider({
       }
     }
     return () => {
-      if (applyClassesTo === "root") {
+      if (applyClassesTo === "root" && targetWindow) {
         // When unmounting/remounting, remove the applied styles from the root
-        document.documentElement.classList.remove(
+        targetWindow.document.documentElement.classList.remove(
           ...themeNames,
           `salt-density-${density}`
         );
-        document.documentElement.dataset.mode = undefined;
+        targetWindow.document.documentElement.dataset.mode = undefined;
       }
     };
-  }, [applyClassesTo, density, isRoot, mode, themeName]);
+  }, [applyClassesTo, density, isRoot, mode, themeName, targetWindow]);
 
   const saltProvider = (
     <DensityContext.Provider value={density}>

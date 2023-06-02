@@ -1,0 +1,299 @@
+.salt-density-high {
+  --formFieldLegacy-label-top-marginBottom: 2px;
+}
+.salt-density-medium {
+  --formFieldLegacy-label-top-marginBottom: 2px;
+}
+.salt-density-low {
+  --formFieldLegacy-label-top-marginBottom: 4px;
+}
+.salt-density-touch {
+  --formFieldLegacy-label-top-marginBottom: 8px;
+}
+
+/* Style applied to the root element */
+.saltFormFieldLegacy {
+  --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle);
+  --formFieldLegacy-background: var(--salt-editable-primary-background);
+  --formFieldLegacy-focused-outlineColor: var(--salt-focused-outlineColor);
+  /* Set to 0 until helper text class provided */
+  --formFieldLegacy-helperText-height: 0px;
+}
+
+.saltFormFieldLegacy-secondary.saltFormFieldLegacy {
+  --formFieldLegacy-background: var(--salt-editable-secondary-background);
+}
+
+.saltFormFieldLegacy {
+  border: 0;
+  display: inline-grid;
+  font-size: var(--saltFormFieldLegacy-fontSize, var(--salt-text-fontSize));
+  margin: var(--saltFormFieldLegacy-margin, 0);
+  padding: 0;
+  position: relative;
+  min-width: 0;
+  vertical-align: top;
+  width: var(--saltFormFieldLegacy-width, auto);
+}
+
+/* Class applied to the root element on hover */
+.saltFormFieldLegacy:hover {
+  --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-hover);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-hover);
+
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-hover);
+}
+
+/* Class applied to the root element when focused */
+.saltFormFieldLegacy-focused,
+.saltFormFieldLegacy-lowFocused,
+.saltFormFieldLegacy.saltFormFieldLegacy-focused:hover,
+.saltFormFieldLegacy.saltFormFieldLegacy-lowFocused:hover {
+  --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-active);
+  --formFieldLegacy-activationIndicator-size: var(--salt-editable-borderWidth-active);
+  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-active);
+
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-active);
+}
+
+/* Class applied when helper text is provided */
+.saltFormFieldLegacy-withHelperText {
+  --formFieldLegacy-helperText-marginTop: var(--formFieldLegacy-helperText-marginTop-default);
+  --formFieldLegacy-activationIndicator-offsetBottom: calc(var(--formFieldLegacy-helperText-marginTop) + var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height)));
+}
+
+/* Class applied if `fullWidth={true}` and helper text is provided */
+.saltFormFieldLegacy-fullWidth.saltFormFieldLegacy-withHelperText {
+  --formFieldLegacy-helperText-marginTop: var(--formFieldLegacy-helperText-marginTop-fullWidth);
+  --formFieldLegacy-activationIndicator-offsetBottom: calc(
+    var(--formFieldLegacy-helperText-marginTop-fullWidth) + var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height))
+  );
+}
+
+/* Class applied when helper text is provided */
+.saltFormFieldLegacy-withHelperText {
+  --formFieldLegacy-helperText-fontSize: var(--saltFormFieldLegacy-helperText-fontSize, var(--salt-text-fontSize));
+  --formFieldLegacy-helperText-baseHeight: calc(1.3 * var(--formFieldLegacy-helperText-fontSize));
+  --formFieldLegacy-helperText-calculatedHeight: max(var(--salt-text-label-minHeight), var(--formFieldLegacy-helperText-baseHeight));
+  --formFieldLegacy-helperText-height: calc(var(--formFieldLegacy-helperText-calculatedHeight) + var(--formFieldLegacy-helperText-marginTop));
+}
+
+/* Class applied to the root element if `fillWidth={true}` */
+.saltFormFieldLegacy-fullWidth {
+  width: 100%;
+}
+
+/* Class applied to the root element if `disabled={true}` */
+.saltFormFieldLegacy-disabled {
+  --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-disabled);
+  --formFieldLegacy-activationIndicator-opacity: var(--salt-palette-opacity-foreground);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
+  --formFieldLegacy-helperText-opacity: var(--salt-palette-opacity-foreground);
+
+  --saltControlLabel-color: var(--salt-text-primary-foreground-disabled);
+
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-disabled);
+}
+
+/* Class applied to the root element on hover if `disabled={true}` */
+.saltFormFieldLegacy.saltFormFieldLegacy-disabled:hover {
+  --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-disabled);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
+
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-disabled);
+}
+
+/* Class applied to the root element on warning state */
+.saltFormFieldLegacy.saltFormFieldLegacy-warning {
+  --formFieldLegacy-focused-outlineColor: var(--salt-status-warning-borderColor);
+  --formFieldLegacy-activationIndicator-color: var(--salt-status-warning-borderColor);
+}
+
+/* Class applied to the root element on warning state on hover */
+.saltFormFieldLegacy.saltFormFieldLegacy-warning:hover {
+  --formFieldLegacy-activationIndicator-color: var(--salt-status-warning-borderColor);
+}
+
+/* Class applied to the root element on error state */
+.saltFormFieldLegacy.saltFormFieldLegacy-error {
+  --formFieldLegacy-focused-outlineColor: var(--salt-status-error-borderColor);
+  --formFieldLegacy-activationIndicator-color: var(--salt-status-error-borderColor);
+}
+
+/* Class applied to the root element on error state on hover */
+.saltFormFieldLegacy.saltFormFieldLegacy-error:hover {
+  --formFieldLegacy-activationIndicator-color: var(--salt-status-error-borderColor);
+}
+
+/* Error state styling when `variant="secondary"` */
+.saltFormFieldLegacy-secondary.saltFormFieldLegacy-error {
+  --formFieldLegacy-background: var(--salt-status-error-background);
+}
+
+/* Warning state styling when `variant="secondary"` */
+.saltFormFieldLegacy-secondary.saltFormFieldLegacy-warning {
+  --formFieldLegacy-background: var(--salt-status-warning-background);
+}
+
+/* Class applied to the root element if `labelPlacement="left"` */
+.saltFormFieldLegacy-labelLeft {
+  --formFieldLegacy-label-marginTop: var(--salt-size-unit);
+  --formFieldLegacy-label-paddingLeft: 0px;
+  --formFieldLegacy-label-paddingRight: calc(0.75 * var(--salt-size-unit));
+
+  align-self: start;
+  grid-template-columns: auto 1fr;
+}
+
+/* Class applied to the root element if `labelPlacement="top"` or labelPlacement omitted (default is 'top') */
+.saltFormFieldLegacy-labelTop {
+  --formFieldLegacy-label-marginBottom: var(--formFieldLegacy-label-top-marginBottom);
+  --formFieldLegacy-label-marginTop: 0;
+  --formFieldLegacy-label-paddingLeft: var(--salt-size-unit);
+  --formFieldLegacy-label-paddingRight: var(--salt-size-unit);
+  /* Uses density invariant value unless helper text provided */
+  --formFieldLegacy-background-offset-height: calc(var(--formFieldLegacy-helperText-marginTop, 0px) + var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height)));
+
+  background: linear-gradient(
+    to top,
+    transparent var(--formFieldLegacy-background-offset-height),
+    var(--saltFormFieldLegacy-background, var(--formFieldLegacy-background)) var(--formFieldLegacy-background-offset-height)
+  );
+}
+
+/* Class applied if `labelPlacement="top"` and helper text is provided */
+.saltFormFieldLegacy-labelTop.saltFormFieldLegacy-withHelperText {
+  /* Uses density aware value from FormHelperText */
+  --formFieldLegacy-background-offset-height: var(--formFieldLegacy-helperText-background-offset-height);
+}
+
+.saltFormFieldLegacy > * {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.saltFormFieldLegacy-labelLeft > * {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.saltFormFieldLegacy > .saltFormLabel {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.saltFormFieldLegacy > .saltFormActivationIndicator {
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.saltFormFieldLegacy > .saltFormHelperText {
+  grid-row-start: 4;
+  grid-row-end: 5;
+}
+
+.saltFormFieldLegacy-labelLeft > .saltFormLabel ~ * {
+  grid-column-start: 2;
+  grid-column-end: 2;
+}
+
+/* Class applied if `readOnly={true}"` */
+.saltFormFieldLegacy-readOnly {
+  --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-readonly);
+
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-readonly);
+}
+
+/* Class applied to the root element if `readOnly={true}"` on hover */
+.saltFormFieldLegacy.saltFormFieldLegacy-readOnly:hover {
+  --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-readonly);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-readonly);
+
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-readonly);
+}
+
+/* Class applied on focus with `labelTop={true}` and no helper text provided */
+.saltFormFieldLegacy:not(.saltFormFieldLegacy-withHelperText):not(.saltFormFieldLegacy-labelLeft).saltFormFieldLegacy-focused:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height, 0px));
+  outline-color: var(--formFieldLegacy-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+}
+
+/* Class applied on focus with `labelTop={true}` and helper text provided */
+.saltFormFieldLegacy-withHelperText:not(.saltFormFieldLegacy-labelLeft).saltFormFieldLegacy-focused:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: var(--formFieldLegacy-helperText-height, 0px);
+  outline-color: var(--formFieldLegacy-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+}
+
+.saltFormFieldLegacy-labelLeft.saltFormFieldLegacy-focused:before {
+  content: none;
+}
+
+/* Class applied on focus with `labelLeft={true}` */
+.saltFormFieldLegacy-labelLeft.saltFormFieldLegacy-focused > *:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  outline-color: var(--formFieldLegacy-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  z-index: -1;
+}
+
+.saltFormFieldLegacy-labelLeft.saltFormFieldLegacy-focused > :is(.saltFormActivationIndicator, .saltFormHelperText, .saltFormLabel):before {
+  content: none;
+}
+
+.saltFormFieldLegacy-labelLeft.saltFormFieldLegacy-focused {
+  outline: none;
+}
+
+.saltFormFieldLegacy-labelLeft.saltFormFieldLegacy-focused > :is(.saltFormFieldLegacy-activationIndicator, .saltFormFieldLegacy-helperText, .saltFormLabel):before {
+  content: none;
+}
+
+.saltFormFieldLegacy-labelLeft.saltFormFieldLegacy-focused .saltFormLabel + * {
+  outline: none;
+}
+
+.saltFormFieldLegacy-tertiary.saltFormFieldLegacy.saltFormFieldLegacy-labelLeft > .saltFormLabel ~ * {
+  background: var(--saltFormFieldLegacy-background, var(--formFieldLegacy-background));
+}
+
+/* TODO: I don't think this is needed, but commenting until work on FF done
+.saltFormFieldLegacy-primary.saltFormFieldLegacy > :not(.saltFormLabel):first-child {
+  background: var(--saltFormFieldLegacy-background, var(--formFieldLegacy-background));
+} */
+
+.saltFormFieldLegacy-labelLeft > .saltFormLabel ~ :not(.saltFormHelperText) {
+  background: var(--saltFormFieldLegacy-background, var(--formFieldLegacy-background));
+}
+
+/* **Deprecated:** Tertiary variant no longer supported */
+.saltFormFieldLegacy-tertiary.saltFormFieldLegacy {
+  --formFieldLegacy-background: var(--salt-editable-tertiary-background);
+}

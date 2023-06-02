@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://next.saltdesignsystem.com/sitemap.xml
+Sitemap: https://saltdesignsystem.com/sitemap.xml

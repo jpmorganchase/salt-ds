@@ -46,7 +46,7 @@
 
 /* Styles applied if `disabled={true}` or nested in FormField where `disabled={true}` */
 .saltControlLabel-disabled,
-.saltFormField-disabled .saltControlLabel {
+.saltFormFieldLegacy-disabled .saltControlLabel {
   cursor: var(--salt-selectable-cursor-disabled);
 }
 

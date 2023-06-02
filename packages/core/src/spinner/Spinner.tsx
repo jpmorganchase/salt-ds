@@ -4,7 +4,9 @@ import { useAriaAnnouncer } from "../aria-announcer";
 import { makePrefixer, useId } from "../utils";
 import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
 
-import "./Spinner.css";
+import spinnerCss from "./Spinner.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 /**
  * Spinner component, provides an indeterminate loading indicator
@@ -69,6 +71,12 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
     ref
   ) {
     const id = useId(idProp);
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-spinner",
+      css: spinnerCss,
+      window: targetWindow,
+    });
 
     const { announce } = useAriaAnnouncer();
 

@@ -1,5 +1,5 @@
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
-import { Banner } from "@salt-ds/lab";
+import { Banner, BannerContent } from "@salt-ds/core";
 import { DocGrid } from "docs/components/DocGrid";
 import { NumberBlock } from "docs/components/NumberBlock";
 
@@ -7,7 +7,9 @@ import { NumberBlock } from "docs/components/NumberBlock";
 
 # Delay
 
-<Banner status="warning">Deprecated: Use Duration foundation instead.</Banner>
+<Banner status="warning">
+  <BannerContent>Deprecated: Use Duration foundation instead.</BannerContent>
+</Banner>
 
 Components which may have a standard time duration between the moment a user performs an action
 and the moment feedback is given by the system.

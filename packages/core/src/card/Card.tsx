@@ -1,7 +1,11 @@
 import { clsx } from "clsx";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
 import { makePrefixer } from "../utils";
-import "./Card.css";
+
+import cardCss from "./Card.css";
 
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
@@ -24,7 +28,15 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   props,
   ref
 ) {
-  const { className, children, disabled, interactable, ...rest } = props;
+  const { className, disabled, interactable, children, ...rest } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-card",
+    css: cardCss,
+    window: targetWindow,
+  });
+
   return (
     <div
       className={clsx(

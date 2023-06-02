@@ -7,8 +7,10 @@ import {
   CheckboxUncheckedIcon,
 } from "./assets";
 
-import "./CheckboxIcon.css";
+import checkboxIconCss from "./CheckboxIcon.css";
 import { useDensity } from "../salt-provider";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface CheckboxIconProps {
   checked?: boolean;
@@ -27,6 +29,12 @@ export const CheckboxIcon = ({
   error,
   indeterminate,
 }: CheckboxIconProps): JSX.Element => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-checkbox-icon",
+    css: checkboxIconCss,
+    window: targetWindow,
+  });
   const className = clsx(
     withBaseName(),
     {

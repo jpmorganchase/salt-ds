@@ -40,3 +40,51 @@ index 5587b7cda8a2841b4fd7c2950127cc3a102f3f19..e4ea664a9d0cc312d7b4c42c631aa8ec
      resolveModular('node_modules/.modular'),
    ],
    appTsConfig: resolveApp('tsconfig.json'),
+diff --git a/react-scripts/config/parts/styleLoadersConfig.js b/react-scripts/config/parts/styleLoadersConfig.js
+index ebd208fd1df2eb0f1dab4e32de678043e17b6155..d9887fdd4f5d5f70a8b3fb462bf45b0636ac2737 100644
+--- a/react-scripts/config/parts/styleLoadersConfig.js
++++ b/react-scripts/config/parts/styleLoadersConfig.js
+@@ -25,15 +25,7 @@ function createConfig({
+           options: { info, dependencyMap },
+         };
+       },
+-    isEnvDevelopment && require.resolve('style-loader'),
+-    isEnvProduction && {
+-      loader: MiniCssExtractPlugin.loader,
+-      // css is located in `static/css`, use '../../' to locate index.html folder
+-      // in production `paths.publicUrlOrPath` can be a relative path
+-      options: paths.publicUrlOrPath.startsWith('.')
+-        ? { publicPath: '../../' }
+-        : {},
+-    },
++    require.resolve('style-loader'),
+     {
+       loader: require.resolve('css-loader'),
+       options: cssOptions,
+diff --git a/dist-cjs/build/buildPackage/makeBundle.js b/dist-cjs/build/buildPackage/makeBundle.js
+index ec658b3e7d3e05e99e8f4f547da1597cf6b7c709..1c77378b0d5907bc1f896c01c8de6633fe85c607 100644
+--- a/dist-cjs/build/buildPackage/makeBundle.js
++++ b/dist-cjs/build/buildPackage/makeBundle.js
+@@ -96,7 +96,7 @@ async function makeBundle(packageName, preserveModules, includePrivate) {
+       include: [`packages/**/*`],
+       exclude: 'node_modules/**'
+     }), (0, _rollupPluginPostcss.default)({
+-      extract: false
++      extract: false, inject: false
+     }), // TODO: add sass, dotenv
+     (0, _pluginJson.default)()] // TODO: support for css modules, sass, dotenv,
+     // and anything else create-react-app supports
+diff --git a/dist-cjs/build/buildPackage/makeBundle.js b/dist-cjs/build/buildPackage/makeBundle.js
+index ec658b3e7d3e05e99e8f4f547da1597cf6b7c709..05ac5c933b8ea733dea421ee103ca5b26c598e5e 100644
+--- a/dist-cjs/build/buildPackage/makeBundle.js
++++ b/dist-cjs/build/buildPackage/makeBundle.js
+@@ -166,7 +166,8 @@ async function makeBundle(packageName, preserveModules, includePrivate) {
+           // we publish to the registry
+           // TODO: make sure local workspaces are NOT explicitly included in package.json
+           if (includePrivate || packageJsons[importedPackage].private !== true) {
+-            localImports[importedPackage] = packageJsons[importedPackage].version;
++			// Adding ^ prevents multiple versions of an local workspace from being installed
++            localImports[importedPackage] = "^" + packageJsons[importedPackage].version;
+           } else {
+             throw new Error(`referencing a private package: ${importedPackage}`); // TODO - lineNo, filename
+           }

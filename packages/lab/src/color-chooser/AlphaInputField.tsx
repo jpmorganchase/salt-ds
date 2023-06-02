@@ -1,9 +1,12 @@
 import { clsx } from "clsx";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { Input } from "../input";
+import { InputLegacy as Input } from "../input-legacy";
 
-import "./RGBAInput.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import rgbaInputCss from "./RGBAInput.css";
 
 const withBaseName = makePrefixer("saltColorChooser");
 
@@ -18,6 +21,13 @@ export const AlphaInput = ({
   onSubmit,
   showAsOpacity = false,
 }: AlphaInputProps): JSX.Element => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-rgba-input",
+    css: rgbaInputCss,
+    window: targetWindow,
+  });
+
   const [alphaInputValue, setAlphaInputValue] = useState<string>(
     !isNaN(alphaValue) ? alphaValue.toString() : ""
   );

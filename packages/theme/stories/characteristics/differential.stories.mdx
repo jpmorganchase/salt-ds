@@ -1,5 +1,5 @@
 import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { Banner } from "@salt-ds/lab";
+import { Banner, BannerContent } from "@salt-ds/core";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 
@@ -7,7 +7,9 @@ import { ColorBlock } from "docs/components/ColorBlock";
 
 # Differential
 
-<Banner status="warning">Deprecated: Use Status characteristic instead.</Banner>
+<Banner status="warning">
+  <BannerContent>Deprecated: Use Status characteristic instead.</BannerContent>
+</Banner>
 
 Indicates a positive or negative change within a value or object.
 

@@ -7,9 +7,13 @@ import {
   useState,
 } from "react";
 import { makePrefixer, useControlled } from "@salt-ds/core";
-import "./Accordion.css";
+
 import { clsx } from "clsx";
 import { AccordionContext } from "./AccordionContext";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import accordionCss from "./Accordion.css";
 
 const withBaseName = makePrefixer("saltAccordion");
 
@@ -49,6 +53,13 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-accordion",
+      css: accordionCss,
+      window: targetWindow,
+    });
+
     const [sectionIds, setSectionIds] = useState<Set<string>>(new Set());
 
     const [expandedSectionIds, setExpandedSectionIds] = useControlled<string[]>(

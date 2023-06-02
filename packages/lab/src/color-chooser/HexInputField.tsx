@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
-import { Input } from "../input";
+import { useEffect, useState } from "react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { InputLegacy as Input } from "../input-legacy";
 import { isValidHex } from "./ColorHelpers";
 
-import "./ColorPicker.css";
+import colorPickerCss from "./ColorPicker.css";
 
 interface HexInputProps {
   hexValue: string | undefined;
@@ -15,6 +17,13 @@ export const HexInput = ({
   disableAlphaChooser,
   onSubmit,
 }: HexInputProps): JSX.Element => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-color-picker",
+    css: colorPickerCss,
+    window: targetWindow,
+  });
+
   const [hexInputValue, setHexInputValue] = useState<string | undefined>(
     hexValue
   );

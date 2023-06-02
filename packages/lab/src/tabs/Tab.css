@@ -2,7 +2,7 @@
 .saltTab {
   --saltEditableLabel-padding: 0;
   --saltEditableLabel-height: var(--tabs-tabstrip-height);
-  --saltInput-minWidth: 4em;
+  --saltInputLegacy-minWidth: 4em;
 
   --tabs-tab-background: var(--salt-navigable-primary-background);
   --tabs-tab-cursor: pointer;

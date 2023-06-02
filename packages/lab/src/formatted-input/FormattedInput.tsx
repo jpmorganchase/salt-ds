@@ -2,14 +2,20 @@ import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { useRifm } from "rifm";
 import { useControlled } from "@salt-ds/core";
-import { Input, InputProps } from "../input";
+import {
+  InputLegacy as Input,
+  InputLegacyProps as InputProps,
+} from "../input-legacy";
 import {
   baseName,
   InputWithMask,
   InputWithMaskProps,
 } from "./internal/InputWithMask";
 
-import "./FormattedInput.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import formattedInputCss from "./FormattedInput.css";
 
 export type MaskFunction = (value: string | undefined) => boolean;
 
@@ -47,6 +53,13 @@ export const FormattedInput = forwardRef<HTMLInputElement, FormattedInputProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-formatted-input",
+      css: formattedInputCss,
+      window: targetWindow,
+    });
+
     const [valueState, setValueState] = useControlled<string | undefined>({
       default: defaultValue,
       controlled: valueProp,

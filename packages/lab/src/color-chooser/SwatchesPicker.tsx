@@ -3,7 +3,10 @@ import { Swatch } from "./Swatch";
 import { convertColorMapValueToHex } from "./ColorHelpers";
 import { isTransparent } from "./color-utils";
 
-import "./Swatch.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import swatchCSS from "./Swatch.css";
 
 interface SwatchesPickerProps {
   allColors: string[][];
@@ -36,6 +39,13 @@ const SwatchesGroup = ({
   selectedColor,
   alpha,
 }: SwatchesGroupProps): JSX.Element => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-swatches",
+    css: swatchCSS,
+    window: targetWindow,
+  });
+
   const isBlackOrWhite = (color: string): boolean => {
     return (
       ((selectedColor ? selectedColor.startsWith("#000000") : false) &&

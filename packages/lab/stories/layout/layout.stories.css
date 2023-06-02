@@ -85,11 +85,11 @@
   text-align: right;
 }
 
-.border-layout-custom-form .saltFormField-labelLeft {
+.border-layout-custom-form .saltFormFieldLegacy-labelLeft {
   width: 70%;
 }
 
-.border-layout-custom-form .saltInput-suffixContainer {
+.border-layout-custom-form .saltInputLegacy-suffixContainer {
   margin-right: var(--salt-size-unit);
 }
 

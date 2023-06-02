@@ -1,7 +1,7 @@
 .saltToolbar {
   --toolbar-background: var(--salt-container-secondary-background);
   --toolbar-fontSize: var(--salt-text-fontSize);
-  /* --saltFormField-activationIndicator-size: 0; */
+  /* --saltFormFieldLegacy-activationIndicator-size: 0; */
 }
 
 .saltToolbar {
@@ -110,19 +110,25 @@
   flex-grow: 0;
 }
 
-.saltToolbarField.saltFormField-labelLeft > .saltFormLabel {
+.saltToolbarField.saltFormFieldLegacy-labelLeft > .saltFormLabel {
   padding-left: var(--salt-size-unit);
 }
 
-.saltToolbar .saltFormField-primary.saltFormField > .saltToolbarButton {
+.saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton {
   background: var(--toolbar-background);
 }
-.saltToolbar .saltFormField-primary.saltFormField > .saltToolbarButton:hover {
+.saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton:hover {
   background: var(--salt-actionable-secondary-background-hover);
 }
-.saltToolbar .saltFormField-primary.saltFormField > .saltButton-active,
-.saltToolbar .saltFormField-primary.saltFormField > .saltToolbarButton:active {
+.saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltButton-active,
+.saltToolbar .saltFormFieldLegacy-primary.saltFormFieldLegacy > .saltToolbarButton:active {
   background: var(--salt-actionable-secondary-background-active) !important;
+}
+
+/* copied over from Tabstrip.css */
+[data-overflowed] {
+  order: 99;
+  visibility: hidden;
 }
 
 /* .Responsive-inner > [data-collapsed='true'] {

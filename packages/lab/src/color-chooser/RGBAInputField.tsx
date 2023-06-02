@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { RGBAValue } from "./Color";
-import { Input } from "../input";
+import { InputLegacy as Input } from "../input-legacy";
 
-import "./RGBAInput.css";
+import rgbaInputCss from "./RGBAInput.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 const withBaseName = makePrefixer("saltColorChooser");
 interface RGBInputProps {
@@ -17,6 +19,13 @@ export const RGBInput = ({
   value,
   onSubmit,
 }: RGBInputProps): JSX.Element => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-rgba-input",
+    css: rgbaInputCss,
+    window: targetWindow,
+  });
+
   const [rgbaInputValue, setRgbaInputValue] = useState<number | string>(
     rgbaValue ? rgbaValue[value] : ""
   );

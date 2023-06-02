@@ -1,0 +1,16 @@
+.saltStaticInputAdornment {
+  --inputLegacy-staticAdornment-padding: var(--salt-size-unit);
+}
+
+.saltStaticInputAdornment {
+  display: flex;
+  align-items: center;
+}
+
+.saltInputLegacy-prefixContainer .saltStaticInputAdornment {
+  padding-left: var(--inputLegacy-staticAdornment-padding);
+}
+
+.saltInputLegacy-suffixContainer .saltStaticInputAdornment {
+  padding-right: var(--inputLegacy-staticAdornment-padding);
+}

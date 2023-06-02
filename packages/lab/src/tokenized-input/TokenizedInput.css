@@ -74,7 +74,9 @@
 }
 
 /* Styles applied to Input and Clear Button if `expanded={false}` */
-.saltTokenizedInput-hidden {
+.saltTokenizedInput-hidden,
+.saltTokenizedInput-input.saltTokenizedInput-hidden,
+.saltButton.saltTokenizedInput-hidden {
   display: none;
 }
 
@@ -82,7 +84,7 @@
   Styles applied to inner Input component
   Used to be .inputRoot
 **/
-.saltTokenizedInput-input {
+.saltInputLegacy.saltTokenizedInput-input {
   align-items: flex-start;
   cursor: text;
   flex-grow: 1;
@@ -115,7 +117,7 @@
   This is an example of internal sub-component naming convension. */
 .saltTokenizedInput .saltInputPill,
 .saltTokenizedInput-expandButton,
-.saltTokenizedInput-input,
+.saltInputLegacy.saltTokenizedInput-input,
 .saltTokenizedInput-inputField.saltTokenizedInput-inputMultiline .saltTokenizedInput-input {
   margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
   height: calc(var(--tokenizedInput-height) - var(--tokenizedInput-spacing) * 1.5);

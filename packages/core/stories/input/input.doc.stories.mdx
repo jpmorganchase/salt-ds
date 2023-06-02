@@ -1,0 +1,108 @@
+import { Input, Link } from "@salt-ds/core";
+import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
+import {
+  CSSClassTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Core/Input"
+  component={Input}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Input
+
+Input provides an editable field in which users can enter text and numeric values.
+
+## Examples
+
+### Default
+
+Input comprises value text and a focus ring. The component is initially empty. Once it has focus, it accepts text on a single line.
+
+<Canvas>
+  <Story id="core-input--default" />
+</Canvas>
+
+### Controlled
+
+You can control Input with the `value` and `onChange` props. Learn more about <Link href="https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components">controlled vs. uncontrolled components</Link> in the official React docs.
+
+<Canvas>
+  <Story id="core-input--controlled" />
+</Canvas>
+
+### Variants
+
+Input has two variants: primary (default) and secondary.
+
+<Canvas>
+  <Story id="core-input--variants" />
+</Canvas>
+
+### Disabled
+
+You can set Input to a disabled state, with no resultant action when the user interacts with it.
+
+<Canvas>
+  <Story id="core-input--disabled" />
+</Canvas>
+
+### Read-only
+
+You can set Input to a read-only state. The value text can’t be edited in this state, but it can be highlighted and copied.
+
+<Canvas>
+  <Story id="core-input--readonly" />
+</Canvas>
+
+For accessibility purposes, we recommend that you add a marker for empty read-only fields via the `emptyReadOnlyMarker` prop. This makes the field easier to be seen amongst other UI elements, indicating its read-only status.
+
+<Canvas>
+  <Story id="core-input--empty-readonly-marker" />
+</Canvas>
+
+### Text Alignment
+
+Text is aligned to the left by default. Use the `textAlign` prop to change to “center” or “right”.
+
+<Canvas>
+  <Story id="core-input--text-alignment" />
+</Canvas>
+
+### Validation
+
+Input can show validation states (warning, success, error) with the prop `validationStatus`.
+
+<Canvas>
+  <Story id="core-input--validation" />
+</Canvas>
+
+- Use the error state to alert the user of a critical issue that’s related to the input. Issues highlighted by an error state may jeopardize completion of the task and usually require action from the user to resolve the error.
+- Display the warning state to alert the user of a potential issue that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
+
+## API
+
+```
+import { Input } from "@salt-ds/core";
+```
+
+### Props
+
+<ArgsTable of={Input} />
+
+### CSS Class
+
+<CSSClassTable of={Input} />
+
+### Characteristics Used
+
+<CharacteristicUsage of={Input} />
+
+### Accessibility
+
+<HelpAndSupport />

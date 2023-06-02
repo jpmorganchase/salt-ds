@@ -40,8 +40,11 @@ import {
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
 
-import "./Tabstrip.css";
-import "./ThemeTabstrip.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import themeTabstripCss from "./ThemeTabstrip.css";
+import tabstripCss from "./Tabstrip.css";
 
 const withBaseName = makePrefixer("saltTabstrip");
 
@@ -89,10 +92,22 @@ export const Tabstrip = forwardRef(function Tabstrip(
   }: TabstripProps,
   forwardedRef: ForwardedRef<FocusAPI>
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tab-strip",
+    css: tabstripCss,
+    window: targetWindow,
+  });
+  useComponentCssInjection({
+    testId: "salt-theme-tab-strip",
+    css: themeTabstripCss,
+    window: targetWindow,
+  });
+
   const root = useRef<HTMLDivElement>(null);
   // can't use forwardedRef here, can we ?
   // const setForkRef = useForkRef(root, forwardedRef);
-  const activeRef = useRef<number>(
+  const activeRef = useRef<number | null>(
     activeTabIndexProp || defaultActiveTabIndex || 0
   );
 
@@ -293,7 +308,11 @@ export const Tabstrip = forwardRef(function Tabstrip(
   }, [children]);
 
   useIsomorphicLayoutEffect(() => {
-    if (focusedTabIndex !== activeTabIndex && focusedTabIndex !== -1) {
+    if (
+      activeTabIndex !== null &&
+      focusedTabIndex !== activeTabIndex &&
+      focusedTabIndex !== -1
+    ) {
       tabstripHook.focusTab(activeTabIndex);
     }
 
@@ -463,7 +482,8 @@ export const Tabstrip = forwardRef(function Tabstrip(
     }
   );
 
-  const { id: selectedTabId } = collectionHook.data[activeTabIndex];
+  const selectedTabId =
+    activeTabIndex !== null ? collectionHook.data[activeTabIndex].id : null;
 
   return (
     <div

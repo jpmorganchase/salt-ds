@@ -8,10 +8,17 @@ import {
 } from "react";
 import { clsx } from "clsx";
 import { Button, useControlled, useForkRef } from "@salt-ds/core";
-import { Input, InputProps, StaticInputAdornment } from "../input";
+import {
+  InputLegacy as Input,
+  InputLegacyProps as InputProps,
+  StaticInputAdornment,
+} from "../input-legacy";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 
-import "./SearchInput.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import searchInputCss from "./SearchInput.css";
 
 const baseName = "saltSearchInput";
 
@@ -53,6 +60,13 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-search-input",
+      css: searchInputCss,
+      window: targetWindow,
+    });
+
     const inputRef = useRef<HTMLInputElement>(null);
     const handleRef = useForkRef(inputRef, ref);
 

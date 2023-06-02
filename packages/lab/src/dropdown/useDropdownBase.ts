@@ -4,7 +4,7 @@ import { KeyboardEvent, useCallback, useRef, useState } from "react";
 import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
 import { useClickAway } from "./useClickAway";
 import { measurements, useResizeObserver, WidthOnly } from "../responsive";
-import { useFormFieldProps } from "../form-field-context";
+import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 
 const NO_OBSERVER: string[] = [];
 
@@ -40,7 +40,7 @@ export const useDropdownBase = ({
     inFormField,
     setFocused: setFormFieldFocused,
     a11yProps: { "aria-labelledby": ariaLabelledBy, ...restA11yProps } = {},
-  } = useFormFieldProps();
+  } = useFormFieldLegacyProps();
 
   const [popup, setPopup] = useState<measurements>({
     width: popupWidthProp ?? width ?? 0,

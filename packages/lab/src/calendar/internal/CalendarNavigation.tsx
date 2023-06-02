@@ -18,10 +18,12 @@ import { ListItem, ListItemType } from "../../list";
 
 import { useCalendarContext } from "./CalendarContext";
 
-import "./CalendarNavigation.css";
+import calendarNavigationCss from "./CalendarNavigation.css";
 import { DateValue, isSameMonth, isSameYear } from "@internationalized/date";
 import { formatDate, monthDiff, monthsForLocale } from "./utils";
 import { SelectionChangeHandler } from "../../common-hooks";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
 type DropdownItem = {
   value: DateValue;
@@ -138,6 +140,13 @@ export const CalendarNavigation = forwardRef<
     hideYearDropdown,
     ...rest
   } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-calendar-navigation",
+    css: calendarNavigationCss,
+    window: targetWindow,
+  });
 
   const {
     moveToPreviousMonth,

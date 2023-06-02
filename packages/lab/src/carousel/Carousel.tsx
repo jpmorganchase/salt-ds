@@ -2,8 +2,8 @@ import {
   Button,
   GridLayout,
   makePrefixer,
-  RadioButtonGroup,
   RadioButton,
+  RadioButtonGroup,
   useId,
 } from "@salt-ds/core";
 import {
@@ -17,9 +17,13 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { DeckLayout } from "../deck-layout";
 import { clsx } from "clsx";
-import "./Carousel.css";
+
 import { useSlideSelection } from "../utils";
 import { CarouselSlideProps } from "./CarouselSlide";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import carouselCss from "./Carousel.css";
 
 const withBaseName = makePrefixer("saltCarousel");
 
@@ -71,6 +75,13 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-carousel",
+      css: carouselCss,
+      window: targetWindow,
+    });
+
     const id = useId(idProp);
     const slidesCount = Children.count(children);
 

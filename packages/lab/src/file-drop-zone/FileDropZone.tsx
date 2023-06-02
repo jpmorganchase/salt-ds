@@ -19,7 +19,10 @@ import {
 import { containsFiles, extractFiles, validateFiles } from "./internal/utils";
 import { FilesValidator } from "./validators";
 
-import "./FileDropZone.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import fileDropZoneCss from "./FileDropZone.css";
 
 // Recommended button label by ADA review
 const buttonLabel = "Browse files";
@@ -111,6 +114,13 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-file-drop-zone",
+      css: fileDropZoneCss,
+      window: targetWindow,
+    });
+
     const id = useId(idProp);
 
     const iconId = `${id}-icon`;

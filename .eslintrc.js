@@ -1,6 +1,13 @@
 module.exports = {
   extends: ["modular-app", "plugin:storybook/recommended"],
+  plugins: ["eslint-plugin-local-rules"],
   overrides: [
+    {
+      files: ["packages/**/src/**/*.ts", "packages/**/src/**/*.tsx"],
+      rules: {
+        "local-rules/must-inject-css": 2,
+      },
+    },
     {
       files: ["*.ts", "*.tsx"],
       parserOptions: {

@@ -1,0 +1,50 @@
+.saltFormField {
+  display: inline-grid;
+  position: relative;
+  column-gap: var(--salt-size-adornmentGap);
+  row-gap: var(--salt-size-adornmentGap);
+  width: var(--saltFormField-width, 100%);
+}
+
+.saltFormField-labelLeft {
+  align-self: center;
+  grid-template-columns: 40% 1fr;
+}
+
+.saltFormField-controls {
+  align-items: center;
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  grid-column-gap: var(--salt-size-adornmentGap);
+}
+
+.saltFormField {
+  grid-template-areas:
+    "label"
+    "controls"
+    "helperText";
+}
+
+.saltFormField-labelLeft {
+  grid-template-areas:
+    "label controls"
+    "auto helperText";
+}
+
+.saltFormField > *,
+.saltFormFieldControlWrapper {
+  grid-area: controls;
+}
+
+.saltFormFieldLabel {
+  grid-area: label;
+}
+
+.saltFormFieldHelperText {
+  grid-area: helperText;
+}
+
+.saltFormField-disabled .saltInput-focused {
+  outline: none;
+}

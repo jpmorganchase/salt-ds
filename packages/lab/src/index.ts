@@ -17,7 +17,6 @@ export {
 export * from "./accordion";
 export * from "./app-header";
 export * from "./badge";
-export * from "./banner";
 export * from "./breadcrumbs";
 export * from "./button-bar";
 export * from "./calendar";
@@ -35,23 +34,25 @@ export * from "./dialog";
 export * from "./dropdown";
 export * from "./editable-label";
 export * from "./file-drop-zone";
-export * from "./form-field";
 export {
-  FormField as FormFieldNext,
-  FormFieldHelperText,
-  FormFieldLabel,
-  FormFieldControlWrapper,
-} from "./form-field-next";
-export * from "./form-field-context";
+  FormFieldLegacy as FormField,
+  type FormFieldLegacyProps as FormFieldProps,
+  FormLabel,
+} from "./form-field-legacy";
+export * from "./form-field-context-legacy";
 export * from "./form-group";
 export * from "./formatted-input";
-export * from "./input";
-export { Input as InputNext } from "./input-next";
+export {
+  InputLegacy as Input,
+  type InputLegacyProps as InputProps,
+  StaticInputAdornment,
+} from "./input-legacy";
 export * from "./layer-layout";
 export * from "./list";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
+export * from "./nav-item";
 export * from "./overlay";
 export * from "./pagination";
 export * from "./parent-child-item";

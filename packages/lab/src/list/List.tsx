@@ -25,7 +25,10 @@ import { ListItemProps, ListProps } from "./listTypes";
 import { useList } from "./useList";
 import { useListHeight } from "./useListHeight";
 
-import "./List.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import listCss from "./List.css";
 
 const defaultEmptyMessage = "No data to display";
 
@@ -84,6 +87,13 @@ export const List = forwardRef(function List<
   }: ListProps<Item, Selection>,
   forwardedRef?: ForwardedRef<HTMLDivElement>
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-list",
+    css: listCss,
+    window: targetWindow,
+  });
+
   const id = useIdMemo(idProp);
   const rootRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);

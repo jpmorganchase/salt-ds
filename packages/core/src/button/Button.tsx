@@ -1,8 +1,10 @@
 import { ComponentPropsWithoutRef, forwardRef, ReactElement } from "react";
 import { clsx } from "clsx";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "../utils";
 
-import "./Button.css";
+import buttonCss from "./Button.css";
 import { useButton } from "./useButton";
 
 const withBaseName = makePrefixer("saltButton");
@@ -51,6 +53,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onBlur,
       onClick,
     });
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-button",
+      css: buttonCss,
+      window: targetWindow,
+    });
+
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
     const { tabIndex, ...restButtonProps } = buttonProps;

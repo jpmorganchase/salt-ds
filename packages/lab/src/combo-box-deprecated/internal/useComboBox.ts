@@ -21,7 +21,7 @@ import { defaultItemToString } from "../../tokenized-input/internal/defaultItemT
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
 import { DefaultComboBoxProps } from "./DefaultComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
-import { InputProps } from "../../input";
+import { InputLegacyProps as InputProps } from "../../input-legacy";
 
 export type UseComboBoxProps<Item> = Omit<
   DefaultComboBoxProps<Item>,
