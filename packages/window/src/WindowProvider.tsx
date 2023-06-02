@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext } from "react";
 
-export type WindowContextType = Window;
+export type WindowContextType = Window | null;
 
 const WindowContext = createContext<WindowContextType | null>(
   typeof window !== "undefined" ? window : null
@@ -25,10 +25,6 @@ export function WindowProvider(props: WindowProviderProps) {
   );
 }
 
-export function useWindow() {
-  const value = useContext(WindowContext);
-  if (!value) {
-    throw new Error("useWindow must be used within a WindowProvider");
-  }
-  return value;
+export function useWindow(): WindowContextType {
+  return useContext(WindowContext);
 }
