@@ -20,23 +20,43 @@ const SimpleListExample = [
   "Georgia",
 ];
 
-const listItems = SimpleListExample.map((item, index) => (
-  <ListItemNext key={index} disabled={[1, 5].includes(index)}>
-    {item}
-  </ListItemNext>
-));
+const getListItems = ({
+  disabledItems = [],
+  selectedItems = [],
+}: {
+  disabledItems?: number[];
+  selectedItems?: number[];
+}) =>
+  SimpleListExample.map((item, index) => {
+    return (
+      <ListItemNext
+        key={index}
+        disabled={disabledItems.includes(index)}
+        // selected={
+        //   selectedItems ? selectedItems.includes(index) : undefined
+        // }
+      >
+        {item}
+      </ListItemNext>
+    );
+  });
 
 export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
   return (
     <ListNext {...rest} aria-label="Declarative List example">
-      {children || listItems}
+      {children ||
+        getListItems({
+          disabledItems: [1, 5],
+        })}
     </ListNext>
   );
 };
+
 Default.args = {
   style: { width: "200px" },
   displayedItemCount: 4,
 };
+
 export const Borderless = Default.bind({});
 Borderless.args = {
   borderless: true,
@@ -56,6 +76,15 @@ export const Disabled = Default.bind({});
 Disabled.args = {
   disabled: true,
   displayedItemCount: 3,
+};
+
+export const DisabledSelected = Default.bind({});
+DisabledSelected.args = {
+  displayedItemCount: 6,
+  children: getListItems({
+    disabledItems: [1, 5],
+    selectedItems: [5],
+  }),
 };
 
 export const Empty = Default.bind({});

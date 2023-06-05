@@ -34,6 +34,7 @@
   outline-offset: calc(var(--salt-focused-outlineWidth) * -1);
 }
 
+/* active list item when focused */
 .saltListItemNext:hover:not([role="presentation"]):not(.saltListItemNext-disabled),
 .saltListItemNext-focused {
   --list-item-background: var(--salt-selectable-background-hover);
@@ -49,6 +50,12 @@
 .saltListItemNext-disabled {
   --list-item-text-color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
+}
+
+/* disabled list item when selected */
+.saltListItemNext-disabled[aria-selected="true"] {
+  border-block: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selectedDisabled);
+  --list-item-background: var(--salt-selectable-background-selectedDisabled);
 }
 
 .saltListItemNext-textWrapper {
