@@ -1,0 +1,4 @@
+.saltLogoImage {
+  fill: var(--salt-text-secondary-foreground);
+  stroke: none;
+}

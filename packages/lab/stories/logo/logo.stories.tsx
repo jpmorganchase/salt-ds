@@ -1,4 +1,4 @@
-import { Logo, LogoImage, LogoTitle } from "@salt-ds/lab";
+import { Logo, LogoImage, LogoSeparator, LogoTitle } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
@@ -12,26 +12,10 @@ const Template: ComponentStory<typeof Logo> = (args) => {
   return (
     <Logo {...args}>
       <LogoImage src={PlaceholderLogo} />
-      <LogoTitle>Logo</LogoTitle>
+      <LogoSeparator />
+      <LogoTitle>Company name</LogoTitle>
     </Logo>
   );
 };
 
 export const Default = Template.bind({});
-// Default.args = {
-//   src: PlaceholderLogo as string,
-// };
-
-// export const FeatureLogo = Template.bind({});
-
-// FeatureLogo.args = {
-//   appTitle: "Salt",
-//   src: PlaceholderLogo as string,
-// };
-
-// FeatureLogo.argTypes = {
-//   src: { control: { type: "text" } },
-//   appTitle: { control: { type: "text" } },
-//   ImageProps: { table: { disable: true } },
-//   TitleProps: { table: { disable: true } },
-// };

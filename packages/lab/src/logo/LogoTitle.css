@@ -1,0 +1,7 @@
+.saltLogoTitle {
+  align-self: center;
+  position: relative;
+  color: var(--salt-text-secondary-foreground);
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+}

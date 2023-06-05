@@ -1,27 +1,21 @@
 .salt-density-high {
   --logo-height: var(--saltLogo-logo-height, 14px);
 }
+
 .salt-density-medium {
   --logo-height: var(--saltLogo-logo-height, 20px);
 }
+
 .salt-density-low {
   --logo-height: var(--saltLogo-logo-height, 26px);
 }
+
 .salt-density-touch {
   --logo-height: var(--saltLogo-logo-height, 32px);
 }
 
-.saltLogo {
-  --logo-color: var(--saltLogo-color, var(--salt-text-secondary-foreground));
-  --logo-divider-color: var(--saltLogo-pipe-color, var(--salt-separable-secondary-borderColor));
-  --logo-divider-height: var(--saltLogo-title-height, var(--salt-size-separator-height));
-  --logo-divider-margin: 0 calc(var(--salt-size-unit) * 2);
-  --logo-fontSize: var(--salt-text-fontSize);
-  --logo-lineHeight: var(--salt-text-lineHeight);
-}
-
 .saltLogo-compact {
-  --logo-pipe-margin: 0 calc(var(--salt-size-unit) * 1.5);
+  /* --logo-pipe-margin: 0 calc(var(--salt-size-unit) * 1.5); */
 }
 
 .saltLogo {
@@ -34,31 +28,4 @@
 
 .saltLogo img {
   max-height: 100%;
-}
-
-.saltLogo-wrapper {
-  display: inline-flex;
-  position: relative;
-  height: var(--logo-height);
-}
-
-.saltLogo-logo {
-  fill: var(--logo-color);
-  margin: auto;
-  stroke: none !important;
-  text-align: center;
-  font-size: var(--logo-fontSize);
-  line-height: var(--logo-lineHeight);
-}
-
-.saltLogo-appTitle {
-  align-self: center;
-  color: var(--logo-color);
-  position: relative;
-}
-
-.saltLogo-titlePipe {
-  border-right: 1px solid var(--logo-divider-color);
-  margin: var(--logo-divider-margin);
-  height: var(--logo-divider-height);
 }
