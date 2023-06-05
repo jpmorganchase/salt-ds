@@ -1,0 +1,87 @@
+---
+title: Test page
+layout: DetailTechnical
+sidebar:
+  label: Test page
+---
+
+Advice callout containing text and then image:
+
+<AdviceCallout type="positive">
+  Use primary and secondary text colors and/or weight variants to create visual hierarchy.
+  <Image
+    src="/img/foundations/typography-heading-emphasized.svg"
+    alt="Example showing heading emphasized with font weight"
+  />
+
+</AdviceCallout>
+
+Advice callout containing image and then text:
+
+<AdviceCallout type="positive">
+  <img
+    src="https://picsum.photos/700/300"
+    alt="Example showing heading emphasized with font weight"
+    width={700}
+    height={300}
+  />
+  Use primary and secondary text colors and/or weight variants to create visual hierarchy.
+</AdviceCallout>
+
+Advice callout containing text content only:
+
+<AdviceCallout type="negative">
+
+Our newly built Accordion component displays a series of panes containing summary content.
+
+Users can expand or collapse the panes to show or hide content. This allows them to control the complexity of a given view to suit their needs.
+
+<small>Three relatively short sentences split into two paragraphs.</small>
+
+</AdviceCallout>
+
+Advice callout with image only:
+
+<AdviceCallout type="positive">
+  <Image
+    src="/img/foundations/typography-heading-emphasized.svg"
+    alt="Example showing heading emphasized with font weight"
+  />
+
+</AdviceCallout>
+
+Two advice callouts in a `<GridLayout>`:
+
+<GridLayout columns={2}>
+  <AdviceCallout type="positive">
+    <Image
+      src="/img/foundations/typography-heading-emphasized.svg"
+      alt="Example showing heading emphasized with font weight"
+    />
+  </AdviceCallout>
+
+  <AdviceCallout type="negative">
+
+    Our newly built Accordion component displays a series of panes containing summary content.
+
+    Users can expand or collapse the panes to show or hide content. This allows them to control the complexity of a given view to suit their needs.
+
+    <small>Three relatively short sentences split into two paragraphs.</small>
+
+  </AdviceCallout>
+</GridLayout>
+
+Adjacent Advice Callouts...
+
+{" "}
+
+<AdviceCallout type="positive">
+  Our newly built Accordion component displays a series of panes containing
+  summary content.
+</AdviceCallout>
+
+  <AdviceCallout type="negative">
+
+    Our newly built Accordion component displays a series of panes containing summary content.
+
+  </AdviceCallout>

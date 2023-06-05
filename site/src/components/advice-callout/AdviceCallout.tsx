@@ -9,6 +9,7 @@ export interface AdviceCalloutProps {
   as: ElementType<any>;
   type: "positive" | "negative";
   iconLabel?: string;
+  headingText?: string;
 }
 
 export const AdviceCallout: FC<AdviceCalloutProps> = ({
@@ -16,27 +17,39 @@ export const AdviceCallout: FC<AdviceCalloutProps> = ({
   as,
   type,
   iconLabel,
+  headingText,
 }) => {
   const iconProps: Partial<IconProps> = {
     "aria-hidden": iconLabel === undefined,
     "aria-label": iconLabel,
     size: 1,
+    className: styles.icon,
   };
 
   return (
-    <FlexLayout as={as} className={styles.root} gap={1}>
-      {type === "positive" ? (
-        <SuccessTickIcon
-          {...iconProps}
-          className={clsx(styles.icon, styles.iconPositive)}
-        />
-      ) : (
-        <CloseIcon
-          {...iconProps}
-          className={clsx(styles.icon, styles.iconNegative)}
-        />
+    <FlexLayout
+      as={as}
+      className={clsx(
+        styles.root,
+        type === "positive" ? styles.positive : styles.negative
       )}
+      gap={1}
+      direction={"column"}
+    >
+      <FlexItem shrink={0} className={styles.topBar}>
+        <h3 className={styles.heading}>
+          {type === "positive" ? (
+            <SuccessTickIcon {...iconProps} />
+          ) : (
+            <CloseIcon {...iconProps} />
+          )}
+          {headingText || type === "positive" ? "Do" : "Don't"}
+        </h3>
+      </FlexItem>
       <FlexItem grow={1} className={styles.content}>
+        {/* <h3 className={styles.heading}>
+          {headingText || type === "positive" ? "Do" : "Don't"}
+        </h3> */}
         {children}
       </FlexItem>
     </FlexLayout>
