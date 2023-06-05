@@ -52,7 +52,7 @@ Advice callout with image only:
 
 Two advice callouts in a `<GridLayout>`:
 
-<GridLayout columns={2}>
+<GridLayout columns={2} gap={2}>
   <AdviceCallout type="positive">
     <Image
       src="/img/foundations/typography-heading-emphasized.svg"
@@ -76,12 +76,19 @@ Adjacent Advice Callouts...
 {" "}
 
 <AdviceCallout type="positive">
-  Our newly built Accordion component displays a series of panes containing
-  summary content.
+
+- A thing you should do
+- Another thing you should do
+- One more thing to do
+
 </AdviceCallout>
 
-  <AdviceCallout type="negative">
+<AdviceCallout type="negative">
 
-    Our newly built Accordion component displays a series of panes containing summary content.
+Some blurb about what not to do.
 
-  </AdviceCallout>
+- Maybe
+- some
+- bullet points too
+
+</AdviceCallout>

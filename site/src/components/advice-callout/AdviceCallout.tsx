@@ -34,22 +34,18 @@ export const AdviceCallout: FC<AdviceCalloutProps> = ({
         type === "positive" ? styles.positive : styles.negative
       )}
       gap={1}
-      direction={"column"}
     >
       <FlexItem shrink={0} className={styles.topBar}>
-        <h3 className={styles.heading}>
-          {type === "positive" ? (
-            <SuccessTickIcon {...iconProps} />
-          ) : (
-            <CloseIcon {...iconProps} />
-          )}
-          {headingText || type === "positive" ? "Do" : "Don't"}
-        </h3>
+        {type === "positive" ? (
+          <SuccessTickIcon {...iconProps} />
+        ) : (
+          <CloseIcon {...iconProps} />
+        )}
       </FlexItem>
       <FlexItem grow={1} className={styles.content}>
-        {/* <h3 className={styles.heading}>
+        <h3 className={styles.heading}>
           {headingText || type === "positive" ? "Do" : "Don't"}
-        </h3> */}
+        </h3>
         {children}
       </FlexItem>
     </FlexLayout>
