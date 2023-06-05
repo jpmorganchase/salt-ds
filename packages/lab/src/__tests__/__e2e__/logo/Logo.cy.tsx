@@ -1,4 +1,5 @@
 import { Logo } from "@salt-ds/lab";
+import { LogoImage, LogoTitle } from "packages/lab/src/logo";
 
 const CustomLogoImage = ({ src }: any) => <div>{src}</div>;
 
@@ -9,21 +10,24 @@ describe("GIVEN a logo", () => {
   it("renders an image", () => {
     cy.mount(
       <Logo
-        src={src}
-        appTitle={appTitle}
-        LogoImageComponent={CustomLogoImage}
-      />
+      // LogoImageComponent={CustomLogoImage}
+      >
+        <LogoImage src={src} />
+        <LogoTitle>{appTitle}</LogoTitle>
+      </Logo>
     );
-    cy.findByText(src).should("exist");
+    cy.get("img").should("exist");
   });
 
   it("renders an appTitle", () => {
     cy.mount(
       <Logo
-        src={src}
-        appTitle={appTitle}
-        LogoImageComponent={CustomLogoImage}
-      />
+      // LogoImageComponent={CustomLogoImage}
+      >
+        <LogoImage src={src} />
+
+        <LogoTitle>{appTitle}</LogoTitle>
+      </Logo>
     );
     cy.findByText(appTitle).should("exist");
   });
