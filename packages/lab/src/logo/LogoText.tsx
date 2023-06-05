@@ -5,14 +5,14 @@ import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import logoTitleCss from "./LogoTitle.css";
+import logoTitleCss from "./LogoText.css";
 
 export interface LogoTitleProps extends ComponentPropsWithoutRef<"span"> {}
 
 const withBaseName = makePrefixer("saltLogoTitle");
 
-export const LogoTitle = forwardRef<HTMLSpanElement, LogoTitleProps>(
-  function LogoTitle({ className, ...rest }, ref) {
+export const LogoText = forwardRef<HTMLSpanElement, LogoTitleProps>(
+  function LogoText({ className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-logo-title",

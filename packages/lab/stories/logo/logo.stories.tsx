@@ -1,4 +1,4 @@
-import { Logo, LogoImage, LogoSeparator, LogoTitle } from "@salt-ds/lab";
+import { Logo, LogoImage, LogoSeparator, LogoText } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
@@ -8,14 +8,20 @@ export default {
   component: Logo,
 } as ComponentMeta<typeof Logo>;
 
-const Template: ComponentStory<typeof Logo> = (args) => {
-  return (
-    <Logo {...args}>
-      <LogoImage src={PlaceholderLogo} />
-      <LogoSeparator />
-      <LogoTitle>Company name</LogoTitle>
-    </Logo>
-  );
-};
+const Template: ComponentStory<typeof Logo> = (args) => <Logo {...args} />;
 
-export const Default = Template.bind({});
+export const Default = () => (
+  <Template>
+    <LogoImage src={PlaceholderLogo} />
+    <LogoSeparator />
+    <LogoText>Company name</LogoText>
+  </Template>
+);
+
+export const TextInsteadImage = () => (
+  <Template>
+    <LogoText>Logo text</LogoText>
+    <LogoSeparator />
+    <LogoText>Company name</LogoText>
+  </Template>
+);
