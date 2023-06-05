@@ -1,4 +1,6 @@
-.salt-theme {
+/* ::backdrop is needed because it doesn't inherit css variables */
+.salt-theme,
+::backdrop {
   --salt-overlayable-shadow-scroll: var(--salt-shadow-1);
   --salt-overlayable-shadow-borderRegion: var(--salt-shadow-2);
   --salt-overlayable-shadow: var(--salt-shadow-2);

@@ -1,4 +1,5 @@
-.salt-theme {
+.salt-theme,
+::backdrop {
   --salt-color-blue-100-fade-foreground: rgba(100, 177, 228, var(--salt-palette-opacity-foreground));
   --salt-color-blue-500-fade-foreground: rgba(38, 112, 169, var(--salt-palette-opacity-foreground));
   --salt-color-blue-600-fade-foreground: rgba(21, 92, 147, var(--salt-palette-opacity-foreground));

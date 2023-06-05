@@ -1,10 +1,13 @@
-import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  MouseEvent,
+  SyntheticEvent,
+  useRef,
+} from "react";
 import { clsx } from "clsx";
 
-import { Scrim, ScrimProps } from "../scrim";
-
-import { Breakpoints, makePrefixer, usePrevious } from "@salt-ds/core";
-import { useIsViewportLargerThanBreakpoint } from "../utils";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -20,51 +23,31 @@ export const LAYER_POSITIONS = [
 
 export type LayerPositions = typeof LAYER_POSITIONS[number];
 
-export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Disable the scrim.
-   */
-  disableScrim?: boolean;
+export interface LayerLayoutProps extends ComponentPropsWithoutRef<"dialog"> {
   /**
    * Defines the layer position within the screen.
    */
   position?: LayerPositions;
   /**
-   * Breakpoint at which the layer will become fullscreen.
+   * You should use `showModal` or `show` instead.
    */
-  fullScreenAtBreakpoint?: keyof Breakpoints;
-  /**
-   * Disable all animations.
-   */
-  disableAnimations?: boolean;
-  /**
-   * Display or hide the component.
-   */
-  isOpen?: boolean;
-  /**
-   * Props to be passed to the Scrim component.
-   */
-  scrimProps?: Partial<ScrimProps>;
+  open?: undefined;
 }
 
 const withBaseName = makePrefixer("saltLayerLayout");
 
-const ariaAttributes = { role: "dialog", "aria-modal": true };
-
-export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
+export const LayerLayout = forwardRef<HTMLDialogElement, LayerLayoutProps>(
   function LayerLayout(props, ref) {
     const {
       children,
       className,
-      disableScrim = false,
       position = "center",
-      fullScreenAtBreakpoint = "sm",
-      disableAnimations = false,
-      scrimProps,
-      isOpen = true,
+      onClick,
       ...rest
     } = props;
 
+    const dialogRef = useRef<HTMLDialogElement>(null);
+    const handleRef = useForkRef(ref, dialogRef);
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-layer-layout",
@@ -72,73 +55,22 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       window: targetWindow,
     });
 
-    const previousDisableAnimationsProp = usePrevious(
-      disableAnimations,
-      [disableAnimations],
-      false
-    ); // we check the previous value for this prop to prevent the animations from triggering again when it changes
-
-    const [showComponent, setShowComponent] = useState(false);
-
-    const [isAnimating, setIsAnimating] = useState(false);
-
-    useEffect(() => {
-      if ((!isOpen && disableAnimations) || (!isOpen && !isAnimating)) {
-        setShowComponent(false);
+    const handleClick = (event: MouseEvent<HTMLDialogElement>) => {
+      if (event.target === dialogRef.current) {
+        dialogRef.current?.close("dismiss");
       }
+      onClick?.(event);
+    };
 
-      if (isOpen && !showComponent) {
-        setShowComponent(true);
-      }
-    }, [isOpen, showComponent, disableAnimations, isAnimating]);
-
-    const fullScreen = useIsViewportLargerThanBreakpoint(
-      fullScreenAtBreakpoint
-    );
-
-    const anchored = position !== "center" && !fullScreen;
-
-    const enterAnimation =
-      !disableAnimations && isOpen && !previousDisableAnimationsProp;
-
-    const exitAnimation = !disableAnimations && !isOpen;
-
-    const layerLayout = showComponent ? (
-      <div
-        ref={ref}
-        className={clsx(withBaseName(), className, {
-          [withBaseName("anchor")]: anchored,
-          [withBaseName("fullScreen")]: fullScreen,
-          [withBaseName(position)]: !fullScreen,
-          [withBaseName("enter-animation")]: enterAnimation,
-          [withBaseName("exit-animation")]: exitAnimation,
-        })}
-        onAnimationStart={() => setIsAnimating(true)}
-        onAnimationEnd={() => {
-          if (!isOpen && showComponent) {
-            setShowComponent(false);
-          }
-        }}
-        {...(disableScrim && ariaAttributes)}
+    return (
+      <dialog
+        className={clsx(withBaseName(), withBaseName(position), className)}
+        ref={handleRef}
+        onClick={handleClick}
         {...rest}
       >
         {children}
-      </div>
-    ) : null;
-
-    return disableScrim ? (
-      layerLayout
-    ) : (
-      <Scrim
-        open={showComponent}
-        className={clsx({
-          [withBaseName("enter-animation")]: enterAnimation,
-          [withBaseName("exit-animation")]: exitAnimation,
-        })}
-        {...scrimProps}
-      >
-        {layerLayout}
-      </Scrim>
+      </dialog>
     );
   }
 );

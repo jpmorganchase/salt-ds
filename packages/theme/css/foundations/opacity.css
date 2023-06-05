@@ -1,4 +1,5 @@
-.salt-theme {
+.salt-theme,
+::backdrop {
   --salt-opacity-1: 0.15;
   --salt-opacity-2: 0.25;
   --salt-opacity-3: 0.4;

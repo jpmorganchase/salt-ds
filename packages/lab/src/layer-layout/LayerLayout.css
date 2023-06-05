@@ -1,106 +1,93 @@
 .saltLayerLayout {
-  --layerLayout-boxShadow: var(--saltLayerLayout-boxShadow, var(--salt-overlayable-shadow-modal));
-  --layerLayout-background: var(--saltLayerLayout-background, var(--salt-container-primary-background));
-  --layerLayout-padding: var(--saltLayerLayout-padding, var(--salt-size-container-spacing));
-  --layerLayout-margin: var(--saltLayerLayout-margin, var(--salt-size-container-spacing));
-}
-
-.saltLayerLayout {
-  background: var(--layerLayout-background);
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-  max-width: 100%;
-  overflow: auto;
-  padding: var(--layerLayout-padding);
-  box-shadow: var(--saltLayerLayout-boxShadow, var(--layerLayout-boxShadow));
-  z-index: calc(var(--salt-zIndex-appHeader) - 1);
-}
-
-.saltLayerLayout-fullScreen {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
+  display: grid;
+  align-content: start;
   position: fixed;
-  top: 0;
-  left: 0;
+  padding: var(--salt-spacing-300);
+  background: var(--salt-container-primary-background);
+  z-index: calc(var(--salt-zIndex-appHeader) - 1);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  inset: 0;
+  animation-timing-function: var(--salt-duration-perceptible);
 }
 
-.saltLayerLayout-center {
-  margin: var(--saltLayerLayout-margin, var(--layerLayout-margin));
+.saltLayerLayout[open] {
+  box-shadow: var(--salt-overlayable-shadow-modal);
 }
 
-.saltLayerLayout-center.saltLayerLayout-enter-animation,
-.saltLayerLayout-fullScreen.saltLayerLayout-enter-animation,
-.saltScrim.saltLayerLayout-enter-animation {
+.saltLayerLayout::backdrop {
+  background: var(--salt-overlayable-background);
   animation: var(--salt-animation-fade-in-center);
 }
 
-.saltLayerLayout-center.saltLayerLayout-exit-animation,
-.saltLayerLayout-fullScreen.saltLayerLayout-exit-animation,
-.saltScrim.saltLayerLayout-exit-animation {
-  animation: var(--salt-animation-fade-out-back);
+.saltLayerLayout:not([open]) {
+  pointer-events: none;
+  opacity: 0;
 }
 
-.saltLayerLayout-anchor {
-  position: fixed;
+.saltLayerLayout-right {
   max-height: 100%;
+  height: 100%;
+  inset-inline-start: auto;
+  top: 0;
+}
+
+.saltLayerLayout-bottom {
+  max-width: 100%;
+  width: 100%;
+  inset-block-start: auto;
+  bottom: 0;
+}
+
+.saltLayerLayout-left {
+  max-height: 100%;
+  height: 100%;
+  inset-inline-end: auto;
   top: 0;
 }
 
 .saltLayerLayout-top {
-  left: 0;
-  right: 0;
-  bottom: auto;
+  max-width: 100%;
+  width: 100%;
+  inset-block-end: auto;
+  top: 0;
 }
 
-.saltLayerLayout-top.saltLayerLayout-enter-animation {
-  animation: var(--salt-animation-slide-in-bottom);
-}
-
-.saltLayerLayout-top.saltLayerLayout-exit-animation {
-  animation: var(--salt-animation-slide-out-bottom);
+.saltLayerLayout {
+  transition: opacity var(--salt-duration-perceptible) var(--salt-animation-timing-function);
 }
 
 .saltLayerLayout-right {
-  left: auto;
-  right: 0;
-  height: 100%;
+  transition: transform var(--salt-duration-perceptible) var(--salt-animation-timing-function), opacity var(--salt-duration-perceptible) var(--salt-animation-timing-function);
+  transform: translateX(var(--salt-animation-transform-start));
 }
 
-.saltLayerLayout-right.saltLayerLayout-enter-animation {
-  animation: var(--salt-animation-slide-in-right);
-}
-
-.saltLayerLayout-right.saltLayerLayout-exit-animation {
-  animation: var(--salt-animation-slide-out-right);
-}
-
-.saltLayerLayout-left {
-  left: 0;
-  right: auto;
-  height: 100%;
-}
-
-.saltLayerLayout-left.saltLayerLayout-enter-animation {
-  animation: var(--salt-animation-slide-in-left);
-}
-
-.saltLayerLayout-left.saltLayerLayout-exit-animation {
-  animation: var(--salt-animation-slide-out-left);
+.saltLayerLayout-right[open] {
+  transform: translateX(var(--salt-animation-transform-end));
 }
 
 .saltLayerLayout-bottom {
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: auto;
+  transition: transform var(--salt-duration-perceptible) var(--salt-animation-timing-function), opacity var(--salt-duration-perceptible) var(--salt-animation-timing-function);
+  transform: translateY(var(--salt-animation-transform-start));
 }
 
-.saltLayerLayout-bottom.saltLayerLayout-enter-animation {
-  animation: var(--salt-animation-slide-in-top);
+.saltLayerLayout-bottom[open] {
+  transform: translateY(var(--salt-animation-transform-end));
 }
 
-.saltLayerLayout-bottom.saltLayerLayout-exit-animation {
-  animation: var(--salt-animation-slide-out-top);
+.saltLayerLayout-left {
+  transition: transform var(--salt-duration-perceptible) var(--salt-animation-timing-function), opacity var(--salt-duration-perceptible) var(--salt-animation-timing-function);
+  transform: translateX(calc(-1 * var(--salt-animation-transform-start)));
+}
+
+.saltLayerLayout-left[open] {
+  transform: translateX(var(--salt-animation-transform-end));
+}
+
+.saltLayerLayout-top {
+  transition: transform var(--salt-duration-perceptible) var(--salt-animation-timing-function), opacity var(--salt-duration-perceptible) var(--salt-animation-timing-function);
+  transform: translateY(calc(-1 * var(--salt-animation-transform-start)));
+}
+
+.saltLayerLayout-top[open] {
+  transform: translateY(var(--salt-animation-transform-end));
 }

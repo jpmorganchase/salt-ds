@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useRef } from "react";
 import { ContentStatus, ContentStatusProps } from "@salt-ds/lab";
 import {
   Button,
@@ -21,59 +21,55 @@ export default {
     },
   },
   args: {
-    disableScrim: false,
-    disableAnimations: false,
-    fullScreenAtBreakpoint: "sm",
+    disableModal: false,
   },
 } as ComponentMeta<typeof LayerLayout>;
 
-type LayerContentExampleProps = {
-  onClick: (evt: MouseEvent) => void;
-};
-
-const LayerContentExample = ({ onClick }: LayerContentExampleProps) => (
-  <StackLayout className="layer-example">
-    <FlexItem grow={1}>
-      <h2 id="layer_label">Lorem ipsum</h2>
-      <p id="layer_description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc lacus,
-        scelerisque ut elit nec, commodo blandit est. Duis mollis dui at nisl
-        faucibus, id maximus urna pellentesque. Praesent consequat vulputate
-        dolor, a mattis metus suscipit vitae. Donec ullamcorper, neque sit amet
-        laoreet ornare, diam eros posuere metus, id consectetur tellus nisl id
-        ipsum. Fusce sit amet cursus mauris, vel scelerisque enim. Quisque eu
-        dolor tortor. Nulla facilisi. Vestibulum at neque sit amet neque
-        facilisis porttitor a ac risus.Mauris consequat sollicitudin commodo.
-        Vestibulum ac diam vulputate, condimentum purus non, eleifend erat. Nunc
-        auctor iaculis mi eu hendrerit. Suspendisse potenti. Cras tristique
-        vehicula iaculis. Morbi faucibus volutpat tellus, sit amet fringilla dui
-        rhoncus a. Suspendisse nunc nulla, mattis sed commodo ac, cursus ut
-        augue.
-      </p>
-    </FlexItem>
-    <FlowLayout justify="end">
-      <Button onClick={onClick}>Close layer</Button>
-    </FlowLayout>
-  </StackLayout>
+const LayerContentExample = () => (
+  <form method="dialog">
+    <StackLayout className="layer-example">
+      <FlexItem grow={1}>
+        <h2 id="layer_label">Lorem ipsum</h2>
+        <p id="layer_description">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc
+          lacus, scelerisque ut elit nec, commodo blandit est. Duis mollis dui
+          at nisl faucibus, id maximus urna pellentesque. Praesent consequat
+          vulputate dolor, a mattis metus suscipit vitae. Donec ullamcorper,
+          neque sit amet laoreet ornare, diam eros posuere metus, id consectetur
+          tellus nisl id ipsum. Fusce sit amet cursus mauris, vel scelerisque
+          enim. Quisque eu dolor tortor. Nulla facilisi. Vestibulum at neque sit
+          amet neque facilisis porttitor a ac risus.Mauris consequat
+          sollicitudin commodo. Vestibulum ac diam vulputate, condimentum purus
+          non, eleifend erat. Nunc auctor iaculis mi eu hendrerit. Suspendisse
+          potenti. Cras tristique vehicula iaculis. Morbi faucibus volutpat
+          tellus, sit amet fringilla dui rhoncus a. Suspendisse nunc nulla,
+          mattis sed commodo ac, cursus ut augue.
+        </p>
+      </FlexItem>
+      <FlowLayout justify="end">
+        <Button type="submit">Close layer</Button>
+      </FlowLayout>
+    </StackLayout>
+  </form>
 );
 
 const DefaultLayerLayoutStory: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout
-        isOpen={open}
+        ref={layerRef}
         aria-labelledby="layer_label"
         aria-describedby="layer_description"
         {...args}
       >
-        <LayerContentExample onClick={hide} />
+        <LayerContentExample />
       </LayerLayout>
     </div>
   );
@@ -85,17 +81,17 @@ Default.args = {
 };
 
 const TopTemplate: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} {...args}>
-        <LayerContentExample onClick={hide} />
+      <LayerLayout ref={layerRef} {...args}>
+        <LayerContentExample />
       </LayerLayout>
     </div>
   );
@@ -107,17 +103,17 @@ Top.args = {
 };
 
 const RightTemplate: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} {...args}>
-        <LayerContentExample onClick={hide} />
+      <LayerLayout ref={layerRef} {...args}>
+        <LayerContentExample />
       </LayerLayout>
     </div>
   );
@@ -129,17 +125,17 @@ Right.args = {
 };
 
 const LeftTemplate: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} {...args}>
-        <LayerContentExample onClick={hide} />
+      <LayerLayout ref={layerRef} {...args}>
+        <LayerContentExample />
       </LayerLayout>
     </div>
   );
@@ -151,17 +147,17 @@ Left.args = {
 };
 
 const BottomTemplate: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} {...args}>
-        <LayerContentExample onClick={hide} />
+      <LayerLayout ref={layerRef} {...args}>
+        <LayerContentExample />
       </LayerLayout>
     </div>
   );
@@ -175,42 +171,44 @@ Bottom.args = {
 const CustomFullScreenAnimationTemplate: ComponentStory<typeof LayerLayout> = (
   args
 ) => {
-  const [open, setOpen] = useState(false);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="custom-layer-container">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} className="custom-animation" {...args}>
-        <StackLayout className="layer-example">
-          <FlexItem grow={1}>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc
-              lacus, scelerisque ut elit nec, commodo blandit est. Duis mollis
-              dui at nisl faucibus, id maximus urna pellentesque. Praesent
-              consequat vulputate dolor, a mattis metus suscipit vitae. Donec
-              ullamcorper, neque sit amet laoreet ornare, diam eros posuere
-              metus, id consectetur tellus nisl id ipsum. Fusce sit amet cursus
-              mauris, vel scelerisque enim. Quisque eu dolor tortor. Nulla
-              facilisi. Vestibulum at neque sit amet neque facilisis porttitor a
-              ac risus.
-            </p>
-            <p>
-              Mauris consequat sollicitudin commodo. Vestibulum ac diam
-              vulputate, condimentum purus non, eleifend erat. Nunc auctor
-              iaculis mi eu hendrerit. Suspendisse potenti. Cras tristique
-              vehicula iaculis. Morbi faucibus volutpat tellus, sit amet
-              fringilla dui rhoncus a. Suspendisse nunc nulla, mattis sed
-              commodo ac, cursus ut augue.
-            </p>
-          </FlexItem>
-          <FlowLayout justify="end">
-            <Button onClick={hide}>Close layer</Button>
-          </FlowLayout>
-        </StackLayout>
+      <LayerLayout ref={layerRef} className="custom-animation" {...args}>
+        <form method="dialog">
+          <StackLayout className="layer-example">
+            <FlexItem grow={1}>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc
+                lacus, scelerisque ut elit nec, commodo blandit est. Duis mollis
+                dui at nisl faucibus, id maximus urna pellentesque. Praesent
+                consequat vulputate dolor, a mattis metus suscipit vitae. Donec
+                ullamcorper, neque sit amet laoreet ornare, diam eros posuere
+                metus, id consectetur tellus nisl id ipsum. Fusce sit amet
+                cursus mauris, vel scelerisque enim. Quisque eu dolor tortor.
+                Nulla facilisi. Vestibulum at neque sit amet neque facilisis
+                porttitor a ac risus.
+              </p>
+              <p>
+                Mauris consequat sollicitudin commodo. Vestibulum ac diam
+                vulputate, condimentum purus non, eleifend erat. Nunc auctor
+                iaculis mi eu hendrerit. Suspendisse potenti. Cras tristique
+                vehicula iaculis. Morbi faucibus volutpat tellus, sit amet
+                fringilla dui rhoncus a. Suspendisse nunc nulla, mattis sed
+                commodo ac, cursus ut augue.
+              </p>
+            </FlexItem>
+            <FlowLayout justify="end">
+              <Button type="submit">Close layer</Button>
+            </FlowLayout>
+          </StackLayout>
+        </form>
       </LayerLayout>
     </div>
   );
@@ -231,11 +229,11 @@ CustomFullScreenAnimation.parameters = {
 };
 
 const ReducedMotionTemplate: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(false);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <>
@@ -246,8 +244,8 @@ const ReducedMotionTemplate: ComponentStory<typeof LayerLayout> = (args) => {
       </p>
       <div className="layer-container reduced-motion">
         <Button onClick={show}>Open Layer</Button>
-        <LayerLayout isOpen={open} {...args}>
-          <LayerContentExample onClick={hide} />
+        <LayerLayout ref={layerRef} {...args}>
+          <LayerContentExample />
         </LayerLayout>
       </div>
     </>
@@ -257,32 +255,34 @@ const ReducedMotionTemplate: ComponentStory<typeof LayerLayout> = (args) => {
 export const ReducedMotion = ReducedMotionTemplate.bind({});
 
 const LayerLayoutCenterExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(true);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   const errorProps: ContentStatusProps = {
     status: "error",
     title: "There's been a system error",
     message: "It should be temporary, so please try again.",
-    actionLabel: "CLOSE LAYER",
-    onActionClick: hide,
   };
 
   return (
     <>
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout
-        isOpen={open}
+        ref={layerRef}
+        role="alertdialog"
         className="layer-simple-usage-center"
-        scrimProps={{ role: "alertdialog" }}
         {...args}
       >
-        <FlowLayout justify="center">
-          <ContentStatus {...errorProps} />
-        </FlowLayout>
+        <form method="dialog">
+          <FlowLayout justify="center">
+            <ContentStatus {...errorProps}>
+              <Button type="submit">Close Layer</Button>
+            </ContentStatus>
+          </FlowLayout>
+        </form>
       </LayerLayout>
     </>
   );
@@ -300,36 +300,38 @@ const FormFieldExample = () => (
 );
 
 const LayerLayoutLeftExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(true);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="layer-container layer-simple-usage">
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout
-        isOpen={open}
+        ref={layerRef}
         aria-labelledby="layer_label"
         aria-describedby="layer_description"
         {...args}
       >
-        <StackLayout>
-          <h2 id="layer_label">Section title</h2>
-          <p id="layer_description">
-            Incididunt adipisicing deserunt nostrud ullamco consequat
-            consectetur magna id do irure labore fugiat. Eiusmod pariatur
-            officia elit ad. Ullamco adipisicing Lorem amet velit in do
-            reprehenderit nostrud eu aute voluptate quis quis.
-          </p>
-          {Array.from({ length: 7 }, (_, index) => (
-            <FormFieldExample key={index} />
-          ))}
-          <FlexItem align="end">
-            <Button onClick={hide}>Close layer</Button>
-          </FlexItem>
-        </StackLayout>
+        <form method="dialog">
+          <StackLayout>
+            <h2 id="layer_label">Section title</h2>
+            <p id="layer_description">
+              Incididunt adipisicing deserunt nostrud ullamco consequat
+              consectetur magna id do irure labore fugiat. Eiusmod pariatur
+              officia elit ad. Ullamco adipisicing Lorem amet velit in do
+              reprehenderit nostrud eu aute voluptate quis quis.
+            </p>
+            {Array.from({ length: 7 }, (_, index) => (
+              <FormFieldExample key={index} />
+            ))}
+            <FlexItem align="end">
+              <Button type="submit">Close layer</Button>
+            </FlexItem>
+          </StackLayout>
+        </form>
       </LayerLayout>
     </div>
   );
@@ -341,33 +343,35 @@ LeftSimpleUsage.args = {
 };
 
 const LayerLayoutTopExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(true);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="layer-container layer-simple-usage">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} {...args}>
-        <StackLayout>
-          <h2>Section title</h2>
-          <p>
-            Incididunt adipisicing deserunt nostrud ullamco consequat
-            consectetur magna id do irure labore fugiat. Eiusmod pariatur
-            officia elit ad. Ullamco adipisicing Lorem amet velit in do
-            reprehenderit nostrud eu aute voluptate quis quis.
-          </p>
-          <FlexLayout>
-            {Array.from({ length: 4 }, (_, index) => (
-              <FormFieldExample key={index} />
-            ))}
-          </FlexLayout>
-          <FlexItem align="end">
-            <Button onClick={hide}>Close layer</Button>
-          </FlexItem>
-        </StackLayout>
+      <LayerLayout ref={layerRef} {...args}>
+        <form method="dialog">
+          <StackLayout>
+            <h2>Section title</h2>
+            <p>
+              Incididunt adipisicing deserunt nostrud ullamco consequat
+              consectetur magna id do irure labore fugiat. Eiusmod pariatur
+              officia elit ad. Ullamco adipisicing Lorem amet velit in do
+              reprehenderit nostrud eu aute voluptate quis quis.
+            </p>
+            <FlexLayout>
+              {Array.from({ length: 4 }, (_, index) => (
+                <FormFieldExample key={index} />
+              ))}
+            </FlexLayout>
+            <FlexItem align="end">
+              <Button type="submit">Close layer</Button>
+            </FlexItem>
+          </StackLayout>
+        </form>
       </LayerLayout>
     </div>
   );
@@ -379,36 +383,38 @@ TopSimpleUsage.args = {
 };
 
 const LayerLayoutRightExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(true);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="layer-container layer-simple-usage">
       <Button onClick={show}>Open Layer</Button>
       <LayerLayout
-        isOpen={open}
+        ref={layerRef}
         aria-labelledby="layer_label"
         aria-describedby="layer_description"
         {...args}
       >
-        <StackLayout>
-          <h2 id="layer_label">Section title</h2>
-          <p id="layer_description">
-            Incididunt adipisicing deserunt nostrud ullamco consequat
-            consectetur magna id do irure labore fugiat. Eiusmod pariatur
-            officia elit ad. Ullamco adipisicing Lorem amet velit in do
-            reprehenderit nostrud eu aute voluptate quis quis.
-          </p>
-          {Array.from({ length: 7 }, (_, index) => (
-            <FormFieldExample key={index} />
-          ))}
-          <FlexItem align="end">
-            <Button onClick={hide}>Close layer</Button>
-          </FlexItem>
-        </StackLayout>
+        <form method="dialog">
+          <StackLayout>
+            <h2 id="layer_label">Section title</h2>
+            <p id="layer_description">
+              Incididunt adipisicing deserunt nostrud ullamco consequat
+              consectetur magna id do irure labore fugiat. Eiusmod pariatur
+              officia elit ad. Ullamco adipisicing Lorem amet velit in do
+              reprehenderit nostrud eu aute voluptate quis quis.
+            </p>
+            {Array.from({ length: 7 }, (_, index) => (
+              <FormFieldExample key={index} />
+            ))}
+            <FlexItem align="end">
+              <Button type="submit">Close layer</Button>
+            </FlexItem>
+          </StackLayout>
+        </form>
       </LayerLayout>
     </div>
   );
@@ -433,29 +439,31 @@ const ArticleExample = () => (
 );
 
 const LayerLayoutBottomExample: ComponentStory<typeof LayerLayout> = (args) => {
-  const [open, setOpen] = useState(true);
+  const layerRef = useRef<HTMLDialogElement>(null);
 
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
+  const show = () => {
+    layerRef.current?.showModal();
+  };
 
   return (
     <div className="layer-container layer-simple-usage">
       <Button onClick={show}>Open Layer</Button>
-      <LayerLayout isOpen={open} aria-labelledby="layer_label" {...args}>
-        <StackLayout>
-          <h2 id="layer_label" tabIndex={-1}>
-            Section title
-          </h2>
-          <FlowLayout>
-            {Array.from({ length: 4 }, (_, index) => (
-              <ArticleExample key={index} />
-            ))}
-          </FlowLayout>
-          <FlexItem align="end">
-            <Button onClick={hide}>Close layer</Button>
-          </FlexItem>
-        </StackLayout>
+      <LayerLayout ref={layerRef} aria-labelledby="layer_label" {...args}>
+        <form method="dialog">
+          <StackLayout>
+            <h2 id="layer_label" tabIndex={-1}>
+              Section title
+            </h2>
+            <FlowLayout>
+              {Array.from({ length: 4 }, (_, index) => (
+                <ArticleExample key={index} />
+              ))}
+            </FlowLayout>
+            <FlexItem align="end">
+              <Button type="submit">Close layer</Button>
+            </FlexItem>
+          </StackLayout>
+        </form>
       </LayerLayout>
     </div>
   );

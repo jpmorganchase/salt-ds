@@ -1,6 +1,6 @@
 import { LayerLayout, NavItem, NavItemProps } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
-import { CSSProperties, useState } from "react";
+import { useRef, useState } from "react";
 import { Card, H2, Link } from "@salt-ds/core";
 
 import "./nav-item.stories.css";
@@ -212,6 +212,9 @@ export const HorizontalExpandableGroup = () => {
   const currentSubNav = itemsWithSubNav.find(
     (item) => item.name === expanded
   )?.subNav;
+
+  const layerLayoutRef = useRef<HTMLDialogElement>(null);
+
   return (
     <div className="container">
       <nav className="center">
@@ -235,8 +238,10 @@ export const HorizontalExpandableGroup = () => {
                 onExpand={() => {
                   setExpanded((old) => {
                     if (old === name) {
+                      layerLayoutRef.current?.close();
                       return null;
                     }
+                    layerLayoutRef.current?.showModal();
                     return name;
                   });
                 }}
@@ -251,11 +256,7 @@ export const HorizontalExpandableGroup = () => {
         </ul>
       </nav>
       <div className="content">
-        <LayerLayout
-          position="top"
-          isOpen={currentSubNav !== undefined}
-          fullScreenAtBreakpoint={"sm"}
-        >
+        <LayerLayout position="top" ref={layerLayoutRef}>
           <ul className="menu">
             <H2>{expanded}</H2>
             {currentSubNav?.map((item) => {
