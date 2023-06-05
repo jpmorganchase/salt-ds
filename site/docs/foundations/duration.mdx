@@ -9,7 +9,14 @@ data:
 
 The time between the moment a user performs an action and the moment feedback is given by the system. Consistency in timing provides comfort and can increase trust in a system.
 
-There are four durations available to choose from; Instant, Perceptible, Delayed, and Cut-off.
+There are four durations available to choose from; Instant, Perceptible, Notable, and Cut-off.
+
+|Token| Duration (milliseconds) |
+|---|---|
+|`duration-instant`| 100 |
+|`duration-perceptible`| 300 |
+|`duration-notable`| 1000 |
+|`duration-cutoff`| 10000 |
 
 ## Instant
 
@@ -21,7 +28,7 @@ There are four durations available to choose from; Instant, Perceptible, Delayed
 - 300ms
 - Short but perceptible delay, user is aware but retains feeling of control – delay feels acceptable e.g. tooltip, overlay
 
-## Delayed
+## Notable
 
 - 1,000ms
 - User is aware the system is slow to respond, user will feel a loss of control – delay must be communicated to the user e.g. loading a data grid, retrieving search results
