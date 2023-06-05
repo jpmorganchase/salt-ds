@@ -11,9 +11,9 @@ import { useStore, SiteState } from "@jpmorganchase/mosaic-store";
 import { Footer } from "../../components/footer";
 import { AppHeader } from "../../components/app-header";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
+import { StatusPill } from "../../components/status-pill";
 import { LayoutColumns } from "../LayoutColumns/LayoutColumns";
 import { SaltProvider } from "@salt-ds/core";
-import { Pill } from "@salt-ds/lab";
 import { useMeta } from "@jpmorganchase/mosaic-store";
 import { LayoutProps } from "../types/index";
 import layoutStyles from "../index.module.css";
@@ -33,7 +33,7 @@ const PageHeadingWithPill: FC<PageHeadingWithPillProps> = ({
 }) => (
   <div className={styles.headingContainer}>
     <h1>{title}</h1>
-    {pageStatus && <Pill label={pageStatus} className={styles.pill} />}
+    {pageStatus && <StatusPill label={pageStatus} />}
   </div>
 );
 

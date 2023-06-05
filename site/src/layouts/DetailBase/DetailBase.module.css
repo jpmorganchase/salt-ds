@@ -156,12 +156,6 @@
   line-height: var(--salt-text-display2-lineHeight);
 }
 
-.headingContainer .pill {
-  text-transform: capitalize;
-  background-color: var(--salt-accent-background);
-  border-radius: 16px;
-}
-
 .docPaginator a[role="link"]:hover {
   background-color: var(--salt-color-teal-900);
 }
