@@ -1,3 +1,4 @@
+/* Default variables applied to the root element */
 .saltList {
   --list-background: var(--salt-container-primary-background);
   --list-borderStyle: var(--salt-container-borderStyle);
@@ -5,6 +6,7 @@
   --list-height: calc(var(--salt-size-stackable) * var(--list-displayedItemCount));
 }
 
+/* Style applied to the root element */
 .saltList {
   margin: 0;
   background: var(--list-background);
@@ -20,6 +22,7 @@
   box-sizing: content-box;
 }
 
+/* Style applied to the borderless variant */
 .saltList-borderless {
   --list-borderStyle: none;
 }
