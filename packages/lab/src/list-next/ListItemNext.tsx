@@ -1,13 +1,11 @@
 import React, { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
-import { makePrefixer, Text, Tooltip } from "@salt-ds/core";
+import { makePrefixer, Text } from "@salt-ds/core";
 import { Highlighter } from "./Highlighter";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import listItemNextCss from "./ListItemNext.css";
-
-import { useOverflowDetection } from "../utils";
 
 const withBaseName = makePrefixer("saltListItemNext");
 
@@ -55,11 +53,9 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       classNameProp
     );
 
-    const [overflowRef, isOverflowed] = useOverflowDetection<HTMLDivElement>();
-
     const content = label || children;
 
-    const renderListItem = () => (
+    return (
       <li
         ref={ref}
         className={className}
@@ -70,40 +66,17 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         id={id}
         onClick={onClick}
       >
-        {/*// if the user sends something that is not a string, they would have to handle disabled and overflow */}
-        {children && typeof children !== "string" ? (
-          children
-        ) : (
-          <Text
-            as="p"
-            className={withBaseName("textWrapper")}
-            disabled={disabled}
-            ref={overflowRef}
-          >
-            {itemTextHighlightPattern === null ? (
-              content
-            ) : (
-              <Highlighter
-                matchPattern={itemTextHighlightPattern}
-                text={label || (children as string)}
-              />
-            )}
-          </Text>
-        )}
+        <Text as="p" className={withBaseName("textWrapper")}>
+          {itemTextHighlightPattern === null ? (
+            content
+          ) : (
+            <Highlighter
+              matchPattern={itemTextHighlightPattern}
+              text={label || (children as string)}
+            />
+          )}
+        </Text>
       </li>
-    );
-
-    return isOverflowed ? (
-      <Tooltip
-        disabled={!isOverflowed}
-        open={focused} // TODO: this needs to be on hover, not on focus!
-        content={content}
-        hideIcon
-      >
-        {renderListItem()}
-      </Tooltip>
-    ) : (
-      renderListItem()
     );
   }
 );

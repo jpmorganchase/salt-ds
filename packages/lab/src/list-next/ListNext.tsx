@@ -22,11 +22,31 @@ const withBaseName = makePrefixer("saltList");
 const defaultEmptyMessage = "No data to display";
 
 export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
+  /**
+   * If true, all items in list will be disabled.
+   */
   disabled?: boolean;
+  /**
+   * Use to override the default empty message.
+   */
   emptyMessage?: string;
+  /**
+   * The component used to render a ListItem instead of the default. This must itself render a ListItem,
+   * must implement props that extend ListItemProps and must forward ListItem props to the ListItem.
+   */
   ListItem?: ReactElement;
+  /**
+   * If `true`, the component will have no border.
+   */
   borderless?: boolean;
+  /**
+   * If `true`, items in list will be deselectable.
+   */
   deselectable?: boolean;
+  /**
+   * The number of items displayed in the visible area.
+   * Note that this determines the max height of the list.
+   */
   displayedItemCount?: number;
 }
 

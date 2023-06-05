@@ -24,6 +24,7 @@
   pointer-events: none;
 }
 
+/* Style applied to presentation items (headers and empty message) */
 .saltListItemNext[role="presentation"] {
   cursor: default;
 }
@@ -47,9 +48,13 @@
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
 
+/* Style applied to disabled items */
 .saltListItemNext-disabled {
   --list-item-text-color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
+}
+.saltListItemNext-disabled .saltText {
+  color: var(--list-item-text-color);
 }
 
 /* disabled list item when selected */
