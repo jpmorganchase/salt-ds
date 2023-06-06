@@ -52,7 +52,10 @@
   .ag-ltr,
   .ag-rtl {
     .ag-row-focus .ag-cell-focus .ag-cell-wrapper.ag-row-group,
-    .ag-cell-focus .ag-drag-handle.ag-row-drag {
+    .ag-cell-focus .ag-drag-handle.ag-row-drag,
+    .ag-cell-focus
+      .ag-cell-wrapper
+      > :not(.ag-cell-value):not(.ag-group-value) {
       height: calc(
         min(
             var(--ag-internal-calculated-line-height),
