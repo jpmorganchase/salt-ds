@@ -1,0 +1,76 @@
+---
+title: Responsiveness
+layout: DetailTechnical
+sidebar:
+  label: Responsiveness
+data:
+  status: In progress
+---
+
+A responsive layout makes dynamic changes to the appearance of a product in response to a user's behavior and/or environment based on screen size, platform, orientation or zoom level. 
+
+Responsiveness provides a fluid and flexible layout that adapts to screen size and offers an optimized experience.
+
+## Types
+
+There are two types of layout behavior; Responsive and Adaptive. 
+
+### Responsive
+Responsive design changes the layout of elements on the screen (including hiding/showing some elements) based on the size of the screen, e.g. a design will reflow as you resize the browser window to ensure the application remains usable.
+
+### Adaptive
+In adaptive design, the nature of components used on a screen changes based on the device being used, e.g., a desktop browser window and a tablet browser, both set to the same size, would display different componentry to suit a keyboard/mouse vs. touch context.
+
+In other words, an adaptive UI adapts itself to the capabilities of the device on which it's displayed, while a responsive UI simply responds to changes in viewport size.
+
+## Breakpoints
+
+In responsive and adaptive design, a breakpoint is the point (width) at which a layout will adapt in order to provide the best possible user experience. The number of columns in a layout varies dependent on the breakpoint and [density](density) set. For each combination the margin and gutter size remains constant, whereas the width of each column will vary as a percentage of the overall width. 
+
+### High density
+
+| Breakpoint | Width (pixels) | Columns | Margin and gutter size (token) | 
+| --- | --- | --- | --- | 
+| Extra Small | 0 - 599 |2| `spacing-300` |
+| Small | 600 - 959 |4|`spacing-300` |
+| Medium | 960 - 1279 |6|`spacing-300` |
+| Large | 1280-1919 |8|`spacing-300` |
+| Extra Large | >1920 |12|`spacing-300` |
+
+### Medium density
+
+| Breakpoint | Width (pixels) | Columns | Margin and gutter size (token) | 
+| --- | --- | --- | --- | 
+| Extra Small | 0 - 599 |2|`spacing-300` |
+| Small | 600 - 959 |4|`spacing-300` |
+| Medium | 960 - 1279 |6|`spacing-300` |
+| Large | 1280-1919 |8|`spacing-300` |
+| Extra Large | >1920 |12|`spacing-300` |
+
+### Low density
+
+| Breakpoint | Width (pixels) | Columns | Margin and gutter size (token) | 
+| --- | --- | --- | --- | 
+| Extra Small | 0 - 599 |1|`spacing-300` |
+| Small | 600 - 959 |2|`spacing-300` |
+| Medium | 960 - 1279 |4|`spacing-300` |
+| Large | 1280-1919 |6|`spacing-300` |
+| Extra Large | >1920 |8|`spacing-300` |
+
+### Touch density
+
+| Breakpoint | Width (pixels) | Columns | Margin and gutter size (token) | 
+| --- | --- | --- | --- | 
+| Extra Small | 0 - 599 |1|`spacing-300` |
+| Small | 600 - 959 |2|`spacing-300` |
+| Medium | 960 - 1279 |4|`spacing-300` |
+| Large | 1280-1919 |6|`spacing-300` |
+| Extra Large | >1920 |8|`spacing-300` |
+
+
+
+<Callout title="Have some feedback?">
+
+The Salt Foundations are still in progress and we'd appreciate your thoughts and feedback. If you have any comments or questions please [contact us](../support-and-contributions/index).
+
+</Callout>
