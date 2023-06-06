@@ -7,7 +7,6 @@ import {
   Ref,
   RefObject,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -23,7 +22,10 @@ import { GetFilterRegex } from "../filterHelpers";
 import { getAnnouncement } from "./getAnnouncement";
 import { useComboBox } from "./useComboBox";
 import { isDesktop, Window, WindowProps } from "../../window";
-import { Input, InputProps } from "../../input";
+import {
+  InputLegacy as Input,
+  InputLegacyProps as InputProps,
+} from "../../input-legacy";
 
 export type BaseComboBoxProps<
   Item,

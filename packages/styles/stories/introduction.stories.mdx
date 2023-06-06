@@ -46,6 +46,21 @@ Internally, the hook uses a Map of Map objects to store if a CSS string has been
 
 Optionally, a `testId` can be passed to the hook, the injected style tag will contain a data attribute with the given id.
 
+As a result of this, we have disabled the use of style-inject using a patch for modular. The patch passes an option to rollup-postcss-plugin to disable style-inject.
+
+### Linting for CSS injection
+
+We have created a local eslint rule (must-inject-css) that checks if any component CSS being imported is assigned to a variable.
+This will help to make sure developers import CSS in such a way that can be injected by using the hook.
+
+This linting rule will only be run for component tsx files, all other CSS file imports will be ignored by this rule.
+
+### Storybook plugin
+
+Vite as of version 4 deprecated the use of default and named imports and instead requires you to append '?inline' to a CSS import to opt out of Vite's style injection
+To save time, we have created a Vite plugin that disables the inbuilt css injection. It iterates through all the imports in the component typescript files checks if the file imported is a .css file.
+If the extension matches, the plugin appends '?inline' to the CSS file name.
+
 ## Insertion Point
 
 Developers may want to control where the CSS is injected into the document, such as if a component library's styles are overriding an application's styles or if a developer wanted to inject styles into a shadow DOM.

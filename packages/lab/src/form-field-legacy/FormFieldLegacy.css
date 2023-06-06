@@ -44,7 +44,7 @@
   --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-hover);
 
-  --saltInput-cursor: var(--salt-editable-cursor-hover);
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-hover);
 }
 
 /* Class applied to the root element when focused */
@@ -56,7 +56,7 @@
   --formFieldLegacy-activationIndicator-size: var(--salt-editable-borderWidth-active);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-active);
 
-  --saltInput-cursor: var(--salt-editable-cursor-active);
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-active);
 }
 
 /* Class applied when helper text is provided */
@@ -96,7 +96,7 @@
 
   --saltControlLabel-color: var(--salt-text-primary-foreground-disabled);
 
-  --saltInput-cursor: var(--salt-editable-cursor-disabled);
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-disabled);
 }
 
 /* Class applied to the root element on hover if `disabled={true}` */
@@ -105,7 +105,7 @@
   --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
 
-  --saltInput-cursor: var(--salt-editable-cursor-disabled);
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-disabled);
 }
 
 /* Class applied to the root element on warning state */
@@ -208,7 +208,7 @@
 .saltFormFieldLegacy-readOnly {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-readonly);
 
-  --saltInput-cursor: var(--salt-editable-cursor-readonly);
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-readonly);
 }
 
 /* Class applied to the root element if `readOnly={true}"` on hover */
@@ -217,7 +217,7 @@
   --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-readonly);
 
-  --saltInput-cursor: var(--salt-editable-cursor-readonly);
+  --saltInputLegacy-cursor: var(--salt-editable-cursor-readonly);
 }
 
 /* Class applied on focus with `labelTop={true}` and no helper text provided */

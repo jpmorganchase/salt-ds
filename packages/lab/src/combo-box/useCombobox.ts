@@ -19,7 +19,7 @@ import {
   SelectionStrategy,
   SingleSelectionStrategy,
 } from "../common-hooks";
-import { InputProps } from "../input";
+import { InputLegacyProps as InputProps } from "../input-legacy";
 
 const NULL_REF = { current: null };
 const EnterOnly = ["Enter"];

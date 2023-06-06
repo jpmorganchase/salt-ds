@@ -161,7 +161,7 @@ export function SaltProvider({
       themeName === DEFAULT_THEME_NAME
         ? [DEFAULT_THEME_NAME]
         : [DEFAULT_THEME_NAME, themeName];
-    if (applyClassesTo === "root") {
+    if (applyClassesTo === "root" && targetWindow) {
       if (isRoot) {
         // add the styles we want to apply
         targetWindow.document.documentElement.classList.add(
@@ -176,7 +176,7 @@ export function SaltProvider({
       }
     }
     return () => {
-      if (applyClassesTo === "root") {
+      if (applyClassesTo === "root" && targetWindow) {
         // When unmounting/remounting, remove the applied styles from the root
         targetWindow.document.documentElement.classList.remove(
           ...themeNames,
@@ -185,7 +185,7 @@ export function SaltProvider({
         targetWindow.document.documentElement.dataset.mode = undefined;
       }
     };
-  }, [applyClassesTo, density, isRoot, mode, themeName]);
+  }, [applyClassesTo, density, isRoot, mode, themeName, targetWindow]);
 
   const saltProvider = (
     <DensityContext.Provider value={density}>

@@ -9,7 +9,7 @@ const maybeUseInsertionEffect: typeof React.useLayoutEffect =
 export interface UseComponentCssInjection {
   testId?: string;
   css: string;
-  window?: Window;
+  window?: Window | null;
 }
 
 type StyleElementMap = Map<
