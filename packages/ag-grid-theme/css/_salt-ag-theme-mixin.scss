@@ -21,7 +21,6 @@
   .ag-rtl {
     .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected),
     .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
-    .ag-has-focus .ag-full-width-row.ag-row-focus .ag-cell-wrapper.ag-row-group,
     .ag-cell-range-single-cell,
     .ag-cell-range-single-cell.ag-cell-range-handle {
       border: var(--agGrid-cursor-borderWidth) var(--agGrid-cursor-borderStyle)
@@ -37,6 +36,28 @@
             var(--ag-internal-calculated-line-height),
             var(--ag-internal-padded-row-height)
           ) - var(--agGrid-cursor-borderWidth)
+      );
+    }
+  }
+  // Because we are using a different border thickness on focus than default
+  // we have to adjust height on various elements either using the line-height or height
+  // properties.
+  .ag-ltr,
+  .ag-rtl {
+    .ag-cell-wrapper.ag-row-group {
+      align-items: center;
+    }
+  }
+
+  .ag-ltr,
+  .ag-rtl {
+    .ag-row-focus .ag-cell-focus .ag-cell-wrapper.ag-row-group,
+    .ag-cell-focus .ag-drag-handle.ag-row-drag {
+      height: calc(
+        min(
+            var(--ag-internal-calculated-line-height),
+            var(--ag-internal-padded-row-height)
+          ) - 2px
       );
     }
   }
