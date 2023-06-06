@@ -7,14 +7,23 @@ import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { isDesktop, Window as SaltWindow, WindowProps } from "../window";
 
-import "./ElectronWindow.css";
 import { useWindowParentContext, WindowParentContext } from "./desktop-utils";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import electronWindowCss from "./ElectronWindow.css";
 
 const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   { className, children, id = "dialog", open = true, style = {}, ...rest },
   forwardedRef
 ): JSX.Element | null {
   const { top, left, position, ...styleRest } = style;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-electron-window",
+    css: electronWindowCss,
+    window: targetWindow,
+  });
 
   const [mountNode, setMountNode] = useState<Element | null>(null);
   const [windowRef, setWindowRef] = useState<Window | null>(null);

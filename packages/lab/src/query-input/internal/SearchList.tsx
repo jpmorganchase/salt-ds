@@ -5,7 +5,10 @@ import { List, ListItem, ListItemGroup } from "../../list";
 import { SelectionChangeHandler } from "../../common-hooks";
 
 import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
-import "../QueryInput.css";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import queryInputCss from "../QueryInput.css";
 
 const withBaseName = makePrefixer("saltQueryInputSearchList");
 
@@ -33,6 +36,13 @@ export function SearchList(props: SearchListProps) {
     setHighlightedIndex,
     visibleCategories,
   } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-query-input",
+    css: queryInputCss,
+    window: targetWindow,
+  });
 
   const onChange: SelectionChangeHandler<QueryInputItem, "multiple"> =
     useCallback(

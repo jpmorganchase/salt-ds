@@ -3,7 +3,10 @@ import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { createHandleStyles, createSliderRailMarksStyle } from "./styles";
 import { isMarkAtMax } from "./utils";
-import "../Slider.css";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import sliderCss from "../Slider.css";
 
 const withBaseName = makePrefixer("saltSliderRailMarks");
 
@@ -22,6 +25,14 @@ export interface SliderRailMarksProps {
 
 export function SliderRailMarks(props: SliderRailMarksProps) {
   const { min, max, marks } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-slider",
+    css: sliderCss,
+    window: targetWindow,
+  });
+
   const style = useMemo(
     () => createSliderRailMarksStyle(min, max, marks),
     [min, max, marks]

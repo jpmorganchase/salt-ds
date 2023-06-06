@@ -6,10 +6,7 @@
   "modular": {
     "type": "package"
   },
-  "sideEffects": [
-    "**/*.css",
-    "**/*.css.js"
-  ],
+  "sideEffects": false,
   "scripts": {
     "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
     "clean": "rimraf ./src/components"
