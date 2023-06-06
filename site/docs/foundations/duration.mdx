@@ -9,9 +9,9 @@ data:
 
 The time between the moment a user performs an action and the moment feedback is given by the system. Consistency in timing provides comfort and can increase trust in a system.
 
-There are four durations available to choose from; Instant, Perceptible, Notable, and Cut-off.
-
 ## Duration scale
+
+There are four durations available to choose from; Instant, Perceptible, Notable, and Cut-off.
 
 | Token                  | Duration (milliseconds) |
 | ---------------------- | ----------------------- |
@@ -21,24 +21,16 @@ There are four durations available to choose from; Instant, Perceptible, Notable
 | `duration-cutoff`      | 10000                   |
 
 ### Instant
-
-- 100ms
-- Instant response to a user interaction e.g. hover, click, type, drag
+The immediate response by the system to a users interaction, such as hovering over a button, clicking on a radio button, typing into an editable field, or dragging an object.
 
 ### Perceptible
-
-- 300ms
-- Short but perceptible delay, user is aware but retains feeling of control – delay feels acceptable e.g. tooltip, overlay
+A short but detectable delay, between a users action and the systems response. The user should be aware of the gap but retain the feeling of control, in essence the delay should feel acceptable. Tooltips and overlays are examples of perceptible delays.
 
 ### Notable
-
-- 1,000ms
-- User is aware the system is slow to respond, user will feel a loss of control – delay must be communicated to the user e.g. loading a data grid, retrieving search results
+With a notable delay the user is aware the system is slow to respond. A feeling of loss of control may occur, which is why it's important the delay is clearly communicated. Notable delays may be required in order to load a data grid or retrieve search results.
 
 ### Cut-off
-
-- 10,000ms
-- Delay cut-off. 10 seconds is the average attention span limit, user is likely to mentally context switch if delayed beyond this point.
+10 seconds is the limit of the average attention span. Beyond this period of time users are likely to start mentally context-switching. 'Cut-off' is the point at which any attempt for a system to respond is finished and a status message is displayed. 
 
 <Callout title="Have some feedback?">
 
