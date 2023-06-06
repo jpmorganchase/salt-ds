@@ -7,7 +7,6 @@
   position: relative;
 }
 
-
 .pill {
   position: absolute;
   top: var(--example-container-padding);
@@ -63,5 +62,5 @@
 .content img {
   width: 100%;
   height: auto;
-  margin-bottom: calc(2 * var(--salt-size-unit)) ;
+  margin-bottom: calc(2 * var(--salt-size-unit));
 }
