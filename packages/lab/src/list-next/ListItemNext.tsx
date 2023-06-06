@@ -17,6 +17,7 @@ export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
   selected?: boolean;
   showCheckbox?: boolean;
   id?: string;
+  value: string;
   role?: string;
 }
 
@@ -32,6 +33,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       role = "option",
       selected,
       id,
+      value,
       onClick,
       ...props
     },
@@ -64,6 +66,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         aria-selected={selected || undefined}
         role={role}
         id={id}
+        value={value}
         onClick={onClick}
       >
         <Text as="p" className={withBaseName("textWrapper")}>

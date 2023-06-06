@@ -1,7 +1,7 @@
 import {
-  Children,
-  isValidElement,
-  MouseEvent,
+  Children, FocusEventHandler,
+  isValidElement, KeyboardEventHandler,
+  MouseEvent, MouseEventHandler,
   ReactNode,
   useEffect,
   useRef,
@@ -22,9 +22,11 @@ interface UseListProps {
   children: ReactNode;
   deselectable: boolean;
   displayedItemCount: number;
-  onFocus: (element: Element) => void;
-  onKeyDown: (element: Element) => void;
-  onBlur: () => void;
+  // ListNextControlProps
+  onBlur?: FocusEventHandler;
+  onFocus?: FocusEventHandler;
+  onKeyDown?: KeyboardEventHandler;
+  onMouseDown?: MouseEventHandler;
 }
 
 const getSelected = (children: ReactNode): number[] =>
@@ -46,6 +48,7 @@ export const useList = ({
   onFocus,
   onKeyDown,
   onBlur,
+  onMouseDown,
 }: UseListProps) => {
   const listRef = useRef<HTMLUListElement | null>(null);
   let list = listRef.current;
@@ -57,6 +60,7 @@ export const useList = ({
   );
   const [allOptions, setAllOptions] = useState<Element[]>([]);
   const [activeOptions, setActiveOptions] = useState<Element[]>([]);
+  const [mouseDown, setMouseDown] = useState<boolean>(false);
 
   const getListItemIndex = (item: Element): number => {
     const optionIndex = allOptions.indexOf(item);
@@ -159,8 +163,13 @@ export const useList = ({
     }
   });
 
+  const handleMouseDown = useEventCallback(() => {
+    setMouseDown(true);
+    onMouseDown()
+  });
+
   const handleFocus = useEventCallback(() => {
-    if (!activeDescendant) {
+    if (!activeDescendant && !mouseDown) {
       // Focus on first active option if no option was previously focused
       focusFirstItem();
     } else {
@@ -232,6 +241,20 @@ export const useList = ({
   }, []);
 
   useEffect(() => {
+    const prepare = (list: HTMLUListElement) => {
+      list.addEventListener("keydown", handleKeyDown);
+      list.addEventListener("focus", handleFocus);
+      list.addEventListener("blur", handleBlur);
+      list.addEventListener("mousedown", handleMouseDown);
+    };
+
+    const tearDown = (list: HTMLUListElement): void => {
+      list.removeEventListener("keydown", handleKeyDown);
+      list.removeEventListener("focus", handleFocus);
+      list.removeEventListener("blur", handleBlur);
+      list.removeEventListener("mousedown", handleMouseDown);
+    };
+
     if (list) {
       setAllOptions(
         Array.from(list.children).filter(
@@ -243,14 +266,10 @@ export const useList = ({
           .filter((child) => child.getAttribute("role") === "option")
           .filter((option) => option.getAttribute("aria-disabled") !== "true")
       );
-      list.addEventListener("keydown", handleKeyDown);
-      list.addEventListener("focus", handleFocus);
-      list.addEventListener("blur", handleBlur);
+      prepare(list);
       // remove listeners
       return () => {
-        list.removeEventListener("keydown", handleKeyDown);
-        list.removeEventListener("focus", handleFocus);
-        list.removeEventListener("blur", handleBlur);
+        tearDown(list);
       };
     }
   }, [list]);

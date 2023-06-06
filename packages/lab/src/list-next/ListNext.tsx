@@ -1,4 +1,4 @@
-import { makePrefixer, mergeProps, useForkRef } from "@salt-ds/core";
+import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import {
   Children,
   cloneElement,
@@ -8,6 +8,7 @@ import {
   isValidElement,
   KeyboardEventHandler,
   MouseEvent,
+  MouseEventHandler,
   ReactElement,
   useMemo,
 } from "react";
@@ -44,16 +45,21 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
    */
   deselectable?: boolean;
   /**
+   * Optional id prop
+   *
+   * Used as suffix of List id: `list-{id}`
+   */
+  id?: string;
+  /**
    * The number of items displayed in the visible area.
    * Note that this determines the max height of the list.
    */
   displayedItemCount?: number;
-}
-
-export interface ListNextControlProps {
-  onBlur: FocusEventHandler;
-  onFocus: FocusEventHandler;
-  onKeyDown: KeyboardEventHandler;
+  // ListNextControlProps
+  onBlur?: FocusEventHandler;
+  onFocus?: FocusEventHandler;
+  onKeyDown?: KeyboardEventHandler;
+  onMouseDown?: MouseEventHandler;
 }
 
 export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
@@ -62,15 +68,17 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       borderless,
       children,
       className,
-      disabled,
+      disabled: disabledListProp,
       displayedItemCount: displayedItemCountProp,
       deselectable = false,
       ListItem = DefaultListItem,
       emptyMessage,
+      id: idProp,
       onSelect,
       onFocus,
       onBlur,
       onKeyDown,
+      onMouseDown,
       style,
       ...rest
     },
@@ -85,6 +93,12 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
     const childrenCount = Children.count(children);
     const emptyList = childrenCount === 0;
+    const selectedDisabled =
+      Children.toArray(children).findIndex(
+        (child) => isValidElement(child) && child.props.disabled && child.props.selected
+      ) !== -1;
+    const disabled = disabledListProp || selectedDisabled;
+    const listId = useId(idProp); // TODO: check why useId needs to return undefined
 
     const displayedItemCount = useMemo((): number => {
       // if no children, display empty message
@@ -92,13 +106,11 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
       // displayedItemCount takes precedence over childrenCount
       if (displayedItemCountProp)
-        return displayedItemCountProp <= childrenCount
-          ? displayedItemCountProp
-          : childrenCount;
+        return Math.min(displayedItemCountProp, childrenCount);
 
       // if more than 4 children, display 4 tops
-      return childrenCount > 4 ? 4 : childrenCount;
-    }, [displayedItemCountProp, children]);
+      return Math.min(4, childrenCount);
+    }, [displayedItemCountProp, children, childrenCount, emptyList]);
 
     const {
       listRef,
@@ -113,12 +125,14 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onFocus,
       onKeyDown,
       onBlur,
+      onMouseDown,
     });
+
     const forkedRef = useForkRef(ref, listRef);
 
     function renderEmpty() {
       return (
-        <ListItemNext role="presentation">
+        <ListItemNext role="presentation" value="emptyMessage">
           {emptyMessage || defaultEmptyMessage}
         </ListItemNext>
       );
@@ -126,19 +140,19 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
     const renderContent = () => {
       return Children.map(children, (listItem, index) => {
+        if (!isValidElement(listItem)) return;
         const { disabled: propDisabled, ...restListItemProps } = listItem.props;
-        const childProps = {
+        const listItemProps = {
+          ...restListItemProps,
           disabled: propDisabled || disabled,
           onClick: (e: MouseEvent<HTMLUListElement>) => handleClick(e),
           focused: focusedIndex === index,
           selected: selectedIndexes.includes(index),
-          id: `list-item--${index}`,
-          ...restListItemProps,
+          id: `list-${listId}--list-item--${index}`,
         };
 
         return (
-          isValidElement(listItem) &&
-          cloneElement(listItem, { ...mergeProps(listItem.props, childProps) })
+          cloneElement(listItem, { ...listItemProps })
         );
       });
     };
@@ -156,7 +170,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         )}
         role="listbox"
         tabIndex={disabled ? undefined : 0}
-        aria-activedescendant={activeDescendant}
+        aria-activedescendant={disabled ? undefined : activeDescendant}
         style={{
           ...style,
           "--list-displayedItemCount": displayedItemCount,
