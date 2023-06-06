@@ -4,6 +4,8 @@ import {
   AppHeader,
   Badge,
   Logo,
+  LogoImage,
+  LogoText,
   LogoProps,
   Tab,
   Tabstrip,
@@ -75,9 +77,10 @@ export const Default: ComponentStory<typeof AppHeader> = () => {
           data-collapsible="instant"
           data-index={0}
           data-priority={1}
-          src={PlaceholderLogo as string}
-          appTitle="Salt"
-        />
+        >
+          <LogoImage src={PlaceholderLogo as string} />
+          <LogoText>Salt</LogoText>
+        </CollapsibleLogo>
         <Tabstrip
           data-index={1}
           data-priority={2}
