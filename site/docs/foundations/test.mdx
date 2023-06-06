@@ -7,18 +7,18 @@ sidebar:
 
 Advice callout containing text and then image:
 
-<AdviceCallout type="positive">
+<ExampleContainer type="positive">
   Use primary and secondary text colors and/or weight variants to create visual hierarchy.
   <Image
     src="/img/foundations/typography-heading-emphasized.svg"
     alt="Example showing heading emphasized with font weight"
   />
 
-</AdviceCallout>
+</ExampleContainer>
 
 Advice callout containing image and then text:
 
-<AdviceCallout type="positive">
+<ExampleContainer type="negative">
   <img
     src="https://picsum.photos/700/300"
     alt="Example showing heading emphasized with font weight"
@@ -26,11 +26,11 @@ Advice callout containing image and then text:
     height={300}
   />
   Use primary and secondary text colors and/or weight variants to create visual hierarchy.
-</AdviceCallout>
+</ExampleContainer>
 
 Advice callout containing text content only:
 
-<AdviceCallout type="negative">
+<ExampleContainer type="negative">
 
 Our newly built Accordion component displays a series of panes containing summary content.
 
@@ -38,29 +38,29 @@ Users can expand or collapse the panes to show or hide content. This allows them
 
 <small>Three relatively short sentences split into two paragraphs.</small>
 
-</AdviceCallout>
+</ExampleContainer>
 
 Advice callout with image only:
 
-<AdviceCallout type="positive">
+<ExampleContainer type="positive">
   <Image
     src="/img/foundations/typography-heading-emphasized.svg"
     alt="Example showing heading emphasized with font weight"
   />
 
-</AdviceCallout>
+</ExampleContainer>
 
 Two advice callouts in a `<GridLayout>`:
 
 <GridLayout columns={2} gap={2}>
-  <AdviceCallout type="positive">
+  <ExampleContainer type="positive">
     <Image
       src="/img/foundations/typography-heading-emphasized.svg"
       alt="Example showing heading emphasized with font weight"
     />
-  </AdviceCallout>
+  </ExampleContainer>
 
-  <AdviceCallout type="negative">
+  <ExampleContainer type="negative">
 
     Our newly built Accordion component displays a series of panes containing summary content.
 
@@ -68,22 +68,22 @@ Two advice callouts in a `<GridLayout>`:
 
     <small>Three relatively short sentences split into two paragraphs.</small>
 
-  </AdviceCallout>
+  </ExampleContainer>
 </GridLayout>
 
 Adjacent Advice Callouts...
 
 {" "}
 
-<AdviceCallout type="positive">
+<ExampleContainer type="positive">
 
 - A thing you should do
 - Another thing you should do
 - One more thing to do
 
-</AdviceCallout>
+</ExampleContainer>
 
-<AdviceCallout type="negative">
+<ExampleContainer type="negative">
 
 Some blurb about what not to do.
 
@@ -91,4 +91,4 @@ Some blurb about what not to do.
 - some
 - bullet points too
 
-</AdviceCallout>
+</ExampleContainer>

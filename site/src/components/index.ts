@@ -6,6 +6,7 @@ export * from "./app-header";
 export * from "./callout";
 export * from "./card";
 export * from "./components";
+export * from "./example-container";
 export * from "./advice-callout";
 export * from "./footer";
 export * from "./getting-started";
