@@ -11,6 +11,8 @@ The time between the moment a user performs an action and the moment feedback is
 
 There are four durations available to choose from; Instant, Perceptible, Notable, and Cut-off.
 
+## Duration scale
+
 |Token| Duration (milliseconds) |
 |---|---|
 |`duration-instant`| 100 |
@@ -18,22 +20,22 @@ There are four durations available to choose from; Instant, Perceptible, Notable
 |`duration-notable`| 1000 |
 |`duration-cutoff`| 10000 |
 
-## Instant
+### Instant
 
 - 100ms
 - Instant response to a user interaction e.g. hover, click, type, drag
 
-## Perceptible
+### Perceptible
 
 - 300ms
 - Short but perceptible delay, user is aware but retains feeling of control – delay feels acceptable e.g. tooltip, overlay
 
-## Notable
+### Notable
 
 - 1,000ms
 - User is aware the system is slow to respond, user will feel a loss of control – delay must be communicated to the user e.g. loading a data grid, retrieving search results
 
-## Cut-off
+### Cut-off
 
 - 10,000ms
 - Delay cut-off. 10 seconds is the average attention span limit, user is likely to mentally context switch if delayed beyond this point.
