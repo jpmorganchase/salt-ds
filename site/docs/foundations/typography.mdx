@@ -28,6 +28,7 @@ The design system uses the open-source, sans-serif typeface **Open Sans**.
 #### Display
 
 Display styles are primarily reserved for representing key metrics and mastheads.
+
 <Image
   src="/img/foundations/typography-style-display.svg"
   alt="Graphical representation of Display styles"
@@ -42,7 +43,7 @@ Headings provide varying levels of typographic hierarchy.
   alt="Graphical representation of Heading styles"
 />
 
-#### Body 
+#### Body
 
 Body is the default style for most components and text blocks.
 
@@ -58,7 +59,6 @@ Help text is used to provide additional information or instructions, such as acc
 
 The code text style is used to display code in a clear format.
 
-
 <Image
   src="/img/foundations/typography-style-body-label.svg"
   alt="Graphical representation of Body and Label styles"
@@ -72,10 +72,9 @@ Legibility and accessibility are key considerations within the design system. Wi
   src="/img/foundations/typography-colors.svg"
   alt="Example of type color options"
 />
-| Token  | Light mode  | Dark mode  | 
-| --- | --- | --- | 
-| `text-primary-foreground` | `color-gray-900` | `color-white` | 
-| `text-secondary-foreground` | `color-gray-200` | `color-gray-70` |
+| Token | Light mode | Dark mode | | --- | --- | --- | | `text-primary-foreground`
+| `color-gray-900` | `color-white` | | `text-secondary-foreground` | `color-gray-200`
+| `color-gray-70` |
 
 ### Primary foreground
 
@@ -107,47 +106,45 @@ Secondary text used for labels to ensure data has greater prominence, without th
 
 </DesignCards>
 
-<AdviceCallout type="negative">
+<ExampleContainer type="negative">
 <Image
   src="/img/foundations/typography-color-heading.svg"
   alt="Example showing heading colored incorrectly"
 />
 
 Don’t use colors, other than the primary and secondary options, to emphasise headings, labels, alerts, or blocks of text.
-  
-</AdviceCallout>
 
-<AdviceCallout type="positive">
-<Image
-  src="/img/foundations/typography-heading-emphasized.svg"
-  alt="Example showing heading emphasized with font weight"
-/>
-Use primary and secondary text colors and/or weight variants to create visual hierarchy.
-  
-</AdviceCallout>
+</ExampleContainer>
+
+<ExampleContainer type="positive">
+  <Image
+    src="/img/foundations/typography-heading-emphasized.svg"
+    alt="Example showing heading emphasized with font weight"
+  />
+  Use primary and secondary text colors and/or weight variants to create visual hierarchy.
+</ExampleContainer>
 
 All text within the design system meets WCAG 2.0 level AA requirements in order to ensure legibility.
 
 WCAG 2.0 requires that the contrast ratio between text and the background it sits on is at least 4.5:1 for normal sized text and 3:1 for larger text.
 
-<AdviceCallout type="negative">
-<Image
-  src="/img/foundations/typography-color-meaning.svg"
-  alt="Example showing color used to infer meaning"
-/>
-Don’t use color alone to infer meaning. Color-blind and low-vision users may not be able to perceive the difference, and screen readers do not announce colors to non-sighted readers.
-  
-</AdviceCallout>
+<ExampleContainer type="negative">
+  <Image
+    src="/img/foundations/typography-color-meaning.svg"
+    alt="Example showing color used to infer meaning"
+  />
+  Don’t use color alone to infer meaning. Color-blind and low-vision users may not
+  be able to perceive the difference, and screen readers do not announce colors to
+  non-sighted readers.
+</ExampleContainer>
 
-<AdviceCallout type="positive">
-<Image
-  src="/img/foundations/typography-iconography.svg"
-  alt="Example showing color and iconography used to infer meaning"
-/>
-Use color and iconography in partnership with text to help convey additional meaning.
-  
-</AdviceCallout>
-
+<ExampleContainer type="positive">
+  <Image
+    src="/img/foundations/typography-iconography.svg"
+    alt="Example showing color and iconography used to infer meaning"
+  />
+  Use color and iconography in partnership with text to help convey additional meaning.
+</ExampleContainer>
 
 ## Line height
 
@@ -204,24 +201,21 @@ Text aligned to the left is the default configuration for left-to-right (LTR) la
 
 Right align text for right-to-left (RTL) languages, such as Arabic or Hebrew. It should also be used for Numeric values (including dates, times, and currency figures) when the intention is to carry out comparisons within a data set, for instance within a data grid column. If a numeric value is displayed in isolation, and therefore not for comparison, it should be left aligned to fit in with the content around it.
 
+<ExampleContainer type="positive">
+  <Image
+    src="/img/foundations/typography-rightalign-annotations.svg"
+    alt="Example of right aligned text"
+  />
+  Right-align short amounts of text, such as a supporting detail, side note or annotation.
+</ExampleContainer>
 
-<AdviceCallout type="positive">
-<Image
-  src="/img/foundations/typography-rightalign-annotations.svg"
-  alt="Example of right aligned text"
-/>
-Right-align short amounts of text, such as a supporting detail, side note or annotation.
-  
-</AdviceCallout>
-
-<AdviceCallout type="positive">
-<Image
-  src="/img/foundations/typography-rightalign-numbers.svg"
-  alt="Example of right aligned text"
-/>
-Right align numerical values and corresponding headers within data grid columns.
-  
-</AdviceCallout>
+<ExampleContainer type="positive">
+  <Image
+    src="/img/foundations/typography-rightalign-numbers.svg"
+    alt="Example of right aligned text"
+  />
+  Right align numerical values and corresponding headers within data grid columns.
+</ExampleContainer>
 
 ### Center-aligned
 
@@ -272,16 +266,16 @@ All caps are reserved for button labels to give them prominence and to different
   src="/img/foundations/typography-allcaps.svg"
   alt="Example of buttons with allcaps"
 />
-<AdviceCallout type="negative">
+<ExampleContainer type="negative">
 
 When referring to a button in written content, never use all caps.
-  
-</AdviceCallout>
-<AdviceCallout type="positive">
+
+</ExampleContainer>
+<ExampleContainer type="positive">
 
 When referring to a button in written content, capitalize the button label and apply emphasis using font weight.
-  
-</AdviceCallout>
+
+</ExampleContainer>
 
 ## Italics
 
@@ -292,29 +286,29 @@ Italics are primarily used for help text to differentiate it from other text, su
   alt="Example of italicized text"
 />
 
-<AdviceCallout type="positive">
+<ExampleContainer type="positive">
 
 Italics should be used sparingly and only to highlight a specific word or short phrase.
+
+</ExampleContainer>
   
-</AdviceCallout>
-  
-<AdviceCallout type="positive">
+<ExampleContainer type="positive">
 
 For publication names, the introduction of new terms, etc., use quotation marks instead.
-  
-</AdviceCallout>
 
-<AdviceCallout type="negative">
+</ExampleContainer>
+
+<ExampleContainer type="negative">
 
 Don't italicize full sentences or blocks of text except when including help text with an input or selectable element, such as a radio button group.
-  
-</AdviceCallout>
 
-<AdviceCallout type="negative">
+</ExampleContainer>
 
-Don’t use italics and font weight together to emphasize a word—use font weight alone to emphasize a word, use italics simply to differentiate it from the rest of the text.  
-  
-</AdviceCallout>
+<ExampleContainer type="negative">
+
+Don’t use italics and font weight together to emphasize a word—use font weight alone to emphasize a word, use italics simply to differentiate it from the rest of the text.
+
+</ExampleContainer>
 
 <Callout title="Have some feedback?">
 
