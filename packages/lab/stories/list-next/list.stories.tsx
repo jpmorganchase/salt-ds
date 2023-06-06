@@ -1,6 +1,6 @@
 import { ComponentMeta, Story } from "@storybook/react";
-import { ListNext, ListNextProps } from "../../src";
-import { ListItemNext } from "../../src/list-next/ListItemNext";
+import { ListNext, ListItemNext, ListNextProps } from "../../src";
+import { FlexItem, FlexLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/List Next",
@@ -32,9 +32,8 @@ const getListItems = ({
       <ListItemNext
         key={index}
         disabled={disabledItems.includes(index)}
-        // selected={
-        //   selectedItems ? selectedItems.includes(index) : undefined
-        // }
+        selected={selectedItems?.includes(index)}
+        value={item}
       >
         {item}
       </ListItemNext>
@@ -54,7 +53,6 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
 
 Default.args = {
   style: { width: "200px" },
-  displayedItemCount: 4,
 };
 
 export const Borderless = Default.bind({});
@@ -62,9 +60,9 @@ Borderless.args = {
   borderless: true,
 };
 
-export const Truncation = Default.bind({});
-Truncation.args = {
-  style: { width: "80px" },
+export const ConfigurableHeight = Default.bind({});
+ConfigurableHeight.args = {
+  displayedItemCount: 6,
 };
 
 export const Deselectable = Default.bind({});
@@ -75,20 +73,44 @@ Deselectable.args = {
 export const Disabled = Default.bind({});
 Disabled.args = {
   disabled: true,
-  displayedItemCount: 3,
 };
 
 export const DisabledSelected = Default.bind({});
 DisabledSelected.args = {
-  displayedItemCount: 6,
   children: getListItems({
-    disabledItems: [1, 5],
-    selectedItems: [5],
+    disabledItems: [1],
+    selectedItems: [1],
   }),
 };
 
-export const Empty = Default.bind({});
-Empty.args = {
-  children: [],
-  emptyMessage: "Empty list example with long empty message",
+export const Empty: Story<ListNextProps> = ({ children, ...rest }) => {
+  return (
+    <FlexLayout>
+      <FlexItem>
+        <p>Default message</p>
+        <ListNext aria-label="Empty List default example" />
+      </FlexItem>
+      <FlexItem>
+        <p>Custom message</p>
+        <ListNext {...rest} aria-label="Empty List custom message example" />
+      </FlexItem>
+    </FlexLayout>
+  );
 };
+Empty.args = {
+  emptyMessage: "List is empty",
+};
+
+//
+// const CustomItemComponent = ({item}) => {
+//   return <div>{item}
+//   </div>
+// }
+// const customItems = SimpleListExample.map((item, index) => {
+//   return <CustomItemComponent item={item}/>;
+// });
+//
+// export const CustomListItem = Default.bind({});
+// CustomListItem.args = {
+//   children: customItems,
+// };
