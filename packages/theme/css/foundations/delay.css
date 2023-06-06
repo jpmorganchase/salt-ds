@@ -2,8 +2,8 @@
 * **Deprecated:** Use duration instead
 */
 .salt-theme {
-  --salt-delay-instant: 100;
-  --salt-delay-perceptible: 300;
-  --salt-delay-notable: 1000;
-  --salt-delay-cutoff: 10000;
+  --salt-delay-instant: 100ms;
+  --salt-delay-perceptible: 300ms;
+  --salt-delay-notable: 1000ms;
+  --salt-delay-cutoff: 10000ms;
 }
