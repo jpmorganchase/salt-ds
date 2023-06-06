@@ -24,9 +24,20 @@
     .ag-has-focus .ag-full-width-row.ag-row-focus .ag-cell-wrapper.ag-row-group,
     .ag-cell-range-single-cell,
     .ag-cell-range-single-cell.ag-cell-range-handle {
-      border: 2px dotted var(--agGrid-color-focus) !important;
-      padding-left: ag-param(cell-horizontal-padding) - 2px;
-      padding-right: ag-param(cell-horizontal-padding) - 2px;
+      border: var(--agGrid-cursor-borderWidth) var(--agGrid-cursor-borderStyle)
+        var(--agGrid-cursor-borderColor) !important;
+      padding-left: calc(
+        ag-param(cell-horizontal-padding) - var(--agGrid-cursor-borderWidth)
+      );
+      padding-right: calc(
+        ag-param(cell-horizontal-padding) - var(--agGrid-cursor-borderWidth)
+      );
+      line-height: calc(
+        min(
+            var(--ag-internal-calculated-line-height),
+            var(--ag-internal-padded-row-height)
+          ) - var(--agGrid-cursor-borderWidth)
+      );
     }
   }
 

@@ -536,6 +536,14 @@ $ag-theme-salt-params-touch-dark: map-merge(
     --saltGrid-cursor-borderColor,
     var(--salt-focused-outlineColor)
   );
+  --agGrid-cursor-borderWidth: var(
+    --saltGrid-cursor-borderWidth,
+    var(--salt-focused-outlineWidth)
+  );
+  --agGrid-cursor-borderStyle: var(
+    --saltGrid-cursor-borderStyle,
+    var(--salt-focused-outlineStyle)
+  );
 }
 
 // Import is here so the custom icons are injected after the default ag-grid icons.
