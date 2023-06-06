@@ -32,7 +32,7 @@ const getListItems = ({
       <ListItemNext
         key={index}
         disabled={disabledItems.includes(index)}
-        selected={selectedItems ? selectedItems.includes(index) : undefined}
+        selected={selectedItems?.includes(index)}
         value={item}
       >
         {item}
