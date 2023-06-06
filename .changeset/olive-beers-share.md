@@ -1,6 +1,6 @@
 ---
-"@salt-ds/styles": patch
-"@salt-ds/window": patch
+"@salt-ds/styles": minor
+"@salt-ds/window": minor
 ---
 
 Added @salt-ds/styles and @salt-ds/window packages
