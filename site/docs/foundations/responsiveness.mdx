@@ -25,15 +25,50 @@ In other words, an adaptive UI adapts itself to the capabilities of the device o
 
 ## Breakpoints
 
-In responsive and adaptive design, a breakpoint is the point (width) at which a layout will adapt in order to provide the best possible user experience.
+In responsive and adaptive design, a breakpoint is the point (width) at which a layout will adapt in order to provide the best possible user experience. The number of columns in a layout varies dependent on the breakpoint and density set. For each combination the margin and gutter size remains constant, whereas the width of each column will vary as a percentage of the overall width. 
 
-| Breakpoint | Width (pixels) | Columns | Margin and gutter size | 
+### High density
+
+| Breakpoint | Width (pixels) | Columns | Margin and gutter size (token) | 
 | --- | --- | --- | --- | 
-| Extra Small | 0 - 599 |||
-| Small | 600 - 959 |||
-| Medium | 960 - 1279 |||
-| Large | 1280-1919 |||
-| Extra Large | >1920 |||
+| Extra Small | 0 - 599 |2| `spacing-300` |
+| Small | 600 - 959 |4|`spacing-300` |
+| Medium | 960 - 1279 |6|`spacing-300` |
+| Large | 1280-1919 |8|`spacing-300` |
+| Extra Large | >1920 |12|`spacing-300` |
+
+### Medium density
+
+| Breakpoint | Width (pixels) | Columns | Margin and gutter size (token) | 
+| --- | --- | --- | --- | 
+| Extra Small | 0 - 599 |2|`spacing-300` |
+| Small | 600 - 959 |4|`spacing-300` |
+| Medium | 960 - 1279 |6|`spacing-300` |
+| Large | 1280-1919 |8|`spacing-300` |
+| Extra Large | >1920 |12|`spacing-300` |
+
+### Low density
+
+| Breakpoint | Width (pixels) | Columns | Margin and gutter size (token) | 
+| --- | --- | --- | --- | 
+| Extra Small | 0 - 599 |1|`spacing-300` |
+| Small | 600 - 959 |2|`spacing-300` |
+| Medium | 960 - 1279 |4|`spacing-300` |
+| Large | 1280-1919 |6|`spacing-300` |
+| Extra Large | >1920 |8|`spacing-300` |
+
+### Touch density
+
+| Breakpoint | Width (pixels) | Columns | Margin and gutter size (token) | 
+| --- | --- | --- | --- | 
+| Extra Small | 0 - 599 |1|`spacing-300` |
+| Small | 600 - 959 |2|`spacing-300` |
+| Medium | 960 - 1279 |4|`spacing-300` |
+| Large | 1280-1919 |6|`spacing-300` |
+| Extra Large | >1920 |8|`spacing-300` |
+
+Further guidance on the [Density foundation](density).
+
 
 <Callout title="Have some feedback?">
 
