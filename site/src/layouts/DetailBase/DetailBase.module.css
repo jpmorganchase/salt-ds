@@ -142,12 +142,12 @@
   align-items: center;
   gap: var(--salt-size-unit);
   /*
-    Mosaic's still using Salt 1.1, so --salt-size-container-spacing is not available yet.
+    Mosaic's still using Salt 1.1, so --salt-spacing-100 etc is not available yet.
 
     TODO: Replace line below with the commented-out one underneath once we upgrade Mosaic
   */
   margin: calc(var(--salt-size-unit) * 8) calc(3 * var(--salt-size-unit)) calc(var(--salt-size-unit) * 2) calc(3 * var(--salt-size-unit));
-  /* margin: calc(var(--salt-size-unit) * 8) var(--salt-size-container-spacing) calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing); */
+  /* margin: var(--salt-spacing-800) var(--salt-spacing-300) var(--salt-spacing-200) var(--salt-spacing-300); */
 }
 
 .headingContainer h1 {
