@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Card (default) design changed to include border to enhance visual accessibility
+The default Card design has been changed to include a border to enhance visual accessibility.
