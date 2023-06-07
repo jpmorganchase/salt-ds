@@ -129,7 +129,7 @@ export const componentDetails: ComponentDetails[] = [
     name: "Accordion",
     description:
       "Displays a series of panes containing summary content, which can then be expanded or collapsed to allow the user to show or hide content.",
-    devStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
@@ -176,8 +176,11 @@ export const componentDetails: ComponentDetails[] = [
     name: "Banner",
     description:
       "Notifies the user of an error, a warning, a successfully-completed task or an information update. It spans the page or container width to give quick, non-disruptive feedback.",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_PROGRESS,
+    availableInCoreSince: "1.8.0-rc.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-banner--page",
   },
   {
     name: "Border Layout",
@@ -369,9 +372,13 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Form Field",
-    description: "",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    description:
+      "Form Field is a wrapper for UI controls that are typically found in a form (for example, Input, Combobox or Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements.",
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_PROGRESS,
+    availableInCoreSince: "1.8.0-rc.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-form-field--page",
   },
   {
     name: "Formatted Input",
@@ -404,8 +411,11 @@ export const componentDetails: ComponentDetails[] = [
     name: "Input",
     description:
       "Allows the user to enter arbitrary text and numeric values into an editable field, with no specific format defined.",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.IN_PROGRESS,
+    availableInCoreSince: "1.8.0-rc.0",
+    storybookUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-input--page",
   },
   {
     name: "Layer Layout",
@@ -435,8 +445,8 @@ export const componentDetails: ComponentDetails[] = [
     name: "Logo",
     description:
       "Makes it easy to include a brand-compliant logo for a J.P. Morgan or Chase in your application.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Menu Button",
@@ -451,6 +461,11 @@ export const componentDetails: ComponentDetails[] = [
       "Displays an important number value prominently. Indicators, icons or labels can be added to help provide context to the presented value.",
     devStatus: ComponentStatus.IN_BACKLOG,
     designStatus: ComponentStatus.IN_BACKLOG,
+  },
+  {
+    name: "Nav Item",
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Overlay",
@@ -685,8 +700,8 @@ export const componentDetails: ComponentDetails[] = [
     name: "Toggle Button",
     description:
       "Allows the user to switch between two possible states, or a related, grouped set of options.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Tokenized Input",

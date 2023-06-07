@@ -88,8 +88,8 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
 
   const {
     a11yProps: {
+      "aria-describedby": formFieldDescribedBy,
       "aria-labelledby": formFieldLabelledBy,
-      ...restFormFieldA11yProps
     } = {},
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
@@ -100,7 +100,6 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     ariaActiveDescendant,
     ariaExpanded,
     ariaOwns,
-    ...restFormFieldA11yProps,
   };
 
   const isDisabled = disabled || formFieldDisabled;
@@ -114,6 +113,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
 
   const {
+    "aria-describedby": inputDescribedBy,
     "aria-labelledby": inputLabelledBy,
     onBlur,
     onChange,
@@ -167,6 +167,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
       {...other}
     >
       <input
+        aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
         aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
         className={clsx(withBaseName("input"), inputProps?.className)}
         disabled={isDisabled}
