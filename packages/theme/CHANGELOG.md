@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.5.1
+
+### Patch Changes
+
+- 813daa28: Fixed the duration foundation token values having invalid values
+
 ## 1.5.0
 
 ### Minor Changes
