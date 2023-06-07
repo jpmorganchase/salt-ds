@@ -1,5 +1,5 @@
-import { Logo } from "@salt-ds/lab";
-import { LogoImage, LogoSeparator, LogoText } from "packages/lab/src/logo";
+import { Text } from "@salt-ds/core";
+import { Logo, LogoImage, LogoSeparator } from "@salt-ds/lab";
 
 describe("GIVEN a logo", () => {
   const appTitle = "Test App Title";
@@ -9,7 +9,7 @@ describe("GIVEN a logo", () => {
     cy.mount(
       <Logo>
         <LogoImage src={src} />
-        <LogoText>{appTitle}</LogoText>
+        <Text>{appTitle}</Text>
       </Logo>
     );
     cy.get("img").should("exist");
@@ -20,7 +20,7 @@ describe("GIVEN a logo", () => {
       <Logo>
         <LogoImage src={src} />
         <LogoSeparator />
-        <LogoText>{appTitle}</LogoText>
+        <Text>{appTitle}</Text>
       </Logo>
     );
     cy.get(".saltLogoSeparator").should("exist");
@@ -30,7 +30,7 @@ describe("GIVEN a logo", () => {
     cy.mount(
       <Logo>
         <LogoImage src={src} />
-        <LogoText>{appTitle}</LogoText>
+        <Text>{appTitle}</Text>
       </Logo>
     );
     cy.findByText(appTitle).should("exist");
@@ -39,9 +39,9 @@ describe("GIVEN a logo", () => {
   it("rendering text instead of image", () => {
     cy.mount(
       <Logo>
-        <LogoText>{src}</LogoText>
+        <Text>{src}</Text>
         <LogoSeparator />
-        <LogoText>{appTitle}</LogoText>
+        <Text>{appTitle}</Text>
       </Logo>
     );
     cy.findByText(src).should("exist");

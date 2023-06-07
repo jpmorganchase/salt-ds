@@ -5,14 +5,13 @@ import {
   Badge,
   Logo,
   LogoImage,
-  LogoText,
   LogoProps,
   Tab,
   Tabstrip,
   TabstripProps,
   Tooltray /*, Toolbar */,
 } from "@salt-ds/lab";
-import { Button } from "@salt-ds/core";
+import { Button, Text } from "@salt-ds/core";
 import {
   FilterIcon,
   MessageIcon,
@@ -79,7 +78,7 @@ export const Default: ComponentStory<typeof AppHeader> = () => {
           data-priority={1}
         >
           <LogoImage src={PlaceholderLogo as string} />
-          <LogoText>Salt</LogoText>
+          <Text>Salt</Text>
         </CollapsibleLogo>
         <Tabstrip
           data-index={1}

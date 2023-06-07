@@ -25,7 +25,3 @@
   justify-content: center;
   height: var(--logo-height);
 }
-
-.saltLogo img {
-  max-height: 100%;
-}
