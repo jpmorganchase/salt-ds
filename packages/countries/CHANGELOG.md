@@ -1,5 +1,11 @@
 # @salt-ds/countries
 
+## 1.1.1
+
+### Patch Changes
+
+- cc1f2d46: Bump countries version to fix package publishing
+
 ## 1.1.0
 
 ### Minor Changes
