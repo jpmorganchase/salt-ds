@@ -3,7 +3,9 @@ import { clsx } from "clsx";
 import { CSSProperties } from "react";
 import { getSliderAriaLabel } from "./utils";
 
-import "../Slider.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import sliderCss from "../Slider.css";
 
 const withBaseName = makePrefixer("saltSliderHandle");
 
@@ -19,6 +21,13 @@ export interface SliderHandleProps {
 
 export function SliderHandle(props: SliderHandleProps): JSX.Element {
   const { min, max, value, disabled, valueLength, index, style } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-slider",
+    css: sliderCss,
+    window: targetWindow,
+  });
 
   return (
     <Tooltip content={value} placement="top">

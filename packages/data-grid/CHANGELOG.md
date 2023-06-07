@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.3
+
+### Minor Changes
+
+- af22b756: DropdownCellEditor accepts reandonly array
+
 ## 1.0.4-alpha.2
 
 ### Patch Changes
