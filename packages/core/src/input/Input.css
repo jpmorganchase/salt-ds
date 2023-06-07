@@ -4,7 +4,7 @@
   --input-borderStyle: var(--salt-editable-borderStyle);
   --input-outlineColor: var(--salt-focused-outlineColor);
   --input-borderWidth: var(--salt-size-border);
-  --input-paddingLeft: var(--salt-size-unit);
+  --input-paddingLeft: var(--salt-spacing-100);
 
   align-items: center;
   background: var(--saltInput-background, var(--input-background));
@@ -17,7 +17,7 @@
   min-height: var(--saltInput-minHeight, var(--salt-size-base));
   min-width: var(--saltInput-minWidth, 4em);
   padding-left: var(--saltInput-paddingLeft, var(--input-paddingLeft));
-  padding-right: var(--saltInput-paddingRight, var(--salt-size-unit));
+  padding-right: var(--saltInput-paddingRight, var(--salt-spacing-100));
   position: relative;
   width: 100%;
 }
@@ -189,13 +189,13 @@
 
 /* TODO: Firefox fix */
 .saltInput:has(.saltInput-startAdornmentContainer):has(.saltAdornmentButton) {
-  --saltInput-paddingLeft: calc(0.25 * var(--salt-size-unit));
+  --saltInput-paddingLeft: var(--salt-spacing-25);
 }
 .saltInput-endAdornmentContainer:has(.saltAdornmentButton) .saltAdornmentButton,
 .saltInput-startAdornmentContainer:has(.saltAdornmentButton) .saltAdornmentButton {
-  --saltButton-height: calc(var(--salt-size-base) - 0.5 * var(--salt-size-unit));
-  --saltButton-width: calc(var(--salt-size-base) - 0.5 * var(--salt-size-unit));
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-50));
+  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-50));
 }
 .saltInput:has(.saltInput-endAdornmentContainer):has(.saltAdornmentButton) {
-  --saltInput-paddingRight: calc(0.25 * var(--salt-size-unit));
+  --saltInput-paddingRight: var(--salt-spacing-25);
 }
