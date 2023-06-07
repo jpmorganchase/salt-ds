@@ -1,4 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Banner, BannerContent } from "@salt-ds/core";
 import { FormField, Input, StaticInputAdornment } from "@salt-ds/lab";
 import { CalendarIcon, CallIcon } from "@salt-ds/icons";
 import {
@@ -18,8 +19,10 @@ import { withFlexGap } from "docs/decorators/withFlexGap";
 # Input Legacy
 
 <Banner status="warning">
-  This component has been deprecated. The new
-  [Input](?path=/docs/documentation-lab-input-next--page) is a current WIP.
+  <BannerContent>
+    This component has been deprecated. The new
+    [Input](?path=/docs/documentation-core-input--page) is a current WIP.
+  </BannerContent>
 </Banner>
 
 The Input component provides an editable field in which users can enter arbitrary text and numeric values—with no specific format defined.

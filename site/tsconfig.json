@@ -5,5 +5,5 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "globals.d.ts"]
 }

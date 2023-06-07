@@ -17,7 +17,6 @@ export {
 export * from "./accordion";
 export * from "./app-header";
 export * from "./badge";
-export * from "./banner";
 export * from "./breadcrumbs";
 export * from "./button-bar";
 export * from "./calendar";
@@ -53,6 +52,7 @@ export * from "./list";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
+export * from "./nav-item";
 export * from "./overlay";
 export * from "./pagination";
 export * from "./parent-child-item";

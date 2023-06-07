@@ -1,22 +1,20 @@
 import { useState } from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import {
+  Banner,
+  BannerActions,
+  BannerContent,
+  BannerProps,
   Button,
   Link,
   StackLayout,
   Text,
   ValidationStatus,
 } from "@salt-ds/core";
-import {
-  Banner,
-  BannerActions,
-  BannerContent,
-  BannerProps,
-} from "@salt-ds/lab";
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/Banner",
+  title: "Core/Banner",
   component: Banner,
 } as ComponentMeta<typeof Banner>;
 

@@ -1,5 +1,11 @@
 # @salt-ds/ag-grid-theme
 
+## 1.1.5
+
+### Patch Changes
+
+- 123daf60: Fix inconsistent uitk ag-grid theme menu padding across densities
+
 ## 1.1.4
 
 ### Patch Changes

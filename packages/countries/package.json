@@ -1,15 +1,12 @@
 {
   "name": "@salt-ds/countries",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "license": "Apache-2.0",
   "main": "./src/index.ts",
   "modular": {
     "type": "package"
   },
-  "sideEffects": [
-    "**/*.css",
-    "**/*.css.js"
-  ],
+  "sideEffects": false,
   "scripts": {
     "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
     "clean": "rimraf ./src/components"
