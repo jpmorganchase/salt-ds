@@ -60,7 +60,7 @@
         min(
             var(--ag-internal-calculated-line-height),
             var(--ag-internal-padded-row-height)
-          ) - 2px
+          ) - var(--agGrid-cursor-borderWidth)
       );
     }
   }
