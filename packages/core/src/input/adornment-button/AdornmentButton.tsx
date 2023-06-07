@@ -1,5 +1,5 @@
 import { ForwardedRef, forwardRef } from "react";
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { Button, ButtonProps, makePrefixer, useFormFieldProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
@@ -20,10 +20,14 @@ export const AdornmentButton = forwardRef(function AdornmentButton(
     window: targetWindow,
   });
 
+  const { disabled: formFieldDisabled } = useFormFieldProps();
+  
+  const isDisabled = disabled || formFieldDisabled;
+
   return (
     <Button
       className={withBaseName()}
-      disabled={disabled}
+      disabled={isDisabled}
       variant={variant}
       {...rest}
       ref={ref}
