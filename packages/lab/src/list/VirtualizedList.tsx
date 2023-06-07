@@ -15,7 +15,9 @@ import { ListProps } from "./listTypes";
 import { useList } from "./useList";
 import { Row, useVirtualization } from "./useVirtualization";
 
-import "./List.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import listCss from "./List.css";
 
 const defaultEmptyMessage = "No data to display";
 
@@ -69,6 +71,13 @@ export const VirtualizedList = forwardRef(function List<
   }: ListProps<Item, Selection>,
   forwardedRef?: ForwardedRef<HTMLDivElement>
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-list",
+    css: listCss,
+    window: targetWindow,
+  });
+
   const id = useIdMemo(idProp);
   const rootRef = useRef<HTMLDivElement>(null);
   const rowHeightProxyRef = useRef<HTMLDivElement | null>(null);

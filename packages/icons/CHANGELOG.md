@@ -1,5 +1,16 @@
 # @salt-ds/icons
 
+## 1.4.0
+
+### Minor Changes
+
+- f166e777: Added:
+
+  - CollapseAll
+  - ExpandAll
+
+- d78ff537: Refactored all components to use new style injection mechanism provided by `@salt-ds/styles`
+
 ## 1.3.1
 
 ### Patch Changes
