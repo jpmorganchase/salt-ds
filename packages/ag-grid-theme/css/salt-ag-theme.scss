@@ -532,16 +532,16 @@ $ag-theme-salt-params-touch-dark: map-merge(
     --saltAgGrid-editableCell-cornerTag-size,
     var(--agGrid-editableCell-cornerTag-size-default)
   );
-  --agGrid-cursor-borderColor: var(
-    --saltGrid-cursor-borderColor,
+  --agGrid-focused-borderColor: var(
+    --saltGrid-focused-borderColor,
     var(--salt-focused-outlineColor)
   );
-  --agGrid-cursor-borderWidth: var(
-    --saltGrid-cursor-borderWidth,
+  --agGrid-focused-borderWidth: var(
+    --saltGrid-focused-borderWidth,
     var(--salt-focused-outlineWidth)
   );
-  --agGrid-cursor-borderStyle: var(
-    --saltGrid-cursor-borderStyle,
+  --agGrid-focused-borderStyle: var(
+    --saltGrid-focused-borderStyle,
     var(--salt-focused-outlineStyle)
   );
 }
