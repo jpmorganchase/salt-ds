@@ -185,6 +185,7 @@ const Homepage = (): JSX.Element => {
                 url={url}
                 footerText={footerText}
                 keylineColor={keylineColor}
+                className={styles.card}
               />
             );
           })}

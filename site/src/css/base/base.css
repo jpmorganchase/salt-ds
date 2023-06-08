@@ -1,8 +1,11 @@
 :root {
   --max-container-width: 1920px;
   --max-content-width: min(var(--max-container-width), 120ch);
-  --card-background: #10212b;
   --navbar-height: 44px;
+
+  /* "Special" colors used mainly on homepage */
+  --salt-site-dark-accent: #10212b;
+  --salt-site-dark-accent-secondary: #0e1b23;
 }
 
 :root {
