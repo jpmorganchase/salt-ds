@@ -188,14 +188,9 @@
 }
 
 /* TODO: Firefox fix */
-.saltInput:has(.saltInput-startAdornmentContainer):has(.saltAdornmentButton) {
+.saltInput:has(.saltInput-startAdornmentContainer):has(.saltAdornmentButton:first-child) {
   --saltInput-paddingLeft: var(--salt-spacing-25);
 }
-.saltInput-endAdornmentContainer:has(.saltAdornmentButton) .saltAdornmentButton,
-.saltInput-startAdornmentContainer:has(.saltAdornmentButton) .saltAdornmentButton {
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-50));
-  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-50));
-}
-.saltInput:has(.saltInput-endAdornmentContainer):has(.saltAdornmentButton) {
+.saltInput:has(.saltInput-endAdornmentContainer):has(.saltAdornmentButton:last-child) {
   --saltInput-paddingRight: var(--salt-spacing-25);
 }

@@ -266,17 +266,15 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const WithInputWithAdornments: ComponentStory<typeof FormField> = (props) => {
+export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
+  props
+) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField {...props}>
         <FormLabel>Form Field label</FormLabel>
         <Input
-          startAdornment={
-            <Text>
-              $
-            </Text>
-          }
+          startAdornment={<Text>$</Text>}
           endAdornment={
             <AdornmentButton>
               <NoteIcon />
