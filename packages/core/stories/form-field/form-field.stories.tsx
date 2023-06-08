@@ -9,6 +9,7 @@ import {
   FormField,
   Input,
   Tooltip,
+  AdornmentButton,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -160,7 +161,20 @@ export const Readonly: ComponentStory<typeof FormField> = (props) => {
   return (
     <FormField style={{ width: "366px" }} readOnly {...props}>
       <FormLabel>Readonly Form Field</FormLabel>
-      <Input defaultValue="Primary Input value" />
+      <Input
+        variant="secondary"
+        endAdornment={
+          <>
+            <AdornmentButton variant="secondary">
+              hi
+            </AdornmentButton>
+            <AdornmentButton variant="cta">
+              hi
+            </AdornmentButton>
+          </>
+        }
+        defaultValue={"Value"}
+      />
       <FormHelperText>This Form Field is readonly</FormHelperText>
     </FormField>
   );
