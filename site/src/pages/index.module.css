@@ -90,6 +90,11 @@
   padding: calc(var(--salt-size-unit) * 5) calc(var(--salt-size-unit) * 4);
 }
 
+.card {
+  --card-background: #10212b;
+  --card-icon-background: #0e1b23;
+}
+
 @media screen and (max-width: 1280px) {
   .heroTitle {
     --heading-line-height: var(--salt-text-h1-lineHeight);

@@ -1,18 +1,9 @@
 .card,
 .inlineCard {
-  --ifm-link-hover-color: none;
-  --ifm-link-decoration: none;
-  --ifm-link-hover-decoration: none;
-  --card-color: var(--salt-color-white);
-  --card-icon-background: #0e1b23;
-  --saltIcon-color: var(--salt-color-gray-900);
-}
-
-.card.lightTheme,
-.inlineCard.lightTheme {
-  --card-background: var(--salt-color-white);
-  --card-color: var(--salt-color-gray-900);
-  --card-icon-background: var(--salt-color-gray-10);
+  --card-background: var(--salt-container-primary-background);
+  --card-color: var(--salt-text-primary-foreground);
+  --card-icon-background: var(--salt-container-secondary-background);
+  --saltIcon-color: var(---salt-text-primary-foreground);
 }
 
 .cardTitle h2 {

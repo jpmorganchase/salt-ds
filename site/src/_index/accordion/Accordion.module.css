@@ -14,7 +14,7 @@
 }
 
 .accordionWrapper {
-  background-color: var(--card-background);
+  background-color: #10212b;
   width: min(55vw, var(--max-container-width));
   padding: calc(var(--salt-size-unit) * 10);
   grid-area: 2 / 1 / 3 / 3;
