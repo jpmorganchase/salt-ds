@@ -240,14 +240,13 @@ describe("GIVEN a FormField", () => {
       });
 
       it("THEN should disable the button when disabled", () => {
-        const clickSpy = cy.stub().as("clickSpy");
         cy.mount(
           <FormField disabled>
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
               startAdornment={
-                <AdornmentButton onClick={clickSpy}>Test</AdornmentButton>
+                <AdornmentButton>Test</AdornmentButton>
               }
               data-testid="test-id-3"
             />
@@ -258,14 +257,13 @@ describe("GIVEN a FormField", () => {
       });
 
       it("THEN should disable the button when readonly", () => {
-        const clickSpy = cy.stub().as("clickSpy");
         cy.mount(
           <FormField readOnly>
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
               startAdornment={
-                <AdornmentButton onClick={clickSpy}>Test</AdornmentButton>
+                <AdornmentButton>Test</AdornmentButton>
               }
               data-testid="test-id-3"
             />

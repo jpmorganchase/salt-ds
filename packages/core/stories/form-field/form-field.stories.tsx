@@ -304,6 +304,25 @@ export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
         />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
+      <FormField disabled {...props}>
+        <FormLabel>Form Field label (disabled)</FormLabel>
+        <Input
+          startAdornment={
+            <AdornmentButton>
+              <InfoIcon />
+            </AdornmentButton>
+          }
+          endAdornment={
+            <>
+              <Text>%</Text>
+              <AdornmentButton variant="cta">
+                <NoteIcon />
+              </AdornmentButton>
+            </>
+          }
+          defaultValue={"Value"}
+        />
+      </FormField>
     </FlowLayout>
   );
 };
