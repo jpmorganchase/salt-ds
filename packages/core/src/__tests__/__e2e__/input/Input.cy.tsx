@@ -1,5 +1,10 @@
 import { ChangeEvent, useState } from "react";
-import { Input, FormField, FormFieldLabel } from "@salt-ds/core";
+import {
+  Input,
+  FormField,
+  FormFieldLabel,
+  AdornmentButton,
+} from "@salt-ds/core";
 
 describe("GIVEN an Input", () => {
   it("SHOULD have no a11y violations on load", () => {
@@ -59,6 +64,62 @@ describe("GIVEN an Input", () => {
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
           target: { value: "new value" },
         });
+      });
+    });
+  });
+
+  describe("WHEN an adornment is given", () => {
+    it("THEN should cy.mount with the adornment", () => {
+      cy.mount(<Input startAdornment={<>%</>} defaultValue={"Value"} />);
+      cy.findByText("%").should("be.visible");
+    });
+
+    describe("AND adornment is AdornmentButton", () => {
+      it("THEN should cy.mount with the adornment", () => {
+        cy.mount(
+          <Input
+            startAdornment={<AdornmentButton>Test</AdornmentButton>}
+            defaultValue={"Value"}
+          />
+        );
+        cy.findByRole("button").should("be.visible");
+        cy.findByRole("button").should("have.class", "saltAdornmentButton");
+      });
+
+      it("THEN should have the correct tab order on startAdornment", () => {
+        cy.mount(
+          <FormField>
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input
+              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              defaultValue="Value"
+              data-testid="test-id-3"
+            />
+          </FormField>
+        );
+
+        cy.realPress("Tab");
+        cy.findByRole("button").should("be.focused");
+        cy.realPress("Tab");
+        cy.findByRole("textbox").should("be.focused");
+      });
+
+      it("THEN should have the correct tab order on endAdornment", () => {
+        cy.mount(
+          <FormField>
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input
+              defaultValue="Value"
+              endAdornment={<AdornmentButton>Test</AdornmentButton>}
+              data-testid="test-id-3"
+            />
+          </FormField>
+        );
+
+        cy.realPress("Tab");
+        cy.findByRole("textbox").should("be.focused");
+        cy.realPress("Tab");
+        cy.findByRole("button").should("be.focused");
       });
     });
   });
