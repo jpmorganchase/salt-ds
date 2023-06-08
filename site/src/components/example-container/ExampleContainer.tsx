@@ -1,7 +1,7 @@
 import { ElementType, FC, ReactNode } from "react";
 import clsx from "clsx";
 import { CloseIcon, SuccessTickIcon, IconProps } from "@salt-ds/icons";
-import styles from "./ExampleConainer.module.css";
+import styles from "./ExampleContainer.module.css";
 
 export interface ExampleContainerProps {
   children: ReactNode;
