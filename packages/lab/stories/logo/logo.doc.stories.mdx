@@ -1,0 +1,86 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Text } from "@salt-ds/core";
+import { Logo } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Lab/Logo"
+  component={Logo}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Logo
+
+Logos are image/s, text/s or a combination of the two that depict the name and purpose of a business.
+
+Logo is essentially a wrapping component for LogoImage, LogoSeparator and any [Text](?path=/docs/documentation-core-text--page) component.
+
+## Examples
+
+### Logo as an Image
+
+<Canvas>
+  <Story id="lab-logo--default" />
+</Canvas>
+
+### Logo as an Image and Text
+
+<Canvas>
+  <Story id="lab-logo--image-and-text" />
+</Canvas>
+
+### Logo as an Image and Text with Separator
+
+<Canvas>
+  <Story id="lab-logo--image-and-text-with-separator" />
+</Canvas>
+
+### Logo Wrapped with Link
+
+<Canvas>
+  <Story id="lab-logo--link-logo" />
+</Canvas>
+
+### LogoImage Wrapped with Link
+
+<Canvas>
+  <Story id="lab-logo--link-on-image" />
+</Canvas>
+
+### Two Texts
+
+<Canvas>
+  <Story id="lab-logo--text-instead-image" />
+</Canvas>
+
+## Configuring Logo
+
+```
+import { Logo, LogoImage, LogoSeparator } from '@salt-ds/lab';
+```
+
+### Props
+
+<ArgsTable of={Logo} />
+
+### CSS Class
+
+<CSSClassTable of={Logo} />
+
+### Characteristics Used
+
+<CharacteristicUsage of={Logo} />
+
+## Accessibility
+
+Banner is accessible by assistive technologies like screen readers, and provides full WAI - ARIA support.
+
+Any focusable elements included in the Banner content will need to be checked and tested accordingly.
+
+<HelpAndSupport />
