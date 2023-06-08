@@ -87,35 +87,35 @@ describe("GIVEN an Input", () => {
       });
 
       it("THEN should have the correct tab order on startAdornment", () => {
-        cy.mount( 
+        cy.mount(
           <FormField>
             <FormFieldLabel>Label</FormFieldLabel>
-            <Input 
-              startAdornment={<AdornmentButton>Test</AdornmentButton>} 
-              defaultValue="Value"  
-              data-testid="test-id-3" 
+            <Input
+              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              defaultValue="Value"
+              data-testid="test-id-3"
             />
           </FormField>
         );
-        
+
         cy.realPress("Tab");
         cy.findByRole("button").should("be.focused");
         cy.realPress("Tab");
         cy.findByRole("textbox").should("be.focused");
       });
-  
+
       it("THEN should have the correct tab order on endAdornment", () => {
-        cy.mount( 
+        cy.mount(
           <FormField>
             <FormFieldLabel>Label</FormFieldLabel>
-            <Input 
-              defaultValue="Value" 
-              endAdornment={<AdornmentButton>Test</AdornmentButton>} 
-              data-testid="test-id-3" 
+            <Input
+              defaultValue="Value"
+              endAdornment={<AdornmentButton>Test</AdornmentButton>}
+              data-testid="test-id-3"
             />
           </FormField>
         );
-  
+
         cy.realPress("Tab");
         cy.findByRole("textbox").should("be.focused");
         cy.realPress("Tab");
