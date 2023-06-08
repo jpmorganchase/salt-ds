@@ -208,11 +208,6 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
           {endAdornment}
         </div>
       )}
-      {endAdornment && (
-        <div className={withBaseName("endAdornmentContainer")}>
-          {endAdornment}
-        </div>
-      )}
       <div className={withBaseName("activationIndicator")} />
     </div>
   );
