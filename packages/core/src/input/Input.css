@@ -187,10 +187,19 @@
   column-gap: var(--salt-spacing-75);
 }
 
-/* TODO: Firefox fix */
+/* TODO: Replace below with this cleaner code once Firefox supports :has selector
+
+.saltInput:has(.saltInput-startAdornmentContainer):has(.saltAdornmentButton:first-child), 
 .saltInput:has(.saltInput-startAdornmentContainer):has(.saltAdornmentButton:first-child) {
   --saltInput-paddingLeft: var(--salt-spacing-25);
 }
 .saltInput:has(.saltInput-endAdornmentContainer):has(.saltAdornmentButton:last-child) {
   --saltInput-paddingRight: var(--salt-spacing-25);
+} */
+
+.saltInput-startAdornmentContainer .saltAdornmentButton.saltButton:first-child {
+  margin-left: calc(var(--salt-spacing-75) * -1);
+}
+.saltInput-endAdornmentContainer .saltAdornmentButton.saltButton:last-child {
+  margin-right: calc(var(--salt-spacing-75) * -1);
 }
