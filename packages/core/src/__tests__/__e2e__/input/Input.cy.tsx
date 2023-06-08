@@ -1,5 +1,10 @@
 import { ChangeEvent, useState } from "react";
-import { Input, FormField, FormFieldLabel } from "@salt-ds/core";
+import {
+  Input,
+  FormField,
+  FormFieldLabel,
+  AdornmentButton,
+} from "@salt-ds/core";
 
 describe("GIVEN an Input", () => {
   it("SHOULD have no a11y violations on load", () => {
@@ -59,6 +64,26 @@ describe("GIVEN an Input", () => {
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
           target: { value: "new value" },
         });
+      });
+    });
+  });
+
+  describe("WHEN an adornment is given", () => {
+    it("THEN should cy.mount with the adornment", () => {
+      cy.mount(<Input startAdornment={<>%</>} defaultValue={"Value"} />);
+      cy.findByText("%").should("be.visible");
+    });
+
+    describe("AND adornment is AdornmentButton", () => {
+      it("THEN should cy.mount with the adornment", () => {
+        cy.mount(
+          <Input
+            startAdornment={<AdornmentButton>Test</AdornmentButton>}
+            defaultValue={"Value"}
+          />
+        );
+        cy.findByRole("button").should("be.visible");
+        cy.findByRole("button").should("have.class", ".saltAdornmentButton");
       });
     });
   });
