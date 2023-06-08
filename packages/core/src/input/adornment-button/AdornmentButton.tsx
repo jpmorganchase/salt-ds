@@ -22,9 +22,9 @@ export const AdornmentButton = forwardRef(function AdornmentButton(
     window: targetWindow,
   });
 
-  const { disabled: formFieldDisabled } = useFormFieldProps();
+  const { disabled: formFieldDisabled, readOnly: formFieldReadOnly } = useFormFieldProps();
 
-  const isDisabled = disabled || formFieldDisabled;
+  const isDisabled = disabled || formFieldDisabled || formFieldReadOnly;
 
   return (
     <Button

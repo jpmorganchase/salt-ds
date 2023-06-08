@@ -141,7 +141,7 @@ export const Validation: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const StaticAdornments: ComponentStory<typeof Input> = (args) => {
+export const WithStaticAdornments: ComponentStory<typeof Input> = (args) => {
   return (
     <FlowLayout style={{ width: "266px" }}>
       <Input
@@ -181,7 +181,7 @@ export const StaticAdornments: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const ButtonAdornment: ComponentStory<typeof Input> = (args) => {
+export const WithAdornmentButton: ComponentStory<typeof Input> = (args) => {
   return (
     <FlowLayout style={{ width: "266px" }}>
       <Input
