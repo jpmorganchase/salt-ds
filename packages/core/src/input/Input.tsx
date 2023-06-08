@@ -23,7 +23,7 @@ export interface InputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
       ComponentPropsWithoutRef<"input">,
-      "disabled" | "value" | "defaultValue"
+      "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
    * The marker to use in an empty read only Input.
@@ -76,6 +76,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     id,
     inputProps = {},
     inputRef,
+    placeholder,
     readOnly: readOnlyProp,
     role,
     startAdornment,
@@ -194,6 +195,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         onBlur={handleBlur}
         onChange={handleChange}
         onFocus={!isDisabled ? handleFocus : undefined}
+        placeholder={placeholder}
         value={value}
         {...restA11yProps}
         {...restInputProps}
