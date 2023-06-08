@@ -1,8 +1,8 @@
 import {
-  Children, FocusEventHandler,
-  isValidElement, KeyboardEventHandler,
-  MouseEvent, MouseEventHandler,
-  ReactNode,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  MouseEvent,
+  MouseEventHandler,
   useEffect,
   useRef,
   useState,
@@ -16,47 +16,38 @@ import {
   PageUp,
   Space,
 } from "../common-hooks";
-import { useEventCallback } from "../utils";
+import {useEventCallback} from "../utils";
 
 interface UseListProps {
-  children: ReactNode;
   deselectable: boolean;
   displayedItemCount: number;
   // ListNextControlProps
-  onBlur?: FocusEventHandler;
-  onFocus?: FocusEventHandler;
-  onKeyDown?: KeyboardEventHandler;
-  onMouseDown?: MouseEventHandler;
+  onBlur?: FocusEventHandler<HTMLUListElement>;
+  onFocus?: FocusEventHandler<HTMLUListElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLUListElement>;
+  onMouseDown?: MouseEventHandler<HTMLUListElement>;
+  onSelect: () => void;
 }
 
-const getSelected = (children: ReactNode): number[] =>
-  Children.toArray(children).reduce(
-    (selectedItems: number[], child: ReactNode, index) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (isValidElement(child) && child.props?.selected) {
-        selectedItems.push(index);
-      }
-      return selectedItems;
-    },
-    []
-  );
-
 export const useList = ({
-  children,
-  deselectable,
-  displayedItemCount,
-  onFocus,
-  onKeyDown,
-  onBlur,
-  onMouseDown,
-}: UseListProps) => {
+                          deselectable,
+                          displayedItemCount,
+                          onFocus,
+                          onHoverChange,
+                          onKeyDown,
+                          onBlur,
+                          onMouseDown,
+                          onSelect,
+                          selectedIndexesProp,
+                          hoveredIndexProp
+                        }: UseListProps) => {
   const listRef = useRef<HTMLUListElement | null>(null);
   let list = listRef.current;
 
   const [activeDescendant, setActiveDescendant] = useState<string>("");
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(hoveredIndexProp || null);
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>(
-    getSelected(children)
+    selectedIndexesProp || []
   );
   const [allOptions, setAllOptions] = useState<Element[]>([]);
   const [activeOptions, setActiveOptions] = useState<Element[]>([]);
@@ -72,9 +63,10 @@ export const useList = ({
     setActiveDescendant(element.id);
     setFocusedIndex(getListItemIndex(element));
     updateScroll(element);
+    onSelect([getListItemIndex(element)]);
 
     if (onFocus) {
-      onFocus(element);
+      onFocus();
     }
   };
 
@@ -99,11 +91,12 @@ export const useList = ({
     const itemIsSelected = selectedIndexes.includes(elementIndex);
     const newSelection = deselectable && itemIsSelected ? [] : [elementIndex];
     setSelectedIndexes(newSelection);
+    onSelect(newSelection);
   };
 
   const justFocusItem = (element: Element) => {
     if (onFocus) {
-      onFocus(element);
+      onFocus();
     }
     setActiveDescendant(element.id);
     setFocusedIndex(getListItemIndex(element));
@@ -134,7 +127,7 @@ export const useList = ({
 
   const updateScroll = (currentTarget: Element) => {
     if (!list || !currentTarget) return;
-    const { offsetTop, offsetHeight } = currentTarget;
+    const {offsetTop, offsetHeight} = currentTarget;
     const listHeight = list?.clientHeight;
     const listScrollTop = list?.scrollTop;
     if (offsetTop < listScrollTop) {
@@ -145,7 +138,8 @@ export const useList = ({
   };
 
   // Handlers
-  const handleClick = ({ currentTarget }: MouseEvent<HTMLUListElement>) => {
+  const handleClick = (evt: MouseEvent<HTMLUListElement>) => {
+    const {currentTarget} = evt;
     const nonClickableTarget = activeOptions.indexOf(currentTarget) === -1;
     if (nonClickableTarget) {
       return;
@@ -156,19 +150,21 @@ export const useList = ({
     updateScroll(currentTarget);
   };
 
-  const handleBlur = useEventCallback(() => {
+  const handleBlur = useEventCallback((evt) => {
     setFocusedIndex(null);
     if (onBlur) {
-      onBlur();
+      onBlur(evt);
     }
   });
 
-  const handleMouseDown = useEventCallback(() => {
+  const handleMouseDown = useEventCallback((evt: MouseEvent) => {
     setMouseDown(true);
-    onMouseDown()
+    if (onMouseDown) {
+      onMouseDown(evt);
+    }
   });
 
-  const handleFocus = useEventCallback(() => {
+  const handleFocus = useEventCallback((evt: FocusEvent) => {
     if (!activeDescendant && !mouseDown) {
       // Focus on first active option if no option was previously focused
       focusFirstItem();
@@ -181,7 +177,7 @@ export const useList = ({
   });
 
   const handleKeyDown = useEventCallback((evt: KeyboardEvent) => {
-    const { key } = evt;
+    const {key} = evt;
     const currentItem =
       document.getElementById(activeDescendant) || activeOptions[0];
     let nextItem = currentItem;
@@ -233,6 +229,28 @@ export const useList = ({
     }
     return;
   });
+
+  // Effects
+  useEffect(() => {
+    if (selectedIndexesProp) {
+      setSelectedIndexes(selectedIndexesProp);
+    }
+  }, [selectedIndexesProp]);
+
+  // Effects
+  useEffect(() => {
+    setFocusedIndex(hoveredIndexProp);
+
+  }, [hoveredIndexProp]);
+
+  // Effects
+  useEffect(() => {
+    if (onHoverChange) {
+
+      onHoverChange(focusedIndex);
+    }
+
+  }, [focusedIndex]);
 
   // Effects
   useEffect(() => {

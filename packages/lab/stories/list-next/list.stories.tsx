@@ -1,6 +1,8 @@
 import { ComponentMeta, Story } from "@storybook/react";
 import { ListNext, ListItemNext, ListNextProps } from "../../src";
-import { FlexItem, FlexLayout } from "@salt-ds/core";
+import { Button, FlexItem, FlexLayout } from "@salt-ds/core";
+import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
+import {useEffect, useState} from "react";
 
 export default {
   title: "Lab/List Next",
@@ -20,19 +22,12 @@ const SimpleListExample = [
   "Georgia",
 ];
 
-const getListItems = ({
-  disabledItems = [],
-  selectedItems = [],
-}: {
-  disabledItems?: number[];
-  selectedItems?: number[];
-}) =>
+const getListItems = ({disabledItems}) =>
   SimpleListExample.map((item, index) => {
     return (
       <ListItemNext
         key={index}
         disabled={disabledItems.includes(index)}
-        selected={selectedItems?.includes(index)}
         value={item}
       >
         {item}
@@ -79,8 +74,8 @@ export const DisabledSelected = Default.bind({});
 DisabledSelected.args = {
   children: getListItems({
     disabledItems: [1],
-    selectedItems: [1],
   }),
+  selectedIndexes: [1]
 };
 
 export const Empty: Story<ListNextProps> = ({ children, ...rest }) => {
@@ -101,16 +96,79 @@ Empty.args = {
   emptyMessage: "List is empty",
 };
 
-//
-// const CustomItemComponent = ({item}) => {
-//   return <div>{item}
-//   </div>
-// }
-// const customItems = SimpleListExample.map((item, index) => {
-//   return <CustomItemComponent item={item}/>;
-// });
-//
-// export const CustomListItem = Default.bind({});
-// CustomListItem.args = {
-//   children: customItems,
-// };
+export const Controlled: Story<ListNextProps> = (props) => {
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+    // console.log('highlighed index chabged ti ', highlightedIndex)
+  }, [highlightedIndex])
+
+  useEffect(() => {
+    // console.log('selectedItems index chabged ti ', selectedItems)
+  }, [selectedItems])
+
+  const handleArrowDown = () => {
+    setHighlightedIndex((prevHighlightedIndex) =>
+      Math.min(SimpleListExample.length - 1, prevHighlightedIndex + 1)
+    );
+  };
+
+  const handleArrowUp = () => {
+    setHighlightedIndex((prevHighlightedIndex) =>
+      Math.max(0, prevHighlightedIndex - 1)
+    );
+  };
+
+  const handleSelect = () => {
+    console.log("setting selected", highlightedIndex);
+    setSelectedItems([highlightedIndex]);
+    setHighlightedIndex(highlightedIndex)
+
+  };
+
+  const listItems = () => {
+    return getListItems({
+      disabledItems: [],
+    });
+  };
+
+  const onHoverChange = (item) => {
+    console.log("on hover change from inside hook", item);
+    // setSelectedItems(item);
+  };
+
+  return (
+    <FlexLayout direction="column" gap={0}>
+      <FlexLayout gap={0}>
+        <Button
+          disabled={highlightedIndex === SimpleListExample.length - 1}
+          onClick={handleArrowDown}
+          aria-label="Move down"
+        >
+          <ChevronDownIcon aria-hidden />
+        </Button>
+        <Button
+          disabled={highlightedIndex <= 0}
+          onClick={handleArrowUp}
+          aria-label="Move up"
+        >
+          <ChevronUpIcon aria-hidden />
+        </Button>
+        <Button onClick={handleSelect}>Select</Button>
+      </FlexLayout>
+      <ListNext
+        {...props}
+        onSelect={(item) => setSelectedItems(item)}
+        onHoverChange={onHoverChange}
+        selectedIndexes={selectedItems}
+        hoveredIndex={highlightedIndex}
+        aria-label="Declarative List example"
+      >
+        {listItems()}
+      </ListNext>
+    </FlexLayout>
+  );
+};
+
+Controlled.args = {};

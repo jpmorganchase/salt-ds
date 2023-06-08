@@ -13,7 +13,11 @@ import {
   useMemo,
 } from "react";
 import { clsx } from "clsx";
-import { ListItemNext, ListItemNext as DefaultListItem } from "./ListItemNext";
+import {
+  ListItemNext,
+  ListItemNext as DefaultListItem,
+  ListItemNextProps,
+} from "./ListItemNext";
 import { useList } from "./useList";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -56,10 +60,14 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
    */
   displayedItemCount?: number;
   // ListNextControlProps
-  onBlur?: FocusEventHandler;
-  onFocus?: FocusEventHandler;
-  onKeyDown?: KeyboardEventHandler;
-  onMouseDown?: MouseEventHandler;
+  onBlur?: FocusEventHandler<HTMLUListElement>;
+  onFocus?: FocusEventHandler<HTMLUListElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLUListElement>;
+  onMouseDown?: MouseEventHandler<HTMLUListElement>;
+  onSelect?: () => void;
+  onHoverChange?: () => void;
+  selectedIndexes?: number[];
+  hoveredIndex?: number;
 }
 
 export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
@@ -75,11 +83,14 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       emptyMessage,
       id: idProp,
       onSelect,
+      onHoverChange,
       onFocus,
       onBlur,
       onKeyDown,
       onMouseDown,
       style,
+      selectedIndexes: selectedIndexesProp,
+      hoveredIndex: hoveredIndexProp,
       ...rest
     },
     ref
@@ -95,7 +106,8 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const emptyList = childrenCount === 0;
     const selectedDisabled =
       Children.toArray(children).findIndex(
-        (child) => isValidElement(child) && child.props.disabled && child.props.selected
+        (child, index) =>
+          isValidElement(child) && child.props.disabled && selectedIndexesProp?.includes(index)
       ) !== -1;
     const disabled = disabledListProp || selectedDisabled;
     const listId = useId(idProp); // TODO: check why useId needs to return undefined
@@ -119,13 +131,16 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       activeDescendant,
       handleClick,
     } = useList({
-      children,
       deselectable,
       displayedItemCount,
       onFocus,
+      onHoverChange,
       onKeyDown,
       onBlur,
       onMouseDown,
+      onSelect,
+      selectedIndexesProp,
+      hoveredIndexProp,
     });
 
     const forkedRef = useForkRef(ref, listRef);
@@ -139,22 +154,24 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     }
 
     const renderContent = () => {
-      return Children.map(children, (listItem, index) => {
-        if (!isValidElement(listItem)) return;
-        const { disabled: propDisabled, ...restListItemProps } = listItem.props;
-        const listItemProps = {
-          ...restListItemProps,
-          disabled: propDisabled || disabled,
-          onClick: (e: MouseEvent<HTMLUListElement>) => handleClick(e),
-          focused: focusedIndex === index,
-          selected: selectedIndexes.includes(index),
-          id: `list-${listId}--list-item--${index}`,
-        };
+      return Children.map(
+        children,
+        (listItem: ReactElement<ListItemNextProps>, index) => {
+          if (!isValidElement(listItem)) return;
+          const { disabled: propDisabled, ...restListItemProps } =
+            listItem.props;
+          const listItemProps = {
+            ...restListItemProps,
+            disabled: propDisabled || disabled,
+            onClick: (e: MouseEvent<HTMLUListElement>) => handleClick(e),
+            focused: focusedIndex === index,
+            selected: selectedIndexes && selectedIndexes.includes(index),
+            id: `list-${listId}--list-item--${index}`,
+          };
 
-        return (
-          cloneElement(listItem, { ...listItemProps })
-        );
-      });
+          return cloneElement(listItem, { ...listItemProps });
+        }
+      );
     };
 
     return (
