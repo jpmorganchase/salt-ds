@@ -2,4 +2,4 @@
 "@salt-ds/core": minor
 ---
 
-Add `startAdornment` and `endAdornment` props to Input
+Added `startAdornment` and `endAdornment` props to Input: Allows for custom adornments to be used within the Input component
