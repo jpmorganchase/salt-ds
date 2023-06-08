@@ -245,9 +245,7 @@ describe("GIVEN a FormField", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
-              startAdornment={
-                <AdornmentButton>Test</AdornmentButton>
-              }
+              startAdornment={<AdornmentButton>Test</AdornmentButton>}
               data-testid="test-id-3"
             />
           </FormField>
@@ -262,9 +260,7 @@ describe("GIVEN a FormField", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
-              startAdornment={
-                <AdornmentButton>Test</AdornmentButton>
-              }
+              startAdornment={<AdornmentButton>Test</AdornmentButton>}
               data-testid="test-id-3"
             />
           </FormField>
