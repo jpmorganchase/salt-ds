@@ -49,7 +49,6 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
     const className = clsx(
       withBaseName(),
       {
-        [withBaseName("disabled")]: disabled,
         [withBaseName("focused")]: focused,
       },
       classNameProp
