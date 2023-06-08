@@ -91,8 +91,8 @@
 }
 
 .card {
-  --card-background: #10212b;
-  --card-icon-background: #0e1b23;
+  --card-background: var(--salt-site-dark-accent);
+  --card-icon-background: var(--salt-site-dark-accent-secondary);
 }
 
 @media screen and (max-width: 1280px) {
