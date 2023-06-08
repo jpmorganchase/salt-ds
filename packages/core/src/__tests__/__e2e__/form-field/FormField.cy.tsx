@@ -4,6 +4,7 @@ import {
   FormFieldHelperText,
   Input,
   Tooltip,
+  AdornmentButton,
 } from "@salt-ds/core";
 
 const MockChildren = () => {
@@ -222,5 +223,58 @@ describe("GIVEN a FormField", () => {
         });
       });
     });
+
+
+  describe("AND Input has an AdornmentButton", () => {
+    it("THEN should cy.mount with the adornment", () => {
+      cy.mount( 
+        <FormField>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input 
+            defaultValue="Value" 
+            startAdornment={<AdornmentButton>Test</AdornmentButton>} 
+            data-testid="test-id-3" 
+          />
+        </FormField>
+      );
+      cy.findByRole("button").should("be.visible");
+    });
+
+    it("THEN should disable the button when disabled", () => {
+      const clickSpy = cy.stub().as("clickSpy");
+      cy.mount( 
+        <FormField disabled>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input 
+            defaultValue="Value" 
+            startAdornment={<AdornmentButton onClick={clickSpy}>Test</AdornmentButton>} 
+            data-testid="test-id-3" 
+          />
+        </FormField>
+      );
+      cy.findByRole("button").should("be.visible");
+      cy.findByRole("button").should("have.class","saltButton-disabled");
+      cy.realPress("Tab");
+      cy.findByRole("textbox").should("be.focused");
+    });
+
+    it("THEN should disable the button when readonly", () => {
+      const clickSpy = cy.stub().as("clickSpy");
+      cy.mount( 
+        <FormField readOnly>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input 
+            defaultValue="Value" 
+            startAdornment={<AdornmentButton onClick={clickSpy}>Test</AdornmentButton>} 
+            data-testid="test-id-3" 
+          />
+        </FormField>
+      );
+      cy.findByRole("button").should("be.visible");
+      cy.findByRole("button").should("have.class","saltButton-disabled");
+      cy.realPress("Tab");
+      cy.findByRole("textbox").should("be.focused");
+    });
+  });
   });
 });

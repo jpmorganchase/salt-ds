@@ -83,7 +83,43 @@ describe("GIVEN an Input", () => {
           />
         );
         cy.findByRole("button").should("be.visible");
-        cy.findByRole("button").should("have.class", ".saltAdornmentButton");
+        cy.findByRole("button").should("have.class", "saltAdornmentButton");
+      });
+
+      it("THEN should have the correct tab order on startAdornment", () => {
+        cy.mount( 
+          <FormField>
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input 
+              startAdornment={<AdornmentButton>Test</AdornmentButton>} 
+              defaultValue="Value"  
+              data-testid="test-id-3" 
+            />
+          </FormField>
+        );
+        
+        cy.realPress("Tab");
+        cy.findByRole("button").should("be.focused");
+        cy.realPress("Tab");
+        cy.findByRole("textbox").should("be.focused");
+      });
+  
+      it("THEN should have the correct tab order on endAdornment", () => {
+        cy.mount( 
+          <FormField>
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input 
+              defaultValue="Value" 
+              endAdornment={<AdornmentButton>Test</AdornmentButton>} 
+              data-testid="test-id-3" 
+            />
+          </FormField>
+        );
+  
+        cy.realPress("Tab");
+        cy.findByRole("textbox").should("be.focused");
+        cy.realPress("Tab");
+        cy.findByRole("button").should("be.focused");
       });
     });
   });
