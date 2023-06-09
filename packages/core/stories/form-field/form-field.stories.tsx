@@ -304,6 +304,17 @@ export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
         />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
+      <FormField validationStatus="error" {...props}>
+        <FormLabel>Form Field label (with error)</FormLabel>
+        <Input
+          endAdornment={
+            <AdornmentButton variant="secondary">
+              <NoteIcon />
+            </AdornmentButton>
+          }
+          defaultValue={"Value"}
+        />
+      </FormField>
       <FormField disabled {...props}>
         <FormLabel>Form Field label (disabled)</FormLabel>
         <Input
