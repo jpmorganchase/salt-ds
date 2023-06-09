@@ -41,7 +41,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-hightligher",
+      testId: "salt-list-item-next",
       css: listItemNextCss,
       window: targetWindow,
     });

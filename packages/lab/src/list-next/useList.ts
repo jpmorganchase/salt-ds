@@ -1,7 +1,10 @@
 import {
-  Children, FocusEventHandler,
-  isValidElement, KeyboardEventHandler,
-  MouseEvent, MouseEventHandler,
+  Children,
+  FocusEventHandler,
+  isValidElement,
+  KeyboardEventHandler,
+  MouseEvent,
+  MouseEventHandler,
   ReactNode,
   useEffect,
   useRef,
@@ -134,7 +137,7 @@ export const useList = ({
 
   const updateScroll = (currentTarget: Element) => {
     if (!list || !currentTarget) return;
-    const { offsetTop, offsetHeight } = currentTarget;
+    const { offsetTop, offsetHeight } = currentTarget as HTMLLIElement;
     const listHeight = list?.clientHeight;
     const listScrollTop = list?.scrollTop;
     if (offsetTop < listScrollTop) {
@@ -156,16 +159,18 @@ export const useList = ({
     updateScroll(currentTarget);
   };
 
-  const handleBlur = useEventCallback(() => {
+  const handleBlur = useEventCallback((e: FocusEvent) => {
     setFocusedIndex(null);
     if (onBlur) {
-      onBlur();
+      onBlur(e);
     }
   });
 
   const handleMouseDown = useEventCallback(() => {
     setMouseDown(true);
-    onMouseDown()
+    if (onMouseDown) {
+      onMouseDown();
+    }
   });
 
   const handleFocus = useEventCallback(() => {

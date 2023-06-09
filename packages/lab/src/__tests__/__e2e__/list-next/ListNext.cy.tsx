@@ -33,7 +33,11 @@ describe("A single select list", () => {
       <ListNext {...props}>
         {props.children ||
           ITEMS.map((item, index) => {
-            return <ListItemNext key={index}>{item.label}</ListItemNext>;
+            return (
+              <ListItemNext key={index} value={item.label}>
+                {item.label}
+              </ListItemNext>
+            );
           })}
       </ListNext>
     );
@@ -108,7 +112,7 @@ describe("A single select list", () => {
   it("should render a borderless list ", () => {
     cy.mount(SingleSelectList({ borderless: true }));
 
-    cy.findByRole("listbox").should("have.class", "saltList-borderless");
+    cy.findByRole("listbox").should("have.class", "saltListNext-borderless");
   });
 
   it("should allow a single item to be selected", () => {
