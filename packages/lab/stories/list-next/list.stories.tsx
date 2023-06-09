@@ -140,7 +140,12 @@ export const Controlled: Story<ListNextProps> = (props) => {
         >
           <ChevronUpIcon aria-hidden />
         </Button>
-        <Button onClick={() => handleSelect([highlightedIndex])}>Select</Button>
+        <Button
+          onClick={() => handleSelect([highlightedIndex])}
+          aria-label="Select"
+        >
+          Select
+        </Button>
       </FlexLayout>
       <ListNext
         {...props}

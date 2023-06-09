@@ -15,6 +15,7 @@ import {
   PageDown,
   PageUp,
   Space,
+  Enter,
 } from "../common-hooks";
 import { useEventCallback } from "../utils";
 
@@ -226,6 +227,7 @@ export const useList = ({
         focusLastItem();
         break;
       case Space:
+      case Enter:
         evt.preventDefault();
         toggleSelectItem(nextItem);
         break;
