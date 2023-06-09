@@ -416,7 +416,7 @@ describe("A controlled single select list", () => {
   });
 
   // Keyboard navigations for controlled single select list
-  describe.only("Keyboard navigation and interactions", () => {
+  describe("Keyboard navigation and interactions", () => {
     it("should focus on first list item on first controlled list focus", () => {
       cy.mount(<ControlledSingleSelectList />);
 
