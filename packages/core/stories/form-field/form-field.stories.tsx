@@ -9,8 +9,11 @@ import {
   FormField,
   Input,
   Tooltip,
+  AdornmentButton,
+  Text,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { NoteIcon, InfoIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Form Field",
@@ -259,6 +262,67 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
       >
         <Input disabled defaultValue="Input value" />
       </FormField> */}
+    </FlowLayout>
+  );
+};
+
+export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
+  props
+) => {
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input
+          startAdornment={<Text>$</Text>}
+          endAdornment={
+            <AdornmentButton>
+              <NoteIcon />
+            </AdornmentButton>
+          }
+          defaultValue={"Value"}
+        />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input
+          startAdornment={
+            <AdornmentButton>
+              <InfoIcon />
+            </AdornmentButton>
+          }
+          endAdornment={
+            <>
+              <Text>%</Text>
+              <AdornmentButton variant="cta">
+                <NoteIcon />
+              </AdornmentButton>
+            </>
+          }
+          defaultValue={"Value"}
+        />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField disabled {...props}>
+        <FormLabel>Form Field label (disabled)</FormLabel>
+        <Input
+          startAdornment={
+            <AdornmentButton>
+              <InfoIcon />
+            </AdornmentButton>
+          }
+          endAdornment={
+            <>
+              <Text>%</Text>
+              <AdornmentButton variant="cta">
+                <NoteIcon />
+              </AdornmentButton>
+            </>
+          }
+          defaultValue={"Value"}
+        />
+      </FormField>
     </FlowLayout>
   );
 };

@@ -1,10 +1,13 @@
-const splitArray = <T>(array: T[]) => {
-  const arrayHalf = Math.ceil(array.length / 2);
+const splitArray = <T>(array: T[], chunkSize?: number) => {
+  const actualChunkSize = chunkSize || Math.ceil(array.length / 2);
 
-  const firstHalf = array.slice(0, arrayHalf);
-  const secondHalf = array.slice(arrayHalf);
+  const chunks: T[][] = [];
 
-  return [firstHalf, secondHalf];
+  for (let i = 0; i < array.length; i += actualChunkSize) {
+    chunks.push(array.slice(i, i + actualChunkSize));
+  }
+
+  return chunks;
 };
 
 export default splitArray;
