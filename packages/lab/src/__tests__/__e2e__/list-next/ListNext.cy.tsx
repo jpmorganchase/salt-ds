@@ -1,7 +1,7 @@
 import { Button } from "@salt-ds/core";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { ListNext, ListItemNext } from "@salt-ds/lab";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 type ItemType = { label: string; value: string };
 
@@ -18,7 +18,11 @@ describe("An uncontrolled single select list", () => {
       <ListNext {...props}>
         {props.children ||
           ITEMS.map((item, index) => {
-            return <ListItemNext key={index}>{item.label}</ListItemNext>;
+            return (
+              <ListItemNext value={item.value} key={index}>
+                {item.label}
+              </ListItemNext>
+            );
           })}
       </ListNext>
     );
@@ -141,9 +145,15 @@ describe("An uncontrolled single select list", () => {
         <SingleSelectList
           children={
             <>
-              <ListItemNext>{ITEMS[0].label}</ListItemNext>
-              <ListItemNext disabled>{ITEMS[1].label}</ListItemNext>
-              <ListItemNext>{ITEMS[2].label}</ListItemNext>
+              <ListItemNext value={ITEMS[0].value}>
+                {ITEMS[0].label}
+              </ListItemNext>
+              <ListItemNext value={ITEMS[1].value} disabled>
+                {ITEMS[1].label}
+              </ListItemNext>
+              <ListItemNext value={ITEMS[2].value}>
+                {ITEMS[2].label}
+              </ListItemNext>
             </>
           }
         />
@@ -161,9 +171,15 @@ describe("An uncontrolled single select list", () => {
         <SingleSelectList
           children={
             <>
-              <ListItemNext>{ITEMS[0].label}</ListItemNext>
-              <ListItemNext disabled>{ITEMS[1].label}</ListItemNext>
-              <ListItemNext>{ITEMS[2].label}</ListItemNext>
+              <ListItemNext value={ITEMS[0].value}>
+                {ITEMS[0].label}
+              </ListItemNext>
+              <ListItemNext value={ITEMS[1].value} disabled>
+                {ITEMS[1].label}
+              </ListItemNext>
+              <ListItemNext value={ITEMS[2].value}>
+                {ITEMS[2].label}
+              </ListItemNext>
             </>
           }
         />
@@ -368,9 +384,13 @@ describe("A controlled single select list", () => {
           selectedIndexes={selectedItem ?? []}
           hoveredIndex={highlightedIndex}
         >
-          <ListItemNext>{ITEMS[0].label}</ListItemNext>
-          <ListItemNext>{ITEMS[1].label}</ListItemNext>
-          <ListItemNext>{ITEMS[2].label}</ListItemNext>
+          {ITEMS.map((item, index) => {
+            return (
+              <ListItemNext value={item.value} key={index}>
+                {item.label}
+              </ListItemNext>
+            );
+          })}
         </ListNext>
       </>
     );
