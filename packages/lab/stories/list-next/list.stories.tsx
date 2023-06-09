@@ -2,7 +2,7 @@ import { ComponentMeta, Story } from "@storybook/react";
 import { ListNext, ListItemNext, ListNextProps } from "../../src";
 import { Button, FlexItem, FlexLayout } from "@salt-ds/core";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import {useEffect, useState} from "react";
+import { useState } from "react";
 
 export default {
   title: "Lab/List Next",
@@ -22,7 +22,7 @@ const SimpleListExample = [
   "Georgia",
 ];
 
-const getListItems = ({disabledItems}) =>
+const getListItems = ({ disabledItems }: { disabledItems: number[] }) =>
   SimpleListExample.map((item, index) => {
     return (
       <ListItemNext
@@ -75,7 +75,7 @@ DisabledSelected.args = {
   children: getListItems({
     disabledItems: [1],
   }),
-  selectedIndexes: [1]
+  selectedIndexes: [1],
 };
 
 export const Empty: Story<ListNextProps> = ({ children, ...rest }) => {
@@ -98,15 +98,7 @@ Empty.args = {
 
 export const Controlled: Story<ListNextProps> = (props) => {
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const [selectedItems, setSelectedItems] = useState([]);
-
-  useEffect(() => {
-    // console.log('highlighed index chabged ti ', highlightedIndex)
-  }, [highlightedIndex])
-
-  useEffect(() => {
-    // console.log('selectedItems index chabged ti ', selectedItems)
-  }, [selectedItems])
+  const [selectedItem, setSelectedItem] = useState([]);
 
   const handleArrowDown = () => {
     setHighlightedIndex((prevHighlightedIndex) =>
@@ -120,11 +112,9 @@ export const Controlled: Story<ListNextProps> = (props) => {
     );
   };
 
-  const handleSelect = () => {
-    console.log("setting selected", highlightedIndex);
-    setSelectedItems([highlightedIndex]);
-    setHighlightedIndex(highlightedIndex)
-
+  const handleSelect = (item) => {
+    setSelectedItem(item);
+    setHighlightedIndex(item);
   };
 
   const listItems = () => {
@@ -133,14 +123,9 @@ export const Controlled: Story<ListNextProps> = (props) => {
     });
   };
 
-  const onHoverChange = (item) => {
-    console.log("on hover change from inside hook", item);
-    // setSelectedItems(item);
-  };
-
   return (
-    <FlexLayout direction="column" gap={0}>
-      <FlexLayout gap={0}>
+    <FlexLayout direction="column" gap={1}>
+      <FlexLayout gap={1}>
         <Button
           disabled={highlightedIndex === SimpleListExample.length - 1}
           onClick={handleArrowDown}
@@ -155,13 +140,13 @@ export const Controlled: Story<ListNextProps> = (props) => {
         >
           <ChevronUpIcon aria-hidden />
         </Button>
-        <Button onClick={handleSelect}>Select</Button>
+        <Button onClick={() => handleSelect([highlightedIndex])}>Select</Button>
       </FlexLayout>
       <ListNext
         {...props}
-        onSelect={(item) => setSelectedItems(item)}
-        onHoverChange={onHoverChange}
-        selectedIndexes={selectedItems}
+        onSelect={(item) => handleSelect(item)}
+        onFocus={(item) => setHighlightedIndex(item)}
+        selectedIndexes={selectedItem ? selectedItem : null}
         hoveredIndex={highlightedIndex}
         aria-label="Declarative List example"
       >

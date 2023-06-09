@@ -64,8 +64,8 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
   onFocus?: FocusEventHandler<HTMLUListElement>;
   onKeyDown?: KeyboardEventHandler<HTMLUListElement>;
   onMouseDown?: MouseEventHandler<HTMLUListElement>;
-  onSelect?: () => void;
-  onHoverChange?: () => void;
+  onSelect?: (item: number[]) => void;
+  onHoverChange?: (item: number) => void;
   selectedIndexes?: number[];
   hoveredIndex?: number;
 }
@@ -97,29 +97,22 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-hightligher",
+      testId: "salt-listNext",
       css: listNextCss,
       window: targetWindow,
     });
 
     const childrenCount = Children.count(children);
     const emptyList = childrenCount === 0;
-    const selectedDisabled =
-      Children.toArray(children).findIndex(
-        (child, index) =>
-          isValidElement(child) && child.props.disabled && selectedIndexesProp?.includes(index)
-      ) !== -1;
-    const disabled = disabledListProp || selectedDisabled;
+
     const listId = useId(idProp); // TODO: check why useId needs to return undefined
 
     const displayedItemCount = useMemo((): number => {
       // if no children, display empty message
       if (emptyList) return 1;
-
       // displayedItemCount takes precedence over childrenCount
       if (displayedItemCountProp)
         return Math.min(displayedItemCountProp, childrenCount);
-
       // if more than 4 children, display 4 tops
       return Math.min(4, childrenCount);
     }, [displayedItemCountProp, children, childrenCount, emptyList]);
@@ -143,6 +136,18 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       hoveredIndexProp,
     });
 
+    const selectedDisabled = useMemo(
+      () =>
+        Children.toArray(children).findIndex(
+          (child, index) =>
+            isValidElement(child) &&
+            child.props.disabled &&
+            selectedIndexes?.includes(index)
+        ) !== -1,
+      [children, selectedIndexes]
+    );
+    const disabled = disabledListProp || selectedDisabled;
+
     const forkedRef = useForkRef(ref, listRef);
 
     function renderEmpty() {
@@ -165,7 +170,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
             disabled: propDisabled || disabled,
             onClick: (e: MouseEvent<HTMLUListElement>) => handleClick(e),
             focused: focusedIndex === index,
-            selected: selectedIndexes && selectedIndexes.includes(index),
+            selected: selectedIndexes?.includes(index),
             id: `list-${listId}--list-item--${index}`,
           };
 

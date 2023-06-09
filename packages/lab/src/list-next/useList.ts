@@ -16,7 +16,7 @@ import {
   PageUp,
   Space,
 } from "../common-hooks";
-import {useEventCallback} from "../utils";
+import { useEventCallback } from "../utils";
 
 interface UseListProps {
   deselectable: boolean;
@@ -26,29 +26,32 @@ interface UseListProps {
   onFocus?: FocusEventHandler<HTMLUListElement>;
   onKeyDown?: KeyboardEventHandler<HTMLUListElement>;
   onMouseDown?: MouseEventHandler<HTMLUListElement>;
-  onSelect: () => void;
+  onSelect?: (item: number[]) => void;
+  onHoverChange?: (item: number) => void;
+  selectedIndexesProp?: number[];
+  hoveredIndexProp?: number;
 }
 
 export const useList = ({
-                          deselectable,
-                          displayedItemCount,
-                          onFocus,
-                          onHoverChange,
-                          onKeyDown,
-                          onBlur,
-                          onMouseDown,
-                          onSelect,
-                          selectedIndexesProp,
-                          hoveredIndexProp
-                        }: UseListProps) => {
+  deselectable,
+  displayedItemCount,
+  onFocus,
+  onHoverChange,
+  onKeyDown,
+  onBlur,
+  onMouseDown,
+  onSelect,
+  selectedIndexesProp,
+  hoveredIndexProp,
+}: UseListProps) => {
   const listRef = useRef<HTMLUListElement | null>(null);
   let list = listRef.current;
-
   const [activeDescendant, setActiveDescendant] = useState<string>("");
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(hoveredIndexProp || null);
-  const [selectedIndexes, setSelectedIndexes] = useState<number[]>(
-    selectedIndexesProp || []
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(
+    hoveredIndexProp
   );
+  const [selectedIndexes, setSelectedIndexes] =
+    useState<number[]>(selectedIndexesProp);
   const [allOptions, setAllOptions] = useState<Element[]>([]);
   const [activeOptions, setActiveOptions] = useState<Element[]>([]);
   const [mouseDown, setMouseDown] = useState<boolean>(false);
@@ -63,7 +66,9 @@ export const useList = ({
     setActiveDescendant(element.id);
     setFocusedIndex(getListItemIndex(element));
     updateScroll(element);
-    onSelect([getListItemIndex(element)]);
+    if (onSelect) {
+      onSelect(getListItemIndex(element));
+    }
 
     if (onFocus) {
       onFocus();
@@ -88,10 +93,13 @@ export const useList = ({
 
   const toggleSelectItem = (element: Element) => {
     const elementIndex = getListItemIndex(element);
-    const itemIsSelected = selectedIndexes.includes(elementIndex);
+    const itemIsSelected =
+      selectedIndexes && selectedIndexes.includes(elementIndex);
     const newSelection = deselectable && itemIsSelected ? [] : [elementIndex];
     setSelectedIndexes(newSelection);
-    onSelect(newSelection);
+    if (onSelect) {
+      onSelect(newSelection);
+    }
   };
 
   const justFocusItem = (element: Element) => {
@@ -127,7 +135,7 @@ export const useList = ({
 
   const updateScroll = (currentTarget: Element) => {
     if (!list || !currentTarget) return;
-    const {offsetTop, offsetHeight} = currentTarget;
+    const { offsetTop, offsetHeight } = currentTarget;
     const listHeight = list?.clientHeight;
     const listScrollTop = list?.scrollTop;
     if (offsetTop < listScrollTop) {
@@ -139,7 +147,7 @@ export const useList = ({
 
   // Handlers
   const handleClick = (evt: MouseEvent<HTMLUListElement>) => {
-    const {currentTarget} = evt;
+    const { currentTarget } = evt;
     const nonClickableTarget = activeOptions.indexOf(currentTarget) === -1;
     if (nonClickableTarget) {
       return;
@@ -177,7 +185,7 @@ export const useList = ({
   });
 
   const handleKeyDown = useEventCallback((evt: KeyboardEvent) => {
-    const {key} = evt;
+    const { key } = evt;
     const currentItem =
       document.getElementById(activeDescendant) || activeOptions[0];
     let nextItem = currentItem;
@@ -239,17 +247,20 @@ export const useList = ({
 
   // Effects
   useEffect(() => {
-    setFocusedIndex(hoveredIndexProp);
-
+    const hoveredItem = allOptions[hoveredIndexProp];
+    //    if there is an item with the hovered indexed, set focus
+    if (hoveredItem) {
+      setFocusedIndex(hoveredIndexProp);
+      setActiveDescendant(hoveredItem?.id);
+      updateScroll(hoveredItem);
+    }
   }, [hoveredIndexProp]);
 
   // Effects
   useEffect(() => {
     if (onHoverChange) {
-
       onHoverChange(focusedIndex);
     }
-
   }, [focusedIndex]);
 
   // Effects
