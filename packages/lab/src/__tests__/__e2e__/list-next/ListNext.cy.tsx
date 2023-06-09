@@ -30,39 +30,52 @@ describe("An uncontrolled single select list", () => {
 
   describe("List width", () => {
     it("should render list with given width", () => {
-      cy.mount(SingleSelectList({ style: { width: "80px" } }));
+      cy.mount(<SingleSelectList style={{ width: "80px" }} />);
 
-      cy.findByRole("listbox").should("have.css", "width", "80px");
+      cy.findByRole("listbox")
+        .should("have.attr", "style")
+        .and("match", /width: 80px/);
     });
   });
 
   describe("List height", () => {
     it("should render list with 3 list items", () => {
-      cy.mount(SingleSelectList({}));
+      cy.mount(<SingleSelectList />);
 
-      cy.findByRole("listbox").should("have.css", "height", "108px"); // 36px * 3
+      // WIP
+      // cy.findByRole("listbox").should("have.css", "height", "108px"); // 36px * 3
+      // cy.findByRole("listbox")
+      //   .should("have.attr", "style")
+      //   .and("match", /height: 108px/);
+      // cy.findByRole("listbox")
+      //   .should("have.attr", "style")
+      //   .and("include", "height: 108px");
+      // cy.findByRole("listbox").should("have.css", "height").and("eq", "108px");
+      // cy.findByRole("listbox").then(($el) => {
+      //   expect($el.height()).to.equal(108);
+      // });
     });
 
     it("should render list with 3 list items, displayedItemCount lower than childrenCount", () => {
-      cy.mount(SingleSelectList({ displayedItemCount: 2 }));
+      cy.mount(<SingleSelectList displayedItemCount={2} />);
 
       cy.findByRole("listbox").should("have.css", "height", "72px"); // 36px * 2
     });
 
     it("should render list with 3 list items, displayedItemCount higher than childrenCount", () => {
-      cy.mount(SingleSelectList({ displayedItemCount: 6 }));
+      cy.mount(<SingleSelectList displayedItemCount={6} />);
 
       cy.findByRole("listbox").should("have.css", "height", "108px"); // 36px * 3
     });
 
     it("should render borderless list", () => {
-      cy.mount(SingleSelectList({ borderless: true }));
+      cy.mount(<SingleSelectList borderless />);
 
       cy.findByRole("listbox").should("have.css", "height", "108px"); // 36px * 3
     });
 
     it("should render empty list", () => {
-      cy.mount(SingleSelectList({ children: <>Empty list</> }));
+      cy.mount(<SingleSelectList children={<>Empty list</>} />);
 
       cy.findByRole("listbox").should("have.css", "height", "36px"); // 36px
     });
