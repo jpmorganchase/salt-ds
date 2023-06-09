@@ -4,6 +4,7 @@ import {
   FormFieldHelperText,
   Input,
   Tooltip,
+  AdornmentButton,
 } from "@salt-ds/core";
 
 const MockChildren = () => {
@@ -220,6 +221,52 @@ describe("GIVEN a FormField", () => {
 
           cy.findByRole("tooltip").should("have.class", "saltTooltip-error");
         });
+      });
+    });
+
+    describe("AND Input has an AdornmentButton", () => {
+      it("THEN should cy.mount with the adornment", () => {
+        cy.mount(
+          <FormField>
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input
+              defaultValue="Value"
+              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              data-testid="test-id-3"
+            />
+          </FormField>
+        );
+        cy.findByRole("button").should("be.visible");
+      });
+
+      it("THEN should disable the button when disabled", () => {
+        cy.mount(
+          <FormField disabled>
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input
+              defaultValue="Value"
+              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              data-testid="test-id-3"
+            />
+          </FormField>
+        );
+        cy.findByRole("button").should("be.visible");
+        cy.findByRole("button").should("have.class", "saltButton-disabled");
+      });
+
+      it("THEN should disable the button when readonly", () => {
+        cy.mount(
+          <FormField readOnly>
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input
+              defaultValue="Value"
+              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              data-testid="test-id-3"
+            />
+          </FormField>
+        );
+        cy.findByRole("button").should("be.visible");
+        cy.findByRole("button").should("have.class", "saltButton-disabled");
       });
     });
   });

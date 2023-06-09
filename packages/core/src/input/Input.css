@@ -4,7 +4,7 @@
   --input-borderStyle: var(--salt-editable-borderStyle);
   --input-outlineColor: var(--salt-focused-outlineColor);
   --input-borderWidth: var(--salt-size-border);
-  --input-paddingLeft: var(--salt-size-unit);
+  --input-paddingLeft: var(--salt-spacing-100);
 
   align-items: center;
   background: var(--saltInput-background, var(--input-background));
@@ -17,7 +17,7 @@
   min-height: var(--saltInput-minHeight, var(--salt-size-base));
   min-width: var(--saltInput-minWidth, 4em);
   padding-left: var(--saltInput-paddingLeft, var(--input-paddingLeft));
-  padding-right: var(--saltInput-paddingRight, var(--salt-size-unit));
+  padding-right: var(--saltInput-paddingRight, var(--salt-spacing-100));
   position: relative;
   width: 100%;
 }
@@ -175,14 +175,21 @@
 .saltInput-startAdornmentContainer {
   align-items: center;
   display: inline-flex;
-  padding-right: var(--salt-size-adornmentGap);
-  column-gap: var(--salt-size-adornmentGap);
+  padding-right: var(--salt-spacing-75);
+  column-gap: var(--salt-spacing-75);
 }
 
 /* Style applied to end adornments */
 .saltInput-endAdornmentContainer {
   align-items: center;
   display: inline-flex;
-  padding-left: var(--salt-size-adornmentGap);
-  column-gap: var(--salt-size-adornmentGap);
+  padding-left: var(--salt-spacing-75);
+  column-gap: var(--salt-spacing-75);
+}
+
+.saltInput-startAdornmentContainer .saltAdornmentButton.saltButton:first-child {
+  margin-left: calc(var(--salt-spacing-75) * -1);
+}
+.saltInput-endAdornmentContainer .saltAdornmentButton.saltButton:last-child {
+  margin-right: calc(var(--salt-spacing-75) * -1);
 }
