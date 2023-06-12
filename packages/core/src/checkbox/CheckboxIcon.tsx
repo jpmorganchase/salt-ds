@@ -30,6 +30,7 @@ export const CheckboxIcon = ({
   error,
   indeterminate,
   validationStatus,
+  readOnly
 }: CheckboxIconProps): JSX.Element => {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -43,6 +44,7 @@ export const CheckboxIcon = ({
       [withBaseName("disabled")]: disabled,
       [withBaseName("error")]: error,
       [withBaseName(validationStatus || "")]: validationStatus,
+      [withBaseName("readonly")]: readOnly
     },
     classNameProp
   );
