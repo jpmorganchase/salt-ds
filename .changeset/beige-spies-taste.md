@@ -2,4 +2,4 @@
 "@salt-ds/core": minor
 ---
 
-Fix for console errors of invalid ARIA attributes in Input
+Fixed invalid ARIA attribute console errors when using Input
