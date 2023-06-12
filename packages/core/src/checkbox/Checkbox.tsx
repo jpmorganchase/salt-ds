@@ -126,13 +126,15 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       state: "checked",
     });
 
+    const isError = error && !disabled;
+
     return (
       <label
         className={clsx(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName("error")]: error,
+            [withBaseName("error")]: isError,
           },
           className
         )}
@@ -158,7 +160,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <CheckboxIcon
           checked={checked}
           disabled={disabled}
-          error={error}
+          error={isError}
           indeterminate={indeterminate}
         />
         {label}

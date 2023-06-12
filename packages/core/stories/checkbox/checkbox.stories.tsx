@@ -93,29 +93,25 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
 
 export const Disabled: ComponentStory<typeof Checkbox> = () => {
   return (
+    <CheckboxGroup>
+      <Checkbox disabled label="disabled checkbox" />
+      <Checkbox
+        disabled
+        indeterminate
+        label="disabled indeterminate checkbox"
+      />
+      <Checkbox disabled checked label="disabled checked checkbox" />
+    </CheckboxGroup>
+  );
+};
+
+export const DisabledWithError: ComponentStory<typeof Checkbox> = () => {
+  const [isDisabled, setDisabled] =  useState(true);
+
+  return (
     <>
-      <CheckboxGroup>
-        <Checkbox disabled label="disabled checkbox" />
-        <Checkbox
-          disabled
-          indeterminate
-          label="disabled indeterminate checkbox"
-        />
-        <Checkbox disabled checked label="disabled checked checkbox" />
-        <Checkbox error disabled label="disabled checkbox in error state" />
-        <Checkbox
-          error
-          disabled
-          indeterminate
-          label="disabled indeterminate checkbox in error state"
-        />
-        <Checkbox
-          error
-          disabled
-          checked
-          label="disabled checked checkbox in error state"
-        />
-      </CheckboxGroup>
+      <Checkbox disabled={isDisabled} error label="disabled checkbox with underlying error" />
+      <Button onClick={() => setDisabled(!isDisabled)}>Toggle permisions</Button>
     </>
   );
 };
