@@ -92,7 +92,7 @@ describe("An uncontrolled single select list", () => {
   it("should render a borderless list ", () => {
     cy.mount(<SingleSelectList borderless />);
 
-    cy.findByRole("listbox").should("have.class", "saltList-borderless");
+    cy.findByRole("listbox").should("have.class", "saltListNext-borderless");
   });
 
   it("should allow a single item to be selected", () => {

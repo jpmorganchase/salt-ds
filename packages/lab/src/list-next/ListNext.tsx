@@ -23,7 +23,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import listNextCss from "./ListNext.css";
 
-const withBaseName = makePrefixer("saltList");
+const withBaseName = makePrefixer("saltListNext");
 const defaultEmptyMessage = "No data to display";
 
 export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
@@ -97,7 +97,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-listNext",
+      testId: "salt-list-next",
       css: listNextCss,
       window: targetWindow,
     });
@@ -105,7 +105,14 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const childrenCount = Children.count(children);
     const emptyList = childrenCount === 0;
 
-    const listId = useId(idProp); // TODO: check why useId needs to return undefined
+    const selectedDisabled =
+      Children.toArray(children).findIndex(
+        (child) =>
+          isValidElement(child) && child.props.disabled && child.props.selected
+      ) !== -1;
+    const disabled = disabledListProp || selectedDisabled;
+    const listId = useId(idProp) || 'listNext'; // TODO: check why useId needs to return undefined
+
 
     const displayedItemCount = useMemo((): number => {
       // if no children, display empty message
@@ -115,7 +122,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         return Math.min(displayedItemCountProp, childrenCount);
       // if more than 4 children, display 4 tops
       return Math.min(4, childrenCount);
-    }, [displayedItemCountProp, children, childrenCount, emptyList]);
+    }, [displayedItemCountProp, childrenCount, emptyList]);
 
     const {
       listRef,
@@ -173,10 +180,13 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
             selected: selectedIndexes?.includes(index),
             id: `list-${listId}--list-item--${index}`,
           };
-
           return cloneElement(listItem, { ...listItemProps });
         }
       );
+    };
+    const listStyles = {
+      ...style,
+      "--list-displayedItemCount": displayedItemCount,
     };
 
     return (
@@ -191,12 +201,9 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           className
         )}
         role="listbox"
-        tabIndex={disabled ? undefined : 0}
+        tabIndex={disabled ? -1 : 0}
         aria-activedescendant={disabled ? undefined : activeDescendant}
-        style={{
-          ...style,
-          "--list-displayedItemCount": displayedItemCount,
-        }}
+        style={listStyles}
         {...rest}
       >
         {emptyList ? renderEmpty() : renderContent()}

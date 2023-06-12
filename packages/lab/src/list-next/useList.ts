@@ -136,7 +136,7 @@ export const useList = ({
 
   const updateScroll = (currentTarget: Element) => {
     if (!list || !currentTarget) return;
-    const { offsetTop, offsetHeight } = currentTarget;
+    const { offsetTop, offsetHeight } = currentTarget as HTMLLIElement;
     const listHeight = list?.clientHeight;
     const listScrollTop = list?.scrollTop;
     if (offsetTop < listScrollTop) {
@@ -159,10 +159,10 @@ export const useList = ({
     updateScroll(currentTarget);
   };
 
-  const handleBlur = useEventCallback((evt) => {
+  const handleBlur = useEventCallback((e: FocusEvent) => {
     setFocusedIndex(null);
     if (onBlur) {
-      onBlur(evt);
+      onBlur(e);
     }
   });
 

@@ -1,5 +1,5 @@
 /* Default variables applied to the root element */
-.saltList {
+.saltListNext {
   --list-background: var(--salt-container-primary-background);
   --list-borderStyle: var(--salt-container-borderStyle);
   --list-borderWidth: var(--salt-size-border);
@@ -7,7 +7,7 @@
 }
 
 /* Style applied to the root element */
-.saltList {
+.saltListNext {
   margin: 0;
   background: var(--list-background);
   border-color: var(--salt-container-primary-borderColor);
@@ -23,12 +23,12 @@
 }
 
 /* Style applied to the borderless variant */
-.saltList-borderless {
+.saltListNext-borderless {
   --list-borderStyle: none;
 }
 
 /* Pseudo-class applied to the root element on focus */
-.saltList-focusable:focus-visible {
+.saltListNext-focusable:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(0 - var(--salt-focused-outlineWidth));
 }
