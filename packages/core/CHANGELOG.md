@@ -1,5 +1,21 @@
 # @salt-ds/core
 
+## 1.8.0-rc.1
+
+### Minor Changes
+
+- 287cb5fa: Form Field supports helper text within a nested Tooltip
+
+  Tooltip uses FormFieldContext which has precedence over any disabled and status given to Tooltip when wrapped within a FormField component
+
+- 2da87f0b: Added `placeholder` prop to Input: Placeholder can be used when no default value is given to promopt user input
+- 49fa6ad5: Added `AdornmentButton` component as an interactive adornment to be used within Input
+- 8d5a8c9f: Added `startAdornment` and `endAdornment` props to Input: Allows for custom adornments to be used within the Input component
+
+### Patch Changes
+
+- c4df0491: The default Card design has been changed to include a border to enhance visual accessibility.
+
 ## 1.8.0-rc.0
 
 ### Minor Changes
