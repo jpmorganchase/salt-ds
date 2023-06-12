@@ -110,7 +110,7 @@ export const Label: ComponentStory<typeof FormField> = (props) => {
 
 export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
   return (
-    <FlowLayout style={{ width: "366px", textAlign: "center" }}>
+    <FlowLayout style={{ width: "366px" }}>
       <FormField labelPlacement="left" {...props}>
         <FormLabel>Form Field label left</FormLabel>
         <Input defaultValue="Value" />
