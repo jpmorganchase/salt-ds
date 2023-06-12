@@ -37,7 +37,7 @@ export const Skeleton: ComponentStory<typeof FormField> = (props) => {
 
 export const Default: ComponentStory<typeof FormField> = (props) => {
   return (
-    <FlowLayout style={{ width: "366px" }}>
+    <FlowLayout style={{ width: "366px", textAlign: "center" }}>
       <FormField {...props}>
         <FormLabel>Form Field label</FormLabel>
         <Input defaultValue="Value" />
@@ -110,7 +110,7 @@ export const Label: ComponentStory<typeof FormField> = (props) => {
 
 export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
   return (
-    <FlowLayout style={{ width: "366px" }}>
+    <FlowLayout style={{ width: "366px", textAlign: "center" }}>
       <FormField labelPlacement="left" {...props}>
         <FormLabel>Form Field label left</FormLabel>
         <Input defaultValue="Value" />
