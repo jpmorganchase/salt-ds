@@ -16,6 +16,11 @@
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
+/* Styles applied to root component if `disabled={true}` */
+.saltCheckbox-readonly {
+  cursor: var(--salt-selectable-cursor-readonly);
+}
+
 /* Styles applied to the icon component if focused */
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
   outline-offset: var(--salt-focused-outlineOffset);

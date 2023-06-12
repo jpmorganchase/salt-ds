@@ -97,6 +97,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       onFocus,
       value,
       validationStatus: validationStatusProp,
+      readOnly,
       ...rest
     },
     ref
@@ -151,6 +152,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName("error")]: error,
+            [withBaseName("readonly")]: readOnly,
             [withBaseName(validationStatus || "")]: validationStatus,
           },
           className
@@ -185,9 +187,10 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <CheckboxIcon
           checked={checked}
           disabled={disabled}
+          readOnly={readOnly}
+          error={error}
           indeterminate={indeterminate}
           validationStatus={validationStatus}
-          error={error}
         />
         {label}
       </label>
