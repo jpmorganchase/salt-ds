@@ -1,10 +1,10 @@
 .saltToggleButtonGroup {
   display: flex;
+  background: var(--salt-container-primary-background);
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
-  border-width: 1px;
   width: fit-content;
   gap: var(--salt-spacing-50);
-  padding: var(--salt-spacing-50);
+  padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   flex-direction: var(--saltToggleButtonGroup-flexDirection, row);
 }
 

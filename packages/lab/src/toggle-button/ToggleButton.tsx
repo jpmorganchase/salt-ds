@@ -50,7 +50,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     const toggleButtonGroupSelected = toggleButtonGroup
       ? toggleButtonGroup.isSelected(value)
       : selectedProp;
-    const focused = toggleButtonGroup?.isFocused(value);
+    const focusable = toggleButtonGroup ? toggleButtonGroup?.isFocused(value) : true;
     const disabled = toggleButtonGroup?.disabled || disabledProp;
 
     const [selected, setSelected] = useControlled({
@@ -72,16 +72,18 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onFocus?.(event);
     };
 
+    const ariaChecked = selected && !disabled;
+
     return (
       <button
-        aria-checked={selected}
+        aria-checked={ariaChecked}
         className={clsx(withBaseName(), className)}
         disabled={disabled}
         role={toggleButtonGroup ? "radio" : "checkbox"}
         ref={handleRef}
         onClick={handleClick}
         onFocus={handleFocus}
-        tabIndex={focused && !disabled ? 0 : -1}
+        tabIndex={focusable && !disabled ? 0 : -1}
         value={value}
         {...rest}
       >
