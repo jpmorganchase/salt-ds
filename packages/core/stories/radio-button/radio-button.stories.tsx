@@ -8,15 +8,11 @@ export default {
 } as ComponentMeta<typeof RadioButton>;
 
 export const Default = () => {
-  return (
-    <RadioButton label="Default" value="Unchecked" />
-  );
+  return <RadioButton label="Default" value="Unchecked" />;
 };
 
 export const Checked = () => {
-  return (
-    <RadioButton label="Checked" value="Checked" checked />
-  );
+  return <RadioButton label="Checked" value="Checked" checked />;
 };
 
 export const Disabled = () => {
@@ -46,23 +42,22 @@ export const Error = () => {
 export const ErrorDisabled = () => {
   return (
     <>
-    <RadioButton
-      label="Error Disabled"
-      value="disabled-error"
-      disabled
-      error
-    />
-    <RadioButton
-      label="Error Disabled"
-      value="disabled-error"
-      disabled
-      checked
-      error
-    />
+      <RadioButton
+        label="Error Disabled"
+        value="disabled-error"
+        disabled
+        error
+      />
+      <RadioButton
+        label="Error Disabled"
+        value="disabled-error"
+        disabled
+        checked
+        error
+      />
     </>
   );
 };
-
 
 export const VerticalGroup = () => (
   <RadioButtonGroup>
