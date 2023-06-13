@@ -50,7 +50,9 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     const toggleButtonGroupSelected = toggleButtonGroup
       ? toggleButtonGroup.isSelected(value)
       : selectedProp;
-    const focusable = toggleButtonGroup ? toggleButtonGroup?.isFocused(value) : true;
+    const focusable = toggleButtonGroup
+      ? toggleButtonGroup?.isFocused(value)
+      : true;
     const disabled = toggleButtonGroup?.disabled || disabledProp;
 
     const [selected, setSelected] = useControlled({
