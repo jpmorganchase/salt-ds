@@ -23,7 +23,6 @@ import { useEventCallback } from "../utils";
 
 interface UseListProps {
   children: ReactNode;
-  deselectable: boolean;
   displayedItemCount: number;
   // ListNextControlProps
   onBlur?: FocusEventHandler;
@@ -46,7 +45,6 @@ const getSelected = (children: ReactNode): number[] =>
 
 export const useList = ({
   children,
-  deselectable,
   displayedItemCount,
   onFocus,
   onKeyDown,
@@ -99,9 +97,7 @@ export const useList = ({
 
   const toggleSelectItem = (element: Element) => {
     const elementIndex = getListItemIndex(element);
-    const itemIsSelected = selectedIndexes.includes(elementIndex);
-    const newSelection = deselectable && itemIsSelected ? [] : [elementIndex];
-    setSelectedIndexes(newSelection);
+    setSelectedIndexes([elementIndex]);
   };
 
   const justFocusItem = (element: Element) => {
@@ -253,11 +249,13 @@ export const useList = ({
       list.addEventListener("mousedown", handleMouseDown);
     };
 
-    const tearDown = (list: HTMLUListElement): void => {
+    const tearDown = (list: HTMLUListElement | null): void => {
+      if (list) {
       list.removeEventListener("keydown", handleKeyDown);
       list.removeEventListener("focus", handleFocus);
       list.removeEventListener("blur", handleBlur);
       list.removeEventListener("mousedown", handleMouseDown);
+      }
     };
 
     if (list) {
@@ -277,7 +275,7 @@ export const useList = ({
         tearDown(list);
       };
     }
-  }, [list]);
+  }, [list, handleFocus, handleBlur, handleKeyDown, handleMouseDown]);
 
   return {
     listRef,

@@ -55,20 +55,20 @@ Default.args = {
   style: { width: "200px" },
 };
 
-export const Borderless = Default.bind({});
-Borderless.args = {
-  borderless: true,
-};
+// export const Borderless = Default.bind({});
+// Borderless.args = {
+//   borderless: true,
+// };
 
 export const ConfigurableHeight = Default.bind({});
 ConfigurableHeight.args = {
   displayedItemCount: 6,
 };
 
-export const Deselectable = Default.bind({});
-Deselectable.args = {
-  deselectable: true,
-};
+// export const Deselectable = Default.bind({});
+// Deselectable.args = {
+//   deselectable: true,
+// };
 
 export const Disabled = Default.bind({});
 Disabled.args = {
@@ -88,17 +88,16 @@ export const Empty: Story<ListNextProps> = ({ children, ...rest }) => {
     <FlexLayout>
       <FlexItem>
         <p>Default message</p>
-        <ListNext aria-label="Empty List default example" />
+        <ListNext {...rest} aria-label="Empty List default example" />
       </FlexItem>
       <FlexItem>
         <p>Custom message</p>
-        <ListNext {...rest} aria-label="Empty List custom message example" />
+        <ListNext {...rest} emptyMessage="List is empty" aria-label="Empty List custom message example" />
       </FlexItem>
     </FlexLayout>
   );
 };
 Empty.args = {
-  emptyMessage: "List is empty",
 };
 
 //

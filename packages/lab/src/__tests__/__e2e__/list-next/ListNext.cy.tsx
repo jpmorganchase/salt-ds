@@ -1,4 +1,4 @@
-import {ListNext, ListItemNext, ListNextProps} from "@salt-ds/lab";
+import { ListNext, ListItemNext, ListNextProps } from "@salt-ds/lab";
 
 type ItemType = { label: string; value: string };
 

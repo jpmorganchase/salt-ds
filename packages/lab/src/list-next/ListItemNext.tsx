@@ -15,7 +15,6 @@ export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
   disabled?: boolean;
   focused?: boolean;
   selected?: boolean;
-  showCheckbox?: boolean;
   id?: string;
   value: string;
   role?: string;
@@ -55,7 +54,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       classNameProp
     );
 
-    const content = label || children;
+    const content = label || (children as string);
 
     return (
       <li
@@ -75,7 +74,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
           ) : (
             <Highlighter
               matchPattern={itemTextHighlightPattern}
-              text={label || (children as string)}
+              text={content}
             />
           )}
         </Text>

@@ -1,9 +1,11 @@
 /* Default variables applied to the root element */
 .saltListNext {
+  --list-displayedItemCount: 4;
   --list-background: var(--salt-container-primary-background);
   --list-borderStyle: var(--salt-container-borderStyle);
   --list-borderWidth: var(--salt-size-border);
   --list-height: calc(var(--salt-size-stackable) * var(--list-displayedItemCount));
+
 }
 
 /* Style applied to the root element */
@@ -22,9 +24,13 @@
   box-sizing: content-box;
 }
 
-/* Style applied to the borderless variant */
-.saltListNext-borderless {
-  --list-borderStyle: none;
+.saltListNext:empty:before {
+  height: 100%;
+  padding-inline: var(--salt-size-unit);
+  display: flex;
+  position: relative;
+  align-items: center;
+  content: var(--list-emptyMessage);
 }
 
 /* Pseudo-class applied to the root element on focus */

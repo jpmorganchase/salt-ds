@@ -13,10 +13,7 @@ import {
   useMemo,
 } from "react";
 import { clsx } from "clsx";
-import {
-  ListItemNext,
-  ListItemNext as DefaultListItem,
-} from "./ListItemNext";
+import { ListItemNext as DefaultListItem } from "./ListItemNext";
 import { useList } from "./useList";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -40,17 +37,9 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
    */
   ListItem?: ReactElement;
   /**
-   * If `true`, the component will have no border.
-   */
-  borderless?: boolean;
-  /**
-   * If `true`, items in list will be deselectable.
-   */
-  deselectable?: boolean;
-  /**
    * Optional id prop
    *
-   * Used as suffix of List id: `list-{id}`
+   *The id for the list component
    */
   id?: string;
   /**
@@ -68,14 +57,12 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
 export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
   function ListNext(
     {
-      borderless,
       children,
       className,
       disabled: disabledListProp,
       displayedItemCount: displayedItemCountProp,
-      deselectable = false,
       ListItem = DefaultListItem,
-      emptyMessage,
+      emptyMessage = defaultEmptyMessage,
       id: idProp,
       onSelect,
       onFocus,
@@ -96,13 +83,9 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
     const childrenCount = Children.count(children);
     const emptyList = childrenCount === 0;
-    const selectedDisabled =
-      Children.toArray(children).findIndex(
-        (child) =>
-          isValidElement(child) && child.props.disabled && child.props.selected
-      ) !== -1;
-    const disabled = disabledListProp || selectedDisabled;
-    const listId = useId(idProp) || 'listNext'; // TODO: check why useId needs to return undefined
+
+    const disabled = disabledListProp;
+    const listId = useId(idProp) || "listNext"; // TODO: check why useId needs to return undefined
 
     const displayedItemCount = useMemo((): number => {
       // if no children, display empty message
@@ -124,7 +107,6 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       handleClick,
     } = useList({
       children,
-      deselectable,
       displayedItemCount,
       onFocus,
       onKeyDown,
@@ -133,14 +115,6 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     });
 
     const forkedRef = useForkRef(ref, listRef);
-
-    function renderEmpty() {
-      return (
-        <ListItemNext role="presentation" value="emptyMessage">
-          {emptyMessage || defaultEmptyMessage}
-        </ListItemNext>
-      );
-    }
 
     const renderContent = () => {
       return Children.map(children, (listItem, index) => {
@@ -161,6 +135,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const listStyles = {
       ...style,
       "--list-displayedItemCount": displayedItemCount,
+      "--list-emptyMessage": emptyMessage && `"${emptyMessage}"`,
     };
 
     return (
@@ -169,18 +144,18 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName("borderless")]: borderless,
             [withBaseName("focusable")]: !childrenCount,
           },
           className
         )}
         role="listbox"
         tabIndex={disabled ? -1 : 0}
+        aria-label={emptyList && emptyMessage}
         aria-activedescendant={disabled ? undefined : activeDescendant}
         style={listStyles}
         {...rest}
       >
-        {emptyList ? renderEmpty() : renderContent()}
+        {!emptyList && renderContent()}
       </ul>
     );
   }
