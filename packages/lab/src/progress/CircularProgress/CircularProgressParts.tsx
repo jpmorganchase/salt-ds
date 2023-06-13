@@ -1,5 +1,5 @@
 import { CSSProperties, ReactNode } from "react";
-import "./CircularProgress.css";
+
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import circularProgressCSS from "./CircularProgress.css";

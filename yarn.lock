@@ -2872,7 +2872,7 @@ __metadata:
 
 "@changesets/assemble-release-plan@patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch::locator=%40salt-ds%2Froot%40workspace%3A.":
   version: 5.2.2
-  resolution: "@changesets/assemble-release-plan@patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch::version=5.2.2&hash=e1a9b5&locator=%40salt-ds%2Froot%40workspace%3A."
+  resolution: "@changesets/assemble-release-plan@patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch::version=5.2.2&hash=d6a223&locator=%40salt-ds%2Froot%40workspace%3A."
   dependencies:
     "@babel/runtime": ^7.10.4
     "@changesets/errors": ^0.1.4
@@ -2880,7 +2880,7 @@ __metadata:
     "@changesets/types": ^5.2.0
     "@manypkg/get-packages": ^1.1.3
     semver: ^5.4.1
-  checksum: 6e710986afae1c11031b36d0bf50ad3b6994e21e77632d5b4ff191499901cd68a4d78a6fa21abd70038d5af095a8464f1b6c7f1d1479544af9efbc44c456ce0a
+  checksum: 5f9ab8943e1bcb9436dd982fd0ca82e7899dcc0c51737cb366c2438c5a7f42ffbbf365016545b5dcd6ef9beccb6fd84a17f92fcff8783b61a52f80f6df3b79b0
   languageName: node
   linkType: hard
 
@@ -5374,19 +5374,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/core@^1.7.0, @salt-ds/core@workspace:packages/core":
-  version: 0.0.0-use.local
-  resolution: "@salt-ds/core@workspace:packages/core"
-  peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  languageName: unknown
-  linkType: soft
-
 "@salt-ds/core@npm:1.7.0":
   version: 1.7.0
   resolution: "@salt-ds/core@npm:1.7.0"
@@ -5404,6 +5391,37 @@ __metadata:
   checksum: 216896f50f098f59bdcb40be154d25a7937d88f812c31d0c902013294fdd393e42dab764184375589baebca5cbc84b76ac3d2101bf5680894ae49dd8e3e49644
   languageName: node
   linkType: hard
+
+"@salt-ds/core@npm:^1.7.0":
+  version: 1.7.1
+  resolution: "@salt-ds/core@npm:1.7.1"
+  dependencies:
+    "@floating-ui/react": ^0.23.0
+    "@salt-ds/icons": ^1.3.1
+    clsx: ^1.2.1
+  peerDependencies:
+    "@types/react": ">=16.8.6"
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: a90e69937b88bbce29bd857b4ec968a4fc2c8d2465e875b7e887faa850129b50729c70b63fc326751b0ba4501eeb5b8870c8ce632706bc5cd100ba9ec45fd410
+  languageName: node
+  linkType: hard
+
+"@salt-ds/core@workspace:packages/core":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/core@workspace:packages/core"
+  peerDependencies:
+    "@types/react": ">=16.8.6"
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  languageName: unknown
+  linkType: soft
 
 "@salt-ds/countries@workspace:packages/countries":
   version: 0.0.0-use.local
@@ -5436,7 +5454,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/icons@^1.3.0, @salt-ds/icons@workspace:packages/icons":
+"@salt-ds/icons@^1.3.0, @salt-ds/icons@^1.3.1, @salt-ds/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@salt-ds/icons@workspace:packages/icons"
   dependencies:
@@ -23046,12 +23064,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.1, nanoid@npm:^3.3.4":
-  version: 3.3.4
-  resolution: "nanoid@npm:3.3.4"
+"nanoid@npm:^3.3.1, nanoid@npm:^3.3.4, nanoid@npm:^3.3.6":
+  version: 3.3.6
+  resolution: "nanoid@npm:3.3.6"
   bin:
     nanoid: bin/nanoid.cjs
-  checksum: 2fddd6dee994b7676f008d3ffa4ab16035a754f4bb586c61df5a22cf8c8c94017aadd360368f47d653829e0569a92b129979152ff97af23a558331e47e37cd9c
+  checksum: 7d0eda657002738aa5206107bd0580aead6c95c460ef1bdd0b1a87a9c7ae6277ac2e9b945306aaa5b32c6dcb7feaf462d0f552e7f8b5718abfc6ead5c94a71b3
   languageName: node
   linkType: hard
 
@@ -25809,14 +25827,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.1.0, postcss@npm:^8.2.14, postcss@npm:^8.3.5, postcss@npm:^8.4.14, postcss@npm:^8.4.16, postcss@npm:^8.4.21, postcss@npm:^8.4.7":
-  version: 8.4.21
-  resolution: "postcss@npm:8.4.21"
+"postcss@npm:^8.1.0, postcss@npm:^8.2.14, postcss@npm:^8.3.5, postcss@npm:^8.4.14, postcss@npm:^8.4.18, postcss@npm:^8.4.21, postcss@npm:^8.4.7":
+  version: 8.4.24
+  resolution: "postcss@npm:8.4.24"
   dependencies:
-    nanoid: ^3.3.4
+    nanoid: ^3.3.6
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
-  checksum: e39ac60ccd1542d4f9d93d894048aac0d686b3bb38e927d8386005718e6793dbbb46930f0a523fe382f1bbd843c6d980aaea791252bf5e176180e5a4336d9679
+  checksum: 814e2126dacfea313588eda09cc99a9b4c26ec55c059188aa7a916d20d26d483483106dc5ff9e560731b59f45c5bb91b945dfadc670aed875cc90ddbbf4e787d
   languageName: node
   linkType: hard
 
@@ -31688,34 +31706,40 @@ __metadata:
   linkType: hard
 
 "vite@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "vite@npm:3.1.0"
+  version: 3.2.7
+  resolution: "vite@npm:3.2.7"
   dependencies:
-    esbuild: ^0.15.6
+    esbuild: ^0.15.9
     fsevents: ~2.3.2
-    postcss: ^8.4.16
+    postcss: ^8.4.18
     resolve: ^1.22.1
-    rollup: ~2.78.0
+    rollup: ^2.79.1
   peerDependencies:
+    "@types/node": ">= 14"
     less: "*"
     sass: "*"
     stylus: "*"
+    sugarss: "*"
     terser: ^5.4.0
   dependenciesMeta:
     fsevents:
       optional: true
   peerDependenciesMeta:
+    "@types/node":
+      optional: true
     less:
       optional: true
     sass:
       optional: true
     stylus:
       optional: true
+    sugarss:
+      optional: true
     terser:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 1a343e3d46450181f79f34ff49cca5ff59bb7472de51ea2c4a042aa076f597d27d25c49f48405e82f607af7d8c1c13a9e789402ccb1b23570132382132ec3903
+  checksum: 4c5883b721b6ec406419e61d0b3fae8528e80f8c2eb20c087c7b1b76daec3665a0a49c83cd8ac7fdda6089625094b70c6a132daa5edc650c515ddc9f5eed44f0
   languageName: node
   linkType: hard
 

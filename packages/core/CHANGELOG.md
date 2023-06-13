@@ -1,5 +1,54 @@
 # @salt-ds/core
 
+## 1.8.0-rc.1
+
+### Minor Changes
+
+- 287cb5fa: Form Field supports helper text within a nested Tooltip
+
+  Tooltip uses FormFieldContext which has precedence over any disabled and status given to Tooltip when wrapped within a FormField component
+
+- 2da87f0b: Added `placeholder` prop to Input: Placeholder can be used when no default value is given to promopt user input
+- 49fa6ad5: Added `AdornmentButton` component as an interactive adornment to be used within Input
+- 8d5a8c9f: Added `startAdornment` and `endAdornment` props to Input: Allows for custom adornments to be used within the Input component
+
+### Patch Changes
+
+- c4df0491: The default Card design has been changed to include a border to enhance visual accessibility.
+
+## 1.8.0-rc.0
+
+### Minor Changes
+
+- 58c6699f: Input: `aria-describedby` is now merged between the value from Form Field context if present and the value from inputProps
+- bf5a9441: Updated `RadioButtonGroup` to use renamed token from `FormFieldLegacy`
+- 9d68637a: Moved form-field-next and form-field-context-next to core as form-field and form-field-context
+
+  `FormField`: First version of Form Field built with a compositional API by providing the following components alongside:
+  `FormFieldHelperText`: Helper text component
+  `FormFieldLabel`: Form label component (compatible with left and top placement)
+  `FormFieldControlWrapper`: Styling container for controls used within Form Field
+
+  `FormFieldContext`, `useFormFieldProps`: Context and hook for inner controls to respond to disabled, readonly, and validation state on the parent Form Field
+
+- eb3db91c: Removed `startAdornment` and `endAdornment` props from `InputNext`. Props will be added back once adornments come in v2
+
+  Moved input-next to core as input
+
+  `Input`: First version of `InputNext` renamed to Input
+
+  - All tokens prefixed `--saltInputNext-` changed to prefix `--saltInput-`
+
+  Moved status-adornment to core
+
+  `StatusAdornment`: Component to be used for validation status indication
+
+- d78ff537: Refactored all components to use new style injection mechanism provided by `@salt-ds/styles`
+
+### Patch Changes
+
+- 46af9f8c: Move Banner to core
+
 ## 1.7.1
 
 ### Patch Changes

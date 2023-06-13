@@ -8,8 +8,12 @@ import {
   FormFieldLabel as FormLabel,
   FormField,
   Input,
+  Tooltip,
+  AdornmentButton,
+  Text,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { NoteIcon, InfoIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Form Field",
@@ -70,6 +74,19 @@ export const HelperText: ComponentStory<typeof FormField> = (props) => {
         </FormHelperText>
       </FormField>
     </FlowLayout>
+  );
+};
+
+export const HelperTextAsTooltip: ComponentStory<typeof FormField> = (
+  props
+) => {
+  return (
+    <FormField {...props}>
+      <FormLabel>Form Field label</FormLabel>
+      <Tooltip content="Helper text">
+        <Input defaultValue="Value" />
+      </Tooltip>
+    </FormField>
   );
 };
 
@@ -205,6 +222,25 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
         <Input defaultValue="Input value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
+
+      <FormField validationStatus="error" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Tooltip content="Helper text indicating error">
+          <Input defaultValue="Value" />
+        </Tooltip>
+      </FormField>
+      <FormField validationStatus="warning" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Tooltip content="Helper text indicating warning">
+          <Input defaultValue="Value" />
+        </Tooltip>
+      </FormField>
+      <FormField validationStatus="success" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Tooltip content="Helper text indicating success">
+          <Input defaultValue="Value" />
+        </Tooltip>
+      </FormField>
       {/* TODO: Guidance to explain that the following would produce broken design/behaviour
       
       
@@ -226,6 +262,78 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
       >
         <Input disabled defaultValue="Input value" />
       </FormField> */}
+    </FlowLayout>
+  );
+};
+
+export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
+  props
+) => {
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input
+          startAdornment={<Text>$</Text>}
+          endAdornment={
+            <AdornmentButton>
+              <NoteIcon />
+            </AdornmentButton>
+          }
+          defaultValue={"Value"}
+        />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input
+          startAdornment={
+            <AdornmentButton>
+              <InfoIcon />
+            </AdornmentButton>
+          }
+          endAdornment={
+            <>
+              <Text>%</Text>
+              <AdornmentButton variant="cta">
+                <NoteIcon />
+              </AdornmentButton>
+            </>
+          }
+          defaultValue={"Value"}
+        />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField validationStatus="error" {...props}>
+        <FormLabel>Form Field label (with error)</FormLabel>
+        <Input
+          endAdornment={
+            <AdornmentButton variant="secondary">
+              <NoteIcon />
+            </AdornmentButton>
+          }
+          defaultValue={"Value"}
+        />
+      </FormField>
+      <FormField disabled {...props}>
+        <FormLabel>Form Field label (disabled)</FormLabel>
+        <Input
+          startAdornment={
+            <AdornmentButton>
+              <InfoIcon />
+            </AdornmentButton>
+          }
+          endAdornment={
+            <>
+              <Text>%</Text>
+              <AdornmentButton variant="cta">
+                <NoteIcon />
+              </AdornmentButton>
+            </>
+          }
+          defaultValue={"Value"}
+        />
+      </FormField>
     </FlowLayout>
   );
 };

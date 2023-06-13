@@ -1,5 +1,17 @@
 # @salt-ds/countries
 
+## 1.1.1
+
+### Patch Changes
+
+- cc1f2d46: Bump countries version to fix package publishing
+
+## 1.1.0
+
+### Minor Changes
+
+- d78ff537: Refactored all components to use new style injection mechanism provided by `@salt-ds/styles`
+
 ## 1.0.1
 
 ### Patch Changes
