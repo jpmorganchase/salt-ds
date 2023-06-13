@@ -16,9 +16,9 @@
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
-/* Styles applied to root component if `disabled={true}` */
+/* Styles applied to root component if `readonly={true}` */
 .saltCheckbox-readonly {
-  cursor: var(--salt-selectable-cursor-readonly);
+  cursor: var(--salt-selectable-cursor-disabled); /* TODO check token */
 }
 
 /* Styles applied to the icon component if focused */
