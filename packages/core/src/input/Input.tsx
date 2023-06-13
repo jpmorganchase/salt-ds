@@ -108,9 +108,9 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   } = useFormFieldProps();
 
   const restA11yProps = {
-    ariaActiveDescendant,
-    ariaExpanded,
-    ariaOwns,
+    "aria-activedescendant": ariaActiveDescendant,
+    "aria-expanded": ariaExpanded,
+    "aria-owns": ariaOwns,
   };
 
   const isDisabled = disabled || formFieldDisabled;
