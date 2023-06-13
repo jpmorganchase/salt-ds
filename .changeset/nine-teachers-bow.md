@@ -4,5 +4,6 @@
 ---
 
 Logo
+
 - Add LogoImage and LogoSeparator components
 - Remove LogoTitle
