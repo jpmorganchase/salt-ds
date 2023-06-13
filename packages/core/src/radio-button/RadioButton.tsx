@@ -60,6 +60,10 @@ export interface RadioButtonProps
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
   /**
+   * Set the readonly state
+   */
+  readOnly?: boolean
+  /**
    * Value of radio button
    */
   value?: string;
@@ -82,6 +86,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       onFocus,
       onBlur,
       onChange,
+      readOnly,
       value,
       validationStatus: validationStatusProp,
       ...rest
@@ -136,6 +141,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
             [withBaseName("disabled")]: disabled,
             [withBaseName(validationStatus || "")]: validationStatus,
             [withBaseName("error")]: error,
+            [withBaseName("readonly")]: readOnly,
           },
           className
         )}
@@ -154,7 +160,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           className={withBaseName("input")}
           {...restInputProps}
           checked={checked}
-          disabled={disabled}
+          disabled={disabled || readOnly}
           name={name}
           value={value}
           onBlur={onBlur}
@@ -166,7 +172,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           checked={checked}
           disabled={disabled}
           validationStatus={validationStatus}
-          error={error}
+          readOnly={readOnly} 
+          error={error} /* **Deprecated** */
         />
         {label}
       </label>

@@ -14,6 +14,13 @@
   pointer-events: visible;
 }
 
+/* Styles applied when RadioButton is readonly */
+.saltRadioButton-readonly {
+  color: var(--salt-text-primary-foreground-disabled); /* TODO check tokens */
+  cursor: var(--salt-selectable-cursor-disabled);
+  pointer-events: visible;
+}
+
 /* Styles applied to input component */
 .saltRadioButton-input {
   cursor: inherit;

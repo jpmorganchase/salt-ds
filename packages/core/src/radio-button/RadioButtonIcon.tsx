@@ -11,6 +11,7 @@ export interface RadioButtonIconProps {
   error?: boolean;
   disabled?: boolean;
   validationStatus?: "error" | "warning";
+  readOnly?: boolean;
 }
 
 /**
@@ -20,6 +21,7 @@ export const RadioButtonIcon = ({
   checked,
   error,
   disabled,
+  readOnly,
   validationStatus,
 }: RadioButtonIconProps) => {
   const targetWindow = useWindow();
@@ -35,6 +37,7 @@ export const RadioButtonIcon = ({
         [withBaseName("error")]: error,
         [withBaseName("disabled")]: disabled,
         [withBaseName(validationStatus || "")]: validationStatus,
+        [withBaseName("readonly")]: readOnly,
       })}
       height="14"
       viewBox="0 0 14 14"
