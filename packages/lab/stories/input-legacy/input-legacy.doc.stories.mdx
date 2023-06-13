@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Banner, BannerContent } from "@salt-ds/core";
+import { Banner, BannerContent, Link } from "@salt-ds/core";
 import { FormField, Input, StaticInputAdornment } from "@salt-ds/lab";
 import { CalendarIcon, CallIcon } from "@salt-ds/icons";
 import {
@@ -20,8 +20,11 @@ import { withFlexGap } from "docs/decorators/withFlexGap";
 
 <Banner status="warning">
   <BannerContent>
-    This component has been deprecated. The new
-    [Input](?path=/docs/documentation-core-input--page) is a current WIP.
+    This component has been deprecated. The new{" "}
+    <Link href="https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-input--page">
+      Input
+    </Link>{" "}
+    component is available in core.
   </BannerContent>
 </Banner>
 
