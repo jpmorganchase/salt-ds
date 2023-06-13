@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CartSolidIconProps = IconProps;
 
-export const CartSolidIcon = forwardRef<SVGSVGElement, CartSolidIconProps>(
+const CartSolidIcon = forwardRef<SVGSVGElement, CartSolidIconProps>(
   function CartSolidIcon(props: CartSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const CartSolidIcon = forwardRef<SVGSVGElement, CartSolidIconProps>(
     );
   }
 );
+
+export default CartSolidIcon;

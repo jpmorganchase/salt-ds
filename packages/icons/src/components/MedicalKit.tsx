@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type MedicalKitIconProps = IconProps;
 
-export const MedicalKitIcon = forwardRef<SVGSVGElement, MedicalKitIconProps>(
+const MedicalKitIcon = forwardRef<SVGSVGElement, MedicalKitIconProps>(
   function MedicalKitIcon(props: MedicalKitIconProps, ref) {
     return (
       <Icon
@@ -30,3 +30,5 @@ export const MedicalKitIcon = forwardRef<SVGSVGElement, MedicalKitIconProps>(
     );
   }
 );
+
+export default MedicalKitIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type StorefrontIconProps = IconProps;
 
-export const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
+const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
   function StorefrontIcon(props: StorefrontIconProps, ref) {
     return (
       <Icon
@@ -30,3 +30,5 @@ export const StorefrontIcon = forwardRef<SVGSVGElement, StorefrontIconProps>(
     );
   }
 );
+
+export default StorefrontIcon;

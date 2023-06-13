@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CallSolidIconProps = IconProps;
 
-export const CallSolidIcon = forwardRef<SVGSVGElement, CallSolidIconProps>(
+const CallSolidIcon = forwardRef<SVGSVGElement, CallSolidIconProps>(
   function CallSolidIcon(props: CallSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const CallSolidIcon = forwardRef<SVGSVGElement, CallSolidIconProps>(
     );
   }
 );
+
+export default CallSolidIcon;

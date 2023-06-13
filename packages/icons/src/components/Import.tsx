@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ImportIconProps = IconProps;
 
-export const ImportIcon = forwardRef<SVGSVGElement, ImportIconProps>(
+const ImportIcon = forwardRef<SVGSVGElement, ImportIconProps>(
   function ImportIcon(props: ImportIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const ImportIcon = forwardRef<SVGSVGElement, ImportIconProps>(
     );
   }
 );
+
+export default ImportIcon;

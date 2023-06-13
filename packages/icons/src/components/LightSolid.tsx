@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type LightSolidIconProps = IconProps;
 
-export const LightSolidIcon = forwardRef<SVGSVGElement, LightSolidIconProps>(
+const LightSolidIcon = forwardRef<SVGSVGElement, LightSolidIconProps>(
   function LightSolidIcon(props: LightSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const LightSolidIcon = forwardRef<SVGSVGElement, LightSolidIconProps>(
     );
   }
 );
+
+export default LightSolidIcon;

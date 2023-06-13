@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type TagClearIconProps = IconProps;
 
-export const TagClearIcon = forwardRef<SVGSVGElement, TagClearIconProps>(
+const TagClearIcon = forwardRef<SVGSVGElement, TagClearIconProps>(
   function TagClearIcon(props: TagClearIconProps, ref) {
     return (
       <Icon
@@ -26,3 +26,5 @@ export const TagClearIcon = forwardRef<SVGSVGElement, TagClearIconProps>(
     );
   }
 );
+
+export default TagClearIcon;

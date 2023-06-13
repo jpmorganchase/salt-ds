@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PdfSolidIconProps = IconProps;
 
-export const PdfSolidIcon = forwardRef<SVGSVGElement, PdfSolidIconProps>(
+const PdfSolidIcon = forwardRef<SVGSVGElement, PdfSolidIconProps>(
   function PdfSolidIcon(props: PdfSolidIconProps, ref) {
     return (
       <Icon
@@ -30,3 +30,5 @@ export const PdfSolidIcon = forwardRef<SVGSVGElement, PdfSolidIconProps>(
     );
   }
 );
+
+export default PdfSolidIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type UrgencyNoneIconProps = IconProps;
 
-export const UrgencyNoneIcon = forwardRef<SVGSVGElement, UrgencyNoneIconProps>(
+const UrgencyNoneIcon = forwardRef<SVGSVGElement, UrgencyNoneIconProps>(
   function UrgencyNoneIcon(props: UrgencyNoneIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const UrgencyNoneIcon = forwardRef<SVGSVGElement, UrgencyNoneIconProps>(
     );
   }
 );
+
+export default UrgencyNoneIcon;

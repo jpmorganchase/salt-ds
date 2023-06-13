@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type SuccessTickIconProps = IconProps;
 
-export const SuccessTickIcon = forwardRef<SVGSVGElement, SuccessTickIconProps>(
+const SuccessTickIcon = forwardRef<SVGSVGElement, SuccessTickIconProps>(
   function SuccessTickIcon(props: SuccessTickIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const SuccessTickIcon = forwardRef<SVGSVGElement, SuccessTickIconProps>(
     );
   }
 );
+
+export default SuccessTickIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ColumnChooserSolidIconProps = IconProps;
 
-export const ColumnChooserSolidIcon = forwardRef<
+const ColumnChooserSolidIcon = forwardRef<
   SVGSVGElement,
   ColumnChooserSolidIconProps
 >(function ColumnChooserSolidIcon(props: ColumnChooserSolidIconProps, ref) {
@@ -21,3 +21,5 @@ export const ColumnChooserSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default ColumnChooserSolidIcon;

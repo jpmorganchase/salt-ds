@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CalculatorIconProps = IconProps;
 
-export const CalculatorIcon = forwardRef<SVGSVGElement, CalculatorIconProps>(
+const CalculatorIcon = forwardRef<SVGSVGElement, CalculatorIconProps>(
   function CalculatorIcon(props: CalculatorIconProps, ref) {
     return (
       <Icon
@@ -26,3 +26,5 @@ export const CalculatorIcon = forwardRef<SVGSVGElement, CalculatorIconProps>(
     );
   }
 );
+
+export default CalculatorIcon;

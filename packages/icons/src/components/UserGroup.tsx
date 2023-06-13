@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type UserGroupIconProps = IconProps;
 
-export const UserGroupIcon = forwardRef<SVGSVGElement, UserGroupIconProps>(
+const UserGroupIcon = forwardRef<SVGSVGElement, UserGroupIconProps>(
   function UserGroupIcon(props: UserGroupIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const UserGroupIcon = forwardRef<SVGSVGElement, UserGroupIconProps>(
     );
   }
 );
+
+export default UserGroupIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type RefreshIconProps = IconProps;
 
-export const RefreshIcon = forwardRef<SVGSVGElement, RefreshIconProps>(
+const RefreshIcon = forwardRef<SVGSVGElement, RefreshIconProps>(
   function RefreshIcon(props: RefreshIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const RefreshIcon = forwardRef<SVGSVGElement, RefreshIconProps>(
     );
   }
 );
+
+export default RefreshIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type MessageIconProps = IconProps;
 
-export const MessageIcon = forwardRef<SVGSVGElement, MessageIconProps>(
+const MessageIcon = forwardRef<SVGSVGElement, MessageIconProps>(
   function MessageIcon(props: MessageIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const MessageIcon = forwardRef<SVGSVGElement, MessageIconProps>(
     );
   }
 );
+
+export default MessageIcon;

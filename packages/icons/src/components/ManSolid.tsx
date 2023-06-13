@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ManSolidIconProps = IconProps;
 
-export const ManSolidIcon = forwardRef<SVGSVGElement, ManSolidIconProps>(
+const ManSolidIcon = forwardRef<SVGSVGElement, ManSolidIconProps>(
   function ManSolidIcon(props: ManSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const ManSolidIcon = forwardRef<SVGSVGElement, ManSolidIconProps>(
     );
   }
 );
+
+export default ManSolidIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ChattingIconProps = IconProps;
 
-export const ChattingIcon = forwardRef<SVGSVGElement, ChattingIconProps>(
+const ChattingIcon = forwardRef<SVGSVGElement, ChattingIconProps>(
   function ChattingIcon(props: ChattingIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const ChattingIcon = forwardRef<SVGSVGElement, ChattingIconProps>(
     );
   }
 );
+
+export default ChattingIcon;

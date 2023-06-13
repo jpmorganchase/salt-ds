@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type DeleteIconProps = IconProps;
 
-export const DeleteIcon = forwardRef<SVGSVGElement, DeleteIconProps>(
+const DeleteIcon = forwardRef<SVGSVGElement, DeleteIconProps>(
   function DeleteIcon(props: DeleteIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const DeleteIcon = forwardRef<SVGSVGElement, DeleteIconProps>(
     );
   }
 );
+
+export default DeleteIcon;

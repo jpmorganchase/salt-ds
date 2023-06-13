@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type DatabaseIconProps = IconProps;
 
-export const DatabaseIcon = forwardRef<SVGSVGElement, DatabaseIconProps>(
+const DatabaseIcon = forwardRef<SVGSVGElement, DatabaseIconProps>(
   function DatabaseIcon(props: DatabaseIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const DatabaseIcon = forwardRef<SVGSVGElement, DatabaseIconProps>(
     );
   }
 );
+
+export default DatabaseIcon;

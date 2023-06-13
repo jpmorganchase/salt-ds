@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ChatGroupIconProps = IconProps;
 
-export const ChatGroupIcon = forwardRef<SVGSVGElement, ChatGroupIconProps>(
+const ChatGroupIcon = forwardRef<SVGSVGElement, ChatGroupIconProps>(
   function ChatGroupIcon(props: ChatGroupIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const ChatGroupIcon = forwardRef<SVGSVGElement, ChatGroupIconProps>(
     );
   }
 );
+
+export default ChatGroupIcon;

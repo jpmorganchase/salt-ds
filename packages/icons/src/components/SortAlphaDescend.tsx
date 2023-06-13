@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type SortAlphaDescendIconProps = IconProps;
 
-export const SortAlphaDescendIcon = forwardRef<
+const SortAlphaDescendIcon = forwardRef<
   SVGSVGElement,
   SortAlphaDescendIconProps
 >(function SortAlphaDescendIcon(props: SortAlphaDescendIconProps, ref) {
@@ -26,3 +26,5 @@ export const SortAlphaDescendIcon = forwardRef<
     </Icon>
   );
 });
+
+export default SortAlphaDescendIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CutIconProps = IconProps;
 
-export const CutIcon = forwardRef<SVGSVGElement, CutIconProps>(function CutIcon(
+const CutIcon = forwardRef<SVGSVGElement, CutIconProps>(function CutIcon(
   props: CutIconProps,
   ref
 ) {
@@ -22,3 +22,5 @@ export const CutIcon = forwardRef<SVGSVGElement, CutIconProps>(function CutIcon(
     </Icon>
   );
 });
+
+export default CutIcon;

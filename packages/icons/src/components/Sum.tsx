@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type SumIconProps = IconProps;
 
-export const SumIcon = forwardRef<SVGSVGElement, SumIconProps>(function SumIcon(
+const SumIcon = forwardRef<SVGSVGElement, SumIconProps>(function SumIcon(
   props: SumIconProps,
   ref
 ) {
@@ -25,3 +25,5 @@ export const SumIcon = forwardRef<SVGSVGElement, SumIconProps>(function SumIcon(
     </Icon>
   );
 });
+
+export default SumIcon;

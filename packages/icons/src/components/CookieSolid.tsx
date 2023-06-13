@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CookieSolidIconProps = IconProps;
 
-export const CookieSolidIcon = forwardRef<SVGSVGElement, CookieSolidIconProps>(
+const CookieSolidIcon = forwardRef<SVGSVGElement, CookieSolidIconProps>(
   function CookieSolidIcon(props: CookieSolidIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const CookieSolidIcon = forwardRef<SVGSVGElement, CookieSolidIconProps>(
     );
   }
 );
+
+export default CookieSolidIcon;

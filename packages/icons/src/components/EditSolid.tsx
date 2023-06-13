@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type EditSolidIconProps = IconProps;
 
-export const EditSolidIcon = forwardRef<SVGSVGElement, EditSolidIconProps>(
+const EditSolidIcon = forwardRef<SVGSVGElement, EditSolidIconProps>(
   function EditSolidIcon(props: EditSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const EditSolidIcon = forwardRef<SVGSVGElement, EditSolidIconProps>(
     );
   }
 );
+
+export default EditSolidIcon;

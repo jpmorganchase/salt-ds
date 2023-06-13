@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ArrowRightIconProps = IconProps;
 
-export const ArrowRightIcon = forwardRef<SVGSVGElement, ArrowRightIconProps>(
+const ArrowRightIcon = forwardRef<SVGSVGElement, ArrowRightIconProps>(
   function ArrowRightIcon(props: ArrowRightIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const ArrowRightIcon = forwardRef<SVGSVGElement, ArrowRightIconProps>(
     );
   }
 );
+
+export default ArrowRightIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type TailsSolidIconProps = IconProps;
 
-export const TailsSolidIcon = forwardRef<SVGSVGElement, TailsSolidIconProps>(
+const TailsSolidIcon = forwardRef<SVGSVGElement, TailsSolidIconProps>(
   function TailsSolidIcon(props: TailsSolidIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const TailsSolidIcon = forwardRef<SVGSVGElement, TailsSolidIconProps>(
     );
   }
 );
+
+export default TailsSolidIcon;

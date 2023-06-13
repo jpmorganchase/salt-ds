@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ProgressInprogressIconProps = IconProps;
 
-export const ProgressInprogressIcon = forwardRef<
+const ProgressInprogressIcon = forwardRef<
   SVGSVGElement,
   ProgressInprogressIconProps
 >(function ProgressInprogressIcon(props: ProgressInprogressIconProps, ref) {
@@ -25,3 +25,5 @@ export const ProgressInprogressIcon = forwardRef<
     </Icon>
   );
 });
+
+export default ProgressInprogressIcon;

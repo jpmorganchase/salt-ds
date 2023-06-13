@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type MapSolidIconProps = IconProps;
 
-export const MapSolidIcon = forwardRef<SVGSVGElement, MapSolidIconProps>(
+const MapSolidIcon = forwardRef<SVGSVGElement, MapSolidIconProps>(
   function MapSolidIcon(props: MapSolidIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const MapSolidIcon = forwardRef<SVGSVGElement, MapSolidIconProps>(
     );
   }
 );
+
+export default MapSolidIcon;

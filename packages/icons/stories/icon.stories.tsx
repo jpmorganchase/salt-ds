@@ -1,137 +1,158 @@
-import { createElement, ElementType, useMemo, useState } from "react";
+import {createElement, ElementType, useMemo, useState} from "react";
 import {
-  AddDocumentIcon,
-  AddDocumentSolidIcon,
-  Icon,
-  IconProps,
+    AddDocumentIcon,
+    AddDocumentSolidIcon,
+    Icon,
+    IconProps,
+    LazyIcon
 } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { FlexLayout, StackLayout } from "@salt-ds/core";
-import { FormField, Input } from "@salt-ds/lab";
-import { allIcons } from "./icon.all";
+import {ComponentMeta, ComponentStory} from "@storybook/react";
+import {FlexLayout, StackLayout} from "@salt-ds/core";
+import {FormField, Input} from "@salt-ds/lab";
+import {allIcons} from "./icon.all";
 
 const formatIconName = (icon: string) => {
-  const fullName = icon.replace(/([A-Z])/g, " $1");
-  return fullName.substring(0, fullName.lastIndexOf(" "));
+    const fullName = icon.replace(/([A-Z])/g, " $1");
+    return fullName.substring(0, fullName.lastIndexOf(" "));
 };
 
 const allIconNames = allIcons.map((iconComponent) => ({
-  name: formatIconName(iconComponent.displayName || " "),
-  icon: iconComponent,
+    name: formatIconName(iconComponent.displayName || " "),
+    icon: iconComponent,
 }));
 
 export default {
-  title: "Icons/Icon",
-  component: Icon,
+    title: "Icons/Icon",
+    component: Icon,
 } as ComponentMeta<typeof Icon>;
 
 const sizes = [1, 2, 3, 4, 5] as const;
 
 const IconGrid = ({
-  Icon: IconComponent,
-}: {
-  Icon: ElementType<IconProps>;
+                      Icon: IconComponent,
+                  }: {
+    Icon: ElementType<IconProps>;
 }) => {
-  return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${sizes.length}, 100px)`,
+    return (
+        <div
+            style={{
+                display: "grid",
+                gridTemplateColumns: `repeat(${sizes.length}, 100px)`,
 
-        gridGap: 10,
-      }}
-    >
-      {sizes.map((size) => (
-        <IconComponent size={size} />
-      ))}
-    </div>
-  );
+                gridGap: 10,
+            }}
+        >
+            {sizes.map((size) => (
+                <IconComponent size={size}/>
+            ))}
+        </div>
+    );
 };
 
 export const SaltIcon: ComponentStory<typeof Icon> = (props) => (
-  <AddDocumentIcon {...props} />
+    <AddDocumentIcon {...props} />
 );
 export const SaltIconMultipleSizes: ComponentStory<typeof Icon> = () => (
-  <IconGrid Icon={AddDocumentIcon} />
+    <IconGrid Icon={AddDocumentIcon}/>
 );
 
 export const SaltTypes: ComponentStory<typeof Icon> = () => (
-  <FlexLayout wrap gap={2}>
-    <AddDocumentIcon size={4} />
-    <AddDocumentSolidIcon size={4} />
-  </FlexLayout>
+    <FlexLayout wrap gap={2}>
+        <AddDocumentIcon size={4}/>
+        <AddDocumentSolidIcon size={4}/>
+    </FlexLayout>
 );
 
 export const CustomSVGIcon: ComponentStory<typeof Icon> = () => {
-  const CustomIcon = useMemo(
-    () => (props: IconProps) => {
-      return (
-        <Icon aria-label="custom icon" viewBox="0 0 18 18" {...props}>
-          <path d="M16,2V16H2V2Zm.5-1H1.5a.5.5,0,0,0-.5.5v15a.5.5,0,0,0,.5.5h15a.5.5,0,0,0,.5-.5V1.5A.5.5,0,0,0,16.5,1Z" />
-          <rect height="4" rx="0.25" width="12" x="3" y="11" />
-        </Icon>
-      );
-    },
-    []
-  );
+    const CustomIcon = useMemo(
+        () => (props: IconProps) => {
+            return (
+                <Icon aria-label="custom icon" viewBox="0 0 18 18" {...props}>
+                    <path
+                        d="M16,2V16H2V2Zm.5-1H1.5a.5.5,0,0,0-.5.5v15a.5.5,0,0,0,.5.5h15a.5.5,0,0,0,.5-.5V1.5A.5.5,0,0,0,16.5,1Z"/>
+                    <rect height="4" rx="0.25" width="12" x="3" y="11"/>
+                </Icon>
+            );
+        },
+        []
+    );
 
-  return <IconGrid Icon={CustomIcon} />;
+    return <IconGrid Icon={CustomIcon}/>;
 };
 
 export const CustomIconFullSVG: ComponentStory<typeof Icon> = () => {
-  const CustomIcon = useMemo(
-    () => (props: IconProps) => {
-      return (
-        <Icon aria-label="custom icon" {...props}>
-          <svg viewBox="0 0 18 18">
-            <path d="M16,2V16H2V2Zm.5-1H1.5a.5.5,0,0,0-.5.5v15a.5.5,0,0,0,.5.5h15a.5.5,0,0,0,.5-.5V1.5A.5.5,0,0,0,16.5,1Z" />
-            <rect height="4" rx="0.25" width="12" x="3" y="11" />
-          </svg>
-        </Icon>
-      );
-    },
-    []
-  );
+    const CustomIcon = useMemo(
+        () => (props: IconProps) => {
+            return (
+                <Icon aria-label="custom icon" {...props}>
+                    <svg viewBox="0 0 18 18">
+                        <path
+                            d="M16,2V16H2V2Zm.5-1H1.5a.5.5,0,0,0-.5.5v15a.5.5,0,0,0,.5.5h15a.5.5,0,0,0,.5-.5V1.5A.5.5,0,0,0,16.5,1Z"/>
+                        <rect height="4" rx="0.25" width="12" x="3" y="11"/>
+                    </svg>
+                </Icon>
+            );
+        },
+        []
+    );
 
-  return <IconGrid Icon={CustomIcon} />;
+    return <IconGrid Icon={CustomIcon}/>;
 };
 
 export const AllIcons: ComponentStory<typeof Icon> = () => {
-  return (
-    <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
-      {allIcons.map((iconComponent, i) => {
-        return createElement(iconComponent, { key: i, size: 1 });
-      })}
-    </FlexLayout>
-  );
+    return (
+        <FlexLayout wrap gap={1} style={{paddingBlock: "1rem"}}>
+            {allIcons.map((iconComponent, i) => {
+                return createElement(iconComponent, {
+                    key: i,
+                    size: 1
+                });
+            })}
+        </FlexLayout>
+    );
 };
 
 export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
-  const [inputText, setInputText] = useState("");
+    const [inputText, setInputText] = useState("");
 
-  return (
-    <StackLayout separators>
-      <FormField
-        label={"search icon"}
-        style={{ marginBlock: "1rem", maxWidth: "300px" }}
-      >
-        <Input value={inputText} onChange={(_, value) => setInputText(value)} />
-      </FormField>
-      <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
-        {allIconNames
-          .filter(({ name, icon }) => new RegExp(inputText, "i").test(name))
-          .map(({ name, icon }, i) => {
-            return (
-              <StackLayout style={{ width: "150px" }} gap={1} align="center">
-                {createElement(icon, {
-                  key: i,
-                  size: 2,
-                })}
-                <p style={{ margin: 0 }}>{name}</p>
-              </StackLayout>
-            );
-          })}
-      </FlexLayout>
-    </StackLayout>
-  );
+    return (
+        <StackLayout separators>
+            <FormField
+                label={"search icon"}
+                style={{
+                    marginBlock: "1rem",
+                    maxWidth: "300px"
+                }}
+            >
+                <Input value={inputText} onChange={(_, value) => setInputText(value)}/>
+            </FormField>
+            <FlexLayout wrap gap={3} style={{paddingBlock: "1rem"}}>
+                {allIconNames
+                    .filter(({
+                                 name,
+                                 icon
+                             }) => new RegExp(inputText, "i").test(name))
+                    .map(({
+                              name,
+                              icon
+                          }, i) => {
+                        return (
+                            <StackLayout style={{width: "150px"}} gap={1} align="center">
+                                {createElement(icon, {
+                                    key: i,
+                                    size: 2,
+                                })}
+                                <p style={{margin: 0}}>{name}</p>
+                            </StackLayout>
+                        );
+                    })}
+            </FlexLayout>
+        </StackLayout>
+    );
 };
+
+export const LazyIconExample: ComponentStory<typeof Icon> = () => {
+    return <LazyIcon name="AddDocument" />;
+}
+
+LazyIconExample.name = "LazyIcon";

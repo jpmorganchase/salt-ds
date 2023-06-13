@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type TriangleRightDownIconProps = IconProps;
 
-export const TriangleRightDownIcon = forwardRef<
+const TriangleRightDownIcon = forwardRef<
   SVGSVGElement,
   TriangleRightDownIconProps
 >(function TriangleRightDownIcon(props: TriangleRightDownIconProps, ref) {
@@ -21,3 +21,5 @@ export const TriangleRightDownIcon = forwardRef<
     </Icon>
   );
 });
+
+export default TriangleRightDownIcon;

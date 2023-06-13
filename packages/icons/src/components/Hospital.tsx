@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type HospitalIconProps = IconProps;
 
-export const HospitalIcon = forwardRef<SVGSVGElement, HospitalIconProps>(
+const HospitalIcon = forwardRef<SVGSVGElement, HospitalIconProps>(
   function HospitalIcon(props: HospitalIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const HospitalIcon = forwardRef<SVGSVGElement, HospitalIconProps>(
     );
   }
 );
+
+export default HospitalIcon;

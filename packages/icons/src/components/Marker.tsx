@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type MarkerIconProps = IconProps;
 
-export const MarkerIcon = forwardRef<SVGSVGElement, MarkerIconProps>(
+const MarkerIcon = forwardRef<SVGSVGElement, MarkerIconProps>(
   function MarkerIcon(props: MarkerIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const MarkerIcon = forwardRef<SVGSVGElement, MarkerIconProps>(
     );
   }
 );
+
+export default MarkerIcon;

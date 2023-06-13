@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type SettingsIconProps = IconProps;
 
-export const SettingsIcon = forwardRef<SVGSVGElement, SettingsIconProps>(
+const SettingsIcon = forwardRef<SVGSVGElement, SettingsIconProps>(
   function SettingsIcon(props: SettingsIconProps, ref) {
     return (
       <Icon
@@ -29,3 +29,5 @@ export const SettingsIcon = forwardRef<SVGSVGElement, SettingsIconProps>(
     );
   }
 );
+
+export default SettingsIcon;

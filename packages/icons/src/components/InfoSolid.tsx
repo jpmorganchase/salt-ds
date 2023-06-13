@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type InfoSolidIconProps = IconProps;
 
-export const InfoSolidIcon = forwardRef<SVGSVGElement, InfoSolidIconProps>(
+const InfoSolidIcon = forwardRef<SVGSVGElement, InfoSolidIconProps>(
   function InfoSolidIcon(props: InfoSolidIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const InfoSolidIcon = forwardRef<SVGSVGElement, InfoSolidIconProps>(
     );
   }
 );
+
+export default InfoSolidIcon;

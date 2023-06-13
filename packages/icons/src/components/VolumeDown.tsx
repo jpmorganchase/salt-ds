@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type VolumeDownIconProps = IconProps;
 
-export const VolumeDownIcon = forwardRef<SVGSVGElement, VolumeDownIconProps>(
+const VolumeDownIcon = forwardRef<SVGSVGElement, VolumeDownIconProps>(
   function VolumeDownIcon(props: VolumeDownIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const VolumeDownIcon = forwardRef<SVGSVGElement, VolumeDownIconProps>(
     );
   }
 );
+
+export default VolumeDownIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type AttachIconProps = IconProps;
 
-export const AttachIcon = forwardRef<SVGSVGElement, AttachIconProps>(
+const AttachIcon = forwardRef<SVGSVGElement, AttachIconProps>(
   function AttachIcon(props: AttachIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const AttachIcon = forwardRef<SVGSVGElement, AttachIconProps>(
     );
   }
 );
+
+export default AttachIcon;

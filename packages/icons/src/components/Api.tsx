@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ApiIconProps = IconProps;
 
-export const ApiIcon = forwardRef<SVGSVGElement, ApiIconProps>(function ApiIcon(
+const ApiIcon = forwardRef<SVGSVGElement, ApiIconProps>(function ApiIcon(
   props: ApiIconProps,
   ref
 ) {
@@ -25,3 +25,5 @@ export const ApiIcon = forwardRef<SVGSVGElement, ApiIconProps>(function ApiIcon(
     </Icon>
   );
 });
+
+export default ApiIcon;

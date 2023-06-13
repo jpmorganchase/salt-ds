@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type HiddenIconProps = IconProps;
 
-export const HiddenIcon = forwardRef<SVGSVGElement, HiddenIconProps>(
+const HiddenIcon = forwardRef<SVGSVGElement, HiddenIconProps>(
   function HiddenIcon(props: HiddenIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const HiddenIcon = forwardRef<SVGSVGElement, HiddenIconProps>(
     );
   }
 );
+
+export default HiddenIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ExpandAllIconProps = IconProps;
 
-export const ExpandAllIcon = forwardRef<SVGSVGElement, ExpandAllIconProps>(
+const ExpandAllIcon = forwardRef<SVGSVGElement, ExpandAllIconProps>(
   function ExpandAllIcon(props: ExpandAllIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const ExpandAllIcon = forwardRef<SVGSVGElement, ExpandAllIconProps>(
     );
   }
 );
+
+export default ExpandAllIcon;

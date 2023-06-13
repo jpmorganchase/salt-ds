@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type KeyControlIconProps = IconProps;
 
-export const KeyControlIcon = forwardRef<SVGSVGElement, KeyControlIconProps>(
+const KeyControlIcon = forwardRef<SVGSVGElement, KeyControlIconProps>(
   function KeyControlIcon(props: KeyControlIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const KeyControlIcon = forwardRef<SVGSVGElement, KeyControlIconProps>(
     );
   }
 );
+
+export default KeyControlIcon;

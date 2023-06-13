@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type XlsSolidIconProps = IconProps;
 
-export const XlsSolidIcon = forwardRef<SVGSVGElement, XlsSolidIconProps>(
+const XlsSolidIcon = forwardRef<SVGSVGElement, XlsSolidIconProps>(
   function XlsSolidIcon(props: XlsSolidIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const XlsSolidIcon = forwardRef<SVGSVGElement, XlsSolidIconProps>(
     );
   }
 );
+
+export default XlsSolidIcon;

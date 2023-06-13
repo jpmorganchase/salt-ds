@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PresentationSolidIconProps = IconProps;
 
-export const PresentationSolidIcon = forwardRef<
+const PresentationSolidIcon = forwardRef<
   SVGSVGElement,
   PresentationSolidIconProps
 >(function PresentationSolidIcon(props: PresentationSolidIconProps, ref) {
@@ -25,3 +25,5 @@ export const PresentationSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default PresentationSolidIcon;

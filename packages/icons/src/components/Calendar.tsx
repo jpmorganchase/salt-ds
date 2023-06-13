@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CalendarIconProps = IconProps;
 
-export const CalendarIcon = forwardRef<SVGSVGElement, CalendarIconProps>(
+const CalendarIcon = forwardRef<SVGSVGElement, CalendarIconProps>(
   function CalendarIcon(props: CalendarIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const CalendarIcon = forwardRef<SVGSVGElement, CalendarIconProps>(
     );
   }
 );
+
+export default CalendarIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type LinkedIconProps = IconProps;
 
-export const LinkedIcon = forwardRef<SVGSVGElement, LinkedIconProps>(
+const LinkedIcon = forwardRef<SVGSVGElement, LinkedIconProps>(
   function LinkedIcon(props: LinkedIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const LinkedIcon = forwardRef<SVGSVGElement, LinkedIconProps>(
     );
   }
 );
+
+export default LinkedIcon;

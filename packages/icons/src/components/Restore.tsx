@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type RestoreIconProps = IconProps;
 
-export const RestoreIcon = forwardRef<SVGSVGElement, RestoreIconProps>(
+const RestoreIcon = forwardRef<SVGSVGElement, RestoreIconProps>(
   function RestoreIcon(props: RestoreIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const RestoreIcon = forwardRef<SVGSVGElement, RestoreIconProps>(
     );
   }
 );
+
+export default RestoreIcon;

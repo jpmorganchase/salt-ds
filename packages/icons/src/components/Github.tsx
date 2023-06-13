@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type GithubIconProps = IconProps;
 
-export const GithubIcon = forwardRef<SVGSVGElement, GithubIconProps>(
+const GithubIcon = forwardRef<SVGSVGElement, GithubIconProps>(
   function GithubIcon(props: GithubIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const GithubIcon = forwardRef<SVGSVGElement, GithubIconProps>(
     );
   }
 );
+
+export default GithubIcon;

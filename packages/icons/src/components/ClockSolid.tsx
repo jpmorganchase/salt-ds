@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ClockSolidIconProps = IconProps;
 
-export const ClockSolidIcon = forwardRef<SVGSVGElement, ClockSolidIconProps>(
+const ClockSolidIcon = forwardRef<SVGSVGElement, ClockSolidIconProps>(
   function ClockSolidIcon(props: ClockSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const ClockSolidIcon = forwardRef<SVGSVGElement, ClockSolidIconProps>(
     );
   }
 );
+
+export default ClockSolidIcon;

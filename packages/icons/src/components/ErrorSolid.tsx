@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ErrorSolidIconProps = IconProps;
 
-export const ErrorSolidIcon = forwardRef<SVGSVGElement, ErrorSolidIconProps>(
+const ErrorSolidIcon = forwardRef<SVGSVGElement, ErrorSolidIconProps>(
   function ErrorSolidIcon(props: ErrorSolidIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const ErrorSolidIcon = forwardRef<SVGSVGElement, ErrorSolidIconProps>(
     );
   }
 );
+
+export default ErrorSolidIcon;

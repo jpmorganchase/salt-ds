@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type KeyCapslockIconProps = IconProps;
 
-export const KeyCapslockIcon = forwardRef<SVGSVGElement, KeyCapslockIconProps>(
+const KeyCapslockIcon = forwardRef<SVGSVGElement, KeyCapslockIconProps>(
   function KeyCapslockIcon(props: KeyCapslockIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const KeyCapslockIcon = forwardRef<SVGSVGElement, KeyCapslockIconProps>(
     );
   }
 );
+
+export default KeyCapslockIcon;

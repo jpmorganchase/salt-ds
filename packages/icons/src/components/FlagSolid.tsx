@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type FlagSolidIconProps = IconProps;
 
-export const FlagSolidIcon = forwardRef<SVGSVGElement, FlagSolidIconProps>(
+const FlagSolidIcon = forwardRef<SVGSVGElement, FlagSolidIconProps>(
   function FlagSolidIcon(props: FlagSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const FlagSolidIcon = forwardRef<SVGSVGElement, FlagSolidIconProps>(
     );
   }
 );
+
+export default FlagSolidIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type FilterIconProps = IconProps;
 
-export const FilterIcon = forwardRef<SVGSVGElement, FilterIconProps>(
+const FilterIcon = forwardRef<SVGSVGElement, FilterIconProps>(
   function FilterIcon(props: FilterIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const FilterIcon = forwardRef<SVGSVGElement, FilterIconProps>(
     );
   }
 );
+
+export default FilterIcon;

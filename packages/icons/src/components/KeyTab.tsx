@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type KeyTabIconProps = IconProps;
 
-export const KeyTabIcon = forwardRef<SVGSVGElement, KeyTabIconProps>(
+const KeyTabIcon = forwardRef<SVGSVGElement, KeyTabIconProps>(
   function KeyTabIcon(props: KeyTabIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const KeyTabIcon = forwardRef<SVGSVGElement, KeyTabIconProps>(
     );
   }
 );
+
+export default KeyTabIcon;

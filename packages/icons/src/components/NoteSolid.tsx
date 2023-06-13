@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type NoteSolidIconProps = IconProps;
 
-export const NoteSolidIcon = forwardRef<SVGSVGElement, NoteSolidIconProps>(
+const NoteSolidIcon = forwardRef<SVGSVGElement, NoteSolidIconProps>(
   function NoteSolidIcon(props: NoteSolidIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const NoteSolidIcon = forwardRef<SVGSVGElement, NoteSolidIconProps>(
     );
   }
 );
+
+export default NoteSolidIcon;

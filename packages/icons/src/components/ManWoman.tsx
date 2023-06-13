@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ManWomanIconProps = IconProps;
 
-export const ManWomanIcon = forwardRef<SVGSVGElement, ManWomanIconProps>(
+const ManWomanIcon = forwardRef<SVGSVGElement, ManWomanIconProps>(
   function ManWomanIcon(props: ManWomanIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const ManWomanIcon = forwardRef<SVGSVGElement, ManWomanIconProps>(
     );
   }
 );
+
+export default ManWomanIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ProgressCompleteIconProps = IconProps;
 
-export const ProgressCompleteIcon = forwardRef<
+const ProgressCompleteIcon = forwardRef<
   SVGSVGElement,
   ProgressCompleteIconProps
 >(function ProgressCompleteIcon(props: ProgressCompleteIconProps, ref) {
@@ -25,3 +25,5 @@ export const ProgressCompleteIcon = forwardRef<
     </Icon>
   );
 });
+
+export default ProgressCompleteIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PauseSolidIconProps = IconProps;
 
-export const PauseSolidIcon = forwardRef<SVGSVGElement, PauseSolidIconProps>(
+const PauseSolidIcon = forwardRef<SVGSVGElement, PauseSolidIconProps>(
   function PauseSolidIcon(props: PauseSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const PauseSolidIcon = forwardRef<SVGSVGElement, PauseSolidIconProps>(
     );
   }
 );
+
+export default PauseSolidIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type TagSolidIconProps = IconProps;
 
-export const TagSolidIcon = forwardRef<SVGSVGElement, TagSolidIconProps>(
+const TagSolidIcon = forwardRef<SVGSVGElement, TagSolidIconProps>(
   function TagSolidIcon(props: TagSolidIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const TagSolidIcon = forwardRef<SVGSVGElement, TagSolidIconProps>(
     );
   }
 );
+
+export default TagSolidIcon;

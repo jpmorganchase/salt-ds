@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PlaySolidIconProps = IconProps;
 
-export const PlaySolidIcon = forwardRef<SVGSVGElement, PlaySolidIconProps>(
+const PlaySolidIcon = forwardRef<SVGSVGElement, PlaySolidIconProps>(
   function PlaySolidIcon(props: PlaySolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const PlaySolidIcon = forwardRef<SVGSVGElement, PlaySolidIconProps>(
     );
   }
 );
+
+export default PlaySolidIcon;

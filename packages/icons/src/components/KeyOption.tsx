@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type KeyOptionIconProps = IconProps;
 
-export const KeyOptionIcon = forwardRef<SVGSVGElement, KeyOptionIconProps>(
+const KeyOptionIcon = forwardRef<SVGSVGElement, KeyOptionIconProps>(
   function KeyOptionIcon(props: KeyOptionIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const KeyOptionIcon = forwardRef<SVGSVGElement, KeyOptionIconProps>(
     );
   }
 );
+
+export default KeyOptionIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CollapseAllIconProps = IconProps;
 
-export const CollapseAllIcon = forwardRef<SVGSVGElement, CollapseAllIconProps>(
+const CollapseAllIcon = forwardRef<SVGSVGElement, CollapseAllIconProps>(
   function CollapseAllIcon(props: CollapseAllIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const CollapseAllIcon = forwardRef<SVGSVGElement, CollapseAllIconProps>(
     );
   }
 );
+
+export default CollapseAllIcon;

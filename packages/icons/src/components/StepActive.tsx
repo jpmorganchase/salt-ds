@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type StepActiveIconProps = IconProps;
 
-export const StepActiveIcon = forwardRef<SVGSVGElement, StepActiveIconProps>(
+const StepActiveIcon = forwardRef<SVGSVGElement, StepActiveIconProps>(
   function StepActiveIcon(props: StepActiveIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const StepActiveIcon = forwardRef<SVGSVGElement, StepActiveIconProps>(
     );
   }
 );
+
+export default StepActiveIcon;

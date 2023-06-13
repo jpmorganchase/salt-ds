@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type AppSwitcherIconProps = IconProps;
 
-export const AppSwitcherIcon = forwardRef<SVGSVGElement, AppSwitcherIconProps>(
+const AppSwitcherIcon = forwardRef<SVGSVGElement, AppSwitcherIconProps>(
   function AppSwitcherIcon(props: AppSwitcherIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const AppSwitcherIcon = forwardRef<SVGSVGElement, AppSwitcherIconProps>(
     );
   }
 );
+
+export default AppSwitcherIcon;

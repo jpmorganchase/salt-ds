@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CloseSmallIconProps = IconProps;
 
-export const CloseSmallIcon = forwardRef<SVGSVGElement, CloseSmallIconProps>(
+const CloseSmallIcon = forwardRef<SVGSVGElement, CloseSmallIconProps>(
   function CloseSmallIcon(props: CloseSmallIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const CloseSmallIcon = forwardRef<SVGSVGElement, CloseSmallIconProps>(
     );
   }
 );
+
+export default CloseSmallIcon;

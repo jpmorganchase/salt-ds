@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type UrgencyHighIconProps = IconProps;
 
-export const UrgencyHighIcon = forwardRef<SVGSVGElement, UrgencyHighIconProps>(
+const UrgencyHighIcon = forwardRef<SVGSVGElement, UrgencyHighIconProps>(
   function UrgencyHighIcon(props: UrgencyHighIconProps, ref) {
     return (
       <Icon
@@ -22,3 +22,5 @@ export const UrgencyHighIcon = forwardRef<SVGSVGElement, UrgencyHighIconProps>(
     );
   }
 );
+
+export default UrgencyHighIcon;

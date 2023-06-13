@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ZipSolidIconProps = IconProps;
 
-export const ZipSolidIcon = forwardRef<SVGSVGElement, ZipSolidIconProps>(
+const ZipSolidIcon = forwardRef<SVGSVGElement, ZipSolidIconProps>(
   function ZipSolidIcon(props: ZipSolidIconProps, ref) {
     return (
       <Icon
@@ -30,3 +30,5 @@ export const ZipSolidIcon = forwardRef<SVGSVGElement, ZipSolidIconProps>(
     );
   }
 );
+
+export default ZipSolidIcon;

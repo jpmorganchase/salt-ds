@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type TreeSolidIconProps = IconProps;
 
-export const TreeSolidIcon = forwardRef<SVGSVGElement, TreeSolidIconProps>(
+const TreeSolidIcon = forwardRef<SVGSVGElement, TreeSolidIconProps>(
   function TreeSolidIcon(props: TreeSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const TreeSolidIcon = forwardRef<SVGSVGElement, TreeSolidIconProps>(
     );
   }
 );
+
+export default TreeSolidIcon;

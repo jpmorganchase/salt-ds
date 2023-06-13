@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CreditCardIconProps = IconProps;
 
-export const CreditCardIcon = forwardRef<SVGSVGElement, CreditCardIconProps>(
+const CreditCardIcon = forwardRef<SVGSVGElement, CreditCardIconProps>(
   function CreditCardIcon(props: CreditCardIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const CreditCardIcon = forwardRef<SVGSVGElement, CreditCardIconProps>(
     );
   }
 );
+
+export default CreditCardIcon;

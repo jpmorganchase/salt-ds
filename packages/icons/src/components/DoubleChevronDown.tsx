@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type DoubleChevronDownIconProps = IconProps;
 
-export const DoubleChevronDownIcon = forwardRef<
+const DoubleChevronDownIcon = forwardRef<
   SVGSVGElement,
   DoubleChevronDownIconProps
 >(function DoubleChevronDownIcon(props: DoubleChevronDownIconProps, ref) {
@@ -22,3 +22,5 @@ export const DoubleChevronDownIcon = forwardRef<
     </Icon>
   );
 });
+
+export default DoubleChevronDownIcon;

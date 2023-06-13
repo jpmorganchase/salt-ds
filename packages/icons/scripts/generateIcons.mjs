@@ -168,7 +168,7 @@ const generateIndex = async ({ icons, componentsPath }) => {
   const content = icons
     .sort((a, b) => a.localeCompare(b))
     .map((componentName) => {
-      return `export * from './${componentName}';`;
+      return `export { default as ${componentName}Icon } from './${componentName}';`;
     });
 
   const joinedText = [GENERATED_WARNING_COMMENT, ...content].join("\n");
@@ -207,6 +207,48 @@ const generateIconAll = async ({ icons, allPath }) => {
   await fs.writeFile(allPath, formattedResult, { encoding: "utf8" });
 };
 
+// generate lazyMap for use in the LazyIcon component
+const generateLazyMap = ({ icons, basePath }) => {
+  console.log("Generating lazyMap file");
+
+  const outputFile = path.join(
+      basePath,
+      "./lazy-icon/",
+      "lazyMap.ts"
+  );
+
+  const importText = `
+    import { lazy } from "react";
+  `;
+
+  let lazyMapText = ["export const lazyMap = {"];
+
+  for (const name of icons) {
+    const entryText = `"${name}": lazy(() => import("../components/${name}")),`;
+
+    lazyMapText.push(entryText);
+  }
+
+  lazyMapText.push("} as const");
+
+  const joinedText = [
+    GENERATED_WARNING_COMMENT,
+    importText,
+    lazyMapText.join("\n"),
+  ].join("\n");
+
+  const formattedResult = prettier.format(joinedText, PRETTIER_SETTINGS);
+
+  fs.writeFile(
+      outputFile,
+      formattedResult,
+      { encoding: "utf8" },
+      function (err) {
+        if (err) return console.log(err);
+      }
+  );
+};
+
 // Run the script
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.join(__dirname, "../src");
@@ -222,3 +264,4 @@ const icons = await generateIconComponents({
 });
 await generateIndex({ icons, componentsPath });
 await generateIconAll({ icons, allPath });
+await generateLazyMap({ icons, basePath });

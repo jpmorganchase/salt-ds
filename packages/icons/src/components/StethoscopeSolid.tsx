@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type StethoscopeSolidIconProps = IconProps;
 
-export const StethoscopeSolidIcon = forwardRef<
+const StethoscopeSolidIcon = forwardRef<
   SVGSVGElement,
   StethoscopeSolidIconProps
 >(function StethoscopeSolidIcon(props: StethoscopeSolidIconProps, ref) {
@@ -25,3 +25,5 @@ export const StethoscopeSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default StethoscopeSolidIcon;

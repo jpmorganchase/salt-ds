@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ProtectionIconProps = IconProps;
 
-export const ProtectionIcon = forwardRef<SVGSVGElement, ProtectionIconProps>(
+const ProtectionIcon = forwardRef<SVGSVGElement, ProtectionIconProps>(
   function ProtectionIcon(props: ProtectionIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const ProtectionIcon = forwardRef<SVGSVGElement, ProtectionIconProps>(
     );
   }
 );
+
+export default ProtectionIcon;

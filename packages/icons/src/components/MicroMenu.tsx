@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type MicroMenuIconProps = IconProps;
 
-export const MicroMenuIcon = forwardRef<SVGSVGElement, MicroMenuIconProps>(
+const MicroMenuIcon = forwardRef<SVGSVGElement, MicroMenuIconProps>(
   function MicroMenuIcon(props: MicroMenuIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const MicroMenuIcon = forwardRef<SVGSVGElement, MicroMenuIconProps>(
     );
   }
 );
+
+export default MicroMenuIcon;

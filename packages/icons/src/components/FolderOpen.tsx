@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type FolderOpenIconProps = IconProps;
 
-export const FolderOpenIcon = forwardRef<SVGSVGElement, FolderOpenIconProps>(
+const FolderOpenIcon = forwardRef<SVGSVGElement, FolderOpenIconProps>(
   function FolderOpenIcon(props: FolderOpenIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const FolderOpenIcon = forwardRef<SVGSVGElement, FolderOpenIconProps>(
     );
   }
 );
+
+export default FolderOpenIcon;

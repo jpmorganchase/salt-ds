@@ -4,7 +4,7 @@ import { Icon, IconProps } from "../icon";
 
 export type {{componentName}}IconProps = IconProps;
 
-export const {{componentName}}Icon = forwardRef<SVGSVGElement, {{componentName}}IconProps>(
+const {{componentName}}Icon = forwardRef<SVGSVGElement, {{componentName}}IconProps>(
   function {{componentName}}Icon(props: {{componentName}}IconProps, ref) {
     return (
       <Icon data-testid="{{componentName}}Icon" aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} {...props}>
@@ -13,3 +13,5 @@ export const {{componentName}}Icon = forwardRef<SVGSVGElement, {{componentName}}
     );
   }
 );
+
+export default {{componentName}}Icon;

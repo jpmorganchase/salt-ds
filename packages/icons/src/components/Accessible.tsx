@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type AccessibleIconProps = IconProps;
 
-export const AccessibleIcon = forwardRef<SVGSVGElement, AccessibleIconProps>(
+const AccessibleIcon = forwardRef<SVGSVGElement, AccessibleIconProps>(
   function AccessibleIcon(props: AccessibleIconProps, ref) {
     return (
       <Icon
@@ -26,3 +26,5 @@ export const AccessibleIcon = forwardRef<SVGSVGElement, AccessibleIconProps>(
     );
   }
 );
+
+export default AccessibleIcon;

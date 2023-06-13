@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type BarChartIconProps = IconProps;
 
-export const BarChartIcon = forwardRef<SVGSVGElement, BarChartIconProps>(
+const BarChartIcon = forwardRef<SVGSVGElement, BarChartIconProps>(
   function BarChartIcon(props: BarChartIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const BarChartIcon = forwardRef<SVGSVGElement, BarChartIconProps>(
     );
   }
 );
+
+export default BarChartIcon;

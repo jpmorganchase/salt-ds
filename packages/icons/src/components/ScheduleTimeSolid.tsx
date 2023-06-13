@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ScheduleTimeSolidIconProps = IconProps;
 
-export const ScheduleTimeSolidIcon = forwardRef<
+const ScheduleTimeSolidIcon = forwardRef<
   SVGSVGElement,
   ScheduleTimeSolidIconProps
 >(function ScheduleTimeSolidIcon(props: ScheduleTimeSolidIconProps, ref) {
@@ -26,3 +26,5 @@ export const ScheduleTimeSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default ScheduleTimeSolidIcon;

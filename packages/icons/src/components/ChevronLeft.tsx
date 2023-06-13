@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ChevronLeftIconProps = IconProps;
 
-export const ChevronLeftIcon = forwardRef<SVGSVGElement, ChevronLeftIconProps>(
+const ChevronLeftIcon = forwardRef<SVGSVGElement, ChevronLeftIconProps>(
   function ChevronLeftIcon(props: ChevronLeftIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const ChevronLeftIcon = forwardRef<SVGSVGElement, ChevronLeftIconProps>(
     );
   }
 );
+
+export default ChevronLeftIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type GuideOpenIconProps = IconProps;
 
-export const GuideOpenIcon = forwardRef<SVGSVGElement, GuideOpenIconProps>(
+const GuideOpenIcon = forwardRef<SVGSVGElement, GuideOpenIconProps>(
   function GuideOpenIcon(props: GuideOpenIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const GuideOpenIcon = forwardRef<SVGSVGElement, GuideOpenIconProps>(
     );
   }
 );
+
+export default GuideOpenIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type HomeSolidIconProps = IconProps;
 
-export const HomeSolidIcon = forwardRef<SVGSVGElement, HomeSolidIconProps>(
+const HomeSolidIcon = forwardRef<SVGSVGElement, HomeSolidIconProps>(
   function HomeSolidIcon(props: HomeSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const HomeSolidIcon = forwardRef<SVGSVGElement, HomeSolidIconProps>(
     );
   }
 );
+
+export default HomeSolidIcon;

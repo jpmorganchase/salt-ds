@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type BookmarkIconProps = IconProps;
 
-export const BookmarkIcon = forwardRef<SVGSVGElement, BookmarkIconProps>(
+const BookmarkIcon = forwardRef<SVGSVGElement, BookmarkIconProps>(
   function BookmarkIcon(props: BookmarkIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const BookmarkIcon = forwardRef<SVGSVGElement, BookmarkIconProps>(
     );
   }
 );
+
+export default BookmarkIcon;

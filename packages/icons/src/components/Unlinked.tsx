@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type UnlinkedIconProps = IconProps;
 
-export const UnlinkedIcon = forwardRef<SVGSVGElement, UnlinkedIconProps>(
+const UnlinkedIcon = forwardRef<SVGSVGElement, UnlinkedIconProps>(
   function UnlinkedIcon(props: UnlinkedIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const UnlinkedIcon = forwardRef<SVGSVGElement, UnlinkedIconProps>(
     );
   }
 );
+
+export default UnlinkedIcon;

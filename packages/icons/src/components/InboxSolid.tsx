@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type InboxSolidIconProps = IconProps;
 
-export const InboxSolidIcon = forwardRef<SVGSVGElement, InboxSolidIconProps>(
+const InboxSolidIcon = forwardRef<SVGSVGElement, InboxSolidIconProps>(
   function InboxSolidIcon(props: InboxSolidIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const InboxSolidIcon = forwardRef<SVGSVGElement, InboxSolidIconProps>(
     );
   }
 );
+
+export default InboxSolidIcon;

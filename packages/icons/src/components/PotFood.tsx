@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PotFoodIconProps = IconProps;
 
-export const PotFoodIcon = forwardRef<SVGSVGElement, PotFoodIconProps>(
+const PotFoodIcon = forwardRef<SVGSVGElement, PotFoodIconProps>(
   function PotFoodIcon(props: PotFoodIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const PotFoodIcon = forwardRef<SVGSVGElement, PotFoodIconProps>(
     );
   }
 );
+
+export default PotFoodIcon;

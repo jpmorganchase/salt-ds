@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PivotSolidIconProps = IconProps;
 
-export const PivotSolidIcon = forwardRef<SVGSVGElement, PivotSolidIconProps>(
+const PivotSolidIcon = forwardRef<SVGSVGElement, PivotSolidIconProps>(
   function PivotSolidIcon(props: PivotSolidIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const PivotSolidIcon = forwardRef<SVGSVGElement, PivotSolidIconProps>(
     );
   }
 );
+
+export default PivotSolidIcon;

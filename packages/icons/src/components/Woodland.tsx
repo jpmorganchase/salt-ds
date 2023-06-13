@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type WoodlandIconProps = IconProps;
 
-export const WoodlandIcon = forwardRef<SVGSVGElement, WoodlandIconProps>(
+const WoodlandIcon = forwardRef<SVGSVGElement, WoodlandIconProps>(
   function WoodlandIcon(props: WoodlandIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const WoodlandIcon = forwardRef<SVGSVGElement, WoodlandIconProps>(
     );
   }
 );
+
+export default WoodlandIcon;

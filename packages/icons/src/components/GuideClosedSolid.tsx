@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type GuideClosedSolidIconProps = IconProps;
 
-export const GuideClosedSolidIcon = forwardRef<
+const GuideClosedSolidIcon = forwardRef<
   SVGSVGElement,
   GuideClosedSolidIconProps
 >(function GuideClosedSolidIcon(props: GuideClosedSolidIconProps, ref) {
@@ -25,3 +25,5 @@ export const GuideClosedSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default GuideClosedSolidIcon;

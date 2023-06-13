@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type UserAdminIconProps = IconProps;
 
-export const UserAdminIcon = forwardRef<SVGSVGElement, UserAdminIconProps>(
+const UserAdminIcon = forwardRef<SVGSVGElement, UserAdminIconProps>(
   function UserAdminIcon(props: UserAdminIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const UserAdminIcon = forwardRef<SVGSVGElement, UserAdminIconProps>(
     );
   }
 );
+
+export default UserAdminIcon;

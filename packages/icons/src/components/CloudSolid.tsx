@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CloudSolidIconProps = IconProps;
 
-export const CloudSolidIcon = forwardRef<SVGSVGElement, CloudSolidIconProps>(
+const CloudSolidIcon = forwardRef<SVGSVGElement, CloudSolidIconProps>(
   function CloudSolidIcon(props: CloudSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const CloudSolidIcon = forwardRef<SVGSVGElement, CloudSolidIconProps>(
     );
   }
 );
+
+export default CloudSolidIcon;

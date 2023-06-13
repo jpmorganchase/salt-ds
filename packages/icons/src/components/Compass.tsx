@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CompassIconProps = IconProps;
 
-export const CompassIcon = forwardRef<SVGSVGElement, CompassIconProps>(
+const CompassIcon = forwardRef<SVGSVGElement, CompassIconProps>(
   function CompassIcon(props: CompassIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const CompassIcon = forwardRef<SVGSVGElement, CompassIconProps>(
     );
   }
 );
+
+export default CompassIcon;

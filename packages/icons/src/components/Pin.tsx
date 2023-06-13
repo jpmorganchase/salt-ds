@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PinIconProps = IconProps;
 
-export const PinIcon = forwardRef<SVGSVGElement, PinIconProps>(function PinIcon(
+const PinIcon = forwardRef<SVGSVGElement, PinIconProps>(function PinIcon(
   props: PinIconProps,
   ref
 ) {
@@ -25,3 +25,5 @@ export const PinIcon = forwardRef<SVGSVGElement, PinIconProps>(function PinIcon(
     </Icon>
   );
 });
+
+export default PinIcon;

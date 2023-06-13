@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type WarningIconProps = IconProps;
 
-export const WarningIcon = forwardRef<SVGSVGElement, WarningIconProps>(
+const WarningIcon = forwardRef<SVGSVGElement, WarningIconProps>(
   function WarningIcon(props: WarningIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const WarningIcon = forwardRef<SVGSVGElement, WarningIconProps>(
     );
   }
 );
+
+export default WarningIcon;

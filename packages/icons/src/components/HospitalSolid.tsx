@@ -5,23 +5,24 @@ import { Icon, IconProps } from "../icon";
 
 export type HospitalSolidIconProps = IconProps;
 
-export const HospitalSolidIcon = forwardRef<
-  SVGSVGElement,
-  HospitalSolidIconProps
->(function HospitalSolidIcon(props: HospitalSolidIconProps, ref) {
-  return (
-    <Icon
-      data-testid="HospitalSolidIcon"
-      aria-label="hospital solid"
-      viewBox="0 0 12 12"
-      ref={ref}
-      {...props}
-    >
-      <path
-        fillRule="evenodd"
-        d="M2 0h8v11h2v1H0v-1h2V0Zm3 11h2v-1H5v1Zm1.5-9v1.031h1v1h-1V5h-1v-.969h-1v-1h1V2h1ZM5.062 6h-1v1h1V6Zm-1 2h1v1h-1V8ZM8 7V6H7v1h1Zm0 1v1H7V8h1Z"
-        clipRule="evenodd"
-      />
-    </Icon>
-  );
-});
+const HospitalSolidIcon = forwardRef<SVGSVGElement, HospitalSolidIconProps>(
+  function HospitalSolidIcon(props: HospitalSolidIconProps, ref) {
+    return (
+      <Icon
+        data-testid="HospitalSolidIcon"
+        aria-label="hospital solid"
+        viewBox="0 0 12 12"
+        ref={ref}
+        {...props}
+      >
+        <path
+          fillRule="evenodd"
+          d="M2 0h8v11h2v1H0v-1h2V0Zm3 11h2v-1H5v1Zm1.5-9v1.031h1v1h-1V5h-1v-.969h-1v-1h1V2h1ZM5.062 6h-1v1h1V6Zm-1 2h1v1h-1V8ZM8 7V6H7v1h1Zm0 1v1H7V8h1Z"
+          clipRule="evenodd"
+        />
+      </Icon>
+    );
+  }
+);
+
+export default HospitalSolidIcon;

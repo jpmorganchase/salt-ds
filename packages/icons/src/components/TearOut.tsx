@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type TearOutIconProps = IconProps;
 
-export const TearOutIcon = forwardRef<SVGSVGElement, TearOutIconProps>(
+const TearOutIcon = forwardRef<SVGSVGElement, TearOutIconProps>(
   function TearOutIcon(props: TearOutIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const TearOutIcon = forwardRef<SVGSVGElement, TearOutIconProps>(
     );
   }
 );
+
+export default TearOutIcon;

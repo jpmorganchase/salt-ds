@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type RemoveIconProps = IconProps;
 
-export const RemoveIcon = forwardRef<SVGSVGElement, RemoveIconProps>(
+const RemoveIcon = forwardRef<SVGSVGElement, RemoveIconProps>(
   function RemoveIcon(props: RemoveIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const RemoveIcon = forwardRef<SVGSVGElement, RemoveIconProps>(
     );
   }
 );
+
+export default RemoveIcon;

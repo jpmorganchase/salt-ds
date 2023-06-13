@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ToteSolidIconProps = IconProps;
 
-export const ToteSolidIcon = forwardRef<SVGSVGElement, ToteSolidIconProps>(
+const ToteSolidIcon = forwardRef<SVGSVGElement, ToteSolidIconProps>(
   function ToteSolidIcon(props: ToteSolidIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const ToteSolidIcon = forwardRef<SVGSVGElement, ToteSolidIconProps>(
     );
   }
 );
+
+export default ToteSolidIcon;

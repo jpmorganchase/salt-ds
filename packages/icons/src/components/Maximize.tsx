@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type MaximizeIconProps = IconProps;
 
-export const MaximizeIcon = forwardRef<SVGSVGElement, MaximizeIconProps>(
+const MaximizeIcon = forwardRef<SVGSVGElement, MaximizeIconProps>(
   function MaximizeIcon(props: MaximizeIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const MaximizeIcon = forwardRef<SVGSVGElement, MaximizeIconProps>(
     );
   }
 );
+
+export default MaximizeIcon;

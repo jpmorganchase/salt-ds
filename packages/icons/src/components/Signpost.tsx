@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type SignpostIconProps = IconProps;
 
-export const SignpostIcon = forwardRef<SVGSVGElement, SignpostIconProps>(
+const SignpostIcon = forwardRef<SVGSVGElement, SignpostIconProps>(
   function SignpostIcon(props: SignpostIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const SignpostIcon = forwardRef<SVGSVGElement, SignpostIconProps>(
     );
   }
 );
+
+export default SignpostIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CropsSolidIconProps = IconProps;
 
-export const CropsSolidIcon = forwardRef<SVGSVGElement, CropsSolidIconProps>(
+const CropsSolidIcon = forwardRef<SVGSVGElement, CropsSolidIconProps>(
   function CropsSolidIcon(props: CropsSolidIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const CropsSolidIcon = forwardRef<SVGSVGElement, CropsSolidIconProps>(
     );
   }
 );
+
+export default CropsSolidIcon;

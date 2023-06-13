@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ShareSolidIconProps = IconProps;
 
-export const ShareSolidIcon = forwardRef<SVGSVGElement, ShareSolidIconProps>(
+const ShareSolidIcon = forwardRef<SVGSVGElement, ShareSolidIconProps>(
   function ShareSolidIcon(props: ShareSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const ShareSolidIcon = forwardRef<SVGSVGElement, ShareSolidIconProps>(
     );
   }
 );
+
+export default ShareSolidIcon;

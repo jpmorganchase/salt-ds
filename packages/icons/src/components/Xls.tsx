@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type XlsIconProps = IconProps;
 
-export const XlsIcon = forwardRef<SVGSVGElement, XlsIconProps>(function XlsIcon(
+const XlsIcon = forwardRef<SVGSVGElement, XlsIconProps>(function XlsIcon(
   props: XlsIconProps,
   ref
 ) {
@@ -26,3 +26,5 @@ export const XlsIcon = forwardRef<SVGSVGElement, XlsIconProps>(function XlsIcon(
     </Icon>
   );
 });
+
+export default XlsIcon;

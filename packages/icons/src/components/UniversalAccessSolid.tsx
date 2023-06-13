@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type UniversalAccessSolidIconProps = IconProps;
 
-export const UniversalAccessSolidIcon = forwardRef<
+const UniversalAccessSolidIcon = forwardRef<
   SVGSVGElement,
   UniversalAccessSolidIconProps
 >(function UniversalAccessSolidIcon(props: UniversalAccessSolidIconProps, ref) {
@@ -25,3 +25,5 @@ export const UniversalAccessSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default UniversalAccessSolidIcon;

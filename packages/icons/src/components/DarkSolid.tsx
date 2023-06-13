@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type DarkSolidIconProps = IconProps;
 
-export const DarkSolidIcon = forwardRef<SVGSVGElement, DarkSolidIconProps>(
+const DarkSolidIcon = forwardRef<SVGSVGElement, DarkSolidIconProps>(
   function DarkSolidIcon(props: DarkSolidIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const DarkSolidIcon = forwardRef<SVGSVGElement, DarkSolidIconProps>(
     );
   }
 );
+
+export default DarkSolidIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CommentaryIconProps = IconProps;
 
-export const CommentaryIcon = forwardRef<SVGSVGElement, CommentaryIconProps>(
+const CommentaryIcon = forwardRef<SVGSVGElement, CommentaryIconProps>(
   function CommentaryIcon(props: CommentaryIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const CommentaryIcon = forwardRef<SVGSVGElement, CommentaryIconProps>(
     );
   }
 );
+
+export default CommentaryIcon;

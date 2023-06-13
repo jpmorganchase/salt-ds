@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CsvIconProps = IconProps;
 
-export const CsvIcon = forwardRef<SVGSVGElement, CsvIconProps>(function CsvIcon(
+const CsvIcon = forwardRef<SVGSVGElement, CsvIconProps>(function CsvIcon(
   props: CsvIconProps,
   ref
 ) {
@@ -26,3 +26,5 @@ export const CsvIcon = forwardRef<SVGSVGElement, CsvIconProps>(function CsvIcon(
     </Icon>
   );
 });
+
+export default CsvIcon;

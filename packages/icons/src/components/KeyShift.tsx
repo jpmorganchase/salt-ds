@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type KeyShiftIconProps = IconProps;
 
-export const KeyShiftIcon = forwardRef<SVGSVGElement, KeyShiftIconProps>(
+const KeyShiftIcon = forwardRef<SVGSVGElement, KeyShiftIconProps>(
   function KeyShiftIcon(props: KeyShiftIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const KeyShiftIcon = forwardRef<SVGSVGElement, KeyShiftIconProps>(
     );
   }
 );
+
+export default KeyShiftIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type SearchIconProps = IconProps;
 
-export const SearchIcon = forwardRef<SVGSVGElement, SearchIconProps>(
+const SearchIcon = forwardRef<SVGSVGElement, SearchIconProps>(
   function SearchIcon(props: SearchIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const SearchIcon = forwardRef<SVGSVGElement, SearchIconProps>(
     );
   }
 );
+
+export default SearchIcon;

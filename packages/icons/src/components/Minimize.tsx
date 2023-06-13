@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type MinimizeIconProps = IconProps;
 
-export const MinimizeIcon = forwardRef<SVGSVGElement, MinimizeIconProps>(
+const MinimizeIcon = forwardRef<SVGSVGElement, MinimizeIconProps>(
   function MinimizeIcon(props: MinimizeIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const MinimizeIcon = forwardRef<SVGSVGElement, MinimizeIconProps>(
     );
   }
 );
+
+export default MinimizeIcon;

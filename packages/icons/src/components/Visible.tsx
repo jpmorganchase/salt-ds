@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type VisibleIconProps = IconProps;
 
-export const VisibleIcon = forwardRef<SVGSVGElement, VisibleIconProps>(
+const VisibleIcon = forwardRef<SVGSVGElement, VisibleIconProps>(
   function VisibleIcon(props: VisibleIconProps, ref) {
     return (
       <Icon
@@ -29,3 +29,5 @@ export const VisibleIcon = forwardRef<SVGSVGElement, VisibleIconProps>(
     );
   }
 );
+
+export default VisibleIcon;

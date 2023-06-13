@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type SuccessSmallSolidIconProps = IconProps;
 
-export const SuccessSmallSolidIcon = forwardRef<
+const SuccessSmallSolidIcon = forwardRef<
   SVGSVGElement,
   SuccessSmallSolidIconProps
 >(function SuccessSmallSolidIcon(props: SuccessSmallSolidIconProps, ref) {
@@ -25,3 +25,5 @@ export const SuccessSmallSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default SuccessSmallSolidIcon;

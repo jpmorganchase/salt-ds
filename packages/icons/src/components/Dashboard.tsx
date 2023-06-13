@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type DashboardIconProps = IconProps;
 
-export const DashboardIcon = forwardRef<SVGSVGElement, DashboardIconProps>(
+const DashboardIcon = forwardRef<SVGSVGElement, DashboardIconProps>(
   function DashboardIcon(props: DashboardIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const DashboardIcon = forwardRef<SVGSVGElement, DashboardIconProps>(
     );
   }
 );
+
+export default DashboardIcon;

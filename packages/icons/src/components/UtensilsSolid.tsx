@@ -5,19 +5,20 @@ import { Icon, IconProps } from "../icon";
 
 export type UtensilsSolidIconProps = IconProps;
 
-export const UtensilsSolidIcon = forwardRef<
-  SVGSVGElement,
-  UtensilsSolidIconProps
->(function UtensilsSolidIcon(props: UtensilsSolidIconProps, ref) {
-  return (
-    <Icon
-      data-testid="UtensilsSolidIcon"
-      aria-label="utensils solid"
-      viewBox="0 0 12 12"
-      ref={ref}
-      {...props}
-    >
-      <path d="M5 0h1v6H4.508v6h-1V6H2V0h1v3h.5V0h1v3H5V0Zm2.031 3a3 3 0 0 1 3-3v12h-1V8h-2V3Z" />
-    </Icon>
-  );
-});
+const UtensilsSolidIcon = forwardRef<SVGSVGElement, UtensilsSolidIconProps>(
+  function UtensilsSolidIcon(props: UtensilsSolidIconProps, ref) {
+    return (
+      <Icon
+        data-testid="UtensilsSolidIcon"
+        aria-label="utensils solid"
+        viewBox="0 0 12 12"
+        ref={ref}
+        {...props}
+      >
+        <path d="M5 0h1v6H4.508v6h-1V6H2V0h1v3h.5V0h1v3H5V0Zm2.031 3a3 3 0 0 1 3-3v12h-1V8h-2V3Z" />
+      </Icon>
+    );
+  }
+);
+
+export default UtensilsSolidIcon;

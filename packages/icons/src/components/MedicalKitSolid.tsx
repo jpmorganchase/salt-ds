@@ -5,24 +5,25 @@ import { Icon, IconProps } from "../icon";
 
 export type MedicalKitSolidIconProps = IconProps;
 
-export const MedicalKitSolidIcon = forwardRef<
-  SVGSVGElement,
-  MedicalKitSolidIconProps
->(function MedicalKitSolidIcon(props: MedicalKitSolidIconProps, ref) {
-  return (
-    <Icon
-      data-testid="MedicalKitSolidIcon"
-      aria-label="medical kit solid"
-      viewBox="0 0 12 12"
-      ref={ref}
-      {...props}
-    >
-      <path
-        fillRule="evenodd"
-        d="M9 1H3v10h6V1ZM5 8V7H4V5h1V4h2v1h1v2H7v1H5Z"
-        clipRule="evenodd"
-      />
-      <path d="M10 1v10h2V1h-2ZM0 1h2v10H0V1Z" />
-    </Icon>
-  );
-});
+const MedicalKitSolidIcon = forwardRef<SVGSVGElement, MedicalKitSolidIconProps>(
+  function MedicalKitSolidIcon(props: MedicalKitSolidIconProps, ref) {
+    return (
+      <Icon
+        data-testid="MedicalKitSolidIcon"
+        aria-label="medical kit solid"
+        viewBox="0 0 12 12"
+        ref={ref}
+        {...props}
+      >
+        <path
+          fillRule="evenodd"
+          d="M9 1H3v10h6V1ZM5 8V7H4V5h1V4h2v1h1v2H7v1H5Z"
+          clipRule="evenodd"
+        />
+        <path d="M10 1v10h2V1h-2ZM0 1h2v10H0V1Z" />
+      </Icon>
+    );
+  }
+);
+
+export default MedicalKitSolidIcon;

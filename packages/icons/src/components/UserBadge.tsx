@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type UserBadgeIconProps = IconProps;
 
-export const UserBadgeIcon = forwardRef<SVGSVGElement, UserBadgeIconProps>(
+const UserBadgeIcon = forwardRef<SVGSVGElement, UserBadgeIconProps>(
   function UserBadgeIcon(props: UserBadgeIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const UserBadgeIcon = forwardRef<SVGSVGElement, UserBadgeIconProps>(
     );
   }
 );
+
+export default UserBadgeIcon;

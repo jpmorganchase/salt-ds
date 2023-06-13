@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type LocationIconProps = IconProps;
 
-export const LocationIcon = forwardRef<SVGSVGElement, LocationIconProps>(
+const LocationIcon = forwardRef<SVGSVGElement, LocationIconProps>(
   function LocationIcon(props: LocationIconProps, ref) {
     return (
       <Icon
@@ -29,3 +29,5 @@ export const LocationIcon = forwardRef<SVGSVGElement, LocationIconProps>(
     );
   }
 );
+
+export default LocationIcon;

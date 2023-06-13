@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ManIconProps = IconProps;
 
-export const ManIcon = forwardRef<SVGSVGElement, ManIconProps>(function ManIcon(
+const ManIcon = forwardRef<SVGSVGElement, ManIconProps>(function ManIcon(
   props: ManIconProps,
   ref
 ) {
@@ -25,3 +25,5 @@ export const ManIcon = forwardRef<SVGSVGElement, ManIconProps>(function ManIcon(
     </Icon>
   );
 });
+
+export default ManIcon;

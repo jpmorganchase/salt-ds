@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type NotificationSolidIconProps = IconProps;
 
-export const NotificationSolidIcon = forwardRef<
+const NotificationSolidIcon = forwardRef<
   SVGSVGElement,
   NotificationSolidIconProps
 >(function NotificationSolidIcon(props: NotificationSolidIconProps, ref) {
@@ -21,3 +21,5 @@ export const NotificationSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default NotificationSolidIcon;

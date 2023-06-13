@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ZipIconProps = IconProps;
 
-export const ZipIcon = forwardRef<SVGSVGElement, ZipIconProps>(function ZipIcon(
+const ZipIcon = forwardRef<SVGSVGElement, ZipIconProps>(function ZipIcon(
   props: ZipIconProps,
   ref
 ) {
@@ -31,3 +31,5 @@ export const ZipIcon = forwardRef<SVGSVGElement, ZipIconProps>(function ZipIcon(
     </Icon>
   );
 });
+
+export default ZipIcon;

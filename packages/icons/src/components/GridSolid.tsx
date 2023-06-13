@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type GridSolidIconProps = IconProps;
 
-export const GridSolidIcon = forwardRef<SVGSVGElement, GridSolidIconProps>(
+const GridSolidIcon = forwardRef<SVGSVGElement, GridSolidIconProps>(
   function GridSolidIcon(props: GridSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const GridSolidIcon = forwardRef<SVGSVGElement, GridSolidIconProps>(
     );
   }
 );
+
+export default GridSolidIcon;

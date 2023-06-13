@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type FavoriteIconProps = IconProps;
 
-export const FavoriteIcon = forwardRef<SVGSVGElement, FavoriteIconProps>(
+const FavoriteIcon = forwardRef<SVGSVGElement, FavoriteIconProps>(
   function FavoriteIcon(props: FavoriteIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const FavoriteIcon = forwardRef<SVGSVGElement, FavoriteIconProps>(
     );
   }
 );
+
+export default FavoriteIcon;

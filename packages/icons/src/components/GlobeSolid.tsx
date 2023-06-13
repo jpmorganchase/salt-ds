@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type GlobeSolidIconProps = IconProps;
 
-export const GlobeSolidIcon = forwardRef<SVGSVGElement, GlobeSolidIconProps>(
+const GlobeSolidIcon = forwardRef<SVGSVGElement, GlobeSolidIconProps>(
   function GlobeSolidIcon(props: GlobeSolidIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const GlobeSolidIcon = forwardRef<SVGSVGElement, GlobeSolidIconProps>(
     );
   }
 );
+
+export default GlobeSolidIcon;

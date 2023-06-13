@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PriceLadderIconProps = IconProps;
 
-export const PriceLadderIcon = forwardRef<SVGSVGElement, PriceLadderIconProps>(
+const PriceLadderIcon = forwardRef<SVGSVGElement, PriceLadderIconProps>(
   function PriceLadderIcon(props: PriceLadderIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const PriceLadderIcon = forwardRef<SVGSVGElement, PriceLadderIconProps>(
     );
   }
 );
+
+export default PriceLadderIcon;

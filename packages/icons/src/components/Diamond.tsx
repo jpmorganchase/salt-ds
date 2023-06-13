@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type DiamondIconProps = IconProps;
 
-export const DiamondIcon = forwardRef<SVGSVGElement, DiamondIconProps>(
+const DiamondIcon = forwardRef<SVGSVGElement, DiamondIconProps>(
   function DiamondIcon(props: DiamondIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const DiamondIcon = forwardRef<SVGSVGElement, DiamondIconProps>(
     );
   }
 );
+
+export default DiamondIcon;

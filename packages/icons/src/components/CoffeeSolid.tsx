@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type CoffeeSolidIconProps = IconProps;
 
-export const CoffeeSolidIcon = forwardRef<SVGSVGElement, CoffeeSolidIconProps>(
+const CoffeeSolidIcon = forwardRef<SVGSVGElement, CoffeeSolidIconProps>(
   function CoffeeSolidIcon(props: CoffeeSolidIconProps, ref) {
     return (
       <Icon
@@ -25,3 +25,5 @@ export const CoffeeSolidIcon = forwardRef<SVGSVGElement, CoffeeSolidIconProps>(
     );
   }
 );
+
+export default CoffeeSolidIcon;

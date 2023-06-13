@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type Replay15IconProps = IconProps;
 
-export const Replay15Icon = forwardRef<SVGSVGElement, Replay15IconProps>(
+const Replay15Icon = forwardRef<SVGSVGElement, Replay15IconProps>(
   function Replay15Icon(props: Replay15IconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const Replay15Icon = forwardRef<SVGSVGElement, Replay15IconProps>(
     );
   }
 );
+
+export default Replay15Icon;

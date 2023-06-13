@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type BuildReportSolidIconProps = IconProps;
 
-export const BuildReportSolidIcon = forwardRef<
+const BuildReportSolidIcon = forwardRef<
   SVGSVGElement,
   BuildReportSolidIconProps
 >(function BuildReportSolidIcon(props: BuildReportSolidIconProps, ref) {
@@ -25,3 +25,5 @@ export const BuildReportSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default BuildReportSolidIcon;

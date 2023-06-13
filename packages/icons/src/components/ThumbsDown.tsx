@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ThumbsDownIconProps = IconProps;
 
-export const ThumbsDownIcon = forwardRef<SVGSVGElement, ThumbsDownIconProps>(
+const ThumbsDownIcon = forwardRef<SVGSVGElement, ThumbsDownIconProps>(
   function ThumbsDownIcon(props: ThumbsDownIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const ThumbsDownIcon = forwardRef<SVGSVGElement, ThumbsDownIconProps>(
     );
   }
 );
+
+export default ThumbsDownIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PasteSolidIconProps = IconProps;
 
-export const PasteSolidIcon = forwardRef<SVGSVGElement, PasteSolidIconProps>(
+const PasteSolidIcon = forwardRef<SVGSVGElement, PasteSolidIconProps>(
   function PasteSolidIcon(props: PasteSolidIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const PasteSolidIcon = forwardRef<SVGSVGElement, PasteSolidIconProps>(
     );
   }
 );
+
+export default PasteSolidIcon;

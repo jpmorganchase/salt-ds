@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PrintSolidIconProps = IconProps;
 
-export const PrintSolidIcon = forwardRef<SVGSVGElement, PrintSolidIconProps>(
+const PrintSolidIcon = forwardRef<SVGSVGElement, PrintSolidIconProps>(
   function PrintSolidIcon(props: PrintSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const PrintSolidIcon = forwardRef<SVGSVGElement, PrintSolidIconProps>(
     );
   }
 );
+
+export default PrintSolidIcon;

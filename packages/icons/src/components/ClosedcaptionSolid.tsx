@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ClosedcaptionSolidIconProps = IconProps;
 
-export const ClosedcaptionSolidIcon = forwardRef<
+const ClosedcaptionSolidIcon = forwardRef<
   SVGSVGElement,
   ClosedcaptionSolidIconProps
 >(function ClosedcaptionSolidIcon(props: ClosedcaptionSolidIconProps, ref) {
@@ -25,3 +25,5 @@ export const ClosedcaptionSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default ClosedcaptionSolidIcon;

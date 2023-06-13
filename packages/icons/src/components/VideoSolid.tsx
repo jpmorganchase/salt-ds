@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type VideoSolidIconProps = IconProps;
 
-export const VideoSolidIcon = forwardRef<SVGSVGElement, VideoSolidIconProps>(
+const VideoSolidIcon = forwardRef<SVGSVGElement, VideoSolidIconProps>(
   function VideoSolidIcon(props: VideoSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const VideoSolidIcon = forwardRef<SVGSVGElement, VideoSolidIconProps>(
     );
   }
 );
+
+export default VideoSolidIcon;

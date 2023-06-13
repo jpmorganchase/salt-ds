@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type SymphonyIconProps = IconProps;
 
-export const SymphonyIcon = forwardRef<SVGSVGElement, SymphonyIconProps>(
+const SymphonyIcon = forwardRef<SVGSVGElement, SymphonyIconProps>(
   function SymphonyIcon(props: SymphonyIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const SymphonyIcon = forwardRef<SVGSVGElement, SymphonyIconProps>(
     );
   }
 );
+
+export default SymphonyIcon;

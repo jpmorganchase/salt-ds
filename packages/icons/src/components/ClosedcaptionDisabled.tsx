@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ClosedcaptionDisabledIconProps = IconProps;
 
-export const ClosedcaptionDisabledIcon = forwardRef<
+const ClosedcaptionDisabledIcon = forwardRef<
   SVGSVGElement,
   ClosedcaptionDisabledIconProps
 >(function ClosedcaptionDisabledIcon(
@@ -25,3 +25,5 @@ export const ClosedcaptionDisabledIcon = forwardRef<
     </Icon>
   );
 });
+
+export default ClosedcaptionDisabledIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ProgressCancelledIconProps = IconProps;
 
-export const ProgressCancelledIcon = forwardRef<
+const ProgressCancelledIcon = forwardRef<
   SVGSVGElement,
   ProgressCancelledIconProps
 >(function ProgressCancelledIcon(props: ProgressCancelledIconProps, ref) {
@@ -25,3 +25,5 @@ export const ProgressCancelledIcon = forwardRef<
     </Icon>
   );
 });
+
+export default ProgressCancelledIcon;

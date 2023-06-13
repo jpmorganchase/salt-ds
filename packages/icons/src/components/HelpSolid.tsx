@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type HelpSolidIconProps = IconProps;
 
-export const HelpSolidIcon = forwardRef<SVGSVGElement, HelpSolidIconProps>(
+const HelpSolidIcon = forwardRef<SVGSVGElement, HelpSolidIconProps>(
   function HelpSolidIcon(props: HelpSolidIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const HelpSolidIcon = forwardRef<SVGSVGElement, HelpSolidIconProps>(
     );
   }
 );
+
+export default HelpSolidIcon;

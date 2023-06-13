@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type FolderClosedSolidIconProps = IconProps;
 
-export const FolderClosedSolidIcon = forwardRef<
+const FolderClosedSolidIcon = forwardRef<
   SVGSVGElement,
   FolderClosedSolidIconProps
 >(function FolderClosedSolidIcon(props: FolderClosedSolidIconProps, ref) {
@@ -25,3 +25,5 @@ export const FolderClosedSolidIcon = forwardRef<
     </Icon>
   );
 });
+
+export default FolderClosedSolidIcon;

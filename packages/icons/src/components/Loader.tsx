@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type LoaderIconProps = IconProps;
 
-export const LoaderIcon = forwardRef<SVGSVGElement, LoaderIconProps>(
+const LoaderIcon = forwardRef<SVGSVGElement, LoaderIconProps>(
   function LoaderIcon(props: LoaderIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const LoaderIcon = forwardRef<SVGSVGElement, LoaderIconProps>(
     );
   }
 );
+
+export default LoaderIcon;

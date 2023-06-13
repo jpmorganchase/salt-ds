@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type PicnicSolidIconProps = IconProps;
 
-export const PicnicSolidIcon = forwardRef<SVGSVGElement, PicnicSolidIconProps>(
+const PicnicSolidIcon = forwardRef<SVGSVGElement, PicnicSolidIconProps>(
   function PicnicSolidIcon(props: PicnicSolidIconProps, ref) {
     return (
       <Icon
@@ -24,3 +24,5 @@ export const PicnicSolidIcon = forwardRef<SVGSVGElement, PicnicSolidIconProps>(
     );
   }
 );
+
+export default PicnicSolidIcon;

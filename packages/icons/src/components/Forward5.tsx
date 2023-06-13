@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type Forward5IconProps = IconProps;
 
-export const Forward5Icon = forwardRef<SVGSVGElement, Forward5IconProps>(
+const Forward5Icon = forwardRef<SVGSVGElement, Forward5IconProps>(
   function Forward5Icon(props: Forward5IconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const Forward5Icon = forwardRef<SVGSVGElement, Forward5IconProps>(
     );
   }
 );
+
+export default Forward5Icon;

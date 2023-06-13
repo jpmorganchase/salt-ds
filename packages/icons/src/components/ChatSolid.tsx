@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type ChatSolidIconProps = IconProps;
 
-export const ChatSolidIcon = forwardRef<SVGSVGElement, ChatSolidIconProps>(
+const ChatSolidIcon = forwardRef<SVGSVGElement, ChatSolidIconProps>(
   function ChatSolidIcon(props: ChatSolidIconProps, ref) {
     return (
       <Icon
@@ -20,3 +20,5 @@ export const ChatSolidIcon = forwardRef<SVGSVGElement, ChatSolidIconProps>(
     );
   }
 );
+
+export default ChatSolidIcon;

@@ -5,7 +5,7 @@ import { Icon, IconProps } from "../icon";
 
 export type BankCheckIconProps = IconProps;
 
-export const BankCheckIcon = forwardRef<SVGSVGElement, BankCheckIconProps>(
+const BankCheckIcon = forwardRef<SVGSVGElement, BankCheckIconProps>(
   function BankCheckIcon(props: BankCheckIconProps, ref) {
     return (
       <Icon
@@ -21,3 +21,5 @@ export const BankCheckIcon = forwardRef<SVGSVGElement, BankCheckIconProps>(
     );
   }
 );
+
+export default BankCheckIcon;
