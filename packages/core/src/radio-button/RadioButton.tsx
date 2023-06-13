@@ -160,7 +160,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           className={withBaseName("input")}
           {...restInputProps}
           checked={checked}
-          disabled={disabled || readOnly}
+          disabled={disabled || readOnly}          
+          readOnly={readOnly}
           name={name}
           value={value}
           onBlur={onBlur}
