@@ -2,4 +2,4 @@
 "@salt-ds/core": minor
 ---
 
-Give priority to disabled styling over error in Checkbox
+Removed disabled error style variant from Checkbox. Error styling will now only show if component is not disabled.
