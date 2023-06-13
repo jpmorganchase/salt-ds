@@ -17,6 +17,7 @@ import {
   Home,
   PageDown,
   PageUp,
+  Enter,
   Space,
 } from "../common-hooks";
 import { useEventCallback } from "../utils";
@@ -223,6 +224,7 @@ export const useList = ({
         focusLastItem();
         break;
       case Space:
+      case Enter:
         evt.preventDefault();
         toggleSelectItem(nextItem);
         break;
@@ -251,10 +253,10 @@ export const useList = ({
 
     const tearDown = (list: HTMLUListElement | null): void => {
       if (list) {
-      list.removeEventListener("keydown", handleKeyDown);
-      list.removeEventListener("focus", handleFocus);
-      list.removeEventListener("blur", handleBlur);
-      list.removeEventListener("mousedown", handleMouseDown);
+        list.removeEventListener("keydown", handleKeyDown);
+        list.removeEventListener("focus", handleFocus);
+        list.removeEventListener("blur", handleBlur);
+        list.removeEventListener("mousedown", handleMouseDown);
       }
     };
 
