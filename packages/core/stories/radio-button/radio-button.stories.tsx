@@ -29,6 +29,20 @@ export const Disabled = () => {
   );
 };
 
+export const Readonly = () => {
+  return (
+    <>
+      <RadioButton readOnly label="Readonly" value="Readonly" />
+      <RadioButton
+        readOnly
+        label="Checked Readonly"
+        value="Readonly-checked"
+        checked
+      />
+    </>
+  );
+};
+
 export const Error = () => {
   return (
     <RadioButtonGroup validationStatus="error">
