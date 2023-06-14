@@ -149,11 +149,6 @@ export const Readonly: ComponentStory<typeof Checkbox> = () => {
           label="readonly indeterminate checkbox"
         />
         <Checkbox readOnly checked label="readonly checked checkbox" />
-        <Checkbox
-          readOnly
-          indeterminate
-          label="disabled indeterminate checkbox"
-        />
       </CheckboxGroup>
     </>
   );
