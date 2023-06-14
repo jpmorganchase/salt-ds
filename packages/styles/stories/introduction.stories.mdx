@@ -57,7 +57,7 @@ This linting rule will only be run for component tsx files, all other CSS file i
 
 ### Storybook plugin
 
-Vite as of version 4 deprecated the use of default and named imports and instead requires you to append '?inline' to a CSS import to opt out of Vite's style injection
+Vite by default injects imported CSS into the document and instead requires you to append '?inline' to a CSS import to opt out of Vite's style injection
 To save time, we have created a Vite plugin that disables the inbuilt css injection. It iterates through all the imports in the component typescript files checks if the file imported is a .css file.
 If the extension matches, the plugin appends '?inline' to the CSS file name.
 
