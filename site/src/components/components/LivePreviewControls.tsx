@@ -10,7 +10,7 @@ import { LightIcon, DarkIcon } from "@salt-ds/icons";
 import { SaltProvider, Density, Mode } from "@salt-ds/core";
 import ExamplesListView from "./ExamplesListView";
 import useIsMobileView from "../../utils/useIsMobileView";
-import { useAllExamplesView } from "../../layouts/DetailComponent";
+import { useAllExamplesView } from "../../utils/useAllExamplesView";
 
 import styles from "./LivePreviewControls.module.css";
 

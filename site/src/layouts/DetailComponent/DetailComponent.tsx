@@ -1,11 +1,4 @@
-import React, {
-  FC,
-  useEffect,
-  createContext,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@jpmorganchase/mosaic-site-components";
 import { useRoute, useStore, SiteState } from "@jpmorganchase/mosaic-store";
@@ -13,6 +6,7 @@ import { TabPanel, Tabs } from "@salt-ds/lab";
 import { LayoutProps } from "../types/index";
 import { DetailBase } from "../DetailBase";
 import SecondarySidebar from "./SecondarySidebar";
+import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
 
 const tabs = [
   { id: 0, name: "examples", label: "Examples" },
@@ -39,15 +33,6 @@ export type Data = {
 };
 
 type CustomSiteState = SiteState & { data?: Data };
-
-export type AllExamplesViewContextType = {
-  allExamplesView?: boolean;
-  setAllExamplesView: Dispatch<SetStateAction<boolean>>;
-};
-
-export const AllExamplesViewContext = createContext<AllExamplesViewContextType>(
-  { allExamplesView: false, setAllExamplesView: () => {} }
-);
 
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const { push } = useRouter();

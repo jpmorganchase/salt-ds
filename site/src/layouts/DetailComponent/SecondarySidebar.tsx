@@ -4,7 +4,7 @@ import { Pill } from "@salt-ds/lab";
 import { Link } from "@salt-ds/core";
 import { Heading4 } from "../../components/mdx/h4";
 import { Data, Relationship } from "./DetailComponent";
-import { useAllExamplesView } from "./useAllExamplesView";
+import { useAllExamplesView } from "../../utils/useAllExamplesView";
 
 import styles from "./SecondarySidebar.module.css";
 
