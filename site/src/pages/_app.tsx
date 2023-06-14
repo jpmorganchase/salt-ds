@@ -72,6 +72,8 @@ export default function MyApp({
 
   const customSource = source as { frontmatter: Record<string, unknown> };
   const frontmatter = customSource?.frontmatter || {};
+  // Prevents data being re-used across pages
+  frontmatter.data = frontmatter.data || undefined;
   const storeProps = {
     sharedConfig,
     colorMode,
@@ -79,6 +81,7 @@ export default function MyApp({
     searchConfig,
     ...frontmatter,
   };
+
   const createStore = useCreateStore(storeProps);
 
   return (
