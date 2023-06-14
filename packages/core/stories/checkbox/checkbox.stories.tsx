@@ -105,23 +105,6 @@ export const Disabled: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
-export const DisabledWithError: ComponentStory<typeof Checkbox> = () => {
-  const [isDisabled, setDisabled] = useState(true);
-
-  return (
-    <>
-      <Checkbox
-        disabled={isDisabled}
-        error
-        label="disabled checkbox with underlying error"
-      />
-      <Button onClick={() => setDisabled(!isDisabled)}>
-        Toggle permisions
-      </Button>
-    </>
-  );
-};
-
 export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
   return (
     <CheckboxGroup

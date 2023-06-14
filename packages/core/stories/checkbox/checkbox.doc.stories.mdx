@@ -64,11 +64,7 @@ A Checkbox with the prop `disabled="true"` will suppress all functionality along
   <Story id="core-checkbox--disabled" />
 </Canvas>
 
-Be aware that if `disabled="true"` and `error="true"`, disabled functionality and styling will take priority.
-
-<Canvas>
-  <Story id="core-checkbox--disabled-with-error" />
-</Canvas>
+- Avoid using `error` when a Checkbox is `disabled`. If provided, `disabled` functionality and styling will take precedence over `error`.
 
 ## Checkbox Group
 
