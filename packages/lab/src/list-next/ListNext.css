@@ -1,21 +1,16 @@
 /* Default variables applied to the root element */
 .saltListNext {
-  --list-displayedItemCount: 4;
-  --list-background: var(--salt-container-primary-background);
-  --list-borderStyle: var(--salt-container-borderStyle);
-  --list-borderWidth: var(--salt-size-border);
-  --list-height: calc(var(--salt-size-stackable) * var(--list-displayedItemCount));
-
+  --listNext-displayedItemCount: 4;
 }
 
 /* Style applied to the root element */
 .saltListNext {
   margin: 0;
-  background: var(--list-background);
+  background: var(--salt-container-primary-background);
   border-color: var(--salt-container-primary-borderColor);
-  border-style: var(--list-borderStyle);
-  border-width: var(--list-borderWidth);
-  height: var(--list-height);
+  border-style: var(--salt-container-borderStyle);
+  border-width: var(--salt-size-border);
+  height: calc(var(--salt-size-stackable) * var(--listNext-displayedItemCount));
   outline: none;
   overflow-y: auto;
   position: relative;
@@ -30,7 +25,7 @@
   display: flex;
   position: relative;
   align-items: center;
-  content: var(--list-emptyMessage);
+  content: var(--listNext-emptyMessage);
 }
 
 /* Pseudo-class applied to the root element on focus */

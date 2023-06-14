@@ -234,7 +234,6 @@ export const useList = ({
     if (onKeyDown) {
       onKeyDown(currentItem);
     }
-    return;
   });
 
   // Effects
@@ -244,14 +243,14 @@ export const useList = ({
   }, []);
 
   useEffect(() => {
-    const prepare = (list: HTMLUListElement) => {
+    const addListeners = (list: HTMLUListElement) => {
       list.addEventListener("keydown", handleKeyDown);
       list.addEventListener("focus", handleFocus);
       list.addEventListener("blur", handleBlur);
       list.addEventListener("mousedown", handleMouseDown);
     };
 
-    const tearDown = (list: HTMLUListElement | null): void => {
+    const removeListeners = (list: HTMLUListElement | null): void => {
       if (list) {
         list.removeEventListener("keydown", handleKeyDown);
         list.removeEventListener("focus", handleFocus);
@@ -271,10 +270,9 @@ export const useList = ({
           .filter((child) => child.getAttribute("role") === "option")
           .filter((option) => option.getAttribute("aria-disabled") !== "true")
       );
-      prepare(list);
-      // remove listeners
+      addListeners(list);
       return () => {
-        tearDown(list);
+        removeListeners(list);
       };
     }
   }, [list, handleFocus, handleBlur, handleKeyDown, handleMouseDown]);

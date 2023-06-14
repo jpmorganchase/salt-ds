@@ -12,6 +12,9 @@ const withBaseName = makePrefixer("saltListItemNext");
 export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
   itemTextHighlightPattern?: RegExp | string;
   label?: string;
+  /**
+   * If true, the particular list item in list will be disabled.
+   */
   disabled?: boolean;
   focused?: boolean;
   selected?: boolean;

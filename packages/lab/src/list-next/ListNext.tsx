@@ -59,7 +59,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     {
       children,
       className,
-      disabled: disabledListProp,
+      disabled: listDisabled,
       displayedItemCount: displayedItemCountProp,
       ListItem = DefaultListItem,
       emptyMessage = defaultEmptyMessage,
@@ -84,7 +84,6 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const childrenCount = Children.count(children);
     const emptyList = childrenCount === 0;
 
-    const disabled = disabledListProp;
     const listId = useId(idProp) || "listNext"; // TODO: check why useId needs to return undefined
 
     const displayedItemCount = useMemo((): number => {
@@ -119,11 +118,13 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const renderContent = () => {
       return Children.map(children, (listItem, index) => {
         if (!isValidElement(listItem)) return;
-        const { disabled: propDisabled, ...restListItemProps } = listItem.props;
+        const { disabled: listItemDisabled, ...restListItemProps } =
+          listItem.props as ListNextProps;
         const listItemProps = {
           ...restListItemProps,
-          disabled: propDisabled || disabled,
+          disabled: listItemDisabled || listDisabled,
           onClick: (e: MouseEvent<HTMLUListElement>) => handleClick(e),
+          // focused is applicable for list items on focus using keyboard navigation only
           focused: focusedIndex === index,
           selected: selectedIndexes.includes(index),
           id: `list-${listId}--list-item--${index}`,
@@ -134,8 +135,8 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     };
     const listStyles = {
       ...style,
-      "--list-displayedItemCount": displayedItemCount,
-      "--list-emptyMessage": emptyMessage && `"${emptyMessage}"`,
+      "--listNext-displayedItemCount": displayedItemCount,
+      "--listNext-emptyMessage": emptyMessage && `"${emptyMessage}"`,
     };
 
     return (
@@ -149,9 +150,9 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           className
         )}
         role="listbox"
-        tabIndex={disabled ? -1 : 0}
+        tabIndex={listDisabled ? -1 : 0}
         aria-label={emptyList && emptyMessage}
-        aria-activedescendant={disabled ? undefined : activeDescendant}
+        aria-activedescendant={listDisabled ? undefined : activeDescendant}
         style={listStyles}
         {...rest}
       >
