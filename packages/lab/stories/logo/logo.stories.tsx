@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 import { ChaseLogo } from "./assets/ChaseLogo";
-import { ChaseCompactLogo } from './assets/ChaseCompactLogo'
+import { ChaseCompactLogo } from "./assets/ChaseCompactLogo";
 
 export default {
   title: "Lab/Logo",
