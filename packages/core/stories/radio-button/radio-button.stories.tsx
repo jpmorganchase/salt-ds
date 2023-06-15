@@ -38,27 +38,6 @@ export const Error = () => {
   );
 };
 
-/* TODO: Deprecate */
-export const ErrorDisabled = () => {
-  return (
-    <>
-      <RadioButton
-        label="Error Disabled"
-        value="disabled-error"
-        disabled
-        error
-      />
-      <RadioButton
-        label="Error Disabled"
-        value="disabled-error"
-        disabled
-        checked
-        error
-      />
-    </>
-  );
-};
-
 export const VerticalGroup = () => (
   <RadioButtonGroup>
     <RadioButton key="option1" label="Radio Option 1" value="option1" />
