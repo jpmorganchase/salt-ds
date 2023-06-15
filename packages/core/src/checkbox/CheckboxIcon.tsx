@@ -16,8 +16,9 @@ export interface CheckboxIconProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
-  error?: boolean;
+  error?: boolean; /* **Deprecated**: replaced with validationStatus */
   indeterminate?: boolean;
+  validationStatus?: "error" | "warning";
 }
 
 const withBaseName = makePrefixer("saltCheckboxIcon");
@@ -28,6 +29,7 @@ export const CheckboxIcon = ({
   disabled,
   error,
   indeterminate,
+  validationStatus
 }: CheckboxIconProps): JSX.Element => {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -40,6 +42,7 @@ export const CheckboxIcon = ({
     {
       [withBaseName("disabled")]: disabled,
       [withBaseName("error")]: error,
+      [withBaseName(validationStatus || "")]: validationStatus,
     },
     classNameProp
   );
