@@ -222,7 +222,11 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
         <FormFieldControlWrapper>
           <Input placeholder="First value" />
           <Checkbox label="Second value" /> 
-          <Checkbox label="Third value" /> 
+          <RadioButtonGroup>
+            <RadioButton key="option1" label="Radio Option 1" value="option1" />
+            <RadioButton key="option2" label="Radio Option 2" value="option2" />
+            <RadioButton key="option3" label="Radio Option 3" value="option3" />
+          </RadioButtonGroup>
         </FormFieldControlWrapper>
       </FormField>
     </FlowLayout>

@@ -16,5 +16,5 @@ export const FormFieldControlWrapper = ({ children, variant = "primary" }: Props
     css: formFieldControlWrapper,
     window: targetWindow,
   });
-  return <div className={clsx(withBaseName(), withBaseName(variant))}>{children}</div>;
+  return <fieldset className={clsx(withBaseName(), withBaseName(variant))}>{children}</fieldset>;
 };
