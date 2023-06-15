@@ -7,7 +7,8 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import logoImageCss from "./LogoImage.css";
 
-export interface LogoImageProps extends ComponentPropsWithoutRef<"img"> {
+export interface LogoImageProps
+  extends Omit<ComponentPropsWithoutRef<"img">, "alt"> {
   alt: string;
 }
 

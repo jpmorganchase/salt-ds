@@ -61,7 +61,7 @@ const useTabSelection = (): [number, TabstripProps["onActiveChange"]] => {
 type ResponsiveItem = { "data-collapsed"?: boolean };
 
 const CollapsibleLogo = (props: LogoProps & ResponsiveItem) => (
-  <Logo {...props} compact={props["data-collapsed"]} />
+  <Logo {...props} />
 );
 
 export const Default: ComponentStory<typeof AppHeader> = () => {
@@ -77,7 +77,7 @@ export const Default: ComponentStory<typeof AppHeader> = () => {
           data-index={0}
           data-priority={1}
         >
-          <LogoImage src={PlaceholderLogo as string} />
+          <LogoImage src={PlaceholderLogo as string} alt="Logo image" />
           <Text>Salt</Text>
         </CollapsibleLogo>
         <Tabstrip
