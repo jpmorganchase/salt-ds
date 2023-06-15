@@ -7,13 +7,15 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import logoImageCss from "./LogoImage.css";
 
-export interface LogoImageProps extends ComponentPropsWithoutRef<"img"> {}
+export interface LogoImageProps extends ComponentPropsWithoutRef<"img"> {
+  alt: string
+}
 
 const withBaseName = makePrefixer("saltLogoImage");
 
 export const LogoImage = forwardRef<HTMLImageElement, LogoImageProps>(
   function LogoImage(props, ref) {
-    const { className, ...rest } = props;
+    const { className, alt, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -23,7 +25,7 @@ export const LogoImage = forwardRef<HTMLImageElement, LogoImageProps>(
     });
 
     return (
-      <img {...rest} className={clsx(withBaseName(), className)} ref={ref} />
+      <img {...rest} alt={alt} className={clsx(withBaseName(), className)} ref={ref} />
     );
   }
 );

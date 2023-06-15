@@ -14,10 +14,6 @@
   --logo-height: var(--saltLogo-logo-height, 32px);
 }
 
-.saltLogo-compact {
-  /* --logo-pipe-margin: 0 calc(var(--salt-size-unit) * 1.5); */
-}
-
 .saltLogo {
   display: inline-flex;
   position: relative;

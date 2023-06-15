@@ -1,6 +1,6 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Text } from "@salt-ds/core";
-import { Logo } from "@salt-ds/lab";
+import { Logo, LogoImage, LogoSeparator } from "@salt-ds/lab";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -19,44 +19,47 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 Logos are image/s, text/s or a combination of the two that depict the name and purpose of a business.
 
-Logo is essentially a wrapping component for LogoImage, LogoSeparator and any [Text](?path=/docs/documentation-core-text--page) component.
+Making Logo compositional means that it gives users the flexibility of including the elements they need to meet their design specs.
+Logo is essentially a wrapping component for LogoImage, LogoSeparator, [Text component](?path=/docs/documentation-core-text--page) or other elements like SVG image.
 
 ## Examples
 
-### Logo as an Image
+### Logo containing a LogoImage
 
 <Canvas>
-  <Story id="lab-logo--default" />
+  <Story id="lab-logo--logo-with-image" />
 </Canvas>
 
-### Logo as an Image and Text
+### Logo containing a LogoImage and Text
 
 <Canvas>
   <Story id="lab-logo--image-and-text" />
 </Canvas>
 
-### Logo as an Image and Text with Separator
+### Logo containing a LogoImage, Text and LogoSeparator
 
 <Canvas>
   <Story id="lab-logo--image-and-text-with-separator" />
 </Canvas>
 
-### Logo Wrapped with Link
+### Link wrapping Logo
 
 <Canvas>
   <Story id="lab-logo--link-logo" />
 </Canvas>
 
-### LogoImage Wrapped with Link
+### Link wrapping LogoImage only
 
 <Canvas>
   <Story id="lab-logo--link-on-image" />
 </Canvas>
 
-### Two Texts
+### Compact Logo
+
+Here's an example of a reglular versus a compact version of Logo which now you can create yourself.
 
 <Canvas>
-  <Story id="lab-logo--text-instead-image" />
+  <Story id="lab-logo--regular-vs-compact" />
 </Canvas>
 
 ## Configuring Logo
@@ -67,11 +70,19 @@ import { Logo, LogoImage, LogoSeparator } from '@salt-ds/lab';
 
 ### Props
 
+#### Logo
+
 <ArgsTable of={Logo} />
 
-### CSS Class
+#### LogoImage
 
-<CSSClassTable of={Logo} />
+<ArgsTable of={LogoImage} />
+
+#### LogoSeparator
+
+<ArgsTable of={LogoSeparator} />
+
+### CSS Class
 
 ### Characteristics Used
 

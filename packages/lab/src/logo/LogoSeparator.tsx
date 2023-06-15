@@ -7,7 +7,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import logoSeparatorCss from "./LogoSeparator.css";
 
-export interface LogoSeparatorProps extends ComponentPropsWithoutRef<"span"> {}
+export type LogoSeparatorProps = ComponentPropsWithoutRef<"span">
 
 const withBaseName = makePrefixer("saltLogoSeparator");
 

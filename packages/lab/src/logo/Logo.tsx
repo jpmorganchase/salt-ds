@@ -7,12 +7,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import logoCss from "./Logo.css";
 
-export interface LogoProps extends ComponentPropsWithoutRef<"span"> {
-  /**
-   * If `true`, the logo will be compact;
-   */
-  compact?: boolean;
-}
+export type LogoProps = ComponentPropsWithoutRef<"span">
 
 const withBaseName = makePrefixer("saltLogo");
 
@@ -20,7 +15,7 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
   props,
   ref
 ) {
-  const { className, compact, ...rest } = props;
+  const { className, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -31,9 +26,7 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
 
   return (
     <span
-      className={clsx(withBaseName(), className, {
-        [withBaseName("compact")]: compact,
-      })}
+      className={clsx(withBaseName(), className)}
       ref={ref}
       {...rest}
     />
