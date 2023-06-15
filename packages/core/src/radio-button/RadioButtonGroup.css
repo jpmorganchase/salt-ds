@@ -8,14 +8,14 @@
 /* Styles applied when direction is vertical */
 .saltRadioButtonGroup-vertical {
   display: flex;
-  gap: var(--salt-size-unit);
+  gap: var(--salt-spacing-100);
   flex-direction: column;
 }
 
 /* Styles applied when direction is horizontal */
 .saltRadioButtonGroup-horizontal {
   display: flex;
-  gap: var(--salt-size-unit);
+  gap: var(--salt-spacing-200);
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -32,5 +32,5 @@
   display: inline-block;
   font-size: var(--formFieldLegacy-label-fontSize); /* TODO: V2 Form Field work */
   color: var(--salt-text-primary-foreground);
-  margin-bottom: calc(var(--salt-size-unit) * 2);
+  margin-bottom: var(--salt-spacing-200);
 }

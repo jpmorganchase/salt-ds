@@ -8,7 +8,7 @@
 /* Styles applied to root component if `direction={"horizontal"}` */
 .saltCheckboxGroup-horizontal {
   display: flex;
-  gap: var(--salt-size-adornmentGap);
+  gap: var(--salt-spacing-200);
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -16,7 +16,7 @@
 /* Styles applied to root component if `direction={"vertical"}` */
 .saltCheckboxGroup-vertical {
   display: flex;
-  gap: var(--salt-size-unit);
+  gap: var(--salt-spacing-100);
   flex-direction: column;
 }
 
