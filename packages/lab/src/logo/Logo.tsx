@@ -7,7 +7,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import logoCss from "./Logo.css";
 
-export type LogoProps = ComponentPropsWithoutRef<"span">
+export type LogoProps = ComponentPropsWithoutRef<"span">;
 
 const withBaseName = makePrefixer("saltLogo");
 
@@ -25,10 +25,6 @@ export const Logo = forwardRef<HTMLSpanElement, LogoProps>(function Logo(
   });
 
   return (
-    <span
-      className={clsx(withBaseName(), className)}
-      ref={ref}
-      {...rest}
-    />
+    <span className={clsx(withBaseName(), className)} ref={ref} {...rest} />
   );
 });

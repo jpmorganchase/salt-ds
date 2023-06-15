@@ -8,7 +8,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import logoImageCss from "./LogoImage.css";
 
 export interface LogoImageProps extends ComponentPropsWithoutRef<"img"> {
-  alt: string
+  alt: string;
 }
 
 const withBaseName = makePrefixer("saltLogoImage");
@@ -25,7 +25,12 @@ export const LogoImage = forwardRef<HTMLImageElement, LogoImageProps>(
     });
 
     return (
-      <img {...rest} alt={alt} className={clsx(withBaseName(), className)} ref={ref} />
+      <img
+        {...rest}
+        alt={alt}
+        className={clsx(withBaseName(), className)}
+        ref={ref}
+      />
     );
   }
 );
