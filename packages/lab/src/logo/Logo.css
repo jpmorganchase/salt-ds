@@ -1,23 +1,8 @@
-.salt-density-high {
-  --logo-height: var(--saltLogo-logo-height, 14px);
-}
-
-.salt-density-medium {
-  --logo-height: var(--saltLogo-logo-height, 20px);
-}
-
-.salt-density-low {
-  --logo-height: var(--saltLogo-logo-height, 26px);
-}
-
-.salt-density-touch {
-  --logo-height: var(--saltLogo-logo-height, 32px);
-}
-
+/* Styles for Logo */
 .saltLogo {
   display: inline-flex;
   position: relative;
   align-items: center;
   justify-content: center;
-  height: var(--logo-height);
+  height: var(--salt-size-base);
 }
