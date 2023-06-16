@@ -135,7 +135,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName(validationStatus || "")]: validationStatus,
-            [withBaseName("error")]: error
+            [withBaseName("error")]: error,
           },
           className
         )}
