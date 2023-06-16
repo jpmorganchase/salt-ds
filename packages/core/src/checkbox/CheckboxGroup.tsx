@@ -85,7 +85,11 @@ export const CheckboxGroup = forwardRef<
   } = useFormFieldProps();
 
   const disabled = formFieldDisabled ?? disabledProp;
-  const validationStatus = formFieldValidationStatus ? formFieldValidationStatus !== "success" ? formFieldValidationStatus : undefined : validationStatusProp;
+  const validationStatus = formFieldValidationStatus
+    ? formFieldValidationStatus !== "success"
+      ? formFieldValidationStatus
+      : undefined
+    : validationStatusProp;
 
   const [checkedValues, setCheckedValues] = useControlled({
     controlled: checkedValuesProp,
@@ -127,7 +131,7 @@ export const CheckboxGroup = forwardRef<
           name,
           onChange: handleChange,
           checkedValues,
-          validationStatus
+          validationStatus,
         }}
       >
         {children}

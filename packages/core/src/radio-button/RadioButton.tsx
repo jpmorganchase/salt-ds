@@ -143,8 +143,14 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {...rest}
       >
         <input
-          aria-describedby={clsx(radioGroup.a11yProps?.["aria-describedby"], inputDescribedBy)}
-          aria-labelledby={clsx(radioGroup.a11yProps?.["aria-labelledby"], inputLabelledBy)}
+          aria-describedby={clsx(
+            radioGroup.a11yProps?.["aria-describedby"],
+            inputDescribedBy
+          )}
+          aria-labelledby={clsx(
+            radioGroup.a11yProps?.["aria-labelledby"],
+            inputLabelledBy
+          )}
           className={withBaseName("input")}
           {...restInputProps}
           checked={checked}

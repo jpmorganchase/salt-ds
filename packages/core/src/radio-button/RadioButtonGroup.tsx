@@ -82,7 +82,11 @@ export const RadioButtonGroup = forwardRef<
   } = useFormFieldProps();
 
   const disabled = formFieldDisabled ?? disabledProp;
-  const validationStatus = formFieldValidationStatus ? formFieldValidationStatus !== "success" ? formFieldValidationStatus : undefined : validationStatusProp;
+  const validationStatus = formFieldValidationStatus
+    ? formFieldValidationStatus !== "success"
+      ? formFieldValidationStatus
+      : undefined
+    : validationStatusProp;
 
   const [value, setStateValue] = useControlled({
     controlled: valueProp,
@@ -113,7 +117,14 @@ export const RadioButtonGroup = forwardRef<
       {...rest}
     >
       <RadioGroupContext.Provider
-        value={{ a11yProps, disabled, name, onChange: handleChange, validationStatus, value }}
+        value={{
+          a11yProps,
+          disabled,
+          name,
+          onChange: handleChange,
+          validationStatus,
+          value,
+        }}
       >
         {children}
       </RadioGroupContext.Provider>

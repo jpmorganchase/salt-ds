@@ -142,7 +142,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     const validationStatus = !disabled
       ? checkboxGroup.validationStatus ?? validationStatusProp
       : undefined;
-      
+
     return (
       <label
         className={clsx(
@@ -159,8 +159,14 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <input
           // aria-checked only needed when indeterminate since native indeterminate behaviour is not used
           aria-checked={indeterminate ? "mixed" : undefined}
-          aria-describedby={clsx(checkboxGroup.a11yProps?.["aria-describedby"], inputDescribedBy)}
-          aria-labelledby={clsx(checkboxGroup.a11yProps?.["aria-labelledby"], inputLabelledBy)}
+          aria-describedby={clsx(
+            checkboxGroup.a11yProps?.["aria-describedby"],
+            inputDescribedBy
+          )}
+          aria-labelledby={clsx(
+            checkboxGroup.a11yProps?.["aria-labelledby"],
+            inputLabelledBy
+          )}
           name={name}
           value={value}
           {...restInputProps}
