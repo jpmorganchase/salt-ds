@@ -87,6 +87,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       className,
       defaultChecked,
       disabled: disabledProp,
+      error,
       indeterminate,
       inputProps = {},
       label,
@@ -149,6 +150,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName("error")]: error,
             [withBaseName(validationStatus || "")]: validationStatus,
           },
           className
@@ -185,6 +187,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           disabled={disabled}
           indeterminate={indeterminate}
           validationStatus={validationStatus}
+          error={error}
         />
         {label}
       </label>
