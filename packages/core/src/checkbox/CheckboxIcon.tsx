@@ -16,7 +16,7 @@ export interface CheckboxIconProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
-  error?: boolean; /* **Deprecated**: replaced with validationStatus */
+  error?: boolean /* **Deprecated**: replaced with validationStatus */;
   indeterminate?: boolean;
   validationStatus?: "error" | "warning";
 }
@@ -29,7 +29,7 @@ export const CheckboxIcon = ({
   disabled,
   error,
   indeterminate,
-  validationStatus
+  validationStatus,
 }: CheckboxIconProps): JSX.Element => {
   const targetWindow = useWindow();
   useComponentCssInjection({

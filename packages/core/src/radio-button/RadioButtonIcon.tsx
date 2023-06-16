@@ -20,7 +20,7 @@ export const RadioButtonIcon = ({
   checked,
   error,
   disabled,
-  validationStatus
+  validationStatus,
 }: RadioButtonIconProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({

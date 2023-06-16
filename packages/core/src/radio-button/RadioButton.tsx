@@ -66,7 +66,7 @@ export interface RadioButtonProps
   /**
    * Validation status.
    */
-   validationStatus?: "error" | "warning";
+  validationStatus?: "error" | "warning";
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(

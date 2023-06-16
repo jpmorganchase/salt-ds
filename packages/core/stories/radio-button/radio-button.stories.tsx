@@ -32,8 +32,17 @@ export const Disabled = () => {
 export const Error = () => {
   return (
     <>
-      <RadioButton label="Error" value="Error-unchecked" validationStatus="error" />
-      <RadioButton label="Error" value="Error-checked" checked validationStatus="error" />
+      <RadioButton
+        label="Error"
+        value="Error-unchecked"
+        validationStatus="error"
+      />
+      <RadioButton
+        label="Error"
+        value="Error-checked"
+        checked
+        validationStatus="error"
+      />
     </>
   );
 };
@@ -41,8 +50,17 @@ export const Error = () => {
 export const Warning = () => {
   return (
     <>
-      <RadioButton label="Error" value="Error-unchecked" validationStatus="warning" />
-      <RadioButton label="Error" value="Error-checked" checked validationStatus="warning" />
+      <RadioButton
+        label="Error"
+        value="Error-unchecked"
+        validationStatus="warning"
+      />
+      <RadioButton
+        label="Error"
+        value="Error-checked"
+        checked
+        validationStatus="warning"
+      />
     </>
   );
 };

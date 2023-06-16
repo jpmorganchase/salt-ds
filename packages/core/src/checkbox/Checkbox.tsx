@@ -76,7 +76,7 @@ export interface CheckboxProps
   /**
    * Validation status.
    */
-   validationStatus?: "error" | "warning";
+  validationStatus?: "error" | "warning";
 }
 
 export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
