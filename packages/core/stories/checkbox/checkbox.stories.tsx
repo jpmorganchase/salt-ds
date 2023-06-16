@@ -67,10 +67,7 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
   return (
     <StackLayout>
       <CheckboxGroup validationStatus={errorState ? "error" : undefined}>
-        <Checkbox
-          onChange={() => setErrorState(false)}
-          label="Option 1"
-        />
+        <Checkbox onChange={() => setErrorState(false)} label="Option 1" />
         <Checkbox
           onChange={() => setErrorState(false)}
           defaultChecked
@@ -109,10 +106,7 @@ export const Warning: ComponentStory<typeof Checkbox> = () => {
   return (
     <StackLayout>
       <CheckboxGroup validationStatus={warningState ? "warning" : undefined}>
-        <Checkbox
-          onChange={() => setWarningState(false)}
-          label="Option 1"
-        />
+        <Checkbox onChange={() => setWarningState(false)} label="Option 1" />
         <Checkbox
           onChange={() => setWarningState(false)}
           defaultChecked

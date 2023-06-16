@@ -106,7 +106,12 @@ export const CheckboxGroup = forwardRef<
       {...other}
     >
       <CheckboxGroupContext.Provider
-        value={{ name, onChange: handleChange, checkedValues, validationStatus }}
+        value={{
+          name,
+          onChange: handleChange,
+          checkedValues,
+          validationStatus,
+        }}
       >
         {children}
       </CheckboxGroupContext.Provider>
