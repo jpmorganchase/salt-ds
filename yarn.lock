@@ -4141,7 +4141,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-plugins@npm:^0.1.0-beta.35":
+"@jpmorganchase/mosaic-plugins@npm:0.1.0-beta.35":
   version: 0.1.0-beta.35
   resolution: "@jpmorganchase/mosaic-plugins@npm:0.1.0-beta.35"
   dependencies:
@@ -4174,6 +4174,42 @@ __metadata:
     uuid: ^7.0.3
     vfile-reporter: ^7.0.5
   checksum: 6cd113b11c85583074357298baa55ef410e75e15a779363fd814979885917a501a3f3ccb7330425a0f8fbd7059859541917db9d32158eb92d0f6a5cb6f0cfb08
+  languageName: node
+  linkType: hard
+
+"@jpmorganchase/mosaic-plugins@patch:@jpmorganchase/mosaic-plugins@npm%3A0.1.0-beta.35#./.yarn/patches/@jpmorganchase-mosaic-plugins-npm-0.1.0-beta.35-b505dd14d6.patch::locator=%40salt-ds%2Froot%40workspace%3A.":
+  version: 0.1.0-beta.35
+  resolution: "@jpmorganchase/mosaic-plugins@patch:@jpmorganchase/mosaic-plugins@npm%3A0.1.0-beta.35#./.yarn/patches/@jpmorganchase-mosaic-plugins-npm-0.1.0-beta.35-b505dd14d6.patch::version=0.1.0-beta.35&hash=5a0a7d&locator=%40salt-ds%2Froot%40workspace%3A."
+  dependencies:
+    "@apidevtools/json-schema-ref-parser": ^9.0.9
+    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.35
+    "@jpmorganchase/mosaic-serialisers": ^0.1.0-beta.35
+    "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.35
+    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.35
+    "@jpmorganchase/mosaic-types": ^0.1.0-beta.35
+    "@types/github-slugger": ^1.3.0
+    "@vcarl/remark-headings": ^0.1.0
+    check-links: ^2.0.0
+    fs-extra: ^10.1.0
+    github-slugger: ^1.4.0
+    https-proxy-agent: ^5.0.1
+    lodash-es: ^4.17.21
+    memfs: ^3.4.12
+    react-docgen-typescript: ^2.2.2
+    react-pro-sidebar: ^1.0.0
+    reading-time: ^1.5.0
+    remark: ^14.0.2
+    remark-directive: ^2.0.1
+    remark-gfm: ^3.0.1
+    remark-mdx: ^2.1.5
+    remark-parse: ^10.0.1
+    remark-stringify: ^10.0.2
+    rxjs: ^7.5.5
+    unified: ^10.1.2
+    unist-util-visit: ^4.1.1
+    uuid: ^7.0.3
+    vfile-reporter: ^7.0.5
+  checksum: 607617cfd19b3386c773da9fa14d7d7f16e9e67eb3f58baaf37ccdabfbac231661c85d1bf63ad60d9515f2558e03776e897caadfce2737ab3bd235314fa55d82
   languageName: node
   linkType: hard
 
@@ -5541,6 +5577,7 @@ __metadata:
     "@jpmorganchase/mosaic-components": ^0.1.0-beta.35
     "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.35
     "@jpmorganchase/mosaic-layouts": ^0.1.0-beta.35
+    "@jpmorganchase/mosaic-plugins": ^0.1.0-beta.35
     "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.35
     "@jpmorganchase/mosaic-site-preset-styles": ^0.1.0-beta.35
     "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.35

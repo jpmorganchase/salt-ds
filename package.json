@@ -139,7 +139,8 @@
     "esbuild": "0.14.51",
     "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
-    "rollup": "2.79.1"
+    "rollup": "2.79.1",
+    "@jpmorganchase/mosaic-plugins@^0.1.0-beta.35": "patch:@jpmorganchase/mosaic-plugins@npm%3A0.1.0-beta.35#./.yarn/patches/@jpmorganchase-mosaic-plugins-npm-0.1.0-beta.35-b505dd14d6.patch"
   },
   "browserslist": {
     "production": [
