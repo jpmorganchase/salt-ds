@@ -103,17 +103,10 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       ...restInputProps
     } = inputProps;
 
-    const {
-      a11yProps: {
-        "aria-describedby": formFieldDescribedBy,
-        "aria-labelledby": formFieldLabelledBy,
-      } = {},
-      disabled: formFieldDisabled,
-      validationStatus: formFieldValidationStatus,
-    } = useFormFieldProps();
-
-    const disabled = formFieldDisabled ?? disabledProp;
-    const error = formFieldValidationStatus === "error" ?? errorProp;
+    const disabled = radioGroup.disabled ?? disabledProp;
+    const validationStatus = !disabled
+      ? radioGroup.validationStatus ?? validationStatusProp
+      : undefined;
 
     const radioGroupChecked =
       radioGroup.value != null && value != null
@@ -136,10 +129,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       radioGroup.onChange?.(event);
     };
 
-    const validationStatus = !disabled
-      ? radioGroup.validationStatus ?? validationStatusProp
-      : undefined;
-
     return (
       <label
         className={clsx(
@@ -154,8 +143,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {...rest}
       >
         <input
-          aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
-          aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
+          aria-describedby={clsx(radioGroup.a11yProps?.["aria-describedby"], inputDescribedBy)}
+          aria-labelledby={clsx(radioGroup.a11yProps?.["aria-labelledby"], inputLabelledBy)}
           className={withBaseName("input")}
           {...restInputProps}
           checked={checked}

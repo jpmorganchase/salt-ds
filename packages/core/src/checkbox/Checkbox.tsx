@@ -87,7 +87,6 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       className,
       defaultChecked,
       disabled: disabledProp,
-      error: errorProp,
       indeterminate,
       inputProps = {},
       label,
@@ -115,18 +114,6 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       ...restInputProps
     } = inputProps;
 
-    const {
-      a11yProps: {
-        "aria-describedby": formFieldDescribedBy,
-        "aria-labelledby": formFieldLabelledBy,
-      } = {},
-      disabled: formFieldDisabled,
-      validationStatus: formFieldValidationStatus,
-    } = useFormFieldProps();
-
-    const disabled = formFieldDisabled ?? disabledProp;
-    const error = formFieldValidationStatus === "error" ?? errorProp;
-
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       // Workaround for https://github.com/facebook/react/issues/9023
       if (event.nativeEvent.defaultPrevented) {
@@ -151,10 +138,11 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       state: "checked",
     });
 
+    const disabled = checkboxGroup.disabled ?? disabledProp;
     const validationStatus = !disabled
       ? checkboxGroup.validationStatus ?? validationStatusProp
       : undefined;
-
+      
     return (
       <label
         className={clsx(
@@ -171,8 +159,8 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <input
           // aria-checked only needed when indeterminate since native indeterminate behaviour is not used
           aria-checked={indeterminate ? "mixed" : undefined}
-          aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
-          aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
+          aria-describedby={clsx(checkboxGroup.a11yProps?.["aria-describedby"], inputDescribedBy)}
+          aria-labelledby={clsx(checkboxGroup.a11yProps?.["aria-labelledby"], inputLabelledBy)}
           name={name}
           value={value}
           {...restInputProps}
