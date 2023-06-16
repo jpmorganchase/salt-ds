@@ -132,7 +132,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       state: "checked",
     });
 
-    const validationStatus = !disabled ? validationStatusProp : undefined;
+    const validationStatus = !disabled ? checkboxGroup.validationStatus ?? validationStatusProp : undefined;
 
     return (
       <label

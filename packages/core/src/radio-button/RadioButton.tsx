@@ -94,7 +94,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       window: targetWindow,
     });
 
-    const validationStatus = !disabled ? validationStatusProp : undefined;
 
     const radioGroup = useRadioGroup();
 
@@ -118,6 +117,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       onChange?.(event);
       radioGroup.onChange?.(event);
     };
+
+    const validationStatus = !disabled ? radioGroup.validationStatus ?? validationStatusProp : undefined;
 
     return (
       <label

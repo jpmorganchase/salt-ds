@@ -66,20 +66,17 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
 
   return (
     <StackLayout>
-      <CheckboxGroup>
+      <CheckboxGroup validationStatus={errorState ? "error" : undefined}>
         <Checkbox
-          validationStatus={errorState ? "error" : undefined}
           onChange={() => setErrorState(false)}
           label="Option 1"
         />
         <Checkbox
-          validationStatus={errorState ? "error" : undefined}
           onChange={() => setErrorState(false)}
           defaultChecked
           label="Option 2"
         />
         <Checkbox
-          validationStatus={errorState ? "error" : undefined}
           checked={checkboxState.checked}
           indeterminate={checkboxState.indeterminate}
           onChange={handleChange}
@@ -111,20 +108,17 @@ export const Warning: ComponentStory<typeof Checkbox> = () => {
 
   return (
     <StackLayout>
-      <CheckboxGroup>
+      <CheckboxGroup validationStatus={warningState ? "warning" : undefined}>
         <Checkbox
-          validationStatus={warningState ? "warning" : undefined}
           onChange={() => setWarningState(false)}
           label="Option 1"
         />
         <Checkbox
-          validationStatus={warningState ? "warning" : undefined}
           onChange={() => setWarningState(false)}
           defaultChecked
           label="Option 2"
         />
         <Checkbox
-          validationStatus={warningState ? "warning" : undefined}
           checked={checkboxState.checked}
           indeterminate={checkboxState.indeterminate}
           onChange={handleChange}
