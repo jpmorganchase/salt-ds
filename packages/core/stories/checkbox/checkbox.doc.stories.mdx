@@ -62,6 +62,7 @@ A Checkbox with the prop `validationStatus="warning"` will cause the checkbox to
   <Story id="core-checkbox--warning" />
 </Canvas>
 
+- When used in a group, use `validationStatus` on the group rather than the individual controls. Any status provided to the group will take precedence over the statuses applied directly to the nested controls.
 - Avoid using `validationStatus` when a Checkbox is `disabled`. If provided, `disabled` functionality and styling will take precedence over any validation status styling.
 
 ### Disabled
