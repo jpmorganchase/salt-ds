@@ -3,6 +3,7 @@ import {
   forwardRef,
   KeyboardEvent,
   SyntheticEvent,
+  useCallback,
   useMemo,
   useRef,
   useState,
@@ -79,29 +80,34 @@ export const ToggleButtonGroup = forwardRef<
     string | ReadonlyArray<string> | number | undefined
   >(selected);
 
-  const select = (event: SyntheticEvent<HTMLButtonElement>) => {
-    const newValue = event.currentTarget.value;
-    setSelected(newValue);
-    if (selected !== newValue) {
-      onSelectionChange?.(event);
-    }
-  };
+  const select = useCallback(
+    (event: SyntheticEvent<HTMLButtonElement>) => {
+      const newValue = event.currentTarget.value;
+      setSelected(newValue);
+      if (selected !== newValue) {
+        onSelectionChange?.(event);
+      }
+    },
+    [onSelectionChange, selected, setSelected]
+  );
 
-  const isSelected = (
-    id: string | ReadonlyArray<string> | number | undefined
-  ) => {
-    return selected === id;
-  };
+  const isSelected = useCallback(
+    (id: string | ReadonlyArray<string> | number | undefined) => {
+      return selected === id;
+    },
+    [selected]
+  );
 
   const focus = (id: string | ReadonlyArray<string> | number | undefined) => {
     setFocused(id);
   };
 
-  const isFocused = (
-    id: string | ReadonlyArray<string> | number | undefined
-  ) => {
-    return focused === id || !focused;
-  };
+  const isFocused = useCallback(
+    (id: string | ReadonlyArray<string> | number | undefined) => {
+      return focused === id || !focused;
+    },
+    [focused]
+  );
 
   const value = useMemo(
     () => ({
@@ -111,7 +117,7 @@ export const ToggleButtonGroup = forwardRef<
       isFocused,
       disabled,
     }),
-    [select, isSelected, focus, disabled]
+    [select, isSelected, isFocused, disabled]
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {

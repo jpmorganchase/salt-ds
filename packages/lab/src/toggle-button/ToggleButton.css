@@ -16,6 +16,7 @@
   letter-spacing: var(--salt-actionable-letterSpacing);
   line-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);
+  padding-inline: var(--salt-spacing-100);
 }
 
 .saltToggleButton:hover {
