@@ -31,6 +31,7 @@ export interface RadioButtonProps
    */
   disabled?: boolean;
   /**
+   * **Deprecated**: Use validationStatus instead
    * Set the error state
    */
   error?: boolean;
@@ -62,6 +63,10 @@ export interface RadioButtonProps
    * Value of radio button
    */
   value?: string;
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning";
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
@@ -78,6 +83,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       onBlur,
       onChange,
       value,
+      validationStatus: validationStatusProp,
       ...rest
     } = props;
 
@@ -111,12 +117,17 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       radioGroup.onChange?.(event);
     };
 
+    const validationStatus = !disabled
+      ? radioGroup.validationStatus ?? validationStatusProp
+      : undefined;
+
     return (
       <label
         className={clsx(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName(validationStatus || "")]: validationStatus,
           },
           className
         )}
@@ -137,8 +148,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         />
         <RadioButtonIcon
           checked={checked}
-          error={error && !disabled}
           disabled={disabled}
+          validationStatus={validationStatus}
         />
         {label}
       </label>

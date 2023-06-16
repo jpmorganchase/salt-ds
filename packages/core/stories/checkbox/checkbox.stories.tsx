@@ -66,20 +66,14 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
 
   return (
     <StackLayout>
-      <CheckboxGroup>
+      <CheckboxGroup validationStatus={errorState ? "error" : undefined}>
+        <Checkbox onChange={() => setErrorState(false)} label="Option 1" />
         <Checkbox
-          error={errorState}
-          onChange={() => setErrorState(false)}
-          label="Option 1"
-        />
-        <Checkbox
-          error={errorState}
           onChange={() => setErrorState(false)}
           defaultChecked
           label="Option 2"
         />
         <Checkbox
-          error={errorState}
           checked={checkboxState.checked}
           indeterminate={checkboxState.indeterminate}
           onChange={handleChange}
@@ -87,6 +81,45 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
         />
       </CheckboxGroup>
       <Button onClick={() => setErrorState(true)}>Reset</Button>
+    </StackLayout>
+  );
+};
+
+export const Warning: ComponentStory<typeof Checkbox> = () => {
+  const [warningState, setWarningState] = useState(true);
+
+  const [checkboxState, setCheckboxState] = useState({
+    checked: false,
+    indeterminate: true,
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedChecked = event.target.checked;
+    setWarningState(false);
+    setCheckboxState({
+      indeterminate: !updatedChecked && checkboxState.checked,
+      checked:
+        checkboxState.indeterminate && updatedChecked ? false : updatedChecked,
+    });
+  };
+
+  return (
+    <StackLayout>
+      <CheckboxGroup validationStatus={warningState ? "warning" : undefined}>
+        <Checkbox onChange={() => setWarningState(false)} label="Option 1" />
+        <Checkbox
+          onChange={() => setWarningState(false)}
+          defaultChecked
+          label="Option 2"
+        />
+        <Checkbox
+          checked={checkboxState.checked}
+          indeterminate={checkboxState.indeterminate}
+          onChange={handleChange}
+          label="Option 3"
+        />
+      </CheckboxGroup>
+      <Button onClick={() => setWarningState(true)}>Reset</Button>
     </StackLayout>
   );
 };
