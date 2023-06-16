@@ -915,21 +915,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/types@npm:3.347.0":
+"@aws-sdk/types@npm:3.347.0, @aws-sdk/types@npm:^3.222.0":
   version: 3.347.0
   resolution: "@aws-sdk/types@npm:3.347.0"
   dependencies:
     tslib: ^2.5.0
   checksum: 799b053d3651f1754e2925b671fe890047d0ff1af69d22b6826d8e74edefcd558c7c7a911d48eaf5930032bcf291dbdbb6dd2d2f0c596bbe52100941aa349221
-  languageName: node
-  linkType: hard
-
-"@aws-sdk/types@npm:^3.222.0":
-  version: 3.272.0
-  resolution: "@aws-sdk/types@npm:3.272.0"
-  dependencies:
-    tslib: ^2.3.1
-  checksum: c4e4f09dd2672eab4fc15b08006c730c1d07d4b54ae35e03167d99f6110751e36b5332165e03c71c28724037f623f8da87a45a018eb631a1ce86d406f9d08da6
   languageName: node
   linkType: hard
 
@@ -4819,9 +4810,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mswjs/data@npm:^0.12.0":
-  version: 0.12.0
-  resolution: "@mswjs/data@npm:0.12.0"
+"@mswjs/data@npm:^0.13.0":
+  version: 0.13.0
+  resolution: "@mswjs/data@npm:0.13.0"
   dependencies:
     "@types/lodash": ^4.14.172
     "@types/md5": ^2.3.0
@@ -4835,12 +4826,12 @@ __metadata:
     msw: latest
     outvariant: ^1.2.1
     pluralize: ^8.0.0
-    strict-event-emitter: ^0.2.0
+    strict-event-emitter: ^0.5.0
     uuid: ^8.3.1
   dependenciesMeta:
     msw:
       optional: true
-  checksum: fcdb0c9a50b05f0eb7ec8663a82bb3ba31a0b5ae4d6feaa50338eee6468c22d06b48c4dd1aa9ce35d70d62654a5f068a433cb302a5217f517e9f693080a034a0
+  checksum: 924c15cf28c50bca2275a8003f3ce15f18e088fff934ca394e650c097be3090ef31dbf088f5c0c5e357cef7a19d472eef3f141df4e5c3db65ca45a73c1833496
   languageName: node
   linkType: hard
 
@@ -5460,7 +5451,7 @@ __metadata:
     "@fontsource/open-sans": ^4.5.13
     "@internationalized/date": ^3.0.0
     "@jpmorganchase/mosaic-create-site": ^0.1.0-beta.35
-    "@mswjs/data": ^0.12.0
+    "@mswjs/data": ^0.13.0
     "@storybook/addon-a11y": ^6.5.16
     "@storybook/addon-actions": ^6.5.16
     "@storybook/addon-docs": ^6.5.16
@@ -29216,7 +29207,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strict-event-emitter@npm:^0.2.0, strict-event-emitter@npm:^0.2.4":
+"strict-event-emitter@npm:^0.2.4":
   version: 0.2.8
   resolution: "strict-event-emitter@npm:0.2.8"
   dependencies:
@@ -29229,6 +29220,13 @@ __metadata:
   version: 0.4.6
   resolution: "strict-event-emitter@npm:0.4.6"
   checksum: 4f4f2909613e7811de789991c06bfb770d6d6987e2ec5c66fa7485d0f07cc4e7e32eba0dcf26cee6d86af6c92946d7f4acdfaff57d0c4114df2cfa1bf0e3c091
+  languageName: node
+  linkType: hard
+
+"strict-event-emitter@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "strict-event-emitter@npm:0.5.0"
+  checksum: d54c8b7bf3e8bb5687b4afaa18f4df23367d24ac3003ec958d3351e7201cfe18faa314d83a68e9b2e29d2f3aac69a831fb6a4c726ea7a451c0719570d4a07067
   languageName: node
   linkType: hard
 
