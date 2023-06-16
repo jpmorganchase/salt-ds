@@ -44,15 +44,21 @@ A Radio Button can be disabled by setting the `disabled` prop to true. This will
   <Story id="core-radio-button--disabled" />
 </Canvas>
 
-### Error
+### Validation state
 
-Error state can be indicated stylistically by setting the `error` prop to true.
+Error state can be indicated stylistically by setting the `validationStatus` prop to "error".
 
 <Canvas>
   <Story id="core-radio-button--error" />
 </Canvas>
 
-- Avoid using `error` when a Radio Button is `disabled`. If provided, `disabled` functionality and styling will take precedence over `error`.
+Warning state can be indicated stylistically by setting the `validationStatus` prop to "warning".
+
+<Canvas>
+  <Story id="core-radio-button--warning" />
+</Canvas>
+
+- Avoid using `validationStatus` when a Radio Button is `disabled`. If provided, `disabled` functionality and styling will take precedence over any validation status styling.
 
 ## Radio Button Group
 

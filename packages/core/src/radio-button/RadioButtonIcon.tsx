@@ -10,6 +10,7 @@ export interface RadioButtonIconProps {
   checked?: boolean;
   error?: boolean;
   disabled?: boolean;
+  validationStatus?: "error" | "warning";
 }
 
 /**
@@ -19,6 +20,7 @@ export const RadioButtonIcon = ({
   checked,
   error,
   disabled,
+  validationStatus
 }: RadioButtonIconProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -32,6 +34,7 @@ export const RadioButtonIcon = ({
         [withBaseName("checked")]: checked,
         [withBaseName("error")]: error,
         [withBaseName("disabled")]: disabled,
+        [withBaseName(validationStatus || "")]: validationStatus,
       })}
       height="14"
       viewBox="0 0 14 14"
