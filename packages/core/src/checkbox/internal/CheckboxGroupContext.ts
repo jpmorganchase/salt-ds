@@ -5,6 +5,7 @@ export interface CheckboxGroupState {
   name?: CheckboxGroupProps["name"];
   onChange?: CheckboxGroupProps["onChange"];
   checkedValues?: CheckboxGroupProps["checkedValues"];
+  validationStatus?: "error" | "warning";
 }
 
 const CheckboxGroupContext = createContext<CheckboxGroupState>({});

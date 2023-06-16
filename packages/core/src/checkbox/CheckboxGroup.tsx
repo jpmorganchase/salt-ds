@@ -39,6 +39,10 @@ export interface CheckboxGroupProps
    * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise, the checkboxes will wrap onto the next line.
    */
   wrap?: boolean;
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning";
 }
 
 const withBaseName = makePrefixer("saltCheckboxGroup");
@@ -56,6 +60,7 @@ export const CheckboxGroup = forwardRef<
     name,
     onChange,
     wrap,
+    validationStatus,
     ...other
   },
   ref
@@ -101,7 +106,12 @@ export const CheckboxGroup = forwardRef<
       {...other}
     >
       <CheckboxGroupContext.Provider
-        value={{ name, onChange: handleChange, checkedValues }}
+        value={{
+          name,
+          onChange: handleChange,
+          checkedValues,
+          validationStatus,
+        }}
       >
         {children}
       </CheckboxGroupContext.Provider>

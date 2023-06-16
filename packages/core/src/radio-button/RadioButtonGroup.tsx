@@ -39,6 +39,10 @@ export interface RadioButtonGroupProps
    * The value of the radio group, required for a controlled component.
    */
   value?: string;
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning";
 }
 
 export const RadioButtonGroup = forwardRef<
@@ -54,6 +58,7 @@ export const RadioButtonGroup = forwardRef<
     name: nameProp,
     onChange,
     value: valueProp,
+    validationStatus,
     ...rest
   } = props;
 
@@ -93,7 +98,7 @@ export const RadioButtonGroup = forwardRef<
       {...rest}
     >
       <RadioGroupContext.Provider
-        value={{ name, onChange: handleChange, value }}
+        value={{ name, onChange: handleChange, validationStatus, value }}
       >
         {children}
       </RadioGroupContext.Provider>
