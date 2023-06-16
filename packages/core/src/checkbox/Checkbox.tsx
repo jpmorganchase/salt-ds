@@ -35,6 +35,7 @@ export interface CheckboxProps
    */
   disabled?: boolean;
   /**
+   * **Deprecated**: Use validationStatus instead
    * If `true`, the checkbox will be in the error state.
    */
   error?: boolean;
@@ -72,6 +73,10 @@ export interface CheckboxProps
    * The value of the checkbox.
    */
   value?: string;
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning";
 }
 
 export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
@@ -90,6 +95,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       onChange,
       onFocus,
       value,
+      validationStatus: validationStatusProp,
       ...rest
     },
     ref
@@ -126,7 +132,9 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       state: "checked",
     });
 
-    const isError = error && !disabled;
+    const validationStatus = !disabled
+      ? checkboxGroup.validationStatus ?? validationStatusProp
+      : undefined;
 
     return (
       <label
@@ -134,7 +142,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName("error")]: isError,
+            [withBaseName(validationStatus || "")]: validationStatus,
           },
           className
         )}
@@ -160,8 +168,8 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <CheckboxIcon
           checked={checked}
           disabled={disabled}
-          error={isError}
           indeterminate={indeterminate}
+          validationStatus={validationStatus}
         />
         {label}
       </label>
