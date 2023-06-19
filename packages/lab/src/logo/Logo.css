@@ -7,7 +7,7 @@
   height: var(--salt-size-base);
 }
 
-.saltLogo svg{
+.saltLogo svg {
   fill: var(--salt-text-secondary-foreground);
   stroke: none;
 }
