@@ -8,7 +8,7 @@ describe("GIVEN a logo", () => {
   it("renders an image", () => {
     cy.mount(
       <Logo>
-        <LogoImage src={src} />
+        <LogoImage src={src} alt="Logo image" />
         <Text>{appTitle}</Text>
       </Logo>
     );
@@ -18,7 +18,7 @@ describe("GIVEN a logo", () => {
   it("renders a separator", () => {
     cy.mount(
       <Logo>
-        <LogoImage src={src} />
+        <LogoImage src={src} alt="Logo image" />
         <LogoSeparator />
         <Text>{appTitle}</Text>
       </Logo>
@@ -29,7 +29,7 @@ describe("GIVEN a logo", () => {
   it("renders an appTitle", () => {
     cy.mount(
       <Logo>
-        <LogoImage src={src} />
+        <LogoImage src={src} alt="Logo image" />
         <Text>{appTitle}</Text>
       </Logo>
     );
