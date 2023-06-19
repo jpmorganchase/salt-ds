@@ -49,7 +49,6 @@ export {
 } from "./input-legacy";
 export * from "./layer-layout";
 export * from "./list";
-export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
 export * from "./nav-item";

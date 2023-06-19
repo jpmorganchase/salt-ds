@@ -1,5 +1,5 @@
 import { Text } from "@salt-ds/core";
-import { Logo, LogoImage, LogoSeparator } from "@salt-ds/lab";
+import { Logo, LogoImage, LogoSeparator } from "@salt-ds/core";
 
 describe("GIVEN a logo", () => {
   const appTitle = "Test App Title";

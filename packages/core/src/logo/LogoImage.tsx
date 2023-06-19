@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../utils";
 
 export interface LogoImageProps
   extends Omit<ComponentPropsWithoutRef<"img">, "alt"> {

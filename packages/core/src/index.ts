@@ -16,6 +16,7 @@ export * from "./grid-item";
 export * from "./grid-layout";
 export * from "./input";
 export * from "./link";
+export * from "./logo";
 export * from "./panel";
 export * from "./radio-button";
 export * from "./spinner";

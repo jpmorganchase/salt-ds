@@ -1,5 +1,11 @@
-import { Link, StackLayout, Text } from "@salt-ds/core";
-import { Logo, LogoImage, LogoSeparator } from "@salt-ds/lab";
+import {
+  Link,
+  Logo,
+  LogoImage,
+  LogoSeparator,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";

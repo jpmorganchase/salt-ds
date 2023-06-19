@@ -3,14 +3,12 @@ import { AdjustableFlexbox as Flexbox } from "../components";
 import {
   AppHeader,
   Badge,
-  Logo,
-  LogoImage,
   Tab,
   Tabstrip,
   TabstripProps,
   Tooltray /*, Toolbar */,
 } from "@salt-ds/lab";
-import { Button, Text } from "@salt-ds/core";
+import { Button, Logo, LogoImage, Text } from "@salt-ds/core";
 import {
   FilterIcon,
   MessageIcon,
