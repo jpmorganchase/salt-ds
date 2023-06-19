@@ -31,6 +31,7 @@ export interface RadioButtonProps
    */
   disabled?: boolean;
   /**
+   * **Deprecated**: Use validationStatus instead
    * Set the error state
    */
   error?: boolean;
@@ -62,6 +63,10 @@ export interface RadioButtonProps
    * Value of radio button
    */
   value?: string;
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning";
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
@@ -69,15 +74,16 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     const {
       checked: checkedProp,
       className,
-      disabled,
+      disabled: disabledProp,
       error,
-      inputProps,
+      inputProps = {},
       label,
       name: nameProp,
       onFocus,
       onBlur,
       onChange,
       value,
+      validationStatus: validationStatusProp,
       ...rest
     } = props;
 
@@ -89,6 +95,17 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     });
 
     const radioGroup = useRadioGroup();
+
+    const {
+      "aria-describedby": inputDescribedBy,
+      "aria-labelledby": inputLabelledBy,
+      ...restInputProps
+    } = inputProps;
+
+    const disabled = radioGroup.disabled ?? disabledProp;
+    const validationStatus = !disabled
+      ? radioGroup.validationStatus ?? validationStatusProp
+      : undefined;
 
     const radioGroupChecked =
       radioGroup.value != null && value != null
@@ -117,6 +134,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName(validationStatus || "")]: validationStatus,
+            [withBaseName("error")]: error,
           },
           className
         )}
@@ -124,8 +143,16 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {...rest}
       >
         <input
+          aria-describedby={clsx(
+            radioGroup.a11yProps?.["aria-describedby"],
+            inputDescribedBy
+          )}
+          aria-labelledby={clsx(
+            radioGroup.a11yProps?.["aria-labelledby"],
+            inputLabelledBy
+          )}
           className={withBaseName("input")}
-          {...inputProps}
+          {...restInputProps}
           checked={checked}
           disabled={disabled}
           name={name}
@@ -137,8 +164,9 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         />
         <RadioButtonIcon
           checked={checked}
-          error={error && !disabled}
           disabled={disabled}
+          validationStatus={validationStatus}
+          error={error}
         />
         {label}
       </label>
