@@ -74,9 +74,9 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     const {
       checked: checkedProp,
       className,
-      disabled,
+      disabled: disabledProp,
       error,
-      inputProps,
+      inputProps = {},
       label,
       name: nameProp,
       onFocus,
@@ -95,6 +95,17 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     });
 
     const radioGroup = useRadioGroup();
+
+    const {
+      "aria-describedby": inputDescribedBy,
+      "aria-labelledby": inputLabelledBy,
+      ...restInputProps
+    } = inputProps;
+
+    const disabled = radioGroup.disabled ?? disabledProp;
+    const validationStatus = !disabled
+      ? radioGroup.validationStatus ?? validationStatusProp
+      : undefined;
 
     const radioGroupChecked =
       radioGroup.value != null && value != null
@@ -117,10 +128,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       radioGroup.onChange?.(event);
     };
 
-    const validationStatus = !disabled
-      ? radioGroup.validationStatus ?? validationStatusProp
-      : undefined;
-
     return (
       <label
         className={clsx(
@@ -128,6 +135,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName(validationStatus || "")]: validationStatus,
+            [withBaseName("error")]: error,
           },
           className
         )}
@@ -135,8 +143,16 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {...rest}
       >
         <input
+          aria-describedby={clsx(
+            radioGroup.a11yProps?.["aria-describedby"],
+            inputDescribedBy
+          )}
+          aria-labelledby={clsx(
+            radioGroup.a11yProps?.["aria-labelledby"],
+            inputLabelledBy
+          )}
           className={withBaseName("input")}
-          {...inputProps}
+          {...restInputProps}
           checked={checked}
           disabled={disabled}
           name={name}
@@ -150,6 +166,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           checked={checked}
           disabled={disabled}
           validationStatus={validationStatus}
+          error={error}
         />
         {label}
       </label>
