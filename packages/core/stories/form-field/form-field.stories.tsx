@@ -14,6 +14,7 @@ import {
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
+import { ChangeEventHandler, useState } from "react";
 
 export default {
   title: "Core/Form Field",
@@ -169,36 +170,123 @@ export const Readonly: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
+const radioData = [
+  {
+    label: "Ultimate Parent",
+    value: "parent",
+  },
+  {
+    label: "Subsidary",
+    value: "subsidary",
+  },
+];
+
+const checkboxesData = [
+  {
+    label: "Discretionary fee",
+    value: "discretionary",
+  },
+  {
+    label: "Retainer fee",
+    value: "retainer",
+  },
+  {
+    disabled: true,
+    label: "Other fee",
+    value: "other",
+  },
+];
+
 export const WithControls: ComponentStory<typeof FormField> = (props) => {
+  const [isRadioError, setIsRadioError] = useState(true);
+
+  const [radioGroupValue, setRadioGroupValue] = useState("");
+  const [checkboxGroupValue, setCheckboxGroupValue] = useState<string[]>([]);
+
+  const handleRadioChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { value } = event.target;
+    setRadioGroupValue(value);
+    props.onChange?.(event);
+    isRadioError && setIsRadioError(false);
+  };
+
+  const handleCheckboxChange: ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    const { value } = event.target;
+    if (checkboxGroupValue.indexOf(value) === -1) {
+      setCheckboxGroupValue((prevControlledValues) => [
+        ...prevControlledValues,
+        value,
+      ]);
+    } else {
+      setCheckboxGroupValue((prevControlledValues) =>
+        prevControlledValues.filter(
+          (controlledValue) => controlledValue !== value
+        )
+      );
+    }
+    props.onChange?.(event);
+  };
+
+  const isCheckboxError = checkboxGroupValue.length === 0;
+
   return (
-    <FlowLayout style={{ width: "366px" }}>
+    <FlowLayout style={{ width: "466px" }}>
       <FormField {...props}>
-        <FormLabel>Form Field label</FormLabel>
-        <Checkbox label={"Checkbox"} />
-        <FormHelperText>Helper text</FormHelperText>
-      </FormField>
-      <FormField {...props}>
-        <FormLabel>Form Field label</FormLabel>
-        <RadioButton label={"Radio Button"} />
-        <FormHelperText>Helper text</FormHelperText>
-      </FormField>
-      <FormField {...props}>
-        <FormLabel>Form Field label</FormLabel>
-        <CheckboxGroup>
-          <Checkbox label="Option 1" />
-          <Checkbox defaultChecked label="Option 2" />
-          <Checkbox label="Option 3" />
-        </CheckboxGroup>
-        <FormHelperText>Helper text</FormHelperText>
-      </FormField>
-      <FormField {...props}>
-        <FormLabel>Form Field label</FormLabel>
-        <RadioButtonGroup>
-          <RadioButton key="option1" label="Radio Option 1" value="option1" />
-          <RadioButton key="option2" label="Radio Option 2" value="option2" />
-          <RadioButton key="option3" label="Radio Option 3" value="option3" />
+        <FormLabel>Client directed request</FormLabel>
+        <RadioButtonGroup direction="horizontal">
+          <RadioButton key="option1" label="Yes" value="yes" />
+          <RadioButton key="option2" label="No" value="no" />
         </RadioButtonGroup>
-        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Assignment</FormLabel>
+        <CheckboxGroup>
+          <Checkbox label="Private placement of equity or debt securities" />
+          <Checkbox defaultChecked label="Syndicated credit facility or loan" />
+          <Checkbox label="Interest rate, foreign exchange or commodity hedging or equity derivative" />
+          <Checkbox label="Escrow arrangement" />
+          <Checkbox label="Restructuring of debt securities of the Counterparty or the Company" />
+        </CheckboxGroup>
+        <FormHelperText>Select all appropriate</FormHelperText>
+      </FormField>
+      <FormField
+        validationStatus={isRadioError ? "error" : undefined}
+        {...props}
+      >
+        <FormLabel>Deal owner</FormLabel>
+        <RadioButtonGroup onChange={handleRadioChange} value={radioGroupValue}>
+          {radioData.map((radio) => {
+            return (
+              <RadioButton
+                key={radio.label}
+                label={radio.label}
+                value={radio.value}
+              />
+            );
+          })}
+        </RadioButtonGroup>
+        <FormHelperText>{`${
+          isRadioError ? "Must select one option. " : ""
+        }Is this deal for the ultimate parent or a subsidiary?`}</FormHelperText>
+      </FormField>
+      <FormField
+        validationStatus={isCheckboxError ? "error" : undefined}
+        {...props}
+      >
+        <FormLabel>Fee type</FormLabel>
+        <CheckboxGroup
+          checkedValues={checkboxGroupValue}
+          onChange={handleCheckboxChange}
+        >
+          {checkboxesData.map((data) => (
+            <Checkbox key={data.value} {...data} />
+          ))}
+        </CheckboxGroup>
+        <FormHelperText>{`${
+          isCheckboxError ? "Must select at least one option. " : ""
+        }`}</FormHelperText>
       </FormField>
     </FlowLayout>
   );
