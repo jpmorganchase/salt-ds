@@ -281,3 +281,53 @@ export const WithValidationAndAdornments: ComponentStory<typeof Input> = (
     </FlowLayout>
   );
 };
+
+export const CursorPositionOnFocus: ComponentStory<typeof Input> = (args) => {
+  return (
+    <FlowLayout style={{ maxWidth: "266px" }}>
+      Start
+      <Input
+        defaultValue={args.defaultValue ?? "Value"}
+        cursorPositionOnFocus="start"
+        {...args}
+      />
+      End
+      <Input
+        defaultValue={args.defaultValue ?? "Value"}
+        cursorPositionOnFocus="end"
+        {...args}
+      />
+      Index 3
+      <Input
+        defaultValue={args.defaultValue ?? "Value"}
+        cursorPositionOnFocus={3}
+        {...args}
+      />
+    </FlowLayout>
+  );
+};
+
+export const HighlightOnFocus: ComponentStory<typeof Input> = (args) => {
+  const [value, setValue] = useState("company@jpmc.com");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  return (
+    <FlowLayout style={{ maxWidth: "266px" }}>
+      <Input
+        defaultValue={args.defaultValue ?? "Company name"}
+        highlightOnFocus={true}
+        {...args}
+      />
+      <Input
+        value={value} 
+        onChange={handleChange} 
+        highlightOnFocus={[0,value.indexOf("@")]}
+        {...args}
+      />
+    </FlowLayout>
+  );
+};

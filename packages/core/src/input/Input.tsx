@@ -5,15 +5,19 @@ import {
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
+  MouseEvent,
+  MouseEventHandler,
   ReactNode,
   Ref,
+  useRef,
   useState,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useFormFieldProps } from "../form-field-context";
-import { makePrefixer, useControlled } from "../utils";
+import { makePrefixer, useControlled, useForkRef } from "../utils";
 import { StatusAdornment } from "../status-adornment";
+import { useCursorOnFocus } from "./internal/useCursorOnFocus";
 
 import inputCss from "./Input.css";
 
@@ -25,6 +29,14 @@ export interface InputProps
       ComponentPropsWithoutRef<"input">,
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
+  /**
+   * Determines the position of the text cursor on focus of the Input
+   *
+   * start = place cursor at the beginning
+   * end = place cursor at the end
+   * number = index # to place the cursor
+   */
+  cursorPositionOnFocus?: "start" | "end" | number;
   /**
    * The marker to use in an empty read only Input.
    * Use `''` to disable this feature. Defaults to '—'.
@@ -42,6 +54,16 @@ export interface InputProps
    * Optional ref for the input component
    */
   inputRef?: Ref<HTMLInputElement>;
+  /**
+   * Determines what gets highlighted on focus of the input.
+   *
+   * If `true` all text will be highlighted.
+   * If an array text between those indices will be highlighted
+   * e.g. [0,1] will highlight the first character.
+   */
+  highlightOnFocus?: boolean | number[];
+  onMouseUp?: MouseEventHandler<HTMLInputElement>;
+  onMouseDown?: MouseEventHandler<HTMLInputElement>;
   /**
    * If `true`, the component is read only.
    */
@@ -70,12 +92,16 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     "aria-expanded": ariaExpanded,
     "aria-owns": ariaOwns,
     className: classNameProp,
+    cursorPositionOnFocus,
     disabled,
     emptyReadOnlyMarker = "—",
     endAdornment,
+    highlightOnFocus,
     id,
     inputProps = {},
-    inputRef,
+    inputRef: inputRefProp,
+    onMouseDown,
+    onMouseUp,
     placeholder,
     readOnly: readOnlyProp,
     role,
@@ -120,6 +146,14 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
 
   const [focused, setFocused] = useState(false);
 
+  const inputRef = useRef(null);
+  const handleRef = useForkRef(inputRef, inputRefProp);
+  
+  const cursorOnFocusHelpers = useCursorOnFocus(inputRef, {
+    cursorPositionOnFocus,
+    highlightOnFocus,
+  });
+
   const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
   const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
 
@@ -153,6 +187,18 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
     onFocus?.(event);
     setFocused(true);
+  };
+
+  const handleMouseUp = (event: MouseEvent<HTMLInputElement>) => {
+    cursorOnFocusHelpers.handleMouseUp();
+
+    onMouseUp?.(event);
+  };
+
+  const handleMouseDown = (event: MouseEvent<HTMLInputElement>) => {
+    cursorOnFocusHelpers.handleMouseDown();
+
+    onMouseDown?.(event);
   };
 
   const inputStyle = {
@@ -189,11 +235,13 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         disabled={isDisabled}
         id={id}
         readOnly={isReadOnly}
-        ref={inputRef}
+        ref={handleRef}
         role={role}
         tabIndex={isReadOnly || isDisabled ? -1 : 0}
         onBlur={handleBlur}
         onChange={handleChange}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
         onFocus={!isDisabled ? handleFocus : undefined}
         placeholder={placeholder}
         value={value}
