@@ -63,7 +63,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
           <Link href={homeLink} variant="component">
             {logo && (
               <Logo>
-                <LogoImage src={appHeaderLogo} />
+                <LogoImage src={appHeaderLogo} alt="app header logo" />
                 <Text>{title}</Text>
               </Logo>
             )}
