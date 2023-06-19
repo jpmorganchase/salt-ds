@@ -19,8 +19,27 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 Logos are image/s, text/s or a combination of the two that depict the name and purpose of a business.
 
-Making Logo compositional means that it gives users the flexibility of including the elements they need to meet their design specs.
-Logo is essentially a wrapping component for LogoImage, LogoSeparator, [Text component](?path=/docs/documentation-core-text--page) or other elements like SVG image.
+Logo component gives users the flexibility of including the elements they need to meet their design specs. It can contain elements like SVG, LogoImage, LogoSeparator and [Text component](?path=/docs/documentation-core-text--page) or other elements like SVG image.
+
+The Logo component makes it easy to include a brand-compliant logo for a J.P. Morgan or Chase division in your application. It can also support an application title.
+
+## Usage
+
+Use the Logo component whenever you need to visually reference one of the JPMorgan Chase & Co. brands within your application. It is compliant with brand guidelines and accommodates a supporting application title.
+
+### Positioning
+
+Always place the logo on the top left corner of the application. It should never be centered.
+
+### Additional features
+
+The Logo component can be used to provide a link e.g., to a Homepage. Simply wrap the component in a [Link](?path=/story/documentation-core-link--page) component and specify the destination.
+
+### Best practices
+
+Never embed the brand logo into body copy. Instead spell out the name, e.g., “J.P. Morgan”, in text.
+
+Refer to the [J.P. Morgan Brand Toolbox](https://www.jpmcbrandtoolbox.com/) to check that your logo usage follows brand guidelines.
 
 ## Examples
 
@@ -84,9 +103,31 @@ import { Logo, LogoImage, LogoSeparator } from '@salt-ds/lab';
 
 ### CSS Class
 
+#### Logo
+
+<CSSClassTable of={Logo} />
+
+#### LogoImage
+
+<CSSClassTable of={LogoImage} />
+
+#### LogoSeparator
+
+<CSSClassTable of={LogoSeparator} />
+
 ### Characteristics Used
 
+#### Logo
+
 <CharacteristicUsage of={Logo} />
+
+#### LogoImage
+
+<CharacteristicUsage of={LogoImage} />
+
+#### LogoSeparator
+
+<CharacteristicUsage of={LogoSeparator} />
 
 ## Accessibility
 

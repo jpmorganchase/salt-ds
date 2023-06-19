@@ -37,7 +37,7 @@ export const ImageAndTextWithSeparator: ComponentStory<typeof Logo> = (
 export const LinkLogo: ComponentStory<typeof Logo> = (args) => (
   <Link href="">
     <Logo {...args}>
-      <LogoImage src={PlaceholderLogo as string} alt="Logo image" />
+      <ChaseLogo />
       <LogoSeparator />
       <Text>App title</Text>
     </Logo>
@@ -46,7 +46,7 @@ export const LinkLogo: ComponentStory<typeof Logo> = (args) => (
 export const LinkOnImage: ComponentStory<typeof Logo> = (args) => (
   <Logo {...args}>
     <Link href="">
-      <LogoImage src={PlaceholderLogo as string} alt="Logo image" />
+      <ChaseLogo />
     </Link>
     <LogoSeparator />
     <Text>App title</Text>
@@ -58,12 +58,10 @@ export const RegularVsCompact: ComponentStory<typeof Logo> = (args) => (
     <Logo {...args}>
       <ChaseLogo />
       <LogoSeparator />
-      <Text styleAs="h3">App title</Text>
+      <Text styleAs="h3">Regular Logo</Text>
     </Logo>
     <Logo {...args}>
       <ChaseCompactLogo />
-      <LogoSeparator />
-      <Text styleAs="h3">App title</Text>
     </Logo>
   </StackLayout>
 );
