@@ -66,7 +66,6 @@ export const Default: ComponentStory<typeof AppHeader> = () => {
       <AppHeader>
         <Logo
           data-align-start
-          data-collapsible="instant"
           data-index={0}
           data-priority={1}
         >
