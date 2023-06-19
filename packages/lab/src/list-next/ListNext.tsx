@@ -10,7 +10,6 @@ import {
   MouseEvent,
   MouseEventHandler,
   ReactElement,
-  useMemo,
 } from "react";
 import { clsx } from "clsx";
 import { ListItemNext as DefaultListItem } from "./ListItemNext";
@@ -20,17 +19,12 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import listNextCss from "./ListNext.css";
 
 const withBaseName = makePrefixer("saltListNext");
-const defaultEmptyMessage = "No data to display";
 
 export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
   /**
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
-  /**
-   * Use to override the default empty message.
-   */
-  emptyMessage?: string;
   /**
    * The component used to render a ListItem instead of the default. This must itself render a ListItem,
    * must implement props that extend ListItemProps and must forward ListItem props to the ListItem.
@@ -60,9 +54,8 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       className,
       disabled: listDisabled,
-      displayedItemCount: displayedItemCountProp,
+      displayedItemCount: displayedItemCountProp = 4,
       ListItem = DefaultListItem,
-      emptyMessage = defaultEmptyMessage,
       id: idProp,
       onSelect,
       onFocus,
@@ -86,17 +79,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
     const listId = useId(idProp) || "listNext"; // TODO: check why useId needs to return undefined
 
-    const displayedItemCount = useMemo((): number => {
-      // if no children, display empty message
-      if (emptyList) return 1;
-
-      // displayedItemCount takes precedence over childrenCount
-      if (displayedItemCountProp)
-        return Math.min(displayedItemCountProp, childrenCount);
-
-      // if more than 4 children, display 4 tops
-      return Math.min(4, childrenCount);
-    }, [displayedItemCountProp, childrenCount, emptyList]);
+    const displayedItemCount = Math.min(displayedItemCountProp, childrenCount);
 
     const {
       listRef,
@@ -136,7 +119,6 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const listStyles = {
       ...style,
       "--listNext-displayedItemCount": displayedItemCount,
-      "--listNext-emptyMessage": emptyMessage && `"${emptyMessage}"`,
     };
 
     return (
@@ -151,7 +133,6 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         )}
         role="listbox"
         tabIndex={listDisabled ? -1 : 0}
-        aria-label={emptyList && emptyMessage}
         aria-activedescendant={listDisabled ? undefined : activeDescendant}
         style={listStyles}
         {...rest}

@@ -1,7 +1,6 @@
-import React, { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
-import { makePrefixer, Text } from "@salt-ds/core";
-import { Highlighter } from "./Highlighter";
+import { makePrefixer } from "@salt-ds/core";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -71,16 +70,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         value={value}
         onClick={onClick}
       >
-        <Text as="p" className={withBaseName("textWrapper")}>
-          {itemTextHighlightPattern === null ? (
-            content
-          ) : (
-            <Highlighter
-              matchPattern={itemTextHighlightPattern}
-              text={content}
-            />
-          )}
-        </Text>
+        {content}
       </li>
     );
   }

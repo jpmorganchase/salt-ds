@@ -61,10 +61,3 @@
     var(--salt-selectable-borderColor-selectedDisabled);
   --listItemNext-background: var(--salt-selectable-background-selectedDisabled);
 }
-
-.saltListItemNext-textWrapper {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}

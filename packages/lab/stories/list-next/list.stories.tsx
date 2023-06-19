@@ -1,6 +1,7 @@
 import { ComponentMeta, Story } from "@storybook/react";
 import { ListNext, ListItemNext, ListNextProps } from "../../src";
-import { FlexItem, FlexLayout } from "@salt-ds/core";
+import { Button, FlexLayout } from "@salt-ds/core";
+import { useState } from "react";
 
 export default {
   title: "Lab/List Next",
@@ -55,20 +56,10 @@ Default.args = {
   style: { width: "200px" },
 };
 
-// export const Borderless = Default.bind({});
-// Borderless.args = {
-//   borderless: true,
-// };
-
 export const ConfigurableHeight = Default.bind({});
 ConfigurableHeight.args = {
   displayedItemCount: 6,
 };
-
-// export const Deselectable = Default.bind({});
-// Deselectable.args = {
-//   deselectable: true,
-// };
 
 export const Disabled = Default.bind({});
 Disabled.args = {
@@ -84,32 +75,24 @@ DisabledSelected.args = {
 };
 
 export const Empty: Story<ListNextProps> = ({ children, ...rest }) => {
+  const [showList, setShowList] = useState(false);
+  const listItems = showList
+    ? getListItems({
+        disabledItems: [1, 5],
+      })
+    : [];
+
   return (
-    <FlexLayout>
-      <FlexItem>
-        <p>Default message</p>
-        <ListNext {...rest} aria-label="Empty List default example" />
-      </FlexItem>
-      <FlexItem>
-        <p>Custom message</p>
-        <ListNext {...rest} emptyMessage="List is empty" aria-label="Empty List custom message example" />
-      </FlexItem>
+    <FlexLayout direction="column" style={{ height: "200px" }}>
+      <Button onClick={() => setShowList(!showList)}>Toggle list</Button>
+
+      {listItems.length > 0 ? (
+        <ListNext {...rest} aria-label="Populated List example">
+          {listItems}
+        </ListNext>
+      ) : (
+        <div>List is empty</div>
+      )}
     </FlexLayout>
   );
 };
-Empty.args = {
-};
-
-//
-// const CustomItemComponent = ({item}) => {
-//   return <div>{item}
-//   </div>
-// }
-// const customItems = SimpleListExample.map((item, index) => {
-//   return <CustomItemComponent item={item}/>;
-// });
-//
-// export const CustomListItem = Default.bind({});
-// CustomListItem.args = {
-//   children: customItems,
-// };

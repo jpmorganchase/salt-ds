@@ -170,6 +170,7 @@ export const useList = ({
     }
   });
 
+  // takes care of focus when using keyboard navigation
   const handleFocus = useEventCallback(() => {
     if (!activeDescendant && !mouseDown) {
       // Focus on first active option if no option was previously focused
@@ -236,13 +237,11 @@ export const useList = ({
     }
   });
 
-  // Effects
   useEffect(() => {
-    // sets list in first render
     list = listRef.current;
-  }, []);
 
-  useEffect(() => {
+    if (!list) return;
+
     const addListeners = (list: HTMLUListElement) => {
       list.addEventListener("keydown", handleKeyDown);
       list.addEventListener("focus", handleFocus);
@@ -259,23 +258,22 @@ export const useList = ({
       }
     };
 
-    if (list) {
-      setAllOptions(
-        Array.from(list.children).filter(
-          (child) => child.getAttribute("role") === "option"
-        )
-      );
-      setActiveOptions(
-        Array.from(list.children)
-          .filter((child) => child.getAttribute("role") === "option")
-          .filter((option) => option.getAttribute("aria-disabled") !== "true")
-      );
-      addListeners(list);
-      return () => {
-        removeListeners(list);
-      };
-    }
-  }, [list, handleFocus, handleBlur, handleKeyDown, handleMouseDown]);
+    setAllOptions(
+      Array.from(list.children).filter(
+        (child) => child.getAttribute("role") === "option"
+      )
+    );
+    setActiveOptions(
+      Array.from(list.children)
+        .filter((child) => child.getAttribute("role") === "option")
+        .filter((option) => option.getAttribute("aria-disabled") !== "true")
+    );
+    addListeners(list);
+
+    return () => {
+      removeListeners(list);
+    };
+  }, [handleFocus, handleBlur, handleKeyDown, handleMouseDown]);
 
   return {
     listRef,
