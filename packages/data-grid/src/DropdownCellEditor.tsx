@@ -62,8 +62,8 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
   return (
     <Cell separator={column?.separator} className={withBaseName()}>
       <div className={withBaseName("dropdownContainer")}>
-        {options && options.length > 0
-          ? <Dropdown
+        {options && options.length > 0 ? (
+          <Dropdown
             isOpen={true}
             source={options}
             defaultSelected={value}
@@ -71,7 +71,9 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
             triggerComponent={triggerComponent}
             width={column!.info.width! - 5}
           />
-          : triggerComponent}
+        ) : (
+          triggerComponent
+        )}
       </div>
       <CornerTag />
     </Cell>
