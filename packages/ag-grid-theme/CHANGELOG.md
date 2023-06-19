@@ -1,5 +1,17 @@
 # @salt-ds/ag-grid-theme
 
+## 1.1.6
+
+### Patch Changes
+
+- 4bd87710: Fix cell text not truncating in salt ag-grid-theme
+
+## 1.1.5
+
+### Patch Changes
+
+- 123daf60: Fix inconsistent uitk ag-grid theme menu padding across densities
+
 ## 1.1.4
 
 ### Patch Changes

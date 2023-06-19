@@ -3,12 +3,23 @@
   position: relative;
   column-gap: var(--salt-size-adornmentGap);
   row-gap: var(--salt-size-adornmentGap);
+  text-align: left;
   width: var(--saltFormField-width, 100%);
+}
+
+.saltFormField-labelTop {
+  grid-template-areas:
+    "label"
+    "controls"
+    "helperText";
 }
 
 .saltFormField-labelLeft {
   align-self: center;
   grid-template-columns: 40% 1fr;
+  grid-template-areas:
+    "label controls"
+    "auto helperText";
 }
 
 .saltFormField-controls {
@@ -17,19 +28,6 @@
   grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
   grid-column-gap: var(--salt-size-adornmentGap);
-}
-
-.saltFormField {
-  grid-template-areas:
-    "label"
-    "controls"
-    "helperText";
-}
-
-.saltFormField-labelLeft {
-  grid-template-areas:
-    "label controls"
-    "auto helperText";
 }
 
 .saltFormField > *,

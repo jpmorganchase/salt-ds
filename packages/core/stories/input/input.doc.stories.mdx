@@ -1,5 +1,5 @@
 import { Input, Link } from "@salt-ds/core";
-import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { Meta, Canvas, ArgsTable, Story } from "@storybook/addon-docs";
 import {
   CSSClassTable,
   CharacteristicUsage,
@@ -17,6 +17,10 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 # Input
 
 Input provides an editable field in which users can enter text and numeric values.
+
+<Canvas>
+  <Story id="core-input--default" />
+</Canvas>
 
 ## Examples
 
@@ -52,6 +56,14 @@ You can set Input to a disabled state, with no resultant action when the user in
   <Story id="core-input--disabled" />
 </Canvas>
 
+### Placeholder
+
+You can use a placeholder to prompt user input if no default value is provided.
+
+<Canvas>
+  <Story id="core-input--placeholder" />
+</Canvas>
+
 ### Read-only
 
 You can set Input to a read-only state. The value text can’t be edited in this state, but it can be highlighted and copied.
@@ -84,6 +96,20 @@ Input can show validation states (warning, success, error) with the prop `valida
 
 - Use the error state to alert the user of a critical issue that’s related to the input. Issues highlighted by an error state may jeopardize completion of the task and usually require action from the user to resolve the error.
 - Display the warning state to alert the user of a potential issue that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
+
+### Adornments
+
+Adornments can be added at the beginning or end of the Input field using the `startAdornment` and `endAdornment` props respectively.
+
+<Canvas>
+  <Story id="core-input--with-static-adornments" />
+</Canvas>
+
+Use the `AdornmentButton` component to have an interactive button within your Input field.
+
+<Canvas>
+  <Story id="core-input--with-adornment-button" />
+</Canvas>
 
 ## API
 

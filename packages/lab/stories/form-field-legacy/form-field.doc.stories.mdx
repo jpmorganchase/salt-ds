@@ -1,4 +1,4 @@
-import { Banner, BannerContent } from "@salt-ds/core";
+import { Banner, BannerContent, Link } from "@salt-ds/core";
 import { FormField, Input } from "@salt-ds/lab";
 import { Meta, Canvas, ArgsTable } from "@storybook/addon-docs";
 import {
@@ -18,8 +18,11 @@ import {
 
 <Banner status="warning">
   <BannerContent>
-    This component has been deprecated. The new [Form
-    Field](?path=/docs/documentation-core-form-field--page) is a current WIP.
+    This component has been deprecated. The new{" "}
+    <Link href="https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-form-field--page">
+      Form Field
+    </Link>{" "}
+    component is available in core.
   </BannerContent>
 </Banner>
 

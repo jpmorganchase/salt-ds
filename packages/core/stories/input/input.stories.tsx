@@ -1,4 +1,15 @@
-import { Input, FlowLayout } from "@salt-ds/core";
+import { Input, FlowLayout, Text, AdornmentButton } from "@salt-ds/core";
+import {
+  CallIcon,
+  CloseIcon,
+  CreditCardIcon,
+  FilterClearIcon,
+  FilterIcon,
+  FlagIcon,
+  NoteIcon,
+  RefreshIcon,
+  SendIcon,
+} from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
 
@@ -56,6 +67,10 @@ export const Disabled: ComponentStory<typeof Input> = (args) => {
       />
     </FlowLayout>
   );
+};
+
+export const Placeholder: ComponentStory<typeof Input> = (args) => {
+  return <Input placeholder={"Enter a value"} {...args} />;
 };
 
 export const Readonly: ComponentStory<typeof Input> = (args) => {
@@ -121,6 +136,147 @@ export const Validation: ComponentStory<typeof Input> = (args) => {
         defaultValue={args.defaultValue ?? "Success value"}
         validationStatus="success"
         {...args}
+      />
+    </FlowLayout>
+  );
+};
+
+export const WithStaticAdornments: ComponentStory<typeof Input> = (args) => {
+  return (
+    <FlowLayout style={{ width: "266px" }}>
+      <Input
+        startAdornment={<FilterIcon />}
+        defaultValue={args.defaultValue ?? "Value 1"}
+        {...args}
+      />
+      <Input
+        variant="secondary"
+        startAdornment={
+          <>
+            <CallIcon />
+            <Text>+1</Text>
+          </>
+        }
+        defaultValue={args.defaultValue ?? "Value 2"}
+        {...args}
+      />
+      <Input
+        endAdornment={<Text>USD</Text>}
+        defaultValue={args.defaultValue ?? "Value 1"}
+        {...args}
+      />
+      <Input
+        variant="secondary"
+        startAdornment={<FlagIcon />}
+        endAdornment={
+          <>
+            <Text>%</Text>
+            <FilterClearIcon />
+          </>
+        }
+        defaultValue={args.defaultValue ?? "Value 2"}
+        {...args}
+      />
+    </FlowLayout>
+  );
+};
+
+export const WithAdornmentButton: ComponentStory<typeof Input> = (args) => {
+  return (
+    <FlowLayout style={{ width: "266px" }}>
+      <Input
+        startAdornment={
+          <AdornmentButton>
+            <NoteIcon />
+          </AdornmentButton>
+        }
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+      <Input
+        variant="secondary"
+        startAdornment={
+          <AdornmentButton variant="cta">
+            <RefreshIcon />
+          </AdornmentButton>
+        }
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+      <Input
+        endAdornment={
+          <AdornmentButton>
+            <SendIcon />
+          </AdornmentButton>
+        }
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+      <Input
+        variant="secondary"
+        endAdornment={
+          <>
+            <AdornmentButton variant="secondary">
+              <CloseIcon />
+            </AdornmentButton>
+            <AdornmentButton variant="cta">
+              <FlagIcon />
+            </AdornmentButton>
+          </>
+        }
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+    </FlowLayout>
+  );
+};
+
+export const WithValidationAndAdornments: ComponentStory<typeof Input> = (
+  args
+) => {
+  const [firstValue, setFirstValue] = useState("1234567890");
+  const [secondValue, setSecondValue] = useState("");
+
+  const getFirstStatus = () => {
+    return !/^-?\d+$/.test(firstValue) || firstValue.length !== 11
+      ? "error"
+      : undefined;
+  };
+
+  const getSecondStatus = () => {
+    return !secondValue.length ? "warning" : undefined;
+  };
+
+  const handleFirstChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setFirstValue(value);
+  };
+
+  const handleSecondChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSecondValue(value);
+  };
+
+  return (
+    <FlowLayout style={{ maxWidth: "266px" }}>
+      <Input
+        startAdornment={
+          <>
+            <CallIcon />
+            <Text>+1</Text>
+          </>
+        }
+        validationStatus={getFirstStatus()}
+        {...args}
+        value={firstValue}
+        onChange={handleFirstChange}
+      />
+      <Input
+        validationStatus={getSecondStatus()}
+        {...args}
+        endAdornment={<CreditCardIcon />}
+        value={secondValue}
+        onChange={handleSecondChange}
       />
     </FlowLayout>
   );

@@ -8,7 +8,7 @@ import {
 import clsx from "clsx";
 import { Link } from "@jpmorganchase/mosaic-site-components";
 
-import { useTheme, useViewport } from "@salt-ds/core";
+import { useViewport } from "@salt-ds/core";
 
 import useOnScreen from "../../utils/useOnScreen";
 
@@ -34,20 +34,14 @@ export const Card = ({
   footerText,
   keylineColor,
   keyLineAnimation = true,
+  className,
 }: CardProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
   const onScreen: boolean = useOnScreen<HTMLDivElement>(ref, "-100px");
 
-  const { mode } = useTheme();
-
-  const useLightTheme = mode !== "dark";
-
   return (
-    <Link
-      className={clsx(styles.card, { [styles.lightTheme]: useLightTheme })}
-      href={url}
-    >
+    <Link className={clsx(styles.card, className)} href={url}>
       {icon && (
         <div className={styles.iconContainer}>
           {cloneElement(icon, { ...icon.props, className: styles.icon })}
@@ -82,15 +76,12 @@ export const InlineCard = ({
   url,
   footerText,
   keylineColor,
+  className,
 }: CardProps): JSX.Element => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const { mode } = useTheme();
-
   const viewport = useViewport();
   const isTabletView = viewport <= 1070;
-
-  const useLightTheme = mode !== "dark";
 
   if (isTabletView) {
     return (
@@ -106,12 +97,7 @@ export const InlineCard = ({
   }
 
   return (
-    <Link
-      className={clsx(styles.inlineCard, {
-        [styles.lightTheme]: useLightTheme,
-      })}
-      href={url}
-    >
+    <Link className={clsx(styles.inlineCard, className)} href={url}>
       <div className={styles.inlineCardContent}>
         {icon && (
           <div className={styles.iconContainer}>
