@@ -64,11 +64,7 @@ export const Default: ComponentStory<typeof AppHeader> = () => {
   return (
     <Flexbox width={1000} height={400}>
       <AppHeader>
-        <Logo
-          data-align-start
-          data-index={0}
-          data-priority={1}
-        >
+        <Logo data-align-start data-index={0} data-priority={1}>
           <LogoImage src={PlaceholderLogo as string} alt="Logo image" />
           <Text>Salt</Text>
         </Logo>
