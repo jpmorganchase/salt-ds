@@ -5,7 +5,6 @@ import {
   Badge,
   Logo,
   LogoImage,
-  LogoProps,
   Tab,
   Tabstrip,
   TabstripProps,
@@ -58,12 +57,6 @@ const useTabSelection = (): [number, TabstripProps["onActiveChange"]] => {
   return [selectedTab, handleTabSelection];
 };
 
-type ResponsiveItem = { "data-collapsed"?: boolean };
-
-const CollapsibleLogo = (props: LogoProps & ResponsiveItem) => (
-  <Logo {...props} />
-);
-
 export const Default: ComponentStory<typeof AppHeader> = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
 
@@ -71,7 +64,7 @@ export const Default: ComponentStory<typeof AppHeader> = () => {
   return (
     <Flexbox width={1000} height={400}>
       <AppHeader>
-        <CollapsibleLogo
+        <Logo
           data-align-start
           data-collapsible="instant"
           data-index={0}
@@ -79,7 +72,7 @@ export const Default: ComponentStory<typeof AppHeader> = () => {
         >
           <LogoImage src={PlaceholderLogo as string} alt="Logo image" />
           <Text>Salt</Text>
-        </CollapsibleLogo>
+        </Logo>
         <Tabstrip
           data-index={1}
           data-priority={2}
