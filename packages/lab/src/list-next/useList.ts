@@ -1,10 +1,7 @@
 import {
   Children,
-  FocusEventHandler,
   isValidElement,
-  KeyboardEventHandler,
   MouseEvent,
-  MouseEventHandler,
   ReactNode,
   useEffect,
   useRef,
@@ -20,16 +17,10 @@ import {
   Enter,
   Space,
 } from "../common-hooks";
-import { useEventCallback } from "../utils";
 
 interface UseListProps {
   children: ReactNode;
   displayedItemCount: number;
-  // ListNextControlProps
-  onBlur?: FocusEventHandler;
-  onFocus?: FocusEventHandler;
-  onKeyDown?: KeyboardEventHandler;
-  onMouseDown?: MouseEventHandler;
 }
 
 const getSelected = (children: ReactNode): number[] =>
@@ -44,14 +35,7 @@ const getSelected = (children: ReactNode): number[] =>
     []
   );
 
-export const useList = ({
-  children,
-  displayedItemCount,
-  onFocus,
-  onKeyDown,
-  onBlur,
-  onMouseDown,
-}: UseListProps) => {
+export const useList = ({ children, displayedItemCount }: UseListProps) => {
   const listRef = useRef<HTMLUListElement | null>(null);
   let list = listRef.current;
 
@@ -61,7 +45,11 @@ export const useList = ({
     getSelected(children)
   );
   const [allOptions, setAllOptions] = useState<Element[]>([]);
-  const [activeOptions, setActiveOptions] = useState<Element[]>([]);
+
+  const activeOptions = allOptions.filter(
+    (option) => option.getAttribute("aria-disabled") !== "true"
+  );
+
   const [mouseDown, setMouseDown] = useState<boolean>(false);
 
   const getListItemIndex = (item: Element): number => {
@@ -74,10 +62,6 @@ export const useList = ({
     setActiveDescendant(element.id);
     setFocusedIndex(getListItemIndex(element));
     updateScroll(element);
-
-    if (onFocus) {
-      onFocus(element);
-    }
   };
 
   const focusFirstItem = () => {
@@ -102,9 +86,6 @@ export const useList = ({
   };
 
   const justFocusItem = (element: Element) => {
-    if (onFocus) {
-      onFocus(element);
-    }
     setActiveDescendant(element.id);
     setFocusedIndex(getListItemIndex(element));
     updateScroll(element);
@@ -156,22 +137,16 @@ export const useList = ({
     updateScroll(currentTarget);
   };
 
-  const handleBlur = useEventCallback((e: FocusEvent) => {
+  const handleBlur = () => {
     setFocusedIndex(null);
-    if (onBlur) {
-      onBlur(e);
-    }
-  });
+  };
 
-  const handleMouseDown = useEventCallback(() => {
+  const handleMouseDown = () => {
     setMouseDown(true);
-    if (onMouseDown) {
-      onMouseDown();
-    }
-  });
+  };
 
   // takes care of focus when using keyboard navigation
-  const handleFocus = useEventCallback(() => {
+  const handleFocus = () => {
     if (!activeDescendant && !mouseDown) {
       // Focus on first active option if no option was previously focused
       focusFirstItem();
@@ -181,9 +156,10 @@ export const useList = ({
         justFocusItem(activeElement);
       }
     }
-  });
+  };
 
-  const handleKeyDown = useEventCallback((evt: KeyboardEvent) => {
+  // takes care of keydown when using keyboard navigation
+  const handleKeyDown = (evt: KeyboardEvent) => {
     const { key } = evt;
     const currentItem =
       document.getElementById(activeDescendant) || activeOptions[0];
@@ -232,48 +208,18 @@ export const useList = ({
       default:
         break;
     }
-    if (onKeyDown) {
-      onKeyDown(currentItem);
-    }
-  });
+  };
 
   useEffect(() => {
     list = listRef.current;
-
     if (!list) return;
-
-    const addListeners = (list: HTMLUListElement) => {
-      list.addEventListener("keydown", handleKeyDown);
-      list.addEventListener("focus", handleFocus);
-      list.addEventListener("blur", handleBlur);
-      list.addEventListener("mousedown", handleMouseDown);
-    };
-
-    const removeListeners = (list: HTMLUListElement | null): void => {
-      if (list) {
-        list.removeEventListener("keydown", handleKeyDown);
-        list.removeEventListener("focus", handleFocus);
-        list.removeEventListener("blur", handleBlur);
-        list.removeEventListener("mousedown", handleMouseDown);
-      }
-    };
 
     setAllOptions(
       Array.from(list.children).filter(
         (child) => child.getAttribute("role") === "option"
       )
     );
-    setActiveOptions(
-      Array.from(list.children)
-        .filter((child) => child.getAttribute("role") === "option")
-        .filter((option) => option.getAttribute("aria-disabled") !== "true")
-    );
-    addListeners(list);
-
-    return () => {
-      removeListeners(list);
-    };
-  }, [handleFocus, handleBlur, handleKeyDown, handleMouseDown]);
+  }, []);
 
   return {
     listRef,
@@ -281,5 +227,9 @@ export const useList = ({
     selectedIndexes,
     activeDescendant,
     handleClick,
+    handleFocus,
+    handleKeyDown,
+    handleBlur,
+    handleMouseDown,
   };
 };

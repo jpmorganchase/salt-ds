@@ -87,13 +87,13 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       selectedIndexes,
       activeDescendant,
       handleClick,
+      handleFocus,
+      handleKeyDown,
+      handleBlur,
+      handleMouseDown,
     } = useList({
       children,
       displayedItemCount,
-      onFocus,
-      onKeyDown,
-      onBlur,
-      onMouseDown,
     });
 
     const forkedRef = useForkRef(ref, listRef);
@@ -121,6 +121,28 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       "--listNext-displayedItemCount": displayedItemCount,
     };
 
+    const activeElement = document.getElementById(activeDescendant);
+
+    const focusHandler = () => {
+      handleFocus();
+      onFocus && onFocus(activeElement);
+    };
+
+    const keydownHandler = (evt: KeyboardEvent) => {
+      handleKeyDown(evt);
+      onKeyDown && onKeyDown(activeElement);
+    };
+
+    const blurHandler = (evt: FocusEvent) => {
+      handleBlur();
+      onBlur && onBlur(evt);
+    };
+
+    const mousedownHandler = (evt: KeyboardEvent) => {
+      handleMouseDown();
+      onMouseDown && onMouseDown(evt);
+    };
+
     return (
       <ul
         ref={forkedRef}
@@ -135,6 +157,10 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         tabIndex={listDisabled ? -1 : 0}
         aria-activedescendant={listDisabled ? undefined : activeDescendant}
         style={listStyles}
+        onFocus={focusHandler}
+        onKeyDown={keydownHandler}
+        onBlur={blurHandler}
+        onMouseDown={mousedownHandler}
         {...rest}
       >
         {!emptyList && renderContent()}
