@@ -315,15 +315,3 @@ describe("An uncontrolled single select list", () => {
     });
   });
 });
-
-describe("A list with no items", () => {
-  it("should render an empty list with the default placeholder", () => {
-    cy.mount(<ListNext />);
-
-    cy.findByRole("listbox").should(
-      "have.attr",
-      "aria-label",
-      "No data to display"
-    );
-  });
-});

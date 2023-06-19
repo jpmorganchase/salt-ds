@@ -9,7 +9,6 @@ import listItemNextCss from "./ListItemNext.css";
 const withBaseName = makePrefixer("saltListItemNext");
 
 export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
-  itemTextHighlightPattern?: RegExp | string;
   label?: string;
   /**
    * If true, the particular list item in list will be disabled.
@@ -29,7 +28,6 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       className: classNameProp,
       disabled,
       focused,
-      itemTextHighlightPattern,
       label,
       role = "option",
       selected,
