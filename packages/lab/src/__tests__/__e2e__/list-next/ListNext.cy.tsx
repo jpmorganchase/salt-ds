@@ -1,4 +1,4 @@
-import { ListNext, ListItemNext } from "@salt-ds/lab";
+import { ListNext, ListItemNext, ListNextProps } from "@salt-ds/lab";
 
 type ItemType = { label: string; value: string };
 
@@ -10,7 +10,7 @@ const ITEMS: ItemType[] = [
 
 // Uncontrolled single select list
 describe("An uncontrolled single select list", () => {
-  const SingleSelectList = (props: any) => {
+  const SingleSelectList = (props: ListNextProps) => {
     return (
       <ListNext {...props}>
         {props.children ||
