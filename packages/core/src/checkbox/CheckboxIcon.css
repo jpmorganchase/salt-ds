@@ -65,8 +65,8 @@
 
 /* Styles applied if `checked={true}` */
 .saltCheckboxIcon-checked {
-  fill: var(--saltCheckbox-icon-fill-checked, var(--salt-selectable-foreground-selected));
   --checkbox-borderWidth: var(--saltCheckbox-icon-borderWidth-checked, 0px);
+  fill: var(--saltCheckbox-icon-fill-checked, var(--salt-selectable-foreground-selected));
 }
 
 /* Styles applied if `checked={true}` and `disabled={true}` */
@@ -100,8 +100,8 @@
 
 /* Styles applied to icon if `indeterminate={true}` */
 .saltCheckboxIcon-indeterminate {
-  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-foreground-selected));
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color, var(--salt-selectable-foreground-selected));
+  stroke: var(--saltCheckbox-icon-stroke, var(--salt-selectable-foreground-selected));
 }
 
 /* Styles applied to icon if `indeterminate={true}` on hover */
@@ -112,15 +112,15 @@
 /* Styles applied if `indeterminate={true}` and `disabled={true}` */
 .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate,
 .saltCheckbox:hover .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
-  stroke: var(--saltCheckbox-icon-stroke-disabled, var(--salt-selectable-foreground-disabled));
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color-disabled, var(--salt-selectable-foreground-selectedDisabled));
+  stroke: var(--saltCheckbox-icon-stroke-disabled, var(--salt-selectable-foreground-disabled));
 }
 
 /* Styles applied if `indeterminate={true}` and `readonly={true}` */
 .saltCheckboxIcon-readonly.saltCheckboxIcon-indeterminate,
 .saltCheckbox:hover .saltCheckboxIcon-readonly.saltCheckboxIcon-indeterminate {
-  stroke: var(--saltCheckbox-icon-stroke-readonly, var(--salt-selectable-foreground));
   --checkbox-icon-tick-fill: var(--saltCheckbox-icon-indeterminate-bar-color-readonly, var(--salt-selectable-foreground));
+  stroke: var(--saltCheckbox-icon-stroke-readonly, var(--salt-selectable-foreground));
 }
 
 /* Styles applied if `indeterminate={true}` and `validationStatus="error"` */
