@@ -4,13 +4,13 @@ import {
   AppHeader,
   Badge,
   Logo,
-  LogoProps,
+  LogoImage,
   Tab,
   Tabstrip,
   TabstripProps,
   Tooltray /*, Toolbar */,
 } from "@salt-ds/lab";
-import { Button } from "@salt-ds/core";
+import { Button, Text } from "@salt-ds/core";
 import {
   FilterIcon,
   MessageIcon,
@@ -57,12 +57,6 @@ const useTabSelection = (): [number, TabstripProps["onActiveChange"]] => {
   return [selectedTab, handleTabSelection];
 };
 
-type ResponsiveItem = { "data-collapsed"?: boolean };
-
-const CollapsibleLogo = (props: LogoProps & ResponsiveItem) => (
-  <Logo {...props} compact={props["data-collapsed"]} />
-);
-
 export const Default: ComponentStory<typeof AppHeader> = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
 
@@ -70,14 +64,10 @@ export const Default: ComponentStory<typeof AppHeader> = () => {
   return (
     <Flexbox width={1000} height={400}>
       <AppHeader>
-        <CollapsibleLogo
-          data-align-start
-          data-collapsible="instant"
-          data-index={0}
-          data-priority={1}
-          src={PlaceholderLogo as string}
-          appTitle="Salt"
-        />
+        <Logo data-align-start data-index={0} data-priority={1}>
+          <LogoImage src={PlaceholderLogo as string} alt="Logo image" />
+          <Text>Salt</Text>
+        </Logo>
         <Tabstrip
           data-index={1}
           data-priority={2}
