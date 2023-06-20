@@ -148,7 +148,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
 
   const inputRef = useRef(null);
   const handleRef = useForkRef(inputRef, inputRefProp);
-  
+
   const cursorOnFocusHelpers = useCursorOnFocus(inputRef, {
     cursorPositionOnFocus,
     highlightOnFocus,

@@ -72,17 +72,16 @@ export function useCursorOnFocus(
           highlightOnFocus,
           cursorPositionOnFocus,
         });
-        
+
         if (start !== null && end !== null) {
           window.clearTimeout(timeoutRef.current);
 
           selection.current = [start, end];
-          
+
           if (wasClick.current) {
             selectionInProgress.current = true;
             timeoutRef.current = window.setTimeout(() => {
-              originalCursorPosition.current =
-                inputRef.current?.selectionStart;
+              originalCursorPosition.current = inputRef.current?.selectionStart;
               inputRef.current?.setSelectionRange(start, end);
             }, 0);
           } else {

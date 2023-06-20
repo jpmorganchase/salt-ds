@@ -323,9 +323,9 @@ export const HighlightOnFocus: ComponentStory<typeof Input> = (args) => {
         {...args}
       />
       <Input
-        value={value} 
-        onChange={handleChange} 
-        highlightOnFocus={[0,value.indexOf("@")]}
+        value={value}
+        onChange={handleChange}
+        highlightOnFocus={[0, value.indexOf("@")]}
         {...args}
       />
     </FlowLayout>
