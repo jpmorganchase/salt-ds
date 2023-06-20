@@ -57,7 +57,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
   const { editMode, startEditMode } = useEditorContext();
 
   const onRowMouseEnter: MouseEventHandler<HTMLTableRowElement> = (event) => {
-    const target = event.target as HTMLElement;
+    const target = event.currentTarget as HTMLElement;
     const rowKey = getRowKeyAttribute(target);
     setHoverRowKey(rowKey);
   };
