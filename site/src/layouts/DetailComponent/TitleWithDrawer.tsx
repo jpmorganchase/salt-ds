@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, Dispatch, SetStateAction } from "react";
 import { Button } from "@salt-ds/core";
 import { OverflowMenuIcon, CloseIcon } from "@salt-ds/icons";
 
@@ -8,16 +8,22 @@ import styles from "./TitleWithDrawer.module.css";
 type TitleWithDrawerProps = {
   title?: string;
   openDrawer: boolean;
-  showDrawer: () => void;
-  hideDrawer: () => void;
+  setOpenDrawer: Dispatch<SetStateAction<boolean>>;
 };
 
 const TitleWithDrawer: FC<TitleWithDrawerProps> = ({
   title,
   openDrawer,
-  showDrawer,
-  hideDrawer,
+  setOpenDrawer,
 }) => {
+  const showDrawer = () => {
+    setOpenDrawer(true);
+  };
+
+  const hideDrawer = () => {
+    setOpenDrawer(false);
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={layoutStyles.title}>{title}</h1>

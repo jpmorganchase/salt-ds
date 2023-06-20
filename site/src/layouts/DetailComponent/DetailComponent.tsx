@@ -48,14 +48,6 @@ type CustomSiteState = SiteState & { data?: Data };
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const showDrawer = () => {
-    setOpenDrawer(true);
-  };
-
-  const hideDrawer = () => {
-    setOpenDrawer(false);
-  };
-
   const { push } = useRouter();
   const { route } = useRoute();
 
@@ -111,8 +103,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
             <TitleWithDrawer
               title={title}
               openDrawer={openDrawer}
-              showDrawer={showDrawer}
-              hideDrawer={hideDrawer}
+              setOpenDrawer={setOpenDrawer}
             />
           ) : undefined
         }
