@@ -2,7 +2,7 @@
 "@salt-ds/theme": minor
 ---
 
-New characteristics introduced in `selectable`, new palette tokens 
+New characteristics introduced in `selectable`, new palette tokens
 
 ```diff
 --salt-selectable-background-selectedDisabled: var(--salt-palette-interact-background-activeDisabled);
