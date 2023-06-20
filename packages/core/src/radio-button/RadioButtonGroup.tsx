@@ -41,6 +41,10 @@ export interface RadioButtonGroupProps
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
   /**
+   * Set the readonly state
+   */
+  readOnly?: boolean
+  /**
    * The value of the radio group, required for a controlled component.
    */
   value?: string;
@@ -63,6 +67,7 @@ export const RadioButtonGroup = forwardRef<
     wrap = true,
     name: nameProp,
     onChange,
+    readOnly: readOnlyProp,
     value: valueProp,
     validationStatus: validationStatusProp,
     ...rest
@@ -78,9 +83,11 @@ export const RadioButtonGroup = forwardRef<
   const {
     a11yProps,
     disabled: formFieldDisabled,
+    readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
 
+  const readOnly = formFieldReadOnly ?? readOnlyProp;
   const disabled = formFieldDisabled ?? disabledProp;
   const validationStatus = formFieldValidationStatus
     ? formFieldValidationStatus !== "success"
@@ -122,6 +129,7 @@ export const RadioButtonGroup = forwardRef<
           disabled,
           name,
           onChange: handleChange,
+          readOnly,
           validationStatus,
           value,
         }}

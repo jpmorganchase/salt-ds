@@ -17,29 +17,28 @@ export const Checked = () => {
 
 export const Disabled = () => {
   return (
-    <>
-      <RadioButton disabled label="Disabled" value="Disabled" />
+    <RadioButtonGroup disabled>
+      <RadioButton label="Disabled" value="Disabled" />
       <RadioButton
-        disabled
         label="Checked Disabled"
         value="Disabled-checked"
         checked
       />
-    </>
+    </RadioButtonGroup>
   );
 };
 
 export const Readonly = () => {
   return (
-    <>
-      <RadioButton readOnly label="Readonly" value="Readonly" />
+    <RadioButtonGroup readOnly>
+      <RadioButton label="Readonly" value="Readonly" />
       <RadioButton
         readOnly
         label="Checked Readonly"
         value="Readonly-checked"
         checked
       />
-    </>
+    </RadioButtonGroup>
   );
 };
 

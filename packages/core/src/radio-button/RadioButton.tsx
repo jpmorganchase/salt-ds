@@ -86,7 +86,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       onFocus,
       onBlur,
       onChange,
-      readOnly,
+      readOnly: readOnlyProp,
       value,
       validationStatus: validationStatusProp,
       ...rest
@@ -108,7 +108,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     } = inputProps;
 
     const disabled = radioGroup.disabled ?? disabledProp;
-    const validationStatus = !disabled
+    const readOnly = radioGroup.readOnly ?? readOnlyProp;
+    const validationStatus = !disabled && !readOnly
       ? radioGroup.validationStatus ?? validationStatusProp
       : undefined;
 
