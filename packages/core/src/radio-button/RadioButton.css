@@ -17,7 +17,7 @@
 /* Styles applied when RadioButton is readonly */
 .saltRadioButton-readonly {
   color: var(--salt-text-primary-foreground-disabled); /* TODO check tokens */
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-selectable-cursor-readonly);
   pointer-events: visible;
 }
 
