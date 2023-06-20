@@ -3,4 +3,4 @@
 "@salt-ds/theme": minor
 ---
 
-add List V1 component to lab
+Add single select List Next to lab

@@ -30,7 +30,7 @@
 }
 
 /* Active list item on hover using mouse */
-.saltListItemNext:hover:not([role="presentation"]):not(
+.saltListItemNext:hover:not(
     .saltListItemNext-disabled
   ),
 /* Active list item on focus using keyboard navigation  */

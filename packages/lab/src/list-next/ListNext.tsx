@@ -124,22 +124,22 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
 
     const focusHandler = (evt: FocusEvent) => {
       handleFocus();
-      onFocus && onFocus(evt);
+      onFocus?.(evt);
     };
 
     const keyDownHandler = (evt: KeyboardEvent) => {
       handleKeyDown(evt);
-      onKeyDown && onKeyDown(evt);
+      onKeyDown?.(evt);
     };
 
     const blurHandler = (evt: FocusEvent) => {
       handleBlur();
-      onBlur && onBlur(evt);
+      onBlur?.(evt);
     };
 
     const mouseDownHandler = (evt: MouseEvent) => {
       handleMouseDown();
-      onMouseDown && onMouseDown(evt);
+      onMouseDown?.(evt);
     };
 
     return (

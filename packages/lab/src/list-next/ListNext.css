@@ -5,9 +5,10 @@
   border-color: var(--salt-container-primary-borderColor);
   border-style: var(--salt-container-borderStyle);
   border-width: var(--salt-size-border);
-  height: calc(var(--salt-size-stackable) * var(--listNext-displayedItemCount));
+  height: calc(var(--salt-size-stackable) * var(--listNext-displayedItemCount, 4));
   outline: none;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   user-select: none;
   padding-inline-start: 0;

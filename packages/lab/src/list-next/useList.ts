@@ -42,7 +42,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
 
   const [activeDescendant, setActiveDescendant] = useState<string>("");
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const [selectedIndices, setselectedIndices] = useState<number[]>(
+  const [selectedIndices, setSelectedIndices] = useState<number[]>(
     getSelected(children)
   );
   const [allOptions, setAllOptions] = useState<Element[]>([]);
@@ -54,17 +54,13 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
   const [mouseDown, setMouseDown] = useState<boolean>(false);
 
   const getListItemIndex = (item: Element): number => {
-    const optionIndex = allOptions.indexOf(item);
-    return optionIndex !== -1 ? optionIndex : -1;
+    return allOptions.indexOf(item);
   };
 
   const focusAndSelect = (element: Element) => {
-    setselectedIndices([getListItemIndex(element)]);
-    setActiveDescendant(element.id);
-    setFocusedIndex(getListItemIndex(element));
-    updateScroll(element);
+    selectItem(element);
+    focusItem(element);
   };
-
   const focusFirstItem = () => {
     // Find first active item
     const firstItem = activeOptions[0];
@@ -72,7 +68,6 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
       focusAndSelect(firstItem);
     }
   };
-
   const focusLastItem = () => {
     // Find last active item
     const lastItem = activeOptions[activeOptions.length - 1];
@@ -80,18 +75,17 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
       focusAndSelect(lastItem);
     }
   };
-
-  const toggleSelectItem = (element: Element) => {
-    const elementIndex = getListItemIndex(element);
-    setselectedIndices([elementIndex]);
+  const selectItem = (element: Element) => {
+    const index = getListItemIndex(element);
+    setSelectedIndices([index]);
   };
+  const focusItem = (element: Element) => {
+    const index = getListItemIndex(element);
 
-  const justFocusItem = (element: Element) => {
     setActiveDescendant(element.id);
-    setFocusedIndex(getListItemIndex(element));
+    setFocusedIndex(index);
     updateScroll(element);
   };
-
   const findNextOption = (
     currentOption: Element | null,
     moves: number
@@ -132,10 +126,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
     if (nonClickableTarget) {
       return;
     }
-    toggleSelectItem(currentTarget);
-    setActiveDescendant(currentTarget.id);
-    setFocusedIndex(null);
-    updateScroll(currentTarget);
+    focusAndSelect(currentTarget);
   };
 
   const handleBlur = () => {
@@ -154,7 +145,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
     } else {
       const activeElement = document.getElementById(activeDescendant);
       if (activeElement) {
-        justFocusItem(activeElement);
+        focusItem(activeElement);
       }
     }
   };
@@ -178,7 +169,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
 
         if (nextItem && nextItem !== currentItem) {
           evt.preventDefault();
-          justFocusItem(nextItem);
+          focusItem(nextItem);
         }
         break;
       case ArrowUp:
@@ -190,7 +181,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
 
         if (nextItem && nextItem !== currentItem) {
           evt.preventDefault();
-          justFocusItem(nextItem);
+          focusItem(nextItem);
         }
         break;
       case Home:
@@ -204,7 +195,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
       case Space:
       case Enter:
         evt.preventDefault();
-        toggleSelectItem(nextItem);
+        focusAndSelect(nextItem);
         break;
       default:
         break;
