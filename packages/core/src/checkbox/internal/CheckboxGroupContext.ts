@@ -1,10 +1,14 @@
 import { createContext } from "react";
+import { a11yValueAriaProps } from "../../form-field-context";
 import { CheckboxGroupProps } from "../CheckboxGroup";
 
 export interface CheckboxGroupState {
+  a11yProps?: a11yValueAriaProps;
+  disabled?: boolean;
   name?: CheckboxGroupProps["name"];
   onChange?: CheckboxGroupProps["onChange"];
   checkedValues?: CheckboxGroupProps["checkedValues"];
+  validationStatus?: "error" | "warning";
 }
 
 const CheckboxGroupContext = createContext<CheckboxGroupState>({});

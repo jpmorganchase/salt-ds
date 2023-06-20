@@ -11,6 +11,7 @@ import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 import checkboxGroupCss from "./CheckboxGroup.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useFormFieldProps } from "../form-field-context";
 
 export interface CheckboxGroupProps
   extends Omit<ComponentPropsWithoutRef<"fieldset">, "onChange"> {
@@ -27,6 +28,10 @@ export interface CheckboxGroupProps
    */
   direction?: "horizontal" | "vertical";
   /**
+   * Disable the Checkbox group
+   */
+  disabled?: boolean;
+  /**
    * The name used to reference the value of the control.
    */
   name?: string;
@@ -39,6 +44,10 @@ export interface CheckboxGroupProps
    * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise, the checkboxes will wrap onto the next line.
    */
   wrap?: boolean;
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning";
 }
 
 const withBaseName = makePrefixer("saltCheckboxGroup");
@@ -52,10 +61,12 @@ export const CheckboxGroup = forwardRef<
     defaultCheckedValues = [],
     children,
     className,
+    disabled: disabledProp,
     direction = "vertical",
     name,
     onChange,
     wrap,
+    validationStatus: validationStatusProp,
     ...other
   },
   ref
@@ -66,6 +77,19 @@ export const CheckboxGroup = forwardRef<
     css: checkboxGroupCss,
     window: targetWindow,
   });
+
+  const {
+    a11yProps,
+    disabled: formFieldDisabled,
+    validationStatus: formFieldValidationStatus,
+  } = useFormFieldProps();
+
+  const disabled = formFieldDisabled ?? disabledProp;
+  const validationStatus = formFieldValidationStatus
+    ? formFieldValidationStatus !== "success"
+      ? formFieldValidationStatus
+      : undefined
+    : validationStatusProp;
 
   const [checkedValues, setCheckedValues] = useControlled({
     controlled: checkedValuesProp,
@@ -101,7 +125,14 @@ export const CheckboxGroup = forwardRef<
       {...other}
     >
       <CheckboxGroupContext.Provider
-        value={{ name, onChange: handleChange, checkedValues }}
+        value={{
+          a11yProps,
+          disabled,
+          name,
+          onChange: handleChange,
+          checkedValues,
+          validationStatus,
+        }}
       >
         {children}
       </CheckboxGroupContext.Provider>

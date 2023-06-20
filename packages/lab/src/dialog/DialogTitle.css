@@ -1,37 +1,16 @@
-.salt-density-touch {
-  --dialog-title-fontSize: 26px;
-}
-
-.salt-density-low {
-  --dialog-title-fontSize: 24px;
-}
-
-.salt-density-medium {
-  --dialog-title-fontSize: 22px;
-}
-
-.salt-density-high {
-  --dialog-title-fontSize: 20px;
-}
-
 .saltDialogTitle {
   --dialog-closeButton-padding: var(--saltDialog-closeButton-padding, var(--salt-size-unit));
   --dialog-closeButton-offset: var(--saltDialog-closeButton-offset, calc(var(--dialog-padding) * -1));
 
-  --dialog-title-lineHeight: var(--saltDialog-title-lineHeight, var(--salt-text-lineHeight));
-  --dialog-title-fontWeight: var(--saltDialog-title-fontWeight, var(--salt-text-fontWeight-strong));
-  --dialog-title-icon-marginRight: var(--saltDialog-title-icon-marginRight, 8px);
-  --dialog-title-color: var(--saltDialog-title-color, var(--salt-text-primary-foreground));
+  --dialog-title-icon-marginRight: var(--saltDialog-title-icon-marginRight, var(--salt-spacing-100));
 }
 
 .saltDialogTitle {
   display: flex;
   flex: 0 0 auto;
-  font-size: var(--dialog-title-fontSize);
-  font-weight: var(--dialog-title-fontWeight);
   min-height: 16px;
   position: relative;
-  color: var(--dialog-title-color);
+  margin: 0;
 }
 
 .saltDialogTitle-close {
@@ -42,6 +21,11 @@
   top: var(--dialog-closeButton-offset);
 }
 
-.saltDialogTitle-statusIndicator {
+.saltDialogTitle .saltDialogTitle-statusIndicator {
+  min-height: var(--salt-text-h1-lineHeight);
   margin-right: var(--dialog-title-icon-marginRight);
+}
+
+.saltDialogTitle-text {
+  margin: 0;
 }

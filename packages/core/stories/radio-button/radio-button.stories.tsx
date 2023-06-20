@@ -7,35 +7,43 @@ export default {
   component: RadioButton,
 } as ComponentMeta<typeof RadioButton>;
 
-export const RadioButtonVariations = () => {
+export const Default = () => {
+  return <RadioButton label="Default" value="Unchecked" />;
+};
+
+export const Checked = () => {
+  return <RadioButton label="Checked" value="Checked" checked />;
+};
+
+export const Disabled = () => {
   return (
     <>
-      <RadioButton label="Default" value="Unchecked" />
       <RadioButton disabled label="Disabled" value="Disabled" />
-      <RadioButton label="Checked" value="Checked" checked />
       <RadioButton
         disabled
         label="Checked Disabled"
         value="Disabled-checked"
         checked
       />
-
-      <RadioButton label="Error" value="Error-unchecked" error />
-      <RadioButton
-        label="Error Disabled"
-        value="disabled-error"
-        disabled
-        error
-      />
-      <RadioButton label="Error Checked" value="Error-checked" checked error />
-      <RadioButton
-        label="Error Checked Disabled"
-        value="disabled-error-checked"
-        checked
-        disabled
-        error
-      />
     </>
+  );
+};
+
+export const Error = () => {
+  return (
+    <RadioButtonGroup validationStatus="error">
+      <RadioButton label="Error" value="Error-unchecked" />
+      <RadioButton label="Error" value="Error-checked" checked />
+    </RadioButtonGroup>
+  );
+};
+
+export const Warning = () => {
+  return (
+    <RadioButtonGroup validationStatus="warning">
+      <RadioButton label="Error" value="Error-unchecked" />
+      <RadioButton label="Error" value="Error-checked" checked />
+    </RadioButtonGroup>
   );
 };
 

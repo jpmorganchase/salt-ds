@@ -5,6 +5,7 @@ import {
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
+  ReactNode,
   Ref,
   useState,
 } from "react";
@@ -22,13 +23,17 @@ export interface InputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
       ComponentPropsWithoutRef<"input">,
-      "disabled" | "value" | "defaultValue"
+      "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
    * The marker to use in an empty read only Input.
    * Use `''` to disable this feature. Defaults to '—'.
    */
   emptyReadOnlyMarker?: string;
+  /**
+   * End adornment component
+   */
+  endAdornment?: ReactNode;
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
@@ -41,6 +46,10 @@ export interface InputProps
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
+  /**
+   * Start adornment component
+   */
+  startAdornment?: ReactNode;
   /**
    * Alignment of text within container. Defaults to "left"
    */
@@ -63,11 +72,14 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     className: classNameProp,
     disabled,
     emptyReadOnlyMarker = "—",
+    endAdornment,
     id,
     inputProps = {},
     inputRef,
+    placeholder,
     readOnly: readOnlyProp,
     role,
+    startAdornment,
     style,
     textAlign = "left",
     value: valueProp,
@@ -96,9 +108,9 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
   } = useFormFieldProps();
 
   const restA11yProps = {
-    ariaActiveDescendant,
-    ariaExpanded,
-    ariaOwns,
+    "aria-activedescendant": ariaActiveDescendant,
+    "aria-expanded": ariaExpanded,
+    "aria-owns": ariaOwns,
   };
 
   const isDisabled = disabled || formFieldDisabled;
@@ -165,6 +177,11 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
       style={inputStyle}
       {...other}
     >
+      {startAdornment && (
+        <div className={withBaseName("startAdornmentContainer")}>
+          {startAdornment}
+        </div>
+      )}
       <input
         aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
         aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
@@ -178,12 +195,18 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         onBlur={handleBlur}
         onChange={handleChange}
         onFocus={!isDisabled ? handleFocus : undefined}
+        placeholder={placeholder}
         value={value}
         {...restA11yProps}
         {...restInputProps}
       />
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />
+      )}
+      {endAdornment && (
+        <div className={withBaseName("endAdornmentContainer")}>
+          {endAdornment}
+        </div>
       )}
       <div className={withBaseName("activationIndicator")} />
     </div>

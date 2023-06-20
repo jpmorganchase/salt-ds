@@ -7,6 +7,7 @@
   --salt-status-negative-foreground: var(--salt-palette-negative-foreground);
   --salt-status-positive-foreground: var(--salt-palette-positive-foreground);
 
+  /* TODO: Deprecate tokens when deleted from Radio Button */
   --salt-status-info-foreground-disabled: var(--salt-palette-info-foreground-disabled);
   --salt-status-success-foreground-disabled: var(--salt-palette-success-foreground-disabled);
   --salt-status-warning-foreground-disabled: var(--salt-palette-warning-foreground-disabled);

@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
-import { Logo } from "@salt-ds/lab";
-import { useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { Logo, LogoImage } from "@salt-ds/lab";
+import { useIsomorphicLayoutEffect, Text } from "@salt-ds/core";
 import { useBreakpoint, Link } from "@jpmorganchase/mosaic-components";
 import type { TabsMenu, TabsLinkItem } from "@jpmorganchase/mosaic-components";
 import { useRoute, SidebarItem } from "@jpmorganchase/mosaic-store";
@@ -61,7 +61,12 @@ export const AppHeader: FC<AppHeaderProps> = ({
       <div className={styles.root}>
         {homeLink && (
           <Link href={homeLink} variant="component">
-            {logo && <Logo appTitle={title} src={appHeaderLogo} />}
+            {logo && (
+              <Logo>
+                <LogoImage src={appHeaderLogo} alt="app header logo" />
+                <Text>{title}</Text>
+              </Logo>
+            )}
           </Link>
         )}
         {!showDrawer && (

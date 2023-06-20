@@ -21,18 +21,48 @@
   .ag-rtl {
     .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected),
     .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
-    .ag-has-focus .ag-full-width-row.ag-row-focus .ag-cell-wrapper.ag-row-group,
     .ag-cell-range-single-cell,
     .ag-cell-range-single-cell.ag-cell-range-handle {
-      border: 2px dotted var(--agGrid-color-focus) !important;
-      padding-left: ag-param(cell-horizontal-padding) - 2px;
-      padding-right: ag-param(cell-horizontal-padding) - 2px;
+      border: var(--agGrid-focused-borderWidth)
+        var(--agGrid-focused-borderStyle) var(--agGrid-focused-borderColor) !important;
+      padding-left: calc(
+        ag-param(cell-horizontal-padding) - var(--agGrid-focused-borderWidth)
+      );
+      padding-right: calc(
+        ag-param(cell-horizontal-padding) - var(--agGrid-focused-borderWidth)
+      );
+      line-height: calc(
+        min(
+            var(--ag-internal-calculated-line-height),
+            var(--ag-internal-padded-row-height)
+          ) - var(--agGrid-focused-borderWidth)
+      );
+    }
+  }
+  // Because we are using a different border thickness on focus than default
+  // we have to adjust height on various elements either using the line-height or height
+  // properties.
+  .ag-ltr,
+  .ag-rtl {
+    .ag-cell-wrapper.ag-row-group {
+      align-items: center;
     }
   }
 
-  .ag-cell {
-    display: flex;
-    align-items: center;
+  .ag-ltr,
+  .ag-rtl {
+    .ag-row-focus .ag-cell-focus .ag-cell-wrapper.ag-row-group,
+    .ag-cell-focus .ag-drag-handle.ag-row-drag,
+    .ag-cell-focus
+      .ag-cell-wrapper
+      > :not(.ag-cell-value):not(.ag-group-value) {
+      height: calc(
+        min(
+            var(--ag-internal-calculated-line-height),
+            var(--ag-internal-padded-row-height)
+          ) - var(--agGrid-focused-borderWidth)
+      );
+    }
   }
 
   .ag-toggle-button-input-wrapper {
@@ -276,7 +306,7 @@
     left: -2px;
     border-top: 0 solid transparent;
     border-left: var(--agGrid-editableCell-cornerTag-size) solid
-      var(--agGrid-cursor-borderColor);
+      var(--agGrid-focused-borderColor);
     border-bottom: var(--agGrid-editableCell-cornerTag-size) solid transparent;
     z-index: 2;
   }
