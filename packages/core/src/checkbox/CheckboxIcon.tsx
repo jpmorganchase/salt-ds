@@ -18,6 +18,7 @@ export interface CheckboxIconProps {
   disabled?: boolean;
   error?: boolean /* **Deprecated**: replaced with validationStatus */;
   indeterminate?: boolean;
+  readOnly?: boolean;
   validationStatus?: "error" | "warning";
 }
 

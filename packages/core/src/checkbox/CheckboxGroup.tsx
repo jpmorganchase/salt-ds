@@ -41,6 +41,10 @@ export interface CheckboxGroupProps
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
   /**
+   * If `true`, the component is read only.
+   */
+  readOnly?: boolean;
+  /**
    * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise, the checkboxes will wrap onto the next line.
    */
   wrap?: boolean;
@@ -65,6 +69,7 @@ export const CheckboxGroup = forwardRef<
     direction = "vertical",
     name,
     onChange,
+    readOnly: readOnlyProp,
     wrap,
     validationStatus: validationStatusProp,
     ...other
@@ -81,10 +86,12 @@ export const CheckboxGroup = forwardRef<
   const {
     a11yProps,
     disabled: formFieldDisabled,
+    readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
 
   const disabled = formFieldDisabled ?? disabledProp;
+  const readOnly = formFieldReadOnly ?? readOnlyProp;
   const validationStatus = formFieldValidationStatus
     ? formFieldValidationStatus !== "success"
       ? formFieldValidationStatus
@@ -131,7 +138,8 @@ export const CheckboxGroup = forwardRef<
           name,
           onChange: handleChange,
           checkedValues,
-          validationStatus,
+          readOnly,
+          validationStatus
         }}
       >
         {children}

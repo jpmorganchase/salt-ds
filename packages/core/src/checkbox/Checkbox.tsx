@@ -97,7 +97,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       onFocus,
       value,
       validationStatus: validationStatusProp,
-      readOnly,
+      readOnly: readOnlyProp,
       ...rest
     },
     ref
@@ -141,6 +141,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     });
 
     const disabled = checkboxGroup.disabled ?? disabledProp;
+    const readOnly = checkboxGroup.readOnly ?? readOnlyProp;
     const validationStatus = !disabled
       ? checkboxGroup.validationStatus ?? validationStatusProp
       : undefined;
