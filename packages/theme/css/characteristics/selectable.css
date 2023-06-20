@@ -3,6 +3,7 @@
   --salt-selectable-cursor-selected: pointer;
   --salt-selectable-cursor-blurSelected: pointer;
   --salt-selectable-cursor-disabled: not-allowed;
+  --salt-selectable-cursor-readonly: not-allowed;
 
   --salt-selectable-borderStyle: solid;
   --salt-selectable-borderStyle-hover: solid;
@@ -26,6 +27,7 @@
   --salt-selectable-background-selected: var(--salt-palette-interact-background-active);
   --salt-selectable-background-blurSelected: var(--salt-palette-interact-background-blurSelected);
   --salt-selectable-background-disabled: var(--salt-palette-interact-background-disabled);
+  --salt-selectable-background-selectedDisabled: var(--salt-palette-interact-background-activeDisabled);
 
   --salt-selectable-cta-foreground-hover: var(--salt-palette-interact-cta-foreground-hover);
   --salt-selectable-cta-foreground-selected: var(--salt-palette-interact-cta-foreground-active);
