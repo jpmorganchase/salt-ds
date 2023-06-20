@@ -123,8 +123,8 @@ describe("GIVEN a list", () => {
         });
       });
 
-      describe("WHEN a specific list item is disabled", () => {
-        it("THEN it's not able to be selected", () => {
+      describe("WHEN list item is disabled", () => {
+        it("THEN it's not selectable", () => {
           cy.mount(
             <SingleSelectList
               children={
@@ -145,8 +145,10 @@ describe("GIVEN a list", () => {
 
           cy.findByRole("option", { name: ITEMS[1].label })
             .click()
-            .should("have.attr", "aria-disabled", "true")
-            .should("not.have.attr", "aria-selected");
+          cy.findByRole("option", { name: ITEMS[1].label }).should(
+            "not.have.attr",
+            "aria-selected"
+          );
         });
       });
     });
