@@ -1,4 +1,4 @@
-import {ChangeEvent, useState} from "react";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
 import {
   Checkbox,
   CheckboxGroup,
@@ -12,12 +12,10 @@ import {
   Tooltip,
   AdornmentButton,
   Text,
-  FormFieldControlWrapper,
-  ValidationStatus,
+  FormFieldControlWrapper
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
-import { ChangeEventHandler, useState } from "react";
 
 export default {
   title: "Core/Form Field",
@@ -217,7 +215,7 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
           <Input placeholder="Second value" />
         </FormFieldControlWrapper>
       </FormField>
-      <FormField {...props}>
+      {/* <FormField {...props}>
         <FormLabel>Multi controls</FormLabel>
         <FormFieldControlWrapper>
           <Input placeholder="First value" />
@@ -228,7 +226,7 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
             <RadioButton key="option3" label="Radio Option 3" value="option3" />
           </RadioButtonGroup>
         </FormFieldControlWrapper>
-      </FormField>
+      </FormField> */}
     </FlowLayout>
   );
 };
