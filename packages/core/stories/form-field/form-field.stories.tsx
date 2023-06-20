@@ -236,7 +236,11 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
         <FormLabel>Multi controls</FormLabel>
         <FormFieldControlWrapper>
           <Input disabled={checked} placeholder="Transition impact" />
-          <Checkbox checked={checked} onChange={() => setChecked(!checked)} label="Transition impact not applicable" /> 
+          <Checkbox
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+            label="Transition impact not applicable"
+          />
         </FormFieldControlWrapper>
       </FormField>
     </FlowLayout>
