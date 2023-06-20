@@ -98,7 +98,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
             }
           </Sidebar>
         }
-        title={
+        pageTitle={
           isMobileView ? (
             <TitleWithDrawer
               title={title}

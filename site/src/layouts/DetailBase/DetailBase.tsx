@@ -46,7 +46,7 @@ export const DetailBase: FC<LayoutProps> = ({
   SidebarProps,
   children,
   sidebar,
-  title: titleProp,
+  pageTitle: titleProp,
 }) => {
   const Header = <AppHeader />;
 
