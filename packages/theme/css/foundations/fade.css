@@ -33,6 +33,7 @@
   --salt-color-gray-90-fade-border-readonly: rgba(132, 135, 142, var(--salt-palette-opacity-border-readonly));
   --salt-color-gray-200-fade-border-readonly: rgba(97, 101, 110, var(--salt-palette-opacity-border-readonly));
 
+  --salt-color-blue-30-fade-background: rgba(164, 213, 244, var(--salt-palette-opacity-background));
   --salt-color-blue-500-fade-background: rgba(38, 112, 169, var(--salt-palette-opacity-background));
   --salt-color-blue-600-fade-background: rgba(21, 92, 147, var(--salt-palette-opacity-background));
   --salt-color-blue-700-fade-background: rgba(0, 71, 123, var(--salt-palette-opacity-background));
