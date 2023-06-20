@@ -4867,6 +4867,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/eslint-plugin-next@npm:13.4.6":
+  version: 13.4.6
+  resolution: "@next/eslint-plugin-next@npm:13.4.6"
+  dependencies:
+    glob: 7.1.7
+  checksum: b7b53e08a1e2b8862a94981289a3dc4525753e7fd7bc7d0ab60df5e8abd7ab2ad03e079b690d4c816fd48703b160c4ea7c5b1fc4e7a2133b1f1609ae73bfe84f
+  languageName: node
+  linkType: hard
+
 "@next/swc-darwin-arm64@npm:13.4.2":
   version: 13.4.2
   resolution: "@next/swc-darwin-arm64@npm:13.4.2"
@@ -5548,7 +5557,7 @@ __metadata:
     "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.36
     "@jpmorganchase/mosaic-store": ^0.1.0-beta.36
     "@jpmorganchase/mosaic-theme": ^0.1.0-beta.36
-    "@next/eslint-plugin-next": 13.2.4
+    "@next/eslint-plugin-next": 13.4.6
     "@philpl/buble": ^0.19.7
     "@types/node": ^16.0.0
     "@types/react": ^18.0.26
