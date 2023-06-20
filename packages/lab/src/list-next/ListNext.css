@@ -14,17 +14,8 @@
   box-sizing: content-box;
 }
 
-.saltListNext:empty:before {
-  height: 100%;
-  padding-inline: var(--salt-size-unit);
-  display: flex;
-  position: relative;
-  align-items: center;
-  content: var(--listNext-emptyMessage);
-}
-
 /* Pseudo-class applied to the root element on focus */
 .saltListNext-focusable:focus-visible {
   outline: var(--salt-focused-outline);
-  outline-offset: calc(0 - var(--salt-focused-outlineWidth));
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
 }

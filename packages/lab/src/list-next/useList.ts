@@ -2,6 +2,7 @@ import {
   Children,
   isValidElement,
   MouseEvent,
+  KeyboardEvent,
   ReactNode,
   useEffect,
   useRef,
@@ -41,7 +42,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
 
   const [activeDescendant, setActiveDescendant] = useState<string>("");
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const [selectedIndexes, setSelectedIndexes] = useState<number[]>(
+  const [selectedIndices, setselectedIndices] = useState<number[]>(
     getSelected(children)
   );
   const [allOptions, setAllOptions] = useState<Element[]>([]);
@@ -58,7 +59,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
   };
 
   const focusAndSelect = (element: Element) => {
-    setSelectedIndexes([getListItemIndex(element)]);
+    setselectedIndices([getListItemIndex(element)]);
     setActiveDescendant(element.id);
     setFocusedIndex(getListItemIndex(element));
     updateScroll(element);
@@ -82,7 +83,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
 
   const toggleSelectItem = (element: Element) => {
     const elementIndex = getListItemIndex(element);
-    setSelectedIndexes([elementIndex]);
+    setselectedIndices([elementIndex]);
   };
 
   const justFocusItem = (element: Element) => {
@@ -224,7 +225,7 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
   return {
     listRef,
     focusedIndex,
-    selectedIndexes,
+    selectedIndices,
     activeDescendant,
     handleClick,
     handleFocus,

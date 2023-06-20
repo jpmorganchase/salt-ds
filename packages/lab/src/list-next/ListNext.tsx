@@ -7,9 +7,11 @@ import {
   HTMLAttributes,
   isValidElement,
   KeyboardEventHandler,
+  KeyboardEvent,
   MouseEvent,
   MouseEventHandler,
   ReactElement,
+  FocusEvent,
 } from "react";
 import { clsx } from "clsx";
 import { ListItemNext as DefaultListItem } from "./ListItemNext";
@@ -75,7 +77,6 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     });
 
     const childrenCount = Children.count(children);
-    const emptyList = childrenCount === 0;
 
     const listId = useId(idProp) || "listNext"; // TODO: check why useId needs to return undefined
 
@@ -84,7 +85,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const {
       listRef,
       focusedIndex,
-      selectedIndexes,
+      selectedIndices,
       activeDescendant,
       handleClick,
       handleFocus,
@@ -109,7 +110,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           onClick: (e: MouseEvent<HTMLUListElement>) => handleClick(e),
           // focused is applicable for list items on focus using keyboard navigation only
           focused: focusedIndex === index,
-          selected: selectedIndexes.includes(index),
+          selected: selectedIndices.includes(index),
           id: `list-${listId}--list-item--${index}`,
         };
 
@@ -121,16 +122,14 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       "--listNext-displayedItemCount": displayedItemCount,
     };
 
-    const activeElement = document.getElementById(activeDescendant);
-
-    const focusHandler = () => {
+    const focusHandler = (evt: FocusEvent) => {
       handleFocus();
-      onFocus && onFocus(activeElement);
+      onFocus && onFocus(evt);
     };
 
-    const keydownHandler = (evt: KeyboardEvent) => {
+    const keyDownHandler = (evt: KeyboardEvent) => {
       handleKeyDown(evt);
-      onKeyDown && onKeyDown(activeElement);
+      onKeyDown && onKeyDown(evt);
     };
 
     const blurHandler = (evt: FocusEvent) => {
@@ -138,7 +137,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onBlur && onBlur(evt);
     };
 
-    const mousedownHandler = (evt: KeyboardEvent) => {
+    const mouseDownHandler = (evt: MouseEvent) => {
       handleMouseDown();
       onMouseDown && onMouseDown(evt);
     };
@@ -158,12 +157,12 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         aria-activedescendant={listDisabled ? undefined : activeDescendant}
         style={listStyles}
         onFocus={focusHandler}
-        onKeyDown={keydownHandler}
+        onKeyDown={keyDownHandler}
         onBlur={blurHandler}
-        onMouseDown={mousedownHandler}
+        onMouseDown={mouseDownHandler}
         {...rest}
       >
-        {!emptyList && renderContent()}
+        {renderContent()}
       </ul>
     );
   }

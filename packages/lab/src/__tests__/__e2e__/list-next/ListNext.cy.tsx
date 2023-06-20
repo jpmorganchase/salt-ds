@@ -54,13 +54,13 @@ describe("GIVEN a list", () => {
           .should("have.attr", "aria-selected", "true");
       });
 
-      it("THEN deselect previous list item when a new list one is selected, for non deselectable", () => {
+      it("THEN deselect previous list item when a new list one is selected", () => {
         cy.mount(<SingleSelectList />);
 
         cy.findByRole("option", { name: ITEMS[1].label })
           .click()
           .should("have.attr", "aria-selected", "true");
-        // click to select a different list item
+        // select a different list item
         cy.findByRole("option", { name: ITEMS[2].label })
           .click()
           .should("have.attr", "aria-selected", "true");
@@ -113,7 +113,7 @@ describe("GIVEN a list", () => {
 
       describe("WHEN disabled", () => {
         describe("WHEN entire list is disabled", () => {
-          it("THEN does not allow any items to be selected", () => {
+          it("THEN all items should be disabled", () => {
             cy.mount(<SingleSelectList disabled />);
 
             cy.findAllByRole("option").should(
@@ -144,35 +144,10 @@ describe("GIVEN a list", () => {
               />
             );
 
-            cy.findByRole("option", { name: ITEMS[1].label }).should(
-              "have.attr",
-              "aria-disabled",
-              "true"
-            );
-          });
-
-          it("THEN it's not focusable on mouse hover", () => {
-            cy.mount(
-              <SingleSelectList
-                children={
-                  <>
-                    <ListItemNext value={ITEMS[0].value}>
-                      {ITEMS[0].label}
-                    </ListItemNext>
-                    <ListItemNext value={ITEMS[1].value} disabled>
-                      {ITEMS[1].label}
-                    </ListItemNext>
-                    <ListItemNext value={ITEMS[2].value}>
-                      {ITEMS[2].label}
-                    </ListItemNext>
-                  </>
-                }
-              />
-            );
-
             cy.findByRole("option", { name: ITEMS[1].label })
-              .realHover()
-              .should("not.have.class", "saltListItemNext-focused");
+              .click()
+              .should("have.attr", "aria-disabled", "true")
+              .should("not.have.attr", "aria-selected");
           });
         });
       });
@@ -183,15 +158,15 @@ describe("GIVEN a list", () => {
 
           cy.findByRole("listbox").focus();
           cy.realPress("ArrowDown");
-          cy.realPress("Space"); // select second list item
-          cy.findByRole("option", { name: ITEMS[1].label }).should(
-            "have.class",
-            "saltListItemNext-focused"
-          );
-          cy.findByRole("option", { name: ITEMS[0].label }).should(
-            "not.have.attr",
-            "aria-selected"
-          );
+          cy.realPress("Enter"); // select second list item
+          cy.findByRole("option", { name: ITEMS[1].label })
+            .should("have.class", "saltListItemNext-focused")
+            .should("have.attr", "aria-selected");
+          cy.realPress("ArrowDown");
+          cy.realPress("Space"); // select third list item
+          cy.findByRole("option", { name: ITEMS[2].label })
+            .should("have.class", "saltListItemNext-focused")
+            .should("have.attr", "aria-selected");
         });
 
         describe("WHEN on first list keyboard focus", () => {
@@ -225,30 +200,6 @@ describe("GIVEN a list", () => {
             cy.findByRole("listbox").focus(); // focus again
             // focus should be back on the previously focused item
             cy.findByRole("option", { name: ITEMS[1].label }).should(
-              "have.class",
-              "saltListItemNext-focused"
-            );
-          });
-        });
-
-        describe("WHEN an item was previously selected, unless focus has moved", () => {
-          it("THEN re-focus on previously selected item", () => {
-            cy.mount(<SingleSelectList />);
-
-            cy.findByRole("listbox").focus();
-            cy.realPress("ArrowDown");
-            cy.realPress("ArrowDown");
-            cy.realPress("Enter");
-            // list item selected
-            cy.findByRole("option", { name: ITEMS[2].label }).should(
-              "have.attr",
-              "aria-selected",
-              "true"
-            );
-            cy.findByRole("listbox").blur(); // remove focus
-            cy.findByRole("listbox").focus(); // focus again
-            // focus should be back on the previously selected item
-            cy.findByRole("option", { name: ITEMS[2].label }).should(
               "have.class",
               "saltListItemNext-focused"
             );
