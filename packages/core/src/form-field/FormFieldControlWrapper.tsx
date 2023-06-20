@@ -9,12 +9,19 @@ import clsx from "clsx";
 
 const withBaseName = makePrefixer("saltFormFieldControlWrapper");
 
-export const FormFieldControlWrapper = ({ children, variant = "primary" }: PropsWithChildren & {variant?: string}) => {
+export const FormFieldControlWrapper = ({
+  children,
+  variant = "primary",
+}: PropsWithChildren & { variant?: string }) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-control-wrapper",
     css: formFieldControlWrapper,
     window: targetWindow,
   });
-  return <fieldset className={clsx(withBaseName(), withBaseName(variant))}>{children}</fieldset>;
+  return (
+    <fieldset className={clsx(withBaseName(), withBaseName(variant))}>
+      {children}
+    </fieldset>
+  );
 };

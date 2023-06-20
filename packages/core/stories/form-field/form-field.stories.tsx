@@ -12,7 +12,7 @@ import {
   Tooltip,
   AdornmentButton,
   Text,
-  FormFieldControlWrapper
+  FormFieldControlWrapper,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
@@ -136,45 +136,45 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
 
   const [values, setValues] = useState({
     firstValue: "3",
-    secondValue: "4.5"
+    secondValue: "4.5",
   });
 
   const handleUpdate = (e: ChangeEvent<HTMLInputElement>, index: number) => {
     let update = values;
     const value = e.target.value;
 
-    if (parseFloat(value)){
+    if (parseFloat(value)) {
       if (index === 0) {
         update = {
           firstValue: value,
-          secondValue: (parseFloat(value) * 1.5).toString()
-        }
-      }
-      else {
+          secondValue: (parseFloat(value) * 1.5).toString(),
+        };
+      } else {
         update = {
-          firstValue: (parseFloat(value) * 2 / 3).toString(),
-          secondValue: value
-        }
+          firstValue: ((parseFloat(value) * 2) / 3).toString(),
+          secondValue: value,
+        };
       }
       setValues(update);
     }
 
-    if (value.length === 0){
+    if (value.length === 0) {
       if (index === 0) {
         update = {
           ...values,
-          firstValue: value
-        }
-      }
-      else {
+          firstValue: value,
+        };
+      } else {
         update = {
           ...values,
-          secondValue: value
-        }
+          secondValue: value,
+        };
       }
       setValues(update);
     }
   };
+
+  const [checked, setChecked] = useState(false);
 
   /** TODO: How does last example work with aria label */
   return (
@@ -182,8 +182,19 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
       <FormField validationStatus={valid ? undefined : "error"} {...props}>
         <FormLabel>Multi criteria inputs</FormLabel>
         <FormFieldControlWrapper>
-          <Input value={firstValue} onChange={(e: ChangeEvent<HTMLInputElement>) => {setFirstValue(e.target.value)}} />
-          <Input value={secondValue} onChange={(e: ChangeEvent<HTMLInputElement>) => {setSecondValue(e.target.value)}} placeholder="Multiplier" />
+          <Input
+            value={firstValue}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setFirstValue(e.target.value);
+            }}
+          />
+          <Input
+            value={secondValue}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setSecondValue(e.target.value);
+            }}
+            placeholder="Multiplier"
+          />
         </FormFieldControlWrapper>
         <FormHelperText>
           * User must enter all values to complete the input
@@ -192,8 +203,14 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
       <FormField {...props}>
         <FormLabel>Paired fields</FormLabel>
         <FormFieldControlWrapper>
-          <Input onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(e,0)} value={values.firstValue} />
-          <Input onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(e,1)} value={values.secondValue} />
+          <Input
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(e, 0)}
+            value={values.firstValue}
+          />
+          <Input
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(e, 1)}
+            value={values.secondValue}
+          />
         </FormFieldControlWrapper>
         <FormHelperText>
           * User entry in either field will automatically populate the
@@ -215,18 +232,13 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
           <Input placeholder="Second value" />
         </FormFieldControlWrapper>
       </FormField>
-      {/* <FormField {...props}>
+      <FormField {...props}>
         <FormLabel>Multi controls</FormLabel>
         <FormFieldControlWrapper>
-          <Input placeholder="First value" />
-          <Checkbox label="Second value" /> 
-          <RadioButtonGroup>
-            <RadioButton key="option1" label="Radio Option 1" value="option1" />
-            <RadioButton key="option2" label="Radio Option 2" value="option2" />
-            <RadioButton key="option3" label="Radio Option 3" value="option3" />
-          </RadioButtonGroup>
+          <Input disabled={checked} placeholder="Transition impact" />
+          <Checkbox checked={checked} onChange={() => setChecked(!checked)} label="Transition impact not applicable" /> 
         </FormFieldControlWrapper>
-      </FormField> */}
+      </FormField>
     </FlowLayout>
   );
 };
