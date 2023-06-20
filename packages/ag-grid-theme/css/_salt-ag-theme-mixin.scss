@@ -333,6 +333,28 @@
     width: var(--salt-size-stackable);
   }
 
+  .ag-standard-button {
+    appearance: none;
+    background: var(--salt-actionable-secondary-background);
+    -webkit-appearance: none;
+    border-radius: ag-param(border-radius);
+    border: 1px transparent;
+    cursor: pointer;
+    height: var(--salt-size-base);
+    font-weight: 600;
+    color: var(--salt-actionable-secondary-foreground);
+    text-transform: uppercase;
+    font-size: var(--salt-text-fontSize);
+    padding: 0 var(--salt-size-unit);
+    &:hover {
+      background-color: var(--salt-actionable-secondary-background-hover);
+    }
+    &:active {
+      color: var(--salt-actionable-secondary-foreground-active);
+      background-color: var(--salt-actionable-secondary-background-active);
+    }
+  }
+
   .ag-ltr .ag-side-bar-right .ag-side-button-button {
     border-left: 2px solid transparent;
     &:focus-visible {
