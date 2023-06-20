@@ -3,6 +3,7 @@
   --salt-selectable-cursor-selected: pointer;
   --salt-selectable-cursor-blurSelected: pointer;
   --salt-selectable-cursor-disabled: not-allowed;
+  --salt-selectable-cursor-readonly: not-allowed;
 
   --salt-selectable-borderStyle: solid;
   --salt-selectable-borderStyle-hover: solid;
