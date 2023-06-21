@@ -41,8 +41,8 @@ export const Error = () => {
 export const Warning = () => {
   return (
     <RadioButtonGroup validationStatus="warning">
-      <RadioButton label="Error" value="Error-unchecked" />
-      <RadioButton label="Error" value="Error-checked" checked />
+      <RadioButton label="Warning" value="Warning-unchecked" />
+      <RadioButton label="Warning" value="Warning-checked" checked />
     </RadioButtonGroup>
   );
 };
