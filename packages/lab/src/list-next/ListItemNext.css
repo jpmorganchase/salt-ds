@@ -38,8 +38,7 @@
 }
 
 .saltListItemNext[aria-selected="true"] {
-  border-block: var(--salt-size-border) var(--salt-container-borderStyle)
-    var(--salt-selectable-borderColor-selected);
+  border-block: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
   --listItemNext-background: var(--salt-selectable-background-selected);
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
@@ -55,7 +54,6 @@
 
 /* disabled list item when selected */
 .saltListItemNext-disabled[aria-selected="true"] {
-  border-block: var(--salt-size-border) var(--salt-container-borderStyle)
-    var(--salt-selectable-borderColor-selectedDisabled);
+  border-block: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selectedDisabled);
   --listItemNext-background: var(--salt-selectable-background-selectedDisabled);
 }
