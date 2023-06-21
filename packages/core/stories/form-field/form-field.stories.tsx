@@ -226,7 +226,7 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
         </FormFieldControlWrapper>
       </FormField>
       <FormField {...props}>
-        <FormLabel>Multi inputs with variant</FormLabel>
+        <FormLabel>Multi inputs with secondary variant</FormLabel>
         <FormFieldControlWrapper variant="secondary">
           <Input placeholder="First value" />
           <Input placeholder="Second value" />

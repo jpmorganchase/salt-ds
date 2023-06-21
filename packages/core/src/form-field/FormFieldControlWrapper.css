@@ -8,11 +8,3 @@
   margin: 0;
   padding: 0;
 }
-
-.saltFormFieldControlWrapper-secondary .saltInput {
-  --saltInput-background: var(--salt-editable-secondary-background);
-  --saltInput-background-active: var(--salt-editable-secondary-background-active);
-  --saltInput-background-hover: var(--salt-editable-secondary-background-active);
-  --saltInput-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --saltInput-background-readonly: var(--salt-editable-secondary-background-readonly);
-}

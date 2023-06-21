@@ -1,18 +1,27 @@
-import { PropsWithChildren } from "react";
+import { createContext, PropsWithChildren, useContext } from "react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "../utils";
 
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-
 import formFieldControlWrapper from "./FormFieldControlWrapper.css";
-import clsx from "clsx";
 
 const withBaseName = makePrefixer("saltFormFieldControlWrapper");
+
+export type ControlWrapper = {
+  variant: "primary" | "secondary";
+};
+
+export const ControlWrapperContext = createContext<ControlWrapper>({variant: "primary"});
+
+export const useControlWrapperVariant = () => {
+  const variant = useContext(ControlWrapperContext);
+  return variant;
+}
 
 export const FormFieldControlWrapper = ({
   children,
   variant = "primary",
-}: PropsWithChildren & { variant?: string }) => {
+}: PropsWithChildren & { variant?: "primary" | "secondary" }) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-control-wrapper",
@@ -20,8 +29,10 @@ export const FormFieldControlWrapper = ({
     window: targetWindow,
   });
   return (
-    <fieldset className={clsx(withBaseName(), withBaseName(variant))}>
-      {children}
-    </fieldset>
+    <ControlWrapperContext.Provider value={{ variant }}>
+      <fieldset className={withBaseName()}>
+        {children}
+      </fieldset>
+    </ControlWrapperContext.Provider>
   );
 };
