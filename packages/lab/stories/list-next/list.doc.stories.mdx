@@ -9,35 +9,41 @@ import {
 
 # List
 
-### Single select
+The List component allows the user to select one or more items from an array of options—selected items are visually distinct. Long Lists are shown in a scrolling pane to provide access to all options in a space-efficient way.
 
 <Canvas>
   <Story id="lab-list-next--default" />
 </Canvas>
 
-### Deselectable
+### Single select
+
+The default List allows users to make a single selection from the available options.
 
 <Canvas>
-  <Story id="lab-list-next--deselectable" />
+  <Story id="lab-list-next--default" />
 </Canvas>
 
 ### Configure list height
+
+If the List height is greater than the available space, it becomes vertically scrollable. You can control its height by using `displayedItemCount` to configure the number of items displayed—and the List height will automatically adjust. We recommend this method of setting your List height, as it ensures that all items are displayed in their entirety and not partially clipped.
 
 <Canvas>
   <Story id="lab-list-next--configurable-height" />
 </Canvas>
 
-### Custom list item
+## How to use
 
-<Canvas>
-  <Story id="lab-list-next--default" />
-</Canvas>
+### When to use List
 
-### Controlled
+- To present a set of selectable options.
+- To define attributes for an onward action such as filtering a data grid, grouping reports or selecting templates.
 
-<Canvas>
-  <Story id="lab-list-next--default" />
-</Canvas>
+### When not to use List
+
+- To provide navigation within an application. Use vertical navigation instead.
+- To navigate options with hierarchical parent-child relationship. Instead, use components that suit your needs such as: tree, cascading menu, or menu button.
+- To execute commands, or trigger the display of modal windows or dialog boxes.
+- To select among a small number of options. Consider checkbox or radio button instead.
 
 # API
 
@@ -74,3 +80,21 @@ import { ListNext } from "@salt-ds/lab";
 #### ListNextItem
 
 <CharacteristicUsage of={ListItemNext} />
+
+## Accessibility
+
+List Next is accessible by assistive technologies like screen readers, and
+provides full WAI-ARIA support.
+
+### Keyboard Interactions
+
+| Key            | Function                                                                                                                                             |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tab            | If focus is above the List, Tab key moves focus into:<br/>The last selected item;<br/>The last item with focus or;<br/>The first item in the List    |
+| Shift + Tab    | If focus is below the List, Tab key moves focus into the list item which last had focus; or the first item in the List                               |
+| Enter or Space | When focus is on a listed item, Enter or Space keys press, select the item and deselects the previously selected item.                               |
+| Arrow up       | Moves focus to the previous item in the List <br /> If focus is on the first item, the next UpArrow key press should NOT wrap focus to the last item |
+| Arrow down     | Moves focus to next item in the List. <br /> If focus is on the last item, the next DownArrow key press should NOT wrap focus back to the first item |
+| Page up        | Moves the highlight a number of positions up the List, based on the number specified in displayedItemCount.                                          |
+| Page down      | Moves the highlight a number of positions down the list, based on the number specified in displayedItemCount.                                        |
+| Home           | Moves focus to the first list item.                                                                                                                  |
