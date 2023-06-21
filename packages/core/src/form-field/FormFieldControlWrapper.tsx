@@ -11,12 +11,14 @@ export type ControlWrapper = {
   variant: "primary" | "secondary";
 };
 
-export const ControlWrapperContext = createContext<ControlWrapper>({variant: "primary"});
+export const ControlWrapperContext = createContext<ControlWrapper>({
+  variant: "primary",
+});
 
 export const useControlWrapper = () => {
   const wrapperContext = useContext(ControlWrapperContext);
   return wrapperContext;
-}
+};
 
 export const FormFieldControlWrapper = ({
   children,
@@ -30,9 +32,7 @@ export const FormFieldControlWrapper = ({
   });
   return (
     <ControlWrapperContext.Provider value={{ variant }}>
-      <fieldset className={withBaseName()}>
-        {children}
-      </fieldset>
+      <fieldset className={withBaseName()}>{children}</fieldset>
     </ControlWrapperContext.Provider>
   );
 };
