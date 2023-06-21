@@ -19,7 +19,7 @@
 /* Styles applied to the icon component if focused */
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
   outline-offset: var(--salt-focused-outlineOffset);
-  outline: var(--salt-focused-outline);
+  outline: var(--saltCheckbox-outline, var(--salt-focused-outline));
 }
 
 /* Styles applied to input element */

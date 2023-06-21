@@ -17,6 +17,7 @@ import { useFormFieldProps } from "../form-field-context";
 
 const withBaseName = makePrefixer("saltCheckbox");
 
+type CheckboxValidationStatus = "warning" | "error" | undefined;
 export interface CheckboxProps
   extends Omit<
     InputHTMLAttributes<HTMLLabelElement>,
@@ -77,7 +78,19 @@ export interface CheckboxProps
   /**
    * Validation status.
    */
-  validationStatus?: "error" | "warning";
+  validationStatus?: CheckboxValidationStatus;
+}
+
+function getValidationStatus(
+  checkboxGroupStatus: CheckboxValidationStatus,
+  formFieldStatus: CheckboxValidationStatus | "success" | undefined,
+  checkboxStatus: CheckboxValidationStatus
+) {
+  return checkboxGroupStatus ?? formFieldStatus
+    ? formFieldStatus !== "success"
+      ? formFieldStatus
+      : undefined
+    : checkboxStatus;
 }
 
 export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
@@ -139,9 +152,19 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       state: "checked",
     });
 
-    const disabled = checkboxGroup.disabled ?? disabledProp;
+    const {
+      disabled: formFieldDisabled,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
+
+    const disabled =
+      checkboxGroup.disabled ?? formFieldDisabled ?? disabledProp;
     const validationStatus = !disabled
-      ? checkboxGroup.validationStatus ?? validationStatusProp
+      ? getValidationStatus(
+          checkboxGroup.validationStatus,
+          formFieldValidationStatus,
+          validationStatusProp
+        )
       : undefined;
 
     return (

@@ -14,8 +14,11 @@ import { RadioButtonIcon } from "./RadioButtonIcon";
 import radioButtonCss from "./RadioButton.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useFormFieldProps } from "../form-field-context";
 
 const withBaseName = makePrefixer("saltRadioButton");
+
+type RadioButtonValidationStatus = "warning" | "error" | undefined;
 
 export interface RadioButtonProps
   extends Omit<
@@ -66,7 +69,19 @@ export interface RadioButtonProps
   /**
    * Validation status.
    */
-  validationStatus?: "error" | "warning";
+  validationStatus?: RadioButtonValidationStatus;
+}
+
+function getValidationStatus(
+  radioGroupStatus: RadioButtonValidationStatus,
+  formFieldStatus: RadioButtonValidationStatus | "success" | undefined,
+  radioStatus: RadioButtonValidationStatus
+) {
+  return radioGroupStatus ?? formFieldStatus
+    ? formFieldStatus !== "success"
+      ? formFieldStatus
+      : undefined
+    : radioStatus;
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
@@ -94,6 +109,11 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       window: targetWindow,
     });
 
+    const {
+      disabled: formFieldDisabled,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
+
     const radioGroup = useRadioGroup();
 
     const {
@@ -102,9 +122,13 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       ...restInputProps
     } = inputProps;
 
-    const disabled = radioGroup.disabled ?? disabledProp;
+    const disabled = radioGroup.disabled ?? formFieldDisabled ?? disabledProp;
     const validationStatus = !disabled
-      ? radioGroup.validationStatus ?? validationStatusProp
+      ? getValidationStatus(
+          radioGroup.validationStatus,
+          formFieldValidationStatus,
+          validationStatusProp
+        )
       : undefined;
 
     const radioGroupChecked =
