@@ -176,7 +176,6 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
 
   const [checked, setChecked] = useState(false);
 
-  /** TODO: How does last example work with aria label */
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField validationStatus={valid ? undefined : "error"} {...props}>
