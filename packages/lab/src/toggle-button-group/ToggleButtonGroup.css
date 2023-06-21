@@ -5,9 +5,17 @@
   width: fit-content;
   gap: var(--salt-spacing-50);
   padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
-  flex-direction: var(--saltToggleButtonGroup-flexDirection, row);
+  flex-direction: row;
 }
 
-.saltToggleButtonGroup > .saltToggleButton {
+.saltToggleButtonGroup .saltToggleButton {
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+}
+
+.saltToggleButtonGroup-vertical {
+  flex-direction: column;
+}
+
+.saltToggleButtonGroup-vertical .saltToggleButton {
+  justify-content: start;
 }

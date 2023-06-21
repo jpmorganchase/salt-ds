@@ -56,7 +56,6 @@ export const ToggleButtonGroup = forwardRef<
     onSelectionChange,
     onKeyDown,
     orientation = "horizontal",
-    style: styleProp,
     ...rest
   } = props;
 
@@ -143,20 +142,13 @@ export const ToggleButtonGroup = forwardRef<
     onKeyDown?.(event);
   };
 
-  const style = {
-    "--saltToggleButtonGroup-flexDirection":
-      orientation === "vertical" ? "column" : "row",
-    ...styleProp,
-  };
-
   return (
     <ToggleButtonGroupContext.Provider value={value}>
       <div
-        className={clsx(withBaseName(), className)}
+        className={clsx(withBaseName(), withBaseName(orientation), className)}
         role="radiogroup"
         ref={handleRef}
         onKeyDown={handleKeyDown}
-        style={style}
         {...rest}
       >
         {children}
