@@ -18,9 +18,10 @@ export interface FormFieldProps
    */
   disabled?: boolean;
   /**
-   * Disables the focus ring on nested controls. Defaults to false
+   * When set to false, disables the focus ring on nested controls. 
+   * Defaults to true
    */
-  disableFocusRing?: boolean;
+  focusVisible?: boolean;
   /**
    * Location of the label, values: 'top' (default) or 'left'
    */
@@ -50,7 +51,7 @@ export const FormField = forwardRef(
       children,
       className,
       disabled = false,
-      disableFocusRing = false,
+      focusVisible = true,
       id: idProp,
       labelPlacement = "top",
       onBlur,
@@ -80,7 +81,7 @@ export const FormField = forwardRef(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName("disableFocusRing")]: disableFocusRing,
+            [withBaseName("lowFocus")]: !focusVisible,
             [withBaseName(`label${capitalize(labelPlacement)}`)]:
               labelPlacement,
           },

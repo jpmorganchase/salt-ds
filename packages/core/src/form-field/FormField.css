@@ -44,7 +44,7 @@
 }
 
 .saltFormField-disabled,
-.saltFormField-disableFocusRing {
+.saltFormField-lowFocus {
   --saltInput-outline: none;
   --saltCheckbox-outline: none;
   --saltRadioButton-outline: none;
