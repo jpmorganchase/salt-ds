@@ -33,6 +33,10 @@ export interface FormFieldProps
    */
   id?: string;
   /**
+   * Displays necessity on label
+   */
+  necessity?: "required" | "optional" | "asterisk";
+  /**
    * Validation status
    */
   validationStatus?: "error" | "warning" | "success";
@@ -48,6 +52,7 @@ export const FormField = forwardRef(
       disabled = false,
       id: idProp,
       labelPlacement = "top",
+      necessity,
       onBlur,
       onFocus,
       readOnly = false,
@@ -91,6 +96,7 @@ export const FormField = forwardRef(
             disabled,
             readOnly,
             validationStatus,
+            necessity,
           }}
         >
           {children}

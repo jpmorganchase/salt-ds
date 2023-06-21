@@ -124,6 +124,18 @@ describe("GIVEN an Input", () => {
     });
   });
 
+  describe("WHEN the Input is required", () => {
+    it("THEN should have required attr", () => {
+      cy.mount(
+        <Input
+          defaultValue="The default value"
+          inputProps={{ required: true }}
+        />
+      );
+      cy.findByRole("textbox").should("have.attr", "required");
+    });
+  });
+
   describe("WHEN the Input is disabled", () => {
     it("THEN should cy.mount disabled", () => {
       cy.mount(<Input defaultValue="The default value" disabled />);
@@ -168,10 +180,55 @@ describe("GIVEN an Input", () => {
             <Input defaultValue="Value" />
           </FormField>
         );
-        cy.wait(2000);
+        cy.wait(1000);
         cy.findByLabelText("Disabled form field").should(
           "have.attr",
           "disabled"
+        );
+      });
+    });
+
+    describe("AND is required", () => {
+      it("THEN input within should be required", () => {
+        cy.mount(
+          <FormField necessity="required">
+            <FormFieldLabel>Form Field</FormFieldLabel>
+            <Input defaultValue="Value" />
+          </FormField>
+        );
+        cy.wait(1000);
+        cy.findByLabelText("Form Field (Required)").should(
+          "have.attr",
+          "required"
+        );
+      });
+    });
+
+    describe("AND is required with asterisk", () => {
+      it("THEN input within should be required", () => {
+        cy.mount(
+          <FormField necessity="asterisk">
+            <FormFieldLabel>Form Field</FormFieldLabel>
+            <Input defaultValue="Value" />
+          </FormField>
+        );
+        cy.wait(1000);
+        cy.findByLabelText("Form Field*").should("have.attr", "required");
+      });
+    });
+
+    describe("AND is optional", () => {
+      it("THEN input within should not be required", () => {
+        cy.mount(
+          <FormField necessity="optional">
+            <FormFieldLabel>Form Field</FormFieldLabel>
+            <Input defaultValue="Value" />
+          </FormField>
+        );
+        cy.wait(1000);
+        cy.findByLabelText("Form Field (Optional)").should(
+          "not.have.attr",
+          "required"
         );
       });
     });
@@ -184,7 +241,7 @@ describe("GIVEN an Input", () => {
             <Input defaultValue="Value" />
           </FormField>
         );
-        cy.wait(2000);
+        cy.wait(1000);
         cy.findByLabelText("Readonly form field").should(
           "have.attr",
           "readonly"
