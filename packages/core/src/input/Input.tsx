@@ -16,7 +16,7 @@ import { makePrefixer, useControlled } from "../utils";
 import { StatusAdornment } from "../status-adornment";
 
 import inputCss from "./Input.css";
-import { useControlWrapperVariant } from "../form-field";
+import { useControlWrapper } from "../form-field";
 
 const withBaseName = makePrefixer("saltInput");
 
@@ -107,7 +107,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
-  const { variant: controlWrapperVariant } = useControlWrapperVariant();
+  const { variant: controlWrapperVariant } = useControlWrapper();
 
   const restA11yProps = {
     "aria-activedescendant": ariaActiveDescendant,

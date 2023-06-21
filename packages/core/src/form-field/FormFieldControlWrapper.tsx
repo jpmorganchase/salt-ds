@@ -13,9 +13,9 @@ export type ControlWrapper = {
 
 export const ControlWrapperContext = createContext<ControlWrapper>({variant: "primary"});
 
-export const useControlWrapperVariant = () => {
-  const variant = useContext(ControlWrapperContext);
-  return variant;
+export const useControlWrapper = () => {
+  const wrapperContext = useContext(ControlWrapperContext);
+  return wrapperContext;
 }
 
 export const FormFieldControlWrapper = ({
