@@ -43,6 +43,9 @@
   grid-area: helperText;
 }
 
-.saltFormField-disabled .saltInput-focused {
-  outline: none;
+.saltFormField-disabled,
+.saltFormField-disableFocusRing {
+  --saltInput-outline: none;
+  --saltCheckbox-outline: none;
+  --saltRadioButton-outline: none;
 }

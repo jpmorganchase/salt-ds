@@ -58,6 +58,25 @@ export const Disabled: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
+export const DisableFocusRing: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormField style={{ width: "366px" }} disableFocusRing {...props}>
+        <FormLabel>Form Field</FormLabel>
+        <Input defaultValue="Input value" />
+      </FormField>
+      <FormField style={{ width: "366px" }} disableFocusRing {...props}>
+        <FormLabel>Form Field</FormLabel>
+        <Checkbox label="Option" />
+      </FormField>
+      <FormField style={{ width: "366px" }} disableFocusRing {...props}>
+        <FormLabel>Form Field</FormLabel>
+        <RadioButton label="Option" />
+      </FormField>
+    </FlowLayout>
+  );
+};
+
 export const HelperText: ComponentStory<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
