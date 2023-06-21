@@ -9,7 +9,7 @@ const ITEMS: ItemType[] = [
 ];
 
 describe("GIVEN a list", () => {
-  describe("GIVEN an uncontrolled single select list", () => {
+  describe("GIVEN a single select list", () => {
     const SingleSelectList = (props: ListNextProps) => {
       return (
         <ListNext {...props}>
@@ -74,7 +74,7 @@ describe("GIVEN a list", () => {
       const itemHeight = 36;
 
       describe("WHEN undefined", () => {
-        it("THEN list height should be 3 times itemHeight", () => {
+        it("THEN list height should be 3 times list item height", () => {
           cy.mount(<SingleSelectList />);
 
           cy.findByRole("listbox").then(($el) => {
@@ -85,8 +85,8 @@ describe("GIVEN a list", () => {
         });
       });
 
-      describe("WHEN lower than childrenCount", () => {
-        it("THEN list height should be displayedItemCount times itemHeight", () => {
+      describe("WHEN displayedItemCount is 2", () => {
+        it("THEN list height should be 2 times list item height", () => {
           cy.mount(<SingleSelectList displayedItemCount={2} />);
 
           cy.findByRole("listbox").then(($el) => {
@@ -97,8 +97,8 @@ describe("GIVEN a list", () => {
         });
       });
 
-      describe("WHEN higher than childrenCount", () => {
-        it("THEN list height should be childrenCount times itemHeights", () => {
+      describe("WHEN displayedItemCount is 6", () => {
+        it("THEN list height should be 3 times list item height", () => {
           cy.mount(<SingleSelectList displayedItemCount={6} />);
 
           cy.findByRole("listbox").then(($el) => {
@@ -143,8 +143,7 @@ describe("GIVEN a list", () => {
             />
           );
 
-          cy.findByRole("option", { name: ITEMS[1].label })
-            .click()
+          cy.findByRole("option", { name: ITEMS[1].label }).click();
           cy.findByRole("option", { name: ITEMS[1].label }).should(
             "not.have.attr",
             "aria-selected"
@@ -248,6 +247,7 @@ describe("GIVEN a list", () => {
           cy.mount(<SingleSelectList />);
 
           cy.findByRole("listbox").focus();
+          cy.findByRole("option", { name: ITEMS[1].label }).click();
           cy.realPress("Home");
           cy.findByRole("option", { name: ITEMS[0].label }).should(
             "have.class",
