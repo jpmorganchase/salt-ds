@@ -1,3 +1,4 @@
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
 import {
   Checkbox,
   CheckboxGroup,
@@ -11,10 +12,10 @@ import {
   Tooltip,
   AdornmentButton,
   Text,
+  FormFieldControlWrapper,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
-import { ChangeEventHandler, useState } from "react";
 
 export default {
   title: "Core/Form Field",
@@ -127,38 +128,123 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-/* TODO: These issues (in helper text) need consideration 
+export const MultiChild: ComponentStory<typeof FormField> = (props) => {
+  const [firstValue, setFirstValue] = useState("Abcdef");
+  const [secondValue, setSecondValue] = useState("");
 
-Commenting out as it's possible but not supported until V3
-*/
+  const valid = firstValue.length && secondValue.length;
 
-// export const MultiInput: ComponentStory<typeof FormField> = (props) => {
-//   return (
-//     <FlowLayout style={{ width: "366px" }}>
-//       <FormField {...props}>
-//         <FormLabel>Paired fields</FormLabel>
-//         <Controls>
-//           <Input defaultValue="123" />
-//           <Input defaultValue="35" />
-//         </Controls>
-//         <FormHelperText>
-//           *User entry in either field will automatically populate the
-//           corresponding field with the correct value
-//         </FormHelperText>
-//       </FormField>
-//       <FormField {...props}>
-//         <FormLabel>Multi criteria inputs</FormLabel>
-//         <Controls>
-//           <Input defaultValue="2.5" />
-//           <Input defaultValue="750" />
-//         </Controls>
-//         <FormHelperText>
-//           *User must enter all values in the string to complete the input
-//         </FormHelperText>
-//       </FormField>
-//     </FlowLayout>
-//   );
-// };
+  const [values, setValues] = useState({
+    firstValue: "3",
+    secondValue: "4.5",
+  });
+
+  const handleUpdate = (e: ChangeEvent<HTMLInputElement>, index: number) => {
+    let update = values;
+    const value = e.target.value;
+
+    if (parseFloat(value)) {
+      if (index === 0) {
+        update = {
+          firstValue: value,
+          secondValue: (parseFloat(value) * 1.5).toString(),
+        };
+      } else {
+        update = {
+          firstValue: ((parseFloat(value) * 2) / 3).toString(),
+          secondValue: value,
+        };
+      }
+      setValues(update);
+    }
+
+    if (value.length === 0) {
+      if (index === 0) {
+        update = {
+          ...values,
+          firstValue: value,
+        };
+      } else {
+        update = {
+          ...values,
+          secondValue: value,
+        };
+      }
+      setValues(update);
+    }
+  };
+
+  const [checked, setChecked] = useState(false);
+
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormField validationStatus={valid ? undefined : "error"} {...props}>
+        <FormLabel>Multi criteria inputs</FormLabel>
+        <FormFieldControlWrapper>
+          <Input
+            value={firstValue}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setFirstValue(e.target.value);
+            }}
+          />
+          <Input
+            value={secondValue}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setSecondValue(e.target.value);
+            }}
+            placeholder="Multiplier"
+          />
+        </FormFieldControlWrapper>
+        <FormHelperText>
+          * User must enter all values to complete the input
+        </FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Paired fields</FormLabel>
+        <FormFieldControlWrapper>
+          <Input
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(e, 0)}
+            value={values.firstValue}
+          />
+          <Input
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(e, 1)}
+            value={values.secondValue}
+          />
+        </FormFieldControlWrapper>
+        <FormHelperText>
+          * User entry in either field will automatically populate the
+          corresponding field with the correct value
+        </FormHelperText>
+      </FormField>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>Multi inputs with left label</FormLabel>
+        <FormFieldControlWrapper>
+          <Input placeholder="First value" />
+          <Input placeholder="Second value" />
+          <Input placeholder="Third value" />
+        </FormFieldControlWrapper>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Multi inputs with secondary variant</FormLabel>
+        <FormFieldControlWrapper variant="secondary">
+          <Input placeholder="First value" />
+          <Input placeholder="Second value" />
+        </FormFieldControlWrapper>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Multi controls</FormLabel>
+        <FormFieldControlWrapper>
+          <Input disabled={checked} placeholder="Transition impact" />
+          <Checkbox
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+            label="Transition impact not applicable"
+          />
+        </FormFieldControlWrapper>
+      </FormField>
+    </FlowLayout>
+  );
+};
 
 export const Readonly: ComponentStory<typeof FormField> = (props) => {
   return (

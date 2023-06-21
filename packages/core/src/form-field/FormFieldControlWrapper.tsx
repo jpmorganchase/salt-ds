@@ -1,19 +1,38 @@
-import { PropsWithChildren } from "react";
-import { makePrefixer } from "../utils";
-
-import { useWindow } from "@salt-ds/window";
+import { createContext, PropsWithChildren, useContext } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { makePrefixer } from "../utils";
 
 import formFieldControlWrapper from "./FormFieldControlWrapper.css";
 
 const withBaseName = makePrefixer("saltFormFieldControlWrapper");
 
-export const FormFieldControlWrapper = ({ children }: PropsWithChildren) => {
+export type ControlWrapper = {
+  variant: "primary" | "secondary";
+};
+
+export const ControlWrapperContext = createContext<ControlWrapper>({
+  variant: "primary",
+});
+
+export const useControlWrapper = () => {
+  const wrapperContext = useContext(ControlWrapperContext);
+  return wrapperContext;
+};
+
+export const FormFieldControlWrapper = ({
+  children,
+  variant = "primary",
+}: PropsWithChildren & { variant?: "primary" | "secondary" }) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-control-wrapper",
     css: formFieldControlWrapper,
     window: targetWindow,
   });
-  return <div className={withBaseName()}>{children}</div>;
+  return (
+    <ControlWrapperContext.Provider value={{ variant }}>
+      <fieldset className={withBaseName()}>{children}</fieldset>
+    </ControlWrapperContext.Provider>
+  );
 };
