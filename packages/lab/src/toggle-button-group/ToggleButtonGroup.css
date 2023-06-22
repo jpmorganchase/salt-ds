@@ -8,7 +8,7 @@
   flex-direction: row;
 }
 
-.saltToggleButtonGroup .saltToggleButton {
+.saltToggleButtonGroup-horizontal .saltToggleButton {
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 

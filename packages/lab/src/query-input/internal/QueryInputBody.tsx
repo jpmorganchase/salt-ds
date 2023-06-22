@@ -108,8 +108,8 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
         <ToggleButtonGroup
           className={withBaseName("buttonGroup")}
           data-testid="boolean-selector"
-          selected={booleanOperator}
-          onSelectionChange={onChange}
+          value={booleanOperator}
+          onChange={onChange}
         >
           <ToggleButton value="and">And</ToggleButton>
           <ToggleButton value="or">Or</ToggleButton>

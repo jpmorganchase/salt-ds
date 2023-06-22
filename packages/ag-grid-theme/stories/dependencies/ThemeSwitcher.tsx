@@ -26,8 +26,8 @@ export const AgGridThemeSwitcher = ({
     <div>
       <ToggleButtonGroup
         aria-label="Theme Selection"
-        onSelectionChange={onChange}
-        selected={theme}
+        onChange={onChange}
+        value={theme}
       >
         <ToggleButton value="salt">Salt</ToggleButton>
         <ToggleButton value="uitk">UITK</ToggleButton>

@@ -39,7 +39,7 @@ const Variants = (props: AgGridReactProps) => {
       <FlexItem>
         <FlexLayout direction="row">
           <FlexItem>
-            <ToggleButtonGroup onSelectionChange={onChange} selected={selected}>
+            <ToggleButtonGroup onChange={onChange} value={selected}>
               <ToggleButton value="primary">Primary</ToggleButton>
               <ToggleButton value="secondary">Secondary</ToggleButton>
               <ToggleButton value="zebra">Zebra</ToggleButton>

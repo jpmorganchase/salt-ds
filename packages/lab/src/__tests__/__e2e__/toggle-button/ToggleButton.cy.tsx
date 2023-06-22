@@ -7,16 +7,12 @@ describe("GIVEN a ToggleButton with Icon and Text", () => {
     const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     const ControlledToggleButtonExample = () => {
       const [toggled, setToggled] = useState(true);
-      const handleToggle: ToggleButtonProps["onSelectionChange"] = (event) => {
+      const handleToggle: ToggleButtonProps["onChange"] = (event) => {
         setToggled((old) => !old);
         selectionChangeSpy(event);
       };
       return (
-        <ToggleButton
-          onSelectionChange={handleToggle}
-          selected={toggled}
-          value="home"
-        >
+        <ToggleButton onChange={handleToggle} selected={toggled} value="home">
           <HomeIcon aria-hidden />
           Home
         </ToggleButton>
@@ -45,11 +41,7 @@ describe("GIVEN a disabled ToggleButton with Icon and Text", () => {
     const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
 
     cy.mount(
-      <ToggleButton
-        disabled
-        value="home"
-        onSelectionChange={selectionChangeSpy}
-      >
+      <ToggleButton disabled value="home" onChange={selectionChangeSpy}>
         <HomeIcon aria-hidden />
         Home
       </ToggleButton>

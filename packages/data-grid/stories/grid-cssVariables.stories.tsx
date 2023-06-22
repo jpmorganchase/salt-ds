@@ -256,10 +256,7 @@ const CssVariablesTemplate: Story<{}> = () => {
       <FlexItem>
         <FlexLayout direction="row">
           <FlexItem>
-            <ToggleButtonGroup
-              onSelectionChange={onVariantChange}
-              selected={variant}
-            >
+            <ToggleButtonGroup onChange={onVariantChange} value={variant}>
               <ToggleButton value="primary">Primary</ToggleButton>
               <ToggleButton value="secondary">Secondary</ToggleButton>
               <ToggleButton value="zebra">Zebra</ToggleButton>

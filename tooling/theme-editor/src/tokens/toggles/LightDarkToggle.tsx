@@ -23,7 +23,7 @@ export const LightDarkToggle = (props: {
 
   return (
     <div className={withBaseName()}>
-      <ToggleButtonGroup onSelectionChange={onModeChanged} selected={selected}>
+      <ToggleButtonGroup onChange={onModeChanged} value={selected}>
         <ToggleButton value={ThemeMode.LIGHT}>Light</ToggleButton>
         <ToggleButton value={ThemeMode.DARK}>Dark</ToggleButton>
       </ToggleButtonGroup>

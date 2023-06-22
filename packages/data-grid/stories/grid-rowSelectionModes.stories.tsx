@@ -30,10 +30,7 @@ const RowSelectionModesTemplate: Story<{}> = () => {
   return (
     <FlexLayout direction="column">
       <FlexItem>
-        <ToggleButtonGroup
-          onSelectionChange={onChange}
-          selected={rowSelectionMode}
-        >
+        <ToggleButtonGroup onChange={onChange} value={rowSelectionMode}>
           <ToggleButton value="multi">Multi</ToggleButton>
           <ToggleButton value="single">Single</ToggleButton>
           <ToggleButton value="none">None</ToggleButton>

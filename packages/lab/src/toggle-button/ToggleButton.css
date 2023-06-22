@@ -18,12 +18,14 @@
   font-size: var(--salt-text-fontSize);
   padding-inline: var(--salt-spacing-100);
   gap: var(--salt-spacing-50);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground);
 }
 
 .saltToggleButton:hover {
   background: var(--salt-actionable-secondary-background-hover);
   color: var(--salt-actionable-secondary-foreground-hover);
   cursor: var(--salt-actionable-cursor-hover);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-hover);
 }
 
 .saltToggleButton:focus-visible {
@@ -31,6 +33,7 @@
   background: var(--salt-actionable-secondary-background-hover);
   color: var(--salt-actionable-secondary-foreground-hover);
   cursor: var(--salt-actionable-cursor-hover);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
 }
 
 .saltToggleButton[aria-checked="true"]:focus-visible {

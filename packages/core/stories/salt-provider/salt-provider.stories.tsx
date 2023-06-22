@@ -16,8 +16,6 @@ export default {
   component: SaltProvider,
 };
 
-const DENSITIES: Density[] = ["high", "medium", "low", "touch"];
-
 export const Default = () => {
   return (
     <SaltProvider density="high" mode="light">
@@ -43,10 +41,7 @@ export const ToggleTheme = () => {
       <Card>
         <div>
           <h1>This Card is wrapped with a SaltProvider</h1>
-          <ToggleButtonGroup
-            onSelectionChange={handleChangeTheme}
-            selected={mode}
-          >
+          <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
             <ToggleButton aria-label="light theme" value="light">
               Light
             </ToggleButton>
@@ -114,8 +109,8 @@ export const NestedProviders = () => {
           <h1>This Card is wrapped with a SaltProvider</h1>
           <ToggleButtonGroup
             aria-label="Outer theme selection"
-            onSelectionChange={handleChangeOuterTheme}
-            selected={outerMode}
+            onChange={handleChangeOuterTheme}
+            value={outerMode}
           >
             <ToggleButton value="light">Light</ToggleButton>
             <ToggleButton value="dark">Dark</ToggleButton>
@@ -123,8 +118,8 @@ export const NestedProviders = () => {
           </ToggleButtonGroup>
           <ToggleButtonGroup
             aria-label="Outer density selection"
-            onSelectionChange={handleChangeOuterDensity}
-            selected={outerDensity}
+            onChange={handleChangeOuterDensity}
+            value={outerDensity}
           >
             <ToggleButton value="high">High</ToggleButton>
             <ToggleButton value="medium">Medium</ToggleButton>
@@ -147,8 +142,8 @@ export const NestedProviders = () => {
               <h1>Nested Card</h1>
               <ToggleButtonGroup
                 aria-label="Inner theme selection"
-                onSelectionChange={handleChangeInnerTheme}
-                selected={innerMode}
+                onChange={handleChangeInnerTheme}
+                value={innerMode}
               >
                 <ToggleButton value="light">Light</ToggleButton>
                 <ToggleButton value="dark">Dark</ToggleButton>
@@ -157,8 +152,8 @@ export const NestedProviders = () => {
 
               <ToggleButtonGroup
                 aria-label="Inner density selection"
-                onSelectionChange={handleChangeInnerDensity}
-                selected={innerDensity}
+                onChange={handleChangeInnerDensity}
+                value={innerDensity}
               >
                 <ToggleButton value="high">High</ToggleButton>
                 <ToggleButton value="medium">Medium</ToggleButton>

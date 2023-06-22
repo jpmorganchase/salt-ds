@@ -15,7 +15,7 @@ import toggleButtonCss from "./ToggleButton.css";
 
 export interface ToggleButtonProps extends ComponentProps<"button"> {
   selected?: boolean;
-  onSelectionChange?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
   value: string | ReadonlyArray<string> | number | undefined;
 }
 
@@ -30,7 +30,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       value,
       onClick,
       onFocus,
-      onSelectionChange,
+      onChange,
       selected: selectedProp,
       ...rest
     } = props;
@@ -65,7 +65,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
       toggleButtonGroup?.select(event);
       setSelected(!selected);
-      onSelectionChange?.(event);
+      onChange?.(event);
       onClick?.(event);
     };
 

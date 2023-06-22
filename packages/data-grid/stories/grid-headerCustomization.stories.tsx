@@ -76,8 +76,8 @@ const SalesGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
     <FlexLayout direction="row" wrap={false} align={"center"}>
       <span>{group.data.name}</span>
       <ToggleButtonGroup
-        onSelectionChange={onChange}
-        selected={viewModes.indexOf(viewMode)}
+        onChange={onChange}
+        value={viewModes.indexOf(viewMode)}
       >
         {viewModes.map((m) => {
           return (

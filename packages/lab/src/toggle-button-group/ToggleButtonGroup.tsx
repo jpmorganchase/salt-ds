@@ -17,24 +17,24 @@ import { ToggleButtonGroupContext } from "./ToggleButtonGroupContext";
 import toggleButtonGroupCss from "./ToggleButtonGroup.css";
 
 export interface ToggleButtonGroupProps
-  extends ComponentPropsWithoutRef<"div"> {
+  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
-   * The default selected value. Use when the component is not controlled.
+   * The default value. Use when the component is not controlled.
    */
-  defaultSelected?: string | ReadonlyArray<string> | number | undefined;
+  defaultValue?: string | ReadonlyArray<string> | number | undefined;
   /**
    * If `true`, the Toggle Button Group will be disabled.
    */
   disabled?: boolean;
   /**
-   * The selected value. Use when the component is controlled.
+   * The value. Use when the component is controlled.
    */
-  selected?: string | ReadonlyArray<string> | number | undefined;
+  value?: string | ReadonlyArray<string> | number | undefined;
   /**
    * Callback fired when the selection changes.
    * @param event
    */
-  onSelectionChange?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  onChange?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   /**
    * The orientation of the toggle buttons.
    */
@@ -50,10 +50,10 @@ export const ToggleButtonGroup = forwardRef<
   const {
     children,
     className,
-    selected: selectedProp,
-    defaultSelected,
+    value: valueProp,
+    defaultValue,
     disabled,
-    onSelectionChange,
+    onChange,
     onKeyDown,
     orientation = "horizontal",
     ...rest
@@ -69,32 +69,32 @@ export const ToggleButtonGroup = forwardRef<
   const groupRef = useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(ref, groupRef);
 
-  const [selected, setSelected] = useControlled({
-    default: defaultSelected,
-    controlled: selectedProp,
+  const [value, setValue] = useControlled({
+    default: defaultValue,
+    controlled: valueProp,
     name: "ToggleButtonGroup",
-    state: "selected",
+    state: "value",
   });
   const [focused, setFocused] = useState<
     string | ReadonlyArray<string> | number | undefined
-  >(selected);
+  >(value);
 
   const select = useCallback(
     (event: SyntheticEvent<HTMLButtonElement>) => {
       const newValue = event.currentTarget.value;
-      setSelected(newValue);
-      if (selected !== newValue) {
-        onSelectionChange?.(event);
+      setValue(newValue);
+      if (value !== newValue) {
+        onChange?.(event);
       }
     },
-    [onSelectionChange, selected, setSelected]
+    [onChange, value, setValue]
   );
 
   const isSelected = useCallback(
     (id: string | ReadonlyArray<string> | number | undefined) => {
-      return selected === id;
+      return value === id;
     },
-    [selected]
+    [value]
   );
 
   const focus = (id: string | ReadonlyArray<string> | number | undefined) => {
@@ -108,7 +108,7 @@ export const ToggleButtonGroup = forwardRef<
     [focused]
   );
 
-  const value = useMemo(
+  const contextValue = useMemo(
     () => ({
       select,
       isSelected,
@@ -143,7 +143,7 @@ export const ToggleButtonGroup = forwardRef<
   };
 
   return (
-    <ToggleButtonGroupContext.Provider value={value}>
+    <ToggleButtonGroupContext.Provider value={contextValue}>
       <div
         className={clsx(withBaseName(), withBaseName(orientation), className)}
         role="radiogroup"

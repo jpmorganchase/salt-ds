@@ -77,13 +77,13 @@ export const Horizontal = IconAndTextTemplate.bind({});
 export const HorizontalIconOnly = IconOnlyTemplate.bind({});
 
 HorizontalIconOnly.args = {
-  defaultSelected: "light",
+  defaultValue: "light",
 };
 
 export const HorizontalTextOnly = TextOnlyTemplate.bind({});
 
 HorizontalTextOnly.args = {
-  defaultSelected: "high",
+  defaultValue: "high",
 };
 
 export const Vertical = IconAndTextTemplate.bind({});
@@ -96,14 +96,14 @@ export const VerticalIconOnly = IconOnlyTemplate.bind({});
 
 VerticalIconOnly.args = {
   orientation: "vertical",
-  defaultSelected: "light",
+  defaultValue: "light",
 };
 
 export const VerticalTextOnly = TextOnlyTemplate.bind({});
 
 VerticalTextOnly.args = {
   orientation: "vertical",
-  defaultSelected: "high",
+  defaultValue: "high",
 };
 
 export const Disabled = IconAndTextTemplate.bind({});

@@ -20,10 +20,10 @@ export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
         <ToggleButtonGroup
           className="StoryContainer-toggle"
           orientation="vertical"
-          onSelectionChange={(event: SyntheticEvent<HTMLButtonElement>) =>
+          onChange={(event: SyntheticEvent<HTMLButtonElement>) =>
             setSelected(event.currentTarget.value)
           }
-          selected={selected}
+          value={selected}
         >
           <Tooltip content="Pixels">
             <ToggleButton value="px">px</ToggleButton>
