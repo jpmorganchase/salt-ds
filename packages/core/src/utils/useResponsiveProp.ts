@@ -95,7 +95,7 @@ export const useResponsiveProp = <T>(
   const breakpoints = useBreakpoints();
   const viewport = useViewport();
   // return early if the values are the same
-  if (value === defaultValue) return value;
+  if (value === defaultValue) return defaultValue;
 
   const currentViewport = getCurrentBreakpoint(breakpoints, viewport);
   if (hasBreakpointValues(value, breakpoints)) {
