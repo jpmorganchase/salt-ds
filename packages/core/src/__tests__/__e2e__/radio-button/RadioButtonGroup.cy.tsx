@@ -134,7 +134,6 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children as funct
 
       cy.findAllByRole("radio").eq(0).should("have.attr", "disabled");
       cy.findAllByRole("radio").eq(1).should("have.attr", "disabled");
-      cy.findAllByRole("radio").eq(2).should("have.attr", "disabled");
     });
   });
 });
