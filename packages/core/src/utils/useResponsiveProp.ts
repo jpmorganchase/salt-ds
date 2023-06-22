@@ -40,11 +40,9 @@ export const useCurrentBreakpoint = () => {
 export const useOrderedBreakpoints = () => {
   const breakpoints = useBreakpoints();
 
-  const orderedBreakpoints = Object.entries(breakpoints)
+  return Object.entries(breakpoints)
     .sort(([, a], [, b]) => a - b)
     .map(([key]) => key);
-
-  return orderedBreakpoints;
 };
 
 const isObject = <T>(
@@ -67,10 +65,9 @@ const hasBreakpointValues = <T>(
 const getResponsiveValue = <T>(
   breakpointValues: BreakpointProp<T>,
   breakpoints: Breakpoints,
-  viewport: keyof Breakpoints,
-  defaultValue: T
+  viewport: keyof Breakpoints
 ) => {
-  const value = Object.entries(breakpointValues).reduce<[number, T]>(
+  return Object.entries(breakpointValues).reduce<[number, T | undefined]>(
     (acc, val) => {
       const [accWidth] = acc;
       const [breakpoint, breakpointValue] = val;
@@ -87,27 +84,23 @@ const getResponsiveValue = <T>(
 
       return acc;
     },
-    [0, defaultValue]
+    [0, undefined]
   )[1];
-
-  return value;
 };
 
 export const useResponsiveProp = <T>(
   value: ResponsiveProp<T>,
-  defaultValue: T
+  defaultValue?: T
 ) => {
   const breakpoints = useBreakpoints();
   const viewport = useViewport();
+  // return early if the values are the same
+  if (value === defaultValue) return value;
 
   const currentViewport = getCurrentBreakpoint(breakpoints, viewport);
-
   if (hasBreakpointValues(value, breakpoints)) {
-    return getResponsiveValue(
-      value,
-      breakpoints,
-      currentViewport,
-      defaultValue
+    return (
+      getResponsiveValue(value, breakpoints, currentViewport) || defaultValue
     );
   }
   return value;
