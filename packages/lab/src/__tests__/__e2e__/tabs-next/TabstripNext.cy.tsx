@@ -7,7 +7,7 @@ const { Default: DefaultTabstrip, SimpleTabstrip } =
 
 describe("Given a Tabstrip", () => {
   describe("WHEN uncontrolled", () => {
-    describe("WHEN no defaultSelectedTab is provided", () => {
+    describe("WHEN no defaultSelected is provided", () => {
       it("THEN first tab is selected", () => {
         cy.mount(<DefaultTabstrip width={400} />);
         cy.findAllByRole("tab")
@@ -15,44 +15,44 @@ describe("Given a Tabstrip", () => {
           .should("have.attr", "aria-selected", "true");
       });
     });
-    describe("WHEN a defaultSelectedTab is provided", () => {
-      it("THEN the defaultSelectedTab is selected", () => {
+    describe("WHEN a defaultSelected is provided", () => {
+      it("THEN the defaultSelected is selected", () => {
         cy.mount(
-          <DefaultTabstrip defaultSelectedTab="Transactions" width={400} />
+          <DefaultTabstrip defaultSelected="Transactions" width={400} />
         );
         cy.findAllByRole("tab")
           .eq(1)
           .should("have.attr", "aria-selected", "true");
       });
     });
-    describe("WHEN a defaultSelectedTab is null", () => {
+    describe("WHEN a defaultSelected is null", () => {
       it("THEN no tab is selected", () => {
-        cy.mount(<DefaultTabstrip defaultSelectedTab={null} width={400} />);
+        cy.mount(<DefaultTabstrip width={400} />);
         cy.findAllByRole("tab").each(($el) =>
           expect($el.attr("aria-selected")).eq("false")
         );
       });
       it("THEN first tab is focusable", () => {
-        cy.mount(<DefaultTabstrip defaultSelectedTab={null} width={400} />);
+        cy.mount(<DefaultTabstrip width={400} />);
         cy.findAllByRole("tab").eq(0).should("have.attr", "tabindex", "0");
       });
     });
   });
   describe("WHEN controlled", () => {
-    describe("WHEN an selectedTab is provided", () => {
-      it("THEN the selectedTab is selected", () => {
-        cy.mount(<DefaultTabstrip selectedTab="Transactions" width={400} />);
+    describe("WHEN an selected is provided", () => {
+      it("THEN the selected is selected", () => {
+        cy.mount(<DefaultTabstrip selected="Transactions" width={400} />);
         cy.findAllByRole("tab")
           .eq(1)
           .should("have.attr", "aria-selected", "true");
       });
     });
-    describe("WHEN an onActiveChange is provided", () => {
-      it("THEN the selectedTab is selected", () => {
+    describe("WHEN an onChange is provided", () => {
+      it("THEN the selected is selected", () => {
         cy.mount(
           <DefaultTabstrip
-            onSelectTab={cy.spy().as("onActiveChange")}
-            selectedTab="Transactions"
+            onChange={cy.spy().as("onChange")}
+            selected="Transactions"
             width={400}
           />
         );
@@ -62,9 +62,11 @@ describe("Given a Tabstrip", () => {
 
         cy.findAllByRole("tab").eq(0).click();
 
-        cy.get("@onActiveChange")
+        cy.get("@onChange")
           .should("have.been.calledOnce")
-          .should("have.been.calledWith", Cypress.sinon.match.any, "Home");
+          .should("have.been.calledWithMatch", {
+            target: { dataset: { value: "Home" } },
+          });
       });
     });
   });

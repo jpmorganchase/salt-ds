@@ -305,10 +305,6 @@ export const useKeyboardNavigation = <
           ? await nextPageItemIdx(e, highlightedIndex)
           : nextFocusableItemIdx(e.key, highlightedIndex);
 
-      console.log(
-        `useKeyboardNavigation navigateChildItems highlightedIndex = ${highlightedIndex} nextIdx = ${nextIdx}`
-      );
-
       if (nextIdx !== highlightedIndex) {
         setHighlightedIndex(nextIdx, true);
       }

@@ -1,76 +1,93 @@
 import { makePrefixer } from "@salt-ds/core";
 import {
   forwardRef,
-  ForwardedRef,
-  MouseEvent,
   ReactElement,
-  useCallback,
+  ComponentPropsWithoutRef,
+  MouseEvent,
+  FocusEvent,
+  useEffect,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { TabProps } from "./TabsNextTypes";
 
 import tabCss from "./TabNext.css";
 import clsx from "clsx";
+import { OverflowItem } from "@fluentui/react-overflow";
+import { useTabs } from "./TabNextContext";
 
 const withBaseName = makePrefixer("saltTabNext");
 
-export const TabNext = forwardRef(function Tab(
-  {
+export interface TabNextProps extends ComponentPropsWithoutRef<"button"> {
+  /* Value prop is mandatory and must be unique in order for overflow to work. */
+  value: string;
+}
+
+export const TabNext = forwardRef<HTMLButtonElement, TabNextProps>(function Tab(
+  props,
+  ref
+): ReactElement<TabNextProps> {
+  const {
     children,
     className,
-    index,
-    value,
-    label,
+    disabled: disabledProp,
     onClick,
-    onKeyDown,
-    onKeyUp,
-    selected,
-    tabIndex,
-    ...props
-  }: TabProps,
-  ref: ForwardedRef<HTMLDivElement>
-): ReactElement<TabProps> {
+    onFocus,
+    value,
+    ...rest
+  } = props;
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tab-next",
     css: tabCss,
     window: targetWindow,
   });
-  if (index === undefined || onClick === undefined || onKeyDown === undefined) {
-    throw new Error(
-      "index, onClick, onKeyDown are required props, they would normally be injected by Tabstrip, are you creating a Tab outside of a Tabstrip"
-    );
-  }
-  const handleClick = (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    onClick(e, index);
+  const {
+    isSelected,
+    select,
+    isFocused,
+    focus,
+    disabled: tabstripDisabled,
+    unregisterTab,
+    registerTab,
+  } = useTabs();
+  const selected = isSelected(value);
+  const focusable = isFocused(value);
+  const disabled = tabstripDisabled || disabledProp;
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    select(event);
+    onClick?.(event);
   };
 
+  const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+    focus(value);
+    onFocus?.(event);
+  };
+
+  useEffect(() => {
+    registerTab({ value, label: children });
+    return () => unregisterTab(value);
+  }, [children, registerTab, unregisterTab, value]);
+
   return (
-    <div
-      {...props}
-      className={clsx(withBaseName(), className)}
-      aria-selected={selected}
-      data-value={value}
-      onClick={handleClick}
-      onKeyDown={onKeyDown}
-      ref={ref}
-      role="tab"
-      tabIndex={tabIndex}
-    >
-      <div className={withBaseName("main")}>
-        <span
-          className={withBaseName("text")}
-          // data-text is important, it determines the width of the tab. A pseudo
-          // element assigns data-text as content. This is styled as selected tab
-          // text. That means width of tab always corresponds to its selected state,
-          // so tabs do not change size when selected (ie when the text is bolded).
-          data-text={label}
+    <OverflowItem id={value} priority={selected ? 2 : 1}>
+      <div className={withBaseName("wrapper")}>
+        <button
+          className={clsx(withBaseName(), className)}
+          data-value={value}
+          aria-selected={selected}
+          disabled={disabled}
+          value={value}
+          ref={ref}
+          role="tab"
+          onClick={handleClick}
+          onFocus={handleFocus}
+          tabIndex={focusable && !disabled ? 0 : -1}
+          {...rest}
         >
-          {children}
-        </span>
+          <span className={withBaseName("label")}>{children}</span>
+        </button>
       </div>
-    </div>
+    </OverflowItem>
   );
 });

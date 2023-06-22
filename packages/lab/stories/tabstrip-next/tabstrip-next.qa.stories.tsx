@@ -8,7 +8,7 @@ export default {
   title: "Lab/Tabs Next/Tabstrip Next/QA",
   component: TabstripNext,
   args: {
-    selectedTab: undefined,
+    selected: undefined,
     onSelectTab: undefined,
   },
 };
@@ -42,17 +42,21 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
     "Larger",
     "Screens",
   ]);
-  const [selectedTab, setSelectedTab] = useState<string | undefined>("Home");
+  const [selected, setSelected] = useState<string | undefined>("Home");
   return (
     <QAContainer itemPadding={10} itemWidthAuto>
       <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
         <TabstripNext
           {...tabstripProps}
-          selectedTab={selectedTab}
-          onSelectTab={(_, tab) => setSelectedTab(tab)}
+          selected={selected}
+          onChange={(event) => {
+            if (event.currentTarget instanceof HTMLElement) {
+              setSelected(event.currentTarget.dataset.value as string);
+            }
+          }}
         >
           {tabs.map((label) => (
-            <TabNext label={label} key={label} value={label}>
+            <TabNext key={label} value={label}>
               {label}
             </TabNext>
           ))}

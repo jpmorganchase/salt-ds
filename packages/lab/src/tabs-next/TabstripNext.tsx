@@ -1,178 +1,197 @@
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import clsx from "clsx";
 import {
-  Children,
-  cloneElement,
-  isValidElement,
-  KeyboardEvent,
-  MouseEvent,
-  PropsWithChildren,
+  ComponentPropsWithoutRef,
+  forwardRef,
   ReactNode,
+  SyntheticEvent,
+  KeyboardEvent,
+  useCallback,
+  useMemo,
   useRef,
   useState,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { Overflow, OverflowItem } from "@fluentui/react-overflow";
-import { TabNext } from "./TabNext";
-import { TabElement, TabProps } from "./TabsNextTypes";
+import { Overflow } from "@fluentui/react-overflow";
 import { OverflowMenu } from "./OverflowMenu";
 import tabstripCss from "./TabstripNext.css";
+import { TabsContext } from "./TabNextContext";
+import { SelectionChangeHandler } from "../common-hooks";
 
 const withBaseName = makePrefixer("saltTabstripNext");
 
-function isTab(child: ReactNode | TabElement): child is TabElement {
-  return isValidElement(child) && child.type === TabNext;
+export interface TabstripNextProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  disabled?: boolean;
+  /* Value for the uncontrolled version. */
+  selected?: string;
+  /* Callback for the controlled version. */
+  onChange?: (e: SyntheticEvent) => void;
+  /* Initial value for the uncontrolled version. */
+  defaultSelected?: string;
 }
 
-export type TabstripNextProps = PropsWithChildren<{
-  /* Value for the uncontrolled version. Set to null in order to have no tabs be selected. */
-  selectedTab?: string | null;
-  /* Callback for the controlled version. */
-  onSelectTab?: (
-    e: KeyboardEvent<HTMLElement> | MouseEvent<HTMLElement>,
-    value: string
-  ) => void;
-  /* Initial value for the uncontrolled version. Set to null in order to have no tabs be selected by default. */
-  defaultSelectedTab?: string | null;
-  /* Align the tabs to the center. Left aligned by default. */
-  align?: "left" | "center";
-  /* Set a tab max-width in order to enable tab truncation */
-  tabMaxWidth?: number;
-}>;
+type TabValue = {
+  value: string;
+  label: ReactNode;
+};
 
-export const TabstripNext = ({
-  children,
-  selectedTab: selectedTabProp,
-  defaultSelectedTab,
-  onSelectTab,
-  align,
-  tabMaxWidth,
-}: TabstripNextProps) => {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-tabstrip-next",
-    css: tabstripCss,
-    window: targetWindow,
-  });
-  const tabs = Children.toArray(children)
-    .filter(isTab)
-    .map((tab) => {
-      return { tab, value: tab.props.value };
+export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
+  function TabstripNext(props, ref) {
+    const {
+      children,
+      className,
+      disabled,
+      selected: selectedProp,
+      defaultSelected,
+      onChange,
+      onKeyDown,
+      ...rest
+    } = props;
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-tabstrip-next",
+      css: tabstripCss,
+      window: targetWindow,
     });
 
-  const [selectedTab, setSelectedTabId] = useControlled({
-    controlled: selectedTabProp,
-    // we want to make it possible for no tabs to be selected
-    // but it has to be set explicitly by the user by setting default or controlled value to null
-    default:
-      defaultSelectedTab === null
-        ? undefined
-        : defaultSelectedTab ?? tabs[0].value,
-    name: "TabstripNext",
-    state: "selectedTab",
-  });
-  const [focusedId, setFocusedId] = useState(selectedTab);
-  const outerRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const handleOverflowMenuSelectionChange = (
-    event: KeyboardEvent<HTMLElement> | MouseEvent<HTMLElement>,
-    selectedId: string
-  ) => {
-    setSelectedTabId(selectedId);
-    onSelectTab?.(event, selectedId);
-  };
+    const tabstripRef = useRef<HTMLDivElement>(null);
+    const handleRef = useForkRef(tabstripRef, ref);
 
-  return (
-    <div
-      role="tablist"
-      className={clsx(withBaseName(), withBaseName("horizontal"), {
-        [withBaseName("centered")]: align === "center",
-      })}
-      ref={outerRef}
-    >
-      <Overflow>
-        <div className={withBaseName("inner")} ref={innerRef}>
-          {tabs.map(({ tab, value }, index) => {
-            const { label } = tab.props;
-            const isActive = selectedTab === value;
-            const noTabSelected = typeof selectedTab !== "string";
-            return (
-              <OverflowItem
-                id={value}
-                priority={isActive ? 1000 : undefined}
-                key={label}
-              >
-                <div className={withBaseName("tabWrapper")}>
-                  {cloneElement<TabProps>(tab, {
-                    style: {
-                      maxWidth: tabMaxWidth,
-                    },
-                    label,
-                    value,
-                    tabIndex:
-                      // when no tab is active, the first tab should be focusable
-                      focusedId === value || (noTabSelected && index === 0)
-                        ? 0
-                        : -1,
-                    selected: isActive,
-                    index,
-                    onClick: (e) => {
-                      setSelectedTabId(value);
-                      onSelectTab?.(e, value);
-                    },
-                    onFocus: () => {
-                      setFocusedId(value);
-                    },
-                    onKeyDown: (e) => {
-                      // Here we are selecting visible tabs and the overflow menu button since these should be keyboard navigable
-                      // We discern visibility by checking if the tab has the data-overflowing attribute which is added
-                      // by the overflow component
-                      const focusableElements = Array.from(
-                        outerRef.current?.querySelectorAll<HTMLDivElement>(
-                          `[data-overflow-item]:not([data-overflowing]) [role="tab"], [data-overflow-menu] button`
-                        ) ?? []
-                      );
-                      const focusableIndex =
-                        focusableElements.findIndex((tabElement) => {
-                          return value === tabElement.dataset.value;
-                        }) ?? focusableElements.length - 1;
-                      if (
-                        e.key === "ArrowRight" &&
-                        focusableElements[focusableIndex + 1]
-                      ) {
-                        focusableElements[focusableIndex + 1]?.focus();
-                      }
+    const [selected, setSelected] = useControlled({
+      controlled: selectedProp,
+      default: defaultSelected,
+      name: "TabstripNext",
+      state: "selected",
+    });
+    const [focused, setFocused] = useState<string | undefined>(selected);
+    const [overflowOpen, setOverflowOpen] = useState(false);
 
-                      if (e.key === "ArrowLeft") {
-                        focusableElements[focusableIndex - 1]?.focus();
-                      }
+    const select = useCallback(
+      (event: SyntheticEvent<HTMLButtonElement>) => {
+        const newValue = event.currentTarget.value;
+        setSelected(newValue);
+        if (selected !== newValue) {
+          onChange?.(event);
+        }
+      },
+      [onChange, selected, setSelected]
+    );
 
-                      if (e.key === "Enter" || e.key === " ") {
-                        setSelectedTabId(value);
-                        onSelectTab?.(e, value);
-                      }
-                    },
-                  })}
-                </div>
-              </OverflowItem>
-            );
-          })}
-          <OverflowItem id="menu" priority={9999}>
+    const isSelected = useCallback(
+      (id: string | undefined) => {
+        return selected === id;
+      },
+      [selected]
+    );
+
+    const focus = useCallback((id: string | undefined) => {
+      setFocused(id);
+    }, []);
+
+    const isFocused = useCallback(
+      (id: string | undefined) => {
+        return focused === id || !focused;
+      },
+      [focused]
+    );
+
+    const [tabList, setTabList] = useState<TabValue[]>([]);
+    const registerTab = useCallback((tab: TabValue) => {
+      setTabList((list) => list.concat([tab]));
+    }, []);
+
+    const unregisterTab = useCallback((id: string) => {
+      setTabList((list) => list.filter((item) => item.value !== id));
+    }, []);
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (overflowOpen) return;
+
+      const elements: HTMLElement[] = Array.from(
+        tabstripRef.current?.querySelectorAll(
+          `div:not([data-overflowing]) > [role="tab"]:not([disabled])`
+        ) ?? []
+      );
+
+      const currentIndex = elements.findIndex(
+        (element) => element === document.activeElement
+      );
+
+      switch (event.key) {
+        case "ArrowDown":
+        case "ArrowRight":
+          elements[Math.min(currentIndex + 1, elements.length)]?.focus();
+          break;
+        case "ArrowUp":
+        case "ArrowLeft":
+          elements[Math.max(0, currentIndex - 1)]?.focus();
+          break;
+        case "Home":
+          elements[0]?.focus();
+          break;
+        case "End":
+          elements[elements.length - 1]?.focus();
+      }
+
+      onKeyDown?.(event);
+    };
+
+    const handleOverflowItemClick: SelectionChangeHandler<TabValue> = (
+      event,
+      item
+    ) => {
+      if (item) {
+        setSelected(item.value);
+        queueMicrotask(() => {
+          const element = tabstripRef.current?.querySelector(
+            `[value="${item.value}"]`
+          );
+          if (element instanceof HTMLElement) {
+            element?.focus();
+          }
+        });
+        if (selected !== item.value) {
+          onChange?.(event);
+        }
+      }
+    };
+
+    const handleOverflowOpenChange = (isOpen: boolean) => {
+      setOverflowOpen(isOpen);
+    };
+
+    const value = useMemo(
+      () => ({
+        select,
+        isSelected,
+        focus,
+        isFocused,
+        registerTab,
+        unregisterTab,
+      }),
+      [select, isSelected, focus, isFocused, registerTab, unregisterTab]
+    );
+
+    return (
+      <TabsContext.Provider value={value}>
+        <Overflow ref={handleRef}>
+          <div
+            role="tablist"
+            className={clsx(withBaseName(), withBaseName("horizontal"))}
+            onKeyDown={handleKeyDown}
+            {...rest}
+          >
+            {children}
             <OverflowMenu
-              tabs={tabs}
-              onSelectItem={handleOverflowMenuSelectionChange}
-              returnFocusToTabs={() => {
-                const focusable =
-                  outerRef.current?.querySelectorAll<HTMLDivElement>(
-                    `[data-overflow-item]:not([data-overflowing]) [role="tab"]`
-                  ) ?? [];
-                focusable[focusable.length - 1]?.focus();
-              }}
+              tabs={tabList}
+              onOpenChange={handleOverflowOpenChange}
+              onSelectionChange={handleOverflowItemClick}
             />
-          </OverflowItem>
-        </div>
-      </Overflow>
-    </div>
-  );
-};
+          </div>
+        </Overflow>
+      </TabsContext.Provider>
+    );
+  }
+);
