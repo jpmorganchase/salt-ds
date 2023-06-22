@@ -12,8 +12,7 @@ export const getCurrentBreakpoint = (
   breakpoints: Breakpoints,
   width: number
 ) => {
-  const breakpointList = Object.entries(breakpoints);
-
+  const breakpointList = Object.entries(breakpoints).sort(([, a], [, b]) => a - b);
   const [currentBreakpoint] = (
     breakpointList as [keyof Breakpoints, number][]
   ).reduce((acc, val) => {
