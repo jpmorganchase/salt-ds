@@ -23,6 +23,14 @@ const saltConfig = {
       modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
       disabled: true,
     },
+    {
+      modulePath: "@jpmorganchase/mosaic-plugins/FragmentPlugin",
+      options: {},
+    },
+    {
+      modulePath: "@jpmorganchase/mosaic-plugins/PropsTablePlugin",
+      options: {},
+    },
   ],
 };
 
