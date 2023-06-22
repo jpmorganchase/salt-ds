@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from "react";
-import { RadioButton, RadioButtonGroup } from "@salt-ds/core";
+import { FormField, FormFieldLabel, RadioButton, RadioButtonGroup } from "@salt-ds/core";
 import { composeStories } from "@storybook/testing-react";
 import * as radioButtonStories from "@stories/radio-button/radio-button.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
@@ -113,5 +113,23 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children as funct
     cy.get("@changeSpy")
       .should("have.been.calledTwice")
       .and("have.been.calledWithMatch", { target: { value: "spot" } });
+  });
+
+  describe("WHEN wrapped in a FormField", () => {
+    it("THEN should respect the context when disabled", () => {
+      cy.mount(
+        <FormField disabled>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButtonGroup>
+            <RadioButton label="Spot" value="spot" />
+            <RadioButton label="Forward" value="forward" />
+          </RadioButtonGroup>
+        </FormField>
+      );
+
+      cy.findAllByRole("radio").eq(0).should("have.attr", "disabled");
+      cy.findAllByRole("radio").eq(1).should("have.attr", "disabled");
+      cy.findAllByRole("radio").eq(2).should("have.attr", "disabled");
+    });
   });
 });

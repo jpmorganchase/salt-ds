@@ -5,6 +5,9 @@ import {
   Input,
   Tooltip,
   AdornmentButton,
+  Checkbox,
+  RadioButton,
+  RadioButtonGroup
 } from "@salt-ds/core";
 
 const MockChildren = () => {
@@ -168,8 +171,8 @@ describe("GIVEN a FormField", () => {
             </Tooltip>
           </FormField>
         );
-        cy.findByLabelText("Label").realHover();
 
+        cy.findByLabelText("Label").realHover();
         cy.findByRole("tooltip").should("be.visible");
       });
 
@@ -268,6 +271,75 @@ describe("GIVEN a FormField", () => {
         cy.findByRole("button").should("be.visible");
         cy.findByRole("button").should("have.class", "saltButton-disabled");
       });
+    });
+
+  });
+
+  describe("WITH a nested RadioButton", () => {
+    it("SHOULD have no a11y violations on load", () => {
+      cy.mount(
+        <FormField>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButton label="Value" />
+        </FormField>
+      );
+
+      cy.findByLabelText("Label").focus();
+      cy.checkAxeComponent();
+    });
+
+    it("THEN should disable the RadioButton when disabled", () => {
+      cy.mount(
+        <FormField disabled>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButton label="Value" />
+        </FormField>
+      );
+      cy.findByLabelText("Label").should("have.attr", "disabled");
+    });
+
+    it.skip("THEN should disable the RadioButton when readonly", () => {
+      cy.mount(
+        <FormField readOnly>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButton label="Value" />
+        </FormField>
+      );
+      cy.findByText("Label").should("have.class", "saltRadioButton-readonly");
+    });
+  });
+
+  describe("WITH a nested Checkbox", () => {
+    it("SHOULD have no a11y violations on load", () => {
+      cy.mount(
+        <FormField>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Checkbox label="Value" />
+        </FormField>
+      );
+
+      cy.findByLabelText("Label").focus();
+      cy.checkAxeComponent();
+    });
+
+    it("THEN should disable the Checkbox when disabled", () => {
+      cy.mount(
+        <FormField disabled>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Checkbox label="Value" />
+        </FormField>
+      );
+      cy.findByLabelText("Label").should("have.attr", "disabled");
+    });
+
+    it.skip("THEN should disable the Checkbox when readonly", () => {
+      cy.mount(
+        <FormField readOnly>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Checkbox label="Value" />
+        </FormField>
+      );
+      cy.findByText("Label").should("have.class", "saltCheckbox-readonly");
     });
   });
 });

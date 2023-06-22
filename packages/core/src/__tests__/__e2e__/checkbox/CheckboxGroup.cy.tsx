@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup } from "@salt-ds/core";
+import { Checkbox, CheckboxGroup, FormField, FormFieldLabel } from "@salt-ds/core";
 import { ChangeEventHandler } from "react";
 
 describe("GIVEN a CheckboxGroup component", () => {
@@ -108,6 +108,25 @@ describe("GIVEN a CheckboxGroup component", () => {
         cy.findByRole("checkbox", { name: "two" }).realClick();
         cy.findByRole("checkbox", { name: "two" }).should("not.be.checked");
       });
+    });
+  });
+
+  describe("WHEN wrapped in a FormField", () => {
+    it("THEN should respect the context when disabled", () => {
+      cy.mount(
+        <FormField disabled>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <CheckboxGroup checkedValues={["one"]}>
+            <Checkbox label="one" value="one" />
+            <Checkbox label="two" value="two" disabled />
+            <Checkbox label="three" value="three" />
+          </CheckboxGroup>
+        </FormField>
+      );
+
+      cy.findAllByRole("checkbox").eq(0).should("have.attr", "disabled");
+      cy.findAllByRole("checkbox").eq(1).should("have.attr", "disabled");
+      cy.findAllByRole("checkbox").eq(2).should("have.attr", "disabled");
     });
   });
 });

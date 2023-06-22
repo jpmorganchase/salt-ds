@@ -153,6 +153,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     });
 
     const {
+      a11yProps: formFieldA11yProps,
       disabled: formFieldDisabled,
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
@@ -185,11 +186,11 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           // aria-checked only needed when indeterminate since native indeterminate behaviour is not used
           aria-checked={indeterminate ? "mixed" : undefined}
           aria-describedby={clsx(
-            checkboxGroup.a11yProps?.["aria-describedby"],
+            checkboxGroup.a11yProps?.["aria-describedby"] ?? formFieldA11yProps?.["aria-describedby"],
             inputDescribedBy
           )}
           aria-labelledby={clsx(
-            checkboxGroup.a11yProps?.["aria-labelledby"],
+            checkboxGroup.a11yProps?.["aria-labelledby"] ?? formFieldA11yProps?.["aria-labelledby"],
             inputLabelledBy
           )}
           name={name}
