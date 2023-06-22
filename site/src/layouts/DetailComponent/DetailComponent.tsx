@@ -108,10 +108,13 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
           ) : undefined
         }
       >
-        <MobileDrawer
-          open={openDrawer}
-          drawerContent={<SecondarySidebar additionalData={useData} />}
-        />
+        {isMobileView && (
+          <MobileDrawer
+            open={openDrawer}
+            drawerContent={<SecondarySidebar additionalData={useData} />}
+          />
+        )}
+
         <p>{description}</p>
         <Tabs
           activeTabIndex={currentTabIndex}
