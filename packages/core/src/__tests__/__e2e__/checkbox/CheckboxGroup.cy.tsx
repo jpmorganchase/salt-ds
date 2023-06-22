@@ -1,4 +1,9 @@
-import { Checkbox, CheckboxGroup, FormField, FormFieldLabel } from "@salt-ds/core";
+import {
+  Checkbox,
+  CheckboxGroup,
+  FormField,
+  FormFieldLabel,
+} from "@salt-ds/core";
 import { ChangeEventHandler } from "react";
 
 describe("GIVEN a CheckboxGroup component", () => {

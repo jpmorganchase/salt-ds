@@ -7,7 +7,7 @@ import {
   AdornmentButton,
   Checkbox,
   RadioButton,
-  RadioButtonGroup
+  RadioButtonGroup,
 } from "@salt-ds/core";
 
 const MockChildren = () => {
@@ -272,7 +272,6 @@ describe("GIVEN a FormField", () => {
         cy.findByRole("button").should("have.class", "saltButton-disabled");
       });
     });
-
   });
 
   describe("WITH a nested RadioButton", () => {

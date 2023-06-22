@@ -170,11 +170,13 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       >
         <input
           aria-describedby={clsx(
-            radioGroup.a11yProps?.["aria-describedby"] ?? formFieldA11yProps?.["aria-describedby"],
+            radioGroup.a11yProps?.["aria-describedby"] ??
+              formFieldA11yProps?.["aria-describedby"],
             inputDescribedBy
           )}
           aria-labelledby={clsx(
-            radioGroup.a11yProps?.["aria-labelledby"] ?? formFieldA11yProps?.["aria-labelledby"],
+            radioGroup.a11yProps?.["aria-labelledby"] ??
+              formFieldA11yProps?.["aria-labelledby"],
             inputLabelledBy
           )}
           className={withBaseName("input")}
