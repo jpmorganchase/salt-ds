@@ -68,6 +68,7 @@ export function useTooltip(props?: UseTooltipProps) {
     reference,
     x,
     y,
+
     strategy,
     middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
     placement,
