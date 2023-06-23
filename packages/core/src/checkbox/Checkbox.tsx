@@ -76,7 +76,7 @@ export interface CheckboxProps
   value?: string;
   /**
    * Validation status, one of "warning" | "error" | "success"
-   * 
+   *
    * Checkbox has styling variants for "error" and "warning".
    * No visual styling will be applied on "success" variant.
    */
@@ -151,7 +151,10 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     const disabled =
       checkboxGroup.disabled ?? formFieldDisabled ?? disabledProp;
     const validationStatus = !disabled
-      ? checkboxGroup.validationStatus ?? formFieldValidationStatus ?? validationStatusProp : undefined;
+      ? checkboxGroup.validationStatus ??
+        formFieldValidationStatus ??
+        validationStatusProp
+      : undefined;
 
     return (
       <label

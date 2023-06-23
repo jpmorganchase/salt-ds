@@ -6,7 +6,7 @@ import {
   Tooltip,
   AdornmentButton,
   Checkbox,
-  RadioButton
+  RadioButton,
 } from "@salt-ds/core";
 
 const MockChildren = () => {

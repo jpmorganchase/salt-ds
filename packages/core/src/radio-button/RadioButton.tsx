@@ -67,7 +67,7 @@ export interface RadioButtonProps
   value?: string;
   /**
    * Validation status, one of "warning" | "error" | "success"
-   * 
+   *
    * RadioButton has styling variants for "error" and "warning".
    * No visual styling will be applied on "success" variant.
    */
@@ -115,7 +115,10 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
 
     const disabled = radioGroup.disabled ?? formFieldDisabled ?? disabledProp;
     const validationStatus = !disabled
-      ? radioGroup.validationStatus ?? formFieldValidationStatus ?? validationStatusProp : undefined;
+      ? radioGroup.validationStatus ??
+        formFieldValidationStatus ??
+        validationStatusProp
+      : undefined;
 
     const radioGroupChecked =
       radioGroup.value != null && value != null
