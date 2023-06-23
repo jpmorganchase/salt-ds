@@ -86,6 +86,10 @@ function getValidationStatus(
   formFieldStatus: CheckboxValidationStatus | "success" | undefined,
   checkboxStatus: CheckboxValidationStatus
 ) {
+  /** 
+   * Checkbox doesn't have success status, so it doesn't need to be 
+   * defined in Checkbox if coming from FF context
+   */
   return checkboxGroupStatus ?? formFieldStatus
     ? formFieldStatus !== "success"
       ? formFieldStatus
