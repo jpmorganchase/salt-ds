@@ -53,3 +53,28 @@ Success.args = {
     </>
   ),
 };
+
+export const SecondaryInfo = () => (
+  <DefaultInfo variant="secondary">
+    <div>Info title</div>
+    <div>LEI Updated</div>
+  </DefaultInfo>
+);
+export const SecondaryWarning = () => (
+  <Warning variant="secondary" status="warning">
+    <div>Warning title</div>
+    <div>Pre-Trade Transparency</div>
+  </Warning>
+);
+export const SecondaryError = () => (
+  <Error variant="secondary" status="error">
+    <div>Error title</div>
+    <div>CIT Check Failed System Error - Bypass Check</div>
+  </Error>
+);
+export const SecondarySuccess = () => (
+  <Success variant="secondary" status="success">
+    <div>Success title</div>
+    <div>Clear Transact</div>
+  </Success>
+);

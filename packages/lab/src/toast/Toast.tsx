@@ -17,7 +17,7 @@ import toastCss from "./Toast.css";
 const withBaseName = makePrefixer("saltToast");
 
 export interface ToastProps extends HTMLAttributes<"div"> {
-  children: ReactNode;
+  children?: ReactNode;
   status?: BannerProps["status"];
   variant?: "primary" | "secondary";
   onClose?: () => void;
