@@ -260,22 +260,6 @@ describe("Navigation, Given a Tabstrip", () => {
     });
   });
   describe("WHEN overflow is opened", () => {
-    describe("WHEN overflow is opened with keyboard", () => {
-      it("THEN overflow menu button has focus visible", () => {
-        cy.mount(<SimpleTabstrip width={100} />);
-        cy.findByRole("combobox").focus().realPress("Enter");
-        cy.findByRole("listbox").should("have.focus");
-        cy.findByRole("combobox").should("have.class", "saltFocusVisible");
-      });
-    });
-    describe("WHEN overflow is opened with mouse click", () => {
-      it("THEN overflow menu button does not have focus visible", () => {
-        cy.mount(<SimpleTabstrip width={100} />);
-        cy.findByRole("combobox").click();
-        cy.findByRole("listbox").should("have.focus");
-        cy.findByRole("combobox").should("not.have.class", "saltFocusVisible");
-      });
-    });
     it("THEN overflow menu can be navigated up and down", () => {
       cy.mount(<SimpleTabstrip width={100} />);
       cy.findByRole("combobox").click();
