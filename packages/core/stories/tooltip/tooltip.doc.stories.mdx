@@ -87,6 +87,36 @@ By default, the Tooltip displays after 300 milliseconds (ms). To change the dela
   <Story id="core-tooltip--delay" />
 </Canvas>
 
+## Custom Floating UI Platform
+
+### Custom Platforms
+
+Tooltip also provides support for advanced usage where the Tooltip or anchor may not be rendered in the root document of the application. This is based on [Floating UI's Platform feature](https://floating-ui.com/docs/platform)
+
+You can provide a custom Floating UI platform to be used in Tooltip by importing `<FloatingPlatformProvider>` and passing a custom floating-ui [Floating UI Platform](https://floating-ui.com/docs/platform) this will then be used within Tooltip.
+
+```
+import { FloatingPlatformProvider } from "@salt-ds/core";
+```
+
+You may also need to pass a custom component to be used as the root of the tooltip (e.g. to spawn an external window). This can be achieved by importing `<FloatingComponentProvider>` and providing a component.
+
+```
+import { FloatingComponentProvider } from "@salt-ds/window";
+```
+
+The following example shows these in action. The application is rendered in an iframe, representing a windowed applicationinside a global coordinate space (e.g. a users desktop).
+
+When the Button is hovered the Tooltip is rendered in it's own iframe (representing a popout window) which has been portalled to the global coordinate space.
+
+The example uses the `FloatingComponentProvider` to trigger creating the new window when the Tooltip is opened.
+
+It also uses the `FloatingPlatformProvider` to customise the positioning of the Tooltip based on the global coordinates of the anchor, rather than the position within it's own window.
+
+<Canvas>
+  <Story id="core-tooltip--custom-floating-ui-platform" />
+</Canvas>
+
 ## Configuring Tooltip
 
 ### API
