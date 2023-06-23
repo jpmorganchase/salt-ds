@@ -1,3 +1,5 @@
 .saltToast {
-    box-shadow: 0 6px 10px 0 rgb(0 0 0 / 20%);
+  position: absolute;
+  top: var(--salt-spacing-200);
+  box-shadow: 0 6px 10px 0 rgb(0 0 0 / 20%);
 }
