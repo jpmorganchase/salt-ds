@@ -6,18 +6,17 @@ import {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
-import { makePrefixer, useControlled } from "../utils";
-import { CheckboxIcon } from "./CheckboxIcon";
-
-import checkboxCss from "./Checkbox.css";
-import { useCheckboxGroup } from "./internal/useCheckboxGroup";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { makePrefixer, useControlled } from "../utils";
+import { CheckboxIcon } from "./CheckboxIcon";
 import { useFormFieldProps } from "../form-field-context";
+import { AdornmentValidationStatus } from "../status-adornment";
+import { useCheckboxGroup } from "./internal/useCheckboxGroup";
+
+import checkboxCss from "./Checkbox.css";
 
 const withBaseName = makePrefixer("saltCheckbox");
-
-type CheckboxValidationStatus = "warning" | "error" | undefined;
 export interface CheckboxProps
   extends Omit<
     InputHTMLAttributes<HTMLLabelElement>,
@@ -76,25 +75,20 @@ export interface CheckboxProps
    */
   value?: string;
   /**
-   * Validation status.
+   * Validation status, one of "warning" | "error" | "success"
+   * 
+   * Checkbox has styling variants for "error" and "warning".
+   * No visual styling will be applied on "success" variant.
    */
-  validationStatus?: CheckboxValidationStatus;
+  validationStatus?: AdornmentValidationStatus;
 }
 
-function getValidationStatus(
-  checkboxGroupStatus: CheckboxValidationStatus,
-  formFieldStatus: CheckboxValidationStatus | "success" | undefined,
-  checkboxStatus: CheckboxValidationStatus
+function getAdornmentValidationStatus(
+  checkboxGroupStatus?: AdornmentValidationStatus,
+  formFieldStatus?: AdornmentValidationStatus,
+  checkboxStatus?: AdornmentValidationStatus
 ) {
-  /** 
-   * Checkbox doesn't have success status, so it doesn't need to be 
-   * defined in Checkbox if coming from FF context
-   */
-  return checkboxGroupStatus ?? formFieldStatus
-    ? formFieldStatus !== "success"
-      ? formFieldStatus
-      : undefined
-    : checkboxStatus;
+  return checkboxGroupStatus ?? formFieldStatus ?? checkboxStatus;
 }
 
 export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
@@ -165,7 +159,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     const disabled =
       checkboxGroup.disabled ?? formFieldDisabled ?? disabledProp;
     const validationStatus = !disabled
-      ? getValidationStatus(
+      ? getAdornmentValidationStatus(
           checkboxGroup.validationStatus,
           formFieldValidationStatus,
           validationStatusProp

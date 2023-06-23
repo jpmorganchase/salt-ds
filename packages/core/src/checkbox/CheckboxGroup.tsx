@@ -5,13 +5,13 @@ import {
   ComponentPropsWithoutRef,
   forwardRef,
 } from "react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useFormFieldProps } from "../form-field-context";
+import { AdornmentValidationStatus } from "../status-adornment";
 import { makePrefixer, useControlled } from "../utils";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
-
 import checkboxGroupCss from "./CheckboxGroup.css";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useFormFieldProps } from "../form-field-context";
 
 export interface CheckboxGroupProps
   extends Omit<ComponentPropsWithoutRef<"fieldset">, "onChange"> {
@@ -47,7 +47,7 @@ export interface CheckboxGroupProps
   /**
    * Validation status.
    */
-  validationStatus?: "error" | "warning";
+  validationStatus?: AdornmentValidationStatus;
 }
 
 const withBaseName = makePrefixer("saltCheckboxGroup");
@@ -85,11 +85,7 @@ export const CheckboxGroup = forwardRef<
   } = useFormFieldProps();
 
   const disabled = formFieldDisabled ?? disabledProp;
-  const validationStatus = formFieldValidationStatus
-    ? formFieldValidationStatus !== "success"
-      ? formFieldValidationStatus
-      : undefined
-    : validationStatusProp;
+  const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
   const [checkedValues, setCheckedValues] = useControlled({
     controlled: checkedValuesProp,

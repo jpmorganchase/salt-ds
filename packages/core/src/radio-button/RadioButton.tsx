@@ -15,10 +15,9 @@ import radioButtonCss from "./RadioButton.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useFormFieldProps } from "../form-field-context";
+import { AdornmentValidationStatus } from "../status-adornment";
 
 const withBaseName = makePrefixer("saltRadioButton");
-
-type RadioButtonValidationStatus = "warning" | "error" | undefined;
 
 export interface RadioButtonProps
   extends Omit<
@@ -67,21 +66,20 @@ export interface RadioButtonProps
    */
   value?: string;
   /**
-   * Validation status.
+   * Validation status, one of "warning" | "error" | "success"
+   * 
+   * RadioButton has styling variants for "error" and "warning".
+   * No visual styling will be applied on "success" variant.
    */
-  validationStatus?: RadioButtonValidationStatus;
+  validationStatus?: AdornmentValidationStatus;
 }
 
 function getValidationStatus(
-  radioGroupStatus: RadioButtonValidationStatus,
-  formFieldStatus: RadioButtonValidationStatus | "success" | undefined,
-  radioStatus: RadioButtonValidationStatus
+  radioGroupStatus?: AdornmentValidationStatus,
+  formFieldStatus?: AdornmentValidationStatus | "success" | undefined,
+  radioStatus?: AdornmentValidationStatus
 ) {
-  return radioGroupStatus ?? formFieldStatus
-    ? formFieldStatus !== "success"
-      ? formFieldStatus
-      : undefined
-    : radioStatus;
+  return radioGroupStatus ?? formFieldStatus ?? radioStatus;
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
