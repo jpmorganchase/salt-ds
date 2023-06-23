@@ -65,9 +65,10 @@ const hasBreakpointValues = <T>(
 const getResponsiveValue = <T>(
   breakpointValues: BreakpointProp<T>,
   breakpoints: Breakpoints,
-  viewport: keyof Breakpoints
+  viewport: keyof Breakpoints,
+  defaultValue: T
 ) => {
-  return Object.entries(breakpointValues).reduce<[number, T | undefined]>(
+  return Object.entries(breakpointValues).reduce<[number, T]>(
     (acc, val) => {
       const [accWidth] = acc;
       const [breakpoint, breakpointValue] = val;
@@ -84,13 +85,13 @@ const getResponsiveValue = <T>(
 
       return acc;
     },
-    [0, undefined]
+    [0, defaultValue]
   )[1];
 };
 
 export const useResponsiveProp = <T>(
   value: ResponsiveProp<T>,
-  defaultValue?: T
+  defaultValue: T
 ) => {
   const breakpoints = useBreakpoints();
   const viewport = useViewport();
@@ -99,8 +100,11 @@ export const useResponsiveProp = <T>(
 
   const currentViewport = getCurrentBreakpoint(breakpoints, viewport);
   if (hasBreakpointValues(value, breakpoints)) {
-    return (
-      getResponsiveValue(value, breakpoints, currentViewport) || defaultValue
+    return getResponsiveValue(
+      value,
+      breakpoints,
+      currentViewport,
+      defaultValue
     );
   }
   return value;

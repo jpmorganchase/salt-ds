@@ -68,7 +68,7 @@ export const StackLayout: StackLayoutComponent = forwardRef(
 
     const flexGap = useResponsiveProp(gap, 3);
     const separatorAlignment = separators === true ? "center" : separators;
-    const flexDirection = useResponsiveProp(direction) || "column";
+    const flexDirection = useResponsiveProp(direction, "column");
     const stackLayoutStyles = {
       ...style,
       "--stackLayout-gap-multiplier": flexGap,
