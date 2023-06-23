@@ -28,6 +28,7 @@
     "svgo": "^3.0.0"
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-countries"
+    "directory": "../../dist/salt-ds-countries",
+    "provenance": true
   }
 }
