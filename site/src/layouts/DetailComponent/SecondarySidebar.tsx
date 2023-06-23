@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { TableOfContents, Image } from "@jpmorganchase/mosaic-site-components";
+import React, { FC, ReactNode } from "react";
+import { Image } from "@jpmorganchase/mosaic-site-components";
 import { Pill } from "@salt-ds/lab";
 import { Link } from "@salt-ds/core";
 import { Heading4 } from "../../components/mdx/h4";
@@ -23,9 +23,15 @@ const LinkWithLogo: FC<LinkWithLogoProps> = ({ href, label, logo }) => (
   </div>
 );
 
-type SecondarySidebarProps = { additionalData?: Data };
+type SecondarySidebarProps = {
+  additionalData?: Data;
+  tableOfContents?: ReactNode;
+};
 
-const SecondarySidebar: FC<SecondarySidebarProps> = ({ additionalData }) => {
+const SecondarySidebar: FC<SecondarySidebarProps> = ({
+  additionalData,
+  tableOfContents,
+}) => {
   const {
     alsoKnownAs,
     relatedComponents,
@@ -115,10 +121,8 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({ additionalData }) => {
 
   return (
     <div className={styles.sidebar}>
-      {allExamplesView && (
-        <div className={styles.tableOfContents}>
-          <TableOfContents />
-        </div>
+      {allExamplesView && tableOfContents && (
+        <div className={styles.tableOfContents}>{tableOfContents}</div>
       )}
       <div className={styles.wrapper}>
         {alsoKnownAsPills}
