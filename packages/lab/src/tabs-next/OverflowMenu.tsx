@@ -46,7 +46,7 @@ export const OverflowMenu = forwardRef<HTMLDivElement, OverflowMenuProps>(
         source={tabList}
         selected={null}
         {...rest}
-      ></Dropdown>
+      />
     );
   }
 );

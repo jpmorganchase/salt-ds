@@ -95,10 +95,8 @@ export const ControlledTabstrip: TabstripStory = ({
         <TabstripNext
           {...tabstripProps}
           selected={selected}
-          onChange={(event) => {
-            if (event.currentTarget instanceof HTMLElement) {
-              setSelected(event.currentTarget.dataset.value as string);
-            }
+          onChange={(event, { value }) => {
+            setSelected(value);
           }}
         >
           {tabs.map((label) => (
@@ -134,10 +132,8 @@ export const AddTabTabstrip: TabstripStory = ({
         <TabstripNext
           {...tabstripProps}
           selected={selected}
-          onChange={(event) => {
-            if (event.currentTarget instanceof HTMLElement) {
-              setSelected(event.currentTarget.dataset.value as string);
-            }
+          onChange={(event, { value }) => {
+            setSelected(value);
           }}
         >
           {tabs.map((label) => (
@@ -153,12 +149,11 @@ export const AddTabTabstrip: TabstripStory = ({
     </div>
   );
 };
-
 export const LotsOfTabsTabstrip: TabstripStory = ({
   width = 600,
   ...tabstripProps
 }) => {
-  const [tabs] = useState([
+  const tabs = [
     "Home",
     "Transactions",
     "Loans",
@@ -176,17 +171,16 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
     "On",
     "Larger",
     "Screens",
-  ]);
+  ];
+
   const [selected, setSelected] = useState<string | undefined>("Home");
   return (
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext
         {...tabstripProps}
         selected={selected}
-        onChange={(event) => {
-          if (event.currentTarget instanceof HTMLElement) {
-            setSelected(event.currentTarget.dataset.value as string);
-          }
+        onChange={(event, { value }) => {
+          setSelected(value);
         }}
       >
         {tabs.map((label) => (

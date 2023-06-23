@@ -27,7 +27,7 @@ export interface TabstripNextProps
   /* Value for the uncontrolled version. */
   selected?: string;
   /* Callback for the controlled version. */
-  onChange?: (e: SyntheticEvent) => void;
+  onChange?: (e: SyntheticEvent, data: { value: string }) => void;
   /* Initial value for the uncontrolled version. */
   defaultSelected?: string;
 }
@@ -73,7 +73,7 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
         const newValue = event.currentTarget.value;
         setSelected(newValue);
         if (selected !== newValue) {
-          onChange?.(event);
+          onChange?.(event, { value: newValue });
         }
       },
       [onChange, selected, setSelected]
@@ -153,7 +153,7 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
           }
         });
         if (selected !== item.value) {
-          onChange?.(event);
+          onChange?.(event, { value: item.value });
         }
       }
     };

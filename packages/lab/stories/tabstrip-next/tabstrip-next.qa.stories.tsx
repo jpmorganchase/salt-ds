@@ -19,29 +19,30 @@ type TabstripStory = Story<
   }
 >;
 
+const tabs = [
+  "Home",
+  "Transactions",
+  "Loans",
+  "Checks",
+  "Liquidity",
+  "With",
+  "Lots",
+  "More",
+  "Additional",
+  "Tabs",
+  "Added",
+  "In order to",
+  "Showcase overflow",
+  "Menu",
+  "On",
+  "Larger",
+  "Screens",
+];
+
 export const LotsOfTabsTabstrip: TabstripStory = ({
   width = 300,
   ...tabstripProps
 }) => {
-  const [tabs] = useState([
-    "Home",
-    "Transactions",
-    "Loans",
-    "Checks",
-    "Liquidity",
-    "With",
-    "Lots",
-    "More",
-    "Additional",
-    "Tabs",
-    "Added",
-    "In order to",
-    "Showcase overflow",
-    "Menu",
-    "On",
-    "Larger",
-    "Screens",
-  ]);
   const [selected, setSelected] = useState<string | undefined>("Home");
   return (
     <QAContainer itemPadding={10} itemWidthAuto>
@@ -49,10 +50,8 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
         <TabstripNext
           {...tabstripProps}
           selected={selected}
-          onChange={(event) => {
-            if (event.currentTarget instanceof HTMLElement) {
-              setSelected(event.currentTarget.dataset.value as string);
-            }
+          onChange={(event, { value }) => {
+            setSelected(value);
           }}
         >
           {tabs.map((label) => (
