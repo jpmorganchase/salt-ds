@@ -81,8 +81,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
               <span>Density</span>
               <ToggleButtonGroup
                 aria-label="Select density"
-                selected={density}
-                onSelectionChange={handleDensityChange}
+                value={density}
+                onChange={handleDensityChange}
               >
                 <ToggleButton aria-label="high density" value="high">
                   {isMobileView ? "HD" : "High"}
@@ -107,7 +107,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
               <span>Mode</span>
               <ToggleButtonGroup
                 aria-label="Select mode"
-                onSelectionChange={handleModeChange}
+                onChange={handleModeChange}
               >
                 <ToggleButton aria-label="light mode" value="light">
                   <LightIcon /> {!isMobileView && " Light"}
