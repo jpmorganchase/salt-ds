@@ -15,6 +15,7 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-styles"
+    "directory": "../../dist/salt-ds-styles",
+    "provenance": true
   }
 }
