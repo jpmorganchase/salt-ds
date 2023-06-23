@@ -89,14 +89,16 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     >
       <DetailBase
         sidebar={
-          <Sidebar sticky>
-            {
-              <SecondarySidebar
-                additionalData={useData}
-                tableOfContents={<TableOfContents />}
-              />
-            }
-          </Sidebar>
+          !isMobileView ? (
+            <Sidebar sticky>
+              {
+                <SecondarySidebar
+                  additionalData={useData}
+                  tableOfContents={<TableOfContents />}
+                />
+              }
+            </Sidebar>
+          ) : undefined
         }
         pageTitle={
           isMobileView ? (
