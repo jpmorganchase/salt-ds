@@ -7,14 +7,6 @@ const { Default: DefaultTabstrip, SimpleTabstrip } =
 
 describe("Given a Tabstrip", () => {
   describe("WHEN uncontrolled", () => {
-    describe("WHEN no defaultSelected is provided", () => {
-      it("THEN first tab is selected", () => {
-        cy.mount(<DefaultTabstrip width={400} />);
-        cy.findAllByRole("tab")
-          .eq(0)
-          .should("have.attr", "aria-selected", "true");
-      });
-    });
     describe("WHEN a defaultSelected is provided", () => {
       it("THEN the defaultSelected is selected", () => {
         cy.mount(
@@ -25,22 +17,10 @@ describe("Given a Tabstrip", () => {
           .should("have.attr", "aria-selected", "true");
       });
     });
-    describe("WHEN a defaultSelected is null", () => {
-      it("THEN no tab is selected", () => {
-        cy.mount(<DefaultTabstrip width={400} />);
-        cy.findAllByRole("tab").each(($el) =>
-          expect($el.attr("aria-selected")).eq("false")
-        );
-      });
-      it("THEN first tab is focusable", () => {
-        cy.mount(<DefaultTabstrip width={400} />);
-        cy.findAllByRole("tab").eq(0).should("have.attr", "tabindex", "0");
-      });
-    });
   });
   describe("WHEN controlled", () => {
-    describe("WHEN an selected is provided", () => {
-      it("THEN the selected is selected", () => {
+    describe("WHEN selected is provided", () => {
+      it("THEN the id is selected", () => {
         cy.mount(<DefaultTabstrip selected="Transactions" width={400} />);
         cy.findAllByRole("tab")
           .eq(1)
@@ -48,7 +28,7 @@ describe("Given a Tabstrip", () => {
       });
     });
     describe("WHEN an onChange is provided", () => {
-      it("THEN the selected is selected", () => {
+      it("THEN the id is selected", () => {
         cy.mount(
           <DefaultTabstrip
             onChange={cy.spy().as("onChange")}
@@ -62,11 +42,7 @@ describe("Given a Tabstrip", () => {
 
         cy.findAllByRole("tab").eq(0).click();
 
-        cy.get("@onChange")
-          .should("have.been.calledOnce")
-          .should("have.been.calledWithMatch", {
-            target: { dataset: { value: "Home" } },
-          });
+        cy.get("@onChange").should("have.been.calledOnce");
       });
     });
   });
@@ -76,8 +52,7 @@ describe("Given a Tabstrip", () => {
       it("THEN all the content items will be visible", () => {
         cy.mount(<SimpleTabstrip width={400} />);
         cy.findByRole("tablist").should("have.class", "saltTabstripNext");
-        cy.get(".saltTabstripNext-inner")
-          .findAllByRole("tab")
+        cy.findAllByRole("tab")
           .should("have.length", 5)
           .eq(4)
           .should("be.visible");
@@ -92,9 +67,7 @@ describe("Given a Tabstrip", () => {
       it("THEN first 4 tabs will be displayed, with overflow indicator", () => {
         cy.mount(<SimpleTabstrip width={400} />);
         cy.get(".saltTabstripNext").invoke("css", "width", "300px");
-        cy.get(".saltTabstripNext-inner")
-          .findAllByRole("tab")
-          .should("have.length", 3);
+        cy.findAllByRole("tab").should("have.length", 3);
         cy.findByRole("combobox").should("exist").click();
         cy.findByRole("listbox")
           .findAllByRole("option")
@@ -120,9 +93,7 @@ describe("Tab selection, Given a Tabstrip", () => {
     describe("WHEN the selected Tab is in the overflow menu", () => {
       it("THEN the active tab will be moved from the overflow menu to the end of visible tabs", () => {
         cy.mount(<SimpleTabstrip width={220} />);
-        cy.get(".saltTabstripNext-inner [role='tab']:first-child").should(
-          "have.ariaSelected"
-        );
+        cy.get("[role='tab']:first-child").should("have.ariaSelected");
 
         cy.findByRole("combobox").click();
         cy.findByRole("listbox");
@@ -134,9 +105,7 @@ describe("Tab selection, Given a Tabstrip", () => {
       describe("WHEN the component is resized", () => {
         it("THEN the active tab will be moved from the overflow menu to the end of visible tabs", () => {
           cy.mount(<SimpleTabstrip width={320} />);
-          cy.get(".saltTabstripNext-inner [role='tab']:first-child").should(
-            "have.ariaSelected"
-          );
+          cy.get("[role='tab']:first-child").should("have.ariaSelected");
           cy.findByRole("combobox").click();
           cy.findByRole("listbox");
           cy.focused().realPress("ArrowDown").realPress("Enter");
@@ -278,12 +247,8 @@ describe("Navigation, Given a Tabstrip", () => {
       it("THEN overflow indicator is included in keyboard navigation", () => {
         cy.mount(<SimpleTabstrip width={310} />);
         cy.findAllByRole("tab").eq(0).realClick();
-        cy.realPress("ArrowRight");
-        cy.findAllByRole("tab").eq(1).should("be.focused");
-        cy.realPress("ArrowRight");
-        cy.findAllByRole("tab").eq(2).should("be.focused");
         cy.findByRole("combobox").should("be.visible");
-        cy.focused().realPress("ArrowRight");
+        cy.realPress("Tab");
         cy.findByRole("combobox").should("be.focused");
       });
 

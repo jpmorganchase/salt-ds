@@ -25,6 +25,14 @@
   padding-block: var(--salt-spacing-50);
   position: relative;
   flex-shrink: 0;
+
+  color: var(--salt-text-primary-foreground);
+  font-weight: var(--salt-actionable-secondary-fontWeight);
+  font-family: var(--salt-text-fontFamily);
+  text-align: var(--salt-actionable-textAlign);
+  letter-spacing: var(--salt-actionable-letterSpacing);
+  line-height: var(--salt-text-lineHeight);
+  font-size: var(--salt-text-fontSize);
 }
 
 .saltTabNext-divider {
@@ -33,10 +41,11 @@
 
 .saltTabNext:hover {
   cursor: var(--salt-navigable-cursor-hover);
-  background: var(--salt-navigable-primary-background-hover)
+  background: var(--salt-navigable-primary-background-hover);
 }
 
-.saltTabNext:hover::before {
+.saltTabNext:hover::before,
+.saltTabNext:focus-visible::before {
   content: "";
   position: absolute;
   left: 0;
@@ -48,6 +57,7 @@
 
 .saltTabNext:focus-visible {
   outline: var(--salt-focused-outline);
+  background: var(--salt-navigable-primary-background-hover);
 }
 
 .saltTabNext[aria-selected="true"]::after {
@@ -60,17 +70,12 @@
   background: var(--salt-navigable-indicator-active);
 }
 
-.saltTabNext-label {
-  color: var(--salt-text-primary-foreground);
-  font-weight: var(--salt-actionable-secondary-fontWeight);
-  font-family: var(--salt-text-fontFamily);
-  text-align: var(--salt-actionable-textAlign);
-  letter-spacing: var(--salt-actionable-letterSpacing);
-  line-height: var(--salt-text-lineHeight);
-  font-size: var(--salt-text-fontSize);
-}
-
 .saltTabNext:disabled {
   cursor: var(--salt-navigable-cursor-disabled);
   color: var(--salt-text-primary-foreground-disabled);
+  background: var(--salt-navigable-primary-background);
+}
+
+.saltTabNext:disabled:before {
+  background: transparent;
 }

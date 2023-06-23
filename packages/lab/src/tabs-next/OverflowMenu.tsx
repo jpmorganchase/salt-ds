@@ -36,6 +36,7 @@ export const OverflowMenu = forwardRef<HTMLDivElement, OverflowMenuProps>(
             aria-label="More tabs"
             variant="secondary"
             tabIndex={tabIndex}
+            role="combobox"
           >
             <OverflowMenuIcon aria-hidden style={{ margin: 0 }} />
           </Button>
