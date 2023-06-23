@@ -39,12 +39,18 @@ const IconAndTextTemplate: ComponentStory<typeof ToggleButtonGroup> = (
 const IconOnlyTemplate: ComponentStory<typeof ToggleButtonGroup> = (args) => {
   return (
     <ToggleButtonGroup aria-label="Modes" {...args}>
-      <Tooltip content="Light Mode" placement="bottom">
+      <Tooltip
+        content="Light Mode"
+        placement={args.orientation === "vertical" ? "right" : "bottom"}
+      >
         <ToggleButton value="light" aria-label="Light Mode">
           <LightIcon />
         </ToggleButton>
       </Tooltip>
-      <Tooltip content="Dark Mode" placement="bottom">
+      <Tooltip
+        content="Dark Mode"
+        placement={args.orientation === "vertical" ? "right" : "bottom"}
+      >
         <ToggleButton value="dark" aria-label="Dark Mode">
           <DarkIcon />
         </ToggleButton>
