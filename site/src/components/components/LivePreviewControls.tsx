@@ -1,11 +1,13 @@
-import { FC, ReactElement, useState, createContext, ChangeEvent } from "react";
-import clsx from "clsx";
 import {
-  Switch,
-  ToggleButtonGroup,
-  ToggleButton,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
+  FC,
+  ReactElement,
+  useState,
+  createContext,
+  ChangeEvent,
+  SyntheticEvent,
+} from "react";
+import clsx from "clsx";
+import { Switch, ToggleButtonGroup, ToggleButton } from "@salt-ds/lab";
 import { LightIcon, DarkIcon } from "@salt-ds/icons";
 import { SaltProvider, Density, Mode } from "@salt-ds/core";
 import ExamplesListView from "./ExamplesListView";
@@ -44,19 +46,12 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
 
   const isMobileView = useIsMobileView();
 
-  const handleDensityChange: ToggleButtonGroupChangeEventHandler = (
-    _,
-    index
-  ) => {
-    const density = densities.find((_, densityIndex) => densityIndex === index);
-
-    setDensity(density ?? defaultDensity);
+  const handleDensityChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setDensity(event.currentTarget.value as Density);
   };
 
-  const handleModeChange: ToggleButtonGroupChangeEventHandler = (_, index) => {
-    const mode = modes.find((_, modeIndex) => modeIndex === index);
-
-    setMode(mode ?? defaultMode);
+  const handleModeChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setMode(event.currentTarget.value as Mode);
   };
 
   const handleAllExamplesChange = (
@@ -85,21 +80,20 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
             >
               <span>Density</span>
               <ToggleButtonGroup
-                selectedIndex={densities.findIndex(
-                  (currentDensity) => currentDensity === density
-                )}
+                aria-label="Select density"
+                value={density}
                 onChange={handleDensityChange}
               >
-                <ToggleButton aria-label="high density">
+                <ToggleButton aria-label="high density" value="high">
                   {isMobileView ? "HD" : "High"}
                 </ToggleButton>
-                <ToggleButton aria-label="medium density">
+                <ToggleButton aria-label="medium density" value="medium">
                   {isMobileView ? "MD" : "Medium"}
                 </ToggleButton>
-                <ToggleButton aria-label="low density">
+                <ToggleButton aria-label="low density" value="low">
                   {isMobileView ? "LD" : "Low"}
                 </ToggleButton>
-                <ToggleButton aria-label="touch density">
+                <ToggleButton aria-label="touch density" value="touch">
                   {isMobileView ? "TD" : "Touch"}
                 </ToggleButton>
               </ToggleButtonGroup>
@@ -111,11 +105,14 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
               })}
             >
               <span>Mode</span>
-              <ToggleButtonGroup onChange={handleModeChange}>
-                <ToggleButton aria-label="light mode">
+              <ToggleButtonGroup
+                aria-label="Select mode"
+                onChange={handleModeChange}
+              >
+                <ToggleButton aria-label="light mode" value="light">
                   <LightIcon /> {!isMobileView && " Light"}
                 </ToggleButton>
-                <ToggleButton aria-label="dark mode">
+                <ToggleButton aria-label="dark mode" value="dark">
                   <DarkIcon /> {!isMobileView && " Dark"}
                 </ToggleButton>
               </ToggleButtonGroup>
