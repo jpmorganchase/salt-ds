@@ -1,9 +1,5 @@
-import { useState } from "react";
-import {
-  ToggleButton,
-  ToggleButtonGroup,
-  ToggleButtonGroupChangeEventHandler,
-} from "@salt-ds/lab";
+import { SyntheticEvent, useState } from "react";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
 import { Banner, BannerContent, FlexItem, FlexLayout } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
@@ -17,15 +13,11 @@ import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 const Variants = (props: AgGridReactProps) => {
   // const [separators, setSeparators] = useState(false);
   // const [uhd, setUhd] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [selected, setSelected] = useState("primary");
   // const density = useDensity();
 
-  const onChange: ToggleButtonGroupChangeEventHandler = (
-    event,
-    index,
-    toggled
-  ) => {
-    setIndex(index);
+  const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setSelected(event.currentTarget.value);
   };
   const { agGridProps, containerProps } = useAgGridHelpers("ag-theme-salt");
 
@@ -47,16 +39,10 @@ const Variants = (props: AgGridReactProps) => {
       <FlexItem>
         <FlexLayout direction="row">
           <FlexItem>
-            <ToggleButtonGroup onChange={onChange} selectedIndex={index}>
-              <ToggleButton aria-label="primary" tooltipText="Primary">
-                Primary
-              </ToggleButton>
-              <ToggleButton aria-label="secondary" tooltipText="Secondary">
-                Secondary
-              </ToggleButton>
-              <ToggleButton aria-label="zebra" tooltipText="Zebra">
-                Zebra
-              </ToggleButton>
+            <ToggleButtonGroup onChange={onChange} value={selected}>
+              <ToggleButton value="primary">Primary</ToggleButton>
+              <ToggleButton value="secondary">Secondary</ToggleButton>
+              <ToggleButton value="zebra">Zebra</ToggleButton>
             </ToggleButtonGroup>
           </FlexItem>
           {/* <FlexItem>
@@ -73,8 +59,8 @@ const Variants = (props: AgGridReactProps) => {
         style={{ height: 500, width: 800, marginTop: 25 }}
         {...containerProps}
         className={clsx(className, {
-          "ag-theme-salt-variant-secondary": index === 1,
-          "ag-theme-salt-variant-zebra": index === 2,
+          "ag-theme-salt-variant-secondary": selected === "secondary",
+          "ag-theme-salt-variant-zebra": selected === "zebra",
         })}
       >
         <AgGridReact
