@@ -74,14 +74,6 @@ export interface RadioButtonProps
   validationStatus?: AdornmentValidationStatus;
 }
 
-function getValidationStatus(
-  radioGroupStatus?: AdornmentValidationStatus,
-  formFieldStatus?: AdornmentValidationStatus | "success" | undefined,
-  radioStatus?: AdornmentValidationStatus
-) {
-  return radioGroupStatus ?? formFieldStatus ?? radioStatus;
-}
-
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
   function RadioButton(props, ref) {
     const {
@@ -123,12 +115,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
 
     const disabled = radioGroup.disabled ?? formFieldDisabled ?? disabledProp;
     const validationStatus = !disabled
-      ? getValidationStatus(
-          radioGroup.validationStatus,
-          formFieldValidationStatus,
-          validationStatusProp
-        )
-      : undefined;
+      ? radioGroup.validationStatus ?? formFieldValidationStatus ?? validationStatusProp : undefined;
 
     const radioGroupChecked =
       radioGroup.value != null && value != null

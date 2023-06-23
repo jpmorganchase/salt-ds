@@ -83,14 +83,6 @@ export interface CheckboxProps
   validationStatus?: AdornmentValidationStatus;
 }
 
-function getAdornmentValidationStatus(
-  checkboxGroupStatus?: AdornmentValidationStatus,
-  formFieldStatus?: AdornmentValidationStatus,
-  checkboxStatus?: AdornmentValidationStatus
-) {
-  return checkboxGroupStatus ?? formFieldStatus ?? checkboxStatus;
-}
-
 export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
   function Checkbox(
     {
@@ -159,12 +151,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     const disabled =
       checkboxGroup.disabled ?? formFieldDisabled ?? disabledProp;
     const validationStatus = !disabled
-      ? getAdornmentValidationStatus(
-          checkboxGroup.validationStatus,
-          formFieldValidationStatus,
-          validationStatusProp
-        )
-      : undefined;
+      ? checkboxGroup.validationStatus ?? formFieldValidationStatus ?? validationStatusProp : undefined;
 
     return (
       <label
