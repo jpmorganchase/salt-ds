@@ -175,7 +175,7 @@
 .saltInput-startAdornmentContainer {
   align-items: center;
   display: inline-flex;
-  padding-right: var(--salt-spacing-75);
+  padding-right: var(--salt-spacing-100);
   column-gap: var(--salt-spacing-75);
 }
 
@@ -183,13 +183,13 @@
 .saltInput-endAdornmentContainer {
   align-items: center;
   display: inline-flex;
-  padding-left: var(--salt-spacing-75);
+  padding-left: var(--salt-spacing-100);
   column-gap: var(--salt-spacing-75);
 }
 
 .saltInput-startAdornmentContainer .saltAdornmentButton.saltButton:first-child {
-  margin-left: calc(var(--salt-spacing-75) * -1);
+  margin-left: calc(var(--salt-spacing-100) * -1);
 }
 .saltInput-endAdornmentContainer .saltAdornmentButton.saltButton:last-child {
-  margin-right: calc(var(--salt-spacing-75) * -1);
+  margin-right: calc(var(--salt-spacing-100) * -1);
 }
