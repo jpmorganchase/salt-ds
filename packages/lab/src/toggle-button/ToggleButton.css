@@ -33,7 +33,7 @@
   background: var(--salt-actionable-secondary-background-hover);
   color: var(--salt-actionable-secondary-foreground-hover);
   cursor: var(--salt-actionable-cursor-hover);
-  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-hover);
 }
 
 .saltToggleButton[aria-checked="true"]:focus-visible {
