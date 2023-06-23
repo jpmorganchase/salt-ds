@@ -1,0 +1,63 @@
+.diagramsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--salt-spacing-300);
+  margin-block: var(--salt-spacing-300);
+}
+
+
+@media screen and (max-width: 996px) {
+  .diagramsContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+.imageBorder {
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  padding: calc(var(--salt-spacing-200) - var(--salt-size-border));
+}
+
+.diagram {
+  display: flex;
+  flex-direction: column;
+  margin-block: var(--salt-spacing-300);
+}
+
+@media screen and (max-width: 996px) {
+  .diagram:not(.contentTop) {
+   flex-direction: column-reverse;
+  }
+
+  .diagram h3, .diagram h4 {
+    margin-top: 0;
+  }
+
+  .diagram ul {
+    margin-bottom: var(--salt-spacing-100) !important;
+  }
+}
+
+.diagramsContainer .diagram {
+  margin-block: 0;
+}
+
+.contentTop h3, .contentTop h4 {
+  margin-top: 0;
+}
+
+.diagram:not(.contentTop) ul {
+  margin-bottom: 0px;
+}
+
+.image {
+  justify-content: center;
+  display: flex;
+}
+
+.diagramsContainer .image img {
+  width: 100%;
+}
+
+.textContainer {
+  flex: 1;
+}

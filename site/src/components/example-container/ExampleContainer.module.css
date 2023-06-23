@@ -1,16 +1,17 @@
 .root {
-  --example-container-padding: calc(1.5 * var(--salt-size-unit));
-
-  padding: var(--example-container-padding);
-  border: var(--salt-size-separator-strokeWidth) solid var(--salt-container-primary-borderColor);
-  margin-bottom: calc(2 * var(--salt-size-unit));
+  padding: var(--salt-spacing-200);
+  border: var(--salt-size-separator-strokeWidth) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  margin-block: var(--salt-spacing-300);
   position: relative;
 }
 
+@media screen and (max-width: 996px) {
+  .root {
+    padding: var(--salt-spacing-100);
+  }
+}
+
 .pill {
-  position: absolute;
-  top: var(--example-container-padding);
-  left: var(--example-container-padding);
   z-index: 1;
   display: inline-flex;
   align-items: center;
@@ -19,6 +20,7 @@
   line-height: var(--salt-text-lineHeight);
   padding: 0 var(--salt-size-unit);
   background-color: var(--salt-container-secondary-background);
+  margin-bottom: var(--salt-spacing-200)
 }
 
 .positive .pill {
@@ -45,16 +47,6 @@
   margin-top: 0;
 }
 
-/*
-  If the example begins with text content, push it down so that
-  it is not overlapped by the pill
-*/
-.content > p:first-child,
-.content > ul:first-child,
-.content > ol:first-child {
-  margin-top: calc(3 * var(--salt-size-unit));
-}
-
 .content > :last-child {
   margin-bottom: 0;
 }
@@ -62,5 +54,4 @@
 .content img {
   width: 100%;
   height: auto;
-  margin-bottom: calc(2 * var(--salt-size-unit));
 }
