@@ -7,22 +7,19 @@ import {
   ReactNode,
   Ref,
 } from "react";
-import { FloatingArrow, FloatingPortal } from "@floating-ui/react";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
-import { StatusIndicator, ValidationStatus } from "../status-indicator";
+import { ValidationStatus } from "../status-indicator";
 import {
   makePrefixer,
   mergeProps,
   UseFloatingUIProps,
   useForkRef,
+  useFloatingComponent,
 } from "../utils";
-import { SaltProvider } from "../salt-provider";
 
 import { useTooltip, UseTooltipProps } from "./useTooltip";
-import tooltipCss from "./Tooltip.css";
 import { useFormFieldProps } from "../form-field-context";
+import { TooltipBase } from "./TooltipBase";
 
 const withBaseName = makePrefixer("saltTooltip");
 
@@ -76,7 +73,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const {
       children,
       className,
-      disabled: disabledProp,
+      disabled: disabledProp = false,
       hideArrow = false,
       hideIcon = false,
       open: openProp,
@@ -89,7 +86,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     } = props;
 
     const {
-      a11yProps,
       disabled: formFieldDisabled,
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
@@ -97,12 +93,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const disabled = formFieldDisabled ?? disabledProp;
     const status = formFieldValidationStatus ?? statusProp;
 
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-tooltip",
-      css: tooltipCss,
-      window: targetWindow,
-    });
+    const { Component } = useFloatingComponent();
 
     const hookProps: UseTooltipProps = {
       open: openProp,
@@ -126,7 +117,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       isValidElement(children) ? children.ref : null,
       reference
     );
-
     const floatingRef = useForkRef(floating, ref) as Ref<HTMLDivElement>;
 
     return (
@@ -137,49 +127,21 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             ref: triggerRef,
           })}
 
-        {open && !disabled && (
-          <FloatingPortal>
-            {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
-            <SaltProvider>
-              <div
-                className={clsx(
-                  withBaseName(),
-                  withBaseName(status),
-                  className
-                )}
-                ref={floatingRef}
-                {...getTooltipProps()}
-              >
-                <div className={withBaseName("container")}>
-                  {!hideIcon && (
-                    <StatusIndicator
-                      status={status}
-                      size={1}
-                      className={withBaseName("icon")}
-                    />
-                  )}
-                  <span
-                    id={a11yProps?.["aria-describedby"]}
-                    className={withBaseName("content")}
-                  >
-                    {content}
-                  </span>
-                </div>
-                {!hideArrow && (
-                  <FloatingArrow
-                    {...arrowProps}
-                    className={withBaseName("arrow")}
-                    strokeWidth={1}
-                    fill="var(--salt-container-primary-background)"
-                    stroke="var(--tooltip-status-borderColor)"
-                    height={5}
-                    width={10}
-                  />
-                )}
-              </div>
-            </SaltProvider>
-          </FloatingPortal>
-        )}
+        <Component
+          className={clsx(withBaseName(), withBaseName(status), className)}
+          open={open}
+          disabled={disabled}
+          ref={floatingRef}
+          {...getTooltipProps()}
+        >
+          <TooltipBase
+            hideIcon={hideIcon}
+            status={status}
+            content={content}
+            hideArrow={hideArrow}
+            arrowProps={arrowProps}
+          />
+        </Component>
       </>
     );
   }
