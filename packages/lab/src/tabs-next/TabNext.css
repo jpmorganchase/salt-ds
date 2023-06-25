@@ -1,16 +1,5 @@
 /* Class applied to root Tab element */
 .saltTabNext {
-  --tabs-tab-background-hover: rgba(0, 0, 0);
-  --tabs-tab-backgroundOpacity-hover: 0.08;
-  --tabs-tab-letterSpacing: 0;
-  --tabs-tab-cursor: pointer;
-}
-
-.salt-theme[data-mode="dark"] .saltTabNext {
-  --tabs-tab-background-hover: rgba(255, 255, 255);
-}
-
-.saltTabNext {
   align-items: center;
   justify-content: center;
   appearance: none;
