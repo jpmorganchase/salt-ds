@@ -2,8 +2,7 @@ import { composeStories } from "@storybook/testing-react";
 import * as tabstripStories from "@stories/tabstrip-next/tabstrip-next.stories";
 import { StackLayout } from "@salt-ds/core";
 
-const { Default: DefaultTabstrip, SimpleTabstrip } =
-  composeStories(tabstripStories);
+const { Default: DefaultTabstrip } = composeStories(tabstripStories);
 
 describe("Given a Tabstrip", () => {
   describe("WHEN uncontrolled", () => {
@@ -50,7 +49,7 @@ describe("Given a Tabstrip", () => {
   describe("WHEN initial size is sufficient to display all contents", () => {
     describe("WHEN it initially renders", () => {
       it("THEN all the content items will be visible", () => {
-        cy.mount(<SimpleTabstrip width={400} />);
+        cy.mount(<DefaultTabstrip width={400} />);
         cy.findByRole("tablist").should("have.class", "saltTabstripNext");
         cy.findAllByRole("tab")
           .should("have.length", 5)
@@ -58,14 +57,14 @@ describe("Given a Tabstrip", () => {
           .should("be.visible");
       });
       it("THEN no overflow indicator will be present", () => {
-        cy.mount(<SimpleTabstrip width={400} />);
+        cy.mount(<DefaultTabstrip width={400} />);
         cy.findByRole("tablist").findByRole("combobox").should("not.exist");
       });
     });
 
     describe("WHEN resized such that space is sufficient for only 4 tabs (first tab selected)", () => {
       it("THEN first 4 tabs will be displayed, with overflow indicator", () => {
-        cy.mount(<SimpleTabstrip width={400} />);
+        cy.mount(<DefaultTabstrip width={400} />);
         cy.get(".saltTabstripNext").invoke("css", "width", "300px");
         cy.findAllByRole("tab").should("have.length", 3);
         cy.findByRole("combobox").should("exist").click();
@@ -82,7 +81,7 @@ describe("Tab selection, Given a Tabstrip", () => {
     describe("WHEN it initially renders", () => {
       describe("WHEN the selected Tab has not been specified", () => {
         it("THEN the first tab will be selected", () => {
-          cy.mount(<SimpleTabstrip width={400} />);
+          cy.mount(<DefaultTabstrip width={400} />);
           cy.findAllByRole("tab").eq(0).should("have.ariaSelected");
         });
       });
@@ -92,7 +91,7 @@ describe("Tab selection, Given a Tabstrip", () => {
   describe("WHEN initial size is NOT sufficient to display all contents", () => {
     describe("WHEN the selected Tab is in the overflow menu", () => {
       it("THEN the active tab will be moved from the overflow menu to the end of visible tabs", () => {
-        cy.mount(<SimpleTabstrip width={220} />);
+        cy.mount(<DefaultTabstrip width={220} />);
         cy.get("[role='tab']:first-child").should("have.ariaSelected");
 
         cy.findByRole("combobox").click();
@@ -104,7 +103,7 @@ describe("Tab selection, Given a Tabstrip", () => {
     describe("WHEN the selected Tab is moved to visible", () => {
       describe("WHEN the component is resized", () => {
         it("THEN the active tab will be moved from the overflow menu to the end of visible tabs", () => {
-          cy.mount(<SimpleTabstrip width={320} />);
+          cy.mount(<DefaultTabstrip width={320} />);
           cy.get("[role='tab']:first-child").should("have.ariaSelected");
           cy.findByRole("combobox").click();
           cy.findByRole("listbox");
@@ -126,7 +125,7 @@ describe("Navigation, Given a Tabstrip", () => {
           cy.mount(
             <StackLayout>
               <button data-testid="tabstop-1" />
-              <SimpleTabstrip width={400} />
+              <DefaultTabstrip width={400} />
               <button data-testid="tabstop-2" />
             </StackLayout>
           );
@@ -139,7 +138,7 @@ describe("Navigation, Given a Tabstrip", () => {
             cy.mount(
               <StackLayout>
                 <button data-testid="tabstop-1" />
-                <SimpleTabstrip width={400} />
+                <DefaultTabstrip width={400} />
                 <button data-testid="tabstop-2" />
               </StackLayout>
             );
@@ -157,7 +156,7 @@ describe("Navigation, Given a Tabstrip", () => {
           cy.mount(
             <StackLayout>
               <button data-testid="tabstop-1" />
-              <SimpleTabstrip width={400} />
+              <DefaultTabstrip width={400} />
               <button data-testid="tabstop-2" />
             </StackLayout>
           );
@@ -168,7 +167,7 @@ describe("Navigation, Given a Tabstrip", () => {
 
         describe("WHEN the left arrow key is pressed (from first tab)", () => {
           it("THEN no navigation will occur", () => {
-            cy.mount(<SimpleTabstrip width={400} />);
+            cy.mount(<DefaultTabstrip width={400} />);
             cy.findAllByRole("tab").eq(0).realClick();
             cy.findAllByRole("tab").eq(0).should("be.focused");
             cy.realPress("ArrowLeft");
@@ -178,7 +177,7 @@ describe("Navigation, Given a Tabstrip", () => {
 
         describe("WHEN the right arrow key is pressed", () => {
           it("THEN focus will be transfered to the next tab", () => {
-            cy.mount(<SimpleTabstrip width={400} />);
+            cy.mount(<DefaultTabstrip width={400} />);
             cy.findAllByRole("tab").eq(0).realClick();
             cy.findAllByRole("tab").eq(0).should("be.focused");
             cy.realPress("ArrowRight");
@@ -191,7 +190,7 @@ describe("Navigation, Given a Tabstrip", () => {
             cy.mount(
               <StackLayout>
                 <button data-testid="tabstop-1" />
-                <SimpleTabstrip width={400} />
+                <DefaultTabstrip width={400} />
                 <button data-testid="tabstop-2" />
               </StackLayout>
             );
@@ -208,7 +207,7 @@ describe("Navigation, Given a Tabstrip", () => {
             cy.mount(
               <StackLayout>
                 <button data-testid="tabstop-1" />
-                <SimpleTabstrip width={400} />
+                <DefaultTabstrip width={400} />
                 <button data-testid="tabstop-2" />
               </StackLayout>
             );
@@ -225,7 +224,7 @@ describe("Navigation, Given a Tabstrip", () => {
 
         describe("WHEN the right arrow key is pressed repeatedly", () => {
           it("THEN focus will be transfered until last tab is reached", () => {
-            cy.mount(<SimpleTabstrip width={400} />);
+            cy.mount(<DefaultTabstrip width={400} />);
             cy.findAllByRole("tab").eq(0).realClick();
             cy.realPress("ArrowRight");
             cy.findAllByRole("tab").eq(1).should("be.focused");
@@ -245,7 +244,7 @@ describe("Navigation, Given a Tabstrip", () => {
   describe("WHEN initial size is not sufficient to display all contents", () => {
     describe("WHEN it initially renders", () => {
       it("THEN overflow indicator is included in keyboard navigation", () => {
-        cy.mount(<SimpleTabstrip width={310} />);
+        cy.mount(<DefaultTabstrip width={310} />);
         cy.findAllByRole("tab").eq(0).realClick();
         cy.findByRole("combobox").should("be.visible");
         cy.realPress("Tab");
@@ -253,7 +252,7 @@ describe("Navigation, Given a Tabstrip", () => {
       });
 
       it("THEN overflow indicator opens overflow menu", () => {
-        cy.mount(<SimpleTabstrip width={320} />);
+        cy.mount(<DefaultTabstrip width={320} />);
         cy.findByRole("combobox").focus().realPress("Enter");
         cy.findByRole("listbox");
       });
@@ -261,7 +260,7 @@ describe("Navigation, Given a Tabstrip", () => {
   });
   describe("WHEN overflow is opened", () => {
     it("THEN overflow menu can be navigated up and down", () => {
-      cy.mount(<SimpleTabstrip width={100} />);
+      cy.mount(<DefaultTabstrip width={100} />);
       cy.findByRole("combobox").click();
       cy.findByRole("listbox");
       cy.focused().realPress("ArrowDown");
@@ -286,14 +285,14 @@ describe("Navigation, Given a Tabstrip", () => {
         .should("have.class", "saltHighlighted");
     });
     it("THEN overflow menu can be closed with Escape", () => {
-      cy.mount(<SimpleTabstrip width={100} />);
+      cy.mount(<DefaultTabstrip width={100} />);
       cy.findByRole("combobox").click();
       cy.findByRole("listbox").should("exist");
       cy.focused().realPress("Escape");
       cy.findByRole("listbox").should("not.exist");
     });
     it("THEN overflow menu item can be selected with Enter and focus is moved to the active tab", () => {
-      cy.mount(<SimpleTabstrip width={120} />);
+      cy.mount(<DefaultTabstrip width={120} />);
       cy.findByRole("combobox").click();
       cy.findByRole("listbox").should("exist");
       cy.focused().realPress("ArrowDown").realPress("Enter");

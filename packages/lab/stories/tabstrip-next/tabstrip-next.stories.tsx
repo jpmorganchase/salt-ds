@@ -36,25 +36,6 @@ export const Default: TabstripStory = ({ width = 600, ...tabstripProps }) => {
   );
 };
 
-export const SimpleTabstrip: TabstripStory = ({
-  width = 600,
-  ...tabstripProps
-}) => {
-  const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
-
-  return (
-    <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
-      <TabstripNext defaultSelected="Home" {...tabstripProps}>
-        {tabs.map((label) => (
-          <TabNext value={label} key={label}>
-            {label}
-          </TabNext>
-        ))}
-      </TabstripNext>
-    </div>
-  );
-};
-
 export const CenteredTabstrip: TabstripStory = ({
   width = 600,
   ...tabstripProps
