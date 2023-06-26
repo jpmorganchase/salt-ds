@@ -1,8 +1,7 @@
 .saltFormField {
   display: inline-grid;
   position: relative;
-  column-gap: var(--salt-spacing-100);
-  row-gap: var(--salt-spacing-100);
+  gap: var(--salt-spacing-100);
   text-align: left;
   width: var(--saltFormField-width, 100%);
 }
