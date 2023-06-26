@@ -1,11 +1,22 @@
 import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Sidebar } from "@jpmorganchase/mosaic-site-components";
-import { useRoute, useStore, SiteState } from "@jpmorganchase/mosaic-store";
+import {
+  Sidebar,
+  TableOfContents,
+} from "@jpmorganchase/mosaic-site-components";
+import {
+  useRoute,
+  useStore,
+  SiteState,
+  useMeta,
+} from "@jpmorganchase/mosaic-store";
 import { TabPanel, Tabs } from "@salt-ds/lab";
 import { LayoutProps } from "../types/index";
 import { DetailBase } from "../DetailBase";
 import SecondarySidebar from "./SecondarySidebar";
+import TitleWithDrawer from "./TitleWithDrawer";
+import MobileDrawer from "./MobileDrawer";
+import useIsMobileView from "../../utils/useIsMobileView";
 import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
 
 const tabs = [
@@ -35,6 +46,8 @@ export type Data = {
 type CustomSiteState = SiteState & { data?: Data };
 
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
+  const [openDrawer, setOpenDrawer] = useState(false);
+
   const { push } = useRouter();
   const { route } = useRoute();
 
@@ -54,6 +67,8 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     }
   }, [route]);
 
+  const isMobileView = useIsMobileView();
+
   const updateRouteWhenTabChanges = (index: number) => {
     const currentTab = tabs.find(({ id }) => index === id);
 
@@ -64,19 +79,45 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const currentTabIndex = currentTab?.id ?? 0;
 
+  const {
+    meta: { title },
+  } = useMeta();
+
   return (
     <AllExamplesViewContext.Provider
       value={{ allExamplesView, setAllExamplesView }}
     >
       <DetailBase
         sidebar={
-          <Sidebar sticky>
-            {<SecondarySidebar additionalData={useData} />}
-          </Sidebar>
+          !isMobileView ? (
+            <Sidebar sticky>
+              {
+                <SecondarySidebar
+                  additionalData={useData}
+                  tableOfContents={<TableOfContents />}
+                />
+              }
+            </Sidebar>
+          ) : undefined
+        }
+        pageTitle={
+          isMobileView ? (
+            <TitleWithDrawer
+              title={title}
+              openDrawer={openDrawer}
+              setOpenDrawer={setOpenDrawer}
+            />
+          ) : undefined
         }
       >
-        <p>{description}</p>
+        {isMobileView && (
+          <MobileDrawer
+            open={openDrawer}
+            drawerContent={<SecondarySidebar additionalData={useData} />}
+          />
+        )}
 
+        <p>{description}</p>
         <Tabs
           activeTabIndex={currentTabIndex}
           onActiveChange={updateRouteWhenTabChanges}
