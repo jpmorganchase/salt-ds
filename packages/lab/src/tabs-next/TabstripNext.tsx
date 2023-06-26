@@ -144,7 +144,7 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
     ) => {
       if (item) {
         setSelected(item.value);
-        queueMicrotask(() => {
+        requestAnimationFrame(() => {
           const element = tabstripRef.current?.querySelector(
             `[value="${item.value}"]`
           );
@@ -179,7 +179,11 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
         <Overflow ref={handleRef}>
           <div
             role="tablist"
-            className={clsx(withBaseName(), withBaseName("horizontal"))}
+            className={clsx(
+              withBaseName(),
+              withBaseName("horizontal"),
+              className
+            )}
             onKeyDown={handleKeyDown}
             {...rest}
           >
