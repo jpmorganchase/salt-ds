@@ -2,14 +2,11 @@ import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import {
   Children,
   cloneElement,
-  FocusEventHandler,
   forwardRef,
   HTMLAttributes,
   isValidElement,
-  KeyboardEventHandler,
   KeyboardEvent,
   MouseEvent,
-  MouseEventHandler,
   ReactElement,
   FocusEvent,
 } from "react";
@@ -43,11 +40,6 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
    * Note that this determines the max height of the list.
    */
   displayedItemCount?: number;
-  // ListNextControlProps
-  onBlur?: FocusEventHandler;
-  onFocus?: FocusEventHandler;
-  onKeyDown?: KeyboardEventHandler;
-  onMouseDown?: MouseEventHandler;
 }
 
 export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
@@ -122,24 +114,26 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       "--listNext-displayedItemCount": displayedItemCount,
     };
 
-    const focusHandler = (evt: FocusEvent) => {
+    const focusHandler = (event: FocusEvent<HTMLUListElement, Element>) => {
       handleFocus();
-      onFocus?.(evt);
+      onFocus?.(event);
     };
 
-    const keyDownHandler = (evt: KeyboardEvent) => {
-      handleKeyDown(evt);
-      onKeyDown?.(evt);
+    const keyDownHandler = (event: KeyboardEvent<HTMLUListElement>) => {
+      handleKeyDown(event);
+      onKeyDown?.(event);
     };
 
-    const blurHandler = (evt: FocusEvent) => {
+    const blurHandler = (event: FocusEvent<HTMLUListElement, Element>) => {
       handleBlur();
-      onBlur?.(evt);
+      onBlur?.(event);
     };
 
-    const mouseDownHandler = (evt: MouseEvent) => {
+    const mouseDownHandler = (
+      event: MouseEvent<HTMLUListElement, globalThis.MouseEvent>
+    ) => {
       handleMouseDown();
-      onMouseDown?.(evt);
+      onMouseDown?.(event);
     };
 
     return (

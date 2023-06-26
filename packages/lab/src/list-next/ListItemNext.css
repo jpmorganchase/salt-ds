@@ -17,10 +17,6 @@
   transition: background var(--salt-duration-perceptible) ease-in-out;
 }
 
-.saltListItemNext > * {
-  pointer-events: none;
-}
-
 /* Class applied to list item on focus using keyboard navigation only */
 .saltListItemNext-focused {
   outline: var(--salt-focused-outline);
@@ -28,9 +24,7 @@
 }
 
 /* Active list item on hover using mouse */
-.saltListItemNext:hover:not(
-    .saltListItemNext-disabled
-  ),
+.saltListItemNext:hover:not([aria-disabled="true"]),
 /* Active list item on focus using keyboard navigation  */
 .saltListItemNext-focused {
   --listItemNext-background: var(--salt-selectable-background-hover);
@@ -44,16 +38,16 @@
 }
 
 /* Style applied to disabled items */
-.saltListItemNext-disabled {
+.saltListItemNext[aria-disabled="true"] {
   --listItemNext-text-color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
-.saltListItemNext-disabled .saltText {
+.saltListItemNext[aria-disabled="true"] .saltText {
   color: var(--listItemNext-text-color);
 }
 
 /* disabled list item when selected */
-.saltListItemNext-disabled[aria-selected="true"] {
+.saltListItemNext[aria-disabled="true"][aria-selected="true"] {
   border-block: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selectedDisabled);
   --listItemNext-background: var(--salt-selectable-background-selectedDisabled);
 }

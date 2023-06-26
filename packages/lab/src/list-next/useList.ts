@@ -8,16 +8,6 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  ArrowDown,
-  ArrowUp,
-  End,
-  Home,
-  PageDown,
-  PageUp,
-  Enter,
-  Space,
-} from "../common-hooks";
 
 interface UseListProps {
   children: ReactNode;
@@ -38,7 +28,7 @@ const getSelected = (children: ReactNode): number[] =>
 
 export const useList = ({ children, displayedItemCount }: UseListProps) => {
   const listRef = useRef<HTMLUListElement | null>(null);
-  let list = listRef.current;
+  const list = listRef.current;
 
   const [activeDescendant, setActiveDescendant] = useState<string>("");
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
@@ -46,46 +36,58 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
     getSelected(children)
   );
   const [allOptions, setAllOptions] = useState<Element[]>([]);
+  const [mouseDown, setMouseDown] = useState<boolean>(false);
 
   const activeOptions = allOptions.filter(
     (option) => option.getAttribute("aria-disabled") !== "true"
   );
 
-  const [mouseDown, setMouseDown] = useState<boolean>(false);
-
   const getListItemIndex = (item: Element): number => {
     return allOptions.indexOf(item);
   };
 
-  const focusAndSelect = (element: Element) => {
-    selectItem(element);
-    focusItem(element);
+  const selectItem = (element: Element) => {
+    const index = getListItemIndex(element);
+    setSelectedIndices([index]);
   };
+
+  const moveFocus = (element: Element) => {
+    const index = getListItemIndex(element);
+    setFocusedIndex(index);
+  };
+
+  const moveActiveDescendant = (element: Element) => {
+    setActiveDescendant(element.id);
+    updateScroll(element);
+  };
+
+  const selectAndMoveActive = (element: Element) => {
+    selectItem(element);
+    moveActiveDescendant(element);
+  };
+
+  const focusAndMoveActive = (element: Element) => {
+    moveFocus(element);
+    moveActiveDescendant(element);
+  };
+
   const focusFirstItem = () => {
     // Find first active item
     const firstItem = activeOptions[0];
     if (firstItem) {
-      focusAndSelect(firstItem);
+      focusAndMoveActive(firstItem);
+      updateScroll(firstItem);
     }
   };
   const focusLastItem = () => {
     // Find last active item
     const lastItem = activeOptions[activeOptions.length - 1];
     if (lastItem) {
-      focusAndSelect(lastItem);
+      focusAndMoveActive(lastItem);
+      updateScroll(lastItem);
     }
   };
-  const selectItem = (element: Element) => {
-    const index = getListItemIndex(element);
-    setSelectedIndices([index]);
-  };
-  const focusItem = (element: Element) => {
-    const index = getListItemIndex(element);
 
-    setActiveDescendant(element.id);
-    setFocusedIndex(index);
-    updateScroll(element);
-  };
   const findNextOption = (
     currentOption: Element | null,
     moves: number
@@ -126,7 +128,8 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
     if (nonClickableTarget) {
       return;
     }
-    focusAndSelect(currentTarget);
+    setFocusedIndex(null);
+    selectAndMoveActive(currentTarget);
   };
 
   const handleBlur = () => {
@@ -134,25 +137,25 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
   };
 
   const handleMouseDown = () => {
+    // When list gets focused, we can't guarantee that focus happens after click event.
+    // If first focus (where !activeDescendant) happens from a click, list shouldn't render focus ring in the first element.
     setMouseDown(true);
   };
 
   // takes care of focus when using keyboard navigation
   const handleFocus = () => {
-    if (!activeDescendant && !mouseDown) {
+    const activeElement = document.getElementById(activeDescendant);
+    if (activeElement) {
+      focusAndMoveActive(activeElement);
+    } else if (!mouseDown) {
       // Focus on first active option if no option was previously focused
       focusFirstItem();
-    } else {
-      const activeElement = document.getElementById(activeDescendant);
-      if (activeElement) {
-        focusItem(activeElement);
-      }
     }
   };
 
   // takes care of keydown when using keyboard navigation
-  const handleKeyDown = (evt: KeyboardEvent) => {
-    const { key } = evt;
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const { key } = event;
     const currentItem =
       document.getElementById(activeDescendant) || activeOptions[0];
     let nextItem = currentItem;
@@ -160,42 +163,43 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
       return;
     }
     switch (key) {
-      case PageUp:
-      case PageDown:
+      case "PageUp":
+      case "PageDown":
         nextItem =
-          key === PageUp
+          key === "PageUp"
             ? findPreviousOption(currentItem, displayedItemCount)
             : findNextOption(currentItem, displayedItemCount);
 
         if (nextItem && nextItem !== currentItem) {
-          evt.preventDefault();
-          focusItem(nextItem);
+          event.preventDefault();
+          focusAndMoveActive(nextItem);
         }
         break;
-      case ArrowUp:
-      case ArrowDown:
+      case "ArrowUp":
+      case "ArrowDown":
         nextItem =
-          key === ArrowUp
+          key === "ArrowUp"
             ? findPreviousOption(currentItem, 1)
             : findNextOption(currentItem, 1);
 
         if (nextItem && nextItem !== currentItem) {
-          evt.preventDefault();
-          focusItem(nextItem);
+          event.preventDefault();
+          focusAndMoveActive(nextItem);
         }
         break;
-      case Home:
-        evt.preventDefault();
+      case "Home":
+        event.preventDefault();
         focusFirstItem();
         break;
-      case End:
-        evt.preventDefault();
+      case "End":
+        event.preventDefault();
         focusLastItem();
         break;
-      case Space:
-      case Enter:
-        evt.preventDefault();
-        focusAndSelect(nextItem);
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        selectAndMoveActive(nextItem);
+        moveFocus(nextItem);
         break;
       default:
         break;
@@ -203,9 +207,9 @@ export const useList = ({ children, displayedItemCount }: UseListProps) => {
   };
 
   useEffect(() => {
-    list = listRef.current;
+    const list = listRef.current;
     if (!list) return;
-
+    console.log('setting')
     setAllOptions(
       Array.from(list.children).filter(
         (child) => child.getAttribute("role") === "option"

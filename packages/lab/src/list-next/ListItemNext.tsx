@@ -25,7 +25,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
   function ListItemNext(
     {
       children,
-      className: classNameProp,
+      className,
       disabled,
       focused,
       label,
@@ -45,21 +45,19 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       window: targetWindow,
     });
 
-    const className = clsx(
-      withBaseName(),
-      {
-        [withBaseName("disabled")]: disabled,
-        [withBaseName("focused")]: focused,
-      },
-      classNameProp
-    );
-
-    const content = label || (children as string);
+    const content = label || children;
 
     return (
       <li
         ref={ref}
-        className={className}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("focused")]: focused,
+          },
+          className
+        )}
         {...props}
         aria-disabled={disabled || undefined}
         aria-selected={selected || undefined}
