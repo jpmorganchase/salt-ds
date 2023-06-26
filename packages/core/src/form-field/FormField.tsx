@@ -7,8 +7,9 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import formFieldCss from "./FormField.css";
+import { useFormFieldGroup } from "./FormFieldGroupContext";
 
-export type FormFieldLabelPlacement = "top" | "left";
+export type FormFieldLabelPlacement = "top" | "left" | "right" | undefined;
 
 export interface FormFieldProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -57,6 +58,7 @@ export const FormField = forwardRef(
       onFocus,
       readOnly = false,
       validationStatus,
+      style,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
