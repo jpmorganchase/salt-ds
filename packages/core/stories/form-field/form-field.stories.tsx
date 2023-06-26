@@ -5,6 +5,7 @@ import {
   RadioButton,
   RadioButtonGroup,
   FlowLayout,
+  FormFieldGroup,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
   FormField,
@@ -13,6 +14,9 @@ import {
   AdornmentButton,
   Text,
   FormFieldControlWrapper,
+  GridLayout,
+  GridItem,
+  H2,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
@@ -509,5 +513,240 @@ export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
         />
       </FormField>
     </FlowLayout>
+  );
+};
+
+
+export const GroupedWithLabelTop: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <FormFieldGroup style={{width: "500px"}}>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>Form Field label left</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>
+          Helper text
+        </FormHelperText>
+      </FormField>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>
+          Form Field label that's extra long. Showing that labels wrap around to
+          the line.
+        </FormLabel>
+        <Input defaultValue="Primary Input value" />
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Primary Input value" />
+      </FormField>
+    </FormFieldGroup>
+  );
+};
+export const GroupedWithLabelLeft: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <FormFieldGroup labelAlignment="left" style={{width: "500px"}}>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>Form Field label left</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>
+          Helper text
+        </FormHelperText>
+      </FormField>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>
+          Form Field label that's extra long. Showing that labels wrap around to
+          the line.
+        </FormLabel>
+        <Input defaultValue="Primary Input value" />
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Primary Input value" />
+      </FormField>
+    </FormFieldGroup>
+  );
+};
+export const GroupedWithLabelRight: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <FormFieldGroup labelAlignment="right" labelWidth="150px" style={{width: "500px"}}>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>Form Field label left</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>
+          Helper text
+        </FormHelperText>
+      </FormField>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>
+          Form Field label that's extra long. Showing that labels wrap around to
+          the line.
+        </FormLabel>
+        <Input defaultValue="Primary Input value" />
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Primary Input value" />
+      </FormField>
+    </FormFieldGroup>
+  );
+};
+
+export const NestedGroup: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <>
+    <H2>Left aligned label</H2>
+    <FormFieldGroup labelAlignment="left" labelWidth="150px" style={{width: "600px"}}>
+      <FormField {...props}>
+        <FormLabel>Form Field label left</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>
+          Helper text
+        </FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>
+          Form Field label that's extra long. Showing that labels wrap around to
+          the line.
+        </FormLabel>
+        <Input defaultValue="Value" />
+      </FormField>
+      <FormFieldGroup direction="horizontal">
+        <FormField  {...props}>
+          <FormLabel>Form Field</FormLabel>
+          <Input defaultValue="Value" />
+          <FormHelperText>
+            Helper text
+          </FormHelperText>
+        </FormField>
+        <FormField  {...props}>
+          <FormLabel>
+            Form Field
+          </FormLabel>
+          <Input defaultValue="Value" />
+        </FormField>
+      </FormFieldGroup>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>
+          Form Field
+        </FormLabel>
+        <Input defaultValue="Value" />
+      </FormField>
+    </FormFieldGroup>
+
+
+    <H2 style={{marginTop: "var(--salt-spacing-400)"}}>Right aligned label</H2>
+    <FormFieldGroup labelAlignment="right" labelWidth="100px" style={{width: "700px"}}>
+      <FormField {...props}>
+        <FormLabel>Form Field label left</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>
+          Helper text
+        </FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>
+          Form Field label that's extra long. Showing that labels wrap around to
+          the line.
+        </FormLabel>
+        <Input defaultValue="Value" />
+      </FormField>
+      <FormFieldGroup direction="horizontal">
+        <FormField  {...props}>
+          <FormLabel>Form Field</FormLabel>
+          <Input defaultValue="Value" />
+          <FormHelperText>
+            Helper text
+          </FormHelperText>
+        </FormField>
+        <FormField  {...props}>
+          <FormLabel>
+            Form Field
+          </FormLabel>
+          <Input defaultValue="Value" />
+        </FormField>
+      </FormFieldGroup>
+      <FormFieldGroup direction="horizontal">
+        <FormField  {...props}>
+          <FormLabel>Form Field</FormLabel>
+          <Input defaultValue="Value" />
+          <FormHelperText>
+            Helper text
+          </FormHelperText>
+        </FormField>
+        <FormField  {...props}>
+          <FormLabel>
+            Form Field
+          </FormLabel>
+          <Input defaultValue="Value" />
+        </FormField>
+        <FormField  {...props}>
+          <FormLabel>
+            Form Field
+          </FormLabel>
+          <Input defaultValue="Value" />
+        </FormField>
+      </FormFieldGroup>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>
+          Form Field
+        </FormLabel>
+        <Input defaultValue="Value" />
+      </FormField>
+    </FormFieldGroup>
+
+
+    <H2 style={{marginTop: "var(--salt-spacing-400)"}}>Top aligned label</H2>
+    <FormFieldGroup style={{width: "400px"}}>
+      <FormField {...props}>
+        <FormLabel>Form Field label left</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>
+          Helper text
+        </FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>
+          Form Field label that's extra long. Showing that labels wrap around to
+          the line.
+        </FormLabel>
+        <Input defaultValue="Value" />
+      </FormField>
+      <FormFieldGroup direction="horizontal">
+        <FormField  {...props}>
+          <FormLabel>Form Field</FormLabel>
+          <Input defaultValue="Value" />
+          <FormHelperText>
+            Helper text
+          </FormHelperText>
+        </FormField>
+        <FormField  {...props}>
+          <FormLabel>
+            Form Field
+          </FormLabel>
+          <Input defaultValue="Value" />
+        </FormField>
+      </FormFieldGroup>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>
+          Form Field
+        </FormLabel>
+        <Input defaultValue="Value" />
+      </FormField>
+    </FormFieldGroup>
+    </>
   );
 };

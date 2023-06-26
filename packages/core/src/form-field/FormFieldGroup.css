@@ -1,0 +1,50 @@
+.saltFormFieldGroup {
+    display: grid;
+    row-gap: var(--salt-spacing-300);
+}
+
+.saltFormFieldGroup-horizontal {
+    column-gap: var(--salt-spacing-300);
+    grid-auto-flow: column;
+    height: 100%;
+}
+
+.saltFormFieldGroup-labelsTop.saltFormFieldGroup-horizontal .saltFormField:last-child {
+    grid-template-rows: minmax(auto, var(--salt-text-lineHeight)) auto minmax(auto, var(--salt-text-lineHeight));
+}
+
+.saltFormFieldGroup-labelsTop .saltFormField {
+    grid-template-areas:
+        "label"
+        "controls"
+        "helperText";
+}
+
+.saltFormFieldGroup-labelsTop .saltFormField-labelLeft {
+    grid-template-columns: auto;
+}
+
+.saltFormFieldGroup-labelsLeft .saltFormField, 
+.saltFormFieldGroup-labelsRight .saltFormField {
+    grid-template-columns: var(--saltFormFieldGroup-label-width, 250px) auto;
+    grid-template-areas:
+        "label controls"
+        "auto helperText";
+}
+
+.saltFormFieldGroup-labelsLeft .saltText.saltFormFieldLabel {
+    width: var(--saltFormFieldGroup-label-width, 250px);
+}
+
+.saltFormFieldGroup-labelsRight:first-child .saltText.saltFormFieldLabel {
+    width: var(--saltFormFieldGroup-label-width, 250px);
+}
+
+.saltFormFieldGroup-labelsLeft .saltFormFieldLabel {
+    text-align: left;
+}
+  
+.saltFormFieldGroup-labelsRight .saltFormFieldLabel {
+    text-align: right;
+}
+  
