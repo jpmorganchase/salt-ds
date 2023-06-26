@@ -70,6 +70,7 @@ export * from "./stepper-input";
 export * from "./switch";
 export * from "./tabs";
 export * from "./toggle-button";
+export * from "./toggle-button-group";
 export * from "./tokenized-input";
 export * from "./toolbar";
 export * from "./tree";

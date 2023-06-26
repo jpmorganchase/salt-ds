@@ -16,6 +16,7 @@
   },
   "publishConfig": {
     "directory": "../../dist/salt-ds-data-grid",
-    "tag": "next"
+    "tag": "next",
+    "provenance": true
   }
 }
