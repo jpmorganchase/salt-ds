@@ -14,8 +14,6 @@ import {
   AdornmentButton,
   Text,
   FormFieldControlWrapper,
-  GridLayout,
-  GridItem,
   H2,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -733,3 +731,46 @@ export const NestedGroup: ComponentStory<typeof FormField> = (props) => {
     </>
   );
 };
+
+
+export const GroupedWithVariant: ComponentStory<typeof FormField> = (props) => {
+  return (
+      <FormFieldGroup
+        variant="secondary"
+        style={{ width: "600px" }}
+      >
+        <FormField {...props}>
+          <FormLabel>Form Field label left</FormLabel>
+          <Input defaultValue="Value" />
+          <FormHelperText>Helper text</FormHelperText>
+        </FormField>
+        <FormField {...props}>
+          <FormLabel>
+            Form Field label that's extra long. Showing that labels wrap around
+            to the line.
+          </FormLabel>
+          <Input variant="primary" defaultValue="Value" />
+        </FormField>
+        <FormFieldGroup direction="horizontal">
+          <FormField {...props}>
+            <FormLabel>Form Field</FormLabel>
+            <Input defaultValue="Value" />
+            <FormHelperText>Helper text</FormHelperText>
+          </FormField>
+          <FormField {...props}>
+            <FormLabel>Form Field</FormLabel>
+            <FormFieldControlWrapper variant="primary">
+              <Input placeholder="First value" />
+              <Input placeholder="Second value" />
+              <Input placeholder="Third value" />
+            </FormFieldControlWrapper>
+          </FormField>
+        </FormFieldGroup>
+        <FormField labelPlacement="left" {...props}>
+          <FormLabel>Form Field</FormLabel>
+          <Input defaultValue="Value" />
+        </FormField>
+      </FormFieldGroup>
+  );
+};
+
