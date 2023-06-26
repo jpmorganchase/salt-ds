@@ -1,5 +1,4 @@
 .saltFormFieldLabel.saltText {
-  align-self: center;
   font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
   width: 100%;
 }
@@ -9,5 +8,6 @@
 }
 
 .saltFormField-labelLeft .saltFormFieldLabel.saltText {
+  align-self: baseline;
   transform: translate(0, var(--salt-spacing-100));
 }
