@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { a11yValueAriaProps } from "../../form-field-context";
+import { AdornmentValidationStatus } from "../../status-adornment";
 import { CheckboxGroupProps } from "../CheckboxGroup";
 
 export interface CheckboxGroupState {
@@ -8,7 +9,7 @@ export interface CheckboxGroupState {
   name?: CheckboxGroupProps["name"];
   onChange?: CheckboxGroupProps["onChange"];
   checkedValues?: CheckboxGroupProps["checkedValues"];
-  validationStatus?: "error" | "warning";
+  validationStatus?: AdornmentValidationStatus;
 }
 
 const CheckboxGroupContext = createContext<CheckboxGroupState>({});
