@@ -1,4 +1,10 @@
-import { ComponentProps, ComponentPropsWithoutRef, createContext, PropsWithChildren, useContext } from "react";
+import {
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  createContext,
+  PropsWithChildren,
+  useContext,
+} from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { capitalize, makePrefixer } from "../utils";
@@ -8,34 +14,36 @@ import clsx from "clsx";
 
 const withBaseName = makePrefixer("saltFormFieldGroup");
 
-export const FormFieldGroupContext = createContext<Omit<FormFieldGroupProps,"direction">>({
-    labelAlignment: undefined,
-    labelWidth: undefined,
-    variant: undefined
+export const FormFieldGroupContext = createContext<
+  Omit<FormFieldGroupProps, "direction">
+>({
+  labelAlignment: undefined,
+  labelWidth: undefined,
+  variant: undefined,
 });
 
 export const useFormFieldGroup = () => {
-    const groupContext = useContext(FormFieldGroupContext);
-    return groupContext;
+  const groupContext = useContext(FormFieldGroupContext);
+  return groupContext;
 };
 
 interface FormFieldGroupProps extends ComponentProps<"div"> {
-    /**
-     * Direction of flow of Form Fields
-     */
-    direction?: "vertical" | "horizontal";
-    /**
-     * Aligns all labels in the group to the given position 
-     */
-    labelAlignment?: "top" | "left" | "right";
-    /**
-     * Width of labels when labelAlignment="left" or labelAlignment="right"
-     */
-    labelWidth?: string;
-    /*
-    * Variant of all nested controls 
-    */
-    variant?: "primary" | "secondary";
+  /**
+   * Direction of flow of Form Fields
+   */
+  direction?: "vertical" | "horizontal";
+  /**
+   * Aligns all labels in the group to the given position
+   */
+  labelAlignment?: "top" | "left" | "right";
+  /**
+   * Width of labels when labelAlignment="left" or labelAlignment="right"
+   */
+  labelWidth?: string;
+  /*
+   * Variant of all nested controls
+   */
+  variant?: "primary" | "secondary";
 }
 
 export const FormFieldGroup = ({
@@ -44,7 +52,7 @@ export const FormFieldGroup = ({
   labelAlignment = "top",
   labelWidth,
   variant = "primary",
-  style
+  style,
 }: FormFieldGroupProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -53,7 +61,7 @@ export const FormFieldGroup = ({
     window: targetWindow,
   });
 
-const styles = {
+  const styles = {
     "--saltFormFieldGroup-label-width": labelWidth,
     ...style,
   };
@@ -61,23 +69,29 @@ const styles = {
   const {
     variant: parentVariant,
     labelAlignment: parentLabelAlignment,
-    labelWidth: parentLabelWidth
+    labelWidth: parentLabelWidth,
   } = useContext(FormFieldGroupContext);
 
   return (
-    <FormFieldGroupContext.Provider 
-        value={{
-            labelAlignment: parentLabelAlignment ?? labelAlignment,
-            labelWidth: parentLabelWidth ?? labelWidth,
-            variant: parentVariant ?? variant
-        }}
+    <FormFieldGroupContext.Provider
+      value={{
+        labelAlignment: parentLabelAlignment ?? labelAlignment,
+        labelWidth: parentLabelWidth ?? labelWidth,
+        variant: parentVariant ?? variant,
+      }}
     >
-        <div 
-            className={clsx(withBaseName(), withBaseName(direction), withBaseName(`labels${capitalize(parentLabelAlignment ?? labelAlignment)}`))} 
-            style={styles}
-        >
-            {children}
-        </div>
+      <div
+        className={clsx(
+          withBaseName(),
+          withBaseName(direction),
+          withBaseName(
+            `labels${capitalize(parentLabelAlignment ?? labelAlignment)}`
+          )
+        )}
+        style={styles}
+      >
+        {children}
+      </div>
     </FormFieldGroupContext.Provider>
   );
 };
