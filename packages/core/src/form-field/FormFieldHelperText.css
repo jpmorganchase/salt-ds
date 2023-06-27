@@ -10,5 +10,5 @@
 }
 
 .saltFormFieldHelperText-withValidation {
-  column-gap: var(--salt-size-adornmentGap);
+  column-gap: var(--salt-spacing-100);
 }

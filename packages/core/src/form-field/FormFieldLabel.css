@@ -1,9 +1,13 @@
 .saltFormFieldLabel.saltText {
-  align-self: center;
   font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
   width: 100%;
 }
 
 .saltFormFieldLabel:hover + .saltFormField-controls * {
   --input-borderColor: var(--input-borderColor-hover);
+}
+
+.saltFormField-labelLeft .saltFormFieldLabel.saltText {
+  align-self: baseline;
+  padding-top: var(--salt-spacing-100);
 }
