@@ -2,8 +2,8 @@ import { createContext } from "@salt-ds/core";
 import { SyntheticEvent, useContext } from "react";
 
 export interface ListItemNextContextValue {
-  disabled?: boolean;
-  id?: string | undefined;
+  disabled: boolean;
+  id?: string;
   select: (event: SyntheticEvent<HTMLLIElement>) => void;
   isSelected: (id: string) => boolean;
   isFocused: (id: string) => boolean;

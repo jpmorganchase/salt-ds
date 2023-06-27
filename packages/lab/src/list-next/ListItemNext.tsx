@@ -67,13 +67,13 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
           },
           className
         )}
-        {...props}
         role="option"
         aria-disabled={disabled || undefined}
         aria-selected={selected || undefined}
         id={itemId}
         data-value={value}
         onClick={handleClick}
+        {...props}
       >
         {content}
       </li>

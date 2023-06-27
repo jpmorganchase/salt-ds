@@ -73,6 +73,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       activeDescendant,
       contextValue,
     } = useList({
+      disabled: listDisabled,
       selected: selectedProp,
       defaultSelected,
       // onChange,
@@ -95,9 +96,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onBlur?.(event);
     };
 
-    const mouseDownHandler = (
-      event: MouseEvent<HTMLUListElement, globalThis.MouseEvent>
-    ) => {
+    const mouseDownHandler = (event: MouseEvent<HTMLUListElement>) => {
       handleMouseDown();
       onMouseDown?.(event);
     };

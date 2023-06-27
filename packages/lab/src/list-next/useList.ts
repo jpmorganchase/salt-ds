@@ -9,6 +9,10 @@ import {
 import { useControlled } from "@salt-ds/core";
 
 interface UseListProps {
+  /**
+   * If true, all items in list will be disabled.
+   */
+  disabled?: boolean;
   /* Value for the uncontrolled version. */
   selected?: string;
   /* Initial value for the uncontrolled version. */
@@ -20,6 +24,7 @@ interface UseListProps {
 }
 
 export const useList = ({
+  disabled = false,
   selected: selectedProp,
   defaultSelected,
   onChange,
@@ -29,6 +34,7 @@ export const useList = ({
   const [activeDescendant, setActiveDescendant] = useState<string | undefined>(
     undefined
   );
+
   const [showFocusRing, setShowFocusRing] = useState<boolean>(true);
   const [selectedItem, setSelectedItem] = useControlled({
     controlled: selectedProp,
@@ -37,13 +43,13 @@ export const useList = ({
     state: "selected",
   });
 
-  const getOptions = () => {
+  const getOptions = useCallback(() => {
     return Array.from(
       listRef.current?.querySelectorAll(
         '[role="option"]:not([aria-disabled])'
       ) ?? []
-    );
-  };
+    ) as HTMLElement[];
+  }, [listRef]);
 
   const updateScroll = useCallback(
     (currentTarget: Element) => {
@@ -62,14 +68,14 @@ export const useList = ({
   );
 
   const updateActiveDescendant = useCallback(
-    (element: Element) => {
+    (element: HTMLElement) => {
       setActiveDescendant(element.id);
       updateScroll(element);
     },
     [setActiveDescendant, updateScroll]
   );
   const selectItem = useCallback(
-    (element: Element) => {
+    (element: HTMLElement) => {
       const newValue = element?.dataset.value;
       if (newValue) {
         setSelectedItem(newValue);
@@ -79,7 +85,7 @@ export const useList = ({
     [setSelectedItem, updateActiveDescendant]
   );
 
-  const focusAndMoveActive = (element: Element) => {
+  const focusAndMoveActive = (element: HTMLElement) => {
     setShowFocusRing(true);
     updateActiveDescendant(element);
   };
@@ -103,9 +109,9 @@ export const useList = ({
   };
 
   const findNextOption = (
-    currentOption: Element | null,
+    currentOption: HTMLElement | null,
     moves: number
-  ): Element => {
+  ): HTMLElement => {
     const activeOptions = getOptions();
     // Returns next item, if no current option it will return 0
     const nextOptionIndex = currentOption
@@ -117,9 +123,9 @@ export const useList = ({
   };
 
   const findPreviousOption = (
-    currentOption: Element,
+    currentOption: HTMLElement,
     moves: number
-  ): Element => {
+  ): HTMLElement => {
     // Return the previous option if it exists; otherwise, returns first option
     const activeOptions = getOptions();
     const currentOptionIndex = activeOptions.findIndex(
@@ -156,6 +162,16 @@ export const useList = ({
     [activeDescendant, showFocusRing]
   );
 
+  const getActiveItem = () => {
+    const activeOptions = getOptions();
+    const activeIndex = activeOptions.findIndex(
+      (i) => i.id === activeDescendant
+    );
+    return (
+      activeDescendant && activeOptions[activeIndex !== -1 ? activeIndex : 0]
+    );
+  };
+
   // HANDLERS
   const handleBlur = () => {
     setShowFocusRing(false);
@@ -169,42 +185,22 @@ export const useList = ({
 
   // takes care of focus when using keyboard navigation
   const handleFocus = () => {
-    const activeElement =
-      activeDescendant && document.getElementById(activeDescendant);
+    const activeElement = getActiveItem();
     if (activeElement) {
       focusAndMoveActive(activeElement);
-    } else if (showFocusRing) {
-      // Focus on first active option if no option was previously focused
-      focusFirstItem();
     }
   };
 
   // takes care of keydown when using keyboard navigation
-  const handleKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLUListElement>) => {
     const { key } = event;
-    const activeOptions = getOptions();
-    const currentItem =
-      (activeDescendant && document.getElementById(activeDescendant)) ||
-      activeOptions[0];
+    const currentItem = getActiveItem();
     let nextItem = currentItem;
     if (!currentItem) {
       return;
     }
     setShowFocusRing(true);
     switch (key) {
-      // TODO: since we are getting rid of displayItemCount. should we do this with height?
-      // case "PageUp":
-      // case "PageDown":
-      //   nextItem =
-      //     key === "PageUp"
-      //       ? findPreviousOption(currentItem, displayedItemCount)
-      //       : findNextOption(currentItem, displayedItemCount);
-      //
-      //   if (nextItem && nextItem !== currentItem) {
-      //     event.preventDefault();
-      //     focusAndMoveActive(nextItem);
-      //   }
-      //   break;
       case "ArrowUp":
       case "ArrowDown":
         nextItem =
@@ -228,7 +224,7 @@ export const useList = ({
       case " ":
       case "Enter":
         event.preventDefault();
-        selectItem(nextItem);
+        nextItem && selectItem(nextItem);
         break;
       default:
         break;
@@ -238,12 +234,13 @@ export const useList = ({
   // CONTEXT
   const contextValue = useMemo(
     () => ({
+      disabled,
       id,
       select,
       isSelected,
       isFocused,
     }),
-    [id, select, isSelected, isFocused]
+    [disabled, id, select, isSelected, isFocused]
   );
 
   return {

@@ -70,46 +70,6 @@ describe("GIVEN a list", () => {
       );
     });
 
-    describe("GIVEN displayedItemCount", () => {
-      const itemHeight = 36;
-
-      describe("WHEN undefined", () => {
-        it("THEN list height should be 3 times list item height", () => {
-          cy.mount(<SingleSelectList />);
-
-          cy.findByRole("listbox").then(($el) => {
-            expect($el.height()?.toFixed(0)).to.equal(
-              (3 * itemHeight).toString()
-            );
-          });
-        });
-      });
-
-      describe("WHEN displayedItemCount is 2", () => {
-        it("THEN list height should be 2 times list item height", () => {
-          cy.mount(<SingleSelectList displayedItemCount={2} />);
-
-          cy.findByRole("listbox").then(($el) => {
-            expect($el.height()?.toFixed(0)).to.equal(
-              (2 * itemHeight).toString()
-            );
-          });
-        });
-      });
-
-      describe("WHEN displayedItemCount is 6", () => {
-        it("THEN list height should be 3 times list item height", () => {
-          cy.mount(<SingleSelectList displayedItemCount={6} />);
-
-          cy.findByRole("listbox").then(($el) => {
-            expect($el.height()?.toFixed(0)).to.equal(
-              (3 * itemHeight).toString()
-            ); // 36px * 3
-          });
-        });
-      });
-    });
-
     describe("WHEN disabled", () => {
       describe("WHEN entire list is disabled", () => {
         it("THEN all items should be disabled", () => {
@@ -170,15 +130,10 @@ describe("GIVEN a list", () => {
       });
 
       describe("WHEN on first list keyboard focus", () => {
-        it("SHOULD focus and select first list item", () => {
+        it("SHOULD focus first list item", () => {
           cy.mount(<SingleSelectList />);
 
           cy.findByRole("listbox").focus();
-          cy.findByRole("option", { name: ITEMS[0].label }).should(
-            "have.attr",
-            "aria-selected",
-            "true"
-          );
           cy.findByRole("option", { name: ITEMS[0].label }).should(
             "have.class",
             "saltListItemNext-focused"
