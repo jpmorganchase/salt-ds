@@ -116,8 +116,10 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       );
 
       const currentIndex = elements.findIndex(
-        (element) => element === document.activeElement
+        (element) => element === targetWindow?.document.activeElement
       );
+
+      if (currentIndex < 0) return;
 
       switch (event.key) {
         case "ArrowDown":
