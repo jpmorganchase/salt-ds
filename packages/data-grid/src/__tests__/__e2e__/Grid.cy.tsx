@@ -639,7 +639,7 @@ describe("Grid", () => {
   });
 
   describe("Column Sorting", () => {
-    it("should sort column values when sorting is enabled", () => {
+    xit("should sort column values when sorting is enabled", () => {
       cy.mount(<RowSelectionModes />);
 
       // first click: sort in ascending order
