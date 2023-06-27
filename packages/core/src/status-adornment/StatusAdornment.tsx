@@ -17,7 +17,7 @@ const icons = {
   success: SuccessAdornmentIcon,
 };
 
-type AdornmentValidationStatus = Exclude<ValidationStatus, "info">;
+export type AdornmentValidationStatus = Exclude<ValidationStatus, "info">;
 
 export interface StatusAdornmentProps extends IconProps {
   /**

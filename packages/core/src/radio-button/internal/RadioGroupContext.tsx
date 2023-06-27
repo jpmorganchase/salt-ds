@@ -1,5 +1,6 @@
 import { ChangeEventHandler } from "react";
 import { a11yValueAriaProps } from "../../form-field-context";
+import { AdornmentValidationStatus } from "../../status-adornment";
 import { createContext } from "../../utils";
 
 export interface RadioGroupContextValue {
@@ -8,7 +9,7 @@ export interface RadioGroupContextValue {
   name?: string;
   value?: string;
   onChange?: ChangeEventHandler<HTMLElement>;
-  validationStatus?: "error" | "warning";
+  validationStatus?: AdornmentValidationStatus;
 }
 
 export const RadioGroupContext = createContext<RadioGroupContextValue>(
