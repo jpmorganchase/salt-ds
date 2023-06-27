@@ -5,11 +5,9 @@ import {
   HTMLAttributes,
   KeyboardEvent,
   MouseEvent,
-  ReactElement,
   useRef,
 } from "react";
 import { clsx } from "clsx";
-import { ListItemNext as DefaultListItem } from "./ListItemNext";
 import { useList } from "./useList";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -23,11 +21,6 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
-  /**
-   * The component used to render a ListItem instead of the default. This must itself render a ListItem,
-   * must implement props that extend ListItemProps and must forward ListItem props to the ListItem.
-   */
-  ListItem?: ReactElement;
   /**
    * Optional id prop
    *
@@ -48,7 +41,6 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       className,
       disabled: listDisabled,
-      ListItem = DefaultListItem,
       id,
       onSelect,
       onFocus,
