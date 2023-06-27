@@ -11,11 +11,11 @@ import {
   Input,
   InputProps,
   Tooltip,
-  AdornmentButton,
   Text,
   StackLayout,
   GridLayout,
   FormFieldLabelPlacement,
+  Button,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
@@ -443,8 +443,8 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
         </Tooltip>
       </FormField>
       {/* TODO: Guidance to explain that the following would produce broken design/behaviour
-      
-      
+
+
       Error readOnly Input
       <FormField
         validationStatus="error"
@@ -477,9 +477,9 @@ export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
         <Input
           startAdornment={<Text>$</Text>}
           endAdornment={
-            <AdornmentButton>
+            <Button>
               <NoteIcon />
-            </AdornmentButton>
+            </Button>
           }
           defaultValue={"Value"}
         />
@@ -489,16 +489,16 @@ export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
         <FormLabel>Form Field label</FormLabel>
         <Input
           startAdornment={
-            <AdornmentButton>
+            <Button>
               <InfoIcon />
-            </AdornmentButton>
+            </Button>
           }
           endAdornment={
             <>
               <Text>%</Text>
-              <AdornmentButton variant="cta">
+              <Button variant="cta">
                 <NoteIcon />
-              </AdornmentButton>
+              </Button>
             </>
           }
           defaultValue={"Value"}
@@ -509,9 +509,9 @@ export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
         <FormLabel>Form Field label (with error)</FormLabel>
         <Input
           endAdornment={
-            <AdornmentButton variant="secondary">
+            <Button variant="secondary">
               <NoteIcon />
-            </AdornmentButton>
+            </Button>
           }
           defaultValue={"Value"}
         />
@@ -520,16 +520,16 @@ export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
         <FormLabel>Form Field label (disabled)</FormLabel>
         <Input
           startAdornment={
-            <AdornmentButton>
+            <Button disabled>
               <InfoIcon />
-            </AdornmentButton>
+            </Button>
           }
           endAdornment={
             <>
               <Text>%</Text>
-              <AdornmentButton variant="cta">
+              <Button disabled variant="cta">
                 <NoteIcon />
-              </AdornmentButton>
+              </Button>
             </>
           }
           defaultValue={"Value"}

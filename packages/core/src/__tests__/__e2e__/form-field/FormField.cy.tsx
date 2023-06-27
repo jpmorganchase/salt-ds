@@ -4,9 +4,9 @@ import {
   FormFieldHelperText,
   Input,
   Tooltip,
-  AdornmentButton,
   Checkbox,
   RadioButton,
+  Button,
 } from "@salt-ds/core";
 
 const MockChildren = () => {
@@ -266,14 +266,14 @@ describe("GIVEN a FormField", () => {
       });
     });
 
-    describe("AND Input has an AdornmentButton", () => {
+    describe("AND Input has an button adornment", () => {
       it("THEN should cy.mount with the adornment", () => {
         cy.mount(
           <FormField>
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
-              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              startAdornment={<Button>Test</Button>}
               data-testid="test-id-3"
             />
           </FormField>
@@ -287,7 +287,7 @@ describe("GIVEN a FormField", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
-              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              startAdornment={<Button disabled>Test</Button>}
               data-testid="test-id-3"
             />
           </FormField>
@@ -302,7 +302,7 @@ describe("GIVEN a FormField", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
-              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              startAdornment={<Button disabled>Test</Button>}
               data-testid="test-id-3"
             />
           </FormField>
