@@ -34,7 +34,7 @@ type RelatedComponent = {
 
 type ComponentNpmInfo = {
   name: string;
-  initialRelease: string;
+  initialRelease?: string;
 };
 
 export type Data = {
