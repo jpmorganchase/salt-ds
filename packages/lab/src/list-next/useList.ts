@@ -167,9 +167,7 @@ export const useList = ({
     const activeIndex = activeOptions.findIndex(
       (i) => i.id === activeDescendant
     );
-    return (
-      activeDescendant && activeOptions[activeIndex !== -1 ? activeIndex : 0]
-    );
+    return activeOptions[activeIndex !== -1 ? activeIndex : 0];
   };
 
   // HANDLERS
@@ -186,9 +184,7 @@ export const useList = ({
   // takes care of focus when using keyboard navigation
   const handleFocus = () => {
     const activeElement = getActiveItem();
-    if (activeElement) {
-      focusAndMoveActive(activeElement);
-    }
+    focusAndMoveActive(activeElement);
   };
 
   // takes care of keydown when using keyboard navigation

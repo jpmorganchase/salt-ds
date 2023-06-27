@@ -23,14 +23,6 @@ The default List allows users to make a single selection from the available opti
   <Story id="lab-list-next--default" />
 </Canvas>
 
-### Configure list height
-
-If the List height is greater than the available space, it becomes vertically scrollable. You can control its height by using `displayedItemCount` to configure the number of items displayed—and the List height will automatically adjust. We recommend this method of setting your List height, as it ensures that all items are displayed in their entirety and not partially clipped.
-
-<Canvas>
-  <Story id="lab-list-next--configurable-height" />
-</Canvas>
-
 ## How to use
 
 ### When to use List
@@ -95,6 +87,4 @@ provides full WAI-ARIA support.
 | Enter or Space | When focus is on a listed item, Enter or Space keys press, select the item and deselects the previously selected item.                               |
 | Arrow up       | Moves focus to the previous item in the List <br /> If focus is on the first item, the next UpArrow key press should NOT wrap focus to the last item |
 | Arrow down     | Moves focus to next item in the List. <br /> If focus is on the last item, the next DownArrow key press should NOT wrap focus back to the first item |
-| Page up        | Moves the highlight a number of positions up the List, based on the number specified in displayedItemCount.                                          |
-| Page down      | Moves the highlight a number of positions down the list, based on the number specified in displayedItemCount.                                        |
 | Home           | Moves focus to the first list item.                                                                                                                  |

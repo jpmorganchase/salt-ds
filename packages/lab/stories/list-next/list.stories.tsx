@@ -21,19 +21,12 @@ const SimpleListExample = [
   "Georgia",
 ];
 
-const getListItems = ({
-  disabledItems = [],
-  selectedItems = [],
-}: {
-  disabledItems?: number[];
-  selectedItems?: number[];
-}) =>
+const getListItems = ({ disabledItems = [] }: { disabledItems?: number[] }) =>
   SimpleListExample.map((item, index) => {
     return (
       <ListItemNext
         key={index}
         disabled={disabledItems.includes(index)}
-        selected={selectedItems?.includes(index)}
         value={item}
       >
         {item}
@@ -67,10 +60,7 @@ Disabled.args = {
 
 export const DisabledSelected = Default.bind({});
 DisabledSelected.args = {
-  children: getListItems({
-    disabledItems: [1],
-    selectedItems: [1],
-  }),
+  defaultSelected: "Alaska",
 };
 
 export const Empty: Story<ListNextProps> = ({ children, ...rest }) => {
