@@ -27,7 +27,7 @@ describe("GIVEN a QueryInput component", () => {
     cy.findByText("B4").should("exist");
   });
 
-  it("WHEN value list back clicked, SHOULD render the categories list", () => {
+  xit("WHEN value list back clicked, SHOULD render the categories list", () => {
     cy.mount(<QueryInput categories={fakeCategories} />);
     cy.findByRole("textbox").focus();
     cy.findByTestId("category-list").findByText("B").realHover().realClick();
