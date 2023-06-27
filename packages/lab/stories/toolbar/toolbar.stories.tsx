@@ -126,11 +126,11 @@ export const TooltrayAlignment: Story = () => {
         <Tooltray aria-label="filters tooltray">
           <ToolbarField>
             <ToggleButton
-              aria-label=" AND"
               style={{ width: "100%", minWidth: "60px" }}
-              toggled
+              selected
+              value="and"
             >
-              <SwapIcon /> AND
+              <SwapIcon aria-hidden /> AND
             </ToggleButton>
           </ToolbarField>
           <ToolbarField>

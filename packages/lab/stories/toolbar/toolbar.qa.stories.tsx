@@ -89,11 +89,11 @@ export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
       </FormField>
       <Tooltray aria-label="filters tooltray">
         <ToggleButton
-          aria-label=" AND"
           style={{ width: "100%", minWidth: "60px" }}
-          toggled
+          selected
+          value="and"
         >
-          <SwapIcon /> AND
+          <SwapIcon aria-hidden /> AND
         </ToggleButton>
         <FormField>
           <Pill label="LOREM" onClick={() => console.log("lorem.")} />

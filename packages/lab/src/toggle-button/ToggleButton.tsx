@@ -1,51 +1,38 @@
-import { Button, ButtonProps, makePrefixer, Tooltip } from "@salt-ds/core";
-import { clsx } from "clsx";
 import {
+  ComponentProps,
   forwardRef,
-  SyntheticEvent,
-  useCallback,
-  useContext,
-  useEffect,
   useRef,
-  useState,
+  MouseEvent,
+  FocusEvent,
 } from "react";
-import { ToggleButtonGroupContext } from "./internal/ToggleButtonGroupContext";
-
+import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
+import { clsx } from "clsx";
+import { useToggleButtonGroup } from "../toggle-button-group";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import toggleButtonCss from "./ToggleButton.css";
 
-const withBaseName = makePrefixer("saltToggleButton");
-
-export type ToggleButtonToggleEventHandler = (
-  event: SyntheticEvent<HTMLButtonElement>,
-  toggled: boolean
-) => void;
-
-export interface ToggleButtonProps extends ButtonProps {
-  "aria-label"?: string;
-  "data-button-index"?: number;
-  toggled?: boolean;
-  tooltipText?: string;
-  disableTooltip?: boolean;
-  onToggle?: ToggleButtonToggleEventHandler;
+export interface ToggleButtonProps extends ComponentProps<"button"> {
+  selected?: boolean;
+  onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
+  value: string | ReadonlyArray<string> | number | undefined;
 }
 
+const withBaseName = makePrefixer("saltToggleButton");
+
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
-  (props, ref) => {
+  function ToggleButton(props, ref) {
     const {
-      "aria-label": ariaLabel,
+      children,
       className,
-      onToggle,
-      toggled = false,
-      tooltipText = ariaLabel,
-      variant: variantProp = "primary",
       disabled: disabledProp,
-      disableTooltip: disableTooltipProp,
-      focusableWhenDisabled: focusableWhenDisabledProp,
-      "data-button-index": index,
-      ...restProps
+      value,
+      onClick,
+      onFocus,
+      onChange,
+      selected: selectedProp,
+      ...rest
     } = props;
 
     const targetWindow = useWindow();
@@ -55,86 +42,55 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       window: targetWindow,
     });
 
-    const [iconOnly, setIconOnly] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const groupContext = useContext(ToggleButtonGroupContext);
+    const handleRef = useForkRef(ref, buttonRef);
 
-    const handleIconOnlyButton = useCallback(
-      (button: HTMLButtonElement | null) => {
-        setIconOnly(
-          button?.querySelector(".saltIcon") != null &&
-            button?.childElementCount === 1
-        );
-      },
-      [setIconOnly]
-    );
+    const toggleButtonGroup = useToggleButtonGroup();
 
-    const {
-      register,
-      unregister,
-      disabled = disabledProp,
-      disableTooltip = disableTooltipProp,
-      focusableWhenDisabled = focusableWhenDisabledProp,
-      orientation = "horizontal",
-      variant = variantProp,
-    } = groupContext || {};
+    const toggleButtonGroupSelected = toggleButtonGroup
+      ? toggleButtonGroup.isSelected(value)
+      : selectedProp;
+    const focusable = toggleButtonGroup
+      ? toggleButtonGroup?.isFocused(value)
+      : true;
+    const disabled = toggleButtonGroup?.disabled || disabledProp;
 
-    useEffect(() => {
-      if (
-        index !== undefined &&
-        register &&
-        unregister &&
-        (!disabled || focusableWhenDisabled)
-      ) {
-        register(buttonRef.current, index);
+    const [selected, setSelected] = useControlled({
+      controlled: toggleButtonGroupSelected,
+      default: Boolean(selectedProp),
+      name: "ToggleButton",
+      state: "selected",
+    });
 
-        return function cleanup() {
-          unregister(index);
-        };
-      }
-    }, [index, disabled, focusableWhenDisabled, register, unregister]);
-
-    const handleToggle = (event: SyntheticEvent<HTMLButtonElement>) => {
-      if (!disabled) {
-        onToggle?.(event, !toggled);
-      }
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      toggleButtonGroup?.select(event);
+      setSelected(!selected);
+      onChange?.(event);
+      onClick?.(event);
     };
 
-    const tabIndex = toggled && !disabled ? 0 : -1;
+    const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+      toggleButtonGroup?.focus(value);
+      onFocus?.(event);
+    };
+
+    const ariaChecked = selected && !disabled;
 
     return (
-      <Tooltip
-        content={tooltipText}
-        disabled={disableTooltip}
-        placement={orientation === "horizontal" ? "bottom" : "right"}
+      <button
+        aria-checked={ariaChecked}
+        className={clsx(withBaseName(), className)}
+        disabled={disabled}
+        role={toggleButtonGroup ? "radio" : "checkbox"}
+        ref={handleRef}
+        onClick={handleClick}
+        onFocus={handleFocus}
+        tabIndex={focusable && !disabled ? 0 : -1}
+        value={value}
+        {...rest}
       >
-        <Button
-          ref={handleIconOnlyButton}
-          aria-checked={toggled}
-          aria-label={ariaLabel}
-          aria-posinset={index !== undefined ? index + 1 : undefined}
-          className={clsx(
-            withBaseName(),
-            withBaseName(orientation),
-            {
-              [withBaseName("primary")]: variant === "primary",
-              [withBaseName("cta")]: variant === "cta",
-              [withBaseName("secondary")]: variant === "secondary",
-              [withBaseName("toggled")]: toggled,
-              [withBaseName("disabled")]: disabled,
-              [withBaseName("iconOnly")]: iconOnly,
-            },
-            className
-          )}
-          onClick={handleToggle}
-          disabled={disabled}
-          focusableWhenDisabled={focusableWhenDisabled}
-          role={groupContext ? "radio" : "checkbox"}
-          tabIndex={groupContext ? tabIndex : undefined}
-          variant={variant}
-          {...restProps}
-        />
-      </Tooltip>
+        {children}
+      </button>
     );
   }
 );

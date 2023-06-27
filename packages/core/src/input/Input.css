@@ -122,10 +122,7 @@
   --input-borderColor: var(--input-outlineColor);
   --input-borderWidth: var(--salt-editable-borderWidth-active);
 
-  outline-style: var(--salt-focused-outlineStyle);
-  outline-width: var(--salt-focused-outlineWidth);
-  outline-color: var(--saltInput-outlineColor, var(--input-outlineColor));
-  outline-offset: var(--salt-focused-outlineOffset);
+  outline: var(--saltInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
 }
 
 /* Style applied if `readOnly={true}` */
