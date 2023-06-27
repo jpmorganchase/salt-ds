@@ -1,0 +1,40 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Examples
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Single select">
+
+The default List allows users to make a single selection from the available option
+
+</LivePreview>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Deselectable">
+
+Use the deselectable variant if users will need to be able to deselect items in a single-select List. To enable this behavior, set the `deselectable` prop to true
+
+</LivePreview>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Configurable list height">
+
+If the List height is greater than the available space, it becomes vertically scrollable. You can control its height by using `displayedItemCount` to configure the number of items displayed—and the List height will automatically adjust. We recommend this method of setting your List height, as it ensures that all items are displayed in their entirety and not partially clipped.
+
+</LivePreview>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Borderless">
+
+The list has a border by default, but it can be removed if it needs to be inside a container I.e. Dropdown, Combobox
+
+</LivePreview>
+
+{/* Add more <LivePreview>...</LivePreview> blocks here as needed */}
+
+</LivePreviewControls>
