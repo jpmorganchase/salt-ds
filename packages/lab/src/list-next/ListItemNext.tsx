@@ -1,10 +1,11 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, MouseEvent } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import listItemNextCss from "./ListItemNext.css";
+import { useListItems } from "./ListNextContext";
 
 const withBaseName = makePrefixer("saltListItemNext");
 
@@ -14,11 +15,9 @@ export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
    * If true, the particular list item in list will be disabled.
    */
   disabled?: boolean;
-  focused?: boolean;
   selected?: boolean;
   id?: string;
   value: string;
-  role?: string;
 }
 
 export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
@@ -26,12 +25,10 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
     {
       children,
       className,
-      disabled,
-      focused,
+      disabled: disabledProp,
+      selected: selectedProp,
       label,
-      role = "option",
-      selected,
-      id,
+      id: idProp,
       value,
       onClick,
       ...props
@@ -45,7 +42,19 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       window: targetWindow,
     });
 
+    const listContext = useListItems();
+    const id = useId(idProp) || value;
+    const itemId = `list-${listContext?.id || "listNext"}--list-item--${id}`;
     const content = label || children;
+
+    const disabled = disabledProp || listContext?.disabled;
+    const selected = selectedProp || listContext?.isSelected(value);
+    const focused = listContext?.isFocused(itemId);
+
+    const handleClick = (event: MouseEvent<HTMLLIElement>) => {
+      listContext?.select(event);
+      onClick?.(event);
+    };
 
     return (
       <li
@@ -59,12 +68,12 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
           className
         )}
         {...props}
+        role="option"
         aria-disabled={disabled || undefined}
         aria-selected={selected || undefined}
-        role={role}
-        id={id}
-        value={value}
-        onClick={onClick}
+        id={itemId}
+        data-value={value}
+        onClick={handleClick}
       >
         {content}
       </li>

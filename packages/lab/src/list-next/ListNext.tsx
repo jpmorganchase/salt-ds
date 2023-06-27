@@ -1,14 +1,12 @@
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import {
-  Children,
-  cloneElement,
+  FocusEvent,
   forwardRef,
   HTMLAttributes,
-  isValidElement,
   KeyboardEvent,
   MouseEvent,
   ReactElement,
-  FocusEvent,
+  useRef,
 } from "react";
 import { clsx } from "clsx";
 import { ListItemNext as DefaultListItem } from "./ListItemNext";
@@ -16,6 +14,7 @@ import { useList } from "./useList";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import listNextCss from "./ListNext.css";
+import { ListItemNextContext } from "./ListNextContext";
 
 const withBaseName = makePrefixer("saltListNext");
 
@@ -35,11 +34,12 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
    *The id for the list component
    */
   id?: string;
-  /**
-   * The number of items displayed in the visible area.
-   * Note that this determines the max height of the list.
-   */
-  displayedItemCount?: number;
+  /* Value for the uncontrolled version. */
+  selected?: string;
+  /* Initial value for the uncontrolled version. */
+  defaultSelected?: string;
+  /* Callback for the controlled version. */
+  // onChange?: (e: SyntheticEvent, data: { value: string }) => void;
 }
 
 export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
@@ -48,15 +48,16 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       className,
       disabled: listDisabled,
-      displayedItemCount: displayedItemCountProp = 4,
       ListItem = DefaultListItem,
-      id: idProp,
+      id,
       onSelect,
       onFocus,
       onBlur,
       onKeyDown,
       onMouseDown,
-      style,
+      selected: selectedProp,
+      defaultSelected,
+      // onChange,
       ...rest
     },
     ref
@@ -68,53 +69,26 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       window: targetWindow,
     });
 
-    const childrenCount = Children.count(children);
-
-    const listId = useId(idProp) || "listNext"; // TODO: check why useId needs to return undefined
-
-    const displayedItemCount = Math.min(displayedItemCountProp, childrenCount);
+    const listId = useId(id);
+    const listRef = useRef<HTMLUListElement>(null);
+    const handleRef = useForkRef(listRef, ref);
 
     const {
-      listRef,
-      focusedIndex,
-      selectedIndices,
-      activeDescendant,
-      handleClick,
       handleFocus,
       handleKeyDown,
       handleBlur,
       handleMouseDown,
+      activeDescendant,
+      contextValue,
     } = useList({
-      children,
-      displayedItemCount,
+      selected: selectedProp,
+      defaultSelected,
+      // onChange,
+      id: listId,
+      ref: listRef,
     });
 
-    const forkedRef = useForkRef(ref, listRef);
-
-    const renderContent = () => {
-      return Children.map(children, (listItem, index) => {
-        if (!isValidElement(listItem)) return;
-        const { disabled: listItemDisabled, ...restListItemProps } =
-          listItem.props as ListNextProps;
-        const listItemProps = {
-          ...restListItemProps,
-          disabled: listItemDisabled || listDisabled,
-          onClick: (e: MouseEvent<HTMLUListElement>) => handleClick(e),
-          // focused is applicable for list items on focus using keyboard navigation only
-          focused: focusedIndex === index,
-          selected: selectedIndices.includes(index),
-          id: `list-${listId}--list-item--${index}`,
-        };
-
-        return cloneElement(listItem, { ...listItemProps });
-      });
-    };
-    const listStyles = {
-      ...style,
-      "--listNext-displayedItemCount": displayedItemCount,
-    };
-
-    const focusHandler = (event: FocusEvent<HTMLUListElement, Element>) => {
+    const focusHandler = (event: FocusEvent<HTMLUListElement>) => {
       handleFocus();
       onFocus?.(event);
     };
@@ -124,7 +98,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onKeyDown?.(event);
     };
 
-    const blurHandler = (event: FocusEvent<HTMLUListElement, Element>) => {
+    const blurHandler = (event: FocusEvent<HTMLUListElement>) => {
       handleBlur();
       onBlur?.(event);
     };
@@ -137,27 +111,23 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     };
 
     return (
-      <ul
-        ref={forkedRef}
-        className={clsx(
-          withBaseName(),
-          {
-            [withBaseName("focusable")]: !childrenCount,
-          },
-          className
-        )}
-        role="listbox"
-        tabIndex={listDisabled ? -1 : 0}
-        aria-activedescendant={listDisabled ? undefined : activeDescendant}
-        style={listStyles}
-        onFocus={focusHandler}
-        onKeyDown={keyDownHandler}
-        onBlur={blurHandler}
-        onMouseDown={mouseDownHandler}
-        {...rest}
-      >
-        {renderContent()}
-      </ul>
+      <ListItemNextContext.Provider value={contextValue}>
+        <ul
+          ref={handleRef}
+          id={listId}
+          className={clsx(withBaseName(), className)}
+          role="listbox"
+          tabIndex={listDisabled ? -1 : 0}
+          aria-activedescendant={listDisabled ? undefined : activeDescendant}
+          onFocus={focusHandler}
+          onKeyDown={keyDownHandler}
+          onBlur={blurHandler}
+          onMouseDown={mouseDownHandler}
+          {...rest}
+        >
+          {children}
+        </ul>
+      </ListItemNextContext.Provider>
     );
   }
 );

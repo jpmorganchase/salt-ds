@@ -5,7 +5,7 @@
   border-color: var(--salt-container-primary-borderColor);
   border-style: var(--salt-container-borderStyle);
   border-width: var(--salt-size-border);
-  height: calc(var(--salt-size-stackable) * var(--listNext-displayedItemCount, 4));
+  height: 100%;
   outline: none;
   overflow-y: auto;
   overflow-x: hidden;
@@ -13,10 +13,4 @@
   user-select: none;
   padding-inline-start: 0;
   box-sizing: content-box;
-}
-
-/* Pseudo-class applied to the root element on focus */
-.saltListNext-focusable:focus-visible {
-  outline: var(--salt-focused-outline);
-  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
 }

@@ -43,7 +43,11 @@ const getListItems = ({
 
 export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
   return (
-    <ListNext {...rest} aria-label="Declarative List example">
+    <ListNext
+      {...rest}
+      aria-label="Declarative List example"
+      style={{ height: "150px" }}
+    >
       {children ||
         getListItems({
           disabledItems: [1, 5],
@@ -54,11 +58,6 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
 
 Default.args = {
   style: { width: "200px" },
-};
-
-export const ConfigurableHeight = Default.bind({});
-ConfigurableHeight.args = {
-  displayedItemCount: 6,
 };
 
 export const Disabled = Default.bind({});
