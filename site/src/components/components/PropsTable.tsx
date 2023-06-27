@@ -15,11 +15,27 @@ type PropsTableType = {
   componentName: string;
 };
 
+type Props = {
+  [key: string]: {
+    defaultValue?: { value: string };
+    description: string;
+    name: string;
+    type: {
+      name: string;
+    };
+  };
+};
+
+type ComponentData = {
+  displayName: string;
+  props: Props;
+};
+
 export const PropsTable: FC<PropsTableType> = ({
   packageName = "core",
   componentName,
 }) => {
-  const props = require(`../../props/${packageName}-props.json`);
+  const props: ComponentData[] = require(`../../props/${packageName}-props.json`);
 
   const propsTableData = props.find(
     ({ displayName }) => displayName === componentName
