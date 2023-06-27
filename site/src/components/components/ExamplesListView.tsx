@@ -6,17 +6,16 @@ import {
   Dropdown,
 } from "@salt-ds/lab";
 import useIsMobileView from "../../utils/useIsMobileView";
+import { Heading3 } from "../mdx/h3";
+import { exampleNameRegex } from "./LivePreview";
 
 import styles from "./ExamplesListView.module.css";
-
-const exampleNameRegex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
 
 type ExamplesListViewProps = { examples: ReactElement[] };
 
 const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
-  const examplesList: string[] = Children.map(
-    examples,
-    ({ props }) => props.exampleName
+  const examplesList: string[] = Children.map(examples, ({ props }) =>
+    props.title ? props.title : props.exampleName
   );
 
   const [selectedItem, setSelectedItem] = useState<string | null>(
@@ -36,7 +35,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     examplesArray[0];
 
   const {
-    props: { children: exampleCopy, ...restProps },
+    props: { children: exampleCopy, title, exampleName, ...restProps },
     ...rest
   } = selectedExample;
 
@@ -67,11 +66,17 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     </div>
   );
 
-  const componentExample = { props: { list, ...restProps }, ...rest };
+  const componentExample = {
+    props: { list, exampleName, ...restProps },
+    ...rest,
+  };
 
   return (
     <>
       {componentExample}
+      <Heading3>
+        {title ? title : exampleName.match(exampleNameRegex)?.join(" ")}
+      </Heading3>
       {exampleCopy}
     </>
   );

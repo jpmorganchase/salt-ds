@@ -27,6 +27,7 @@ const modes: Mode[] = ["light", "dark"];
 const defaultDensity = densities[1];
 
 const defaultMode = modes[0];
+console.log("defaultMode", defaultMode);
 
 export type LivePreviewContextType = {
   density?: Density;
@@ -41,6 +42,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
   const [density, setDensity] = useState<Density>(defaultDensity);
 
   const [mode, setMode] = useState<Mode>(defaultMode);
+  console.log("mode", mode);
 
   const { allExamplesView, setAllExamplesView } = useAllExamplesView();
 
@@ -108,6 +110,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
               <ToggleButtonGroup
                 aria-label="Select mode"
                 onChange={handleModeChange}
+                value={mode}
               >
                 <ToggleButton aria-label="light mode" value="light">
                   <LightIcon /> {!isMobileView && " Light"}
