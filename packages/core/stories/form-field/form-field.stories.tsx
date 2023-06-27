@@ -16,6 +16,7 @@ import {
   H2,
   FormFieldGroupContext,
   StackLayout,
+  GridLayout,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
@@ -539,7 +540,7 @@ export const GroupedWithLabelTop: ComponentStory<typeof FormField> = (
 ) => {
   return (
     <FormFieldGroupContext.Provider
-      value={{ variant: "primary", labelPlacement: "top", labelWidth: "150px" }}
+      value={{ variant: "primary", labelPlacement: "top" }}
     >
       <StackLayout>
         <FormField {...props}>
@@ -575,8 +576,7 @@ export const GroupedWithLabelLeft: ComponentStory<typeof FormField> = (
     <FormFieldGroupContext.Provider
       value={{
         variant: "primary",
-        labelPlacement: "left",
-        labelWidth: "150px",
+        labelPlacement: "left"
       }}
     >
       <StackLayout>
@@ -613,8 +613,7 @@ export const GroupedWithLabelRight: ComponentStory<typeof FormField> = (
     <FormFieldGroupContext.Provider
       value={{
         variant: "primary",
-        labelPlacement: "right",
-        labelWidth: "150px",
+        labelPlacement: "right"
       }}
     >
       <StackLayout role={"group"}>
@@ -649,8 +648,7 @@ export const GroupedWithVariant: ComponentStory<typeof FormField> = (props) => {
     <FormFieldGroupContext.Provider
       value={{
         variant: "secondary",
-        labelPlacement: "right",
-        labelWidth: "100px",
+        labelPlacement: "right"
       }}
     >
       <StackLayout>
@@ -689,11 +687,10 @@ export const MultiColumnLayout: ComponentStory<typeof FormField> = (props) => {
     <FormFieldGroupContext.Provider
       value={{
         variant: "primary",
-        labelPlacement: "right",
-        labelWidth: "150px",
+        labelPlacement: "right"
       }}
     >
-      <StackLayout>
+    <StackLayout style={{"--formFieldLabel-width": "100px"} as React.CSSProperties}>
         <FormField {...props}>
           <FormLabel>Form Field label left</FormLabel>
           <Input defaultValue="Value" />
@@ -752,15 +749,15 @@ export const MultiColumnLayoutEmptySlot: ComponentStory<typeof FormField> = (
 ) => {
   return (
     <FormFieldGroupContext.Provider
-      value={{ variant: "primary", labelPlacement: "top", labelWidth: "150px" }}
+      value={{ variant: "primary", labelPlacement: "top" }}
     >
-      <StackLayout>
+      <StackLayout style={{"--formFieldLabel-width": "100px"} as React.CSSProperties}>
         <FormField {...props}>
           <FormLabel>Form Field label left</FormLabel>
           <Input defaultValue="Value" />
           <FormHelperText>Helper text</FormHelperText>
         </FormField>
-        <StackLayout direction={"row"}>
+        <GridLayout columns={3}>
           <FormField {...props}>
             <FormLabel>Form Field label</FormLabel>
             <Input defaultValue="Value" />
@@ -775,7 +772,7 @@ export const MultiColumnLayoutEmptySlot: ComponentStory<typeof FormField> = (
             <FormLabel>Form Field label</FormLabel>
             <Checkbox defaultValue="Value" />
           </FormField>
-        </StackLayout>
+        </GridLayout>
         <FormField {...props}>
           <FormLabel>
             Form Field label that's extra long. Showing that labels wrap around
@@ -783,7 +780,7 @@ export const MultiColumnLayoutEmptySlot: ComponentStory<typeof FormField> = (
           </FormLabel>
           <Input defaultValue="Value" />
         </FormField>
-        <StackLayout direction={"row"}>
+        <GridLayout columns={2}>
           <FormField {...props}>
             <FormLabel>Form Field label</FormLabel>
             <Input defaultValue="Value" />
@@ -794,15 +791,14 @@ export const MultiColumnLayoutEmptySlot: ComponentStory<typeof FormField> = (
             <Input defaultValue="Value" />
             <FormHelperText>Helper text</FormHelperText>
           </FormField>
-        </StackLayout>
-        <StackLayout direction={"row"}>
+        </GridLayout>
+        <GridLayout columns={2}>
           <FormField {...props}>
             <FormLabel>Form Field label</FormLabel>
             <Input defaultValue="Value" />
             <FormHelperText>Helper text</FormHelperText>
           </FormField>
-          <div style={{ width: "100%" }} />
-        </StackLayout>
+        </GridLayout>
         <FormField {...props}>
           <FormLabel>Form Field label</FormLabel>
           <Input defaultValue="Value" />
