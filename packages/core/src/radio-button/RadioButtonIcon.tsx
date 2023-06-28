@@ -1,8 +1,9 @@
 import { makePrefixer } from "../utils";
 import { clsx } from "clsx";
-import radioButtonIconCss from "./RadioButtonIcon.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { AdornmentValidationStatus } from "../status-adornment";
+import radioButtonIconCss from "./RadioButtonIcon.css";
 
 const withBaseName = makePrefixer("saltRadioButtonIcon");
 
@@ -10,7 +11,7 @@ export interface RadioButtonIconProps {
   checked?: boolean;
   error?: boolean;
   disabled?: boolean;
-  validationStatus?: "error" | "warning";
+  validationStatus?: AdornmentValidationStatus;
 }
 
 /**

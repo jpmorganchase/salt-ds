@@ -8,6 +8,7 @@ import { FooterProps } from "@jpmorganchase/mosaic-site-components";
 export type LayoutProps = {
   children?: ReactNode;
   sidebar?: ReactElement;
+  pageTitle?: ReactElement;
   className?: string;
   ToCProps?: {
     items: any;

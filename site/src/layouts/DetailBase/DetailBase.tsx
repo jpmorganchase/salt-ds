@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, ReactElement } from "react";
 import clsx from "clsx";
 import { HelpLinks } from "@jpmorganchase/mosaic-components";
 import {
@@ -25,7 +25,10 @@ type Data = {
 
 type CustomSiteState = SiteState & { data?: Data };
 
-type PageHeadingWithPillProps = { title?: string; pageStatus: string };
+type PageHeadingWithPillProps = {
+  title?: string | ReactElement;
+  pageStatus: string;
+};
 
 const PageHeadingWithPill: FC<PageHeadingWithPillProps> = ({
   title,
@@ -43,6 +46,7 @@ export const DetailBase: FC<LayoutProps> = ({
   SidebarProps,
   children,
   sidebar,
+  pageTitle: titleProp,
 }) => {
   const Header = <AppHeader />;
 
@@ -68,15 +72,17 @@ export const DetailBase: FC<LayoutProps> = ({
 
   const pageStatus = useStore((state: CustomSiteState) => state.data?.status);
 
+  const pageTitle = titleProp ? titleProp : title;
+
   return (
     <LayoutBase Header={Header} className={layoutStyles.base}>
       <div className={clsx(layoutStyles.docsWrapper, styles.docsWrapper)}>
         <LayoutColumns PrimarySidebar={PrimarySidebar}>
           <Breadcrumbs />
           {pageStatus ? (
-            <PageHeadingWithPill title={title} pageStatus={pageStatus} />
+            <PageHeadingWithPill title={pageTitle} pageStatus={pageStatus} />
           ) : (
-            <h1 className={layoutStyles.title}>{title}</h1>
+            <h1 className={layoutStyles.title}>{pageTitle}</h1>
           )}
           <SaltProvider mode="light">
             <div className={layoutStyles.docsPageContainer}>

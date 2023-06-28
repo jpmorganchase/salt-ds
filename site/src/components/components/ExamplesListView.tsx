@@ -6,17 +6,16 @@ import {
   Dropdown,
 } from "@salt-ds/lab";
 import useIsMobileView from "../../utils/useIsMobileView";
+import { Heading3 } from "../mdx/h3";
+import { formatComponentExampleName } from "./formatComponentExampleName";
 
 import styles from "./ExamplesListView.module.css";
-
-const exampleNameRegex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
 
 type ExamplesListViewProps = { examples: ReactElement[] };
 
 const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
-  const examplesList: string[] = Children.map(
-    examples,
-    ({ props }) => props.exampleName
+  const examplesList: string[] = Children.map(examples, ({ props }) =>
+    props.title ? props.title : props.exampleName
   );
 
   const [selectedItem, setSelectedItem] = useState<string | null>(
@@ -36,7 +35,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     examplesArray[0];
 
   const {
-    props: { children: exampleCopy, ...restProps },
+    props: { children: exampleCopy, title, exampleName, ...restProps },
     ...rest
   } = selectedExample;
 
@@ -47,7 +46,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
         source={examplesList}
         selected={selectedItem}
         onSelectionChange={handleSelect}
-        itemToString={(item) => item.match(exampleNameRegex)?.join(" ") || item}
+        itemToString={(item) => formatComponentExampleName(item)}
       />
     </FormField>
   ) : (
@@ -62,16 +61,22 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
         onSelect={handleSelect}
         selected={selectedItem}
         defaultSelected={examplesList[0]}
-        itemToString={(item) => item.match(exampleNameRegex)?.join(" ") || item}
+        itemToString={(item) => formatComponentExampleName(item)}
       />
     </div>
   );
 
-  const componentExample = { props: { list, ...restProps }, ...rest };
+  const componentExample = {
+    props: { list, exampleName, ...restProps },
+    ...rest,
+  };
 
   return (
     <>
       {componentExample}
+      <Heading3>
+        {title ? title : formatComponentExampleName(exampleName)}
+      </Heading3>
       {exampleCopy}
     </>
   );

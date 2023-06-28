@@ -1,4 +1,8 @@
 import { clsx } from "clsx";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useDensity } from "../salt-provider";
+import { AdornmentValidationStatus } from "../status-adornment";
 import { makePrefixer } from "../utils";
 import {
   CheckboxCheckedIcon,
@@ -6,11 +10,7 @@ import {
   CheckboxIndeterminateIcon,
   CheckboxUncheckedIcon,
 } from "./assets";
-
 import checkboxIconCss from "./CheckboxIcon.css";
-import { useDensity } from "../salt-provider";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
 export interface CheckboxIconProps {
   checked?: boolean;
@@ -18,7 +18,7 @@ export interface CheckboxIconProps {
   disabled?: boolean;
   error?: boolean /* **Deprecated**: replaced with validationStatus */;
   indeterminate?: boolean;
-  validationStatus?: "error" | "warning";
+  validationStatus?: AdornmentValidationStatus;
 }
 
 const withBaseName = makePrefixer("saltCheckboxIcon");

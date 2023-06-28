@@ -71,6 +71,7 @@ export * from "./switch";
 export * from "./tabs";
 export * from "./toast";
 export * from "./toggle-button";
+export * from "./toggle-button-group";
 export * from "./tokenized-input";
 export * from "./toolbar";
 export * from "./tree";
