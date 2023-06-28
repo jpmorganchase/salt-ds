@@ -9,9 +9,10 @@ export interface ListNextContextValue {
   isFocused: (id: string) => boolean;
 }
 
-export const ListNextContext = createContext<
-  ListNextContextValue | undefined
->("ListNextContext", undefined);
+export const ListNextContext = createContext<ListNextContextValue | undefined>(
+  "ListNextContext",
+  undefined
+);
 
 export function useListItems() {
   return useContext(ListNextContext);
