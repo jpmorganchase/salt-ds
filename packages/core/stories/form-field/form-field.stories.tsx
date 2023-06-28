@@ -256,6 +256,25 @@ export const Readonly: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
+export const NecessityLabel: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormField necessity="optional" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Input value" />
+      </FormField>
+      <FormField necessity="required" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Input value" />
+      </FormField>
+      <FormField necessity="asterisk" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Input value" />
+      </FormField>
+    </FlowLayout>
+  );
+};
+
 const radioData = [
   {
     label: "Ultimate Parent",
