@@ -1,0 +1,50 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Usage
+data:
+  $ref: ./#/data
+---
+
+### Using the Example container component
+
+Use the Example Container to visually distinguish an example of something mentioned in documentation. Can optionally display "Do" and "Don't" labels for situations where contrasting good and bad examples are used.
+
+#### Best practices
+
+- Use Example Containers to distinguish example content (e.g. sample text or code, screenshots, diagrams) from the surrounding documentation
+- When using pairs of Do and Don't examples, consider laying them out side-by-side (on wider viewports). You can use Salt's layout component to achieve this.
+
+#### Things to avoid
+
+- Do not use Example Containers to wrap the actual documentation content (this should be _outside_ of the Example Container)
+- Avoid having multiple examples within a single Example Container, instead use one container per example
+
+### Import
+
+{/* Update the text and code snippet below as needed: */}
+
+This component is automatically available within `.mdx` files, so no explicit `import` is needed for those.
+
+For use elsewhere, import from the site's `src/components/` directory:
+
+```
+import { ExampleContainer } from "path/to/src/components";
+```
+
+### Props
+
+<PropsTable packageName="salt-site" componentName="ExampleContainer" />
+
+### Content
+
+Add text from "Content" section here when available, or else remove this
+section.
+
+### References
+
+Add text from "References" section here when available, or else remove this
+section.

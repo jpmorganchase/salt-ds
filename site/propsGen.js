@@ -10,6 +10,10 @@ const componentFiles = componentPackages.map((package) =>
   path.join(__dirname, "..", "packages", package, "src", "index.ts")
 );
 
+// Add Salt site components
+componentPackages.push("salt-site");
+componentFiles.push(path.join(__dirname, "src", "components", "index.ts"));
+
 const options = {
   propFilter: (prop) =>
     !/@types[\\/]react[\\/]/.test(prop.parent?.fileName || ""),
