@@ -105,6 +105,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     } = {},
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
+    necessity: formFieldRequired,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
   const { variant: controlWrapperVariant } = useControlWrapper();
@@ -131,8 +132,13 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     onBlur,
     onChange,
     onFocus,
+    required: inputPropsRequired,
     ...restInputProps
   } = inputProps;
+
+  const isRequired = formFieldRequired
+    ? ["required", "asterisk"].includes(formFieldRequired)
+    : undefined ?? inputPropsRequired;
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
@@ -201,6 +207,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         value={value}
         {...restA11yProps}
         {...restInputProps}
+        required={isRequired}
       />
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />

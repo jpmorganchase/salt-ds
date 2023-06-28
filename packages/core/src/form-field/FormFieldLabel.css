@@ -11,3 +11,8 @@
   align-self: baseline;
   padding-top: var(--salt-spacing-100);
 }
+
+.saltFormFieldLabel-necessityLabel {
+  font-weight: var(--salt-text-fontWeight);
+  font-style: var(--salt-editable-help-fontStyle);
+}
