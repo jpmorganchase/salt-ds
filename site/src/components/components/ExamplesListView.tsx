@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/lab";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { Heading3 } from "../mdx/h3";
-import { exampleNameRegex } from "./LivePreview";
+import { formatComponentExampleName } from "./formatComponentExampleName";
 
 import styles from "./ExamplesListView.module.css";
 
@@ -46,7 +46,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
         source={examplesList}
         selected={selectedItem}
         onSelectionChange={handleSelect}
-        itemToString={(item) => item.match(exampleNameRegex)?.join(" ") || item}
+        itemToString={(item) => formatComponentExampleName(item)}
       />
     </FormField>
   ) : (
@@ -61,7 +61,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
         onSelect={handleSelect}
         selected={selectedItem}
         defaultSelected={examplesList[0]}
-        itemToString={(item) => item.match(exampleNameRegex)?.join(" ") || item}
+        itemToString={(item) => formatComponentExampleName(item)}
       />
     </div>
   );
@@ -75,7 +75,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     <>
       {componentExample}
       <Heading3>
-        {title ? title : exampleName.match(exampleNameRegex)?.join(" ")}
+        {title ? title : formatComponentExampleName(exampleName)}
       </Heading3>
       {exampleCopy}
     </>

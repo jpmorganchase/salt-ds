@@ -6,7 +6,9 @@ import { SaltProvider } from "@salt-ds/core";
 import { Pre } from "../mdx/pre";
 import { Heading3 } from "../mdx/h3";
 import { useLivePreviewControls } from "./useLivePreviewControls";
+import { formatComponentExampleName } from "./formatComponentExampleName";
 import useIsMobileView from "../../utils/useIsMobileView";
+
 import styles from "./LivePreview.module.css";
 
 type LivePreviewProps = {
@@ -16,8 +18,6 @@ type LivePreviewProps = {
   list?: ReactElement;
   children?: ReactNode;
 };
-
-export const exampleNameRegex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
 
 export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
@@ -48,7 +48,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
     <>
       {!list && (
         <Heading3>
-          {title ? title : exampleName.match(exampleNameRegex)?.join(" ")}
+          {title ? title : formatComponentExampleName(exampleName)}
         </Heading3>
       )}
 
