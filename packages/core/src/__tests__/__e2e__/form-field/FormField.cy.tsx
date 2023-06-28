@@ -160,6 +160,46 @@ describe("GIVEN a FormField", () => {
       cy.checkAxeComponent();
     });
 
+    describe("WITH a necessity label", () => {
+      it("THEN required should display if opted", () => {
+        cy.mount(
+          <FormField necessity="required">
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input defaultValue="Value" />
+            <FormFieldHelperText>Helper text</FormFieldHelperText>
+          </FormField>
+        );
+
+        cy.findByText("(Required)").should("exist");
+        cy.findByLabelText("Label (Required)").should("have.attr", "required");
+      });
+
+      it("THEN optional should display if opted", () => {
+        cy.mount(
+          <FormField necessity="optional">
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input defaultValue="Value" />
+            <FormFieldHelperText>Helper text</FormFieldHelperText>
+          </FormField>
+        );
+
+        cy.findByText("(Optional)").should("exist");
+      });
+
+      it("THEN asterisk should display if opted", () => {
+        cy.mount(
+          <FormField necessity="asterisk">
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input defaultValue="Value" />
+            <FormFieldHelperText>Helper text</FormFieldHelperText>
+          </FormField>
+        );
+
+        cy.findByText("*").should("exist");
+        cy.findByLabelText("Label*").should("have.attr", "required");
+      });
+    });
+
     describe("AND has tooltip helper text", () => {
       it("THEN tooltip should be visible on input hover", () => {
         cy.mount(
