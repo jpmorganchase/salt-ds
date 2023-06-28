@@ -568,7 +568,9 @@ export const GroupedWithLabelTop: ComponentStory<typeof FormField> = (
 export const GroupedWithLabelLeft: ComponentStory<typeof FormField> = (
   props
 ) => {
-  const groupedProps: { labelPlacement: FormFieldLabelPlacement} = { labelPlacement: "right"  };
+  const groupedProps: { labelPlacement: FormFieldLabelPlacement } = {
+    labelPlacement: "right",
+  };
 
   return (
     <StackLayout>
@@ -600,8 +602,10 @@ export const GroupedWithLabelLeft: ComponentStory<typeof FormField> = (
 export const GroupedWithLabelRight: ComponentStory<typeof FormField> = (
   props
 ) => {
-  const groupedProps: { labelPlacement: FormFieldLabelPlacement} = { labelPlacement: "right"  };
-  
+  const groupedProps: { labelPlacement: FormFieldLabelPlacement } = {
+    labelPlacement: "right",
+  };
+
   return (
     <StackLayout role={"group"}>
       <FormField {...groupedProps} {...props}>
