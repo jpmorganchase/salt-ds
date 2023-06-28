@@ -56,7 +56,6 @@ export const FormField = forwardRef(
       onFocus,
       readOnly = false,
       validationStatus,
-      style,
       ...restProps
     }: FormFieldProps,
     ref: ForwardedRef<HTMLDivElement>
