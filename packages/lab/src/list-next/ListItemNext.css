@@ -1,12 +1,12 @@
 /* Default variables applied to the root element */
 .saltListItemNext {
-  --listItemNext-text-color: var(--salt-text-primary-foreground);
-  --listItemNext-background: none;
+  --listNext-item-text-color: var(--salt-text-primary-foreground);
+  --listNext-item-background: none;
 }
 
 .saltListItemNext {
-  color: var(--listItemNext-text-color);
-  background: var(--listItemNext-background);
+  color: var(--listNext-item-text-color);
+  background: var(--listNext-item-background);
   height: var(--salt-size-stackable, auto);
   padding-inline: var(--salt-size-unit);
   display: flex;
@@ -27,27 +27,27 @@
 .saltListItemNext:hover:not([aria-disabled="true"]),
 /* Active list item on focus using keyboard navigation  */
 .saltListItemNext-focused {
-  --listItemNext-background: var(--salt-selectable-background-hover);
+  --listNext-item-background: var(--salt-selectable-background-hover);
   cursor: var(--salt-selectable-cursor-hover);
 }
 
 .saltListItemNext[aria-selected="true"] {
   border-block: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
-  --listItemNext-background: var(--salt-selectable-background-selected);
+  --listNext-item-background: var(--salt-selectable-background-selected);
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
 
 /* Style applied to disabled items */
 .saltListItemNext[aria-disabled="true"] {
-  --listItemNext-text-color: var(--salt-text-primary-foreground-disabled);
+  --listNext-item-text-color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 .saltListItemNext[aria-disabled="true"] .saltText {
-  color: var(--listItemNext-text-color);
+  color: var(--listNext-item-text-color);
 }
 
 /* disabled list item when selected */
 .saltListItemNext[aria-disabled="true"][aria-selected="true"] {
   border-block: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selectedDisabled);
-  --listItemNext-background: var(--salt-selectable-background-selectedDisabled);
+  --listNext-item-background: var(--salt-selectable-background-selectedDisabled);
 }
