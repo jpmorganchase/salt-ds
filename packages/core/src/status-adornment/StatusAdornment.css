@@ -1,9 +1,10 @@
 .saltStatusAdornment {
-  fill: var(--saltStatusAdornment-color, var(--statusAdornment-color));
   display: inline-block;
-  position: relative;
+  fill: var(--saltStatusAdornment-color, var(--statusAdornment-color));
   height: var(--salt-icon-size-status-adornment);
   min-height: var(--salt-icon-size-status-adornment);
+  padding-left: var(--salt-spacing-100);
+  position: relative;
 }
 
 .saltStatusAdornment-error {
@@ -12,4 +13,8 @@
 
 .saltStatusAdornment-warning {
   --statusAdornment-color: var(--salt-status-warning-foreground);
+}
+
+.saltStatusAdornment-success {
+  --statusAdornment-color: var(--salt-status-success-foreground);
 }

@@ -1,8 +1,7 @@
 .saltFormField {
   display: inline-grid;
   position: relative;
-  column-gap: var(--salt-size-adornmentGap);
-  row-gap: var(--salt-size-adornmentGap);
+  gap: var(--salt-spacing-100);
   text-align: left;
   width: var(--saltFormField-width, 100%);
 }
@@ -27,7 +26,7 @@
   display: grid;
   grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
-  grid-column-gap: var(--salt-size-adornmentGap);
+  grid-column-gap: var(--salt-spacing-100);
 }
 
 .saltFormField > *,
@@ -43,6 +42,8 @@
   grid-area: helperText;
 }
 
-.saltFormField-disabled .saltInput-focused {
-  outline: none;
+.saltFormField-disabled {
+  --saltInput-outline: none;
+  --saltCheckbox-outline: none;
+  --saltRadioButton-outline: none;
 }

@@ -14,6 +14,8 @@ import { RadioButtonIcon } from "./RadioButtonIcon";
 import radioButtonCss from "./RadioButton.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useFormFieldProps } from "../form-field-context";
+import { AdornmentValidationStatus } from "../status-adornment";
 
 const withBaseName = makePrefixer("saltRadioButton");
 
@@ -64,9 +66,12 @@ export interface RadioButtonProps
    */
   value?: string;
   /**
-   * Validation status.
+   * Validation status, one of "warning" | "error" | "success"
+   *
+   * RadioButton has styling variants for "error" and "warning".
+   * No visual styling will be applied on "success" variant.
    */
-  validationStatus?: "error" | "warning";
+  validationStatus?: AdornmentValidationStatus;
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
@@ -94,6 +99,12 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       window: targetWindow,
     });
 
+    const {
+      a11yProps: formFieldA11yProps,
+      disabled: formFieldDisabled,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
+
     const radioGroup = useRadioGroup();
 
     const {
@@ -102,9 +113,11 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       ...restInputProps
     } = inputProps;
 
-    const disabled = radioGroup.disabled ?? disabledProp;
+    const disabled = radioGroup.disabled ?? formFieldDisabled ?? disabledProp;
     const validationStatus = !disabled
-      ? radioGroup.validationStatus ?? validationStatusProp
+      ? radioGroup.validationStatus ??
+        formFieldValidationStatus ??
+        validationStatusProp
       : undefined;
 
     const radioGroupChecked =
@@ -145,11 +158,13 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       >
         <input
           aria-describedby={clsx(
-            radioGroup.a11yProps?.["aria-describedby"],
+            radioGroup.a11yProps?.["aria-describedby"] ??
+              formFieldA11yProps?.["aria-describedby"],
             inputDescribedBy
           )}
           aria-labelledby={clsx(
-            radioGroup.a11yProps?.["aria-labelledby"],
+            radioGroup.a11yProps?.["aria-labelledby"] ??
+              formFieldA11yProps?.["aria-labelledby"],
             inputLabelledBy
           )}
           className={withBaseName("input")}
