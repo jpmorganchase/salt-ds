@@ -15,7 +15,7 @@
 
 .saltFormField-labelLeft {
   align-self: center;
-  grid-template-columns: var(--formFieldLabel-width, 40%) 1fr;
+  grid-template-columns: var(--formField-label-width, 40%) 1fr;
   grid-template-areas:
     "label controls"
     "auto helperText";
@@ -23,7 +23,7 @@
 
 .saltFormField-labelRight {
   align-self: center;
-  grid-template-columns: var(--formFieldLabel-width, 40%) 1fr;
+  grid-template-columns: var(--formField-label-width, 40%) 1fr;
   grid-template-areas:
     "label controls"
     "auto helperText";
