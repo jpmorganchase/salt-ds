@@ -43,12 +43,12 @@ export const useList = ({
     state: "selected",
   });
 
-  const getOptions = useCallback(() => {
+  const getOptions: () => HTMLElement[] = useCallback(() => {
     return Array.from(
       listRef.current?.querySelectorAll(
         '[role="option"]:not([aria-disabled])'
       ) ?? []
-    ) as HTMLElement[];
+    );
   }, [listRef]);
 
   const updateScroll = useCallback(
