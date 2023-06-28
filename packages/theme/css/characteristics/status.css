@@ -12,11 +12,6 @@
   --salt-status-warning-borderColor: var(--salt-palette-warning-border);
   --salt-status-error-borderColor: var(--salt-palette-error-border);
 
-  --salt-status-info-borderColor-disabled: var(--salt-palette-info-border-disabled);
-  --salt-status-success-borderColor-disabled: var(--salt-palette-success-border-disabled);
-  --salt-status-warning-borderColor-disabled: var(--salt-palette-warning-border-disabled);
-  --salt-status-error-borderColor-disabled: var(--salt-palette-error-border-disabled);
-
   --salt-status-info-background: var(--salt-palette-info-background);
   --salt-status-success-background: var(--salt-palette-success-background);
   --salt-status-warning-background: var(--salt-palette-warning-background);
@@ -38,4 +33,8 @@
   --salt-status-static-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
   --salt-status-negative-foreground-disabled: var(--salt-palette-negative-foreground-disabled);
   --salt-status-positive-foreground-disabled: var(--salt-palette-positive-foreground-disabled);
+  --salt-status-info-borderColor-disabled: var(--salt-palette-info-border-disabled);
+  --salt-status-success-borderColor-disabled: var(--salt-palette-success-border-disabled);
+  --salt-status-warning-borderColor-disabled: var(--salt-palette-warning-border-disabled);
+  --salt-status-error-borderColor-disabled: var(--salt-palette-error-border-disabled);
 }
