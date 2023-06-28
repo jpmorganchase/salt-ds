@@ -7,7 +7,7 @@ import { makePrefixer, useId, capitalize } from "../utils";
 
 import formFieldCss from "./FormField.css";
 
-export type FormFieldLabelPlacement = "top" | "left" | "right" | undefined;
+export type FormFieldLabelPlacement = "top" | "left" | "right";
 
 export interface FormFieldProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -93,9 +93,9 @@ export const FormField = forwardRef(
               "aria-describedby": helperTextId,
             },
             disabled,
-            readOnly,
-            validationStatus,
             necessity,
+            readOnly,
+            validationStatus
           }}
         >
           {children}

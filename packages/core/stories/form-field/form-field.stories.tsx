@@ -16,7 +16,6 @@ import {
   FormFieldControlWrapper,
   StackLayout,
   GridLayout,
-  FormFieldLabelPlacement,
   FormFieldProps,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
@@ -600,7 +599,7 @@ export const GroupedWithLabelLeft: ComponentStory<typeof FormField> = (
 export const GroupedWithLabelRight: ComponentStory<typeof FormField> = (
   props
 ) => {
-  const groupedProps = { labelPlacement: "right" as FormFieldLabelPlacement };
+  const groupedProps = { labelPlacement: "right" } as Partial<FormFieldProps>;
   return (
     <StackLayout role={"group"}>
       <FormField {...groupedProps} {...props}>
