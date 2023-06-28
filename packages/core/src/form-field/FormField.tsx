@@ -1,13 +1,11 @@
 import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { A11yValueProps, FormFieldContext } from "../form-field-context";
 import { makePrefixer, useId, capitalize } from "../utils";
 
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-
 import formFieldCss from "./FormField.css";
-import { useFormFieldGroup } from "./FormFieldGroupContext";
 
 export type FormFieldLabelPlacement = "top" | "left" | "right" | undefined;
 

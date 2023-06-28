@@ -9,14 +9,15 @@ import {
   FormFieldLabel as FormLabel,
   FormField,
   Input,
+  InputProps,
   Tooltip,
   AdornmentButton,
   Text,
   FormFieldControlWrapper,
-  H2,
-  FormFieldGroupContext,
   StackLayout,
   GridLayout,
+  FormFieldLabelPlacement,
+  FormFieldProps,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
@@ -539,9 +540,6 @@ export const GroupedWithLabelTop: ComponentStory<typeof FormField> = (
   props
 ) => {
   return (
-    <FormFieldGroupContext.Provider
-      value={{ variant: "primary", labelPlacement: "top" }}
-    >
       <StackLayout>
         <FormField {...props}>
           <FormLabel>Form Field label left</FormLabel>
@@ -565,96 +563,79 @@ export const GroupedWithLabelTop: ComponentStory<typeof FormField> = (
           <Input defaultValue="Primary Input value" />
         </FormField>
       </StackLayout>
-    </FormFieldGroupContext.Provider>
   );
 };
 
 export const GroupedWithLabelLeft: ComponentStory<typeof FormField> = (
   props
 ) => {
+  const groupedProps = { labelPlacement: "left" } as Partial<FormFieldProps>;
   return (
-    <FormFieldGroupContext.Provider
-      value={{
-        variant: "primary",
-        labelPlacement: "left"
-      }}
-    >
       <StackLayout>
-        <FormField {...props}>
+        <FormField {...groupedProps} {...props}>
           <FormLabel>Form Field label left</FormLabel>
           <Input defaultValue="Value" />
           <FormHelperText>Helper text</FormHelperText>
         </FormField>
-        <FormField {...props}>
+        <FormField {...groupedProps} {...props}>
           <FormLabel>
             Form Field label that's extra long. Showing that labels wrap around
             to the line.
           </FormLabel>
           <Input defaultValue="Primary Input value" />
         </FormField>
-        <FormField {...props}>
+        <FormField {...groupedProps} {...props}>
           <FormLabel>Form Field label</FormLabel>
           <Input defaultValue="Value" />
           <FormHelperText>Helper text</FormHelperText>
         </FormField>
-        <FormField {...props}>
+        <FormField {...groupedProps} {...props}>
           <FormLabel>Form Field label</FormLabel>
           <Input defaultValue="Primary Input value" />
         </FormField>
       </StackLayout>
-    </FormFieldGroupContext.Provider>
   );
 };
 
 export const GroupedWithLabelRight: ComponentStory<typeof FormField> = (
   props
 ) => {
+  const groupedProps = { labelPlacement: "right" as FormFieldLabelPlacement };
   return (
-    <FormFieldGroupContext.Provider
-      value={{
-        variant: "primary",
-        labelPlacement: "right"
-      }}
-    >
       <StackLayout role={"group"}>
-        <FormField {...props}>
+        <FormField {...groupedProps} {...props}>
           <FormLabel>Form Field label left</FormLabel>
           <Input defaultValue="Value" />
           <FormHelperText>Helper text</FormHelperText>
         </FormField>
-        <FormField {...props}>
+        <FormField {...groupedProps} {...props}>
           <FormLabel>
             Form Field label that's extra long. Showing that labels wrap around
             to the line.
           </FormLabel>
           <Input defaultValue="Primary Input value" />
         </FormField>
-        <FormField {...props}>
+        <FormField {...groupedProps} {...props}>
           <FormLabel>Form Field label</FormLabel>
           <Input defaultValue="Value" />
           <FormHelperText>Helper text</FormHelperText>
         </FormField>
-        <FormField {...props}>
+        <FormField {...groupedProps} {...props}>
           <FormLabel>Form Field label</FormLabel>
           <Input defaultValue="Primary Input value" />
         </FormField>
       </StackLayout>
-    </FormFieldGroupContext.Provider>
   );
 };
 
 export const GroupedWithVariant: ComponentStory<typeof FormField> = (props) => {
+  const groupedControlProps = { variant: "secondary" } as Partial<InputProps>;
+  
   return (
-    <FormFieldGroupContext.Provider
-      value={{
-        variant: "secondary",
-        labelPlacement: "right"
-      }}
-    >
       <StackLayout>
-        <FormField {...props}>
+        <FormField {...props} >
           <FormLabel>Form Field label left</FormLabel>
-          <Input defaultValue="Value" />
+          <Input defaultValue="Value" {...groupedControlProps} />
           <FormHelperText>Helper text</FormHelperText>
         </FormField>
         <FormField {...props}>
@@ -662,7 +643,7 @@ export const GroupedWithVariant: ComponentStory<typeof FormField> = (props) => {
             Form Field label that's extra long. Showing that labels wrap around
             to the line.
           </FormLabel>
-          <Input defaultValue="Value" />
+          <Input defaultValue="Value" {...groupedControlProps} />
         </FormField>
         <FormField {...props}>
           <FormLabel>Form Field label</FormLabel>
@@ -670,33 +651,26 @@ export const GroupedWithVariant: ComponentStory<typeof FormField> = (props) => {
         </FormField>
         <FormField {...props}>
           <FormLabel>Form Field label</FormLabel>
-          <Input defaultValue="Value" />
+          <Input defaultValue="Value" {...groupedControlProps} />
           <FormHelperText>Helper text</FormHelperText>
         </FormField>
         <FormField {...props}>
           <FormLabel>Form Field label</FormLabel>
-          <Input defaultValue="Value" />
+          <Input defaultValue="Value" {...groupedControlProps} />
         </FormField>
       </StackLayout>
-    </FormFieldGroupContext.Provider>
   );
 };
 
 export const MultiColumnLayout: ComponentStory<typeof FormField> = (props) => {
   return (
-    <FormFieldGroupContext.Provider
-      value={{
-        variant: "primary",
-        labelPlacement: "right"
-      }}
-    >
     <StackLayout style={{"--formFieldLabel-width": "100px"} as React.CSSProperties}>
         <FormField {...props}>
           <FormLabel>Form Field label left</FormLabel>
           <Input defaultValue="Value" />
           <FormHelperText>Helper text</FormHelperText>
         </FormField>
-        <StackLayout direction={"row"}>
+        <StackLayout direction={{xs: "column", sm: "row"}}>
           <FormField {...props}>
             <FormLabel>Form Field label</FormLabel>
             <Input defaultValue="Value" />
@@ -719,7 +693,7 @@ export const MultiColumnLayout: ComponentStory<typeof FormField> = (props) => {
           </FormLabel>
           <Input defaultValue="Value" />
         </FormField>
-        <StackLayout direction={"row"}>
+        <StackLayout direction={{xs: "column", sm: "row"}}>
           <FormField {...props}>
             <FormLabel>Form Field label</FormLabel>
             <Input defaultValue="Value" />
@@ -740,7 +714,6 @@ export const MultiColumnLayout: ComponentStory<typeof FormField> = (props) => {
           <Input defaultValue="Value" />
         </FormField>
       </StackLayout>
-    </FormFieldGroupContext.Provider>
   );
 };
 
@@ -748,57 +721,13 @@ export const MultiColumnLayoutEmptySlot: ComponentStory<typeof FormField> = (
   props
 ) => {
   return (
-    <FormFieldGroupContext.Provider
-      value={{ variant: "primary", labelPlacement: "top" }}
-    >
-      <StackLayout style={{"--formFieldLabel-width": "100px"} as React.CSSProperties}>
-        <FormField {...props}>
-          <FormLabel>Form Field label left</FormLabel>
-          <Input defaultValue="Value" />
-          <FormHelperText>Helper text</FormHelperText>
-        </FormField>
-        <GridLayout columns={3}>
-          <FormField {...props}>
-            <FormLabel>Form Field label</FormLabel>
-            <Input defaultValue="Value" />
-            <FormHelperText>Helper text</FormHelperText>
-          </FormField>
-          <FormField {...props}>
-            <FormLabel>Form Field label</FormLabel>
-            <Input defaultValue="Value" />
-            <FormHelperText>Helper text</FormHelperText>
-          </FormField>
-          <FormField {...props}>
-            <FormLabel>Form Field label</FormLabel>
-            <Checkbox defaultValue="Value" />
-          </FormField>
-        </GridLayout>
-        <FormField {...props}>
-          <FormLabel>
-            Form Field label that's extra long. Showing that labels wrap around
-            to the line.
-          </FormLabel>
-          <Input defaultValue="Value" />
-        </FormField>
-        <GridLayout columns={2}>
-          <FormField {...props}>
-            <FormLabel>Form Field label</FormLabel>
-            <Input defaultValue="Value" />
-            <FormHelperText>Helper text</FormHelperText>
-          </FormField>
-          <FormField {...props}>
-            <FormLabel>Form Field label</FormLabel>
-            <Input defaultValue="Value" />
-            <FormHelperText>Helper text</FormHelperText>
-          </FormField>
-        </GridLayout>
-        <GridLayout columns={2}>
-          <FormField {...props}>
-            <FormLabel>Form Field label</FormLabel>
-            <Input defaultValue="Value" />
-            <FormHelperText>Helper text</FormHelperText>
-          </FormField>
-        </GridLayout>
+    <StackLayout style={{"--formFieldLabel-width": "100px"} as React.CSSProperties}>
+      <FormField {...props}>
+        <FormLabel>Form Field label left</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <GridLayout columns={3}>
         <FormField {...props}>
           <FormLabel>Form Field label</FormLabel>
           <Input defaultValue="Value" />
@@ -807,8 +736,48 @@ export const MultiColumnLayoutEmptySlot: ComponentStory<typeof FormField> = (
         <FormField {...props}>
           <FormLabel>Form Field label</FormLabel>
           <Input defaultValue="Value" />
+          <FormHelperText>Helper text</FormHelperText>
         </FormField>
-      </StackLayout>
-    </FormFieldGroupContext.Provider>
+        <FormField {...props}>
+          <FormLabel>Form Field label</FormLabel>
+          <Checkbox defaultValue="Value" />
+        </FormField>
+      </GridLayout>
+      <FormField {...props}>
+        <FormLabel>
+          Form Field label that's extra long. Showing that labels wrap around
+          to the line.
+        </FormLabel>
+        <Input defaultValue="Value" />
+      </FormField>
+      <GridLayout columns={2}>
+        <FormField {...props}>
+          <FormLabel>Form Field label</FormLabel>
+          <Input defaultValue="Value" />
+          <FormHelperText>Helper text</FormHelperText>
+        </FormField>
+        <FormField {...props}>
+          <FormLabel>Form Field label</FormLabel>
+          <Input defaultValue="Value" />
+          <FormHelperText>Helper text</FormHelperText>
+        </FormField>
+      </GridLayout>
+      <GridLayout columns={2}>
+        <FormField {...props}>
+          <FormLabel>Form Field label</FormLabel>
+          <Input defaultValue="Value" />
+          <FormHelperText>Helper text</FormHelperText>
+        </FormField>
+      </GridLayout>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <Input defaultValue="Value" />
+      </FormField>
+    </StackLayout>
   );
 };

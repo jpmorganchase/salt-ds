@@ -11,12 +11,12 @@ import {
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { useControlWrapper } from "../form-field";
 import { useFormFieldProps } from "../form-field-context";
 import { makePrefixer, useControlled } from "../utils";
 import { StatusAdornment } from "../status-adornment";
 
 import inputCss from "./Input.css";
-import { useControlWrapper, useFormFieldGroup } from "../form-field";
 
 const withBaseName = makePrefixer("saltInput");
 
@@ -108,8 +108,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     necessity: formFieldRequired,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
-  const { variant: controlWrapperVariant } = useControlWrapper();
-  const { variant: formFieldGroupVariant } = useFormFieldGroup();
+  const controlWrapper = useControlWrapper();
 
   const restA11yProps = {
     "aria-activedescendant": ariaActiveDescendant,
@@ -117,7 +116,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     "aria-owns": ariaOwns,
   };
 
-  const variant = formFieldGroupVariant ?? controlWrapperVariant ?? variantProp;
+  const variant = controlWrapper?.variant ?? variantProp;
   const isDisabled = disabled || formFieldDisabled;
   const isReadOnly = readOnlyProp || formFieldReadOnly;
   const validationStatus = formFieldValidationStatus ?? validationStatusProp;
