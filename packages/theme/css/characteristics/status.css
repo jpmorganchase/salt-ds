@@ -7,15 +7,6 @@
   --salt-status-negative-foreground: var(--salt-palette-negative-foreground);
   --salt-status-positive-foreground: var(--salt-palette-positive-foreground);
 
-  /* TODO: Deprecate tokens when deleted from Radio Button */
-  --salt-status-info-foreground-disabled: var(--salt-palette-info-foreground-disabled);
-  --salt-status-success-foreground-disabled: var(--salt-palette-success-foreground-disabled);
-  --salt-status-warning-foreground-disabled: var(--salt-palette-warning-foreground-disabled);
-  --salt-status-error-foreground-disabled: var(--salt-palette-error-foreground-disabled);
-  --salt-status-static-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
-  --salt-status-negative-foreground-disabled: var(--salt-palette-negative-foreground-disabled);
-  --salt-status-positive-foreground-disabled: var(--salt-palette-positive-foreground-disabled);
-
   --salt-status-info-borderColor: var(--salt-palette-info-border);
   --salt-status-success-borderColor: var(--salt-palette-success-border);
   --salt-status-warning-borderColor: var(--salt-palette-warning-border);
@@ -40,4 +31,11 @@
   --salt-status-success-background-emphasize: var(--salt-status-success-background);
   --salt-status-warning-background-emphasize: var(--salt-status-warning-background);
   --salt-status-error-background-emphasize: var(--salt-status-error-background);
+  --salt-status-info-foreground-disabled: var(--salt-palette-info-foreground-disabled);
+  --salt-status-success-foreground-disabled: var(--salt-palette-success-foreground-disabled);
+  --salt-status-warning-foreground-disabled: var(--salt-palette-warning-foreground-disabled);
+  --salt-status-error-foreground-disabled: var(--salt-palette-error-foreground-disabled);
+  --salt-status-static-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
+  --salt-status-negative-foreground-disabled: var(--salt-palette-negative-foreground-disabled);
+  --salt-status-positive-foreground-disabled: var(--salt-palette-positive-foreground-disabled);
 }
