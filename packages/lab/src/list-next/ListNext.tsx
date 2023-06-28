@@ -12,7 +12,7 @@ import { useList } from "./useList";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import listNextCss from "./ListNext.css";
-import { ListItemNextContext } from "./ListNextContext";
+import { ListNextContext } from "./ListNextContext";
 
 const withBaseName = makePrefixer("saltListNext");
 
@@ -31,8 +31,6 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
   selected?: string;
   /* Initial value for the uncontrolled version. */
   defaultSelected?: string;
-  /* Callback for the controlled version. */
-  // onChange?: (e: SyntheticEvent, data: { value: string }) => void;
 }
 
 export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
@@ -49,7 +47,6 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onMouseDown,
       selected: selectedProp,
       defaultSelected,
-      // onChange,
       ...rest
     },
     ref
@@ -76,7 +73,6 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       disabled: listDisabled,
       selected: selectedProp,
       defaultSelected,
-      // onChange,
       id: listId,
       ref: listRef,
     });
@@ -102,7 +98,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     };
 
     return (
-      <ListItemNextContext.Provider value={contextValue}>
+      <ListNextContext.Provider value={contextValue}>
         <ul
           ref={handleRef}
           id={listId}
@@ -118,7 +114,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         >
           {children}
         </ul>
-      </ListItemNextContext.Provider>
+      </ListNextContext.Provider>
     );
   }
 );
