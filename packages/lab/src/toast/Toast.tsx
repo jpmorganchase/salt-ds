@@ -16,7 +16,7 @@ import toastCss from "./Toast.css";
 
 const withBaseName = makePrefixer("saltToast");
 
-export interface ToastProps extends HTMLAttributes<"div"> {
+export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   status?: BannerProps["status"];
   variant?: "primary" | "secondary";
@@ -39,7 +39,7 @@ export const Toast = forwardRef(function Toast(
   };
 
   return (
-    <div className={clsx(withBaseName())} ref={ref}>
+    <div className={clsx(withBaseName())} {...restProps} ref={ref}>
       <Banner status={status} variant={variant}>
         <BannerContent>{children}</BannerContent>
         <BannerActions>
