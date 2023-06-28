@@ -12,7 +12,7 @@ export type AdornmentButtonProps = ButtonProps;
 const withBaseName = makePrefixer("saltAdornmentButton");
 
 export const AdornmentButton = forwardRef(function AdornmentButton(
-  { children, disabled, variant, ...rest }: AdornmentButtonProps,
+  { children, disabled, variant = "secondary", ...rest }: AdornmentButtonProps,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
   const targetWindow = useWindow();

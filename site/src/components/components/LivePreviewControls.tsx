@@ -108,6 +108,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
               <ToggleButtonGroup
                 aria-label="Select mode"
                 onChange={handleModeChange}
+                value={mode}
               >
                 <ToggleButton aria-label="light mode" value="light">
                   <LightIcon /> {!isMobileView && " Light"}
