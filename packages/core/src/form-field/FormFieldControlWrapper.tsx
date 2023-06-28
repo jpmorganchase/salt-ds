@@ -11,7 +11,9 @@ export type ControlWrapper = {
   variant: "primary" | "secondary";
 };
 
-export const ControlWrapperContext = createContext<ControlWrapper | undefined>(undefined);
+export const ControlWrapperContext = createContext<ControlWrapper | undefined>(
+  undefined
+);
 
 export const useControlWrapper = () => {
   return useContext(ControlWrapperContext);
