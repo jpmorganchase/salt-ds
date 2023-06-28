@@ -16,7 +16,7 @@
     "gen:snapshot": "yarn gen:props && yarn mosaic build --out snapshots --name latest --config mosaic.config.js && yarn copy:sitemap",
     "serve:snapshot:file": "yarn cross-env MOSAIC_MODE='snapshot-file' concurrently --kill-others 'yarn dev'",
     "serve:snapshot:s3": "yarn cross-env MOSAIC_MODE='snapshot-s3' concurrently --kill-others 'yarn dev'",
-    "serve": "concurrently --kill-others 'yarn dev' 'yarn mosaic serve -c ./mosaic.config.js' -p 8080",
+    "serve": "yarn gen:props && concurrently --kill-others 'yarn dev' 'yarn mosaic serve -c ./mosaic.config.js' -p 8080",
     "copy:sitemap": "yarn node copySitemap.js",
     "gen:props": "yarn node './propsGen.js'"
   },
