@@ -2,7 +2,7 @@ import { createContext } from "@salt-ds/core";
 import { SyntheticEvent, useContext } from "react";
 
 export interface ListNextContextValue {
-  disabled: boolean;
+  disabled?: boolean;
   id?: string;
   select: (event: SyntheticEvent<HTMLLIElement>) => void;
   isSelected: (id: string) => boolean;
