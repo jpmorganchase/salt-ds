@@ -41,11 +41,6 @@
   grid-column-gap: var(--salt-spacing-100);
 }
 
-.saltFormField > *,
-.saltFormFieldControlWrapper {
-  grid-area: controls;
-}
-
 .saltFormFieldLabel {
   grid-area: label;
 }
