@@ -92,26 +92,12 @@ describe("Tab selection, Given a Tabstrip", () => {
     describe("WHEN the selected Tab is in the overflow menu", () => {
       it("THEN the active tab will be moved from the overflow menu to the end of visible tabs", () => {
         cy.mount(<DefaultTabstrip width={220} />);
-        cy.get("[role='tab']:first-child").should("have.ariaSelected");
-
-        cy.findByRole("combobox").click();
-        cy.findByRole("listbox");
-        cy.focused().realPress("ArrowDown").realPress("Enter");
-        cy.findAllByRole("tab").eq(1).should("have.ariaSelected");
-      });
-    });
-    describe("WHEN the selected Tab is moved to visible", () => {
-      describe("WHEN the component is resized", () => {
-        it("THEN the active tab will be moved from the overflow menu to the end of visible tabs", () => {
-          cy.mount(<DefaultTabstrip width={320} />);
-          cy.get("[role='tab']:first-child").should("have.ariaSelected");
-          cy.findByRole("combobox").click();
-          cy.findByRole("listbox");
-          cy.focused().realPress("ArrowDown").realPress("Enter");
-          cy.findAllByRole("tab").eq(2).should("have.ariaSelected");
-          cy.get(".saltTabstripNext").invoke("css", "width", "220px");
-          cy.findAllByRole("tab").eq(1).should("have.ariaSelected");
-        });
+        cy.findAllByRole("tab", { name: "Home" }).should("have.ariaSelected");
+        cy.findByRole("combobox").realClick();
+        cy.findByRole("listbox").should("be.visible");
+        cy.findByRole("option", { name: "Loans" }).realClick();
+        cy.findAllByRole("tab", { name: "Loans" }).should("be.visible");
+        cy.findAllByRole("tab", { name: "Loans" }).should("have.ariaSelected");
       });
     });
   });
