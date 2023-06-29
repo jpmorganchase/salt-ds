@@ -41,18 +41,27 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       css: listItemNextCss,
       window: targetWindow,
     });
+    const id = useId(idProp) || value;
 
     const listContext = useListItems();
-    const id = useId(idProp) || value;
-    const itemId = `list-${listContext?.id || "listNext"}--list-item--${id}`;
-    const content = label || children;
+    if (!listContext) return null;
 
-    const disabled = disabledProp || listContext?.disabled;
-    const selected = selectedProp || listContext?.isSelected(value);
-    const focused = listContext?.isFocused(itemId);
+    const {
+      id: contextId,
+      disabled: contextDisabled,
+      select,
+      isSelected,
+      isFocused,
+    } = listContext;
+
+    const itemId = `${contextId || "listNext"}--${id}`;
+    const content = label || children;
+    const disabled = disabledProp || contextDisabled;
+    const selected = selectedProp || isSelected(value);
+    const focused = isFocused(itemId);
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
-      listContext?.select(event);
+      select(event);
       onClick?.(event);
     };
 

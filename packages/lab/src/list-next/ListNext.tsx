@@ -38,14 +38,14 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     {
       children,
       className,
-      disabled: listDisabled,
+      disabled,
       id,
       onSelect,
       onFocus,
       onBlur,
       onKeyDown,
       onMouseDown,
-      selected: selectedProp,
+      selected,
       defaultSelected,
       ...rest
     },
@@ -70,8 +70,8 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       activeDescendant,
       contextValue,
     } = useList({
-      disabled: listDisabled,
-      selected: selectedProp,
+      disabled,
+      selected,
       defaultSelected,
       id: listId,
       ref: listRef,
@@ -104,8 +104,8 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           id={listId}
           className={clsx(withBaseName(), className)}
           role="listbox"
-          tabIndex={listDisabled ? -1 : 0}
-          aria-activedescendant={listDisabled ? undefined : activeDescendant}
+          tabIndex={disabled ? -1 : 0}
+          aria-activedescendant={disabled ? undefined : activeDescendant}
           onFocus={focusHandler}
           onKeyDown={keyDownHandler}
           onBlur={blurHandler}

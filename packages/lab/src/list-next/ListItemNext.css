@@ -7,8 +7,8 @@
 .saltListItemNext {
   color: var(--listNext-item-text-color);
   background: var(--listNext-item-background);
-  height: var(--salt-size-stackable, auto);
-  padding-inline: var(--salt-size-unit);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  padding-inline: var(--salt-spacing-100);
   display: flex;
   gap: var(--salt-size-unit);
   position: relative;

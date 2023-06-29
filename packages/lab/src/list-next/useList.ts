@@ -29,13 +29,13 @@ export const useList = ({
   defaultSelected,
   onChange,
   id,
-  ref: listRef,
+  ref,
 }: UseListProps) => {
   const [activeDescendant, setActiveDescendant] = useState<string | undefined>(
     undefined
   );
 
-  const [showFocusRing, setShowFocusRing] = useState<boolean>(true);
+  const [showFocusRing, setShowFocusRing] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useControlled({
     controlled: selectedProp,
     default: defaultSelected,
@@ -45,15 +45,14 @@ export const useList = ({
 
   const getOptions: () => HTMLElement[] = useCallback(() => {
     return Array.from(
-      listRef.current?.querySelectorAll(
-        '[role="option"]:not([aria-disabled])'
-      ) ?? []
+      ref.current?.querySelectorAll('[role="option"]:not([aria-disabled])') ??
+        []
     );
-  }, [listRef]);
+  }, [ref]);
 
   const updateScroll = useCallback(
     (currentTarget: Element) => {
-      const list = listRef.current;
+      const list = ref.current;
       if (!list || !currentTarget) return;
       const { offsetTop, offsetHeight } = currentTarget as HTMLLIElement;
       const listHeight = list?.clientHeight;
@@ -64,7 +63,7 @@ export const useList = ({
         list.scrollTop = offsetTop + offsetHeight - listHeight;
       }
     },
-    [listRef]
+    [ref]
   );
 
   const updateActiveDescendant = useCallback(
@@ -195,7 +194,6 @@ export const useList = ({
     if (!currentItem) {
       return;
     }
-    setShowFocusRing(true);
     switch (key) {
       case "ArrowUp":
       case "ArrowDown":
