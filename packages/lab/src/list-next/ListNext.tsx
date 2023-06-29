@@ -21,12 +21,6 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
-  /**
-   * Optional id prop
-   *
-   *The id for the list component
-   */
-  id?: string;
   /* Value for the uncontrolled version. */
   selected?: string;
   /* Initial value for the uncontrolled version. */
@@ -106,6 +100,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           role="listbox"
           tabIndex={disabled ? -1 : 0}
           aria-activedescendant={disabled ? undefined : activeDescendant}
+          aria-disabled={disabled}
           onFocus={handleFocus}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}

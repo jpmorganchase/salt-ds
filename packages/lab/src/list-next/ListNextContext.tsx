@@ -14,6 +14,6 @@ export const ListNextContext = createContext<ListNextContextValue | undefined>(
   undefined
 );
 
-export function useListItems() {
+export function useListItem() {
   return useContext(ListNextContext);
 }

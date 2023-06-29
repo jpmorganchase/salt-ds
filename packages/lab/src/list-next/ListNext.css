@@ -10,7 +10,6 @@
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
-  user-select: none;
   padding-inline-start: 0;
   box-sizing: content-box;
 }

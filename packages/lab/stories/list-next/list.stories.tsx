@@ -14,7 +14,7 @@ const SimpleListExample = [
   "Arizona",
   "Arkansas",
   "California",
-  "Colorado",
+  "Colorsfddhehrehyyhado",
   "Connecticut",
   "Delaware",
   "Florida",

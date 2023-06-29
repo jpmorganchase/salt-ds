@@ -1,16 +1,15 @@
 import { forwardRef, HTMLAttributes, MouseEvent } from "react";
 import { clsx } from "clsx";
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer, useId, useIdMemo } from "@salt-ds/core";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import listItemNextCss from "./ListItemNext.css";
-import { useListItems } from "./ListNextContext";
+import { useListItem } from "./ListNextContext";
 
 const withBaseName = makePrefixer("saltListItemNext");
 
 export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
-  label?: string;
   /**
    * If true, the particular list item in list will be disabled.
    */
@@ -27,7 +26,6 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       className,
       disabled: disabledProp,
       selected: selectedProp,
-      label,
       id: idProp,
       value,
       onClick,
@@ -41,9 +39,9 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       css: listItemNextCss,
       window: targetWindow,
     });
-    const id = useId(idProp) || value;
+    const id = useIdMemo(idProp);
 
-    const listContext = useListItems();
+    const listContext = useListItem();
     if (!listContext) return null;
 
     const {
@@ -55,7 +53,6 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
     } = listContext;
 
     const itemId = `${contextId || "listNext"}--${id}`;
-    const content = label || children;
     const disabled = disabledProp || contextDisabled;
     const selected = selectedProp || isSelected(value);
     const focused = isFocused(itemId);
@@ -84,7 +81,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         onClick={handleClick}
         {...props}
       >
-        {content}
+        {children}
       </li>
     );
   }

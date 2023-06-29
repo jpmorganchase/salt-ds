@@ -3,4 +3,13 @@
 "@salt-ds/theme": minor
 ---
 
-Add single select List Next to lab
+Add new list components: ListNext, ListItemNext
+
+```
+<ListNext>
+  <ListItemNext value={Alaska}>
+    {Alaska}
+  </ListItemNext>
+</ListNext>
+
+```
