@@ -10,3 +10,4 @@
 /.next/
 /snapshots/
 /public/sitemap.xml
+/src/props/*.json
