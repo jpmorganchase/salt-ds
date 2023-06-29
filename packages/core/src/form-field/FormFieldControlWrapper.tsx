@@ -11,12 +11,13 @@ export type ControlWrapper = {
   variant: "primary" | "secondary";
 };
 
-export const ControlWrapperContext = createContext<ControlWrapper | undefined>(
-  undefined
-);
+export const ControlWrapperContext = createContext<ControlWrapper>({
+  variant: "primary",
+});
 
 export const useControlWrapper = () => {
-  return useContext(ControlWrapperContext);
+  const wrapperContext = useContext(ControlWrapperContext);
+  return wrapperContext;
 };
 
 export const FormFieldControlWrapper = ({
