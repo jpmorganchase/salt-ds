@@ -63,10 +63,10 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const handleRef = useForkRef(listRef, ref);
 
     const {
-      handleFocus,
-      handleKeyDown,
-      handleBlur,
-      handleMouseDown,
+      focusHandler,
+      keyDownHandler,
+      blurHandler,
+      mouseDownHandler,
       activeDescendant,
       contextValue,
     } = useList({
@@ -77,23 +77,23 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       ref: listRef,
     });
 
-    const focusHandler = (event: FocusEvent<HTMLUListElement>) => {
-      handleFocus();
+    const handleFocus = (event: FocusEvent<HTMLUListElement>) => {
+      focusHandler();
       onFocus?.(event);
     };
 
-    const keyDownHandler = (event: KeyboardEvent<HTMLUListElement>) => {
-      handleKeyDown(event);
+    const handleKeyDown = (event: KeyboardEvent<HTMLUListElement>) => {
+      keyDownHandler(event);
       onKeyDown?.(event);
     };
 
-    const blurHandler = (event: FocusEvent<HTMLUListElement>) => {
-      handleBlur();
+    const handleBlur = (event: FocusEvent<HTMLUListElement>) => {
+      blurHandler();
       onBlur?.(event);
     };
 
-    const mouseDownHandler = (event: MouseEvent<HTMLUListElement>) => {
-      handleMouseDown();
+    const handleMouseDown = (event: MouseEvent<HTMLUListElement>) => {
+      mouseDownHandler();
       onMouseDown?.(event);
     };
 
@@ -106,10 +106,10 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           role="listbox"
           tabIndex={disabled ? -1 : 0}
           aria-activedescendant={disabled ? undefined : activeDescendant}
-          onFocus={focusHandler}
-          onKeyDown={keyDownHandler}
-          onBlur={blurHandler}
-          onMouseDown={mouseDownHandler}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
+          onMouseDown={handleMouseDown}
           {...rest}
         >
           {children}

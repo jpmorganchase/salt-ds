@@ -170,24 +170,24 @@ export const useList = ({
   };
 
   // HANDLERS
-  const handleBlur = () => {
+  const blurHandler = () => {
     setShowFocusRing(false);
   };
 
-  const handleMouseDown = () => {
+  const mouseDownHandler = () => {
     // When list gets focused, we can't guarantee that focus happens after click event.
     // If first focus (where !activeDescendant) happens from a click, list shouldn't render focus ring in the first element.
     setShowFocusRing(false);
   };
 
   // takes care of focus when using keyboard navigation
-  const handleFocus = () => {
+  const focusHandler = () => {
     const activeElement = getActiveItem();
     focusAndMoveActive(activeElement);
   };
 
   // takes care of keydown when using keyboard navigation
-  const handleKeyDown = (event: KeyboardEvent<HTMLUListElement>) => {
+  const keyDownHandler = (event: KeyboardEvent<HTMLUListElement>) => {
     const { key } = event;
     const currentItem = getActiveItem();
     let nextItem = currentItem;
@@ -238,10 +238,10 @@ export const useList = ({
   );
 
   return {
-    handleFocus,
-    handleKeyDown,
-    handleBlur,
-    handleMouseDown,
+    focusHandler,
+    keyDownHandler,
+    blurHandler,
+    mouseDownHandler,
     activeDescendant,
     contextValue,
   };
