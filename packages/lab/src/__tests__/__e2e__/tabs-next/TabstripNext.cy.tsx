@@ -66,11 +66,11 @@ describe("Given a Tabstrip", () => {
       it("THEN first 4 tabs will be displayed, with overflow indicator", () => {
         cy.mount(<DefaultTabstrip width={400} />);
         cy.get(".saltTabstripNext").invoke("css", "width", "300px");
-        cy.findAllByRole("tab").should("have.length", 3);
+        cy.findAllByRole("tab").should("have.length", 4);
         cy.findByRole("combobox").should("exist").click();
         cy.findByRole("listbox")
           .findAllByRole("option")
-          .should("have.length", 2);
+          .should("have.length", 1);
       });
     });
   });
@@ -95,7 +95,7 @@ describe("Tab selection, Given a Tabstrip", () => {
         cy.findAllByRole("tab", { name: "Home" }).should("have.ariaSelected");
         cy.findByRole("combobox").realClick();
         cy.findByRole("listbox").should("be.visible");
-        cy.findByRole("option", { name: "Loans" }).realClick();
+        cy.findByRole("option", { name: "Loans" }).click();
         cy.findAllByRole("tab", { name: "Loans" }).should("be.visible");
         cy.findAllByRole("tab", { name: "Loans" }).should("have.ariaSelected");
       });
