@@ -236,7 +236,12 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
       </FormField>
       <FormField {...props}>
         <FormLabel>Multi controls</FormLabel>
-        <StackLayout gap={1} direction={"row"} as="fieldset" style={{margin: "0px", border: "none", padding: "0px"}}>
+        <StackLayout
+          gap={1}
+          direction={"row"}
+          as="fieldset"
+          style={{ margin: "0px", border: "none", padding: "0px" }}
+        >
           <Input disabled={checked} placeholder="Transition impact" />
           <Checkbox
             checked={checked}
