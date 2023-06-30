@@ -13,7 +13,6 @@ import {
   Tooltip,
   AdornmentButton,
   Text,
-  FormFieldControlWrapper,
   StackLayout,
   GridLayout,
   FormFieldLabelPlacement,
@@ -184,7 +183,7 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
     <FlowLayout style={{ width: "366px" }}>
       <FormField validationStatus={valid ? undefined : "error"} {...props}>
         <FormLabel>Multi criteria inputs</FormLabel>
-        <FormFieldControlWrapper>
+        <StackLayout gap={1} direction={"row"} role="group">
           <Input
             value={firstValue}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -198,14 +197,14 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
             }}
             placeholder="Multiplier"
           />
-        </FormFieldControlWrapper>
+        </StackLayout>
         <FormHelperText>
           * User must enter all values to complete the input
         </FormHelperText>
       </FormField>
       <FormField {...props}>
         <FormLabel>Paired fields</FormLabel>
-        <FormFieldControlWrapper>
+        <StackLayout gap={1} direction={"row"} role="group">
           <Input
             onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(e, 0)}
             value={values.firstValue}
@@ -214,7 +213,7 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
             onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdate(e, 1)}
             value={values.secondValue}
           />
-        </FormFieldControlWrapper>
+        </StackLayout>
         <FormHelperText>
           * User entry in either field will automatically populate the
           corresponding field with the correct value
@@ -222,29 +221,34 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
       </FormField>
       <FormField labelPlacement="left" {...props}>
         <FormLabel>Multi inputs with left label</FormLabel>
-        <FormFieldControlWrapper>
+        <StackLayout gap={1} direction={"row"} role="group">
           <Input placeholder="First value" />
           <Input placeholder="Second value" />
           <Input placeholder="Third value" />
-        </FormFieldControlWrapper>
+        </StackLayout>
       </FormField>
       <FormField {...props}>
         <FormLabel>Multi inputs with secondary variant</FormLabel>
-        <FormFieldControlWrapper variant="secondary">
-          <Input placeholder="First value" />
-          <Input placeholder="Second value" />
-        </FormFieldControlWrapper>
+        <StackLayout gap={1} direction={"row"} role="group">
+          <Input variant="secondary" placeholder="First value" />
+          <Input variant="secondary" placeholder="Second value" />
+        </StackLayout>
       </FormField>
       <FormField {...props}>
         <FormLabel>Multi controls</FormLabel>
-        <FormFieldControlWrapper>
+        <StackLayout
+          gap={1}
+          direction={"row"}
+          as="fieldset"
+          style={{ margin: "0px", border: "none", padding: "0px" }}
+        >
           <Input disabled={checked} placeholder="Transition impact" />
           <Checkbox
             checked={checked}
             onChange={() => setChecked(!checked)}
             label="Transition impact not applicable"
           />
-        </FormFieldControlWrapper>
+        </StackLayout>
       </FormField>
     </FlowLayout>
   );
