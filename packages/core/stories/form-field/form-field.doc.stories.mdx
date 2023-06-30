@@ -125,11 +125,16 @@ Form Fields can show validation states (warning, success, error) with the prop `
 
 ## Multiple controls
 
-Form Fields can wrap two or more controls in a layout component to have multiple children. Set `role="group"` on the layout component.
+Form Fields can wrap two or more controls in a layout component to have multiple children.
 
 <Canvas>
   <Story id="core-form-field--multi-child" />
 </Canvas>
+
+### Guidance
+
+- Set `role="group"` on the layout component for accessibility.
+- Set the `variant` prop to the same variant on each control.
 
 ## How to use
 
