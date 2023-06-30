@@ -183,8 +183,7 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
     <FlowLayout style={{ width: "366px" }}>
       <FormField validationStatus={valid ? undefined : "error"} {...props}>
         <FormLabel>Multi criteria inputs</FormLabel>
-        <StackLayout gap={1} direction={"row"}>
-          <fieldset>
+        <StackLayout gap={1} direction={"row"} role="group">
             <Input
               value={firstValue}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -198,7 +197,6 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
               }}
               placeholder="Multiplier"
             />
-          </fieldset>
         </StackLayout>
         <FormHelperText>
           * User must enter all values to complete the input
@@ -206,8 +204,7 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
       </FormField>
       <FormField {...props}>
         <FormLabel>Paired fields</FormLabel>
-        <StackLayout gap={1} direction={"row"}>
-          <fieldset>
+        <StackLayout gap={1} direction={"row"} role="group">
             <Input
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 handleUpdate(e, 0)
@@ -220,7 +217,6 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
               }
               value={values.secondValue}
             />
-          </fieldset>
         </StackLayout>
         <FormHelperText>
           * User entry in either field will automatically populate the
@@ -229,34 +225,28 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
       </FormField>
       <FormField labelPlacement="left" {...props}>
         <FormLabel>Multi inputs with left label</FormLabel>
-        <StackLayout gap={1} direction={"row"}>
-          <fieldset>
+        <StackLayout gap={1} direction={"row"} role="group">
             <Input placeholder="First value" />
             <Input placeholder="Second value" />
             <Input placeholder="Third value" />
-          </fieldset>
         </StackLayout>
       </FormField>
       <FormField {...props}>
         <FormLabel>Multi inputs with secondary variant</FormLabel>
-        <StackLayout gap={1} direction={"row"}>
-          <fieldset>
+        <StackLayout gap={1} direction={"row"} role="group">
             <Input variant="secondary" placeholder="First value" />
             <Input variant="secondary" placeholder="Second value" />
-          </fieldset>
         </StackLayout>
       </FormField>
       <FormField {...props}>
         <FormLabel>Multi controls</FormLabel>
-        <StackLayout gap={1} direction={"row"}>
-          <fieldset>
+        <StackLayout gap={1} direction={"row"} role="group">
             <Input disabled={checked} placeholder="Transition impact" />
             <Checkbox
               checked={checked}
               onChange={() => setChecked(!checked)}
               label="Transition impact not applicable"
             />
-          </fieldset>
         </StackLayout>
       </FormField>
     </FlowLayout>
