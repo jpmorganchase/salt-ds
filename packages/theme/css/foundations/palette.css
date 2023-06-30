@@ -310,7 +310,7 @@
   /* Neutral */
   --salt-palette-neutral-tertiary-background-readonly: transparent;
 
-  /* Status */
+  /* Neutral */
   --salt-palette-error-border-disabled: var(--salt-color-red-500-fade-border);
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
   --salt-palette-info-border-disabled: var(--salt-color-blue-500-fade-border);
