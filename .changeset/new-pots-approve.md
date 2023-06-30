@@ -2,4 +2,4 @@
 "@salt-ds/core": major
 ---
 
-Remove `AdornmentButton` and rely on `Button`.
+Removed `AdornmentButton`. Replace usages with core `Button` component.
