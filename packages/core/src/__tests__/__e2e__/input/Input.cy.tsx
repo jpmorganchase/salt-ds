@@ -1,10 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import {
-  Input,
-  FormField,
-  FormFieldLabel,
-  AdornmentButton,
-} from "@salt-ds/core";
+import { Input, FormField, FormFieldLabel, Button } from "@salt-ds/core";
 
 describe("GIVEN an Input", () => {
   it("SHOULD have no a11y violations on load", () => {
@@ -74,16 +69,16 @@ describe("GIVEN an Input", () => {
       cy.findByText("%").should("be.visible");
     });
 
-    describe("AND adornment is AdornmentButton", () => {
+    describe("AND adornment is a Button", () => {
       it("THEN should cy.mount with the adornment", () => {
         cy.mount(
           <Input
-            startAdornment={<AdornmentButton>Test</AdornmentButton>}
+            startAdornment={<Button>Test</Button>}
             defaultValue={"Value"}
           />
         );
         cy.findByRole("button").should("be.visible");
-        cy.findByRole("button").should("have.class", "saltAdornmentButton");
+        cy.findByRole("button").should("have.class", "saltButton");
       });
 
       it("THEN should have the correct tab order on startAdornment", () => {
@@ -91,7 +86,7 @@ describe("GIVEN an Input", () => {
           <FormField>
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
-              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              startAdornment={<Button>Test</Button>}
               defaultValue="Value"
               data-testid="test-id-3"
             />
@@ -110,7 +105,7 @@ describe("GIVEN an Input", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
-              endAdornment={<AdornmentButton>Test</AdornmentButton>}
+              endAdornment={<Button>Test</Button>}
               data-testid="test-id-3"
             />
           </FormField>

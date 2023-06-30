@@ -73,13 +73,6 @@ browsers, outlined in the table below.
 |                  | Chrome      | JAWS          |
 | macOS            | Safari      | VoiceOver     |
 
-## Browser compatibility
-
-| Web Browser  | Version         |
-| ------------ | --------------- |
-| Firefox      | 38+             |
-| Chrome, Edge | last 2 versions |
-
 ## Thanks
 
 <a href="https://www.chromatic.com/">
