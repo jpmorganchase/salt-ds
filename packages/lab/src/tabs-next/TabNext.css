@@ -27,6 +27,7 @@
 .saltTabNext:hover {
   cursor: var(--salt-navigable-cursor-hover);
   background: var(--salt-navigable-primary-background-hover);
+  color: var(--salt-text-primary-foreground);
 }
 
 .saltTabNext:hover::before,
@@ -43,6 +44,7 @@
 .saltTabNext:focus-visible {
   outline: var(--salt-focused-outline);
   background: var(--salt-navigable-primary-background-hover);
+  color: var(--salt-text-primary-foreground);
 }
 
 .saltTabNext[aria-selected="true"] {
