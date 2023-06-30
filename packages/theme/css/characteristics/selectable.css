@@ -21,7 +21,6 @@
   --salt-selectable-foreground-hover: var(--salt-palette-interact-foreground-hover);
   --salt-selectable-foreground-selected: var(--salt-palette-interact-foreground-active);
   --salt-selectable-foreground-selectedDisabled: var(--salt-palette-interact-foreground-activeDisabled);
-
   --salt-selectable-background: var(--salt-palette-interact-background);
   --salt-selectable-background-hover: var(--salt-palette-interact-background-hover);
   --salt-selectable-background-selected: var(--salt-palette-interact-background-active);
