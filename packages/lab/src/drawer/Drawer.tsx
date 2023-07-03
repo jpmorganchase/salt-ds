@@ -10,13 +10,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import drawerCss from "./Drawer.css";
 
-export const DRAWER_POSITIONS = [
-  "center",
-  "left",
-  "top",
-  "right",
-  "bottom",
-] as const;
+export const DRAWER_POSITIONS = ["left", "top", "right", "bottom"] as const;
 
 export type DrawerPositions = typeof DRAWER_POSITIONS[number];
 
@@ -59,7 +53,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     children,
     className,
     disableScrim = false,
-    position = "center",
+    position = "left",
     fullScreenAtBreakpoint = "sm",
     disableAnimations = false,
     scrimProps,
@@ -96,8 +90,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
 
   const fullScreen = useIsViewportLargerThanBreakpoint(fullScreenAtBreakpoint);
 
-  const anchored = position !== "center" && !fullScreen;
-
   const enterAnimation =
     !disableAnimations && isOpen && !previousDisableAnimationsProp;
 
@@ -107,7 +99,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     <div
       ref={ref}
       className={clsx(withBaseName(), className, {
-        [withBaseName("anchor")]: anchored,
+        [withBaseName("anchor")]: !fullScreen,
         [withBaseName("fullScreen")]: fullScreen,
         [withBaseName(position)]: !fullScreen,
         [withBaseName("enter-animation")]: enterAnimation,

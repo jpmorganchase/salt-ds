@@ -2,10 +2,6 @@
   height: 100%;
 }
 
-.drawer-container .saltDrawer-center {
-  width: 50vw;
-}
-
 .drawer-container .saltDrawer-right,
 .drawer-container .saltDrawer-left {
   width: 378px;
@@ -15,15 +11,6 @@
 .drawer-simple-usage h2,
 .drawer-simple-usage h3 {
   margin: 0;
-}
-
-.drawer-simple-usage-center {
-  align-items: center;
-}
-
-.drawer-simple-usage-center .saltFlexLayout {
-  width: 500px;
-  height: 500px;
 }
 
 .drawer-article-container {

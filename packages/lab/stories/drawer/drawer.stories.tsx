@@ -1,5 +1,4 @@
 import { useState, MouseEvent } from "react";
-import { ContentStatus, ContentStatusProps } from "@salt-ds/lab";
 import {
   Button,
   FlowLayout,
@@ -81,7 +80,7 @@ const DefaultDrawerStory: ComponentStory<typeof Drawer> = (args) => {
 
 export const Default = DefaultDrawerStory.bind({});
 Default.args = {
-  position: "center",
+  position: "left",
 };
 
 const TopTemplate: ComponentStory<typeof Drawer> = (args) => {
@@ -126,28 +125,6 @@ const RightTemplate: ComponentStory<typeof Drawer> = (args) => {
 export const Right = RightTemplate.bind({});
 Right.args = {
   position: "right",
-};
-
-const LeftTemplate: ComponentStory<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(false);
-
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
-
-  return (
-    <div className="drawer-container">
-      <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} {...args}>
-        <DrawerContentExample onClick={hide} />
-      </Drawer>
-    </div>
-  );
-};
-
-export const Left = LeftTemplate.bind({});
-Left.args = {
-  position: "left",
 };
 
 const BottomTemplate: ComponentStory<typeof Drawer> = (args) => {
@@ -255,43 +232,6 @@ const ReducedMotionTemplate: ComponentStory<typeof Drawer> = (args) => {
 };
 
 export const ReducedMotion = ReducedMotionTemplate.bind({});
-
-const DrawerCenterExample: ComponentStory<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(true);
-
-  const show = () => setOpen(true);
-
-  const hide = () => setOpen(false);
-
-  const errorProps: ContentStatusProps = {
-    status: "error",
-    title: "There's been a system error",
-    message: "It should be temporary, so please try again.",
-    actionLabel: "Close Drawer",
-    onActionClick: hide,
-  };
-
-  return (
-    <>
-      <Button onClick={show}>Open Drawer</Button>
-      <Drawer
-        isOpen={open}
-        className="drawer-simple-usage-center"
-        scrimProps={{ role: "alertdialog" }}
-        {...args}
-      >
-        <FlowLayout justify="center">
-          <ContentStatus {...errorProps} />
-        </FlowLayout>
-      </Drawer>
-    </>
-  );
-};
-
-export const CenterSimpleUsage = DrawerCenterExample.bind({});
-CenterSimpleUsage.args = {
-  position: "center",
-};
 
 const FormFieldExample = () => (
   <FormField label="Label" helperText="Help text appears here">

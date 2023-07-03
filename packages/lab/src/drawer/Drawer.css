@@ -2,7 +2,6 @@
   --drawer-boxShadow: var(--saltDrawer-boxShadow, var(--salt-overlayable-shadow-modal));
   --drawer-background: var(--saltDrawer-background, var(--salt-container-primary-background));
   --drawer-padding: var(--saltDrawer-padding, var(--salt-size-container-spacing));
-  --drawer-margin: var(--saltDrawer-margin, var(--salt-size-container-spacing));
 }
 
 .saltDrawer {
@@ -26,17 +25,11 @@
   left: 0;
 }
 
-.saltDrawer-center {
-  margin: var(--saltDrawer-margin, var(--drawer-margin));
-}
-
-.saltDrawer-center.saltDrawer-enter-animation,
 .saltDrawer-fullScreen.saltDrawer-enter-animation,
 .saltScrim.saltDrawer-enter-animation {
   animation: var(--salt-animation-fade-in-center);
 }
 
-.saltDrawer-center.saltDrawer-exit-animation,
 .saltDrawer-fullScreen.saltDrawer-exit-animation,
 .saltScrim.saltDrawer-exit-animation {
   animation: var(--salt-animation-fade-out-back);
