@@ -65,7 +65,9 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       name: "TabstripNext",
       state: "selected",
     });
-    const [focused, setFocused] = useState<string | undefined>(selected);
+    const [focusable, setFocusableState] = useState<string | undefined>(
+      selected
+    );
     const [overflowOpen, setOverflowOpen] = useState(false);
 
     const select = useCallback(
@@ -86,15 +88,15 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       [selected]
     );
 
-    const focus = useCallback((id: string | undefined) => {
-      setFocused(id);
+    const setFocusable = useCallback((id: string | undefined) => {
+      setFocusableState(id);
     }, []);
 
-    const isFocused = useCallback(
+    const isFocusable = useCallback(
       (id: string | undefined) => {
-        return focused === id || !focused;
+        return focusable === id || !focusable;
       },
-      [focused]
+      [focusable]
     );
 
     const [tabList, setTabList] = useState<TabValue[]>([]);
@@ -168,12 +170,19 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       () => ({
         select,
         isSelected,
-        focus,
-        isFocused,
+        setFocusable,
+        isFocusable,
         registerTab,
         unregisterTab,
       }),
-      [select, isSelected, focus, isFocused, registerTab, unregisterTab]
+      [
+        select,
+        isSelected,
+        setFocusable,
+        isFocusable,
+        registerTab,
+        unregisterTab,
+      ]
     );
 
     return (

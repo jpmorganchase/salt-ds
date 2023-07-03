@@ -44,14 +44,14 @@ export const TabNext = forwardRef<HTMLButtonElement, TabNextProps>(function Tab(
   const {
     isSelected,
     select,
-    isFocused,
-    focus,
+    isFocusable,
+    setFocusable,
     disabled: tabstripDisabled,
     unregisterTab,
     registerTab,
   } = useTabs();
   const selected = isSelected(value);
-  const focusable = isFocused(value);
+  const focusable = isFocusable(value);
   const disabled = tabstripDisabled || disabledProp;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -60,7 +60,7 @@ export const TabNext = forwardRef<HTMLButtonElement, TabNextProps>(function Tab(
   };
 
   const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
-    focus(value);
+    setFocusable(value);
     onFocus?.(event);
   };
 

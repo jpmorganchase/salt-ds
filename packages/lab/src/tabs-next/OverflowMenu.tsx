@@ -16,7 +16,7 @@ export interface OverflowMenuProps extends DropdownProps<TabValue> {
 
 export const OverflowMenu = forwardRef<HTMLDivElement, OverflowMenuProps>(
   function OverflowMenu(props, forwardedRef) {
-    const { tabs, tabIndex, ...rest } = props;
+    const { tabs, ...rest } = props;
     const { ref, overflowCount, isOverflowing } =
       useOverflowMenu<HTMLDivElement>();
     const handleRef = useForkRef(ref, forwardedRef);
@@ -32,12 +32,7 @@ export const OverflowMenu = forwardRef<HTMLDivElement, OverflowMenuProps>(
       <Dropdown<TabValue>
         aria-label={`${overflowCount} more tabs`}
         triggerComponent={
-          <Button
-            aria-label="More tabs"
-            variant="secondary"
-            tabIndex={tabIndex}
-            role="combobox"
-          >
+          <Button aria-label="More tabs" variant="secondary" role="combobox">
             <OverflowMenuIcon aria-hidden style={{ margin: 0 }} />
           </Button>
         }
