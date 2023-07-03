@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { Dropdown, SelectionChangeHandler } from "@salt-ds/lab";
+import { Dropdown, SelectionChangeHandler, SelectHandler } from "@salt-ds/lab";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -42,6 +42,12 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
     }
   };
 
+  const onSelect: SelectHandler = (event, item) => {
+    if (item) {
+      endEditMode(item);
+    }
+  };
+
   useEffect(() => {
     if (triggerRef.current) {
       triggerRef.current.focus();
@@ -68,6 +74,7 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
             source={options}
             defaultSelected={value}
             onSelectionChange={onSelectionChange}
+            onSelect={onSelect}
             triggerComponent={triggerComponent}
             width={column!.info.width! - 5}
           />
