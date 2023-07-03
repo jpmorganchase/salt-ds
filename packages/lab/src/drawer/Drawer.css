@@ -1,0 +1,106 @@
+.saltDrawer {
+  --drawer-boxShadow: var(--saltDrawer-boxShadow, var(--salt-overlayable-shadow-modal));
+  --drawer-background: var(--saltDrawer-background, var(--salt-container-primary-background));
+  --drawer-padding: var(--saltDrawer-padding, var(--salt-size-container-spacing));
+  --drawer-margin: var(--saltDrawer-margin, var(--salt-size-container-spacing));
+}
+
+.saltDrawer {
+  background: var(--drawer-background);
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: auto;
+  padding: var(--drawer-padding);
+  box-shadow: var(--saltDrawer-boxShadow, var(--drawer-boxShadow));
+  z-index: calc(var(--salt-zIndex-appHeader) - 1);
+}
+
+.saltDrawer-fullScreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.saltDrawer-center {
+  margin: var(--saltDrawer-margin, var(--drawer-margin));
+}
+
+.saltDrawer-center.saltDrawer-enter-animation,
+.saltDrawer-fullScreen.saltDrawer-enter-animation,
+.saltScrim.saltDrawer-enter-animation {
+  animation: var(--salt-animation-fade-in-center);
+}
+
+.saltDrawer-center.saltDrawer-exit-animation,
+.saltDrawer-fullScreen.saltDrawer-exit-animation,
+.saltScrim.saltDrawer-exit-animation {
+  animation: var(--salt-animation-fade-out-back);
+}
+
+.saltDrawer-anchor {
+  position: fixed;
+  max-height: 100%;
+  top: 0;
+}
+
+.saltDrawer-top {
+  left: 0;
+  right: 0;
+  bottom: auto;
+}
+
+.saltDrawer-top.saltDrawer-enter-animation {
+  animation: var(--salt-animation-slide-in-bottom);
+}
+
+.saltDrawer-top.saltDrawer-exit-animation {
+  animation: var(--salt-animation-slide-out-bottom);
+}
+
+.saltDrawer-right {
+  left: auto;
+  right: 0;
+  height: 100%;
+}
+
+.saltDrawer-right.saltDrawer-enter-animation {
+  animation: var(--salt-animation-slide-in-right);
+}
+
+.saltDrawer-right.saltDrawer-exit-animation {
+  animation: var(--salt-animation-slide-out-right);
+}
+
+.saltDrawer-left {
+  left: 0;
+  right: auto;
+  height: 100%;
+}
+
+.saltDrawer-left.saltDrawer-enter-animation {
+  animation: var(--salt-animation-slide-in-left);
+}
+
+.saltDrawer-left.saltDrawer-exit-animation {
+  animation: var(--salt-animation-slide-out-left);
+}
+
+.saltDrawer-bottom {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+}
+
+.saltDrawer-bottom.saltDrawer-enter-animation {
+  animation: var(--salt-animation-slide-in-top);
+}
+
+.saltDrawer-bottom.saltDrawer-exit-animation {
+  animation: var(--salt-animation-slide-out-top);
+}

@@ -1,0 +1,57 @@
+.drawer-example {
+  height: 100%;
+}
+
+.drawer-container .saltDrawer-center {
+  width: 50vw;
+}
+
+.drawer-container .saltDrawer-right,
+.drawer-container .saltDrawer-left {
+  width: 378px;
+}
+
+.drawer-simple-usage p,
+.drawer-simple-usage h2,
+.drawer-simple-usage h3 {
+  margin: 0;
+}
+
+.drawer-simple-usage-center {
+  align-items: center;
+}
+
+.drawer-simple-usage-center .saltFlexLayout {
+  width: 500px;
+  height: 500px;
+}
+
+.drawer-article-container {
+  width: min-content;
+}
+
+.drawer-article-image {
+  min-width: 350px;
+  width: 100%;
+  height: 140px;
+  background-color: var(--salt-color-gray-40);
+}
+
+.custom-drawer-container .custom-animation.saltDrawer-fullScreen.saltDrawer-enter-animation {
+  animation: var(--salt-animation-slide-in-top);
+}
+
+.custom-drawer-container .custom-animation.saltDrawer-fullScreen.saltDrawer-exit-animation {
+  animation: var(--salt-animation-slide-out-top);
+}
+
+.custom-drawer-container .saltScrim.saltDrawer-exit-animation {
+  animation: fade-out-back 1s ease-out both;
+}
+
+@media (prefers-reduced-motion) {
+  .reduced-motion .saltDrawer,
+  .reduced-motion .saltScrim {
+    animation: none;
+  }
+}
