@@ -177,7 +177,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Notifies the user of an error, a warning, a successfully-completed task or an information update. It spans the page or container width to give quick, non-disruptive feedback.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.8.0-rc.0",
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-banner--page",
@@ -327,7 +327,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Allows the user to select an item from an array of options that’s displayed in a list overlay—with the selected value displayed in the dropdown field.",
     devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Experience Customization Wizard",
@@ -375,7 +375,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Form Field is a wrapper for UI controls that are typically found in a form (for example, Input, Combobox or Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.8.0-rc.0",
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-form-field--page",
@@ -412,7 +412,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Allows the user to enter arbitrary text and numeric values into an editable field, with no specific format defined.",
     devStatus: ComponentStatus.READY,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
     availableInCoreSince: "1.8.0-rc.0",
     storybookUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-input--page",
@@ -422,7 +422,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Defines a layer above the existing layout structure for UI elements to be displayed in.",
     devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.NOT_APPLICABLE,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Link",
@@ -439,14 +439,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Allows the user to select one or more items from an array of options. Long Lists are shown in a scrolling pane to provide access to all options in a space-efficient way.",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
-  },
-  {
-    name: "Logo",
-    description:
-      "Makes it easy to include a brand-compliant logo for a J.P. Morgan or Chase in your application.",
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
   },
   {
     name: "Menu Button",
@@ -503,7 +496,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Provides multiple ways to label, tag or categorize content to allow users to trigger actions, make selections or filter results.",
     devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Progress",
@@ -640,7 +633,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Visually communicates a user’s progress through a linear process, giving the user context about where they are in the process and indicating the remaining steps.",
     devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Stepper Input",
@@ -694,14 +687,14 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Displays a small pop-up notification that’s usually short-lived and shown in response to a user action or system event that’s unrelated to the user’s current focus.",
     devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Toggle Button",
     description:
       "Allows the user to switch between two possible states, or a related, grouped set of options.",
     devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
   },
   {
     name: "Tokenized Input",
