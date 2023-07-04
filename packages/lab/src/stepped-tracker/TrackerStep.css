@@ -1,0 +1,35 @@
+.saltTrackerStep {
+  --saltIcon-size: var(--saltTrackerStepIconSize, max(var(--salt-icon-size-base), 12px));
+  --saltIcon-color: var(--saltTrackerStepIconColor, var(--salt-status-info-foreground));
+  --tracker-step-gap: var(--saltTrackerStepGap, var(--salt-spacing-100));
+}
+
+.saltTrackerStep {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: 0;
+  list-style-type: none;
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: var(--tracker-step-gap);
+}
+
+/* Pseudo-class applied to the root element on focus */
+.saltTrackerStep:focus-visible {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+
+.saltTrackerStep-body {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
