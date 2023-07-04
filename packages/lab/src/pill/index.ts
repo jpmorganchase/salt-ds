@@ -1,3 +1,3 @@
-export * from "./Pill";
-export * from "./ClosablePill";
-export * from "./SelectablePill";
+export * from "./PillNext";
+// export * from "./ClosablePill";
+// export * from "./SelectablePill";

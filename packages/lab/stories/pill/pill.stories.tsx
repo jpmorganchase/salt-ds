@@ -22,110 +22,48 @@ const Template: ComponentStory<typeof Pill> = (args) => {
     console.log("clicked");
     args.onClick?.(e);
   };
-  return <Pill label="Basic Pill" {...args} onClick={handleClick} />;
+  return (
+    <Pill {...args} onClick={handleClick}>
+      Basic Pill
+    </Pill>
+  );
+};
+
+export const Default: ComponentStory<typeof Pill> = (args) => {
+  return <Pill>Static Pill</Pill>;
 };
 
 export const FeaturePill = Template.bind({});
 
-// This story is referenced in stories/salt/pill.stories.mdx
-// named function syntax is used to show the same in code block
-export const Controlled: ComponentStory<typeof Pill> = () => {
-  const [checked, setChecked] = useState(true);
-
-  const handleChange = () => {
-    setChecked((c) => !c);
-  };
-
-  return (
-    <Pill
-      label="Controlled Pill"
-      variant="selectable"
-      checked={checked}
-      onChange={handleChange}
-    />
-  );
-};
-
 export const Disabled: ComponentStory<typeof Pill> = () => {
   return (
-    <Pill
-      disabled
-      label="Disabled Pill"
-      onDelete={() => console.log("Deleted.")}
-    />
+    <Pill disabled onClick={() => console.log("Click")}>
+      Disabled Pill
+    </Pill>
   );
 };
 
 export const Closable: ComponentStory<typeof Pill> = () => {
   return (
-    <Pill
-      label="Closable Pill"
-      onDelete={() => console.log("Deleted.")}
-      variant={"closable"}
-    />
+    <Pill onClose={() => console.log("Deleted.")} variant="closable">
+      Closable Pill
+    </Pill>
   );
 };
 
 export const DisabledClosable: ComponentStory<typeof Pill> = () => {
   return (
-    <Pill
-      disabled
-      label="Disabled Pill"
-      onDelete={() => console.log("Deleted.")}
-      variant={"closable"}
-    />
+    <Pill disabled onClose={() => console.log("Deleted.")} variant="closable">
+      Disabled Closable Pill
+    </Pill>
   );
 };
 
 export const Icon: ComponentStory<typeof Pill> = () => {
   return (
-    <Pill
-      icon={<FavoriteIcon />}
-      label="Pill with Icon"
-      onClick={() => console.log("Clicked.")}
-    />
-  );
-};
-
-export const Selectable: ComponentStory<typeof Pill> = () => {
-  return (
-    <Pill
-      label="Selectable Pill"
-      onChange={() => console.log("changed")}
-      variant="selectable"
-    />
-  );
-};
-
-export const DisabledSelectable: ComponentStory<typeof Pill> = () => {
-  return (
-    <Pill
-      label="Selectable Pill"
-      onChange={() => console.log("changed")}
-      variant="selectable"
-      defaultChecked
-      disabled={true}
-    />
-  );
-};
-
-export const MaxWidth: ComponentStory<typeof Pill> = () => {
-  return (
-    <>
-      <Pill
-        label="Extra extra long Pill label example."
-        onClick={() => console.log("Clicked.")}
-      />
-    </>
-  );
-};
-
-export const CustomTooltipText: ComponentStory<typeof Pill> = () => {
-  return (
-    <Pill
-      label="Pill"
-      TooltipProps={{ content: "Extra extra long Pill label example." }}
-    />
+    <Pill icon={<FavoriteIcon />} onClick={() => console.log("Clicked.")}>
+      Pill with Icon
+    </Pill>
   );
 };
 
@@ -139,16 +77,16 @@ export const AllDensities: ComponentStory<typeof Pill> = () => {
       }}
     >
       <SaltProvider density="touch">
-        <Pill label="TD Pill" deletable />
+        <Pill variant="deletable">TD Pill</Pill>
       </SaltProvider>
       <SaltProvider density="low">
-        <Pill label="LD Pill" deletable />
+        <Pill variant="deletable">LD Pill</Pill>
       </SaltProvider>
       <SaltProvider density="medium">
-        <Pill label="MD Pill" deletable />
+        <Pill variant="deletable">MD Pill</Pill>
       </SaltProvider>
       <SaltProvider density="high">
-        <Pill label="HD Pill" deletable />
+        <Pill variant="deletable">HD Pill</Pill>
       </SaltProvider>
     </div>
   );
