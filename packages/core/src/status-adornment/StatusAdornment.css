@@ -1,4 +1,5 @@
 .saltStatusAdornment {
+  align-self: center;
   display: inline-block;
   fill: var(--saltStatusAdornment-color, var(--statusAdornment-color));
   height: var(--salt-icon-size-status-adornment);
