@@ -456,6 +456,11 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.IN_BACKLOG,
   },
   {
+    name: "Multiline Input",
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
+  },
+  {
     name: "Nav Item",
     devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_PROGRESS,
