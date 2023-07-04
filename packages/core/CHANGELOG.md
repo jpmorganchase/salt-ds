@@ -278,16 +278,16 @@
 
   - Usages of `measured` tokens in core and labs components updated to use appropriate characteristic replacement
 
-  - Deprecated the following tokens, no replacement needed:
+  - Deprecated the following tokens, use hex value as replacement if needed:
 
   ```diff
-  - --salt-measured-foreground-undo
-  - --salt-palette-measured-fill
-  - --salt-palette-measured-fill-disabled
-  - --salt-palette-measured-foreground-active
-  - --salt-palette-measured-foreground-activeDisabled
-  - --salt-palette-interact-foreground-partial
-  - --salt-palette-interact-foreground-partialDisabled
+  - --salt-measured-foreground-undo: #2670a9
+  - --salt-palette-measured-fill: #2670A9
+  - --salt-palette-measured-fill-disabled: #2670A966
+  - --salt-palette-measured-foreground-active: #2670A9
+  - --salt-palette-measured-foreground-activeDisabled: #2670A966
+  - --salt-palette-interact-foreground-partial: #155C93
+  - --salt-palette-interact-foreground-partialDisabled: #155C93B3
   ```
 
 - a483ca9b: Added new `basis` prop to FlexItem to control flex-basis

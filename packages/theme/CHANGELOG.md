@@ -45,7 +45,7 @@
 
 ### Minor Changes
 
-- 8bcc9d04: Deprecated tertiary editable tokens
+- 8bcc9d04: Deprecated tertiary editable tokens: If needed, use `#00000066` as a replacement for `--salt-editable-tertiary-background-readonly`, and use `transparent` as a replacement for all remaining tokens
   Deprecated `tertiary` variant in FormField
 - bf66b578: Deprecated -emphasize tokens in status and palette; replaced with default tokens
 
@@ -234,16 +234,16 @@
 
   - Usages of `measured` tokens in core and labs components updated to use appropriate characteristic replacement
 
-  - Deprecated the following tokens, no replacement needed:
+  - Deprecated the following tokens, use hex value as replacement if needed:
 
   ```diff
-  - --salt-measured-foreground-undo
-  - --salt-palette-measured-fill
-  - --salt-palette-measured-fill-disabled
-  - --salt-palette-measured-foreground-active
-  - --salt-palette-measured-foreground-activeDisabled
-  - --salt-palette-interact-foreground-partial
-  - --salt-palette-interact-foreground-partialDisabled
+  - --salt-measured-foreground-undo: #2670a9
+  - --salt-palette-measured-fill: #2670A9
+  - --salt-palette-measured-fill-disabled: #2670A966
+  - --salt-palette-measured-foreground-active: #2670A9
+  - --salt-palette-measured-foreground-activeDisabled: #2670A966
+  - --salt-palette-interact-foreground-partial: #155C93
+  - --salt-palette-interact-foreground-partialDisabled: #155C93B3
   ```
 
 - d2b983de: New status tokens
