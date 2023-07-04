@@ -6,8 +6,6 @@
   border-width: var(--saltToast-borderWidth, var(--salt-size-border));
   border-style: var(--saltToast-borderStyle, var(--salt-container-borderStyle));
 
-  position: absolute;
-  top: var(--salt-spacing-200);
   box-sizing: border-box;
   box-shadow: 0 6px 10px 0 rgb(0 0 0 / 20%);
   display: inline-flex;
