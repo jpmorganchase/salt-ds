@@ -1,30 +1,30 @@
 import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
 import {
-  Banner,
-  BannerActions,
-  BannerContent,
-  BannerProps,
   Button,
   makePrefixer,
+  StatusIndicator,
+  ValidationStatus,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-
+import { ToastContent } from "./ToastContent";
 import toastCss from "./Toast.css";
 
 const withBaseName = makePrefixer("saltToast");
 
 export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
-  status?: BannerProps["status"];
-  variant?: "primary" | "secondary";
+  /**
+   *  A string to determine the current state of the Toast
+   */
+  status?: ValidationStatus;
   onClose?: () => void;
 }
 
 export const Toast = forwardRef(function Toast(
-  { children, onClose, status = "info", variant, ...restProps }: ToastProps,
+  { children, onClose, status = "info", ...restProps }: ToastProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const targetWindow = useWindow();
@@ -39,15 +39,20 @@ export const Toast = forwardRef(function Toast(
   };
 
   return (
-    <div className={clsx(withBaseName())} {...restProps} ref={ref}>
-      <Banner status={status} variant={variant}>
-        <BannerContent>{children}</BannerContent>
-        <BannerActions>
+    <div
+      className={clsx(withBaseName(), withBaseName(status))}
+      {...restProps}
+      ref={ref}
+    >
+      <StatusIndicator status={status} className={withBaseName("icon")} />
+      <ToastContent>{children}</ToastContent>
+      {onClose && (
+        <div className={clsx(withBaseName("close"))}>
           <Button variant="secondary" onClick={handleOnClick}>
             <CloseIcon />
           </Button>
-        </BannerActions>
-      </Banner>
+        </div>
+      )}
     </div>
   );
 });

@@ -1,5 +1,51 @@
 .saltToast {
+  --banner-background: var(--salt-container-primary-background);
+
+  background: var(--saltToast-background, var(--banner-background));
+  border-color: var(--saltToast-borderColor, var(--banner-borderColor));
+  border-width: var(--saltToast-borderWidth, var(--salt-size-border));
+  border-style: var(--saltToast-borderStyle, var(--salt-container-borderStyle));
+
   position: absolute;
   top: var(--salt-spacing-200);
+  box-sizing: border-box;
   box-shadow: 0 6px 10px 0 rgb(0 0 0 / 20%);
+  display: inline-flex;
+  gap: var(--salt-spacing-75);
+  padding: var(--saltToast-padding, var(--salt-spacing-50) var(--salt-spacing-100));
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+/* Styles applied to icon */
+.saltToast-icon.saltIcon {
+  min-height: var(--salt-size-base);
+}
+
+/* Styles applied when state = "info" */
+.saltToast-info {
+  --banner-borderColor: var(--salt-status-info-borderColor);
+}
+
+/* Styles applied when state = "error" */
+.saltToast-error {
+  --banner-borderColor: var(--salt-status-error-borderColor);
+}
+
+/* Styles applied when state = "warning" */
+.saltToast-warning {
+  --banner-borderColor: var(--salt-status-warning-borderColor);
+}
+
+/* Styles applied when state = "success" */
+.saltToast-success {
+  --banner-borderColor: var(--salt-status-success-borderColor);
+}
+
+/* Styles applied to Close button */
+.saltToast-close {
+  margin-bottom: auto;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+  min-height: var(--salt-size-base);
 }

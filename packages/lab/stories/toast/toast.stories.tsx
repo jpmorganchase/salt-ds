@@ -33,24 +33,3 @@ Success.args = {
   status: "success",
   children: <div>Clear Transact</div>,
 };
-
-export const SecondaryInfo = () => (
-  <DefaultInfo variant="secondary">
-    <div>LEI Updated</div>
-  </DefaultInfo>
-);
-export const SecondaryWarning = () => (
-  <Warning variant="secondary" status="warning">
-    <div>Pre-Trade Transparency</div>
-  </Warning>
-);
-export const SecondaryError = () => (
-  <Error variant="secondary" status="error">
-    <div>CIT Check Failed System Error - Bypass Check</div>
-  </Error>
-);
-export const SecondarySuccess = () => (
-  <Success variant="secondary" status="success">
-    <div>Clear Transact</div>
-  </Success>
-);
