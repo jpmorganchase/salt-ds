@@ -33,3 +33,7 @@
   --tracker-connector-color: var(--tracker-connector-color-active);
   --tracker-connector-style: var(--tracker-connector-style-active);
 }
+
+.saltTrackerConnector.saltTrackerConnector-disabled {
+  --tracker-connector-color: var(--tracker-step-disabled-color);
+}

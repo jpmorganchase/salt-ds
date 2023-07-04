@@ -2,6 +2,7 @@
   --saltIcon-size: var(--saltTrackerStepIconSize, max(var(--salt-icon-size-base), 12px));
   --saltIcon-color: var(--saltTrackerStepIconColor, var(--salt-status-info-foreground));
   --tracker-step-gap: var(--saltTrackerStepGap, var(--salt-spacing-100));
+  --tracker-step-disabled-color: var(--saltTrackerStepDisabledColor, var(--salt-text-secondary-foreground-disabled));
 }
 
 .saltTrackerStep {
@@ -16,6 +17,16 @@
   align-items: center;
   flex-direction: column;
   gap: var(--tracker-step-gap);
+  width: var(--tracker-step-width);
+}
+
+.saltTrackerStep.saltTrackerStep-disabled {
+  --saltIcon-color: var(--tracker-step-disabled-color);
+  color: var(--tracker-step-disabled-color);
+}
+
+.saltTrackerStep.saltTrackerStep-active {
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 /* Pseudo-class applied to the root element on focus */
@@ -26,7 +37,7 @@
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
-.saltTrackerStep-body {
+.saltTrackerStep .saltTrackerStep-body {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
