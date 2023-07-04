@@ -11,13 +11,13 @@ import {
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { makePrefixer, mergeProps } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 
 import steppedTrackerCss from "./SteppedTracker.css";
 
-const withBaseName = makePrefixer("saltSteppedTracker");
-
 import useDetectTruncatedText from "./useDetectTruncatedText";
+
+const withBaseName = makePrefixer("saltSteppedTracker");
 
 export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
   /**
@@ -75,6 +75,8 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
             _overflowRef: getOverflowRef(i),
             _hasTooltip: hasTooltips,
             _totalSteps: totalSteps,
+            _completed: activeStep > i,
+            _disabled: disabled,
           });
         })}
       </ul>

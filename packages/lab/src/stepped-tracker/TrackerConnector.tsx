@@ -12,9 +12,13 @@ type ConnectorState = "default" | "active" | "completed";
 
 type TrackerConnectorProps = {
   state: ConnectorState;
+  disabled: boolean;
 };
 
-export const TrackerConnector = ({ state }: TrackerConnectorProps) => {
+export const TrackerConnector = ({
+  state,
+  disabled,
+}: TrackerConnectorProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-tracker-connector",
@@ -22,5 +26,11 @@ export const TrackerConnector = ({ state }: TrackerConnectorProps) => {
     window: targetWindow,
   });
 
-  return <span className={clsx(withBaseName(), withBaseName(state))} />;
+  return (
+    <span
+      className={clsx(withBaseName(), withBaseName(state), {
+        [withBaseName("disabled")]: disabled,
+      })}
+    />
+  );
 };
