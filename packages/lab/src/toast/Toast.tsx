@@ -9,7 +9,7 @@ import {
 import { CloseIcon } from "@salt-ds/icons";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { ToastContent } from "./ToastContent";
+
 import toastCss from "./Toast.css";
 
 const withBaseName = makePrefixer("saltToast");
@@ -51,7 +51,9 @@ export const Toast = forwardRef(function Toast(
       ref={ref}
     >
       <StatusIndicator status={status} className={withBaseName("icon")} />
-      <ToastContent>{children}</ToastContent>
+      <div className={clsx(withBaseName("content"))} >
+        {children}
+      </div>
       {!hideClose && (
         <div className={clsx(withBaseName("close"))}>
           <Button variant="secondary" onClick={onClose}>

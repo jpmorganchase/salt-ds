@@ -41,6 +41,12 @@
   --toast-borderColor: var(--salt-status-success-borderColor);
 }
 
+/* Styles applied to Toast content */
+.saltToast-content {
+  flex: 1 0;
+  margin: var(--salt-spacing-75) 0;
+}
+
 /* Styles applied to Close button */
 .saltToast-close {
   margin-bottom: auto;
