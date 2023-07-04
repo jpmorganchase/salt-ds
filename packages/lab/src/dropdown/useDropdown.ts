@@ -6,6 +6,7 @@ import {
   CollectionItem,
   itemToString as defaultItemToString,
   SelectionChangeHandler,
+  SelectHandler,
   SelectionStrategy,
 } from "../common-hooks";
 
@@ -40,6 +41,7 @@ export const useDropdown = <
   onHighlight,
   onOpenChange,
   onSelectionChange,
+  onSelect,
   selected,
   selectionStrategy,
 }: DropdownListHookProps<Item, Selection>): DropdownListHookResult<
@@ -68,6 +70,17 @@ export const useDropdown = <
     [isMultiSelect, onOpenChange, onSelectionChange, setIsOpen]
   );
 
+  const handleSelect = useCallback<SelectHandler<Item>>(
+    (evt, selected) => {
+      if (!isMultiSelect) {
+        setIsOpen(false);
+        onOpenChange?.(false);
+      }
+      onSelect?.(evt, selected);
+    },
+    [isMultiSelect, onOpenChange, onSelect, setIsOpen]
+  );
+
   const listHook = useList<Item, Selection>({
     collectionHook,
     defaultHighlightedIndex:
@@ -77,6 +90,7 @@ export const useDropdown = <
     defaultSelected,
     label: "useDropDownList",
     onSelectionChange: handleSelectionChange,
+    onSelect: handleSelect,
     containerRef: NULL_REF,
     highlightedIndex: highlightedIndexProp,
     onHighlight,
