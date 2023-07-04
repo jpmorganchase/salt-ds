@@ -1,5 +1,16 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.4
+
+### Minor Changes
+
+- b636a99c: Condition dropdown in data-grid to only render if the array of options is not empty
+
+### Patch Changes
+
+- de5ab33b: Dropdown will now close when the already selected item is selected.
+- f3ebfa48: When using the DropdownCellEditor with the Data Grid, hovering a grid row then hovering over a Dropdown list no longer crashes the Data Grid.
+
 ## 1.0.4-alpha.3
 
 ### Minor Changes

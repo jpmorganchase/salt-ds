@@ -1,5 +1,85 @@
 # @salt-ds/core
 
+## 1.8.0-rc.2
+
+### Major Changes
+
+- 67199b0b: Removed `AdornmentButton`. Replace usages with the `Button` component.
+
+  ```diff
+  - <Input
+  -   defaultValue="Value"
+  -   startAdornment={<AdornmentButton>Test</AdornmentButton>}
+  -   data-testid="test-id-3"
+  - />
+  + <Input
+  +   defaultValue="Value"
+  +   startAdornment={<Button>Test</Button>}
+  +   data-testid="test-id-3"
+  + />
+  ```
+
+  ```diff
+  - <Input
+  -   disabled
+  -   defaultValue="Value"
+  -   startAdornment={<AdornmentButton>Test</AdornmentButton>}
+  -   data-testid="test-id-3"
+  - />
+  + <Input
+  +   disabled
+  +   defaultValue="Value"
+  +   startAdornment={<Button disabled>Test</Button>}
+  +   data-testid="test-id-3"
+  + />
+  ```
+
+  **Note:** You will need to pass `disabled` to the `Button` component if the `Input` is disabled.
+
+### Minor Changes
+
+- 9668b500: Fixed invalid ARIA attribute console errors when using Input
+- cdec98d2: Added `validationStatus` prop to RadioButton and Checkbox allowing for error and warning status
+  Deprecated `error` prop in RadioButton and Checkbox: Use `validationStatus="error"` instead
+
+  Added `validationStatus` prop to RadioButtonGroupContext and CheckboxGroupContext allowing for error and warning status on the group as a whole
+
+- 598be79d: Added `necessity` prop to FormFieldLabel
+- b3e511e9: Add support for Checkbox/RadioButton used alone (not in group context) within a Form Field with status
+
+  Disables Checkbox/RadioButton focus ring when parent Form Field is disabled
+
+  `AdornmentValidationStatus` type exposed for status adornments. Type of `validationStatus` changed in Checkbox and RadioButton to `AdornmentValidationStatus`.
+
+- feda4061: **_Significant styling change_**
+
+  Removed disabled error style variant from Checkbox. Error styling will now only show if component is not disabled.
+
+- 3de30c35: Added stories to show Form Field Group as a pattern, with usage of Stack and Grid Layout components and shared props across Form Fields and controls
+
+  Added "right" as an option to `FormFieldLabelPlacement` type used in FormField `labelPlacement` prop
+
+- e851d2ba: Removed the `FormFieldControlWrapper` component and `useControlWrapper` hook.
+  To replace usages of the wrapper for Form Fields with multiple children, use the `StackLayout` component with a `gap` of `1` to get the recommended layout and set the `role` to `"group"` or `as` to `"fieldset"` for accessibility. The `variant` on each child should be set directly or with shared props.
+- 52c2e1ce: Fixed Form Field label incorrectly inheriting text alignment.
+- 82b162d3: `Checkbox` and `RadioButton` updated to use FormFieldContext
+  When wrapped within a FormField component, values from Form Field now have precedence in these controls over any directly applied disabled and error validation status
+- 3425ea96: **_Significant styling change_**
+
+  Removed disabled error style variant from Radio Button. Error styling will now only show if component is not disabled.
+
+### Patch Changes
+
+- 5b60aa72: Increased spacing between Checkbox/Radio Button and value, and spacing between each when horizontally grouped
+- 7ca8c510: Design fix on Form Field
+
+  - Left aligned label on wrapped text: Ensures label stays in line with Input text.
+  - Success status adornment color corrected.
+  - Spacing changes between adornments.
+
+- 62bb0f8d: - Sort breakpoints in `useResponsiveProps` so it can handle unordered props.
+  - Fix flickering bug on breakpoint change when values passed to `useResponsiveProps` are the same.
+
 ## 1.8.0-rc.1
 
 ### Minor Changes
