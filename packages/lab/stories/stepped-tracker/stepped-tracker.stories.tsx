@@ -2,12 +2,12 @@ import { useState } from "react";
 
 import { SteppedTracker, TrackerStep } from "@salt-ds/lab";
 import { Button, StackLayout } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { ComponentStory } from "@storybook/react";
 
 export default {
-  title: "Lab/SteppedTracker",
-  component: SteppedTracker,
-} as ComponentMeta<typeof SteppedTracker>;
+  title: "Lab/Stepped Tracker",
+  component: "SteppedTracker",
+};
 
 const initialSteps = [
   {
