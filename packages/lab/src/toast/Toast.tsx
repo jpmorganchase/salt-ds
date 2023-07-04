@@ -44,10 +44,6 @@ export const Toast = forwardRef(function Toast(
     window: targetWindow,
   });
 
-  const handleOnClick = () => {
-    onClose?.();
-  };
-
   return (
     <div
       className={clsx(withBaseName(), withBaseName(status))}
@@ -58,7 +54,7 @@ export const Toast = forwardRef(function Toast(
       <ToastContent>{children}</ToastContent>
       {!hideClose && (
         <div className={clsx(withBaseName("close"))}>
-          <Button variant="secondary" onClick={handleOnClick}>
+          <Button variant="secondary" onClick={onClose}>
             <CloseIcon />
           </Button>
         </div>
