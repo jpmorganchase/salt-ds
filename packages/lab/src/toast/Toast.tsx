@@ -51,9 +51,7 @@ export const Toast = forwardRef(function Toast(
       ref={ref}
     >
       <StatusIndicator status={status} className={withBaseName("icon")} />
-      <div className={clsx(withBaseName("content"))} >
-        {children}
-      </div>
+      <div className={clsx(withBaseName("content"))}>{children}</div>
       {!hideClose && (
         <div className={clsx(withBaseName("close"))}>
           <Button variant="secondary" onClick={onClose}>
