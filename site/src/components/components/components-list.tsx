@@ -457,7 +457,8 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Multiline Input",
-    description: "Provides a text area with multiple rows for users to enter arbitrary text and numeric values for input requiring more detail.",
+    description:
+      "Provides a text area with multiple rows for users to enter arbitrary text and numeric values for input requiring more detail.",
     devStatus: ComponentStatus.IN_PROGRESS,
     designStatus: ComponentStatus.IN_PROGRESS,
   },
