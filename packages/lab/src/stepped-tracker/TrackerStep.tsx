@@ -1,9 +1,9 @@
 import {
   ComponentPropsWithoutRef,
+  CSSProperties,
   forwardRef,
   RefCallback,
   useEffect,
-  useMemo,
 } from "react";
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -21,12 +21,6 @@ import trackerStepCss from "./TrackerStep.css";
 const withBaseName = makePrefixer("saltTrackerStep");
 
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
-  _isActive: boolean;
-  _hasConnector: boolean;
-  _overflowRef: RefCallback<HTMLElement>;
-  _hasTooltip: boolean;
-  _totalSteps: number;
-
   /**
    * If `true`, the stepped tracker will be disabled.
    */
@@ -36,6 +30,16 @@ export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
    */
   completed?: boolean;
 }
+
+type TrackerStepInjectedProps = {
+  _isActive: boolean;
+  _hasConnector: boolean;
+  _overflowRef: RefCallback<HTMLElement>;
+  _hasTooltip: boolean;
+  _totalSteps: number;
+  _completed: boolean;
+  _disabled: boolean;
+};
 
 const getState = ({
   isActive,
@@ -72,19 +76,24 @@ const getStateIcon = ({
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
   function TrackerStep(props, ref?) {
     const {
+      _completed,
+      _disabled,
       _isActive: isActive,
       _hasConnector: hasConnector,
       _overflowRef: overflowRef,
       _hasTooltip: hasTooltip,
       _totalSteps: totalSteps,
       completed = false,
-      disabled,
+      disabled = false,
       className,
       children,
       ...restProps
-    } = props;
+    } = props as TrackerStepProps & TrackerStepInjectedProps;
 
-    const isWithinSteppedTracker = "getOverflowRef" in props;
+    const showCompleted = completed || _completed;
+    const showDisabled = disabled || _disabled;
+
+    const isWithinSteppedTracker = !!overflowRef;
 
     useEffect(() => {
       if (!isWithinSteppedTracker) {
@@ -101,8 +110,8 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
       window: targetWindow,
     });
 
-    const Icon = getStateIcon({ isActive, completed });
-    const state = getState({ isActive, completed });
+    const Icon = getStateIcon({ isActive, completed: showCompleted });
+    const state = getState({ isActive, completed: showCompleted });
 
     const Inner = (
       <li
@@ -110,20 +119,26 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("completed")]: completed,
+            [withBaseName("active")]: isActive,
+            [withBaseName("disabled")]: showDisabled,
+            [withBaseName("completed")]: showCompleted,
           },
           className
         )}
-        style={{
-          width: `${100 / totalSteps}%`,
-        }}
+        style={
+          {
+            ...props.style,
+            "--tracker-step-width": `${100 / totalSteps}%`,
+          } as CSSProperties
+        }
         tabIndex={hasTooltip ? 0 : undefined}
         {...restProps}
         ref={ref}
       >
         <Icon />
-        {hasConnector && <TrackerConnector state={state} />}
+        {hasConnector && (
+          <TrackerConnector state={state} disabled={showDisabled} />
+        )}
         <div ref={overflowRef} className={clsx(withBaseName("body"))}>
           {children}
         </div>
