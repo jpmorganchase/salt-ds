@@ -1,5 +1,78 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.11
+
+### Minor Changes
+
+- de5ab33b: Added `onSelect` to Dropdown. `onSelect` is called when any selection occurs and differs from `onSelectionChange`, which is only called when the selection changes.
+- c2f3e7d8: Add new tabs components: TabstripNext, TabNext
+
+  ```tsx
+  <TabstripNext defaultSelected="Home">
+    <TabNext value="home">Home</TabNext>
+    <TabNext value="transactions">Transactions</TabNext>
+    <TabNext value="loans">Loans</TabNext>
+  </TabstripNext>
+  ```
+
+- 8ff0a974: Refactor ToggleButton to use a new API to simplify its usage.
+
+  ```diff
+  - <ToggleButtonGroup onChange={handleChange} selectedIndex={selectedIndex}>
+  -  <ToggleButton aria-label="alert" tooltipText="Alert">
+  -    <NotificationIcon /> Alert
+  -  </ToggleButton>
+  -  <ToggleButton aria-label="home" tooltipText="Home">
+  -    <HomeIcon /> Home
+  -  </ToggleButton>
+  -  <ToggleButton aria-label="search" tooltipText="Search">
+  -    <SearchIcon /> Search
+  -  </ToggleButton>
+  -  <ToggleButton aria-label="print" tooltipText="Print">
+  -    <PrintIcon /> Print
+  -  </ToggleButton>
+  -</ToggleButtonGroup>
+  +<ToggleButtonGroup onSelectionChange={handleChange} selected={selected}>
+  +  <ToggleButton value="alert">
+  +    <NotificationIcon aria-hidden /> Alert
+  +  </ToggleButton>
+  +  <ToggleButton value="home">
+  +    <HomeIcon aria-hidden /> Home
+  +  </ToggleButton>
+  +  <ToggleButton value="search">
+  +    <SearchIcon aria-hidden /> Search
+  +  </ToggleButton>
+  +  <ToggleButton value="print">
+  +    <PrintIcon aria-hidden /> Print
+  +  </ToggleButton>
+  +</ToggleButtonGroup>
+  ``
+
+  ```
+
+- 71fc7474: Add new list components: ListNext, ListItemNext
+
+  ```
+  <ListNext>
+    <ListItemNext value={Alaska}>
+      {Alaska}
+    </ListItemNext>
+  </ListNext>
+
+  ```
+
+### Patch Changes
+
+- de5ab33b: Dropdown will now close when the already selected item is selected.
+- f699f26d: Logo
+
+  - Added `LogoImage` and `LogoSeparator` components
+  - Removed `LogoTitle` component
+  - Removed `compact` prop
+  - Logo follows composition API
+
+- 1fefbe74: Fixed issue where the Dialog heading overlapped when wrapped
+
 ## 1.0.0-alpha.10
 
 ### Minor Changes

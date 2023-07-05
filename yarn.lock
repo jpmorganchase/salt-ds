@@ -5547,7 +5547,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/lab@1.0.0-alpha.10, @salt-ds/lab@workspace:packages/lab":
+"@salt-ds/lab@workspace:*, @salt-ds/lab@workspace:packages/lab":
   version: 0.0.0-use.local
   resolution: "@salt-ds/lab@workspace:packages/lab"
   peerDependencies:
