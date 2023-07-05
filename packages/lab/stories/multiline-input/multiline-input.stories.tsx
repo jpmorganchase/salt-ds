@@ -25,7 +25,12 @@ export const FullBorder: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput fullBorder defaultValue="Value" {...args} />
-      <MultilineInput variant="secondary" fullBorder defaultValue="Value" {...args} />
+      <MultilineInput
+        variant="secondary"
+        fullBorder
+        defaultValue="Value"
+        {...args}
+      />
     </FlowLayout>
   );
 };
@@ -43,14 +48,19 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput disabled defaultValue="Value" {...args} />
-      <MultilineInput disabled variant="secondary" defaultValue="Value" {...args} />
+      <MultilineInput
+        disabled
+        variant="secondary"
+        defaultValue="Value"
+        {...args}
+      />
       <MultilineInput disabled fullBorder defaultValue="Value" {...args} />
       <MultilineInput
         disabled
         fullBorder
         variant="secondary"
         defaultValue="Value"
-        {...args} 
+        {...args}
       />
     </FlowLayout>
   );
@@ -59,20 +69,27 @@ export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput readOnly defaultValue="Value" {...args} />
-      <MultilineInput readOnly variant="secondary" defaultValue="Value" {...args} />
+      <MultilineInput
+        readOnly
+        variant="secondary"
+        defaultValue="Value"
+        {...args}
+      />
       <MultilineInput readOnly fullBorder defaultValue="Value" {...args} />
       <MultilineInput
         readOnly
         fullBorder
         variant="secondary"
         defaultValue="Value"
-        {...args} 
+        {...args}
       />
     </FlowLayout>
   );
 };
 
-export const EmptyReadonlyMarker: ComponentStory<typeof MultilineInput> = (args) => {
+export const EmptyReadonlyMarker: ComponentStory<typeof MultilineInput> = (
+  args
+) => {
   return (
     <FlowLayout>
       <MultilineInput readOnly={true} {...args} />
@@ -85,26 +102,23 @@ export const Placeholder: ComponentStory<typeof MultilineInput> = (args) => {
   return <MultilineInput placeholder={"Enter a value"} {...args} />;
 };
 
-export const TextAlign: ComponentStory<
-  typeof MultilineInput
-> = (args) => {
+export const TextAlign: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ maxWidth: "366px" }}>
-    <MultilineInput defaultValue={args.defaultValue ?? "Value"} {...args} />
-    <MultilineInput
-      textAlign="center"
-      defaultValue={args.defaultValue ?? "Value"}
-      {...args}
-    />
-    <MultilineInput
-      textAlign="right"
-      defaultValue={args.defaultValue ?? "Value"}
-      {...args}
-    />
+      <MultilineInput defaultValue={args.defaultValue ?? "Value"} {...args} />
+      <MultilineInput
+        textAlign="center"
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+      <MultilineInput
+        textAlign="right"
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
     </FlowLayout>
   );
 };
-
 
 export const ValidationStates: ComponentStory<typeof MultilineInput> = (
   args
@@ -116,21 +130,29 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
         fullBorder
         validationStatus="error"
         defaultValue="Value"
-        {...args} 
+        {...args}
       />
-      <MultilineInput validationStatus="warning" defaultValue="Value" {...args} />
+      <MultilineInput
+        validationStatus="warning"
+        defaultValue="Value"
+        {...args}
+      />
       <MultilineInput
         fullBorder
         validationStatus="warning"
         defaultValue="Value"
-        {...args} 
+        {...args}
       />
-      <MultilineInput validationStatus="success" defaultValue="Value" {...args} />
+      <MultilineInput
+        validationStatus="success"
+        defaultValue="Value"
+        {...args}
+      />
       <MultilineInput
         fullBorder
         validationStatus="success"
         defaultValue="Value"
-        {...args} 
+        {...args}
       />
     </FlowLayout>
   );
@@ -148,7 +170,7 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
           </>
         }
         defaultValue="Value"
-        {...args} 
+        {...args}
       />
       <MultilineInput
         startAdornment={<FlagIcon />}
@@ -158,7 +180,7 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
           </Button>
         }
         defaultValue="Value"
-        {...args} 
+        {...args}
       />
       <MultilineInput
         readOnly
@@ -169,7 +191,7 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
           </Button>
         }
         defaultValue="Value"
-        {...args} 
+        {...args}
       />
     </FlowLayout>
   );
@@ -185,8 +207,7 @@ export const WithValidationAndAdornments: ComponentStory<
         endAdornment={<PinSolidIcon />}
         validationStatus="success"
         defaultValue="Value"
-        rows={1}
-        {...args} 
+        {...args}
       />
       <MultilineInput
         startAdornment={<FlagIcon />}
@@ -198,7 +219,7 @@ export const WithValidationAndAdornments: ComponentStory<
         }
         validationStatus="error"
         defaultValue="Value"
-        {...args} 
+        {...args}
       />
     </FlowLayout>
   );
