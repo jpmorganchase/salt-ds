@@ -87,37 +87,8 @@ export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const EmptyReadonlyMarker: ComponentStory<typeof MultilineInput> = (
-  args
-) => {
-  return (
-    <FlowLayout>
-      <MultilineInput readOnly={true} {...args} />
-      <MultilineInput readOnly={true} emptyReadOnlyMarker="*" {...args} />
-    </FlowLayout>
-  );
-};
-
 export const Placeholder: ComponentStory<typeof MultilineInput> = (args) => {
   return <MultilineInput placeholder={"Enter a value"} {...args} />;
-};
-
-export const TextAlign: ComponentStory<typeof MultilineInput> = (args) => {
-  return (
-    <FlowLayout style={{ maxWidth: "366px" }}>
-      <MultilineInput defaultValue={args.defaultValue ?? "Value"} {...args} />
-      <MultilineInput
-        textAlign="center"
-        defaultValue={args.defaultValue ?? "Value"}
-        {...args}
-      />
-      <MultilineInput
-        textAlign="right"
-        defaultValue={args.defaultValue ?? "Value"}
-        {...args}
-      />
-    </FlowLayout>
-  );
 };
 
 export const ValidationStates: ComponentStory<typeof MultilineInput> = (
