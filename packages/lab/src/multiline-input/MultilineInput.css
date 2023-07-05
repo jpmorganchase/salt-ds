@@ -128,14 +128,6 @@
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--multilineInput-outlineColor);
 }
 
-/* Styling when focused if `disabled={true}` or `readOnly={true}` */
-.saltMultilineInput-focused.saltMultilineInput-readOnly,
-.saltMultilineInput-focused.saltMultilineInput-disabled {
-  --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
-
-  outline: none;
-}
-
 /* Style applied if `readOnly={true}` */
 .saltMultilineInput.saltMultilineInput-readOnly,
 .saltMultilineInput.saltMultilineInput-readOnly:active,

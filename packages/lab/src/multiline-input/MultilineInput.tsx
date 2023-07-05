@@ -142,7 +142,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           withBaseName(variant),
           {
             [withBaseName("fullBorder")]: fullBorder,
-            [withBaseName("focused")]: !disabled && focused,
+            [withBaseName("focused")]: !disabled && !readOnly && focused,
             [withBaseName("disabled")]: disabled,
             [withBaseName("readOnly")]: readOnly,
             [withBaseName(validationStatus || "")]: validationStatus,
