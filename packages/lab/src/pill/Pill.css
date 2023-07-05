@@ -54,6 +54,7 @@
   min-height: var(--saltPill-minHeight, var(--salt-text-minHeight));
   outline: var(--saltPill-outline, 0);
   position: relative;
+  gap: 0;
 }
 
 .saltPill:hover {
