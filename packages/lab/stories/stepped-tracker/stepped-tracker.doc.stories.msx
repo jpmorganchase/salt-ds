@@ -1,0 +1,49 @@
+- There are a few differmt states represented in SteppedTracker
+
+- Active Step
+
+  - This is the step which the user is currently working on.
+  - Ideally this should be independant of the state of individual steps E.g.:
+    - The active step could be the last step, while the other steps have a state of 'started'
+    - The active step could be the first step, even if the future steps are already completed 
+  - Accomodating for these combinations gives users the freedom to revisit previous steps, or partially complete steps rather than having to fill out a Wizard or Multi-step form in a linear fashion
+  - Active step is visually represented in a few ways
+     - The style of the 'Connector' lines
+       - This shows as solid for all steps up to the 'Active Step' and dotted after
+     - The font weight of the active step label
+       - This shows as bold for the active step and regular after
+     - The icon for the active step
+       - This shows as 'solid dot' for the active step
+       - Query: What is the precedence of other states e.g. step status and validation status?
+     - The color of the step icon (active step is blue)
+
+- Step status
+
+ - This indicates the state of each individual step. Potential values include:
+   - default (empty circle)
+   - started (half circle)
+   - completed (tick in circle)
+ - Query: What is the presedence of other states e.g. 'active' icon or validation states
+
+Validation status
+   - This can be used to indicate an 'error' or a 'warning'
+   - This is represented by:
+     - Icon color change (red for error, amber for warning);
+     - Icon change (error/warning icons)
+     - Connector color change
+       - Query: does this make sense, given a connector links two steps, it's not obvious which 'owns' the connector
+     - Message under step label
+       - Query, should we just support secondary text in general?
+   - Query: Presedence
+
+Disabled state
+  - Currently this can be applied to an individual step or the whole SteppedTracker
+  - This is represented by:
+    - Greyed out icon on the step
+    - Greyed out text on the step
+    - Greyed out connector
+      - Query: does this make sense? does a greyed out connector represent the previous or next step being disabled?
+  - Query: Presedence of disabled color vs colmplete 
+  
+
+
