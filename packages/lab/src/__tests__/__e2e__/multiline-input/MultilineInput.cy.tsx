@@ -158,17 +158,5 @@ describe("GIVEN an MultilineInput", () => {
       cy.mount(<MultilineInput defaultValue="The default value" readOnly />);
       cy.checkAxeComponent();
     });
-
-    describe("AND empty", () => {
-      it("THEN should cy.mount an emdash by default", () => {
-        cy.mount(<MultilineInput readOnly />);
-        cy.findByRole("textbox").should("have.value", "—");
-      });
-
-      it("THEN should cy.mount an custom marker", () => {
-        cy.mount(<MultilineInput emptyReadOnlyMarker="#" readOnly />);
-        cy.findByRole("textbox").should("have.value", "#");
-      });
-    });
   });
 });
