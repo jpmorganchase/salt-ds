@@ -24,6 +24,9 @@ export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
    *  A string to determine the current state of the Toast.
    */
   status?: ValidationStatus;
+  /**
+   * Callback function triggered when the close button is actioned.
+   */
   onClose?: () => void;
 }
 
@@ -49,6 +52,7 @@ export const Toast = forwardRef(function Toast(
       className={clsx(withBaseName(), withBaseName(status))}
       {...restProps}
       ref={ref}
+      role="alert"
     >
       <StatusIndicator status={status} className={withBaseName("icon")} />
       <div className={clsx(withBaseName("content"))}>{children}</div>
