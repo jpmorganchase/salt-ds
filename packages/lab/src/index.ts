@@ -49,6 +49,7 @@ export {
 } from "./input-legacy";
 export * from "./layer-layout";
 export * from "./list";
+export * from "./list-next";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
@@ -69,6 +70,7 @@ export * from "./slider";
 export * from "./stepper-input";
 export * from "./switch";
 export * from "./tabs";
+export * from "./tabs-next";
 export * from "./toggle-button";
 export * from "./toggle-button-group";
 export * from "./tokenized-input";

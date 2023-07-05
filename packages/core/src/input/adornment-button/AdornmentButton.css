@@ -1,5 +1,0 @@
-.saltAdornmentButton {
-  --saltButton-padding: 0;
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
-}

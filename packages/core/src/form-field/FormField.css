@@ -15,10 +15,22 @@
 
 .saltFormField-labelLeft {
   align-self: center;
-  grid-template-columns: 40% 1fr;
+  grid-template-columns: var(--formField-label-width, 40%) 1fr;
   grid-template-areas:
     "label controls"
     "auto helperText";
+}
+
+.saltFormField-labelRight {
+  align-self: center;
+  grid-template-columns: var(--formField-label-width, 40%) 1fr;
+  grid-template-areas:
+    "label controls"
+    "auto helperText";
+}
+
+.saltFormField-labelRight .saltFormFieldLabel {
+  text-align: right;
 }
 
 .saltFormField-controls {
@@ -27,11 +39,6 @@
   grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
   grid-column-gap: var(--salt-spacing-100);
-}
-
-.saltFormField > *,
-.saltFormFieldControlWrapper {
-  grid-area: controls;
 }
 
 .saltFormFieldLabel {

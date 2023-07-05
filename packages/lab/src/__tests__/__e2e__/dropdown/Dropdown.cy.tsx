@@ -17,4 +17,13 @@ describe("GIVEN a Dropdown component", () => {
       );
     });
   });
+
+  it("it should close the source list when selecting the same option", () => {
+    cy.mount(<Dropdown id="test" source={testSource} selected="Bar" />);
+    cy.get("#test-control").click();
+
+    cy.get("#test-popup").should("be.visible");
+    cy.findAllByRole("option", { name: "Bar" }).eq(1).click();
+    cy.get("#test-popup").should("not.exist");
+  });
 });

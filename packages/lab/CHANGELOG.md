@@ -1,5 +1,78 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.11
+
+### Minor Changes
+
+- de5ab33b: Added `onSelect` to Dropdown. `onSelect` is called when any selection occurs and differs from `onSelectionChange`, which is only called when the selection changes.
+- c2f3e7d8: Add new tabs components: TabstripNext, TabNext
+
+  ```tsx
+  <TabstripNext defaultSelected="Home">
+    <TabNext value="home">Home</TabNext>
+    <TabNext value="transactions">Transactions</TabNext>
+    <TabNext value="loans">Loans</TabNext>
+  </TabstripNext>
+  ```
+
+- 8ff0a974: Refactor ToggleButton to use a new API to simplify its usage.
+
+  ```diff
+  - <ToggleButtonGroup onChange={handleChange} selectedIndex={selectedIndex}>
+  -  <ToggleButton aria-label="alert" tooltipText="Alert">
+  -    <NotificationIcon /> Alert
+  -  </ToggleButton>
+  -  <ToggleButton aria-label="home" tooltipText="Home">
+  -    <HomeIcon /> Home
+  -  </ToggleButton>
+  -  <ToggleButton aria-label="search" tooltipText="Search">
+  -    <SearchIcon /> Search
+  -  </ToggleButton>
+  -  <ToggleButton aria-label="print" tooltipText="Print">
+  -    <PrintIcon /> Print
+  -  </ToggleButton>
+  -</ToggleButtonGroup>
+  +<ToggleButtonGroup onSelectionChange={handleChange} selected={selected}>
+  +  <ToggleButton value="alert">
+  +    <NotificationIcon aria-hidden /> Alert
+  +  </ToggleButton>
+  +  <ToggleButton value="home">
+  +    <HomeIcon aria-hidden /> Home
+  +  </ToggleButton>
+  +  <ToggleButton value="search">
+  +    <SearchIcon aria-hidden /> Search
+  +  </ToggleButton>
+  +  <ToggleButton value="print">
+  +    <PrintIcon aria-hidden /> Print
+  +  </ToggleButton>
+  +</ToggleButtonGroup>
+  ``
+
+  ```
+
+- 71fc7474: Add new list components: ListNext, ListItemNext
+
+  ```
+  <ListNext>
+    <ListItemNext value={Alaska}>
+      {Alaska}
+    </ListItemNext>
+  </ListNext>
+
+  ```
+
+### Patch Changes
+
+- de5ab33b: Dropdown will now close when the already selected item is selected.
+- f699f26d: Logo
+
+  - Added `LogoImage` and `LogoSeparator` components
+  - Removed `LogoTitle` component
+  - Removed `compact` prop
+  - Logo follows composition API
+
+- 1fefbe74: Fixed issue where the Dialog heading overlapped when wrapped
+
 ## 1.0.0-alpha.10
 
 ### Minor Changes
@@ -152,7 +225,7 @@
 
 ### Minor Changes
 
-- 8bcc9d04: Deprecated tertiary editable tokens
+- 8bcc9d04: Deprecated tertiary editable tokens: If needed, use `#00000066` as a replacement for `--salt-editable-tertiary-background-readonly`, and use `transparent` as a replacement for all remaining tokens
   Deprecated `tertiary` variant in FormField
 - bf66b578: Deprecated -emphasize tokens in status and palette; replaced with default tokens
 
@@ -330,16 +403,16 @@
 
   - Usages of `measured` tokens in core and labs components updated to use appropriate characteristic replacement
 
-  - Deprecated the following tokens, no replacement needed:
+  - Deprecated the following tokens, use hex value as replacement if needed:
 
   ```diff
-  - --salt-measured-foreground-undo
-  - --salt-palette-measured-fill
-  - --salt-palette-measured-fill-disabled
-  - --salt-palette-measured-foreground-active
-  - --salt-palette-measured-foreground-activeDisabled
-  - --salt-palette-interact-foreground-partial
-  - --salt-palette-interact-foreground-partialDisabled
+  - --salt-measured-foreground-undo: #2670a9
+  - --salt-palette-measured-fill: #2670A9
+  - --salt-palette-measured-fill-disabled: #2670A966
+  - --salt-palette-measured-foreground-active: #2670A9
+  - --salt-palette-measured-foreground-activeDisabled: #2670A966
+  - --salt-palette-interact-foreground-partial: #155C93
+  - --salt-palette-interact-foreground-partialDisabled: #155C93B3
   ```
 
 - f1b7a60d: - Add `colorName` to `Color`. When `Color` is set to a color in the Salt color palette `colorName` will be set to the color's name.

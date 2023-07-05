@@ -1,4 +1,4 @@
-import { Input, FlowLayout, Text, AdornmentButton } from "@salt-ds/core";
+import { Input, FlowLayout, Text, Button } from "@salt-ds/core";
 import {
   CallIcon,
   CloseIcon,
@@ -181,14 +181,14 @@ export const WithStaticAdornments: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const WithAdornmentButton: ComponentStory<typeof Input> = (args) => {
+export const WithButtonAdornment: ComponentStory<typeof Input> = (args) => {
   return (
     <FlowLayout style={{ width: "266px" }}>
       <Input
         startAdornment={
-          <AdornmentButton>
+          <Button>
             <NoteIcon />
-          </AdornmentButton>
+          </Button>
         }
         defaultValue={args.defaultValue ?? "Value"}
         {...args}
@@ -196,18 +196,18 @@ export const WithAdornmentButton: ComponentStory<typeof Input> = (args) => {
       <Input
         variant="secondary"
         startAdornment={
-          <AdornmentButton variant="cta">
+          <Button variant="cta">
             <RefreshIcon />
-          </AdornmentButton>
+          </Button>
         }
         defaultValue={args.defaultValue ?? "Value"}
         {...args}
       />
       <Input
         endAdornment={
-          <AdornmentButton>
+          <Button>
             <SendIcon />
-          </AdornmentButton>
+          </Button>
         }
         defaultValue={args.defaultValue ?? "Value"}
         {...args}
@@ -216,12 +216,12 @@ export const WithAdornmentButton: ComponentStory<typeof Input> = (args) => {
         variant="secondary"
         endAdornment={
           <>
-            <AdornmentButton variant="secondary">
+            <Button variant="secondary">
               <CloseIcon />
-            </AdornmentButton>
-            <AdornmentButton variant="cta">
+            </Button>
+            <Button variant="cta">
               <FlagIcon />
-            </AdornmentButton>
+            </Button>
           </>
         }
         defaultValue={args.defaultValue ?? "Value"}
