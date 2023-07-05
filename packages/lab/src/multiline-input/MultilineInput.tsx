@@ -24,11 +24,6 @@ export interface MultilineInputProps
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
-   * The marker to use in an empty read only Input.
-   * Use `''` to disable this feature. Defaults to '—'.
-   */
-  emptyReadOnlyMarker?: string;
-  /**
    * End adornment component
    */
   endAdornment?: ReactNode;
@@ -53,10 +48,6 @@ export interface MultilineInputProps
    */
   startAdornment?: ReactNode;
   /**
-   * Alignment of text within container. Defaults to "left"
-   */
-  textAlign?: "left" | "center" | "right";
-  /**
    * Validation status.
    */
   validationStatus?: "error" | "warning" | "success";
@@ -78,7 +69,6 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       "aria-owns": ariaOwns,
       className: classNameProp,
       disabled,
-      emptyReadOnlyMarker = "—",
       endAdornment,
       fullBorder = false,
       id,
@@ -89,8 +79,6 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       role,
       rows = 3,
       startAdornment,
-      style,
-      textAlign = "left",
       value: valueProp,
       defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
       validationStatus,
@@ -114,11 +102,6 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
 
     const [focused, setFocused] = useState(false);
 
-    const isEmptyReadOnly = readOnly && !defaultValueProp && !valueProp;
-    const defaultValue = isEmptyReadOnly
-      ? emptyReadOnlyMarker
-      : defaultValueProp;
-
     const {
       "aria-describedby": textAreaDescribedBy,
       "aria-labelledby": textAreaLabelledBy,
@@ -131,7 +114,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
 
     const [value, setValue] = useControlled({
       controlled: valueProp,
-      default: defaultValue,
+      default: defaultValueProp,
       name: "MultilineInput",
       state: "value",
     });
@@ -152,11 +135,6 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       setFocused(true);
     };
 
-    const multilineInputStyle = {
-      "--multilineInput-textAlign": textAlign,
-      ...style,
-    };
-
     return (
       <div
         className={clsx(
@@ -172,7 +150,6 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           classNameProp
         )}
         ref={ref}
-        style={multilineInputStyle}
         {...other}
       >
         {startAdornment && (

@@ -132,7 +132,7 @@
 .saltMultilineInput-focused.saltMultilineInput-readOnly,
 .saltMultilineInput-focused.saltMultilineInput-disabled {
   --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
-  
+
   outline: none;
 }
 
