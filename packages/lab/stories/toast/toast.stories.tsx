@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, FlowLayout, SplitLayout } from "@salt-ds/core";
+import { Button, FlowLayout } from "@salt-ds/core";
 import { Toast } from "@salt-ds/lab";
 
 export default {
@@ -49,16 +49,14 @@ CustomContent.args = {
         <strong>Lorem ipsum</strong>
       </div>
       <div>Lorem ipsum dolor sit amet consectetur adipiscing elit.</div>
-      <SplitLayout
-        align="end"
-        endItem={
-          <FlowLayout gap={1}>
-            <Button>Dismiss</Button>
-            <Button variant="cta">Yes</Button>
-          </FlowLayout>
-        }
+      <FlowLayout
+        gap={1}
+        justify="end"
         style={{ marginTop: "var(--salt-spacing-100)" }}
-      />
+      >
+        <Button>Dismiss</Button>
+        <Button variant="cta">Yes</Button>
+      </FlowLayout>
     </div>
   ),
   hideClose: true,
