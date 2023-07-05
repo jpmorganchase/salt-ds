@@ -9,5 +9,12 @@ data:
   $ref: ./#/data
 ---
 
-Accessibility best practices and things to be aware of for this component.
-Copy the contents of the "Accessibility" section in the content template here.
+| Key           | Function                                                                                                                                   | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| tab           | If focus is above the List, Tab key moves focus into:  
+|               | The last selected item;  
+|               | The last item with focus or; 
+|               | The first item in the List                                                                           |
+| Shift tab     | If focus is below the List, Tab key moves focus into the list item which last had focus; or the first item in the List                     | Enter / space | Single-select List: when focus is on a listed item, Enter or Space keys press, select the item and deselects the previously selected item. If \`deselectable\` is active and focus is on a selected item, it's deselected. |
+| Arrow up      | Moves focus to the previous item in the List.  If focus is on the first item, the next UpArrow key press should NOT wrap focus to the last item  |                                                                         |
+| Arrow down    | Moves focus to next item in the List. If focus is on the last item, the next DownArrow key press should NOT wrap focus back to the first item  |                                                                         |
+| Page up       | Moves the highlight a number of positions up the List, based on the number specified in displayedItemCount.                                | Page down     | Moves the highlight a number of positions down the list, based on the number specified in displayedItemCount.                              | home          | Moves focus to the first list item.                                                                                                        | end           | Moves focus to the last list item.                                                                                                     |
