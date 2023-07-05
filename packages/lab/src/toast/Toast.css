@@ -7,7 +7,7 @@
   border-style: var(--saltToast-borderStyle, var(--salt-container-borderStyle));
 
   box-sizing: border-box;
-  box-shadow: var(--salt-shadow-4);
+  box-shadow: var(--salt-overlayable-shadow-popout);
   display: inline-flex;
   gap: var(--salt-spacing-75);
   padding: var(--saltToast-padding, var(--salt-spacing-50) var(--salt-spacing-100));
