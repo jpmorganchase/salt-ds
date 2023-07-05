@@ -73,6 +73,7 @@ const allAllowedKeys = [
   "overlayable",
   "selectable",
   "separable",
+  "shadow",
   "status",
   "taggable",
   "target",
