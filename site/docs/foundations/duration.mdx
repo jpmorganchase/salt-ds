@@ -3,8 +3,6 @@ title: Duration
 layout: DetailTechnical
 sidebar:
   label: Duration
-data:
-  status: In progress
 ---
 
 
@@ -21,27 +19,27 @@ There are four durations available to choose from: Instant, Perceptible, Notable
 | `--salt-duration-notable`     | 1000                    |
 | `--salt-duration-cutoff`      | 10000                   |
 
-### Instant (0-100ms)
+## Instant (0-100ms)
 
 An instant duration is the immediate response by the system to a user’s interaction, within a time frame of 0-100ms. The response should take no more than 100ms to complete. The types of interactions that can trigger an instant response include hovering over a button, clicking on a radio button, typing into an editable field, or dragging an object. No feedback is required as the system response itself is the feedback. 
 
 <Image
   src="/img/foundations/duration-instant.svg"
-  alt="Example of Open Sans font"
+  alt="Example of duration instant"
 />
 
-### Perceptible (300ms)
+## Perceptible (300ms)
 
 A perceptible duration is a short, but detectable delay between a user's action and the system's response. The user should be aware of the gap but retain the feeling of control. This implies a shared control between the user and the interface itself—the user expects the system to process the interaction they have enabled the system to do. However, the delay should feel acceptable, and therefore maintain the user’s attention and productivity. This aligns with the “[Doherty Threshold](https://lawsofux.com/doherty-threshold/)” principle which dictates that a user experience turns from painful to addictive after the system feedback time drops below 400ms. Tooltips and overlays are examples of perceptible delays.
 
 <Image
   src="/img/foundations/duration-perceptible.svg"
-  alt="Example of Open Sans font"
+  alt="Example of duration perceptible"
 />
 
 Perceptible is recommended for when you want to reveal secondary guidance or information to your user, but it doesn't warrant a permanent place within the interface. Content typically has a relatively high level of urgency, so that users can quickly find solutions to their problems and avoid getting frustrated with the system.
 
-### Notable (1s)
+## Notable (1s)
 
 With a notable duration, the user is aware the system is slow to respond. A feeling of loss of control may occur, which is why it's important the delay is clearly communicated. Notable delays are intentional and may be required in order to load a data grid or retrieve search results. Should users experience delays longer than 1s they may feel held back by the system.
 
@@ -49,7 +47,7 @@ A 1s delay is usually the maximum limit for experiencing an interaction as being
 
 <Image
   src="/img/foundations/duration-notable.svg"
-  alt="Example of Open Sans font"
+  alt="Example of duration notable"
 />
 
 With a delay of 1s (`salt-duration-notable`) there is no need for visual feedback to be provided to the user, however, it can be used as a breakpoint – once a delay has exceeded the 'notable' duration it is useful to indicate to the user that the system is working on the problem, for example by displaying a progress indicator or loading state.
@@ -64,16 +62,16 @@ The time between `salt-duration-notable` and `salt-duration-cutoff` indicates th
 
 <Image
   src="/img/foundations/duration-timebetween.svg"
-  alt="Example of Open Sans font"
+  alt="Example of time between notable and cut-off"
 />
 
-### Cut-off (10s)
+## Cut-off (10s)
 
 The average person’s attention span has a limit of 10 seconds. Beyond this period of time, users are likely to start mentally context-switching. `salt-duration-cutoff` is the point at which any attempt for a system to respond should finish and a status message is displayed.
 
 <Image
   src="/img/foundations/duration-cutoff.svg"
-  alt="Example of Open Sans font"
+  alt="Example of duration cut-off"
 />
 
 To prevent a frustrating or unproductive user experience, the time up until a cut-off duration can be used for:
