@@ -116,7 +116,6 @@
 
   /* Negative */
   --salt-palette-negative-foreground: var(--salt-color-red-700);
-  --salt-palette-negative-foreground-disabled: var(--salt-color-red-700-fade-foreground);
 
   /* Neutral */
   --salt-palette-neutral-primary-background: var(--salt-color-white);
@@ -144,7 +143,6 @@
 
   /* Positive */
   --salt-palette-positive-foreground: var(--salt-color-green-700);
-  --salt-palette-positive-foreground-disabled: var(--salt-color-green-700-fade-foreground);
 
   /* Track */
   --salt-palette-track-background: var(--salt-color-gray-60);
@@ -249,7 +247,6 @@
 
   /* Negative */
   --salt-palette-negative-foreground: var(--salt-color-red-300);
-  --salt-palette-negative-foreground-disabled: var(--salt-color-red-300-fade-foreground);
 
   /* Neutral */
   --salt-palette-neutral-primary-background: var(--salt-color-gray-800);
@@ -277,7 +274,6 @@
 
   /* Positive */
   --salt-palette-positive-foreground: var(--salt-color-green-300);
-  --salt-palette-positive-foreground-disabled: var(--salt-color-green-300-fade-foreground);
 
   /* Track */
   --salt-palette-track-background: var(--salt-color-gray-300);
@@ -319,6 +315,10 @@
   --salt-palette-success-border-disabled: var(--salt-color-green-500-fade-border);
   --salt-palette-success-foreground-disabled: var(--salt-color-green-500-fade-foreground);
   --salt-palette-warning-border-disabled: var(--salt-color-orange-700-fade-border);
+
+  /* Positive/Negative */
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-700-fade-foreground);
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-700-fade-foreground);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -349,4 +349,8 @@
   --salt-palette-success-border-disabled: var(--salt-color-green-400-fade-border);
   --salt-palette-success-foreground-disabled: var(--salt-color-green-400-fade-foreground);
   --salt-palette-warning-border-disabled: var(--salt-color-orange-500-fade-border);
+
+  /* Positive/Negative */
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-300-fade-foreground);
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-300-fade-foreground);
 }
