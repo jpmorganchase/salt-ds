@@ -8,16 +8,8 @@ import { OpacityBlock } from "docs/components/OpacityBlock";
 
 <DocGrid className="lighterGrid">
   <OpacityBlock
-    opacity="--salt-opacity-40"
-    cssVariable="--salt-palette-opacity-background"
-  />
-  <OpacityBlock
     opacity="--salt-opacity-0"
     cssVariable="--salt-palette-opacity-background-readonly"
-  />
-  <OpacityBlock
-    opacity="--salt-opacity-40"
-    cssVariable="--salt-palette-opacity-border"
   />
   <OpacityBlock
     opacity="--salt-opacity-8"
@@ -37,10 +29,40 @@ import { OpacityBlock } from "docs/components/OpacityBlock";
   />
   <OpacityBlock
     opacity="--salt-opacity-40"
-    cssVariable="--salt-palette-opacity-foreground"
+    cssVariable="--salt-palette-opacity-disabled"
   />
   <OpacityBlock
     opacity="--salt-opacity-70"
     cssVariable="--salt-palette-opacity-backdrop"
+  />
+</DocGrid>
+
+## Deprecated
+
+<DocGrid className="lighterGrid" withNotes>
+  <OpacityBlock
+    opacity="--salt-opacity-40"
+    cssVariable="--salt-palette-opacity-fill"
+    replacementToken="--salt-palette-opacity-disabled"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-40"
+    cssVariable="--salt-palette-opacity-stroke"
+    replacementToken="--salt-palette-opacity-disabled"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-40"
+    cssVariable="--salt-palette-opacity-background"
+    replacementToken="--salt-palette-opacity-disabled"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-40"
+    cssVariable="--salt-palette-opacity-border"
+    replacementToken="--salt-palette-opacity-disabled"
+  />
+  <OpacityBlock
+    opacity="--salt-opacity-40"
+    cssVariable="--salt-palette-opacity-foreground"
+    replacementToken="--salt-palette-opacity-disabled"
   />
 </DocGrid>
