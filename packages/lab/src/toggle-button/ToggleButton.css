@@ -6,7 +6,6 @@
   background: var(--salt-actionable-secondary-background);
   border: 0 solid transparent;
   border-radius: 0;
-  white-space: pre;
   height: var(--salt-size-base);
   color: var(--salt-actionable-secondary-foreground);
   text-transform: var(--salt-actionable-textTransform);

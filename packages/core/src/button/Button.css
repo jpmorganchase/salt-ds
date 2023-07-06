@@ -94,6 +94,7 @@
   color: var(--saltButton-text-color, var(--button-text-color));
   cursor: var(--saltButton-cursor, pointer);
   display: inline-flex;
+  gap: var(--salt-spacing-50);
   justify-content: var(--saltButton-justifyContent, center);
   font-size: var(--saltButton-fontSize, var(--salt-text-fontSize));
   font-family: var(--saltButton-fontFamily, var(--salt-text-fontFamily));
@@ -115,7 +116,6 @@
   -webkit-tap-highlight-color: transparent;
   /* Styles applied to align children*/
   font-weight: var(--saltButton-fontWeight, var(--button-fontWeight));
-  white-space: pre;
 }
 
 /* Pseudo-class applied to the root element on focus */
