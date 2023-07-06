@@ -27,7 +27,7 @@ An instant duration is the immediate response by the system to a user’s intera
 
 ### Perceptible (300ms)
 
-A perceptible duration is a short, but detectable delay between a user's action and the system's response. The user should be aware of the gap but retain the feeling of control. This implies a shared control between the user and the interface itself—the user expects the system to process the interaction they have enabled the system to do. However, the delay should feel acceptable, and therefore maintain the user’s attention and productivity. This aligns with the “Doherty Threshold” principle which dictates that a user experience turns from painful to addictive after the system feedback time drops below 400ms. Tooltips and overlays are examples of perceptible delays.
+A perceptible duration is a short, but detectable delay between a user's action and the system's response. The user should be aware of the gap but retain the feeling of control. This implies a shared control between the user and the interface itself—the user expects the system to process the interaction they have enabled the system to do. However, the delay should feel acceptable, and therefore maintain the user’s attention and productivity. This aligns with the “[Doherty Threshold](https://lawsofux.com/doherty-threshold/)” principle which dictates that a user experience turns from painful to addictive after the system feedback time drops below 400ms. Tooltips and overlays are examples of perceptible delays.
 
 Perceptible is recommended for when you want to reveal secondary guidance or information to your user, but it doesn't warrant a permanent place within the interface. Content typically has a relatively high level of urgency, so that users can quickly find solutions to their problems and avoid getting frustrated with the system.
 
@@ -45,7 +45,7 @@ The time between salt-duration-notable and salt-duration-cutoff indicates that t
 
 #### Recommended visual feedback:
 
-Spinner is a visual representation of a process that is taking an indeterminate amount of time to complete. A spinner can be displayed at any point between ‘notable’ and ‘cut-off’ durations, but should not be displayed any sooner as the assumption should be that the users actions will have completed before it is necessary to show a loading state. 
+[Spinner](https://storybook.saltdesignsystem.com/?path=/story/documentation-core-spinner--page) is a visual representation of a process that is taking an indeterminate amount of time to complete. A spinner can be displayed at any point between ‘notable’ and ‘cut-off’ durations, but should not be displayed any sooner as the assumption should be that the users actions will have completed before it is necessary to show a loading state. 
 
 ### Cut-off (10s)
 
@@ -53,9 +53,9 @@ The average person’s attention span has a limit of 10 seconds. Beyond this per
 
 To prevent a frustrating or unproductive user experience, the time up until a cut-off duration can be used for:
 
-Displaying messages that inform the user of the current interaction and which processes are taking time.
-Displaying general hints and tips to using the application.
-If possible, allowing the user to continue using other parts of the UI whilst the content loads.
+- Displaying messages that inform the user of the current interaction and which processes are taking time.
+- Displaying general hints and tips to using the application.
+- If possible, allowing the user to continue using other parts of the UI whilst the content loads.
 
 #### By-passing the 10 second cut-off point:
 
@@ -65,9 +65,9 @@ It is recommended that if a duration exceeds the cut-off point, appropriate visu
 
 It is therefore acceptable to implement a duration of longer than 10 seconds, provided:
 
-The outcome doesn’t require user input or response.
-The user is able to switch their attention to alternative tasks during the duration time.
-The interaction that has a longer duration time is independent from, and doesn’t affect time sensitivity, of parallel interactions.
+- The outcome doesn’t require user input or response.
+- The user is able to switch their attention to alternative tasks during the duration time.
+- The interaction that has a longer duration time is independent from, and doesn’t affect time sensitivity, of parallel interactions.
 
 <Callout title="Have some feedback?">
 
