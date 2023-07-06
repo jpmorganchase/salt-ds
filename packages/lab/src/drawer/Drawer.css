@@ -14,31 +14,17 @@
   padding: var(--drawer-padding);
   box-shadow: var(--saltDrawer-boxShadow, var(--drawer-boxShadow));
   z-index: calc(var(--salt-zIndex-appHeader) - 1);
-}
-
-.saltDrawer-fullScreen {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
   position: fixed;
+  max-height: 100%;
   top: 0;
-  left: 0;
 }
 
-.saltDrawer-fullScreen.saltDrawer-enter-animation,
 .saltScrim.saltDrawer-enter-animation {
   animation: var(--salt-animation-fade-in-center);
 }
 
-.saltDrawer-fullScreen.saltDrawer-exit-animation,
 .saltScrim.saltDrawer-exit-animation {
   animation: var(--salt-animation-fade-out-back);
-}
-
-.saltDrawer-anchor {
-  position: fixed;
-  max-height: 100%;
-  top: 0;
 }
 
 .saltDrawer-top {

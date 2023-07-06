@@ -3,8 +3,7 @@ import { clsx } from "clsx";
 
 import { Scrim, ScrimProps } from "../scrim";
 
-import { Breakpoints, makePrefixer, usePrevious } from "@salt-ds/core";
-import { useIsViewportLargerThanBreakpoint } from "../utils";
+import { makePrefixer, usePrevious } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -23,10 +22,6 @@ export interface DrawerProps extends HTMLAttributes<HTMLDivElement> {
    * Defines the drawer position within the screen.
    */
   position?: DrawerPositions;
-  /**
-   * Breakpoint at which the drawer will become fullscreen.
-   */
-  fullScreenAtBreakpoint?: keyof Breakpoints;
   /**
    * Disable all animations.
    */
@@ -54,7 +49,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     className,
     disableScrim = false,
     position = "left",
-    fullScreenAtBreakpoint = "sm",
     disableAnimations = false,
     scrimProps,
     isOpen = true,
@@ -88,8 +82,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     }
   }, [isOpen, showComponent, disableAnimations, isAnimating]);
 
-  const fullScreen = useIsViewportLargerThanBreakpoint(fullScreenAtBreakpoint);
-
   const enterAnimation =
     !disableAnimations && isOpen && !previousDisableAnimationsProp;
 
@@ -98,10 +90,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   const drawer = showComponent ? (
     <div
       ref={ref}
-      className={clsx(withBaseName(), className, {
-        [withBaseName("anchor")]: !fullScreen,
-        [withBaseName("fullScreen")]: fullScreen,
-        [withBaseName(position)]: !fullScreen,
+      className={clsx(withBaseName(), className, withBaseName(position), {
         [withBaseName("enter-animation")]: enterAnimation,
         [withBaseName("exit-animation")]: exitAnimation,
       })}

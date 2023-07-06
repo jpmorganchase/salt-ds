@@ -24,18 +24,6 @@
   background-color: var(--salt-color-gray-40);
 }
 
-.custom-drawer-container .custom-animation.saltDrawer-fullScreen.saltDrawer-enter-animation {
-  animation: var(--salt-animation-slide-in-top);
-}
-
-.custom-drawer-container .custom-animation.saltDrawer-fullScreen.saltDrawer-exit-animation {
-  animation: var(--salt-animation-slide-out-top);
-}
-
-.custom-drawer-container .saltScrim.saltDrawer-exit-animation {
-  animation: fade-out-back 1s ease-out both;
-}
-
 @media (prefers-reduced-motion) {
   .reduced-motion .saltDrawer,
   .reduced-motion .saltScrim {
