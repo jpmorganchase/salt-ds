@@ -168,6 +168,25 @@
   border-bottom: var(--multilineInput-activationIndicator-borderWidth) var(--multilineInput-borderStyle) var(--multilineInput-borderColor);
 }
 
+/* Style applied if `fullBorder={true}` */
+.saltMultilineInput.saltMultilineInput-fullBorder {
+  --multilineInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--multilineInput-borderColor);
+  --multilineInput-paddingLeft: var(--salt-spacing-100);
+  --multilineInput-activationIndicator-borderWidth: 0;
+}
+
+/* Style applied if active or focused when `fullBorder={true}` */
+.saltMultilineInput-fullBorder:active,
+.saltMultilineInput-fullBorder.saltMultilineInput-focused {
+  --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+}
+
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `fullBorder={true}` */
+.saltMultilineInput-fullBorder.saltMultilineInput-readOnly:hover,
+.saltMultilineInput-fullBorder.saltMultilineInput-disabled:hover {
+  --multilineInput-activationIndicator-borderWidth: 0;
+}
+
 /* Style applied to adornment containers */
 .saltMultilineInput-endAdornmentContainer,
 .saltMultilineInput-startAdornmentContainer {
@@ -189,29 +208,6 @@
   padding-left: var(--salt-spacing-100);
 }
 
-/* Style applied if `fullBorder={true}` */
-.saltMultilineInput-fullBorder {
-  --multilineInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--multilineInput-borderColor);
-  --multilineInput-paddingLeft: var(--salt-spacing-100);
-  --multilineInput-activationIndicator-borderWidth: 0;
-}
-
-/* Style applied if active or focused when `fullBorder={true}` */
-.saltMultilineInput-fullBorder:active,
-.saltMultilineInput-fullBorder.saltMultilineInput-focused {
-  --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
-}
-
-/* Styling when focused if `disabled={true}` or `readOnly={true}` when `fullBorder={true}` */
-.saltMultilineInput-fullBorder.saltMultilineInput-readOnly,
-.saltMultilineInput-fullBorder.saltMultilineInput-focused.saltMultilineInput-readOnly,
-.saltMultilineInput-fullBorder.saltMultilineInput-readOnly:hover,
-.saltMultilineInput-fullBorder.saltMultilineInput-focused.saltMultilineInput-disabled,
-.saltMultilineInput-fullBorder.saltMultilineInput-disabled:hover {
-  --multilineInput-paddingLeft: var(--salt-spacing-100);
-  --multilineInput-activationIndicator-borderWidth: 0;
-}
-
 /* Style applied to status adornment container */
 .saltMultilineInput-statusAdornmentContainer {
   align-self: self-end;
@@ -224,7 +220,7 @@
   margin-left: calc(var(--salt-spacing-50) * -1);
 }
 
-/* Style applied to button start adornment if last child */
+/* Style applied to button end adornment if last child */
 .saltMultilineInput-endAdornmentContainer .saltButton:last-child {
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
