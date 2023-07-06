@@ -13,7 +13,7 @@
   --salt-palette-warning-background-emphasize: var(--salt-palette-warning-background);
   --salt-palette-success-background-emphasize: var(--salt-palette-success-background);
   --salt-palette-info-background-emphasize: var(--salt-palette-info-background);
-  --salt-palette-opacity-fill: var(--salt-palette-opacity-disabled); 
+  --salt-palette-opacity-fill: var(--salt-palette-opacity-disabled);
   --salt-palette-opacity-stroke: var(--salt-palette-opacity-disabled);
   --salt-palette-opacity-background: var(--salt-palette-opacity-disabled);
   --salt-palette-opacity-border: var(--salt-palette-opacity-disabled);

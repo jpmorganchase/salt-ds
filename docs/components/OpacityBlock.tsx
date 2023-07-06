@@ -8,7 +8,7 @@ export const OpacityBlock = ({
   opacity,
   cssVariable,
   className,
-  replacementToken
+  replacementToken,
 }: {
   opacity: string;
   className?: string;

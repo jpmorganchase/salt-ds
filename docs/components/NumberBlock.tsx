@@ -4,7 +4,7 @@ import { ReplacementToken } from "./ReplacementToken";
 export const NumberBlock = ({
   number,
   cssVariable,
-  replacementToken
+  replacementToken,
 }: {
   number: string;
   cssVariable: string;
