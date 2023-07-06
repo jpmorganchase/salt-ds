@@ -63,7 +63,7 @@ const DefaultDrawerStory: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-container">
+    <>
       <Button onClick={show}>Open Drawer</Button>
       <Drawer
         isOpen={open}
@@ -73,7 +73,7 @@ const DefaultDrawerStory: ComponentStory<typeof Drawer> = (args) => {
       >
         <DrawerContentExample onClick={hide} />
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -90,12 +90,12 @@ const TopTemplate: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-container">
+    <>
       <Button onClick={show}>Open Drawer</Button>
       <Drawer isOpen={open} {...args}>
         <DrawerContentExample onClick={hide} />
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -112,12 +112,12 @@ const RightTemplate: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-container">
+    <>
       <Button onClick={show}>Open Drawer</Button>
       <Drawer isOpen={open} {...args}>
         <DrawerContentExample onClick={hide} />
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -134,12 +134,12 @@ const BottomTemplate: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-container">
+    <>
       <Button onClick={show}>Open Drawer</Button>
       <Drawer isOpen={open} {...args}>
         <DrawerContentExample onClick={hide} />
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -162,7 +162,7 @@ const ReducedMotionTemplate: ComponentStory<typeof Drawer> = (args) => {
         Go to System Preferences, select the Accessibility category, select the
         Display tab, and enable the Reduce Motion option.
       </p>
-      <div className="drawer-container reduced-motion">
+      <div className="reduced-motion">
         <Button onClick={show}>Open Drawer</Button>
         <Drawer isOpen={open} {...args}>
           <DrawerContentExample onClick={hide} />
@@ -188,7 +188,7 @@ const DrawerLeftExample: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-container drawer-simple-usage">
+    <div className="drawer-simple-usage">
       <Button onClick={show}>Open Drawer</Button>
       <Drawer
         isOpen={open}
@@ -229,7 +229,7 @@ const DrawerTopExample: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-container drawer-simple-usage">
+    <div className="drawer-simple-usage">
       <Button onClick={show}>Open Drawer</Button>
       <Drawer isOpen={open} {...args}>
         <StackLayout>
@@ -267,7 +267,7 @@ const DrawerRightExample: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-container drawer-simple-usage">
+    <div className="drawer-simple-usage">
       <Button onClick={show}>Open Drawer</Button>
       <Drawer
         isOpen={open}
@@ -321,7 +321,7 @@ const DrawerBottomExample: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-container drawer-simple-usage">
+    <div className="drawer-simple-usage">
       <Button onClick={show}>Open Drawer</Button>
       <Drawer isOpen={open} aria-labelledby="drawer_label" {...args}>
         <StackLayout>

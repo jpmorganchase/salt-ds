@@ -2,6 +2,9 @@
   --drawer-boxShadow: var(--saltDrawer-boxShadow, var(--salt-overlayable-shadow-modal));
   --drawer-background: var(--saltDrawer-background, var(--salt-container-primary-background));
   --drawer-padding: var(--saltDrawer-padding, var(--salt-size-container-spacing));
+
+  /* Design to advise */
+  --drawer-width: var(--saltDrawer-width, 378px);
 }
 
 .saltDrawer {
@@ -15,7 +18,6 @@
   box-shadow: var(--saltDrawer-boxShadow, var(--drawer-boxShadow));
   z-index: calc(var(--salt-zIndex-appHeader) - 1);
   position: fixed;
-  max-height: 100%;
   top: 0;
 }
 
@@ -39,6 +41,11 @@
 
 .saltDrawer-top.saltDrawer-exit-animation {
   animation: var(--salt-animation-slide-out-bottom);
+}
+
+.saltDrawer-right,
+.saltDrawer-left {
+  width: var(--drawer-width);
 }
 
 .saltDrawer-right {

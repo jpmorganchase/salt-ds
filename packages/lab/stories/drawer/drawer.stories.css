@@ -2,11 +2,6 @@
   height: 100%;
 }
 
-.drawer-container .saltDrawer-right,
-.drawer-container .saltDrawer-left {
-  width: 378px;
-}
-
 .drawer-simple-usage p,
 .drawer-simple-usage h2,
 .drawer-simple-usage h3 {
