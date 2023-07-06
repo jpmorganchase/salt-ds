@@ -25,7 +25,7 @@ Deprecated tokens `--salt-opacity-1`, `--salt-opacity-2`, `--salt-opacity-3`, `-
 + --salt-opacity-70: 0.70;
 ```
 
-Added `--salt-palette-opacity-disabled` of value 0.40 to replace `--salt-palette-opacity-border`, `--salt-palette-opacity-background`, `--salt-palette-opacity-foreground`, `--salt-palette-opacity-fill`, `--salt-palette-opacity-stroke`
+Added `--salt-palette-opacity-disabled` to replace `--salt-palette-opacity-border`, `--salt-palette-opacity-background`, `--salt-palette-opacity-foreground`, `--salt-palette-opacity-fill`, `--salt-palette-opacity-stroke`
 
 | Palette token (deprecated)        | Value  | Use instead                     | New value |
 | --------------------------------- | ------ | ------------------------------- | --------- |
