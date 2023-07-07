@@ -1,7 +1,7 @@
 .saltDrawer {
   --drawer-boxShadow: var(--saltDrawer-boxShadow, var(--salt-overlayable-shadow-modal));
   --drawer-background: var(--saltDrawer-background, var(--salt-container-primary-background));
-  --drawer-padding: var(--saltDrawer-padding, var(--salt-size-container-spacing));
+  --drawer-padding: var(--saltDrawer-padding, var(--salt-spacing-300));
 
   /* Design to advise */
   --drawer-width: var(--saltDrawer-width, 378px);
