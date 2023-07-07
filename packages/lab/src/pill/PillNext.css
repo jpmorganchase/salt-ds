@@ -87,7 +87,10 @@
 /* Style applied to Pill when disabled */
 .saltPill[aria-disabled],
 .saltPill[aria-disabled]:hover,
-.saltPill[aria-disabled]:active {
+.saltPill[aria-disabled]:active,
+.saltPill[aria-disabled] .saltPill-deleteButton,
+.saltPill[aria-disabled] .saltPill-deleteButton:hover,
+.saltPill[aria-disabled] .saltPill-deleteButton:active {
   background: var(--pill-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
   opacity: var(--salt-palette-opacity-foreground);
