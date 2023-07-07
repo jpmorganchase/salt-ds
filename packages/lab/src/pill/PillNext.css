@@ -34,7 +34,6 @@
   font-weight: var(--saltPill-fontWeight, var(--salt-text-fontWeight));
   letter-spacing: var(--saltPill-letterSpacing, 0);
   line-height: var(--saltPill-lineHeight, var(--salt-text-label-lineHeight));
-  max-width: 50px;
 }
 
 .saltPill-label {
@@ -63,15 +62,15 @@
   user-select: none;
 }
 
-.saltPill-clickable:not([aria-disabled]):hover {
+.saltPill-clickable:not([aria-disabled]):hover:has(.saltPill-deleteButton:not(:hover)) {
   --saltIcon-color: var(--pill-icon-color);
   --saltIcon-color-hover: var(--pill-icon-color-hover);
 
   background: var(--pill-background-hover);
 }
 
-.saltPill-clickable:not([aria-disabled]).saltPill-active,
-.saltPill-clickable:not([aria-disabled]):active {
+.saltPill-clickable:not([aria-disabled]).saltPill-active:has(.saltPill-deleteButton:not(:active)),
+.saltPill-clickable:not([aria-disabled]):active:has(.saltPill-deleteButton:not(:active)) {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
   --saltIcon-color: var(--pill-text-color-active);
@@ -101,8 +100,8 @@
 .saltPill-deleteButton {
   --saltIcon-size-multiplier: 1;
   flex-shrink: 0;
-  height: var(--pill-checkbox-size);
-  width: var(--pill-checkbox-size);
+  height: calc(var(--salt-size-base) / 2);
+  width: calc(var(--salt-size-base) / 2);
   min-height: var(--saltPill-minHeight, var(--salt-text-minHeight));
   display: inline-flex;
   align-items: center;
@@ -113,6 +112,13 @@
   cursor: var(--salt-selectable-cursor-hover);
   background: var(--salt-actionable-secondary-background-hover);
   color: var(--salt-actionable-secondary-foreground-hover);
+}
+
+.saltPill-deleteButton:not([aria-disabled]).saltPill-active,
+.saltPill-deleteButton:not([aria-disabled]):active {
+  background: var(--pill-background-active);
+  color: var(--pill-text-color-active);
+  --saltIcon-color: var(--pill-text-color-active);
 }
 
 /* Style applied to Pill delete button icon on active state  */
@@ -134,17 +140,4 @@
 /* Pill label styles on hover */
 .saltPill:hover {
   color: var(--pill-text-color-hover);
-}
-
-.saltPill-closable .saltPill-label,
-.saltPill-closable:active .saltPill-label {
-  background: var(--pill-background);
-  color: var(--pill-text-color);
-}
-
-/* Pill label styles when  `disabled={true}` */
-.saltPill-disabled .saltPill-label,
-.saltPill-disabled:active .saltPill-label {
-  background: initial;
-  color: var(--pill-text-color-disabled);
 }
