@@ -19,6 +19,7 @@ import {
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
+import { MultilineInput } from "@salt-ds/lab";
 
 export default {
   title: "Core/Form Field",
@@ -128,6 +129,15 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
         <Input defaultValue="Primary Input value" />
       </FormField>
     </FlowLayout>
+  );
+};
+
+export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <FormField {...props}>
+      <FormLabel question>Do your current qualifications align with the role? Please describe.</FormLabel>
+      <MultilineInput fullBorder defaultValue="Answer" />
+    </FormField>
   );
 };
 
@@ -400,6 +410,58 @@ export const WithControls: ComponentStory<typeof FormField> = (props) => {
         <FormHelperText>{`${
           isCheckboxError ? "Must select at least one option. " : ""
         }`}</FormHelperText>
+      </FormField>
+    </FlowLayout>
+  );
+};
+
+export const WithMultilineInput: ComponentStory<typeof FormField> = (props) => {
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormField {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <MultilineInput defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField readOnly {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <MultilineInput defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField disabled {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <MultilineInput defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+      <FormField validationStatus="error" {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <MultilineInput defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
+    </FlowLayout>
+  );
+};
+
+export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
+  props
+) => {
+  return (
+    <FlowLayout style={{ width: "366px" }}>
+      <FormField necessity="required" {...props}>
+        <FormLabel question>
+          Will data related to the new initiative be shared across lines of
+          business, external to the firm, or across-jurisdictions? Please
+          explain.
+        </FormLabel>
+        <MultilineInput defaultValue="Value" />
+      </FormField>
+      <FormField necessity="optional" {...props}>
+        <FormLabel question>
+          For the legal entity country of incorporation, are you aware of any
+          specific regulations relating to oversight of third parties?
+        </FormLabel>
+        <MultilineInput variant="secondary" fullBorder defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
       </FormField>
     </FlowLayout>
   );

@@ -16,3 +16,8 @@
   font-weight: var(--salt-text-fontWeight);
   font-style: var(--salt-editable-help-fontStyle);
 }
+
+.saltFormFieldLabel-question.saltText {
+  color: var(--salt-text-primary-foreground);
+  font-weight: var(--salt-text-fontWeight-strong);
+}
