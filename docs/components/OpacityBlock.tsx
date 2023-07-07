@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { Tooltip } from "@salt-ds/core";
+import { ReplacementToken } from "./ReplacementToken";
 
 import "./OpacityBlock.css";
 
@@ -7,10 +8,12 @@ export const OpacityBlock = ({
   opacity,
   cssVariable,
   className,
+  replacementToken,
 }: {
   opacity: string;
   className?: string;
   cssVariable: string;
+  replacementToken?: string;
 }) => (
   <>
     <div className={clsx("OpacityBlock-cell")}>
@@ -22,5 +25,10 @@ export const OpacityBlock = ({
       </Tooltip>
     </div>
     <code className="DocGrid-code">{cssVariable}</code>
+    {replacementToken ? (
+      <ReplacementToken replacementToken={replacementToken} />
+    ) : (
+      ""
+    )}
   </>
 );

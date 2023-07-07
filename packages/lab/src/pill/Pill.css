@@ -160,7 +160,7 @@
 .saltPill-disabled .saltPill-label,
 .saltPill-disabled .saltIcon {
   cursor: var(--salt-selectable-cursor-disabled);
-  opacity: var(--salt-palette-opacity-foreground);
+  opacity: var(--salt-palette-opacity-disabled);
 
   --saltIcon-color: var(--pill-icon-color-disabled);
   --saltIcon-color-hover: var(--pill-icon-color-disabled);
