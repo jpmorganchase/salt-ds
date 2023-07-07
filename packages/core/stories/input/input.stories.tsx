@@ -286,7 +286,7 @@ export const Spellcheck: ComponentStory<typeof Input> = () => {
   return (
     <Input
       defaultValue="This is a coment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
-      inputProps={{ spellCheck: true }}
+      spellCheck
       style={{ width: "266px" }}
     />
   );
