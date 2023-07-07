@@ -1,5 +1,10 @@
 import { clsx } from "clsx";
-import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
+import {
+  ComponentPropsWithoutRef,
+  ForwardedRef,
+  forwardRef,
+  ReactNode,
+} from "react";
 import { makePrefixer, StatusIndicator, ValidationStatus } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -8,7 +13,7 @@ import toastCss from "./Toast.css";
 
 const withBaseName = makePrefixer("saltToast");
 
-export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
+export interface ToastProps extends ComponentPropsWithoutRef<"div"> {
   children?: ReactNode;
   /**
    *  A string to determine the current state of the Toast.
@@ -17,7 +22,7 @@ export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Toast = forwardRef(function Toast(
-  { children, status = "info", ...restProps }: ToastProps,
+  { children, className, status = "info", ...restProps }: ToastProps,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const targetWindow = useWindow();
