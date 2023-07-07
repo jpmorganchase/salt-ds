@@ -18,6 +18,8 @@ There are four durations available to choose from: Instant, Perceptible, Notable
 | `--salt-duration-notable`     | 1000                    |
 | `--salt-duration-cutoff`      | 10000                   |
 
+It is important to use the correct duration to ensure that the user feels in control of the interface. The duration should reflect the importance of the element or information that is being animated. If responses occur too quickly, they can distract or obstruct a workflow (e.g. tooltips should never appear instantly as the user moves the mouse pointer over the UI). If responses occur too slowly, the application may appear unresponsive and result in unnecessary clicks/potential user error (e.g. a system action is taking place but a progress component isn't displayed quickly enough to communicate it’s state).
+
 ## Instant (0-100ms)
 
 An instant duration is the immediate response by the system to a user’s interaction, within a time frame of 0-100ms. The response should take no more than 100ms to complete. The types of interactions that can trigger an instant response include hovering over a button, clicking on a radio button, typing into an editable field, or dragging an object. No feedback is required as the system response itself is the feedback.
