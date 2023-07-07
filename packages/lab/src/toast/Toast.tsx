@@ -29,7 +29,7 @@ export const Toast = forwardRef(function Toast(
 
   return (
     <div
-      className={clsx(withBaseName(), withBaseName(status))}
+      className={clsx(withBaseName(), withBaseName(status), className)}
       {...restProps}
       ref={ref}
       role="alert"
