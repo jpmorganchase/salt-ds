@@ -14,6 +14,8 @@ import { RadioButtonIcon } from "./RadioButtonIcon";
 import radioButtonCss from "./RadioButton.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useFormFieldProps } from "../form-field-context";
+import { AdornmentValidationStatus } from "../status-adornment";
 
 const withBaseName = makePrefixer("saltRadioButton");
 
@@ -31,6 +33,7 @@ export interface RadioButtonProps
    */
   disabled?: boolean;
   /**
+   * **Deprecated**: Use validationStatus instead
    * Set the error state
    */
   error?: boolean;
@@ -62,6 +65,13 @@ export interface RadioButtonProps
    * Value of radio button
    */
   value?: string;
+  /**
+   * Validation status, one of "warning" | "error" | "success"
+   *
+   * RadioButton has styling variants for "error" and "warning".
+   * No visual styling will be applied on "success" variant.
+   */
+  validationStatus?: AdornmentValidationStatus;
 }
 
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
@@ -69,15 +79,16 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     const {
       checked: checkedProp,
       className,
-      disabled,
+      disabled: disabledProp,
       error,
-      inputProps,
+      inputProps = {},
       label,
       name: nameProp,
       onFocus,
       onBlur,
       onChange,
       value,
+      validationStatus: validationStatusProp,
       ...rest
     } = props;
 
@@ -88,7 +99,26 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       window: targetWindow,
     });
 
+    const {
+      a11yProps: formFieldA11yProps,
+      disabled: formFieldDisabled,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
+
     const radioGroup = useRadioGroup();
+
+    const {
+      "aria-describedby": inputDescribedBy,
+      "aria-labelledby": inputLabelledBy,
+      ...restInputProps
+    } = inputProps;
+
+    const disabled = radioGroup.disabled ?? formFieldDisabled ?? disabledProp;
+    const validationStatus = !disabled
+      ? radioGroup.validationStatus ??
+        formFieldValidationStatus ??
+        validationStatusProp
+      : undefined;
 
     const radioGroupChecked =
       radioGroup.value != null && value != null
@@ -117,6 +147,9 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName("error")]: error /* **Deprecated** */,
+            [withBaseName(validationStatus || "")]: validationStatus,
+            [withBaseName("error")]: error,
           },
           className
         )}
@@ -124,8 +157,18 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {...rest}
       >
         <input
+          aria-describedby={clsx(
+            radioGroup.a11yProps?.["aria-describedby"] ??
+              formFieldA11yProps?.["aria-describedby"],
+            inputDescribedBy
+          )}
+          aria-labelledby={clsx(
+            radioGroup.a11yProps?.["aria-labelledby"] ??
+              formFieldA11yProps?.["aria-labelledby"],
+            inputLabelledBy
+          )}
           className={withBaseName("input")}
-          {...inputProps}
+          {...restInputProps}
           checked={checked}
           disabled={disabled}
           name={name}
@@ -135,7 +178,12 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           onFocus={onFocus}
           type="radio"
         />
-        <RadioButtonIcon checked={checked} error={error} disabled={disabled} />
+        <RadioButtonIcon
+          checked={checked}
+          disabled={disabled}
+          validationStatus={validationStatus}
+          error={error}
+        />
         {label}
       </label>
     );

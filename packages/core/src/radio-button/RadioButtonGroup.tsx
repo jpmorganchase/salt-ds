@@ -10,6 +10,7 @@ import { RadioGroupContext } from "./internal/RadioGroupContext";
 import radioButtonGroupCss from "./RadioButtonGroup.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useFormFieldProps } from "../form-field-context";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
@@ -23,6 +24,10 @@ export interface RadioButtonGroupProps
    * Set the group direction.
    */
   direction?: "horizontal" | "vertical";
+  /**
+   * Disable the RadioButton group
+   */
+  disabled?: boolean;
   /**
    * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise the radio buttons will wrap onto the next line.
    */
@@ -39,6 +44,10 @@ export interface RadioButtonGroupProps
    * The value of the radio group, required for a controlled component.
    */
   value?: string;
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning";
 }
 
 export const RadioButtonGroup = forwardRef<
@@ -50,10 +59,12 @@ export const RadioButtonGroup = forwardRef<
     className,
     defaultValue,
     direction = "vertical",
+    disabled: disabledProp,
     wrap = true,
     name: nameProp,
     onChange,
     value: valueProp,
+    validationStatus: validationStatusProp,
     ...rest
   } = props;
 
@@ -63,6 +74,15 @@ export const RadioButtonGroup = forwardRef<
     css: radioButtonGroupCss,
     window: targetWindow,
   });
+
+  const {
+    a11yProps,
+    disabled: formFieldDisabled,
+    validationStatus: formFieldValidationStatus,
+  } = useFormFieldProps();
+
+  const disabled = formFieldDisabled ?? disabledProp;
+  const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
   const [value, setStateValue] = useControlled({
     controlled: valueProp,
@@ -93,7 +113,14 @@ export const RadioButtonGroup = forwardRef<
       {...rest}
     >
       <RadioGroupContext.Provider
-        value={{ name, onChange: handleChange, value }}
+        value={{
+          a11yProps,
+          disabled,
+          name,
+          onChange: handleChange,
+          validationStatus,
+          value,
+        }}
       >
         {children}
       </RadioGroupContext.Provider>

@@ -4,22 +4,7 @@ layout: DetailComponent
 sidebar:
   label: How to use
 data:
-  description:
-    $ref: ./#/data/description
-  alsoKnownAs:
-    $ref: ./#/data/alsoKnownAs
-  relatedComponents:
-    $ref: ./#/data/relatedComponents
-  sourceCodeUrl:
-    $ref: ./#/data/sourceCodeUrl
-  componentGuide:
-    $ref: ./#/data/componentGuide
-  bugReport:
-    $ref: ./#/data/bugReport
-  featureRequest:
-    $ref: ./#/data/featureRequest
-  askQuestion:
-    $ref: ./#/data/askQuestion
+  $ref: ./#/data
 ---
 
 ### Using the Button component
@@ -40,8 +25,4 @@ import { Button } from "@salt-ds/core";
 
 ### Props
 
-| Name                  | Type      | Description                                                                                          | Default   |
-| --------------------- | --------- | ---------------------------------------------------------------------------------------------------- | --------- |
-| disabled              | `boolean` | If `true``, the button will be disabled.                                                             | -         |
-| focusableWhenDisabled | `boolean` | If `true``, the button will be fosusable when disabled.                                              | -         |
-| variant               | -         | The variant to use. “Primary” is the default value, and the other options are “secondary” and “cta.” | "primary" |
+<PropsTable componentName="Button" />

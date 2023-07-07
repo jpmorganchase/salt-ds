@@ -6,16 +6,17 @@ import {
   InputHTMLAttributes,
   ReactNode,
 } from "react";
-import { makePrefixer, useControlled } from "../utils";
-import { CheckboxIcon } from "./CheckboxIcon";
-
-import checkboxCss from "./Checkbox.css";
-import { useCheckboxGroup } from "./internal/useCheckboxGroup";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { makePrefixer, useControlled } from "../utils";
+import { CheckboxIcon } from "./CheckboxIcon";
+import { useFormFieldProps } from "../form-field-context";
+import { AdornmentValidationStatus } from "../status-adornment";
+import { useCheckboxGroup } from "./internal/useCheckboxGroup";
+
+import checkboxCss from "./Checkbox.css";
 
 const withBaseName = makePrefixer("saltCheckbox");
-
 export interface CheckboxProps
   extends Omit<
     InputHTMLAttributes<HTMLLabelElement>,
@@ -35,6 +36,7 @@ export interface CheckboxProps
    */
   disabled?: boolean;
   /**
+   * **Deprecated**: Use validationStatus instead
    * If `true`, the checkbox will be in the error state.
    */
   error?: boolean;
@@ -72,6 +74,13 @@ export interface CheckboxProps
    * The value of the checkbox.
    */
   value?: string;
+  /**
+   * Validation status, one of "warning" | "error" | "success"
+   *
+   * Checkbox has styling variants for "error" and "warning".
+   * No visual styling will be applied on "success" variant.
+   */
+  validationStatus?: AdornmentValidationStatus;
 }
 
 export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
@@ -80,16 +89,17 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       checked: checkedProp,
       className,
       defaultChecked,
-      disabled,
+      disabled: disabledProp,
       error,
       indeterminate,
-      inputProps,
+      inputProps = {},
       label,
       name,
       onBlur,
       onChange,
       onFocus,
       value,
+      validationStatus: validationStatusProp,
       ...rest
     },
     ref
@@ -101,6 +111,12 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       window: targetWindow,
     });
     const checkboxGroup = useCheckboxGroup();
+
+    const {
+      "aria-describedby": inputDescribedBy,
+      "aria-labelledby": inputLabelledBy,
+      ...restInputProps
+    } = inputProps;
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       // Workaround for https://github.com/facebook/react/issues/9023
@@ -126,13 +142,28 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       state: "checked",
     });
 
+    const {
+      a11yProps: formFieldA11yProps,
+      disabled: formFieldDisabled,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
+
+    const disabled =
+      checkboxGroup.disabled ?? formFieldDisabled ?? disabledProp;
+    const validationStatus = !disabled
+      ? checkboxGroup.validationStatus ??
+        formFieldValidationStatus ??
+        validationStatusProp
+      : undefined;
+
     return (
       <label
         className={clsx(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName("error")]: error,
+            [withBaseName("error")]: error /* **Deprecated** */,
+            [withBaseName(validationStatus || "")]: validationStatus,
           },
           className
         )}
@@ -142,9 +173,19 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <input
           // aria-checked only needed when indeterminate since native indeterminate behaviour is not used
           aria-checked={indeterminate ? "mixed" : undefined}
+          aria-describedby={clsx(
+            checkboxGroup.a11yProps?.["aria-describedby"] ??
+              formFieldA11yProps?.["aria-describedby"],
+            inputDescribedBy
+          )}
+          aria-labelledby={clsx(
+            checkboxGroup.a11yProps?.["aria-labelledby"] ??
+              formFieldA11yProps?.["aria-labelledby"],
+            inputLabelledBy
+          )}
           name={name}
           value={value}
-          {...inputProps}
+          {...restInputProps}
           checked={checked}
           className={withBaseName("input")}
           data-indeterminate={indeterminate}
@@ -158,8 +199,9 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <CheckboxIcon
           checked={checked}
           disabled={disabled}
-          error={error}
           indeterminate={indeterminate}
+          validationStatus={validationStatus}
+          error={error}
         />
         {label}
       </label>

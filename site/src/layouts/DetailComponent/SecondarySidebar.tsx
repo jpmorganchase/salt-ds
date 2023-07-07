@@ -1,9 +1,10 @@
-import React, { FC } from "react";
-import { TableOfContents, Image } from "@jpmorganchase/mosaic-site-components";
+import React, { FC, ReactNode } from "react";
+import { Image } from "@jpmorganchase/mosaic-site-components";
 import { Pill } from "@salt-ds/lab";
 import { Link } from "@salt-ds/core";
 import { Heading4 } from "../../components/mdx/h4";
 import { Data, Relationship } from "./DetailComponent";
+import { useAllExamplesView } from "../../utils/useAllExamplesView";
 
 import styles from "./SecondarySidebar.module.css";
 
@@ -22,18 +23,26 @@ const LinkWithLogo: FC<LinkWithLogoProps> = ({ href, label, logo }) => (
   </div>
 );
 
-type SecondarySidebarProps = { additionalData?: Data };
+type SecondarySidebarProps = {
+  additionalData?: Data;
+  tableOfContents?: ReactNode;
+};
 
-const SecondarySidebar: FC<SecondarySidebarProps> = ({ additionalData }) => {
+const SecondarySidebar: FC<SecondarySidebarProps> = ({
+  additionalData,
+  tableOfContents,
+}) => {
   const {
     alsoKnownAs,
     relatedComponents,
     sourceCodeUrl,
-    componentGuide,
+    stickerSheet,
     bugReport,
     featureRequest,
     askQuestion,
   } = additionalData || {};
+
+  const { allExamplesView } = useAllExamplesView();
 
   const alsoKnownAsPills = alsoKnownAs && (
     <>
@@ -74,10 +83,10 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({ additionalData }) => {
             logo="github"
           />
         )}
-        {componentGuide && (
+        {stickerSheet && (
           <LinkWithLogo
-            href={componentGuide}
-            label="Read the component guide"
+            href={stickerSheet}
+            label="Figma sticker sheet"
             logo="figma"
           />
         )}
@@ -112,9 +121,9 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({ additionalData }) => {
 
   return (
     <div className={styles.sidebar}>
-      <div className={styles.tableOfContents}>
-        <TableOfContents />
-      </div>
+      {allExamplesView && tableOfContents && (
+        <div className={styles.tableOfContents}>{tableOfContents}</div>
+      )}
       <div className={styles.wrapper}>
         {alsoKnownAsPills}
         {relatedComponentsPills("similarTo", "Similar to")}

@@ -1,8 +1,9 @@
 import { makePrefixer } from "../utils";
 import { clsx } from "clsx";
-import radioButtonIconCss from "./RadioButtonIcon.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { AdornmentValidationStatus } from "../status-adornment";
+import radioButtonIconCss from "./RadioButtonIcon.css";
 
 const withBaseName = makePrefixer("saltRadioButtonIcon");
 
@@ -10,6 +11,7 @@ export interface RadioButtonIconProps {
   checked?: boolean;
   error?: boolean;
   disabled?: boolean;
+  validationStatus?: AdornmentValidationStatus;
 }
 
 /**
@@ -19,6 +21,7 @@ export const RadioButtonIcon = ({
   checked,
   error,
   disabled,
+  validationStatus,
 }: RadioButtonIconProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -32,6 +35,7 @@ export const RadioButtonIcon = ({
         [withBaseName("checked")]: checked,
         [withBaseName("error")]: error,
         [withBaseName("disabled")]: disabled,
+        [withBaseName(validationStatus || "")]: validationStatus,
       })}
       height="14"
       viewBox="0 0 14 14"

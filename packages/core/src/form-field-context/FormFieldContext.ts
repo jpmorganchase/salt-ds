@@ -11,6 +11,8 @@ export interface A11yValueProps {
   labelId?: string;
 }
 
+type NecessityType = "required" | "optional" | "asterisk";
+
 export interface a11yValueAriaProps {
   "aria-labelledby": A11yValueProps["labelId"];
   "aria-describedby": A11yValueProps["helperTextId"] | undefined;
@@ -19,6 +21,7 @@ export interface a11yValueAriaProps {
 export interface FormFieldContextValue {
   a11yProps: a11yValueAriaProps;
   disabled: boolean;
+  necessity: NecessityType | undefined;
   readOnly: boolean;
   validationStatus: "error" | "warning" | "success" | undefined;
 }

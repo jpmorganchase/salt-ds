@@ -1,11 +1,23 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Sidebar } from "@jpmorganchase/mosaic-site-components";
-import { useRoute, useStore, SiteState } from "@jpmorganchase/mosaic-store";
+import {
+  Sidebar,
+  TableOfContents,
+} from "@jpmorganchase/mosaic-site-components";
+import {
+  useRoute,
+  useStore,
+  SiteState,
+  useMeta,
+} from "@jpmorganchase/mosaic-store";
 import { TabPanel, Tabs } from "@salt-ds/lab";
 import { LayoutProps } from "../types/index";
 import { DetailBase } from "../DetailBase";
 import SecondarySidebar from "./SecondarySidebar";
+import TitleWithDrawer from "./TitleWithDrawer";
+import MobileDrawer from "./MobileDrawer";
+import useIsMobileView from "../../utils/useIsMobileView";
+import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
 
 const tabs = [
   { id: 0, name: "examples", label: "Examples" },
@@ -20,26 +32,45 @@ type RelatedComponent = {
   relationship: Relationship;
 };
 
+type ComponentNpmInfo = {
+  name: string;
+  initialRelease?: string;
+};
+
 export type Data = {
   description: string;
   alsoKnownAs: string[];
   relatedComponents: RelatedComponent[];
   sourceCodeUrl: string;
-  componentGuide: string;
-  bugReport: string;
-  featureRequest: string;
-  askQuestion: string;
+  package: ComponentNpmInfo;
+  stickerSheet?: string;
+  bugReport?: string;
+  featureRequest?: string;
+  askQuestion?: string;
 };
 
 type CustomSiteState = SiteState & { data?: Data };
 
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
+  const [openDrawer, setOpenDrawer] = useState(false);
+
   const { push } = useRouter();
   const { route } = useRoute();
 
+  const [allExamplesView, setAllExamplesView] = useState(false);
+
   const newRoute = route?.substring(0, route.lastIndexOf("/") + 1);
 
-  const useData = useStore((state: CustomSiteState) => state.data);
+  const useData = useStore((state: CustomSiteState) => {
+    const defaultData: Partial<Data> = {
+      bugReport:
+        "https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+bug+%F0%9F%AA%B2%2Cstatus%3A+awaiting+triage&template=bug_report.yml",
+      featureRequest:
+        "https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+enhancement+%F0%9F%92%A1%2Cstatus%3A+awaiting+triage&template=feature_request.yml",
+    };
+
+    return state.data ? { ...defaultData, ...state.data } : undefined;
+  });
 
   const { description } = useData || {};
 
@@ -51,6 +82,8 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     }
   }, [route]);
 
+  const isMobileView = useIsMobileView();
+
   const updateRouteWhenTabChanges = (index: number) => {
     const currentTab = tabs.find(({ id }) => index === id);
 
@@ -61,25 +94,56 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const currentTabIndex = currentTab?.id ?? 0;
 
+  const {
+    meta: { title },
+  } = useMeta();
+
   return (
-    <DetailBase
-      sidebar={
-        <Sidebar sticky>
-          {<SecondarySidebar additionalData={useData} />}
-        </Sidebar>
-      }
+    <AllExamplesViewContext.Provider
+      value={{ allExamplesView, setAllExamplesView }}
     >
-      <p>{description}</p>
-      <Tabs
-        activeTabIndex={currentTabIndex}
-        onActiveChange={updateRouteWhenTabChanges}
+      <DetailBase
+        sidebar={
+          !isMobileView ? (
+            <Sidebar sticky>
+              {
+                <SecondarySidebar
+                  additionalData={useData}
+                  tableOfContents={<TableOfContents />}
+                />
+              }
+            </Sidebar>
+          ) : undefined
+        }
+        pageTitle={
+          isMobileView ? (
+            <TitleWithDrawer
+              title={title}
+              openDrawer={openDrawer}
+              setOpenDrawer={setOpenDrawer}
+            />
+          ) : undefined
+        }
       >
-        {tabs.map(({ id, label }) => (
-          <TabPanel key={id} label={label}>
-            {children}
-          </TabPanel>
-        ))}
-      </Tabs>
-    </DetailBase>
+        {isMobileView && (
+          <MobileDrawer
+            open={openDrawer}
+            drawerContent={<SecondarySidebar additionalData={useData} />}
+          />
+        )}
+
+        <p>{description}</p>
+        <Tabs
+          activeTabIndex={currentTabIndex}
+          onActiveChange={updateRouteWhenTabChanges}
+        >
+          {tabs.map(({ id, label }) => (
+            <TabPanel key={id} label={label}>
+              {children}
+            </TabPanel>
+          ))}
+        </Tabs>
+      </DetailBase>
+    </AllExamplesViewContext.Provider>
   );
 };

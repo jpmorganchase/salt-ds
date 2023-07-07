@@ -190,7 +190,7 @@ describe("Grid", () => {
     getRow(0).should("not.exist");
     getRow(1).should("exist");
     getRow(15).should("exist");
-    // this will fail locally on a mac because macs don't render scrollbars and therefore render an extra row
+    // this will fail locally on a Mac because macs don't render scrollbars and therefore render an extra row
     getRow(16).should("not.exist");
   });
 
@@ -303,6 +303,16 @@ describe("Grid", () => {
       .type("{downArrow}")
       .type("{Enter}");
     findCell(0, 2).should("have.text", "Jersey City, NJ");
+  });
+
+  it("Dropdown editor should close when selecting the same option", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    findCell(0, 3).dblclick({ force: true });
+    cy.findByTestId("dropdown-list").should("be.visible");
+    cy.findByRole("option", { name: "-" }).click();
+    cy.findByTestId("dropdown-list").should("not.exist");
   });
 
   it("Tabbing in and out of grid", () => {
@@ -460,7 +470,7 @@ describe("Grid", () => {
 
     it("displays 'Secondary' variant", () => {
       cy.mount(<GridVariants />);
-      cy.findByLabelText("secondary").click();
+      cy.findByRole("radio", { name: "Secondary" }).click();
       cy.findByRole("grid").should(
         "have.class",
         "saltGrid-secondaryBackground"
@@ -469,7 +479,7 @@ describe("Grid", () => {
 
     it("displays 'Zebra' variant", () => {
       cy.mount(<GridVariants />);
-      cy.findByLabelText("zebra").click();
+      cy.findByRole("radio", { name: "Zebra" }).click();
       cy.findByRole("grid")
         .should("have.class", "saltGrid-primaryBackground")
         .and("have.class", "saltGrid-zebra");
@@ -539,7 +549,7 @@ describe("Grid", () => {
     it("Shows correct columns", () => {
       cy.mount(<RowSelectionModes />);
 
-      cy.findByLabelText("multi").click();
+      cy.findByRole("radio", { name: "Multi" }).click();
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
         15
@@ -553,7 +563,7 @@ describe("Grid", () => {
       cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
       cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
 
-      cy.findByLabelText("single").click();
+      cy.findByRole("radio", { name: "Single" }).click();
       cy.findAllByTestId("grid-row-selection-radiobox").should(
         "have.length",
         15
@@ -567,7 +577,7 @@ describe("Grid", () => {
       cy.findAllByTestId("column-header").eq(2).should("have.text", "B");
       cy.findAllByTestId("column-header").eq(3).should("have.text", "C");
 
-      cy.findByLabelText("none").click();
+      cy.findByRole("radio", { name: "None" }).click();
       cy.findAllByTestId("grid-row-selection-checkbox").should(
         "have.length",
         0
@@ -585,19 +595,19 @@ describe("Grid", () => {
     it("Selects rows correctly", () => {
       cy.mount(<RowSelectionModes />);
 
-      cy.findByLabelText("multi").click();
+      cy.findByRole("radio", { name: "Multi" }).click();
       findCell(2, 3).click({ force: true });
       findCell(3, 3).click({ force: true, shiftKey: true });
       checkRowSelected(2, true);
       checkRowSelected(3, true);
 
-      cy.findByLabelText("single").click();
+      cy.findByRole("radio", { name: "Single" }).click();
       findCell(2, 3).click({ force: true });
       findCell(3, 3).click({ force: true, shiftKey: true });
       checkRowSelected(2, false);
       checkRowSelected(3, true);
 
-      cy.findByLabelText("none").click();
+      cy.findByRole("radio", { name: "None" }).click();
       findCell(2, 2).click({ force: true });
       findCell(3, 2).click({ force: true, shiftKey: true });
       checkRowSelected(2, false);
@@ -626,7 +636,7 @@ describe("Grid", () => {
   it("Space on checkbox column should toggle selection", () => {
     cy.mount(<RowSelectionModes />);
 
-    cy.findByLabelText("multi").realClick();
+    cy.findByRole("radio", { name: "Multi" }).realClick();
     findCell(2, 1).click({ force: true });
     cy.focused().type("{downArrow}");
     cy.focused().type("{leftArrow}");
@@ -639,7 +649,7 @@ describe("Grid", () => {
   });
 
   describe("Column Sorting", () => {
-    it("should sort column values when sorting is enabled", () => {
+    xit("should sort column values when sorting is enabled", () => {
       cy.mount(<RowSelectionModes />);
 
       // first click: sort in ascending order

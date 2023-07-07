@@ -123,6 +123,19 @@ Form Fields can show validation states (warning, success, error) with the prop `
 - Use the error state to alert the user of a critical issue that’s related to the field entry. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
 - Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
 
+## Multiple controls
+
+Form Fields can wrap two or more controls in a layout component to have multiple children.
+
+<Canvas>
+  <Story id="core-form-field--multi-child" />
+</Canvas>
+
+### Guidance
+
+- Set `role="group"` or `as="fieldset"` on the layout component for accessibility. If using a fieldset, browser fieldset styling should be overriden.
+- Set the `variant` prop to the same variant on each control.
+
 ## How to use
 
 ### When to use Form Field

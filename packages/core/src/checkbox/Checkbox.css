@@ -4,7 +4,7 @@
   cursor: var(--salt-selectable-cursor-hover);
   background: var(--saltCheckbox-background, none);
   display: flex;
-  gap: var(--saltCheckbox-gap, var(--salt-size-adornmentGap));
+  gap: var(--saltCheckbox-gap, var(--salt-spacing-100));
   position: relative;
   width: fit-content;
 }
@@ -19,7 +19,7 @@
 /* Styles applied to the icon component if focused */
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
   outline-offset: var(--salt-focused-outlineOffset);
-  outline: var(--salt-focused-outline);
+  outline: var(--saltCheckbox-outline, var(--salt-focused-outline));
 }
 
 /* Styles applied to input element */

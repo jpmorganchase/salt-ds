@@ -1,5 +1,65 @@
 # @salt-ds/theme
 
+## 1.6.0
+
+### Minor Changes
+
+- c9981881: New token introduced in `selectable` characteristic, new palette tokens
+
+  ```diff
+  + --salt-selectable-background-selectedDisabled: var(--salt-palette-interact-background-activeDisabled);
+  ```
+
+  New value in light mode
+
+  ```diff
+  + --salt-palette-interact-background-activeDisabled: var(--salt-color-blue-30-fade-background);
+  ```
+
+  New value in dark mode
+
+  ```diff
+  + --salt-palette-interact-background-activeDisabled: var(--salt-color-blue-700-fade-background);
+  ```
+
+- 71fc7474: Add new list components: ListNext, ListItemNext
+
+  ```
+  <ListNext>
+    <ListItemNext value={Alaska}>
+      {Alaska}
+    </ListItemNext>
+  </ListNext>
+
+  ```
+
+- b52cc743: Deprecated the following tokens: Use hex value as replacement if needed.
+
+  ```diff
+  - --salt-status-info-foreground-disabled: #2670A9B3
+  - --salt-status-success-foreground-disabled: #24874BB3
+  - --salt-status-warning-foreground-disabled: #EA7319B3
+  - --salt-status-error-foreground-disabled: #E32B16B3
+  - --salt-status-static-foreground-disabled: #61656E | #B4B7BE
+  - --salt-status-negative-foreground-disabled: #FF5942B3 | #A6150BB3
+  - --salt-status-positive-foreground-disabled: #3CAB60B3 | #0C5D2EB3
+  - --salt-status-info-borderColor-disabled: #2670A966
+  - --salt-status-success-borderColor-disabled: #24874B66
+  - --salt-status-warning-borderColor-disabled: #EA731966
+  - --salt-status-error-borderColor-disabled: #E32B1666
+  - --salt-palette-error-border-disabled: #E32B1666
+  - --salt-palette-warning-border-disabled: #EA731966
+  - --salt-palette-success-border-disabled: #24874B66
+  - --salt-palette-info-border-disabled: #2670A966
+  - --salt-palette-error-foreground-disabled: #E32B16B3
+  - --salt-palette-success-foreground-disabled: #24874BB3
+  - --salt-palette-info-foreground-disabled: #2670A9B3
+  ```
+
+  Any components that have a validation state should not be able to simultaneously be disabled. Consider altering code if this is the case.
+
+- 5227fd57: Added `--salt-selectable-cursor-readonly` token with `not-allowed` value
+
 ## 1.5.1
 
 ### Patch Changes
@@ -45,7 +105,7 @@
 
 ### Minor Changes
 
-- 8bcc9d04: Deprecated tertiary editable tokens
+- 8bcc9d04: Deprecated tertiary editable tokens: If needed, use `#00000066` as a replacement for `--salt-editable-tertiary-background-readonly`, and use `transparent` as a replacement for all remaining tokens
   Deprecated `tertiary` variant in FormField
 - bf66b578: Deprecated -emphasize tokens in status and palette; replaced with default tokens
 
@@ -234,16 +294,16 @@
 
   - Usages of `measured` tokens in core and labs components updated to use appropriate characteristic replacement
 
-  - Deprecated the following tokens, no replacement needed:
+  - Deprecated the following tokens, use hex value as replacement if needed:
 
   ```diff
-  - --salt-measured-foreground-undo
-  - --salt-palette-measured-fill
-  - --salt-palette-measured-fill-disabled
-  - --salt-palette-measured-foreground-active
-  - --salt-palette-measured-foreground-activeDisabled
-  - --salt-palette-interact-foreground-partial
-  - --salt-palette-interact-foreground-partialDisabled
+  - --salt-measured-foreground-undo: #2670a9
+  - --salt-palette-measured-fill: #2670A9
+  - --salt-palette-measured-fill-disabled: #2670A966
+  - --salt-palette-measured-foreground-active: #2670A9
+  - --salt-palette-measured-foreground-activeDisabled: #2670A966
+  - --salt-palette-interact-foreground-partial: #155C93
+  - --salt-palette-interact-foreground-partialDisabled: #155C93B3
   ```
 
 - d2b983de: New status tokens

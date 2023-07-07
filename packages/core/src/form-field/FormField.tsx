@@ -1,14 +1,13 @@
 import { clsx } from "clsx";
 import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { A11yValueProps, FormFieldContext } from "../form-field-context";
 import { makePrefixer, useId, capitalize } from "../utils";
 
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-
 import formFieldCss from "./FormField.css";
 
-export type FormFieldLabelPlacement = "top" | "left";
+export type FormFieldLabelPlacement = "top" | "left" | "right";
 
 export interface FormFieldProps
   extends HTMLAttributes<HTMLDivElement>,
@@ -33,6 +32,10 @@ export interface FormFieldProps
    */
   id?: string;
   /**
+   * Displays necessity on label
+   */
+  necessity?: "required" | "optional" | "asterisk";
+  /**
    * Validation status
    */
   validationStatus?: "error" | "warning" | "success";
@@ -48,6 +51,7 @@ export const FormField = forwardRef(
       disabled = false,
       id: idProp,
       labelPlacement = "top",
+      necessity,
       onBlur,
       onFocus,
       readOnly = false,
@@ -89,6 +93,7 @@ export const FormField = forwardRef(
               "aria-describedby": helperTextId,
             },
             disabled,
+            necessity,
             readOnly,
             validationStatus,
           }}

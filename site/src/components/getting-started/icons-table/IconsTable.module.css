@@ -2,15 +2,12 @@
   color: var(--site-tertiary-accent-purple);
 }
 
-.iconsTableContainer {
-  overflow-x: auto;
-}
-
 .iconsTableContainer table thead {
   top: 0;
 }
 
 .iconsTableContainer table {
+  table-layout: fixed;
   caption-side: bottom;
 }
 

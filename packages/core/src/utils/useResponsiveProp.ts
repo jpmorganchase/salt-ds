@@ -12,8 +12,9 @@ export const getCurrentBreakpoint = (
   breakpoints: Breakpoints,
   width: number
 ) => {
-  const breakpointList = Object.entries(breakpoints);
-
+  const breakpointList = Object.entries(breakpoints).sort(
+    ([, a], [, b]) => a - b
+  );
   const [currentBreakpoint] = (
     breakpointList as [keyof Breakpoints, number][]
   ).reduce((acc, val) => {
@@ -39,11 +40,9 @@ export const useCurrentBreakpoint = () => {
 export const useOrderedBreakpoints = () => {
   const breakpoints = useBreakpoints();
 
-  const orderedBreakpoints = Object.entries(breakpoints)
+  return Object.entries(breakpoints)
     .sort(([, a], [, b]) => a - b)
     .map(([key]) => key);
-
-  return orderedBreakpoints;
 };
 
 const isObject = <T>(
@@ -69,7 +68,7 @@ const getResponsiveValue = <T>(
   viewport: keyof Breakpoints,
   defaultValue: T
 ) => {
-  const value = Object.entries(breakpointValues).reduce<[number, T]>(
+  return Object.entries(breakpointValues).reduce<[number, T]>(
     (acc, val) => {
       const [accWidth] = acc;
       const [breakpoint, breakpointValue] = val;
@@ -88,8 +87,6 @@ const getResponsiveValue = <T>(
     },
     [0, defaultValue]
   )[1];
-
-  return value;
 };
 
 export const useResponsiveProp = <T>(
@@ -98,9 +95,10 @@ export const useResponsiveProp = <T>(
 ) => {
   const breakpoints = useBreakpoints();
   const viewport = useViewport();
+  // return early if the values are the same
+  if (value === defaultValue) return defaultValue;
 
   const currentViewport = getCurrentBreakpoint(breakpoints, viewport);
-
   if (hasBreakpointValues(value, breakpoints)) {
     return getResponsiveValue(
       value,

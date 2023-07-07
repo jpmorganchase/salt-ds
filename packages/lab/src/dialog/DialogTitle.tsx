@@ -1,4 +1,4 @@
-import { Button, makePrefixer, StatusIndicator } from "@salt-ds/core";
+import { Button, H1, makePrefixer, StatusIndicator } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, SyntheticEvent, useContext } from "react";
@@ -51,9 +51,9 @@ export const DialogTitle = forwardRef<HTMLDivElement, DialogTitleProps>(
             status={status}
           />
         )}
-        <span aria-level={1} id={`${dialogId}-heading`} role="heading">
+        <H1 id={`${dialogId}-heading`} className={withBaseName("text")}>
           {children}
-        </span>
+        </H1>
       </div>
     );
   }

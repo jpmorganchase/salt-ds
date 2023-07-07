@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/lab",
-  "version": "1.0.0-alpha.10",
+  "version": "1.0.0-alpha.11",
   "license": "Apache-2.0",
   "main": "src/index.ts",
   "sideEffects": false,
@@ -15,6 +15,7 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-lab"
+    "directory": "../../dist/salt-ds-lab",
+    "provenance": true
   }
 }

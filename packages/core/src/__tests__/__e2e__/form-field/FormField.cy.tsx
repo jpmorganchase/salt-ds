@@ -4,7 +4,9 @@ import {
   FormFieldHelperText,
   Input,
   Tooltip,
-  AdornmentButton,
+  Checkbox,
+  RadioButton,
+  Button,
 } from "@salt-ds/core";
 
 const MockChildren = () => {
@@ -158,6 +160,46 @@ describe("GIVEN a FormField", () => {
       cy.checkAxeComponent();
     });
 
+    describe("WITH a necessity label", () => {
+      it("THEN required should display if opted", () => {
+        cy.mount(
+          <FormField necessity="required">
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input defaultValue="Value" />
+            <FormFieldHelperText>Helper text</FormFieldHelperText>
+          </FormField>
+        );
+
+        cy.findByText("(Required)").should("exist");
+        cy.findByLabelText("Label (Required)").should("have.attr", "required");
+      });
+
+      it("THEN optional should display if opted", () => {
+        cy.mount(
+          <FormField necessity="optional">
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input defaultValue="Value" />
+            <FormFieldHelperText>Helper text</FormFieldHelperText>
+          </FormField>
+        );
+
+        cy.findByText("(Optional)").should("exist");
+      });
+
+      it("THEN asterisk should display if opted", () => {
+        cy.mount(
+          <FormField necessity="asterisk">
+            <FormFieldLabel>Label</FormFieldLabel>
+            <Input defaultValue="Value" />
+            <FormFieldHelperText>Helper text</FormFieldHelperText>
+          </FormField>
+        );
+
+        cy.findByText("*").should("exist");
+        cy.findByLabelText("Label*").should("have.attr", "required");
+      });
+    });
+
     describe("AND has tooltip helper text", () => {
       it("THEN tooltip should be visible on input hover", () => {
         cy.mount(
@@ -168,8 +210,8 @@ describe("GIVEN a FormField", () => {
             </Tooltip>
           </FormField>
         );
-        cy.findByLabelText("Label").realHover();
 
+        cy.findByLabelText("Label").realHover();
         cy.findByRole("tooltip").should("be.visible");
       });
 
@@ -224,14 +266,14 @@ describe("GIVEN a FormField", () => {
       });
     });
 
-    describe("AND Input has an AdornmentButton", () => {
+    describe("AND Input has an button adornment", () => {
       it("THEN should cy.mount with the adornment", () => {
         cy.mount(
           <FormField>
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
-              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              startAdornment={<Button>Test</Button>}
               data-testid="test-id-3"
             />
           </FormField>
@@ -245,7 +287,7 @@ describe("GIVEN a FormField", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
-              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              startAdornment={<Button disabled>Test</Button>}
               data-testid="test-id-3"
             />
           </FormField>
@@ -260,7 +302,7 @@ describe("GIVEN a FormField", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input
               defaultValue="Value"
-              startAdornment={<AdornmentButton>Test</AdornmentButton>}
+              startAdornment={<Button disabled>Test</Button>}
               data-testid="test-id-3"
             />
           </FormField>
@@ -268,6 +310,74 @@ describe("GIVEN a FormField", () => {
         cy.findByRole("button").should("be.visible");
         cy.findByRole("button").should("have.class", "saltButton-disabled");
       });
+    });
+  });
+
+  describe("WITH a nested RadioButton", () => {
+    it("SHOULD have no a11y violations on load", () => {
+      cy.mount(
+        <FormField>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButton label="Value" />
+        </FormField>
+      );
+
+      cy.findByLabelText("Label").focus();
+      cy.checkAxeComponent();
+    });
+
+    it("THEN should disable the RadioButton when disabled", () => {
+      cy.mount(
+        <FormField disabled>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButton label="Value" />
+        </FormField>
+      );
+      cy.findByLabelText("Label").should("have.attr", "disabled");
+    });
+
+    it.skip("THEN should disable the RadioButton when readonly", () => {
+      cy.mount(
+        <FormField readOnly>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButton label="Value" />
+        </FormField>
+      );
+      cy.findByText("Label").should("have.class", "saltRadioButton-readonly");
+    });
+  });
+
+  describe("WITH a nested Checkbox", () => {
+    it("SHOULD have no a11y violations on load", () => {
+      cy.mount(
+        <FormField>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Checkbox label="Value" />
+        </FormField>
+      );
+
+      cy.findByLabelText("Label").focus();
+      cy.checkAxeComponent();
+    });
+
+    it("THEN should disable the Checkbox when disabled", () => {
+      cy.mount(
+        <FormField disabled>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Checkbox label="Value" />
+        </FormField>
+      );
+      cy.findByLabelText("Label").should("have.attr", "disabled");
+    });
+
+    it.skip("THEN should disable the Checkbox when readonly", () => {
+      cy.mount(
+        <FormField readOnly>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Checkbox label="Value" />
+        </FormField>
+      );
+      cy.findByText("Label").should("have.class", "saltCheckbox-readonly");
     });
   });
 });

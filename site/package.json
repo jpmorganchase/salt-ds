@@ -13,31 +13,32 @@
     "deploy": "yarn mosaic deploy --out snapshots --name latest --config mosaic.config.js",
     "dev": "next dev",
     "start": "next start",
-    "gen:snapshot": "yarn mosaic build --out snapshots --name latest --config mosaic.config.js && yarn copy:sitemap",
+    "gen:snapshot": "yarn gen:props && yarn mosaic build --out snapshots --name latest --config mosaic.config.js && yarn copy:sitemap",
     "serve:snapshot:file": "yarn cross-env MOSAIC_MODE='snapshot-file' concurrently --kill-others 'yarn dev'",
     "serve:snapshot:s3": "yarn cross-env MOSAIC_MODE='snapshot-s3' concurrently --kill-others 'yarn dev'",
-    "serve": "concurrently --kill-others 'yarn dev' 'yarn mosaic serve -c ./mosaic.config.js' -p 8080",
-    "copy:sitemap": "yarn node copySitemap.js"
+    "serve": "yarn gen:props && concurrently --kill-others 'yarn dev' 'yarn mosaic serve -c ./mosaic.config.js' -p 8080",
+    "copy:sitemap": "yarn node copySitemap.js",
+    "gen:props": "yarn node './propsGen.js'"
   },
   "dependencies": {
-    "@jpmorganchase/mosaic-cli": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-components": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-content-editor-plugin": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-layouts": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-site-components": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-site-preset-styles": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-source-git-repo": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-source-local-folder": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-standard-generator": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-store": "^0.1.0-beta.35",
-    "@jpmorganchase/mosaic-theme": "^0.1.0-beta.35",
+    "@jpmorganchase/mosaic-cli": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-components": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-content-editor-plugin": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-layouts": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-site-components": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-site-preset-styles": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-source-git-repo": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-source-local-folder": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-standard-generator": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-store": "^0.1.0-beta.37",
+    "@jpmorganchase/mosaic-theme": "^0.1.0-beta.37",
     "@philpl/buble": "^0.19.7",
     "@types/react": "^18.0.26",
     "next": "^13.3.0",
     "next-auth": "^4.20.1"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "13.2.4",
+    "@next/eslint-plugin-next": "13.4.7",
     "@types/node": "^16.0.0",
     "concurrently": "^8.0.0",
     "cross-env": "^7.0.3",
@@ -45,6 +46,7 @@
     "eslint-config-next": "^13.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-element-to-jsx-string": "^15.0.0"
+    "react-element-to-jsx-string": "^15.0.0",
+    "react-markdown": "^8.0.7"
   }
 }

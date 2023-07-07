@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/theme",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "license": "Apache-2.0",
   "style": "index.css",
   "files": [
@@ -11,6 +11,7 @@
     "build": "yarn node ./scripts/build.mjs"
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-theme"
+    "directory": "../../dist/salt-ds-theme",
+    "provenance": true
   }
 }

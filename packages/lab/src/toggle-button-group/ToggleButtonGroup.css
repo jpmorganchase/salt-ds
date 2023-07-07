@@ -1,0 +1,21 @@
+.saltToggleButtonGroup {
+  display: flex;
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  width: fit-content;
+  gap: var(--salt-spacing-50);
+  padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  flex-direction: row;
+}
+
+.saltToggleButtonGroup-horizontal .saltToggleButton {
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+}
+
+.saltToggleButtonGroup-vertical {
+  flex-direction: column;
+}
+
+.saltToggleButtonGroup-vertical .saltToggleButton {
+  justify-content: start;
+}

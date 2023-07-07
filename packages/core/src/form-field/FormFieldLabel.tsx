@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import { useFormFieldProps } from "../form-field-context";
 import { Label, TextProps } from "../text";
-import { makePrefixer } from "../utils";
+import { capitalize, makePrefixer } from "../utils";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -15,13 +15,19 @@ export const FormFieldLabel = ({
   children,
   ...restProps
 }: Omit<TextProps<"label">, "variant" | "styleAs">) => {
-  const { a11yProps, disabled } = useFormFieldProps();
+  const { a11yProps, disabled, necessity } = useFormFieldProps();
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-label",
     css: formFieldLabelCss,
     window: targetWindow,
   });
+
+  const necessityLabel = necessity
+    ? necessity === "asterisk"
+      ? "*"
+      : ` (${capitalize(necessity)})`
+    : undefined;
 
   return (
     <Label
@@ -33,6 +39,9 @@ export const FormFieldLabel = ({
       {...restProps}
     >
       {children}
+      {necessityLabel && (
+        <span className={withBaseName("necessityLabel")}>{necessityLabel}</span>
+      )}
     </Label>
   );
 };

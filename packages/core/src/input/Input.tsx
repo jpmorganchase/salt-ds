@@ -104,6 +104,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     } = {},
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
+    necessity: formFieldRequired,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
 
@@ -115,7 +116,6 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
 
   const isDisabled = disabled || formFieldDisabled;
   const isReadOnly = readOnlyProp || formFieldReadOnly;
-
   const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
   const [focused, setFocused] = useState(false);
@@ -129,8 +129,13 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     onBlur,
     onChange,
     onFocus,
+    required: inputPropsRequired,
     ...restInputProps
   } = inputProps;
+
+  const isRequired = formFieldRequired
+    ? ["required", "asterisk"].includes(formFieldRequired)
+    : undefined ?? inputPropsRequired;
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
@@ -164,12 +169,12 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     <div
       className={clsx(
         withBaseName(),
+        withBaseName(variant),
         {
           [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName(validationStatus || "")]: validationStatus,
-          [withBaseName(variant)]: variant,
         },
         classNameProp
       )}
@@ -199,6 +204,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         value={value}
         {...restA11yProps}
         {...restInputProps}
+        required={isRequired}
       />
       {!isDisabled && !isReadOnly && validationStatus && (
         <StatusAdornment status={validationStatus} />

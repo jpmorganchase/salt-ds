@@ -1,7 +1,7 @@
 /* Styles applied to RadioButton container */
 .saltRadioButton {
   display: flex;
-  gap: var(--salt-size-adornmentGap);
+  gap: var(--salt-spacing-100);
   position: relative;
   user-select: none;
   cursor: pointer;
@@ -28,6 +28,6 @@
 
 /* Styles applied to icon when :focus-visible */
 .saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
-  outline: var(--salt-focused-outline);
+  outline: var(--saltRadioButton-outline, var(--salt-focused-outline));
   outline-offset: var(--salt-focused-outlineOffset);
 }

@@ -1,0 +1,15 @@
+/* Style applied to the root element */
+.saltListNext {
+  margin: 0;
+  background: var(--salt-container-primary-background);
+  border-color: var(--salt-container-primary-borderColor);
+  border-style: var(--salt-container-borderStyle);
+  border-width: var(--salt-size-border);
+  height: 100%;
+  outline: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  padding-inline-start: 0;
+  box-sizing: content-box;
+}

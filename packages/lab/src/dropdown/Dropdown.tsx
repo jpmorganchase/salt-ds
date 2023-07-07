@@ -54,6 +54,7 @@ export const Dropdown = forwardRef(function Dropdown<
     itemToString = defaultItemToString,
     onOpenChange,
     onSelectionChange,
+    onSelect,
     selected: selectedProp,
     selectionStrategy,
     source,
@@ -100,6 +101,7 @@ export const Dropdown = forwardRef(function Dropdown<
     onHighlight: ListProps?.onHighlight,
     onOpenChange,
     onSelectionChange,
+    onSelect,
     selected: collectionHook.itemToCollectionItem<
       Selection,
       typeof selectedProp
@@ -137,7 +139,7 @@ export const Dropdown = forwardRef(function Dropdown<
       return cloneElement(
         triggerComponent,
         forwardCallbackProps(ownProps, {
-          ...listControlProps,
+          ...(dropdownListHook.isOpen ? listControlProps : {}),
           ...ariaProps,
         })
       );
@@ -145,7 +147,7 @@ export const Dropdown = forwardRef(function Dropdown<
       return (
         <DropdownButton
           label={triggerLabel}
-          {...listControlProps}
+          {...(dropdownListHook.isOpen ? listControlProps : {})}
           {...ariaProps}
         />
       );
@@ -170,6 +172,7 @@ export const Dropdown = forwardRef(function Dropdown<
           highlightedIndex={highlightedIndex}
           listHandlers={listHandlers}
           onSelectionChange={onSelectionChange}
+          onSelect={onSelect}
           selected={collectionItemsToItem(selected)}
           selectionStrategy={selectionStrategy}
           data-testid="dropdown-list"
