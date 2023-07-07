@@ -15,7 +15,13 @@ export default {
 } as ComponentMeta<typeof MultilineInput>;
 
 export const Default: ComponentStory<typeof MultilineInput> = (args) => {
-  return <MultilineInput defaultValue="Value" style={{ maxWidth: "266px" }} {...args} />;
+  return (
+    <MultilineInput
+      defaultValue="Value"
+      style={{ maxWidth: "266px" }}
+      {...args}
+    />
+  );
 };
 
 export const Controlled: ComponentStory<typeof MultilineInput> = (args) => {
@@ -26,11 +32,25 @@ export const Controlled: ComponentStory<typeof MultilineInput> = (args) => {
     setValue(value);
   };
 
-  return <MultilineInput  {...args} value={value} onChange={handleChange} style={{ maxWidth: "266px" }} />;
+  return (
+    <MultilineInput
+      {...args}
+      value={value}
+      onChange={handleChange}
+      style={{ maxWidth: "266px" }}
+    />
+  );
 };
 
 export const NumberOfRows: ComponentStory<typeof MultilineInput> = (args) => {
-  return <MultilineInput rows={5} defaultValue="Value" {...args} style={{ maxWidth: "266px" }} />;
+  return (
+    <MultilineInput
+      rows={5}
+      defaultValue="Value"
+      {...args}
+      style={{ maxWidth: "266px" }}
+    />
+  );
 };
 
 export const FullBorder: ComponentStory<typeof MultilineInput> = (args) => {
@@ -100,7 +120,13 @@ export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
 };
 
 export const Placeholder: ComponentStory<typeof MultilineInput> = (args) => {
-  return <MultilineInput style={{ maxWidth: "266px" }} placeholder={"Enter a value"} {...args} />;
+  return (
+    <MultilineInput
+      style={{ maxWidth: "266px" }}
+      placeholder={"Enter a value"}
+      {...args}
+    />
+  );
 };
 
 export const ValidationStates: ComponentStory<typeof MultilineInput> = (
@@ -143,11 +169,11 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
 
 export const Spellcheck: ComponentStory<typeof MultilineInput> = (args) => {
   return (
-    <MultilineInput 
+    <MultilineInput
       defaultValue="This is a coment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
-      spellCheck 
+      spellCheck
       style={{ maxWidth: "266px" }}
-      {...args} 
+      {...args}
     />
   );
 };
