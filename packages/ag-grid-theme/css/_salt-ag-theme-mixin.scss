@@ -346,6 +346,13 @@
     text-transform: uppercase;
     font-size: var(--salt-text-fontSize);
     padding: 0 var(--salt-size-unit);
+    &:focus-visible {
+      outline-style: var(--salt-focused-outlineStyle);
+      outline-width: var(--salt-focused-outlineWidth);
+      outline-color: var(--salt-focused-outlineColor);
+      outline-offset: var(--salt-focused-outlineOffset);
+      background: var(--salt-actionable-secondary-background-hover);
+    }
     &:hover {
       background-color: var(--salt-actionable-secondary-background-hover);
     }
