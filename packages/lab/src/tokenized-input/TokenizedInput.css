@@ -57,7 +57,7 @@
 /* Styles applied to root component if `disabled={true}` */
 .saltTokenizedInput-disabled {
   cursor: var(--salt-editable-cursor-disabled);
-  opacity: var(--saltTokenizedInput-disabled-opacity, var(--salt-palette-opacity-foreground));
+  opacity: var(--saltTokenizedInput-disabled-opacity, var(--salt-palette-opacity-disabled));
 }
 
 /* Styles applied to root component if `focused={true}` */
