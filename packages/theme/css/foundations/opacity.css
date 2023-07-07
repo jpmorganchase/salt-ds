@@ -1,4 +1,12 @@
 .salt-theme {
+  --salt-opacity-0: 0;
+  --salt-opacity-8: 0.08;
+  --salt-opacity-15: 0.15;
+  --salt-opacity-25: 0.25;
+  --salt-opacity-40: 0.4;
+  --salt-opacity-70: 0.7;
+
+  /** Deprecated: Prefer to use above tokens **/
   --salt-opacity-1: 0.15;
   --salt-opacity-2: 0.25;
   --salt-opacity-3: 0.4;
