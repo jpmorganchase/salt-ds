@@ -8,14 +8,14 @@ describe("GIVEN an MultilineInput", () => {
     cy.checkAxeComponent();
   });
 
-  describe("WHEN cy.mounted as an uncontrolled component", () => {
-    it("THEN it should cy.mount with the specified defaultValue", () => {
+  describe("WHEN mounted as an uncontrolled component", () => {
+    it("SHOULD have the given default value", () => {
       cy.mount(<MultilineInput defaultValue="The default value" />);
       cy.findByRole("textbox").should("have.value", "The default value");
     });
 
-    describe("WHEN the input is updated", () => {
-      it("THEN should call onChange with the new value", () => {
+    describe("THEN the input is updated", () => {
+      it("SHOULD call onChange with the new value", () => {
         const changeSpy = cy.stub().as("changeSpy");
         const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
           // React 16 backwards compatibility
@@ -36,14 +36,14 @@ describe("GIVEN an MultilineInput", () => {
     });
   });
 
-  describe("WHEN cy.mounted as an controlled component", () => {
-    it("THEN it should cy.mount with the specified value", () => {
+  describe("WHEN mounted as an controlled component", () => {
+    it("THEN have the specified value", () => {
       cy.mount(<MultilineInput value="text value" />);
       cy.findByRole("textbox").should("have.value", "text value");
     });
 
-    describe("WHEN the user input is updated", () => {
-      it("THEN should call onChange with the new value", () => {
+    describe("THEN the user input is updated", () => {
+      it("SHOULD call onChange with the new value", () => {
         const changeSpy = cy.stub().as("changeSpy");
 
         function ControlledMultilineInput() {
@@ -68,7 +68,7 @@ describe("GIVEN an MultilineInput", () => {
   });
 
   describe("WHEN an adornment is given", () => {
-    it("THEN should cy.mount with the adornment", () => {
+    it("THEN should mount with adornment", () => {
       cy.mount(
         <MultilineInput startAdornment={<>%</>} defaultValue={"Value"} />
       );
@@ -76,7 +76,7 @@ describe("GIVEN an MultilineInput", () => {
     });
 
     describe("AND adornment is a Button", () => {
-      it("THEN should cy.mount with the adornment", () => {
+      it("SHOULD mount with the button", () => {
         cy.mount(
           <MultilineInput
             startAdornment={<Button>Test</Button>}
@@ -87,7 +87,7 @@ describe("GIVEN an MultilineInput", () => {
         cy.findByRole("button").should("have.class", "saltButton");
       });
 
-      it("THEN should have the correct tab order on startAdornment", () => {
+      it("SHOULD have the correct tab order on startAdornment", () => {
         cy.mount(
           <FormField>
             <FormFieldLabel>Label</FormFieldLabel>
@@ -105,7 +105,7 @@ describe("GIVEN an MultilineInput", () => {
         cy.findByRole("textbox").should("be.focused");
       });
 
-      it("THEN should have the correct tab order on endAdornment", () => {
+      it("SHOULD have the correct tab order on endAdornment", () => {
         cy.mount(
           <FormField>
             <FormFieldLabel>Label</FormFieldLabel>
@@ -125,8 +125,8 @@ describe("GIVEN an MultilineInput", () => {
     });
   });
 
-  describe("WHEN the MultilineInput is required", () => {
-    it("THEN should have required attr", () => {
+  describe("WHEN the input is required", () => {
+    it("SHOULD have required attr", () => {
       cy.mount(
         <MultilineInput
           defaultValue="The default value"
@@ -137,8 +137,8 @@ describe("GIVEN an MultilineInput", () => {
     });
   });
 
-  describe("WHEN the MultilineInput is disabled", () => {
-    it("THEN should cy.mount disabled", () => {
+  describe("WHEN disabled", () => {
+    it("SHOULD mount as disabled", () => {
       cy.mount(<MultilineInput defaultValue="The default value" disabled />);
       cy.findByRole("textbox").should("be.disabled");
     });
@@ -148,8 +148,8 @@ describe("GIVEN an MultilineInput", () => {
     });
   });
 
-  describe("WHEN the MultilineInput is read only", () => {
-    it("THEN should cy.mount read only", () => {
+  describe("WHEN read only", () => {
+    it("SHOULD mount as read only", () => {
       cy.mount(<MultilineInput defaultValue="The default value" readOnly />);
       cy.findByRole("textbox").should("have.attr", "readonly");
     });
