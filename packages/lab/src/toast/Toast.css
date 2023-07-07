@@ -39,18 +39,3 @@
 .saltToast-success {
   --toast-borderColor: var(--salt-status-success-borderColor);
 }
-
-/* Styles applied to Toast content */
-.saltToast-content {
-  flex: 1 0;
-  margin: var(--salt-spacing-75) 0;
-}
-
-/* Styles applied to Close button */
-.saltToast-close {
-  margin-bottom: auto;
-  display: flex;
-  gap: var(--salt-spacing-100);
-  align-items: center;
-  min-height: var(--salt-size-base);
-}

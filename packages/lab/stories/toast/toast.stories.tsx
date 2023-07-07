@@ -1,15 +1,18 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Button, FlowLayout } from "@salt-ds/core";
-import { Toast } from "@salt-ds/lab";
+import { Toast, ToastClose, ToastContent, ToastProps } from "@salt-ds/lab";
 
 export default {
   title: "Lab/Toast",
   component: Toast,
 } as ComponentMeta<typeof Toast>;
 
-const Template: ComponentStory<typeof Toast> = ({ children, ...args }) => {
-  return <Toast {...args}>{children}</Toast>;
-};
+const Template: ComponentStory<typeof Toast> = ({ children, ...args }) => (
+  <Toast {...args}>
+    <ToastContent>{children}</ToastContent>
+    <ToastClose />
+  </Toast>
+);
 
 export const DefaultInfo = Template.bind({});
 DefaultInfo.args = {
@@ -35,16 +38,15 @@ Success.args = {
   children: <div>Clear Transact</div>,
 };
 
-export const HideClose = Template.bind({});
-HideClose.args = {
-  children: <div>LEI Updated</div>,
-  hideClose: true,
-};
+export const HideClose = (args: ToastProps) => (
+  <Toast {...args}>
+    <ToastContent>LEI Updated</ToastContent>
+  </Toast>
+);
 
-export const CustomContent = Template.bind({});
-CustomContent.args = {
-  children: (
-    <div>
+export const CustomContent = (args: ToastProps) => (
+  <Toast {...args}>
+    <ToastContent>
       <div>
         <strong>Lorem ipsum</strong>
       </div>
@@ -57,7 +59,6 @@ CustomContent.args = {
         <Button>Dismiss</Button>
         <Button variant="cta">Yes</Button>
       </FlowLayout>
-    </div>
-  ),
-  hideClose: true,
-};
+    </ToastContent>
+  </Toast>
+);
