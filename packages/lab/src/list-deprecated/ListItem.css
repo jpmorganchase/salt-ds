@@ -23,7 +23,7 @@
   --list-item-cursor: default;
 
   --list-item-disabled-cursor: var(--salt-selectable-cursor-disabled);
-  --list-item-disabled-regular-opacity: var(--salt-palette-opacity-foreground);
+  --list-item-disabled-regular-opacity: var(--salt-palette-opacity-disabled);
 }
 
 .saltListItemDeprecated {
