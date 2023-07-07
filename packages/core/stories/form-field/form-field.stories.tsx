@@ -135,7 +135,9 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
 export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
   return (
     <FormField {...props}>
-      <FormLabel question>Do your current qualifications align with the role? Please describe.</FormLabel>
+      <FormLabel question>
+        Do your current qualifications align with the role? Please describe.
+      </FormLabel>
       <MultilineInput fullBorder defaultValue="Answer" />
     </FormField>
   );
