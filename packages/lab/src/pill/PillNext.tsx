@@ -2,60 +2,30 @@ import {
   forwardRef,
   MouseEvent,
   PropsWithChildren,
-  ReactElement,
   HTMLAttributes,
+  KeyboardEvent,
 } from "react";
 import { useWindow } from "@salt-ds/window";
-import { CloseIcon } from "@salt-ds/icons";
+import { CloseSmallIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer, useButton } from "@salt-ds/core";
-import pillCss from "./Pill.css";
+import pillCss from "./PillNext.css";
 import clsx from "clsx";
 
-type ClickEvent = MouseEvent<HTMLDivElement, globalThis.MouseEvent>;
+type ClickEvent = MouseEvent<Element, globalThis.MouseEvent>;
 
-interface BasePillProps {
-  onClick?: (e: ClickEvent) => void;
+interface PillProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
-  icon?: ReactElement;
   className?: string;
+  icon?: React.ReactNode;
+  onClose?: (e: ClickEvent | KeyboardEvent<HTMLDivElement>) => void;
 }
-
-interface ClosableVariant
-  extends BasePillProps,
-    HTMLAttributes<HTMLDivElement> {
-  variant: "closable";
-  onClose: (e: ClickEvent) => void;
-}
-
-export type PillVariant = "basic" | "closable";
-
-export interface PillVariantProps<T extends PillVariant = "basic"> {
-  /**
-   * Determines the variant of pill
-   */
-  variant?: T;
-}
-
-// Generic checks makes sure that incompatiable props like `onChange` can be inferred correctly when using different variants
-export type PillProps<T extends PillVariant = "basic"> = T extends "closable"
-  ? ClosableVariant & PillVariantProps<T>
-  : BasePillProps & PillVariantProps<T>;
 
 const withBaseName = makePrefixer("saltPill");
 
 export const Pill = forwardRef<HTMLDivElement, PropsWithChildren<PillProps>>(
   function Pill(
-    {
-      variant,
-      onClose,
-      onClick,
-      children,
-      className,
-      icon,
-      disabled,
-      ...restProps
-    },
+    { onClose, onClick, children, className, icon, ...restProps },
     ref
   ) {
     const targetWindow = useWindow();
@@ -65,16 +35,18 @@ export const Pill = forwardRef<HTMLDivElement, PropsWithChildren<PillProps>>(
       window: targetWindow,
     });
 
-    const clickable = onClick !== undefined && !disabled;
-    const interactive = clickable || variant === "closable";
+    const clickable = onClick !== undefined;
+    const closable = onClose !== undefined;
+    const interactive = clickable || closable;
 
     if (interactive) {
       return (
         <InteractivePill
-          disabled={disabled}
           onClose={onClose}
           onClick={onClick}
-          variant={variant}
+          className={className}
+          icon={icon}
+          {...restProps}
         >
           {children}
         </InteractivePill>
@@ -82,14 +54,9 @@ export const Pill = forwardRef<HTMLDivElement, PropsWithChildren<PillProps>>(
     }
 
     return (
-      <div
-        ref={ref}
-        onClick={onClick}
-        {...restProps}
-        className={clsx(withBaseName(), className)}
-      >
+      <div ref={ref} {...restProps} className={clsx(withBaseName(), className)}>
         {icon}
-        <PillContent>{children}</PillContent>
+        <span className={withBaseName("label")}>{children}</span>
       </div>
     );
   }
@@ -99,94 +66,84 @@ const InteractivePill = forwardRef<
   HTMLDivElement,
   PropsWithChildren<PillProps>
 >(function InteractivePill(
-  {
-    disabled,
-    onClick,
-    className,
-    variant,
-    onClose,
-    icon,
-    children,
-    ...restProps
-  },
+  { disabled, onClick, className, onClose, children, icon, ...restProps },
   ref
 ) {
-  const clickable = onClick !== undefined && !disabled;
-  const { buttonProps, active } = useButton({ disabled, onClick });
+  const clickable = onClick !== undefined;
+  const closable = onClose !== undefined;
+  const { buttonProps, active } = useButton<HTMLDivElement>({
+    disabled: disabled || !clickable,
+    onClick,
+    onKeyUp: clickable
+      ? (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            onClick?.(e);
+          }
+          restProps.onKeyUp?.(e);
+        }
+      : restProps.onKeyUp,
+    onKeyDown: closable
+      ? (e) => {
+          if (e.key === "Backspace") {
+            onClose(e);
+          }
+          restProps.onKeyDown?.(e);
+        }
+      : restProps.onKeyDown,
+  });
 
   return (
     <div
       ref={ref}
-      onClick={onClick}
+      role={clickable ? "button" : undefined}
       {...restProps}
       {...buttonProps}
       className={clsx(withBaseName(), className, {
         [withBaseName("clickable")]: clickable,
         [withBaseName("active")]: active,
-        [withBaseName("closable")]: variant === "closable",
+        [withBaseName("closable")]: closable,
       })}
-      aria-disabled={disabled}
+      aria-disabled={disabled ? true : undefined}
       tabIndex={!disabled ? 0 : -1}
-      role="button"
     >
       {icon}
-      <PillContent>{children}</PillContent>
-      {variant === "closable" ? <PillCloseButton onClick={onClose} /> : null}
+      <span className={withBaseName("label")}>{children}</span>
+      {closable ? <PillCloseButton onClick={onClose} /> : null}
     </div>
   );
 });
 
-const PillCloseButton = ({ onClick }: { onClick: (e: ClickEvent) => void }) => {
+const PillCloseButton = ({
+  onClick,
+  disabled,
+}: {
+  disabled?: boolean;
+  onClick: (e: ClickEvent) => void;
+}) => {
+  const { buttonProps, active } = useButton({
+    disabled,
+    onClick: (e) => {
+      e.stopPropagation();
+      onClick(e);
+    },
+  });
+
   return (
     <div
-      onClick={(e) => {
+      {...buttonProps}
+      onMouseDown={(e) => {
         e.stopPropagation();
-        onClick(e);
       }}
+      onMouseUp={(e) => {
+        e.stopPropagation();
+      }}
+      aria-hidden
+      tabIndex={-1}
+      className={clsx(withBaseName("deleteButton"), {
+        [withBaseName("deleteButton-active")]: active,
+      })}
     >
-      <CloseIcon />
+      <CloseSmallIcon />
     </div>
   );
 };
-
-const PillContent = ({ children }: PropsWithChildren) => {
-  return <span className={withBaseName("label")}>{children}</span>;
-};
-
-/* 
-<Pill>Label</Pill> || <Pill variant="basic">Label</Pill> 
-
-<Pill icon={<StarIcon/>}>Label</Pill>
-
-<Pill><StarIcon/> Label</Pill>
-
-<Pill variant="basic" onClick={handleClick}>Label</Pill>
-
-<Pill onClose={handleDelete} variant="closable" onClick={handleClick}>
-  Label
-</Pill>
-
-<Pill onClose={handleDelete} variant="closable">Label</Pill>
-
-<Pill onChange={handleChange} variant="selectable">Label</Pill>
-
-or...
-
-<Pill onClick={handleClick}>
-  <PillContent>Label</PillContent>
-  <PillCloseButton onClick={handleDelete}/>
-</Pill>
-
-<Pill onClick={handleClick}>
-  <PillIcon>
-    <StarIcon/>
-  </PillIcon>
-  <PillContent>Label</PillContent>
-  <PillCloseButton onClick={handleDelete}/>
-</Pill>
-
-<Pill variant="selectable" onChange={handleChange}>
-  <PillCheckBox/>
-  <PillContent>Label</PillContent>
-</Pill>
-*/

@@ -17,23 +17,16 @@ export default {
   component: Pill,
 } as ComponentMeta<typeof Pill>;
 
-const Template: ComponentStory<typeof Pill> = (args) => {
-  const handleClick = (e: SyntheticEvent<HTMLDivElement>) => {
-    console.log("clicked");
-    args.onClick?.(e);
-  };
-  return (
-    <Pill {...args} onClick={handleClick}>
-      Basic Pill
-    </Pill>
-  );
-};
-
 export const Default: ComponentStory<typeof Pill> = (args) => {
   return <Pill>Static Pill</Pill>;
 };
 
-export const FeaturePill = Template.bind({});
+export const Clickable: ComponentStory<typeof Pill> = () => {
+  const handleClick = (e: SyntheticEvent<HTMLDivElement>) => {
+    console.log("clicked");
+  };
+  return <Pill onClick={handleClick}>Clickable Pill</Pill>;
+};
 
 export const Disabled: ComponentStory<typeof Pill> = () => {
   return (
@@ -45,7 +38,10 @@ export const Disabled: ComponentStory<typeof Pill> = () => {
 
 export const Closable: ComponentStory<typeof Pill> = () => {
   return (
-    <Pill onClose={() => console.log("Deleted.")} variant="closable">
+    <Pill
+      onClick={() => console.log("clicked")}
+      onClose={() => console.log("Deleted.")}
+    >
       Closable Pill
     </Pill>
   );
@@ -53,7 +49,7 @@ export const Closable: ComponentStory<typeof Pill> = () => {
 
 export const DisabledClosable: ComponentStory<typeof Pill> = () => {
   return (
-    <Pill disabled onClose={() => console.log("Deleted.")} variant="closable">
+    <Pill disabled onClose={() => console.log("Deleted.")}>
       Disabled Closable Pill
     </Pill>
   );
@@ -67,6 +63,7 @@ export const Icon: ComponentStory<typeof Pill> = () => {
   );
 };
 
+const noop = () => undefined;
 export const AllDensities: ComponentStory<typeof Pill> = () => {
   return (
     <div
@@ -77,16 +74,24 @@ export const AllDensities: ComponentStory<typeof Pill> = () => {
       }}
     >
       <SaltProvider density="touch">
-        <Pill variant="deletable">TD Pill</Pill>
+        <Pill icon={<FavoriteIcon />} onClick={noop} onClose={noop}>
+          TD Pill
+        </Pill>
       </SaltProvider>
       <SaltProvider density="low">
-        <Pill variant="deletable">LD Pill</Pill>
+        <Pill icon={<FavoriteIcon />} onClick={noop} onClose={noop}>
+          LD Pill
+        </Pill>
       </SaltProvider>
       <SaltProvider density="medium">
-        <Pill variant="deletable">MD Pill</Pill>
+        <Pill icon={<FavoriteIcon />} onClick={noop} onClose={noop}>
+          MD Pill
+        </Pill>
       </SaltProvider>
       <SaltProvider density="high">
-        <Pill variant="deletable">HD Pill</Pill>
+        <Pill icon={<FavoriteIcon />} onClick={noop} onClose={noop}>
+          HD Pill
+        </Pill>
       </SaltProvider>
     </div>
   );
