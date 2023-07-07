@@ -62,15 +62,15 @@
   user-select: none;
 }
 
-.saltPill-clickable:not([aria-disabled]):hover:has(.saltPill-deleteButton:not(:hover)) {
+.saltPill-clickable:not([aria-disabled]):hover:not(:has(.saltPill-deleteButton:hover)) {
   --saltIcon-color: var(--pill-icon-color);
   --saltIcon-color-hover: var(--pill-icon-color-hover);
 
   background: var(--pill-background-hover);
 }
 
-.saltPill-clickable:not([aria-disabled]).saltPill-active:has(.saltPill-deleteButton:not(:active)),
-.saltPill-clickable:not([aria-disabled]):active:has(.saltPill-deleteButton:not(:active)) {
+.saltPill-clickable:not([aria-disabled]).saltPill-active:not(:has(.saltPill-deleteButton:active)),
+.saltPill-clickable:not([aria-disabled]):active:not(:has(.saltPill-deleteButton:active)) {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
   --saltIcon-color: var(--pill-text-color-active);
