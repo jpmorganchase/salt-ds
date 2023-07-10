@@ -34,6 +34,10 @@ export interface DrawerProps extends HTMLAttributes<HTMLDivElement> {
    * Props to be passed to the Scrim component.
    */
   scrimProps?: Partial<ScrimProps>;
+  /**
+   * Change text color palette
+   */
+  variant?: "primary" | "secondary";
 }
 
 const withBaseName = makePrefixer("saltDrawer");
@@ -52,6 +56,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     disableAnimations = false,
     scrimProps,
     isOpen = true,
+    variant = "primary",
     ...rest
   } = props;
 
@@ -93,6 +98,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
       className={clsx(withBaseName(), className, withBaseName(position), {
         [withBaseName("enter-animation")]: enterAnimation,
         [withBaseName("exit-animation")]: exitAnimation,
+        [withBaseName(variant)]: variant,
       })}
       onAnimationStart={() => setIsAnimating(true)}
       onAnimationEnd={() => {
