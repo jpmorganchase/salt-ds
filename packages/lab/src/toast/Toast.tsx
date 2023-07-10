@@ -1,10 +1,5 @@
 import { clsx } from "clsx";
-import {
-  ComponentPropsWithoutRef,
-  ForwardedRef,
-  forwardRef,
-  ReactNode,
-} from "react";
+import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
 import { makePrefixer, StatusIndicator, ValidationStatus } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -21,10 +16,11 @@ export interface ToastProps extends ComponentPropsWithoutRef<"div"> {
   status?: ValidationStatus;
 }
 
-export const Toast = forwardRef(function Toast(
-  { children, className, status = "info", ...restProps }: ToastProps,
-  ref: ForwardedRef<HTMLDivElement>
+export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
+  props,
+  ref
 ) {
+  const { children, className, status = "info", ...rest } = props;
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-toast",
@@ -35,7 +31,7 @@ export const Toast = forwardRef(function Toast(
   return (
     <div
       className={clsx(withBaseName(), withBaseName(status), className)}
-      {...restProps}
+      {...rest}
       ref={ref}
       role="alert"
     >
