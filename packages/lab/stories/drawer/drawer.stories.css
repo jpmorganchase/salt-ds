@@ -1,5 +1,7 @@
-.drawer-example {
-  height: 100%;
+.drawer-close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .drawer-simple-usage p,
