@@ -1,6 +1,6 @@
 /* Styles applied to ToastClose button */
-.saltToastClose {
-  margin-bottom: auto;
+.saltButton.saltToastClose {
+  margin-right: calc(var(--salt-spacing-50) * -1);
   display: flex;
   gap: var(--salt-spacing-100);
   align-items: center;
