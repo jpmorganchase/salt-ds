@@ -73,12 +73,7 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
     const totalSteps = Children.count(children);
 
     return (
-      <ul
-        {...restProps}
-        className={clsx(withBaseName(), className)}
-        {...restProps}
-        ref={ref}
-      >
+      <ul {...restProps} className={clsx(withBaseName(), className)} ref={ref}>
         {Children.map(children, (child, i) => {
           if (!isValidElement(child)) {
             return child;
