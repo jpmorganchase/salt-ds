@@ -50,6 +50,7 @@
   --salt-palette-success-border-disabled: var(--salt-color-green-500-fade-border);
   --salt-palette-success-foreground-disabled: var(--salt-color-green-500-fade-foreground);
 
+  --salt-palette-warning-foreground-disabled: var(--salt-color-orange-700-fade-foreground);
   --salt-palette-warning-border-disabled: var(--salt-color-orange-700-fade-border);
 }
 
@@ -87,5 +88,6 @@
   --salt-palette-success-border-disabled: var(--salt-color-green-400-fade-border);
   --salt-palette-success-foreground-disabled: var(--salt-color-green-400-fade-foreground);
 
+  --salt-palette-warning-foreground-disabled: var(--salt-color-orange-500-fade-foreground);
   --salt-palette-warning-border-disabled: var(--salt-color-orange-500-fade-border);
 }
