@@ -4,7 +4,7 @@
   --pill-background-active: var(--saltPill-background-active, var(--salt-taggable-background-active));
   --pill-background-disabled: var(--saltPill-background-disabled, var(--salt-taggable-background-disabled));
   --pill-background-hover: var(--saltPill-background-hover, var(--salt-taggable-background-hover));
-  --pill-fontSize: var(--saltPill-fontSize, var(--salt-text-label-fontSize));
+  --pill-fontSize: var(--saltPill-fontSize, var(--salt-text-fontSize));
   --pill-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 1.5));
   --pill-icon-color: var(--saltPill-icon-color, var(--salt-taggable-foreground));
   --pill-icon-color-active: var(--saltPill-icon-color-active, var(--salt-taggable-foreground-active));
@@ -19,6 +19,7 @@
 .saltPill {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   background: var(--pill-background);
   border-radius: var(--saltPill-borderRadius, 0);
   height: var(--saltPill-height, var(--pill-height));
