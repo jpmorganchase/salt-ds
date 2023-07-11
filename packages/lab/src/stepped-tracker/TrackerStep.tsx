@@ -22,6 +22,8 @@ const withBaseName = makePrefixer("saltTrackerStep");
 
 type State = "default" | "completed";
 
+type StateWithActive = State | "active";
+
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
   /**
    * The state of the TrackerStep
@@ -73,6 +75,19 @@ const getStateIcon = ({
   return iconMap[state];
 };
 
+const getState = ({
+  isActive,
+  state,
+}: {
+  isActive: boolean;
+  state: State;
+}): StateWithActive => {
+  if (state === "default" && isActive) {
+    return "active";
+  }
+  return state;
+};
+
 const injectedProps: (keyof TrackerStepInjectedProps)[] = [
   "_activeStep",
   "_overflowRef",
@@ -121,19 +136,14 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     const isActive = activeStep === stepNumber;
     const Icon = getStateIcon({ isActive, state });
+    const resolvedState = getState({ isActive, state });
     const connectorState = activeStep > stepNumber ? "active" : "default";
     const hasConnector = stepNumber < totalSteps - 1;
 
     const Inner = (
       <li
         {...restProps}
-        className={clsx(
-          withBaseName(),
-          {
-            [withBaseName("active")]: isActive,
-          },
-          className
-        )}
+        className={clsx(withBaseName(), withBaseName(resolvedState), className)}
         style={
           {
             ...props.style,

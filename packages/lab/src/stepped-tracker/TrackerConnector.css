@@ -1,22 +1,15 @@
 .saltTrackerConnector {
-  --tracker-connector-color-default: var(--saltTrackerConnectorColorDefault, var(--salt-text-secondary-foreground));
-  --tracker-connector-color-active: var(--saltTrackerConnectorColorActive, var(--salt-status-info-foreground));
-
-  --tracker-connector-style-default: var(--saltTrackerConnectorColorDefault, dotted);
-  --tracker-connector-style-active: var(--saltTrackerConnectorColorActive, solid);
-
-  --tracker-connector-color: var(--tracker-connector-color-default);
-  --tracker-connector-style: var(--tracker-connector-style-default);
-
-  --tracker-connector-thickness: var(--saltTrackerConnectorThickness, 2px);
-
-  --tracker-connector-margin: var(--saltTrackerConnectorMargin, var(--salt-spacing-100));
+  --tracker-connector-style-default: var(--saltTrackerConnectorColorDefault, var(--salt-track-borderStyle-incomplete));
+  --tracker-connector-style-active: var(--saltTrackerConnectorColorActive, var(--salt-track-borderStyle-active));
+  --tracker-connector-color: var(--saltTrackerConnectorColor, var(--salt-track-borderColor));
+  --tracker-connector-thickness: var(--saltTrackerConnectorThickness, var(--salt-track-borderWidth));
+  --tracker-connector-margin: var(--saltTrackerConnectorMargin, var(--salt-spacing-50));
 }
 
 .saltTrackerConnector {
   height: 0;
   border-top-width: var(--tracker-connector-thickness);
-  border-top-style: var(--tracker-connector-style);
+  border-top-style: var(--tracker-connector-style-default);
   border-top-color: var(--tracker-connector-color);
   position: absolute;
   width: calc(100% - (var(--saltIcon-size)) - (var(--tracker-connector-margin) * 2));
@@ -25,6 +18,5 @@
 }
 
 .saltTrackerConnector.saltTrackerConnector-active {
-  --tracker-connector-color: var(--tracker-connector-color-active);
-  --tracker-connector-style: var(--tracker-connector-style-active);
+  border-top-style: var(--tracker-connector-style-active);
 }
