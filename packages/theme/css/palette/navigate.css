@@ -1,4 +1,4 @@
-.salt-theme[data-mode="light"]{
+.salt-theme[data-mode="light"] {
   --salt-palette-navigate-primary-background: transparent;
   --salt-palette-navigate-primary-background-active: transparent;
   --salt-palette-navigate-primary-background-hover: var(--salt-color-gray-20);
