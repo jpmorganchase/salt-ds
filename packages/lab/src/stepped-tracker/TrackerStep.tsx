@@ -147,7 +147,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
         style={
           {
             ...props.style,
-            "--tracker-step-width": `${100 / totalSteps}%`,
+            "--trackerStep-width": `${100 / totalSteps}%`,
           } as CSSProperties
         }
         tabIndex={hasTooltip ? 0 : undefined}

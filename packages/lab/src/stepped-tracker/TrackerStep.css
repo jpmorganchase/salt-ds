@@ -1,10 +1,10 @@
 .saltTrackerStep {
-  --tracker-step-icon-active-color: var(--saltTrackerStepIconActiveColor, var(--salt-status-info-foreground));
-  --tracker-step-icon-completed-color: var(--saltTrackerStepIconCompletedColor, var(--salt-status-success-foreground));
+  --trackerStep-icon-active-color: var(--saltTrackerStepIconActiveColor, var(--salt-status-info-foreground));
+  --trackerStep-icon-completed-color: var(--saltTrackerStepIconCompletedColor, var(--salt-status-success-foreground));
 
-  --tracker-step-icon-color: var(--saltTrackerStepIconColor, var(--salt-status-static-foreground));
+  --trackerStep-icon-color: var(--saltTrackerStepIconColor, var(--salt-status-static-foreground));
 
-  --saltIcon-color: var(--tracker-step-icon-color);
+  --saltIcon-color: var(--trackerStep-icon-color);
   /* We redefine Icon Size so we can use it in calc functions in the trackerConnector */
   --saltIcon-size: var(--saltTrackerStepIconSize, max(var(--salt-icon-size-base), 12px));
 }
@@ -20,7 +20,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: var(--tracker-step-width);
+  width: var(--trackerStep-width);
   gap: var(--salt-spacing-50);
   color: var(--salt-text-primary-foreground);
 }
@@ -42,9 +42,9 @@
 }
 
 .saltTrackerStep.saltTrackerStep-active {
-  --tracker-step-icon-color: var(--tracker-step-icon-active-color);
+  --trackerStep-icon-color: var(--trackerStep-icon-active-color);
 }
 
 .saltTrackerStep.saltTrackerStep-completed {
-  --tracker-step-icon-color: var(--tracker-step-icon-completed-color);
+  --trackerStep-icon-color: var(--trackerStep-icon-completed-color);
 }

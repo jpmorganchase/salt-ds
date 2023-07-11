@@ -1,22 +1,22 @@
 .saltTrackerConnector {
-  --tracker-connector-style-default: var(--saltTrackerConnectorColorDefault, var(--salt-track-borderStyle-incomplete));
-  --tracker-connector-style-active: var(--saltTrackerConnectorColorActive, var(--salt-track-borderStyle-active));
-  --tracker-connector-color: var(--saltTrackerConnectorColor, var(--salt-track-borderColor));
-  --tracker-connector-thickness: var(--saltTrackerConnectorThickness, var(--salt-track-borderWidth));
-  --tracker-connector-margin: var(--saltTrackerConnectorMargin, var(--salt-spacing-50));
+  --trackerConnector-style-default: var(--saltTrackerConnectorColorDefault, var(--salt-track-borderStyle-incomplete));
+  --trackerConnector-style-active: var(--saltTrackerConnectorColorActive, var(--salt-track-borderStyle-active));
+  --trackerConnector-color: var(--saltTrackerConnectorColor, var(--salt-track-borderColor));
+  --trackerConnector-thickness: var(--saltTrackerConnectorThickness, var(--salt-track-borderWidth));
+  --trackerConnector-margin: var(--saltTrackerConnectorMargin, var(--salt-spacing-50));
 }
 
 .saltTrackerConnector {
   height: 0;
-  border-top-width: var(--tracker-connector-thickness);
-  border-top-style: var(--tracker-connector-style-default);
-  border-top-color: var(--tracker-connector-color);
+  border-top-width: var(--trackerConnector-thickness);
+  border-top-style: var(--trackerConnector-style-default);
+  border-top-color: var(--trackerConnector-color);
   position: absolute;
-  width: calc(100% - (var(--saltIcon-size)) - (var(--tracker-connector-margin) * 2));
-  left: calc(50% + (var(--saltIcon-size) / 2) + var(--tracker-connector-margin));
+  width: calc(100% - (var(--saltIcon-size)) - (var(--trackerConnector-margin) * 2));
+  left: calc(50% + (var(--saltIcon-size) / 2) + var(--trackerConnector-margin));
   top: calc(var(--saltIcon-size) / 2);
 }
 
 .saltTrackerConnector.saltTrackerConnector-active {
-  border-top-style: var(--tracker-connector-style-active);
+  border-top-style: var(--trackerConnector-style-active);
 }
