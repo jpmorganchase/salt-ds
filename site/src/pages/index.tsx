@@ -85,7 +85,7 @@ const cards: CardProps[] = [
         Salt site and legacy UI Toolkit.
       </p>
     ),
-    url: "./getting-started/roadmap",
+    url: "./about/roadmap",
     footerText: "View our planning schedule",
     keylineColor: "var(--site-tertiary-accent-orange)",
   },
