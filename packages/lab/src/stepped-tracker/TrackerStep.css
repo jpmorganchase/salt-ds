@@ -4,8 +4,9 @@
 
   --tracker-step-icon-color: var(--saltTrackerStepIconColor, var(--salt-status-static-foreground));
 
-  --saltIcon-size: var(--saltTrackerStepIconSize, max(var(--salt-icon-size-base), 12px));
   --saltIcon-color: var(--tracker-step-icon-color);
+  /* We redefine Icon Size so we can use it in calc functions in the trackerConnector */
+  --saltIcon-size: var(--saltTrackerStepIconSize, max(var(--salt-icon-size-base), 12px));
 }
 
 .saltTrackerStep {

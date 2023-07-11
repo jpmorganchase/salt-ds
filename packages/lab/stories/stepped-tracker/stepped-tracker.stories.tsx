@@ -129,7 +129,9 @@ export const Truncated: ComponentStory<typeof SteppedTracker> = () => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={0}>
-        <TrackerStep state="default">{`Step One: I am some ${longText} long text which will be truncated`}</TrackerStep>
+        <TrackerStep state="default">
+          {`Step One: I am some ${longText} long text which will be truncated`}
+        </TrackerStep>
         <TrackerStep state="default">{`Step Two: I am some ${longText} long text which will be truncated`}</TrackerStep>
         <TrackerStep state="default">{`Step Three: I am some ${longText} long text which will be truncated`}</TrackerStep>
         <TrackerStep state="default">{`Step Four: I am some ${longText} long text which will be truncated`}</TrackerStep>
