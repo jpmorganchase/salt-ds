@@ -6,4 +6,6 @@
   list-style-type: none;
   display: flex;
   flex-direction: row;
+  gap: var(--salt-spacing-25);
+  width: 100%;
 }

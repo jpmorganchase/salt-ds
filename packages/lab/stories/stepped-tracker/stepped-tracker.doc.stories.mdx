@@ -1,0 +1,102 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { SteppedTracker, TrackerStep } from "@salt-ds/lab";
+
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Lab/SteppedTracker"
+  component={SteppedTracker}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Stepped Tracker
+
+The Stepped Tracker visually communicates a user’s progress through a linear process. It gives the user context about where they are in the process, as well as an indication of remaining steps and the state of all steps.
+
+##### Use when
+
+- There are separate steps within a process such as a wizard or a multi-step form.
+- Where a process can be broken into bite-sized sections that are less daunting than lengthy forms.
+
+##### Don't use when
+
+- There are less than three sequential steps in a process
+
+## Features
+
+The SteppedTracker contains multiple TrackerStep child components. Each TrackerStep indicates it's current status through it's icon, and the connectors indicate current active step i.e. progress through the process.
+
+<Canvas>
+  <Story id="lab-stepped-tracker--default" />
+</Canvas>
+
+### Label Truncation
+
+A node label is displayed over a single line. If the label is too long to fit the visible width of the Stepped Tracker, the label string is truncated with an ellipsis. A tooltip will surface the full string on node hover or keyboard focus.
+
+<Canvas>
+  <Story id="lab-stepped-tracker--truncated" />
+</Canvas>
+
+Tooltips will be shown on all steps if a single step is truncted
+
+<Canvas>
+  <Story id="lab-stepped-tracker--single-truncated" />
+</Canvas>
+
+#### Best Practice
+
+Keep labels clear and concise, succinctly indicating what the user will encounter during the step. Ideally, labels should be displayed over a single line.
+
+### Step Progression
+
+In normal circumstances, once a step is completed you should both advance the active step, and change the status of the current active step in unison.
+
+<Canvas>
+  <Story id="lab-stepped-tracker--auto-progress" />
+</Canvas>
+
+It may however be appropriate to control the state of steps, and the active step independantly if users are able to revisit previous steps or complete step non-sequentially.
+
+<Canvas>
+  <Story id="lab-stepped-tracker--non-sequential-progress" />
+</Canvas>
+
+### Props
+
+#### SteppedTracker
+
+<ArgsTable of={SteppedTracker} />
+
+#### TrackerStep
+
+<ArgsTable of={TrackerStep} />
+
+### Classes
+
+#### SteppedTracker
+
+<CSSClassTable of={SteppedTracker} />
+
+#### TrackerStep
+
+<CSSClassTable of={TrackerStep} />
+
+### Characteristics used
+
+#### SteppedTracker
+
+<CharacteristicUsage of={SteppedTracker} />
+
+#### TrackerStep
+
+<CharacteristicUsage of={TrackerStep} />
+
+<HelpAndSupport />

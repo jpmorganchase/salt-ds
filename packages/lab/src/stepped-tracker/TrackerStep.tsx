@@ -20,88 +20,95 @@ import trackerStepCss from "./TrackerStep.css";
 
 const withBaseName = makePrefixer("saltTrackerStep");
 
+type State = "default" | "completed";
+
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
   /**
-   * If `true`, the stepped tracker will be disabled.
+   * The state of the TrackerStep
    */
-  disabled?: boolean;
-  /**
-   * Whether the step should be marked as completed
-   */
-  completed?: boolean;
+  state?: State;
 }
 
+// Internal props passed by the parent SteppedTracker
 type TrackerStepInjectedProps = {
-  _isActive: boolean;
-  _hasConnector: boolean;
+  /**
+   * The index of the active currently active step
+   */
+  _activeStep: number;
+  /**
+   * A callback ref for the label container, used to observe the element for truncation
+   */
   _overflowRef: RefCallback<HTMLElement>;
+  /**
+   * Whether the step should show a tooltip (in the case of any label being truncated)
+   */
   _hasTooltip: boolean;
+  /**
+   * The total steps in the SteppedTracker
+   */
   _totalSteps: number;
-  _completed: boolean;
-  _disabled: boolean;
+  /**
+   * The index position of this TrackerStep
+   */
+  _stepNumber: number;
 };
 
-const getState = ({
-  isActive,
-  completed,
-}: {
-  isActive: boolean;
-  completed: boolean;
-}) => {
-  if (completed) {
-    return "completed";
-  }
-  if (isActive) {
-    return "active";
-  }
-  return "default";
+type WithInjectedProps = TrackerStepProps & TrackerStepInjectedProps;
+
+const iconMap = {
+  default: StepDefaultIcon,
+  completed: StepSuccessIcon,
 };
 
 const getStateIcon = ({
   isActive,
-  completed,
+  state,
 }: {
   isActive: boolean;
-  completed: boolean;
+  state: State;
 }) => {
-  if (completed) {
-    return StepSuccessIcon;
-  }
-  if (isActive) {
+  if (state === "default" && isActive) {
     return StepActiveIcon;
   }
-  return StepDefaultIcon;
+  return iconMap[state];
+};
+
+const injectedProps: (keyof TrackerStepInjectedProps)[] = [
+  "_activeStep",
+  "_overflowRef",
+  "_hasTooltip",
+  "_totalSteps",
+  "_stepNumber",
+];
+
+const useCheckWithinValidParent = (props: WithInjectedProps) => {
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      for (const key of injectedProps) {
+        if (!(key in props)) {
+          console.error(
+            "The <TrackerStep> component should only be used within a <StepTracker> component"
+          );
+          break;
+        }
+      }
+    }
+  }, [props]);
 };
 
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
   function TrackerStep(props, ref?) {
     const {
-      _completed,
-      _disabled,
-      _isActive: isActive,
-      _hasConnector: hasConnector,
+      _activeStep: activeStep,
       _overflowRef: overflowRef,
       _hasTooltip: hasTooltip,
       _totalSteps: totalSteps,
-      completed = false,
-      disabled = false,
+      _stepNumber: stepNumber,
+      state = "default",
       className,
       children,
       ...restProps
-    } = props as TrackerStepProps & TrackerStepInjectedProps;
-
-    const showCompleted = completed || _completed;
-    const showDisabled = disabled || _disabled;
-
-    const isWithinSteppedTracker = !!overflowRef;
-
-    useEffect(() => {
-      if (!isWithinSteppedTracker) {
-        console.error(
-          "The <TrackerStep> component should only be used within a <StepTracker> component"
-        );
-      }
-    }, [isWithinSteppedTracker]);
+    } = props as WithInjectedProps;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -110,8 +117,12 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
       window: targetWindow,
     });
 
-    const Icon = getStateIcon({ isActive, completed: showCompleted });
-    const state = getState({ isActive, completed: showCompleted });
+    useCheckWithinValidParent(props as WithInjectedProps);
+
+    const isActive = activeStep === stepNumber;
+    const Icon = getStateIcon({ isActive, state });
+    const connectorState = activeStep > stepNumber ? "active" : "default";
+    const hasConnector = stepNumber < totalSteps - 1;
 
     const Inner = (
       <li
@@ -120,8 +131,6 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
           withBaseName(),
           {
             [withBaseName("active")]: isActive,
-            [withBaseName("disabled")]: showDisabled,
-            [withBaseName("completed")]: showCompleted,
           },
           className
         )}
@@ -132,13 +141,11 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
           } as CSSProperties
         }
         tabIndex={hasTooltip ? 0 : undefined}
-        {...restProps}
+        aria-current={isActive ? "step" : undefined}
         ref={ref}
       >
         <Icon />
-        {hasConnector && (
-          <TrackerConnector state={state} disabled={showDisabled} />
-        )}
+        {hasConnector && <TrackerConnector state={connectorState} />}
         <div ref={overflowRef} className={clsx(withBaseName("body"))}>
           {children}
         </div>
