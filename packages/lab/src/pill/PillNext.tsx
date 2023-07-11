@@ -4,6 +4,7 @@ import {
   PropsWithChildren,
   HTMLAttributes,
   KeyboardEvent,
+  useState,
 } from "react";
 import { useWindow } from "@salt-ds/window";
 import { CloseSmallIcon } from "@salt-ds/icons";
@@ -76,6 +77,7 @@ const InteractivePill = forwardRef<
     onClick,
     onKeyUp: clickable
       ? (e) => {
+          if (disabled) return;
           if (e.key === "Enter" || e.key === " ") {
             onClick?.(e);
           }
@@ -84,6 +86,7 @@ const InteractivePill = forwardRef<
       : restProps.onKeyUp,
     onKeyDown: closable
       ? (e) => {
+          if (disabled) return;
           if (e.key === "Backspace") {
             onClose(e);
           }
@@ -91,6 +94,13 @@ const InteractivePill = forwardRef<
         }
       : restProps.onKeyDown,
   });
+  const [nestedHover, setNestedHover] = useState(false);
+  const handleNestedMouseEnter = () => {
+    setNestedHover(true);
+  };
+  const handleNestedMouseLeave = () => {
+    setNestedHover(false);
+  };
 
   return (
     <div
@@ -102,13 +112,20 @@ const InteractivePill = forwardRef<
         [withBaseName("clickable")]: clickable,
         [withBaseName("active")]: active,
         [withBaseName("closable")]: closable,
+        [withBaseName("nestedHover")]: nestedHover,
       })}
       aria-disabled={disabled ? true : undefined}
       tabIndex={!disabled ? 0 : -1}
     >
       {icon}
       <span className={withBaseName("label")}>{children}</span>
-      {closable ? <PillCloseButton onClick={onClose} /> : null}
+      {closable ? (
+        <PillCloseButton
+          onMouseEnter={handleNestedMouseEnter}
+          onMouseLeave={handleNestedMouseLeave}
+          onClick={onClose}
+        />
+      ) : null}
     </div>
   );
 });
@@ -116,9 +133,13 @@ const InteractivePill = forwardRef<
 const PillCloseButton = ({
   onClick,
   disabled,
+  onMouseEnter,
+  onMouseLeave,
 }: {
   disabled?: boolean;
   onClick: (e: ClickEvent) => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }) => {
   const { buttonProps, active } = useButton({
     disabled,
@@ -131,19 +152,22 @@ const PillCloseButton = ({
   return (
     <div
       {...buttonProps}
+      role="button"
       onMouseDown={(e) => {
         e.stopPropagation();
       }}
       onMouseUp={(e) => {
         e.stopPropagation();
       }}
-      aria-hidden
+      aria-label="Close Pill"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       tabIndex={-1}
       className={clsx(withBaseName("deleteButton"), {
         [withBaseName("deleteButton-active")]: active,
       })}
     >
-      <CloseSmallIcon />
+      <CloseSmallIcon aria-hidden />
     </div>
   );
 };

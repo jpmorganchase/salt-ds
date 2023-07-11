@@ -62,18 +62,35 @@
   user-select: none;
 }
 
-.saltPill-clickable:not([aria-disabled]):hover:not(:has(.saltPill-deleteButton:hover)) {
+.saltPill-clickable:hover {
   --saltIcon-color: var(--pill-icon-color);
   --saltIcon-color-hover: var(--pill-icon-color-hover);
 
   background: var(--pill-background-hover);
 }
 
-.saltPill-clickable:not([aria-disabled]).saltPill-active:not(:has(.saltPill-deleteButton:active)),
-.saltPill-clickable:not([aria-disabled]):active:not(:has(.saltPill-deleteButton:active)) {
+.saltPill-clickable[aria-disabled]:hover,
+.saltPill-nestedHover:hover {
+  --saltIcon-color: var(--pill-icon-color);
+  --saltIcon-color-hover: var(--pill-icon-color);
+
+  background: var(--pill-background);
+}
+
+.saltPill-clickable.saltPill-active,
+.saltPill-clickable:active {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
   --saltIcon-color: var(--pill-text-color-active);
+}
+
+.saltPill-clickable[aria-disabled].saltPill-active,
+.saltPill-clickable[aria-disabled]:active,
+.saltPill-clickable.saltPill-nestedHover.saltPill-active,
+.saltPill-clickable.saltPill-nestedHover:active {
+  background: var(--pill-background);
+  color: var(--pill-text-color);
+  --saltIcon-color: var(--pill-text-color);
 }
 
 /* Style applied to Pill on focus */
@@ -99,6 +116,12 @@
   --saltIcon-color-hover: var(--pill-icon-color-disabled);
 }
 
+.saltPill[aria-disabled] .saltPill-deleteButton,
+.saltPill[aria-disabled] .saltPill-deleteButton:hover,
+.saltPill[aria-disabled] .saltPill-deleteButton:active {
+  background: transparent;
+}
+
 /* Style applied to Pill delete button */
 .saltPill-deleteButton {
   --saltIcon-size-multiplier: 1;
@@ -111,14 +134,14 @@
   justify-content: center;
 }
 
-.saltPill-deleteButton:hover:not([aria-disabled]) {
+.saltPill-deleteButton:hover {
   cursor: var(--salt-selectable-cursor-hover);
   background: var(--salt-actionable-secondary-background-hover);
   color: var(--salt-actionable-secondary-foreground-hover);
 }
 
-.saltPill-deleteButton:not([aria-disabled]).saltPill-active,
-.saltPill-deleteButton:not([aria-disabled]):active {
+.saltPill-deleteButton.saltPill-active,
+.saltPill-deleteButton:active {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
   --saltIcon-color: var(--pill-text-color-active);
@@ -138,9 +161,4 @@
 .saltPill-clickable:not([aria-disabled]) .saltPill-icon,
 .saltPill-clickable.saltPill-active:not([aria-disabled]) .saltPill-icon {
   fill: var(--pill-icon-color-active);
-}
-
-/* Pill label styles on hover */
-.saltPill:hover {
-  color: var(--pill-text-color-hover);
 }
