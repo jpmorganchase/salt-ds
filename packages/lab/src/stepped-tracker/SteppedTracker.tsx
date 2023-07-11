@@ -7,11 +7,13 @@ import {
   useState,
   cloneElement,
   isValidElement,
+  useEffect,
 } from "react";
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "@salt-ds/core";
+import { TrackerStep } from "./TrackerStep";
 
 import steppedTrackerCss from "./SteppedTracker.css";
 
@@ -25,18 +27,33 @@ export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
    */
   activeStep: number;
   /**
-   * If `true`, the stepped tracker will be disabled.
-   */
-  disabled?: boolean;
-  /**
    * Should be one or more <TrackerStep> components
    */
   children: ReactNode;
 }
 
+const useCheckInvalidChildren = (children: ReactNode) => {
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      let hasInvalidChild = false;
+      Children.forEach(children, (child) => {
+        if (!isValidElement(child) || child.type !== TrackerStep) {
+          hasInvalidChild = true;
+        }
+      });
+
+      if (hasInvalidChild) {
+        console.error(
+          "Invalid children: children of <SteppedTracker> must be a <TrackerStep> component"
+        );
+      }
+    }
+  }, [children]);
+};
+
 export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
   function SteppedTracker(
-    { children, className, disabled, activeStep, ...restProps },
+    { children, className, activeStep, ...restProps },
     ref?
   ): ReactElement<SteppedTrackerProps> {
     const targetWindow = useWindow();
@@ -46,8 +63,11 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
       window: targetWindow,
     });
 
+    useCheckInvalidChildren(children);
+
     const [hasTooltips, setHasTooltips] = useState(false);
 
+    // A factory function used to get a callback ref for checking truncation.
     const getOverflowRef = useDetectTruncatedText(setHasTooltips);
 
     const totalSteps = Children.count(children);
@@ -55,13 +75,7 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
     return (
       <ul
         {...restProps}
-        className={clsx(
-          withBaseName(),
-          {
-            [withBaseName("disabled")]: disabled,
-          },
-          className
-        )}
+        className={clsx(withBaseName(), className)}
         {...restProps}
         ref={ref}
       >
@@ -69,14 +83,13 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
           if (!isValidElement(child)) {
             return child;
           }
+
           return cloneElement(child, {
-            _isActive: activeStep === i,
-            _hasConnector: i < totalSteps - 1,
+            _activeStep: activeStep,
             _overflowRef: getOverflowRef(i),
             _hasTooltip: hasTooltips,
             _totalSteps: totalSteps,
-            _completed: activeStep > i,
-            _disabled: disabled,
+            _stepNumber: i,
           });
         })}
       </ul>
