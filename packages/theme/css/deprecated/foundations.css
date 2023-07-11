@@ -1,0 +1,35 @@
+/*
+* **Deprecated:** Use duration instead
+*/
+.salt-theme {
+  /* Delay */
+  --salt-delay-instant: 100ms;
+  --salt-delay-perceptible: 300ms;
+  --salt-delay-notable: 1000ms;
+  --salt-delay-cutoff: 10000ms;
+
+  /* Icon */
+  --salt-size-icon-base: var(--salt-icon-size-base);
+
+  /* Opacity */
+  --salt-opacity-1: 0.15;
+  --salt-opacity-2: 0.25;
+  --salt-opacity-3: 0.4;
+  --salt-opacity-4: 0.7;
+}
+
+.salt-density-touch,
+.salt-density-low,
+.salt-density-medium,
+.salt-density-high {
+  /* Size */
+  --salt-size-selection: var(--salt-size-selectable);
+  --salt-size-brandBar: 4px; /* Use --salt-size-accent */
+  --salt-size-graphic-small: 12px;
+  --salt-size-graphic-medium: 24px;
+  --salt-size-graphic-large: 48px;
+  --salt-size-divider-height: var(--salt-size-separator-height);
+  --salt-size-divider-strokeWidth: var(--salt-size-separator-strokeWidth);
+
+  --salt-size-detail: var(--salt-size-compact);
+}

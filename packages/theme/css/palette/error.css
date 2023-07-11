@@ -1,0 +1,13 @@
+.salt-theme[data-mode="light"] {
+  --salt-palette-error-background: var(--salt-color-red-10);
+  --salt-palette-error-background-selected: var(--salt-color-red-20);
+  --salt-palette-error-border: var(--salt-color-red-500);
+  --salt-palette-error-foreground: var(--salt-color-red-500);
+}
+
+.salt-theme[data-mode="dark"]{
+  --salt-palette-error-background: var(--salt-color-red-900);
+  --salt-palette-error-background-selected: var(--salt-color-red-900);
+  --salt-palette-error-border: var(--salt-color-red-500);
+  --salt-palette-error-foreground: var(--salt-color-red-500);
+}
