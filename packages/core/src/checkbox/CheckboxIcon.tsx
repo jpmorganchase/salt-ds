@@ -4,28 +4,39 @@ import { useWindow } from "@salt-ds/window";
 import { useDensity } from "../salt-provider";
 import { AdornmentValidationStatus } from "../status-adornment";
 import { makePrefixer } from "../utils";
-import {
-  CheckboxCheckedIcon,
-  CheckboxCheckedIconHD,
-  CheckboxIndeterminateIcon,
-  CheckboxUncheckedIcon,
-} from "./assets";
 import checkboxIconCss from "./CheckboxIcon.css";
+import {
+  IconProps,
+  SuccessSmallSolidIcon,
+  SuccessSolidIcon,
+} from "@salt-ds/icons";
 
 export interface CheckboxIconProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
-  error?: boolean /* **Deprecated**: replaced with validationStatus */;
+  /**
+   * @deprecated Use validationStatus instead
+   */
+  error?: boolean;
   indeterminate?: boolean;
   validationStatus?: AdornmentValidationStatus;
 }
 
 const withBaseName = makePrefixer("saltCheckboxIcon");
 
+function CheckedIcon(props: IconProps) {
+  const density = useDensity();
+  return density === "high" ? (
+    <SuccessSmallSolidIcon {...props} />
+  ) : (
+    <SuccessSolidIcon {...props} />
+  );
+}
+
 export const CheckboxIcon = ({
   checked = false,
-  className: classNameProp,
+  className,
   disabled,
   error,
   indeterminate,
@@ -37,34 +48,25 @@ export const CheckboxIcon = ({
     css: checkboxIconCss,
     window: targetWindow,
   });
-  const className = clsx(
-    withBaseName(),
-    {
-      [withBaseName("disabled")]: disabled,
-      [withBaseName("error")]: error,
-      [withBaseName(validationStatus || "")]: validationStatus,
-    },
-    classNameProp
-  );
 
-  // A different CheckboxCheckedIcon is rendered if the density is set to high
-  const density = useDensity();
-
-  return indeterminate ? (
-    <CheckboxIndeterminateIcon
-      className={clsx(className, withBaseName("indeterminate"))}
-    />
-  ) : checked ? (
-    density === "high" ? (
-      <CheckboxCheckedIconHD
-        className={clsx(className, withBaseName("checked"))}
-      />
-    ) : (
-      <CheckboxCheckedIcon
-        className={clsx(className, withBaseName("checked"))}
-      />
-    )
-  ) : (
-    <CheckboxUncheckedIcon className={className} />
+  return (
+    <div
+      aria-hidden="true"
+      className={clsx(
+        withBaseName(),
+        {
+          [withBaseName("checked")]: checked,
+          [withBaseName("disabled")]: disabled,
+          [withBaseName("error")]: error,
+          [withBaseName(validationStatus || "")]: validationStatus,
+          [withBaseName("indeterminate")]: indeterminate,
+        },
+        className
+      )}
+    >
+      {checked && !indeterminate && (
+        <CheckedIcon className={withBaseName("icon")} />
+      )}
+    </div>
   );
 };

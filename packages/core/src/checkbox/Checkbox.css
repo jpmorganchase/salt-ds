@@ -1,10 +1,8 @@
 /* Styles applied to root component */
-
 .saltCheckbox {
   cursor: var(--salt-selectable-cursor-hover);
-  background: var(--saltCheckbox-background, none);
   display: flex;
-  gap: var(--saltCheckbox-gap, var(--salt-spacing-100));
+  gap: var(--salt-spacing-100);
   position: relative;
   width: fit-content;
 }
@@ -20,6 +18,20 @@
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
   outline-offset: var(--salt-focused-outlineOffset);
   outline: var(--saltCheckbox-outline, var(--salt-focused-outline));
+  border-color: var(--salt-selectable-foreground-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+
+.saltCheckbox-error .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
+  outline-color: var(--salt-status-error-foreground);
+  border-color: var(--salt-status-error-foreground);
+  color: var(--salt-status-error-foreground);
+}
+
+.saltCheckbox-warning .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
+  outline-color: var(--salt-status-warning-foreground);
+  border-color: var(--salt-status-warning-foreground);
+  color: var(--salt-status-warning-foreground);
 }
 
 /* Styles applied to input element */
