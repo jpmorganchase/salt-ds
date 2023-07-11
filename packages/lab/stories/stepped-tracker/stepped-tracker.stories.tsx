@@ -18,7 +18,7 @@ type Step = {
 
 type Steps = Step[];
 
-const defaultSteps: Steps = [
+const sampleSteps: Steps = [
   {
     label: "Step One",
     state: "default",
@@ -37,7 +37,7 @@ const defaultSteps: Steps = [
   },
 ];
 
-export const Default: ComponentStory<typeof SteppedTracker> = () => {
+export const Basic: ComponentStory<typeof SteppedTracker> = () => {
   return (
     <StackLayout
       direction="column"
@@ -69,7 +69,7 @@ export const Default: ComponentStory<typeof SteppedTracker> = () => {
 
 export const AutoProgress: ComponentStory<typeof SteppedTracker> = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [steps, setSteps] = useState(defaultSteps);
+  const [steps, setSteps] = useState(sampleSteps);
   const totalSteps = steps.length;
 
   const onComplete = () => {
@@ -91,7 +91,7 @@ export const AutoProgress: ComponentStory<typeof SteppedTracker> = () => {
 
   const onRefresh = () => {
     setActiveStep(0);
-    setSteps(defaultSteps);
+    setSteps(sampleSteps);
   };
 
   return (
@@ -159,7 +159,7 @@ export const NonSequentialProgress: ComponentStory<
   typeof SteppedTracker
 > = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [steps, setSteps] = useState(defaultSteps);
+  const [steps, setSteps] = useState(sampleSteps);
   const totalSteps = steps.length;
 
   const onNext = () => {
