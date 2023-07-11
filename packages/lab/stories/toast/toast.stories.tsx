@@ -45,20 +45,37 @@ export const HideClose = (args: ToastProps) => (
 );
 
 export const CustomContent = (args: ToastProps) => (
-  <Toast {...args}>
-    <ToastContent>
-      <div>
-        <strong>Lorem ipsum</strong>
-      </div>
-      <div>Lorem ipsum dolor sit amet consectetur adipiscing elit.</div>
-      <FlowLayout
-        gap={1}
-        justify="end"
-        style={{ marginTop: "var(--salt-spacing-100)" }}
-      >
-        <Button>Dismiss</Button>
-        <Button variant="cta">Yes</Button>
-      </FlowLayout>
-    </ToastContent>
-  </Toast>
+  <FlowLayout style={{ width: 352 }}>
+    <Toast {...args}>
+      <ToastContent>
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud.
+        </div>
+        <FlowLayout
+          gap={1}
+          justify="end"
+          style={{ marginTop: "var(--salt-spacing-100)" }}
+        ></FlowLayout>
+      </ToastContent>
+      <ToastClose />
+    </Toast>
+    <Toast {...args}>
+      <ToastContent>
+        <div>
+          <strong>Lorem ipsum</strong>
+        </div>
+        <div>Lorem ipsum dolor sit amet consectetur adipiscing elit.</div>
+        <FlowLayout
+          gap={1}
+          justify="end"
+          style={{ marginTop: "var(--salt-spacing-100)" }}
+        >
+          <Button>Dismiss</Button>
+          <Button variant="cta">Yes</Button>
+        </FlowLayout>
+      </ToastContent>
+    </Toast>
+  </FlowLayout>
 );
