@@ -100,6 +100,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       onFocus,
       value,
       validationStatus: validationStatusProp,
+      readOnly: readOnlyProp,
       ...rest
     },
     ref
@@ -118,18 +119,6 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       ...restInputProps
     } = inputProps;
 
-    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-      // Workaround for https://github.com/facebook/react/issues/9023
-      if (event.nativeEvent.defaultPrevented) {
-        return;
-      }
-
-      const value = event.target.checked;
-      setChecked(value);
-      onChange?.(event);
-      checkboxGroup.onChange?.(event);
-    };
-
     const checkboxGroupChecked =
       checkedProp == null && value != null
         ? checkboxGroup.checkedValues?.includes(value)
@@ -145,16 +134,31 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     const {
       a11yProps: formFieldA11yProps,
       disabled: formFieldDisabled,
+      readOnly: formFieldReadOnly,
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
 
     const disabled =
       checkboxGroup.disabled ?? formFieldDisabled ?? disabledProp;
+    const readOnly =
+      checkboxGroup.readOnly ?? formFieldReadOnly ?? readOnlyProp;
     const validationStatus = !disabled
       ? checkboxGroup.validationStatus ??
         formFieldValidationStatus ??
         validationStatusProp
       : undefined;
+
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+      // Workaround for https://github.com/facebook/react/issues/9023
+      if (event.nativeEvent.defaultPrevented || readOnly) {
+        return;
+      }
+
+      const value = event.target.checked;
+      setChecked(value);
+      onChange?.(event);
+      checkboxGroup.onChange?.(event);
+    };
 
     return (
       <label
@@ -162,6 +166,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName("readOnly")]: readOnly,
             [withBaseName("error")]: error /* **Deprecated** */,
             [withBaseName(validationStatus || "")]: validationStatus,
           },
@@ -191,14 +196,17 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           data-indeterminate={indeterminate}
           defaultChecked={defaultChecked}
           disabled={disabled}
+          readOnly={readOnly}
           onBlur={onBlur}
           onChange={handleChange}
           onFocus={onFocus}
           type="checkbox"
+          tabIndex={readOnly ? -1 : undefined}
         />
         <CheckboxIcon
           checked={checked}
           disabled={disabled}
+          readOnly={readOnly}
           indeterminate={indeterminate}
           validationStatus={validationStatus}
           error={error}
