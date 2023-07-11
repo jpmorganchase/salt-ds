@@ -1,16 +1,16 @@
 .saltTrackerConnector {
   --tracker-connector-color-default: var(--saltTrackerConnectorColorDefault, var(--salt-text-secondary-foreground));
   --tracker-connector-color-active: var(--saltTrackerConnectorColorActive, var(--salt-status-info-foreground));
-  --tracker-connector-color-completed: var(--saltTrackerConnectorColorCompleted, var(--salt-status-info-foreground));
 
   --tracker-connector-style-default: var(--saltTrackerConnectorColorDefault, dotted);
-  --tracker-connector-style-active: var(--saltTrackerConnectorColorActive, dotted);
-  --tracker-connector-style-completed: var(--saltTrackerConnectorColorCompleted, solid);
+  --tracker-connector-style-active: var(--saltTrackerConnectorColorActive, solid);
 
   --tracker-connector-color: var(--tracker-connector-color-default);
   --tracker-connector-style: var(--tracker-connector-style-default);
 
   --tracker-connector-thickness: var(--saltTrackerConnectorThickness, 2px);
+
+  --tracker-connector-margin: var(--saltTrackerConnectorMargin, var(--salt-spacing-100));
 }
 
 .saltTrackerConnector {
@@ -19,21 +19,12 @@
   border-top-style: var(--tracker-connector-style);
   border-top-color: var(--tracker-connector-color);
   position: absolute;
-  width: calc(100% - var(--saltIcon-size));
-  left: calc(50% + (var(--saltIcon-size) / 2));
+  width: calc(100% - (var(--saltIcon-size)) - (var(--tracker-connector-margin) * 2));
+  left: calc(50% + (var(--saltIcon-size) / 2) + var(--tracker-connector-margin));
   top: calc(var(--saltIcon-size) / 2);
-}
-
-.saltTrackerConnector.saltTrackerConnector-completed {
-  --tracker-connector-color: var(--tracker-connector-color-completed);
-  --tracker-connector-style: var(--tracker-connector-style-completed);
 }
 
 .saltTrackerConnector.saltTrackerConnector-active {
   --tracker-connector-color: var(--tracker-connector-color-active);
   --tracker-connector-style: var(--tracker-connector-style-active);
-}
-
-.saltTrackerConnector.saltTrackerConnector-disabled {
-  --tracker-connector-color: var(--tracker-step-disabled-color);
 }
