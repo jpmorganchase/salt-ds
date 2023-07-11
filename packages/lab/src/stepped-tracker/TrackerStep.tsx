@@ -142,6 +142,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
         }
         tabIndex={hasTooltip ? 0 : undefined}
         aria-current={isActive ? "step" : undefined}
+        data-state={state}
         ref={ref}
       >
         <Icon />
