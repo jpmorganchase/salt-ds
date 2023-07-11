@@ -1,4 +1,9 @@
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  CSSProperties,
+  useState,
+} from "react";
 import {
   Checkbox,
   CheckboxGroup,
@@ -135,7 +140,7 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
 export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
   return (
     <FormField {...props}>
-      <FormLabel question>
+      <FormLabel pronounced>
         Do your current qualifications align with the role? Please describe.
       </FormLabel>
       <MultilineInput fullBorder defaultValue="Answer" />
@@ -144,7 +149,7 @@ export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
 };
 
 export const MultiChild: ComponentStory<typeof FormField> = (props) => {
-  const [firstValue, setFirstValue] = useState("Abcdef");
+  const [firstValue, setFirstValue] = useState("Five");
   const [secondValue, setSecondValue] = useState("");
 
   const valid = firstValue.length && secondValue.length;
@@ -301,8 +306,8 @@ const radioData = [
     value: "parent",
   },
   {
-    label: "Subsidary",
-    value: "subsidary",
+    label: "Subsidiary",
+    value: "subsidiary",
   },
 ];
 
@@ -450,7 +455,7 @@ export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField necessity="required" {...props}>
-        <FormLabel question>
+        <FormLabel pronounced>
           Will data related to the new initiative be shared across lines of
           business, external to the firm, or across-jurisdictions? Please
           explain.
@@ -458,7 +463,7 @@ export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
         <MultilineInput defaultValue="Value" />
       </FormField>
       <FormField necessity="optional" {...props}>
-        <FormLabel question>
+        <FormLabel pronounced>
           For the legal entity country of incorporation, are you aware of any
           specific regulations relating to oversight of third parties?
         </FormLabel>
@@ -738,7 +743,7 @@ export const GroupedWithVariant: ComponentStory<typeof FormField> = (props) => {
 export const MultiColumnLayout: ComponentStory<typeof FormField> = (props) => {
   return (
     <StackLayout
-      style={{ "--formField-label-width": "100px" } as React.CSSProperties}
+      style={{ "--formField-label-width": "100px" } as CSSProperties}
     >
       <FormField {...props}>
         <FormLabel>Form Field label left</FormLabel>

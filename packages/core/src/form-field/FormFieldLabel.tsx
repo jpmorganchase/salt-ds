@@ -12,10 +12,10 @@ const withBaseName = makePrefixer("saltFormFieldLabel");
 export const FormFieldLabel = ({
   className,
   children,
-  question = false,
+  pronounced = false,
   ...restProps
 }: Omit<TextProps<"label">, "variant" | "styleAs"> & {
-  question?: boolean;
+  pronounced?: boolean;
 }) => {
   const { a11yProps, disabled, necessity } = useFormFieldProps();
   const targetWindow = useWindow();
@@ -36,7 +36,7 @@ export const FormFieldLabel = ({
       as="label"
       className={clsx(
         withBaseName(),
-        { [withBaseName("question")]: question },
+        { [withBaseName("pronounced")]: pronounced },
         className
       )}
       id={a11yProps?.["aria-labelledby"]}
