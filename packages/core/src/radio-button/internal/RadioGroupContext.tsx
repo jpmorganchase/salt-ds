@@ -9,6 +9,7 @@ export interface RadioGroupContextValue {
   name?: string;
   value?: string;
   onChange?: ChangeEventHandler<HTMLElement>;
+  readOnly?: boolean;
   validationStatus?: AdornmentValidationStatus;
 }
 

@@ -23,6 +23,12 @@ const RadioButtonGroups = () => {
           label="Radio Option 3 (disabled)"
           value="option3"
         />
+        <RadioButton
+          readOnly
+          key="option4"
+          label="Radio Option 4 (read-only)"
+          value="option4"
+        />
       </RadioButtonGroup>
       <RadioButtonGroup direction={"horizontal"} defaultValue="option2">
         <RadioButton key="option1" label="Radio Option 1" value="option1" />
@@ -32,6 +38,12 @@ const RadioButtonGroups = () => {
           key="option3"
           label="Radio Option 3 (disabled)"
           value="option3"
+        />
+        <RadioButton
+          readOnly
+          key="option4"
+          label="Radio Option 4 (read-only)"
+          value="option4"
         />
       </RadioButtonGroup>
     </>

@@ -61,7 +61,7 @@ describe("GIVEN a RadioButtonGroup component", () => {
   });
 });
 
-describe("GIVEN a RadioButtonGroup uncontrolled component with children as function", () => {
+describe("GIVEN a RadioButtonGroup uncontrolled component with children", () => {
   describe("WHEN defaultValue is set", () => {
     it("THEN it should render with the specified radio being checked", () => {
       cy.mount(

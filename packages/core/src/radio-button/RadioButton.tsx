@@ -1,9 +1,9 @@
 import { clsx } from "clsx";
 import {
   ChangeEventHandler,
+  ComponentPropsWithoutRef,
   FocusEventHandler,
   forwardRef,
-  HTMLAttributes,
   InputHTMLAttributes,
   ReactNode,
 } from "react";
@@ -21,7 +21,7 @@ const withBaseName = makePrefixer("saltRadioButton");
 
 export interface RadioButtonProps
   extends Omit<
-    HTMLAttributes<HTMLLabelElement>,
+    ComponentPropsWithoutRef<"label">,
     "onChange" | "onBlur" | "onFocus"
   > {
   /**
@@ -62,6 +62,10 @@ export interface RadioButtonProps
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
   /**
+   * Set the read only state.
+   */
+  readOnly?: boolean;
+  /**
    * Value of radio button
    */
   value?: string;
@@ -87,6 +91,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       onFocus,
       onBlur,
       onChange,
+      readOnly: readOnlyProp,
       value,
       validationStatus: validationStatusProp,
       ...rest
@@ -102,6 +107,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     const {
       a11yProps: formFieldA11yProps,
       disabled: formFieldDisabled,
+      readOnly: formFieldReadOnly,
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
 
@@ -110,10 +116,13 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     const {
       "aria-describedby": inputDescribedBy,
       "aria-labelledby": inputLabelledBy,
+      className: inputClassName,
+      onChange: inputOnChange,
       ...restInputProps
     } = inputProps;
 
     const disabled = radioGroup.disabled ?? formFieldDisabled ?? disabledProp;
+    const readOnly = radioGroup.readOnly ?? formFieldReadOnly ?? readOnlyProp;
     const validationStatus = !disabled
       ? radioGroup.validationStatus ??
         formFieldValidationStatus ??
@@ -134,10 +143,13 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     });
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+      if (readOnly) return;
+
       const newChecked = event.target.checked;
       setCheckedState(newChecked);
 
       onChange?.(event);
+      inputOnChange?.(event);
       radioGroup.onChange?.(event);
     };
 
@@ -147,9 +159,9 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName("readOnly")]: readOnly,
             [withBaseName("error")]: error /* **Deprecated** */,
             [withBaseName(validationStatus || "")]: validationStatus,
-            [withBaseName("error")]: error,
           },
           className
         )}
@@ -167,8 +179,8 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
               formFieldA11yProps?.["aria-labelledby"],
             inputLabelledBy
           )}
-          className={withBaseName("input")}
-          {...restInputProps}
+          className={clsx(withBaseName("input"), inputClassName)}
+          tabIndex={readOnly ? -1 : undefined}
           checked={checked}
           disabled={disabled}
           name={name}
@@ -177,10 +189,12 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           onChange={handleChange}
           onFocus={onFocus}
           type="radio"
+          {...restInputProps}
         />
         <RadioButtonIcon
           checked={checked}
           disabled={disabled}
+          readOnly={readOnly}
           validationStatus={validationStatus}
           error={error}
         />
