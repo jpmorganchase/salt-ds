@@ -6,10 +6,7 @@ import { Pill, PillProps } from "../../pill";
 
 const withBaseName = makePrefixer("saltInputPill");
 
-export type InputPillProps = Omit<
-  PillProps<"basic" | "closable">,
-  "variant" | "onDelete" | "clickable"
-> & {
+export type InputPillProps = Omit<PillProps, "onClose"> & {
   /**
    * An ref object holds pills index map to width.
    */
@@ -33,7 +30,7 @@ export type InputPillProps = Omit<
   /**
    * Callback when pill is deleted.
    */
-  onDelete?: (index: number) => void;
+  onClose?: (index: number) => void;
 };
 
 export const InputPill = memo(function InputPill(props: InputPillProps) {
@@ -45,14 +42,14 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     highlighted,
     index,
     lastVisible,
-    onDelete,
+    onClose,
     pillsRef,
     tabIndex: tabIndexProp,
     ...restProps
   } = props;
 
   const ref = useRef<HTMLDivElement | null>(null);
-  const isRemovable = Boolean(onDelete);
+  const isRemovable = Boolean(onClose);
 
   // useLayoutEffect to match the calcFirstHiddenIndex in TokenizedInputBase
   // We need to collect widths before the calculation
@@ -70,7 +67,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
   );
 
   const handleDelete = () => {
-    onDelete?.(index);
+    onClose?.(index);
   };
 
   return (
@@ -80,17 +77,14 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
         {
           [withBaseName("pillActive")]: active || highlighted,
           [withBaseName("pillLastVisible")]: lastVisible,
-          [withBaseName("hidden")]: hidden,
         },
         className
       )}
       disabled={disabled}
-      onDelete={isRemovable ? handleDelete : undefined}
+      onClose={isRemovable ? handleDelete : undefined}
       ref={ref}
       role="option"
-      //  style={useMemo(() => ({ maxWidth }), [maxWidth])}
       tabIndex={undefined}
-      variant={isRemovable ? "closable" : "basic"}
       {...restProps}
     />
   );

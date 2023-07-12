@@ -17,7 +17,7 @@ type ClickEvent =
   | MouseEvent<Element, globalThis.MouseEvent>
   | KeyboardEvent<HTMLDivElement>;
 
-interface PillProps extends ComponentPropsWithoutRef<"div"> {
+export interface PillProps extends ComponentPropsWithoutRef<"div"> {
   disabled?: boolean;
   className?: string;
   icon?: React.ReactNode;
