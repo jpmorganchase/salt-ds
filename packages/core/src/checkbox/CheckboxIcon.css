@@ -9,7 +9,7 @@
   background: var(--salt-container-primary-background);
   position: relative;
   --saltIcon-color: currentColor;
-  display: flex
+  display: flex;
 }
 
 .saltCheckboxIcon .saltCheckboxIcon-icon {
@@ -44,7 +44,7 @@
 }
 
 .saltCheckboxIcon-indeterminate::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;

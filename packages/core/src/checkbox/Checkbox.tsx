@@ -116,6 +116,8 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     const {
       "aria-describedby": inputDescribedBy,
       "aria-labelledby": inputLabelledBy,
+      className: inputClassName,
+      onChange: inputOnChange,
       ...restInputProps
     } = inputProps;
 
@@ -157,6 +159,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       const value = event.target.checked;
       setChecked(value);
       onChange?.(event);
+      inputOnChange?.(event);
       checkboxGroup.onChange?.(event);
     };
 
@@ -190,9 +193,9 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           )}
           name={name}
           value={value}
-          {...restInputProps}
+          tabIndex={readOnly ? -1 : undefined}
           checked={checked}
-          className={withBaseName("input")}
+          className={clsx(withBaseName("input"), inputClassName)}
           data-indeterminate={indeterminate}
           defaultChecked={defaultChecked}
           disabled={disabled}
@@ -201,7 +204,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           onChange={handleChange}
           onFocus={onFocus}
           type="checkbox"
-          tabIndex={readOnly ? -1 : undefined}
+          {...restInputProps}
         />
         <CheckboxIcon
           checked={checked}
