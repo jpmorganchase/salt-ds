@@ -20,7 +20,7 @@
   line-height: var(--salt-text-lineHeight);
   padding: 0 var(--salt-size-unit);
   background-color: var(--salt-container-secondary-background);
-  margin-bottom: var(--salt-spacing-200)
+  margin-bottom: var(--salt-spacing-200);
 }
 
 .positive .pill {

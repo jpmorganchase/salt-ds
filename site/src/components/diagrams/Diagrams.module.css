@@ -5,7 +5,6 @@
   margin-block: var(--salt-spacing-300);
 }
 
-
 @media screen and (max-width: 996px) {
   .diagramsContainer {
     grid-template-columns: 1fr;
@@ -25,10 +24,11 @@
 
 @media screen and (max-width: 996px) {
   .diagram:not(.contentTop) {
-   flex-direction: column-reverse;
+    flex-direction: column-reverse;
   }
 
-  .diagram h3, .diagram h4 {
+  .diagram h3,
+  .diagram h4 {
     margin-top: 0;
   }
 
@@ -41,7 +41,8 @@
   margin-block: 0;
 }
 
-.contentTop h3, .contentTop h4 {
+.contentTop h3,
+.contentTop h4 {
   margin-top: 0;
 }
 

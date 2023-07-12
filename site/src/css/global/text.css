@@ -25,7 +25,7 @@ main {
 
 p {
   margin-top: var(--salt-spacing-100);
-  margin-bottom: var(--salt-spacing-100)
+  margin-bottom: var(--salt-spacing-100);
 }
 
 @media screen and (max-width: 768px) {
