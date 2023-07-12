@@ -1,6 +1,6 @@
 .heading2 {
-  margin-bottom: calc(var(--salt-size-unit) * 2);
-  margin-top: calc(var(--salt-size-unit) * 3);
+  margin-bottom: var(--salt-spacing-200);
+  margin-top: var(--salt-spacing-300);
 }
 
 .heading2 + h3 {
