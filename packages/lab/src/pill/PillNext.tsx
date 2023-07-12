@@ -7,9 +7,9 @@ import {
   ComponentPropsWithoutRef,
 } from "react";
 import { useWindow } from "@salt-ds/window";
-import { CloseSmallIcon } from "@salt-ds/icons";
+import { CloseIcon, CloseSmallIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer, useButton } from "@salt-ds/core";
+import { makePrefixer, useButton, useDensity } from "@salt-ds/core";
 import pillCss from "./PillNext.css";
 import clsx from "clsx";
 
@@ -120,6 +120,7 @@ const InteractivePill = forwardRef<
         className
       )}
       {...buttonProps}
+      aria-disabled={disabled ? true : undefined}
       {...restProps}
     >
       {icon}
@@ -146,6 +147,7 @@ const PillCloseButton = ({
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 }) => {
+  const density = useDensity();
   const { buttonProps, active } = useButton({
     disabled,
     onClick: (e) => {
@@ -157,6 +159,7 @@ const PillCloseButton = ({
   return (
     <div
       {...buttonProps}
+      aria-disabled={disabled ? true : undefined}
       role="button"
       onMouseDown={(e) => {
         e.stopPropagation();
@@ -168,11 +171,15 @@ const PillCloseButton = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       tabIndex={-1}
-      className={clsx(withBaseName("deleteButton"), {
-        [withBaseName("deleteButton-active")]: active,
+      className={clsx(withBaseName("closeButton"), {
+        [withBaseName("closeButton-active")]: active,
       })}
     >
-      <CloseSmallIcon aria-hidden />
+      {density === "high" ? (
+        <CloseSmallIcon aria-hidden />
+      ) : (
+        <CloseIcon aria-hidden />
+      )}
     </div>
   );
 };

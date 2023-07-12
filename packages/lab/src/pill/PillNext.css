@@ -5,7 +5,7 @@
   --pill-background-disabled: var(--saltPill-background-disabled, var(--salt-taggable-background-disabled));
   --pill-background-hover: var(--saltPill-background-hover, var(--salt-taggable-background-hover));
   --pill-fontSize: var(--saltPill-fontSize, var(--salt-text-fontSize));
-  --pill-height: calc(var(--salt-size-base) - (var(--salt-size-unit) * 1.5));
+  --pill-height: calc(var(--salt-size-base) - var(--salt-size-unit));
   --pill-icon-color: var(--saltPill-icon-color, var(--salt-taggable-foreground));
   --pill-icon-color-active: var(--saltPill-icon-color-active, var(--salt-taggable-foreground-active));
   --pill-icon-color-hover: var(--saltPill-icon-color-hover, var(--salt-taggable-foreground-hover));
@@ -49,21 +49,22 @@
   padding-right: 0;
 }
 
-.saltPill-closeButton .saltIcon {
-  display: block;
-  fill: var(--pill-icon-color);
-  height: 12px;
-  margin-left: var(--salt-size-adornmentGap);
-  margin-right: calc(var(--salt-size-unit) * 0.5);
+.saltPill .saltIcon {
+  --saltIcon-color: var(--pill-icon-color);
 }
 
-/* Style applied to Pill icon if `clickable={true}`  */
+.saltPill-closeButton .saltIcon {
+  display: block;
+}
+
+/* Style applied to Pill if `clickable={true}`  */
 .saltPill-clickable {
   cursor: var(--salt-selectable-cursor-hover);
   user-select: none;
 }
 
-.saltPill-clickable:hover {
+.saltPill-clickable:hover,
+.saltPill-closeButton:hover {
   --saltIcon-color: var(--pill-icon-color);
   --saltIcon-color-hover: var(--pill-icon-color-hover);
 
@@ -82,7 +83,24 @@
 .saltPill-clickable:active {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
+}
+
+.saltPill-clickable.saltPill-active .saltIcon,
+.saltPill-clickable:active .saltIcon {
   --saltIcon-color: var(--pill-text-color-active);
+  --saltIcon-color-hover: var(--pill-text-color-active);
+}
+
+.saltPill-nestedHover.saltPill-active .saltIcon,
+.saltPill-nestedHover:active .saltIcon {
+  --saltIcon-color: var(--pill-icon-color);
+  --saltIcon-color-hover: var(--pill-icon-color);
+}
+
+.saltPill-clickable .saltPill-closeButton.saltPill-active .saltIcon,
+.saltPill-clickable .saltPill-closeButton:active .saltIcon {
+  --saltIcon-color: var(--pill-text-color-active);
+  --saltIcon-color-hover: var(--pill-text-color-active);
 }
 
 .saltPill-clickable[aria-disabled].saltPill-active,
@@ -106,9 +124,9 @@
 .saltPill[aria-disabled],
 .saltPill[aria-disabled]:hover,
 .saltPill[aria-disabled]:active,
-.saltPill[aria-disabled] .saltPill-deleteButton,
-.saltPill[aria-disabled] .saltPill-deleteButton:hover,
-.saltPill[aria-disabled] .saltPill-deleteButton:active {
+.saltPill[aria-disabled] .saltPill-closeButton,
+.saltPill[aria-disabled] .saltPill-closeButton:hover,
+.saltPill[aria-disabled] .saltPill-closeButton:active {
   background: var(--pill-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
   opacity: var(--salt-palette-opacity-foreground);
@@ -117,45 +135,45 @@
   --saltIcon-color-hover: var(--pill-icon-color-disabled);
 }
 
-.saltPill[aria-disabled] .saltPill-deleteButton,
-.saltPill[aria-disabled] .saltPill-deleteButton:hover,
-.saltPill[aria-disabled] .saltPill-deleteButton:active {
+.saltPill[aria-disabled] .saltPill-closeButton,
+.saltPill[aria-disabled] .saltPill-closeButton:hover,
+.saltPill[aria-disabled] .saltPill-closeButton:active {
   background: transparent;
 }
 
 /* Style applied to Pill delete button */
-.saltPill-deleteButton {
+.saltPill-closeButton {
   --saltIcon-size-multiplier: 1;
   flex-shrink: 0;
-  height: calc(var(--salt-size-base) / 2);
-  width: calc(var(--salt-size-base) / 2);
+  height: var(--pill-height);
+  width: var(--pill-height);
   min-height: var(--saltPill-minHeight, var(--salt-text-minHeight));
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.saltPill-deleteButton:hover {
+.saltPill-closeButton:hover {
   cursor: var(--salt-selectable-cursor-hover);
   background: var(--salt-actionable-secondary-background-hover);
   color: var(--salt-actionable-secondary-foreground-hover);
 }
 
-.saltPill-deleteButton.saltPill-active,
-.saltPill-deleteButton:active {
+.saltPill-closeButton.saltPill-active,
+.saltPill-closeButton:active {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
   --saltIcon-color: var(--pill-text-color-active);
 }
 
 /* Style applied to Pill delete button icon on active state  */
-.saltPill-deleteButton:active .saltPill-deleteIcon {
-  --saltIcon-color: var(--saltPill-deleteButton-color-active, var(--pill-icon-color-active));
+.saltPill-closeButton:active .saltPill-deleteIcon {
+  --saltIcon-color: var(--saltPill-closeButton-color-active, var(--pill-icon-color-active));
 }
 
 /* Style applied to Pill delete button icon if `disabled={true}` on active state  */
 .saltPill-disabled:active .saltPill-deleteIcon {
-  --saltIcon-color: var(--saltPill-deleteButton-color-disabled, var(--pill-icon-color));
+  --saltIcon-color: var(--saltPill-closeButton-color-disabled, var(--pill-icon-color));
 }
 
 /* Style applied to Pill icon on active state */
