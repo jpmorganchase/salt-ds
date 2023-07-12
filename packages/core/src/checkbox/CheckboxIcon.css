@@ -9,12 +9,8 @@
   background: var(--salt-container-primary-background);
   position: relative;
   --saltIcon-color: currentColor;
+  --saltIcon-size: 100%;
   display: flex;
-}
-
-.saltCheckboxIcon .saltCheckboxIcon-icon {
-  width: 100%;
-  height: 100%;
 }
 
 .saltCheckbox:hover .saltCheckboxIcon,
