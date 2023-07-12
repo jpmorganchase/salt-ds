@@ -48,7 +48,10 @@ export const CustomContent = (args: ToastProps) => (
   <FlowLayout style={{ width: 352 }}>
     <Toast {...args}>
       <ToastContent>
-        <div>This is a toast message. This is a toast message.</div>
+        <div>
+          This is a toast message. This is a toast message. This is a toast
+          message. This is a toast message.
+        </div>
       </ToastContent>
       <ToastClose />
     </Toast>
@@ -59,7 +62,7 @@ export const CustomContent = (args: ToastProps) => (
         </div>
         <div>
           This is a toast message. This is a toast message. This is a toast
-          message.
+          message. This is a toast message.
         </div>
         <FlowLayout
           gap={1}

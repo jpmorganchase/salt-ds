@@ -11,13 +11,16 @@
   box-shadow: var(--salt-overlayable-shadow-popout);
   display: inline-flex;
   gap: var(--salt-spacing-75);
-  padding: var(--saltToast-padding, var(--salt-spacing-50) var(--salt-spacing-100));
+  padding: var(--saltToast-padding, var(--salt-spacing-100));
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
 /* Styles applied to icon */
 .saltToast-icon.saltIcon {
-  min-height: var(--salt-size-base);
+  margin-top: 2px;
+}
+.salt-density-high.saltToast-icon.saltIcon {
+  margin-top: 1px;
 }
 
 /* Styles applied when state = "info" */
