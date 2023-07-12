@@ -127,6 +127,7 @@ const InteractivePill = forwardRef<
       <span className={withBaseName("label")}>{children}</span>
       {closable ? (
         <PillCloseButton
+          disabled={disabled}
           onMouseEnter={handleNestedMouseEnter}
           onMouseLeave={handleNestedMouseLeave}
           onClick={onClose}

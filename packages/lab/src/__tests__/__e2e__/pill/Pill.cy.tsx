@@ -52,6 +52,18 @@ describe("GIVEN a Pill", () => {
         cy.findByRole("button").focus().realPress("{enter}").realPress(" ");
         cy.get("@clickSpy").should("have.callCount", 0);
       });
+
+      it("THEN should NOT call onClose on close button click", () => {
+        const clickSpy = cy.stub().as("clickSpy");
+        const deleteSpy = cy.stub().as("deleteSpy");
+        cy.mount(
+          <Pill onClick={clickSpy} onClose={deleteSpy} disabled>
+            Closable Pill
+          </Pill>
+        );
+        cy.findByRole("button", { name: "Close Pill" }).click();
+        cy.get("@deleteSpy").should("have.callCount", 0);
+      });
     });
 
     describe("GIVEN an onClose prop", () => {
