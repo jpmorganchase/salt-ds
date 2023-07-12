@@ -13,7 +13,6 @@ import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "@salt-ds/core";
-import { TrackerStep } from "./TrackerStep";
 
 import steppedTrackerCss from "./SteppedTracker.css";
 
@@ -37,7 +36,7 @@ const useCheckInvalidChildren = (children: ReactNode) => {
     if (process.env.NODE_ENV !== "production") {
       let hasInvalidChild = false;
       Children.forEach(children, (child) => {
-        if (!isValidElement(child) || child.type !== TrackerStep) {
+        if (!isValidElement(child)) {
           hasInvalidChild = true;
         }
       });
