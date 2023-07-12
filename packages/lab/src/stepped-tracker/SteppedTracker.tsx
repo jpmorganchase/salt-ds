@@ -26,7 +26,7 @@ export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
    */
   activeStep: number;
   /**
-   * Should be one or more <TrackerStep> components
+   * Should be one or more TrackerStep components
    */
   children: ReactNode;
 }
