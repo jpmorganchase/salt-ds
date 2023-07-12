@@ -2,9 +2,9 @@ import {
   forwardRef,
   MouseEvent,
   PropsWithChildren,
-  HTMLAttributes,
   KeyboardEvent,
   useState,
+  ComponentPropsWithoutRef,
 } from "react";
 import { useWindow } from "@salt-ds/window";
 import { CloseSmallIcon } from "@salt-ds/icons";
@@ -13,13 +13,16 @@ import { makePrefixer, useButton } from "@salt-ds/core";
 import pillCss from "./PillNext.css";
 import clsx from "clsx";
 
-type ClickEvent = MouseEvent<Element, globalThis.MouseEvent>;
+type ClickEvent =
+  | MouseEvent<Element, globalThis.MouseEvent>
+  | KeyboardEvent<HTMLDivElement>;
 
-interface PillProps extends HTMLAttributes<HTMLDivElement> {
+interface PillProps extends ComponentPropsWithoutRef<"div"> {
   disabled?: boolean;
   className?: string;
   icon?: React.ReactNode;
   onClose?: (e: ClickEvent | KeyboardEvent<HTMLDivElement>) => void;
+  onClick?: (e: ClickEvent) => void;
 }
 
 const withBaseName = makePrefixer("saltPill");
@@ -55,7 +58,7 @@ export const Pill = forwardRef<HTMLDivElement, PropsWithChildren<PillProps>>(
     }
 
     return (
-      <div ref={ref} {...restProps} className={clsx(withBaseName(), className)}>
+      <div ref={ref} className={clsx(withBaseName(), className)} {...restProps}>
         {icon}
         <span className={withBaseName("label")}>{children}</span>
       </div>
@@ -106,16 +109,18 @@ const InteractivePill = forwardRef<
     <div
       ref={ref}
       role={clickable ? "button" : undefined}
-      {...restProps}
+      className={clsx(
+        withBaseName(),
+        {
+          [withBaseName("clickable")]: clickable,
+          [withBaseName("active")]: active,
+          [withBaseName("closable")]: closable,
+          [withBaseName("nestedHover")]: nestedHover,
+        },
+        className
+      )}
       {...buttonProps}
-      className={clsx(withBaseName(), className, {
-        [withBaseName("clickable")]: clickable,
-        [withBaseName("active")]: active,
-        [withBaseName("closable")]: closable,
-        [withBaseName("nestedHover")]: nestedHover,
-      })}
-      aria-disabled={disabled ? true : undefined}
-      tabIndex={!disabled ? 0 : -1}
+      {...restProps}
     >
       {icon}
       <span className={withBaseName("label")}>{children}</span>
