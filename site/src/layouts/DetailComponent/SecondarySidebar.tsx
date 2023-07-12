@@ -36,7 +36,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
     alsoKnownAs,
     relatedComponents,
     sourceCodeUrl,
-    componentGuide,
+    stickerSheet,
     bugReport,
     featureRequest,
     askQuestion,
@@ -83,10 +83,10 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
             logo="github"
           />
         )}
-        {componentGuide && (
+        {stickerSheet && (
           <LinkWithLogo
-            href={componentGuide}
-            label="Read the component guide"
+            href={stickerSheet}
+            label="Figma sticker sheet"
             logo="figma"
           />
         )}

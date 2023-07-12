@@ -54,6 +54,7 @@
   min-height: var(--saltPill-minHeight, var(--salt-text-minHeight));
   outline: var(--saltPill-outline, 0);
   position: relative;
+  gap: 0;
 }
 
 .saltPill:hover {
@@ -159,7 +160,7 @@
 .saltPill-disabled .saltPill-label,
 .saltPill-disabled .saltIcon {
   cursor: var(--salt-selectable-cursor-disabled);
-  opacity: var(--salt-palette-opacity-foreground);
+  opacity: var(--salt-palette-opacity-disabled);
 
   --saltIcon-color: var(--pill-icon-color-disabled);
   --saltIcon-color-hover: var(--pill-icon-color-disabled);

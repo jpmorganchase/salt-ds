@@ -32,15 +32,21 @@ type RelatedComponent = {
   relationship: Relationship;
 };
 
+type ComponentNpmInfo = {
+  name: string;
+  initialRelease?: string;
+};
+
 export type Data = {
   description: string;
   alsoKnownAs: string[];
   relatedComponents: RelatedComponent[];
   sourceCodeUrl: string;
-  componentGuide: string;
-  bugReport: string;
-  featureRequest: string;
-  askQuestion: string;
+  package: ComponentNpmInfo;
+  stickerSheet?: string;
+  bugReport?: string;
+  featureRequest?: string;
+  askQuestion?: string;
 };
 
 type CustomSiteState = SiteState & { data?: Data };
@@ -55,7 +61,16 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const newRoute = route?.substring(0, route.lastIndexOf("/") + 1);
 
-  const useData = useStore((state: CustomSiteState) => state.data);
+  const useData = useStore((state: CustomSiteState) => {
+    const defaultData: Partial<Data> = {
+      bugReport:
+        "https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+bug+%F0%9F%AA%B2%2Cstatus%3A+awaiting+triage&template=bug_report.yml",
+      featureRequest:
+        "https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+enhancement+%F0%9F%92%A1%2Cstatus%3A+awaiting+triage&template=feature_request.yml",
+    };
+
+    return state.data ? { ...defaultData, ...state.data } : undefined;
+  });
 
   const { description } = useData || {};
 

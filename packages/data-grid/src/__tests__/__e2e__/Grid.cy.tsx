@@ -305,6 +305,16 @@ describe("Grid", () => {
     findCell(0, 2).should("have.text", "Jersey City, NJ");
   });
 
+  it("Dropdown editor should close when selecting the same option", () => {
+    cy.mount(<EditableCells />);
+
+    assertGridReady();
+    findCell(0, 3).dblclick({ force: true });
+    cy.findByTestId("dropdown-list").should("be.visible");
+    cy.findByRole("option", { name: "-" }).click();
+    cy.findByTestId("dropdown-list").should("not.exist");
+  });
+
   it("Tabbing in and out of grid", () => {
     cy.mount(
       <>

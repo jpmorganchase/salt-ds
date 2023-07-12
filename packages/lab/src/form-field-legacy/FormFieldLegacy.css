@@ -89,10 +89,10 @@
 /* Class applied to the root element if `disabled={true}` */
 .saltFormFieldLegacy-disabled {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-disabled);
-  --formFieldLegacy-activationIndicator-opacity: var(--salt-palette-opacity-foreground);
+  --formFieldLegacy-activationIndicator-opacity: var(--salt-palette-opacity-disabled);
   --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
-  --formFieldLegacy-helperText-opacity: var(--salt-palette-opacity-foreground);
+  --formFieldLegacy-helperText-opacity: var(--salt-palette-opacity-disabled);
 
   --saltControlLabel-color: var(--salt-text-primary-foreground-disabled);
 

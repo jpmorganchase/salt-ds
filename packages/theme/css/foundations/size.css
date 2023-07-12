@@ -13,15 +13,6 @@
   --salt-size-sharktooth-height: 5px;
   --salt-size-sharktooth-width: 10px;
   --salt-size-stackable: calc(var(--salt-size-base) + var(--salt-size-unit));
-
-  /* Deprecated */
-  --salt-size-selection: var(--salt-size-selectable);
-  --salt-size-brandBar: 4px; /* Use --salt-size-accent */
-  --salt-size-graphic-small: 12px;
-  --salt-size-graphic-medium: 24px;
-  --salt-size-graphic-large: 48px;
-  --salt-size-divider-height: var(--salt-size-separator-height);
-  --salt-size-divider-strokeWidth: var(--salt-size-separator-strokeWidth);
 }
 
 .salt-density-high {
@@ -36,10 +27,8 @@
   --salt-size-border: 1px;
   --salt-size-selectable: 12px;
   --salt-size-icon: 12px;
-
-  /* Deprecated */
-  --salt-size-detail: var(--salt-size-compact);
 }
+
 .salt-density-medium {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 2);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 2);
@@ -52,10 +41,8 @@
   --salt-size-border: 1px;
   --salt-size-selectable: 14px;
   --salt-size-icon: 12px;
-
-  /* Deprecated */
-  --salt-size-detail: var(--salt-size-compact);
 }
+
 .salt-density-low {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 3);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 2.5);
@@ -68,10 +55,8 @@
   --salt-size-border: 1px;
   --salt-size-selectable: 16px;
   --salt-size-icon: 14px;
-
-  /* Deprecated */
-  --salt-size-detail: var(--salt-size-compact);
 }
+
 .salt-density-touch {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 4);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 3);
@@ -84,7 +69,4 @@
   --salt-size-border: 1px;
   --salt-size-selectable: 18px;
   --salt-size-icon: 16px;
-
-  /* Deprecated */
-  --salt-size-detail: var(--salt-size-compact);
 }

@@ -17,8 +17,3 @@
   --salt-icon-size-base: 10px;
   --salt-icon-size-status-adornment: 6px;
 }
-
-.salt-theme {
-  /* **Deprecated:** Replacement tokens should be used as noted */
-  --salt-size-icon-base: var(--salt-icon-size-base);
-}

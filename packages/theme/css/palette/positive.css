@@ -1,0 +1,7 @@
+.salt-theme[data-mode="light"] {
+  --salt-palette-positive-foreground: var(--salt-color-green-700);
+}
+
+.salt-theme[data-mode="dark"] {
+  --salt-palette-positive-foreground: var(--salt-color-green-300);
+}
