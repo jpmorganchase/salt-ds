@@ -1,15 +1,13 @@
 /* Styles applied to root component */
 .saltCheckbox {
-  cursor: var(--salt-selectable-cursor-hover);
   display: flex;
   gap: var(--salt-spacing-100);
   position: relative;
-  width: fit-content;
+  cursor: var(--salt-selectable-cursor-hover);
 }
 
 /* Styles applied to root component if `disabled={true}` */
 .saltCheckbox-disabled {
-  pointer-events: visible;
   color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
