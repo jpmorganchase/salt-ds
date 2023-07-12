@@ -6,7 +6,7 @@
  * Refresh of a page is needed.
  */
 
-import { SyntheticEvent } from "react";
+import { SyntheticEvent, useState } from "react";
 import {
   Banner,
   BannerContent,
@@ -41,15 +41,13 @@ export const Disabled: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const Closable: ComponentStory<typeof Pill> = () => {
-  return (
-    <Pill
-      onClick={() => console.log("clicked")}
-      onClose={() => console.log("Deleted.")}
-    >
+export const Closable = () => {
+  const [show, setShow] = useState(true);
+  return show ? (
+    <Pill onClick={() => console.log("clicked")} onClose={() => setShow(false)}>
       Closable Pill
     </Pill>
-  );
+  ) : null;
 };
 
 export const DisabledClosable: ComponentStory<typeof Pill> = () => {
