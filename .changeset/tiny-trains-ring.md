@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-remove unnecessary transition in list item next
+Removed unnecessary transition in List Item Next
