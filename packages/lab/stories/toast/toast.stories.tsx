@@ -48,25 +48,19 @@ export const CustomContent = (args: ToastProps) => (
   <FlowLayout style={{ width: 352 }}>
     <Toast {...args}>
       <ToastContent>
-        <div>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud.
-        </div>
-        <FlowLayout
-          gap={1}
-          justify="end"
-          style={{ marginTop: "var(--salt-spacing-100)" }}
-        ></FlowLayout>
+        <div>This is a toast message. This is a toast message.</div>
       </ToastContent>
       <ToastClose />
     </Toast>
     <Toast {...args}>
       <ToastContent>
         <div>
-          <strong>Lorem ipsum</strong>
+          <strong>Toast title</strong>
         </div>
-        <div>Lorem ipsum dolor sit amet consectetur adipiscing elit.</div>
+        <div>
+          This is a toast message. This is a toast message. This is a toast
+          message.
+        </div>
         <FlowLayout
           gap={1}
           justify="end"
