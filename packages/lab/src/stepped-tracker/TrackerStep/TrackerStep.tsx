@@ -14,7 +14,7 @@ import {
   StepDefaultIcon,
   StepSuccessIcon,
 } from "@salt-ds/icons";
-import { TrackerConnector } from "./TrackerConnector";
+import { TrackerConnector } from "../TrackerConnector";
 
 import trackerStepCss from "./TrackerStep.css";
 
