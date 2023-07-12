@@ -33,19 +33,25 @@ export function Resources() {
   return (
     <div className={styles.root}>
       <Heading4>{title} resources</Heading4>
-      <div className={styles.list}>
-        {externalResources.map(({ href, label }) => (
-          <LinkWithLogo key={href} href={href} label={label} />
-        ))}
-      </div>
-      <Text className={styles.subtitle} styleAs="label">
-        JPM employees only:
-      </Text>
-      <div className={styles.list}>
-        {internalResources.map(({ href, label }) => (
-          <LinkWithLogo key={href} href={href} label={label} />
-        ))}
-      </div>
+      {externalResources.length > 0 && (
+        <div className={styles.list}>
+          {externalResources.map(({ href, label }) => (
+            <LinkWithLogo key={href} href={href} label={label} />
+          ))}
+        </div>
+      )}
+      {internalResources.length > 0 && (
+        <>
+          <Text className={styles.subtitle} styleAs="label">
+            JPM employees only:
+          </Text>
+          <div className={styles.list}>
+            {internalResources.map(({ href, label }) => (
+              <LinkWithLogo key={href} href={href} label={label} />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
