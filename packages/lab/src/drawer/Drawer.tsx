@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 
 import { Scrim, ScrimProps } from "../scrim";
 
-import { makePrefixer, usePrevious } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -67,12 +67,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     window: targetWindow,
   });
 
-  const previousDisableAnimationsProp = usePrevious(
-    disableAnimations,
-    [disableAnimations],
-    false
-  ); // we check the previous value for this prop to prevent the animations from triggering again when it changes
-
   const [showComponent, setShowComponent] = useState(false);
 
   const [isAnimating, setIsAnimating] = useState(false);
@@ -87,8 +81,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     }
   }, [isOpen, showComponent, disableAnimations, isAnimating]);
 
-  const enterAnimation =
-    !disableAnimations && isOpen && !previousDisableAnimationsProp;
+  const enterAnimation = !disableAnimations && isOpen;
 
   const exitAnimation = !disableAnimations && !isOpen;
 
