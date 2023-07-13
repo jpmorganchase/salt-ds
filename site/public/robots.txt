@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /site/
 
 Sitemap: https://www.saltdesignsystem.com/sitemap.xml
