@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes, MouseEvent } from "react";
 import { clsx } from "clsx";
-import { makePrefixer, useId, useIdMemo } from "@salt-ds/core";
+import { makePrefixer, useIdMemo } from "@salt-ds/core";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -58,7 +58,9 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
     const focused = isFocused(itemId);
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
-      select(event);
+      if (!disabled) {
+        select(event);
+      }
       onClick?.(event);
     };
 

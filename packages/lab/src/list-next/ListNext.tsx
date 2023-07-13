@@ -22,6 +22,8 @@ export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
    */
   disabled?: boolean;
   /* Value for the uncontrolled version. */
+  highlightedIndex?: number;
+  /* Value for the uncontrolled version. */
   selected?: string;
   /* Initial value for the uncontrolled version. */
   defaultSelected?: string;
@@ -39,6 +41,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onBlur,
       onKeyDown,
       onMouseDown,
+      highlightedIndex,
       selected,
       defaultSelected,
       ...rest
@@ -55,7 +58,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const listId = useId(id);
     const listRef = useRef<HTMLUListElement>(null);
     const handleRef = useForkRef(listRef, ref);
-
+    const controlled = Boolean(selected || highlightedIndex);
     const {
       focusHandler,
       keyDownHandler,
@@ -65,6 +68,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       contextValue,
     } = useList({
       disabled,
+      highlightedIndex,
       selected,
       defaultSelected,
       id: listId,
@@ -98,7 +102,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           id={listId}
           className={clsx(withBaseName(), className)}
           role="listbox"
-          tabIndex={disabled ? -1 : 0}
+          tabIndex={disabled || controlled ? -1 : 0}
           aria-activedescendant={disabled ? undefined : activeDescendant}
           aria-disabled={disabled}
           onFocus={handleFocus}
