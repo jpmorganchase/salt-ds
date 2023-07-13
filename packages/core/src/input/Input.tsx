@@ -199,6 +199,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         tabIndex={isReadOnly || isDisabled ? -1 : 0}
         onBlur={handleBlur}
         onChange={handleChange}
+        // From ADA: read-only field doesn't need to be focusable since it's not a field but text
         onFocus={!isDisabled && !isReadOnly ? handleFocus : undefined}
         placeholder={placeholder}
         value={value}
