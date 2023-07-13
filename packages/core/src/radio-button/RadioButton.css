@@ -12,6 +12,12 @@
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
+/* Styles applied to root component if `readOnly={true}` */
+.saltRadioButton-readOnly {
+  color: var(--salt-text-primary-foreground);
+  cursor: var(--salt-selectable-cursor-readonly);
+}
+
 /* Styles applied to input component */
 .saltRadioButton-input {
   cursor: inherit;

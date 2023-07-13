@@ -135,5 +135,20 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children", () => 
       cy.findAllByRole("radio").eq(0).should("have.attr", "disabled");
       cy.findAllByRole("radio").eq(1).should("have.attr", "disabled");
     });
+
+    it("THEN should respect the context when read-only", () => {
+      cy.mount(
+        <FormField readOnly>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButtonGroup>
+            <RadioButton label="Spot" value="spot" />
+            <RadioButton label="Forward" value="forward" />
+          </RadioButtonGroup>
+        </FormField>
+      );
+
+      cy.findAllByRole("radio").eq(0).should("have.attr", "readonly");
+      cy.findAllByRole("radio").eq(1).should("have.attr", "readonly");
+    });
   });
 });
