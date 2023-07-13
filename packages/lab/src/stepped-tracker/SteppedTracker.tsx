@@ -114,9 +114,9 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
     return (
       <SteppedTrackerContext.Provider value={steppedTrackerContextValue}>
         <ul
-          {...restProps}
           className={clsx(withBaseName(), className)}
           ref={ref}
+          {...restProps}
         >
           {Children.map(children, (child, i) => (
             <TrackerStepContext.Provider value={i}>
