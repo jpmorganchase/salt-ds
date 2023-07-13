@@ -1,7 +1,7 @@
 import { Pill } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { FavoriteIcon } from "packages/icons/src";
+import { FavoriteIcon } from "@salt-ds/icons";
 
 export default {
   title: "Lab/Pill/QA",
