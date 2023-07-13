@@ -1,7 +1,0 @@
-/* Styles applied to ToastClose button */
-.saltButton.saltToastClose {
-  display: flex;
-  gap: var(--salt-spacing-100);
-  align-items: center;
-  min-height: var(--salt-size-base);
-}

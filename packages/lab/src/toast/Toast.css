@@ -23,6 +23,12 @@
   margin-top: 1px;
 }
 
+.saltToast-content {
+  flex: 1 0;
+  display: inline-flex;
+  gap: var(--salt-spacing-75);
+}
+
 /* Styles applied when state = "info" */
 .saltToast-info {
   --toast-borderColor: var(--salt-status-info-borderColor);
