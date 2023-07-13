@@ -2,7 +2,7 @@ import {
   ComponentPropsWithoutRef,
   CSSProperties,
   forwardRef,
-  RefCallback,
+  useMemo,
   useEffect,
 } from "react";
 import { clsx } from "clsx";
@@ -15,6 +15,11 @@ import {
   StepSuccessIcon,
 } from "@salt-ds/icons";
 import { TrackerConnector } from "../TrackerConnector";
+
+import {
+  useSteppedTrackerContext,
+  useTrackerStepContext,
+} from "../SteppedTracker";
 
 import trackerStepCss from "./TrackerStep.css";
 
@@ -30,32 +35,6 @@ export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
    */
   state?: State;
 }
-
-// Internal props passed by the parent SteppedTracker
-type TrackerStepInjectedProps = {
-  /**
-   * The index of the active currently active step
-   */
-  _activeStep: number;
-  /**
-   * A callback ref for the label container, used to observe the element for truncation
-   */
-  _overflowRef: RefCallback<HTMLElement>;
-  /**
-   * Whether the step should show a tooltip (in the case of any label being truncated)
-   */
-  _hasTooltip: boolean;
-  /**
-   * The total steps in the SteppedTracker
-   */
-  _totalSteps: number;
-  /**
-   * The index position of this TrackerStep
-   */
-  _stepNumber: number;
-};
-
-type WithInjectedProps = TrackerStepProps & TrackerStepInjectedProps;
 
 const iconMap = {
   default: StepDefaultIcon,
@@ -88,42 +67,21 @@ const getState = ({
   return state;
 };
 
-const injectedProps: (keyof TrackerStepInjectedProps)[] = [
-  "_activeStep",
-  "_overflowRef",
-  "_hasTooltip",
-  "_totalSteps",
-  "_stepNumber",
-];
-
-const useCheckWithinValidParent = (props: WithInjectedProps) => {
+const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") {
-      for (const key of injectedProps) {
-        if (!(key in props)) {
-          console.error(
-            "The <TrackerStep> component should only be used within a <StepTracker> component"
-          );
-          break;
-        }
+      if (!isWithinSteppedTracker) {
+        console.error(
+          "The TrackerStep component must be placed within a SteppedTracker component"
+        );
       }
     }
-  }, [props]);
+  }, [isWithinSteppedTracker]);
 };
 
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
   function TrackerStep(props, ref?) {
-    const {
-      _activeStep: activeStep,
-      _overflowRef: overflowRef,
-      _hasTooltip: hasTooltip,
-      _totalSteps: totalSteps,
-      _stepNumber: stepNumber,
-      state = "default",
-      className,
-      children,
-      ...restProps
-    } = props as WithInjectedProps;
+    const { state = "default", className, children, ...restProps } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -132,7 +90,21 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
       window: targetWindow,
     });
 
-    useCheckWithinValidParent(props as WithInjectedProps);
+    const {
+      activeStep,
+      totalSteps,
+      hasTooltips,
+      getOverflowRef,
+      isWithinSteppedTracker,
+    } = useSteppedTrackerContext();
+    const stepNumber = useTrackerStepContext();
+
+    useCheckWithinSteppedTracker(isWithinSteppedTracker);
+
+    const overflowRef = useMemo(
+      () => getOverflowRef(stepNumber),
+      [stepNumber, getOverflowRef]
+    );
 
     const isActive = activeStep === stepNumber;
     const Icon = getStateIcon({ isActive, state });
@@ -150,7 +122,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
             "--trackerStep-width": `${100 / totalSteps}%`,
           } as CSSProperties
         }
-        tabIndex={hasTooltip ? 0 : undefined}
+        tabIndex={hasTooltips ? 0 : undefined}
         aria-current={isActive ? "step" : undefined}
         data-state={state}
         ref={ref}
@@ -163,7 +135,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
       </li>
     );
 
-    if (!hasTooltip) {
+    if (!hasTooltips) {
       return Inner;
     }
 
