@@ -114,7 +114,6 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     const Inner = (
       <li
-        {...restProps}
         className={clsx(withBaseName(), withBaseName(resolvedState), className)}
         style={
           {
@@ -126,6 +125,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
         aria-current={isActive ? "step" : undefined}
         data-state={state}
         ref={ref}
+        {...restProps}
       >
         <Icon />
         {hasConnector && <TrackerConnector state={connectorState} />}
