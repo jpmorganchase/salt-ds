@@ -193,6 +193,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           )}
           name={name}
           value={value}
+          // From ADA: read-only field doesn't need to be focusable since it's not a field but text
           tabIndex={readOnly ? -1 : undefined}
           checked={checked}
           className={clsx(withBaseName("input"), inputClassName)}
