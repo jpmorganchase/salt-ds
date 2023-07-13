@@ -23,6 +23,7 @@
 .list {
   display: flex;
   gap: var(--salt-spacing-100);
+  flex-direction: column;
 }
 
 .subtitle {
