@@ -169,7 +169,6 @@ describe("GIVEN an MultilineInput", () => {
             <MultilineInput defaultValue="Value" />
           </FormField>
         );
-        cy.wait(1000);
         cy.findByLabelText("Disabled form field").should(
           "have.attr",
           "disabled"
@@ -185,7 +184,6 @@ describe("GIVEN an MultilineInput", () => {
             <MultilineInput defaultValue="Value" />
           </FormField>
         );
-        cy.wait(1000);
         cy.findByLabelText("Form Field (Required)").should(
           "have.attr",
           "required"
@@ -201,7 +199,6 @@ describe("GIVEN an MultilineInput", () => {
             <MultilineInput defaultValue="Value" />
           </FormField>
         );
-        cy.wait(1000);
         cy.findByLabelText("Form Field*").should("have.attr", "required");
       });
     });
@@ -214,7 +211,6 @@ describe("GIVEN an MultilineInput", () => {
             <MultilineInput defaultValue="Value" />
           </FormField>
         );
-        cy.wait(1000);
         cy.findByLabelText("Form Field (Optional)").should(
           "not.have.attr",
           "required"
@@ -230,7 +226,6 @@ describe("GIVEN an MultilineInput", () => {
             <MultilineInput defaultValue="Value" />
           </FormField>
         );
-        cy.wait(1000);
         cy.findByLabelText("Readonly form field").should(
           "have.attr",
           "readonly"
