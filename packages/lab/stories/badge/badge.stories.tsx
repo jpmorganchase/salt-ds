@@ -44,7 +44,7 @@ const Template: ComponentStory<typeof Badge> = (args) => {
 export const Default = Template.bind({});
 Default.args = {
   max: 1000,
-  value: 1,
+  // value: 1,
   children: <SettingsSolidIcon />,
 };
 

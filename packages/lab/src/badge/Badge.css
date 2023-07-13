@@ -12,31 +12,37 @@
 
 
 /* Style applied to the badge in the corner of the node */
-.saltBadge-badge {
-  color: var(--saltBadge-content-text-color, var(--salt-accent-foreground));
-  display: inline-block;
-  font-weight: var(--salt-accent-fontSize); 
-  font-size: var(--salt-accent-fontSize);
-
-  /* default small type */
-  min-width: 15px;
-  line-height: 15px;
-  border-radius: 16px;
-
-  transform: translate(-4px, -50%);
-  transform-origin: 100% 0%;
-
-  /* Should this vary according to touch size */
-  margin-right: -4px; 
-
-  padding: 0px 4px;
-  background: var(--saltBadge-content-icon-color, var(--salt-accent-background));
-
+.saltBadge-position {
   position: relative;
-
   flex-wrap: wrap;
   align-items: center;
   align-content: center;
   flex-direction: row;
   justify-content: center;
+  display: inline-block;
+  transform: translate(-4px, -50%);
+  transform-origin: 100% 0%;
+
+  /* Should this vary according to touch size */
+  margin-right: -4px; 
+  padding: 0px 4px;
+  background: var(--saltBadge-content-icon-color, var(--salt-accent-background));
+  color: var(--saltBadge-content-text-color, var(--salt-accent-foreground));
 }
+
+/* when badge has a numeerical value */
+.saltBadge-withValue {
+  min-width: 10px;
+  line-height: 15px;
+  border-radius: 16px;
+  font-weight: var(--salt-accent-fontSize); 
+  font-size: var(--salt-accent-fontSize);
+}
+
+/* smaller styling when badge has no value */
+.saltBadge-noValue {
+  height: 8px;
+  border-radius: 5px;
+}
+
+
