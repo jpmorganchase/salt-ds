@@ -35,9 +35,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
       ref={ref}
     >
       <StatusIndicator status={status} className={withBaseName("icon")} />
-      <div className={clsx(withBaseName("content"))}>
-        {children}
-      </div>
+      <div className={clsx(withBaseName("content"))}>{children}</div>
     </div>
   );
 });
