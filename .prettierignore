@@ -21,3 +21,6 @@ storybook-static
 
 /site/snapshots
 /docs/public/mockServiceWorker.js
+
+# Prettier doesn't support MDX v2 yet
+site/docs/patterns/index.mdx
