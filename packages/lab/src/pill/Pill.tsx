@@ -1,55 +1,63 @@
-import { ForwardedRef, forwardRef, ReactElement } from "react";
-
-import { ClosablePill, ClosablePillProps } from "./ClosablePill";
-import { PillBase, PillBaseProps } from "./PillBase";
-import { SelectablePill, SelectablePillProps } from "./SelectablePill";
-
+import {
+  forwardRef,
+  MouseEvent,
+  PropsWithChildren,
+  KeyboardEvent,
+  ComponentPropsWithoutRef,
+} from "react";
+import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer } from "@salt-ds/core";
 import pillCss from "./Pill.css";
+import { InteractivePill } from "./InteractivePill";
 
-export type PillVariant = "basic" | "closable" | "selectable";
+export type PillClickEvent =
+  | MouseEvent<Element, globalThis.MouseEvent>
+  | KeyboardEvent<HTMLDivElement>;
 
-export interface PillVariantProps<T extends PillVariant = "basic"> {
-  /**
-   * Determines the variant of pill
-   */
-  variant?: T;
+export interface PillProps extends ComponentPropsWithoutRef<"div"> {
+  disabled?: boolean;
+  className?: string;
+  icon?: React.ReactNode;
+  onClose?: (e: PillClickEvent | KeyboardEvent<HTMLDivElement>) => void;
+  onClick?: (e: PillClickEvent) => void;
 }
 
-// Generic checks makes sure that incompatiable props like `onChange` can be inferred correctly when using different variants
-export type PillProps<T extends PillVariant = "basic"> = T extends "closable"
-  ? ClosablePillProps & PillVariantProps<T>
-  : T extends "basic"
-  ? PillBaseProps & PillVariantProps<T>
-  : SelectablePillProps & PillVariantProps<T>;
+const withBaseName = makePrefixer("saltPill");
 
-const getVariant = (deletable?: boolean, variantProp?: PillVariant) => {
-  if (variantProp) {
-    return variantProp;
-  } else {
-    return deletable !== undefined ? "closable" : "basic";
-  }
-};
+export const Pill = forwardRef<HTMLDivElement, PropsWithChildren<PillProps>>(
+  function Pill({ onClose, onClick, children, className, icon, ...rest }, ref) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-pill",
+      css: pillCss,
+      window: targetWindow,
+    });
 
-export const Pill = forwardRef(function Pill(
-  { variant: variantProp, ...restProps }: PillProps,
-  ref: ForwardedRef<HTMLDivElement>
-) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-pill",
-    css: pillCss,
-    window: targetWindow,
-  });
-  const variant = getVariant(restProps.deletable, variantProp);
-  if (variant === "selectable") {
-    return <SelectablePill {...(restProps as SelectablePillProps)} ref={ref} />;
-  } else if (variant === "closable") {
-    return <ClosablePill {...restProps} ref={ref} />;
-  } else {
-    return <PillBase clickable {...restProps} ref={ref} />;
+    const clickable = onClick !== undefined;
+    const closable = onClose !== undefined;
+    const interactive = clickable || closable;
+
+    if (interactive) {
+      return (
+        <InteractivePill
+          onClose={onClose}
+          onClick={onClick}
+          className={className}
+          icon={icon}
+          {...rest}
+        >
+          {children}
+        </InteractivePill>
+      );
+    }
+
+    return (
+      <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+        {icon}
+        <span className={withBaseName("label")}>{children}</span>
+      </div>
+    );
   }
-}) as <T extends PillVariant = "basic">(
-  p: PillProps<T> & { ref?: ForwardedRef<HTMLDivElement> }
-) => ReactElement<PillProps<T>>;
+);

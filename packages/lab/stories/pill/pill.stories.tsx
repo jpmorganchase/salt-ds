@@ -21,6 +21,13 @@ export const Default: ComponentStory<typeof Pill> = (args) => {
   return <Pill>Static Pill</Pill>;
 };
 
+export const ClosableStatic = () => {
+  const [show, setShow] = useState(true);
+  return show ? (
+    <Pill onClose={() => setShow(false)}>Closable Static Pill</Pill>
+  ) : null;
+};
+
 export const Clickable: ComponentStory<typeof Pill> = () => {
   const handleClick = () => {
     console.log("clicked");
@@ -36,11 +43,11 @@ export const Disabled: ComponentStory<typeof Pill> = () => {
   );
 };
 
-export const Closable = () => {
+export const ClosableClickable = () => {
   const [show, setShow] = useState(true);
   return show ? (
     <Pill onClick={() => console.log("clicked")} onClose={() => setShow(false)}>
-      Closable Pill
+      Closable Clickable Pill
     </Pill>
   ) : null;
 };
