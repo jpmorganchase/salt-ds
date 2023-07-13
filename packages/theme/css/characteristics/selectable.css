@@ -54,16 +54,4 @@
   --salt-selectable-secondary-background-hover: var(--salt-palette-interact-secondary-background-hover);
   --salt-selectable-secondary-background-selected: var(--salt-palette-interact-secondary-background-active);
   --salt-selectable-secondary-background-selectedDisabled: var(--salt-palette-interact-secondary-background-activeDisabled);
-
-  /* **Deprecated:** use --salt-selectable-foreground-selected instead */
-  --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
-  --salt-selectable-foreground-partialDisabled: var(--salt-palette-interact-foreground-partialDisabled);
-
-  /* **Deprecated:** use --salt-text-foreground, --salt-text-foreground-disabled instead */
-  --salt-selectable-cta-foreground: var(--salt-palette-interact-foreground);
-  --salt-selectable-cta-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
-  --salt-selectable-primary-foreground: var(--salt-palette-interact-foreground);
-  --salt-selectable-primary-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
-  --salt-selectable-secondary-foreground: var(--salt-palette-interact-foreground);
-  --salt-selectable-secondary-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
 }

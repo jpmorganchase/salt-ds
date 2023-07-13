@@ -14,7 +14,6 @@
   position: relative;
   align-items: center;
   white-space: nowrap;
-  transition: background var(--salt-duration-perceptible) ease-in-out;
 }
 
 /* Class applied to list item on focus using keyboard navigation only */
