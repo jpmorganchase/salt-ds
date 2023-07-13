@@ -5,9 +5,11 @@ import {
   ReactNode,
   Children,
   useState,
-  cloneElement,
   isValidElement,
   useEffect,
+  createContext,
+  useContext,
+  useMemo,
 } from "react";
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -16,7 +18,37 @@ import { makePrefixer } from "@salt-ds/core";
 
 import steppedTrackerCss from "./SteppedTracker.css";
 
-import useDetectTruncatedText from "./useDetectTruncatedText";
+import useDetectTruncatedText, {
+  GetOverflowRef,
+} from "./useDetectTruncatedText";
+
+export type SteppedTrackerContextType = {
+  activeStep: number;
+  getOverflowRef: GetOverflowRef;
+  hasTooltips: boolean;
+  totalSteps: number;
+  isWithinSteppedTracker: boolean;
+};
+
+const defaultSteppedTrackerContext = {
+  activeStep: 0,
+  hasTooltips: false,
+  totalSteps: 1,
+  getOverflowRef: () => undefined,
+  isWithinSteppedTracker: false,
+};
+
+const SteppedTrackerContext = createContext(
+  defaultSteppedTrackerContext as unknown as SteppedTrackerContextType
+);
+
+export const useSteppedTrackerContext = () => useContext(SteppedTrackerContext);
+
+type TrackerStepNumberContextType = number;
+
+const TrackerStepContext = createContext<TrackerStepNumberContextType>(0);
+
+export const useTrackerStepContext = () => useContext(TrackerStepContext);
 
 const withBaseName = makePrefixer("saltSteppedTracker");
 
@@ -43,7 +75,7 @@ const useCheckInvalidChildren = (children: ReactNode) => {
 
       if (hasInvalidChild) {
         console.error(
-          "Invalid children: children of <SteppedTracker> must be a <TrackerStep> component"
+          "Invalid child: children of SteppedTracker must be a TrackerStep component"
         );
       }
     }
@@ -63,30 +95,36 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
     });
 
     useCheckInvalidChildren(children);
-
     const [hasTooltips, setHasTooltips] = useState(false);
-
     // A factory function used to get a callback ref for checking truncation.
     const getOverflowRef = useDetectTruncatedText(setHasTooltips);
-
     const totalSteps = Children.count(children);
 
-    return (
-      <ul {...restProps} className={clsx(withBaseName(), className)} ref={ref}>
-        {Children.map(children, (child, i) => {
-          if (!isValidElement(child)) {
-            return child;
-          }
+    const steppedTrackerContextValue: SteppedTrackerContextType = useMemo(
+      () => ({
+        activeStep,
+        getOverflowRef,
+        hasTooltips,
+        totalSteps,
+        isWithinSteppedTracker: true,
+      }),
+      [activeStep, getOverflowRef, hasTooltips, totalSteps]
+    );
 
-          return cloneElement(child, {
-            _activeStep: activeStep,
-            _overflowRef: getOverflowRef(i),
-            _hasTooltip: hasTooltips,
-            _totalSteps: totalSteps,
-            _stepNumber: i,
-          });
-        })}
-      </ul>
+    return (
+      <SteppedTrackerContext.Provider value={steppedTrackerContextValue}>
+        <ul
+          {...restProps}
+          className={clsx(withBaseName(), className)}
+          ref={ref}
+        >
+          {Children.map(children, (child, i) => (
+            <TrackerStepContext.Provider value={i}>
+              {child}
+            </TrackerStepContext.Provider>
+          ))}
+        </ul>
+      </SteppedTrackerContext.Provider>
     );
   }
 );
