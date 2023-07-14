@@ -138,6 +138,20 @@ export const Disabled: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
+export const Readonly: ComponentStory<typeof Checkbox> = () => {
+  return (
+    <CheckboxGroup>
+      <Checkbox readOnly label="readonly checkbox" />
+      <Checkbox
+        readOnly
+        indeterminate
+        label="readonly indeterminate checkbox"
+      />
+      <Checkbox readOnly checked label="readonly checked checkbox" />
+    </CheckboxGroup>
+  );
+};
+
 export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
   return (
     <CheckboxGroup

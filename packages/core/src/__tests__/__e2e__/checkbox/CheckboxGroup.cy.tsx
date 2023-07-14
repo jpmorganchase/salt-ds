@@ -133,5 +133,22 @@ describe("GIVEN a CheckboxGroup component", () => {
       cy.findAllByRole("checkbox").eq(1).should("have.attr", "disabled");
       cy.findAllByRole("checkbox").eq(2).should("have.attr", "disabled");
     });
+
+    it("THEN should respect the context when read-only", () => {
+      cy.mount(
+        <FormField readOnly>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <CheckboxGroup checkedValues={["one"]}>
+            <Checkbox label="one" value="one" />
+            <Checkbox label="two" value="two" readOnly />
+            <Checkbox label="three" value="three" />
+          </CheckboxGroup>
+        </FormField>
+      );
+
+      cy.findAllByRole("checkbox").eq(0).should("have.attr", "readonly");
+      cy.findAllByRole("checkbox").eq(1).should("have.attr", "readonly");
+      cy.findAllByRole("checkbox").eq(2).should("have.attr", "readonly");
+    });
   });
 });

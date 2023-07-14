@@ -61,7 +61,7 @@ describe("GIVEN a RadioButtonGroup component", () => {
   });
 });
 
-describe("GIVEN a RadioButtonGroup uncontrolled component with children as function", () => {
+describe("GIVEN a RadioButtonGroup uncontrolled component with children", () => {
   describe("WHEN defaultValue is set", () => {
     it("THEN it should render with the specified radio being checked", () => {
       cy.mount(
@@ -134,6 +134,21 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children as funct
 
       cy.findAllByRole("radio").eq(0).should("have.attr", "disabled");
       cy.findAllByRole("radio").eq(1).should("have.attr", "disabled");
+    });
+
+    it("THEN should respect the context when read-only", () => {
+      cy.mount(
+        <FormField readOnly>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButtonGroup>
+            <RadioButton label="Spot" value="spot" />
+            <RadioButton label="Forward" value="forward" />
+          </RadioButtonGroup>
+        </FormField>
+      );
+
+      cy.findAllByRole("radio").eq(0).should("have.attr", "readonly");
+      cy.findAllByRole("radio").eq(1).should("have.attr", "readonly");
     });
   });
 });
