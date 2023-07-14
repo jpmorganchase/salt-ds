@@ -1,0 +1,37 @@
+.root {
+  position: relative;
+  padding-block: var(--salt-spacing-200);
+}
+
+.root::before {
+  content: "";
+  height: var(--salt-size-border);
+  background: var(--salt-separable-tertiary-borderColor);
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: var(--salt-spacing-300);
+}
+
+.link {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.list {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  flex-direction: column;
+}
+
+.subtitle {
+  font-style: var(--salt-editable-help-fontStyle);
+  margin-top: var(--salt-spacing-300);
+  margin-bottom: var(--salt-spacing-200);
+}
+
+.root h4 {
+  margin-bottom: var(--salt-spacing-200);
+}
