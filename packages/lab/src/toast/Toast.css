@@ -17,10 +17,10 @@
 
 /* Styles applied to icon */
 .saltToast-icon.saltIcon {
-  margin-top: 2px;
+  margin: calc(var(--salt-spacing-75) + 2px) 0 var(--salt-spacing-75) 0;
 }
 .salt-density-high.saltToast-icon.saltIcon {
-  margin-top: 1px;
+  margin: calc(var(--salt-spacing-75) + 1px) 0 var(--salt-spacing-75) 0;
 }
 
 /* Styles applied when state = "info" */

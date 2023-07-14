@@ -1,4 +1,5 @@
 /* Styles applied to ToastContent */
 .saltToastContent {
   flex: 1 0;
+  margin: var(--salt-spacing-75) 0;
 }
