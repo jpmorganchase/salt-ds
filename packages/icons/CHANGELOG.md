@@ -1,5 +1,38 @@
 # @salt-ds/icons
 
+## 1.5.0
+
+### Minor Changes
+
+- 1ba2f407: Added:
+
+  - Bank
+  - BankSolid
+  - Battery
+  - BatterySolid
+  - Browser
+  - BrowserSolid
+  - Devices
+  - DevicesSolid
+  - Display
+  - DisplaySolid
+  - Laptop
+  - LaptopSolid
+  - Mobile
+  - MobileSolid
+  - Mouse
+  - MouseSolid
+  - NotificationRead
+  - NotificationReadSolid
+  - Receipt
+  - ReceiptSolid
+  - SaltShaker
+  - SaltShakerSolid
+  - SortableAlpha
+  - SortableNum
+  - Watch
+  - WatchSolid
+
 ## 1.4.0
 
 ### Minor Changes

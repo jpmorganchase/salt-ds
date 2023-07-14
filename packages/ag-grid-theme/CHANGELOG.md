@@ -1,5 +1,11 @@
 # @salt-ds/ag-grid-theme
 
+## 1.2.0
+
+### Minor Changes
+
+- 1013b554: Fix button styles in ag grid theme currently showing default HTML buttons by adding salt styles to `.ag-standard-button`.
+
 ## 1.1.6
 
 ### Patch Changes
