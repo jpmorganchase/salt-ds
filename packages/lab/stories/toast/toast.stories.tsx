@@ -1,6 +1,7 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Button, FlowLayout, Text } from "@salt-ds/core";
-import { Toast, ToastClose, ToastContent, ToastProps } from "@salt-ds/lab";
+import { Toast, ToastContent, ToastProps } from "@salt-ds/lab";
+import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Lab/Toast",
@@ -10,7 +11,9 @@ export default {
 const Template: ComponentStory<typeof Toast> = ({ children, ...args }) => (
   <Toast {...args}>
     <ToastContent>{children}</ToastContent>
-    <ToastClose />
+    <Button variant="secondary">
+      <CloseIcon />
+    </Button>
   </Toast>
 );
 
@@ -78,7 +81,9 @@ export const SingleLine = (args: ToastProps) => (
       <ToastContent>
         <div>This is a toast message. This is a toast message.</div>
       </ToastContent>
-      <ToastClose />
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
     </Toast>
     <Toast {...args}>
       <ToastContent>
@@ -97,7 +102,9 @@ export const CustomContent = (args: ToastProps) => (
           message. This is a toast message.
         </div>
       </ToastContent>
-      <ToastClose />
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
     </Toast>
     <Toast {...args}>
       <ToastContent>

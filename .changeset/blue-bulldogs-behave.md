@@ -5,11 +5,12 @@
 Add Toast component
 
 - Add ToastContent component
-- Add ToastClose component
 
 ```js
 <Toast {...args}>
   <ToastContent>{children}</ToastContent>
-  <ToastClose />
+  <Button variant="secondary">
+    <CloseIcon />
+  </Button>
 </Toast>
 ```

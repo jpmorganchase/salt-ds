@@ -1,5 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
-import { Toast, ToastClose, ToastContent } from "@salt-ds/lab";
+import { Toast, ToastContent } from "@salt-ds/lab";
+import { Button } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import * as toastStories from "@stories/toast/toast.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
@@ -51,7 +53,9 @@ describe("Given a Toast", () => {
       cy.mount(
         <Toast>
           <ToastContent>Toast content</ToastContent>
-          <ToastClose />
+          <Button variant="secondary">
+            <CloseIcon />
+          </Button>
         </Toast>
       );
       cy.findAllByRole("button").should("exist");
