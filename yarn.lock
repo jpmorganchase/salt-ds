@@ -4085,7 +4085,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-components@npm:0.1.0-beta.37, @jpmorganchase/mosaic-components@npm:^0.1.0-beta.37":
+"@jpmorganchase/mosaic-components@npm:0.1.0-beta.37":
   version: 0.1.0-beta.37
   resolution: "@jpmorganchase/mosaic-components@npm:0.1.0-beta.37"
   dependencies:
@@ -4113,6 +4113,37 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
   checksum: c2b987b49e1d01476af2310424fc1aadfc26c5d65435f1f0d9b0842cc2829f46cd429a379daeffc25bc55226030e6ba412c6473b44a38811e383dc02a5e21b3b
+  languageName: node
+  linkType: hard
+
+"@jpmorganchase/mosaic-components@patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.37#./.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.37-6d8686e3dc.patch::locator=%40salt-ds%2Froot%40workspace%3A.":
+  version: 0.1.0-beta.37
+  resolution: "@jpmorganchase/mosaic-components@patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.37#./.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.37-6d8686e3dc.patch::version=0.1.0-beta.37&hash=8ac3ba&locator=%40salt-ds%2Froot%40workspace%3A."
+  dependencies:
+    "@jpmorganchase/mosaic-store": ^0.1.0-beta.37
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.37
+    "@salt-ds/core": ^1.8.0-rc.0
+    "@salt-ds/lab": 1.0.0-alpha.10
+    "@vanilla-extract/css": ^1.6.0
+    "@vanilla-extract/recipes": ^0.2.1
+    "@vanilla-extract/sprinkles": ^1.3.0
+    clsx: ^1.2.1
+    deepmerge: ^2.0.1
+    hoist-non-react-statics: ^3.3.2
+    lodash: ^4.17.21
+    prism-react-renderer: ^1.1.1
+    react-live: ^2.2.3
+    react-markdown: ^6.0.2
+    react-responsive-carousel: 3.2.10
+    react-table: ^7.8.0
+    swagger-ui-react: ^4.5.2
+    use-memo-one: ^1.1.1
+    warning: ^3.0.0
+  peerDependencies:
+    "@types/react": ^18.0.26
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 5df779a5e35364b3b26634e42b327dcf2969c48eaf089303ffd69cdccc3999f0d2f0a334a41b5efba61fd86f5490d8511096b13d956abde1dce85a767b970d5d
   languageName: node
   linkType: hard
 

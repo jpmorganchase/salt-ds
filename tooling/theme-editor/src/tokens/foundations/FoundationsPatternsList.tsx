@@ -1,7 +1,7 @@
 import { useMemo, useCallback, ReactElement } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
-import { Accordion } from "@salt-ds/lab";
+import { AccordionGroup } from "@salt-ds/lab";
 import { createColorMap } from "../../helpers/createColorMap";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { ThemeMode } from "../../header/ScopeSelector";
@@ -58,7 +58,7 @@ export const FoundationPatternsList = (
         .length && (
         <LightDarkToggle mode={props.mode} onModeChanged={onModeChanged} />
       )}
-      <Accordion>
+      <AccordionGroup>
         {jsonByScopeInView.map((s) => {
           return Object.keys(s.jsonObj.salt)
             .filter((pattern) => props.patternsInScope.includes(pattern))
@@ -116,7 +116,7 @@ export const FoundationPatternsList = (
               );
             });
         })}
-      </Accordion>
+      </AccordionGroup>
     </div>
   );
 };
