@@ -1,5 +1,17 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.12
+
+### Minor Changes
+
+- 95188004: Added `MultilineInput` component with fixed number of rows
+
+### Patch Changes
+
+- 79e9f4bc: `MultilineInput` is now compatible with `FormField`. `FormFieldLabel` can be styled as a question by using the new `pronounced` prop.
+- 4329d8c7: Update Button and Toggle Button to have a fixed gap between icons and text.
+- 78ee0b81: Removed unnecessary transition in List Item Next
+
 ## 1.0.0-alpha.11
 
 ### Minor Changes

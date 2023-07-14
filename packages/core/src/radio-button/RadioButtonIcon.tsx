@@ -4,13 +4,18 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { AdornmentValidationStatus } from "../status-adornment";
 import radioButtonIconCss from "./RadioButtonIcon.css";
+import { ComponentPropsWithoutRef } from "react";
 
 const withBaseName = makePrefixer("saltRadioButtonIcon");
 
-export interface RadioButtonIconProps {
+export interface RadioButtonIconProps extends ComponentPropsWithoutRef<"div"> {
   checked?: boolean;
-  error?: boolean;
   disabled?: boolean;
+  /**
+   * @deprecated Use validationStatus instead
+   */
+  error?: boolean;
+  readOnly?: boolean;
   validationStatus?: AdornmentValidationStatus;
 }
 
@@ -19,9 +24,12 @@ export interface RadioButtonIconProps {
  */
 export const RadioButtonIcon = ({
   checked,
+  className,
   error,
   disabled,
   validationStatus,
+  readOnly,
+  ...rest
 }: RadioButtonIconProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -30,26 +38,34 @@ export const RadioButtonIcon = ({
     window: targetWindow,
   });
   return (
-    <svg
-      className={clsx(withBaseName(), {
-        [withBaseName("checked")]: checked,
-        [withBaseName("error")]: error,
-        [withBaseName("disabled")]: disabled,
-        [withBaseName(validationStatus || "")]: validationStatus,
-      })}
-      height="14"
-      viewBox="0 0 14 14"
-      width="14"
-    >
-      <circle className={withBaseName("circle")} cx="7" cy="7" r="6.5" />
-      {checked && (
-        <circle
-          className={withBaseName("checked-circle")}
-          cx="7"
-          cy="7"
-          r="3.2"
-        />
+    <div
+      aria-hidden="true"
+      className={clsx(
+        withBaseName(),
+        {
+          [withBaseName("checked")]: checked,
+          [withBaseName("error")]: error,
+          [withBaseName("disabled")]: disabled,
+          [withBaseName(validationStatus || "")]: validationStatus,
+          [withBaseName("readOnly")]: readOnly,
+        },
+        className
       )}
-    </svg>
+      {...rest}
+    >
+      {checked && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 12 12"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M0 6a6 6 0 1 1 12 0A6 6 0 0 1 0 6Zm6 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"
+            clipRule="evenodd"
+          />
+        </svg>
+      )}
+    </div>
   );
 };

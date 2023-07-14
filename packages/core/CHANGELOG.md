@@ -1,5 +1,37 @@
 # @salt-ds/core
 
+## 1.8.0-rc.3
+
+### Minor Changes
+
+- 0a1c9d9d: Refactored Checkbox to align styling.
+  Add readOnly support to Checkbox.
+
+  ```tsx
+  <CheckboxGroup>
+    <Checkbox readOnly label="readonly checkbox" />
+    <Checkbox readOnly indeterminate label="readonly indeterminate checkbox" />
+    <Checkbox readOnly checked label="readonly checked checkbox" />
+  </CheckboxGroup>
+  ```
+
+- 21a76576: Refactored Radio Button to align styling.
+  Added readOnly support to Radio Button.
+
+  ```tsx
+  <RadioButtonGroup readOnly>
+    <RadioButton label="Readonly" value="Readonly" />
+    <RadioButton label="Checked Readonly" value="Readonly-checked" checked />
+  </RadioButtonGroup>
+  ```
+
+### Patch Changes
+
+- 4329d8c7: Update Button and Toggle Button to have a fixed gap between icons and text.
+- 0a1c9d9d: Fix inputProps overwriting internal Checkbox props
+- 21a76576: Fixed inputProps overwriting internal Radio Button props
+- 95188004: Alignment of StatusAdornment has been fixed
+
 ## 1.8.0-rc.2
 
 ### Major Changes

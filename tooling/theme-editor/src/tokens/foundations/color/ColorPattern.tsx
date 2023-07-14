@@ -1,11 +1,7 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import { useSearchParams } from "react-router-dom";
 import { capitalize } from "@salt-ds/core";
-import {
-  AccordionSection,
-  AccordionDetails,
-  AccordionSummary,
-} from "@salt-ds/lab";
+import { Accordion, AccordionPanel, AccordionHeader } from "@salt-ds/lab";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { ChildrenValues } from "../../ChildrenValues";
 export interface ColorPatternProps {
@@ -19,24 +15,20 @@ export interface ColorPatternProps {
 }
 
 export const ColorPattern = (props: ColorPatternProps): ReactElement => {
-  const [expandedSections, setExpandedSections] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    const openSections = searchParams.get("open")?.split("&") || [];
-    setExpandedSections(openSections);
-  }, [searchParams]);
+  const expandedSections = searchParams.get("open")?.split("&") || [];
 
   return (
     <>
       {Object.keys(props.values).map(function (color) {
         return (
-          <AccordionSection
+          <Accordion
             expanded={expandedSections.includes(color)}
+            value={color}
             key={`${props.themeName}-${props.patternName}-${color}-accordion`}
-            onChange={(isExpanded) => {
+            onToggle={() => {
               let colors;
-              if (isExpanded) {
+              if (expandedSections.includes(color)) {
                 const openColors = searchParams.get("open");
                 colors = color;
                 if (openColors) {
@@ -53,8 +45,8 @@ export const ColorPattern = (props: ColorPatternProps): ReactElement => {
               colors ? setSearchParams({ open: colors }) : setSearchParams({});
             }}
           >
-            <AccordionSummary>{capitalize(color) as string}</AccordionSummary>
-            <AccordionDetails>
+            <AccordionHeader>{capitalize(color) as string}</AccordionHeader>
+            <AccordionPanel>
               {Object.keys(props.values[color]).map(function (node) {
                 const [values, fieldName] =
                   node === "value"
@@ -74,8 +66,8 @@ export const ColorPattern = (props: ColorPatternProps): ReactElement => {
                   />
                 );
               })}
-            </AccordionDetails>
-          </AccordionSection>
+            </AccordionPanel>
+          </Accordion>
         );
       })}
     </>

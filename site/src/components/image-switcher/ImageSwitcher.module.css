@@ -1,0 +1,32 @@
+.container {
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  padding: var(--salt-spacing-200);
+  gap: var(--salt-spacing-300);
+  display: flex;
+  flex-direction: column;
+  margin-block: var(--salt-spacing-300);
+}
+
+@media screen and (max-width: 996px) {
+  .container {
+    padding: var(--salt-spacing-100);
+    gap: var(--salt-spacing-200);
+  }
+}
+
+.container .switch {
+  --saltSwitch-height: var(--salt-switch-height);
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}

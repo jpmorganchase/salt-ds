@@ -1,57 +1,31 @@
-.accordion {
-  --saltAccordion-section-borderColor: rgba(255, 255, 255, 0.1);
-  --saltAccordion-summary-background-hover: var(--salt-color-gray-20);
-  --saltAccordion-summary-background: none;
-  --saltAccordion-summary-background-active: none;
-  --saltAccordion-summary-paddingLeft: 0;
-  --saltAccordion-summary-background-hover: transparent;
-  --accordion-padding-left: var(--salt-size-unit);
-  --accordion-section-padding: calc(var(--salt-size-unit) * 2) 0;
+.accordion .header {
+  padding: var(--salt-spacing-200);
 }
 
-.accordion {
-  height: calc(100% - var(--keyline-height));
-}
-
-.accordion .section {
-  padding: var(--accordion-section-padding);
-}
-.accordion .section:last-of-type {
+.group .accordion:last-of-type {
   border: none;
 }
 
-.accordion .summary h2 {
-  padding-left: var(--accordion-padding-left);
-}
-
-.accordion .summary {
-  line-height: initial;
-  flex-direction: row-reverse;
-  justify-content: space-between;
+.accordion .header h2 {
+  padding-left: var(--salt-spacing-100);
 }
 
 .accordion a {
   text-decoration: var(--salt-text-link-textDecoration);
 }
 
-/* Override Salt accordion styles */
-
-.summary :global(.saltAccordionSummary-icon:hover) {
-  background: var(--accordion-summary-background-hover);
+.accordion :global(.saltIcon) {
+  --salt-icon-size-base: var(--salt-spacing-200);
 }
 
-.summary :global(.saltIcon) {
-  --salt-icon-size-base: calc(var(--salt-size-unit) * 2);
-}
-
-.accordion :global(.saltAccordionDetails .saltAccordionDetails-content) {
-  padding-left: var(--salt-size-unit);
+.accordion .panel {
+  padding-left: var(--salt-spacing-100);
 }
 
 /* ----------------------------- */
 
 @media screen and (max-width: 768px) {
-  .summary :global(.saltIcon) {
-    --salt-icon-size-base: var(--salt-size-unit);
+  .accordion :global(.saltIcon) {
+    --salt-icon-size-base: var(--salt-spacing-100);
   }
 }
