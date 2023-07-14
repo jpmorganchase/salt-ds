@@ -24,4 +24,11 @@ describe("GIVEN a RadioButton component", () => {
       cy.findByRole("radio").should("be.disabled");
     });
   });
+
+  describe("WHEN read-only", () => {
+    it("THEN should have the readOnly attribute applied", () => {
+      cy.mount(<RadioButton readOnly />);
+      cy.findByRole("radio").should("have.attr", "readonly");
+    });
+  });
 });
