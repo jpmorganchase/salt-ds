@@ -14,8 +14,17 @@ export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
    * If true, the particular list item in list will be disabled.
    */
   disabled?: boolean;
+  /**
+   * If true, the particular list item in list will be selected.
+   */
   selected?: boolean;
+  /**
+   * List item id.
+   */
   id?: string;
+  /**
+   * List item value.
+   */
   value: string;
 }
 

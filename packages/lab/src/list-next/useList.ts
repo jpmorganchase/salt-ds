@@ -14,15 +14,17 @@ interface UseListProps {
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
-  /* Value for the uncontrolled version. */
+  /* Value for the controlled version. */
   highlightedIndex?: number;
-  /* Value for the uncontrolled version. */
+  /* Value for the controlled version. */
   selected?: string;
-  /* Initial value for the uncontrolled version. */
+  /* Initial value for the controlled version. */
   defaultSelected?: string;
   /* Callback for the controlled version. */
   onChange?: (e: SyntheticEvent, data: { value: string }) => void;
+  /* List id. */
   id?: string;
+  /* List ref. */
   ref: RefObject<HTMLUListElement>;
 }
 
@@ -42,16 +44,18 @@ export const useList = ({
     );
   }, [ref]);
 
-  const [showFocusRing, setShowFocusRing] = useState<boolean>(true);
-  const [fromMouse, setFromMouse] = useState<boolean>(false);
-  const getId = () => {
+  const getId = useCallback(() => {
+    if (!highlightedIndex) return undefined;
     const controlledHighlightedIndex = highlightedIndex || 0;
     const activeOptions = getOptions();
     return activeOptions[controlledHighlightedIndex]?.id || undefined;
-  };
+  }, [highlightedIndex, getOptions]);
+
+  const [showFocusRing, setShowFocusRing] = useState<boolean>(true);
+  const [fromMouse, setFromMouse] = useState<boolean>(false);
   const [activeDescendant, setActiveDescendant] = useControlled({
     controlled: getId(),
-    default: getId(),
+    default: undefined,
     name: "ListNextHighlighted",
     state: "activeDescendant",
   });

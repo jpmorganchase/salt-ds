@@ -239,7 +239,8 @@ describe("GIVEN a list", () => {
           // mouse to click on another list item
           cy.findByRole("option", { name: ITEMS[2].label }).realClick();
           cy.findByRole("listbox").blur(); // remove focus
-          cy.findByRole("listbox").focus();
+          // return to list with keyboard
+          cy.realPress("Tab");
           // focus should be on item previously selected using mouse
           cy.findByRole("option", { name: ITEMS[2].label }).should(
             "have.class",

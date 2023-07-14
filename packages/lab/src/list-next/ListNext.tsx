@@ -1,10 +1,11 @@
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import {
+  ComponentPropsWithoutRef,
   FocusEvent,
   forwardRef,
-  HTMLAttributes,
   KeyboardEvent,
   MouseEvent,
+  SyntheticEvent,
   useRef,
 } from "react";
 import { clsx } from "clsx";
@@ -16,16 +17,19 @@ import { ListNextContext } from "./ListNextContext";
 
 const withBaseName = makePrefixer("saltListNext");
 
-export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
+export interface ListNextProps
+  extends Omit<ComponentPropsWithoutRef<"ul">, "onChange"> {
   /**
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
-  /* Value for the uncontrolled version. */
+  /* Value for the controlled version. */
   highlightedIndex?: number;
-  /* Value for the uncontrolled version. */
+  /* Value for the controlled version. */
   selected?: string;
-  /* Initial value for the uncontrolled version. */
+  /* Callback for the controlled version. */
+  onChange?: (e: SyntheticEvent, data: { value: string }) => void;
+  /* Initial value for the controlled version. */
   defaultSelected?: string;
 }
 
@@ -44,6 +48,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       highlightedIndex,
       selected,
       defaultSelected,
+      onChange,
       ...rest
     },
     ref
@@ -71,6 +76,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       highlightedIndex,
       selected,
       defaultSelected,
+      onChange,
       id: listId,
       ref: listRef,
     });
