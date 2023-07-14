@@ -1,3 +1,4 @@
+export * from "./accordion";
 export * from "./aria-announcer";
 export * from "./avatar";
 export * from "./banner";

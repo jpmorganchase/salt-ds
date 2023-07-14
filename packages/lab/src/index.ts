@@ -14,7 +14,6 @@ export {
   useListItem as useListItemDeprecated,
 } from "./list-deprecated";
 
-export * from "./accordion";
 export * from "./app-header";
 export * from "./badge";
 export * from "./breadcrumbs";

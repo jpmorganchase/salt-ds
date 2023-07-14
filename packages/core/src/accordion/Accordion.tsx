@@ -1,9 +1,9 @@
 import { ComponentPropsWithoutRef, forwardRef, SyntheticEvent } from "react";
-import { makePrefixer, useControlled, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { AccordionContext } from "./AccordionContext";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer, useControlled, useId } from "../utils";
 import accordionCss from "./Accordion.css";
 export interface AccordionProps extends ComponentPropsWithoutRef<"div"> {
   /**

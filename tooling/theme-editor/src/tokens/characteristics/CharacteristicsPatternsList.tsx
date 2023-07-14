@@ -1,7 +1,6 @@
 import { ReactElement, useMemo, useState, useEffect } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
-import { AccordionGroup } from "@salt-ds/lab";
+import { AccordionGroup, makePrefixer } from "@salt-ds/core";
 import { CharacteristicPattern } from "./CharacteristicPattern";
 import { JSONByScope, JSONObj } from "../../helpers/parseToJson";
 import { useSearchParams } from "react-router-dom";
