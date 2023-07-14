@@ -45,10 +45,9 @@ export const useList = ({
   }, [ref]);
 
   const getId = useCallback(() => {
-    if (!highlightedIndex) return undefined;
-    const controlledHighlightedIndex = highlightedIndex || 0;
+    if (highlightedIndex === undefined) return undefined;
     const activeOptions = getOptions();
-    return activeOptions[controlledHighlightedIndex]?.id || undefined;
+    return activeOptions[highlightedIndex]?.id;
   }, [highlightedIndex, getOptions]);
 
   const [showFocusRing, setShowFocusRing] = useState<boolean>(true);
