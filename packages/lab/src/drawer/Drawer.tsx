@@ -35,7 +35,7 @@ export interface DrawerProps extends HTMLAttributes<HTMLDivElement> {
    */
   scrimProps?: Partial<ScrimProps>;
   /**
-   * Change text color palette
+   * Change background color palette
    */
   variant?: "primary" | "secondary";
 }
