@@ -8,7 +8,7 @@ Add Toast component
 
 ```js
 <Toast {...args}>
-  <ToastContent>{children}</ToastContent>
+  <ToastContent>Toast content</ToastContent>
   <Button variant="secondary">
     <CloseIcon />
   </Button>
