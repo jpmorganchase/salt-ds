@@ -1,7 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
 import { Toast, ToastContent } from "@salt-ds/lab";
-import { Button } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import * as toastStories from "@stories/toast/toast.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
