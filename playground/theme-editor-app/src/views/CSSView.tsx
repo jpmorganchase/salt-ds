@@ -4,7 +4,7 @@ import {
   AccordionPanel,
   Accordion,
   AccordionHeader,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { CSSByPattern } from "@salt-ds/theme-editor/src/helpers/parseToCss";
 
 interface CSSViewProps {

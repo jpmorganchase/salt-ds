@@ -5,12 +5,12 @@ import {
   Accordion,
   AccordionHeader,
   AccordionProps,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { ComponentMeta, Story } from "@storybook/react";
 import "./accordion.stories.css";
 
 export default {
-  title: "Lab/Accordion",
+  title: "Core/Accordion",
   component: Accordion,
 } as ComponentMeta<typeof Accordion>;
 

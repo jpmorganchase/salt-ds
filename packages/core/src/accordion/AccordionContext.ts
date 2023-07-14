@@ -1,5 +1,5 @@
-import { createContext } from "@salt-ds/core";
 import { SyntheticEvent, useContext } from "react";
+import { createContext } from "../utils";
 
 export interface AccordionContextValue {
   value: string;
@@ -14,7 +14,7 @@ export const AccordionContext = createContext<AccordionContextValue>(
   {
     value: "",
     expanded: false,
-    toggle: () => {},
+    toggle: () => undefined,
     disabled: false,
     id: "",
   }
