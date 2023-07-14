@@ -4,12 +4,11 @@ import {
   forwardRef,
   useMemo,
   useEffect,
-  useId,
 } from "react";
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { makePrefixer, Tooltip } from "@salt-ds/core";
+import { makePrefixer, Tooltip, useId } from "@salt-ds/core";
 import {
   StepActiveIcon,
   StepDefaultIcon,
