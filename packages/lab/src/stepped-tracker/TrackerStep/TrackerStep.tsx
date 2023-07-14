@@ -8,7 +8,7 @@ import {
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { makePrefixer, Tooltip, useId } from "@salt-ds/core";
+import { makePrefixer, Tooltip, useIdMemo } from "@salt-ds/core";
 import {
   StepActiveIcon,
   StepDefaultIcon,
@@ -81,7 +81,7 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
 
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
   function TrackerStep(props, ref?) {
-    const id = useId();
+    const id = useIdMemo();
     const { state = "default", className, children, ...restProps } = props;
 
     const targetWindow = useWindow();
