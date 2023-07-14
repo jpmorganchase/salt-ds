@@ -97,7 +97,6 @@ export const useList = ({
     [setSelectedItem, updateActiveDescendant]
   );
 
-
   // Effect to move the cursor when items change controlled.
   // this could be following active descendant if there is no better way of doing it when controlled
   useEffect(() => {
