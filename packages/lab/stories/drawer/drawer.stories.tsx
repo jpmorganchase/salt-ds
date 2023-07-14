@@ -5,9 +5,13 @@ import {
   StackLayout,
   FlexItem,
   FlexLayout,
+  FormField,
+  FormFieldLabel,
+  FormFieldHelperText,
+  Input,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { FormField, Input, Drawer, DRAWER_POSITIONS } from "@salt-ds/lab";
+import { Drawer, DRAWER_POSITIONS } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./drawer.stories.css";
 
@@ -177,8 +181,10 @@ const ReducedMotionTemplate: ComponentStory<typeof Drawer> = (args) => {
 export const ReducedMotion = ReducedMotionTemplate.bind({});
 
 const FormFieldExample = () => (
-  <FormField label="Label" helperText="Help text appears here">
+  <FormField>
+    <FormFieldLabel>Label</FormFieldLabel>
     <Input />
+    <FormFieldHelperText>Help text appears here</FormFieldHelperText>
   </FormField>
 );
 
