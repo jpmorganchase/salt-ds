@@ -9,6 +9,7 @@ export interface CheckboxGroupState {
   name?: CheckboxGroupProps["name"];
   onChange?: CheckboxGroupProps["onChange"];
   checkedValues?: CheckboxGroupProps["checkedValues"];
+  readOnly?: boolean;
   validationStatus?: AdornmentValidationStatus;
 }
 

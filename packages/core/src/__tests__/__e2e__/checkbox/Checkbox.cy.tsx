@@ -71,4 +71,11 @@ describe("GIVEN a Checkbox", () => {
       cy.findByRole("checkbox").should("be.disabled");
     });
   });
+
+  describe("WHEN read-only", () => {
+    it("THEN should have the readOnly attribute applied", () => {
+      cy.mount(<Checkbox readOnly />);
+      cy.findByRole("checkbox").should("have.attr", "readonly");
+    });
+  });
 });

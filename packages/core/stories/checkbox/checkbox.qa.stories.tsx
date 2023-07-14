@@ -33,6 +33,11 @@ export const AllExamplesGrid: Story<
           disabled
           label="I understand ADA requires Labels on disabled checkboxes"
         />
+        <Checkbox
+          className={className}
+          readOnly
+          label="I understand ADA requires Labels on read-only checkboxes"
+        />
       </CheckboxGroup>
     </QAContainer>
   );
