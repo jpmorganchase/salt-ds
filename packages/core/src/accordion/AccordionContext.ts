@@ -14,7 +14,7 @@ export const AccordionContext = createContext<AccordionContextValue>(
   {
     value: "",
     expanded: false,
-    toggle: () => {},
+    toggle: () => undefined,
     disabled: false,
     id: "",
   }

@@ -3,7 +3,7 @@ import {
   AccordionPanel,
   Accordion,
   AccordionHeader,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 import styles from "./Accordion.module.css";
 

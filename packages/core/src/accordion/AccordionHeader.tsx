@@ -9,8 +9,7 @@ import { makePrefixer } from "../utils";
 import { useAccordion } from "./AccordionContext";
 import accordionHeaderCss from "./AccordionHeader.css";
 
-export interface AccordionHeaderProps
-  extends ComponentPropsWithoutRef<"button"> {}
+export type AccordionHeaderProps = ComponentPropsWithoutRef<"button">;
 
 const withBaseName = makePrefixer("saltAccordionHeader");
 

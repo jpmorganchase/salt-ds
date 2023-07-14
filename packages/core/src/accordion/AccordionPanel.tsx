@@ -7,7 +7,7 @@ import { makePrefixer } from "../utils";
 import { useAccordion } from "./AccordionContext";
 import accordionPanelCss from "./AccordionPanel.css";
 
-export interface AccordionPanelProps extends ComponentPropsWithoutRef<"div"> {}
+export type AccordionPanelProps = ComponentPropsWithoutRef<"div">;
 
 const withBaseName = makePrefixer("saltAccordionPanel");
 
