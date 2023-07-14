@@ -5,6 +5,45 @@
 ### Minor Changes
 
 - 95188004: Added `MultilineInput` component with fixed number of rows
+- 27139c5c0: Realign Accordion to our design language
+
+Before:
+
+```tsx
+<Accordion expandedSectionIds={expanded} onChange={handleChange}>
+  <AccordionSection id="accordion-0" key="AccordionSection0">
+    <AccordionSummary>AccordionSummary0</AccordionSummary>
+    <AccordionDetails>AccordionDetails0</AccordionDetails>
+  </AccordionSection>
+  <AccordionSection id="accordion-1" key="AccordionSection1">
+    <AccordionSummary>AccordionSummary1</AccordionSummary>
+    <AccordionDetails>AccordionDetails1</AccordionDetails>
+  </AccordionSection>
+</Accordion>
+```
+
+After:
+
+```tsx
+<AccordionGroup>
+  <Accordion
+    expanded={expanded === "accordion-0"}
+    value="accordion-0"
+    onToggle={onChange}
+  >
+    <AccordionHeader>AccordionHeader0</AccordionHeader>
+    <AccordionPanel>AccordionPanel0</AccordionPanel>
+  </Accordion>
+  <Accordion
+    expanded={expanded === "accordion-1"}
+    value="accordion-1"
+    onToggle={onChange}
+  >
+    <AccordionHeader>AccordionHeader1</AccordionHeader>
+    <AccordionPanel>AccordionPanel1</AccordionPanel>
+  </Accordion>
+</AccordionGroup>
+```
 
 ### Patch Changes
 

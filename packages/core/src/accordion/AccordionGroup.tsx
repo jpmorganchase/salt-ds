@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { makePrefixer } from "../utils";
 export interface AccordionGroupProps extends ComponentPropsWithoutRef<"div"> {}
 
 const withBaseName = makePrefixer("saltAccordionGroup");

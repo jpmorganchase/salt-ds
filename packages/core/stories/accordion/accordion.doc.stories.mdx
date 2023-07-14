@@ -4,12 +4,12 @@ import {
   AccordionPanel,
   Accordion,
   AccordionHeader,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { CharacteristicUsage } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Accordion"
+  title="Documentation/Core/Accordion"
   component={Accordion}
   parameters={{
     viewMode: "docs",
@@ -19,7 +19,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 # Accordion
 
 <Canvas>
-  <Story id="lab-accordion--default" />
+  <Story id="core-accordion--default" />
 </Canvas>
 
 A pane containing summary content, which can then be expanded or collapsed to allow the user to show or hide content.
@@ -29,7 +29,7 @@ A pane containing summary content, which can then be expanded or collapsed to al
 ### Default
 
 <Canvas>
-  <Story id="lab-accordion--default" />
+  <Story id="core-accordion--default" />
 </Canvas>
 
 ### Group
@@ -37,7 +37,7 @@ A pane containing summary content, which can then be expanded or collapsed to al
 Accordions can be placed in an Accordion Group
 
 <Canvas>
-  <Story id="lab-accordion--default-group" />
+  <Story id="core-accordion--default-group" />
 </Canvas>
 
 ### Exclusive Group
@@ -45,7 +45,7 @@ Accordions can be placed in an Accordion Group
 You can use the controlled API to create an exclusive accordion group. This means that only one accordion can be open at a time.
 
 <Canvas>
-  <Story id="lab-accordion--exclusive-group" />
+  <Story id="core-accordion--exclusive-group" />
 </Canvas>
 
 ### Disabled
@@ -54,13 +54,13 @@ Accordions can be disabled by passing the `disabled` prop to the Accordion compo
 This will prevent the accordion from being expanded, collapsed or focused.
 
 <Canvas>
-  <Story id="lab-accordion--disabled" />
+  <Story id="core-accordion--disabled" />
 </Canvas>
 
 ## Configuring Accordion
 
 ```
-import { Accordion, AccordionGroup, AccordionHeader, AccordionPanel } from '@salt-ds/lab';
+import { Accordion, AccordionGroup, AccordionHeader, AccordionPanel } from '@salt-ds/core';
 ```
 
 ### Props

@@ -1,9 +1,10 @@
 import { ComponentPropsWithoutRef, forwardRef, MouseEvent } from "react";
-import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import { makePrefixer } from "../utils";
 
 import { useAccordion } from "./AccordionContext";
 import accordionHeaderCss from "./AccordionHeader.css";

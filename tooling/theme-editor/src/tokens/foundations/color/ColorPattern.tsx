@@ -1,7 +1,11 @@
 import { ReactElement } from "react";
 import { useSearchParams } from "react-router-dom";
-import { capitalize } from "@salt-ds/core";
-import { Accordion, AccordionPanel, AccordionHeader } from "@salt-ds/lab";
+import {
+  Accordion,
+  AccordionPanel,
+  AccordionHeader,
+  capitalize,
+} from "@salt-ds/core";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { ChildrenValues } from "../../ChildrenValues";
 export interface ColorPatternProps {
