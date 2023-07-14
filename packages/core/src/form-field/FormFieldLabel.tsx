@@ -1,10 +1,9 @@
 import { clsx } from "clsx";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { useFormFieldProps } from "../form-field-context";
 import { Label, TextProps } from "../text";
 import { capitalize, makePrefixer } from "../utils";
-
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
 import formFieldLabelCss from "./FormFieldLabel.css";
 
@@ -13,8 +12,11 @@ const withBaseName = makePrefixer("saltFormFieldLabel");
 export const FormFieldLabel = ({
   className,
   children,
+  pronounced = false,
   ...restProps
-}: Omit<TextProps<"label">, "variant" | "styleAs">) => {
+}: Omit<TextProps<"label">, "variant" | "styleAs"> & {
+  pronounced?: boolean;
+}) => {
   const { a11yProps, disabled, necessity } = useFormFieldProps();
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -32,7 +34,11 @@ export const FormFieldLabel = ({
   return (
     <Label
       as="label"
-      className={clsx(withBaseName(), className)}
+      className={clsx(
+        withBaseName(),
+        { [withBaseName("pronounced")]: pronounced },
+        className
+      )}
       id={a11yProps?.["aria-labelledby"]}
       disabled={disabled}
       variant="secondary"

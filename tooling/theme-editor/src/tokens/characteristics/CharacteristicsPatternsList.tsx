@@ -1,7 +1,7 @@
 import { ReactElement, useMemo, useState, useEffect } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
-import { Accordion } from "@salt-ds/lab";
+import { AccordionGroup } from "@salt-ds/lab";
 import { CharacteristicPattern } from "./CharacteristicPattern";
 import { JSONByScope, JSONObj } from "../../helpers/parseToJson";
 import { useSearchParams } from "react-router-dom";
@@ -63,7 +63,7 @@ export const CharacteristicPatternsList = (
   }, [jsonByScopeInView]);
 
   return (
-    <Accordion>
+    <AccordionGroup>
       <div className={clsx(withBaseName())}>
         {Object.keys(patternValuesInScope).map(function (pattern) {
           return (
@@ -81,6 +81,6 @@ export const CharacteristicPatternsList = (
           );
         })}
       </div>
-    </Accordion>
+    </AccordionGroup>
   );
 };

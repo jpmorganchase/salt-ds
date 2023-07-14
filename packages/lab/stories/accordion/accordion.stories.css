@@ -1,15 +1,8 @@
-.story-root {
-  height: 600px;
-  overflow-y: auto;
-  border: solid 1px var(--salt-container-primary-borderColor);
-  padding: var(--salt-size-base);
+#root .story-root {
+  height: 80vh;
+  padding: var(--salt-spacing-200);
 }
 
-.accordion {
-  width: 600px;
-}
-
-.accordion-story-details {
-  padding: var(--salt-size-base);
-  border: solid 1px var(--salt-text-primary-foreground);
+.saltAccordion {
+  width: 60vw;
 }

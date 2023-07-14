@@ -1,10 +1,6 @@
 import { clsx } from "clsx";
 import { capitalize, makePrefixer } from "@salt-ds/core";
-import {
-  AccordionSection,
-  AccordionDetails,
-  AccordionSummary,
-} from "@salt-ds/lab";
+import { Accordion, AccordionPanel, AccordionHeader } from "@salt-ds/lab";
 import { ReactElement } from "react";
 import { JSONObj } from "../../../helpers/parseToJson";
 import { ShadowInnerPattern } from "./ShadowInnerPattern";
@@ -31,14 +27,19 @@ export const ColorShadow = (props: ColorShadowProps): ReactElement => {
         const patternParts = getShadowParts(props.shadowPattern[shadowKey]);
 
         return (
-          <AccordionSection
+          <Accordion
             key={`${props.themeName}-${props.innerPattern}-${shadowKey}-accordion`}
+            value={`${props.innerPattern}${shadowKey}`}
             expanded={props.expandedSections.includes(
               `${props.innerPattern}${shadowKey}`
             )}
-            onChange={(isExpanded) => {
+            onToggle={() => {
               let shadows;
-              if (isExpanded) {
+              if (
+                props.expandedSections.includes(
+                  `${props.innerPattern}${shadowKey}`
+                )
+              ) {
                 const openShadows = props.searchParams.get("open");
                 shadows = `${props.innerPattern}${shadowKey}`;
                 if (openShadows) {
@@ -59,10 +60,10 @@ export const ColorShadow = (props: ColorShadowProps): ReactElement => {
                 : props.setSearchParams({});
             }}
           >
-            <AccordionSummary>
+            <AccordionHeader>
               {capitalize(props.innerPattern) as string}-{shadowKey}
-            </AccordionSummary>
-            <AccordionDetails>
+            </AccordionHeader>
+            <AccordionPanel>
               <div className={clsx(withBaseName("ValueSection"))}>
                 {patternParts.map((shadowPart: string, index) => {
                   const jsonObj: JSONObj = {};
@@ -104,8 +105,8 @@ export const ColorShadow = (props: ColorShadowProps): ReactElement => {
                   );
                 })}
               </div>
-            </AccordionDetails>
-          </AccordionSection>
+            </AccordionPanel>
+          </Accordion>
         );
       })}
     </div>

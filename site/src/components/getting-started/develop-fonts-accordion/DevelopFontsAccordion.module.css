@@ -6,7 +6,7 @@
   --salt-icon-size-base: var(--salt-size-unit);
 }
 
-.accordionWrapper :global(.saltAccordionSection) {
+.accordionWrapper :global(.saltAccordion) {
   --accordion-section-padding: 0;
 }
 

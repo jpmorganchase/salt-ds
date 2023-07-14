@@ -9,7 +9,12 @@ import {
   TextareaHTMLAttributes,
   useState,
 } from "react";
-import { makePrefixer, StatusAdornment, useControlled } from "@salt-ds/core";
+import {
+  makePrefixer,
+  StatusAdornment,
+  useControlled,
+  useFormFieldProps,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
@@ -81,7 +86,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       startAdornment,
       value: valueProp,
       defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
-      validationStatus,
+      validationStatus: validationStatusProp,
       variant = "primary",
       ...other
     },
@@ -108,9 +113,27 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       onBlur,
       onChange,
       onFocus,
-      required,
+      required: textAreaRequired,
       ...restTextAreaProps
     } = textAreaProps;
+
+    const {
+      a11yProps: {
+        "aria-describedby": formFieldDescribedBy,
+        "aria-labelledby": formFieldLabelledBy,
+      } = {},
+      disabled: formFieldDisabled,
+      readOnly: formFieldReadOnly,
+      necessity: formFieldRequired,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
+
+    const isDisabled = disabled || formFieldDisabled;
+    const isReadOnly = readOnly || formFieldReadOnly;
+    const validationStatus = formFieldValidationStatus ?? validationStatusProp;
+    const isRequired = formFieldRequired
+      ? ["required", "asterisk"].includes(formFieldRequired)
+      : undefined ?? textAreaRequired;
 
     const [value, setValue] = useControlled({
       controlled: valueProp,
@@ -142,9 +165,9 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           withBaseName(variant),
           {
             [withBaseName("fullBorder")]: fullBorder,
-            [withBaseName("focused")]: !disabled && !readOnly && focused,
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("readOnly")]: readOnly,
+            [withBaseName("focused")]: !isDisabled && !isReadOnly && focused,
+            [withBaseName("disabled")]: isDisabled,
+            [withBaseName("readOnly")]: isReadOnly,
             [withBaseName(validationStatus || "")]: validationStatus,
           },
           classNameProp
@@ -158,26 +181,26 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           </div>
         )}
         <textarea
-          aria-describedby={textAreaDescribedBy}
-          aria-labelledby={textAreaLabelledBy}
+          aria-describedby={clsx(formFieldDescribedBy, textAreaDescribedBy)}
+          aria-labelledby={clsx(formFieldLabelledBy, textAreaLabelledBy)}
           className={clsx(withBaseName("textarea"), textAreaProps?.className)}
-          disabled={disabled}
+          disabled={isDisabled}
           id={id}
-          readOnly={readOnly}
+          readOnly={isReadOnly}
           ref={textAreaRef}
+          required={isRequired}
           role={role}
           rows={rows}
-          tabIndex={readOnly || disabled ? -1 : 0}
+          tabIndex={isReadOnly || isDisabled ? -1 : 0}
           onBlur={handleBlur}
           onChange={handleChange}
-          onFocus={!disabled ? handleFocus : undefined}
+          onFocus={!isDisabled && !isReadOnly ? handleFocus : undefined}
           placeholder={placeholder}
           value={value}
           {...restA11yProps}
           {...restTextAreaProps}
-          required={required}
         />
-        {!disabled && !readOnly && validationStatus && (
+        {!isDisabled && !isReadOnly && validationStatus && (
           <div className={withBaseName("statusAdornmentContainer")}>
             <StatusAdornment status={validationStatus} />
           </div>

@@ -28,10 +28,16 @@ All examples demonstrate Salt form controls inside the Form Field, including Inp
 
 ## Form Controls
 
-Form field can wrap any Salt UI control that is typically found in a form, such as Input, Checkbox and Radio Button components.
+Form field can wrap any Salt UI control that is typically found in a form, such as Input, Multiline Input, Checkbox and Radio Button components.
 
 <Canvas>
   <Story id="core-form-field--with-controls" />
+</Canvas>
+
+When using Form Field with Multiline Input, the `pronounced` prop can be used on the form label and the `fullBorder` prop can be set on Multiline Input to style the field as a question.
+
+<Canvas>
+  <Story id="core-form-field--with-multiline-input-as-question" />
 </Canvas>
 
 ## Form Field Label
@@ -61,6 +67,18 @@ The Form Field Label can be positioned to the left of the form control via the p
 ### Guidance
 
 Place your label to the left of the control if your application is limited in vertical real estate or if you have a very data heavy, dense form, where it’s preferable to have as many fields visible as possible without scrolling.
+
+## Form Field Label Question
+
+The Form Field Label can be styled as a question by setting the `pronounced` prop to `true`.
+
+<Canvas>
+  <Story id="core-form-field--label-question" />
+</Canvas>
+
+### Guidance
+
+- When paired with Multiline Input, pair the pronounced label with a full border.
 
 ## Form Field Helper Text
 
