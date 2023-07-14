@@ -6,6 +6,7 @@ import {
   KeyboardEvent,
   MouseEvent,
   SyntheticEvent,
+  useMemo,
   useRef,
 } from "react";
 import { clsx } from "clsx";
@@ -63,7 +64,10 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const listId = useId(id);
     const listRef = useRef<HTMLUListElement>(null);
     const handleRef = useForkRef(listRef, ref);
-    const controlled = Boolean(selected || highlightedIndex);
+    const controlled = useMemo(
+      () => Boolean(selected || highlightedIndex !== undefined),
+      [selected, highlightedIndex]
+    );
     const {
       focusHandler,
       keyDownHandler,
