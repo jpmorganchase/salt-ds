@@ -2,9 +2,9 @@ import { useState, ReactNode, SyntheticEvent, ComponentType } from "react";
 import {
   AccordionGroup,
   AccordionPanel,
-  AccordionGroupProps,
   Accordion,
   AccordionHeader,
+  AccordionProps,
 } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
 import "./accordion.stories.css";
@@ -58,13 +58,32 @@ const contentMap: Record<string, ComponentType> = {
   Islands,
 };
 
-const AccordionTemplate: Story<AccordionStoryProps> = (props) => (
+export const Default: Story<AccordionProps> = (props) => (
+  <div className="story-root">
+    <Accordion {...props}>
+      <AccordionHeader>Mountains and hills</AccordionHeader>
+      <AccordionPanel>
+        <MountainsAndHills />
+      </AccordionPanel>
+    </Accordion>
+  </div>
+);
+
+Default.args = {
+  value: "Mountains and hills",
+};
+
+export const DefaultGroup: Story<AccordionStoryProps> = (props) => (
   <div className="story-root">
     <AccordionGroup>
       {accordions.map((accordion) => {
         const Content = contentMap[accordion];
         return (
-          <Accordion value={accordion} disabled={props.disabled}>
+          <Accordion
+            value={accordion}
+            disabled={props.disabled}
+            key={accordion}
+          >
             <AccordionHeader>{accordion}</AccordionHeader>
             <AccordionPanel>
               <Content />
@@ -76,7 +95,7 @@ const AccordionTemplate: Story<AccordionStoryProps> = (props) => (
   </div>
 );
 
-const ControlledAccordionTemplate: Story<AccordionStoryProps> = (props) => {
+export const ExclusiveGroup: Story<AccordionStoryProps> = (props) => {
   const [expanded, setExpanded] = useState<string>("");
 
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -95,6 +114,7 @@ const ControlledAccordionTemplate: Story<AccordionStoryProps> = (props) => {
               onToggle={onChange}
               value={accordion}
               disabled={props.disabled}
+              key={accordion}
             >
               <AccordionHeader>{accordion}</AccordionHeader>
               <AccordionPanel>
@@ -108,83 +128,24 @@ const ControlledAccordionTemplate: Story<AccordionStoryProps> = (props) => {
   );
 };
 
-const MultiAccordionTemplate: Story<AccordionGroupProps> = () => {
-  const [expanded, setExpanded] = useState<string[]>([]);
-
-  const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
-    const value = event.currentTarget.value;
-    setExpanded((old) =>
-      old.includes(value) ? old.filter((v) => v !== value) : [...old, value]
-    );
-  };
-
-  return (
-    <div className="story-root">
-      <AccordionGroup>
-        {accordions.map((accordion) => {
-          const Content = contentMap[accordion];
-          return (
-            <Accordion
-              expanded={expanded.includes(accordion)}
-              onToggle={onChange}
-              value={accordion}
-            >
-              <AccordionHeader>{accordion}</AccordionHeader>
-              <AccordionPanel>
-                <Content />
-              </AccordionPanel>
-            </Accordion>
-          );
-        })}
-      </AccordionGroup>
-    </div>
-  );
-};
-
-const AccordionInAccordionTemplate: Story = () => {
-  return (
-    <div className="story-root">
-      <AccordionGroup>
-        <Accordion value="Geography">
-          <AccordionHeader>Geography</AccordionHeader>
-          <AccordionPanel>
-            <PanelContent>
-              {accordions.map((accordion) => {
-                const Content = contentMap[accordion];
-                return (
-                  <Accordion key={accordion} value={accordion}>
-                    <AccordionHeader>{accordion}</AccordionHeader>
-                    <AccordionPanel>
-                      <Content />
-                    </AccordionPanel>
-                  </Accordion>
-                );
-              })}
-            </PanelContent>
-          </AccordionPanel>
-        </Accordion>
-        <Accordion value="Climate">
-          <AccordionHeader>Climate</AccordionHeader>
-          <AccordionPanel>
-            <p>
-              Most of the United Kingdom has a temperate climate, with generally
-              cool temperatures and plentiful rainfall all year round.
-            </p>
-          </AccordionPanel>
-        </Accordion>
-      </AccordionGroup>
-    </div>
-  );
-};
-
-export const Default = AccordionTemplate.bind({});
-
-export const Controlled = ControlledAccordionTemplate.bind({});
-
-export const DefaultMulti = MultiAccordionTemplate.bind({});
-
-export const AccordionInAccordion = AccordionInAccordionTemplate.bind({});
-
-Default.args = {
-  disabled: false,
-};
+export const Disabled: Story<AccordionStoryProps> = (props) => (
+  <div className="story-root">
+    <AccordionGroup>
+      {accordions.map((accordion, index) => {
+        const Content = contentMap[accordion];
+        return (
+          <Accordion
+            value={accordion}
+            disabled={index === 1 || props.disabled}
+            key={accordion}
+          >
+            <AccordionHeader>{accordion}</AccordionHeader>
+            <AccordionPanel>
+              <Content />
+            </AccordionPanel>
+          </Accordion>
+        );
+      })}
+    </AccordionGroup>
+  </div>
+);

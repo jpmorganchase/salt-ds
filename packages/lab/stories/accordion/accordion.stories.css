@@ -1,9 +1,8 @@
-.story-root {
-  height: 600px;
-  overflow-y: auto;
+#root .story-root {
+  height: 80vh;
   padding: var(--salt-spacing-200);
 }
 
 .saltAccordion {
-  width: 600px;
+  width: 60vw;
 }
