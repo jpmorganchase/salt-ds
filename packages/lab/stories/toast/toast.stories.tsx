@@ -69,7 +69,7 @@ Success.args = {
   ),
 };
 
-export const HideClose = (args: ToastProps) => (
+export const NoCloseButton = (args: ToastProps) => (
   <Toast {...args}>
     <div>
       <Text>
@@ -78,6 +78,20 @@ export const HideClose = (args: ToastProps) => (
       <div>A new version of this file is available with 37 updates. </div>
     </div>
   </Toast>
+);
+
+export const SingleLine = (args: ToastProps) => (
+  <FlowLayout style={{ width: 352 }}>
+    <Toast {...args}>
+      <div>This is a toast message. This is a toast message.</div>
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
+    </Toast>
+    <Toast {...args}>
+      <div>This is a toast message. This is a toast message.</div>
+    </Toast>
+  </FlowLayout>
 );
 
 export const CustomContent = (args: ToastProps) => (
