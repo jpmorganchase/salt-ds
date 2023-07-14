@@ -1,5 +1,5 @@
 import type { ComponentMeta, Story } from "@storybook/react";
-import { Avatar, Button } from "@salt-ds/core";
+import { Avatar, Button, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
   ChatIcon,
@@ -27,7 +27,6 @@ import {
 } from "@salt-ds/icons";
 import {
   Dropdown,
-  ToggleButton,
   Toolbar,
   ToolbarButton,
   ToolbarField,

@@ -1,9 +1,9 @@
 import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Toggle Button"
+  title="Documentation/Core/Toggle Button"
   component={ToggleButtonGroup}
   subcomponents={{ ToggleButton }}
   parameters={{
@@ -14,7 +14,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 # Toggle Button
 
 <Canvas>
-  <Story id="lab-toggle-button--text-and-icon" />
+  <Story id="core-toggle-button--text-and-icon" />
 </Canvas>
 
 This basic component allows users to enable or disable a single command.
@@ -26,7 +26,7 @@ Use icons and text in Toggle Buttons if it's important to visually reinforce the
 - Pass `aria-hidden=”true”` to the icon so its label is not announced by the screen reader.
 
 <Canvas>
-  <Story id="lab-toggle-button--text-and-icon" />
+  <Story id="core-toggle-button--text-and-icon" />
 </Canvas>
 
 ### Icon only
@@ -37,7 +37,7 @@ The Toggle Button Group can be used with icons only.
 - A `Tooltip` should be used to provide additional context for each `ToggleButton`.
 
 <Canvas>
-  <Story id="lab-toggle-button--icon-only" />
+  <Story id="core-toggle-button--icon-only" />
 </Canvas>
 
 ### Text only
@@ -45,7 +45,7 @@ The Toggle Button Group can be used with icons only.
 You can configure the Toggle Buttons to display text only when you can't identify a suitable or intuitive icon.
 
 <Canvas>
-  <Story id="lab-toggle-button--text-only" />
+  <Story id="core-toggle-button--text-only" />
 </Canvas>
 
 ### Disabled
@@ -53,7 +53,7 @@ You can configure the Toggle Buttons to display text only when you can't identif
 Disable the entire group, if required by context or users permissions.
 
 <Canvas>
-  <Story id="lab-toggle-button--disabled" />
+  <Story id="core-toggle-button--disabled" />
 </Canvas>
 
 ## How to use
@@ -68,7 +68,7 @@ Disable the entire group, if required by context or users permissions.
 ### API
 
 ```jsx
-import { ToggleButton } from "@salt-ds/lab";
+import { ToggleButton } from "@salt-ds/core";
 ```
 
 ### Props

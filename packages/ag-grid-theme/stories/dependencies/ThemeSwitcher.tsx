@@ -1,5 +1,5 @@
 import { SyntheticEvent, useState } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 
 export const useAgGridThemeSwitcher = () => {
   const [themeName, setThemeName] = useState("salt");

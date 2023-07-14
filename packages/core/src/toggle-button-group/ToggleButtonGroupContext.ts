@@ -1,6 +1,5 @@
-import { createContext } from "@salt-ds/core";
 import { SyntheticEvent, useContext } from "react";
-
+import { createContext } from "../utils";
 export interface ToggleButtonGroupContextValue {
   disabled?: boolean;
   select: (event: SyntheticEvent<HTMLButtonElement>) => void;

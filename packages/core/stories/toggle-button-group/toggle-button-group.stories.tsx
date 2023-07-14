@@ -1,4 +1,4 @@
-import { ToggleButtonGroup, ToggleButton } from "@salt-ds/lab";
+import { Tooltip, ToggleButtonGroup, ToggleButton } from "@salt-ds/core";
 import {
   LightIcon,
   DarkIcon,
@@ -7,10 +7,9 @@ import {
   VisibleIcon,
 } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Tooltip } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Toggle Button Group",
+  title: "Core/Toggle Button Group",
   component: ToggleButtonGroup,
   subcomponents: { ToggleButton },
 } as ComponentMeta<typeof ToggleButtonGroup>;
