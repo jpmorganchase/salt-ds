@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { ColorShadow } from "./ColorShadow";
@@ -9,12 +9,8 @@ import { ShadowPatternProps } from "./ShadowPatternProps";
 const withBaseName = makePrefixer("saltShadow");
 
 export const ShadowPattern = (props: ShadowPatternProps): ReactElement => {
-  const [expandedSections, setExpandedSections] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  useEffect(() => {
-    const openSections = searchParams.get("open")?.split("&") || [];
-    setExpandedSections(openSections);
-  }, [searchParams]);
+  const expandedSections = searchParams.get("open")?.split("&") || [];
 
   return (
     <div className={clsx(withBaseName())}>

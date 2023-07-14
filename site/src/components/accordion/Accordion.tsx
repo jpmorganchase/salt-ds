@@ -1,8 +1,8 @@
 import {
+  AccordionGroup,
+  AccordionPanel,
   Accordion,
-  AccordionDetails,
-  AccordionSection,
-  AccordionSummary,
+  AccordionHeader,
 } from "@salt-ds/lab";
 
 import styles from "./Accordion.module.css";
@@ -23,22 +23,23 @@ const AccordionBase = ({
   defaultExpandedSectionIds,
 }: AccordionBaseProps): JSX.Element => {
   return (
-    <Accordion
-      className={styles.accordion}
-      defaultExpandedSectionIds={defaultExpandedSectionIds}
-      maxExpandedItems={1}
-    >
+    <AccordionGroup className={styles.group}>
       {accordionInfo.map(({ id, summary, details }) => {
         return (
-          <AccordionSection className={styles.section} key={id} id={id}>
-            <AccordionSummary className={styles.summary}>
+          <Accordion
+            className={styles.accordion}
+            key={id}
+            value={id}
+            defaultExpanded={defaultExpandedSectionIds?.includes(id)}
+          >
+            <AccordionHeader className={styles.header}>
               {summary}
-            </AccordionSummary>
-            <AccordionDetails>{details}</AccordionDetails>
-          </AccordionSection>
+            </AccordionHeader>
+            <AccordionPanel className={styles.panel}>{details}</AccordionPanel>
+          </Accordion>
         );
       })}
-    </Accordion>
+    </AccordionGroup>
   );
 };
 
