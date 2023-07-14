@@ -4,6 +4,12 @@
 
 Add Toast component
 
+- Add ToastContent component
+- Add ToastClose component
+
 ```js
-<Toast {...args}>{children}</Toast>
+<Toast {...args}>
+  <ToastContent>{children}</ToastContent>
+  <ToastClose />
+</Toast>
 ```
