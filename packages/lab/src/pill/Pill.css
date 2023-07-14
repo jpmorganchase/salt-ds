@@ -6,10 +6,6 @@
   --pill-background-hover: var(--saltPill-background-hover, var(--salt-taggable-background-hover));
   --pill-fontSize: var(--saltPill-fontSize, var(--salt-text-fontSize));
   --pill-height: calc(var(--salt-size-base) - var(--salt-size-unit));
-  --pill-icon-color: var(--saltPill-icon-color, var(--salt-taggable-foreground));
-  --pill-icon-color-active: var(--saltPill-icon-color-active, var(--salt-taggable-foreground-active));
-  --pill-icon-color-hover: var(--saltPill-icon-color-hover, var(--salt-taggable-foreground-hover));
-  --pill-icon-color-disabled: var(--saltPill-icon-color-disabled, var(--salt-taggable-foreground-disabled));
   --pill-text-color: var(--saltPill-text-color, var(--salt-taggable-foreground));
   --pill-text-color-active: var(--saltPill-text-color-active, var(--salt-taggable-foreground-active));
   --pill-text-color-hover: var(--saltPill-text-color-hover, var(--salt-taggable-foreground-hover));
@@ -55,11 +51,6 @@
 
 .saltPill-closeButton .saltIcon {
   display: block;
-}
-
-.saltPill-closeButton {
-  color: var(--pill-text-color);
-  background: var(--pill-background);
 }
 
 /* Style applied to Pill if `clickable={true}`  */
@@ -118,22 +109,16 @@
 .saltPill[aria-disabled] .saltPill-closeButton,
 .saltPill[aria-disabled] .saltPill-closeButton:hover,
 .saltPill[aria-disabled] .saltPill-closeButton:active {
+  color: var(--pill-text-color-disabled);
   background: var(--pill-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
   opacity: var(--salt-palette-opacity-disabled);
-
-  --saltIcon-color: var(--pill-icon-color-disabled);
-  --saltIcon-color-hover: var(--pill-icon-color-disabled);
-}
-
-.saltPill[aria-disabled] .saltPill-closeButton,
-.saltPill[aria-disabled] .saltPill-closeButton:hover,
-.saltPill[aria-disabled] .saltPill-closeButton:active {
-  background: transparent;
 }
 
 /* Style applied to Pill delete button */
 .saltPill-closeButton {
+  color: var(--pill-text-color);
+  background: var(--pill-background);
   --saltIcon-size-multiplier: 1;
   flex-shrink: 0;
   height: var(--pill-height);
@@ -152,6 +137,12 @@
 
 .saltPill-closeButton.saltPill-active,
 .saltPill-closeButton:active {
-  background: var(--pill-background-active);
-  color: var(--pill-text-color-active);
+  background: var(--salt-actionable-primary-background-active);
+  color: var(--salt-actionable-primary-foreground-active);
+}
+
+.saltPill[aria-disabled] .saltPill-closeButton,
+.saltPill[aria-disabled] .saltPill-closeButton:hover,
+.saltPill[aria-disabled] .saltPill-closeButton:active {
+  background: transparent;
 }
