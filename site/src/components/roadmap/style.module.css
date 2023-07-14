@@ -1,0 +1,55 @@
+.heading{
+    margin-bottom: 5%;
+}
+
+
+.spacing{
+    /* width: "250px";
+    height: "2px" */
+    border-radius: 8px;
+}
+
+.date {
+    display: inline;
+  }
+  
+.icon{
+    margin-bottom: -3px;
+    margin-left: 9px;
+}
+.column {
+    /* border-right: 3px solid black; */
+    padding-right: 20px; /* Adjust the padding as per your design */
+  }
+
+.info{
+    margin-left: 20px;
+    background-color: rgb(200, 205, 212);
+    padding: 6px;
+    border-radius: 55%;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    
+
+}
+
+
+.iconplace{
+    position: absolute;
+    top: 2;
+    right: 2;
+
+    
+
+}
+
+
+
+.card{
+    border-radius: 8px;
+
+    position: relative;
+}
