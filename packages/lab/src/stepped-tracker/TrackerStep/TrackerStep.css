@@ -1,6 +1,6 @@
 .saltTrackerStep {
-  --trackerStep-icon-active-color: var(--saltTrackerStep-icon-active-color, var(--salt-status-info-foreground));
-  --trackerStep-icon-completed-color: var(--saltTrackerStep-icon-completed-color, var(--salt-status-success-foreground));
+  --trackerStep-icon-color-active: var(--saltTrackerStep-icon-color-active, var(--salt-status-info-foreground));
+  --trackerStep-icon-color-completed: var(--saltTrackerStep-icon-color-completed, var(--salt-status-success-foreground));
 
   --trackerStep-icon-color: var(--saltTrackerStep-icon-color, var(--salt-status-static-foreground));
 
@@ -41,9 +41,9 @@
 }
 
 .saltTrackerStep.saltTrackerStep-active {
-  --trackerStep-icon-color: var(--trackerStep-icon-active-color);
+  --trackerStep-icon-color: var(--trackerStep-icon-color-active);
 }
 
 .saltTrackerStep.saltTrackerStep-completed {
-  --trackerStep-icon-color: var(--trackerStep-icon-completed-color);
+  --trackerStep-icon-color: var(--trackerStep-icon-color-completed);
 }

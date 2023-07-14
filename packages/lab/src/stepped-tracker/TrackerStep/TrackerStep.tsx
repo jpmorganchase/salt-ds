@@ -4,6 +4,7 @@ import {
   forwardRef,
   useMemo,
   useEffect,
+  useId,
 } from "react";
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -81,6 +82,7 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
 
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
   function TrackerStep(props, ref?) {
+    const id = useId();
     const { state = "default", className, children, ...restProps } = props;
 
     const targetWindow = useWindow();
@@ -101,10 +103,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     useCheckWithinSteppedTracker(isWithinSteppedTracker);
 
-    const overflowRef = useMemo(
-      () => getOverflowRef(stepNumber),
-      [stepNumber, getOverflowRef]
-    );
+    const overflowRef = useMemo(() => getOverflowRef(id), [id, getOverflowRef]);
 
     const isActive = activeStep === stepNumber;
     const Icon = getStateIcon({ isActive, state });
