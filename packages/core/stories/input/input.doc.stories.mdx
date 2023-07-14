@@ -67,6 +67,7 @@ You can use a placeholder to prompt user input if no default value is provided.
 ### Read-only
 
 You can set Input to a read-only state. The value text can’t be edited in this state, but it can be highlighted and copied.
+**Note:** Read-only fields are not focusable since they are treated as a static representation rather than a form control.
 
 <Canvas>
   <Story id="core-input--readonly" />
@@ -108,7 +109,7 @@ Adornments can be added at the beginning or end of the Input field using the `st
 Use the `Button` component to have an interactive button within your Input field.
 
 <Canvas>
-  <Story id="core-input--with-adornment-button" />
+  <Story id="core-input--with-button-adornment" />
 </Canvas>
 
 ## Spellcheck

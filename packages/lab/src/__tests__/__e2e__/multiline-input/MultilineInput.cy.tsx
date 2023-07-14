@@ -159,4 +159,78 @@ describe("GIVEN an MultilineInput", () => {
       cy.checkAxeComponent();
     });
   });
+
+  describe("WHEN used in Formfield", () => {
+    describe("AND disabled", () => {
+      it("THEN MultilineInput within should be disabled", () => {
+        cy.mount(
+          <FormField disabled>
+            <FormFieldLabel>Disabled form field</FormFieldLabel>
+            <MultilineInput defaultValue="Value" />
+          </FormField>
+        );
+        cy.findByLabelText("Disabled form field").should(
+          "have.attr",
+          "disabled"
+        );
+      });
+    });
+
+    describe("AND is required", () => {
+      it("THEN MultilineInput within should be required", () => {
+        cy.mount(
+          <FormField necessity="required">
+            <FormFieldLabel>Form Field</FormFieldLabel>
+            <MultilineInput defaultValue="Value" />
+          </FormField>
+        );
+        cy.findByLabelText("Form Field (Required)").should(
+          "have.attr",
+          "required"
+        );
+      });
+    });
+
+    describe("AND is required with asterisk", () => {
+      it("THEN MultilineInput within should be required", () => {
+        cy.mount(
+          <FormField necessity="asterisk">
+            <FormFieldLabel>Form Field</FormFieldLabel>
+            <MultilineInput defaultValue="Value" />
+          </FormField>
+        );
+        cy.findByLabelText("Form Field*").should("have.attr", "required");
+      });
+    });
+
+    describe("AND is optional", () => {
+      it("THEN MultilineInput within should not be required", () => {
+        cy.mount(
+          <FormField necessity="optional">
+            <FormFieldLabel>Form Field</FormFieldLabel>
+            <MultilineInput defaultValue="Value" />
+          </FormField>
+        );
+        cy.findByLabelText("Form Field (Optional)").should(
+          "not.have.attr",
+          "required"
+        );
+      });
+    });
+
+    describe("AND readonly", () => {
+      it("THEN MultilineInput within should be readonly", () => {
+        cy.mount(
+          <FormField readOnly>
+            <FormFieldLabel>Readonly form field</FormFieldLabel>
+            <MultilineInput defaultValue="Value" />
+          </FormField>
+        );
+        cy.findByLabelText("Readonly form field").should(
+          "have.attr",
+          "readonly"
+        );
+      });
+    });
+  });
 });
