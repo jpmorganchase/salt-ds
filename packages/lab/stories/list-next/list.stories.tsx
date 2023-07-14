@@ -42,25 +42,27 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
 Default.args = {};
 
 export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
+    undefined
+  );
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
     undefined
   );
 
   const handleArrowDown = () => {
-    setHighlightedIndex((prevHighlightedIndex) =>
-      Math.min(usStateExampleData.length - 1, prevHighlightedIndex + 1)
-    );
+    const nextIndex = highlightedIndex === undefined ? 0 : highlightedIndex + 1;
+    setHighlightedIndex(nextIndex);
   };
 
   const handleArrowUp = () => {
-    setHighlightedIndex((prevHighlightedIndex) =>
-      Math.max(0, prevHighlightedIndex - 1)
-    );
+    const prevIndex = highlightedIndex && highlightedIndex - 1;
+    setHighlightedIndex(prevIndex);
   };
 
   const handleSelect = () => {
-    setSelectedItem(usStateExampleData[highlightedIndex] || undefined);
+    if (highlightedIndex !== undefined) {
+      setSelectedItem(usStateExampleData[highlightedIndex]);
+    }
   };
 
   const handleClick = (index: number) => {
@@ -69,18 +71,26 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
   };
 
   return (
-    <FlexLayout direction="column" gap={0}>
-      <FlexLayout>
+    <FlexLayout direction="column" gap={1}>
+      <FlexLayout gap={0} justify={"space-between"}>
         <Button
           disabled={highlightedIndex === usStateExampleData.length - 1}
           onClick={handleArrowDown}
         >
           <ArrowDownIcon />
         </Button>
-        <Button disabled={highlightedIndex <= 0} onClick={handleArrowUp}>
+        <Button
+          disabled={!highlightedIndex || highlightedIndex === 0}
+          onClick={handleArrowUp}
+        >
           <ArrowUpIcon />
         </Button>
-        <Button onClick={handleSelect}>Select</Button>
+        <Button
+          disabled={highlightedIndex === undefined}
+          onClick={handleSelect}
+        >
+          Select
+        </Button>
       </FlexLayout>
       <ListNext
         {...rest}
@@ -95,6 +105,7 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
               key={index}
               onClick={() => handleClick(index)}
               value={item}
+              id={`controlled-item-${item}-${index}`}
             >
               {item}
             </ListItemNext>

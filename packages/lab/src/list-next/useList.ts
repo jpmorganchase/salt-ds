@@ -45,12 +45,13 @@ export const useList = ({
   const [showFocusRing, setShowFocusRing] = useState<boolean>(true);
   const [fromMouse, setFromMouse] = useState<boolean>(false);
   const getId = () => {
+    const controlledHighlightedIndex = highlightedIndex || 0;
     const activeOptions = getOptions();
-    return activeOptions[highlightedIndex || 0]?.id || undefined;
+    return activeOptions[controlledHighlightedIndex]?.id || undefined;
   };
   const [activeDescendant, setActiveDescendant] = useControlled({
     controlled: getId(),
-    default: "",
+    default: getId(),
     name: "ListNextHighlighted",
     state: "activeDescendant",
   });
@@ -61,13 +62,6 @@ export const useList = ({
     name: "ListNextSelected",
     state: "selected",
   });
-
-  // adding an effect to move the cursor when items change controlled.
-  // this could be following active descendant if there is no better way of doing it when controlled
-  useEffect(() => {
-    const activeOptions = getOptions();
-    highlightedIndex && updateScroll(activeOptions[highlightedIndex]);
-  }, [highlightedIndex]);
 
   const updateScroll = useCallback(
     (currentTarget: Element) => {
@@ -102,6 +96,14 @@ export const useList = ({
     },
     [setSelectedItem, updateActiveDescendant]
   );
+
+
+  // Effect to move the cursor when items change controlled.
+  // this could be following active descendant if there is no better way of doing it when controlled
+  useEffect(() => {
+    const activeOptions = getOptions();
+    highlightedIndex && updateScroll(activeOptions[highlightedIndex]);
+  }, [highlightedIndex, getOptions, updateScroll]);
 
   const focusAndMoveActive = (element: HTMLElement) => {
     setShowFocusRing(true);
@@ -177,8 +179,9 @@ export const useList = ({
 
   const isFocused = useCallback(
     (id: string | undefined) =>
-      activeDescendant === id && Boolean(showFocusRing || highlightedIndex),
-    [activeDescendant, showFocusRing]
+      activeDescendant === id &&
+      Boolean(showFocusRing || highlightedIndex !== undefined),
+    [activeDescendant, showFocusRing, highlightedIndex]
   );
 
   const getActiveItem = () => {
