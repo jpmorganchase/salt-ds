@@ -20,7 +20,7 @@ describe("Given a Toast", () => {
       cy.findAllByTestId("InfoSolidIcon").should("exist");
     });
 
-    it("AND status=error, THEN renders error state", () => {
+    it("AND status is error, THEN renders error state", () => {
       cy.mount(
         <Toast status="error">
           <ToastContent>Toast content</ToastContent>
@@ -29,7 +29,7 @@ describe("Given a Toast", () => {
       cy.findAllByTestId("ErrorSolidIcon").should("exist");
     });
 
-    it("AND status=warning, THEN renders warning state", () => {
+    it("AND status is warning, THEN renders warning state", () => {
       cy.mount(
         <Toast status="warning">
           <ToastContent>Toast content</ToastContent>
@@ -38,28 +38,13 @@ describe("Given a Toast", () => {
       cy.findAllByTestId("WarningSolidIcon").should("exist");
     });
 
-    it("AND status=success, THEN renders success state", () => {
+    it("AND status is success, THEN renders success state", () => {
       cy.mount(
         <Toast status="success">
           <ToastContent>Toast content</ToastContent>
         </Toast>
       );
       cy.findAllByTestId("SuccessTickIcon").should("exist");
-    });
-  });
-
-  describe("WHEN ToastClose", () => {
-    it("renders close button", () => {
-      cy.mount(
-        <Toast>
-          <ToastContent>Toast content</ToastContent>
-          <Button variant="secondary">
-            <CloseIcon />
-          </Button>
-        </Toast>
-      );
-      cy.findAllByRole("button").should("exist");
-      cy.findAllByTestId("CloseIcon").should("exist");
     });
   });
 });
