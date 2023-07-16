@@ -4,8 +4,6 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import circularProgressCSS from "./CircularProgress.css";
 
-export const SIZE = 44;
-
 export const circularGradientId = "salt-circular-progress-gradient";
 
 export const ViewBox = (props: { children?: ReactNode }) => {
@@ -19,7 +17,6 @@ export const ViewBox = (props: { children?: ReactNode }) => {
   return (
     <svg
       className="saltCircularProgress-svg"
-      viewBox={`${SIZE / 2} ${SIZE / 2} ${SIZE} ${SIZE}`}
     >
       {props.children}
     </svg>
@@ -60,11 +57,9 @@ export const Circle = ({ strokeWidth, style, className }: CircleProps) => {
 
   return (
     <circle
-      cx={SIZE}
-      cy={SIZE}
+      cx="50%"
+      cy="50%"
       fill="none"
-      r={(SIZE - strokeWidth) / 2}
-      strokeWidth={strokeWidth}
       style={style}
       className={className}
     />

@@ -30,20 +30,7 @@ const ProgressWithControls = ({
         </Button>
         <Button onClick={handleReset}>Reset</Button>
       </div>
-      <div className="salt-ProgressWithControls-progressComponentContainer">
-        <div className="salt-ProgressWithControls-container">
-          <Progress aria-label="Download" size="small" value={value} />
-          <h3>small</h3>
-        </div>
-        <div className="salt-ProgressWithControls-container">
-          <Progress aria-label="Download" size="medium" value={value} />
-          <h3>medium</h3>
-        </div>
-        <div className="salt-ProgressWithControls-container">
-          <Progress aria-label="Download" size="large" value={value} />
-          <h3>large</h3>
-        </div>
-      </div>
+      <Progress aria-label="Download" value={value} />
     </div>
   );
 };
@@ -52,16 +39,28 @@ const CircularExamples = () => (
   <Panel style={{ height: "unset", marginLeft: 20 }}>
     <div style={{ display: "flex" }}>
       <div>
-        <h3>size=small</h3>
-        <CircularProgress aria-label="Download" size="small" value={38} />
+        <h3>HD</h3>
+        <SaltProvider density="high">
+        <CircularProgress aria-label="Download" value={38} />
+        </SaltProvider>
       </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>size=medium</h3>
-        <CircularProgress aria-label="Download" size="medium" value={38} />
+      <div style={{marginLeft: 100}}>
+        <h3>MD</h3>
+        <SaltProvider density="medium">
+        <CircularProgress aria-label="Download" value={38} />
+        </SaltProvider>
       </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>size=large</h3>
-        <CircularProgress aria-label="Download" size="large" value={38} />
+      <div style={{marginLeft: 100}}>
+        <h3>LD</h3>
+        <SaltProvider density="low">
+        <CircularProgress aria-label="Download" value={38} />
+        </SaltProvider>
+      </div>
+      <div style={{marginLeft: 100}}>
+        <h3>TD</h3>
+        <SaltProvider density="touch">
+        <CircularProgress aria-label="Download" value={38} />
+        </SaltProvider>
       </div>
     </div>
   </Panel>
@@ -89,83 +88,39 @@ export const All: ComponentStory<typeof CircularProgress> = () => (
 );
 
 export const Default: ComponentStory<typeof CircularProgress> = () => (
-  <div style={{ display: "flex" }}>
-    <div>
-      <h3>size=small</h3>
-      <CircularProgress aria-label="Download" size="small" value={100} />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=medium</h3>
-      <CircularProgress aria-label="Download" size="medium" value={38} />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=large</h3>
-      <CircularProgress aria-label="Download" size="large" value={38} />
-    </div>
-  </div>
+  <CircularProgress aria-label="Download" value={38} />
 );
 
 export const Disabled: ComponentStory<typeof CircularProgress> = () => (
-  <div style={{ display: "flex" }}>
-    <div>
-      <h3>size=small</h3>
-      <CircularProgress
-        aria-label="Download"
-        disabled
-        size="small"
-        value={38}
-      />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=medium</h3>
-      <CircularProgress
-        aria-label="Download"
-        disabled
-        size="medium"
-        value={38}
-      />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=large</h3>
-      <CircularProgress
-        aria-label="Download"
-        disabled
-        size="large"
-        value={38}
-      />
-    </div>
-  </div>
+  <CircularProgress aria-label="Download" disabled value={38} />
 );
 
 export const Indeterminate: ComponentStory<typeof CircularProgress> = () => (
   <div style={{ display: "flex" }}>
     <div>
-      <h3>size=small</h3>
-      <CircularProgress
-        aria-label="Download"
-        showInfo={false}
-        size="small"
-        variant="indeterminate"
-      />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=medium</h3>
-      <CircularProgress
-        aria-label="Download"
-        showInfo={false}
-        size="medium"
-        variant="indeterminate"
-      />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=large</h3>
-      <CircularProgress
-        aria-label="Download"
-        showInfo={false}
-        size="large"
-        variant="indeterminate"
-      />
-    </div>
+        <h3>HD</h3>
+        <SaltProvider density="high">
+        <CircularProgress aria-label="Download" variant="indeterminate" />
+        </SaltProvider>
+      </div>
+      <div style={{marginLeft: 100}}>
+        <h3>MD</h3>
+        <SaltProvider density="medium">
+        <CircularProgress aria-label="Download" variant="indeterminate" />
+        </SaltProvider>
+      </div>
+      <div style={{marginLeft: 100}}>
+        <h3>LD</h3>
+        <SaltProvider density="low">
+        <CircularProgress aria-label="Download" variant="indeterminate" />
+        </SaltProvider>
+      </div>
+      <div style={{marginLeft: 100}}>
+        <h3>TD</h3>
+        <SaltProvider density="touch">
+        <CircularProgress aria-label="Download" variant="indeterminate" />
+        </SaltProvider>
+      </div>
   </div>
 );
 

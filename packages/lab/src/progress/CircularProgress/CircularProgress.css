@@ -1,5 +1,7 @@
 .saltCircularProgress {
   --circularProgress-gradient-color: var(--salt-accent-background);
+  --progress-circle-radius: calc(var(--salt-size-base) - (var(--salt-size-detail) * 0.25));
+  --progress-circle-circumference: calc(var(--progress-circle-radius) * 2 * 3.14);
 
   color: var(--salt-text-primary-foreground);
   display: inline-flex;
@@ -14,19 +16,6 @@
 
 .saltCircularProgress-circle {
   stroke: url("#salt-circular-progress-gradient");
-  stroke-width: 2px;
-}
-
-.saltCircularProgress-small {
-  font-size: 11px;
-}
-
-.saltCircularProgress-medium {
-  font-size: 14px;
-}
-
-.saltCircularProgress-large {
-  font-size: 16px;
 }
 
 .saltCircularProgress-progressValue {
@@ -40,15 +29,14 @@
   width: 100%;
 }
 
-.saltCircularProgress-disabled {
-}
+.saltCircularProgress-disabled {}
 
-.saltCircularProgress-completed {
-}
+.saltCircularProgress-completed {}
 
 .saltCircularProgress-railCircle {
   stroke: var(--salt-track-borderColor);
-  stroke-width: var(--salt-size-border);
+  stroke-width: calc(var(--salt-size-basis-unit) * 0.5);
+  r: calc(var(--salt-size-base) - (var(--salt-size-basis-unit) * 0.25));
 }
 
 .saltCircularProgress-gradientStart,
@@ -64,16 +52,16 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 
-.saltCircularProgress-indeterminate {
-  animation: circular-rotate 1.4s linear infinite;
-}
-
 .saltCircularProgress-svg {
+  height: calc(var(--salt-size-base) * 2);
+  width: calc(var(--salt-size-base) * 2);
   fill: var(--salt-accent-background);
   display: block;
 }
 
 .saltCircularProgress-circle {
+  r: var(--progress-circle-radius);
+  stroke-width: calc(var(--salt-size-detail) * 0.5);
   stroke: url("#salt-circular-progress-gradient");
 }
 
@@ -82,13 +70,15 @@
 }
 
 .saltCircularProgress-circleIndeterminate {
-  animation: circular-dash 1.4s ease-in-out infinite;
+  stroke-dasharray: calc(var(--progress-circle-circumference) * 0.9), calc(var(--progress-circle-circumference) * 0.1);
+  animation: circular-dash 1.4s linear infinite;
 }
 
 @keyframes circular-rotate {
   0% {
     transform-origin: 50% 50%;
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -96,15 +86,14 @@
 
 @keyframes circular-dash {
   0% {
-    stroke-dasharray: 1px, 200px;
     stroke-dashoffset: 0;
   }
   50% {
-    stroke-dasharray: 100px, 200px;
-    stroke-dashoffset: -15px;
+    stroke-dashoffset: calc(var(--progress-circle-circumference) * -1);
+    stroke-dasharray: calc(var(--progress-circle-circumference) * 0.1), calc(var(--progress-circle-circumference) * 0.9);
   }
   100% {
-    stroke-dasharray: 100px, 200px;
-    stroke-dashoffset: -125px;
+    stroke-dashoffset: calc(var(--progress-circle-circumference) * -2);
+    stroke-dasharray: calc(var(--progress-circle-circumference) * 0.9), calc(var(--progress-circle-circumference) * 0.1);
   }
 }

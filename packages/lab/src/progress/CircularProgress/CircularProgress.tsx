@@ -9,7 +9,7 @@ import {
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Info as DefaultInfo } from "../Info";
-import { Circle, LinearGradient, SIZE, ViewBox } from "./CircularProgressParts";
+import { Circle, LinearGradient, ViewBox } from "./CircularProgressParts";
 import { InfoRendererProps } from "../LinearProgress/LinearProgress";
 
 import { useWindow } from "@salt-ds/window";
@@ -21,18 +21,6 @@ const MAX = 100;
 const MIN = 0;
 
 const withBaseName = makePrefixer("saltCircularProgress");
-
-export const SIZE_OPTIONS = {
-  small: {
-    container: 36,
-  },
-  medium: {
-    container: 48,
-  },
-  large: {
-    container: 60,
-  },
-};
 
 function getRelativeValue(value: number, min: number, max: number): number {
   return (Math.min(Math.max(min, value), max) - min) / (max - min);
@@ -73,11 +61,6 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   showInfo?: boolean;
   /**
-   * The size of the circle
-   * (small, medium, large)
-   */
-  size?: "small" | "medium" | "large";
-  /**
    * Default unit is`%`
    */
   unit?: string;
@@ -112,7 +95,6 @@ export const CircularProgress = forwardRef<
     className,
     disabled,
     showInfo = true,
-    size = "small",
     renderInfo,
     value = 0,
     unit = "%",
@@ -133,23 +115,16 @@ export const CircularProgress = forwardRef<
   const rootProps: HTMLAttributes<any> = {};
 
   if (variant === "determinate" || variant === "static") {
-    const circumference = 2 * Math.PI * ((SIZE - 2) * 0.5);
-    circleStyle.strokeDasharray = circumference.toFixed(3);
     rootProps["aria-valuenow"] = Math.round(value);
 
+    circleStyle.strokeDasharray = `var(--progress-circle-circumference)`;
+
     if (variant === "static") {
-      circleStyle.strokeDashoffset = `${(
-        ((100 - value) / 100) *
-        circumference
-      ).toFixed(3)}px`;
+      circleStyle.strokeDashoffset = `calc((100 - ${value}) / 100 * var(--progress-circle-circumference))`;
       rootStyle.transform = "rotate(-90deg)";
     } else {
-      circleStyle.strokeDashoffset = `${(
-        easeIn((100 - value) / 100) * circumference
-      ).toFixed(3)}px`;
-      rootStyle.transform = `rotate(${(easeOut(value / 70) * 270).toFixed(
-        3
-      )}deg)`;
+      circleStyle.strokeDashoffset = `calc((100 - ${value}) / 100 * var(--progress-circle-circumference))`;
+      rootStyle.transform = `rotate(calc(${value} / 70 * 270deg))`;
     }
   }
 
@@ -161,8 +136,6 @@ export const CircularProgress = forwardRef<
       );
     }
   }, [ariaLabel]);
-
-  const containerSize = SIZE_OPTIONS[size].container;
 
   const getValueProps = () => ({
     unit,
@@ -190,9 +163,6 @@ export const CircularProgress = forwardRef<
   return (
     <div
       className={clsx(className, "saltCircularProgress", {
-        [withBaseName("small")]: size === "small",
-        [withBaseName("medium")]: size === "medium",
-        [withBaseName("large")]: size === "large",
         [withBaseName("disabled")]: disabled,
       })}
       data-testid="circular-progress"
@@ -209,7 +179,7 @@ export const CircularProgress = forwardRef<
           [withBaseName("indeterminate")]: variant === "indeterminate",
           [withBaseName("static")]: variant === "static",
         })}
-        style={{ width: containerSize, height: containerSize, ...rootStyle }}
+        style={{ ...rootStyle }}
       >
         <ViewBox>
           <LinearGradient />
