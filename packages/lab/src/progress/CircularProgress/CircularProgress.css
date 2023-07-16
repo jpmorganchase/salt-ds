@@ -48,7 +48,7 @@
   display: inline-block;
 }
 
-.saltCircularProgress-static {
+.saltCircularProgress-determinate {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 
@@ -65,7 +65,7 @@
   stroke: url("#salt-circular-progress-gradient");
 }
 
-.saltCircularProgress-circleStatic {
+.saltCircularProgress-circleDeterminate {
   transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
 }
 

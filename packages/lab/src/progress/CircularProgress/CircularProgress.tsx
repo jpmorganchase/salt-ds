@@ -73,7 +73,7 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
    * The variant to use.
    * Use indeterminate or query when there is no progress value.
    */
-  variant?: "determinate" | "indeterminate" | "static";
+  variant?: "determinate" | "indeterminate";
 }
 
 /**
@@ -98,7 +98,7 @@ export const CircularProgress = forwardRef<
     renderInfo,
     value = 0,
     unit = "%",
-    variant = "static",
+    variant = "determinate",
     ...rest
   },
   ref
@@ -114,18 +114,11 @@ export const CircularProgress = forwardRef<
   const rootStyle: CSSProperties = {};
   const rootProps: HTMLAttributes<any> = {};
 
-  if (variant === "determinate" || variant === "static") {
+  if (variant === "determinate") {
     rootProps["aria-valuenow"] = Math.round(value);
-
     circleStyle.strokeDasharray = `var(--progress-circle-circumference)`;
-
-    if (variant === "static") {
-      circleStyle.strokeDashoffset = `calc((100 - ${value}) / 100 * var(--progress-circle-circumference))`;
-      rootStyle.transform = "rotate(-90deg)";
-    } else {
-      circleStyle.strokeDashoffset = `calc((100 - ${value}) / 100 * var(--progress-circle-circumference))`;
-      rootStyle.transform = `rotate(calc(${value} / 70 * 270deg))`;
-    }
+    circleStyle.strokeDashoffset = `calc((100 - ${value}) / 100 * var(--progress-circle-circumference))`;
+    rootStyle.transform = "rotate(-90deg)";
   }
 
   useEffect(() => {
@@ -177,7 +170,7 @@ export const CircularProgress = forwardRef<
       <div
         className={clsx(withBaseName("container"), {
           [withBaseName("indeterminate")]: variant === "indeterminate",
-          [withBaseName("static")]: variant === "static",
+          [withBaseName("determinate")]: variant === "determinate",
         })}
         style={{ ...rootStyle }}
       >
@@ -190,7 +183,7 @@ export const CircularProgress = forwardRef<
             className={clsx(withBaseName("circle"), {
               [withBaseName("circleIndeterminate")]:
                 variant === "indeterminate",
-              [withBaseName("circleStatic")]: variant === "static",
+                [withBaseName("circleDeterminate")]: variant === "determinate",
             })}
           />
         </ViewBox>
