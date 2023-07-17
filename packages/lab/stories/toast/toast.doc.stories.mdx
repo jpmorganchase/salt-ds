@@ -1,0 +1,78 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Link } from "@salt-ds/core";
+import { Toast } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Lab/Toast"
+  component={Toast}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Toast
+
+<Canvas>
+  <Story id="lab-toast--default-info" />
+</Canvas>
+
+## Examples
+
+### Displaying general information
+
+<Canvas>
+  <Story id="lab-toast--default-info" />
+</Canvas>
+
+### Letting users know about an issue
+
+<Canvas>
+  <Story id="lab-toast--error" />
+</Canvas>
+
+<Canvas>
+  <Story id="lab-toast--warning" />
+</Canvas>
+
+### When you need to reassure your users
+
+<Canvas>
+  <Story id="lab-toast--success" />
+</Canvas>
+
+### Custom content
+
+<Canvas>
+  <Story id="lab-toast--custom-content" />
+</Canvas>
+
+## Configuring Toast
+
+```
+import { Toast } from '@salt-ds/lab';
+```
+
+### Props
+
+<ArgsTable of={Toast} />
+
+### CSS Class
+
+<CSSClassTable of={Toast} />
+
+### Characteristics Used
+
+<CharacteristicUsage of={Toast} />
+
+## Accessibility
+
+Toast is accessible by assistive technologies like screen readers, and provides full WAI-ARIA support.
+
+Any focusable elements included in the Toast content will need to be checked and tested accordingly.
+
+<HelpAndSupport />
