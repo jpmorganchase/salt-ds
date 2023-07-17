@@ -28,6 +28,8 @@ export * from "./theme";
 export * from "./toast";
 export * from "./salt-provider";
 export * from "./split-layout";
+export * from "./toggle-button";
+export * from "./toggle-button-group";
 export * from "./tooltip";
 export * from "./utils";
 export * from "./viewport";

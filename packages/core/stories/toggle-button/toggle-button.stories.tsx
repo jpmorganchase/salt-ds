@@ -1,10 +1,9 @@
-import { ToggleButton } from "@salt-ds/lab";
+import { ToggleButton, Tooltip } from "@salt-ds/core";
 import { HomeIcon, FavoriteSolidIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Tooltip } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Toggle Button",
+  title: "Core/Toggle Button",
   component: ToggleButton,
 } as ComponentMeta<typeof ToggleButton>;
 

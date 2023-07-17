@@ -4,7 +4,7 @@ import {
   PrintIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { SyntheticEvent, useState } from "react";
 
 describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (uncontrolled)", () => {

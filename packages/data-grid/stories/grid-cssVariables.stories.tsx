@@ -7,8 +7,14 @@ import {
   TextCellEditor,
 } from "../src";
 import { ChangeEvent, SyntheticEvent, useMemo, useState } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
-import { Button, Checkbox, FlexItem, FlexLayout } from "@salt-ds/core";
+import {
+  Button,
+  Checkbox,
+  FlexItem,
+  FlexLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
 import { DeleteIcon, UndoIcon } from "@salt-ds/icons";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";

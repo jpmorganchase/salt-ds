@@ -6,8 +6,9 @@ import {
   Density,
   Mode,
   SaltProvider,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@salt-ds/core";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
 
 import "docs/story.css";
 
