@@ -147,7 +147,9 @@ export const CustomContent = (args: ToastProps) => (
           style={{ marginTop: "var(--salt-spacing-100)" }}
         >
           <Button style={{ flex: 1 }}>Dismiss</Button>
-          <Button variant="cta" style={{ flex: 1 }}>Yes</Button>
+          <Button variant="cta" style={{ flex: 1 }}>
+            Yes
+          </Button>
         </FlowLayout>
       </ToastContent>
     </Toast>
