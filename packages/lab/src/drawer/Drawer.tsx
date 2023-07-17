@@ -88,11 +88,16 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   const drawer = showComponent ? (
     <div
       ref={ref}
-      className={clsx(withBaseName(), withBaseName(position), {
-        [withBaseName("enter-animation")]: enterAnimation,
-        [withBaseName("exit-animation")]: exitAnimation,
-        [withBaseName(variant)]: variant,
-      }, className)}
+      className={clsx(
+        withBaseName(),
+        withBaseName(position),
+        {
+          [withBaseName("enter-animation")]: enterAnimation,
+          [withBaseName("exit-animation")]: exitAnimation,
+          [withBaseName(variant)]: variant,
+        },
+        className
+      )}
       onAnimationStart={() => setIsAnimating(true)}
       onAnimationEnd={() => {
         if (!isOpen && showComponent) {
