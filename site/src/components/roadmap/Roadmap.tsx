@@ -1,6 +1,5 @@
 import { ReactNode, SetStateAction, useEffect, useState } from "react";
-import { Grid, GridColumn } from "@salt-ds/data-grid";
-import { GridLayout, GridItem, Card, H1, CardProps, Button, Input, H3, Link } from "@salt-ds/core";
+import { GridLayout, Card, H1, CardProps, Button, Input, H3, Link, Banner, BannerContent } from "@salt-ds/core";
 import styles from "./style.module.css";
 import { ProgressInprogressIcon, ProgressPendingIcon, SearchIcon } from "@salt-ds/icons";
 import { Heading3 } from "../mdx/h3";
@@ -144,8 +143,13 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
         startAdornment={<SearchIcon />}
       />
 
-        {/* <TableView sortedRoadmapData={sortedRoadmapData} searchQuery={searchQuery}/> */}
-        <CardView sortedRoadmapData={sortedRoadmapData} searchQuery={searchQuery}  />
+  {roadmapData !== null && roadmapData.length > 0 ? (
+        <CardView sortedRoadmapData={sortedRoadmapData} searchQuery={searchQuery} />
+      ) : (
+        <Banner status="info">
+          <BannerContent>No data available</BannerContent>
+        </Banner>
+      )}
 
     </div>
 
@@ -224,10 +228,6 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
   </div>
 </GridLayout>
 
-
-
   );
-
-
 
 }

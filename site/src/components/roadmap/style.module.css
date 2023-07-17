@@ -16,8 +16,8 @@
 .cardContainer:global(.saltGridLayout){
     margin-top: 50px;
     display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
-  gap: 20px; /* Adjust the gap between columns */
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 20px; /* Adjust the gap between columns */
 }
 
 
