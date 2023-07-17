@@ -1,5 +1,5 @@
 import { Story } from "@storybook/react";
-import { Button } from "@salt-ds/core";
+import { Button, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
   ColumnChooserIcon,
@@ -14,7 +14,6 @@ import {
 
 import {
   Dropdown,
-  ToggleButton,
   Toolbar,
   ToolbarButton,
   Tooltray,

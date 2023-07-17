@@ -1,5 +1,5 @@
 import { HomeIcon } from "@salt-ds/icons";
-import { ToggleButton, ToggleButtonProps } from "@salt-ds/lab";
+import { ToggleButton, ToggleButtonProps } from "@salt-ds/core";
 import { useState } from "react";
 
 describe("GIVEN a ToggleButton with Icon and Text", () => {

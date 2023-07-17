@@ -1,6 +1,5 @@
 import { ReactElement, SyntheticEvent, useCallback, useState } from "react";
-import { makePrefixer } from "@salt-ds/core";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
+import { makePrefixer, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { ThemeMode } from "../../header/ScopeSelector";
 import "./LightDarkToggle.css";
 
