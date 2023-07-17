@@ -53,3 +53,10 @@
 
     position: relative;
 }
+
+
+
+.gridLayout {
+  max-width: 1000px;
+}
+
