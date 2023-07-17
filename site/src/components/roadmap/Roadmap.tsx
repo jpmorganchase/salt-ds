@@ -1,6 +1,6 @@
 import { ReactNode, SetStateAction, useEffect, useState } from "react";
 import { Grid, GridColumn } from "@salt-ds/data-grid";
-import { GridLayout, GridItem, Card, H1, CardProps, Button, Input } from "@salt-ds/core";
+import { GridLayout, GridItem, Card, H1, CardProps, Button, Input, H3, Link } from "@salt-ds/core";
 import styles from "./style.module.css";
 import { ProgressInprogressIcon, ProgressPendingIcon, SearchIcon } from "@salt-ds/icons";
 
@@ -194,11 +194,14 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
 
             return (
               <RoadmapCard className={styles.card} key={item.id}>
-                <H1 style={{ marginTop: "-10px" }} styleAs="h3">
-                  <a href={item.issueUrl}>
-                    <u>{item.text}</u>
+               <Link>
+              <H1 style={{ marginTop: "-10px" }} styleAs="h3">
+              <a href={item.issueUrl}>
+                    {item.text}
+                  
                   </a>
                 </H1>
+                </Link>
                 <b>Due Date: </b>
                 <p className={styles.date}>{formattedDate}</p>
               </RoadmapCard>
@@ -223,12 +226,14 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
     
           return (
             <RoadmapCard key={item.id}>
+              <Link>
               <H1 style={{ marginTop: "-10px" }} styleAs="h3">
               <a href={item.issueUrl}>
-                    <u>{item.text} </u>
+                    {item.text}
                   
                   </a>
                 </H1>
+                </Link>
                 <p className={styles.date}><b>Due date: </b>{formattedDate}</p>
             </RoadmapCard>
           );
