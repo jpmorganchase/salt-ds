@@ -71,7 +71,14 @@ Success.args = {
 
 export const NoCloseButton = (args: ToastProps) => (
   <Toast {...args}>
-    <ToastContent>LEI Updated</ToastContent>
+    <ToastContent>
+      <div>
+        <Text>
+          <strong>File update</strong>
+        </Text>
+        <div>A new version of this file is available with 37 updates. </div>
+      </div>
+    </ToastContent>
   </Toast>
 );
 
@@ -122,6 +129,25 @@ export const CustomContent = (args: ToastProps) => (
         >
           <Button>Dismiss</Button>
           <Button variant="cta">Yes</Button>
+        </FlowLayout>
+      </ToastContent>
+    </Toast>
+    <Toast {...args}>
+      <ToastContent>
+        <Text>
+          <strong>Toast title</strong>
+        </Text>
+        <div>
+          This is a toast message. This is a toast message. This is a toast
+          message. This is a toast message.
+        </div>
+        <FlowLayout
+          gap={1}
+          justify="end"
+          style={{ marginTop: "var(--salt-spacing-100)" }}
+        >
+          <Button style={{ flex: 1 }}>Dismiss</Button>
+          <Button variant="cta" style={{ flex: 1 }}>Yes</Button>
         </FlowLayout>
       </ToastContent>
     </Toast>
