@@ -3,7 +3,6 @@ import { Grid, GridColumn } from "@salt-ds/data-grid";
 import { GridLayout, GridItem, Card, H1, CardProps, Button, Input } from "@salt-ds/core";
 import styles from "./style.module.css";
 import { ProgressInprogressIcon, ProgressPendingIcon, SearchIcon } from "@salt-ds/icons";
-import axios from 'axios';
 
 
 type CalloutProps = { title: string; children: ReactNode };
@@ -84,8 +83,8 @@ export const Roadmap = ({ title, children }: CalloutProps) => {
     const fetchData = async () => {
       try {
         //gets the data
-        const response = await axios.get('/api/auth/roadmap');
-        const responseData = response.data;
+        const response = await fetch('/api/roadmap');
+        const responseData = await response.json();
         const jsonString = JSON.stringify(responseData, null, 2);
         setJsonData(jsonString);
 

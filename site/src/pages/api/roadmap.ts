@@ -1,6 +1,7 @@
-import axios from 'axios';
+import { NextApiRequest, NextApiResponse } from 'next';
+import fetch from 'node-fetch';
 
-export default async function handler(req: any, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { message: string; }): void; new(): any; }; }; }) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const query = `
       query($endCursor: String) {
@@ -54,23 +55,24 @@ export default async function handler(req: any, res: { status: (arg0: number) =>
       }
     `;
 
-    const response = await axios.post(
-      'https://api.github.com/graphql',
-      {
+    const response = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      },
+      body: JSON.stringify({
         query,
         variables: { endCursor: "null" },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-        },
-      }
-    );
+      }),
+    });
 
-    const responseData = response.data;
+    const responseData = await response.json();
     res.status(200).json(responseData);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error fetching data' });
   }
-}
+};
+
+export default handler;
