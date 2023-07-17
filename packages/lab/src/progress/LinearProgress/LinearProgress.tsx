@@ -73,10 +73,6 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   showInfo?: boolean;
   /**
-   * The size of the line, default is 'small'.
-   */
-  size?: "small" | "medium" | "large";
-  /**
    * Default unit is`%`.
    */
   unit?: string;
@@ -109,7 +105,6 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       disabled,
       renderInfo,
       showInfo = true,
-      size = "small",
       variant = "determinate",
       unit = "%",
       value = 0,
@@ -164,9 +159,6 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName("small")]: size === "small",
-            [withBaseName("medium")]: size === "medium",
-            [withBaseName("large")]: size === "large",
           },
           className
         )}

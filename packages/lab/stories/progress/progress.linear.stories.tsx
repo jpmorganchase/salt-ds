@@ -31,18 +31,7 @@ const ProgressWithControls = ({
         <Button onClick={handleReset}>Reset</Button>
       </div>
       <div className="salt-ProgressWithControls-progressComponentContainer">
-        <div className="salt-ProgressWithControls-container">
-          <Progress aria-label="Download" size="small" value={value} />
-          <h3>small</h3>
-        </div>
-        <div className="salt-ProgressWithControls-container">
-          <Progress aria-label="Download" size="medium" value={value} />
-          <h3>medium</h3>
-        </div>
-        <div className="salt-ProgressWithControls-container">
-          <Progress aria-label="Download" size="large" value={value} />
-          <h3>large</h3>
-        </div>
+        <Progress aria-label="Download" value={value} />
       </div>
     </div>
   );
@@ -52,21 +41,32 @@ const LinearExamples = () => (
   <Panel style={{ height: "unset", marginLeft: 20 }}>
     <div style={{ display: "flex" }}>
       <div>
-        <h3>size=small</h3>
-        <LinearProgress aria-label="Download" size="small" value={38} />
+        <h3>HD</h3>
+        <SaltProvider density="high">
+          <LinearProgress aria-label="Download" value={38} />
+        </SaltProvider>
       </div>
       <div style={{ marginLeft: 100 }}>
-        <h3>size=medium</h3>
-        <LinearProgress aria-label="Download" size="medium" value={38} />
+        <h3>MD</h3>
+        <SaltProvider density="medium">
+          <LinearProgress aria-label="Download" value={38} />
+        </SaltProvider>
       </div>
       <div style={{ marginLeft: 100 }}>
-        <h3>size=large</h3>
-        <LinearProgress aria-label="Download" size="large" value={38} />
+        <h3>LD</h3>
+        <SaltProvider density="low">
+          <LinearProgress aria-label="Download" value={38} />
+        </SaltProvider>
+      </div>
+      <div style={{ marginLeft: 100 }}>
+        <h3>TD</h3>
+        <SaltProvider density="touch">
+          <LinearProgress aria-label="Download" value={38} />
+        </SaltProvider>
       </div>
     </div>
   </Panel>
 );
-
 export const All: ComponentStory<typeof LinearProgress> = () => (
   <div
     style={{
@@ -89,54 +89,15 @@ export const All: ComponentStory<typeof LinearProgress> = () => (
 );
 
 export const Default: ComponentStory<typeof LinearProgress> = () => (
-  <div>
-    <div>
-      <h3>size=small</h3>
-      <LinearProgress size="small" value={38} />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=medium</h3>
-      <LinearProgress size="medium" value={38} />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=large</h3>
-      <LinearProgress size="large" value={38} />
-    </div>
-  </div>
+  <LinearProgress value={38} />
 );
 
 export const Disabled: ComponentStory<typeof LinearProgress> = () => (
-  <div>
-    <div>
-      <h3>size=small</h3>
-      <LinearProgress disabled size="small" value={38} />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=medium</h3>
-      <LinearProgress disabled size="medium" value={38} />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=large</h3>
-      <LinearProgress disabled size="large" value={38} />
-    </div>
-  </div>
+  <LinearProgress disabled value={38} />
 );
 
 export const Indeterminate: ComponentStory<typeof LinearProgress> = () => (
-  <div>
-    <div>
-      <h3>size=small</h3>
-      <LinearProgress size="small" value={38} variant="indeterminate" />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=medium</h3>
-      <LinearProgress size="medium" value={38} variant="indeterminate" />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=large</h3>
-      <LinearProgress size="large" value={38} variant="indeterminate" />
-    </div>
-  </div>
+  <LinearProgress value={38} variant="indeterminate" />
 );
 
 export const ProgressingValue: ComponentStory<typeof LinearProgress> = () => (
@@ -144,20 +105,7 @@ export const ProgressingValue: ComponentStory<typeof LinearProgress> = () => (
 );
 
 export const LinearQuery: ComponentStory<typeof LinearProgress> = () => (
-  <div>
-    <div>
-      <h3>size=small</h3>
-      <LinearProgress size="small" value={38} variant="query" />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=medium</h3>
-      <LinearProgress size="medium" value={38} variant="query" />
-    </div>
-    <div style={{ marginTop: 50 }}>
-      <h3>size=large</h3>
-      <LinearProgress size="large" value={38} variant="query" />
-    </div>
-  </div>
+  <LinearProgress value={38} variant="query" />
 );
 
 export const ShowNoInfo: ComponentStory<typeof LinearProgress> = () => (

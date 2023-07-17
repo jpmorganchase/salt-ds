@@ -6,26 +6,10 @@
   font-size: var(--linearProgress-fontSize);
 }
 
-/* TODO: Odyssey now has only 2 sizes */
-.saltLinearProgress-large {
-  --linearProgress-after-top: 3px;
-  --linearProgress-value-paddingLeft: 12px;
-  --linearProgress-height: 7px;
-  --linearProgress-fontSize: 16px;
-}
-
-.saltLinearProgress-medium {
-  --linearProgress-after-top: 2px;
-  --linearProgress-value-paddingLeft: 8px;
-  --linearProgress-height: 5px;
-  --linearProgress-fontSize: 14px;
-}
-
-.saltLinearProgress-small {
-  --linearProgress-after-top: 1px;
-  --linearProgress-value-paddingLeft: 4px;
-  --linearProgress-height: 3px;
-  --linearProgress-fontSize: 11px;
+.saltLinearProgress {
+  --linearProgress-after-top: calc((var(--linearProgress-height) - var(--salt-size-basis-unit) * 0.5) / 2);
+  --linearProgress-value-paddingLeft: var(--salt-size-unit);
+  --linearProgress-height: var(--salt-size-detail);
 }
 
 .saltLinearProgress-disabled .saltLinearProgress-bar {
@@ -55,7 +39,7 @@
   background: var(--salt-track-borderColor);
   content: "";
   display: block;
-  height: 1px;
+  height: calc(var(--salt-size-basis-unit) * 0.5);
   left: 0;
   position: absolute;
   right: 0;
