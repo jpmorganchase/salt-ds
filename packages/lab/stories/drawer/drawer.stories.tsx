@@ -11,23 +11,13 @@ import {
   Input,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { Drawer, DRAWER_POSITIONS } from "@salt-ds/lab";
+import { Drawer } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./drawer.stories.css";
 
 export default {
   title: "Lab/Drawer",
   component: Drawer,
-  argTypes: {
-    position: {
-      options: DRAWER_POSITIONS,
-      control: { type: "select" },
-    },
-  },
-  args: {
-    disableScrim: false,
-    disableAnimations: false,
-  },
 } as ComponentMeta<typeof Drawer>;
 
 type DrawerContentExampleProps = {
