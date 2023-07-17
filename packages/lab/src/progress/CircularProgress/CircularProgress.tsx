@@ -138,7 +138,7 @@ export const CircularProgress = forwardRef<
       <DefaultInfo
         className={withBaseName("progressValue")}
         unit={unit}
-        value={progress}
+        value={Math.round(progress)}
         {...rest}
       />
     );

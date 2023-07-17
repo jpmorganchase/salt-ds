@@ -147,7 +147,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           )
         )
       ) : (
-        <DefaultInfo unit={unit} value={progress} className={progressValue} />
+        <DefaultInfo unit={unit} value={Math.round(progress)} className={progressValue} />
       );
     }
 
