@@ -34,7 +34,7 @@
 .saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
   outline: var(--saltRadioButton-outline, var(--salt-focused-outline));
   outline-offset: var(--salt-focused-outlineOffset);
-  border-color: var(--salt-selectable-foreground-hover);
+  border-color: var(--salt-selectable-borderColor-hover);
   color: var(--salt-selectable-foreground-hover);
 }
 
