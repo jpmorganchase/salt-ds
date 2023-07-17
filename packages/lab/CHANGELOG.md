@@ -1,5 +1,56 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.12
+
+### Minor Changes
+
+- 95188004: Added `MultilineInput` component with fixed number of rows
+- 27139c5c0: Realign Accordion to our design language
+
+Before:
+
+```tsx
+<Accordion expandedSectionIds={expanded} onChange={handleChange}>
+  <AccordionSection id="accordion-0" key="AccordionSection0">
+    <AccordionSummary>AccordionSummary0</AccordionSummary>
+    <AccordionDetails>AccordionDetails0</AccordionDetails>
+  </AccordionSection>
+  <AccordionSection id="accordion-1" key="AccordionSection1">
+    <AccordionSummary>AccordionSummary1</AccordionSummary>
+    <AccordionDetails>AccordionDetails1</AccordionDetails>
+  </AccordionSection>
+</Accordion>
+```
+
+After:
+
+```tsx
+<AccordionGroup>
+  <Accordion
+    expanded={expanded === "accordion-0"}
+    value="accordion-0"
+    onToggle={onChange}
+  >
+    <AccordionHeader>AccordionHeader0</AccordionHeader>
+    <AccordionPanel>AccordionPanel0</AccordionPanel>
+  </Accordion>
+  <Accordion
+    expanded={expanded === "accordion-1"}
+    value="accordion-1"
+    onToggle={onChange}
+  >
+    <AccordionHeader>AccordionHeader1</AccordionHeader>
+    <AccordionPanel>AccordionPanel1</AccordionPanel>
+  </Accordion>
+</AccordionGroup>
+```
+
+### Patch Changes
+
+- 79e9f4bc: `MultilineInput` is now compatible with `FormField`. `FormFieldLabel` can be styled as a question by using the new `pronounced` prop.
+- 4329d8c7: Update Button and Toggle Button to have a fixed gap between icons and text.
+- 78ee0b81: Removed unnecessary transition in List Item Next
+
 ## 1.0.0-alpha.11
 
 ### Minor Changes

@@ -1,7 +1,11 @@
 import { ReactElement } from "react";
 import { clsx } from "clsx";
-import { Accordion, AccordionHeader, AccordionPanel } from "@salt-ds/lab";
-import { makePrefixer } from "@salt-ds/core";
+import {
+  Accordion,
+  AccordionHeader,
+  AccordionPanel,
+  makePrefixer,
+} from "@salt-ds/core";
 import { ChildrenValues } from "../../ChildrenValues";
 import { JSONObj } from "../../../helpers/parseToJson";
 import "../Foundations.css";

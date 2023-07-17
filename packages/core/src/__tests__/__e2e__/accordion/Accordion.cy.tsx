@@ -3,7 +3,7 @@ import {
   Accordion,
   AccordionProps,
   AccordionHeader,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { Component, ReactNode } from "react";
 
 interface DetailsSpyProps {
