@@ -1,9 +1,9 @@
 import { ReactNode, SetStateAction, useEffect, useState } from "react";
-import { fetchGraphQLData } from "./get_data.js";
 import { Grid, GridColumn } from "@salt-ds/data-grid";
 import { GridLayout, GridItem, Card, H1, CardProps, Button, Input } from "@salt-ds/core";
 import styles from "./style.module.css";
 import { ProgressInprogressIcon, ProgressPendingIcon, SearchIcon } from "@salt-ds/icons";
+import axios from 'axios';
 
 
 type CalloutProps = { title: string; children: ReactNode };
@@ -79,13 +79,13 @@ export const Roadmap = ({ title, children }: CalloutProps) => {
   const [searchQuery, setSearchQuery] = useState("");
 
 
-
   useEffect(() => {
    
     const fetchData = async () => {
       try {
         //gets the data
-        const responseData = await fetchGraphQLData();
+        const response = await axios.get('/api/auth/roadmap');
+        const responseData = response.data;
         const jsonString = JSON.stringify(responseData, null, 2);
         setJsonData(jsonString);
 
