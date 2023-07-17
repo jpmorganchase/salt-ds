@@ -75,9 +75,22 @@ export const AllDensities: ComponentStory<typeof Pill> = () => {
       style={{
         display: "grid",
         gridTemplateColumns: " repeat(4, auto)",
-        gridColumnGap: 16,
+        gap: 16,
       }}
     >
+      <SaltProvider density="touch">
+        <Pill icon={<FavoriteIcon />}>TD Pill</Pill>
+      </SaltProvider>
+      <SaltProvider density="low">
+        <Pill icon={<FavoriteIcon />}>LD Pill</Pill>
+      </SaltProvider>
+      <SaltProvider density="medium">
+        <Pill icon={<FavoriteIcon />}>MD Pill</Pill>
+      </SaltProvider>
+      <SaltProvider density="high">
+        <Pill icon={<FavoriteIcon />}>HD Pill</Pill>
+      </SaltProvider>
+
       <SaltProvider density="touch">
         <Pill icon={<FavoriteIcon />} onClick={noop} onClose={noop}>
           TD Pill
@@ -95,6 +108,26 @@ export const AllDensities: ComponentStory<typeof Pill> = () => {
       </SaltProvider>
       <SaltProvider density="high">
         <Pill icon={<FavoriteIcon />} onClick={noop} onClose={noop}>
+          HD Pill
+        </Pill>
+      </SaltProvider>
+      <SaltProvider density="touch">
+        <Pill icon={<FavoriteIcon />} onClose={noop}>
+          TD Pill
+        </Pill>
+      </SaltProvider>
+      <SaltProvider density="low">
+        <Pill icon={<FavoriteIcon />} onClose={noop}>
+          LD Pill
+        </Pill>
+      </SaltProvider>
+      <SaltProvider density="medium">
+        <Pill icon={<FavoriteIcon />} onClose={noop}>
+          MD Pill
+        </Pill>
+      </SaltProvider>
+      <SaltProvider density="high">
+        <Pill icon={<FavoriteIcon />} onClose={noop}>
           HD Pill
         </Pill>
       </SaltProvider>
