@@ -35,8 +35,8 @@
 
 .saltCircularProgress-railCircle {
   stroke: var(--salt-track-borderColor);
-  stroke-width: calc(var(--salt-size-basis-unit) * 0.5);
-  r: calc(var(--salt-size-base) - (var(--salt-size-basis-unit) * 0.25));
+  stroke-width: var(--salt-track-borderWidth);
+  r: calc(var(--salt-size-base) - (var(--salt-track-borderWidth) * 0.5));
 }
 
 .saltCircularProgress-gradientStart,

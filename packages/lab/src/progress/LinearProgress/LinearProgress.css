@@ -6,12 +6,6 @@
   font-size: var(--linearProgress-fontSize);
 }
 
-.saltLinearProgress {
-  --linearProgress-after-top: calc((var(--linearProgress-height) - var(--salt-size-basis-unit) * 0.5) / 2);
-  --linearProgress-value-paddingLeft: var(--salt-size-unit);
-  --linearProgress-height: var(--salt-size-detail);
-}
-
 .saltLinearProgress-disabled .saltLinearProgress-bar {
   background: var(--salt-accent-background-disabled);
 }
@@ -30,16 +24,16 @@
   position: relative;
   width: calc(100% - 10px);
   overflow: hidden;
-  height: var(--linearProgress-height);
+  height: var(--salt-size-detail);
 }
 
 /* Horizontal line under the progress indicator bar */
 .saltLinearProgress-barContainer:after {
-  top: var(--linearProgress-after-top);
+  top: calc((var(--salt-size-detail) - var(--salt-size-basis-unit) * 0.5) / 2);
   background: var(--salt-track-borderColor);
   content: "";
   display: block;
-  height: calc(var(--salt-size-basis-unit) * 0.5);
+  height: var(--salt-track-borderWidth);
   left: 0;
   position: absolute;
   right: 0;
@@ -90,7 +84,7 @@
   color: inherit;
   margin: 0;
   white-space: nowrap;
-  padding-left: var(--linearProgress-value-paddingLeft);
+  padding-left: var(--salt-size-unit);
 }
 
 @keyframes Indeterminate1 {
