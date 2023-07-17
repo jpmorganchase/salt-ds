@@ -89,7 +89,6 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
         setJsonData(jsonString);
 
         const items = responseData?.data?.organization?.repository?.projectV2?.items?.nodes;
-        console.log(items); // Check the structure of the extracted items data
 
         //creates an array of objects with data from github
         const extractedData = items?.map((item: any) => {
@@ -176,7 +175,7 @@ export const TableView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => 
 export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
 
   return(
-    <GridLayout  style={{ maxWidth: "1000px", paddingBottom: "00px"}}  columns={3}  >
+    <GridLayout className={styles.grid}  columns={3}   >
 
     <div className={styles.column}>
       <h2 className={styles.heading} style={{marginLeft: "22%"}}>Future <ProgressPendingIcon className={styles.icon} size={1.4}/></h2>
