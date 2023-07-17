@@ -108,9 +108,9 @@ export const CustomContent = (args: ToastProps) => (
     </Toast>
     <Toast {...args}>
       <ToastContent>
-        <div>
+        <Text>
           <strong>Toast title</strong>
-        </div>
+        </Text>
         <div>
           This is a toast message. This is a toast message. This is a toast
           message. This is a toast message.
