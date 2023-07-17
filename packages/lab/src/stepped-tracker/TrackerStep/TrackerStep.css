@@ -22,6 +22,8 @@
   width: var(--trackerStep-width);
   gap: var(--salt-spacing-50);
   color: var(--salt-text-primary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
 }
 
 /* Pseudo-class applied to the root element on focus */

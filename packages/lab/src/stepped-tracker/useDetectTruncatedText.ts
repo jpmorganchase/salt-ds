@@ -26,10 +26,8 @@ const useDetectTruncatedText = (
     let anyEntriesTruncated = false;
 
     observedMap.forEach((entry) => {
-      if (!anyEntriesTruncated) {
-        if (entry.offsetWidth < entry.scrollWidth) {
-          anyEntriesTruncated = true;
-        }
+      if (entry.offsetWidth < entry.scrollWidth) {
+        anyEntriesTruncated = true;
       }
     });
 

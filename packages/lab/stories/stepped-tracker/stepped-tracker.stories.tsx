@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { SteppedTracker, TrackerStep } from "@salt-ds/lab";
+import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 import { Button, StackLayout, FlexLayout, Tooltip } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
@@ -8,7 +8,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 export default {
   title: "Lab/Stepped Tracker",
   component: SteppedTracker,
-  subcomponents: { TrackerStep },
+  subcomponents: { TrackerStep, StepLabel },
 } as ComponentMeta<typeof SteppedTracker>;
 
 type Step = {
@@ -46,22 +46,46 @@ export const Basic: ComponentStory<typeof SteppedTracker> = () => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={0}>
-        <TrackerStep state="default">Step One</TrackerStep>
-        <TrackerStep state="default">Step Two</TrackerStep>
-        <TrackerStep state="default">Step Three</TrackerStep>
-        <TrackerStep state="default">Step Four</TrackerStep>
+        <TrackerStep>
+          <StepLabel>Step One</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Step Two</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Step Three</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Step Four</StepLabel>
+        </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={2}>
-        <TrackerStep state="completed">Step One</TrackerStep>
-        <TrackerStep state="completed">Step Two</TrackerStep>
-        <TrackerStep state="default">Step Three</TrackerStep>
-        <TrackerStep state="default">Step Four</TrackerStep>
+        <TrackerStep state="completed">
+          <StepLabel>Step One</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="completed">
+          <StepLabel>Step Two</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>Step Three</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>Step Four</StepLabel>
+        </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={3}>
-        <TrackerStep state="completed">Step One</TrackerStep>
-        <TrackerStep state="completed">Step Two</TrackerStep>
-        <TrackerStep state="completed">Step Three</TrackerStep>
-        <TrackerStep state="completed">Step Four</TrackerStep>
+        <TrackerStep state="completed">
+          <StepLabel>Step One</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="completed">
+          <StepLabel>Step Two</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="completed">
+          <StepLabel>Step Three</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="completed">
+          <StepLabel>Step Four</StepLabel>
+        </TrackerStep>
       </SteppedTracker>
     </StackLayout>
   );
@@ -103,7 +127,7 @@ export const AutoProgress: ComponentStory<typeof SteppedTracker> = () => {
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }, key) => (
           <TrackerStep state={state} key={key}>
-            {label}
+            <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}
       </SteppedTracker>
@@ -130,11 +154,19 @@ export const Truncated: ComponentStory<typeof SteppedTracker> = () => {
     >
       <SteppedTracker activeStep={0}>
         <TrackerStep state="default">
-          {`Step One: I am some ${longText} long text which will be truncated`}
+          <StepLabel>
+            {`Step One: I am some ${longText} long text which will be truncated`}
+          </StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">{`Step Two: I am some ${longText} long text which will be truncated`}</TrackerStep>
-        <TrackerStep state="default">{`Step Three: I am some ${longText} long text which will be truncated`}</TrackerStep>
-        <TrackerStep state="default">{`Step Four: I am some ${longText} long text which will be truncated`}</TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>{`Step Two: I am some ${longText} long text which will be truncated`}</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>{`Step Three: I am some ${longText} long text which will be truncated`}</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>{`Step Four: I am some ${longText} long text which will be truncated`}</StepLabel>
+        </TrackerStep>
       </SteppedTracker>
     </StackLayout>
   );
@@ -148,10 +180,20 @@ export const SingleTruncated: ComponentStory<typeof SteppedTracker> = () => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={0}>
-        <TrackerStep state="default">{`Step One`}</TrackerStep>
-        <TrackerStep state="default">{`Step Two: I am truncated on smaller screen sizes`}</TrackerStep>
-        <TrackerStep state="default">{`Step Three`}</TrackerStep>
-        <TrackerStep state="default">{`Step Four`}</TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>Step One</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>
+            Step Two: I am truncated on smaller screen sizes
+          </StepLabel>
+        </TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>Step Three</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>Step Four</StepLabel>
+        </TrackerStep>
       </SteppedTracker>
     </StackLayout>
   );
@@ -194,7 +236,7 @@ export const NonSequentialProgress: ComponentStory<
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }, key) => (
           <TrackerStep state={state} key={key}>
-            {label}
+            <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}
       </SteppedTracker>

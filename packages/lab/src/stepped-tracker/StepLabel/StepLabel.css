@@ -1,0 +1,12 @@
+/* StepLabel can also be rendered into a tooltip, in this case we don't want truncation or custom styling */
+.saltStepLabel:not(.saltTooltip .saltStepLabel) {
+  margin: 0px;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  color: var(--salt-text-primary-foreground);
+}

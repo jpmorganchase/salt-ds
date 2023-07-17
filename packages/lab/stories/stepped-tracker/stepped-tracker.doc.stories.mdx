@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { SteppedTracker, TrackerStep } from "@salt-ds/lab";
+import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 
 import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
@@ -11,6 +11,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 <Meta
   title="Documentation/Lab/SteppedTracker"
   component={SteppedTracker}
+  subcomponents={{ TrackerStep, StepLabel }}
   parameters={{
     viewMode: "docs",
   }}
@@ -31,7 +32,21 @@ The Stepped Tracker visually communicates a user’s progress through a linear p
 
 ## Features
 
-The SteppedTracker contains multiple TrackerStep child components. Each TrackerStep indicates it's current status through it's icon, and the connectors indicate current active step i.e. progress through the process.
+The SteppedTracker contains multiple TrackerStep child components. Each TrackerStep indicates it's current status through it's icon, and the connectors indicate current active step i.e. progress through the process. You should add a label to the TrackerStep using the StepLabel component as follows:
+
+```jsx
+<SteppedTracker activeStep={1}>
+  <TrackerStep>
+    <StepLabel state="completed">Step 1</StepLabel>
+  <TrackerStep>
+  <TrackerStep>
+    <StepLabel>Step 2</StepLabel>
+  <TrackerStep>
+  <TrackerStep>
+    <StepLabel>Step 3</StepLabel>
+  <TrackerStep>
+</SteppedTracker>
+```
 
 <Canvas>
   <Story id="lab-stepped-tracker--basic" />

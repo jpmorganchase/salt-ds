@@ -1,4 +1,8 @@
-import { SteppedTracker, TrackerStep } from "../../../stepped-tracker";
+import {
+  SteppedTracker,
+  TrackerStep,
+  StepLabel,
+} from "../../../stepped-tracker";
 import * as steppedTrackerStories from "@stories/stepped-tracker/stepped-tracker.stories";
 import { composeStories } from "@storybook/testing-react";
 
@@ -16,7 +20,9 @@ describe("GIVEN a SteppedTracker", () => {
     const TestComponent = (
       <SteppedTracker activeStep={activeStep} style={{ width: 300 }}>
         {labels.map((label, key) => (
-          <TrackerStep key={key}>{label}</TrackerStep>
+          <TrackerStep key={key}>
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
         ))}
       </SteppedTracker>
     );
@@ -34,7 +40,9 @@ describe("GIVEN a SteppedTracker", () => {
     const TestComponent = (
       <SteppedTracker activeStep={activeStep} style={{ width: 300 }}>
         {labels.map((label, key) => (
-          <TrackerStep key={key}>{label}</TrackerStep>
+          <TrackerStep key={key}>
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
         ))}
       </SteppedTracker>
     );
@@ -50,6 +58,92 @@ describe("GIVEN a SteppedTracker", () => {
       .should("not.have.attr", "aria-current");
   });
 
+  it("should indicate the active step with an active icon", () => {
+    const labels = ["Step 1", "Step 2", "Step 3"];
+    const activeStep = 1;
+
+    const TestComponent = (
+      <SteppedTracker activeStep={activeStep} style={{ width: 300 }}>
+        {labels.map((label, key) => (
+          <TrackerStep key={key}>
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
+        ))}
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${activeStep + 1})`)
+      .findByTestId("StepActiveIcon")
+      .should("exist");
+    cy.findAllByRole("listitem")
+      .not(`:nth-child(${activeStep + 1})`)
+      .findByTestId("StepActiveIcon")
+      .should("not.exist");
+  });
+
+  it("should indicate the completed step with a completed icon", () => {
+    const labels = ["Step 1", "Step 2", "Step 3"];
+    const activeStep = 1;
+    const completedStep = 2;
+
+    const TestComponent = (
+      <SteppedTracker activeStep={activeStep} style={{ width: 300 }}>
+        {labels.map((label, key) => (
+          <TrackerStep
+            key={key}
+            state={key === completedStep ? "completed" : undefined}
+          >
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
+        ))}
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${completedStep + 1})`)
+      .findByTestId("StepSuccessIcon")
+      .should("exist");
+    cy.findAllByRole("listitem")
+      .not(`:nth-child(${completedStep + 1})`)
+      .findByTestId("StepSuccessIcon")
+      .should("not.exist");
+  });
+
+  it("should show completed icon if a state is completed and active", () => {
+    const labels = ["Step 1", "Step 2", "Step 3"];
+
+    const stepNum = 1;
+
+    const TestComponent = (
+      <SteppedTracker activeStep={stepNum} style={{ width: 300 }}>
+        {labels.map((label, key) => (
+          <TrackerStep
+            key={key}
+            state={key === stepNum ? "completed" : undefined}
+          >
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
+        ))}
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${stepNum + 1})`)
+      .findByTestId("StepSuccessIcon")
+      .should("exist");
+    cy.findAllByRole("listitem")
+      .not(`:nth-child(${stepNum + 1})`)
+      .findByTestId("StepActiveIcon")
+      .should("not.exist");
+  });
+
   it("should have focusable steps when a label is truncated", () => {
     const labels = [
       "Step 1",
@@ -61,7 +155,9 @@ describe("GIVEN a SteppedTracker", () => {
     const TestComponent = (
       <SteppedTracker activeStep={activeStep} style={{ width: 300 }}>
         {labels.map((label, key) => (
-          <TrackerStep key={key}>{label}</TrackerStep>
+          <TrackerStep key={key}>
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
         ))}
       </SteppedTracker>
     );
@@ -80,7 +176,7 @@ describe("GIVEN a SteppedTracker", () => {
     cy.findAllByRole("listitem")
       .not(`:nth-child(${focusedIndex + 1})`)
       .should("not.be.focused");
-    cy.findByRole("tooltip").should("have.text", labels[focusedIndex]);
+    cy.findByRole("tooltip").should("contain.text", labels[focusedIndex]);
 
     cy.realPress("Tab");
     focusedIndex = focusedIndex + 1;
