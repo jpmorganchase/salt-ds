@@ -67,9 +67,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
     const focused = isFocused(itemId);
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
-      if (!disabled) {
-        select(event);
-      }
+      select(event);
       onClick?.(event);
     };
 
@@ -89,7 +87,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         aria-selected={selected || undefined}
         id={itemId}
         data-value={value}
-        onClick={handleClick}
+        onClick={disabled ? undefined : handleClick}
         {...props}
       >
         {children}
