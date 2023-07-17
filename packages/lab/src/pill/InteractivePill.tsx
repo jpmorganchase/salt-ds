@@ -15,7 +15,10 @@ export const InteractivePill = forwardRef<
 ) {
   const clickable = onClick !== undefined;
   const closable = onClose !== undefined;
-  const { buttonProps, active } = useButton<HTMLDivElement>({
+  const {
+    buttonProps: { disabled: disabledAttribute, ...buttonProps },
+    active,
+  } = useButton<HTMLDivElement>({
     disabled: disabled || !clickable,
     onClick,
     onKeyUp: clickable
@@ -47,6 +50,7 @@ export const InteractivePill = forwardRef<
 
   return (
     <div
+      data-testid="pill"
       ref={ref}
       role={clickable ? "button" : undefined}
       aria-roledescription={closable ? "Closable pill" : undefined}
@@ -54,7 +58,7 @@ export const InteractivePill = forwardRef<
         withBaseName(),
         {
           [withBaseName("clickable")]: clickable,
-          [withBaseName("active")]: active,
+          [withBaseName("active")]: clickable && active,
           [withBaseName("closable")]: closable,
           [withBaseName("nestedHover")]: nestedHover,
         },
