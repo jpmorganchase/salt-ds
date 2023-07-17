@@ -41,6 +41,7 @@
   white-space: nowrap;
 }
 
+/* Style applied to Pill if `onClose` prop is provided  */
 .saltPill-closable {
   padding-right: 0;
 }
@@ -53,7 +54,7 @@
   display: block;
 }
 
-/* Style applied to Pill if `clickable={true}`  */
+/* Style applied to Pill if `onClick` prop is provided  */
 .saltPill-clickable {
   cursor: var(--salt-selectable-cursor-hover);
   user-select: none;
@@ -75,11 +76,6 @@
 .saltPill-clickable:active {
   background: var(--pill-background-active);
   color: var(--pill-text-color-active);
-}
-
-.saltPill-nestedHover.saltPill-active .saltIcon,
-.saltPill-nestedHover:active .saltIcon {
-  color: var(--pill-text-color);
 }
 
 .saltPill-clickable .saltPill-closeButton.saltPill-active .saltIcon,
@@ -114,7 +110,7 @@
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
-/* Style applied to Pill delete button */
+/* Style applied to Pill close button */
 .saltPill-closeButton {
   color: var(--pill-text-color);
   background: var(--pill-background);
