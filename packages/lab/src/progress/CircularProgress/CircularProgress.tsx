@@ -17,24 +17,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import circularProgressCSS from "./CircularProgress.css";
 
-const MAX = 100;
-const MIN = 0;
-
 const withBaseName = makePrefixer("saltCircularProgress");
-
-function getRelativeValue(value: number, min: number, max: number): number {
-  return (Math.min(Math.max(min, value), max) - min) / (max - min);
-}
-
-function easeOut(t: number): number {
-  t = getRelativeValue(t, 0, 1);
-  t = (t -= 1) * t * t + 1;
-  return t;
-}
-
-function easeIn(t: number): number {
-  return t * t;
-}
 
 export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -49,6 +32,11 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
    * Disabled flag, true when the component is disabled.
    */
   disabled?: boolean;
+  /**
+   * The value of the max progress indicator for the determinate variant.
+   * Default value is 100.
+   */
+  max?: number;
   /**
    * Render props callback to render info panel.
    * @param function({ value, unit, getValueProps })
@@ -94,6 +82,7 @@ export const CircularProgress = forwardRef<
     "aria-label": ariaLabel,
     className,
     disabled,
+    max = 100,
     showInfo = true,
     renderInfo,
     value = 0,
@@ -114,10 +103,12 @@ export const CircularProgress = forwardRef<
   const rootStyle: CSSProperties = {};
   const rootProps: HTMLAttributes<any> = {};
 
+  const progress = (value / max) * 100;
+
   if (variant === "determinate") {
     rootProps["aria-valuenow"] = Math.round(value);
-    circleStyle.strokeDasharray = `var(--progress-circle-circumference)`;
-    circleStyle.strokeDashoffset = `calc((100 - ${value}) / 100 * var(--progress-circle-circumference))`;
+    circleStyle.strokeDasharray = "var(--progress-circle-circumference)";
+    circleStyle.strokeDashoffset = `calc((100 - ${progress}) / 100 * var(--progress-circle-circumference))`;
     rootStyle.transform = "rotate(-90deg)";
   }
 
@@ -147,7 +138,7 @@ export const CircularProgress = forwardRef<
       <DefaultInfo
         className={withBaseName("progressValue")}
         unit={unit}
-        value={value}
+        value={progress}
         {...rest}
       />
     );
@@ -162,8 +153,8 @@ export const CircularProgress = forwardRef<
       ref={ref}
       role="progressbar"
       aria-label={ariaLabel}
-      aria-valuemax={MAX}
-      aria-valuemin={MIN}
+      aria-valuemax={max}
+      aria-valuemin={0}
       aria-valuenow={value}
       {...rest}
     >
@@ -176,19 +167,18 @@ export const CircularProgress = forwardRef<
       >
         <ViewBox>
           <LinearGradient />
-          <Circle className={withBaseName("railCircle")} strokeWidth={1} />
+          <Circle className={withBaseName("railCircle")} />
           <Circle
-            strokeWidth={2}
             style={circleStyle}
             className={clsx(withBaseName("circle"), {
               [withBaseName("circleIndeterminate")]:
                 variant === "indeterminate",
-                [withBaseName("circleDeterminate")]: variant === "determinate",
+              [withBaseName("circleDeterminate")]: variant === "determinate",
             })}
           />
         </ViewBox>
       </div>
-      {progressInfo}
+      {variant === "determinate" && progressInfo}
     </div>
   );
 });

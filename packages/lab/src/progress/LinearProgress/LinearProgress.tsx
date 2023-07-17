@@ -60,6 +60,11 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   disabled?: boolean;
   /**
+   * The value of the max progress indicator for the determinate variant.
+   * Default value is 100.
+   */
+  max?: number;
+  /**
    * render props callback to render info panel.
    */
   renderInfo?: (
@@ -103,6 +108,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     {
       className,
       disabled,
+      max = 100,
       renderInfo,
       showInfo = true,
       variant = "determinate",
@@ -124,6 +130,8 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     const progressUnit = withBaseName("progressUnit");
     const progressValue = withBaseName("progressValue");
 
+    const progress = (value / max) * 100;
+
     if (showInfo) {
       progressInfo = renderInfo ? (
         renderInfo(
@@ -139,7 +147,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           )
         )
       ) : (
-        <DefaultInfo unit={unit} value={value} className={progressValue} />
+        <DefaultInfo unit={unit} value={progress} className={progressValue} />
       );
     }
 
@@ -150,7 +158,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       rootProps["aria-valuenow"] = Math.round(value);
       rootProps["aria-valuemin"] = 0;
       rootProps["aria-valuemax"] = 100;
-      barStyle.transform = `translateX(${value - 100}%)`;
+      barStyle.transform = `translateX(${progress - 100}%)`;
     }
 
     return (
@@ -183,7 +191,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
             <div className={clsx(withBaseName("bar"), withBaseName("bar2"))} />
           )}
         </div>
-        {progressInfo}
+        {variant === "determinate" && progressInfo}
       </div>
     );
   }

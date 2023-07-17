@@ -42,12 +42,11 @@ export const LinearGradient = () => {
 };
 
 export interface CircleProps {
-  strokeWidth: number;
   style?: CSSProperties;
   className?: string;
 }
 
-export const Circle = ({ strokeWidth, style, className }: CircleProps) => {
+export const Circle = ({ style, className }: CircleProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-circular-progress",

@@ -108,6 +108,13 @@ export const LinearQuery: ComponentStory<typeof LinearProgress> = () => (
   <LinearProgress value={38} variant="query" />
 );
 
+export const MaxValue: ComponentStory<typeof CircularProgress> = () => (
+  <div>
+    <h3> max = 500, value = 250</h3>
+    <LinearProgress aria-label="Download" value={250} max={500} />
+  </div>
+);
+
 export const ShowNoInfo: ComponentStory<typeof LinearProgress> = () => (
   <LinearProgress showInfo={false} value={38} />
 );
