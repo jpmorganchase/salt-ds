@@ -4,6 +4,5 @@
 
 Added controlled version of ListNext
 
-- Added `highlightedIndex` prop to `ListNext`
-- Added controlled example to List documentation
+- Added `highlightedIndex`, `selected` and `onChange` props to `ListNext` in order to support a controlled list.
 - Fixed focusRing when focusing on disabled listItem
