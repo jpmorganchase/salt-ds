@@ -1,5 +1,12 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, FlowLayout, Text, Toast, ToastContent, ToastProps } from "@salt-ds/core";
+import {
+  Button,
+  FlowLayout,
+  Text,
+  Toast,
+  ToastContent,
+  ToastProps,
+} from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 
 export default {
