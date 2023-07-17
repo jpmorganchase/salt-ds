@@ -1,1 +1,1 @@
-export * from "./Steplabel";
+export * from "./StepLabel";
