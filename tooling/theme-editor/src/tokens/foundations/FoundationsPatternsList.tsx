@@ -1,7 +1,6 @@
 import { useMemo, useCallback, ReactElement } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
-import { AccordionGroup } from "@salt-ds/lab";
+import { AccordionGroup, makePrefixer } from "@salt-ds/core";
 import { createColorMap } from "../../helpers/createColorMap";
 import { JSONByScope } from "../../helpers/parseToJson";
 import { ThemeMode } from "../../header/ScopeSelector";
