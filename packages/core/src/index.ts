@@ -25,6 +25,7 @@ export * from "./status-adornment";
 export * from "./status-indicator";
 export * from "./text";
 export * from "./theme";
+export * from "./toast";
 export * from "./salt-provider";
 export * from "./split-layout";
 export * from "./tooltip";
