@@ -16,6 +16,15 @@ interface RoadmapData {
   text: string;
 }
 
+type RoadmapDataItem = {
+  text: string;
+  startDate: string;
+  targetDate: string;
+  status: string;
+  issueUrl: string;
+};
+
+
 interface CardViewProps {
   sortedRoadmapData: RoadmapData[];
   searchQuery: string;
@@ -92,7 +101,8 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
         const items = responseData?.data?.organization?.repository?.projectV2?.items?.nodes;
 
         //creates an array of objects with data from github
-        const extractedData = items?.map((item: any) => {
+        const extractedData: RoadmapDataItem[] = items?.map((item: any) => {
+
           const fieldValueNodes = item?.fieldValues?.nodes;
           const text = getFieldValueByName(fieldValueNodes, "Title");
           const startDate = getFieldValueByName(fieldValueNodes, "Start Date");
@@ -142,34 +152,7 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
   );
 };
 
-export const TableView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
-  const filteredData = sortedRoadmapData.filter((item) => {
-    const matchesSearchQuery =
-      searchQuery === "" ||
-      item.text.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesSearchQuery;
-  });
 
-  return (
-    <Grid rowData={filteredData} style={{ height: 2000 }}>
-      <GridColumn
-        name="Name"
-        id="name"
-        defaultWidth={200}
-        getValue={(rowData) => rowData.text}
-      />
-      <GridColumn
-        name="Release"
-        id="location"
-        defaultWidth={150}
-        getValue={(rowData) => {
-          const formattedDate = formatDate(new Date(rowData.targetDate));
-          return formattedDate;
-        }}
-      />
-    </Grid>
-  );
-};
 
 
 
