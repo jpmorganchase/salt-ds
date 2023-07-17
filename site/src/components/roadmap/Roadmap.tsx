@@ -5,12 +5,12 @@ import styles from "./style.module.css";
 import { ProgressInprogressIcon, ProgressPendingIcon, SearchIcon } from "@salt-ds/icons";
 
 
-type CalloutProps = { title: string; children: ReactNode };
+type RoadmapProps = { title: string; children: ReactNode };
 
 interface RoadmapData {
   id: string;
-  startDate: string;
-  targetDate: string;
+  startDate: Date;
+  targetDate: Date;
   issueUrl: string;
   text: string;
 }
@@ -70,7 +70,7 @@ function RoadmapCard (props: CardProps) {
   {...props} />
 }
 
-export const Roadmap = ({ title, children }: CalloutProps) => {
+export const Roadmap = ({ title, children }: RoadmapProps) => {
 
   const [jsonData, setJsonData] = useState("");
   const [roadmapData, setRoadmapData] = useState<any[]>([]);

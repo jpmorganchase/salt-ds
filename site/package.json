@@ -34,7 +34,6 @@
     "@jpmorganchase/mosaic-theme": "^0.1.0-beta.37",
     "@philpl/buble": "^0.19.7",
     "@types/react": "^18.0.26",
-    "axios": "^1.4.0",
     "next": "^13.3.0",
     "next-auth": "^4.20.1"
   },
