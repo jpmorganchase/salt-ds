@@ -1,11 +1,4 @@
-.saltDrawer-primary {
-  --drawer-background: var(--salt-container-primary-background);
-}
-
-.saltDrawer-secondary {
-  --drawer-background: var(--salt-container-secondary-background);
-}
-
+/* Styles applied to Drawer component (root component if Scrim is disabled) */
 .saltDrawer {
   background: var(--drawer-background);
   display: flex;
@@ -20,61 +13,84 @@
   top: 0;
 }
 
+/* Styles applied when variant = "primary" */
+.saltDrawer-primary {
+  --drawer-background: var(--salt-container-primary-background);
+}
+
+/* Styles applied when variant = "secondary" */
+.saltDrawer-secondary {
+  --drawer-background: var(--salt-container-secondary-background);
+}
+
+/* Animation styles applied when the Scrim mounts */
 .saltScrim.saltDrawer-enter-animation {
   animation: var(--salt-animation-fade-in-center);
 }
 
+/* Animation styles applied when the Scrim unmounts */
 .saltScrim.saltDrawer-exit-animation {
   animation: var(--salt-animation-fade-out-back);
 }
 
+/* Styles applied when position = "top" */
 .saltDrawer-top {
   left: 0;
   right: 0;
   bottom: auto;
 }
 
+/* Styles applied when position = "top" and the component mounts */
 .saltDrawer-top.saltDrawer-enter-animation {
   animation: var(--salt-animation-slide-in-bottom);
 }
 
+/* Styles applied when position = "top" and the component unmounts */
 .saltDrawer-top.saltDrawer-exit-animation {
   animation: var(--salt-animation-slide-out-bottom);
 }
 
+/* Styles applied when position = "right" or position = "left" */
 .saltDrawer-right,
 .saltDrawer-left {
   width: calc(10 * var(--salt-size-base));
 }
 
+/* Styles applied when position = "right" */
 .saltDrawer-right {
   left: auto;
   right: 0;
   height: 100%;
 }
 
+/* Styles applied when position = "right" and the component mounts */
 .saltDrawer-right.saltDrawer-enter-animation {
   animation: var(--salt-animation-slide-in-right);
 }
 
+/* Styles applied when position = "right" and the component unmounts */
 .saltDrawer-right.saltDrawer-exit-animation {
   animation: var(--salt-animation-slide-out-right);
 }
 
+/* Styles applied when position = "left" */
 .saltDrawer-left {
   left: 0;
   right: auto;
   height: 100%;
 }
 
+/* Styles applied when position = "left" and the component mounts */
 .saltDrawer-left.saltDrawer-enter-animation {
   animation: var(--salt-animation-slide-in-left);
 }
 
+/* Styles applied when position = "left" and the component unmounts */
 .saltDrawer-left.saltDrawer-exit-animation {
   animation: var(--salt-animation-slide-out-left);
 }
 
+/* Styles applied when position = "bottom" */
 .saltDrawer-bottom {
   left: 0;
   right: 0;
@@ -82,10 +98,12 @@
   top: auto;
 }
 
+/* Styles applied when position = "bottom" and the component mounts */
 .saltDrawer-bottom.saltDrawer-enter-animation {
   animation: var(--salt-animation-slide-in-top);
 }
 
+/* Styles applied when position = "bottom" and the component unmounts */
 .saltDrawer-bottom.saltDrawer-exit-animation {
   animation: var(--salt-animation-slide-out-top);
 }
