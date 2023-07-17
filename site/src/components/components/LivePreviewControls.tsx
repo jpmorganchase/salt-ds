@@ -7,9 +7,15 @@ import {
   SyntheticEvent,
 } from "react";
 import clsx from "clsx";
-import { Switch, ToggleButtonGroup, ToggleButton } from "@salt-ds/lab";
+import { Switch } from "@salt-ds/lab";
 import { LightIcon, DarkIcon } from "@salt-ds/icons";
-import { SaltProvider, Density, Mode } from "@salt-ds/core";
+import {
+  SaltProvider,
+  ToggleButtonGroup,
+  ToggleButton,
+  Density,
+  Mode,
+} from "@salt-ds/core";
 import ExamplesListView from "./ExamplesListView";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { useAllExamplesView } from "../../utils/useAllExamplesView";

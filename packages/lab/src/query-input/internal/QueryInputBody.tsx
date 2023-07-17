@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { FilterIcon } from "@salt-ds/icons";
 import {
   ChangeEventHandler,
@@ -10,8 +10,6 @@ import {
   useMemo,
 } from "react";
 
-import { ToggleButton } from "../../toggle-button";
-import { ToggleButtonGroup } from "../../toggle-button-group";
 import {
   ChangeHandler,
   StringToItem,

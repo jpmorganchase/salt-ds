@@ -15,8 +15,13 @@ import {
   GridHeaderValueProps,
   NumericColumn,
 } from "../src";
-import { MenuButton, ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
-import { FlexItem, FlexLayout } from "@salt-ds/core";
+import { MenuButton } from "@salt-ds/lab";
+import {
+  FlexItem,
+  FlexLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon, MenuIcon, HomeIcon } from "@salt-ds/icons";
 import { randomInt, randomNumber } from "./utils";
 import "./grid.stories.css";
