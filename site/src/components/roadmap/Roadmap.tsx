@@ -3,6 +3,7 @@ import { Grid, GridColumn } from "@salt-ds/data-grid";
 import { GridLayout, GridItem, Card, H1, CardProps, Button, Input, H3, Link } from "@salt-ds/core";
 import styles from "./style.module.css";
 import { ProgressInprogressIcon, ProgressPendingIcon, SearchIcon } from "@salt-ds/icons";
+import { Heading3 } from "../mdx/h3";
 
 
 type RoadmapProps = { title: string; children: ReactNode };
@@ -129,7 +130,7 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
         onChange={(event) =>
           setSearchQuery((event.target as HTMLInputElement).value)
         }
-        style={{width: "400px", marginBottom:" 50px "}}
+        className={styles.bar}
         startAdornment={<SearchIcon />}
       />
 
@@ -175,10 +176,10 @@ export const TableView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => 
 export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
 
   return(
-    <GridLayout className={styles.grid}  columns={3}   >
+    <GridLayout className={styles.cardContainer}  columns={3}   >
 
     <div className={styles.column}>
-      <h2 className={styles.heading} style={{marginLeft: "22%"}}>Future <ProgressPendingIcon className={styles.icon} size={1.4}/></h2>
+      <h2 className={styles.heading} >Future <ProgressPendingIcon className={styles.icon} size={1.4}/></h2>
         {  sortedRoadmapData.filter((item) => {
         const startDate = item.startDate ? new Date(item.startDate) : null;
         const today = new Date();
@@ -194,12 +195,12 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
             return (
               <RoadmapCard className={styles.card} key={item.id}>
                <Link>
-              <H1 style={{ marginTop: "-10px" }} styleAs="h3">
+              <Heading3 className={styles.heading3}>
               <a href={item.issueUrl}>
                     {item.text}
                   
                   </a>
-                </H1>
+                </Heading3>
                 </Link>
                 <b>Due Date: </b>
                 <p className={styles.date}>{formattedDate}</p>
@@ -208,7 +209,7 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
           })}
   </div>
   <div className={styles.column}>
-    <h2 className={styles.heading} style={{marginLeft: "13%"}}>In Progress <ProgressInprogressIcon  className={styles.icon} size={1.4}/></h2>
+    <h2 className={styles.heading}>In Progress <ProgressInprogressIcon  className={styles.icon} size={1.4}/></h2>
       {sortedRoadmapData.filter((item) => {
   const startDate = new Date(item.startDate);
   const targetDate = new Date(item.targetDate);
@@ -226,12 +227,12 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
           return (
             <RoadmapCard key={item.id}>
               <Link>
-              <H1 style={{ marginTop: "-10px" }} styleAs="h3">
+              <Heading3 className={styles.heading3}>
               <a href={item.issueUrl}>
                     {item.text}
                   
                   </a>
-                </H1>
+                </Heading3>
                 </Link>
                 <p className={styles.date}><b>Due date: </b>{formattedDate}</p>
             </RoadmapCard>

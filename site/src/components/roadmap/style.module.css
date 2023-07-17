@@ -1,14 +1,31 @@
 .heading{
     margin-bottom: 5%;
+    text-align: center;
+
 }
 
+.heading3{
+   padding-bottom: 5%;
+}
 
 .spacing{
-    /* width: "250px";
-    height: "2px" */
     border-radius: 8px;
 }
 
+
+.cardContainer:global(.saltGridLayout){
+    margin-top: 50px;
+}
+
+
+.bar{
+    width: 400px;
+}
+
+.test{
+    width: "400px";
+     margin-bottom:" 50px ";
+}
 .date {
     display: inline;
   }
@@ -18,7 +35,6 @@
     margin-left: 9px;
 }
 .column {
-    /* border-right: 3px solid black; */
     padding-right: 20px; /* Adjust the padding as per your design */
   }
 
@@ -32,8 +48,6 @@
     position: absolute;
     top: 0;
     right: 0;
-    
-
 }
 
 
@@ -41,20 +55,12 @@
     position: absolute;
     top: 2;
     right: 2;
-
-    
-
 }
-
-
 
 .card{
     border-radius: 8px;
-
     position: relative;
 }
-
-
 
 .gridLayout {
   max-width: 1000px;
