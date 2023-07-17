@@ -1,10 +1,3 @@
-.saltDrawer {
-  --drawer-boxShadow: var(--saltDrawer-boxShadow, var(--salt-overlayable-shadow-modal));
-  --drawer-background: var(--saltDrawer-background, var(--drawer-background));
-  --drawer-padding: var(--saltDrawer-padding, var(--salt-spacing-300));
-  --drawer-width: var(--saltDrawer-width, calc(10 * var(--salt-size-base)));
-}
-
 .saltDrawer-primary {
   --drawer-background: var(--salt-container-primary-background);
 }
@@ -20,8 +13,8 @@
   max-height: 100%;
   max-width: 100%;
   overflow: auto;
-  padding: var(--drawer-padding);
-  box-shadow: var(--saltDrawer-boxShadow, var(--drawer-boxShadow));
+  padding: var(--salt-spacing-300);
+  box-shadow: var(--salt-overlayable-shadow-modal);
   z-index: calc(var(--salt-zIndex-appHeader) - 1);
   position: fixed;
   top: 0;
@@ -51,7 +44,7 @@
 
 .saltDrawer-right,
 .saltDrawer-left {
-  width: var(--drawer-width);
+  width: calc(10 * var(--salt-size-base));
 }
 
 .saltDrawer-right {
