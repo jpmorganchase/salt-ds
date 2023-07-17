@@ -3,10 +3,13 @@ import fetch from 'node-fetch';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const org = "jpmorganchase";
+    const repo = "salt-ds";
+
     const query = `
-      query($endCursor: String) {
-        organization(login: "jpmorganchase") {
-          repository(name: "salt-ds") {
+      query($org: String!, $repo: String!, $endCursor: String) {
+        organization(login: $org) {
+          repository(name: $repo) {
             projectV2(number: 18) {
               items(first: 100, after: $endCursor) {
                 pageInfo {
@@ -63,7 +66,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
       body: JSON.stringify({
         query,
-        variables: { endCursor: "null" },
+        variables: { org, repo, endCursor: "null" },
       }),
     });
 
