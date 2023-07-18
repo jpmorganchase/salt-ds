@@ -16,6 +16,7 @@ import {
 } from "@salt-ds/icons";
 import { Heading3 } from "../mdx/h3";
 import { formatDate } from "src/utils/formatDate";
+import { Heading2 } from "../mdx/h2";
 
 type RoadmapProps = { title: string; children: ReactNode };
 
@@ -151,9 +152,9 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
   return (
     <GridLayout className={styles.cardContainer} columns={3}>
       <div className={styles.column}>
-        <h2 className={styles.heading}>
+        <Heading2 className={styles.heading}>
           Future <ProgressPendingIcon className={styles.icon} size={1.4} />
-        </h2>
+        </Heading2>
         {sortedRoadmapData
           .filter((item) => {
             const startDate = item.startDate ? new Date(item.startDate) : null;
@@ -181,10 +182,10 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
           })}
       </div>
       <div className={styles.column}>
-        <h2 className={styles.heading}>
+        <Heading2 className={styles.heading}>
           In Progress{" "}
           <ProgressInprogressIcon className={styles.icon} size={1.4} />
-        </h2>
+        </Heading2>
         {sortedRoadmapData
           .filter((item) => {
             const startDate = new Date(item.startDate);
