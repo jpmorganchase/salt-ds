@@ -185,7 +185,11 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput
-        startAdornment={<Button variant="cta"><EditSolidIcon /></Button>}
+        startAdornment={
+          <Button variant="cta">
+            <EditSolidIcon />
+          </Button>
+        }
         endAdornment={
           <>
             <Text>%</Text>
