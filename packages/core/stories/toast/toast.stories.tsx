@@ -1,10 +1,16 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, FlowLayout, Text } from "@salt-ds/core";
-import { Toast, ToastContent, ToastProps } from "@salt-ds/lab";
+import {
+  Button,
+  FlowLayout,
+  Text,
+  Toast,
+  ToastContent,
+  ToastProps,
+} from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/Toast",
+  title: "Core/Toast",
   component: Toast,
 } as ComponentMeta<typeof Toast>;
 

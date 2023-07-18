@@ -70,7 +70,6 @@ export * from "./slider";
 export * from "./stepper-input";
 export * from "./switch";
 export * from "./tabs";
-export * from "./toast";
 export * from "./tabs-next";
 export * from "./tokenized-input";
 export * from "./toolbar";
