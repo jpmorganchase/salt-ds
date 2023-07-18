@@ -41,19 +41,8 @@
   white-space: nowrap;
 }
 
-/* Style applied to Pill if `onClose` prop is provided  */
-.saltPill-closable {
-  padding-right: 0;
-  /* Min width is applied on the contents so we have to add the width of the close button */
-  min-width: calc(var(--saltPill-minWidth, 4em) + var(--saltPill-height));
-}
-
 .saltPill .saltIcon {
   --saltIcon-color: currentColor;
-}
-
-.saltPill-closeButton .saltIcon {
-  display: block;
 }
 
 /* Style applied to Pill if `onClick` prop is provided  */
@@ -62,8 +51,7 @@
   user-select: none;
 }
 
-.saltPill-clickable:hover,
-.saltPill-closeButton:hover {
+.saltPill-clickable:hover {
   color: var(--pill-text-color-hover);
   background: var(--pill-background-hover);
 }
@@ -80,12 +68,6 @@
   color: var(--pill-text-color-active);
 }
 
-.saltPill-clickable .saltPill-closeButton.saltPill-active .saltIcon,
-.saltPill-clickable .saltPill-closeButton:active .saltIcon {
-  --saltIcon-color: var(--pill-text-color-active);
-  --saltIcon-color-hover: var(--pill-text-color-active);
-}
-
 .saltPill-clickable[aria-disabled].saltPill-active,
 .saltPill-clickable[aria-disabled]:active,
 .saltPill-clickable.saltPill-nestedHover.saltPill-active,
@@ -95,61 +77,15 @@
 }
 
 /* Style applied to Pill on focus */
-.saltPill:focus-visible,
-.saltPill-closeButton:focus-visible {
+.saltPill:focus-visible {
   outline: var(--salt-focused-outline);
 }
 
 /* Style applied to Pill when disabled */
 .saltPill[aria-disabled],
 .saltPill[aria-disabled]:hover,
-.saltPill[aria-disabled]:active,
-.saltPill[aria-disabled] .saltPill-closeButton,
-.saltPill[aria-disabled] .saltPill-closeButton:hover,
-.saltPill[aria-disabled] .saltPill-closeButton:active {
+.saltPill[aria-disabled]:active {
   color: var(--pill-text-color-disabled);
   background: var(--pill-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
-}
-
-/* Style applied to Pill close button */
-.saltPill-closeButton {
-  color: var(--pill-text-color);
-  background: var(--pill-background);
-  --saltIcon-size-multiplier: 1;
-  flex-shrink: 0;
-  height: var(--pill-height);
-  width: var(--pill-height);
-  min-height: var(--saltPill-minHeight, var(--salt-text-minHeight));
-  min-width: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  z-index: -1;
-}
-
-.saltPill-closeButton:focus-visible {
-  z-index: 0;
-}
-
-.saltPill-closeButton:hover {
-  cursor: var(--salt-selectable-cursor-hover);
-  background: var(--salt-actionable-secondary-background-hover);
-  color: var(--salt-actionable-secondary-foreground-hover);
-}
-
-.saltPill-closeButton.saltPill-active,
-.saltPill-closeButton:active {
-  background: var(--salt-actionable-primary-background-active);
-  color: var(--salt-actionable-primary-foreground-active);
-}
-
-.saltPill[aria-disabled] .saltPill-closeButton,
-.saltPill[aria-disabled] .saltPill-closeButton:hover,
-.saltPill[aria-disabled] .saltPill-closeButton:active {
-  background: transparent;
-}
-
-.saltPill-wrapper {
-  display: inline-flex;
 }
