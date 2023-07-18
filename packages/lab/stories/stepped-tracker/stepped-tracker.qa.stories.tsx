@@ -15,8 +15,11 @@ export const Basic: Story<QAContainerProps> = (props) => {
       <StackLayout
         direction="column"
         align="stretch"
-        gap={10}
-        style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+        gap={2}
+        style={{
+          minWidth: 450,
+          marginBottom: 50,
+        }}
       >
         <SteppedTracker activeStep={0}>
           <TrackerStep>
