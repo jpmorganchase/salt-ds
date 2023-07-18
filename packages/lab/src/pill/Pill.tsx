@@ -8,9 +8,8 @@ import {
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useButton } from "@salt-ds/core";
 import pillCss from "./Pill.css";
-import { InteractivePill } from "./InteractivePill";
 
 export type PillClickEvent =
   | MouseEvent<Element, globalThis.MouseEvent>
@@ -22,11 +21,6 @@ export interface PillProps extends ComponentPropsWithoutRef<"div"> {
   className?: string;
   /* Pass an element to render an icon descriptor on the left of the label */
   icon?: React.ReactNode;
-  /* 
-    Pass a callback function to render a close button on the right of the label. 
-    Pill can also be closed by pressing Backspace or Delete when Pill is focused. 
-  */
-  onClose?: (e: PillClickEvent | KeyboardEvent<HTMLDivElement>) => void;
   /* Pass a callback function to make the pill clickable */
   onClick?: (e: PillClickEvent) => void;
 }
@@ -35,7 +29,7 @@ const withBaseName = makePrefixer("saltPill");
 
 export const Pill = forwardRef<HTMLDivElement, PropsWithChildren<PillProps>>(
   function Pill(
-    { onClose, onClick, children, className, icon, disabled, ...rest },
+    { onClick, children, className, icon, disabled, ...restProps },
     ref
   ) {
     const targetWindow = useWindow();
@@ -44,32 +38,38 @@ export const Pill = forwardRef<HTMLDivElement, PropsWithChildren<PillProps>>(
       css: pillCss,
       window: targetWindow,
     });
-
-    const clickable = onClick !== undefined;
-    const closable = onClose !== undefined;
-    const interactive = clickable || closable;
-
-    if (interactive) {
-      return (
-        <InteractivePill
-          onClose={onClose}
-          onClick={onClick}
-          className={className}
-          icon={icon}
-          disabled={disabled}
-          {...rest}
-        >
-          {children}
-        </InteractivePill>
-      );
-    }
+    const {
+      buttonProps: { disabled: disabledAttribute, ...buttonProps },
+      active,
+    } = useButton<HTMLDivElement>({
+      disabled,
+      onClick,
+      onKeyUp: (e) => {
+        if (disabled) return;
+        if (e.key === "Enter" || e.key === " ") {
+          onClick?.(e);
+        }
+        restProps.onKeyUp?.(e);
+      },
+      onKeyDown: restProps.onKeyDown,
+    });
 
     return (
       <div
         data-testid="pill"
         ref={ref}
-        className={clsx(withBaseName(), className)}
-        {...rest}
+        role="button"
+        className={clsx(
+          withBaseName(),
+          withBaseName("clickable"),
+          {
+            [withBaseName("active")]: active,
+          },
+          className
+        )}
+        {...buttonProps}
+        aria-disabled={disabled ? true : undefined}
+        {...restProps}
       >
         {icon}
         <span className={withBaseName("label")}>{children}</span>

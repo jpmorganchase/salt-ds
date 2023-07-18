@@ -52,109 +52,6 @@ describe("GIVEN a Pill", () => {
         cy.findByRole("button").focus().realPress("{enter}").realPress(" ");
         cy.get("@clickSpy").should("have.callCount", 0);
       });
-
-      it("THEN should NOT call onClose on close button click", () => {
-        const clickSpy = cy.stub().as("clickSpy");
-        const deleteSpy = cy.stub().as("deleteSpy");
-        cy.mount(
-          <Pill onClick={clickSpy} onClose={deleteSpy} disabled>
-            Closable Pill
-          </Pill>
-        );
-        cy.findByRole("button", { name: "Close Pill" }).click();
-        cy.get("@deleteSpy").should("have.callCount", 0);
-      });
-    });
-
-    describe("GIVEN an onClose prop", () => {
-      it("THEN should render two buttons, on for a `closable` Pill and the default wrapper", () => {
-        const clickSpy = cy.stub().as("clickSpy");
-        const deleteSpy = cy.stub().as("deleteSpy");
-        cy.mount(
-          <Pill onClick={clickSpy} onClose={deleteSpy}>
-            Closable Pill
-          </Pill>
-        );
-        cy.findAllByRole("button").should("have.length", 2);
-        cy.findAllByRole("button").eq(0).should("have.text", "Closable Pill");
-        cy.findAllByRole("button")
-          .eq(1)
-          .should("have.attr", "aria-label", "Close Pill");
-      });
-      it("THEN the close button should NOT be focusable", () => {
-        const clickSpy = cy.stub().as("clickSpy");
-        const deleteSpy = cy.stub().as("deleteSpy");
-        cy.mount(
-          <Pill onClick={clickSpy} onClose={deleteSpy}>
-            Closable Pill
-          </Pill>
-        );
-        cy.findByRole("button", { name: "Close Pill" }).should(
-          "have.attr",
-          "tabindex",
-          "-1"
-        );
-      });
-      it("THEN call the onClose when the user presses {Backspace} when focused on the Pill", () => {
-        const clickSpy = cy.stub().as("clickSpy");
-        const deleteSpy = cy.stub().as("deleteSpy");
-        cy.mount(
-          <Pill onClick={clickSpy} onClose={deleteSpy}>
-            Closable Pill
-          </Pill>
-        );
-        cy.findByRole("button", { name: "Closable Pill" })
-          .focus()
-          .realPress("{backspace}");
-
-        cy.get("@deleteSpy").should("have.callCount", 1);
-      });
-
-      describe("GIVEN user clicks the close button", () => {
-        it("THEN calls the onClose callback", () => {
-          const clickSpy = cy.stub().as("clickSpy");
-          const deleteSpy = cy.stub().as("deleteSpy");
-          cy.mount(
-            <Pill onClick={clickSpy} onClose={deleteSpy}>
-              Closable Pill
-            </Pill>
-          );
-          cy.findByRole("button", { name: "Close Pill" }).click();
-
-          cy.get("@deleteSpy").should("have.callCount", 1);
-        });
-        it("THEN should NOT call onClick callback", () => {
-          const clickSpy = cy.stub().as("clickSpy");
-          const deleteSpy = cy.stub().as("deleteSpy");
-          cy.mount(
-            <Pill onClick={clickSpy} onClose={deleteSpy}>
-              Closable Pill
-            </Pill>
-          );
-          cy.findByRole("button", { name: "Close Pill" }).click();
-
-          cy.get("@deleteSpy").should("have.callCount", 1);
-          cy.get("@clickSpy").should("have.callCount", 0);
-        });
-      });
-
-      describe("GIVEN user hovers the close button", () => {
-        it("THEN should apply a nestedHover class on the Pill", () => {
-          const clickSpy = cy.stub().as("clickSpy");
-          const deleteSpy = cy.stub().as("deleteSpy");
-          cy.mount(
-            <Pill onClick={clickSpy} onClose={deleteSpy}>
-              Closable Pill
-            </Pill>
-          );
-          cy.findByRole("button", { name: "Close Pill" }).realHover();
-
-          cy.findByRole("button", { name: "Closable Pill" }).should(
-            "have.class",
-            "saltPill-nestedHover"
-          );
-        });
-      });
     });
   });
 
@@ -167,12 +64,7 @@ describe("GIVEN a Pill", () => {
 
   it("SHOULD have no a11y violations on load", () => {
     const clickSpy = cy.stub().as("clickSpy");
-    const deleteSpy = cy.stub().as("deleteSpy");
-    cy.mount(
-      <Pill onClick={clickSpy} onClose={deleteSpy}>
-        Closable Pill
-      </Pill>
-    );
+    cy.mount(<Pill onClick={clickSpy}>Closable Pill</Pill>);
     cy.checkAxeComponent();
   });
 });

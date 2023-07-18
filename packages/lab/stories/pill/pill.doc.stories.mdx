@@ -40,10 +40,6 @@ Pill is a versatile, interactive and stand-alone component. It is often used to:
   Use a Pill to organise content that may be mapped to more than one category. It
   provides users with a way of distinguishing among different types of content and
   categories.
-- **Display or remove a value**
-  A Pill allows users to display or remove a value that’s been selected elsewhere
-  via another mechanism, like a filter or dropdown. Options selected within Auto
-  Complete or Combo Box components, for example, may be displayed alongside a Pill.
 - **Trigger a quick action**
   You can configure a Pill to trigger an immediate action—such as changing the view
   of content that’s currently on display or navigating to a new page.
@@ -58,7 +54,7 @@ Pill is a versatile, interactive and stand-alone component. It is often used to:
 
 ## Basic Pill
 
-The default Pill is often used for tagging purposes, or to categorize content.
+The default Pill is often used for tagging purposes, or to categorize content. Pill can be used to trigger an action that is subject to change as a result of user Pills or other factors. This Pill, for example, may be used to send an auto-generated quick response to a message. If a Pill enables an action that is fixed, and not subject to change, use a [Button](/?path=/docs/documentation-core-button--page) instead.
 
 **Best practices**
 
@@ -69,44 +65,6 @@ The default Pill is often used for tagging purposes, or to categorize content.
 
 <Canvas>
   <Story id="lab-pill--default" />
-</Canvas>
-
-## Clickable Pill
-
-Pill can also be used to trigger an action that is subject to change as a result of user Pills or other factors. This Pill, for example, may be used to send an auto-generated quick response to a message. If a Pill enables an action that is fixed, and not subject to change, use a [Button](/?path=/docs/documentation-core-button--page) instead. Provide an `onClick` callback to enable clickable Pill.
-
-<Canvas>
-  <Story id="lab-pill--clickable" />
-</Canvas>
-
-## Closable Pill
-
-The Closable Pill represents a value that was selected via another mechanism,
-and which can be removed within the Pill. It can appear on its own, for example,
-alongside a complex filter panel—or within an Pill control such as
-[Auto Complete](/components/autocomplete) or [Combo Box](/components/combobox).
-
-Provide an `onClose` callback to enable closable Pill.
-
-The close button is persistent for improved accessibility and usability.
-Actioning it removes the Pill and any associated content.
-
-**Best practices**
-
-- Position a Closable Pill that represents a selection or filter _above_ related
-  content.
-- Always use a separate selection mechanism with a Closable Pill.
-
-<Canvas>
-  <Story id="lab-pill--closable-static" />
-</Canvas>
-
-## Clickable and closable Pill
-
-Clickable and Closable Pills can be combined to enable users to select a value and to remove it if necessary.
-
-<Canvas>
-  <Story id="lab-pill--closable-clickable" />
 </Canvas>
 
 ## Icon Descriptors
@@ -140,12 +98,11 @@ ensure it provides an accurate role to screen readers.
 
 ### Keyboard Interactions
 
-| Key                 | Function                                                                                                                                               |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Enter or Space      | Clickable Pill:<br /> - When focus is on Pill, it’s activated.                                                                                         |
-| Backspace or Delete | Closable Pill:<br /> - When focus is on Pill, it’s closed. **Make sure to move focus to the next component in tab order**.                             |
-| Tab                 | - Moves focus into Pill, setting focus to the entire Pill.<br/> - When Pill has focus, moves focus out of Pill to the next component in the tab order. |
-| Shift + Tab         | When Pill has focus, moves focus out of Pill to the previous component in the tab order.                                                               |
+| Key            | Function                                                                                                                                               |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Enter or Space | Clickable Pill:<br /> - When focus is on Pill, it’s activated.                                                                                         |
+| Tab            | - Moves focus into Pill, setting focus to the entire Pill.<br/> - When Pill has focus, moves focus out of Pill to the next component in the tab order. |
+| Shift + Tab    | When Pill has focus, moves focus out of Pill to the previous component in the tab order.                                                               |
 
 ## API
 

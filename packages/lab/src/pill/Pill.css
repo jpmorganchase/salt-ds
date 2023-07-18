@@ -19,8 +19,8 @@
   background: var(--pill-background);
   border-radius: var(--saltPill-borderRadius, 0);
   height: var(--saltPill-height, var(--pill-height));
-  max-width: var(--saltPill-maxWidth, 160px);
-  min-width: var(--saltPill-minWidth, 40px);
+  /* max-width: var(--saltPill-maxWidth, 10em); */
+  min-width: var(--saltPill-minWidth, 4em);
   min-height: var(--saltPill-minHeight, var(--salt-text-minHeight));
   outline: var(--saltPill-outline, 0);
   position: relative;
@@ -44,6 +44,8 @@
 /* Style applied to Pill if `onClose` prop is provided  */
 .saltPill-closable {
   padding-right: 0;
+  /* Min width is applied on the contents so we have to add the width of the close button */
+  min-width: calc(var(--saltPill-minWidth, 4em) + var(--saltPill-height));
 }
 
 .saltPill .saltIcon {
@@ -119,9 +121,15 @@
   height: var(--pill-height);
   width: var(--pill-height);
   min-height: var(--saltPill-minHeight, var(--salt-text-minHeight));
+  min-width: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  z-index: -1;
+}
+
+.saltPill-closeButton:focus-visible {
+  z-index: 0;
 }
 
 .saltPill-closeButton:hover {
@@ -140,4 +148,8 @@
 .saltPill[aria-disabled] .saltPill-closeButton:hover,
 .saltPill[aria-disabled] .saltPill-closeButton:active {
   background: transparent;
+}
+
+.saltPill-wrapper {
+  display: inline-flex;
 }

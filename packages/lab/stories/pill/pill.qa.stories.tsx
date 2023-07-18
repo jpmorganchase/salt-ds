@@ -18,21 +18,14 @@ export const ExamplesGrid: Story<QAContainerProps> = (props) => {
       <Pill className={className} onClick={noop}>
         Clickable Pill
       </Pill>
-      <Pill className={className} onClose={noop}>
-        Closable Pill
-      </Pill>
+      <Pill className={className}>Closable Pill</Pill>
       <Pill className={className} onClick={noop} disabled>
         Disabled Pill
       </Pill>
-      <Pill className={className} onClose={noop} onClick={noop}>
+      <Pill className={className} onClick={noop}>
         Interactive Pill
       </Pill>
-      <Pill
-        className={className}
-        icon={<FavoriteIcon />}
-        onClose={noop}
-        onClick={noop}
-      >
+      <Pill className={className} icon={<FavoriteIcon />} onClick={noop}>
         With Icon Pill
       </Pill>
       <Pill className={className}>Extra extra long Pill label example.</Pill>
