@@ -1,6 +1,5 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { MessageIcon } from "@salt-ds/icons";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -11,7 +10,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * The number to display on the badge
    */
-  value: number | string;
+  value?: number | string;
   /**
    * The badge will be added relative to this node. Renders the "message" icon by default.
    */
@@ -36,21 +35,28 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     window: targetWindow,
   });
 
+  //truncate according to value type
   if (typeof value === "number") {
     valueText = value > max ? `${max}+` : value;
   } else if (typeof value === "string") {
-    valueText = value.slice(0, 3);
+    valueText = value.slice(0, 4);
   }
+
+  //positioning for standalone
+  const position = children ? "superPosition" : "inline";
 
   return (
     <span className={clsx(withBaseName(), className)} ref={ref} {...rest}>
       {children}
-      <span className={clsx(withBaseName("position"), className)}>
+      <span
+        className={clsx(
+          withBaseName("badge"),
+          withBaseName(`${position}`),
+          className
+        )}
+      >
         {valueText}
       </span>
     </span>
   );
 });
-
-// If there is a child then add stylinging to display this in the top right
-// If there is no child then diplsay inline ??

@@ -1,4 +1,5 @@
 import { Badge } from "@salt-ds/lab";
+import { Tab } from "@salt-ds/lab";
 
 import { ClockIcon, SettingsSolidIcon, UserBadgeIcon } from "@salt-ds/icons";
 
@@ -43,9 +44,20 @@ const Template: ComponentStory<typeof Badge> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  max: 1000,
-  value: 50,
   children: <SettingsSolidIcon />,
+};
+
+export const MaxNumber = Template.bind({});
+MaxNumber.args = {
+  max: 99,
+  value: 150,
+  children: "Lorem Ipsum",
+};
+
+export const String = Template.bind({});
+String.args = {
+  value: "lots and lots",
+  children: "Lorem Ipsum",
 };
 
 export const Words = Template.bind({});
@@ -55,9 +67,7 @@ Words.args = {
   children: "Lorem Ipsum",
 };
 
-export const MaxNumber = Template.bind({});
-MaxNumber.args = {
-  max: 99,
-  value: 150,
-  children: "Lorem Ipsum",
+export const Standalone = Template.bind({});
+Standalone.args = {
+  value: "test",
 };
