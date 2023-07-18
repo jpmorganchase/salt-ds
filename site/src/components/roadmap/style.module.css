@@ -18,8 +18,21 @@
   gap: 20px; /* Adjust the gap between columns */
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .bar {
-  width: 400px;
+  flex: 1;
+  max-width: 400px;
+  width: 100%;
 }
 
 .test {
