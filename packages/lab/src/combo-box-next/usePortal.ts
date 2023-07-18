@@ -1,23 +1,22 @@
 import {
   arrow,
   flip,
+  limitShift,
   offset,
-  safePolygon,
   shift,
   useDismiss,
   useFocus,
-  useHover,
   useInteractions,
   useRole,
-  limitShift,
 } from "@floating-ui/react";
-import { HTMLProps, useRef } from "react";
-import { useControlled, UseFloatingUIProps, useFloatingUI } from "../utils";
+import {HTMLProps, useRef, useState} from "react";
+import {useFloatingUI, UseFloatingUIProps} from "../utils";
+import {useControlled} from "@salt-ds/core";
 
-export interface UseTooltipProps
+export interface UsePortalProps
   extends Partial<
     Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
-  > {
+    > {
   /**
    * Do not respond to focus events.
    */
@@ -29,7 +28,7 @@ export interface UseTooltipProps
 
 }
 
-export function useTooltip(props?: UseTooltipProps) {
+export function usePortal(props?: UsePortalProps) {
   const {
     open: openProp,
     onOpenChange,
@@ -37,15 +36,10 @@ export function useTooltip(props?: UseTooltipProps) {
     disableHoverListener,
     disableFocusListener,
   } = props || {};
+  const [open, setOpen] = useState(false)
 
   const arrowRef = useRef<SVGSVGElement | null>(null);
 
-  const [open, setOpen] = useControlled({
-    controlled: openProp,
-    default: false,
-    name: "Tooltip",
-    state: "open",
-  });
   const handleOpenChange = (open: boolean) => {
     setOpen(open);
     onOpenChange?.(open);
@@ -57,7 +51,6 @@ export function useTooltip(props?: UseTooltipProps) {
     x,
     y,
     strategy,
-    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
     placement,
     context,
   } = useFloatingUI({
@@ -83,7 +76,7 @@ export function useTooltip(props?: UseTooltipProps) {
   ]);
 
 
-  const getTooltipProps = (): HTMLProps<HTMLDivElement> => {
+  const getPortalProps = (): HTMLProps<HTMLDivElement> => {
     return getFloatingProps({
       // @ts-ignore
       "data-placement": placement,
@@ -103,9 +96,10 @@ export function useTooltip(props?: UseTooltipProps) {
 
   return {
     open,
+    setOpen,
     floating,
     reference,
-    getTooltipProps,
+    getPortalProps,
     getTriggerProps,
   };
 }

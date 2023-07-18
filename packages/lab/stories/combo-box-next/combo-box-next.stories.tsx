@@ -1,6 +1,6 @@
-import {ComboBoxNext, ComboBoxProps, ListItemNext} from "@salt-ds/lab";
+import {ComboBoxNext, ComboBoxNextProps} from "@salt-ds/lab";
 import {ComponentMeta, Story} from "@storybook/react";
-import {largestCities} from "../assets/exampleData";
+import {largestCities, shortColorData} from "../assets/exampleData";
 import {CountrySymbol} from "@salt-ds/countries";
 
 export default {
@@ -8,25 +8,36 @@ export default {
   component: ComboBoxNext,
 } as ComponentMeta<typeof ComboBoxNext>;
 
+const customStringToItem = () => {
 
-const ComboBoxTemplate: Story<ComboBoxProps> = (args) => {
-  return <ComboBoxNext>
-    {largestCities.map((city, index) => {
-        return (
-          <ListItemNext
-            key={index}
-            value={city.name}
-            // TODO: if using ids, this needs to be more unique
-            id={city.name}
-          >
-            <CountrySymbol code={city.countryCode} size={1}/>
-            {city.name}
-          </ListItemNext>
-        );
-      })}
-  </ComboBoxNext>;
+}
+
+const ComboBoxTemplate: Story<ComboBoxNextProps> = (args) => {
+  const handleChange = (event) => {
+    console.log('input value changed', event.target.value);
+  };
+
+  const handleSelect = (event) => {
+    console.log('selected item', event.target.value);
+  };
+  return <ComboBoxNext onChange={handleChange}
+                       onSelect={handleSelect}
+                       {...args}
+  />;
 };
 
 export const Default = ComboBoxTemplate.bind({});
 Default.args = {
+  source: shortColorData
+};
+
+export const CustomRenderer = ComboBoxTemplate.bind({});
+CustomRenderer.args = {
+  source: largestCities,
+  stringToItem: customStringToItem
+};
+
+export const Empty = ComboBoxTemplate.bind({});
+Empty.args = {
+  source: undefined
 };

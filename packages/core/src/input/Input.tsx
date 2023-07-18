@@ -122,7 +122,6 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
 
   const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
   const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
-
   const {
     "aria-describedby": inputDescribedBy,
     "aria-labelledby": inputLabelledBy,

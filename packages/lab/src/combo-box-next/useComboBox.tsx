@@ -1,45 +1,79 @@
-import {KeyboardEvent, ReactNode, useMemo, useState} from "react";
+import {ChangeEvent, KeyboardEvent, ReactNode, useMemo, useState} from "react";
+import {
+  autoUpdate,
+  flip,
+  Placement,
+  size,
+  useFloating
+} from "@floating-ui/react";
+import {usePortal} from "./usePortal";
 
 interface UseComboBoxProps {
   children?: ReactNode;
+  placement?: Placement;
 }
 
-export const useComboBox = ({children}: UseComboBoxProps) => {
+export const useComboBox = ({children, placement = "bottom"}: UseComboBoxProps) => {
 
-  const [expanded, setExpanded] = useState(false)
   const [value, setValue] = useState("");
   const [selected, setSelected] = useState("");
-  const [index, setIndex] = useState(-1);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+
+  const {
+    open,
+    setOpen,
+    floating,
+    reference,
+    getTriggerProps,
+    getPortalProps,
+  } = usePortal({placement});
 
   // HANDLERS
   const blurHandler = () => {
-    setExpanded(false);
+    setOpen(false);
   };
   const focusHandler = () => {
-    setExpanded(true);
+    console.log('open')
+    setOpen(true);
   };
 
+  const selectHandler = (value) => {
+    console.log(value)
+    if (value) {
+
+    // setSelected(value)
+    }
+    setValue(value)
+
+  }
+  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { key, target } = event;
+    const value = target.value;
+    setValue(value);
+    console.log(value)
+  }
   const keyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     const { key, target } = event;
     const value = target.value;
-    console.log(index)
+    console.log(highlightedIndex)
     switch (key) {
       case "Escape":
         setValue("");
-        setExpanded(false);
+        setOpen(false);
         break;
       case "Enter":
-        if (!expanded) {setExpanded(true)}
+        if (!open) {setOpen(true)}
         break;
       //  TODO: arrows are incrementing by one but need a stop
       case "ArrowUp":
-        setIndex(index - 1);
+        console.log('arrow up')
+        setHighlightedIndex(highlightedIndex - 1);
         break;
       case "ArrowDown":
-        setIndex(index + 1);
+        console.log('arrow down')
+        setHighlightedIndex(highlightedIndex + 1);
         break;
       default:
-        setValue(value)
         break;
     }
   }
@@ -56,8 +90,16 @@ export const useComboBox = ({children}: UseComboBoxProps) => {
     focusHandler,
     keyDownHandler,
     blurHandler,
+    changeHandler,
     contextValue,
-    expanded,
-    value
+    open,
+    value,
+    selected,
+    selectHandler,
+    highlightedIndex,
+    floating,
+    reference,
+    getTriggerProps,
+    getPortalProps,
   }
 };
