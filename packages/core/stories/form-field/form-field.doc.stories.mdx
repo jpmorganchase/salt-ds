@@ -34,7 +34,7 @@ Form field can wrap any Salt UI control that is typically found in a form, such 
   <Story id="core-form-field--with-controls" />
 </Canvas>
 
-When using Form Field with Multiline Input, the `pronounced` prop can be used on the form label and the `bordered` prop can be set on Multiline Input to style the field as a question.
+When using Form Field with Multiline Input, the `intent` prop can be set to "sentence" on the Form Field Label and the `bordered` prop can be set on Multiline Input to style the field as a question.
 
 <Canvas>
   <Story id="core-form-field--with-multiline-input-as-question" />
@@ -70,7 +70,7 @@ Place your label to the left of the control if your application is limited in ve
 
 ## Form Field Label Question
 
-The Form Field Label can be styled as a question by setting the `pronounced` prop to `true`.
+The Form Field Label can be styled as a question by setting the `intent` prop to `strong`.
 
 <Canvas>
   <Story id="core-form-field--label-question" />
@@ -78,7 +78,7 @@ The Form Field Label can be styled as a question by setting the `pronounced` pro
 
 ### Guidance
 
-- When paired with Multiline Input, pair the pronounced label with a full border.
+- When paired with Multiline Input, pair the strong label with a full border.
 
 ## Form Field Helper Text
 

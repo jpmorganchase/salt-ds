@@ -9,14 +9,22 @@ import formFieldLabelCss from "./FormFieldLabel.css";
 
 const withBaseName = makePrefixer("saltFormFieldLabel");
 
+
+export interface FormFieldLabelProps
+  extends Omit<TextProps<"label">, "variant" | "styleAs"> {
+  /**
+   * Intent for the label.
+   * Use "strong" for bolder and bigger styling
+   */
+  intent?: "default" | "strong";
+}
+
 export const FormFieldLabel = ({
   className,
   children,
-  pronounced = false,
+  intent = "default",
   ...restProps
-}: Omit<TextProps<"label">, "variant" | "styleAs"> & {
-  pronounced?: boolean;
-}) => {
+}: FormFieldLabelProps) => {
   const { a11yProps, disabled, necessity } = useFormFieldProps();
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -36,7 +44,7 @@ export const FormFieldLabel = ({
       as="label"
       className={clsx(
         withBaseName(),
-        { [withBaseName("pronounced")]: pronounced },
+        withBaseName(intent),
         className
       )}
       id={a11yProps?.["aria-labelledby"]}

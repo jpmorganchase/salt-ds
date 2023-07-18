@@ -17,7 +17,7 @@
   font-style: var(--salt-editable-help-fontStyle);
 }
 
-.saltFormFieldLabel-pronounced.saltText {
+.saltFormFieldLabel-strong.saltText {
   color: var(--salt-text-primary-foreground);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);
