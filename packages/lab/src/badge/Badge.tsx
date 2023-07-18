@@ -1,40 +1,20 @@
 import { makePrefixer, useId } from "@salt-ds/core";
-import { MessageIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import {
-  cloneElement,
-  forwardRef,
-  HTMLAttributes,
-  isValidElement,
-  ReactElement,
-  ReactText,
-} from "react";
+import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import badgeCss from "./Badge.css";
 
-/**
- * @example overriding density prop to fit a smaller denser space otherwise handled through context provider
- * <Badge density={'high'} />
- *
- * NOTE: Badge component no longer has AccessibleText prop
- *
- */
-
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /**
-   * The number to display on the badge.
+   * The number to display on the badge
    */
-  badgeContent?: string | number;
+  value?: number | string;
   /**
    * The badge will be added relative to this node. Renders the "message" icon by default.
    */
-  children?: ReactElement<HTMLAttributes<HTMLElement>> | ReactText;
-  /**
-   * The className(s) of the component.
-   */
-  className?: string;
+  children?: ReactNode;
   /**
    * The max number to display on the badge.
    */
@@ -44,13 +24,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 const withBaseName = makePrefixer("saltBadge");
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
-  {
-    badgeContent = 0,
-    max = 1000,
-    className,
-    children = <MessageIcon />,
-    ...rest
-  },
+  { value, max, className, children, ...rest },
   ref
 ) {
   const targetWindow = useWindow();
@@ -60,32 +34,26 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     window: targetWindow,
   });
 
-  const badgeId = useId();
-  const childId = useId(
-    isValidElement<HTMLAttributes<HTMLElement>>(children)
-      ? children.props?.id
-      : undefined
-  );
+  let valueText = value;
 
-  let badgeContentValue = badgeContent;
-  if (badgeContentValue > max) {
-    badgeContentValue = `${max}+`;
+  if ( typeof value === "number" && !max) {
+    valueText = value > 1000 ? '1000+' : value;
+  } else if (typeof value === "number" && max) {
+    valueText = value > max ? `${max}+` : value;
+  } else if (typeof value === 'string') {
+    valueText = value.length > 4 ? `${value.slice(0,4)}...` : value;
   }
 
-  return (
-    <span
-      className={clsx(withBaseName(), className)}
-      ref={ref}
-      role="img"
-      aria-labelledby={clsx(childId, badgeId)}
-      {...rest}
-    >
-      {children && isValidElement<HTMLAttributes<HTMLElement>>(children)
-        ? cloneElement(children, { id: childId })
-        : children}
-      <span id={badgeId} className={clsx(withBaseName("badge"))}>
-        {badgeContentValue}
+    return (
+      <span
+        className={clsx(withBaseName(), className)}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+        <span className={clsx(withBaseName("badge"), {[withBaseName("topRight")]: children})}>
+          {valueText}
+        </span>
       </span>
-    </span>
-  );
+    );
 });
