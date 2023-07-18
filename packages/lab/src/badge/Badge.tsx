@@ -42,19 +42,10 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     valueText = value.slice(0, 4);
   }
 
-  //positioning for standalone
-  const position = children ? "superPosition" : "inline";
-
   return (
     <span className={clsx(withBaseName(), className)} ref={ref} {...rest}>
       {children}
-      <span
-        className={clsx(
-          withBaseName("badge"),
-          withBaseName(`${position}`),
-          className
-        )}
-      >
+      <span className={clsx(withBaseName("badge"), className)}>
         {valueText}
       </span>
     </span>

@@ -32,18 +32,7 @@
   flex-direction: row;
   justify-content: center;
   display: inline-block;
-}
 
-/* when badge has a numeerical value */
-.saltBadge-superPosition {
   transform: translate(-4px, -50%);
   transform-origin: 100% 0%;
-}
-
-/* smaller styling when badge has no value */
-.saltBadge-inline {
-  transform: translate(0px, 0%);
-  transform-origin: 100% 0%;
-  align-items: right;
-  align-content: right;
 }
