@@ -195,7 +195,7 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
             return (
               <RoadmapCard className={styles.card} key={item.id}>
                 <Link>
-                  <Heading3>
+                  <Heading3 className={styles.heading3}>
                     <a href={item.issueUrl}>{item.text}</a>
                   </Heading3>
                 </Link>
@@ -227,7 +227,7 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
             return (
               <RoadmapCard key={item.id}>
                 <Link>
-                  <Heading3>
+                  <Heading3 className={styles.heading3}>
                     <a href={item.issueUrl}>{item.text}</a>
                   </Heading3>
                 </Link>

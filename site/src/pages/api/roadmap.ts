@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import fetch from 'node-fetch';
+import { NextApiRequest, NextApiResponse } from "next";
+import fetch from "node-fetch";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -58,10 +58,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     `;
 
-    const response = await fetch('https://api.github.com/graphql', {
-      method: 'POST',
+    const response = await fetch("https://api.github.com/graphql", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
       },
       body: JSON.stringify({
@@ -74,7 +74,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json(responseData);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error fetching data' });
+    res.status(500).json({ message: "Error fetching data" });
   }
 };
 
