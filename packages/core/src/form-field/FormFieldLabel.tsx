@@ -9,7 +9,6 @@ import formFieldLabelCss from "./FormFieldLabel.css";
 
 const withBaseName = makePrefixer("saltFormFieldLabel");
 
-
 export interface FormFieldLabelProps
   extends Omit<TextProps<"label">, "variant" | "styleAs"> {
   /**
@@ -42,11 +41,7 @@ export const FormFieldLabel = ({
   return (
     <Label
       as="label"
-      className={clsx(
-        withBaseName(),
-        withBaseName(intent),
-        className
-      )}
+      className={clsx(withBaseName(), withBaseName(intent), className)}
       id={a11yProps?.["aria-labelledby"]}
       disabled={disabled}
       variant="secondary"
