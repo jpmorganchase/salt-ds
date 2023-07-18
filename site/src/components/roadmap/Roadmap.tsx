@@ -147,27 +147,29 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
   };
 
   return (
-    <div>
-      <Input
-        placeholder="Search"
-        value={searchQuery}
-        onChange={(event) =>
-          setSearchQuery((event.target as HTMLInputElement).value)
-        }
-        className={styles.bar}
-        startAdornment={<SearchIcon />}
-      />
-
-      {roadmapData !== null && roadmapData.length > 0 ? (
-        <CardView
-          sortedRoadmapData={sortedRoadmapData}
-          searchQuery={searchQuery}
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <Input
+          placeholder="Search"
+          value={searchQuery}
+          onChange={(event) =>
+            setSearchQuery((event.target as HTMLInputElement).value)
+          }
+          className={styles.bar}
+          startAdornment={<SearchIcon />}
         />
-      ) : (
-        <Banner status="info">
-          <BannerContent>No data available</BannerContent>
-        </Banner>
-      )}
+
+        {roadmapData !== null && roadmapData.length > 0 ? (
+          <CardView
+            sortedRoadmapData={sortedRoadmapData}
+            searchQuery={searchQuery}
+          />
+        ) : (
+          <Banner status="info">
+            <BannerContent>No data available</BannerContent>
+          </Banner>
+        )}
+      </div>
     </div>
   );
 };
