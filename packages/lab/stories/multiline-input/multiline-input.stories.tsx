@@ -2,7 +2,10 @@ import { Button, FlowLayout, Text } from "@salt-ds/core";
 import { MultilineInput } from "@salt-ds/lab";
 import {
   BookmarkSolidIcon,
+  CookieSolidIcon,
+  EditSolidIcon,
   FilterClearIcon,
+  FilterIcon,
   FlagIcon,
   PinSolidIcon,
 } from "@salt-ds/icons";
@@ -182,7 +185,7 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput
-        startAdornment={<Button variant="cta">AB</Button>}
+        startAdornment={<Button variant="cta"><EditSolidIcon /></Button>}
         endAdornment={
           <>
             <Text>%</Text>
@@ -193,7 +196,7 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
         {...args}
       />
       <MultilineInput
-        startAdornment={<FlagIcon />}
+        startAdornment={<FilterIcon />}
         endAdornment={
           <Button>
             <BookmarkSolidIcon />
@@ -204,10 +207,9 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
       />
       <MultilineInput
         readOnly
-        startAdornment={<FlagIcon />}
         endAdornment={
           <Button disabled>
-            <BookmarkSolidIcon />
+            <CookieSolidIcon />
           </Button>
         }
         defaultValue="Value"
