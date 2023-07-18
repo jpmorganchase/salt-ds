@@ -81,7 +81,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
         className
       )}
       disabled={disabled}
-      onClose={isRemovable ? handleDelete : undefined}
+      // onClose={isRemovable ? handleDelete : undefined}
       ref={ref}
       role="option"
       tabIndex={undefined}
