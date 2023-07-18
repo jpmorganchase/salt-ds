@@ -22,10 +22,9 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const withBaseName = makePrefixer("saltBadge");
-let valueText: ReactNode;
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
-  { value, max = 5, className, children, ...rest },
+  { value, max, className, children, ...rest },
   ref
 ) {
   const targetWindow = useWindow();
@@ -35,19 +34,38 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     window: targetWindow,
   });
 
+  let valueText = value;
+
   //truncate according to value type
-  if (typeof value === "number") {
+  if (typeof value === "number" && max) {
     valueText = value > max ? `${max}+` : value;
-  } else if (typeof value === "string") {
-    valueText = value.slice(0, 4);
   }
 
-  return (
-    <span className={clsx(withBaseName(), className)} ref={ref} {...rest}>
-      {children}
-      <span className={clsx(withBaseName("badge"), className)}>
+  if (!children) {
+    //This is the most basic form of the badge inline
+    return (
+      <span
+        className={clsx(withBaseName(), withBaseName("badge"), className)}
+        ref={ref}
+        {...rest}
+      >
         {valueText}
       </span>
-    </span>
-  );
+    );
+  } else
+    return (
+      <span
+        className={clsx(withBaseName("wrap"), className)}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+        <span
+          //top right styling for when there is a child
+          className={clsx(withBaseName(), withBaseName(`topRight`), className)}
+        >
+          {valueText}
+        </span>
+      </span>
+    );
 });

@@ -26,13 +26,18 @@
   color: var(--saltBadge-content-text-color, var(--salt-accent-foreground));
 
   position: relative;
-  flex-wrap: wrap;
   align-items: center;
-  align-content: center;
-  flex-direction: row;
   justify-content: center;
-  display: inline-block;
+  display: inline-flex;
+}
 
+/* when badge has a numeerical value */
+.saltBadge-topRight {
   transform: translate(-4px, -50%);
   transform-origin: 100% 0%;
 }
+
+.saltBadge-inline;
+
+//wrapper - position relative
+//badge - position absolute, like 0px
