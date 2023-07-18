@@ -3,7 +3,7 @@
   --trackerConnector-style-active: var(--saltTrackerConnector-style-active, var(--salt-track-borderStyle-active));
   --trackerConnector-color: var(--saltTrackerConnector-color, var(--salt-track-borderColor));
   --trackerConnector-thickness: var(--saltTrackerConnector-thickness, var(--salt-track-borderWidth));
-  --trackerConnector-margin: var(--saltTrackerConnector-margin, var(--salt-spacing-50));
+  --trackerConnector-margin: var(--saltTrackerConnector-margin, var(--salt-spacing-100));
 }
 
 .saltTrackerConnector {
