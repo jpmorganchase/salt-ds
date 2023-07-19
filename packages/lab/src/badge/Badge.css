@@ -21,17 +21,15 @@
   color: var(--saltBadge-content-text-color, var(--salt-accent-foreground));
 }
 
-/* Style applied to the badge in the corner of the node */
 .saltBadge-inline {
   position: relative;
   align-items: center;
   justify-content: center;
   display: inline-flex;
   margin-bottom: 4px;
-  margin-left: 5px;
+  margin-left: var(--salt-spacing-50);
 }
 
-/* when badge has a numeerical value */
 .saltBadge-topRight {
   top: -8px;
   right: 5px;

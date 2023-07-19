@@ -36,7 +36,6 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
 
   let valueText = value;
 
-  //truncate according to value type
   if (typeof value === "number" && max) {
     valueText = value > max ? `${max}+` : value;
   } else if (typeof value === "string") {
@@ -44,7 +43,6 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   }
 
   if (!children) {
-    //This is the most basic form of the badge inline
     return (
       <div>
         <span
@@ -65,7 +63,6 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
       >
         {children}
         <span
-          //top right styling for when there is a child
           className={clsx(withBaseName(), withBaseName(`topRight`), className)}
         >
           {valueText}
