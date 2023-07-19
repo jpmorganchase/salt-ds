@@ -1,6 +1,6 @@
 .saltCircularProgress {
   --circularProgress-gradient-color: var(--salt-accent-background);
-  --progress-circle-radius: calc(var(--salt-size-base) - (var(--salt-size-detail) * 0.25));
+  --progress-circle-radius: calc(var(--salt-size-base) - (var(--salt-size-adornment) * 0.25));
   --progress-circle-circumference: calc(var(--progress-circle-radius) * 2 * 3.14);
 
   color: var(--salt-text-primary-foreground);
@@ -67,7 +67,7 @@
 
 .saltCircularProgress-circle {
   r: var(--progress-circle-radius);
-  stroke-width: calc(var(--salt-size-detail) * 0.5);
+  stroke-width: calc(var(--salt-size-adornment) * 0.5);
   stroke: url("#salt-circular-progress-gradient");
 }
 

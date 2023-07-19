@@ -29,12 +29,12 @@
   position: relative;
   width: calc(100% - 10px);
   overflow: hidden;
-  height: var(--salt-size-detail);
+  height: var(--salt-size-adornment);
 }
 
 /* Horizontal line under the progress indicator bar */
 .saltLinearProgress-barContainer:after {
-  top: calc((var(--salt-size-detail) - var(--salt-size-basis-unit) * 0.5) / 2);
+  top: calc((var(--salt-size-adornment) - var(--salt-track-borderWidth)) / 2);
   background: var(--salt-track-borderColor);
   content: "";
   display: block;
