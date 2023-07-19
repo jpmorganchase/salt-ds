@@ -66,10 +66,6 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     [pillsRef, index]
   );
 
-  const handleDelete = () => {
-    onClose?.(index);
-  };
-
   return (
     <Pill
       className={clsx(
@@ -81,7 +77,6 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
         className
       )}
       disabled={disabled}
-      // onClose={isRemovable ? handleDelete : undefined}
       ref={ref}
       role="option"
       tabIndex={undefined}
