@@ -1,7 +1,13 @@
 import { ComponentMeta, Story } from "@storybook/react";
 import { ListItemNext, ListNext, ListNextProps } from "../../src";
-import { Button, FlexLayout } from "@salt-ds/core";
-import { useState } from "react";
+import {
+  Button,
+  FlexLayout,
+  Input,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
+import { ChangeEvent, KeyboardEvent, SyntheticEvent, useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 
@@ -30,6 +36,7 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
       {...rest}
       aria-label="Declarative List example"
       style={{ height: "150px" }}
+      onChange={(e, { value }) => console.log("new selection", value)}
     >
       {children ||
         getListItems({
@@ -48,6 +55,7 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
     undefined
   );
+  const [controls, setControls] = useState<string>("buttons");
 
   const handleArrowDown = () => {
     const nextIndex = highlightedIndex === undefined ? 0 : highlightedIndex + 1;
@@ -70,34 +78,96 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
     setHighlightedIndex(index);
   };
 
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value.toLowerCase();
+    console.log(inputValue.length);
+    const firstMatchingItem =
+      inputValue.length - 1 >= 0
+        ? usStateExampleData.findIndex((item) =>
+            item.toLowerCase().includes(inputValue)
+          )
+        : undefined;
+    setHighlightedIndex(firstMatchingItem);
+    setSelectedItem(event.target.value);
+  };
+
+  const handleInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const { key } = event;
+    switch (key) {
+      case "ArrowUp":
+        event.preventDefault();
+        handleArrowUp();
+        break;
+      case "ArrowDown":
+        event.preventDefault();
+        handleArrowDown();
+        break;
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        handleSelect();
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
-    <FlexLayout direction="column" gap={1}>
-      <FlexLayout gap={0} justify={"space-between"}>
-        <Button
-          disabled={highlightedIndex === usStateExampleData.length - 1}
-          onClick={handleArrowDown}
-        >
-          <ArrowDownIcon />
-        </Button>
-        <Button
-          disabled={!highlightedIndex || highlightedIndex === 0}
-          onClick={handleArrowUp}
-        >
-          <ArrowUpIcon />
-        </Button>
-        <Button
-          disabled={highlightedIndex === undefined}
-          onClick={handleSelect}
-        >
-          Select
-        </Button>
-      </FlexLayout>
+    <FlexLayout
+      direction="column"
+      gap={1}
+      align={"center"}
+      style={{ height: "260px" }}
+    >
+      <ToggleButtonGroup
+        aria-label="Controls"
+        value={controls}
+        onChange={(event: SyntheticEvent<HTMLButtonElement>) =>
+          setControls(event.target.value)
+        }
+      >
+        <ToggleButton aria-label="Button controls" value="buttons">
+          buttons
+        </ToggleButton>
+        <ToggleButton aria-label="Input controls" value="input">
+          input
+        </ToggleButton>
+      </ToggleButtonGroup>
+      {controls === "buttons" ? (
+        <FlexLayout gap={0}>
+          <Button
+            disabled={highlightedIndex === usStateExampleData.length - 1}
+            onClick={handleArrowDown}
+          >
+            <ArrowDownIcon />
+          </Button>
+          <Button
+            disabled={!highlightedIndex || highlightedIndex === 0}
+            onClick={handleArrowUp}
+          >
+            <ArrowUpIcon />
+          </Button>
+          <Button
+            disabled={highlightedIndex === undefined}
+            onClick={handleSelect}
+          >
+            Select
+          </Button>
+        </FlexLayout>
+      ) : (
+        <Input
+          value={selectedItem}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
+        ></Input>
+      )}
       <ListNext
         {...rest}
         aria-label="Controlled List example"
         selected={selectedItem}
+        disableFocus
         highlightedIndex={highlightedIndex}
-        style={{ height: "150px" }}
+        style={{ maxHeight: "150px", width: "100%" }}
       >
         {usStateExampleData.map((item, index) => {
           return (

@@ -20,7 +20,7 @@ interface UseListProps {
   selected?: string;
   /* Initial value for the controlled version. */
   defaultSelected?: string;
-  /* Callback for the controlled version. */
+  /* Callback for the uncontrolled version. */
   onChange?: (e: SyntheticEvent, data: { value: string }) => void;
   /* List id. */
   id?: string;
@@ -249,7 +249,10 @@ export const useList = ({
       case " ":
       case "Enter":
         event.preventDefault();
-        nextItem && selectItem(nextItem);
+        if (nextItem) {
+          selectItem(nextItem);
+          onChange?.(event, { value: nextItem.dataset.value || "" });
+        }
         break;
       case "PageDown":
       case "PageUp":

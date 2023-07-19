@@ -6,7 +6,6 @@ import {
   KeyboardEvent,
   MouseEvent,
   SyntheticEvent,
-  useMemo,
   useRef,
 } from "react";
 import { clsx } from "clsx";
