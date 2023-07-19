@@ -80,7 +80,6 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value.toLowerCase();
-    console.log(inputValue.length);
     const firstMatchingItem =
       inputValue.length - 1 >= 0
         ? usStateExampleData.findIndex((item) =>
