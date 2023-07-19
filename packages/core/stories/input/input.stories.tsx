@@ -70,7 +70,13 @@ export const Disabled: ComponentStory<typeof Input> = (args) => {
 };
 
 export const Placeholder: ComponentStory<typeof Input> = (args) => {
-  return <Input placeholder={"Enter a value"} {...args} />;
+  return (
+    <FlowLayout>
+      <Input placeholder={"Enter a value"} {...args} />
+      <Input disabled placeholder={"Enter a value"} {...args} />
+      <Input readOnly placeholder={"Enter a value"} {...args} />
+    </FlowLayout>
+  );
 };
 
 export const Readonly: ComponentStory<typeof Input> = (args) => {
