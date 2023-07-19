@@ -47,7 +47,6 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     //This is the most basic form of the badge inline
     return (
       <div>
-        Hello Babe
         <span
           className={clsx(withBaseName(), withBaseName("inline"), className)}
           ref={ref}

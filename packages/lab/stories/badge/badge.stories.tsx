@@ -20,9 +20,15 @@ export const All: ComponentStory<typeof Badge> = () => {
         <Badge value={6}>
           <UserBadgeIcon />
         </Badge>
-        <Badge value={8}>
-          <ClockIcon />
-        </Badge>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          List Item
+          <Badge value={8} />
+        </div>
         <Badge value={999} />
       </div>
       <div>
