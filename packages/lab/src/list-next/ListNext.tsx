@@ -24,13 +24,15 @@ export interface ListNextProps
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
+  /* If `true`, the component will not receive focus. */
+  disableFocus?: boolean;
   /* Value for the controlled version. */
   highlightedIndex?: number;
   /* Value for the controlled version. */
   selected?: string;
   /* Callback for the controlled version. */
   onChange?: (e: SyntheticEvent, data: { value: string }) => void;
-  /* Initial value for the controlled version. */
+  /* Initial selection. */
   defaultSelected?: string;
 }
 
@@ -40,6 +42,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       className,
       disabled,
+      disableFocus,
       id,
       onSelect,
       onFocus,
@@ -64,10 +67,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const listId = useId(id);
     const listRef = useRef<HTMLUListElement>(null);
     const handleRef = useForkRef(listRef, ref);
-    const controlled = useMemo(
-      () => Boolean(selected || highlightedIndex !== undefined),
-      [selected, highlightedIndex]
-    );
+
     const {
       focusHandler,
       keyDownHandler,
@@ -112,7 +112,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           id={listId}
           className={clsx(withBaseName(), className)}
           role="listbox"
-          tabIndex={disabled || controlled ? -1 : 0}
+          tabIndex={disabled || disableFocus ? -1 : 0}
           aria-activedescendant={disabled ? undefined : activeDescendant}
           aria-disabled={disabled}
           onFocus={handleFocus}

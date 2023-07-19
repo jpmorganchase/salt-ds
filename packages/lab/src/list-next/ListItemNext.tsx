@@ -15,10 +15,6 @@ export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
    */
   disabled?: boolean;
   /**
-   * If true, the particular list item in list will be selected.
-   */
-  selected?: boolean;
-  /**
    * List item id.
    */
   id?: string;
@@ -34,7 +30,6 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       children,
       className,
       disabled: disabledProp,
-      selected: selectedProp,
       id: idProp,
       value,
       onClick,
@@ -63,7 +58,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
 
     const itemId = `${contextId || "listNext"}--${id}`;
     const disabled = disabledProp || contextDisabled;
-    const selected = selectedProp || isSelected(value);
+    const selected = isSelected(value);
     const focused = isFocused(itemId);
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
