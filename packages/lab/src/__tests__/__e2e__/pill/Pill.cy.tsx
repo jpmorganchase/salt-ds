@@ -64,7 +64,7 @@ describe("GIVEN a Pill", () => {
 
   it("SHOULD have no a11y violations on load", () => {
     const clickSpy = cy.stub().as("clickSpy");
-    cy.mount(<Pill onClick={clickSpy}>Closable Pill</Pill>);
+    cy.mount(<Pill onClick={clickSpy}>Pill</Pill>);
     cy.checkAxeComponent();
   });
 });
