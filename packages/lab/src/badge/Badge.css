@@ -3,38 +3,38 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: inline-flex;
-  position: relative;
   flex-shrink: 0;
-  vertical-align: middle;
+  justify-content: center;
+}
 
+.saltBadge-badge {
   /* Should this vary according to touch size */
   padding: 0px var(--salt-spacing-50);
   line-height: var(--salt-text-lineHeight);
   min-width: 10px;
-  line-height: 15px;
-  border-radius: 16px;
+  max-width: 50px;
+  border-radius: 999px;
 
-  font-size: var(--saltBadge-fontSize, var(--salt-text-label-fontSize));
-  font-weight: var(--salt-accent-fontSize);
-
-  background: var(--saltBadge-content-icon-color, var(--salt-accent-background));
-  color: var(--saltBadge-content-text-color, var(--salt-accent-foreground));
-}
-
-.saltBadge-inline {
-  position: relative;
   align-items: center;
   justify-content: center;
-  display: inline-flex;
+  display: inline-block;
   margin-bottom: 4px;
-  margin-left: var(--salt-spacing-50);
+
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-accent-fontSize);
+  background: var(--salt-accent-background);
+  color: var(--salt-accent-foreground);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .saltBadge-topRight {
-  top: -8px;
-  right: 5px;
+  position: relative;
+  top: -5px;
+  right: 5px
 }
 
-.saltBadge-wrap {
-  position: relative;
-}
+
+

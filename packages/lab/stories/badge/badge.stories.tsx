@@ -17,28 +17,24 @@ export const All: ComponentStory<typeof Badge> = () => {
         <Badge value={1}>
           <SettingsSolidIcon />
         </Badge>
-        <Badge value={6}>
+        <Badge value={"hi"}>
           <UserBadgeIcon />
         </Badge>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-          }}
-        >
-          List Item
-          <Badge value={8} />
-        </div>
-        <Badge value={999} />
       </div>
       <div>
         <Badge value={1}>Lorem Ipsum</Badge>
-        <Badge value={10}>Lorem Ipsum</Badge>
-        <Badge value={100}>Lorem Ipsum</Badge>
-        <Badge value={2000}>Lorem Ipsum</Badge>
-        <Badge value={2000} max={99}>
-          Lorem Ipsum
-        </Badge>
+        <Badge value={2000} max={99}> Lorem Ipsum </Badge>
+        <Badge value={"hi"}> Lorem Ipsum </Badge>
+        <Badge value={"lots and lots"}> Lorem Ipsum </Badge>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        Inline
+        <Badge value={8} />
       </div>
     </div>
   );
@@ -63,7 +59,7 @@ MaxNumber.args = {
 
 export const String = Template.bind({});
 String.args = {
-  value: "lots and lots",
+  value: "lots",
   children: "Lorem Ipsum",
 };
 
@@ -72,9 +68,4 @@ Words.args = {
   max: 1000,
   value: 1,
   children: "Lorem Ipsum",
-};
-
-export const Standalone = Template.bind({});
-Standalone.args = {
-  value: "test",
 };
