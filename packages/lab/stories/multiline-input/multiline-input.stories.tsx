@@ -117,7 +117,14 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
       {...args}
       value={value}
       onChange={handleChange}
-      endAdornment={<span style={{color: "var(--salt-text-secondary-foreground)", fontWeight: "var(--salt-text-fontWeight-small)"}}>{`${value.length}/${MAX_CHARS}`}</span>}
+      endAdornment={
+        <span
+          style={{
+            color: "var(--salt-text-secondary-foreground)",
+            fontWeight: "var(--salt-text-fontWeight-small)",
+          }}
+        >{`${value.length}/${MAX_CHARS}`}</span>
+      }
       style={{ maxWidth: "266px" }}
     />
   );
@@ -246,9 +253,9 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const WithMultipleFeatures: ComponentStory<
-  typeof MultilineInput
-> = (args) => {
+export const WithMultipleFeatures: ComponentStory<typeof MultilineInput> = (
+  args
+) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput
