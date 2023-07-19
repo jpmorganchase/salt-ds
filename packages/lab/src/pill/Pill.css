@@ -4,8 +4,6 @@
   --pill-background-active: var(--saltPill-background-active, var(--salt-actionable-primary-background-active));
   --pill-background-disabled: var(--saltPill-background-disabled, var(--salt-actionable-primary-background-disabled));
   --pill-background-hover: var(--saltPill-background-hover, var(--salt-actionable-primary-background-hover));
-  --pill-fontSize: var(--saltPill-fontSize, var(--salt-text-fontSize));
-  --pill-height: calc(var(--salt-size-base) - var(--salt-size-unit));
   --pill-text-color: var(--saltPill-text-color, var(--salt-actionable-primary-foreground));
   --pill-text-color-active: var(--saltPill-text-color-active, var(--salt-actionable-primary-foreground-active));
   --pill-text-color-hover: var(--saltPill-text-color-hover, var(--salt-actionable-primary-foreground-hover));
@@ -18,7 +16,7 @@
   justify-content: center;
   background: var(--pill-background);
   border-radius: var(--saltPill-borderRadius, 0);
-  height: var(--saltPill-height, var(--pill-height));
+  height: calc(var(--salt-size-base) - var(--salt-size-unit));
   /* max-width: var(--saltPill-maxWidth, 10em); */
   min-width: var(--saltPill-minWidth, 4em);
   min-height: var(--saltPill-minHeight, var(--salt-text-minHeight));
@@ -27,7 +25,7 @@
   gap: var(--saltPill-gap, var(--salt-spacing-50));
   padding-inline: var(--salt-spacing-50);
   color: var(--saltPill-text-color, var(--pill-text-color));
-  font-size: var(--pill-fontSize);
+  font-size: var(--saltPill-fontSize, var(--salt-text-fontSize));
   font-weight: var(--saltPill-fontWeight, var(--salt-text-fontWeight));
   letter-spacing: var(--saltPill-letterSpacing, 0);
   line-height: var(--saltPill-lineHeight, var(--salt-text-label-lineHeight));
@@ -56,7 +54,7 @@
   background: var(--pill-background-hover);
 }
 
-.saltPill-clickable[aria-disabled]:hover,
+.saltPill-clickable.saltPill-disabled:hover,
 .saltPill-nestedHover:hover {
   color: var(--pill-text-color);
   background: var(--pill-background);
@@ -68,8 +66,8 @@
   color: var(--pill-text-color-active);
 }
 
-.saltPill-clickable[aria-disabled].saltPill-active,
-.saltPill-clickable[aria-disabled]:active,
+.saltPill-clickable.saltPill-disabled.saltPill-active,
+.saltPill-clickable.saltPill-disabled:active,
 .saltPill-clickable.saltPill-nestedHover.saltPill-active,
 .saltPill-clickable.saltPill-nestedHover:active {
   background: var(--pill-background);
@@ -82,9 +80,9 @@
 }
 
 /* Style applied to Pill when disabled */
-.saltPill[aria-disabled],
-.saltPill[aria-disabled]:hover,
-.saltPill[aria-disabled]:active {
+.saltPill.saltPill-disabled,
+.saltPill.saltPill-disabled:hover,
+.saltPill.saltPill-disabled:active {
   color: var(--pill-text-color-disabled);
   background: var(--pill-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);

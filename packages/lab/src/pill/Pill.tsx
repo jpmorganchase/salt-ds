@@ -22,7 +22,7 @@ export interface PillProps extends ComponentPropsWithoutRef<"div"> {
   /* Pass an element to render an icon descriptor on the left of the label */
   icon?: React.ReactNode;
   /* Pass a callback function to make the pill clickable */
-  onClick?: (e: PillClickEvent) => void;
+  onClick?: (event: PillClickEvent) => void;
 }
 
 const withBaseName = makePrefixer("saltPill");
@@ -44,12 +44,12 @@ export const Pill = forwardRef<HTMLDivElement, PropsWithChildren<PillProps>>(
     } = useButton<HTMLDivElement>({
       disabled,
       onClick,
-      onKeyUp: (e) => {
+      onKeyUp: (event) => {
         if (disabled) return;
-        if (e.key === "Enter" || e.key === " ") {
-          onClick?.(e);
+        if (event.key === "Enter" || event.key === " ") {
+          onClick?.(event);
         }
-        restProps.onKeyUp?.(e);
+        restProps.onKeyUp?.(event);
       },
       onKeyDown: restProps.onKeyDown,
     });
@@ -64,6 +64,7 @@ export const Pill = forwardRef<HTMLDivElement, PropsWithChildren<PillProps>>(
           withBaseName("clickable"),
           {
             [withBaseName("active")]: active,
+            [withBaseName("disabled")]: disabled,
           },
           className
         )}
