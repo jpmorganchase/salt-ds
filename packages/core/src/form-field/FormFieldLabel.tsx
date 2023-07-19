@@ -12,16 +12,18 @@ const withBaseName = makePrefixer("saltFormFieldLabel");
 export interface FormFieldLabelProps
   extends Omit<TextProps<"label">, "variant" | "styleAs"> {
   /**
-   * Intent for the label.
-   * Use "strong" for bolder and bigger styling
+   * Intent for the label. 
+   * 
+   * Defaults to "label"
+   * Using "sentence" gives more prominent styling
    */
-  intent?: "default" | "strong";
+  intent?: "label" | "sentence";
 }
 
 export const FormFieldLabel = ({
   className,
   children,
-  intent = "default",
+  intent = "label",
   ...restProps
 }: FormFieldLabelProps) => {
   const { a11yProps, disabled, necessity } = useFormFieldProps();
