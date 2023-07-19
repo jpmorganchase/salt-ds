@@ -98,7 +98,6 @@
   color: inherit;
   cursor: inherit;
   display: block;
-  height: calc(var(--saltMultilineInput-rows, 3) * var(--salt-text-lineHeight));
   flex: 1;
   font: inherit;
   letter-spacing: 0;
