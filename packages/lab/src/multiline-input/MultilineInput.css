@@ -231,6 +231,14 @@
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
 
+.saltMultilineInput-characterCount {
+  align-self: self-end;
+  color: var(--salt-text-secondary-foreground);  
+  min-height: calc(var(--salt-size-base) - var(--salt-spacing-25));
+  padding-left: var(--salt-spacing-100);
+  padding-bottom: var(--salt-spacing-50);
+}
+
 /* Styles for button adornment */
 .saltMultilineInput .saltButton {
   --saltButton-padding: 0;

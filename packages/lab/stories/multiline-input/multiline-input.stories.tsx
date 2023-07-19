@@ -100,6 +100,18 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
     </FlowLayout>
   );
 };
+
+export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
+  return (
+      <MultilineInput
+        defaultValue="This is a comment."
+        maxChars={50}
+        style={{ maxWidth: "266px" }}
+        {...args}
+      />
+  );
+};
+
 export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
@@ -223,7 +235,7 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const WithValidationAndAdornments: ComponentStory<
+export const WithMultipleFeatures: ComponentStory<
   typeof MultilineInput
 > = (args) => {
   return (
@@ -245,6 +257,7 @@ export const WithValidationAndAdornments: ComponentStory<
         }
         validationStatus="error"
         defaultValue="Value"
+        maxChars={300}
         {...args}
       />
     </FlowLayout>
