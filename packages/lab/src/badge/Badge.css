@@ -13,12 +13,12 @@
   line-height: var(--salt-text-lineHeight);
   min-width: 10px;
   max-width: 50px;
-  border-radius: 999px;
+  border-radius: 10px;
 
   align-items: center;
   justify-content: center;
   display: inline-block;
-  margin-bottom: 4px;
+  margin: auto;
 
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-accent-fontSize);
