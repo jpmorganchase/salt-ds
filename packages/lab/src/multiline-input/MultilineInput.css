@@ -169,7 +169,7 @@
   border-bottom: var(--multilineInput-activationIndicator-borderWidth) var(--multilineInput-borderStyle) var(--multilineInput-borderColor);
 }
 
-/* Style applied if `fullBorder={true}` */
+/* Style applied if `bordered={true}` */
 .saltMultilineInput.saltMultilineInput-bordered,
 .saltMultilineInput.saltMultilineInput-readOnly.saltMultilineInput-bordered {
   --multilineInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--multilineInput-borderColor);
