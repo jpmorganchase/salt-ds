@@ -240,9 +240,9 @@ export const WithButtonAdornment: ComponentStory<typeof Input> = (args) => {
         disabled
         endAdornment={
           <>
-          <Button disabled>
-            <SendIcon />
-          </Button>
+            <Button disabled>
+              <SendIcon />
+            </Button>
             <Button disabled variant="secondary">
               <CloseIcon />
             </Button>
@@ -258,9 +258,9 @@ export const WithButtonAdornment: ComponentStory<typeof Input> = (args) => {
         readOnly
         startAdornment={
           <>
-          <Button disabled>
-            <SendIcon />
-          </Button>
+            <Button disabled>
+              <SendIcon />
+            </Button>
             <Button disabled variant="secondary">
               <CloseIcon />
             </Button>
