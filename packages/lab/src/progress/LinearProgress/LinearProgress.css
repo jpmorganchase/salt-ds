@@ -19,6 +19,11 @@
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
+.saltLinearProgress-disabled .saltLinearProgress-barContainer:after {
+  background: var(--salt-track-borderColor-disabled);
+}
+
+
 .saltLinearProgress-barContainer {
   background: none;
   position: relative;
@@ -37,12 +42,6 @@
   left: 0;
   position: absolute;
   right: 0;
-}
-
-.saltLinearProgress-determinate {
-}
-
-.saltLinearProgress-indeterminate {
 }
 
 .saltLinearProgress-query {

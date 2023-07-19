@@ -31,9 +31,13 @@
   width: 100%;
 }
 
-.saltCircularProgress-disabled {}
+.saltCircularProgress-disabled .saltCircularProgress-circleDeterminate {
+  stroke: var(--salt-accent-background-disabled);
+}
 
-.saltCircularProgress-completed {}
+.saltCircularProgress-disabled .saltCircularProgress-railCircle {
+  stroke: var(--salt-track-borderColor-disabled);
+}
 
 .saltCircularProgress-railCircle {
   stroke: var(--salt-track-borderColor);
