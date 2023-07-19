@@ -200,8 +200,7 @@ export const WithButtonAdornment: ComponentStory<typeof Input> = (args) => {
         {...args}
       />
       <Input
-        variant="secondary"
-        startAdornment={
+        endAdornment={
           <Button variant="cta">
             <RefreshIcon />
           </Button>
@@ -224,7 +223,6 @@ export const WithButtonAdornment: ComponentStory<typeof Input> = (args) => {
         {...args}
       />
       <Input
-        variant="secondary"
         endAdornment={
           <>
             <Button variant="secondary">
@@ -234,6 +232,62 @@ export const WithButtonAdornment: ComponentStory<typeof Input> = (args) => {
               <FlagIcon />
             </Button>
           </>
+        }
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+      <Input
+        disabled
+        endAdornment={
+          <>
+          <Button disabled>
+            <SendIcon />
+          </Button>
+            <Button disabled variant="secondary">
+              <CloseIcon />
+            </Button>
+            <Button disabled variant="cta">
+              <FlagIcon />
+            </Button>
+          </>
+        }
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+      <Input
+        readOnly
+        startAdornment={
+          <>
+          <Button disabled>
+            <SendIcon />
+          </Button>
+            <Button disabled variant="secondary">
+              <CloseIcon />
+            </Button>
+            <Button disabled variant="cta">
+              <FlagIcon />
+            </Button>
+          </>
+        }
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+      <Input
+        disabled
+        startAdornment={
+          <>
+            <Button disabled>
+              <CloseIcon />
+            </Button>
+            <Button disabled variant="secondary">
+              <FlagIcon />
+            </Button>
+          </>
+        }
+        endAdornment={
+          <Button variant="cta" disabled>
+            <SendIcon />
+          </Button>
         }
         defaultValue={args.defaultValue ?? "Value"}
         {...args}

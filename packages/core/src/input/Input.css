@@ -190,6 +190,9 @@
   column-gap: var(--salt-spacing-100);
 }
 
+.saltInput-readOnly .saltInput-startAdornmentContainer {
+  margin-left: var(--salt-spacing-50);
+}
 
 .saltInput-startAdornmentContainer .saltButton ~ .saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
