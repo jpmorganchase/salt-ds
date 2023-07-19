@@ -39,18 +39,23 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   //truncate according to value type
   if (typeof value === "number" && max) {
     valueText = value > max ? `${max}+` : value;
+  } else if (typeof value === "string") {
+    valueText = value.length > 4 ? `${value.slice(0, 4)}...` : value;
   }
 
   if (!children) {
     //This is the most basic form of the badge inline
     return (
-      <span
-        className={clsx(withBaseName(), withBaseName("badge"), className)}
-        ref={ref}
-        {...rest}
-      >
-        {valueText}
-      </span>
+      <div>
+        Hello Babe
+        <span
+          className={clsx(withBaseName(), withBaseName("inline"), className)}
+          ref={ref}
+          {...rest}
+        >
+          {valueText}
+        </span>
+      </div>
     );
   } else
     return (

@@ -8,36 +8,39 @@
   vertical-align: middle;
   line-height: var(--salt-text-lineHeight);
   font-size: var(--saltBadge-fontSize, var(--salt-text-label-fontSize));
-}
-
-/* Style applied to the badge in the corner of the node */
-.saltBadge-badge {
   min-width: 10px;
   line-height: 15px;
   border-radius: 16px;
   font-weight: var(--salt-accent-fontSize);
-  font-size: var(--salt-accent-fontSize);
 
-  /* Should this vary according to touch size */
   margin-right: -4px;
   padding: 0px 4px;
   background: var(--saltBadge-content-icon-color, var(--salt-accent-background));
   /* background: var(--saltBadge-content-icon-color); */
   color: var(--saltBadge-content-text-color, var(--salt-accent-foreground));
+}
+
+/* Style applied to the badge in the corner of the node */
+.saltBadge-inline {
+  /* Should this vary according to touch size */
 
   position: relative;
   align-items: center;
   justify-content: center;
   display: inline-flex;
+  margin-bottom: 4px;
+  margin-left: 5px;
 }
 
 /* when badge has a numeerical value */
 .saltBadge-topRight {
-  transform: translate(-4px, -50%);
-  transform-origin: 100% 0%;
+  top: -5px;
+  right: 5px;
+  /* transform: translate(-4px, -50%);
+  transform-origin: 100% 0%; */
 }
 
-.saltBadge-inline;
-
-//wrapper - position relative
-//badge - position absolute, like 0px
+.saltBadge-wrap {
+  position: relative;
+  /* background: "pink"; */
+}
