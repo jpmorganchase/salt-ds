@@ -18,7 +18,8 @@
   line-height: var(--salt-text-lineHeight);
   min-height: var(--salt-size-base);
   min-width: 4em;
-  padding-inline: var(--salt-spacing-100);
+  padding-left: var(--saltMultilineInput-paddingLeft, var(--multilineInput-paddingLeft));
+  padding-right: var(--salt-spacing-100);
   position: relative;
   width: 100%;
 }
@@ -168,8 +169,9 @@
   border-bottom: var(--multilineInput-activationIndicator-borderWidth) var(--multilineInput-borderStyle) var(--multilineInput-borderColor);
 }
 
-/* Style applied if `bordered={true}` */
-.saltMultilineInput.saltMultilineInput-bordered {
+/* Style applied if `fullBorder={true}` */
+.saltMultilineInput.saltMultilineInput-bordered,
+.saltMultilineInput.saltMultilineInput-readOnly.saltMultilineInput-bordered {
   --multilineInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--multilineInput-borderColor);
   --multilineInput-paddingLeft: var(--salt-spacing-100);
   --multilineInput-activationIndicator-borderWidth: 0;
