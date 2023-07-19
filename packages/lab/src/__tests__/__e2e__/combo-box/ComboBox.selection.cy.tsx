@@ -31,6 +31,7 @@ describe("A combo box", () => {
 
     cy.findByRole("combobox").realClick();
 
+    cy.findByRole("listbox").should("exist");
     cy.realType("ama");
     cy.findByRole("combobox").should("have.value", "ama");
 
