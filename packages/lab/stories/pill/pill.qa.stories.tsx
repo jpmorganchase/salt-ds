@@ -18,7 +18,6 @@ export const ExamplesGrid: Story<QAContainerProps> = (props) => {
       <Pill className={className} onClick={noop}>
         Clickable Pill
       </Pill>
-      <Pill className={className}>Closable Pill</Pill>
       <Pill className={className} onClick={noop} disabled>
         Disabled Pill
       </Pill>
