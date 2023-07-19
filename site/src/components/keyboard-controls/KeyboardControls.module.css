@@ -1,0 +1,18 @@
+.table {
+  table-layout: initial;
+  margin-top: calc(2 * var(--salt-size-unit));
+  margin-bottom: calc(2 * var(--salt-size-unit));
+}
+
+.table td {
+  vertical-align: top;
+}
+
+.table td > :last-child {
+  margin-bottom: 0;
+}
+
+
+.keyCol {
+  min-width: 10rem;
+}

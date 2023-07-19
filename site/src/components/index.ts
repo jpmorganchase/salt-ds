@@ -11,5 +11,6 @@ export * from "./example-container";
 export * from "./footer";
 export * from "./getting-started";
 export * from "./image-switcher";
+export * from "./keyboard-controls";
 export * from "./mdx";
 export * from "./support-and-contributions";
