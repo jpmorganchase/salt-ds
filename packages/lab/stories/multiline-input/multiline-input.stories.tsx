@@ -102,13 +102,24 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
 };
 
 export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
+  const [value, setValue] = useState<string>("Value");
+  const MAX_CHARS = 10;
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (value.length < MAX_CHARS) {
+      const value = event.target.value;
+      setValue(value);
+    }
+  };
+
   return (
-      <MultilineInput
-        defaultValue="This is a comment."
-        maxChars={50}
-        style={{ maxWidth: "266px" }}
-        {...args}
-      />
+    <MultilineInput
+      {...args}
+      value={value}
+      onChange={handleChange}
+      endAdornment={<span style={{color: "var(--salt-text-secondary-foreground)"}}>{`${value.length}/${MAX_CHARS}`}</span>}
+      style={{ maxWidth: "266px" }}
+    />
   );
 };
 
@@ -257,7 +268,6 @@ export const WithMultipleFeatures: ComponentStory<
         }
         validationStatus="error"
         defaultValue="Value"
-        maxChars={300}
         {...args}
       />
     </FlowLayout>

@@ -37,10 +37,6 @@ export interface MultilineInputProps
    */
   endAdornment?: ReactNode;
   /**
-   * Maximum number of characters allowed.
-   */
-  maxChars?: number;
-  /**
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
@@ -81,7 +77,6 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       disabled,
       endAdornment,
       id,
-      maxChars,
       placeholder,
       readOnly,
       role,
@@ -149,11 +144,9 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     });
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-      if (!maxChars || (event.target.value.length < maxChars)){
-        const value = event.target.value;
-        setValue(value);
-        onChange?.(event);
-      }
+      const value = event.target.value;
+      setValue(value);
+      onChange?.(event);
     };
 
     const handleBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
@@ -214,10 +207,6 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           {...restA11yProps}
           {...restTextAreaProps}
         />
-        {maxChars && 
-          <span className={withBaseName("characterCount")}>
-            {`${value ? value.toString().length : defaultValueProp ? defaultValueProp.toString().length : 0}/${maxChars}`}
-          </span>}
         {!isDisabled && !isReadOnly && validationStatus && (
           <div className={withBaseName("statusAdornmentContainer")}>
             <StatusAdornment status={validationStatus} />
