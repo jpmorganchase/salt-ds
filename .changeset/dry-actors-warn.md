@@ -2,4 +2,6 @@
 "@salt-ds/core": patch
 ---
 
-Fixes placeholder styling and activation indicator width on readonly variant in Input component
+Fixed placeholder styling in Input
+Fixed activation indicator width on readonly variant in Input when active
+Fixed spacing between multiple adornment buttons

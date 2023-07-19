@@ -190,6 +190,14 @@
   column-gap: var(--salt-spacing-100);
 }
 
+
+.saltInput-startAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+.saltInput-endAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+
 .saltInput-startAdornmentContainer .saltButton:first-child {
   margin-left: calc(var(--salt-spacing-50) * -1);
 }

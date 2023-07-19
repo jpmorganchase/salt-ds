@@ -210,10 +210,15 @@ export const WithButtonAdornment: ComponentStory<typeof Input> = (args) => {
         {...args}
       />
       <Input
-        endAdornment={
-          <Button>
-            <SendIcon />
-          </Button>
+        startAdornment={
+          <>
+            <Button>
+              <SendIcon />
+            </Button>
+            <Button variant="cta">
+              <FlagIcon />
+            </Button>
+          </>
         }
         defaultValue={args.defaultValue ?? "Value"}
         {...args}
