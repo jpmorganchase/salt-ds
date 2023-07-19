@@ -53,13 +53,13 @@ export const NumberOfRows: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const FullBorder: ComponentStory<typeof MultilineInput> = (args) => {
+export const bordered: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <MultilineInput fullBorder defaultValue="Value" {...args} />
+      <MultilineInput bordered defaultValue="Value" {...args} />
       <MultilineInput
         variant="secondary"
-        fullBorder
+        bordered
         defaultValue="Value"
         {...args}
       />
@@ -86,10 +86,10 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
         defaultValue="Value"
         {...args}
       />
-      <MultilineInput disabled fullBorder defaultValue="Value" {...args} />
+      <MultilineInput disabled bordered defaultValue="Value" {...args} />
       <MultilineInput
         disabled
-        fullBorder
+        bordered
         variant="secondary"
         defaultValue="Value"
         {...args}
@@ -107,10 +107,10 @@ export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
         defaultValue="Value"
         {...args}
       />
-      <MultilineInput readOnly fullBorder defaultValue="Value" {...args} />
+      <MultilineInput readOnly bordered defaultValue="Value" {...args} />
       <MultilineInput
         readOnly
-        fullBorder
+        bordered
         variant="secondary"
         defaultValue="Value"
         {...args}
@@ -136,7 +136,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput validationStatus="error" defaultValue="Value" {...args} />
       <MultilineInput
-        fullBorder
+        bordered
         validationStatus="error"
         defaultValue="Value"
         {...args}
@@ -147,7 +147,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
         {...args}
       />
       <MultilineInput
-        fullBorder
+        bordered
         validationStatus="warning"
         defaultValue="Value"
         {...args}
@@ -158,7 +158,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
         {...args}
       />
       <MultilineInput
-        fullBorder
+        bordered
         validationStatus="success"
         defaultValue="Value"
         {...args}
