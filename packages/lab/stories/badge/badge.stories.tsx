@@ -34,7 +34,7 @@ export const All: ComponentStory<typeof Badge> = () => {
         }}
       >
         Inline
-        <Badge value={8} />
+        <Badge value={83} />
       </div>
     </div>
   );

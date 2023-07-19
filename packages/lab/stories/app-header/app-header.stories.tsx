@@ -85,7 +85,7 @@ export const Default: ComponentStory<typeof AppHeader> = () => {
           data-reclaim-space
         >
           <Button variant="secondary">
-            <Badge badgeContent={50}>
+            <Badge value={50}>
               <MessageIcon />
             </Badge>
           </Button>
