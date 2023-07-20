@@ -1,8 +1,9 @@
 import { clsx } from "clsx";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { makePrefixer, StatusIndicator, ValidationStatus } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer } from "../utils";
+import { StatusIndicator, ValidationStatus } from "../status-indicator";
 
 import toastCss from "./Toast.css";
 
