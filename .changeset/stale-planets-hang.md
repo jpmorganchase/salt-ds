@@ -2,7 +2,8 @@
 "@salt-ds/lab": minor
 ---
 
-Refactor Pill. It is now receives the label as children. Remove selectable and closable variants from Pill.
+Refactor Pill API: label should be passed in as children
+Removed selectable and closable variants from Pill
 
 ```tsx
 <Pill onClick={handleClick}>
