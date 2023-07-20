@@ -38,37 +38,3 @@ export const Icon: ComponentStory<typeof PillNext> = () => {
     </PillNext>
   );
 };
-
-const noop = () => undefined;
-export const AllDensities: ComponentStory<typeof PillNext> = () => {
-  return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: " repeat(4, auto)",
-        gap: 16,
-      }}
-    >
-      <SaltProvider density="touch">
-        <PillNext onClick={noop} icon={<FavoriteIcon />}>
-          TD Pill
-        </PillNext>
-      </SaltProvider>
-      <SaltProvider density="low">
-        <PillNext onClick={noop} icon={<FavoriteIcon />}>
-          LD Pill
-        </PillNext>
-      </SaltProvider>
-      <SaltProvider density="medium">
-        <PillNext onClick={noop} icon={<FavoriteIcon />}>
-          MD Pill
-        </PillNext>
-      </SaltProvider>
-      <SaltProvider density="high">
-        <PillNext onClick={noop} icon={<FavoriteIcon />}>
-          HD Pill
-        </PillNext>
-      </SaltProvider>
-    </div>
-  );
-};
