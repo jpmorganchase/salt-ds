@@ -102,8 +102,8 @@ export const CheckboxGroup = forwardRef<
   });
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const name = event.target.value;
     setCheckedValues((oldValues: string[] = []) => {
-      const name = event.target.value;
       const isSelected = oldValues.includes(name);
 
       return isSelected
