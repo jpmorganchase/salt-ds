@@ -5,7 +5,7 @@ sidebar:
   label: Typography
 ---
 
-Typography can help to enhance readability, establish hierarchy and set a visual tone, resulting in more effective communication.
+Typography can enhance readability, establish hierarchy and set a visual tone, resulting in more effective communication.
 
 ## Fonts
 
@@ -14,20 +14,20 @@ Typography can help to enhance readability, establish hierarchy and set a visual
   alt="Example of Open Sans font"
 />
 
-The design system uses the open-source, sans-serif typeface **Open Sans**.
+The design system uses the open-source, sans-serif typeface, **Open Sans**.
 
 <Image
   src="/img/foundations/typography-ptmono.svg"
   alt="Example of PT Mono font"
 />
 
-**PT Mono** is used to represent code snippets only, and therefore should not be used in any other context. PT Mono is a monospace typeface that displays all characters within the same width.
+Use **PT Mono** to represent code snippets only and not in any other context. PT Mono is a monospace typeface that displays all characters within the same width.
 
 ## Styles
 
 #### Display
 
-Display styles are primarily reserved for representing key metrics and mastheads.
+Display styles are primarily for representing key metrics and mastheads.
 
 <Image
   src="/img/foundations/typography-style-display.svg"
@@ -49,15 +49,15 @@ Body is the default style for most components and text blocks.
 
 #### Label
 
-Labels are used to display a small amount of text that helps people understand the current context of a component.
+Labels display a small amount of text that helps people understand the current context of a component.
 
 #### Help
 
-Help text is used to provide additional information or instructions, such as accepted data formats for an input or file types for upload.
+Help text provides additional information or instructions, such as accepted data formats for input or file types for upload.
 
 #### Code
 
-The code text style is used to display code in a clear format.
+The code text style displays code in a clear format.
 
 <Image
   src="/img/foundations/typography-style-body-label.svg"
@@ -66,7 +66,7 @@ The code text style is used to display code in a clear format.
 
 ## Color
 
-Legibility and accessibility are key considerations within the design system. With this in mind, each mode provides two color options: primary and secondary. Both of these options are selected from the neutral palette. These colors are consistently applied throughout the design system.
+Legibility and accessibility are key considerations within the design system. With this in mind, each mode provides two color options: primary and secondary. Both options are selected from the neutral palette. These colors are applied consistently throughout the design system.
 
 <Image
   src="/img/foundations/typography-colors.svg"
@@ -80,11 +80,11 @@ Legibility and accessibility are key considerations within the design system. Wi
 
 ### Primary foreground
 
-The primary text color should be used by default and make up the majority of text within any composition. It provides the greatest level of contrast between foreground and background.
+Use the primary text color by default. It should comprise the majority of text within any composition. It provides the greatest level of contrast between foreground and background.
 
 ### Secondary foreground
 
-Secondary text should be used sparingly. It is intended to only be used for supporting text, or to provide contrast between labels and data.
+You should use secondary text sparingly for supporting text, or for contrast between labels and data.
 
 <DesignCards>
 
@@ -93,7 +93,7 @@ Secondary text should be used sparingly. It is intended to only be used for supp
       alt="Example of a form field"
 >
 
-Form field labels use secondary text in order to give greater prominence to the entered value.
+Form field labels use secondary text to give greater prominence to the entered value.
 
 </DesignCard>
   
@@ -102,21 +102,11 @@ Form field labels use secondary text in order to give greater prominence to the 
       alt="Example of a group of label value pairings"
 >
 
-Secondary text used for labels to ensure data has greater prominence, without the need for differing weights or font sizes.
+Use secondary text for labels to ensure data has greater prominence without the need for differing weights or font sizes.
 
 </DesignCard>
 
 </DesignCards>
-
-<ExampleContainer type="negative">
-<Image
-  src="/img/foundations/typography-color-heading.svg"
-  alt="Example showing heading colored incorrectly"
-/>
-
-Don’t use colors, other than the primary and secondary options, to emphasise headings, labels, alerts or blocks of text.
-
-</ExampleContainer>
 
 <ExampleContainer type="positive">
   <Image
@@ -126,9 +116,27 @@ Don’t use colors, other than the primary and secondary options, to emphasise h
   Use primary and secondary text colors and/or weight variants to create visual hierarchy.
 </ExampleContainer>
 
-All text within the design system meets WCAG 2.0 level AA requirements in order to ensure legibility.
+<ExampleContainer type="negative">
+<Image
+  src="/img/foundations/typography-color-heading.svg"
+  alt="Example showing heading colored incorrectly"
+/>
 
-WCAG 2.0 requires that the contrast ratio between text and the background it sits on is at least 4.5:1 for normal sized text and 3:1 for larger text.
+Don’t use colors, other than the primary and secondary options, to emphasize headings, labels, alerts or blocks of text.
+
+</ExampleContainer>
+
+All text within the design system meets the Web Content Accessibility Guidelines (WCAG) 2.0 level AA requirements to ensure legibility.
+
+WCAG 2.0 requires that the contrast ratio between text and background is at least 4.5:1 for normal sized text and 3:1 for larger text.
+
+<ExampleContainer type="positive">
+  <Image
+    src="/img/foundations/typography-iconography.svg"
+    alt="Example showing color and iconography used to infer meaning"
+  />
+  Use color and iconography with text to help convey additional meaning.
+</ExampleContainer>
 
 <ExampleContainer type="negative">
   <Image
@@ -136,29 +144,21 @@ WCAG 2.0 requires that the contrast ratio between text and the background it sit
     alt="Example showing color used to infer meaning"
   />
   Don’t use color alone to infer meaning. Color-blind and low-vision users may not
-  be able to perceive the difference, and screen readers do not announce colors to
-  non-sighted readers.
-</ExampleContainer>
-
-<ExampleContainer type="positive">
-  <Image
-    src="/img/foundations/typography-iconography.svg"
-    alt="Example showing color and iconography used to infer meaning"
-  />
-  Use color and iconography in partnership with text to help convey additional meaning.
+  perceive the difference, and screen readers do not announce colors to non-sighted
+  readers.
 </ExampleContainer>
 
 ## Line height
 
-As with most aspects of the design system, type conforms to [density](density). Each style grows proportionately to align with the elements around it. Line height and the spaces between blocks of text also adhere to density.
+As with most aspects of the design system, type conforms to [density](density). Each style grows proportionately to align with the elements. Line height and the spaces between blocks also adhere to density.
 
-Line height controls the amount of space between baselines within a block of text. The height of a line of text is proportional to the text size.
+Line height controls the space between baselines within a text. The height of a line of text is proportional to the text size.
 
-In order to scale consistently across all styles, weights and densities, line height is set to a multiple of the font size. The multiple is set to 1.3x. This balances the need for a moderate degree of information density with the need to create enough visual separation between lines of text to enable efficient line tracking when reading blocks of text.
+Line height is set to a multiple of the font size to scale consistently across all styles, weights and densities. The multiple is set to 1.3x. This balances the need for moderate information density with the need to create enough visual separation between lines of text to enable efficient line tracking when reading blocks of text.
 
 ## Weight
 
-Weight refers to the relative thickness of a font’s stroke. Each style includes three weights, enabling the default style to either be emphasised or de-emphasised to help create visual hiearachy.
+Weight refers to the relative thickness of a font’s stroke. Each style includes three weights, enabling you to emphasize or de-emphasize the default style to help create visual hierarchy.
 
 <DesignCards>
 
@@ -167,7 +167,7 @@ Weight refers to the relative thickness of a font’s stroke. Each style include
       alt="Example of text displayed in small weight"
 >
 
-Small offers a subtler option, providing a lighter weight for each type style. Small can be used to de-emphasise secondary text such as footnotes or supporting instructions.
+Small offers a subtler option, providing a lighter weight for each type style. Small de-emphasizes secondary text, such as footnotes or supporting instructions.
 
 </DesignCard>
   
@@ -176,7 +176,7 @@ Small offers a subtler option, providing a lighter weight for each type style. S
       alt="Example of text displayed in default weight"
 >
 
-By default, all text within the block would be the same level of emphasis.
+By default, all text within the block would use the same emphasis.
 
 </DesignCard>
   
@@ -185,7 +185,7 @@ By default, all text within the block would be the same level of emphasis.
       alt="Example of text displayed in strong weight"
 >
 
-The strong weight provides the ability for each font style to be emphasised. This can help guide a reader to take note of specific words or phrases. Alternatively, it can allow greater focus to be placed on an entire header of block of text in order to establish a visual hierarchy.
+The strong weight allows you to emphasize each font style. This can help guide a reader to note specific words or phrases. Alternatively, it can allow greater focus on an entire header or block of text to establish a visual hierarchy.
 
 </DesignCard>
 
@@ -193,15 +193,15 @@ The strong weight provides the ability for each font style to be emphasised. Thi
 
 ## Alignment
 
-Type alignment controls how text aligns in the space it appears. There are four types of alignment: left, right, centered and justified.
+Type alignment controls how text aligns in the space. There are four types of alignment: left, right, centered and justified.
 
 ### Left-aligned
 
-Text aligned to the left is the default configuration for left-to-right (LTR) languages, such as English.
+Text aligned to the left is the default configuration for left-to-right languages, such as English.
 
 ### Right-aligned
 
-Right align text for right-to-left (RTL) languages, such as Arabic or Hebrew. It should also be used for Numeric values (including dates, times, and currency figures) when the intention is to carry out comparisons within a data set, for instance within a data grid column. If a numeric value is displayed in isolation, and therefore not for comparison, it should be left aligned to fit in with the content around it.
+Right align text for right-to-left languages, such as Arabic or Hebrew. It should also be used for Numeric values (including dates, times, and currency) for comparisons within a data set, for instance within a data grid column. If a numeric value is displayed in isolation, and therefore not for comparison, it should be left aligned to fit the content.
 
 <ExampleContainer type="positive">
   <Image
@@ -216,30 +216,30 @@ Right align text for right-to-left (RTL) languages, such as Arabic or Hebrew. It
     src="/img/foundations/typography-rightalign-numbers.svg"
     alt="Example of right aligned text"
   />
-  Right align numerical values and corresponding headers within data grid columns.
+  Right-align numerical values and corresponding headers within data grid columns.
 </ExampleContainer>
 
 ### Center-aligned
 
-Center-aligned text should be reserved for short sentences or blocks of text included as a typographic element, such as a pull quote or key metric. Avoid center-aligning large blocks of text or headings. When longer text is centered, readers are forced into additional eye movements on both sides of the text, resulting in unnecessary eye fatigue and lower reading accuracy.
+You should only center-align short sentences or blocks of text included as typographic elements, such as a pull quote or key metric. Avoid center-aligning large blocks of text or headings. Longer text forces readers to make additional eye movements on both sides of the text, resulting in unnecessary eye fatigue and lower reading accuracy.
 
 ### Justified text
 
-The use of justified text is not encouraged, but if required for a more formal aesthetic or to align to print materials, consider enabling hyphenation to balance negative space and avoid large gaps between words.
+The use of justified text is not encouraged, but if required for a more formal aesthetic or to align for print materials, consider enabling hyphenation to balance negative space and avoid large gaps between words.
 
 ## Line length
 
-When including paragraphs of text within a design, it should be laid out in a way that accommodates the intended reader. Shorter line lengths are typically more comfortable for the majority of readers and scenarios. With longer line lengths a reader's eyes have to travel further from the end of one line to the start of the next. This can make it hard to track progress and has been shown to cause fatigue (Baymard Institute, 2022).
+When including paragraphs of text within a design, the layout should accommodate the intended reader. Shorter line lengths are typically more comfortable for most readers and scenarios. With longer line lengths, a reader's eyes have to travel further from the end of one line to the start of the next. This can make it hard to track progress and can cause fatigue (Baymard Institute, 2022).
 
-Based on research and accessibility guidelines, a line length of between **60-80 characters per line** (CPL) is recommended.
+Research and accessibility guidelines recommend a line length of between **60–80 characters per line** (CPL).
 
-Shorter line lengths can improve the user’s focus and understanding of the text. However, too narrow means the eye must travel back too often, breaking the reader’s rhythm. This tends to cause stress for readers, making them begin the next line before finishing the current one. This can also mean they skip important words.
+Shorter line lengths can improve the user’s focus and understanding of the text. Too narrow, and the eye must travel back too often, breaking the reader’s rhythm. This tends to cause stress for readers, making them begin the next line before finishing the current, causing them to skip important words.
 
-Our recommendation is for the absolute minimum width of a block of text to be **no less than 45 CPL**.
+You should ensure the absolute minimum width of a text is **no less than 45 CPL**.
 
-Longer lines can be better suited for cases where the information is more likely to be scanned and accuracy is less important. If a line is too long, a reader’s eyes will have a tougher time focusing on the text. Because the line length makes it hard to judge where the line starts and ends, it can be difficult to continue onto the correct line in large blocks of text.
+Longer lines can be better when the user is more likely to scan the information and accuracy is less important. If a line is too long, a reader’s eyes will have a tougher time focusing on the text. Because the line length makes it hard to judge where the line starts and ends, it can be difficult to continue to the correct line in large blocks of text.
 
-We recommend that no block of text exceeds **a maximum of 100 CPL**.
+We recommend that no block of text exceeds **100 CPL**.
 
 <Image
   src="/img/foundations/typography-cpl.svg"
@@ -258,11 +258,11 @@ Use sentence case in most instances—for body copy, page titles, navigation, su
 
 ### Title case
 
-The only words you should capitalize or put in title case are proper nouns and job titles. A proper noun is an individual, company, product or object that’s one of a kind.
+The only words you should capitalize or put in title case are proper nouns and job titles. A proper noun is a specific individual, company, product or object.
 
 ### All capitals
 
-All caps are reserved for button labels to give them prominence and to differentiate them from other graphical elements. Never use all caps in general writing.
+Use all caps for button labels to give them prominence and to differentiate them from other graphical elements. Never use all caps in general writing.
 
 <Image
   src="/img/foundations/typography-allcaps.svg"
@@ -275,7 +275,7 @@ When referring to a button in written content, never use all caps. Instead, capi
 
 ## Italics
 
-Italics are primarily used for help text to differentiate it from other text, such as labels within an input.
+Italics primarily help differentiate text, such as labels within an input.
 
 <Image
   src="/img/foundations/typography-italics.svg"
@@ -284,20 +284,20 @@ Italics are primarily used for help text to differentiate it from other text, su
 
 <ExampleContainer type="positive">
 
-- Italics should be used sparingly and only to highlight a specific word or short phrase.
-- For publication names, the introduction of new terms, etc., use quotation marks instead.
+- You should use italics sparingly and to highlight a specific word or short phrase.
+- Use quotation marks instead for publication names, the introduction of new terms, etc.
 
 </ExampleContainer>
 
 <ExampleContainer type="negative">
 
-- Don't italicize full sentences or blocks of text except when including help text with an input or selectable element, such as a radio button group.
+- Don't italicize full sentences or blocks of text unless including help text with an input or selectable element, such as a radio button group.
 - Don’t use italics and font weight together to emphasize a word—use font weight alone to emphasize a word, use italics simply to differentiate it from the rest of the text.
 
 </ExampleContainer>
 
 <Callout title="Have some feedback?">
 
-The Salt Foundations are still in progress and we'd appreciate your thoughts and feedback. If you have any comments or questions please [contact us](../support-and-contributions/index).
+The Salt Foundations are still in progress, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or questions.
 
 </Callout>
