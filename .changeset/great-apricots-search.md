@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": patch
+"@salt-ds/lab": patch
 ---
 
-Remove Toast from lab and promote to core
+Remove Toast and ToastContent from lab and promote to core.
