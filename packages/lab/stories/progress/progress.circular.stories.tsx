@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, Panel } from "@salt-ds/core";
+import { Button, FlowLayout, Panel } from "@salt-ds/core";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
 
@@ -21,7 +21,7 @@ const ProgressWithControls = ({
     useProgressingValue();
   return (
     <div className="salt-ProgressWithControls-root">
-      <div className="salt-ProgressWithControls-controls">
+      <FlowLayout gap={1} className="salt-ProgressWithControls-controls">
         <Button disabled={isProgressing} onClick={handleStart}>
           Start
         </Button>
@@ -29,7 +29,7 @@ const ProgressWithControls = ({
           Stop
         </Button>
         <Button onClick={handleReset}>Reset</Button>
-      </div>
+      </FlowLayout>
       <Progress aria-label="Download" value={value} />
     </div>
   );
