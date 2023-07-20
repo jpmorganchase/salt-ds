@@ -166,6 +166,7 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
         selected={selectedItem}
         disableFocus
         highlightedIndex={highlightedIndex}
+        onChange={(e, { value }) => console.log("new selection", value)}
         style={{ maxHeight: "150px", width: "100%" }}
       >
         {usStateExampleData.map((item, index) => {

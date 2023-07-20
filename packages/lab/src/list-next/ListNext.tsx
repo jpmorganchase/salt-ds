@@ -29,7 +29,7 @@ export interface ListNextProps
   highlightedIndex?: number;
   /* Value for the controlled version. */
   selected?: string;
-  /* Callback for the controlled version. */
+  /* Callback for change event. */
   onChange?: (e: SyntheticEvent, data: { value: string }) => void;
   /* Initial selection. */
   defaultSelected?: string;
