@@ -161,7 +161,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
 
     const multilineInputStyles = {
       "--saltMultilineInput-rows": rows,
-      ...style
+      ...style,
     };
 
     return (
