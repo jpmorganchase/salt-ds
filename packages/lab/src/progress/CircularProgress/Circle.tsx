@@ -3,8 +3,6 @@ import { CSSProperties } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import circularProgressCSS from "./CircularProgress.css";
-
-export const circularGradientId = "salt-circular-progress-gradient";
 export interface CircleProps {
   style?: CSSProperties;
   className?: string;
@@ -13,7 +11,7 @@ export interface CircleProps {
 export const Circle = ({ style, className }: CircleProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-circular-progress",
+    testId: "salt-circle",
     css: circularProgressCSS,
     window: targetWindow,
   });

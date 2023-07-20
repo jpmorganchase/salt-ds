@@ -33,7 +33,7 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   disabled?: boolean;
   /**
-   * The value of the max progress indicator for the determinate variant.
+   * The value of the max progress indicator.
    * Default value is 100.
    */
   max?: number;
@@ -53,15 +53,10 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   unit?: string;
   /**
-   * The value of the progress indicator for the determinate and static variants.
+   * The value of the progress indicator.
    * Value between 0 and 100.
    */
   value?: number;
-  /**
-   * The variant to use.
-   * Use indeterminate or query when there is no progress value.
-   */
-  variant?: "determinate" | "indeterminate";
 }
 
 /**
@@ -71,7 +66,6 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
  * The render props callback is of the form
  * @param {string} unit the unit of the progress info
  * @param {number} value the value of the progress info
- * @param {string} variant the variant to use.
  * @param {function} getValueProps function callback that returns the value props
  */
 export const CircularProgress = forwardRef<
@@ -87,7 +81,6 @@ export const CircularProgress = forwardRef<
     renderInfo,
     value = 0,
     unit = "%",
-    variant = "determinate",
     ...rest
   },
   ref
@@ -105,12 +98,10 @@ export const CircularProgress = forwardRef<
 
   const progress = (value / max) * 100;
 
-  if (variant === "determinate") {
-    rootProps["aria-valuenow"] = Math.round(value);
-    circleStyle.strokeDasharray = "var(--progress-circle-circumference)";
-    circleStyle.strokeDashoffset = `calc((100 - ${progress}) / 100 * var(--progress-circle-circumference))`;
-    rootStyle.transform = "rotate(-90deg)";
-  }
+  rootProps["aria-valuenow"] = Math.round(value);
+  circleStyle.strokeDasharray = "var(--progress-circle-circumference)";
+  circleStyle.strokeDashoffset = `calc((100 - ${progress}) / 100 * var(--progress-circle-circumference))`;
+  rootStyle.transform = "rotate(-90deg)";
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" && !ariaLabel) {
@@ -146,9 +137,11 @@ export const CircularProgress = forwardRef<
 
   return (
     <div
-      className={clsx(className, "saltCircularProgress", {
-        [withBaseName("disabled")]: disabled,
-      })}
+      className={clsx(
+        withBaseName(),
+        { [withBaseName("disabled")]: disabled },
+        className
+      )}
       data-testid="circular-progress"
       ref={ref}
       role="progressbar"
@@ -158,26 +151,16 @@ export const CircularProgress = forwardRef<
       aria-valuenow={value}
       {...rest}
     >
-      <div
-        className={clsx(withBaseName("container"), {
-          [withBaseName("indeterminate")]: variant === "indeterminate",
-          [withBaseName("determinate")]: variant === "determinate",
-        })}
-        style={{ ...rootStyle }}
-      >
+      <div className={clsx(withBaseName("container"))} style={{ ...rootStyle }}>
         <svg className="saltCircularProgress-svg">
           <Circle className={withBaseName("railCircle")} />
           <Circle
             style={circleStyle}
-            className={clsx(withBaseName("circle"), {
-              [withBaseName("circleIndeterminate")]:
-                variant === "indeterminate",
-              [withBaseName("circleDeterminate")]: variant === "determinate",
-            })}
+            className={clsx(withBaseName("circle"))}
           />
         </svg>
       </div>
-      {variant === "determinate" && progressInfo}
+      {progressInfo}
     </div>
   );
 });

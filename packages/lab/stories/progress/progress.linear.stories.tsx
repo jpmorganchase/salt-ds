@@ -61,27 +61,11 @@ export const All: ComponentStory<typeof LinearProgress> = () => (
 );
 
 export const Default: ComponentStory<typeof LinearProgress> = () => (
-  <div>
-    <LinearProgress value={0} />
-    <LinearProgress value={91} />
-    <LinearProgress value={92} />
-    <LinearProgress value={93} />
-    <LinearProgress value={94} />
-    <LinearProgress value={95} />
-    <LinearProgress value={96} />
-    <LinearProgress value={97} />
-    <LinearProgress value={98} />
-    <LinearProgress value={99} />
-    <LinearProgress value={100} />
-  </div>
+  <LinearProgress value={38} />
 );
 
 export const Disabled: ComponentStory<typeof LinearProgress> = () => (
   <LinearProgress disabled value={38} />
-);
-
-export const Indeterminate: ComponentStory<typeof LinearProgress> = () => (
-  <LinearProgress value={38} variant="indeterminate" />
 );
 
 export const ProgressingValue: ComponentStory<typeof LinearProgress> = () => (

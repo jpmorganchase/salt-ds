@@ -13,10 +13,6 @@
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.saltCircularProgress-circle {
-  stroke: var(--salt-accent-background);
-}
-
 .saltCircularProgress-progressValue {
   align-items: center;
   color: var(--salt-text-primary-foreground);
@@ -30,7 +26,7 @@
   width: 100%;
 }
 
-.saltCircularProgress-disabled .saltCircularProgress-circleDeterminate {
+.saltCircularProgress-disabled .saltCircularProgress-circle {
   stroke: var(--salt-accent-background-disabled);
 }
 
@@ -48,10 +44,6 @@
   display: inline-block;
 }
 
-.saltCircularProgress-determinate {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-}
-
 .saltCircularProgress-svg {
   height: calc(var(--salt-size-base) * 2);
   width: calc(var(--salt-size-base) * 2);
@@ -63,37 +55,5 @@
   r: var(--progress-circle-radius);
   stroke-width: calc(var(--salt-size-adornment) * 0.5);
   stroke: var(--salt-accent-background);
-}
-
-.saltCircularProgress-circleDeterminate {
   transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-}
-
-.saltCircularProgress-circleIndeterminate {
-  stroke-dasharray: calc(var(--progress-circle-circumference) * 0.9), calc(var(--progress-circle-circumference) * 0.1);
-  animation: circular-dash 1.4s linear infinite;
-}
-
-@keyframes circular-rotate {
-  0% {
-    transform-origin: 50% 50%;
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes circular-dash {
-  0% {
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dashoffset: calc(var(--progress-circle-circumference) * -1);
-    stroke-dasharray: calc(var(--progress-circle-circumference) * 0.1), calc(var(--progress-circle-circumference) * 0.9);
-  }
-  100% {
-    stroke-dashoffset: calc(var(--progress-circle-circumference) * -2);
-    stroke-dasharray: calc(var(--progress-circle-circumference) * 0.9), calc(var(--progress-circle-circumference) * 0.1);
-  }
 }
