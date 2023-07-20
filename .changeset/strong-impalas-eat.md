@@ -6,7 +6,6 @@
 Drawer
 
 - Added `Drawer` component
-  JoanaMMoreira marked this conversation as resolved.
 
 ```
 const [open, setOpen] = useState(false);
