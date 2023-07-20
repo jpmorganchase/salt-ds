@@ -51,8 +51,7 @@
   background: var(--pillNext-background-hover);
 }
 
-.saltPillNext-clickable.saltPillNext-disabled:hover,
-.saltPillNext-nestedHover:hover {
+.saltPillNext-clickable.saltPillNext-disabled:hover {
   color: var(--pillNext-text-color);
   background: var(--pillNext-background);
 }
@@ -64,9 +63,7 @@
 }
 
 .saltPillNext-clickable.saltPillNext-disabled.saltPillNext-active,
-.saltPillNext-clickable.saltPillNext-disabled:active,
-.saltPillNext-clickable.saltPillNext-nestedHover.saltPillNext-active,
-.saltPillNext-clickable.saltPillNext-nestedHover:active {
+.saltPillNext-clickable.saltPillNext-disabled:active {
   background: var(--pillNext-background);
   color: var(--pillNext-text-color);
 }
