@@ -18,7 +18,6 @@ export type PillClickEvent =
 export interface PillNextProps extends ComponentPropsWithoutRef<"div"> {
   /* If true the pill will be disabled */
   disabled?: boolean;
-  className?: string;
   /* Pass an element to render an icon descriptor on the left of the label */
   icon?: React.ReactNode;
   /* Pass a callback function to make the pill clickable */
