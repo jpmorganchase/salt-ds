@@ -13,7 +13,6 @@
 .saltPillNext {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   background: var(--pillNext-background);
   border-radius: var(--saltPillNext-borderRadius, 0);
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
@@ -33,7 +32,6 @@
 .saltPillNext-label {
   min-width: 0;
   overflow: hidden;
-  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
