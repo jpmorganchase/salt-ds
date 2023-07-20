@@ -10,6 +10,10 @@
   background: var(--salt-accent-background-disabled);
 }
 
+.saltLinearProgress-disabled .saltLinearProgress-track {
+  background: var(--salt-track-borderColor-disabled);
+}
+
 .saltLinearProgress-disabled .saltLinearProgress-progressValue {
   color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
