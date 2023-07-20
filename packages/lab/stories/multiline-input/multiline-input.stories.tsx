@@ -1,4 +1,4 @@
-import { Button, FlowLayout, Text } from "@salt-ds/core";
+import { Button, FlowLayout, Text, useAriaAnnouncer } from "@salt-ds/core";
 import { MultilineInput } from "@salt-ds/lab";
 import {
   BookmarkSolidIcon,
@@ -102,13 +102,32 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
 };
 
 export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
+  const { announce } = useAriaAnnouncer();
   const [value, setValue] = useState<string>("Value");
+
+  const ANNOUNCER_DELAY = 100;
   const MAX_CHARS = 10;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (value.length < MAX_CHARS) {
-      const value = event.target.value;
+    const newVal = event.target.value;
+
+    if (newVal.length < MAX_CHARS) {
+      const value = newVal;
       setValue(value);
+    }
+
+    if (MAX_CHARS - newVal.length === 50) {
+      setTimeout(() => {
+        announce('50 characters remaining');
+      }, ANNOUNCER_DELAY);
+    } else if (MAX_CHARS - newVal.length === 10) {
+      setTimeout(() => {
+        announce('10 characters remaining');
+      }, ANNOUNCER_DELAY);
+    } else if (MAX_CHARS - newVal.length === 0) {
+      setTimeout(() => {
+        announce('No characters remaining');
+      }, ANNOUNCER_DELAY);
     }
   };
 
