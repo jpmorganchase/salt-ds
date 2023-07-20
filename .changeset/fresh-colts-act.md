@@ -1,6 +1,5 @@
 ---
 "@salt-ds/lab": patch
-"@salt-ds/theme": patch
 ---
 
 Drawer
@@ -21,7 +20,3 @@ const hide = () => setOpen(false);
  </Drawer>
 </>
 ```
-
-Theme
-
-- Added `both` fill-mode to `--salt-animation-slide-out-*` css animation vars
