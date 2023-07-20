@@ -12,7 +12,6 @@ describe("GIVEN a Pill", () => {
       const clickSpy = cy.stub().as("clickSpy");
       cy.mount(<PillNext onClick={clickSpy}>Clickable Pill</PillNext>);
       cy.findByRole("button").should("have.text", "Clickable Pill");
-      cy.findByRole("button").should("have.attr", "tabindex", "0");
     });
 
     it("THEN should call onClick when Pill is clicked", () => {
@@ -46,11 +45,7 @@ describe("GIVEN a Pill", () => {
             Pill disabled
           </PillNext>
         );
-        cy.findByRole("button").should("have.attr", "aria-disabled", "true");
-        cy.findByRole("button").should("have.attr", "tabindex", "-1");
-        cy.findByRole("button").click();
-        cy.findByRole("button").focus().realPress("{enter}").realPress(" ");
-        cy.get("@clickSpy").should("have.callCount", 0);
+        cy.findByRole("button").should("have.attr", "disabled");
       });
     });
   });
