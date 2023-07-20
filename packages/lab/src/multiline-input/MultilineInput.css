@@ -110,6 +110,11 @@
   width: 100%;
 }
 
+/* Style applied to placeholder */
+.saltMultilineInput-textarea::placeholder {
+  font-weight: var(--salt-text-fontWeight-small);
+}
+
 /* Reset in the  class */
 .saltMultilineInput-textarea:focus {
   outline: none;
