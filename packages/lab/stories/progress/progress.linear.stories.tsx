@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, Panel, SaltProvider } from "@salt-ds/core";
+import { Button, Panel } from "@salt-ds/core";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
 
@@ -40,30 +40,7 @@ const ProgressWithControls = ({
 const LinearExamples = () => (
   <Panel style={{ height: "unset", marginLeft: 20 }}>
     <div style={{ display: "flex" }}>
-      <div>
-        <h3>HD</h3>
-        <SaltProvider density="high">
-          <LinearProgress aria-label="Download" value={38} />
-        </SaltProvider>
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>MD</h3>
-        <SaltProvider density="medium">
-          <LinearProgress aria-label="Download" value={38} />
-        </SaltProvider>
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>LD</h3>
-        <SaltProvider density="low">
-          <LinearProgress aria-label="Download" value={38} />
-        </SaltProvider>
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>TD</h3>
-        <SaltProvider density="touch">
-          <LinearProgress aria-label="Download" value={38} />
-        </SaltProvider>
-      </div>
+      <LinearProgress aria-label="Download" value={38} />
     </div>
   </Panel>
 );
@@ -79,17 +56,24 @@ export const All: ComponentStory<typeof LinearProgress> = () => (
       right: 0,
     }}
   >
-    <SaltProvider mode="light">
-      <LinearExamples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <LinearExamples />
-    </SaltProvider>
+    <LinearExamples />
   </div>
 );
 
 export const Default: ComponentStory<typeof LinearProgress> = () => (
-  <LinearProgress value={38} />
+  <div>
+    <LinearProgress value={0} />
+    <LinearProgress value={91} />
+    <LinearProgress value={92} />
+    <LinearProgress value={93} />
+    <LinearProgress value={94} />
+    <LinearProgress value={95} />
+    <LinearProgress value={96} />
+    <LinearProgress value={97} />
+    <LinearProgress value={98} />
+    <LinearProgress value={99} />
+    <LinearProgress value={100} />
+  </div>
 );
 
 export const Disabled: ComponentStory<typeof LinearProgress> = () => (
@@ -102,10 +86,6 @@ export const Indeterminate: ComponentStory<typeof LinearProgress> = () => (
 
 export const ProgressingValue: ComponentStory<typeof LinearProgress> = () => (
   <ProgressWithControls ProgressComponent={LinearProgress} />
-);
-
-export const LinearQuery: ComponentStory<typeof LinearProgress> = () => (
-  <LinearProgress value={38} variant="query" />
 );
 
 export const MaxValue: ComponentStory<typeof CircularProgress> = () => (

@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, Panel, SaltProvider } from "@salt-ds/core";
+import { Button, Panel } from "@salt-ds/core";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
 
@@ -37,32 +37,7 @@ const ProgressWithControls = ({
 
 const CircularExamples = () => (
   <Panel style={{ height: "unset", marginLeft: 20 }}>
-    <div style={{ display: "flex" }}>
-      <div>
-        <h3>HD</h3>
-        <SaltProvider density="high">
-          <CircularProgress aria-label="Download" value={38} />
-        </SaltProvider>
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>MD</h3>
-        <SaltProvider density="medium">
-          <CircularProgress aria-label="Download" value={38} />
-        </SaltProvider>
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>LD</h3>
-        <SaltProvider density="low">
-          <CircularProgress aria-label="Download" value={38} />
-        </SaltProvider>
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>TD</h3>
-        <SaltProvider density="touch">
-          <CircularProgress aria-label="Download" value={38} />
-        </SaltProvider>
-      </div>
-    </div>
+    <CircularProgress aria-label="Download" value={38} />
   </Panel>
 );
 
@@ -78,12 +53,7 @@ export const All: ComponentStory<typeof CircularProgress> = () => (
       right: 0,
     }}
   >
-    <SaltProvider mode="light">
-      <CircularExamples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <CircularExamples />
-    </SaltProvider>
+    <CircularExamples />
   </div>
 );
 
@@ -96,32 +66,7 @@ export const Disabled: ComponentStory<typeof CircularProgress> = () => (
 );
 
 export const Indeterminate: ComponentStory<typeof CircularProgress> = () => (
-  <div style={{ display: "flex" }}>
-    <div>
-      <h3>HD</h3>
-      <SaltProvider density="high">
-        <CircularProgress aria-label="Download" variant="indeterminate" />
-      </SaltProvider>
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>MD</h3>
-      <SaltProvider density="medium">
-        <CircularProgress aria-label="Download" variant="indeterminate" />
-      </SaltProvider>
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>LD</h3>
-      <SaltProvider density="low">
-        <CircularProgress aria-label="Download" variant="indeterminate" />
-      </SaltProvider>
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>TD</h3>
-      <SaltProvider density="touch">
-        <CircularProgress aria-label="Download" variant="indeterminate" />
-      </SaltProvider>
-    </div>
-  </div>
+  <CircularProgress aria-label="Download" variant="indeterminate" />
 );
 
 export const MaxValue: ComponentStory<typeof CircularProgress> = () => (
