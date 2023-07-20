@@ -135,9 +135,9 @@
 }
 
 /* Style applied if `readOnly={true}` */
-.saltMultilineInput.saltMultilineInput-readOnly,
-.saltMultilineInput.saltMultilineInput-readOnly:active,
-.saltMultilineInput.saltMultilineInput-readOnly:hover {
+.saltMultilineInput-readOnly,
+.saltMultilineInput-readOnly:active,
+.saltMultilineInput-readOnly:hover {
   --multilineInput-borderColor: var(--salt-editable-borderColor-readonly);
   --multilineInput-borderStyle: var(--salt-editable-borderStyle-readonly);
   --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
