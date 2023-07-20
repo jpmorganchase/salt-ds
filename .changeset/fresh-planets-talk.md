@@ -2,5 +2,8 @@
 "@salt-ds/core": patch
 ---
 
-Removed `pronounced` prop.
-Added `intent` prop. Use `intent` with "sentence" value to replace pronounced label styling
+The `pronounced` prop has been replaced with the `intent` prop.
+
+```diff
+- <FormLabel pronounced />
++ <FormLabel intent="sentence" />
