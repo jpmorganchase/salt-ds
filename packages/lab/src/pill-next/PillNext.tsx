@@ -9,7 +9,7 @@ import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer, useButton } from "@salt-ds/core";
-import pillCss from "./Pill.css";
+import pillCss from "./PillNext.css";
 
 export type PillClickEvent =
   | MouseEvent<Element, globalThis.MouseEvent>
