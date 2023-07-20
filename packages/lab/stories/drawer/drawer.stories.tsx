@@ -268,11 +268,10 @@ const DrawerRightExample: ComponentStory<typeof Drawer> = (args) => {
 
   return (
     <div className="drawer-simple-usage">
-      <Button onClick={show} onOpenChange={setOpen}>
-        Open Drawer
-      </Button>
+      <Button onClick={show}>Open Drawer</Button>
       <Drawer
         open={open}
+        onOpenChange={setOpen}
         aria-labelledby="drawer_label"
         aria-describedby="drawer_description"
         {...args}
