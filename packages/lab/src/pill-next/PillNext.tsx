@@ -26,55 +26,54 @@ export interface PillNextProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltPillNext");
 
-export const PillNext = forwardRef<
-  HTMLDivElement,
-  PropsWithChildren<PillNextProps>
->(function PillNext(
-  { onClick, children, className, icon, disabled, ...restProps },
-  ref
-) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-pill",
-    css: pillCss,
-    window: targetWindow,
-  });
-  const {
-    buttonProps: { disabled: disabledAttribute, ...buttonProps },
-    active,
-  } = useButton<HTMLDivElement>({
-    disabled,
-    onClick,
-    onKeyUp: (event) => {
-      if (disabled) return;
-      if (event.key === "Enter" || event.key === " ") {
-        onClick?.(event);
-      }
-      restProps.onKeyUp?.(event);
-    },
-    onKeyDown: restProps.onKeyDown,
-  });
+export const PillNext = forwardRef<HTMLDivElement, PillNextProps>(
+  function PillNext(
+    { onClick, children, className, icon, disabled, ...restProps },
+    ref
+  ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-pill",
+      css: pillCss,
+      window: targetWindow,
+    });
+    const {
+      buttonProps: { disabled: disabledAttribute, ...buttonProps },
+      active,
+    } = useButton<HTMLDivElement>({
+      disabled,
+      onClick,
+      onKeyUp: (event) => {
+        if (disabled) return;
+        if (event.key === "Enter" || event.key === " ") {
+          onClick?.(event);
+        }
+        restProps.onKeyUp?.(event);
+      },
+      onKeyDown: restProps.onKeyDown,
+    });
 
-  return (
-    <div
-      data-testid="pill"
-      ref={ref}
-      role="button"
-      className={clsx(
-        withBaseName(),
-        withBaseName("clickable"),
-        {
-          [withBaseName("active")]: active,
-          [withBaseName("disabled")]: disabled,
-        },
-        className
-      )}
-      {...buttonProps}
-      aria-disabled={disabled ? true : undefined}
-      {...restProps}
-    >
-      {icon}
-      <span className={withBaseName("label")}>{children}</span>
-    </div>
-  );
-});
+    return (
+      <div
+        data-testid="pill"
+        ref={ref}
+        role="button"
+        className={clsx(
+          withBaseName(),
+          withBaseName("clickable"),
+          {
+            [withBaseName("active")]: active,
+            [withBaseName("disabled")]: disabled,
+          },
+          className
+        )}
+        {...buttonProps}
+        aria-disabled={disabled ? true : undefined}
+        {...restProps}
+      >
+        {icon}
+        <span className={withBaseName("label")}>{children}</span>
+      </div>
+    );
+  }
+);
