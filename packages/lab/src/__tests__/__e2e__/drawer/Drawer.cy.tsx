@@ -28,7 +28,7 @@ describe("GIVEN a Drawer", () => {
 
       cy.findByRole("button", { name: /Open Drawer/i }).click();
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-enter-animation");
+      cy.get(".saltDrawer").should("have.class", "saltDrawer-enterAnimation");
     });
 
     it("THEN it should display a primary variant by default", () => {
@@ -100,7 +100,7 @@ describe("GIVEN a Drawer", () => {
 
       cy.findByRole("button", { name: /Open Drawer/i }).click();
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-enter-animation");
+      cy.get(".saltDrawer").should("have.class", "saltDrawer-enterAnimation");
     });
   });
 
@@ -112,7 +112,7 @@ describe("GIVEN a Drawer", () => {
 
       cy.get(".saltDrawer").should(
         "not.have.class",
-        "saltDrawer-enter-animation"
+        "saltDrawer-enterAnimation"
       );
     });
   });
@@ -123,13 +123,13 @@ describe("GIVEN a Drawer", () => {
 
       cy.findByRole("button", { name: /Open Drawer/i }).click();
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-enter-animation");
+      cy.get(".saltDrawer").should("have.class", "saltDrawer-enterAnimation");
 
       cy.get(".saltDrawer").should("be.visible");
 
       cy.findByLabelText("close").click();
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-exit-animation");
+      cy.get(".saltDrawer").should("have.class", "saltDrawer-exitAnimation");
 
       cy.get(".saltDrawer").should("not.exist");
     });
