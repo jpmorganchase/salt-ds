@@ -8,11 +8,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
+import { makePrefixer, useControlled, useForkRef } from "../utils";
 import { ToggleButtonGroupContext } from "./ToggleButtonGroupContext";
 import toggleButtonGroupCss from "./ToggleButtonGroup.css";
 

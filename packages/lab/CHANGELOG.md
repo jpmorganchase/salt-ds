@@ -1,5 +1,27 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.13
+
+### Minor Changes
+
+- 00f04b17: Remove ToggleButton and ToggleButtonGroup from lab and promote to core.
+- 58cf03cf: Remove AccordionGroup, AccordionPanel, Accordion, AccordionHeader from lab and promote to core
+
+### Patch Changes
+
+- ff3eea5d: Add Toast component
+
+  - Add ToastContent component
+
+  ```js
+  <Toast {...args}>
+    <ToastContent>Toast content</ToastContent>
+    <Button variant="secondary">
+      <CloseIcon />
+    </Button>
+  </Toast>
+  ```
+
 ## 1.0.0-alpha.12
 
 ### Minor Changes

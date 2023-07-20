@@ -5530,9 +5530,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/core@workspace:packages/core"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5548,9 +5548,9 @@ __metadata:
     rimraf: ^4.4.0
     svgo: ^3.0.0
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5561,9 +5561,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/data-grid@workspace:packages/data-grid"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5578,9 +5578,9 @@ __metadata:
     rimraf: ^4.4.0
     svgo: ^3.0.0
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5591,9 +5591,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/lab@workspace:packages/lab"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5651,7 +5651,7 @@ __metadata:
     chromatic: ^6.14.0
     ci-info: ^3.3.1
     clipboard-copy: ^4.0.1
-    clsx: ^1.2.1
+    clsx: ^2.0.0
     compute-scroll-into-view: ^3.0.0
     csstree-validator: ^3.0.0
     cypress: ^12.3.0
@@ -5730,9 +5730,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/styles@workspace:packages/styles"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5764,9 +5764,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/window@workspace:packages/window"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -12025,6 +12025,13 @@ __metadata:
   version: 1.2.1
   resolution: "clsx@npm:1.2.1"
   checksum: 30befca8019b2eb7dbad38cff6266cf543091dae2825c856a62a8ccf2c3ab9c2907c4d12b288b73101196767f66812365400a227581484a05f968b0307cfaf12
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "clsx@npm:2.0.0"
+  checksum: a2cfb2351b254611acf92faa0daf15220f4cd648bdf96ce369d729813b85336993871a4bf6978ddea2b81b5a130478339c20d9d0b5c6fc287e5147f0c059276e
   languageName: node
   linkType: hard
 

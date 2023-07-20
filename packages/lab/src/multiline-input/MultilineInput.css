@@ -168,22 +168,22 @@
   border-bottom: var(--multilineInput-activationIndicator-borderWidth) var(--multilineInput-borderStyle) var(--multilineInput-borderColor);
 }
 
-/* Style applied if `fullBorder={true}` */
-.saltMultilineInput.saltMultilineInput-fullBorder {
+/* Style applied if `bordered={true}` */
+.saltMultilineInput.saltMultilineInput-bordered {
   --multilineInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--multilineInput-borderColor);
   --multilineInput-paddingLeft: var(--salt-spacing-100);
   --multilineInput-activationIndicator-borderWidth: 0;
 }
 
-/* Style applied if active or focused when `fullBorder={true}` */
-.saltMultilineInput-fullBorder:active,
-.saltMultilineInput-fullBorder.saltMultilineInput-focused {
+/* Style applied if active or focused when `bordered={true}` */
+.saltMultilineInput-bordered:active,
+.saltMultilineInput-bordered.saltMultilineInput-focused {
   --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
 }
 
-/* Styling when focused if `disabled={true}` or `readOnly={true}` when `fullBorder={true}` */
-.saltMultilineInput-fullBorder.saltMultilineInput-readOnly:hover,
-.saltMultilineInput-fullBorder.saltMultilineInput-disabled:hover {
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
+.saltMultilineInput-bordered.saltMultilineInput-readOnly:hover,
+.saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
   --multilineInput-activationIndicator-borderWidth: 0;
 }
 

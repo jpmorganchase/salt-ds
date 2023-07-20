@@ -5,8 +5,14 @@ import {
   RowSelectionCheckboxColumn,
 } from "../src";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
-import { Checkbox, FlexItem, FlexLayout, useDensity } from "@salt-ds/core";
+import {
+  Checkbox,
+  FlexItem,
+  FlexLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+  useDensity,
+} from "@salt-ds/core";
 import "./grid.stories.css";
 import { Story } from "@storybook/react";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";

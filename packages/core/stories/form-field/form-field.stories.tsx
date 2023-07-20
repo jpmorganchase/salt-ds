@@ -143,7 +143,7 @@ export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
       <FormLabel pronounced>
         Do your current qualifications align with the role? Please describe.
       </FormLabel>
-      <MultilineInput fullBorder defaultValue="Answer" />
+      <MultilineInput bordered defaultValue="Answer" />
     </FormField>
   );
 };
@@ -467,7 +467,7 @@ export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
           For the legal entity country of incorporation, are you aware of any
           specific regulations relating to oversight of third parties?
         </FormLabel>
-        <MultilineInput variant="secondary" fullBorder defaultValue="Value" />
+        <MultilineInput variant="secondary" bordered defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
     </FlowLayout>

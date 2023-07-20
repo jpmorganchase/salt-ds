@@ -1,9 +1,9 @@
 import { ComponentsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Toggle Button Group"
+  title="Documentation/Core/Toggle Button Group"
   component={ToggleButtonGroup}
   subcomponents={{ ToggleButton }}
   parameters={{
@@ -14,7 +14,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 # Toggle Button Group
 
 <Canvas>
-  <Story id="lab-toggle-button-group--horizontal" />
+  <Story id="core-toggle-button-group--horizontal" />
 </Canvas>
 
 The Toggle Button Group allows users to make a mutually exclusive selection from a set of related commands—with only one option selected at a time.
@@ -29,7 +29,7 @@ Use icons and text in Toggle Buttons if it's important to visually reinforce the
 - To reduce visual noise and mitigate alignment issues, use icons in Toggle Button labels consistently across all options in the group.
 
 <Canvas>
-  <Story id="lab-toggle-button-group--horizontal" />
+  <Story id="core-toggle-button-group--horizontal" />
 </Canvas>
 
 ### Icon only
@@ -40,7 +40,7 @@ The Toggle Button Group can be used with icons only.
 - A `Tooltip` should be used to provide additional context for each `ToggleButton`.
 
 <Canvas>
-  <Story id="lab-toggle-button-group--horizontal-icon-only" />
+  <Story id="core-toggle-button-group--horizontal-icon-only" />
 </Canvas>
 
 ### Text only
@@ -48,7 +48,7 @@ The Toggle Button Group can be used with icons only.
 You can configure the Toggle Buttons to display text only when you can't identify a suitable or intuitive icon.
 
 <Canvas>
-  <Story id="lab-toggle-button-group--horizontal-text-only" />
+  <Story id="core-toggle-button-group--horizontal-text-only" />
 </Canvas>
 
 ### Disabled
@@ -56,7 +56,7 @@ You can configure the Toggle Buttons to display text only when you can't identif
 Disable the entire group, if required by context or users permissions.
 
 <Canvas>
-  <Story id="lab-toggle-button-group--disabled" />
+  <Story id="core-toggle-button-group--disabled" />
 </Canvas>
 
 ### Orientation
@@ -64,15 +64,15 @@ Disable the entire group, if required by context or users permissions.
 The Toggle Button Group can be vertically orientated using the `orientation` prop, if the options are better presented in a stacked layout.
 
 <Canvas>
-  <Story id="lab-toggle-button-group--vertical" />
+  <Story id="core-toggle-button-group--vertical" />
 </Canvas>
 
 <Canvas>
-  <Story id="lab-toggle-button-group--vertical-icon-only" />
+  <Story id="core-toggle-button-group--vertical-icon-only" />
 </Canvas>
 
 <Canvas>
-  <Story id="lab-toggle-button-group--vertical-text-only" />
+  <Story id="core-toggle-button-group--vertical-text-only" />
 </Canvas>
 
 ## How to use
@@ -93,7 +93,7 @@ The Toggle Button Group can be vertically orientated using the `orientation` pro
 ### API
 
 ```jsx
-import { ToggleButtonGroup, ToggleButton } from "@salt-ds/lab";
+import { ToggleButtonGroup, ToggleButton } from "@salt-ds/core";
 ```
 
 ### Props
