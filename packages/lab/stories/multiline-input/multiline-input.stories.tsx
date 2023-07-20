@@ -118,15 +118,15 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
 
     if (MAX_CHARS - newVal.length === 50) {
       setTimeout(() => {
-        announce('50 characters remaining');
+        announce("50 characters remaining");
       }, ANNOUNCER_DELAY);
     } else if (MAX_CHARS - newVal.length === 10) {
       setTimeout(() => {
-        announce('10 characters remaining');
+        announce("10 characters remaining");
       }, ANNOUNCER_DELAY);
     } else if (MAX_CHARS - newVal.length === 0) {
       setTimeout(() => {
-        announce('No characters remaining');
+        announce("No characters remaining");
       }, ANNOUNCER_DELAY);
     }
   };
