@@ -39,6 +39,10 @@ export const Icon: ComponentStory<typeof PillNext> = () => {
   );
 };
 
+export const MinWidth: ComponentStory<typeof PillNext> = () => {
+  return <PillNext>Foo</PillNext>;
+};
+
 const noop = () => undefined;
 export const AllDensities: ComponentStory<typeof PillNext> = () => {
   return (

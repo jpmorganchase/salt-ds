@@ -4,7 +4,7 @@ import { QAContainer, QAContainerProps } from "docs/components";
 import { FavoriteIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/PillNext/QA",
+  title: "Lab/Pill Next/QA",
   component: PillNext,
 } as ComponentMeta<typeof PillNext>;
 
