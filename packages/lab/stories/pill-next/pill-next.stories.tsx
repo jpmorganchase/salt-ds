@@ -7,7 +7,7 @@
  */
 
 import { SaltProvider } from "@salt-ds/core";
-import { Pill as PillNext } from "@salt-ds/lab";
+import { PillNext } from "@salt-ds/lab";
 import { FavoriteIcon } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 

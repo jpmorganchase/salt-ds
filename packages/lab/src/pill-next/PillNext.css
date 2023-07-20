@@ -1,20 +1,20 @@
 /* Styles applied to the root element */
 .saltPillNext {
-  --pill-background: var(--saltPillNext-background, var(--salt-actionable-primary-background));
-  --pill-background-active: var(--saltPillNext-background-active, var(--salt-actionable-primary-background-active));
-  --pill-background-disabled: var(--saltPillNext-background-disabled, var(--salt-actionable-primary-background-disabled));
-  --pill-background-hover: var(--saltPillNext-background-hover, var(--salt-actionable-primary-background-hover));
-  --pill-text-color: var(--saltPillNext-text-color, var(--salt-actionable-primary-foreground));
-  --pill-text-color-active: var(--saltPillNext-text-color-active, var(--salt-actionable-primary-foreground-active));
-  --pill-text-color-hover: var(--saltPillNext-text-color-hover, var(--salt-actionable-primary-foreground-hover));
-  --pill-text-color-disabled: var(--saltPillNext-text-color-disabled, var(--salt-actionable-primary-foreground-disabled));
+  --pillNext-background: var(--saltPillNext-background, var(--salt-actionable-primary-background));
+  --pillNext-background-active: var(--saltPillNext-background-active, var(--salt-actionable-primary-background-active));
+  --pillNext-background-disabled: var(--saltPillNext-background-disabled, var(--salt-actionable-primary-background-disabled));
+  --pillNext-background-hover: var(--saltPillNext-background-hover, var(--salt-actionable-primary-background-hover));
+  --pillNext-text-color: var(--saltPillNext-text-color, var(--salt-actionable-primary-foreground));
+  --pillNext-text-color-active: var(--saltPillNext-text-color-active, var(--salt-actionable-primary-foreground-active));
+  --pillNext-text-color-hover: var(--saltPillNext-text-color-hover, var(--salt-actionable-primary-foreground-hover));
+  --pillNext-text-color-disabled: var(--saltPillNext-text-color-disabled, var(--salt-actionable-primary-foreground-disabled));
 }
 
 .saltPillNext {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--pill-background);
+  background: var(--pillNext-background);
   border-radius: var(--saltPillNext-borderRadius, 0);
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   /* max-width: var(--saltPillNext-maxWidth, 10em); */
@@ -24,10 +24,9 @@
   position: relative;
   gap: var(--saltPillNext-gap, var(--salt-spacing-50));
   padding-inline: var(--salt-spacing-50);
-  color: var(--saltPillNext-text-color, var(--pill-text-color));
+  color: var(--saltPillNext-text-color, var(--pillNext-text-color));
   font-size: var(--saltPillNext-fontSize, var(--salt-text-fontSize));
   font-weight: var(--saltPillNext-fontWeight, var(--salt-text-fontWeight));
-  letter-spacing: var(--saltPillNext-letterSpacing, 0);
   line-height: var(--saltPillNext-lineHeight, var(--salt-text-label-lineHeight));
 }
 
@@ -50,28 +49,28 @@
 }
 
 .saltPillNext-clickable:hover {
-  color: var(--pill-text-color-hover);
-  background: var(--pill-background-hover);
+  color: var(--pillNext-text-color-hover);
+  background: var(--pillNext-background-hover);
 }
 
 .saltPillNext-clickable.saltPillNext-disabled:hover,
 .saltPillNext-nestedHover:hover {
-  color: var(--pill-text-color);
-  background: var(--pill-background);
+  color: var(--pillNext-text-color);
+  background: var(--pillNext-background);
 }
 
 .saltPillNext-clickable.saltPillNext-active,
 .saltPillNext-clickable:active {
-  background: var(--pill-background-active);
-  color: var(--pill-text-color-active);
+  background: var(--pillNext-background-active);
+  color: var(--pillNext-text-color-active);
 }
 
 .saltPillNext-clickable.saltPillNext-disabled.saltPillNext-active,
 .saltPillNext-clickable.saltPillNext-disabled:active,
 .saltPillNext-clickable.saltPillNext-nestedHover.saltPillNext-active,
 .saltPillNext-clickable.saltPillNext-nestedHover:active {
-  background: var(--pill-background);
-  color: var(--pill-text-color);
+  background: var(--pillNext-background);
+  color: var(--pillNext-text-color);
 }
 
 /* Style applied to Pill on focus */
@@ -83,7 +82,7 @@
 .saltPillNext.saltPillNext-disabled,
 .saltPillNext.saltPillNext-disabled:hover,
 .saltPillNext.saltPillNext-disabled:active {
-  color: var(--pill-text-color-disabled);
-  background: var(--pill-background-disabled);
+  color: var(--pillNext-text-color-disabled);
+  background: var(--pillNext-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }

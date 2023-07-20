@@ -4,16 +4,13 @@
 
 Add PillNext
 
-Changes from Pill API: `label` prop should be passed in as children
-Removed selectable and closable variants from Pill
-
 ```tsx
-<Pill onClick={handleClick}>
+<PillNext onClick={handleClick}>
     Pill
-</Pill>
+</PillNext>
 
 
-<Pill icon={<FavoriteIcon/>} onClick={handleClick}>
+<PillNext icon={<FavoriteIcon/>} onClick={handleClick}>
     Pill With Icon
-</Pill>
+</PillNext>
 ```
