@@ -24,12 +24,12 @@
 }
 
 /* Animation styles applied when the Scrim mounts */
-.saltScrim.saltDrawer-enter-animation {
+.saltScrim.saltDrawer-enterAnimation {
   animation: var(--salt-animation-fade-in-center);
 }
 
 /* Animation styles applied when the Scrim unmounts */
-.saltScrim.saltDrawer-exit-animation {
+.saltScrim.saltDrawer-exitAnimation {
   animation: var(--salt-animation-fade-out-back);
 }
 
@@ -41,12 +41,12 @@
 }
 
 /* Styles applied when position = "top" and the component mounts */
-.saltDrawer-top.saltDrawer-enter-animation {
+.saltDrawer-top.saltDrawer-enterAnimation {
   animation: var(--salt-animation-slide-in-bottom);
 }
 
 /* Styles applied when position = "top" and the component unmounts */
-.saltDrawer-top.saltDrawer-exit-animation {
+.saltDrawer-top.saltDrawer-exitAnimation {
   animation: var(--salt-animation-slide-out-bottom);
 }
 
@@ -64,12 +64,12 @@
 }
 
 /* Styles applied when position = "right" and the component mounts */
-.saltDrawer-right.saltDrawer-enter-animation {
+.saltDrawer-right.saltDrawer-enterAnimation {
   animation: var(--salt-animation-slide-in-right);
 }
 
 /* Styles applied when position = "right" and the component unmounts */
-.saltDrawer-right.saltDrawer-exit-animation {
+.saltDrawer-right.saltDrawer-exitAnimation {
   animation: var(--salt-animation-slide-out-right);
 }
 
@@ -81,12 +81,12 @@
 }
 
 /* Styles applied when position = "left" and the component mounts */
-.saltDrawer-left.saltDrawer-enter-animation {
+.saltDrawer-left.saltDrawer-enterAnimation {
   animation: var(--salt-animation-slide-in-left);
 }
 
 /* Styles applied when position = "left" and the component unmounts */
-.saltDrawer-left.saltDrawer-exit-animation {
+.saltDrawer-left.saltDrawer-exitAnimation {
   animation: var(--salt-animation-slide-out-left);
 }
 
@@ -99,11 +99,11 @@
 }
 
 /* Styles applied when position = "bottom" and the component mounts */
-.saltDrawer-bottom.saltDrawer-enter-animation {
+.saltDrawer-bottom.saltDrawer-enterAnimation {
   animation: var(--salt-animation-slide-in-top);
 }
 
 /* Styles applied when position = "bottom" and the component unmounts */
-.saltDrawer-bottom.saltDrawer-exit-animation {
+.saltDrawer-bottom.saltDrawer-exitAnimation {
   animation: var(--salt-animation-slide-out-top);
 }

@@ -92,8 +92,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
         withBaseName(),
         withBaseName(position),
         {
-          [withBaseName("enter-animation")]: enterAnimation,
-          [withBaseName("exit-animation")]: exitAnimation,
+          [withBaseName("enterAnimation")]: enterAnimation,
+          [withBaseName("exitAnimation")]: exitAnimation,
           [withBaseName(variant)]: variant,
         },
         className
@@ -117,8 +117,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     <Scrim
       open={showComponent}
       className={clsx({
-        [withBaseName("enter-animation")]: enterAnimation,
-        [withBaseName("exit-animation")]: exitAnimation,
+        [withBaseName("enterAnimation")]: enterAnimation,
+        [withBaseName("exitAnimation")]: exitAnimation,
       })}
       {...scrimProps}
     >
