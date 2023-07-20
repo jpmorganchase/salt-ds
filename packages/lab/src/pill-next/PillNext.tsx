@@ -33,7 +33,7 @@ export const PillNext = forwardRef<HTMLDivElement, PillNextProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-pill",
+      testId: "salt-pill-next",
       css: pillCss,
       window: targetWindow,
     });
