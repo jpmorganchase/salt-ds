@@ -7,12 +7,12 @@ const { Default, Top, Right, Bottom } = composedStories;
 
 describe("GIVEN a Drawer", () => {
   describe("WHEN no props are provided", () => {
-    it("THEN it should display a scrim by default", () => {
+    it("THEN it should display an overlay by default", () => {
       cy.mount(<Default />);
 
       cy.findByRole("button", { name: /Open Drawer/i }).click();
 
-      cy.get(".saltScrim").should("be.visible");
+      cy.get(".saltDrawer-overlay").should("be.visible");
     });
 
     it("THEN it should default to a left position", () => {
@@ -37,26 +37,6 @@ describe("GIVEN a Drawer", () => {
       cy.findByRole("button", { name: /Open Drawer/i }).click();
 
       cy.get(".saltDrawer").should("have.class", "saltDrawer-primary");
-    });
-  });
-
-  describe("WHEN scrim is enabled", () => {
-    it("THEN it should display a scrim", () => {
-      cy.mount(<Default disableScrim={false} />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltScrim").should("be.visible");
-    });
-  });
-
-  describe("WHEN scrim is disabled", () => {
-    it("THEN it should not display a scrim", () => {
-      cy.mount(<Default disableScrim />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltScrim").should("not.exist");
     });
   });
 
@@ -94,29 +74,6 @@ describe("GIVEN a Drawer", () => {
     });
   });
 
-  describe("WHEN animations are enabled", () => {
-    it("THEN it should display animations", () => {
-      cy.mount(<Default disableAnimations={false} />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-enterAnimation");
-    });
-  });
-
-  describe("WHEN animations are disabled", () => {
-    it("THEN it should not display animations", () => {
-      cy.mount(<Default disableAnimations />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer").should(
-        "not.have.class",
-        "saltDrawer-enterAnimation"
-      );
-    });
-  });
-
   describe("WHEN a drawer is open", () => {
     it("THEN it should be able to close", () => {
       cy.mount(<Default />);
@@ -128,6 +85,22 @@ describe("GIVEN a Drawer", () => {
       cy.get(".saltDrawer").should("be.visible");
 
       cy.findByLabelText("close").click();
+
+      cy.get(".saltDrawer").should("have.class", "saltDrawer-exitAnimation");
+
+      cy.get(".saltDrawer").should("not.exist");
+    });
+
+    it("THEN it should be able to close by clicking outside", () => {
+      cy.mount(<Default />);
+
+      cy.findByRole("button", { name: /Open Drawer/i }).click();
+
+      cy.get(".saltDrawer").should("have.class", "saltDrawer-enterAnimation");
+
+      cy.get(".saltDrawer").should("be.visible");
+
+      cy.get(".saltDrawer-overlay").click();
 
       cy.get(".saltDrawer").should("have.class", "saltDrawer-exitAnimation");
 
