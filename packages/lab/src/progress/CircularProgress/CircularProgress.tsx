@@ -9,7 +9,7 @@ import {
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Info as DefaultInfo } from "../Info";
-import { Circle, LinearGradient, ViewBox } from "./CircularProgressParts";
+import { Circle } from "./Circle";
 import { InfoRendererProps } from "../LinearProgress/LinearProgress";
 
 import { useWindow } from "@salt-ds/window";
@@ -165,8 +165,7 @@ export const CircularProgress = forwardRef<
         })}
         style={{ ...rootStyle }}
       >
-        <ViewBox>
-          <LinearGradient />
+        <svg className="saltCircularProgress-svg">
           <Circle className={withBaseName("railCircle")} />
           <Circle
             style={circleStyle}
@@ -176,7 +175,7 @@ export const CircularProgress = forwardRef<
               [withBaseName("circleDeterminate")]: variant === "determinate",
             })}
           />
-        </ViewBox>
+        </svg>
       </div>
       {variant === "determinate" && progressInfo}
     </div>

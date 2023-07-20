@@ -1,5 +1,4 @@
 .saltCircularProgress {
-  --circularProgress-gradient-color: var(--salt-accent-background);
   --progress-circle-radius: calc(var(--salt-size-base) - (var(--salt-size-adornment) * 0.25));
   --progress-circle-circumference: calc(var(--progress-circle-radius) * 2 * 3.14);
 
@@ -15,7 +14,7 @@
 }
 
 .saltCircularProgress-circle {
-  stroke: url("#salt-circular-progress-gradient");
+  stroke: var(--salt-accent-background);
 }
 
 .saltCircularProgress-progressValue {
@@ -45,11 +44,6 @@
   r: calc(var(--salt-size-base) - (var(--salt-track-borderWidth) * 0.5));
 }
 
-.saltCircularProgress-gradientStart,
-.saltCircularProgress-gradientStop {
-  stop-color: var(--saltCircularProgress-gradient-color, var(--circularProgress-gradient-color));
-}
-
 .saltCircularProgress-container {
   display: inline-block;
 }
@@ -68,7 +62,7 @@
 .saltCircularProgress-circle {
   r: var(--progress-circle-radius);
   stroke-width: calc(var(--salt-size-adornment) * 0.5);
-  stroke: url("#salt-circular-progress-gradient");
+  stroke: var(--salt-accent-background);
 }
 
 .saltCircularProgress-circleDeterminate {
