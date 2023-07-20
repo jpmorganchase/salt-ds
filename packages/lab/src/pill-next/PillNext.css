@@ -16,7 +16,7 @@
   justify-content: center;
   background: var(--pill-background);
   border-radius: var(--saltPillNext-borderRadius, 0);
-  height: calc(var(--salt-size-base) - var(--salt-size-unit));
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   /* max-width: var(--saltPillNext-maxWidth, 10em); */
   min-width: var(--saltPillNext-minWidth, 4em);
   min-height: var(--saltPillNext-minHeight, var(--salt-text-minHeight));
