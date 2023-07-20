@@ -117,6 +117,11 @@
   background: var(--salt-text-background-selected);
 }
 
+/* Style applied to placeholder text */
+.saltInput-input::placeholder {
+  font-weight: var(--salt-text-fontWeight-small);
+}
+
 /* Styling when focused */
 .saltInput-focused {
   --input-borderColor: var(--input-outlineColor);
@@ -129,6 +134,7 @@
 .saltInput.saltInput-readOnly {
   --input-borderColor: var(--salt-editable-borderColor-readonly);
   --input-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --input-borderWidth: var(--salt-size-border);
   --input-paddingLeft: 0;
 
   background: var(--input-background-readonly);
@@ -184,6 +190,17 @@
   column-gap: var(--salt-spacing-100);
 }
 
+.saltInput-readOnly .saltInput-startAdornmentContainer {
+  margin-left: var(--salt-spacing-50);
+}
+
+.saltInput-startAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+.saltInput-endAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+
 .saltInput-startAdornmentContainer .saltButton:first-child {
   margin-left: calc(var(--salt-spacing-50) * -1);
 }
@@ -193,6 +210,6 @@
 
 .saltInput .saltButton {
   --saltButton-padding: 0;
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-50));
-  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-50));
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
