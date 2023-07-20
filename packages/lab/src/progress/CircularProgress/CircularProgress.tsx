@@ -93,14 +93,23 @@ export const CircularProgress = forwardRef<
   });
 
   const circleStyle: CSSProperties = {};
+  const railCircleStyle: CSSProperties = {};
   const rootStyle: CSSProperties = {};
   const rootProps: HTMLAttributes<any> = {};
 
   const progress = (value / max) * 100;
 
   rootProps["aria-valuenow"] = Math.round(value);
-  circleStyle.strokeDasharray = "var(--progress-circle-circumference)";
-  circleStyle.strokeDashoffset = `calc((100 - ${progress}) / 100 * var(--progress-circle-circumference))`;
+
+  const progressStrokeLength = `calc(${progress} * var(--progress-circle-circumference) / 100)`;
+  const progressGapLength = `calc((100 - ${progress}) * var(--progress-circle-circumference) / 100)`;
+  const railStrokeLength = `calc((100 - ${progress}) * var(--rail-circle-circumference) / 100)`;
+  const railGapLength = `calc((${progress}) * var(--rail-circle-circumference) / 100)`;
+
+  circleStyle.strokeDasharray = `${progressStrokeLength} ${progressGapLength}`;
+  railCircleStyle.strokeDashoffset = `${railStrokeLength}`;
+  railCircleStyle.strokeDasharray = `${railStrokeLength} ${railGapLength}`;
+
   rootStyle.transform = "rotate(-90deg)";
 
   useEffect(() => {
@@ -153,7 +162,10 @@ export const CircularProgress = forwardRef<
     >
       <div className={clsx(withBaseName("container"))} style={{ ...rootStyle }}>
         <svg className="saltCircularProgress-svg">
-          <Circle className={withBaseName("railCircle")} />
+          <Circle
+            style={railCircleStyle}
+            className={withBaseName("railCircle")}
+          />
           <Circle
             style={circleStyle}
             className={clsx(withBaseName("circle"))}
