@@ -1,7 +1,6 @@
 import {
   forwardRef,
   MouseEvent,
-  PropsWithChildren,
   KeyboardEvent,
   ComponentPropsWithoutRef,
 } from "react";
@@ -15,20 +14,18 @@ export type PillClickEvent =
   | MouseEvent<Element, globalThis.MouseEvent>
   | KeyboardEvent<HTMLDivElement>;
 
-export interface PillNextProps extends ComponentPropsWithoutRef<"div"> {
+export interface PillNextProps extends ComponentPropsWithoutRef<"button"> {
   /* If true the pill will be disabled */
   disabled?: boolean;
   /* Pass an element to render an icon descriptor on the left of the label */
   icon?: React.ReactNode;
-  /* Pass a callback function to make the pill clickable */
-  onClick?: (event: PillClickEvent) => void;
 }
 
 const withBaseName = makePrefixer("saltPillNext");
 
-export const PillNext = forwardRef<HTMLDivElement, PillNextProps>(
+export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
   function PillNext(
-    { onClick, children, className, icon, disabled, ...restProps },
+    { children, className, icon, disabled, ...restProps },
     ref
   ) {
     const targetWindow = useWindow();
@@ -37,27 +34,19 @@ export const PillNext = forwardRef<HTMLDivElement, PillNextProps>(
       css: pillCss,
       window: targetWindow,
     });
-    const {
-      buttonProps: { disabled: disabledAttribute, ...buttonProps },
-      active,
-    } = useButton<HTMLDivElement>({
+    const { buttonProps, active } = useButton<HTMLButtonElement>({
       disabled,
-      onClick,
-      onKeyUp: (event) => {
-        if (disabled) return;
-        if (event.key === "Enter" || event.key === " ") {
-          onClick?.(event);
-        }
-        restProps.onKeyUp?.(event);
-      },
-      onKeyDown: restProps.onKeyDown,
+      ...restProps,
     });
+    // we do not want to spread tab index in this case because the button element
+    // does not require tabindex="0" attribute
+    const { tabIndex, ...restButtonProps } = buttonProps;
 
     return (
-      <div
+      <button
         data-testid="pill"
         ref={ref}
-        role="button"
+        type="button"
         className={clsx(
           withBaseName(),
           withBaseName("clickable"),
@@ -67,13 +56,12 @@ export const PillNext = forwardRef<HTMLDivElement, PillNextProps>(
           },
           className
         )}
-        {...buttonProps}
-        aria-disabled={disabled ? true : undefined}
+        {...restButtonProps}
         {...restProps}
       >
         {icon}
         <span className={withBaseName("label")}>{children}</span>
-      </div>
+      </button>
     );
   }
 );
