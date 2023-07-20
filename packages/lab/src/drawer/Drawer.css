@@ -1,4 +1,4 @@
-/* Styles applied to Drawer component (root component if Scrim is disabled) */
+/* Styles applied to Drawer component */
 .saltDrawer {
   background: var(--drawer-background);
   display: flex;
@@ -13,6 +13,10 @@
   top: 0;
 }
 
+.saltDrawer-overlay {
+  background: var(--salt-overlayable-background);
+}
+
 /* Styles applied when variant = "primary" */
 .saltDrawer-primary {
   --drawer-background: var(--salt-container-primary-background);
@@ -21,16 +25,6 @@
 /* Styles applied when variant = "secondary" */
 .saltDrawer-secondary {
   --drawer-background: var(--salt-container-secondary-background);
-}
-
-/* Animation styles applied when the Scrim mounts */
-.saltScrim.saltDrawer-enterAnimation {
-  animation: var(--salt-animation-fade-in-center);
-}
-
-/* Animation styles applied when the Scrim unmounts */
-.saltScrim.saltDrawer-exitAnimation {
-  animation: var(--salt-animation-fade-out-back);
 }
 
 /* Styles applied when position = "top" */

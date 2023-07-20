@@ -62,7 +62,8 @@ const DefaultDrawerStory: ComponentStory<typeof Drawer> = (args) => {
     <>
       <Button onClick={show}>Open Drawer</Button>
       <Drawer
-        isOpen={open}
+        open={open}
+        onOpenChange={setOpen}
         aria-labelledby="drawer_label"
         aria-describedby="drawer_description"
         {...args}
@@ -88,7 +89,7 @@ const TopTemplate: ComponentStory<typeof Drawer> = (args) => {
   return (
     <>
       <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} {...args}>
+      <Drawer open={open} onOpenChange={setOpen} {...args}>
         <DrawerContentExample onClick={hide} />
       </Drawer>
     </>
@@ -110,7 +111,7 @@ const RightTemplate: ComponentStory<typeof Drawer> = (args) => {
   return (
     <>
       <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} {...args}>
+      <Drawer open={open} onOpenChange={setOpen} {...args}>
         <DrawerContentExample onClick={hide} />
       </Drawer>
     </>
@@ -132,7 +133,7 @@ const BottomTemplate: ComponentStory<typeof Drawer> = (args) => {
   return (
     <>
       <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} {...args}>
+      <Drawer open={open} onOpenChange={setOpen} {...args}>
         <DrawerContentExample onClick={hide} />
       </Drawer>
     </>
@@ -160,7 +161,7 @@ const ReducedMotionTemplate: ComponentStory<typeof Drawer> = (args) => {
       </p>
       <div className="reduced-motion">
         <Button onClick={show}>Open Drawer</Button>
-        <Drawer isOpen={open} {...args}>
+        <Drawer open={open} onOpenChange={setOpen} {...args}>
           <DrawerContentExample onClick={hide} />
         </Drawer>
       </div>
@@ -189,7 +190,8 @@ const DrawerLeftExample: ComponentStory<typeof Drawer> = (args) => {
     <div className="drawer-simple-usage">
       <Button onClick={show}>Open Drawer</Button>
       <Drawer
-        isOpen={open}
+        open={open}
+        onOpenChange={setOpen}
         aria-labelledby="drawer_label"
         aria-describedby="drawer_description"
         {...args}
@@ -229,7 +231,7 @@ const DrawerTopExample: ComponentStory<typeof Drawer> = (args) => {
   return (
     <div className="drawer-simple-usage">
       <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} {...args}>
+      <Drawer open={open} onOpenChange={setOpen} {...args}>
         <StackLayout>
           <h2>Section title</h2>
           <p>
@@ -266,9 +268,11 @@ const DrawerRightExample: ComponentStory<typeof Drawer> = (args) => {
 
   return (
     <div className="drawer-simple-usage">
-      <Button onClick={show}>Open Drawer</Button>
+      <Button onClick={show} onOpenChange={setOpen}>
+        Open Drawer
+      </Button>
       <Drawer
-        isOpen={open}
+        open={open}
         aria-labelledby="drawer_label"
         aria-describedby="drawer_description"
         {...args}
@@ -321,7 +325,12 @@ const DrawerBottomExample: ComponentStory<typeof Drawer> = (args) => {
   return (
     <div className="drawer-simple-usage">
       <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} aria-labelledby="drawer_label" {...args}>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        aria-labelledby="drawer_label"
+        {...args}
+      >
         <StackLayout>
           <h2 id="drawer_label" tabIndex={-1}>
             Section title

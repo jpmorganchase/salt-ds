@@ -1,9 +1,14 @@
-import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
+import { forwardRef, HTMLAttributes, Ref, useEffect, useState } from "react";
 import { clsx } from "clsx";
-
-import { Scrim, ScrimProps } from "../scrim";
-
-import { makePrefixer } from "@salt-ds/core";
+import {
+  useRole,
+  useInteractions,
+  FloatingFocusManager,
+  FloatingOverlay,
+  FloatingPortal,
+  useDismiss,
+} from "@floating-ui/react";
+import { makePrefixer, useFloatingUI, useForkRef } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -15,25 +20,17 @@ export type DrawerPositions = typeof DRAWER_POSITIONS[number];
 
 export interface DrawerProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Disable the scrim.
-   */
-  disableScrim?: boolean;
-  /**
    * Defines the drawer position within the screen.
    */
   position?: DrawerPositions;
   /**
-   * Disable all animations.
-   */
-  disableAnimations?: boolean;
-  /**
    * Display or hide the component.
    */
-  isOpen?: boolean;
+  open?: boolean;
   /**
-   * Props to be passed to the Scrim component.
+   * Callback function triggered when open state changes.
    */
-  scrimProps?: Partial<ScrimProps>;
+  onOpenChange?: (open: boolean) => void;
   /**
    * Change background color palette
    */
@@ -42,8 +39,6 @@ export interface DrawerProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("saltDrawer");
 
-const ariaAttributes = { role: "dialog", "aria-modal": true };
-
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   props,
   ref
@@ -51,11 +46,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   const {
     children,
     className,
-    disableScrim = false,
     position = "left",
-    disableAnimations = false,
-    scrimProps,
-    isOpen = true,
+    open = true,
+    onOpenChange,
     variant = "primary",
     ...rest
   } = props;
@@ -71,58 +64,59 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
 
   const [isAnimating, setIsAnimating] = useState(false);
 
+  const { context, floating } = useFloatingUI({
+    open,
+    onOpenChange,
+  });
+
+  const floatingRef = useForkRef(floating, ref) as Ref<HTMLDivElement>;
+
+  const role = useRole(context);
+  const dismiss = useDismiss(context, { outsidePressEvent: "mousedown" });
+
+  const { getFloatingProps } = useInteractions([role, dismiss]);
+
   useEffect(() => {
-    if ((!isOpen && disableAnimations) || (!isOpen && !isAnimating)) {
+    if (!open && !isAnimating) {
       setShowComponent(false);
     }
 
-    if (isOpen && !showComponent) {
+    if (open && !showComponent) {
       setShowComponent(true);
     }
-  }, [isOpen, showComponent, disableAnimations, isAnimating]);
+  }, [open, showComponent, isAnimating]);
 
-  const enterAnimation = !disableAnimations && isOpen;
-
-  const exitAnimation = !disableAnimations && !isOpen;
-
-  const drawer = showComponent ? (
-    <div
-      ref={ref}
-      className={clsx(
-        withBaseName(),
-        withBaseName(position),
-        {
-          [withBaseName("enterAnimation")]: enterAnimation,
-          [withBaseName("exitAnimation")]: exitAnimation,
-          [withBaseName(variant)]: variant,
-        },
-        className
+  return (
+    <FloatingPortal>
+      {showComponent && (
+        <FloatingOverlay className={withBaseName("overlay")}>
+          <FloatingFocusManager context={context}>
+            <div
+              ref={floatingRef}
+              className={clsx(
+                withBaseName(),
+                withBaseName(position),
+                {
+                  [withBaseName("enterAnimation")]: open,
+                  [withBaseName("exitAnimation")]: !open,
+                  [withBaseName(variant)]: variant,
+                },
+                className
+              )}
+              onAnimationStart={() => setIsAnimating(true)}
+              onAnimationEnd={() => {
+                if (!open && showComponent) {
+                  setShowComponent(false);
+                }
+              }}
+              {...getFloatingProps()}
+              {...rest}
+            >
+              {children}
+            </div>
+          </FloatingFocusManager>
+        </FloatingOverlay>
       )}
-      onAnimationStart={() => setIsAnimating(true)}
-      onAnimationEnd={() => {
-        if (!isOpen && showComponent) {
-          setShowComponent(false);
-        }
-      }}
-      {...(disableScrim && ariaAttributes)}
-      {...rest}
-    >
-      {children}
-    </div>
-  ) : null;
-
-  return disableScrim ? (
-    drawer
-  ) : (
-    <Scrim
-      open={showComponent}
-      className={clsx({
-        [withBaseName("enterAnimation")]: enterAnimation,
-        [withBaseName("exitAnimation")]: exitAnimation,
-      })}
-      {...scrimProps}
-    >
-      {drawer}
-    </Scrim>
+    </FloatingPortal>
   );
 });
