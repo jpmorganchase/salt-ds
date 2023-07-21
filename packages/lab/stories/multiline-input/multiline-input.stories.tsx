@@ -1,4 +1,4 @@
-import { Button, FlowLayout, Text } from "@salt-ds/core";
+import { Button, FlowLayout, Label, Text } from "@salt-ds/core";
 import { MultilineInput } from "@salt-ds/lab";
 import {
   BankCheckSolidIcon,
@@ -124,12 +124,7 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
       value={value}
       onChange={handleChange}
       endAdornment={
-        <span
-          style={{
-            color: "var(--salt-text-secondary-foreground)",
-            fontWeight: "var(--salt-text-fontWeight-small)",
-          }}
-        >{`${value.length}/${MAX_CHARS}`}</span>
+        <Label variant="secondary">{`${value.length}/${MAX_CHARS}`}</Label>
       }
       style={{ maxWidth: "266px" }}
     />
