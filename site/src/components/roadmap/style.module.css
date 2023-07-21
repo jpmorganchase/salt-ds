@@ -14,11 +14,6 @@
   gap: 20px; /* Adjust the gap between columns */
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
 .content {
   flex: 1;
   display: flex;
