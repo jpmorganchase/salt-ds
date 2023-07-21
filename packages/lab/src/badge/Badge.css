@@ -20,7 +20,7 @@
   display: inline-block;
   margin: auto;
 
-  font-size: var(--salt-text-label-fontSize);
+  font-size: var(--salt-accent-fontSize);
   font-weight: var(--salt-accent-fontSize);
   background: var(--salt-accent-background);
   color: var(--salt-accent-foreground);
