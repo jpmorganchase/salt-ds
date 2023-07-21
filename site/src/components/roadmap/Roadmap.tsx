@@ -39,7 +39,7 @@ type RoadmapDataItem = {
 };
 
 interface CardViewProps {
-  sortedRoadmapData: RoadmapData[];
+  data: RoadmapData[];
   searchQuery: string;
 }
 
@@ -124,15 +124,12 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
         onChange={(event) =>
           setSearchQuery((event.target as HTMLInputElement).value)
         }
-        className={styles.bar}
+        className={styles.searchInput}
         startAdornment={<SearchIcon />}
       />
 
       {roadmapData !== null && roadmapData.length > 0 ? (
-        <CardView
-          sortedRoadmapData={sortedRoadmapData}
-          searchQuery={searchQuery}
-        />
+        <CardView data={sortedRoadmapData} searchQuery={searchQuery} />
       ) : (
         <Banner status="info">
           <BannerContent>No data available</BannerContent>
@@ -142,14 +139,14 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
   );
 };
 
-export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
+export const CardView = ({ data, searchQuery }: CardViewProps) => {
   return (
     <GridLayout className={styles.cardContainer} columns={3}>
       <div className={styles.column}>
         <Heading2 className={styles.heading}>
           Future <ProgressPendingIcon className={styles.icon} size={1.4} />
         </Heading2>
-        {sortedRoadmapData
+        {data
           .filter((item) => {
             const startDate = item.startDate ? new Date(item.startDate) : null;
             const today = new Date();
@@ -180,7 +177,7 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
           In Progress{" "}
           <ProgressInprogressIcon className={styles.icon} size={1.4} />
         </Heading2>
-        {sortedRoadmapData
+        {data
           .filter((item) => {
             const startDate = new Date(item.startDate);
             const targetDate = new Date(item.targetDate);

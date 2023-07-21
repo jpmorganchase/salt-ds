@@ -1,6 +1,6 @@
 export const formatDate = (date: Date): string => {
   if (isNaN(date.getTime())) {
-    return "To be seen";
+    return "Not yet defined";
   } else {
     const options: Intl.DateTimeFormatOptions = {
       day: "numeric",
