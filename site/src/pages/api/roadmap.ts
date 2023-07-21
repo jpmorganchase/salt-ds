@@ -1,3 +1,4 @@
+require('dotenv').config();
 import { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
 
@@ -58,7 +59,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     `;
 
-    const response = await fetch("https://api.github.com/graphql", {
+    const response = await fetch(`${process.env.GRAPH_QL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

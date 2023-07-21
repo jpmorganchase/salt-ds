@@ -41,18 +41,6 @@
   padding-right: 20px; /* Adjust the padding as per your design */
 }
 
-.info {
-  margin-left: 20px;
-  background-color: rgb(200, 205, 212);
-  padding: 6px;
-  border-radius: 55%;
-  height: 30px;
-  width: 30px;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
 .iconplace {
   position: absolute;
   top: 2;
