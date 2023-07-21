@@ -69,6 +69,7 @@ export * from "./scrim";
 export * from "./search-input";
 export * from "./skip-link";
 export * from "./slider";
+export * from "./stepped-tracker";
 export * from "./stepper-input";
 export * from "./switch";
 export * from "./tabs";
