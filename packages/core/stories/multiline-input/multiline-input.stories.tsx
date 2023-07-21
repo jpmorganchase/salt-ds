@@ -1,12 +1,10 @@
-import { Button, FlowLayout, Label, Text } from "@salt-ds/core";
-import { MultilineInput } from "@salt-ds/lab";
+import { ChangeEvent, Label, useState } from "react";
+import { Button, FlowLayout, MultilineInput, Text } from "@salt-ds/core";
 import {
   BankCheckSolidIcon,
   BookmarkSolidIcon,
-  CookieSolidIcon,
   EditSolidIcon,
   FilterClearIcon,
-  FilterIcon,
   FlagIcon,
   HelpSolidIcon,
   PinSolidIcon,
@@ -14,10 +12,9 @@ import {
   UserBadgeIcon,
 } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { ChangeEvent, useState } from "react";
 
 export default {
-  title: "Lab/Multiline Input",
+  title: "Core/Multiline Input",
   component: MultilineInput,
 } as ComponentMeta<typeof MultilineInput>;
 
@@ -60,7 +57,7 @@ export const NumberOfRows: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const bordered: ComponentStory<typeof MultilineInput> = (args) => {
+export const Bordered: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput bordered defaultValue="Value" {...args} />

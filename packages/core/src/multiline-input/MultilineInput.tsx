@@ -9,14 +9,11 @@ import {
   TextareaHTMLAttributes,
   useState,
 } from "react";
-import {
-  makePrefixer,
-  StatusAdornment,
-  useControlled,
-  useFormFieldProps,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { useFormFieldProps } from "../form-field-context";
+import { StatusAdornment } from "../status-adornment";
+import { makePrefixer, useControlled } from "../utils";
 
 import multilineInputCss from "./MultilineInput.css";
 

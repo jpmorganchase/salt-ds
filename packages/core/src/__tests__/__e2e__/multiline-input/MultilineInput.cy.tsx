@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { FormField, FormFieldLabel, Button } from "@salt-ds/core";
-import { MultilineInput } from "@salt-ds/lab";
+import { Button, FormField, FormFieldLabel, MultilineInput } from "@salt-ds/core";
 
 describe("GIVEN an MultilineInput", () => {
   it("SHOULD have no a11y violations on load", () => {
