@@ -5530,9 +5530,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/core@workspace:packages/core"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5548,9 +5548,9 @@ __metadata:
     rimraf: ^4.4.0
     svgo: ^3.0.0
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5561,9 +5561,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/data-grid@workspace:packages/data-grid"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5578,9 +5578,9 @@ __metadata:
     rimraf: ^4.4.0
     svgo: ^3.0.0
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5591,9 +5591,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/lab@workspace:packages/lab"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5730,9 +5730,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/styles@workspace:packages/styles"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true
@@ -5764,9 +5764,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/window@workspace:packages/window"
   peerDependencies:
-    "@types/react": ">=16.8.6"
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
       optional: true

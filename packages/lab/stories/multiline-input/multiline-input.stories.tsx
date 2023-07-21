@@ -2,7 +2,10 @@ import { Button, FlowLayout, Text } from "@salt-ds/core";
 import { MultilineInput } from "@salt-ds/lab";
 import {
   BookmarkSolidIcon,
+  CookieSolidIcon,
+  EditSolidIcon,
   FilterClearIcon,
+  FilterIcon,
   FlagIcon,
   PinSolidIcon,
 } from "@salt-ds/icons";
@@ -53,13 +56,13 @@ export const NumberOfRows: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const FullBorder: ComponentStory<typeof MultilineInput> = (args) => {
+export const bordered: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <MultilineInput fullBorder defaultValue="Value" {...args} />
+      <MultilineInput bordered defaultValue="Value" {...args} />
       <MultilineInput
         variant="secondary"
-        fullBorder
+        bordered
         defaultValue="Value"
         {...args}
       />
@@ -86,10 +89,10 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
         defaultValue="Value"
         {...args}
       />
-      <MultilineInput disabled fullBorder defaultValue="Value" {...args} />
+      <MultilineInput disabled bordered defaultValue="Value" {...args} />
       <MultilineInput
         disabled
-        fullBorder
+        bordered
         variant="secondary"
         defaultValue="Value"
         {...args}
@@ -107,10 +110,10 @@ export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
         defaultValue="Value"
         {...args}
       />
-      <MultilineInput readOnly fullBorder defaultValue="Value" {...args} />
+      <MultilineInput readOnly bordered defaultValue="Value" {...args} />
       <MultilineInput
         readOnly
-        fullBorder
+        bordered
         variant="secondary"
         defaultValue="Value"
         {...args}
@@ -136,7 +139,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput validationStatus="error" defaultValue="Value" {...args} />
       <MultilineInput
-        fullBorder
+        bordered
         validationStatus="error"
         defaultValue="Value"
         {...args}
@@ -147,7 +150,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
         {...args}
       />
       <MultilineInput
-        fullBorder
+        bordered
         validationStatus="warning"
         defaultValue="Value"
         {...args}
@@ -158,7 +161,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
         {...args}
       />
       <MultilineInput
-        fullBorder
+        bordered
         validationStatus="success"
         defaultValue="Value"
         {...args}
@@ -182,7 +185,11 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput
-        startAdornment={<Button variant="cta">AB</Button>}
+        startAdornment={
+          <Button variant="cta">
+            <EditSolidIcon />
+          </Button>
+        }
         endAdornment={
           <>
             <Text>%</Text>
@@ -193,7 +200,7 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
         {...args}
       />
       <MultilineInput
-        startAdornment={<FlagIcon />}
+        startAdornment={<FilterIcon />}
         endAdornment={
           <Button>
             <BookmarkSolidIcon />
@@ -204,10 +211,9 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
       />
       <MultilineInput
         readOnly
-        startAdornment={<FlagIcon />}
         endAdornment={
           <Button disabled>
-            <BookmarkSolidIcon />
+            <CookieSolidIcon />
           </Button>
         }
         defaultValue="Value"

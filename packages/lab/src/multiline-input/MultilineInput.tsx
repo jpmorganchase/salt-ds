@@ -35,7 +35,7 @@ export interface MultilineInputProps
   /**
    * Styling variant with full border. Defaults to false
    */
-  fullBorder?: boolean;
+  bordered?: boolean;
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes) applied to the `textarea` element.
    */
@@ -75,7 +75,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       className: classNameProp,
       disabled,
       endAdornment,
-      fullBorder = false,
+      bordered = false,
       id,
       textAreaProps = {},
       textAreaRef,
@@ -84,6 +84,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       role,
       rows = 3,
       startAdornment,
+      style,
       value: valueProp,
       defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
       validationStatus: validationStatusProp,
@@ -158,13 +159,18 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       setFocused(true);
     };
 
+    const multilineInputStyles = {
+      "--saltMultilineInput-rows": rows,
+      ...style,
+    };
+
     return (
       <div
         className={clsx(
           withBaseName(),
           withBaseName(variant),
           {
-            [withBaseName("fullBorder")]: fullBorder,
+            [withBaseName("bordered")]: bordered,
             [withBaseName("focused")]: !isDisabled && !isReadOnly && focused,
             [withBaseName("disabled")]: isDisabled,
             [withBaseName("readOnly")]: isReadOnly,
@@ -173,6 +179,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           classNameProp
         )}
         ref={ref}
+        style={multilineInputStyles}
         {...other}
       >
         {startAdornment && (

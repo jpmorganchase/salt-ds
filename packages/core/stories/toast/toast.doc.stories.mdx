@@ -1,6 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Link } from "@salt-ds/core";
-import { Toast } from "@salt-ds/lab";
+import { Link, Toast } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -8,7 +7,7 @@ import {
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Toast"
+  title="Documentation/Core/Toast"
   component={Toast}
   parameters={{
     viewMode: "docs",
@@ -18,7 +17,7 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 # Toast
 
 <Canvas>
-  <Story id="lab-toast--default-info" />
+  <Story id="core-toast--default-info" />
 </Canvas>
 
 ## Examples
@@ -26,35 +25,35 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 ### Displaying general information
 
 <Canvas>
-  <Story id="lab-toast--default-info" />
+  <Story id="core-toast--default-info" />
 </Canvas>
 
 ### Letting users know about an issue
 
 <Canvas>
-  <Story id="lab-toast--error" />
+  <Story id="core-toast--error" />
 </Canvas>
 
 <Canvas>
-  <Story id="lab-toast--warning" />
+  <Story id="core-toast--warning" />
 </Canvas>
 
 ### When you need to reassure your users
 
 <Canvas>
-  <Story id="lab-toast--success" />
+  <Story id="core-toast--success" />
 </Canvas>
 
 ### Custom content
 
 <Canvas>
-  <Story id="lab-toast--custom-content" />
+  <Story id="core-toast--custom-content" />
 </Canvas>
 
 ## Configuring Toast
 
 ```
-import { Toast } from '@salt-ds/lab';
+import { Toast, ToastContent } from '@salt-ds/core';
 ```
 
 ### Props
