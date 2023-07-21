@@ -1,13 +1,17 @@
 import { Button, FlowLayout, Text } from "@salt-ds/core";
 import { MultilineInput } from "@salt-ds/lab";
 import {
+  BankCheckSolidIcon,
   BookmarkSolidIcon,
   CookieSolidIcon,
   EditSolidIcon,
   FilterClearIcon,
   FilterIcon,
   FlagIcon,
+  HelpSolidIcon,
   PinSolidIcon,
+  SendIcon,
+  UserBadgeIcon,
 } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
@@ -224,15 +228,20 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
         }
         endAdornment={
           <>
-            <Text>%</Text>
-            <FilterClearIcon />
+            <Text>GBP</Text>
+            <Button variant="secondary">
+              <HelpSolidIcon />
+            </Button>
+            <Button variant="cta">
+              <SendIcon />
+            </Button>
           </>
         }
         defaultValue="Value"
         {...args}
       />
       <MultilineInput
-        startAdornment={<FilterIcon />}
+        startAdornment={<Text>£</Text>}
         endAdornment={
           <Button>
             <BookmarkSolidIcon />
@@ -242,13 +251,23 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
         {...args}
       />
       <MultilineInput
-        readOnly
+        disabled
         endAdornment={
           <Button disabled>
-            <CookieSolidIcon />
+            <UserBadgeIcon />
           </Button>
         }
-        defaultValue="Value"
+        defaultValue="Disabled value"
+        {...args}
+      />
+      <MultilineInput
+        readOnly
+        endAdornment={
+          <Button variant="secondary" disabled>
+            <BankCheckSolidIcon />
+          </Button>
+        }
+        defaultValue="Readonly value"
         {...args}
       />
     </FlowLayout>

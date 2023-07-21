@@ -170,6 +170,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           withBaseName(),
           withBaseName(variant),
           {
+            [withBaseName("withAdornmentRow")]: endAdornment,
             [withBaseName("bordered")]: bordered,
             [withBaseName("focused")]: !isDisabled && !isReadOnly && focused,
             [withBaseName("disabled")]: isDisabled,
@@ -207,16 +208,18 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           {...restA11yProps}
           {...restTextAreaProps}
         />
-        {!isDisabled && !isReadOnly && validationStatus && (
-          <div className={withBaseName("statusAdornmentContainer")}>
-            <StatusAdornment status={validationStatus} />
-          </div>
-        )}
-        {endAdornment && (
-          <div className={withBaseName("endAdornmentContainer")}>
-            {endAdornment}
-          </div>
-        )}
+        <div className={withBaseName("suffixAdornments")}>
+          {!isDisabled && !isReadOnly && validationStatus && (
+            <div className={withBaseName("statusAdornmentContainer")}>
+              <StatusAdornment status={validationStatus} />
+            </div>
+          )}
+          {endAdornment && (
+            <div className={withBaseName("endAdornmentContainer")}>
+              {endAdornment}
+            </div>
+          )}
+        </div>
         <div className={withBaseName("activationIndicator")} />
       </div>
     );
