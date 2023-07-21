@@ -9,7 +9,6 @@ import {
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Info as DefaultInfo } from "../Info";
-import { Circle } from "./Circle";
 import { InfoRendererProps } from "../LinearProgress/LinearProgress";
 
 import { useWindow } from "@salt-ds/window";
@@ -54,7 +53,7 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
   unit?: string;
   /**
    * The value of the progress indicator.
-   * Value between 0 and 100.
+   * Value between 0 and max.
    */
   value?: number;
 }
@@ -160,15 +159,22 @@ export const CircularProgress = forwardRef<
       aria-valuenow={value}
       {...rest}
     >
-      <div className={clsx(withBaseName("container"))} style={{ ...rootStyle }}>
-        <svg className="saltCircularProgress-svg">
-          <Circle
+      <div className={withBaseName("container")} style={rootStyle}>
+      <svg className={withBaseName("svg")}>
+          <circle
+            cx="50%"
+            cy="50%"
+            fill="none"
             style={railCircleStyle}
             className={withBaseName("railCircle")}
           />
-          <Circle
+
+          <circle
+            cx="50%"
+            cy="50%"
+            fill="none"
             style={circleStyle}
-            className={clsx(withBaseName("circle"))}
+            className={withBaseName("circle")}
           />
         </svg>
       </div>

@@ -37,29 +37,6 @@ const ProgressWithControls = ({
   );
 };
 
-const LinearExamples = () => (
-  <Panel style={{ height: "unset", marginLeft: 20 }}>
-    <div style={{ display: "flex" }}>
-      <LinearProgress aria-label="Download" value={38} />
-    </div>
-  </Panel>
-);
-export const All: ComponentStory<typeof LinearProgress> = () => (
-  <div
-    style={{
-      height: "100%",
-      overflowY: "scroll",
-      position: "absolute",
-      width: 1200,
-      top: 0,
-      left: 0,
-      right: 0,
-    }}
-  >
-    <LinearExamples />
-  </div>
-);
-
 export const Default: ComponentStory<typeof LinearProgress> = () => (
   <LinearProgress value={38} />
 );

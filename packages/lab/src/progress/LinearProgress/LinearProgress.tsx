@@ -83,7 +83,7 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
   unit?: string;
   /**
    * The value of the progress indicator.
-   * Value between 0 and 100.
+   * Value between 0 and max.
    */
   value?: number;
 }
@@ -172,11 +172,11 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         {...rootProps}
         {...rest}
       >
-        <div className={clsx(withBaseName("barContainer"))}>
+        <div className={withBaseName("barContainer")}>
           {progress !== 0 && (
-            <div className={clsx(withBaseName("bar"))} style={barStyle} />
+            <div className={withBaseName("bar")} style={barStyle} />
           )}
-          <div className={clsx(withBaseName("track"))} style={trackStyle} />
+          <div className={withBaseName("track")} style={trackStyle} />
         </div>
         {progressInfo}
       </div>

@@ -35,28 +35,6 @@ const ProgressWithControls = ({
   );
 };
 
-const CircularExamples = () => (
-  <Panel style={{ height: "unset", marginLeft: 20 }}>
-    <CircularProgress aria-label="Download" value={38} />
-  </Panel>
-);
-
-export const All: ComponentStory<typeof CircularProgress> = () => (
-  <div
-    style={{
-      height: "100%",
-      overflowY: "scroll",
-      position: "absolute",
-      width: 1200,
-      top: 0,
-      left: 0,
-      right: 0,
-    }}
-  >
-    <CircularExamples />
-  </div>
-);
-
 export const Default: ComponentStory<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" value={38} />
 );
