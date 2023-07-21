@@ -430,14 +430,19 @@ export const WithMultilineInput: ComponentStory<typeof FormField> = (props) => {
         <MultilineInput defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
+      <FormField disabled {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <MultilineInput defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
       <FormField readOnly {...props}>
         <FormLabel>Form Field label</FormLabel>
         <MultilineInput defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
-      <FormField disabled {...props}>
+      <FormField readOnly {...props}>
         <FormLabel>Form Field label</FormLabel>
-        <MultilineInput defaultValue="Value" />
+        <MultilineInput bordered defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
       <FormField validationStatus="error" {...props}>
