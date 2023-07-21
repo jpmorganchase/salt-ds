@@ -1,5 +1,8 @@
 .saltCircularProgress {
-  --circularProgress-gradient-color: var(--salt-accent-background);
+  --circularProgress-progressCircle-radius: calc(var(--salt-size-base) - (var(--salt-size-adornment) * 0.25));
+  --circularProgress-progressCircle-circumference: calc(var(--circularProgress-progressCircle-radius) * 2 * PI);
+  --circularProgress-railCircle-radius: calc(var(--salt-size-base) - (var(--salt-track-borderWidth) * 0.5));
+  --circularProgress-railCircle-circumference: calc(var(--circularProgress-railCircle-radius) * 2 * PI);
 
   color: var(--salt-text-primary-foreground);
   display: inline-flex;
@@ -12,27 +15,13 @@
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.saltCircularProgress-circle {
-  stroke: url("#salt-circular-progress-gradient");
-  stroke-width: 2px;
-}
-
-.saltCircularProgress-small {
-  font-size: 11px;
-}
-
-.saltCircularProgress-medium {
-  font-size: 14px;
-}
-
-.saltCircularProgress-large {
-  font-size: 16px;
-}
-
 .saltCircularProgress-progressValue {
   align-items: center;
   color: var(--salt-text-primary-foreground);
   display: flex;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight-strong);
   height: 100%;
   justify-content: center;
   left: 0;
@@ -40,71 +29,31 @@
   width: 100%;
 }
 
-.saltCircularProgress-disabled {
+.saltCircularProgress-disabled .saltCircularProgress-circle {
+  stroke: var(--salt-accent-background-disabled);
 }
 
-.saltCircularProgress-completed {
+.saltCircularProgress-disabled .saltCircularProgress-railCircle {
+  stroke: var(--salt-track-borderColor-disabled);
 }
 
 .saltCircularProgress-railCircle {
   stroke: var(--salt-track-borderColor);
-  stroke-width: var(--salt-size-border);
-}
-
-.saltCircularProgress-gradientStart,
-.saltCircularProgress-gradientStop {
-  stop-color: var(--saltCircularProgress-gradient-color, var(--circularProgress-gradient-color));
-}
-
-.saltCircularProgress-container {
-  display: inline-block;
-}
-
-.saltCircularProgress-static {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-}
-
-.saltCircularProgress-indeterminate {
-  animation: circular-rotate 1.4s linear infinite;
+  stroke-width: var(--salt-track-borderWidth);
+  r: var(--circularProgress-railCircle-radius);
 }
 
 .saltCircularProgress-svg {
+  height: calc(var(--salt-size-base) * 2);
+  width: calc(var(--salt-size-base) * 2);
   fill: var(--salt-accent-background);
+  transform: rotate(-90deg);
   display: block;
 }
 
 .saltCircularProgress-circle {
-  stroke: url("#salt-circular-progress-gradient");
-}
-
-.saltCircularProgress-circleStatic {
+  r: var(--circularProgress-progressCircle-radius);
+  stroke-width: calc(var(--salt-size-adornment) * 0.5);
+  stroke: var(--salt-accent-background);
   transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
-}
-
-.saltCircularProgress-circleIndeterminate {
-  animation: circular-dash 1.4s ease-in-out infinite;
-}
-
-@keyframes circular-rotate {
-  0% {
-    transform-origin: 50% 50%;
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes circular-dash {
-  0% {
-    stroke-dasharray: 1px, 200px;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dasharray: 100px, 200px;
-    stroke-dashoffset: -15px;
-  }
-  100% {
-    stroke-dasharray: 100px, 200px;
-    stroke-dashoffset: -125px;
-  }
 }

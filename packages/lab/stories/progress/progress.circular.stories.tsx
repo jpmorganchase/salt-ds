@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, Panel, SaltProvider } from "@salt-ds/core";
+import { Button, FlowLayout, Panel } from "@salt-ds/core";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
 
@@ -20,8 +20,8 @@ const ProgressWithControls = ({
   const { handleReset, handleStart, handleStop, isProgressing, value } =
     useProgressingValue();
   return (
-    <div className="salt-ProgressWithControls-root">
-      <div className="salt-ProgressWithControls-controls">
+    <div className="root">
+      <FlowLayout gap={1} className="controls">
         <Button disabled={isProgressing} onClick={handleStart}>
           Start
         </Button>
@@ -29,143 +29,24 @@ const ProgressWithControls = ({
           Stop
         </Button>
         <Button onClick={handleReset}>Reset</Button>
-      </div>
-      <div className="salt-ProgressWithControls-progressComponentContainer">
-        <div className="salt-ProgressWithControls-container">
-          <Progress aria-label="Download" size="small" value={value} />
-          <h3>small</h3>
-        </div>
-        <div className="salt-ProgressWithControls-container">
-          <Progress aria-label="Download" size="medium" value={value} />
-          <h3>medium</h3>
-        </div>
-        <div className="salt-ProgressWithControls-container">
-          <Progress aria-label="Download" size="large" value={value} />
-          <h3>large</h3>
-        </div>
-      </div>
+      </FlowLayout>
+      <Progress aria-label="Download" value={value} />
     </div>
   );
 };
 
-const CircularExamples = () => (
-  <Panel style={{ height: "unset", marginLeft: 20 }}>
-    <div style={{ display: "flex" }}>
-      <div>
-        <h3>size=small</h3>
-        <CircularProgress aria-label="Download" size="small" value={38} />
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>size=medium</h3>
-        <CircularProgress aria-label="Download" size="medium" value={38} />
-      </div>
-      <div style={{ marginLeft: 100 }}>
-        <h3>size=large</h3>
-        <CircularProgress aria-label="Download" size="large" value={38} />
-      </div>
-    </div>
-  </Panel>
-);
-
-export const All: ComponentStory<typeof CircularProgress> = () => (
-  <div
-    style={{
-      height: "100%",
-      overflowY: "scroll",
-      position: "absolute",
-      width: 1200,
-      top: 0,
-      left: 0,
-      right: 0,
-    }}
-  >
-    <SaltProvider mode="light">
-      <CircularExamples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <CircularExamples />
-    </SaltProvider>
-  </div>
-);
-
 export const Default: ComponentStory<typeof CircularProgress> = () => (
-  <div style={{ display: "flex" }}>
-    <div>
-      <h3>size=small</h3>
-      <CircularProgress aria-label="Download" size="small" value={100} />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=medium</h3>
-      <CircularProgress aria-label="Download" size="medium" value={38} />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=large</h3>
-      <CircularProgress aria-label="Download" size="large" value={38} />
-    </div>
-  </div>
+  <CircularProgress aria-label="Download" value={38} />
 );
 
 export const Disabled: ComponentStory<typeof CircularProgress> = () => (
-  <div style={{ display: "flex" }}>
-    <div>
-      <h3>size=small</h3>
-      <CircularProgress
-        aria-label="Download"
-        disabled
-        size="small"
-        value={38}
-      />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=medium</h3>
-      <CircularProgress
-        aria-label="Download"
-        disabled
-        size="medium"
-        value={38}
-      />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=large</h3>
-      <CircularProgress
-        aria-label="Download"
-        disabled
-        size="large"
-        value={38}
-      />
-    </div>
-  </div>
+  <CircularProgress aria-label="Download" disabled value={38} />
 );
 
-export const Indeterminate: ComponentStory<typeof CircularProgress> = () => (
-  <div style={{ display: "flex" }}>
-    <div>
-      <h3>size=small</h3>
-      <CircularProgress
-        aria-label="Download"
-        showInfo={false}
-        size="small"
-        variant="indeterminate"
-      />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=medium</h3>
-      <CircularProgress
-        aria-label="Download"
-        showInfo={false}
-        size="medium"
-        variant="indeterminate"
-      />
-    </div>
-    <div style={{ marginLeft: 100 }}>
-      <h3>size=large</h3>
-      <CircularProgress
-        aria-label="Download"
-        showInfo={false}
-        size="large"
-        variant="indeterminate"
-      />
-    </div>
+export const MaxValue: ComponentStory<typeof CircularProgress> = () => (
+  <div>
+    <h3> max = 500, value = 250</h3>
+    <CircularProgress aria-label="Download" value={250} max={500} />
   </div>
 );
 
