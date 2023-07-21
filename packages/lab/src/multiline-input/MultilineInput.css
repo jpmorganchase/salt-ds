@@ -90,6 +90,11 @@
   --multilineInput-outlineColor: var(--salt-status-success-borderColor);
 }
 
+.saltMultilineInput.saltMultilineInput-withAdornmentRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /* Style applied to inner textarea element */
 .saltMultilineInput-textarea {
   background: none;
@@ -97,9 +102,9 @@
   box-sizing: content-box;
   color: inherit;
   cursor: inherit;
-  display: block;
+  display: inline-flex;
   height: calc(var(--saltMultilineInput-rows, 3) * var(--salt-text-lineHeight));
-  flex: 1;
+  flex-grow: 1;
   font: inherit;
   letter-spacing: 0;
   margin: var(--salt-spacing-75) 0;
@@ -107,8 +112,6 @@
   overflow: hidden;
   resize: none;
   padding: 0;
-  text-align: var(--multilineInput-textAlign);
-  width: 100%;
 }
 
 /* Style applied to placeholder */
@@ -198,7 +201,7 @@
 .saltMultilineInput-startAdornmentContainer {
   align-items: center;
   display: inline-flex;
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-height: var(--salt-size-base);
   column-gap: var(--salt-spacing-100);
 }
 
@@ -208,17 +211,28 @@
   padding-right: var(--salt-spacing-100);
 }
 
+/* Style applied to suffix adornment container */
+.saltMultilineInput-suffixAdornments {
+  align-self: self-end;
+}
+
+/* Style applied to suffix adornment container when end adornments are provided */
+.saltMultilineInput-withAdornmentRow .saltMultilineInput-suffixAdornments {
+  display: inline-flex;
+  flex-basis: 100%;
+  justify-content: flex-end;
+}
+
 /* Style applied to end adornment container */
 .saltMultilineInput-endAdornmentContainer {
-  align-self: self-end;
-  padding-left: var(--salt-spacing-100);
+  padding-left: var(--multilineInput-paddingInline);
 }
 
 /* Style applied to status adornment container */
 .saltMultilineInput-statusAdornmentContainer {
   align-self: self-end;
   display: inline-flex;
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-height: var(--salt-size-base);
 }
 
 /* Style applied to button start adornment if first child */
@@ -229,6 +243,10 @@
 /* Style applied to button end adornment if last child */
 .saltMultilineInput-endAdornmentContainer .saltButton:last-child {
   margin-right: calc(var(--salt-spacing-50) * -1);
+}
+/* Style applied to button end adornment if last child */
+.saltMultilineInput-readOnly .saltMultilineInput-endAdornmentContainer .saltButton:last-child {
+  margin-right: 0;
 }
 
 /* Styles for button adornment */
