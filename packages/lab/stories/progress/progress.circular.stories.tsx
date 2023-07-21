@@ -20,8 +20,8 @@ const ProgressWithControls = ({
   const { handleReset, handleStart, handleStop, isProgressing, value } =
     useProgressingValue();
   return (
-    <div className="salt-ProgressWithControls-root">
-      <FlowLayout gap={1} className="salt-ProgressWithControls-controls">
+    <div className="root">
+      <FlowLayout gap={1} className="controls">
         <Button disabled={isProgressing} onClick={handleStart}>
           Start
         </Button>
