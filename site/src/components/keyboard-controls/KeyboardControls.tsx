@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import clsx from "clsx";
-import tableStyles from "../mdx/table/Table.module.css";
+import { Table } from "../mdx/table";
 import styles from "./KeyboardControls.module.css";
 
 export interface KeyboardControlsProps {
@@ -13,7 +13,7 @@ export const KeyboardControls: FC<KeyboardControlsProps> = ({
   className,
 }) => {
   return (
-    <table className={clsx(styles.table, tableStyles.table, className)}>
+    <Table className={clsx(styles.table, className)}>
       <thead>
         <tr>
           <th className={styles.keyCol}>Key</th>
@@ -21,6 +21,6 @@ export const KeyboardControls: FC<KeyboardControlsProps> = ({
         </tr>
       </thead>
       <tbody>{children}</tbody>
-    </table>
+    </Table>
   );
 };
