@@ -110,7 +110,6 @@
   text-align: var(--saltButton-textAlign, var(--salt-actionable-textAlign));
   text-decoration: none;
   transition: none;
-  user-select: none;
   width: var(--saltButton-width, auto);
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
