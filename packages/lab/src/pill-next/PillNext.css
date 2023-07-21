@@ -1,0 +1,84 @@
+/* Styles applied to the root element */
+.saltPillNext {
+  --pillNext-background: var(--salt-actionable-primary-background);
+  --pillNext-background-active: var(--salt-actionable-primary-background-active);
+  --pillNext-background-disabled: var(--salt-actionable-primary-background-disabled);
+  --pillNext-background-hover: var(--salt-actionable-primary-background-hover);
+  --pillNext-text-color: var(--salt-actionable-primary-foreground);
+  --pillNext-text-color-active: var(--salt-actionable-primary-foreground-active);
+  --pillNext-text-color-hover: var(--salt-actionable-primary-foreground-hover);
+  --pillNext-text-color-disabled: var(--salt-actionable-primary-foreground-disabled);
+}
+
+.saltPillNext {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  background: var(--pillNext-background);
+  border-radius: 0;
+  border: 0;
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  min-width: 4em;
+  min-height: var(--salt-text-minHeight);
+  outline: 0;
+  position: relative;
+  gap: var(--salt-spacing-50);
+  padding-inline: var(--salt-spacing-50);
+  color: var(--pillNext-text-color);
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-label-lineHeight);
+}
+
+.saltPillNext-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.saltPillNext .saltIcon {
+  --saltIcon-color: currentColor;
+}
+
+/* Style applied to Pill if `onClick` prop is provided  */
+.saltPillNext-clickable {
+  cursor: var(--salt-selectable-cursor-hover);
+}
+
+.saltPillNext-clickable:hover {
+  color: var(--pillNext-text-color-hover);
+  background: var(--pillNext-background-hover);
+}
+
+.saltPillNext-clickable.saltPillNext-disabled:hover {
+  color: var(--pillNext-text-color);
+  background: var(--pillNext-background);
+}
+
+.saltPillNext-clickable.saltPillNext-active,
+.saltPillNext-clickable:active {
+  background: var(--pillNext-background-active);
+  color: var(--pillNext-text-color-active);
+}
+
+.saltPillNext-clickable.saltPillNext-disabled.saltPillNext-active,
+.saltPillNext-clickable.saltPillNext-disabled:active {
+  background: var(--pillNext-background);
+  color: var(--pillNext-text-color);
+}
+
+/* Style applied to Pill on focus */
+.saltPillNext:focus-visible {
+  outline: var(--salt-focused-outline);
+}
+
+/* Style applied to Pill when disabled */
+.saltPillNext.saltPillNext-disabled,
+.saltPillNext.saltPillNext-disabled:hover,
+.saltPillNext.saltPillNext-disabled:active {
+  color: var(--pillNext-text-color-disabled);
+  background: var(--pillNext-background-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
+}
