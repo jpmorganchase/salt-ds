@@ -28,6 +28,7 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setValue(value);
+    console.log('changing')
   };
 
   return <Input {...args} value={value} onChange={handleChange} />;

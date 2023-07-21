@@ -22,7 +22,7 @@ const withBaseName = makePrefixer("saltMultilineInput");
 export interface MultilineInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
-      ComponentPropsWithoutRef<"input">,
+      ComponentPropsWithoutRef<"textarea">,
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
