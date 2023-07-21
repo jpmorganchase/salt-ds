@@ -69,7 +69,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     onOpenChange,
   });
 
-  const floatingRef = useForkRef(floating, ref) as Ref<HTMLDivElement>;
+  const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
   const role = useRole(context);
   const dismiss = useDismiss(context, { outsidePressEvent: "mousedown" });
