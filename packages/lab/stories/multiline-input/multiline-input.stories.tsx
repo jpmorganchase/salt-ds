@@ -108,7 +108,7 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newVal = event.target.value;
 
-    if (newVal.length < MAX_CHARS) {
+    if (newVal.length <= MAX_CHARS) {
       const value = newVal;
       setValue(value);
     }
