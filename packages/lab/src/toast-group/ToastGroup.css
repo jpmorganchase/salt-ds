@@ -1,0 +1,47 @@
+.saltToastGroup {
+  position: absolute;
+  z-index: var(--salt-zIndex-default);
+  width: var(--toastGroup-width);
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--salt-spacing-300);
+}
+
+.saltToastGroup-bottom-right {
+  bottom: 0;
+  right: 0; 
+  left: auto;
+}
+
+.saltToastGroup-bottom-right .saltToast {
+  margin-bottom: var(--salt-spacing-100);
+  animation: var(--salt-animation-slide-in-top);
+}
+
+.saltToastGroup-top-right {
+  top: 0;
+  right: 0; 
+  bottom: auto;
+}
+
+.saltToastGroup-top-right .saltToast {
+  margin-bottom: var(--salt-spacing-100);
+  animation: var(--salt-animation-slide-in-top);
+}
+
+.salt-density-high {
+  --toastGroup-width: 210px;
+}
+
+.salt-density-medium {
+  --toastGroup-width: 260px;
+}
+
+.salt-density-low {
+  --toastGroup-width: 310px;
+}
+
+.salt-density-touch {
+  --toastGroup-width: 360px;
+}
