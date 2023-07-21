@@ -9,7 +9,7 @@
 
 .saltBadge-badge {
   /* Should this vary according to touch size */
-  padding: 0px var(--salt-spacing-50);
+  padding-inline: var(--salt-spacing-50);
   line-height: var(--salt-accent-lineHeight);
   min-width: 10px;
   max-width: 50px;
