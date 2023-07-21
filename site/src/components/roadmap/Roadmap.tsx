@@ -109,7 +109,7 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
         //sets the data to retrieved data or null
         setRoadmapData(extractedData || []);
       } catch (error) {
-        console.error(error);
+        console.error("Could not fetch roadmap data");
       }
     };
 
