@@ -61,17 +61,10 @@ function sortRoadmapDataByDate(roadmapData: RoadmapData[]): RoadmapData[] {
 }
 
 function RoadmapCard(props: CardProps) {
-  return (
-    <Card
-      className={styles.spacing}
-      style={{ width: "250px", marginBottom: "15px", minHeight: "unset" }}
-      {...props}
-    />
-  );
+  return <Card {...props} />;
 }
 
 export const Roadmap = ({ title, children }: RoadmapProps) => {
-  const [jsonData, setJsonData] = useState("");
   const [roadmapData, setRoadmapData] = useState<any[]>([]);
   const sortedRoadmapData = sortRoadmapDataByDate(roadmapData);
   const [searchQuery, setSearchQuery] = useState("");
@@ -206,7 +199,7 @@ export const CardView = ({ sortedRoadmapData, searchQuery }: CardViewProps) => {
             const formattedDate = formatDate(new Date(item.targetDate));
 
             return (
-              <RoadmapCard key={item.id}>
+              <RoadmapCard key={item.id} className={styles.card}>
                 <Link>
                   <Heading3 className={styles.heading3}>
                     <a href={item.issueUrl}>{item.text}</a>
