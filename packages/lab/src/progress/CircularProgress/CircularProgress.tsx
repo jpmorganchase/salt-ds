@@ -160,7 +160,7 @@ export const CircularProgress = forwardRef<
       {...rest}
     >
       <div className={withBaseName("container")} style={rootStyle}>
-      <svg className={withBaseName("svg")}>
+        <svg className={withBaseName("svg")}>
           <circle
             cx="50%"
             cy="50%"
