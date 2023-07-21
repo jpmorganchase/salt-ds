@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 import { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
 
