@@ -1,4 +1,14 @@
-import { ReactNode, SetStateAction, useEffect, useState } from "react";
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactFragment,
+  ReactNode,
+  ReactPortal,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import {
   GridLayout,
   Card,
@@ -21,22 +31,14 @@ import { Heading2 } from "../mdx/h2";
 type RoadmapProps = { title: string; children: ReactNode };
 
 interface RoadmapData {
+  content: any;
+  fieldValues: any;
   id: string;
   startDate: Date;
   targetDate: Date;
   issueUrl: string;
   text: string;
 }
-
-type RoadmapDataItem = {
-  content: any;
-  fieldValues: any;
-  text: string;
-  startDate: string;
-  targetDate: string;
-  status: string;
-  issueUrl: string;
-};
 
 interface CardViewProps {
   data: RoadmapData[];
@@ -79,24 +81,18 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
           responseData?.data?.organization?.repository?.projectV2?.items?.nodes;
 
         //creates an array of objects with data from github
-        const extractedData: RoadmapDataItem[] = items?.map(
-          (item: RoadmapDataItem) => {
-            const fieldValueNodes = item?.fieldValues?.nodes;
-            const text = getFieldValueByName(fieldValueNodes, "Title");
-            const startDate = getFieldValueByName(
-              fieldValueNodes,
-              "Start Date"
-            );
-            const targetDate = getFieldValueByName(
-              fieldValueNodes,
-              "Target Date"
-            );
-            const status = getFieldValueByName(fieldValueNodes, "Status");
-            const issueUrl = item?.content?.url;
+        const extractedData: RoadmapData[] = items?.map((item: RoadmapData) => {
+          const fieldValueNodes = item?.fieldValues?.nodes;
+          const text = getFieldValueByName(fieldValueNodes, "Title");
+          const startDate = getFieldValueByName(fieldValueNodes, "Start Date");
+          const targetDate = getFieldValueByName(
+            fieldValueNodes,
+            "Target Date"
+          );
+          const issueUrl = item?.content?.url;
 
-            return { text, startDate, targetDate, status, issueUrl };
-          }
-        );
+          return { text, startDate, targetDate, issueUrl };
+        });
 
         setRoadmapData(extractedData || []);
       } catch (error) {
@@ -139,38 +135,55 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
   );
 };
 
-export const CardView = ({ data, searchQuery }: CardViewProps) => {
+export const ColumnData = (item: {
+  targetDate: string | number | Date;
+  id: Key | null | undefined;
+  issueUrl: string | undefined;
+  text:
+    | string
+    | number
+    | boolean
+    | ReactElement<any, string | JSXElementConstructor<any>>
+    | ReactFragment
+    | ReactPortal
+    | null
+    | undefined;
+}) => {
+  const formattedDate = formatDate(new Date(item.targetDate));
+
   return (
-    <GridLayout className={styles.cardContainer} columns={3}>
+    <RoadmapCard className={styles.card} key={item.id}>
+      <Link>
+        <Heading3 className={styles.heading3}>
+          <a href={item.issueUrl}>{item.text}</a>
+        </Heading3>
+      </Link>
+      <b>Due Date: </b>
+      <p className={styles.date}>{formattedDate}</p>
+    </RoadmapCard>
+  );
+};
+
+export const CardView = ({ data, searchQuery }: CardViewProps) => {
+  const filteredData = data.filter((item) => {
+    const startDate = item.startDate ? new Date(item.startDate) : null;
+    const today = new Date();
+    const isFutureItem = !startDate || startDate > today;
+    const matchesSearchQuery =
+      searchQuery === "" ||
+      item.text.toLowerCase().includes(searchQuery.toLowerCase());
+    return isFutureItem && matchesSearchQuery;
+  });
+
+  return (
+    <GridLayout className={styles.cardContainer} columns={2}>
       <div className={styles.column}>
         <Heading2 className={styles.heading}>
           Future <ProgressPendingIcon className={styles.icon} size={1.4} />
         </Heading2>
-        {data
-          .filter((item) => {
-            const startDate = item.startDate ? new Date(item.startDate) : null;
-            const today = new Date();
-            const isFutureItem = !startDate || startDate > today;
-            const matchesSearchQuery =
-              searchQuery === "" ||
-              item.text.toLowerCase().includes(searchQuery.toLowerCase());
-            return isFutureItem && matchesSearchQuery;
-          })
-          .map((item) => {
-            const formattedDate = formatDate(new Date(item.targetDate));
-
-            return (
-              <RoadmapCard className={styles.card} key={item.id}>
-                <Link>
-                  <Heading3 className={styles.heading3}>
-                    <a href={item.issueUrl}>{item.text}</a>
-                  </Heading3>
-                </Link>
-                <b>Due Date: </b>
-                <p className={styles.date}>{formattedDate}</p>
-              </RoadmapCard>
-            );
-          })}
+        {filteredData.map((item) => (
+          <ColumnData key={item.id} item={item} />
+        ))}
       </div>
       <div className={styles.column}>
         <Heading2 className={styles.heading}>
