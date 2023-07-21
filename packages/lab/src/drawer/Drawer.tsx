@@ -1,16 +1,14 @@
-import { forwardRef, HTMLAttributes, Ref, useEffect, useState } from "react";
+import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
 import { clsx } from "clsx";
 import {
-  useRole,
-  useInteractions,
   FloatingFocusManager,
   FloatingOverlay,
   FloatingPortal,
-  useDismiss,
 } from "@floating-ui/react";
-import { makePrefixer, useFloatingUI, useForkRef } from "@salt-ds/core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useDrawer } from "./useDrawer";
 
 import drawerCss from "./Drawer.css";
 
@@ -64,17 +62,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
 
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const { context, floating } = useFloatingUI({
+  const { floating, context } = useDrawer({
     open,
     onOpenChange,
   });
 
   const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
-
-  const role = useRole(context);
-  const dismiss = useDismiss(context, { outsidePressEvent: "mousedown" });
-
-  const { getFloatingProps } = useInteractions([role, dismiss]);
 
   useEffect(() => {
     if (!open && !isAnimating) {
@@ -109,7 +102,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
                   setShowComponent(false);
                 }
               }}
-              {...getFloatingProps()}
               {...rest}
             >
               {children}
