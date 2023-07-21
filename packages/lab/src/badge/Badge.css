@@ -21,7 +21,7 @@
   margin: auto;
 
   font-size: var(--salt-accent-fontSize);
-  font-weight: var(--salt-accent-fontSize);
+  font-weight: var(--salt-accent-fontWeight);
   background: var(--salt-accent-background);
   color: var(--salt-accent-foreground);
 
