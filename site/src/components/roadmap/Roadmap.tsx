@@ -29,6 +29,8 @@ interface RoadmapData {
 }
 
 type RoadmapDataItem = {
+  content: any;
+  fieldValues: any;
   text: string;
   startDate: string;
   targetDate: string;
@@ -80,26 +82,29 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
         //gets the data
         const response = await fetch("/api/roadmap");
         const responseData = await response.json();
-        const jsonString = JSON.stringify(responseData, null, 2);
-        setJsonData(jsonString);
 
         const items =
           responseData?.data?.organization?.repository?.projectV2?.items?.nodes;
 
         //creates an array of objects with data from github
-        const extractedData: RoadmapDataItem[] = items?.map((item: any) => {
-          const fieldValueNodes = item?.fieldValues?.nodes;
-          const text = getFieldValueByName(fieldValueNodes, "Title");
-          const startDate = getFieldValueByName(fieldValueNodes, "Start Date");
-          const targetDate = getFieldValueByName(
-            fieldValueNodes,
-            "Target Date"
-          );
-          const status = getFieldValueByName(fieldValueNodes, "Status");
-          const issueUrl = item?.content?.url;
+        const extractedData: RoadmapDataItem[] = items?.map(
+          (item: RoadmapDataItem) => {
+            const fieldValueNodes = item?.fieldValues?.nodes;
+            const text = getFieldValueByName(fieldValueNodes, "Title");
+            const startDate = getFieldValueByName(
+              fieldValueNodes,
+              "Start Date"
+            );
+            const targetDate = getFieldValueByName(
+              fieldValueNodes,
+              "Target Date"
+            );
+            const status = getFieldValueByName(fieldValueNodes, "Status");
+            const issueUrl = item?.content?.url;
 
-          return { text, startDate, targetDate, status, issueUrl };
-        });
+            return { text, startDate, targetDate, status, issueUrl };
+          }
+        );
 
         //sets the data to retrieved data or null
         setRoadmapData(extractedData || []);
