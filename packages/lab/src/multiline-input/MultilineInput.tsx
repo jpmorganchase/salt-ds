@@ -84,6 +84,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       role,
       rows = 3,
       startAdornment,
+      style,
       value: valueProp,
       defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
       validationStatus: validationStatusProp,
@@ -158,6 +159,11 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       setFocused(true);
     };
 
+    const multilineInputStyles = {
+      "--saltMultilineInput-rows": rows,
+      ...style,
+    };
+
     return (
       <div
         className={clsx(
@@ -173,6 +179,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           classNameProp
         )}
         ref={ref}
+        style={multilineInputStyles}
         {...other}
       >
         {startAdornment && (
