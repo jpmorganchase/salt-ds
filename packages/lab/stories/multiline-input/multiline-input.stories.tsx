@@ -197,8 +197,12 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
         endAdornment={
           <>
             <Text>GBP</Text>
-            <Button variant="secondary"><HelpSolidIcon /></Button>
-            <Button variant="cta"><SendIcon /></Button>
+            <Button variant="secondary">
+              <HelpSolidIcon />
+            </Button>
+            <Button variant="cta">
+              <SendIcon />
+            </Button>
           </>
         }
         defaultValue="Value"
