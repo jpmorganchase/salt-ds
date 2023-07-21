@@ -13,8 +13,19 @@ ul {
   height: 500px;
 }
 
-.horizontal {
+.horizontal,
+.vertical {
   display: flex;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.nestedGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-size-border);
 }
 
 .cardList {

@@ -1,54 +1,69 @@
 .saltNavItem {
+  --navItem-color: var(--salt-text-secondary-foreground);
+  --navItem-font-weight: var(--salt-text-fontWeight);
+  --navItem-fill: var(--salt-text-secondary-foreground);
+  --navItem-bar-inset: var(--salt-spacing-25);
+}
+
+.saltNavItem:hover,
+.saltNavItem-active {
+  --navItem-color: var(--salt-text-primary-foreground);
+  --navItem-font-weight: var(--salt-text-fontWeight-strong);
+  --navItem-fill: var(--salt-text-primary-foreground);
+}
+
+.saltNavItem {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   position: relative;
-  background: var(--salt-navigable-primary-background);
-  gap: var(--salt-spacing-75);
+  gap: var(--salt-spacing-100);
+  font-weight: var(--navItem-font-weight);
+  /* Hover off */
+  transition: all var(--salt-duration-instant) ease-in-out;
+}
+
+.saltNavItem .saltNavItem-icon {
+  fill: var(--navItem-fill);
 }
 
 .saltNavItem-horizontal {
-  min-height: calc(var(--salt-size-stackable) + var(--salt-size-accent) + var(--salt-spacing-100));
-  padding: var(--salt-spacing-100);
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-spacing-100));
+  padding: calc(var(--salt-spacing-100) + var(--navItem-bar-inset)) var(--salt-spacing-100) var(--salt-spacing-100) var(--salt-spacing-100);
 }
 
 .saltNavItem-vertical {
   min-height: var(--salt-size-stackable);
+  padding-left: calc(var(--salt-spacing-100) + var(--navItem-bar-inset));
 }
 
-.saltNavItem-label,
+.saltNavItem-label {
+  flex: 1;
+}
+
 .saltNavItem-label:hover {
-  color: var(--salt-text-primary-foreground);
+  --link-color-hover: inherit;
+}
+
+.saltNavItem .saltNavItem-label {
+  text-decoration: none;
+  color: var(--navItem-color);
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
-  padding-left: calc(var(--saltNavItem-level, 0) * var(--salt-spacing-150));
-  text-decoration: none;
+  padding-left: calc(var(--saltNavItem-level, 0) * var(--salt-spacing-100));
+}
+
+.saltNavItem-nested {
+  padding-left: calc(var(--salt-spacing-250) + (var(--saltNavItem-level, 0) * var(--salt-spacing-100)));
 }
 
 .saltNavItem-vertical .saltNavItem-expandButton {
-  justify-self: end;
-  margin: calc((var(--salt-size-stackable) - var(--salt-size-base)) / 2);
-}
+  --saltIcon-color: var(--navItem-fill);
 
-.saltNavItem-horizontal {
-  padding-top: calc(var(--salt-spacing-100) + var(--salt-size-accent));
-}
-
-.saltNavItem-vertical {
-  padding-left: calc(var(--salt-spacing-200) + var(--salt-size-accent));
-}
-
-.saltNavItem:hover,
-.saltNavItem:focus {
-  background: var(--salt-navigable-primary-background-hover);
+  margin: var(--salt-spacing-50);
 }
 
 .saltNavItem:focus-visible {
   outline: var(--salt-focused-outline);
-}
-
-.saltNavItem-active {
-  background: var(--salt-navigable-primary-background-active);
 }
 
 .saltNavItem::after {
@@ -61,21 +76,27 @@
 
 .saltNavItem-horizontal::after {
   width: 100%;
-  height: var(--salt-size-accent);
+  height: var(--salt-size-bar);
+  top: var(--navItem-bar-inset);
 }
 
 .saltNavItem-vertical::after {
-  width: var(--salt-size-accent);
+  width: var(--salt-size-bar);
   height: 100%;
+  left: var(--navItem-bar-inset);
 }
 
-.saltNavItem-horizontal:hover::after,
-.saltNavItem-horizontal:focus::after {
+.saltNavItem:hover::after,
+.saltNavItem:focus::after {
   background: var(--salt-navigable-indicator-hover);
+  /* Hover on */
+  transition: all var(--salt-duration-perceptible) ease-in-out;
 }
 
 .saltNavItem.saltNavItem-active::after,
 .saltNavItem.saltNavItem-active:hover::after,
 .saltNavItem.saltNavItem-active:focus::after {
-  background: var(--saltNavItem-indicator-color, var(--salt-navigable-indicator-active));
+  background: var(--salt-navigable-indicator-active);
+  /* Hover on */
+  transition: all var(--salt-duration-perceptible) ease-in-out;
 }

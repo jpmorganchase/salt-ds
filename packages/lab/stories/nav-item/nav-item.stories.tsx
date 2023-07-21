@@ -1,7 +1,8 @@
 import { LayerLayout, NavItem, NavItemProps } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
-import { CSSProperties, useState } from "react";
+import { useState } from "react";
 import { Card, H2, Link } from "@salt-ds/core";
+import { NotificationIcon } from "@salt-ds/icons";
 
 import "./nav-item.stories.css";
 
@@ -18,17 +19,52 @@ Default.args = {
   children: "Nav Item",
   href: "#",
 };
+
+export const WithIcon: Story<NavItemProps> = (args) => (
+  <NavItem IconComponent={NotificationIcon} {...args} />
+);
+WithIcon.args = {
+  active: false,
+  children: "Nav Item",
+  href: "#",
+};
+
 const itemsWithSubNav = [
   {
     name: "Nav Item 1",
   },
   {
     name: "Nav Item 2",
-    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
   },
   {
     name: "Nav Item 3",
+  },
+  {
+    name: "Nav Item 4",
     subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
+  },
+  {
+    name: "Nav Item 5",
+    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
+  },
+];
+
+const multipleLevelNesting = [
+  {
+    name: "Nav Item 1",
+  },
+  {
+    name: "Nav Item 2",
+    subNav: [
+      {
+        name: "Sub Nav Item 1",
+        subNav: [
+          "Nested Sub Nav Item 1",
+          "Nested Sub Nav Item 2",
+          "Nested Sub Nav Item 3",
+        ],
+      },
+    ],
   },
 ];
 
@@ -86,19 +122,20 @@ export const VerticalGroup = () => {
   );
 };
 export const NestedGroup = () => {
-  const [active, setActive] = useState(itemsWithSubNav[0].name);
+  const [active, setActive] = useState(multipleLevelNesting[0].name);
+
   const [expanded, setExpanded] = useState<string[]>([]);
 
   return (
     <nav>
       <ul className="vertical">
-        {itemsWithSubNav.map(({ name, subNav }) => (
+        {multipleLevelNesting.map(({ name, subNav }) => (
           <li key={name}>
             <NavItem
               active={
                 active === name ||
                 (!expanded.includes(name) &&
-                  subNav?.some((item) => active === `${name} - ${item}`))
+                  subNav?.some((item) => active === `${name} - ${item.name}`))
               }
               href="#"
               orientation="vertical"
@@ -116,17 +153,25 @@ export const NestedGroup = () => {
               }}
               parent={subNav && subNav.length > 0}
               expanded={expanded.includes(name)}
+              IconComponent={NotificationIcon}
             >
               {name}
             </NavItem>
             {expanded.includes(name) && (
-              <ul>
+              <ul className="nestedGroup">
                 {subNav?.map((item) => {
-                  const itemValue = `${name} - ${item}`;
+                  const itemValue = `${name} - ${item.name}`;
+
                   return (
                     <li key={itemValue}>
                       <NavItem
-                        active={active === itemValue}
+                        active={
+                          active === itemValue ||
+                          (!expanded.includes(item.name) &&
+                            item.subNav?.some(
+                              (item) => active === `${name} - ${item}`
+                            ))
+                        }
                         href="#"
                         orientation="vertical"
                         onClick={(event) => {
@@ -135,9 +180,48 @@ export const NestedGroup = () => {
                           setActive(itemValue);
                         }}
                         level={1}
+                        onExpand={() => {
+                          if (expanded.includes(item.name)) {
+                            setExpanded(
+                              expanded.filter(
+                                (element) => element !== item.name
+                              )
+                            );
+                          } else {
+                            setExpanded([...expanded, item.name]);
+                          }
+                        }}
+                        parent={item.subNav && item.subNav.length > 0}
+                        expanded={expanded.includes(item.name)}
                       >
-                        {item}
+                        {item.name}
                       </NavItem>
+
+                      {expanded.includes(item.name) && (
+                        <ul className="nestedGroup">
+                          {item.subNav.map((item) => {
+                            const itemValue = `${name} - ${item}`;
+
+                            return (
+                              <li key={itemValue}>
+                                <NavItem
+                                  active={active === itemValue}
+                                  href="#"
+                                  orientation="vertical"
+                                  onClick={(event) => {
+                                    // Prevent default to avoid navigation
+                                    event.preventDefault();
+                                    setActive(itemValue);
+                                  }}
+                                  level={2}
+                                >
+                                  {item}
+                                </NavItem>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
                     </li>
                   );
                 })}

@@ -3,8 +3,10 @@ import {
   forwardRef,
   MouseEventHandler,
   MouseEvent,
+  ComponentType,
 } from "react";
 import { makePrefixer, Link } from "@salt-ds/core";
+import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ExpansionButton } from "./ExpansionButton";
 
@@ -26,6 +28,10 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
   parent?: boolean;
   onExpand?: MouseEventHandler<HTMLButtonElement>;
   href?: string;
+  /**
+   * Icon component to be displayed next to the nav item label.
+   */
+  IconComponent?: ComponentType<IconProps> | null;
 }
 
 const withBaseName = makePrefixer("saltNavItem");
@@ -42,6 +48,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       level = 0,
       onExpand,
       href,
+      IconComponent,
       style: styleProp,
       ...rest
     } = props;
@@ -69,6 +76,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
           withBaseName(),
           {
             [withBaseName("active")]: active,
+            [withBaseName("nested")]: level !== 0,
           },
           withBaseName(orientation),
           className
@@ -77,6 +85,9 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         style={style}
         {...rest}
       >
+        {IconComponent && (
+          <IconComponent aria-hidden className={withBaseName("icon")} />
+        )}
         <Link
           className={withBaseName("label")}
           aria-current={active ? "page" : undefined}
