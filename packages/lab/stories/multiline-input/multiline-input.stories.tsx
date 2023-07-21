@@ -1,4 +1,4 @@
-import { Button, FlowLayout, Text } from "@salt-ds/core";
+import { Button, FlowLayout, Label, Text } from "@salt-ds/core";
 import { MultilineInput } from "@salt-ds/lab";
 import {
   BankCheckSolidIcon,
@@ -104,6 +104,33 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
     </FlowLayout>
   );
 };
+
+export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
+  const [value, setValue] = useState<string>("Value");
+  const MAX_CHARS = 10;
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newVal = event.target.value;
+
+    if (newVal.length <= MAX_CHARS) {
+      const value = newVal;
+      setValue(value);
+    }
+  };
+
+  return (
+    <MultilineInput
+      {...args}
+      value={value}
+      onChange={handleChange}
+      endAdornment={
+        <Label variant="secondary">{`${value.length}/${MAX_CHARS}`}</Label>
+      }
+      style={{ maxWidth: "266px" }}
+    />
+  );
+};
+
 export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
@@ -242,9 +269,9 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const WithValidationAndAdornments: ComponentStory<
-  typeof MultilineInput
-> = (args) => {
+export const WithMultipleFeatures: ComponentStory<typeof MultilineInput> = (
+  args
+) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput
