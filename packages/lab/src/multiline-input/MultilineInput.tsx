@@ -29,13 +29,25 @@ export interface MultilineInputProps
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
+   * Styling variant with full border. Defaults to false
+   */
+  bordered?: boolean;
+  /**
    * End adornment component
    */
   endAdornment?: ReactNode;
   /**
-   * Styling variant with full border. Defaults to false
+   * If `true`, the component is read only.
    */
-  bordered?: boolean;
+  readOnly?: boolean;
+  /**
+   * Number of rows. Defaults to 3
+   */
+  rows?: number;
+  /**
+   * Start adornment component
+   */
+  startAdornment?: ReactNode;
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes) applied to the `textarea` element.
    */
@@ -45,14 +57,6 @@ export interface MultilineInputProps
    */
   textAreaRef?: Ref<HTMLTextAreaElement>;
   /**
-   * If `true`, the component is read only.
-   */
-  readOnly?: boolean;
-  /**
-   * Start adornment component
-   */
-  startAdornment?: ReactNode;
-  /**
    * Validation status.
    */
   validationStatus?: "error" | "warning" | "success";
@@ -60,10 +64,6 @@ export interface MultilineInputProps
    * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
-  /**
-   * Number of rows. Defaults to 3
-   */
-  rows?: number;
 }
 
 export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
@@ -72,19 +72,19 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       "aria-activedescendant": ariaActiveDescendant,
       "aria-expanded": ariaExpanded,
       "aria-owns": ariaOwns,
+      bordered = false,
       className: classNameProp,
       disabled,
       endAdornment,
-      bordered = false,
       id,
-      textAreaProps = {},
-      textAreaRef,
       placeholder,
       readOnly,
       role,
       rows = 3,
       startAdornment,
       style,
+      textAreaProps = {},
+      textAreaRef,
       value: valueProp,
       defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
       validationStatus: validationStatusProp,
