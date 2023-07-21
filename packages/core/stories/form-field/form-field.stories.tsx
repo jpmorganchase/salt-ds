@@ -21,7 +21,7 @@ import {
   GridLayout,
   FormFieldLabelPlacement,
   Button,
-  MultilineInput
+  MultilineInput,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";

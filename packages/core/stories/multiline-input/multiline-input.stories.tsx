@@ -1,5 +1,5 @@
-import { ChangeEvent, Label, useState } from "react";
-import { Button, FlowLayout, MultilineInput, Text } from "@salt-ds/core";
+import { ChangeEvent, useState } from "react";
+import { Button, FlowLayout, Label, MultilineInput, Text } from "@salt-ds/core";
 import {
   BankCheckSolidIcon,
   BookmarkSolidIcon,
