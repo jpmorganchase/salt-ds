@@ -72,7 +72,6 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        //gets the data
         const response = await fetch("/api/roadmap");
         const responseData = await response.json();
 
@@ -99,7 +98,6 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
           }
         );
 
-        //sets the data to retrieved data or null
         setRoadmapData(extractedData || []);
       } catch (error) {
         console.error("Could not fetch roadmap data");
@@ -119,29 +117,27 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <Input
-          placeholder="Search"
-          value={searchQuery}
-          onChange={(event) =>
-            setSearchQuery((event.target as HTMLInputElement).value)
-          }
-          className={styles.bar}
-          startAdornment={<SearchIcon />}
-        />
+    <div className={styles.content}>
+      <Input
+        placeholder="Search"
+        value={searchQuery}
+        onChange={(event) =>
+          setSearchQuery((event.target as HTMLInputElement).value)
+        }
+        className={styles.bar}
+        startAdornment={<SearchIcon />}
+      />
 
-        {roadmapData !== null && roadmapData.length > 0 ? (
-          <CardView
-            sortedRoadmapData={sortedRoadmapData}
-            searchQuery={searchQuery}
-          />
-        ) : (
-          <Banner status="info">
-            <BannerContent>No data available</BannerContent>
-          </Banner>
-        )}
-      </div>
+      {roadmapData !== null && roadmapData.length > 0 ? (
+        <CardView
+          sortedRoadmapData={sortedRoadmapData}
+          searchQuery={searchQuery}
+        />
+      ) : (
+        <Banner status="info">
+          <BannerContent>No data available</BannerContent>
+        </Banner>
+      )}
     </div>
   );
 };
