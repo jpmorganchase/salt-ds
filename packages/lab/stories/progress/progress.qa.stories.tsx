@@ -12,33 +12,10 @@ export const ExamplesGrid: Story<QAContainerProps> = (props) => {
   const { className } = props;
   return (
     <QAContainer cols={3} {...props}>
-      <LinearProgress className={className} size="small" value={38} />
-      <LinearProgress className={className} size="medium" value={38} />
-      <LinearProgress className={className} size="large" value={38} />
-      <LinearProgress className={className} disabled size="small" value={38} />
-      <LinearProgress className={className} disabled size="medium" value={38} />
-      <LinearProgress className={className} disabled size="large" value={38} />
-      <CircularProgress aria-label="Download" size="small" value={38} />
-      <CircularProgress aria-label="Download" size="medium" value={38} />
-      <CircularProgress aria-label="Download" size="large" value={38} />
-      <CircularProgress
-        aria-label="Download"
-        disabled
-        size="small"
-        value={38}
-      />
-      <CircularProgress
-        aria-label="Download"
-        disabled
-        size="medium"
-        value={38}
-      />
-      <CircularProgress
-        aria-label="Download"
-        disabled
-        size="large"
-        value={38}
-      />
+      <LinearProgress className={className} value={38} />
+      <LinearProgress className={className} disabled value={38} />
+      <CircularProgress aria-label="Download" value={38} />
+      <CircularProgress aria-label="Download" disabled value={38} />
     </QAContainer>
   );
 };
