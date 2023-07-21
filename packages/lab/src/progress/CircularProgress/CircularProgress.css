@@ -1,6 +1,6 @@
 .saltCircularProgress {
   --circularProgress-progressCircle-radius: calc(var(--salt-size-base) - (var(--salt-size-adornment) * 0.25));
-  --circularProgress-progressCircle-circumference: calc(var( --circularProgress-progressCircle-radius) * 2 * PI);
+  --circularProgress-progressCircle-circumference: calc(var(--circularProgress-progressCircle-radius) * 2 * PI);
   --circularProgress-railCircle-radius: calc(var(--salt-size-base) - (var(--salt-track-borderWidth) * 0.5));
   --circularProgress-railCircle-circumference: calc(var(--circularProgress-railCircle-radius) * 2 * PI);
 
