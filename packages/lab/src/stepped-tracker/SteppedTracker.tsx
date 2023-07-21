@@ -7,48 +7,19 @@ import {
   useState,
   isValidElement,
   useEffect,
-  createContext,
-  useContext,
-  useMemo,
 } from "react";
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "@salt-ds/core";
 
+import useDetectTruncatedText from "./useDetectTruncatedText";
+import {
+  SteppedTrackerProvider,
+  TrackerStepProvider,
+} from "./SteppedTrackerContext";
+
 import steppedTrackerCss from "./SteppedTracker.css";
-
-import useDetectTruncatedText, {
-  GetOverflowRef,
-} from "./useDetectTruncatedText";
-
-export type SteppedTrackerContextType = {
-  activeStep: number;
-  getOverflowRef: GetOverflowRef;
-  hasTooltips: boolean;
-  totalSteps: number;
-  isWithinSteppedTracker: boolean;
-};
-
-const defaultSteppedTrackerContext = {
-  activeStep: 0,
-  hasTooltips: false,
-  totalSteps: 1,
-  getOverflowRef: () => undefined,
-  isWithinSteppedTracker: false,
-};
-
-const SteppedTrackerContext = createContext(
-  defaultSteppedTrackerContext as unknown as SteppedTrackerContextType
-);
-
-export const useSteppedTrackerContext = () => useContext(SteppedTrackerContext);
-
-type TrackerStepNumberContextType = number;
-
-const TrackerStepContext = createContext<TrackerStepNumberContextType>(0);
-
-export const useTrackerStepContext = () => useContext(TrackerStepContext);
 
 const withBaseName = makePrefixer("saltSteppedTracker");
 
@@ -100,31 +71,23 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
     const getOverflowRef = useDetectTruncatedText(setHasTooltips);
     const totalSteps = Children.count(children);
 
-    const steppedTrackerContextValue: SteppedTrackerContextType = useMemo(
-      () => ({
-        activeStep,
-        getOverflowRef,
-        hasTooltips,
-        totalSteps,
-        isWithinSteppedTracker: true,
-      }),
-      [activeStep, getOverflowRef, hasTooltips, totalSteps]
-    );
-
     return (
-      <SteppedTrackerContext.Provider value={steppedTrackerContextValue}>
+      <SteppedTrackerProvider
+        hasTooltips={hasTooltips}
+        getOverflowRef={getOverflowRef}
+        totalSteps={totalSteps}
+        activeStep={activeStep}
+      >
         <ul
           className={clsx(withBaseName(), className)}
           ref={ref}
           {...restProps}
         >
           {Children.map(children, (child, i) => (
-            <TrackerStepContext.Provider value={i}>
-              {child}
-            </TrackerStepContext.Provider>
+            <TrackerStepProvider stepNumber={i}>{child}</TrackerStepProvider>
           ))}
         </ul>
-      </SteppedTrackerContext.Provider>
+      </SteppedTrackerProvider>
     );
   }
 );

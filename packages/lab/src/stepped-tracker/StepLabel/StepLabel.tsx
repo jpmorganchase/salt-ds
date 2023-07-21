@@ -5,13 +5,14 @@ import {
   ComponentPropsWithoutRef,
 } from "react";
 import { clsx } from "clsx";
-import { useForkRef, makePrefixer, useIdMemo } from "@salt-ds/core";
+import { useForkRef, makePrefixer, useIdMemo, Label } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
 import stepLabelCss from "./StepLabel.css";
 
-import { useSteppedTrackerContext } from "../SteppedTracker";
+import { useSteppedTrackerContext } from "../SteppedTrackerContext";
+import { useTrackerStepTooltipContext } from "../TrackerStep";
 
 const withBaseName = makePrefixer("saltStepLabel");
 
@@ -33,16 +34,20 @@ export const StepLabel = forwardRef<HTMLLabelElement, StepLabelProps>(
     const { getOverflowRef } = useSteppedTrackerContext();
     const overflowRef = useMemo(() => getOverflowRef(id), [id, getOverflowRef]);
 
-    const combinedRef = useForkRef(overflowRef, ref);
+    const isInTooltip = useTrackerStepTooltipContext();
 
-    return (
-      <label
+    const combinedRef = useForkRef<HTMLLabelElement>(overflowRef, ref);
+
+    return isInTooltip ? (
+      <span>{children}</span>
+    ) : (
+      <Label
         className={clsx(withBaseName(), className)}
-        ref={combinedRef as typeof overflowRef}
+        ref={combinedRef}
         {...rest}
       >
         {children}
-      </label>
+      </Label>
     );
   }
 );

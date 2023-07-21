@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: var(--trackerStep-width);
+  width: var(--saltTrackerStep-width, 100%);
   gap: var(--salt-spacing-50);
   color: var(--salt-text-primary-foreground);
   font-size: var(--salt-text-label-fontSize);

@@ -1,9 +1,4 @@
-import {
-  ComponentPropsWithoutRef,
-  CSSProperties,
-  forwardRef,
-  useEffect,
-} from "react";
+import { ComponentPropsWithoutRef, forwardRef, useEffect } from "react";
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -18,9 +13,10 @@ import { TrackerConnector } from "../TrackerConnector";
 import {
   useSteppedTrackerContext,
   useTrackerStepContext,
-} from "../SteppedTracker";
+} from "../SteppedTrackerContext";
 
 import trackerStepCss from "./TrackerStep.css";
+import { TrackStepTooltipProvider } from "./TrackerStepTooltipContext";
 
 const withBaseName = makePrefixer("saltTrackerStep");
 
@@ -80,7 +76,13 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
 
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
   function TrackerStep(props, ref?) {
-    const { state = "default", className, children, ...restProps } = props;
+    const {
+      state = "default",
+      style,
+      className,
+      children,
+      ...restProps
+    } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -101,15 +103,15 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
     const connectorState = activeStep > stepNumber ? "active" : "default";
     const hasConnector = stepNumber < totalSteps - 1;
 
+    const innerStyle = {
+      ...style,
+      "--saltTrackerStep-width": `${100 / totalSteps}%`,
+    };
+
     const Inner = (
       <li
         className={clsx(withBaseName(), withBaseName(resolvedState), className)}
-        style={
-          {
-            ...props.style,
-            "--trackerStep-width": `${100 / totalSteps}%`,
-          } as CSSProperties
-        }
+        style={innerStyle}
         tabIndex={hasTooltips ? 0 : undefined}
         aria-current={isActive ? "step" : undefined}
         data-state={state}
@@ -127,7 +129,12 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
     }
 
     return (
-      <Tooltip placement="top" content={children}>
+      <Tooltip
+        placement="top"
+        content={
+          <TrackStepTooltipProvider>{children}</TrackStepTooltipProvider>
+        }
+      >
         {Inner}
       </Tooltip>
     );
