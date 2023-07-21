@@ -89,7 +89,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   return (
     <FloatingPortal>
       {showComponent && (
-        <FloatingOverlay className={withBaseName("overlay")}>
+        <FloatingOverlay className={withBaseName("overlay")} lockScroll>
           <FloatingFocusManager context={context}>
             <div
               ref={floatingRef}

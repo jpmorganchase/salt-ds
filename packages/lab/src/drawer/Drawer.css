@@ -15,6 +15,7 @@
 
 .saltDrawer-overlay {
   background: var(--salt-overlayable-background);
+  z-index: var(--salt-zIndex-drawer);
 }
 
 /* Styles applied when variant = "primary" */

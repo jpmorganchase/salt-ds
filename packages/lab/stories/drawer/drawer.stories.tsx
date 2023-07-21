@@ -159,12 +159,15 @@ const ReducedMotionTemplate: ComponentStory<typeof Drawer> = (args) => {
         Go to System Preferences, select the Accessibility category, select the
         Display tab, and enable the Reduce Motion option.
       </p>
-      <div className="reduced-motion">
-        <Button onClick={show}>Open Drawer</Button>
-        <Drawer open={open} onOpenChange={setOpen} {...args}>
-          <DrawerContentExample onClick={hide} />
-        </Drawer>
-      </div>
+      <Button onClick={show}>Open Drawer</Button>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        className="reduced-motion"
+        {...args}
+      >
+        <DrawerContentExample onClick={hide} />
+      </Drawer>
     </>
   );
 };
@@ -187,7 +190,7 @@ const DrawerLeftExample: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-simple-usage">
+    <>
       <Button onClick={show}>Open Drawer</Button>
       <Drawer
         open={open}
@@ -212,7 +215,7 @@ const DrawerLeftExample: ComponentStory<typeof Drawer> = (args) => {
           </FlexItem>
         </StackLayout>
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -229,7 +232,7 @@ const DrawerTopExample: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-simple-usage">
+    <>
       <Button onClick={show}>Open Drawer</Button>
       <Drawer open={open} onOpenChange={setOpen} {...args}>
         <StackLayout>
@@ -250,7 +253,7 @@ const DrawerTopExample: ComponentStory<typeof Drawer> = (args) => {
           </FlexItem>
         </StackLayout>
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -267,7 +270,7 @@ const DrawerRightExample: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-simple-usage">
+    <>
       <Button onClick={show}>Open Drawer</Button>
       <Drawer
         open={open}
@@ -292,7 +295,7 @@ const DrawerRightExample: ComponentStory<typeof Drawer> = (args) => {
           </FlexItem>
         </StackLayout>
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -322,7 +325,7 @@ const DrawerBottomExample: ComponentStory<typeof Drawer> = (args) => {
   const hide = () => setOpen(false);
 
   return (
-    <div className="drawer-simple-usage">
+    <>
       <Button onClick={show}>Open Drawer</Button>
       <Drawer
         open={open}
@@ -344,7 +347,7 @@ const DrawerBottomExample: ComponentStory<typeof Drawer> = (args) => {
           </FlexItem>
         </StackLayout>
       </Drawer>
-    </div>
+    </>
   );
 };
 
