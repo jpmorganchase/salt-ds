@@ -100,10 +100,10 @@ export const CircularProgress = forwardRef<
 
   rootProps["aria-valuenow"] = Math.round(value);
 
-  const progressStrokeLength = `calc(${progress} * var(--progress-circle-circumference) / 100)`;
-  const progressGapLength = `calc((100 - ${progress}) * var(--progress-circle-circumference) / 100)`;
-  const railStrokeLength = `calc((100 - ${progress}) * var(--rail-circle-circumference) / 100)`;
-  const railGapLength = `calc((${progress}) * var(--rail-circle-circumference) / 100)`;
+  const progressStrokeLength = `calc(${progress} * var(--circularProgress-progressCircle-circumference) / 100)`;
+  const progressGapLength = `calc((100 - ${progress}) * var(--circularProgress-progressCircle-circumference) / 100)`;
+  const railStrokeLength = `calc((100 - ${progress}) * var(--circularProgress-railCircle-circumference) / 100)`;
+  const railGapLength = `calc((${progress}) * var(--circularProgress-railCircle-circumference) / 100)`;
 
   circleStyle.strokeDasharray = `${progressStrokeLength} ${progressGapLength}`;
   railCircleStyle.strokeDashoffset = `${railStrokeLength}`;
