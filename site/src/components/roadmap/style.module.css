@@ -7,10 +7,6 @@
   padding-bottom: 5%;
 }
 
-.spacing {
-  border-radius: 8px;
-}
-
 .cardContainer:global(.saltGridLayout) {
   margin-top: 50px;
   display: flex;
@@ -72,6 +68,9 @@
 .card {
   border-radius: 8px;
   position: relative;
+  width: 250px;
+  margin-bottom: 15px;
+  min-height: unset;
 }
 
 .gridLayout {
