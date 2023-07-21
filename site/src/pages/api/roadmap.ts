@@ -74,7 +74,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json(responseData);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error fetching data" });
+    res.status(404).json({ message: "Error fetching data" });
   }
 };
 
