@@ -1,5 +1,60 @@
 # @salt-ds/core
 
+## 1.8.0-rc.4
+
+### Minor Changes
+
+- 00f04b17: Add ToggleButton and ToggleButtonGroup.
+
+  The Toggle Button Group allows users to make a mutually exclusive selection from a set of related commands—with only one option selected at a time.
+  This Toggle Button allows users to enable or disable a single command.
+
+  ```tsx
+  <ToggleButtonGroup>
+    <ToggleButton value="all">
+      <AppSwitcherIcon aria-hidden />
+      All
+    </ToggleButton>
+    <ToggleButton value="active">
+      <VisibleIcon aria-hidden />
+      Active
+    </ToggleButton>
+    <ToggleButton disabled value="search">
+      <FolderClosedIcon aria-hidden />
+      Archived
+    </ToggleButton>
+  </ToggleButtonGroup>
+  ```
+
+- 58cf03cf: Add AccordionGroup, AccordionPanel, Accordion, AccordionHeader.
+
+  A pane containing summary content, which can then be expanded or collapsed to allow the user to show or hide content.
+
+  ```tsx
+  <AccordionGroup>
+    <Accordion
+      expanded={expanded === "accordion-0"}
+      value="accordion-0"
+      onToggle={onChange}
+    >
+      <AccordionHeader>AccordionHeader0</AccordionHeader>
+      <AccordionPanel>AccordionPanel0</AccordionPanel>
+    </Accordion>
+    <Accordion
+      expanded={expanded === "accordion-1"}
+      value="accordion-1"
+      onToggle={onChange}
+    >
+      <AccordionHeader>AccordionHeader1</AccordionHeader>
+      <AccordionPanel>AccordionPanel1</AccordionPanel>
+    </Accordion>
+  </AccordionGroup>
+  ```
+
+### Patch Changes
+
+- 89a3da4c: Fixed Checkbox and Radio Button border style incorrectly using `--salt-container-borderStyle`.
+
 ## 1.8.0-rc.3
 
 ### Minor Changes

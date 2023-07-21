@@ -29,13 +29,25 @@ export interface MultilineInputProps
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
+   * Styling variant with full border. Defaults to false
+   */
+  bordered?: boolean;
+  /**
    * End adornment component
    */
   endAdornment?: ReactNode;
   /**
-   * Styling variant with full border. Defaults to false
+   * If `true`, the component is read only.
    */
-  fullBorder?: boolean;
+  readOnly?: boolean;
+  /**
+   * Number of rows. Defaults to 3
+   */
+  rows?: number;
+  /**
+   * Start adornment component
+   */
+  startAdornment?: ReactNode;
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes) applied to the `textarea` element.
    */
@@ -45,14 +57,6 @@ export interface MultilineInputProps
    */
   textAreaRef?: Ref<HTMLTextAreaElement>;
   /**
-   * If `true`, the component is read only.
-   */
-  readOnly?: boolean;
-  /**
-   * Start adornment component
-   */
-  startAdornment?: ReactNode;
-  /**
    * Validation status.
    */
   validationStatus?: "error" | "warning" | "success";
@@ -60,10 +64,6 @@ export interface MultilineInputProps
    * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
-  /**
-   * Number of rows. Defaults to 3
-   */
-  rows?: number;
 }
 
 export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
@@ -72,18 +72,19 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       "aria-activedescendant": ariaActiveDescendant,
       "aria-expanded": ariaExpanded,
       "aria-owns": ariaOwns,
+      bordered = false,
       className: classNameProp,
       disabled,
       endAdornment,
-      fullBorder = false,
       id,
-      textAreaProps = {},
-      textAreaRef,
       placeholder,
       readOnly,
       role,
       rows = 3,
       startAdornment,
+      style,
+      textAreaProps = {},
+      textAreaRef,
       value: valueProp,
       defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
       validationStatus: validationStatusProp,
@@ -158,13 +159,19 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       setFocused(true);
     };
 
+    const multilineInputStyles = {
+      "--saltMultilineInput-rows": rows,
+      ...style,
+    };
+
     return (
       <div
         className={clsx(
           withBaseName(),
           withBaseName(variant),
           {
-            [withBaseName("fullBorder")]: fullBorder,
+            [withBaseName("withAdornmentRow")]: endAdornment,
+            [withBaseName("bordered")]: bordered,
             [withBaseName("focused")]: !isDisabled && !isReadOnly && focused,
             [withBaseName("disabled")]: isDisabled,
             [withBaseName("readOnly")]: isReadOnly,
@@ -173,6 +180,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           classNameProp
         )}
         ref={ref}
+        style={multilineInputStyles}
         {...other}
       >
         {startAdornment && (
@@ -200,16 +208,18 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           {...restA11yProps}
           {...restTextAreaProps}
         />
-        {!isDisabled && !isReadOnly && validationStatus && (
-          <div className={withBaseName("statusAdornmentContainer")}>
-            <StatusAdornment status={validationStatus} />
-          </div>
-        )}
-        {endAdornment && (
-          <div className={withBaseName("endAdornmentContainer")}>
-            {endAdornment}
-          </div>
-        )}
+        <div className={withBaseName("suffixAdornments")}>
+          {!isDisabled && !isReadOnly && validationStatus && (
+            <div className={withBaseName("statusAdornmentContainer")}>
+              <StatusAdornment status={validationStatus} />
+            </div>
+          )}
+          {endAdornment && (
+            <div className={withBaseName("endAdornmentContainer")}>
+              {endAdornment}
+            </div>
+          )}
+        </div>
         <div className={withBaseName("activationIndicator")} />
       </div>
     );

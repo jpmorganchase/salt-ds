@@ -1,10 +1,17 @@
-import { Button, FlowLayout, Text } from "@salt-ds/core";
+import { Button, FlowLayout, Label, Text } from "@salt-ds/core";
 import { MultilineInput } from "@salt-ds/lab";
 import {
+  BankCheckSolidIcon,
   BookmarkSolidIcon,
+  CookieSolidIcon,
+  EditSolidIcon,
   FilterClearIcon,
+  FilterIcon,
   FlagIcon,
+  HelpSolidIcon,
   PinSolidIcon,
+  SendIcon,
+  UserBadgeIcon,
 } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
@@ -53,13 +60,13 @@ export const NumberOfRows: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const FullBorder: ComponentStory<typeof MultilineInput> = (args) => {
+export const bordered: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
-      <MultilineInput fullBorder defaultValue="Value" {...args} />
+      <MultilineInput bordered defaultValue="Value" {...args} />
       <MultilineInput
         variant="secondary"
-        fullBorder
+        bordered
         defaultValue="Value"
         {...args}
       />
@@ -86,10 +93,10 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
         defaultValue="Value"
         {...args}
       />
-      <MultilineInput disabled fullBorder defaultValue="Value" {...args} />
+      <MultilineInput disabled bordered defaultValue="Value" {...args} />
       <MultilineInput
         disabled
-        fullBorder
+        bordered
         variant="secondary"
         defaultValue="Value"
         {...args}
@@ -97,6 +104,33 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
     </FlowLayout>
   );
 };
+
+export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
+  const [value, setValue] = useState<string>("Value");
+  const MAX_CHARS = 10;
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newVal = event.target.value;
+
+    if (newVal.length <= MAX_CHARS) {
+      const value = newVal;
+      setValue(value);
+    }
+  };
+
+  return (
+    <MultilineInput
+      {...args}
+      value={value}
+      onChange={handleChange}
+      endAdornment={
+        <Label variant="secondary">{`${value.length}/${MAX_CHARS}`}</Label>
+      }
+      style={{ maxWidth: "266px" }}
+    />
+  );
+};
+
 export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
@@ -107,10 +141,10 @@ export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
         defaultValue="Value"
         {...args}
       />
-      <MultilineInput readOnly fullBorder defaultValue="Value" {...args} />
+      <MultilineInput readOnly bordered defaultValue="Value" {...args} />
       <MultilineInput
         readOnly
-        fullBorder
+        bordered
         variant="secondary"
         defaultValue="Value"
         {...args}
@@ -136,7 +170,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput validationStatus="error" defaultValue="Value" {...args} />
       <MultilineInput
-        fullBorder
+        bordered
         validationStatus="error"
         defaultValue="Value"
         {...args}
@@ -147,7 +181,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
         {...args}
       />
       <MultilineInput
-        fullBorder
+        bordered
         validationStatus="warning"
         defaultValue="Value"
         {...args}
@@ -158,7 +192,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
         {...args}
       />
       <MultilineInput
-        fullBorder
+        bordered
         validationStatus="success"
         defaultValue="Value"
         {...args}
@@ -182,18 +216,27 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput
-        startAdornment={<Button variant="cta">AB</Button>}
+        startAdornment={
+          <Button variant="cta">
+            <EditSolidIcon />
+          </Button>
+        }
         endAdornment={
           <>
-            <Text>%</Text>
-            <FilterClearIcon />
+            <Text>GBP</Text>
+            <Button variant="secondary">
+              <HelpSolidIcon />
+            </Button>
+            <Button variant="cta">
+              <SendIcon />
+            </Button>
           </>
         }
         defaultValue="Value"
         {...args}
       />
       <MultilineInput
-        startAdornment={<FlagIcon />}
+        startAdornment={<Text>£</Text>}
         endAdornment={
           <Button>
             <BookmarkSolidIcon />
@@ -203,23 +246,32 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
         {...args}
       />
       <MultilineInput
-        readOnly
-        startAdornment={<FlagIcon />}
+        disabled
         endAdornment={
           <Button disabled>
-            <BookmarkSolidIcon />
+            <UserBadgeIcon />
           </Button>
         }
-        defaultValue="Value"
+        defaultValue="Disabled value"
+        {...args}
+      />
+      <MultilineInput
+        readOnly
+        endAdornment={
+          <Button variant="secondary" disabled>
+            <BankCheckSolidIcon />
+          </Button>
+        }
+        defaultValue="Readonly value"
         {...args}
       />
     </FlowLayout>
   );
 };
 
-export const WithValidationAndAdornments: ComponentStory<
-  typeof MultilineInput
-> = (args) => {
+export const WithMultipleFeatures: ComponentStory<typeof MultilineInput> = (
+  args
+) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput

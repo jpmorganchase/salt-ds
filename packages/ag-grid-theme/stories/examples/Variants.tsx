@@ -1,6 +1,12 @@
 import { SyntheticEvent, useState } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
-import { Banner, BannerContent, FlexItem, FlexLayout } from "@salt-ds/core";
+import {
+  Banner,
+  BannerContent,
+  FlexItem,
+  FlexLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
 import { clsx } from "clsx";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";

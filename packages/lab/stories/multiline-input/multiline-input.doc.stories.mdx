@@ -50,7 +50,7 @@ Multiline Input shows 3 rows by default. This can be adjusted by setting the `ro
 
 ## Full Border
 
-Multiline Input can be styled with a full border by setting the `fullBorder` prop to `true`.
+Multiline Input can be styled with a full border by setting the `bordered` prop to `true`.
 
 <Canvas>
   <Story id="lab-multiline-input--full-border" />
@@ -111,6 +111,16 @@ Adornments can be added at the beginning or end of the text area using the `star
 <Canvas>
   <Story id="lab-multiline-input--with-adornments" />
 </Canvas>
+
+### Character Count
+
+Use a controlled Multiline Input to enforce a character count on the user input. Add the character count as a span adornment to present the remaining characters out of the given limit.
+
+<Canvas>
+  <Story id="lab-multiline-input--character-count" />
+</Canvas>
+
+- Set the color on the character count span to "--salt-text-secondary-foreground" and font weight to "--salt-text-fontWeight-small" for Salt styling.
 
 ## Spellcheck
 

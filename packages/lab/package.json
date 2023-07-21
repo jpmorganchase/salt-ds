@@ -1,13 +1,13 @@
 {
   "name": "@salt-ds/lab",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-alpha.13",
   "license": "Apache-2.0",
   "main": "src/index.ts",
   "sideEffects": false,
   "peerDependencies": {
-    "@types/react": ">=16.8.6",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "@types/react": ">=16.14.0",
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {

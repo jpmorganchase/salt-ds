@@ -3,7 +3,7 @@
   --multilineInput-borderColor: var(--salt-editable-borderColor);
   --multilineInput-borderStyle: var(--salt-editable-borderStyle);
   --multilineInput-outlineColor: var(--salt-focused-outlineColor);
-  --multilineInput-paddingLeft: var(--salt-spacing-100);
+  --multilineInput-paddingInline: var(--salt-spacing-100);
   --multilineInput-border: none;
   --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
 
@@ -18,7 +18,7 @@
   line-height: var(--salt-text-lineHeight);
   min-height: var(--salt-size-base);
   min-width: 4em;
-  padding-inline: var(--salt-spacing-100);
+  padding-inline: var(--multilineInput-paddingInline);
   position: relative;
   width: 100%;
 }
@@ -90,6 +90,11 @@
   --multilineInput-outlineColor: var(--salt-status-success-borderColor);
 }
 
+.saltMultilineInput.saltMultilineInput-withAdornmentRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /* Style applied to inner textarea element */
 .saltMultilineInput-textarea {
   background: none;
@@ -97,17 +102,21 @@
   box-sizing: content-box;
   color: inherit;
   cursor: inherit;
-  display: block;
-  flex: 1;
+  display: inline-flex;
+  height: calc(var(--saltMultilineInput-rows, 3) * var(--salt-text-lineHeight));
+  flex-grow: 1;
   font: inherit;
   letter-spacing: 0;
-  margin: 0;
+  margin: var(--salt-spacing-75) 0;
   min-width: 0;
   overflow: hidden;
   resize: none;
-  padding: var(--salt-spacing-100) 0;
-  text-align: var(--multilineInput-textAlign);
-  width: 100%;
+  padding: 0;
+}
+
+/* Style applied to placeholder */
+.saltMultilineInput-textarea::placeholder {
+  font-weight: var(--salt-text-fontWeight-small);
 }
 
 /* Reset in the  class */
@@ -129,13 +138,13 @@
 }
 
 /* Style applied if `readOnly={true}` */
-.saltMultilineInput.saltMultilineInput-readOnly,
-.saltMultilineInput.saltMultilineInput-readOnly:active,
-.saltMultilineInput.saltMultilineInput-readOnly:hover {
+.saltMultilineInput-readOnly,
+.saltMultilineInput-readOnly:active,
+.saltMultilineInput-readOnly:hover {
   --multilineInput-borderColor: var(--salt-editable-borderColor-readonly);
   --multilineInput-borderStyle: var(--salt-editable-borderStyle-readonly);
   --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
-  --multilineInput-paddingLeft: 0;
+  --multilineInput-paddingInline: 0;
 
   background: var(--multilineInput-background-readonly);
   cursor: var(--salt-editable-cursor-readonly);
@@ -168,22 +177,22 @@
   border-bottom: var(--multilineInput-activationIndicator-borderWidth) var(--multilineInput-borderStyle) var(--multilineInput-borderColor);
 }
 
-/* Style applied if `fullBorder={true}` */
-.saltMultilineInput.saltMultilineInput-fullBorder {
+/* Style applied if `bordered={true}` */
+.saltMultilineInput.saltMultilineInput-bordered {
   --multilineInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--multilineInput-borderColor);
-  --multilineInput-paddingLeft: var(--salt-spacing-100);
+  --multilineInput-paddingInline: var(--salt-spacing-100);
   --multilineInput-activationIndicator-borderWidth: 0;
 }
 
-/* Style applied if active or focused when `fullBorder={true}` */
-.saltMultilineInput-fullBorder:active,
-.saltMultilineInput-fullBorder.saltMultilineInput-focused {
+/* Style applied if active or focused when `bordered={true}` */
+.saltMultilineInput-bordered:active,
+.saltMultilineInput-bordered.saltMultilineInput-focused {
   --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
 }
 
-/* Styling when focused if `disabled={true}` or `readOnly={true}` when `fullBorder={true}` */
-.saltMultilineInput-fullBorder.saltMultilineInput-readOnly:hover,
-.saltMultilineInput-fullBorder.saltMultilineInput-disabled:hover {
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
+.saltMultilineInput-bordered.saltMultilineInput-readOnly:hover,
+.saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
   --multilineInput-activationIndicator-borderWidth: 0;
 }
 
@@ -192,7 +201,7 @@
 .saltMultilineInput-startAdornmentContainer {
   align-items: center;
   display: inline-flex;
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-height: var(--salt-size-base);
   column-gap: var(--salt-spacing-100);
 }
 
@@ -202,17 +211,28 @@
   padding-right: var(--salt-spacing-100);
 }
 
+/* Style applied to suffix adornment container */
+.saltMultilineInput-suffixAdornments {
+  align-self: self-end;
+}
+
+/* Style applied to suffix adornment container when end adornments are provided */
+.saltMultilineInput-withAdornmentRow .saltMultilineInput-suffixAdornments {
+  display: inline-flex;
+  flex-basis: 100%;
+  justify-content: flex-end;
+}
+
 /* Style applied to end adornment container */
 .saltMultilineInput-endAdornmentContainer {
-  align-self: self-end;
-  padding-left: var(--salt-spacing-100);
+  padding-left: var(--multilineInput-paddingInline);
 }
 
 /* Style applied to status adornment container */
 .saltMultilineInput-statusAdornmentContainer {
   align-self: self-end;
   display: inline-flex;
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-height: var(--salt-size-base);
 }
 
 /* Style applied to button start adornment if first child */
@@ -223,6 +243,10 @@
 /* Style applied to button end adornment if last child */
 .saltMultilineInput-endAdornmentContainer .saltButton:last-child {
   margin-right: calc(var(--salt-spacing-50) * -1);
+}
+/* Style applied to button end adornment if last child */
+.saltMultilineInput-readOnly .saltMultilineInput-endAdornmentContainer .saltButton:last-child {
+  margin-right: 0;
 }
 
 /* Styles for button adornment */

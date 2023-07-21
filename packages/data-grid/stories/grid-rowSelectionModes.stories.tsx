@@ -9,8 +9,12 @@ import {
 } from "../src";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { SyntheticEvent, useState } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
-import { FlexItem, FlexLayout } from "@salt-ds/core";
+import {
+  FlexItem,
+  FlexLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
 import "./grid.stories.css";
 
 export default {
