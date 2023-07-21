@@ -24,6 +24,8 @@ interface UseListProps {
   onChange?: (e: SyntheticEvent, data: { value: string }) => void;
   /* List id. */
   id?: string;
+  /* List active target status. */
+  isTargetElement: boolean;
   /* List ref. */
   ref: RefObject<HTMLUListElement>;
 }
@@ -35,6 +37,7 @@ export const useList = ({
   defaultSelected,
   onChange,
   id,
+  isTargetElement,
   ref,
 }: UseListProps) => {
   const getOptions: () => HTMLElement[] = useCallback(() => {
@@ -181,9 +184,13 @@ export const useList = ({
 
   const isFocused = useCallback(
     (id: string | undefined) =>
-      activeDescendant === id &&
-      Boolean(showFocusRing || highlightedIndex !== undefined),
-    [activeDescendant, showFocusRing, highlightedIndex]
+      // uncontrolled activeDescendant with focus ring
+      (!highlightedIndex && activeDescendant === id && showFocusRing) ||
+      // controlled activeDescendant with focus ring or from outside the list
+      (highlightedIndex !== undefined &&
+        activeDescendant === id &&
+        (showFocusRing || !isTargetElement)),
+    [activeDescendant, showFocusRing, isTargetElement, highlightedIndex]
   );
 
   const getActiveItem = () => {
@@ -197,7 +204,6 @@ export const useList = ({
   // HANDLERS
   const blurHandler = () => {
     setShowFocusRing(false);
-    setFromMouse(false);
   };
 
   const mouseDownHandler = () => {
@@ -222,7 +228,8 @@ export const useList = ({
     const { key } = event;
     const currentItem = getActiveItem();
     let nextItem = currentItem;
-    if (!currentItem) {
+    if (!currentItem || highlightedIndex) {
+      event.preventDefault();
       return;
     }
     switch (key) {

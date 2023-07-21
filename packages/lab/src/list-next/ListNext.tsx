@@ -66,7 +66,8 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const listId = useId(id);
     const listRef = useRef<HTMLUListElement>(null);
     const handleRef = useForkRef(listRef, ref);
-
+    const activeElement = targetWindow?.document.activeElement;
+    const isTargetElement = activeElement?.id === listId;
     const {
       focusHandler,
       keyDownHandler,
@@ -82,6 +83,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onChange,
       id: listId,
       ref: listRef,
+      isTargetElement,
     });
 
     const handleFocus = (event: FocusEvent<HTMLUListElement>) => {
