@@ -109,8 +109,6 @@ export const CircularProgress = forwardRef<
   railCircleStyle.strokeDashoffset = `${railStrokeLength}`;
   railCircleStyle.strokeDasharray = `${railStrokeLength} ${railGapLength}`;
 
-  rootStyle.transform = "rotate(-90deg)";
-
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" && !ariaLabel) {
       // eslint-disable-next-line no-console
@@ -159,25 +157,23 @@ export const CircularProgress = forwardRef<
       aria-valuenow={value}
       {...rest}
     >
-      <div className={withBaseName("container")} style={rootStyle}>
-        <svg className={withBaseName("svg")}>
-          <circle
-            cx="50%"
-            cy="50%"
-            fill="none"
-            style={railCircleStyle}
-            className={withBaseName("railCircle")}
-          />
+      <svg className={withBaseName("svg")}>
+        <circle
+          cx="50%"
+          cy="50%"
+          fill="none"
+          style={railCircleStyle}
+          className={withBaseName("railCircle")}
+        />
 
-          <circle
-            cx="50%"
-            cy="50%"
-            fill="none"
-            style={circleStyle}
-            className={withBaseName("circle")}
-          />
-        </svg>
-      </div>
+        <circle
+          cx="50%"
+          cy="50%"
+          fill="none"
+          style={circleStyle}
+          className={withBaseName("circle")}
+        />
+      </svg>
       {progressInfo}
     </div>
   );

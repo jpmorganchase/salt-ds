@@ -19,6 +19,7 @@
   align-items: center;
   color: var(--salt-text-primary-foreground);
   display: flex;
+  font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
   height: 100%;
@@ -42,14 +43,11 @@
   r: var(--circularProgress-railCircle-radius);
 }
 
-.saltCircularProgress-container {
-  display: inline-block;
-}
-
 .saltCircularProgress-svg {
   height: calc(var(--salt-size-base) * 2);
   width: calc(var(--salt-size-base) * 2);
   fill: var(--salt-accent-background);
+  transform: rotate(-90deg);
   display: block;
 }
 
