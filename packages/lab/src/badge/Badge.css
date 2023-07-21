@@ -13,7 +13,7 @@
   line-height: var(--salt-accent-lineHeight);
   min-width: 10px;
   max-width: 50px;
-  border-radius: 10px;
+  border-radius: 9999px;
 
   align-items: center;
   justify-content: center;
