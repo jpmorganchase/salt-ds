@@ -1,14 +1,4 @@
-import {
-  JSXElementConstructor,
-  Key,
-  ReactElement,
-  ReactFragment,
-  ReactNode,
-  ReactPortal,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { Key, ReactNode, useEffect, useState } from "react";
 import {
   GridLayout,
   Card,
@@ -25,10 +15,10 @@ import {
   SearchIcon,
 } from "@salt-ds/icons";
 import { Heading3 } from "../mdx/h3";
-import { formatDate } from "src/utils/formatDate";
 import { Heading2 } from "../mdx/h2";
+import { formatDate } from "src/utils/formatDate";
 
-type RoadmapProps = { title: string; children: ReactNode };
+type RoadmapProps = { title: string; children: ReactNode; endpoint: string };
 
 interface RoadmapData {
   content: any;
@@ -66,7 +56,7 @@ function RoadmapCard(props: CardProps) {
   return <Card {...props} />;
 }
 
-export const Roadmap = ({ title, children }: RoadmapProps) => {
+export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
   const [roadmapData, setRoadmapData] = useState<any[]>([]);
   const sortedRoadmapData = sortRoadmapDataByDate(roadmapData);
   const [searchQuery, setSearchQuery] = useState("");
@@ -74,7 +64,7 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/roadmap");
+        const response = await fetch(`${endpoint}`);
         const responseData = await response.json();
 
         const items =
@@ -135,7 +125,7 @@ export const Roadmap = ({ title, children }: RoadmapProps) => {
   );
 };
 
-export const ColumnData = (item: {
+interface ItemProps {
   targetDate: string | number | Date;
   id: Key | null | undefined;
   issueUrl: string | undefined;
@@ -143,12 +133,13 @@ export const ColumnData = (item: {
     | string
     | number
     | boolean
-    | ReactElement<any, string | JSXElementConstructor<any>>
-    | ReactFragment
-    | ReactPortal
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | React.ReactFragment
+    | React.ReactPortal
     | null
     | undefined;
-}) => {
+}
+const ColumnData: React.FC<{ item: ItemProps }> = ({ item }) => {
   const formattedDate = formatDate(new Date(item.targetDate));
 
   return (
@@ -165,7 +156,7 @@ export const ColumnData = (item: {
 };
 
 export const CardView = ({ data, searchQuery }: CardViewProps) => {
-  const filteredData = data.filter((item) => {
+  const futureData = data.filter((item) => {
     const startDate = item.startDate ? new Date(item.startDate) : null;
     const today = new Date();
     const isFutureItem = !startDate || startDate > today;
@@ -175,13 +166,24 @@ export const CardView = ({ data, searchQuery }: CardViewProps) => {
     return isFutureItem && matchesSearchQuery;
   });
 
+  const inProgressData = data.filter((item) => {
+    const startDate = new Date(item.startDate);
+    const targetDate = new Date(item.targetDate);
+    const today = new Date();
+    const isInRange = startDate <= today && today <= targetDate;
+    const matchesSearchQuery =
+      searchQuery === "" ||
+      item.text.toLowerCase().includes(searchQuery.toLowerCase());
+    return isInRange && matchesSearchQuery;
+  });
+
   return (
     <GridLayout className={styles.cardContainer} columns={2}>
       <div className={styles.column}>
         <Heading2 className={styles.heading}>
           Future <ProgressPendingIcon className={styles.icon} size={1.4} />
         </Heading2>
-        {filteredData.map((item) => (
+        {futureData.map((item) => (
           <ColumnData key={item.id} item={item} />
         ))}
       </div>
@@ -190,34 +192,9 @@ export const CardView = ({ data, searchQuery }: CardViewProps) => {
           In Progress{" "}
           <ProgressInprogressIcon className={styles.icon} size={1.4} />
         </Heading2>
-        {data
-          .filter((item) => {
-            const startDate = new Date(item.startDate);
-            const targetDate = new Date(item.targetDate);
-            const today = new Date();
-            const isInRange = startDate <= today && today <= targetDate;
-            const matchesSearchQuery =
-              searchQuery === "" ||
-              item.text.toLowerCase().includes(searchQuery.toLowerCase());
-            return isInRange && matchesSearchQuery;
-          })
-          .map((item) => {
-            const formattedDate = formatDate(new Date(item.targetDate));
-
-            return (
-              <RoadmapCard key={item.id} className={styles.card}>
-                <Link>
-                  <Heading3 className={styles.heading3}>
-                    <a href={item.issueUrl}>{item.text}</a>
-                  </Heading3>
-                </Link>
-                <p className={styles.date}>
-                  <b>Due date: </b>
-                  {formattedDate}
-                </p>
-              </RoadmapCard>
-            );
-          })}
+        {inProgressData.map((item) => (
+          <ColumnData key={item.id} item={item} />
+        ))}
       </div>
     </GridLayout>
   );
