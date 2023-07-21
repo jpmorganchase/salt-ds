@@ -140,7 +140,7 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
 export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
   return (
     <FormField {...props}>
-      <FormLabel pronounced>
+      <FormLabel intent="sentence">
         Do your current qualifications align with the role? Please describe.
       </FormLabel>
       <MultilineInput bordered defaultValue="Answer" />
@@ -455,7 +455,7 @@ export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField necessity="required" {...props}>
-        <FormLabel pronounced>
+        <FormLabel intent="sentence">
           Will data related to the new initiative be shared across lines of
           business, external to the firm, or across-jurisdictions? Please
           explain.
@@ -463,7 +463,7 @@ export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
         <MultilineInput defaultValue="Value" />
       </FormField>
       <FormField necessity="optional" {...props}>
-        <FormLabel pronounced>
+        <FormLabel intent="sentence">
           For the legal entity country of incorporation, are you aware of any
           specific regulations relating to oversight of third parties?
         </FormLabel>
