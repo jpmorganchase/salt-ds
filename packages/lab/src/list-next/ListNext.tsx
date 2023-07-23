@@ -66,15 +66,14 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const listId = useId(id);
     const listRef = useRef<HTMLUListElement>(null);
     const handleRef = useForkRef(listRef, ref);
-    const activeElement = targetWindow?.document.activeElement;
-    const isTargetElement = activeElement?.id === listId;
+
     const {
       focusHandler,
       keyDownHandler,
       blurHandler,
-      mouseDownHandler,
       activeDescendant,
       contextValue,
+      focusVisibleRef,
     } = useList({
       disabled,
       highlightedIndex,
@@ -83,11 +82,12 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onChange,
       id: listId,
       ref: listRef,
-      isTargetElement,
     });
 
+    const setListRef = useForkRef(focusVisibleRef, handleRef);
+
     const handleFocus = (event: FocusEvent<HTMLUListElement>) => {
-      focusHandler();
+      focusHandler(event);
       onFocus?.(event);
     };
 
@@ -102,14 +102,15 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     };
 
     const handleMouseDown = (event: MouseEvent<HTMLUListElement>) => {
-      mouseDownHandler();
       onMouseDown?.(event);
     };
 
     return (
       <ListNextContext.Provider value={contextValue}>
         <ul
-          ref={handleRef}
+          // TODO: fix type from useIsFocusVisible
+          // @ts-ignore
+          ref={setListRef}
           id={listId}
           className={clsx(withBaseName(), className)}
           role="listbox"

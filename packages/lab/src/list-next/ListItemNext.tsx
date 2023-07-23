@@ -54,17 +54,26 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       select,
       isSelected,
       isFocused,
+      highlight,
+      isHighlighted,
     } = listContext;
 
     const itemId = `${contextId || "listNext"}--${id}`;
     const disabled = disabledProp || contextDisabled;
     const selected = isSelected(value);
     const focused = isFocused(itemId);
+    const highlighted = isHighlighted(itemId);
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
       if (!disabled) {
         select(event);
         onClick?.(event);
+      }
+    };
+
+    const handleMouseMove = (event: MouseEvent<HTMLLIElement>) => {
+      if (!highlighted) {
+        highlight(event);
       }
     };
 
@@ -75,6 +84,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName("highlighted")]: highlighted,
             [withBaseName("focused")]: focused,
           },
           className
@@ -85,6 +95,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         id={itemId}
         data-value={value}
         onClick={handleClick}
+        onMouseMove={handleMouseMove}
         {...props}
       >
         {children}
