@@ -1,5 +1,13 @@
 # @salt-ds/theme
 
+## 1.7.1
+
+### Patch Changes
+
+- 2c6d86dd: Theme
+
+  - Added `both` fill-mode to `--salt-animation-slide-out-*` css animation vars
+
 ## 1.7.0
 
 ### Minor Changes
