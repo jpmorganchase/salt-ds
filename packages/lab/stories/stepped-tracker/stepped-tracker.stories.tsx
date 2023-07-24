@@ -143,36 +143,7 @@ export const AutoProgress: ComponentStory<typeof SteppedTracker> = () => {
   );
 };
 
-const longText = "very ".repeat(30);
-
-export const Truncated: ComponentStory<typeof SteppedTracker> = () => {
-  return (
-    <StackLayout
-      direction="column"
-      align="stretch"
-      style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
-    >
-      <SteppedTracker activeStep={0}>
-        <TrackerStep state="default">
-          <StepLabel>
-            {`Step One: I am some ${longText} long text which will be truncated`}
-          </StepLabel>
-        </TrackerStep>
-        <TrackerStep state="default">
-          <StepLabel>{`Step Two: I am some ${longText} long text which will be truncated`}</StepLabel>
-        </TrackerStep>
-        <TrackerStep state="default">
-          <StepLabel>{`Step Three: I am some ${longText} long text which will be truncated`}</StepLabel>
-        </TrackerStep>
-        <TrackerStep state="default">
-          <StepLabel>{`Step Four: I am some ${longText} long text which will be truncated`}</StepLabel>
-        </TrackerStep>
-      </SteppedTracker>
-    </StackLayout>
-  );
-};
-
-export const SingleTruncated: ComponentStory<typeof SteppedTracker> = () => {
+export const WrappingLabel: ComponentStory<typeof SteppedTracker> = () => {
   return (
     <StackLayout
       direction="column"
@@ -185,7 +156,7 @@ export const SingleTruncated: ComponentStory<typeof SteppedTracker> = () => {
         </TrackerStep>
         <TrackerStep state="default">
           <StepLabel>
-            Step Two: I am truncated on smaller screen sizes
+            Step Two: I am a label that wraps on smaller screen sizes
           </StepLabel>
         </TrackerStep>
         <TrackerStep state="default">
