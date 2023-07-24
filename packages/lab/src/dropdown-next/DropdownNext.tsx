@@ -99,7 +99,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       floating,
       reference,
       getDropdownNextProps,
-    } = useDropdownNext({ defaultSelected, placement: "top-start" });
+    } = useDropdownNext({ defaultSelected, source, placement: "top-start" });
 
     const triggerRef = useForkRef(
       ref,
