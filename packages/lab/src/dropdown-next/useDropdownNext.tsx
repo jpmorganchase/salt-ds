@@ -31,7 +31,9 @@ export const useDropdownNext = ({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>("");
   const [selected, setSelected] = useState<string>(defaultSelected ?? "");
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const [highlightedIndex, setHighlightedIndex] = useState(
+    selected ? source.indexOf(selected) : -1
+  );
 
   // const [open, setOpen] = useControlled({
   //   controlled: openProp,
@@ -143,7 +145,6 @@ export const useDropdownNext = ({
     const { key, target } = event;
     switch (key) {
       case "ArrowUp":
-        // TODO: set visual focus on the one i selected
         setOpen(true);
         setHighlightedIndex(Math.max(0, highlightedIndex - 1));
         break;
