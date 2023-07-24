@@ -1,5 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { CircularProgress } from "@salt-ds/lab";
+import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -22,13 +22,13 @@ A progress indicator gives the user an understanding of how long a system operat
 ### Circular Progress
 
 <Canvas>
-  <Story id="lab-CircularProgress--default" />
+  <Story id="lab-progress-circular--default" />
 </Canvas>
 
 ### Linear Progress
 
 <Canvas>
-  <Story id="lab-LinearProgress--default" />
+  <Story id="lab-progress-linear--default" />
 </Canvas>
 
 ### With maximum value
@@ -38,13 +38,13 @@ Specify the maximum value of the progress indicator. The percentage progress wil
 #### Circular Progress with maximum value
 
 <Canvas>
-  <Story id="lab-CircularProgress--max-value" />
+  <Story id="lab-progress-circular--max-value" />
 </Canvas>
 
 #### Linear Progress with maximum value
 
 <Canvas>
-  <Story id="lab-LinearProgress--max-value" />
+  <Story id="lab-progress-linear--max-value" />
 </Canvas>
 
 ### With progressing value
@@ -52,30 +52,56 @@ Specify the maximum value of the progress indicator. The percentage progress wil
 #### Circular Progress with progressing value
 
 <Canvas>
-  <Story id="lab-CircularProgress--progressing-value" />
+  <Story id="lab-progress-circular--progressing-value" />
 </Canvas>
 
 #### Linear Progress with progressing value
 
 <Canvas>
-  <Story id="lab-LinearProgress--progressing-value" />
+  <Story id="lab-progress-linear--progressing-value" />
 </Canvas>
 
 ## How to use
 
-### API
+### Circular Progress
+
+#### API
 
 ```
 import { CircularProgress } from "@salt-ds/lab";
 ```
 
+#### Props
+
+<ArgsTable of={CircularProgress} />
+
+#### Characteristics Used
+
+<CharacteristicUsage of={CircularProgress} />
+
+#### CSS Class
+
+<CSSClassTable of={CircularProgress} />
+
+### Linear Progress
+
+#### API
+
 ```
 import { LinearProgress } from "@salt-ds/lab";
 ```
 
-### Props
+#### Props
 
-<ArgsTable of={CircularProgress} />
+<ArgsTable of={LinearProgress} />
+
+#### Characteristics Used
+
+<CharacteristicUsage of={LinearProgress} />
+
+#### CSS Class
+
+<CSSClassTable of={LinearProgress} />
 
 ## Accessibility
 
