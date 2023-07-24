@@ -80,15 +80,11 @@ describe("GIVEN a Drawer", () => {
 
       cy.findByRole("button", { name: /Open Drawer/i }).click();
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-enterAnimation");
-
-      cy.get(".saltDrawer").should("be.visible");
+      cy.findByRole("dialog").should("be.visible");
 
       cy.findByLabelText("close").click();
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-exitAnimation");
-
-      cy.get(".saltDrawer").should("not.exist");
+      cy.findByRole("dialog").should("not.exist");
     });
 
     it("THEN it should be able to close by clicking outside", () => {
@@ -96,15 +92,11 @@ describe("GIVEN a Drawer", () => {
 
       cy.findByRole("button", { name: /Open Drawer/i }).click();
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-enterAnimation");
-
-      cy.get(".saltDrawer").should("be.visible");
+      cy.findByRole("dialog").should("be.visible");
 
       cy.get(".saltDrawer-overlay").click();
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-exitAnimation");
-
-      cy.get(".saltDrawer").should("not.exist");
+      cy.findByRole("dialog").should("not.exist");
     });
   });
 
