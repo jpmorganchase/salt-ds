@@ -4,7 +4,7 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { useFloatingUI, UseFloatingUIProps } from "@salt-ds/core";
+import { useFloatingUI, UseFloatingUIProps } from "../utils";
 
 export type UseDrawerProps = Partial<
   Pick<UseFloatingUIProps, "onOpenChange" | "open">
