@@ -37,7 +37,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   let valueText = value;
 
   if (typeof value === "number" && !max) {
-    valueText = value > 1000 ? "1000+" : value;
+    valueText = value > 999 ? "999+" : value;
   } else if (typeof value === "number" && max) {
     valueText = value > max ? `${max}+` : value;
   } else if (typeof value === "string") {
