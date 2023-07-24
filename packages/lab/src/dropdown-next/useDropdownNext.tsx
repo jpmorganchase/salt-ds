@@ -19,11 +19,13 @@ interface UseDropdownNextProps<T>
     Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   defaultSelected?: string;
+  source: T[];
 }
 
 export const useDropdownNext = ({
   defaultSelected,
   onOpenChange,
+  source,
   placement: placementProp,
 }: UseDropdownNextProps<T>) => {
   const [open, setOpen] = useState(false);
@@ -143,11 +145,11 @@ export const useDropdownNext = ({
       case "ArrowUp":
         // TODO: set visual focus on the one i selected
         setOpen(true);
-        setHighlightedIndex(highlightedIndex - 1);
+        setHighlightedIndex(Math.max(0, highlightedIndex - 1));
         break;
       case "ArrowDown":
         setOpen(true);
-        setHighlightedIndex(highlightedIndex + 1);
+        setHighlightedIndex(Math.min(source.length - 1, highlightedIndex + 1));
         break;
       case " ":
       case "Enter":
