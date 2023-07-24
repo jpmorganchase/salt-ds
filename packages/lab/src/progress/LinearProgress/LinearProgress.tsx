@@ -60,6 +60,11 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   disabled?: boolean;
   /**
+   * The value of the max progress indicator.
+   * Default value is 100.
+   */
+  max?: number;
+  /**
    * render props callback to render info panel.
    */
   renderInfo?: (
@@ -73,23 +78,14 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   showInfo?: boolean;
   /**
-   * The size of the line, default is 'small'.
-   */
-  size?: "small" | "medium" | "large";
-  /**
    * Default unit is`%`.
    */
   unit?: string;
   /**
-   * The value of the progress indicator for the determinate and static variants.
-   * Value between 0 and 100.
+   * The value of the progress indicator.
+   * Value between 0 and max.
    */
   value?: number;
-  /**
-   * The variant to use.
-   * Use indeterminate or query when there is no progress value.
-   */
-  variant?: "determinate" | "indeterminate" | "query";
 }
 
 /**
@@ -107,10 +103,9 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     {
       className,
       disabled,
+      max = 100,
       renderInfo,
       showInfo = true,
-      size = "small",
-      variant = "determinate",
       unit = "%",
       value = 0,
       ...rest
@@ -129,6 +124,8 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     const progressUnit = withBaseName("progressUnit");
     const progressValue = withBaseName("progressValue");
 
+    const progress = (value / max) * 100;
+
     if (showInfo) {
       progressInfo = renderInfo ? (
         renderInfo(
@@ -144,30 +141,29 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           )
         )
       ) : (
-        <DefaultInfo unit={unit} value={value} className={progressValue} />
+        <DefaultInfo
+          unit={unit}
+          value={Math.round(progress)}
+          className={progressValue}
+        />
       );
     }
 
     const rootProps: HTMLAttributes<HTMLDivElement> = {};
     const barStyle: CSSProperties = {};
+    const trackStyle: CSSProperties = {};
 
-    if (variant === "determinate") {
-      rootProps["aria-valuenow"] = Math.round(value);
-      rootProps["aria-valuemin"] = 0;
-      rootProps["aria-valuemax"] = 100;
-      barStyle.transform = `translateX(${value - 100}%)`;
-    }
+    rootProps["aria-valuenow"] = Math.round(value);
+    rootProps["aria-valuemin"] = 0;
+    rootProps["aria-valuemax"] = 100;
+    barStyle.transform = `translateX(${progress - 100}%)`;
+    trackStyle.transform = `translateX(${progress}%)`;
 
     return (
       <div
         className={clsx(
           withBaseName(),
-          {
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("small")]: size === "small",
-            [withBaseName("medium")]: size === "medium",
-            [withBaseName("large")]: size === "large",
-          },
+          { [withBaseName("disabled")]: disabled },
           className
         )}
         ref={ref}
@@ -176,20 +172,11 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         {...rootProps}
         {...rest}
       >
-        <div
-          className={clsx(withBaseName("barContainer"), {
-            [withBaseName("determinate")]: variant === "determinate",
-            [withBaseName("indeterminate")]: variant === "indeterminate",
-            [withBaseName("query")]: variant === "query",
-          })}
-        >
-          <div
-            className={clsx(withBaseName("bar"), withBaseName("bar1"))}
-            style={barStyle}
-          />
-          {variant === "determinate" ? null : (
-            <div className={clsx(withBaseName("bar"), withBaseName("bar2"))} />
+        <div className={withBaseName("barContainer")}>
+          {progress !== 0 && (
+            <div className={withBaseName("bar")} style={barStyle} />
           )}
+          <div className={withBaseName("track")} style={trackStyle} />
         </div>
         {progressInfo}
       </div>
