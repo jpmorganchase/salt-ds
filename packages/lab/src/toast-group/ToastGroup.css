@@ -2,10 +2,14 @@
   position: absolute;
   z-index: var(--salt-zIndex-default);
   width: var(--toastGroup-width);
-  max-height: 100%;
+  max-height: calc(100% - var(--salt-spacing-300) * 2);
   overflow-y: auto;
   overflow-x: hidden;
   padding: var(--salt-spacing-300);
+}
+
+.saltToastGroup .saltToast {
+  margin-bottom: var(--salt-spacing-100);
 }
 
 .saltToastGroup-bottom-right {
@@ -14,20 +18,10 @@
   left: auto;
 }
 
-.saltToastGroup-bottom-right .saltToast {
-  margin-bottom: var(--salt-spacing-100);
-  animation: var(--salt-animation-slide-in-top);
-}
-
 .saltToastGroup-top-right {
   top: 0;
   right: 0; 
   bottom: auto;
-}
-
-.saltToastGroup-top-right .saltToast {
-  margin-bottom: var(--salt-spacing-100);
-  animation: var(--salt-animation-slide-in-top);
 }
 
 .salt-density-high {

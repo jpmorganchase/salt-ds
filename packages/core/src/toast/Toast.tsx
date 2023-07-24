@@ -1,8 +1,8 @@
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, RefObject, forwardRef, useLayoutEffect, useRef } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer } from "../utils";
+import { makePrefixer, useForkRef } from "../utils";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 
 import toastCss from "./Toast.css";
@@ -28,12 +28,19 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
     window: targetWindow,
   });
 
+  const toastRef = useRef<HTMLDivElement>()
+  const handleRef = useForkRef(toastRef, ref)
+  useLayoutEffect(() => {
+    toastRef.current?.scrollIntoView()
+  }, [])
+
+
   return (
     <div
       className={clsx(withBaseName(), withBaseName(status), className)}
       role="alert"
       {...rest}
-      ref={ref}
+      ref={handleRef as RefObject<HTMLDivElement>}
     >
       <StatusIndicator status={status} className={withBaseName("icon")} />
       {children}
