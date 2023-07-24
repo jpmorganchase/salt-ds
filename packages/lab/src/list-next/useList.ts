@@ -3,6 +3,7 @@ import {
   RefObject,
   SyntheticEvent,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -13,42 +14,60 @@ interface UseListProps {
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
-  /* Value for the uncontrolled version. */
+  /* Value for the controlled version. */
+  highlightedIndex?: number;
+  /* Value for the controlled version. */
   selected?: string;
-  /* Initial value for the uncontrolled version. */
+  /* Initial value for the controlled version. */
   defaultSelected?: string;
-  /* Callback for the controlled version. */
+  /* Callback for the uncontrolled version. */
   onChange?: (e: SyntheticEvent, data: { value: string }) => void;
+  /* List id. */
   id?: string;
+  /* List active target status. */
+  isTargetElement: boolean;
+  /* List ref. */
   ref: RefObject<HTMLUListElement>;
 }
 
 export const useList = ({
   disabled = false,
+  highlightedIndex,
   selected: selectedProp,
   defaultSelected,
   onChange,
   id,
+  isTargetElement,
   ref,
 }: UseListProps) => {
-  const [activeDescendant, setActiveDescendant] = useState<string | undefined>(
-    undefined
-  );
-
-  const [showFocusRing, setShowFocusRing] = useState<boolean>(false);
-  const [selectedItem, setSelectedItem] = useControlled({
-    controlled: selectedProp,
-    default: defaultSelected,
-    name: "ListNext",
-    state: "selected",
-  });
-
   const getOptions: () => HTMLElement[] = useCallback(() => {
     return Array.from(
       ref.current?.querySelectorAll('[role="option"]:not([aria-disabled])') ??
         []
     );
   }, [ref]);
+
+  const getId = useCallback(() => {
+    if (highlightedIndex === undefined) return undefined;
+    const activeOptions = getOptions();
+    return activeOptions[highlightedIndex]?.id;
+  }, [highlightedIndex, getOptions]);
+
+  const [showFocusRing, setShowFocusRing] = useState<boolean>(true);
+  const [fromMouse, setFromMouse] = useState<boolean>(false);
+  const [activeDescendant, setActiveDescendant] = useControlled({
+    controlled: getId(),
+    default: undefined,
+    name: "ListNextHighlighted",
+    state: "activeDescendant",
+  });
+
+  const [selectedItem, setSelectedItem] = useControlled({
+    controlled: selectedProp,
+    default: defaultSelected,
+    name: "ListNextSelected",
+    state: "selected",
+  });
 
   const updateScroll = useCallback(
     (currentTarget: Element) => {
@@ -83,6 +102,13 @@ export const useList = ({
     },
     [setSelectedItem, updateActiveDescendant]
   );
+
+  // Effect to move the cursor when items change controlled.
+  // this could be following active descendant if there is no better way of doing it when controlled
+  useEffect(() => {
+    const activeOptions = getOptions();
+    highlightedIndex && updateScroll(activeOptions[highlightedIndex]);
+  }, [highlightedIndex, getOptions, updateScroll]);
 
   const focusAndMoveActive = (element: HTMLElement) => {
     setShowFocusRing(true);
@@ -152,13 +178,19 @@ export const useList = ({
   );
 
   const isSelected = useCallback(
-    (id: string) => selectedItem === id,
+    (value: string) => selectedItem === value,
     [selectedItem]
   );
 
   const isFocused = useCallback(
-    (id: string | undefined) => activeDescendant === id && showFocusRing,
-    [activeDescendant, showFocusRing]
+    (id: string | undefined) =>
+      // uncontrolled activeDescendant with focus ring
+      (!highlightedIndex && activeDescendant === id && showFocusRing) ||
+      // controlled activeDescendant with focus ring or from outside the list
+      (highlightedIndex !== undefined &&
+        activeDescendant === id &&
+        (showFocusRing || !isTargetElement)),
+    [activeDescendant, showFocusRing, isTargetElement, highlightedIndex]
   );
 
   const getActiveItem = () => {
@@ -176,12 +208,17 @@ export const useList = ({
 
   const mouseDownHandler = () => {
     // When list gets focused, we can't guarantee that focus happens after click event.
-    // If first focus (where !activeDescendant) happens from a click, list shouldn't render focus ring in the first element.
-    setShowFocusRing(false);
+    // If focus happens from a click, list shouldn't render focus ring.
+    if (!fromMouse) {
+      setFromMouse(true);
+    }
   };
 
   // takes care of focus when using keyboard navigation
   const focusHandler = () => {
+    if (fromMouse) {
+      return;
+    }
     const activeElement = getActiveItem();
     focusAndMoveActive(activeElement);
   };
@@ -191,7 +228,8 @@ export const useList = ({
     const { key } = event;
     const currentItem = getActiveItem();
     let nextItem = currentItem;
-    if (!currentItem) {
+    if (!currentItem || highlightedIndex) {
+      event.preventDefault();
       return;
     }
     switch (key) {
@@ -218,8 +256,13 @@ export const useList = ({
       case " ":
       case "Enter":
         event.preventDefault();
-        nextItem && selectItem(nextItem);
+        if (nextItem) {
+          selectItem(nextItem);
+          onChange?.(event, { value: nextItem.dataset.value || "" });
+        }
         break;
+      case "PageDown":
+      case "PageUp":
       default:
         break;
     }

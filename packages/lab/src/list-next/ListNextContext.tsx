@@ -5,7 +5,7 @@ export interface ListNextContextValue {
   disabled?: boolean;
   id?: string;
   select: (event: SyntheticEvent<HTMLLIElement>) => void;
-  isSelected: (id: string) => boolean;
+  isSelected: (value: string) => boolean;
   isFocused: (id: string) => boolean;
 }
 

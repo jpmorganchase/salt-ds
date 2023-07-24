@@ -1,32 +1,28 @@
 import { ComponentMeta, Story } from "@storybook/react";
-import { ListNext, ListItemNext, ListNextProps } from "../../src";
-import { Button, FlexLayout } from "@salt-ds/core";
-import { useState } from "react";
+import { ListItemNext, ListNext, ListNextProps } from "../../src";
+import {
+  Button,
+  FlexLayout,
+  Input,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
+import { ChangeEvent, KeyboardEvent, SyntheticEvent, useState } from "react";
+import { usStateExampleData } from "../assets/exampleData";
+import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 
 export default {
   title: "Lab/List Next",
   component: ListNext,
 } as ComponentMeta<typeof ListNext>;
 
-const SimpleListExample = [
-  "Alabama",
-  "Alaska",
-  "Arizona",
-  "Arkansas",
-  "California",
-  "Colorsfddhehrehyyhado",
-  "Connecticut",
-  "Delaware",
-  "Florida",
-  "Georgia",
-];
-
 const getListItems = ({ disabledItems = [] }: { disabledItems?: number[] }) =>
-  SimpleListExample.map((item, index) => {
+  usStateExampleData.map((item, index) => {
     return (
       <ListItemNext
         key={index}
         disabled={disabledItems.includes(index)}
+        id={`controlled-list-item-${index}`}
         value={item}
       >
         {item}
@@ -40,6 +36,7 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
       {...rest}
       aria-label="Declarative List example"
       style={{ height: "150px" }}
+      onChange={(e, { value }) => console.log("new selection", value)}
     >
       {children ||
         getListItems({
@@ -49,8 +46,144 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
   );
 };
 
-Default.args = {
-  style: { width: "200px" },
+Default.args = {};
+
+export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
+  const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
+    undefined
+  );
+  const [selectedItem, setSelectedItem] = useState<string | undefined>(
+    undefined
+  );
+  const [controls, setControls] = useState<string>("buttons");
+
+  const handleArrowDown = () => {
+    const nextIndex = highlightedIndex === undefined ? 0 : highlightedIndex + 1;
+    setHighlightedIndex(nextIndex);
+  };
+
+  const handleArrowUp = () => {
+    const prevIndex = highlightedIndex && highlightedIndex - 1;
+    setHighlightedIndex(prevIndex);
+  };
+
+  const handleSelect = () => {
+    if (highlightedIndex !== undefined) {
+      setSelectedItem(usStateExampleData[highlightedIndex]);
+    }
+  };
+
+  const handleClick = (index: number) => {
+    setSelectedItem(usStateExampleData[index]);
+    setHighlightedIndex(index);
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value.toLowerCase();
+    const firstMatchingItem =
+      inputValue.length - 1 >= 0
+        ? usStateExampleData.findIndex((item) =>
+            item.toLowerCase().includes(inputValue)
+          )
+        : undefined;
+    setHighlightedIndex(firstMatchingItem);
+    setSelectedItem(event.target.value);
+  };
+
+  const handleInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const { key } = event;
+    switch (key) {
+      case "ArrowUp":
+        event.preventDefault();
+        handleArrowUp();
+        break;
+      case "ArrowDown":
+        event.preventDefault();
+        handleArrowDown();
+        break;
+      case " ":
+      case "Enter":
+        event.preventDefault();
+        handleSelect();
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <FlexLayout
+      direction="column"
+      gap={1}
+      align={"center"}
+      style={{ height: "260px" }}
+    >
+      <ToggleButtonGroup
+        aria-label="Controls"
+        value={controls}
+        onChange={(event: SyntheticEvent<HTMLButtonElement>) =>
+          setControls(event.target.value)
+        }
+      >
+        <ToggleButton aria-label="Button controls" value="buttons">
+          buttons
+        </ToggleButton>
+        <ToggleButton aria-label="Input controls" value="input">
+          input
+        </ToggleButton>
+      </ToggleButtonGroup>
+      {controls === "buttons" ? (
+        <FlexLayout gap={0}>
+          <Button
+            disabled={highlightedIndex === usStateExampleData.length - 1}
+            onClick={handleArrowDown}
+          >
+            <ArrowDownIcon />
+          </Button>
+          <Button
+            disabled={!highlightedIndex || highlightedIndex === 0}
+            onClick={handleArrowUp}
+          >
+            <ArrowUpIcon />
+          </Button>
+          <Button
+            disabled={highlightedIndex === undefined}
+            onClick={handleSelect}
+          >
+            Select
+          </Button>
+        </FlexLayout>
+      ) : (
+        <Input
+          value={selectedItem}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
+        ></Input>
+      )}
+      <ListNext
+        {...rest}
+        aria-label="Controlled List example"
+        selected={selectedItem}
+        disableFocus
+        highlightedIndex={highlightedIndex}
+        onChange={(e, { value }) => console.log("new selection", value)}
+        style={{ maxHeight: "150px", width: "100%" }}
+      >
+        {usStateExampleData.map((item, index) => {
+          return (
+            <ListItemNext
+              key={index}
+              onClick={() => handleClick(index)}
+              value={item}
+              id={`controlled-item-${item}-${index}`}
+            >
+              {item}
+            </ListItemNext>
+          );
+        })}
+      </ListNext>
+    </FlexLayout>
+  );
 };
 
 export const Disabled = Default.bind({});

@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes, MouseEvent } from "react";
 import { clsx } from "clsx";
-import { makePrefixer, useId, useIdMemo } from "@salt-ds/core";
+import { makePrefixer, useIdMemo } from "@salt-ds/core";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -14,8 +14,13 @@ export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
    * If true, the particular list item in list will be disabled.
    */
   disabled?: boolean;
-  selected?: boolean;
+  /**
+   * List item id.
+   */
   id?: string;
+  /**
+   * List item value.
+   */
   value: string;
 }
 
@@ -25,7 +30,6 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       children,
       className,
       disabled: disabledProp,
-      selected: selectedProp,
       id: idProp,
       value,
       onClick,
@@ -54,12 +58,15 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
 
     const itemId = `${contextId || "listNext"}--${id}`;
     const disabled = disabledProp || contextDisabled;
-    const selected = selectedProp || isSelected(value);
+    const selected = isSelected(value);
     const focused = isFocused(itemId);
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
-      select(event);
-      onClick?.(event);
+      console.log("listitemnext handleClick");
+      if (!disabled) {
+        select(event);
+        onClick?.(event);
+      }
     };
 
     return (
