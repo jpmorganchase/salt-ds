@@ -1,0 +1,86 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { CircularProgress } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+
+<Meta
+  title="Documentation/Lab/Progress"
+  component={CircularProgress}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Progress
+
+A progress indicator gives the user an understanding of how long a system operation will take. It should be used when the operation will take more than a second to complete. Two variants are available to accommodate different layout constraints: Linear and Circular.
+
+## Examples
+
+### CircularProgress
+
+<Canvas>
+  <Story id="lab-CircularProgress--default" />
+</Canvas>
+
+### LinearProgress
+
+<Canvas>
+  <Story id="lab-LinearProgress--default" />
+</Canvas>
+
+### With maximum value
+
+Specify the maximum value of the progress indicator. The percentage progress will be calculated using this value. Default value is 100.
+
+#### CircularProgress with maximum value
+
+<Canvas>
+  <Story id="lab-CircularProgress--max-value" />
+</Canvas>
+
+#### LinearProgress with maximum value
+
+<Canvas>
+  <Story id="lab-LinearProgress--max-value" />
+</Canvas>
+
+### With progressing value
+
+#### CircularProgress with progressing value
+
+<Canvas>
+  <Story id="lab-CircularProgress--progressing-value" />
+</Canvas>
+
+#### LinearProgress with progressing value
+
+<Canvas>
+  <Story id="lab-LinearProgress--progressing-value" />
+</Canvas>
+
+## How to use
+
+### API
+
+```
+import { CircularProgress } from "@salt-ds/lab";
+```
+
+```
+import { LinearProgress } from "@salt-ds/lab";
+```
+
+### Props
+
+<ArgsTable of={CircularProgress} />
+
+## Accessibility
+
+Improve accessibility by customizing the ariaLabel prop to provide additional context about what is loading. For example:
+
+```
+ariaLabel = “loading settings panel 0%”
+```
