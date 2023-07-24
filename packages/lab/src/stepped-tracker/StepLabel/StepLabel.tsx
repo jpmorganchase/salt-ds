@@ -11,7 +11,7 @@ const withBaseName = makePrefixer("saltStepLabel");
 export type StepLabelProps = ComponentPropsWithoutRef<"label">;
 
 export const StepLabel = forwardRef<HTMLLabelElement, StepLabelProps>(
-  function StepLabel({ children, className, ...rest }, ref?) {
+  function StepLabel({ children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-step-label",

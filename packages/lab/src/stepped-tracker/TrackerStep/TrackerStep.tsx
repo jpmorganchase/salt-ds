@@ -74,7 +74,7 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
 };
 
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
-  function TrackerStep(props, ref?) {
+  function TrackerStep(props, ref) {
     const {
       state = "default",
       style,

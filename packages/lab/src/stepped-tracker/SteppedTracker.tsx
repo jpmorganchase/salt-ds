@@ -54,7 +54,7 @@ const useCheckInvalidChildren = (children: ReactNode) => {
 export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
   function SteppedTracker(
     { children, className, activeStep, ...restProps },
-    ref?
+    ref
   ): ReactElement<SteppedTrackerProps> {
     const targetWindow = useWindow();
     useComponentCssInjection({
