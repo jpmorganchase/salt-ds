@@ -21,6 +21,11 @@ describe("GIVEN a Badge", () => {
     cy.findByText("lots").should("exist");
   });
 
+  it("THEN can render a badge with a truncated string", () => {
+    cy.mount(<Badge value={"lots and lots"} />);
+    cy.findByText("lots...").should("exist");
+  });
+
   it("THEN can render with a custom text child", () => {
     cy.mount(<Badge value={1}>Lorem Ipsum</Badge>);
     cy.findByText("Lorem Ipsum").should("exist");

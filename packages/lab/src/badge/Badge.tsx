@@ -40,6 +40,8 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     valueText = value > 1000 ? '1000+' : value;
   } else if (typeof value === "number" && max) {
     valueText = value > max ? `${max}+` : value;
+  } else if (typeof value === 'string') {
+    valueText = value.length > 4 ? `${value.slice(0,4)}...` : value;
   }
 
     return (

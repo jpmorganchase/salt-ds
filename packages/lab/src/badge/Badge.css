@@ -17,23 +17,20 @@
 
   align-items: center;
   justify-content: center;
-  display: inline-block;
+  display: inline-flex;
   margin: auto;
 
   font-size: var(--salt-accent-fontSize);
+  font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-accent-fontWeight);
   background: var(--salt-accent-background);
   color: var(--salt-accent-foreground);
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .saltBadge-topRight {
   position: relative;
-  top: -5px;
-  right: 5px
+  top: -7px;
+  right: 4px
 }
 
 
