@@ -72,8 +72,8 @@ String.args = {
   children: "Lorem Ipsum",
 };
 
-export const TruncatedString = Template.bind({});
-String.args = {
+export const truncated = Template.bind({});
+truncated.args = {
   value: "lots and lots",
   children: "Lorem Ipsum",
 };
