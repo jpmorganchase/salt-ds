@@ -5,6 +5,9 @@ export * from "./accordion";
 export * from "./app-header";
 export * from "./callout";
 export * from "./card";
+
+export * from "./roadmap";
+
 export * from "./components";
 export * from "./diagrams";
 export * from "./example-container";

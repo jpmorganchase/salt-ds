@@ -3,7 +3,7 @@
 }
 
 .componentList {
-  margin: calc(var(--salt-size-unit) * 3) 0;
+  margin: 0 0 calc(var(--salt-size-unit) * 3) 0;
 }
 
 .componentList table {
