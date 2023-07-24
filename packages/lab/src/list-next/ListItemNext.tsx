@@ -54,12 +54,15 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       select,
       isSelected,
       isFocused,
+      highlight,
+      isHighlighted,
     } = listContext;
 
     const itemId = `${contextId || "listNext"}--${id}`;
     const disabled = disabledProp || contextDisabled;
     const selected = isSelected(value);
     const focused = isFocused(itemId);
+    const highlighted = isHighlighted(itemId);
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
       console.log("listitemnext handleClick");

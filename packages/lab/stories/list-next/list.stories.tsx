@@ -50,7 +50,7 @@ Default.args = {};
 
 export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
   const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
-    undefined
+    0
   );
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
     undefined
@@ -174,6 +174,7 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
             <ListItemNext
               key={index}
               onClick={() => handleClick(index)}
+              onMouseMove={() => setHighlightedIndex(index)}
               value={item}
               id={`controlled-item-${item}-${index}`}
             >

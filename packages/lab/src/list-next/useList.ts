@@ -1,4 +1,5 @@
 import {
+  FocusEvent,
   KeyboardEvent,
   RefObject,
   SyntheticEvent,
@@ -7,7 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useControlled } from "@salt-ds/core";
+import { useControlled, useIsFocusVisible } from "@salt-ds/core";
 
 interface UseListProps {
   /**
@@ -24,8 +25,6 @@ interface UseListProps {
   onChange?: (e: SyntheticEvent, data: { value: string }) => void;
   /* List id. */
   id?: string;
-  /* List active target status. */
-  isTargetElement: boolean;
   /* List ref. */
   ref: RefObject<HTMLUListElement>;
 }
@@ -37,7 +36,6 @@ export const useList = ({
   defaultSelected,
   onChange,
   id,
-  isTargetElement,
   ref,
 }: UseListProps) => {
   const getOptions: () => HTMLElement[] = useCallback(() => {
@@ -53,8 +51,8 @@ export const useList = ({
     return activeOptions[highlightedIndex]?.id;
   }, [highlightedIndex, getOptions]);
 
-  const [showFocusRing, setShowFocusRing] = useState<boolean>(true);
-  const [fromMouse, setFromMouse] = useState<boolean>(false);
+  const [focusVisible, setFocusVisible] = useState(false);
+
   const [activeDescendant, setActiveDescendant] = useControlled({
     controlled: getId(),
     default: undefined,
@@ -68,6 +66,13 @@ export const useList = ({
     name: "ListNextSelected",
     state: "selected",
   });
+
+  const {
+    isFocusVisibleRef,
+    onFocus: handleFocusVisible,
+    onBlur: handleBlurVisible,
+    ref: focusVisibleRef,
+  } = useIsFocusVisible();
 
   const updateScroll = useCallback(
     (currentTarget: Element) => {
@@ -110,17 +115,12 @@ export const useList = ({
     highlightedIndex && updateScroll(activeOptions[highlightedIndex]);
   }, [highlightedIndex, getOptions, updateScroll]);
 
-  const focusAndMoveActive = (element: HTMLElement) => {
-    setShowFocusRing(true);
-    updateActiveDescendant(element);
-  };
-
   const focusFirstItem = () => {
     // Find first active item
     const activeOptions = getOptions();
     const firstItem = activeOptions[0];
     if (firstItem) {
-      focusAndMoveActive(firstItem);
+      updateActiveDescendant(firstItem);
     }
   };
   const focusLastItem = () => {
@@ -128,7 +128,7 @@ export const useList = ({
     const activeOptions = getOptions();
     const lastItem = activeOptions[activeOptions.length - 1];
     if (lastItem) {
-      focusAndMoveActive(lastItem);
+      updateActiveDescendant(lastItem);
       updateScroll(lastItem);
     }
   };
@@ -163,9 +163,6 @@ export const useList = ({
   const select = useCallback(
     (event: SyntheticEvent<HTMLLIElement>) => {
       const newValue = event.currentTarget.dataset.value;
-      if (event.type === "click") {
-        setShowFocusRing(false);
-      }
       const activeOptions = getOptions();
       const isActiveOption =
         activeOptions.findIndex((i) => i.id === event.currentTarget.id) !== -1;
@@ -183,14 +180,20 @@ export const useList = ({
   );
 
   const isFocused = useCallback(
-    (id: string | undefined) =>
-      // uncontrolled activeDescendant with focus ring
-      (!highlightedIndex && activeDescendant === id && showFocusRing) ||
-      // controlled activeDescendant with focus ring or from outside the list
-      (highlightedIndex !== undefined &&
-        activeDescendant === id &&
-        (showFocusRing || !isTargetElement)),
-    [activeDescendant, showFocusRing, isTargetElement, highlightedIndex]
+    (id: string | undefined) => activeDescendant === id && focusVisible,
+    [activeDescendant, focusVisible]
+  );
+
+  const highlight = useCallback(
+    (event: SyntheticEvent<HTMLLIElement>) => {
+      setActiveDescendant(event.currentTarget.id);
+    },
+    [setActiveDescendant]
+  );
+
+  const isHighlighted = useCallback(
+    (id: string | undefined) => activeDescendant === id,
+    [activeDescendant]
   );
 
   const getActiveItem = () => {
@@ -203,24 +206,20 @@ export const useList = ({
 
   // HANDLERS
   const blurHandler = () => {
-    setShowFocusRing(false);
-  };
-
-  const mouseDownHandler = () => {
-    // When list gets focused, we can't guarantee that focus happens after click event.
-    // If focus happens from a click, list shouldn't render focus ring.
-    if (!fromMouse) {
-      setFromMouse(true);
+    handleBlurVisible();
+    if (!isFocusVisibleRef.current) {
+      setFocusVisible(false);
     }
   };
 
   // takes care of focus when using keyboard navigation
-  const focusHandler = () => {
-    if (fromMouse) {
-      return;
+  const focusHandler = (event: FocusEvent<HTMLUListElement>) => {
+    handleFocusVisible(event);
+    if (isFocusVisibleRef.current) {
+      setFocusVisible(true);
     }
     const activeElement = getActiveItem();
-    focusAndMoveActive(activeElement);
+    updateActiveDescendant(activeElement);
   };
 
   // takes care of keydown when using keyboard navigation
@@ -228,9 +227,12 @@ export const useList = ({
     const { key } = event;
     const currentItem = getActiveItem();
     let nextItem = currentItem;
-    if (!currentItem || highlightedIndex) {
+    if (!currentItem) {
       event.preventDefault();
       return;
+    }
+    if (isFocusVisibleRef.current) {
+      setFocusVisible(true);
     }
     switch (key) {
       case "ArrowUp":
@@ -242,7 +244,7 @@ export const useList = ({
 
         if (nextItem && nextItem !== currentItem) {
           event.preventDefault();
-          focusAndMoveActive(nextItem);
+          updateActiveDescendant(nextItem);
         }
         break;
       case "Home":
@@ -264,6 +266,7 @@ export const useList = ({
       case "PageDown":
       case "PageUp":
       default:
+        event.preventDefault();
         break;
     }
   };
@@ -276,16 +279,18 @@ export const useList = ({
       select,
       isSelected,
       isFocused,
+      highlight,
+      isHighlighted,
     }),
-    [disabled, id, select, isSelected, isFocused]
+    [disabled, id, select, isSelected, isFocused, highlight, isHighlighted]
   );
 
   return {
     focusHandler,
     keyDownHandler,
     blurHandler,
-    mouseDownHandler,
     activeDescendant,
     contextValue,
+    focusVisibleRef,
   };
 };
