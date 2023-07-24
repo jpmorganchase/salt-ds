@@ -19,8 +19,23 @@ data:
 
 ### Keyboard interactions
 
-| Key                                  | Function                                                                                                                                                                                                                                                                |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>Tab</kbd>                       | - If focus is above the button, Tab key press moves focus onto the button.<br/>- If the button is disabled and is set to receive focus, receives focus.<br/>- If the button has focus, Tab moves focus out of the button, to next focusable component in the tab order. |
-| <kbd>Tab</kbd> and <kbd>Shift</kbd>  | - If focused, Tab+Shift combo moves focus out of the component to the previous component in the tab order.                                                                                                                                                              |
-| <kbd>Enter</kbd> or <kbd>Space</kbd> | - If the button has focus, Enter or Space key press activates the button.<br/>- If the button is disabled and can receive focus, does nothing.                                                                                                                          |
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is above the button, Tab key press moves focus onto the button.
+- If the button is disabled and is set to receive focus, receives focus.
+- If the button has focus, Tab moves focus out of the button, to next focusable component in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Tab + Shift">
+
+- If focused, Tab+Shift combo moves focus out of the component to the previous component in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- If the button has focus, Enter or Space key press activates the button.
+- If the button is disabled and can receive focus, does nothing.
+
+</KeyboardControl>
+</KeyboardControls>
