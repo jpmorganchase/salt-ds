@@ -1,5 +1,6 @@
 /* Styles applied to RadioButton container */
 .saltRadioButton {
+  align-items: center;
   display: flex;
   gap: var(--salt-spacing-100);
   cursor: var(--salt-selectable-cursor-hover);
@@ -22,11 +23,13 @@
 .saltRadioButton-input {
   cursor: inherit;
   position: absolute;
+  height: var(--salt-size-selectable);
   opacity: 0;
   top: 0;
   left: 0;
   margin: 0;
   padding: 0;
+  width: var(--salt-size-selectable);
   z-index: var(--salt-zIndex-default);
 }
 

@@ -1,5 +1,6 @@
 /* Styles applied to root component */
 .saltCheckbox {
+  align-items: center;
   display: flex;
   gap: var(--salt-spacing-100);
   position: relative;
