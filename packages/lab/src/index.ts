@@ -53,7 +53,6 @@ export * from "./list-next";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
-export * from "./multiline-input";
 export * from "./nav-item";
 export * from "./overlay";
 export * from "./pagination";

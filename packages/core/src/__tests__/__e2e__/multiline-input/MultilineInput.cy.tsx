@@ -1,6 +1,10 @@
 import { ChangeEvent, useState } from "react";
-import { FormField, FormFieldLabel, Button } from "@salt-ds/core";
-import { MultilineInput } from "@salt-ds/lab";
+import {
+  Button,
+  FormField,
+  FormFieldLabel,
+  MultilineInput,
+} from "@salt-ds/core";
 
 describe("GIVEN an MultilineInput", () => {
   it("SHOULD have no a11y violations on load", () => {
@@ -17,7 +21,7 @@ describe("GIVEN an MultilineInput", () => {
     describe("THEN the input is updated", () => {
       it("SHOULD call onChange with the new value", () => {
         const changeSpy = cy.stub().as("changeSpy");
-        const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        const onChange = (event: ChangeEvent<HTMLInputElement>) => {
           // React 16 backwards compatibility
           event.persist();
           changeSpy(event);
@@ -48,7 +52,7 @@ describe("GIVEN an MultilineInput", () => {
 
         function ControlledMultilineInput() {
           const [value, setValue] = useState("text value");
-          const onChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+          const onChange = (event: ChangeEvent<HTMLInputElement>) => {
             // React 16 backwards compatibility
             event.persist();
             setValue(event.target.value);
