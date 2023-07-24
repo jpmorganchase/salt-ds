@@ -7,17 +7,19 @@ import {
   useFloating
 } from "@floating-ui/react";
 import {usePortal} from "./usePortal";
+import {useList} from "../list-next/useList";
+import {useForkRef} from "@salt-ds/core";
 
 interface UseComboBoxProps {
-  children?: ReactNode;
+  disabled?: boolean;
+  defaultSelected?: string;
   placement?: Placement;
 }
 
-export const useComboBox = ({children, placement = "bottom"}: UseComboBoxProps) => {
+export const useComboBox = ({disabled, defaultSelected, listId, listRef, onChange, defaultValue, placement = "bottom"}: UseComboBoxProps) => {
 
-  const [value, setValue] = useState("");
-  const [selected, setSelected] = useState("");
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  // STATE
+  const [value, setValue] = useState<string | undefined>(defaultValue);
 
   const {
     open,
@@ -28,78 +30,73 @@ export const useComboBox = ({children, placement = "bottom"}: UseComboBoxProps) 
     getPortalProps,
   } = usePortal({placement});
 
-  // HANDLERS
-  const blurHandler = () => {
-    setOpen(false);
-  };
-  const focusHandler = () => {
-    console.log('open')
+  const {
+    focusHandler: listFocusHandler,
+    keyDownHandler: listKeyDownHandler,
+    blurHandler: listBlurHandler,
+    activeDescendant,
+    focusVisibleRef,
+    selectedItem,
+    highlightedIndex,
+  } = useList({
+    disabled,
+    defaultSelected,
+    id: listId,
+    ref: listRef,
+  });
+
+  // Handlers
+  console.log()
+
+  const focusHandler = (event: FocusEvent<HTMLInputElement>) => {
+    console.log('focus')
+    listFocusHandler(event);
     setOpen(true);
+    // onFocus?.(event);
   };
 
-  const selectHandler = (value) => {
-    console.log(value)
-    if (value) {
-
-    // setSelected(value)
-    }
-    setValue(value)
-
-  }
-  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const { key, target } = event;
-    const value = target.value;
-    setValue(value);
-    console.log(value)
-  }
   const keyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     const { key, target } = event;
     const value = target.value;
-    console.log(highlightedIndex)
+    console.log(key)
     switch (key) {
-      case "Escape":
-        setValue("");
-        setOpen(false);
-        break;
-      case "Enter":
-        if (!open) {setOpen(true)}
-        break;
-      //  TODO: arrows are incrementing by one but need a stop
       case "ArrowUp":
-        console.log('arrow up')
-        setHighlightedIndex(highlightedIndex - 1);
-        break;
       case "ArrowDown":
-        console.log('arrow down')
-        setHighlightedIndex(highlightedIndex + 1);
+        listKeyDownHandler(event);
         break;
       default:
         break;
     }
+
   }
 
-  // CONTEXT
-  const contextValue = useMemo(
-    () => ({
-      value,
-      setValue
-    }), [value, setValue]
-  )
+  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+    onChange?.(event);
+  };
+
+  // }
+
+  // const setListRef = useForkRef(focusVisibleRef, floating);
 
   return {
-    focusHandler,
-    keyDownHandler,
-    blurHandler,
-    changeHandler,
-    contextValue,
-    open,
+    // state
     value,
-    selected,
-    selectHandler,
-    highlightedIndex,
-    floating,
+    setValue,
+    // portal
+    open,
+    setOpen,
     reference,
     getTriggerProps,
     getPortalProps,
+    // list
+    selectedItem,
+    highlightedIndex,
+    activeDescendant,
+    setListRef: focusVisibleRef,
+    keyDownHandler,
+    focusHandler,
+    changeHandler
   }
 };
