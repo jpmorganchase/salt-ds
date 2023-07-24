@@ -11,8 +11,6 @@ import { ToastGroup } from "@salt-ds/lab";
 import { CloseIcon } from "@salt-ds/icons";
 import { Fragment, ReactNode, useState } from "react";
 
-import "./toast-group.stories.css";
-
 export default {
   title: "Lab/Toast Group",
   component: ToastGroup,
