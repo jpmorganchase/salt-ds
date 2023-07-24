@@ -36,7 +36,6 @@ export const useList = ({
   defaultSelected,
   onChange,
   id,
-  isTargetElement,
   ref,
 }: UseListProps) => {
   const getOptions: () => HTMLElement[] = useCallback(() => {
