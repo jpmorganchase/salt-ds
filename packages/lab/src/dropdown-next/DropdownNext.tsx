@@ -1,6 +1,13 @@
 import { clsx } from "clsx";
-import { ListNext, ListNextProps } from "@salt-ds/lab";
-import { makePrefixer, useId, useForkRef } from "@salt-ds/core";
+import { ListItemNext, ListNext, ListNextProps } from "@salt-ds/lab";
+import {
+  makePrefixer,
+  useId,
+  useForkRef,
+  useFloatingUI,
+  UseFloatingUIProps,
+  SaltProvider,
+} from "@salt-ds/core";
 import { ChevronDownIcon } from "@salt-ds/icons";
 import {
   useRef,
@@ -9,6 +16,8 @@ import {
   FocusEvent,
   KeyboardEvent,
   MouseEvent,
+  MutableRefObject,
+  ChangeEvent,
 } from "react";
 import { useWindow } from "@salt-ds/window";
 import dropdownNextCss from "./DropdownNext.css";
@@ -19,7 +28,9 @@ import { useDropdownNext } from "./useDropdownNext";
 
 const withBaseName = makePrefixer("saltDropdownNext");
 
-export interface DropdownNextProps extends HTMLAttributes<HTMLElement> {
+export interface DropdownNextProps<T>
+  extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
+    HTMLAttributes<HTMLElement> {
   /**
    * If true, dropdown will be disabled.
    */
@@ -28,13 +39,39 @@ export interface DropdownNextProps extends HTMLAttributes<HTMLElement> {
    * Initially selected value for the dropdown.
    */
   defaultSelected?: string;
+  selected?: string;
+  open?: boolean;
+  listId?: string;
+  displayedItemCount?: number;
+  /**
+   * Background styling variant. Defaults to "primary".
+   */
+  variant?: "primary" | "secondary";
+  /**
+   * List of items when using a Dropdown.
+   */
+  source: T[];
 }
 
-export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps>(
-  function DropdownNext(
-    { children, className, disabled, id, defaultSelected, ...rest },
-    ref
-  ) {
+export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
+  function DropdownNext(props, ref) {
+    const {
+      className,
+      disabled,
+      variant = "primary",
+      id: dropdownIdProp,
+      listId: listIdProp,
+      defaultSelected,
+      selected: selectedProp,
+      open: openProp,
+      source,
+      onFocus,
+      onKeyDown,
+      onMouseDown,
+      onBlur,
+      ...rest
+    } = props;
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-dropdown-next",
@@ -42,97 +79,131 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps>(
       window: targetWindow,
     });
 
-    const dropdownId = useId(id);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-    const handleRef = useForkRef<HTMLDivElement>(dropdownRef, ref);
+    const listId = useId(listIdProp);
+    const dropdownId = useId(dropdownIdProp);
+    const listRef = useRef<HTMLUListElement>(null);
 
     const {
       focusHandler,
       keyDownHandler,
       blurHandler,
       mouseDownHandler,
-      listExpanded,
-      setListExpanded,
       contextValue,
-      valueSelected,
-      setValueSelected,
-    } = useDropdownNext({
-      children,
-    });
+      open,
+      // value, // value
+      // setValueSelected, // setValue
+      selected,
+      selectHandler,
+      highlightedIndex,
+      getListItems,
+      floating,
+      reference,
+      getDropdownNextProps,
+    } = useDropdownNext({ defaultSelected, placement: "top-start" });
 
-    // TODO: do we want list to open on DD focus??
-    const handleFocus = (event: FocusEvent<HTMLElement>) => {
-      focusHandler();
-      // onFocus?.(event);
+    const triggerRef = useForkRef(
+      ref,
+      reference
+    ) as MutableRefObject<HTMLButtonElement>;
+
+    const floatingRef = useForkRef(
+      listRef,
+      floating
+    ) as MutableRefObject<HTMLUListElement>;
+
+    const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+      focusHandler(event);
+      onFocus?.(event);
     };
 
-    const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
       keyDownHandler(event);
-      // onKeyDown?.(event);
+      onKeyDown?.(event);
     };
 
     const handleBlur = (event: FocusEvent<HTMLElement>) => {
       blurHandler();
-      // onBlur?.(event);
+      onBlur?.(event);
+    };
+
+    const handleSelect = (event: MouseEvent | KeyboardEvent) => {
+      selectHandler(event);
+      // onSelect?.(event);
     };
 
     const handleMouseDown = (event: MouseEvent<HTMLElement>) => {
-      mouseDownHandler();
-      // onMouseDown?.(event);
-    };
-
-    const handleListMouseDown = (event: MouseEvent<HTMLElement>) => {
-      setValueSelected(event.target.dataset.value);
-      setListExpanded(false);
-      // onSelect?.(event.target.dataset.value);
-    };
-
-    const getDropdownDisplayText = () => {
-      if (valueSelected?.length > 0) return valueSelected;
-      if (defaultSelected) return defaultSelected;
-
-      return "Select an option";
+      mouseDownHandler(event);
+      onMouseDown?.(event);
     };
 
     return (
       <DropdownNextContext.Provider value={contextValue}>
-        <div
-          className={clsx(withBaseName(), className)}
-          ref={handleRef}
-          id={dropdownId}
-          aria-disabled={disabled}
-          {...rest}
-        >
+        <>
+          {/* <label id="dropdownLabel">Dropdown Label</label> */}
           <button
+            id={dropdownId}
             disabled={disabled}
             onMouseDown={handleMouseDown}
             onFocus={handleFocus}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
-            value={valueSelected}
-            className="dropdown-next-button"
+            value={selected} // previously value
+            className={clsx(
+              withBaseName("button"),
+              {
+                [withBaseName(variant)]: variant,
+              },
+              className
+            )}
+            role="combobox"
             aria-haspopup="listbox"
-            aria-expanded={listExpanded}
-            aria-labelledby={"dropdownLabel"}
+            aria-expanded={open}
+            // aria-labelledby="dropdownLabel" // identifies element that labels the DD
             tabIndex={disabled ? -1 : 0}
+            aria-owns={listId} // see w3 managing focus...
+            aria-controls={listId}
+            // aria-activedescendant="" // listbox option with visual keyboard focus
+            ref={triggerRef}
           >
-            {getDropdownDisplayText()}
-            <ChevronDownIcon />
+            {selected}
+            <ChevronDownIcon
+              className={clsx(withBaseName("icon"), className)}
+            />
           </button>
-          {listExpanded && (
-            // TODO: fix portal position
+          {open && (
             <FloatingPortal>
-              <ListNext
-                className="dropdown-next-menu"
-                aria-labelledby={"dropdownLabel"}
-                disabled={disabled}
-                onMouseDown={handleListMouseDown}
-              >
-                {children}
-              </ListNext>
+              <SaltProvider>
+                <div
+                  className={clsx(withBaseName("popup"), className)}
+                  {...getDropdownNextProps()}
+                >
+                  <ListNext
+                    id={listId}
+                    ref={floatingRef}
+                    tabIndex={-1}
+                    // className={clsx(withBaseName("list"), className)}
+                    // aria-labelledby="dropdownLabel"
+                    disabled={disabled}
+                    selected={selected}
+                    onMouseDown={(evt) => {
+                      console.log("list onMouseDown");
+                      handleSelect(evt);
+                    }}
+                    onKeyDown={(evt) => {
+                      console.log("list onKeyDown");
+                      handleSelect(evt);
+                    }}
+                    highlightedIndex={highlightedIndex}
+                    defaultSelected={defaultSelected}
+                    displayedItemCount={6}
+                  >
+                    {getListItems(source, handleSelect)}
+                  </ListNext>
+                </div>
+              </SaltProvider>
             </FloatingPortal>
           )}
-        </div>
+        </>
       </DropdownNextContext.Provider>
     );
   }

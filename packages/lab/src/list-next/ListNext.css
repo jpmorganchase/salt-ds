@@ -1,3 +1,11 @@
+/* Default variables applied to the root element */
+.saltListNext {
+  --list-height: calc(
+    (var(--salt-size-base) + var(--salt-spacing-100)) *
+      var(--list-displayedItemCount)
+  );
+}
+
 /* Style applied to the root element */
 .saltListNext {
   margin: 0;
@@ -5,11 +13,11 @@
   border-color: var(--salt-container-primary-borderColor);
   border-style: var(--salt-container-borderStyle);
   border-width: var(--salt-size-border);
-  height: 100%;
   outline: none;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
   padding-inline-start: 0;
   box-sizing: content-box;
+  height: var(--list-height);
 }

@@ -1,2 +1,20 @@
+/* Styles applied to DropdownNext root component */
 .saltDropdownNext {
+  /* --dropdownNext-zIndex: var(
+    --saltDropdownNext-zIndex,
+    var(--salt-zIndex-flyover)
+  ); */
+}
+
+.saltDropdownNext {
+  position: relative;
+  display: inline-block;
+}
+
+/* dropdown content container (hidden by default) */
+.saltDropdownNext-popup {
+  position: absolute; /* portal covers this */
+  /* width: 100%; dropdown content to be as wide as dropdown btn */
+  overflow: auto; /* dropdown content to be as wide as dropdown btn */
+  z-index: 1;
 }

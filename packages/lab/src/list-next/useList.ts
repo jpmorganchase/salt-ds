@@ -36,6 +36,7 @@ export const useList = ({
   defaultSelected,
   onChange,
   id,
+  isTargetElement,
   ref,
 }: UseListProps) => {
   const getOptions: () => HTMLElement[] = useCallback(() => {
@@ -106,6 +107,23 @@ export const useList = ({
     },
     [setSelectedItem, updateHighlighted]
   );
+
+  // Effect to move the cursor when items change controlled.
+  // this could be following active descendant if there is no better way of doing it when controlled
+  useEffect(() => {
+    const activeOptions = getOptions();
+<<<<<<< HEAD
+    const highlightedIndex = activeOptions.findIndex(
+      (i) => i.dataset.value === highlightedItem
+    );
+    if (highlightedIndex) {
+      setActiveDescendant(activeOptions[highlightedIndex]?.id);
+      highlightedItem && updateScroll(activeOptions[highlightedIndex]);
+    }
+  }, [highlightedItem, getOptions, updateScroll]);
+=======
+    highlightedIndex && updateScroll(activeOptions[highlightedIndex]);
+  }, [highlightedIndex, getOptions, updateScroll]);
 
   // Effect to move the cursor when items change controlled.
   // this could be following active descendant if there is no better way of doing it when controlled
