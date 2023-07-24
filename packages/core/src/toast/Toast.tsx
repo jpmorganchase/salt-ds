@@ -1,5 +1,11 @@
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, RefObject, forwardRef, useLayoutEffect, useRef } from "react";
+import {
+  ComponentPropsWithoutRef,
+  RefObject,
+  forwardRef,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer, useForkRef } from "../utils";
@@ -28,12 +34,11 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
     window: targetWindow,
   });
 
-  const toastRef = useRef<HTMLDivElement>()
-  const handleRef = useForkRef(toastRef, ref)
+  const toastRef = useRef<HTMLDivElement>();
+  const handleRef = useForkRef(toastRef, ref);
   useLayoutEffect(() => {
-    toastRef.current?.scrollIntoView()
-  }, [])
-
+    toastRef.current?.scrollIntoView();
+  }, []);
 
   return (
     <div

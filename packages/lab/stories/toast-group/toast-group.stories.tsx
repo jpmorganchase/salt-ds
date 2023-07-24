@@ -7,11 +7,11 @@ import {
   ToastContent,
   StackLayout,
 } from "@salt-ds/core";
-import { ToastGroup } from '@salt-ds/lab'
+import { ToastGroup } from "@salt-ds/lab";
 import { CloseIcon } from "@salt-ds/icons";
 import { Fragment, ReactNode, useState } from "react";
 
-import './toast-group.stories.css'
+import "./toast-group.stories.css";
 
 export default {
   title: "Lab/Toast Group",
@@ -19,11 +19,11 @@ export default {
 } as ComponentMeta<typeof ToastGroup>;
 
 const InfoToast = () => {
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(true);
   const closeToast = () => {
-    setOpen(false)
-  }
-  return open ?
+    setOpen(false);
+  };
+  return open ? (
     <Toast>
       <ToastContent>
         <Text>
@@ -35,15 +35,17 @@ const InfoToast = () => {
         <CloseIcon />
       </Button>
     </Toast>
-    : <></>
-}
+  ) : (
+    <></>
+  );
+};
 
 const ErrorToast = () => {
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(true);
   const closeToast = () => {
-    setOpen(false)
-  }
-  return open ?
+    setOpen(false);
+  };
+  return open ? (
     <Toast status="error">
       <ToastContent>
         <div>
@@ -62,15 +64,17 @@ const ErrorToast = () => {
         </FlowLayout>
       </ToastContent>
     </Toast>
-    : <></>
-}
+  ) : (
+    <></>
+  );
+};
 
 const WarningToast = () => {
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(true);
   const closeToast = () => {
-    setOpen(false)
-  }
-  return open ?
+    setOpen(false);
+  };
+  return open ? (
     <Toast status="warning">
       <ToastContent>
         <div>
@@ -79,24 +83,27 @@ const WarningToast = () => {
           </Text>
           <div>Viewers of this file can see comments and suggestions. </div>
         </div>
-        <FlowLayout
-          gap={1}
-          style={{ marginTop: "var(--salt-spacing-100)" }}
-        >
-          <Button variant="cta" style={{ width: "100%" }}>Edit permissions</Button>
-          <Button onClick={closeToast} style={{ width: "100%" }}>Dismiss</Button>
+        <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
+          <Button variant="cta" style={{ width: "100%" }}>
+            Edit permissions
+          </Button>
+          <Button onClick={closeToast} style={{ width: "100%" }}>
+            Dismiss
+          </Button>
         </FlowLayout>
       </ToastContent>
     </Toast>
-    : <></>
-}
+  ) : (
+    <></>
+  );
+};
 
 const SuccessToast = () => {
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(true);
   const closeToast = () => {
-    setOpen(false)
-  }
-  return open ?
+    setOpen(false);
+  };
+  return open ? (
     <Toast status="success">
       <ToastContent>
         <Text>
@@ -108,31 +115,38 @@ const SuccessToast = () => {
         <CloseIcon />
       </Button>
     </Toast>
-    : <></>
-}
-
+  ) : (
+    <></>
+  );
+};
 
 type ToastEntryType = {
-  timestamp: number
-  content: ReactNode
-}
+  timestamp: number;
+  content: ReactNode;
+};
 
 export const BottomRight = () => {
-  const [toasts, setToasts] = useState<ToastEntryType[]>([])
+  const [toasts, setToasts] = useState<ToastEntryType[]>([]);
 
   const addInfoToast = () => {
-    setToasts([{ timestamp: Date.now(), content: <InfoToast /> }, ...toasts])
-  }
+    setToasts([{ timestamp: Date.now(), content: <InfoToast /> }, ...toasts]);
+  };
 
   const addErrorToast = () => {
-    setToasts([{ timestamp: Date.now(), content: <ErrorToast /> }, ...toasts])
-  }
+    setToasts([{ timestamp: Date.now(), content: <ErrorToast /> }, ...toasts]);
+  };
   const addWarningToast = () => {
-    setToasts([{ timestamp: Date.now(), content: <WarningToast /> }, ...toasts])
-  }
+    setToasts([
+      { timestamp: Date.now(), content: <WarningToast /> },
+      ...toasts,
+    ]);
+  };
   const addSuccessToast = () => {
-    setToasts([{ timestamp: Date.now(), content: <SuccessToast /> }, ...toasts])
-  }
+    setToasts([
+      { timestamp: Date.now(), content: <SuccessToast /> },
+      ...toasts,
+    ]);
+  };
 
   return (
     <>
@@ -143,28 +157,38 @@ export const BottomRight = () => {
         <Button onClick={addSuccessToast}>Add success toast</Button>
       </StackLayout>
       <ToastGroup>
-        {toasts?.sort((a, b) => a.timestamp - b.timestamp).map(({ content, timestamp }) => <Fragment key={timestamp}>{content}</Fragment>)}
+        {toasts
+          ?.sort((a, b) => a.timestamp - b.timestamp)
+          .map(({ content, timestamp }) => (
+            <Fragment key={timestamp}>{content}</Fragment>
+          ))}
       </ToastGroup>
     </>
-  )
-}
+  );
+};
 
 export const TopRight = () => {
-  const [toasts, setToasts] = useState<ToastEntryType[]>([])
+  const [toasts, setToasts] = useState<ToastEntryType[]>([]);
 
   const addInfoToast = () => {
-    setToasts([{ timestamp: Date.now(), content: <InfoToast /> }, ...toasts])
-  }
+    setToasts([{ timestamp: Date.now(), content: <InfoToast /> }, ...toasts]);
+  };
 
   const addErrorToast = () => {
-    setToasts([{ timestamp: Date.now(), content: <ErrorToast /> }, ...toasts])
-  }
+    setToasts([{ timestamp: Date.now(), content: <ErrorToast /> }, ...toasts]);
+  };
   const addWarningToast = () => {
-    setToasts([{ timestamp: Date.now(), content: <WarningToast /> }, ...toasts])
-  }
+    setToasts([
+      { timestamp: Date.now(), content: <WarningToast /> },
+      ...toasts,
+    ]);
+  };
   const addSuccessToast = () => {
-    setToasts([{ timestamp: Date.now(), content: <SuccessToast /> }, ...toasts])
-  }
+    setToasts([
+      { timestamp: Date.now(), content: <SuccessToast /> },
+      ...toasts,
+    ]);
+  };
 
   return (
     <>
@@ -175,8 +199,12 @@ export const TopRight = () => {
         <Button onClick={addSuccessToast}>Add success toast</Button>
       </StackLayout>
       <ToastGroup placement="top-right">
-        {toasts?.sort((a, b) => b.timestamp - a.timestamp).map(({ content, timestamp }) => <Fragment key={timestamp}>{content}</Fragment>)}
+        {toasts
+          ?.sort((a, b) => b.timestamp - a.timestamp)
+          .map(({ content, timestamp }) => (
+            <Fragment key={timestamp}>{content}</Fragment>
+          ))}
       </ToastGroup>
     </>
-  )
-}
+  );
+};
