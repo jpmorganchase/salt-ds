@@ -20,7 +20,7 @@ export function useDrawer(props: UseDrawerProps) {
 
   const click = useClick(context);
   const role = useRole(context);
-  const dismiss = useDismiss(context, { outsidePressEvent: "mousedown" });
+  const dismiss = useDismiss(context);
 
   const { getFloatingProps, getReferenceProps } = useInteractions([
     role,
