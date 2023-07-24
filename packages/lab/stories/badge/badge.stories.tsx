@@ -31,8 +31,7 @@ export const All: ComponentStory<typeof Badge> = () => {
       </div>
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
+          display: "inline"
         }}
       >
         Inline

@@ -11,13 +11,13 @@
   /* Should this vary according to touch size */
   padding-inline: var(--salt-spacing-50);
   line-height: var(--salt-accent-lineHeight);
-  min-width: 10px;
+  min-width: var(--salt-accent-lineHeight);
   max-width: 50px;
   border-radius: 9999px;
 
   align-items: center;
   justify-content: center;
-  display: inline-flex;
+  display: inline;
   margin: auto;
 
   font-size: var(--salt-accent-fontSize);
