@@ -60,8 +60,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
 
   const [showComponent, setShowComponent] = useState(false);
 
-  const [isAnimating, setIsAnimating] = useState(false);
-
   const { floating, context } = useDrawer({
     open,
     onOpenChange,
@@ -70,14 +68,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
   useEffect(() => {
-    if (!open && !isAnimating) {
-      setShowComponent(false);
-    }
-
     if (open && !showComponent) {
       setShowComponent(true);
     }
-  }, [open, showComponent, isAnimating]);
+  }, [open, showComponent]);
 
   return (
     <FloatingPortal>
@@ -96,7 +90,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
                 },
                 className
               )}
-              onAnimationStart={() => setIsAnimating(true)}
               onAnimationEnd={() => {
                 if (!open && showComponent) {
                   setShowComponent(false);
