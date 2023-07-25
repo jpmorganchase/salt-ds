@@ -52,7 +52,6 @@
   margin-bottom: 15px;
   min-height: unset;
   border-left-color: var(--salt-palette-info-border);
-  --card-borderWidth: 0 0 0 var(--salt-size-accent);
 }
 
 .gridLayout {
