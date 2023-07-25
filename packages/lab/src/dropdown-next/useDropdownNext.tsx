@@ -10,7 +10,16 @@ import {
   offset,
 } from "@floating-ui/react";
 import { ListItemNext } from "@salt-ds/lab";
-import { HTMLProps, KeyboardEvent, useMemo, useState } from "react";
+import {
+  HTMLProps,
+  KeyboardEvent,
+  useMemo,
+  useState,
+  FocusEvent,
+  RefObject,
+} from "react";
+import { BooleanLiteral } from "typescript";
+import { useList } from "../list-next/useList";
 
 import { useFloatingUI, UseFloatingUIProps } from "../utils";
 
@@ -20,20 +29,23 @@ interface UseDropdownNextProps<T>
   > {
   defaultSelected?: string;
   source: T[];
+  disabled?: boolean;
+  listRef: RefObject<HTMLUListElement>;
+  listId?: string;
 }
 
 export const useDropdownNext = ({
   defaultSelected,
   onOpenChange,
   source,
+  disabled,
+  listRef,
+  listId,
   placement: placementProp,
 }: UseDropdownNextProps<T>) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>("");
-  const [selected, setSelected] = useState<string>(defaultSelected ?? "");
-  const [highlightedIndex, setHighlightedIndex] = useState(
-    selected ? source.indexOf(selected) : -1
-  );
+  // const [selected, setSelected] = useState<string>(defaultSelected ?? "");
 
   // const [open, setOpen] = useControlled({
   //   controlled: openProp,
@@ -77,6 +89,23 @@ export const useDropdownNext = ({
     });
   };
 
+  // USELIST HOOK
+  const {
+    focusHandler: listFocusHandler,
+    keyDownHandler: listKeyDownHandler,
+    blurHandler: listBlurHandler,
+    activeDescendant: listActiveDescendant,
+    contextValue: listContextValue,
+    focusVisibleRef: listFocusVisibleRef,
+    selectedItem,
+    highlightedIndex,
+  } = useList({
+    disabled,
+    defaultSelected,
+    id: listId,
+    ref: listRef,
+  });
+
   // FLOATING PORTAL
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -119,12 +148,13 @@ export const useDropdownNext = ({
   };
 
   // HANDLERS
-  const blurHandler = () => {
-    // listBlurHandler();
+  const blurHandler = (event: FocusEvent) => {
+    listBlurHandler(event);
     setOpen(false);
   };
 
-  const focusHandler = (event) => {
+  const focusHandler = (event: FocusEvent<HTMLElement>) => {
+    listFocusHandler(event);
     // setOpen(??);
   };
 
@@ -134,23 +164,21 @@ export const useDropdownNext = ({
     setOpen(!open);
   };
 
-  const selectHandler = (event) => {
-    console.log("selectHandler", event.target.dataset.value);
+  // const selectHandler = (event) => {
+  //   console.log("selectHandler", event.target.dataset.value);
 
-    setValue(event.target.dataset.value);
-    setSelected(event.target.dataset.value);
-  };
+  //   setValue(event.target.dataset.value);
+  //   setSelected(event.target.dataset.value);
+  // };
 
-  const keyDownHandler = (event: KeyboardEvent<HTMLButtonElement>) => {
+  const keyDownHandler = (event: KeyboardEvent) => {
     const { key, target } = event;
     switch (key) {
       case "ArrowUp":
-        setOpen(true);
-        setHighlightedIndex(Math.max(0, highlightedIndex - 1));
-        break;
       case "ArrowDown":
+        console.log(highlightedIndex, listActiveDescendant);
         setOpen(true);
-        setHighlightedIndex(Math.min(source.length - 1, highlightedIndex + 1));
+        listKeyDownHandler(event);
         break;
       case " ":
       case "Enter":
@@ -161,14 +189,12 @@ export const useDropdownNext = ({
 
         if (open) {
           console.log("EVENT", target);
-          console.log("value", value); //?????
+          // console.log("value", value); //?????
           // next step: find out how to get the target here to be the list item instead of the button!!!
           // setSelected(target.dataset.value); // previously value
-          setSelected(value);
-          setValue(value);
+          // setValue(value);
           setOpen(false);
 
-          console.log("value", value);
           break;
         }
 
@@ -184,10 +210,9 @@ export const useDropdownNext = ({
   // CONTEXT
   const contextValue = useMemo(
     () => ({
-      value,
-      setValue,
+      ...listContextValue,
     }),
-    [value, setValue]
+    [listContextValue]
   );
 
   return {
@@ -196,24 +221,17 @@ export const useDropdownNext = ({
     blurHandler,
     mouseDownHandler,
     contextValue,
-    open,
+    listActiveDescendant,
     // value,
-    selected,
-    selectHandler,
+    selectedItem,
     highlightedIndex,
-    // valueSelected,
-    // setValueSelected,
+    setListRef: listFocusVisibleRef,
     getListItems,
+    // portal
+    open,
+    setOpen,
     floating,
     reference,
     getDropdownNextProps,
   };
 };
-
-// keyboard nav
-// --- OLD
-// 1. if there's selected item, focus moves to selected item
-// 2. if no selected item, focus moves to first list item
-// ..then move selection one list item down
-// DOM focus remains on DD, visual focus is in listbox
-// aria-activedescendant: listbox option visually indicated as focused
