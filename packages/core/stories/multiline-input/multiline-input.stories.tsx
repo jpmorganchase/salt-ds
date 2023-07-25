@@ -113,10 +113,7 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
     const newVal = event.target.value;
     setValue(newVal);
 
-    if (newVal.length > MAX_CHARS) {
-      setIsError(true);
-    } else if (isError) {
-      setIsError(false);
+      setIsError(newVal.length > MAX_CHARS);
     }
   };
 
