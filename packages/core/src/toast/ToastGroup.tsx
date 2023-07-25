@@ -25,7 +25,7 @@ export const ToastGroup = forwardRef<HTMLDivElement, ToastGroupProps>(
 
     return (
       <div className={clsx(withBaseName(), withBaseName(placement), className)}>
-        {children}
+        <div className={withBaseName("container")}>{children}</div>
       </div>
     );
   }
