@@ -22,11 +22,13 @@
 .saltRadioButton-input {
   cursor: inherit;
   position: absolute;
+  height: var(--salt-size-selectable);
   opacity: 0;
   top: 0;
   left: 0;
   margin: 0;
   padding: 0;
+  width: var(--salt-size-selectable);
   z-index: var(--salt-zIndex-default);
 }
 
