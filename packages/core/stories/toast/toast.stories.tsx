@@ -117,6 +117,26 @@ export const Warning: ComponentStory<typeof Toast> = () => (
   </div>
 );
 
+export const Warning: ComponentStory<typeof Toast> = () => (
+  <Toast status="warning">
+    <ToastContent>
+      <div>
+        <Text>
+          <strong>File access</strong>
+        </Text>
+        <div>Viewers of this file can see comments and suggestions. </div>
+      </div>
+      <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
+        <Button variant="cta" style={{ width: "100%" }}>
+          Edit permissions
+        </Button>
+        <Button style={{ width: "100%" }}>
+          Dismiss
+        </Button>
+      </FlowLayout>
+    </ToastContent>
+  </Toast>
+);
 export const Success = Template.bind({});
 Success.args = {
   status: "success",

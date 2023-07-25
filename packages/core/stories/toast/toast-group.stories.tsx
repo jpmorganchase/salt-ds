@@ -13,69 +13,33 @@ import {
   ComponentPropsWithoutRef,
   Fragment,
   ReactNode,
-  useEffect,
   useState,
 } from "react";
-
-import "./toast-group.stories.css";
 
 export default {
   title: "Core/Toast/Toast Group",
   component: ToastGroup,
 } as ComponentMeta<typeof ToastGroup>;
 
-interface AnimatedComponentProps extends ComponentPropsWithoutRef<"div"> {
-  show: boolean;
-}
-const AnimatedComponent = (props: AnimatedComponentProps) => {
-  const { children, show } = props;
-
-  const [shouldRender, setRender] = useState<boolean>(show);
-
-  useEffect(() => {
-    if (show) setRender(true);
-  }, [show]);
-
-  const onAnimationEnd = () => {
-    if (!show) setRender(false);
-  };
-
-  return shouldRender ? (
-    <div
-      style={{
-        animationName: `${show ? "fadeIn, heightIn" : "fadeOut, heightOut"}`,
-        animationDuration: "1s",
-      }}
-      onAnimationEnd={onAnimationEnd}
-    >
-      {children}
-    </div>
-  ) : (
-    <></>
-  );
-};
 
 const InfoToast = () => {
   const [open, setOpen] = useState<boolean>(true);
   const closeToast = () => {
     setOpen(false);
   };
-
-  return (
-    <AnimatedComponent show={open}>
-      <Toast>
-        <ToastContent>
-          <Text>
-            <strong>File update</strong>
-          </Text>
-          <div>A new version of this file is available with 37 updates. </div>
-        </ToastContent>
-        <Button variant="secondary" onClick={closeToast}>
-          <CloseIcon />
-        </Button>
-      </Toast>
-    </AnimatedComponent>
-  );
+  return open ? (
+    <Toast>
+      <ToastContent>
+        <Text>
+          <strong>File update</strong>
+        </Text>
+        <div>A new version of this file is available with 37 updates. </div>
+      </ToastContent>
+      <Button variant="secondary" onClick={closeToast}>
+        <CloseIcon />
+      </Button>
+    </Toast>
+  ) : <></>
 };
 
 const ErrorToast = () => {
@@ -83,28 +47,26 @@ const ErrorToast = () => {
   const closeToast = () => {
     setOpen(false);
   };
-  return (
-    <AnimatedComponent show={open}>
-      <Toast status="error">
-        <ToastContent>
-          <div>
-            <Text>
-              <strong>System error</strong>
-            </Text>
-            <div>Connection timed out. Failed to retrieve data. </div>
-          </div>
-          <FlowLayout
-            gap={1}
-            justify="end"
-            style={{ marginTop: "var(--salt-spacing-100)" }}
-          >
-            <Button onClick={closeToast}>Dismiss</Button>
-            <Button variant="cta">Try again</Button>
-          </FlowLayout>
-        </ToastContent>
-      </Toast>
-    </AnimatedComponent>
-  );
+  return open ? (
+    <Toast status="error">
+      <ToastContent>
+        <div>
+          <Text>
+            <strong>System error</strong>
+          </Text>
+          <div>Connection timed out. Failed to retrieve data. </div>
+        </div>
+        <FlowLayout
+          gap={1}
+          justify="end"
+          style={{ marginTop: "var(--salt-spacing-100)" }}
+        >
+          <Button onClick={closeToast}>Dismiss</Button>
+          <Button variant="cta">Try again</Button>
+        </FlowLayout>
+      </ToastContent>
+    </Toast>
+  ) : <></>
 };
 
 const WarningToast = () => {
@@ -112,28 +74,26 @@ const WarningToast = () => {
   const closeToast = () => {
     setOpen(false);
   };
-  return (
-    <AnimatedComponent show={open}>
-      <Toast status="warning">
-        <ToastContent>
-          <div>
-            <Text>
-              <strong>File access</strong>
-            </Text>
-            <div>Viewers of this file can see comments and suggestions. </div>
-          </div>
-          <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
-            <Button variant="cta" style={{ width: "100%" }}>
-              Edit permissions
-            </Button>
-            <Button onClick={closeToast} style={{ width: "100%" }}>
-              Dismiss
-            </Button>
-          </FlowLayout>
-        </ToastContent>
-      </Toast>
-    </AnimatedComponent>
-  );
+  return open ? (
+    <Toast status="warning">
+      <ToastContent>
+        <div>
+          <Text>
+            <strong>File access</strong>
+          </Text>
+          <div>Viewers of this file can see comments and suggestions. </div>
+        </div>
+        <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
+          <Button variant="cta" style={{ width: "100%" }}>
+            Edit permissions
+          </Button>
+          <Button onClick={closeToast} style={{ width: "100%" }}>
+            Dismiss
+          </Button>
+        </FlowLayout>
+      </ToastContent>
+    </Toast>
+  ) : <></>
 };
 
 const SuccessToast = () => {
@@ -141,23 +101,21 @@ const SuccessToast = () => {
   const closeToast = () => {
     setOpen(false);
   };
-  return (
-    <AnimatedComponent show={open}>
-      <Toast status="success">
-        <ToastContent>
-          <Text>
-            <strong>Project file upload</strong>
-          </Text>
-          <div>
-            Project file has successfully uploaded to the shared drive.{" "}
-          </div>
-        </ToastContent>
-        <Button variant="secondary" onClick={closeToast}>
-          <CloseIcon />
-        </Button>
-      </Toast>
-    </AnimatedComponent>
-  );
+  return open ? (
+    <Toast status="success">
+      <ToastContent>
+        <Text>
+          <strong>Project file upload</strong>
+        </Text>
+        <div>
+          Project file has successfully uploaded to the shared drive.{" "}
+        </div>
+      </ToastContent>
+      <Button variant="secondary" onClick={closeToast}>
+        <CloseIcon />
+      </Button>
+    </Toast>
+  ) : <></>
 };
 
 type ToastEntryType = {
