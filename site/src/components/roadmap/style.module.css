@@ -34,17 +34,22 @@
   display: inline;
 }
 
-.icon {
-  /* margin-left: 9px; */
-}
 .column {
   padding-right: 20px;
 }
 
-.card {
+.cardFuture {
   width: 400px;
   margin-bottom: 15px;
   min-height: unset;
+  border-left-color: var(--salt-palette-warning-border);
+}
+
+.cardInProgress {
+  width: 400px;
+  margin-bottom: 15px;
+  min-height: unset;
+  border-left-color: var(--salt-palette-info-border);
 }
 
 .gridLayout {

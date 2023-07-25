@@ -9,6 +9,7 @@ import {
   BannerContent,
   InteractableCard,
   InteractableCardProps,
+  H4,
 } from "@salt-ds/core";
 import styles from "./style.module.css";
 import {
@@ -141,15 +142,21 @@ interface ItemProps {
     | null
     | undefined;
 }
-const ColumnData: React.FC<{ item: ItemProps }> = ({ item }) => {
+const ColumnData: React.FC<{ item: ItemProps; future?: boolean }> = ({
+  item,
+  future = true,
+}) => {
   const formattedDate = formatDate(new Date(item.targetDate));
 
   return (
-    <RoadmapCard className={styles.card} key={item.id}>
+    <RoadmapCard
+      className={future ? styles.cardFuture : styles.cardInProgress}
+      key={item.id}
+    >
       <Link>
-        <Heading3 className={styles.heading3}>
+        <H4 className={styles.heading3}>
           <a href={item.issueUrl}>{item.text}</a>
-        </Heading3>
+        </H4>
       </Link>
       <b>Due Date: </b>
       <p className={styles.date}>{formattedDate}</p>
@@ -187,7 +194,7 @@ export const CardView = ({ data, searchQuery }: CardViewProps) => {
           In Progress{" "}
         </Heading2>
         {inProgressData.map((item) => (
-          <ColumnData key={item.id} item={item} />
+          <ColumnData future={false} key={item.id} item={item} />
         ))}
       </div>
       <div className={styles.column}>
