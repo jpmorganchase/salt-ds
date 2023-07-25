@@ -124,9 +124,11 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
   return (
     <MultilineInput
       {...args}
-      className={clsx({ error: isError })}
       endAdornment={
-        <Label variant="secondary">{`${value.length}/${MAX_CHARS}`}</Label>
+        <Label variant={!isError ? "secondary": "primary"}>
+          {!isError && `${value.length}/${MAX_CHARS}`}
+          {isError && <strong>{`${value.length}/${MAX_CHARS}`}</strong>}
+        </Label>
       }
       onChange={handleChange}
       value={value}
