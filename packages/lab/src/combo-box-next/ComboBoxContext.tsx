@@ -2,7 +2,9 @@ import { createContext } from "@salt-ds/core";
 import { SyntheticEvent, useContext } from "react";
 
 export interface ComboBoxContextValue {
-  value?: string;
+  inputValue?: string;
+  setInputValue: () => void;
+  open?: boolean;
 }
 
 export const ComboBoxContext = createContext("ComboBoxContext", undefined);

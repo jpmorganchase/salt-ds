@@ -87,6 +87,10 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const setListRef = useForkRef(focusVisibleRef, handleRef);
 
     const handleFocus = (event: FocusEvent<HTMLUListElement>) => {
+      if (disableFocus) {
+        event.preventDefault();
+        return;
+      }
       focusHandler(event);
       onFocus?.(event);
     };

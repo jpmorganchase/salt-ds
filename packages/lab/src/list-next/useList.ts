@@ -10,7 +10,7 @@ import {
 } from "react";
 import { useControlled, useIsFocusVisible } from "@salt-ds/core";
 
-interface UseListProps {
+export interface UseListProps {
   /**
    * If true, all items in list will be disabled.
    */

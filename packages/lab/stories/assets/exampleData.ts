@@ -1,4 +1,3 @@
-
 export interface objectOptionType {
   value: number;
   text: string;
@@ -62,7 +61,6 @@ export const usStateExampleData = [
   "Wisconsin",
   "Wyoming",
 ];
-
 
 export const shortColorData = [
   "Baby blue",

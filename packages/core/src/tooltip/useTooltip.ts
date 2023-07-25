@@ -13,6 +13,7 @@ import {
 } from "@floating-ui/react";
 import { HTMLProps, useRef } from "react";
 import { useControlled, UseFloatingUIProps, useFloatingUI } from "../utils";
+import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps
   extends Partial<
@@ -26,11 +27,22 @@ export interface UseTooltipProps
    * Do not respond to hover events.
    */
   disableHoverListener?: boolean;
-
+  /**
+   * The number of milliseconds to wait before showing the tooltip.
+   * This prop won't impact the enter touch delay (`enterTouchDelay`).
+   */
+  enterDelay?: number;
+  /**
+   * The number of milliseconds to wait before hiding the tooltip.
+   * This prop won't impact the leave touch delay (`leaveTouchDelay`).
+   */
+  leaveDelay?: number;
 }
 
 export function useTooltip(props?: UseTooltipProps) {
   const {
+    enterDelay,
+    leaveDelay,
     open: openProp,
     onOpenChange,
     placement: placementProp,
@@ -73,15 +85,34 @@ export function useTooltip(props?: UseTooltipProps) {
   });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
-    // useHover(context, {
-    //   enabled: !disableHoverListener,
-    //   handleClose: safePolygon(),
-    // }),
+    useHover(context, {
+      delay: {
+        open: enterDelay,
+        close: leaveDelay,
+      },
+      enabled: !disableHoverListener,
+      handleClose: safePolygon(),
+    }),
     useFocus(context, { enabled: !disableFocusListener }),
     useRole(context, { role: "tooltip" }),
     useDismiss(context),
+    useAriaAnnounce(context, {
+      delay: {
+        open: enterDelay,
+        close: leaveDelay,
+      },
+    }),
   ]);
 
+  const arrowProps = {
+    ref: arrowRef,
+    context,
+    style: {
+      position: strategy,
+      left: arrowX ?? 0,
+      top: arrowY ?? 0,
+    },
+  };
 
   const getTooltipProps = (): HTMLProps<HTMLDivElement> => {
     return getFloatingProps({
@@ -102,6 +133,7 @@ export function useTooltip(props?: UseTooltipProps) {
     });
 
   return {
+    arrowProps,
     open,
     floating,
     reference,

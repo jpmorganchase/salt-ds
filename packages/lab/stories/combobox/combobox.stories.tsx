@@ -12,8 +12,9 @@ import {
 import { ComponentMeta, Story } from "@storybook/react";
 import {
   LargeCity,
-  largestCities, shortColorData,
-  statesData
+  largestCities,
+  shortColorData,
+  statesData,
 } from "../assets/exampleData";
 
 export default {

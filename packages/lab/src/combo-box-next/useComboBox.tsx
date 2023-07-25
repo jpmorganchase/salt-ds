@@ -1,102 +1,144 @@
-import {ChangeEvent, KeyboardEvent, ReactNode, useMemo, useState} from "react";
 import {
-  autoUpdate,
-  flip,
-  Placement,
-  size,
-  useFloating
-} from "@floating-ui/react";
-import {usePortal} from "./usePortal";
-import {useList} from "../list-next/useList";
-import {useForkRef} from "@salt-ds/core";
+  FocusEvent,
+  KeyboardEvent,
+  MouseEvent,
+  RefObject,
+  useEffect,
+  useState,
+} from "react";
+import { useList, UseListProps } from "../list-next/useList";
+import { useComboboxPortal, UsePortalProps } from "./useComboboxPortal";
 
 interface UseComboBoxProps {
   disabled?: boolean;
   defaultSelected?: string;
-  placement?: Placement;
+  listId?: string;
+  listRef: RefObject<HTMLUListElement>;
+  //
+  onBlur?: FocusEvent<HTMLInputElement>;
+  onFocus?: FocusEvent<HTMLInputElement>;
+  onMouseOver?: FocusEvent<HTMLUListElement>;
+  PortalProps?: UsePortalProps;
+  listProps: UseListProps;
 }
 
-export const useComboBox = ({disabled, defaultSelected, listId, listRef, onChange, defaultValue, placement = "bottom"}: UseComboBoxProps) => {
-
-  // STATE
-  const [value, setValue] = useState<string | undefined>(defaultValue);
-
+export const useComboBox = ({
+  onFocus,
+  onBlur,
+  onMouseOver,
+  PortalProps,
+  listProps,
+}: UseComboBoxProps) => {
   const {
     open,
     setOpen,
     floating,
     reference,
-    getTriggerProps,
     getPortalProps,
-  } = usePortal({placement});
+    getTriggerProps,
+  } = useComboboxPortal(PortalProps);
 
   const {
-    focusHandler: listFocusHandler,
     keyDownHandler: listKeyDownHandler,
-    blurHandler: listBlurHandler,
     activeDescendant,
     focusVisibleRef,
     selectedItem,
-    highlightedIndex,
+    setSelectedItem,
+    setHighlightedItem,
+    highlightedItem,
   } = useList({
-    disabled,
-    defaultSelected,
-    id: listId,
-    ref: listRef,
+    ...listProps,
   });
 
-  // Handlers
-  console.log()
-
   const focusHandler = (event: FocusEvent<HTMLInputElement>) => {
-    console.log('focus')
-    listFocusHandler(event);
     setOpen(true);
-    // onFocus?.(event);
+    onFocus?.(event);
+  };
+
+  const blurHandler = (event: FocusEvent<HTMLInputElement>) => {
+    setOpen(false);
+    if (!selectedItem) {
+      setSelectedItem(undefined);
+    }
+    onBlur?.(event);
+  };
+
+  const mouseOverHandler = (event: MouseEvent<HTMLElement>) => {
+    const hoveredElement = event.target;
+    setHighlightedItem(hoveredElement?.dataset.value);
+    onMouseOver?.(event);
   };
 
   const keyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-    const { key, target } = event;
-    const value = target.value;
-    console.log(key)
+    const { key, altKey } = event;
     switch (key) {
-      case "ArrowUp":
       case "ArrowDown":
+      case "ArrowUp":
+        if (altKey) {
+          event.preventDefault();
+          if (open && !selectedItem) {
+            setSelectedItem(undefined);
+          }
+          setOpen(!open);
+          break;
+        }
+        if (!open) {
+          setOpen(true);
+        }
         listKeyDownHandler(event);
+        break;
+      case "PageDown":
+      case "PageUp":
+      case "Home":
+      case "End":
+        if (open) {
+          listKeyDownHandler(event);
+        }
+        break;
+      case "Enter":
+        if (!open) {
+          setOpen(true);
+        } else {
+          setSelectedItem(highlightedItem);
+        }
+        break;
+      case "Escape":
+        if (open) {
+          setOpen(false);
+          if (!selectedItem) {
+            setSelectedItem(undefined);
+          }
+        }
+        break;
+      case "Backspace":
+        if (!open) {
+          setOpen(true);
+        }
         break;
       default:
         break;
     }
-
-  }
-
-  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setValue(value);
-    onChange?.(event);
   };
 
-  // }
-
-  // const setListRef = useForkRef(focusVisibleRef, floating);
-
   return {
-    // state
-    value,
-    setValue,
     // portal
-    open,
-    setOpen,
-    reference,
-    getTriggerProps,
-    getPortalProps,
+    portalProps: {
+      open,
+      floating,
+      reference,
+      getTriggerProps,
+      getPortalProps,
+    },
     // list
     selectedItem,
-    highlightedIndex,
+    setSelectedItem,
+    highlightedItem,
+    setHighlightedItem,
     activeDescendant,
-    setListRef: focusVisibleRef,
+    focusVisibleRef,
     keyDownHandler,
     focusHandler,
-    changeHandler
-  }
+    blurHandler,
+    mouseOverHandler,
+  };
 };
