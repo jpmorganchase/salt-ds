@@ -26,7 +26,10 @@ const Icons = () => {
       {Object.keys(styles).map((key) => {
         if (styles[key].startsWith('"')) {
           return (
-            <div {...containerProps} style={{ "--icon-content": styles[key] } as CSSProperties}>
+            <div
+              {...containerProps}
+              style={{ "--icon-content": styles[key] } as CSSProperties}
+            >
               {key}
             </div>
           );
