@@ -7,6 +7,8 @@ import {
   Link,
   Banner,
   BannerContent,
+  InteractableCard,
+  InteractableCardProps,
 } from "@salt-ds/core";
 import styles from "./style.module.css";
 import {
@@ -52,8 +54,8 @@ function sortRoadmapDataByDate(roadmapData: RoadmapData[]): RoadmapData[] {
   return sortedData;
 }
 
-function RoadmapCard(props: CardProps) {
-  return <Card {...props} />;
+function RoadmapCard(props: InteractableCardProps) {
+  return <InteractableCard accentPlacement="left" {...props} />;
 }
 
 export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
@@ -181,18 +183,19 @@ export const CardView = ({ data, searchQuery }: CardViewProps) => {
     <GridLayout className={styles.cardContainer} columns={2}>
       <div className={styles.column}>
         <Heading2 className={styles.heading}>
-          Future <ProgressPendingIcon className={styles.icon} size={1.4} />
+          <ProgressInprogressIcon className={styles.icon} size={2} />
+          In Progress{" "}
         </Heading2>
-        {futureData.map((item) => (
+        {inProgressData.map((item) => (
           <ColumnData key={item.id} item={item} />
         ))}
       </div>
       <div className={styles.column}>
         <Heading2 className={styles.heading}>
-          In Progress{" "}
-          <ProgressInprogressIcon className={styles.icon} size={1.4} />
+          <ProgressPendingIcon className={styles.icon} size={2} />
+          Future
         </Heading2>
-        {inProgressData.map((item) => (
+        {futureData.map((item) => (
           <ColumnData key={item.id} item={item} />
         ))}
       </div>

@@ -1,6 +1,6 @@
 .heading {
   margin-bottom: 5%;
-  text-align: center;
+  text-align: left;
 }
 
 .heading3 {
@@ -35,22 +35,14 @@
 }
 
 .icon {
-  margin-left: 9px;
+  /* margin-left: 9px; */
 }
 .column {
-  padding-right: 20px; /* Adjust the padding as per your design */
-}
-
-.iconplace {
-  position: absolute;
-  top: 2;
-  right: 2;
+  padding-right: 20px;
 }
 
 .card {
-  border-radius: 8px;
-  position: relative;
-  width: 250px;
+  width: 400px;
   margin-bottom: 15px;
   min-height: unset;
 }
