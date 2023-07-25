@@ -27,7 +27,7 @@ export interface ListNextProps
   /* If `true`, the component will not receive focus. */
   disableFocus?: boolean;
   /* Value for the controlled version. */
-  highlightedIndex?: number;
+  highlightedItem?: string;
   /* Value for the controlled version. */
   selected?: string;
   /* Callback for change event. */
@@ -50,8 +50,8 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onFocus,
       onBlur,
       onKeyDown,
-      onMouseDown,
-      highlightedIndex,
+      onMouseOver,
+      highlightedItem,
       selected,
       defaultSelected,
       onChange,
@@ -76,12 +76,13 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       focusHandler,
       keyDownHandler,
       blurHandler,
+      mouseOverHandler,
       activeDescendant,
       contextValue,
       focusVisibleRef,
     } = useList({
       disabled,
-      highlightedIndex,
+      highlightedItem,
       selected,
       defaultSelected,
       onChange,
@@ -97,6 +98,10 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLUListElement>) => {
+      if (disableFocus) {
+        event.preventDefault();
+        return;
+      }
       keyDownHandler(event);
       onKeyDown?.(event);
     };
@@ -106,9 +111,9 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onBlur?.(event);
     };
 
-    const handleMouseDown = (event: MouseEvent<HTMLUListElement>) => {
-      mouseDownHandler();
-      onMouseDown?.(event);
+    const handleMouseOver = (event: MouseEvent<HTMLUListElement>) => {
+      mouseOverHandler();
+      onMouseOver?.(event);
     };
 
     const getDisplayedItemCount = () => {
@@ -130,7 +135,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           onFocus={handleFocus}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
-          onMouseDown={handleMouseDown}
+          onMouseOver={handleMouseOver}
           style={{
             ...style,
             "--list-displayedItemCount": getDisplayedItemCount(),

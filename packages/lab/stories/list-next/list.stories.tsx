@@ -30,13 +30,20 @@ const getListItems = ({ disabledItems = [] }: { disabledItems?: number[] }) =>
     );
   });
 
-export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
+export const Default: Story<ListNextProps> = ({
+  children,
+  onChange,
+  ...rest
+}) => {
   return (
     <ListNext
-      {...rest}
       aria-label="Declarative List example"
       style={{ height: "150px" }}
-      onChange={(e, { value }) => console.log("new selection", value)}
+      onChange={(e, { value }) => {
+        console.log("new selection", value);
+        onChange?.(e, { value });
+      }}
+      {...rest}
     >
       {children ||
         getListItems({
@@ -48,7 +55,7 @@ export const Default: Story<ListNextProps> = ({ children, ...rest }) => {
 
 Default.args = {};
 
-export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
+export const Controlled: Story<ListNextProps> = ({ onChange, ...rest }) => {
   const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
     0
   );
@@ -63,7 +70,8 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
   };
 
   const handleArrowUp = () => {
-    const prevIndex = highlightedIndex && highlightedIndex - 1;
+    const prevIndex =
+      highlightedIndex === undefined ? undefined : highlightedIndex - 1;
     setHighlightedIndex(prevIndex);
   };
 
@@ -87,7 +95,6 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
           )
         : undefined;
     setHighlightedIndex(firstMatchingItem);
-    setSelectedItem(event.target.value);
   };
 
   const handleInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -122,7 +129,7 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
         aria-label="Controls"
         value={controls}
         onChange={(event: SyntheticEvent<HTMLButtonElement>) =>
-          setControls(event.target.value)
+          setControls(event.currentTarget.value)
         }
       >
         <ToggleButton aria-label="Button controls" value="buttons">
@@ -165,8 +172,15 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
         aria-label="Controlled List example"
         selected={selectedItem}
         disableFocus
-        highlightedIndex={highlightedIndex}
-        onChange={(e, { value }) => console.log("new selection", value)}
+        highlightedItem={
+          highlightedIndex === undefined
+            ? undefined
+            : usStateExampleData[highlightedIndex]
+        }
+        onChange={(e, { value }) => {
+          console.log("new selection", value);
+          onChange?.(e, { value });
+        }}
         style={{ maxHeight: "150px", width: "100%" }}
       >
         {usStateExampleData.map((item, index) => {

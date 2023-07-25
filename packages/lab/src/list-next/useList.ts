@@ -15,13 +15,13 @@ interface UseListProps {
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
-  /* Value for the controlled version. */
-  highlightedIndex?: number;
-  /* Value for the controlled version. */
+  /* Highlighted index for when the list is controlled. */
+  highlightedItem?: string;
+  /* Selected value for when the list is controlled. */
   selected?: string;
-  /* Initial value for the controlled version. */
+  /* Initial selected value for when the list is controlled. */
   defaultSelected?: string;
-  /* Callback for the uncontrolled version. */
+  /* Callback for when the list is controlled. */
   onChange?: (e: SyntheticEvent, data: { value: string }) => void;
   /* List id. */
   id?: string;
@@ -31,7 +31,7 @@ interface UseListProps {
 
 export const useList = ({
   disabled = false,
-  highlightedIndex,
+  highlightedItem: highlightedItemProp,
   selected: selectedProp,
   defaultSelected,
   onChange,
@@ -45,25 +45,23 @@ export const useList = ({
     );
   }, [ref]);
 
-  const getId = useCallback(() => {
-    if (highlightedIndex === undefined) return undefined;
-    const activeOptions = getOptions();
-    return activeOptions[highlightedIndex]?.id;
-  }, [highlightedIndex, getOptions]);
-
   const [focusVisible, setFocusVisible] = useState(false);
+  const [activeDescendant, setActiveDescendant] = useState<string | undefined>(
+    undefined
+  );
 
-  const [activeDescendant, setActiveDescendant] = useControlled({
-    controlled: getId(),
-    default: undefined,
-    name: "ListNextHighlighted",
-    state: "activeDescendant",
+  const [highlightedItem, setHighlightedItem] = useControlled({
+    controlled: highlightedItemProp,
+    default: highlightedItemProp,
+    name: "ListNext",
+    state: "highlighted",
   });
+
 
   const [selectedItem, setSelectedItem] = useControlled({
     controlled: selectedProp,
     default: defaultSelected,
-    name: "ListNextSelected",
+    name: "ListNext",
     state: "selected",
   });
 
@@ -90,37 +88,45 @@ export const useList = ({
     [ref]
   );
 
-  const updateActiveDescendant = useCallback(
+  const updateHighlighted = useCallback(
     (element: HTMLElement) => {
+      setHighlightedItem(element.dataset.value);
       setActiveDescendant(element.id);
       updateScroll(element);
     },
-    [setActiveDescendant, updateScroll]
+    [setHighlightedItem, updateScroll]
   );
+
   const selectItem = useCallback(
     (element: HTMLElement) => {
       const newValue = element?.dataset.value;
       if (newValue) {
         setSelectedItem(newValue);
-        updateActiveDescendant(element);
+        updateHighlighted(element);
       }
     },
-    [setSelectedItem, updateActiveDescendant]
+    [setSelectedItem, updateHighlighted]
   );
 
   // Effect to move the cursor when items change controlled.
   // this could be following active descendant if there is no better way of doing it when controlled
   useEffect(() => {
     const activeOptions = getOptions();
-    highlightedIndex && updateScroll(activeOptions[highlightedIndex]);
-  }, [highlightedIndex, getOptions, updateScroll]);
+    const highlightedIndex = activeOptions.findIndex(
+      (i) => i.dataset.value === highlightedItem
+    );
+    if (highlightedIndex) {
+      setActiveDescendant(activeOptions[highlightedIndex]?.id);
+      highlightedItem && updateScroll(activeOptions[highlightedIndex]);
+    }
+  }, [highlightedItem, getOptions, updateScroll]);
 
   const focusFirstItem = () => {
     // Find first active item
     const activeOptions = getOptions();
     const firstItem = activeOptions[0];
     if (firstItem) {
-      updateActiveDescendant(firstItem);
+      updateHighlighted(firstItem);
     }
   };
   const focusLastItem = () => {
@@ -128,7 +134,7 @@ export const useList = ({
     const activeOptions = getOptions();
     const lastItem = activeOptions[activeOptions.length - 1];
     if (lastItem) {
-      updateActiveDescendant(lastItem);
+      updateHighlighted(lastItem);
       updateScroll(lastItem);
     }
   };
@@ -179,21 +185,21 @@ export const useList = ({
     [selectedItem]
   );
 
-  const isFocused = useCallback(
-    (id: string | undefined) => activeDescendant === id && focusVisible,
-    [activeDescendant, focusVisible]
-  );
-
   const highlight = useCallback(
     (event: SyntheticEvent<HTMLLIElement>) => {
-      setActiveDescendant(event.currentTarget.id);
+      setHighlightedItem(event.currentTarget.dataset.value);
     },
-    [setActiveDescendant]
+    [setHighlightedItem]
   );
 
   const isHighlighted = useCallback(
-    (id: string | undefined) => activeDescendant === id,
-    [activeDescendant]
+    (value: string) => highlightedItem === value,
+    [highlightedItem]
+  );
+
+  const isFocused = useCallback(
+    (value: string) => isHighlighted(value) && focusVisible,
+    [focusVisible, isHighlighted]
   );
 
   const getActiveItem = () => {
@@ -212,6 +218,12 @@ export const useList = ({
     }
   };
 
+  const mouseOverHandler = () => {
+    if (focusVisible) {
+      setFocusVisible(false);
+    }
+  };
+
   // takes care of focus when using keyboard navigation
   const focusHandler = (event: FocusEvent<HTMLUListElement>) => {
     handleFocusVisible(event);
@@ -219,7 +231,7 @@ export const useList = ({
       setFocusVisible(true);
     }
     const activeElement = getActiveItem();
-    updateActiveDescendant(activeElement);
+    updateHighlighted(activeElement);
   };
 
   // takes care of keydown when using keyboard navigation
@@ -231,7 +243,7 @@ export const useList = ({
       event.preventDefault();
       return;
     }
-    if (isFocusVisibleRef.current) {
+    if (isFocusVisibleRef.current || !focusVisible) {
       setFocusVisible(true);
     }
     switch (key) {
@@ -244,7 +256,7 @@ export const useList = ({
 
         if (nextItem && nextItem !== currentItem) {
           event.preventDefault();
-          updateActiveDescendant(nextItem);
+          updateHighlighted(nextItem);
         }
         break;
       case "Home":
@@ -289,7 +301,10 @@ export const useList = ({
     focusHandler,
     keyDownHandler,
     blurHandler,
+    mouseOverHandler,
     activeDescendant,
+    selectedItem,
+    highlightedItem,
     contextValue,
     focusVisibleRef,
   };

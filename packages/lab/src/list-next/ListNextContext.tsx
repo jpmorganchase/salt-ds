@@ -8,7 +8,7 @@ export interface ListNextContextValue {
   isSelected: (value: string) => boolean;
   isFocused: (value: string) => boolean;
   highlight: (event: SyntheticEvent<HTMLLIElement>) => void;
-  isHighlighted: (id: string) => boolean;
+  isHighlighted: (value: string) => boolean;
 }
 
 export const ListNextContext = createContext<ListNextContextValue | undefined>(
