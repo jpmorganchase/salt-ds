@@ -6,6 +6,7 @@ import saltStyles from "../../css/_export-salt-icons.module.scss";
 import uitkStyles from "../../css/_export-uitk-icons.module.scss";
 
 import iconCss from "./Icons.css";
+import { CSSProperties } from "react";
 
 const Icons = () => {
   const targetWindow = useWindow();
@@ -25,7 +26,7 @@ const Icons = () => {
       {Object.keys(styles).map((key) => {
         if (styles[key].startsWith('"')) {
           return (
-            <div {...containerProps} style={{ "--icon-content": styles[key] }}>
+            <div {...containerProps} style={{ "--icon-content": styles[key] } as CSSProperties}>
               {key}
             </div>
           );
