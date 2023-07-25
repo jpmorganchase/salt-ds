@@ -62,10 +62,14 @@
 
 @media (max-width: 767px) {
   .cardFuture {
-    width: fit-content;
+    width: 80%;
   }
 
   .cardInProgress {
-    width: fit-content;
+    width: 80%;
+  }
+  .cardContainer {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 }
