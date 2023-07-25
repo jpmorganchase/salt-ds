@@ -9,7 +9,6 @@ import {
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Info as DefaultInfo } from "../Info";
-import { Circle, LinearGradient, SIZE, ViewBox } from "./CircularProgressParts";
 import { InfoRendererProps } from "../LinearProgress/LinearProgress";
 
 import { useWindow } from "@salt-ds/window";
@@ -17,36 +16,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import circularProgressCSS from "./CircularProgress.css";
 
-const MAX = 100;
-const MIN = 0;
-
 const withBaseName = makePrefixer("saltCircularProgress");
-
-export const SIZE_OPTIONS = {
-  small: {
-    container: 36,
-  },
-  medium: {
-    container: 48,
-  },
-  large: {
-    container: 60,
-  },
-};
-
-function getRelativeValue(value: number, min: number, max: number): number {
-  return (Math.min(Math.max(min, value), max) - min) / (max - min);
-}
-
-function easeOut(t: number): number {
-  t = getRelativeValue(t, 0, 1);
-  t = (t -= 1) * t * t + 1;
-  return t;
-}
-
-function easeIn(t: number): number {
-  return t * t;
-}
 
 export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -62,6 +32,11 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   disabled?: boolean;
   /**
+   * The value of the max progress indicator.
+   * Default value is 100.
+   */
+  max?: number;
+  /**
    * Render props callback to render info panel.
    * @param function({ value, unit, getValueProps })
    */
@@ -73,24 +48,14 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   showInfo?: boolean;
   /**
-   * The size of the circle
-   * (small, medium, large)
-   */
-  size?: "small" | "medium" | "large";
-  /**
    * Default unit is`%`
    */
   unit?: string;
   /**
-   * The value of the progress indicator for the determinate and static variants.
-   * Value between 0 and 100.
+   * The value of the progress indicator.
+   * Value between 0 and max.
    */
   value?: number;
-  /**
-   * The variant to use.
-   * Use indeterminate or query when there is no progress value.
-   */
-  variant?: "determinate" | "indeterminate" | "static";
 }
 
 /**
@@ -100,7 +65,6 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
  * The render props callback is of the form
  * @param {string} unit the unit of the progress info
  * @param {number} value the value of the progress info
- * @param {string} variant the variant to use.
  * @param {function} getValueProps function callback that returns the value props
  */
 export const CircularProgress = forwardRef<
@@ -111,12 +75,11 @@ export const CircularProgress = forwardRef<
     "aria-label": ariaLabel,
     className,
     disabled,
+    max = 100,
     showInfo = true,
-    size = "small",
     renderInfo,
     value = 0,
     unit = "%",
-    variant = "static",
     ...rest
   },
   ref
@@ -129,29 +92,22 @@ export const CircularProgress = forwardRef<
   });
 
   const circleStyle: CSSProperties = {};
+  const railCircleStyle: CSSProperties = {};
   const rootStyle: CSSProperties = {};
   const rootProps: HTMLAttributes<any> = {};
 
-  if (variant === "determinate" || variant === "static") {
-    const circumference = 2 * Math.PI * ((SIZE - 2) * 0.5);
-    circleStyle.strokeDasharray = circumference.toFixed(3);
-    rootProps["aria-valuenow"] = Math.round(value);
+  const progress = (value / max) * 100;
 
-    if (variant === "static") {
-      circleStyle.strokeDashoffset = `${(
-        ((100 - value) / 100) *
-        circumference
-      ).toFixed(3)}px`;
-      rootStyle.transform = "rotate(-90deg)";
-    } else {
-      circleStyle.strokeDashoffset = `${(
-        easeIn((100 - value) / 100) * circumference
-      ).toFixed(3)}px`;
-      rootStyle.transform = `rotate(${(easeOut(value / 70) * 270).toFixed(
-        3
-      )}deg)`;
-    }
-  }
+  rootProps["aria-valuenow"] = Math.round(value);
+
+  const progressStrokeLength = `calc(${progress} * var(--circularProgress-progressCircle-circumference) / 100)`;
+  const progressGapLength = `calc((100 - ${progress}) * var(--circularProgress-progressCircle-circumference) / 100)`;
+  const railStrokeLength = `calc((100 - ${progress}) * var(--circularProgress-railCircle-circumference) / 100)`;
+  const railGapLength = `calc((${progress}) * var(--circularProgress-railCircle-circumference) / 100)`;
+
+  circleStyle.strokeDasharray = `${progressStrokeLength} ${progressGapLength}`;
+  railCircleStyle.strokeDashoffset = `${railStrokeLength}`;
+  railCircleStyle.strokeDasharray = `${railStrokeLength} ${railGapLength}`;
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" && !ariaLabel) {
@@ -161,8 +117,6 @@ export const CircularProgress = forwardRef<
       );
     }
   }, [ariaLabel]);
-
-  const containerSize = SIZE_OPTIONS[size].container;
 
   const getValueProps = () => ({
     unit,
@@ -181,7 +135,7 @@ export const CircularProgress = forwardRef<
       <DefaultInfo
         className={withBaseName("progressValue")}
         unit={unit}
-        value={value}
+        value={Math.round(progress)}
         {...rest}
       />
     );
@@ -189,42 +143,37 @@ export const CircularProgress = forwardRef<
 
   return (
     <div
-      className={clsx(className, "saltCircularProgress", {
-        [withBaseName("small")]: size === "small",
-        [withBaseName("medium")]: size === "medium",
-        [withBaseName("large")]: size === "large",
-        [withBaseName("disabled")]: disabled,
-      })}
+      className={clsx(
+        withBaseName(),
+        { [withBaseName("disabled")]: disabled },
+        className
+      )}
       data-testid="circular-progress"
       ref={ref}
       role="progressbar"
       aria-label={ariaLabel}
-      aria-valuemax={MAX}
-      aria-valuemin={MIN}
+      aria-valuemax={max}
+      aria-valuemin={0}
       aria-valuenow={value}
       {...rest}
     >
-      <div
-        className={clsx(withBaseName("container"), {
-          [withBaseName("indeterminate")]: variant === "indeterminate",
-          [withBaseName("static")]: variant === "static",
-        })}
-        style={{ width: containerSize, height: containerSize, ...rootStyle }}
-      >
-        <ViewBox>
-          <LinearGradient />
-          <Circle className={withBaseName("railCircle")} strokeWidth={1} />
-          <Circle
-            strokeWidth={2}
-            style={circleStyle}
-            className={clsx(withBaseName("circle"), {
-              [withBaseName("circleIndeterminate")]:
-                variant === "indeterminate",
-              [withBaseName("circleStatic")]: variant === "static",
-            })}
-          />
-        </ViewBox>
-      </div>
+      <svg className={withBaseName("svg")}>
+        <circle
+          cx="50%"
+          cy="50%"
+          fill="none"
+          style={railCircleStyle}
+          className={withBaseName("railCircle")}
+        />
+
+        <circle
+          cx="50%"
+          cy="50%"
+          fill="none"
+          style={circleStyle}
+          className={withBaseName("circle")}
+        />
+      </svg>
       {progressInfo}
     </div>
   );

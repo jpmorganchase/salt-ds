@@ -1,0 +1,60 @@
+.heading {
+  margin-bottom: 5%;
+  text-align: center;
+}
+
+.heading3 {
+  padding-bottom: 5%;
+}
+
+.cardContainer:global(.saltGridLayout) {
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 20px; /* Adjust the gap between columns */
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchInput {
+  flex: 1;
+  max-width: 400px;
+  width: 100%;
+}
+
+.test {
+  width: "400px";
+  margin-bottom: " 50px ";
+}
+.date {
+  display: inline;
+}
+
+.icon {
+  margin-left: 9px;
+}
+.column {
+  padding-right: 20px; /* Adjust the padding as per your design */
+}
+
+.iconplace {
+  position: absolute;
+  top: 2;
+  right: 2;
+}
+
+.card {
+  border-radius: 8px;
+  position: relative;
+  width: 250px;
+  margin-bottom: 15px;
+  min-height: unset;
+}
+
+.gridLayout {
+  max-width: 1000px;
+}

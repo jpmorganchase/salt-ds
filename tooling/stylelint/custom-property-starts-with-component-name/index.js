@@ -4,6 +4,7 @@ const valueParser = require("postcss-value-parser");
 const stylelint = require("stylelint");
 const fs = require("fs");
 const path = require("path");
+const glob = require("glob-promise");
 
 const { report, ruleMessages } = stylelint.utils;
 
@@ -56,47 +57,23 @@ function capitalize(folderName) {
   return parts.map((value) => value[0].toUpperCase() + value.slice(1)).join("");
 }
 
-let components = [];
-
-function getComponentName(path) {
-  const componentFolder = path.split("/").slice(-2)[0];
-  return componentFolder
-    .split("-")
-    .map((part, index) => {
-      return index === 0 ? part : capitalize(part);
-    })
-    .join("");
-}
-
-const getFilesRecursively = (directorys) => {
-  for (var dir of directorys) {
-    const filesInDirectory = fs.readdirSync(dir);
-    for (const file of filesInDirectory) {
-      if (!file.startsWith("__")) {
-        // ignore test folders
-        const parentFolder = path.join(dir, file);
-        if (fs.statSync(parentFolder).isDirectory()) {
-          getFilesRecursively([parentFolder]);
-        } else if (file.endsWith(".css")) {
-          const fileName = file.split(".css")[0];
-          const component = getComponentName(parentFolder); // formats e.g. radio-button to RadioButton
-          if (capitalize(component) === fileName) {
-            // matches folder name to file name
-            components.push(fileName);
-          }
-        }
-      }
+const allowedNames = glob
+  .sync("./packages/*/src/**/*.css")
+  .map((file) => {
+    const fileName = path.basename(file, ".css");
+    const parentFolder = path.basename(path.dirname(file));
+    const component = parentFolder.replace(/(^\w|-\w)/g, (text) =>
+      text.replace(/-/, "").toUpperCase()
+    );
+    if (capitalize(component) === fileName) {
+      // matches folder name to file name
+      return fileName;
     }
-  }
-  return components;
-};
 
-const allowedNames = getFilesRecursively([
-  `./packages/core/src`,
-  `./packages/icons/src`,
-  `./packages/data-grid/src`,
-  `./packages/lab/src`,
-]);
+    return null;
+  })
+  .filter(Boolean);
+
 const allowedNamesFormatted = allowedNames.map(
   (component) => `${component[0].toLowerCase()}${component.slice(1)}`
 );

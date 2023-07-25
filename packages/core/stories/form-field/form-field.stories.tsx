@@ -21,10 +21,10 @@ import {
   GridLayout,
   FormFieldLabelPlacement,
   Button,
+  MultilineInput,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
-import { MultilineInput } from "@salt-ds/lab";
 
 export default {
   title: "Core/Form Field",

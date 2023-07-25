@@ -1,0 +1,151 @@
+import { MultilineInput } from "@salt-ds/core";
+import { Meta, Canvas, ArgsTable, Story } from "@storybook/addon-docs";
+import {
+  CSSClassTable,
+  CharacteristicUsage,
+} from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Core/Multiline Input"
+  component={MultilineInput}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Multiline Input
+
+Multiline Input provides an editable text area in which users can enter multiple lines of text and numeric values.
+
+<Canvas>
+  <Story id="core-multiline-input--default" />
+</Canvas>
+
+## Examples
+
+### Default
+
+Multiline Input comprises value text and a focus ring. The component is initially empty. Once it has focus, it accepts text on multipline lines, with a default of three lines visible to the user.
+
+<Canvas>
+  <Story id="core-multiline-input--default" />
+</Canvas>
+
+### Controlled
+
+You can control Multiline Input with the `value` and `onChange` props. Learn more about <Link href="https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components">controlled vs. uncontrolled components</Link> in the official React docs.
+
+<Canvas>
+  <Story id="core-multiline-input--controlled" />
+</Canvas>
+
+## Number of Rows
+
+Multiline Input shows 3 rows by default. This can be adjusted by setting the `rows` prop.
+
+<Canvas>
+  <Story id="core-multiline-input--number-of-rows" />
+</Canvas>
+
+## Bordered
+
+Multiline Input can be styled with a full border by setting the `bordered` prop to `true`.
+
+<Canvas>
+  <Story id="core-multiline-input--bordered" />
+</Canvas>
+
+### Variants
+
+Multiline Input has two variants: primary (default) and secondary.
+
+<Canvas>
+  <Story id="core-multiline-input--variants" />
+</Canvas>
+
+### Disabled
+
+You can set Multiline Input to a disabled state, with no resultant action when the user interacts with it.
+
+<Canvas>
+  <Story id="core-multiline-input--disabled" />
+</Canvas>
+
+- When setting Multiline Input to disabled state, ensure to also disable any nested interactive adornments, such as buttons.
+
+### Placeholder
+
+You can use a placeholder to prompt user input if no default value is provided.
+
+<Canvas>
+  <Story id="core-multiline-input--placeholder" />
+</Canvas>
+
+### Read-only
+
+You can set Multiline Input to a read-only state. The value text can’t be edited in this state, but it can be highlighted and copied.
+**Note:** Read-only fields are not focusable since they are treated as a static representation rather than a form control.
+
+<Canvas>
+  <Story id="core-multiline-input--readonly" />
+</Canvas>
+
+- When setting Multiline Input to read-only state, ensure to also disable any nested interactive adornments, such as buttons.
+
+### Validation
+
+Multiline Input can show validation states (warning, success, error) with the prop `validationStatus`.
+
+<Canvas>
+  <Story id="core-multiline-input--validation-states" />
+</Canvas>
+
+- Use the error state to alert the user of a critical issue that’s related to the input. Issues highlighted by an error state may jeopardize completion of the task and usually require action from the user to resolve the error.
+- Display the warning state to alert the user of a potential issue that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
+
+### Adornments
+
+Adornments can be added at the beginning or end of the text area using the `startAdornment` and `endAdornment` props respectively. Use the `Button` component to have an interactive button within your Multiline Input.
+
+<Canvas>
+  <Story id="core-multiline-input--with-adornments" />
+</Canvas>
+
+### Character Count
+
+Use a controlled Multiline Input to enforce a character count on the user input. Add the character count as a Label component to present the remaining characters out of the given limit with the encouraged Salt styling.
+
+<Canvas>
+  <Story id="lab-multiline-input--character-count" />
+</Canvas>
+
+## Spellcheck
+
+Automatic spellchecking can be turned on by using `inputProps`.
+
+<Canvas>
+  <Story id="core-multiline-input--spellcheck" />
+</Canvas>
+
+## API
+
+```
+import { MultilineInput } from "@salt-ds/core";
+```
+
+### Props
+
+<ArgsTable of={MultilineInput} />
+
+### CSS Class
+
+<CSSClassTable of={MultilineInput} />
+
+### Characteristics Used
+
+<CharacteristicUsage of={MultilineInput} />
+
+### Accessibility
+
+<HelpAndSupport />

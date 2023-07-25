@@ -1,0 +1,22 @@
+.saltTrackerConnector {
+  --trackerConnector-style-default: var(--saltTrackerConnector-style-default, var(--salt-track-borderStyle-incomplete));
+  --trackerConnector-style-active: var(--saltTrackerConnector-style-active, var(--salt-track-borderStyle-active));
+  --trackerConnector-color: var(--saltTrackerConnector-color, var(--salt-track-borderColor));
+  --trackerConnector-thickness: var(--saltTrackerConnector-thickness, var(--salt-track-borderWidth));
+  --trackerConnector-margin: var(--saltTrackerConnector-margin, var(--salt-spacing-100));
+}
+
+.saltTrackerConnector {
+  height: 0;
+  border-top-width: var(--trackerConnector-thickness);
+  border-top-style: var(--trackerConnector-style-default);
+  border-top-color: var(--trackerConnector-color);
+  position: absolute;
+  width: calc(100% - (var(--saltIcon-size)) - (var(--trackerConnector-margin) * 2));
+  left: calc(50% + (var(--saltIcon-size) / 2) + var(--trackerConnector-margin));
+  top: calc(var(--saltIcon-size) / 2);
+}
+
+.saltTrackerConnector.saltTrackerConnector-active {
+  border-top-style: var(--trackerConnector-style-active);
+}

@@ -1,5 +1,39 @@
 # @salt-ds/core
 
+## 1.8.0-rc.5
+
+### Minor Changes
+
+- 6c86e078: Add Toast and ToastContent.
+
+  Displays a small pop-up notification that’s usually short-lived and shown in response to a user action or system event unrelated to the user’s current focus.
+
+  ```tsx
+  <Toast>
+    <ToastContent>Toast content</ToastContent>
+    <Button variant="secondary">
+      <CloseIcon />
+    </Button>
+  </Toast>
+  ```
+
+### Patch Changes
+
+- 6099c82a: Removed "user-select:none" from Button
+- 087496e3: Fixed placeholder styling in Input
+  Fixed activation indicator width on readonly variant in Input when active
+  Fixed spacing between multiple adornment buttons
+  Fixed adornment button height and width
+- b5e70f08: Fixed Checkbox Group crashing when a Checkbox was toggled in React 16
+- 58a6de9a: The `pronounced` prop has been replaced with the `intent` prop.
+
+  ```diff
+  - <FormLabel pronounced />
+  + <FormLabel intent="sentence" />
+  ```
+
+- abfc4364: Corrected the minimum supported version of React. It has been updated to 16.14.0 due to the support for the new [JSX transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)
+
 ## 1.8.0-rc.4
 
 ### Minor Changes
