@@ -1,9 +1,8 @@
 import { clsx } from "clsx";
-import { forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import { Card, CardProps } from "./Card";
 import { capitalize, makePrefixer } from "../utils";
 import { useInteractableCard } from "./useInteractableCard";
 
@@ -12,8 +11,7 @@ import interactableCardCss from "./InteractableCard.css";
 const withBaseName = makePrefixer("saltInteractableCard");
 
 // TODO: Remove omissions when Card props deprecated
-export interface InteractableCardProps
-  extends Omit<CardProps, "disabled" | "interactable"> {
+export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Accent border position: defaults to "bottom"
    */
