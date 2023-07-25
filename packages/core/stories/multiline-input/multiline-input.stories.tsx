@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { ChangeEvent, useState } from "react";
 import { Button, FlowLayout, Label, MultilineInput, Text } from "@salt-ds/core";
 import {
@@ -12,6 +13,8 @@ import {
   UserBadgeIcon,
 } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
+
+import "./multiline-input.stories.css";
 
 export default {
   title: "Core/Multiline Input",
@@ -104,26 +107,30 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
 
 export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
   const [value, setValue] = useState<string>("Value");
+  const [isError, setIsError] = useState<boolean>(false);
   const MAX_CHARS = 10;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newVal = event.target.value;
+    setValue(newVal);
 
-    if (newVal.length <= MAX_CHARS) {
-      const value = newVal;
-      setValue(value);
+    if (newVal.length > MAX_CHARS) {
+      setIsError(true);
+    } else if (isError) {
+      setIsError(false);
     }
   };
 
   return (
     <MultilineInput
       {...args}
-      value={value}
-      onChange={handleChange}
+      className={clsx({"error": isError})}
       endAdornment={
         <Label variant="secondary">{`${value.length}/${MAX_CHARS}`}</Label>
       }
-      style={{ maxWidth: "266px" }}
+      onChange={handleChange}
+      value={value}
+      validationStatus={isError ? "error" : undefined}
     />
   );
 };
