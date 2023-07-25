@@ -1,0 +1,33 @@
+---
+title: Versioning
+layout: DetailTechnical
+---
+
+## Versioning strategy
+
+Salt follows [semantic versioning 2.0.0](https://semver.org/). This means that the version number is composed of three numbers: `major`.`minor`.`patch`.
+
+The `major` number is incremented when there are breaking changes.
+The `minor` number is incremented when new functionality is added.
+The `patch` number is incremented when bug fixes are made.
+
+Below is a list of example changes and the corresponding version number increment:
+
+### Major
+
+- Removal of a component
+- Removal of a prop
+- Removal of a CSS variable from the theme
+
+### Minor
+
+- Addition of a component
+- Addition of a prop
+- Addition of a CSS variable to the theme
+- Deprecation of a component or prop
+
+### Patch
+
+- Changes that do not affect a public API
+- Style changes
+- Changes to CSS classnames and HTML structure
