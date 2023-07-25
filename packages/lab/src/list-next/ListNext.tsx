@@ -26,7 +26,7 @@ export interface ListNextProps
   /* If `true`, the component will not receive focus. */
   disableFocus?: boolean;
   /* Value for the controlled version. */
-  highlightedIndex?: number;
+  highlightedItem?: string;
   /* Value for the controlled version. */
   selected?: string;
   /* Callback for change event. */
@@ -47,8 +47,8 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onFocus,
       onBlur,
       onKeyDown,
-      onMouseDown,
-      highlightedIndex,
+      onMouseOver,
+      highlightedItem,
       selected,
       defaultSelected,
       onChange,
@@ -66,17 +66,17 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const listId = useId(id);
     const listRef = useRef<HTMLUListElement>(null);
     const handleRef = useForkRef(listRef, ref);
-
     const {
       focusHandler,
       keyDownHandler,
       blurHandler,
+      mouseOverHandler,
       activeDescendant,
       contextValue,
       focusVisibleRef,
     } = useList({
       disabled,
-      highlightedIndex,
+      highlightedItem,
       selected,
       defaultSelected,
       onChange,
@@ -101,8 +101,9 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onBlur?.(event);
     };
 
-    const handleMouseDown = (event: MouseEvent<HTMLUListElement>) => {
-      onMouseDown?.(event);
+    const handleMouseOver = (event: MouseEvent<HTMLUListElement>) => {
+      mouseOverHandler();
+      onMouseOver?.(event);
     };
 
     return (
@@ -120,7 +121,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
           onFocus={handleFocus}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
-          onMouseDown={handleMouseDown}
+          onMouseOver={handleMouseOver}
           {...rest}
         >
           {children}

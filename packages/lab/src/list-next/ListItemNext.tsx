@@ -61,8 +61,8 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
     const itemId = `${contextId || "listNext"}--${id}`;
     const disabled = disabledProp || contextDisabled;
     const selected = isSelected(value);
-    const focused = isFocused(itemId);
-    const highlighted = isHighlighted(itemId);
+    const focused = isFocused(value);
+    const highlighted = isHighlighted(value);
 
     const handleClick = (event: MouseEvent<HTMLLIElement>) => {
       if (!disabled) {

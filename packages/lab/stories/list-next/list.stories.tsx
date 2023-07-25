@@ -63,7 +63,8 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
   };
 
   const handleArrowUp = () => {
-    const prevIndex = highlightedIndex && highlightedIndex - 1;
+    const prevIndex =
+      highlightedIndex === undefined ? undefined : highlightedIndex - 1;
     setHighlightedIndex(prevIndex);
   };
 
@@ -87,7 +88,6 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
           )
         : undefined;
     setHighlightedIndex(firstMatchingItem);
-    setSelectedItem(event.target.value);
   };
 
   const handleInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -110,7 +110,6 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
         break;
     }
   };
-
   return (
     <FlexLayout
       direction="column"
@@ -165,7 +164,11 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
         aria-label="Controlled List example"
         selected={selectedItem}
         disableFocus
-        highlightedIndex={highlightedIndex}
+        highlightedItem={
+          highlightedIndex === undefined
+            ? undefined
+            : usStateExampleData[highlightedIndex]
+        }
         onChange={(e, { value }) => console.log("new selection", value)}
         style={{ maxHeight: "150px", width: "100%" }}
       >
