@@ -11,7 +11,7 @@ import {
   Input,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { Drawer } from "@salt-ds/lab";
+import { Drawer, useDrawer } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./drawer.stories.css";
 
@@ -54,17 +54,22 @@ const DrawerContentExample = ({ onClick }: DrawerContentExampleProps) => (
 const DefaultDrawerStory: ComponentStory<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
-  const show = () => setOpen(true);
-
   const hide = () => setOpen(false);
+
+  const { getReferenceProps, getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
 
   return (
     <>
-      <Button onClick={show}>Open Drawer</Button>
+      <Button {...getReferenceProps()}>Open Drawer</Button>
       <Drawer
-        isOpen={open}
+        open={open}
+        onOpenChange={setOpen}
         aria-labelledby="drawer_label"
         aria-describedby="drawer_description"
+        {...getFloatingProps()}
         {...args}
       >
         <DrawerContentExample onClick={hide} />
@@ -81,14 +86,22 @@ Default.args = {
 const TopTemplate: ComponentStory<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
-  const show = () => setOpen(true);
-
   const hide = () => setOpen(false);
+
+  const { getReferenceProps, getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
 
   return (
     <>
-      <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} {...args}>
+      <Button {...getReferenceProps()}>Open Drawer</Button>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        {...getFloatingProps()}
+        {...args}
+      >
         <DrawerContentExample onClick={hide} />
       </Drawer>
     </>
@@ -103,14 +116,22 @@ Top.args = {
 const RightTemplate: ComponentStory<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
-  const show = () => setOpen(true);
-
   const hide = () => setOpen(false);
+
+  const { getReferenceProps, getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
 
   return (
     <>
-      <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} {...args}>
+      <Button {...getReferenceProps()}>Open Drawer</Button>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        {...getFloatingProps()}
+        {...args}
+      >
         <DrawerContentExample onClick={hide} />
       </Drawer>
     </>
@@ -125,14 +146,22 @@ Right.args = {
 const BottomTemplate: ComponentStory<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
-  const show = () => setOpen(true);
-
   const hide = () => setOpen(false);
+
+  const { getReferenceProps, getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
 
   return (
     <>
-      <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} {...args}>
+      <Button {...getReferenceProps()}>Open Drawer</Button>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        {...getFloatingProps()}
+        {...args}
+      >
         <DrawerContentExample onClick={hide} />
       </Drawer>
     </>
@@ -147,9 +176,12 @@ Bottom.args = {
 const ReducedMotionTemplate: ComponentStory<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
-  const show = () => setOpen(true);
-
   const hide = () => setOpen(false);
+
+  const { getReferenceProps, getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
 
   return (
     <>
@@ -158,12 +190,16 @@ const ReducedMotionTemplate: ComponentStory<typeof Drawer> = (args) => {
         Go to System Preferences, select the Accessibility category, select the
         Display tab, and enable the Reduce Motion option.
       </p>
-      <div className="reduced-motion">
-        <Button onClick={show}>Open Drawer</Button>
-        <Drawer isOpen={open} {...args}>
-          <DrawerContentExample onClick={hide} />
-        </Drawer>
-      </div>
+      <Button {...getReferenceProps()}>Open Drawer</Button>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        className="reduced-motion"
+        {...getFloatingProps()}
+        {...args}
+      >
+        <DrawerContentExample onClick={hide} />
+      </Drawer>
     </>
   );
 };
@@ -181,17 +217,22 @@ const FormFieldExample = () => (
 const DrawerLeftExample: ComponentStory<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(true);
 
-  const show = () => setOpen(true);
-
   const hide = () => setOpen(false);
 
+  const { getReferenceProps, getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
+
   return (
-    <div className="drawer-simple-usage">
-      <Button onClick={show}>Open Drawer</Button>
+    <>
+      <Button {...getReferenceProps()}>Open Drawer</Button>
       <Drawer
-        isOpen={open}
+        open={open}
+        onOpenChange={setOpen}
         aria-labelledby="drawer_label"
         aria-describedby="drawer_description"
+        {...getFloatingProps()}
         {...args}
       >
         <StackLayout>
@@ -210,7 +251,7 @@ const DrawerLeftExample: ComponentStory<typeof Drawer> = (args) => {
           </FlexItem>
         </StackLayout>
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -222,14 +263,22 @@ LeftSimpleUsage.args = {
 const DrawerTopExample: ComponentStory<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(true);
 
-  const show = () => setOpen(true);
-
   const hide = () => setOpen(false);
 
+  const { getReferenceProps, getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
+
   return (
-    <div className="drawer-simple-usage">
-      <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} {...args}>
+    <>
+      <Button {...getReferenceProps()}>Open Drawer</Button>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        {...getFloatingProps()}
+        {...args}
+      >
         <StackLayout>
           <h2>Section title</h2>
           <p>
@@ -248,7 +297,7 @@ const DrawerTopExample: ComponentStory<typeof Drawer> = (args) => {
           </FlexItem>
         </StackLayout>
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -260,17 +309,22 @@ TopSimpleUsage.args = {
 const DrawerRightExample: ComponentStory<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(true);
 
-  const show = () => setOpen(true);
-
   const hide = () => setOpen(false);
 
+  const { getReferenceProps, getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
+
   return (
-    <div className="drawer-simple-usage">
-      <Button onClick={show}>Open Drawer</Button>
+    <>
+      <Button {...getReferenceProps()}>Open Drawer</Button>
       <Drawer
-        isOpen={open}
+        open={open}
+        onOpenChange={setOpen}
         aria-labelledby="drawer_label"
         aria-describedby="drawer_description"
+        {...getFloatingProps()}
         {...args}
       >
         <StackLayout>
@@ -289,7 +343,7 @@ const DrawerRightExample: ComponentStory<typeof Drawer> = (args) => {
           </FlexItem>
         </StackLayout>
       </Drawer>
-    </div>
+    </>
   );
 };
 
@@ -314,14 +368,23 @@ const ArticleExample = () => (
 const DrawerBottomExample: ComponentStory<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(true);
 
-  const show = () => setOpen(true);
-
   const hide = () => setOpen(false);
 
+  const { getReferenceProps, getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
+
   return (
-    <div className="drawer-simple-usage">
-      <Button onClick={show}>Open Drawer</Button>
-      <Drawer isOpen={open} aria-labelledby="drawer_label" {...args}>
+    <>
+      <Button {...getReferenceProps()}>Open Drawer</Button>
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        aria-labelledby="drawer_label"
+        {...getFloatingProps()}
+        {...args}
+      >
         <StackLayout>
           <h2 id="drawer_label" tabIndex={-1}>
             Section title
@@ -336,7 +399,7 @@ const DrawerBottomExample: ComponentStory<typeof Drawer> = (args) => {
           </FlexItem>
         </StackLayout>
       </Drawer>
-    </div>
+    </>
   );
 };
 
