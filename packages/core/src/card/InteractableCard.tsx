@@ -58,7 +58,7 @@ export const InteractableCard = forwardRef<
   const { tabIndex, ...restCardProps } = cardProps;
 
   return (
-    <Card
+    <div
       {...restCardProps}
       className={clsx(
         withBaseName(),
@@ -72,7 +72,7 @@ export const InteractableCard = forwardRef<
       {...rest}
       ref={ref}
     >
-      {children}
-    </Card>
+      <div className={withBaseName("content")}>{children}</div>
+    </div>
   );
 });
