@@ -302,6 +302,8 @@ export const useList = ({
     blurHandler,
     mouseOverHandler,
     activeDescendant,
+    selectedItem,
+    highlightedItem,
     contextValue,
     focusVisibleRef,
   };

@@ -92,6 +92,10 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLUListElement>) => {
+      if (disableFocus) {
+        event.preventDefault();
+        return;
+      }
       keyDownHandler(event);
       onKeyDown?.(event);
     };
