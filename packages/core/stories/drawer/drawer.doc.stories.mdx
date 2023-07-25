@@ -1,10 +1,10 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { Drawer } from "@salt-ds/lab";
+import { Drawer } from "@salt-ds/core";
 import { CSSClassTable } from "css-variable-docgen-components";
 import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 <Meta
-  title="Documentation/Lab/Drawer"
+  title="Documentation/Core/Drawer"
   component={Drawer}
   parameters={{
     viewMode: "docs",
@@ -22,7 +22,7 @@ Use this component to display content as an overlay within the application layou
 Use this component by wrapping it around your content and setting the desired position. For example:
 
 <Canvas>
-  <Story id="lab-drawer--default" />
+  <Story id="core-drawer--default" />
 </Canvas>
 
 Provide a component like a Button so that users can open and close the Drawer.
@@ -46,25 +46,25 @@ The component will be displayed in the left position by default but you can cust
 #### Top positioned
 
 <Canvas>
-  <Story id="lab-drawer--top" />
+  <Story id="core-drawer--top" />
 </Canvas>
 
 #### Right positioned
 
 <Canvas>
-  <Story id="lab-drawer--right" />
+  <Story id="core-drawer--right" />
 </Canvas>
 
 #### Left positioned
 
 <Canvas>
-  <Story id="lab-drawer--default" />
+  <Story id="core-drawer--default" />
 </Canvas>
 
 #### Bottom positioned
 
 <Canvas>
-  <Story id="lab-drawer--bottom" />
+  <Story id="core-drawer--bottom" />
 </Canvas>
 
 ## Configuring Drawer
@@ -72,7 +72,7 @@ The component will be displayed in the left position by default but you can cust
 ### API
 
 ```
-import { Drawer } from "@salt-ds/lab";
+import { Drawer } from "@salt-ds/core";
 ```
 
 ### Props
@@ -88,7 +88,7 @@ import { Drawer } from "@salt-ds/lab";
 You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
 
 <Canvas>
-  <Story id="lab-drawer--reduced-motion" />
+  <Story id="core-drawer--reduced-motion" />
 </Canvas>
 
 <HelpAndSupport />
