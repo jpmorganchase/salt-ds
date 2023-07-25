@@ -7,7 +7,6 @@ import {
   BannerContent,
   InteractableCard,
   InteractableCardProps,
-  H4,
   H3,
 } from "@salt-ds/core";
 import styles from "./style.module.css";
