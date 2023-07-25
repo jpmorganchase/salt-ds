@@ -1,55 +1,56 @@
 $icons: (
-  aggregation: "\e974",
-  arrows: "\e970",
-  asc: "\e940",
-  cancel: "\e90e",
-  chart: "\e904",
-  columns: "\e910",
-  contracted: "\e91b",
-  copy: "\e90d",
-  cross: "\e90e",
-  cut: "\e96d",
-  csv: "\e915",
-  desc: "\e93f",
-  excel: "\e91a",
-  expanded: "\e950",
-  eye-slash: "\e966",
-  eye: "\e965",
-  filter: "\e922",
-  first: "\e934",
-  group: "\e929",
-  last: "\e951",
-  left: "\e933",
-  linked: "\e935",
-  loading: "\e96f",
-  menu: "\e969",
-  next: "\e950",
-  none: "\e971",
-  not-allowed: "\e90e",
-  paste: "\e946",
-  pin: "\e944",
-  pivot: "\e979",
-  previous: "\e933",
-  right: "\e950",
-  save: "\e953",
-  small-down: "\e91b",
-  small-left: "\e981",
-  small-right: "\e980",
-  small-up: "\e982",
-  tick: "\e95b",
-  tree-closed: "\e950",
-  tree-open: "\e91b",
-  unlinked: "\e95e",
+  // Left is CSS icon name, right is Salt icon name
+  aggregation: "\ea2f", // sum-solid
+  arrows: "\e9e7", // move-all
+  asc: "\e954", // arrow-up 
+  cancel: "\e975", // close
+  chart: "\e958", // bar-chart
+  columns: "\e981", // column-chooser
+  contracted: "\e96d", // chevron-down
+  copy: "\e973", //clone
+  cross: "\e975", //close
+  cut: "\e98e", // cut
+  csv: "\e98d", // csv
+  desc: "\e951", // arrow-down
+  excel: "\ea62", // xls
+  expanded: "\e96f", // chevron-right
+  eye-slash: "\e9c1", // hidden
+  eye: "\ea5b", // visible
+  filter: "\e9ac", // filter
+  first: "\e99b", // double-chevron-left
+  group: "\ea54", // user-group
+  last: "\e99c", // double-chevron-right
+  left: "\e96e", //chevron-left
+  linked: "\e9da", //linked
+  loading: "\e9dc", //loader
+  menu: "\e9e5", // micro-menu
+  next: "\e96f", // chevron-right
+  none: "\e9e9", // move-vertical
+  not-allowed: "\e975", // close
+  paste: "\e9f0", // paste
+  pin: "\e9f6", // pin
+  pivot: "\e9f8", // pivot
+  previous: "\e96e", // chevron-left
+  right: "\e96f", // chevron-right
+  save: "\ea19", // save
+  small-down: "\ea51", // triangle-down
+  small-left: "\ea42", // triangle-left
+  small-right: "\ea44", // triangle-right
+  small-up: "\ea45", //triangle-up
+  tick: "\ea2e", //success-tick
+  tree-closed: "\e96f", // chevron-right
+  tree-open: "\e96d", // triangle-down
+  unlinked: "\ea47", // unlinked
 );
 
 @font-face {
-  font-family: "jpmuitk-icons";
-  src: url("../fonts/jpmuitk-icons.woff") format("woff");
+  font-family: "salt-icons";
+  src: url("../fonts/salt-icons.woff") format("woff");
 }
 
 @each $name, $glyph in $icons {
   [class^="ag-theme-salt"] .ag-icon-#{$name} {
-    font-family: "jpmuitk-icons";
+    font-family: "salt-icons";
   }
 
   [class^="ag-theme-salt"] .ag-icon-#{$name}::before {
@@ -58,14 +59,14 @@ $icons: (
 }
 
 [class^="ag-theme-salt"] .ag-checkbox-input-wrapper::after {
-  font-family: "jpmuitk-icons";
+  font-family: "salt-icons";
   content: "";
 }
 
 [class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked::after {
-  content: "\e95b";
+  content: "\ea2e";
 }
 
 [class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-indeterminate::after {
-  content: "\e94e";
+  content: "\ea10"; 
 }
