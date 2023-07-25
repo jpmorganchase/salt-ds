@@ -1,8 +1,0 @@
-.saltMultilineInput {
-  width: 266px;
-}
-
-.error.saltMultilineInput .saltText {
-  color: var(--salt-text-primary-foreground);
-  font-weight: var(--salt-text-fontWeight-strong);
-}
