@@ -1,8 +1,6 @@
 import { Key, ReactNode, useEffect, useState } from "react";
 import {
   GridLayout,
-  Card,
-  CardProps,
   Input,
   Link,
   Banner,
@@ -17,11 +15,10 @@ import {
   FilterIcon,
   ProgressInprogressIcon,
   ProgressPendingIcon,
-  SearchIcon,
 } from "@salt-ds/icons";
-import { Heading3 } from "../mdx/h3";
-import { Heading2 } from "../mdx/h2";
+
 import { formatDate } from "src/utils/formatDate";
+import { Heading4 } from "../mdx/h4";
 
 type RoadmapProps = { title: string; children: ReactNode; endpoint: string };
 
@@ -57,8 +54,12 @@ function sortRoadmapDataByDate(roadmapData: RoadmapData[]): RoadmapData[] {
   return sortedData;
 }
 
-function RoadmapCard(props: InteractableCardProps) {
-  return <InteractableCard accentPlacement="left" {...props} />;
+function RoadmapCard(props: InteractableCardProps, item: ItemProps) {
+  return (
+    <>
+      <InteractableCard accentPlacement="left" {...props} />
+    </>
+  );
 }
 
 export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
@@ -151,18 +152,18 @@ const ColumnData: React.FC<{ item: ItemProps; future?: boolean }> = ({
   const formattedDate = formatDate(new Date(item.targetDate));
 
   return (
-    <RoadmapCard
-      className={future ? styles.cardFuture : styles.cardInProgress}
-      key={item.id}
-    >
-      <Link>
-        <H4 className={styles.heading3}>
-          <a href={item.issueUrl}>{item.text}</a>
-        </H4>
-      </Link>
-      <b>Due Date: </b>
-      <p className={styles.date}>{formattedDate}</p>
-    </RoadmapCard>
+    <>
+      <a href={item.issueUrl}>
+        <RoadmapCard
+          className={future ? styles.cardFuture : styles.cardInProgress}
+          key={item.id}
+        >
+          <Heading4 className={styles.heading4}>{item.text}</Heading4>
+          Due Date:
+          <p className={styles.date}> {formattedDate}</p>
+        </RoadmapCard>
+      </a>
+    </>
   );
 };
 

@@ -1,9 +1,12 @@
 .heading {
   margin-bottom: 5%;
   text-align: left;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
-.heading3 {
+.heading4 {
   padding-bottom: 5%;
 }
 
@@ -58,8 +61,20 @@
 
 .futureIcon {
   color: var(--salt-palette-warning-border);
+  margin-right: 10%;
 }
 
 .progressIcon {
   color: var(--salt-palette-info-border);
+  margin-right: 10%;
+}
+
+@media (max-width: 767px) {
+  .cardFuture {
+    width: fit-content;
+  }
+
+  .cardInProgress {
+    width: fit-content;
+  }
 }
