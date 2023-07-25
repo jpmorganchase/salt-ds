@@ -14,7 +14,6 @@ import {
 } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import "./multiline-input.stories.css";
 
 export default {
   title: "Core/Multiline Input",
