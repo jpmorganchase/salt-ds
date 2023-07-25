@@ -10,9 +10,11 @@ import {
   InteractableCard,
   InteractableCardProps,
   H4,
+  H3,
 } from "@salt-ds/core";
 import styles from "./style.module.css";
 import {
+  FilterIcon,
   ProgressInprogressIcon,
   ProgressPendingIcon,
   SearchIcon,
@@ -108,13 +110,13 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
   return (
     <div className={styles.content}>
       <Input
-        placeholder="Search"
         value={searchQuery}
+        variant="secondary"
         onChange={(event) =>
           setSearchQuery((event.target as HTMLInputElement).value)
         }
         className={styles.searchInput}
-        startAdornment={<SearchIcon />}
+        startAdornment={<FilterIcon />}
       />
 
       {roadmapData !== null && roadmapData.length > 0 ? (
@@ -189,19 +191,19 @@ export const CardView = ({ data, searchQuery }: CardViewProps) => {
   return (
     <GridLayout className={styles.cardContainer} columns={2}>
       <div className={styles.column}>
-        <Heading2 className={styles.heading}>
-          <ProgressInprogressIcon className={styles.icon} size={2} />
+        <H3 className={styles.heading}>
+          <ProgressInprogressIcon className={styles.progressIcon} size={2} />
           In Progress{" "}
-        </Heading2>
+        </H3>
         {inProgressData.map((item) => (
           <ColumnData future={false} key={item.id} item={item} />
         ))}
       </div>
       <div className={styles.column}>
-        <Heading2 className={styles.heading}>
-          <ProgressPendingIcon className={styles.icon} size={2} />
+        <H3 className={styles.heading}>
+          <ProgressPendingIcon className={styles.futureIcon} size={2} />
           Future
-        </Heading2>
+        </H3>
         {futureData.map((item) => (
           <ColumnData key={item.id} item={item} />
         ))}

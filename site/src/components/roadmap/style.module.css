@@ -46,7 +46,7 @@
 }
 
 .cardInProgress {
-  width: 400px;
+  width: 408px;
   margin-bottom: 15px;
   min-height: unset;
   border-left-color: var(--salt-palette-info-border);
@@ -54,4 +54,12 @@
 
 .gridLayout {
   max-width: 1000px;
+}
+
+.futureIcon {
+  color: var(--salt-palette-warning-border);
+}
+
+.progressIcon {
+  color: var(--salt-palette-info-border);
 }
