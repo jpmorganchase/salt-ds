@@ -22,17 +22,15 @@ const Icons = () => {
   return (
     <>
       {switcher}
-      {Object.keys(styles).map(
-        (key) => {
-          if (styles[key].startsWith('"')) {
-            return (
-              <div {...containerProps} style={{ "--icon-content": styles[key] }}>
-                {key}
-              </div>
-            );
-          }
+      {Object.keys(styles).map((key) => {
+        if (styles[key].startsWith('"')) {
+          return (
+            <div {...containerProps} style={{ "--icon-content": styles[key] }}>
+              {key}
+            </div>
+          );
         }
-      )}
+      })}
     </>
   );
 };
