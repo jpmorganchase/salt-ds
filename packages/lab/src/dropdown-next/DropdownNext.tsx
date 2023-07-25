@@ -51,6 +51,11 @@ export interface DropdownNextProps<T>
    * List of items when using a Dropdown.
    */
   source: T[];
+  ListProps?: ListNextProps;
+  /**
+   * If `true`, the component is read only.
+   */
+  readOnly?: boolean;
 }
 
 export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
@@ -58,17 +63,19 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     const {
       className,
       disabled,
-      variant = "primary",
+      variant = "secondary",
       id: dropdownIdProp,
       listId: listIdProp,
       defaultSelected,
       selected: selectedProp,
       open: openProp,
+      readOnly,
       source,
       onFocus,
       onKeyDown,
       onMouseDown,
       onBlur,
+      style: dropdownStyle,
       ...rest
     } = props;
 
@@ -89,17 +96,24 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       blurHandler,
       mouseDownHandler,
       contextValue,
-      open,
-      // value, // value
-      // setValueSelected, // setValue
-      selected,
-      selectHandler,
+      listActiveDescendant,
+      selectedItem,
       highlightedIndex,
+      setListRef,
       getListItems,
+      open,
+      setOpen,
       floating,
       reference,
       getDropdownNextProps,
-    } = useDropdownNext({ defaultSelected, source, placement: "top-start" });
+    } = useDropdownNext({
+      source,
+      defaultSelected,
+      disabled,
+      listRef,
+      listId,
+      placement: "top-start",
+    });
 
     const triggerRef = useForkRef(
       ref,
@@ -122,7 +136,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     };
 
     const handleBlur = (event: FocusEvent<HTMLElement>) => {
-      blurHandler();
+      blurHandler(event);
       onBlur?.(event);
     };
 
@@ -138,8 +152,17 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
 
     return (
       <DropdownNextContext.Provider value={contextValue}>
-        <>
-          {/* <label id="dropdownLabel">Dropdown Label</label> */}
+        <div
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            {
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("readOnly")]: readOnly,
+            },
+            className
+          )}
+        >
           <button
             id={dropdownId}
             disabled={disabled}
@@ -147,14 +170,8 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
             onFocus={handleFocus}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
-            value={selected} // previously value
-            className={clsx(
-              withBaseName("button"),
-              {
-                [withBaseName(variant)]: variant,
-              },
-              className
-            )}
+            value={selectedItem}
+            className={clsx(withBaseName("button"), className)}
             role="combobox"
             aria-haspopup="listbox"
             aria-expanded={open}
@@ -164,12 +181,16 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
             aria-controls={listId}
             // aria-activedescendant="" // listbox option with visual keyboard focus
             ref={triggerRef}
+            style={dropdownStyle}
           >
-            {selected}
-            <ChevronDownIcon
-              className={clsx(withBaseName("icon"), className)}
-            />
+            <span className={clsx(withBaseName("buttonText"), className)}>
+              {selectedItem}
+            </span>
+            <span className={clsx(withBaseName("icon"), className)}>
+              <ChevronDownIcon />
+            </span>
           </button>
+
           {open && (
             <FloatingPortal>
               <SaltProvider>
@@ -184,15 +205,15 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
                     // className={clsx(withBaseName("list"), className)}
                     // aria-labelledby="dropdownLabel"
                     disabled={disabled}
-                    selected={selected}
+                    selected={selectedItem}
                     onMouseDown={(evt) => {
                       console.log("list onMouseDown");
                       handleSelect(evt);
                     }}
-                    onKeyDown={(evt) => {
-                      console.log("list onKeyDown");
-                      handleSelect(evt);
-                    }}
+                    // onKeyDown={(evt) => {
+                    //   console.log("list onKeyDown");
+                    //   handleSelect(evt);
+                    // }}
                     highlightedIndex={highlightedIndex}
                     defaultSelected={defaultSelected}
                     displayedItemCount={6}
@@ -203,7 +224,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
               </SaltProvider>
             </FloatingPortal>
           )}
-        </>
+        </div>
       </DropdownNextContext.Provider>
     );
   }
