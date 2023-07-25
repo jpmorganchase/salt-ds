@@ -12,14 +12,12 @@
 
 .cardContainer:global(.saltGridLayout) {
   margin-top: 50px;
-  display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
   gap: 20px; /* Adjust the gap between columns */
 }
 
 .content {
   flex: 1;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
 }
 
@@ -42,14 +40,16 @@
 }
 
 .cardFuture {
-  width: 400px;
+  width: auto;
+  min-width: 400px;
   margin-bottom: 15px;
   min-height: unset;
   border-left-color: var(--salt-palette-warning-border);
 }
 
 .cardInProgress {
-  width: 408px;
+  width: auto;
+  min-width: 400px;
   margin-bottom: 15px;
   min-height: unset;
   border-left-color: var(--salt-palette-info-border);
