@@ -26,10 +26,6 @@
   width: 100%;
 }
 
-.test {
-  width: "400px";
-  margin-bottom: " 50px ";
-}
 .date {
   display: inline;
 }
@@ -52,10 +48,6 @@
   margin-bottom: 15px;
   min-height: unset;
   border-left-color: var(--salt-palette-info-border);
-}
-
-.gridLayout {
-  max-width: 1000px;
 }
 
 .futureIcon {
