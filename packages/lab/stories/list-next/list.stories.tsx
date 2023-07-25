@@ -121,7 +121,7 @@ export const Controlled: Story<ListNextProps> = ({ children, ...rest }) => {
         aria-label="Controls"
         value={controls}
         onChange={(event: SyntheticEvent<HTMLButtonElement>) =>
-          setControls(event.target.value)
+          setControls(event.currentTarget.value)
         }
       >
         <ToggleButton aria-label="Button controls" value="buttons">
