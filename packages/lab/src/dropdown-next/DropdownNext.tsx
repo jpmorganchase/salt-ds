@@ -63,7 +63,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     const {
       className,
       disabled,
-      variant = "secondary",
+      variant = "primary",
       id: dropdownIdProp,
       listId: listIdProp,
       defaultSelected,
@@ -152,17 +152,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
 
     return (
       <DropdownNextContext.Provider value={contextValue}>
-        <div
-          className={clsx(
-            withBaseName(),
-            withBaseName(variant),
-            {
-              [withBaseName("disabled")]: disabled,
-              [withBaseName("readOnly")]: readOnly,
-            },
-            className
-          )}
-        >
+        <div className={clsx(withBaseName(), className)}>
           <button
             id={dropdownId}
             disabled={disabled}
@@ -171,7 +161,15 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
             value={selectedItem}
-            className={clsx(withBaseName("button"), className)}
+            className={clsx(
+              withBaseName("button"),
+              withBaseName(variant),
+              {
+                [withBaseName("disabled")]: disabled,
+                [withBaseName("readOnly")]: readOnly,
+              },
+              className
+            )}
             role="combobox"
             aria-haspopup="listbox"
             aria-expanded={open}

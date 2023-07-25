@@ -41,9 +41,14 @@
   justify-content: space-between;
 }
 
+.saltDropdownNext-button:hover {
+  --dropdownNext-borderColor: var(--salt-selectable-borderColor-hover);
+
+  cursor: var(--salt-selectable-cursor-hover);
+}
+
 .saltDropdownNext-button:focus {
   --dropdownNext-borderColor: var(--salt-editable-borderColor-active);
-  --dropdownNext-borderStyle: var(--salt-editable-borderStyle-active);
   --dropdownNext-borderWidth: var(--salt-editable-borderWidth-active);
 
   outline: var(
@@ -51,6 +56,18 @@
     var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
       var(--dropdownNext-outlineColor)
   );
+}
+
+.saltDropdownNext-buttonText {
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.saltDropdownNext-icon {
+  padding-left: var(--salt-size-adornmentGap);
+  float: right;
 }
 
 /* Class applied if `variant="primary"` */
@@ -106,26 +123,23 @@
   --dropdownNext-paddingLeft: 0;
 
   background: var(--dropdownNext-background-readonly);
-  cursor: var(--salt-editable-cursor-readonly);
+  cursor: var(--salt-selectable-cursor-readonly);
 }
 
-/* Styling when focused if `disabled={true}` or `readOnly={true}` */
-.saltDropdownNext-focused.saltDropdownNext-readOnly,
-.saltDropdownNext-focused.saltDropdownNext-disabled {
+/* Styling applied if `disabled={true}` */
+.saltDropdownNext-disabled,
+.saltDropdownNext-disabled:hover,
+.saltDropdownNext-disabled:active {
   --dropdownNext-borderWidth: var(--salt-size-border);
-  outline: none;
-}
+  --dropdownNext-borderColor: var(--salt-editable-borderColor-disabled);
+  --dropdownNext-borderStyle: var(--salt-editable-borderStyle-disabled);
 
-.saltDropdownNext-buttonText {
-  text-align: left;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.saltDropdownNext-icon {
-  padding-left: var(--salt-size-adornmentGap);
-  float: right;
+  cursor: var(--salt-selectable-cursor-disabled);
+  background: var(--dropdownNext-background-disabled);
+  color: var(
+    --saltDropdownNext-color-disabled,
+    var(--salt-text-primary-foreground-disabled)
+  );
 }
 
 /* dropdownNext content container (hidden by default) */
