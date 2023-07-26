@@ -57,7 +57,6 @@ export const useList = ({
     state: "highlighted",
   });
 
-
   const [selectedItem, setSelectedItem] = useControlled({
     controlled: selectedProp,
     default: defaultSelected,
