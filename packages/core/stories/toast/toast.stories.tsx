@@ -36,31 +36,45 @@ DefaultInfo.args = {
   ),
 };
 
-export const Warning = Template.bind({});
-Warning.args = {
-  status: "warning",
-  children: (
-    <div>
-      <Text>
-        <strong>File access</strong>
-      </Text>
-      <div>Viewers of this file can see comments and suggestions. </div>
-    </div>
-  ),
-};
+export const Error: ComponentStory<typeof Toast> = () => (
+  <Toast status="error">
+    <ToastContent>
+      <div>
+        <Text>
+          <strong>System error</strong>
+        </Text>
+        <div>Connection timed out. Failed to retrieve data. </div>
+      </div>
+      <FlowLayout
+        gap={1}
+        justify="end"
+        style={{ marginTop: "var(--salt-spacing-100)" }}
+      >
+        <Button>Dismiss</Button>
+        <Button variant="cta">Try again</Button>
+      </FlowLayout>
+    </ToastContent>
+  </Toast>
+);
 
-export const Error = Template.bind({});
-Error.args = {
-  status: "error",
-  children: (
-    <div>
-      <Text>
-        <strong>System error</strong>
-      </Text>
-      <div>Connection timed out. Failed to retrieve data. </div>
-    </div>
-  ),
-};
+export const Warning: ComponentStory<typeof Toast> = () => (
+  <Toast status="warning">
+    <ToastContent>
+      <div>
+        <Text>
+          <strong>File access</strong>
+        </Text>
+        <div>Viewers of this file can see comments and suggestions. </div>
+      </div>
+      <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
+        <Button variant="cta" style={{ width: "100%" }}>
+          Edit permissions
+        </Button>
+        <Button style={{ width: "100%" }}>Dismiss</Button>
+      </FlowLayout>
+    </ToastContent>
+  </Toast>
+);
 
 export const Success = Template.bind({});
 Success.args = {
