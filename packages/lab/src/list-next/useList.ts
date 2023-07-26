@@ -233,7 +233,7 @@ export const useList = ({
     if (activeElement) {
       updateHighlighted(activeElement);
     } else {
-      focusFirstItem()
+      focusFirstItem();
     }
   };
 
