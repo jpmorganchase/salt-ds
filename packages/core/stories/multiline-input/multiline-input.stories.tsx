@@ -123,7 +123,7 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
           {isError && <strong>{`${value.length}/${MAX_CHARS}`}</strong>}
         </Label>
       }
-      style={{ maxWidth: "266px" }}
+      style={{ width: "266px" }}
       onChange={handleChange}
       value={value}
       validationStatus={isError ? "error" : undefined}
