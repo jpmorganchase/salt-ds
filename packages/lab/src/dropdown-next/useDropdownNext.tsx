@@ -3,11 +3,11 @@ import {
   useDismiss,
   useClick,
   useRole,
-  useFocus,
   flip,
   shift,
   limitShift,
   offset,
+  size,
 } from "@floating-ui/react";
 import { ListItemNext } from "@salt-ds/lab";
 import {
@@ -16,9 +16,9 @@ import {
   useMemo,
   useState,
   FocusEvent,
+  MouseEvent,
   RefObject,
 } from "react";
-import { BooleanLiteral } from "typescript";
 import { useList } from "../list-next/useList";
 
 import { useFloatingUI, UseFloatingUIProps } from "../utils";
@@ -36,16 +36,16 @@ interface UseDropdownNextProps<T>
 
 export const useDropdownNext = ({
   defaultSelected,
-  onOpenChange,
   source,
   disabled,
   listRef,
   listId,
-  placement: placementProp,
+  // portal stuffs
+  open: openProp,
+  onOpenChange: onOpenChangeProp,
+  placement: placementProp = "bottom",
 }: UseDropdownNextProps<T>) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<string>("");
-  // const [selected, setSelected] = useState<string>(defaultSelected ?? "");
 
   // const [open, setOpen] = useControlled({
   //   controlled: openProp,
@@ -54,20 +54,13 @@ export const useDropdownNext = ({
   //   state: "open",
   // });
 
-  const getListItems = (source: T[], handleSelect: (evt) => void) => {
+  const getListItems = (source: T[]) => {
     if (!source) return;
 
     return source.map((item, index) => {
       if (typeof item === "string") {
         return (
-          <ListItemNext
-            key={index}
-            value={item}
-            onClick={(evt) => {
-              console.log("clicked on item");
-              handleSelect(evt);
-            }}
-          >
+          <ListItemNext key={index} value={item}>
             {item}
           </ListItemNext>
         );
@@ -78,10 +71,6 @@ export const useDropdownNext = ({
           key={item?.id ?? index}
           value={item.value}
           disabled={item?.disabled ?? false}
-          onClick={() => {
-            console.log("clicked on item");
-            handleSelect(item);
-          }}
         >
           {item.value}
         </ListItemNext>
@@ -94,11 +83,13 @@ export const useDropdownNext = ({
     focusHandler: listFocusHandler,
     keyDownHandler: listKeyDownHandler,
     blurHandler: listBlurHandler,
-    activeDescendant: listActiveDescendant,
+    mouseOverHandler: listMouseOverHandler,
+    // mouseDownHandler: listMouseDownHandler,
+    activeDescendant,
+    selectedItem,
+    highlightedItem,
     contextValue: listContextValue,
     focusVisibleRef: listFocusVisibleRef,
-    selectedItem,
-    highlightedIndex,
   } = useList({
     disabled,
     defaultSelected,
@@ -107,9 +98,9 @@ export const useDropdownNext = ({
   });
 
   // FLOATING PORTAL
-  const handleOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-    onOpenChange?.(newOpen);
+  const onOpenChange = (open: boolean) => {
+    setOpen(open);
+    onOpenChangeProp?.(open);
   };
 
   const {
@@ -122,16 +113,27 @@ export const useDropdownNext = ({
     context,
   } = useFloatingUI({
     open,
-    onOpenChange: handleOpenChange,
+    onOpenChange,
     placement: placementProp, //  "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"
-    middleware: [flip(), shift({ limiter: limitShift() })],
+    middleware: [
+      offset(0),
+      size({
+        apply({ rects, elements }) {
+          Object.assign(elements.floating.style, {
+            width: `${rects.reference.width}px`,
+          });
+        },
+      }),
+      flip(),
+      shift({ limiter: limitShift() }),
+    ],
   });
 
   const { getFloatingProps } = useInteractions([
     useDismiss(context),
     useRole(context, { role: "listbox" }),
     useClick(context),
-    useFocus(context), // Opens the floating element while the reference element has focus, like CSS
+    // useFocus(context), // Opens the floating element while the reference element has focus, like CSS
   ]);
 
   const getDropdownNextProps = (): HTMLProps<HTMLDivElement> => {
@@ -154,29 +156,21 @@ export const useDropdownNext = ({
   };
 
   const focusHandler = (event: FocusEvent<HTMLElement>) => {
-    listFocusHandler(event);
-    // setOpen(??);
+    console.log("useDD hook: focusHandler");
+    // listFocusHandler(event);
+    setOpen(true);
   };
 
-  const mouseDownHandler = (evt) => {
-    console.log("Mouse down", evt);
-
-    setOpen(!open);
+  const mouseOverHandler = (event: MouseEvent<HTMLElement>) => {
+    listMouseOverHandler(event);
   };
-
-  // const selectHandler = (event) => {
-  //   console.log("selectHandler", event.target.dataset.value);
-
-  //   setValue(event.target.dataset.value);
-  //   setSelected(event.target.dataset.value);
-  // };
 
   const keyDownHandler = (event: KeyboardEvent) => {
-    const { key, target } = event;
+    console.log("useDD hook: keyDOwnHandler");
+    const { key } = event;
     switch (key) {
       case "ArrowUp":
       case "ArrowDown":
-        console.log(highlightedIndex, listActiveDescendant);
         setOpen(true);
         listKeyDownHandler(event);
         break;
@@ -186,18 +180,11 @@ export const useDropdownNext = ({
           setOpen(true);
           break;
         }
-
         if (open) {
-          console.log("EVENT", target);
-          // console.log("value", value); //?????
-          // next step: find out how to get the target here to be the list item instead of the button!!!
-          // setSelected(target.dataset.value); // previously value
-          // setValue(value);
+          listKeyDownHandler(event);
           setOpen(false);
-
           break;
         }
-
         break;
       case "Escape":
         setOpen(false);
@@ -219,15 +206,14 @@ export const useDropdownNext = ({
     focusHandler,
     keyDownHandler,
     blurHandler,
-    mouseDownHandler,
+    mouseOverHandler,
     contextValue,
-    listActiveDescendant,
-    // value,
+    activeDescendant,
     selectedItem,
-    highlightedIndex,
+    highlightedItem,
     setListRef: listFocusVisibleRef,
     getListItems,
-    // portal
+    // portal stuffs
     open,
     setOpen,
     floating,

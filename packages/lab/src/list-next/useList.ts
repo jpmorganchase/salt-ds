@@ -57,7 +57,6 @@ export const useList = ({
     state: "highlighted",
   });
 
-
   const [selectedItem, setSelectedItem] = useControlled({
     controlled: selectedProp,
     default: defaultSelected,
@@ -207,7 +206,7 @@ export const useList = ({
     const activeIndex = activeOptions.findIndex(
       (i) => i.id === activeDescendant
     );
-    return activeOptions[activeIndex !== -1 ? activeIndex : 0];
+    return activeOptions[activeIndex];
   };
 
   // HANDLERS
@@ -231,7 +230,11 @@ export const useList = ({
       setFocusVisible(true);
     }
     const activeElement = getActiveItem();
-    updateHighlighted(activeElement);
+    if (activeElement) {
+      updateHighlighted(activeElement);
+    } else {
+      focusFirstItem();
+    }
   };
 
   // takes care of keydown when using keyboard navigation
@@ -239,16 +242,18 @@ export const useList = ({
     const { key } = event;
     const currentItem = getActiveItem();
     let nextItem = currentItem;
-    if (!currentItem) {
-      event.preventDefault();
-      return;
-    }
+
     if (isFocusVisibleRef.current || !focusVisible) {
       setFocusVisible(true);
     }
     switch (key) {
       case "ArrowUp":
       case "ArrowDown":
+        if (!currentItem) {
+          focusFirstItem();
+          break;
+        }
+
         nextItem =
           key === "ArrowUp"
             ? findPreviousOption(currentItem, 1)

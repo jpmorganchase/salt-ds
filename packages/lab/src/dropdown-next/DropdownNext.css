@@ -1,11 +1,3 @@
-/* Styles applied to DropdownNext root component */
-.saltDropdownNext {
-  /* --dropdownNext-zIndex: var(
-    --saltDropdownNext-zIndex,
-    var(--salt-zIndex-flyover)
-  ); */
-}
-
 .saltDropdownNext-button {
   --dropdownNext-borderColor: var(--salt-editable-borderColor);
   --dropdownNext-borderStyle: var(--salt-editable-borderStyle);
@@ -35,6 +27,7 @@
     var(--dropdownNext-padding)
   );
   position: relative;
+  width: 100%;
   border: none;
   border-bottom: var(--dropdownNext-borderWidth) var(--dropdownNext-borderStyle)
     var(--dropdownNext-borderColor);
@@ -42,12 +35,13 @@
 }
 
 .saltDropdownNext-button:hover {
-  --dropdownNext-borderColor: var(--salt-selectable-borderColor-hover);
+  --dropdownNext-borderColor: var(--salt-editable-borderColor-hover);
 
   cursor: var(--salt-selectable-cursor-hover);
 }
 
-.saltDropdownNext-button:focus {
+.saltDropdownNext-button:focus,
+.saltDropdownNext-button:active {
   --dropdownNext-borderColor: var(--salt-editable-borderColor-active);
   --dropdownNext-borderWidth: var(--salt-editable-borderWidth-active);
 
@@ -63,11 +57,50 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  padding-right: var(--salt-size-adornmentGap);
 }
 
-.saltDropdownNext-icon {
-  padding-left: var(--salt-size-adornmentGap);
-  float: right;
+/* Styling applied to dropdown button if `disabled={true}` */
+.saltDropdownNext-disabled,
+.saltDropdownNext-disabled:hover,
+.saltDropdownNext-disabled:active {
+  --dropdownNext-borderColor: var(--salt-editable-borderColor-disabled);
+  --dropdownNext-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --dropdownNext-borderWidth: var(--salt-size-border);
+
+  cursor: var(--salt-selectable-cursor-disabled);
+  background: var(--dropdownNext-background-disabled);
+  color: var(
+    --saltDropdownNext-color-disabled,
+    var(--salt-text-primary-foreground-disabled)
+  );
+  outline: 0;
+}
+
+/* Style applied to dropdown button if `readOnly={true}` */
+.saltDropdownNext-button.saltDropdownNext-readOnly,
+.saltDropdownNext-button.saltDropdownNext-readOnly:hover,
+.saltDropdownNext-button.saltDropdownNext-readOnly:active {
+  --dropdownNext-borderColor: var(--salt-editable-borderColor-readonly);
+  --dropdownNext-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --dropdownNext-borderWidth: var(--salt-size-border);
+
+  cursor: var(--salt-selectable-cursor-readonly);
+  background: var(--dropdownNext-background-readonly);
+  padding-left: 0;
+  outline: 0;
+}
+
+/* Styling applied to dropdown button icon if `disabled={true}` or `readOnly={true}` */
+.saltDropdownNext-icon.saltDropdownNext-disabled,
+.saltDropdownNext-icon.saltDropdownNext-disabled:hover,
+.saltDropdownNext-icon.saltDropdownNext-disabled:active,
+.saltDropdownNext-icon.saltDropdownNext-readOnly,
+.saltDropdownNext-icon.saltDropdownNext-readOnly:hover,
+.saltDropdownNext-icon.saltDropdownNext-readOnly:active {
+  --icon-color: var(--salt-text-primary-foreground-disabled);
+
+  color: var(--icon-color);
 }
 
 /* Class applied if `variant="primary"` */
@@ -103,49 +136,3 @@
     --salt-editable-secondary-background-readonly
   );
 }
-
-/* Styling when focused */
-.saltDropdownNext-focused {
-  --dropdownNext-borderColor: var(--dropdownNext-outlineColor);
-  --dropdownNext-borderWidth: var(--salt-editable-borderWidth-active);
-
-  outline: var(
-    --saltDropdownNext-outline,
-    var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-      var(--dropdownNext-outlineColor)
-  );
-}
-
-/* Style applied if `readOnly={true}` */
-.saltDropdownNext.saltDropdownNext-readOnly {
-  --dropdownNext-borderColor: var(--salt-editable-borderColor-readonly);
-  --dropdownNext-borderStyle: var(--salt-editable-borderStyle-readonly);
-  --dropdownNext-paddingLeft: 0;
-
-  background: var(--dropdownNext-background-readonly);
-  cursor: var(--salt-selectable-cursor-readonly);
-}
-
-/* Styling applied if `disabled={true}` */
-.saltDropdownNext-disabled,
-.saltDropdownNext-disabled:hover,
-.saltDropdownNext-disabled:active {
-  --dropdownNext-borderWidth: var(--salt-size-border);
-  --dropdownNext-borderColor: var(--salt-editable-borderColor-disabled);
-  --dropdownNext-borderStyle: var(--salt-editable-borderStyle-disabled);
-
-  cursor: var(--salt-selectable-cursor-disabled);
-  background: var(--dropdownNext-background-disabled);
-  color: var(
-    --saltDropdownNext-color-disabled,
-    var(--salt-text-primary-foreground-disabled)
-  );
-}
-
-/* dropdownNext content container (hidden by default) */
-/* .saltDropdownNext-popup { */
-/* position: absolute; portal covers this */
-/* width: 100%; dropdownNext content to be as wide as dropdownNext btn */
-/* overflow: auto; dropdownNext content to be as wide as dropdownNext btn */
-/* z-index: 1; */
-/* } */
