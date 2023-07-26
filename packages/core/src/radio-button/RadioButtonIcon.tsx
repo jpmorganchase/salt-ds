@@ -53,7 +53,7 @@ export const RadioButtonIcon = ({
       )}
       {...rest}
     >
-      {checked && (
+      {checked && !readOnly && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 12 12"
@@ -63,6 +63,18 @@ export const RadioButtonIcon = ({
             fillRule="evenodd"
             d="M0 6a6 6 0 1 1 12 0A6 6 0 0 1 0 6Zm6 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"
             clipRule="evenodd"
+          />
+        </svg>
+      )}
+      {checked && readOnly && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 12 12"
+        >
+          <path
+            fill="#161616"
+            d="M9.5 6a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
           />
         </svg>
       )}
