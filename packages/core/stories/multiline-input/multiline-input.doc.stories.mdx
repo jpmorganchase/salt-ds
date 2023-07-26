@@ -114,11 +114,13 @@ Adornments can be added at the beginning or end of the text area using the `star
 
 ### Character Count
 
-Use a controlled Multiline Input to enforce a character count on the user input. Add the character count as a Label component to present the remaining characters out of the given limit with the encouraged Salt styling.
+Use a controlled Multiline Input to enforce a character count on the user input. Add the character count as a Label component to present the remaining characters out of the given limit.
 
 <Canvas>
   <Story id="lab-multiline-input--character-count" />
 </Canvas>
+
+- If the user goes over the character count limit, display an error state and change the Label to `primary` variant with strong text.
 
 ## Spellcheck
 
