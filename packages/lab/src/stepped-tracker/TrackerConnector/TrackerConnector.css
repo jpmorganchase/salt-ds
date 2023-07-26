@@ -14,7 +14,7 @@
   position: absolute;
   width: calc(100% - (var(--saltIcon-size)) - (var(--trackerConnector-margin) * 2));
   left: calc(50% + (var(--saltIcon-size) / 2) + var(--trackerConnector-margin));
-  top: calc(var(--saltIcon-size) / 2);
+  top: calc(var(--saltIcon-size) / 2 - (var(--trackerConnector-thickness) / 2));
 }
 
 .saltTrackerConnector.saltTrackerConnector-active {
