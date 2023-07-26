@@ -112,9 +112,7 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newVal = event.target.value;
     setValue(newVal);
-
-      setIsError(newVal.length > MAX_CHARS);
-    }
+    setIsError(newVal.length > MAX_CHARS);
   };
 
   return (
@@ -125,7 +123,8 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
           {!isError && `${value.length}/${MAX_CHARS}`}
           {isError && <strong>{`${value.length}/${MAX_CHARS}`}</strong>}
         </Label>
-      }
+      }      
+      style={{ maxWidth: "266px" }}
       onChange={handleChange}
       value={value}
       validationStatus={isError ? "error" : undefined}
