@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, forwardRef, useEffect } from "react";
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { makePrefixer, Tooltip } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import {
   StepActiveIcon,
   StepDefaultIcon,
@@ -16,7 +16,6 @@ import {
 } from "../SteppedTrackerContext";
 
 import trackerStepCss from "./TrackerStep.css";
-import { TrackStepTooltipProvider } from "./TrackerStepTooltipContext";
 
 const withBaseName = makePrefixer("saltTrackerStep");
 
@@ -75,7 +74,7 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
 };
 
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
-  function TrackerStep(props, ref?) {
+  function TrackerStep(props, ref) {
     const {
       state = "default",
       style,
@@ -91,7 +90,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
       window: targetWindow,
     });
 
-    const { activeStep, totalSteps, hasTooltips, isWithinSteppedTracker } =
+    const { activeStep, totalSteps, isWithinSteppedTracker } =
       useSteppedTrackerContext();
     const stepNumber = useTrackerStepContext();
 
@@ -108,11 +107,10 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
       "--saltTrackerStep-width": `${100 / totalSteps}%`,
     };
 
-    const Inner = (
+    return (
       <li
         className={clsx(withBaseName(), withBaseName(resolvedState), className)}
         style={innerStyle}
-        tabIndex={hasTooltips ? 0 : undefined}
         aria-current={isActive ? "step" : undefined}
         data-state={state}
         ref={ref}
@@ -122,21 +120,6 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
         {hasConnector && <TrackerConnector state={connectorState} />}
         <div className={withBaseName("body")}>{children}</div>
       </li>
-    );
-
-    if (!hasTooltips) {
-      return Inner;
-    }
-
-    return (
-      <Tooltip
-        placement="top"
-        content={
-          <TrackStepTooltipProvider>{children}</TrackStepTooltipProvider>
-        }
-      >
-        {Inner}
-      </Tooltip>
     );
   }
 );

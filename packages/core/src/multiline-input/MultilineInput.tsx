@@ -9,14 +9,11 @@ import {
   TextareaHTMLAttributes,
   useState,
 } from "react";
-import {
-  makePrefixer,
-  StatusAdornment,
-  useControlled,
-  useFormFieldProps,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { useFormFieldProps } from "../form-field-context";
+import { StatusAdornment } from "../status-adornment";
+import { makePrefixer, useControlled } from "../utils";
 
 import multilineInputCss from "./MultilineInput.css";
 
@@ -25,7 +22,7 @@ const withBaseName = makePrefixer("saltMultilineInput");
 export interface MultilineInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
-      ComponentPropsWithoutRef<"input">,
+      ComponentPropsWithoutRef<"textarea">,
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
