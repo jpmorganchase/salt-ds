@@ -8,6 +8,9 @@
 
 .heading4 {
   margin: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cardContainer:global(.saltGridLayout) {
@@ -35,23 +38,21 @@
 }
 
 .cardFuture {
-  width: auto;
-  min-width: 400px;
+  width: 400px;
   margin-bottom: 15px;
   min-height: unset;
-  border-left-color: var(--salt-palette-warning-border);
+  border-left-color: var(--salt-palette-neutral-secondary-foreground);
 }
 
 .cardInProgress {
-  width: auto;
-  min-width: 400px;
+  width: 400px;
   margin-bottom: 15px;
   min-height: unset;
   border-left-color: var(--salt-palette-info-border);
 }
 
-.futureIcon {
-  color: var(--salt-palette-warning-border);
+.backlogIcon {
+  color: var(--salt-palette-neutral-secondary-foreground);
   margin-right: 10%;
 }
 

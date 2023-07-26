@@ -14,6 +14,7 @@ import {
   FilterIcon,
   ProgressInprogressIcon,
   ProgressPendingIcon,
+  ProgressTodoIcon,
 } from "@salt-ds/icons";
 import { formatDate } from "src/utils/formatDate";
 import { Heading4 } from "../mdx/h4";
@@ -197,7 +198,7 @@ export const CardView = ({ data, searchQuery }: CardViewProps) => {
       <div className={styles.column}>
         <H3 className={styles.heading}>
           <ProgressInprogressIcon className={styles.progressIcon} size={2} />
-          In Progress{" "}
+          In-Progress{" "}
         </H3>
         {inProgressData.map((item) => (
           <ColumnData future={false} key={item.id} item={item} />
@@ -205,8 +206,8 @@ export const CardView = ({ data, searchQuery }: CardViewProps) => {
       </div>
       <div className={styles.column}>
         <H3 className={styles.heading}>
-          <ProgressPendingIcon className={styles.futureIcon} size={2} />
-          Future
+          <ProgressTodoIcon className={styles.backlogIcon} size={2} />
+          In backlog
         </H3>
         {futureData.map((item) => (
           <ColumnData key={item.id} item={item} />
