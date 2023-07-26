@@ -1,10 +1,11 @@
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import {
+  ComponentPropsWithoutRef,
   FocusEvent,
   forwardRef,
-  HTMLAttributes,
   KeyboardEvent,
   MouseEvent,
+  SyntheticEvent,
   useRef,
 } from "react";
 import { clsx } from "clsx";
@@ -16,14 +17,21 @@ import { ListNextContext } from "./ListNextContext";
 
 const withBaseName = makePrefixer("saltListNext");
 
-export interface ListNextProps extends HTMLAttributes<HTMLUListElement> {
+export interface ListNextProps
+  extends Omit<ComponentPropsWithoutRef<"ul">, "onChange"> {
   /**
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
-  /* Value for the uncontrolled version. */
+  /* If `true`, the component will not receive focus. */
+  disableFocus?: boolean;
+  /* Value for the controlled version. */
+  highlightedItem?: string;
+  /* Value for the controlled version. */
   selected?: string;
-  /* Initial value for the uncontrolled version. */
+  /* Callback for change event. */
+  onChange?: (e: SyntheticEvent, data: { value: string }) => void;
+  /* Initial selection. */
   defaultSelected?: string;
 }
 
@@ -33,14 +41,17 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       children,
       className,
       disabled,
+      disableFocus,
       id,
       onSelect,
       onFocus,
       onBlur,
       onKeyDown,
-      onMouseDown,
+      onMouseOver,
+      highlightedItem,
       selected,
       defaultSelected,
+      onChange,
       ...rest
     },
     ref
@@ -55,28 +66,36 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
     const listId = useId(id);
     const listRef = useRef<HTMLUListElement>(null);
     const handleRef = useForkRef(listRef, ref);
-
     const {
       focusHandler,
       keyDownHandler,
       blurHandler,
-      mouseDownHandler,
+      mouseOverHandler,
       activeDescendant,
       contextValue,
+      focusVisibleRef,
     } = useList({
       disabled,
+      highlightedItem,
       selected,
       defaultSelected,
+      onChange,
       id: listId,
       ref: listRef,
     });
 
+    const setListRef = useForkRef(focusVisibleRef, handleRef);
+
     const handleFocus = (event: FocusEvent<HTMLUListElement>) => {
-      focusHandler();
+      focusHandler(event);
       onFocus?.(event);
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLUListElement>) => {
+      if (disableFocus) {
+        event.preventDefault();
+        return;
+      }
       keyDownHandler(event);
       onKeyDown?.(event);
     };
@@ -86,25 +105,27 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onBlur?.(event);
     };
 
-    const handleMouseDown = (event: MouseEvent<HTMLUListElement>) => {
-      mouseDownHandler();
-      onMouseDown?.(event);
+    const handleMouseOver = (event: MouseEvent<HTMLUListElement>) => {
+      mouseOverHandler();
+      onMouseOver?.(event);
     };
 
     return (
       <ListNextContext.Provider value={contextValue}>
         <ul
-          ref={handleRef}
+          // TODO: fix type from useIsFocusVisible
+          // @ts-ignore
+          ref={setListRef}
           id={listId}
           className={clsx(withBaseName(), className)}
           role="listbox"
-          tabIndex={disabled ? -1 : 0}
+          tabIndex={disabled || disableFocus ? -1 : 0}
           aria-activedescendant={disabled ? undefined : activeDescendant}
           aria-disabled={disabled}
           onFocus={handleFocus}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
-          onMouseDown={handleMouseDown}
+          onMouseOver={handleMouseOver}
           {...rest}
         >
           {children}
