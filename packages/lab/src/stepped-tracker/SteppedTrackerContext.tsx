@@ -1,20 +1,14 @@
 import { createContext, useContext, ReactNode, useMemo } from "react";
 
-import { GetOverflowRef } from "./useDetectTruncatedText";
-
 export type SteppedTrackerContextType = {
   activeStep: number;
-  getOverflowRef: GetOverflowRef;
-  hasTooltips: boolean;
   totalSteps: number;
   isWithinSteppedTracker: boolean;
 };
 
 const defaultSteppedTrackerContext = {
   activeStep: 0,
-  hasTooltips: false,
   totalSteps: 1,
-  getOverflowRef: () => undefined,
   isWithinSteppedTracker: false,
 };
 
@@ -31,20 +25,16 @@ type SteppedTrackerProviderProps = Omit<
 
 export const SteppedTrackerProvider = ({
   activeStep,
-  getOverflowRef,
-  hasTooltips,
   totalSteps,
   children,
 }: SteppedTrackerProviderProps) => {
   const steppedTrackerContextValue: SteppedTrackerContextType = useMemo(
     () => ({
       activeStep,
-      getOverflowRef,
-      hasTooltips,
       totalSteps,
       isWithinSteppedTracker: true,
     }),
-    [activeStep, getOverflowRef, hasTooltips, totalSteps]
+    [activeStep, totalSteps]
   );
 
   return (
