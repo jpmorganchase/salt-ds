@@ -13,7 +13,6 @@ import styles from "./style.module.css";
 import {
   FilterIcon,
   ProgressInprogressIcon,
-  ProgressPendingIcon,
   ProgressTodoIcon,
 } from "@salt-ds/icons";
 import { formatDate } from "src/utils/formatDate";
