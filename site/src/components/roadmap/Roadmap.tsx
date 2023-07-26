@@ -7,6 +7,7 @@ import {
   InteractableCard,
   InteractableCardProps,
   H3,
+  Spinner,
 } from "@salt-ds/core";
 import styles from "./style.module.css";
 import {
@@ -89,7 +90,9 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
 
         setRoadmapData(extractedData || []);
       } catch (error) {
-        console.error("Could not fetch roadmap data");
+        <Banner status="info">
+          <BannerContent>No data available</BannerContent>
+        </Banner>;
       }
     };
 
@@ -120,9 +123,12 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
       {roadmapData !== null && roadmapData.length > 0 ? (
         <CardView data={sortedRoadmapData} searchQuery={searchQuery} />
       ) : (
-        <Banner status="info">
-          <BannerContent>No data available</BannerContent>
-        </Banner>
+        <Spinner
+          className={styles.loading}
+          aria-label="loading"
+          role="status"
+          size="large"
+        />
       )}
     </div>
   );

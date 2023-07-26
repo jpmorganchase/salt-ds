@@ -7,7 +7,7 @@
 }
 
 .heading4 {
-  padding-bottom: 5%;
+  margin: auto;
 }
 
 .cardContainer:global(.saltGridLayout) {
@@ -58,6 +58,11 @@
 .progressIcon {
   color: var(--salt-palette-info-border);
   margin-right: 10%;
+}
+
+.loading {
+  display: flex;
+  margin-left: 50%;
 }
 
 @media (max-width: 767px) {
