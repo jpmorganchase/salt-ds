@@ -4,7 +4,6 @@ import {
   ReactElement,
   ReactNode,
   Children,
-  useState,
   isValidElement,
   useEffect,
 } from "react";
@@ -13,7 +12,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "@salt-ds/core";
 
-import useDetectTruncatedText from "./useDetectTruncatedText";
 import {
   SteppedTrackerProvider,
   TrackerStepProvider,
@@ -56,7 +54,7 @@ const useCheckInvalidChildren = (children: ReactNode) => {
 export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
   function SteppedTracker(
     { children, className, activeStep, ...restProps },
-    ref?
+    ref
   ): ReactElement<SteppedTrackerProps> {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -64,20 +62,12 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
       css: steppedTrackerCss,
       window: targetWindow,
     });
-
     useCheckInvalidChildren(children);
-    const [hasTooltips, setHasTooltips] = useState(false);
-    // A factory function used to get a callback ref for checking truncation.
-    const getOverflowRef = useDetectTruncatedText(setHasTooltips);
+
     const totalSteps = Children.count(children);
 
     return (
-      <SteppedTrackerProvider
-        hasTooltips={hasTooltips}
-        getOverflowRef={getOverflowRef}
-        totalSteps={totalSteps}
-        activeStep={activeStep}
-      >
+      <SteppedTrackerProvider totalSteps={totalSteps} activeStep={activeStep}>
         <ul
           className={clsx(withBaseName(), className)}
           ref={ref}
