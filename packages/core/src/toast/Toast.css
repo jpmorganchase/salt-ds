@@ -13,6 +13,7 @@
   gap: var(--salt-spacing-75);
   padding: var(--saltToast-padding, var(--salt-spacing-100));
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  margin-bottom: var(--salt-spacing-100);
 }
 
 /* Styles applied to icon */

@@ -15,7 +15,7 @@ export default {
 } as ComponentMeta<typeof Toast>;
 
 const Template: ComponentStory<typeof Toast> = ({ children, ...args }) => (
-  <Toast {...args}>
+  <Toast {...args} style={{ width: 260 }}>
     <ToastContent>{children}</ToastContent>
     <Button variant="secondary">
       <CloseIcon />
@@ -23,8 +23,19 @@ const Template: ComponentStory<typeof Toast> = ({ children, ...args }) => (
   </Toast>
 );
 
-export const DefaultInfo = Template.bind({});
-DefaultInfo.args = {
+export const Default: ComponentStory<typeof Toast> = (args) => (
+  <Toast {...args} style={{ width: 260 }}>
+    <ToastContent>
+      <Text>
+        <strong>File update</strong>
+      </Text>
+      <div>A new version of this file is available with 37 updates. </div>
+    </ToastContent>
+  </Toast>
+);
+
+export const Info = Template.bind({});
+Info.args = {
   status: "info",
   children: (
     <div>
@@ -37,43 +48,73 @@ DefaultInfo.args = {
 };
 
 export const Error: ComponentStory<typeof Toast> = () => (
-  <Toast status="error">
-    <ToastContent>
-      <div>
-        <Text>
-          <strong>System error</strong>
-        </Text>
-        <div>Connection timed out. Failed to retrieve data. </div>
-      </div>
-      <FlowLayout
-        gap={1}
-        justify="end"
-        style={{ marginTop: "var(--salt-spacing-100)" }}
-      >
-        <Button>Dismiss</Button>
-        <Button variant="cta">Try again</Button>
-      </FlowLayout>
-    </ToastContent>
-  </Toast>
+  <div style={{ width: 260 }}>
+    <Toast status="error">
+      <ToastContent>
+        <div>
+          <Text>
+            <strong>System error</strong>
+          </Text>
+          <div>Connection timed out. Failed to retrieve data. </div>
+        </div>
+      </ToastContent>
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
+    </Toast>
+    <Toast status="error">
+      <ToastContent>
+        <div>
+          <Text>
+            <strong>System error</strong>
+          </Text>
+          <div>Connection timed out. Failed to retrieve data. </div>
+        </div>
+        <FlowLayout
+          gap={1}
+          justify="end"
+          style={{ marginTop: "var(--salt-spacing-100)" }}
+        >
+          <Button>Dismiss</Button>
+          <Button variant="cta">Try again</Button>
+        </FlowLayout>
+      </ToastContent>
+    </Toast>
+  </div>
 );
 
 export const Warning: ComponentStory<typeof Toast> = () => (
-  <Toast status="warning">
-    <ToastContent>
-      <div>
-        <Text>
-          <strong>File access</strong>
-        </Text>
-        <div>Viewers of this file can see comments and suggestions. </div>
-      </div>
-      <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
-        <Button variant="cta" style={{ width: "100%" }}>
-          Edit permissions
-        </Button>
-        <Button style={{ width: "100%" }}>Dismiss</Button>
-      </FlowLayout>
-    </ToastContent>
-  </Toast>
+  <div style={{ width: 260 }}>
+    <Toast status="warning">
+      <ToastContent>
+        <div>
+          <Text>
+            <strong>File access</strong>
+          </Text>
+          <div>Viewers of this file can see comments and suggestions. </div>
+        </div>
+      </ToastContent>
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
+    </Toast>
+    <Toast status="warning">
+      <ToastContent>
+        <div>
+          <Text>
+            <strong>File access</strong>
+          </Text>
+          <div>Viewers of this file can see comments and suggestions. </div>
+        </div>
+        <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
+          <Button variant="cta" style={{ width: "100%" }}>
+            Edit permissions
+          </Button>
+          <Button style={{ width: "100%" }}>Dismiss</Button>
+        </FlowLayout>
+      </ToastContent>
+    </Toast>
+  </div>
 );
 
 export const Success = Template.bind({});
@@ -89,24 +130,11 @@ Success.args = {
   ),
 };
 
-export const NoCloseButton = (args: ToastProps) => (
-  <Toast {...args}>
-    <ToastContent>
-      <div>
-        <Text>
-          <strong>File update</strong>
-        </Text>
-        <div>A new version of this file is available with 37 updates. </div>
-      </div>
-    </ToastContent>
-  </Toast>
-);
-
 export const SingleLine = (args: ToastProps) => (
-  <FlowLayout style={{ width: 352 }}>
+  <div style={{ width: 260 }}>
     <Toast {...args}>
       <ToastContent>
-        <div>This is a toast message. This is a toast message.</div>
+        <div>This is a toast message.</div>
       </ToastContent>
       <Button variant="secondary">
         <CloseIcon />
@@ -114,64 +142,8 @@ export const SingleLine = (args: ToastProps) => (
     </Toast>
     <Toast {...args}>
       <ToastContent>
-        <div>This is a toast message. This is a toast message.</div>
+        <div>This is a toast message.</div>
       </ToastContent>
     </Toast>
-  </FlowLayout>
-);
-
-export const CustomContent = (args: ToastProps) => (
-  <FlowLayout style={{ width: 352 }}>
-    <Toast {...args}>
-      <ToastContent>
-        <div>
-          This is a toast message. This is a toast message. This is a toast
-          message. This is a toast message.
-        </div>
-      </ToastContent>
-      <Button variant="secondary">
-        <CloseIcon />
-      </Button>
-    </Toast>
-    <Toast {...args}>
-      <ToastContent>
-        <Text>
-          <strong>Toast title</strong>
-        </Text>
-        <div>
-          This is a toast message. This is a toast message. This is a toast
-          message. This is a toast message.
-        </div>
-        <FlowLayout
-          gap={1}
-          justify="end"
-          style={{ marginTop: "var(--salt-spacing-100)" }}
-        >
-          <Button>Dismiss</Button>
-          <Button variant="cta">Yes</Button>
-        </FlowLayout>
-      </ToastContent>
-    </Toast>
-    <Toast {...args}>
-      <ToastContent>
-        <Text>
-          <strong>Toast title</strong>
-        </Text>
-        <div>
-          This is a toast message. This is a toast message. This is a toast
-          message. This is a toast message.
-        </div>
-        <FlowLayout
-          gap={1}
-          justify="end"
-          style={{ marginTop: "var(--salt-spacing-100)" }}
-        >
-          <Button style={{ flex: 1 }}>Dismiss</Button>
-          <Button variant="cta" style={{ flex: 1 }}>
-            Yes
-          </Button>
-        </FlowLayout>
-      </ToastContent>
-    </Toast>
-  </FlowLayout>
+  </div>
 );
