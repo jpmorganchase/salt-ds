@@ -14,7 +14,6 @@ import {
 } from "@salt-ds/icons";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-
 export default {
   title: "Core/Multiline Input",
   component: MultilineInput,
@@ -123,7 +122,7 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
           {!isError && `${value.length}/${MAX_CHARS}`}
           {isError && <strong>{`${value.length}/${MAX_CHARS}`}</strong>}
         </Label>
-      }      
+      }
       style={{ maxWidth: "266px" }}
       onChange={handleChange}
       value={value}
