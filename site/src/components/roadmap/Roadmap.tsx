@@ -9,6 +9,7 @@ import {
   H3,
   Spinner,
 } from "@salt-ds/core";
+
 import styles from "./style.module.css";
 import {
   FilterIcon,
