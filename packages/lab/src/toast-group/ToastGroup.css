@@ -5,7 +5,7 @@
   overflow: auto;
   display: flex-inline;
   flex-direction: column;
-  position:fixed;
+  position: fixed;
   z-index: var(--salt-zIndex-flyover);
 }
 
