@@ -39,10 +39,6 @@ export const Default: ComponentStory<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" value={38} />
 );
 
-export const Disabled: ComponentStory<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" disabled value={38} />
-);
-
 export const MaxValue: ComponentStory<typeof CircularProgress> = () => (
   <div>
     <h3> max = 500, value = 250</h3>

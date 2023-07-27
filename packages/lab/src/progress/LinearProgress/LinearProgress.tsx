@@ -56,10 +56,6 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   className?: string;
   /**
-   * Disabled flag, true when the component is disabled.
-   */
-  disabled?: boolean;
-  /**
    * The value of the max progress indicator.
    * Default value is 100.
    */
@@ -102,7 +98,6 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
   function LinearProgress(
     {
       className,
-      disabled,
       max = 100,
       renderInfo,
       showInfo = true,
@@ -161,11 +156,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
 
     return (
       <div
-        className={clsx(
-          withBaseName(),
-          { [withBaseName("disabled")]: disabled },
-          className
-        )}
+        className={clsx(withBaseName(), className)}
         ref={ref}
         data-testid="linear-progress"
         role="progressbar"
