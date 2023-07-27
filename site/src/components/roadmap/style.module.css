@@ -57,7 +57,7 @@
 }
 
 .progressIcon {
-  color: var(--salt-palette-info-border);
+  color: var(--salt-status-info-borderColor);
   margin-right: 10%;
 }
 
