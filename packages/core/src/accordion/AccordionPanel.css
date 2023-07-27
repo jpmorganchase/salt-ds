@@ -1,11 +1,15 @@
 .saltAccordionPanel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows var(--salt-duration-perceptible) cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-rows var(--salt-duration-perceptible) ease-in-out, opacity var(--salt-duration-perceptible) ease-in-out, visibility var(--salt-duration-perceptible) ease-in-out;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .saltAccordionHeader[aria-expanded="true"] + .saltAccordionPanel {
   grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
 }
 
 .saltAccordionPanel-inner {
@@ -13,6 +17,6 @@
 }
 
 .saltAccordionPanel-content {
-  padding: var(--salt-spacing-200);
   padding-left: calc(var(--salt-spacing-200) + var(--salt-size-icon));
+  padding-block: var(--salt-spacing-300);
 }
