@@ -15,7 +15,7 @@ import {
 
 # Badge
 
-A Badge is a numeric annotation that indicates the number of outstanding items that need to be addressed. It appears on the top-right of an element, usually an icon. The badge can accommodate values of up to four digits in length.
+Badge is an alpha or numeric character annotation indicating the number of outstanding items. It appears on the top-right of an element, usually an icon. 
 
 ## Icon Badge
 
@@ -70,3 +70,24 @@ import { Badge } from "@salt-ds/lab";
 ## Characteristics Used
 
 <CharacteristicUsage of={Badge} />
+
+# Content
+
+If a numeric annotation exceeds the max value passed as a prop, a plus (+) sign will be displayed after the max value stated. In the case that no max value is passed to the component, the value will truncate after 3 digits and therefore display 999+ for any values over 999.  
+
+If an alpha or text annotation in Badge exceeds four characters an ellipsis is used to truncate the annotation after the fourth character. 
+
+# When not to use Component Name 
+
+Badge must not indicate status through colour, such as red-amber-green or progress.
+
+Don’t allow users to edit the contents of Badge. To accept user input, consider using an interactive Pill. 
+
+# Accessibility 
+
+If custom colours are used, consider the minimum contrast guidance outlined in WCAG 2.1 documentation. The document recommends that the visual presentation of text and images of text has a contrast ratio of at least 4.5:1.  
+
+We recommend only using the accent colour for Bbadge. But for overrides, ADA should be considered where possible. 
+
+ 
+
