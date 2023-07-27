@@ -43,10 +43,6 @@ export interface DropdownNextProps<T>
   open?: boolean;
   listId?: string;
   /**
-   * List item count to display. Defaults to 10.
-   */
-  displayedItemCount?: number;
-  /**
    * Background styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
@@ -69,7 +65,6 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       variant = "primary",
       id: dropdownIdProp,
       listId: listIdProp,
-      displayedItemCount = 10,
       defaultSelected,
       selected: selectedProp,
       open: openProp,
@@ -227,7 +222,6 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
                   highlightedItem={highlightedItem}
                   // onFocus={handleFocus}
                   onMouseOver={handleMouseOver}
-                  displayedItemCount={displayedItemCount}
                   {...ListProps}
                   ref={floatingRef}
                 >

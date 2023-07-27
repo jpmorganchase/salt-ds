@@ -9,6 +9,7 @@ import {
   offset,
   size,
 } from "@floating-ui/react";
+import { useFloatingUI, UseFloatingUIProps } from "@salt-ds/core";
 import { ListItemNext } from "@salt-ds/lab";
 import {
   HTMLProps,
@@ -20,8 +21,6 @@ import {
   RefObject,
 } from "react";
 import { useList } from "../list-next/useList";
-
-import { useFloatingUI, UseFloatingUIProps } from "../utils";
 
 interface UseDropdownNextProps<T>
   extends Partial<
@@ -193,7 +192,6 @@ export const useDropdownNext = ({
         setOpen(true);
         listKeyDownHandler(event);
         break;
-
       case " ":
       case "Enter":
         if (!open) {
@@ -208,6 +206,15 @@ export const useDropdownNext = ({
         break;
       case "Escape":
         setOpen(false);
+        break;
+      case "PageUp":
+      case "PageDown":
+      case "Home":
+      case "End":
+        if (open) {
+          listKeyDownHandler(event);
+          break;
+        }
         break;
       default:
         break;
