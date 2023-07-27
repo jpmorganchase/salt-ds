@@ -1,16 +1,12 @@
 .saltToastGroup {
-  position: absolute;
-  z-index: var(--salt-zIndex-default);
   width: var(--toastGroup-width);
   max-height: calc(100% - var(--salt-spacing-300) * 2);
   margin: var(--salt-spacing-300);
   overflow: auto;
-  display: flex;
+  display: flex-inline;
   flex-direction: column;
-}
-
-.saltToastGroup-container {
-  height: 100%;
+  position:fixed;
+  z-index: var(--salt-zIndex-flyover);
 }
 
 .saltToastGroup-bottom-right {
