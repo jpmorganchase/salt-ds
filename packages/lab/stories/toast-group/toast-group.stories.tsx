@@ -5,14 +5,14 @@ import {
   Text,
   Toast,
   ToastContent,
-  ToastGroup,
   StackLayout,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
+import { ToastGroup } from "@salt-ds/lab";
 import { Fragment, ReactNode, useState } from "react";
 
 export default {
-  title: "Core/Toast/Toast Group",
+  title: "Lab/Toast Group",
   component: ToastGroup,
 } as ComponentMeta<typeof ToastGroup>;
 
