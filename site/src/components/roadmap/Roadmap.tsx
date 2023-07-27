@@ -16,6 +16,7 @@ import {
   ProgressInprogressIcon,
   ProgressTodoIcon,
 } from "@salt-ds/icons";
+
 import { formatDate } from "src/utils/formatDate";
 import { Heading4 } from "../mdx/h4";
 
