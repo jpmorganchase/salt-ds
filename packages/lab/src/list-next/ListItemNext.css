@@ -23,10 +23,8 @@
   border: var(--salt-focused-outline);
 }
 
-/* Active list item on hover using mouse */
-.saltListItemNext:hover:not([aria-disabled="true"]),
 /* Active list item on focus using keyboard navigation  */
-.saltListItemNext-focused {
+.saltListItemNext-highlighted:not([aria-disabled="true"]) {
   --listNext-item-background: var(--salt-selectable-background-hover);
   cursor: var(--salt-selectable-cursor-hover);
 }
