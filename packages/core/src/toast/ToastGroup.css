@@ -1,23 +1,16 @@
 .saltToastGroup {
   position: absolute;
-  /* display: flex;
-  flex-direction: column; */
   z-index: var(--salt-zIndex-default);
   width: var(--toastGroup-width);
   max-height: calc(100% - var(--salt-spacing-300) * 2);
   margin: var(--salt-spacing-300);
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .saltToastGroup-container {
-  /* display: flex;
-  flex-direction: column; */
   height: 100%;
-  /* overflow: auto; */
-}
-
-.saltToastGroup .saltToast {
-  margin-bottom: var(--salt-spacing-100);
 }
 
 .saltToastGroup-bottom-right {

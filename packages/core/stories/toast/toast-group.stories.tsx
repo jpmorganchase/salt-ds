@@ -9,18 +9,12 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import {
-  ComponentPropsWithoutRef,
-  Fragment,
-  ReactNode,
-  useState,
-} from "react";
+import { Fragment, ReactNode, useState } from "react";
 
 export default {
   title: "Core/Toast/Toast Group",
   component: ToastGroup,
 } as ComponentMeta<typeof ToastGroup>;
-
 
 const InfoToast = () => {
   const [open, setOpen] = useState<boolean>(true);
@@ -39,7 +33,9 @@ const InfoToast = () => {
         <CloseIcon />
       </Button>
     </Toast>
-  ) : <></>
+  ) : (
+    <></>
+  );
 };
 
 const ErrorToast = () => {
@@ -66,7 +62,9 @@ const ErrorToast = () => {
         </FlowLayout>
       </ToastContent>
     </Toast>
-  ) : <></>
+  ) : (
+    <></>
+  );
 };
 
 const WarningToast = () => {
@@ -93,7 +91,9 @@ const WarningToast = () => {
         </FlowLayout>
       </ToastContent>
     </Toast>
-  ) : <></>
+  ) : (
+    <></>
+  );
 };
 
 const SuccessToast = () => {
@@ -107,15 +107,15 @@ const SuccessToast = () => {
         <Text>
           <strong>Project file upload</strong>
         </Text>
-        <div>
-          Project file has successfully uploaded to the shared drive.{" "}
-        </div>
+        <div>Project file has successfully uploaded to the shared drive. </div>
       </ToastContent>
       <Button variant="secondary" onClick={closeToast}>
         <CloseIcon />
       </Button>
     </Toast>
-  ) : <></>
+  ) : (
+    <></>
+  );
 };
 
 type ToastEntryType = {

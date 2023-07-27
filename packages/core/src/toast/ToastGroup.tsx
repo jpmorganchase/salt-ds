@@ -14,7 +14,7 @@ export interface ToastGroupProps extends ComponentPropsWithoutRef<"div"> {
 
 export const ToastGroup = forwardRef<HTMLDivElement, ToastGroupProps>(
   function ToastGroup(props, ref) {
-    const { children, className, placement = "bottom-right" } = props;
+    const { children, className, placement = "bottom-right", ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -24,7 +24,7 @@ export const ToastGroup = forwardRef<HTMLDivElement, ToastGroupProps>(
     });
 
     return (
-      <div className={clsx(withBaseName(), withBaseName(placement), className)}>
+      <div className={clsx(withBaseName(), withBaseName(placement), className)} {...rest}>
         <div className={withBaseName("container")}>{children}</div>
       </div>
     );
