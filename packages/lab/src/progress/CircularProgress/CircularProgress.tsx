@@ -91,23 +91,32 @@ export const CircularProgress = forwardRef<
     window: targetWindow,
   });
 
-  const circleStyle: CSSProperties = {};
-  const railCircleStyle: CSSProperties = {};
-  const rootStyle: CSSProperties = {};
   const rootProps: HTMLAttributes<any> = {};
-
-  const progress = (value / max) * 100;
 
   rootProps["aria-valuenow"] = Math.round(value);
 
-  const progressStrokeLength = `calc(${progress} * var(--circularProgress-progressCircle-circumference) / 100)`;
-  const progressGapLength = `calc((100 - ${progress}) * var(--circularProgress-progressCircle-circumference) / 100)`;
-  const railStrokeLength = `calc((100 - ${progress}) * var(--circularProgress-railCircle-circumference) / 100)`;
-  const railGapLength = `calc((${progress}) * var(--circularProgress-railCircle-circumference) / 100)`;
+  const subOverlayRightStyle: CSSProperties = {};
+  const subOverlayLeftStyle: CSSProperties = {};
 
-  circleStyle.strokeDasharray = `${progressStrokeLength} ${progressGapLength}`;
-  railCircleStyle.strokeDashoffset = `${railStrokeLength}`;
-  railCircleStyle.strokeDasharray = `${railStrokeLength} ${railGapLength}`;
+  const computePercentage = (value: number, maxValue: number) => {
+    return (value / maxValue) * 100;
+  };
+
+  const getRotationAngle = (progress: number, shift = 0) => {
+    return -180 + ((progress - shift) / 50) * 180;
+  };
+
+  const progress = computePercentage(value, max);
+
+  if (progress <= 50) {
+    const rotationAngle = getRotationAngle(progress);
+    subOverlayRightStyle.transform = `rotate(${rotationAngle}deg)`;
+    subOverlayLeftStyle.transform = "rotate(-180deg)";
+  } else {
+    const rotationAngle = getRotationAngle(progress, 50);
+    subOverlayRightStyle.transform = "rotate(0deg)";
+    subOverlayLeftStyle.transform = `rotate(${rotationAngle}deg)`;
+  }
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" && !ariaLabel) {
@@ -157,23 +166,27 @@ export const CircularProgress = forwardRef<
       aria-valuenow={value}
       {...rest}
     >
-      <svg className={withBaseName("svg")}>
-        <circle
-          cx="50%"
-          cy="50%"
-          fill="none"
-          style={railCircleStyle}
-          className={withBaseName("railCircle")}
-        />
-
-        <circle
-          cx="50%"
-          cy="50%"
-          fill="none"
-          style={circleStyle}
-          className={withBaseName("circle")}
-        />
-      </svg>
+      <div className={withBaseName("track")} />
+      <div className={withBaseName("bars")}>
+        <div className={withBaseName("barOverlayRight")}>
+          <div
+            className={withBaseName("barSubOverlayRight")}
+            data-testid="barSubOverlayRight"
+            style={subOverlayRightStyle}
+          >
+            <div className={withBaseName("bar")} />
+          </div>
+        </div>
+        <div className={withBaseName("barOverlayLeft")}>
+          <div
+            className={withBaseName("barSubOverlayLeft")}
+            data-testid="barSubOverlayLeft"
+            style={subOverlayLeftStyle}
+          >
+            <div className={withBaseName("bar")} />
+          </div>
+        </div>
+      </div>
       {progressInfo}
     </div>
   );
