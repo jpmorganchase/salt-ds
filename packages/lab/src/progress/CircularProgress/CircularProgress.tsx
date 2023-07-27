@@ -98,15 +98,11 @@ export const CircularProgress = forwardRef<
   const subOverlayRightStyle: CSSProperties = {};
   const subOverlayLeftStyle: CSSProperties = {};
 
-  const computePercentage = (value: number, maxValue: number) => {
-    return (value / maxValue) * 100;
-  };
-
   const getRotationAngle = (progress: number, shift = 0) => {
     return -180 + ((progress - shift) / 50) * 180;
   };
 
-  const progress = computePercentage(value, max);
+  const progress = (value / max) * 100;
 
   if (progress <= 50) {
     const rotationAngle = getRotationAngle(progress);
