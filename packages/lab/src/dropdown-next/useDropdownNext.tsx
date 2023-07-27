@@ -43,7 +43,7 @@ export const useDropdownNext = ({
   // portal stuffs
   open: openProp,
   onOpenChange: onOpenChangeProp,
-  placement: placementProp = "bottom",
+  placement: placementProp,
 }: UseDropdownNextProps<T>) => {
   const [open, setOpen] = useState(false);
 
@@ -53,30 +53,6 @@ export const useDropdownNext = ({
   //   name: "DropdownNext",
   //   state: "open",
   // });
-
-  const getListItems = (source: T[]) => {
-    if (!source) return;
-
-    return source.map((item, index) => {
-      if (typeof item === "string") {
-        return (
-          <ListItemNext key={index} value={item}>
-            {item}
-          </ListItemNext>
-        );
-      }
-
-      return (
-        <ListItemNext
-          key={item?.id ?? index}
-          value={item.value}
-          disabled={item?.disabled ?? false}
-        >
-          {item.value}
-        </ListItemNext>
-      );
-    });
-  };
 
   // USELIST HOOK
   const {
@@ -96,6 +72,48 @@ export const useDropdownNext = ({
     id: listId,
     ref: listRef,
   });
+
+  const { select, highlight } = listContextValue;
+
+  // LIST SOURCE
+  const getListItems = (source: T[]) => {
+    if (!source) return;
+
+    return source.map((item, index) => {
+      if (typeof item === "string") {
+        return (
+          <ListItemNext
+            key={index}
+            value={item}
+            onMouseDown={(event) => {
+              select(event);
+            }}
+            onMouseMove={(event) => {
+              highlight(event);
+            }}
+          >
+            {item}
+          </ListItemNext>
+        );
+      }
+
+      return (
+        <ListItemNext
+          key={item?.id ?? index}
+          value={item.value}
+          disabled={item?.disabled ?? false}
+          onMouseDown={(event) => {
+            select(event);
+          }}
+          onMouseMove={(event) => {
+            highlight(event);
+          }}
+        >
+          {item.value}
+        </ListItemNext>
+      );
+    });
+  };
 
   // FLOATING PORTAL
   const onOpenChange = (open: boolean) => {
@@ -156,17 +174,18 @@ export const useDropdownNext = ({
   };
 
   const focusHandler = (event: FocusEvent<HTMLElement>) => {
-    console.log("useDD hook: focusHandler");
+    // console.log("useDD hook: focusHandler");
     // listFocusHandler(event);
     setOpen(true);
   };
 
   const mouseOverHandler = (event: MouseEvent<HTMLElement>) => {
+    // console.log("useDD hook: mouseOverHandler");
     listMouseOverHandler(event);
   };
 
   const keyDownHandler = (event: KeyboardEvent) => {
-    console.log("useDD hook: keyDOwnHandler");
+    // console.log("useDD hook: keyDownHandler");
     const { key } = event;
     switch (key) {
       case "ArrowUp":
@@ -174,6 +193,7 @@ export const useDropdownNext = ({
         setOpen(true);
         listKeyDownHandler(event);
         break;
+
       case " ":
       case "Enter":
         if (!open) {
