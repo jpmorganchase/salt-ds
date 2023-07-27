@@ -71,16 +71,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       }
     };
 
-    const handleMouseDown = (event: MouseEvent<HTMLLIElement>) => {
-      console.log("listitemnext handleMouseDown");
-      if (!disabled) {
-        select(event);
-        onClick?.(event);
-      }
-    };
-
     const handleMouseMove = (event: MouseEvent<HTMLLIElement>) => {
-      console.log("listitemnext handleMouseMOOOOOVE");
       if (!highlighted) {
         highlight(event);
       }
@@ -103,9 +94,8 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         aria-selected={selected || undefined}
         id={itemId}
         data-value={value}
-        // onClick={handleClick}
+        onClick={handleClick}
         onMouseMove={handleMouseMove}
-        onMouseDown={handleMouseDown}
         {...props}
       >
         {children}

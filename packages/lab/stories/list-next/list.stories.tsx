@@ -1,7 +1,12 @@
 import { ComponentMeta, Story } from "@storybook/react";
 import { ListItemNext, ListNext, ListNextProps } from "../../src";
-import { Button, FlexLayout, Input } from "@salt-ds/core";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/lab";
+import {
+  Button,
+  FlexLayout,
+  Input,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
 import { ChangeEvent, KeyboardEvent, SyntheticEvent, useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
