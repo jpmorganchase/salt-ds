@@ -41,7 +41,7 @@
   width: 400px;
   margin-bottom: 15px;
   min-height: unset;
-  border-left-color: var(--salt-palette-neutral-secondary-foreground);
+  border-left-color: var(--salt-status-static-foreground);
 }
 
 .cardInProgress {
