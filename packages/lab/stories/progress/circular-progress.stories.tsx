@@ -53,7 +53,3 @@ export const ProgressingValue: ComponentStory<typeof CircularProgress> = () => (
 export const ShowNoInfo: ComponentStory<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" showInfo={false} value={38} />
 );
-
-export const Unit: ComponentStory<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" unit="px" value={38} />
-);

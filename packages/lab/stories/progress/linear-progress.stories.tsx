@@ -53,7 +53,3 @@ export const MaxValue: ComponentStory<typeof CircularProgress> = () => (
 export const ShowNoInfo: ComponentStory<typeof LinearProgress> = () => (
   <LinearProgress showInfo={false} value={38} />
 );
-
-export const Unit: ComponentStory<typeof LinearProgress> = () => (
-  <LinearProgress unit="px" value={38} />
-);
