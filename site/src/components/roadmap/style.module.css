@@ -48,7 +48,7 @@
   width: 400px;
   margin-bottom: 15px;
   min-height: unset;
-  border-left-color: var(--salt-palette-info-border);
+  border-left-color: var(--salt-status-info-borderColor);
 }
 
 .backlogIcon {
