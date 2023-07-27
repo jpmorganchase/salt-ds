@@ -8,7 +8,7 @@ import {
   UseFloatingUIProps,
   SaltProvider,
 } from "@salt-ds/core";
-import { ChevronDownIcon } from "@salt-ds/icons";
+import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import {
   useRef,
   forwardRef,
@@ -42,6 +42,9 @@ export interface DropdownNextProps<T>
   selected?: string;
   open?: boolean;
   listId?: string;
+  /**
+   * List item count to display. Defaults to 10.
+   */
   displayedItemCount?: number;
   /**
    * Background styling variant. Defaults to "primary".
@@ -66,16 +69,19 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       variant = "primary",
       id: dropdownIdProp,
       listId: listIdProp,
+      displayedItemCount = 10,
       defaultSelected,
       selected: selectedProp,
       open: openProp,
       readOnly,
       source,
+      placement = "bottom",
       onFocus,
       onKeyDown,
-      onMouseDown,
       onBlur,
+      onMouseOver,
       style: dropdownStyle,
+      ListProps,
       ...rest
     } = props;
 
@@ -94,11 +100,11 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       focusHandler,
       keyDownHandler,
       blurHandler,
-      mouseDownHandler,
+      mouseOverHandler,
       contextValue,
-      listActiveDescendant,
+      activeDescendant,
       selectedItem,
-      highlightedIndex,
+      highlightedItem,
       setListRef,
       getListItems,
       open,
@@ -112,7 +118,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       disabled,
       listRef,
       listId,
-      placement: "top-start",
+      placement,
     });
 
     const triggerRef = useForkRef(
@@ -126,6 +132,8 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     ) as MutableRefObject<HTMLUListElement>;
 
     const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+      if (disabled || readOnly) return;
+
       focusHandler(event);
       onFocus?.(event);
     };
@@ -140,14 +148,9 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       onBlur?.(event);
     };
 
-    const handleSelect = (event: MouseEvent | KeyboardEvent) => {
-      selectHandler(event);
-      // onSelect?.(event);
-    };
-
-    const handleMouseDown = (event: MouseEvent<HTMLElement>) => {
-      mouseDownHandler(event);
-      onMouseDown?.(event);
+    const handleMouseOver = (event: MouseEvent<HTMLElement>) => {
+      mouseOverHandler(event);
+      onMouseOver?.(event);
     };
 
     return (
@@ -156,9 +159,9 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
           <button
             id={dropdownId}
             disabled={disabled}
-            onMouseDown={handleMouseDown}
             onFocus={handleFocus}
             onKeyDown={handleKeyDown}
+            onMouseOver={handleMouseOver}
             onBlur={handleBlur}
             value={selectedItem}
             className={clsx(
@@ -173,53 +176,64 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
             role="combobox"
             aria-haspopup="listbox"
             aria-expanded={open}
+            aria-activedescendant={disabled ? undefined : activeDescendant}
             // aria-labelledby="dropdownLabel" // identifies element that labels the DD
             tabIndex={disabled ? -1 : 0}
-            aria-owns={listId} // see w3 managing focus...
+            aria-owns={listId}
             aria-controls={listId}
-            // aria-activedescendant="" // listbox option with visual keyboard focus
             ref={triggerRef}
             style={dropdownStyle}
           >
             <span className={clsx(withBaseName("buttonText"), className)}>
               {selectedItem}
             </span>
-            <span className={clsx(withBaseName("icon"), className)}>
-              <ChevronDownIcon />
-            </span>
+            {open && readOnly === false ? (
+              <ChevronUpIcon
+                className={clsx(
+                  withBaseName("icon"),
+                  {
+                    [withBaseName("disabled")]: disabled,
+                    [withBaseName("readOnly")]: readOnly,
+                  },
+                  className
+                )}
+              />
+            ) : (
+              <ChevronDownIcon
+                className={clsx(
+                  withBaseName("icon"),
+                  {
+                    [withBaseName("disabled")]: disabled,
+                    [withBaseName("readOnly")]: readOnly,
+                  },
+                  className
+                )}
+              />
+            )}
           </button>
 
           {open && (
             <FloatingPortal>
-              <SaltProvider>
-                <div
-                  className={clsx(withBaseName("popup"), className)}
-                  {...getDropdownNextProps()}
+              <div
+                className={clsx(withBaseName("popup"), className)}
+                {...getDropdownNextProps()}
+              >
+                <ListNext
+                  id={listId}
+                  disableFocus
+                  // aria-labelledby="dropdownLabel"
+                  disabled={disabled}
+                  selected={selectedItem}
+                  highlightedItem={highlightedItem}
+                  // onFocus={handleFocus}
+                  onMouseOver={handleMouseOver}
+                  displayedItemCount={displayedItemCount}
+                  {...ListProps}
+                  ref={floatingRef}
                 >
-                  <ListNext
-                    id={listId}
-                    ref={floatingRef}
-                    tabIndex={-1}
-                    // className={clsx(withBaseName("list"), className)}
-                    // aria-labelledby="dropdownLabel"
-                    disabled={disabled}
-                    selected={selectedItem}
-                    onMouseDown={(evt) => {
-                      console.log("list onMouseDown");
-                      handleSelect(evt);
-                    }}
-                    // onKeyDown={(evt) => {
-                    //   console.log("list onKeyDown");
-                    //   handleSelect(evt);
-                    // }}
-                    highlightedIndex={highlightedIndex}
-                    defaultSelected={defaultSelected}
-                    displayedItemCount={6}
-                  >
-                    {getListItems(source, handleSelect)}
-                  </ListNext>
-                </div>
-              </SaltProvider>
+                  {getListItems(source)}
+                </ListNext>
+              </div>
             </FloatingPortal>
           )}
         </div>
