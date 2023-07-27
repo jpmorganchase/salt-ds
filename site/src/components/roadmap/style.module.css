@@ -52,7 +52,7 @@
 }
 
 .backlogIcon {
-  color: var(--salt-palette-neutral-secondary-foreground);
+  color: var(--salt-status-static-foreground);
   margin-right: 10%;
 }
 
