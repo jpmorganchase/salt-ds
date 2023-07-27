@@ -28,10 +28,6 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   className?: string;
   /**
-   * Disabled flag, true when the component is disabled.
-   */
-  disabled?: boolean;
-  /**
    * The value of the max progress indicator.
    * Default value is 100.
    */
@@ -74,7 +70,6 @@ export const CircularProgress = forwardRef<
   {
     "aria-label": ariaLabel,
     className,
-    disabled,
     max = 100,
     showInfo = true,
     renderInfo,
@@ -143,11 +138,7 @@ export const CircularProgress = forwardRef<
 
   return (
     <div
-      className={clsx(
-        withBaseName(),
-        { [withBaseName("disabled")]: disabled },
-        className
-      )}
+      className={clsx(withBaseName(), className)}
       data-testid="circular-progress"
       ref={ref}
       role="progressbar"
