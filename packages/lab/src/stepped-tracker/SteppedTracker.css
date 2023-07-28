@@ -5,7 +5,6 @@
   list-style-type: none;
   display: flex;
   flex-direction: row;
-  gap: var(--salt-spacing-50);
   width: 100%;
   position: relative;
 }
