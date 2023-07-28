@@ -38,7 +38,7 @@ const dataGridExampleColumns: ColDef[] = [
     headerName: "Date",
     type: "dateColumn",
     field: "date",
-    filter: "agDateColumnFilter"
+    filter: "agDateColumnFilter",
   },
 ];
 export default dataGridExampleColumns;
