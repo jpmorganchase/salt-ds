@@ -1,41 +1,62 @@
 import {
+  FocusEvent,
   KeyboardEvent,
   RefObject,
   SyntheticEvent,
   useCallback,
+  useEffect,
   useMemo,
   useState,
 } from "react";
-import { useControlled } from "@salt-ds/core";
+import { useControlled, useIsFocusVisible } from "@salt-ds/core";
 
 interface UseListProps {
   /**
    * If true, all items in list will be disabled.
    */
   disabled?: boolean;
-  /* Value for the uncontrolled version. */
+  /* Highlighted index for when the list is controlled. */
+  highlightedItem?: string;
+  /* Selected value for when the list is controlled. */
   selected?: string;
-  /* Initial value for the uncontrolled version. */
+  /* Initial selected value for when the list is controlled. */
   defaultSelected?: string;
-  /* Callback for the controlled version. */
+  /* Callback for when the list is controlled. */
   onChange?: (e: SyntheticEvent, data: { value: string }) => void;
+  /* List id. */
   id?: string;
+  /* List ref. */
   ref: RefObject<HTMLUListElement>;
 }
 
 export const useList = ({
   disabled = false,
+  highlightedItem: highLightedItemProp,
   selected: selectedProp,
   defaultSelected,
   onChange,
   id,
   ref,
 }: UseListProps) => {
+  const getOptions: () => HTMLElement[] = useCallback(() => {
+    return Array.from(
+      ref.current?.querySelectorAll('[role="option"]:not([aria-disabled])') ??
+        []
+    );
+  }, [ref]);
+
+  const [focusVisible, setFocusVisible] = useState(false);
   const [activeDescendant, setActiveDescendant] = useState<string | undefined>(
     undefined
   );
 
-  const [showFocusRing, setShowFocusRing] = useState<boolean>(false);
+  const [highlightedItem, setHighlightedItem] = useControlled({
+    controlled: highLightedItemProp,
+    default: highLightedItemProp,
+    name: "ListNext",
+    state: "highlighted",
+  });
+
   const [selectedItem, setSelectedItem] = useControlled({
     controlled: selectedProp,
     default: defaultSelected,
@@ -43,12 +64,12 @@ export const useList = ({
     state: "selected",
   });
 
-  const getOptions: () => HTMLElement[] = useCallback(() => {
-    return Array.from(
-      ref.current?.querySelectorAll('[role="option"]:not([aria-disabled])') ??
-        []
-    );
-  }, [ref]);
+  const {
+    isFocusVisibleRef,
+    onFocus: handleFocusVisible,
+    onBlur: handleBlurVisible,
+    ref: focusVisibleRef,
+  } = useIsFocusVisible();
 
   const updateScroll = useCallback(
     (currentTarget: Element) => {
@@ -66,35 +87,45 @@ export const useList = ({
     [ref]
   );
 
-  const updateActiveDescendant = useCallback(
+  const updateHighlighted = useCallback(
     (element: HTMLElement) => {
+      setHighlightedItem(element.dataset.value);
       setActiveDescendant(element.id);
       updateScroll(element);
     },
-    [setActiveDescendant, updateScroll]
+    [setHighlightedItem, updateScroll]
   );
+
   const selectItem = useCallback(
     (element: HTMLElement) => {
       const newValue = element?.dataset.value;
       if (newValue) {
         setSelectedItem(newValue);
-        updateActiveDescendant(element);
+        updateHighlighted(element);
       }
     },
-    [setSelectedItem, updateActiveDescendant]
+    [setSelectedItem, updateHighlighted]
   );
 
-  const focusAndMoveActive = (element: HTMLElement) => {
-    setShowFocusRing(true);
-    updateActiveDescendant(element);
-  };
+  // Effect to move the cursor when items change controlled.
+  // this could be following active descendant if there is no better way of doing it when controlled
+  useEffect(() => {
+    const activeOptions = getOptions();
+    const highlightedIndex = activeOptions.findIndex(
+      (i) => i.dataset.value === highlightedItem
+    );
+    if (highlightedIndex) {
+      setActiveDescendant(activeOptions[highlightedIndex]?.id);
+      highlightedItem && updateScroll(activeOptions[highlightedIndex]);
+    }
+  }, [highlightedItem, getOptions, updateScroll]);
 
   const focusFirstItem = () => {
     // Find first active item
     const activeOptions = getOptions();
     const firstItem = activeOptions[0];
     if (firstItem) {
-      focusAndMoveActive(firstItem);
+      updateHighlighted(firstItem);
     }
   };
   const focusLastItem = () => {
@@ -102,7 +133,7 @@ export const useList = ({
     const activeOptions = getOptions();
     const lastItem = activeOptions[activeOptions.length - 1];
     if (lastItem) {
-      focusAndMoveActive(lastItem);
+      updateHighlighted(lastItem);
       updateScroll(lastItem);
     }
   };
@@ -137,9 +168,6 @@ export const useList = ({
   const select = useCallback(
     (event: SyntheticEvent<HTMLLIElement>) => {
       const newValue = event.currentTarget.dataset.value;
-      if (event.type === "click") {
-        setShowFocusRing(false);
-      }
       const activeOptions = getOptions();
       const isActiveOption =
         activeOptions.findIndex((i) => i.id === event.currentTarget.id) !== -1;
@@ -152,13 +180,25 @@ export const useList = ({
   );
 
   const isSelected = useCallback(
-    (id: string) => selectedItem === id,
+    (value: string) => selectedItem === value,
     [selectedItem]
   );
 
+  const highlight = useCallback(
+    (event: SyntheticEvent<HTMLLIElement>) => {
+      setHighlightedItem(event.currentTarget.dataset.value);
+    },
+    [setHighlightedItem]
+  );
+
+  const isHighlighted = useCallback(
+    (value: string) => highlightedItem === value,
+    [highlightedItem]
+  );
+
   const isFocused = useCallback(
-    (id: string | undefined) => activeDescendant === id && showFocusRing,
-    [activeDescendant, showFocusRing]
+    (value: string) => isHighlighted(value) && focusVisible,
+    [focusVisible, isHighlighted]
   );
 
   const getActiveItem = () => {
@@ -166,24 +206,35 @@ export const useList = ({
     const activeIndex = activeOptions.findIndex(
       (i) => i.id === activeDescendant
     );
-    return activeOptions[activeIndex !== -1 ? activeIndex : 0];
+    return activeOptions[activeIndex];
   };
 
   // HANDLERS
   const blurHandler = () => {
-    setShowFocusRing(false);
+    handleBlurVisible();
+    if (!isFocusVisibleRef.current) {
+      setFocusVisible(false);
+    }
   };
 
-  const mouseDownHandler = () => {
-    // When list gets focused, we can't guarantee that focus happens after click event.
-    // If first focus (where !activeDescendant) happens from a click, list shouldn't render focus ring in the first element.
-    setShowFocusRing(false);
+  const mouseOverHandler = () => {
+    if (focusVisible) {
+      setFocusVisible(false);
+    }
   };
 
   // takes care of focus when using keyboard navigation
-  const focusHandler = () => {
+  const focusHandler = (event: FocusEvent<HTMLUListElement>) => {
+    handleFocusVisible(event);
+    if (isFocusVisibleRef.current) {
+      setFocusVisible(true);
+    }
     const activeElement = getActiveItem();
-    focusAndMoveActive(activeElement);
+    if (activeElement) {
+      updateHighlighted(activeElement);
+    } else {
+      focusFirstItem();
+    }
   };
 
   // takes care of keydown when using keyboard navigation
@@ -191,12 +242,16 @@ export const useList = ({
     const { key } = event;
     const currentItem = getActiveItem();
     let nextItem = currentItem;
-    if (!currentItem) {
-      return;
+    if (isFocusVisibleRef.current || !focusVisible) {
+      setFocusVisible(true);
     }
     switch (key) {
       case "ArrowUp":
       case "ArrowDown":
+        if (!currentItem) {
+          focusFirstItem();
+          break;
+        }
         nextItem =
           key === "ArrowUp"
             ? findPreviousOption(currentItem, 1)
@@ -204,7 +259,7 @@ export const useList = ({
 
         if (nextItem && nextItem !== currentItem) {
           event.preventDefault();
-          focusAndMoveActive(nextItem);
+          updateHighlighted(nextItem);
         }
         break;
       case "Home":
@@ -218,9 +273,15 @@ export const useList = ({
       case " ":
       case "Enter":
         event.preventDefault();
-        nextItem && selectItem(nextItem);
+        if (nextItem) {
+          selectItem(nextItem);
+          onChange?.(event, { value: nextItem.dataset.value || "" });
+        }
         break;
+      case "PageDown":
+      case "PageUp":
       default:
+        event.preventDefault();
         break;
     }
   };
@@ -233,16 +294,21 @@ export const useList = ({
       select,
       isSelected,
       isFocused,
+      highlight,
+      isHighlighted,
     }),
-    [disabled, id, select, isSelected, isFocused]
+    [disabled, id, select, isSelected, isFocused, highlight, isHighlighted]
   );
 
   return {
     focusHandler,
     keyDownHandler,
     blurHandler,
-    mouseDownHandler,
+    mouseOverHandler,
     activeDescendant,
+    selectedItem,
+    highlightedItem,
     contextValue,
+    focusVisibleRef,
   };
 };

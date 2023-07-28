@@ -24,6 +24,7 @@
   color: var(--salt-text-primary-foreground);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
+  padding: 0 var(--salt-spacing-25);
 }
 
 /* Pseudo-class applied to the root element on focus */
