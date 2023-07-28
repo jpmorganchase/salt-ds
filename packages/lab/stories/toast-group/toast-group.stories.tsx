@@ -148,7 +148,7 @@ export const BottomRight = () => {
 
   return (
     <>
-      <StackLayout>
+      <StackLayout style={{ maxWidth: 250 }}>
         <Button onClick={addInfoToast}>Add info toast</Button>
         <Button onClick={addErrorToast}>Add error toast</Button>
         <Button onClick={addWarningToast}>Add warning toast</Button>
@@ -190,7 +190,7 @@ export const TopRight = () => {
 
   return (
     <>
-      <StackLayout>
+      <StackLayout style={{ maxWidth: 250 }}>
         <Button onClick={addInfoToast}>Add info toast</Button>
         <Button onClick={addErrorToast}>Add error toast</Button>
         <Button onClick={addWarningToast}>Add warning toast</Button>
