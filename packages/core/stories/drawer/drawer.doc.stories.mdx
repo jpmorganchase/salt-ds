@@ -22,7 +22,7 @@ Use this component to display content as an overlay within the application layou
 Use this component by wrapping it around your content and setting the desired position. For example:
 
 <Canvas>
-  <Story id="core-drawer--default" />
+  <Story id="core-drawer--default" inline={false} height="500px" />
 </Canvas>
 
 Provide a component like a Button so that users can open and close the Drawer.
@@ -46,25 +46,25 @@ The component will be displayed in the left position by default but you can cust
 #### Top positioned
 
 <Canvas>
-  <Story id="core-drawer--top" />
+  <Story id="core-drawer--top" inline={false} height="500px" />
 </Canvas>
 
 #### Right positioned
 
 <Canvas>
-  <Story id="core-drawer--right" />
+  <Story id="core-drawer--right" inline={false} height="500px" />
 </Canvas>
 
 #### Left positioned
 
 <Canvas>
-  <Story id="core-drawer--default" />
+  <Story id="core-drawer--default" inline={false} height="500px" />
 </Canvas>
 
 #### Bottom positioned
 
 <Canvas>
-  <Story id="core-drawer--bottom" />
+  <Story id="core-drawer--bottom" inline={false} height="500px" />
 </Canvas>
 
 ## Configuring Drawer
@@ -88,7 +88,7 @@ import { Drawer } from "@salt-ds/core";
 You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
 
 <Canvas>
-  <Story id="core-drawer--reduced-motion" />
+  <Story id="core-drawer--reduced-motion" inline={false} height="500px" />
 </Canvas>
 
 <HelpAndSupport />
