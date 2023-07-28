@@ -52,14 +52,15 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
 
     let progressInfo: ReactNode = null;
 
-    const progressUnit = withBaseName("progressUnit");
-    const progressValue = withBaseName("progressValue");
-
     const progress = (value / max) * 100;
 
     if (showInfo) {
       progressInfo = (
-        <Info unit="%" value={Math.round(progress)} className={progressValue} />
+        <Info
+          unit="%"
+          value={Math.round(progress)}
+          className={withBaseName("progressValue")}
+        />
       );
     }
 
