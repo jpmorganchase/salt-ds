@@ -1,7 +1,7 @@
 .saltToastGroup {
   width: var(--toastGroup-width);
   max-height: calc(100% - var(--salt-spacing-300) * 2);
-  margin: var(--salt-spacing-300);
+  margin: var(--salt-spacing-300) var(--salt-spacing-200) var(--salt-spacing-100) var(--salt-spacing-200);
   overflow: auto;
   display: flex-inline;
   flex-direction: column;
