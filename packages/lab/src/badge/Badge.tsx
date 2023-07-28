@@ -1,4 +1,4 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useWindow } from "@salt-ds/window";
@@ -40,33 +40,18 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     valueText = value > 999 ? "999+" : value;
   } else if (typeof value === "number" && max) {
     valueText = value > max ? `${max}+` : value;
-  } else if (typeof value === "string") {
-    valueText = value.length > 4 ? `${value.slice(0, 4)}...` : value;
   }
+
   return (
     <span className={clsx(withBaseName(), className)} ref={ref} {...rest}>
       {children}
-      {typeof value === "string" && value.length > 4 ? (
-        <>
-          <span
-            className={clsx(withBaseName("badge"), {
-              [withBaseName("topRight")]: children,
-            })}
-            aria-hidden="true"
-          >
-            {valueText}
-          </span>
-          <span className="salt-visuallyHidden">{value}</span>
-        </>
-      ) : (
-        <span
-          className={clsx(withBaseName("badge"), {
-            [withBaseName("topRight")]: children,
-          })}
-        >
-          {valueText}
-        </span>
-      )}
+      <span
+        className={clsx(withBaseName("badge"), {
+          [withBaseName("topRight")]: children,
+        })}
+      >
+        {valueText}
+      </span>
     </span>
   );
 });
