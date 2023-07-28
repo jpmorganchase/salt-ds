@@ -13,19 +13,27 @@ export const ExamplesGrid: Story<QAContainerProps> = (props) => (
     <StackLayout>
       <Toast>
         <ToastContent>This is a toast</ToastContent>
-        <Button variant="secondary"><CloseIcon /></Button>
+        <Button variant="secondary">
+          <CloseIcon />
+        </Button>
       </Toast>
       <Toast status="error">
         <ToastContent>This is a toast</ToastContent>
-        <Button variant="secondary"><CloseIcon /></Button>
+        <Button variant="secondary">
+          <CloseIcon />
+        </Button>
       </Toast>
       <Toast status="warning">
         <ToastContent>This is a toast</ToastContent>
-        <Button variant="secondary"><CloseIcon /></Button>
+        <Button variant="secondary">
+          <CloseIcon />
+        </Button>
       </Toast>
       <Toast status="success">
         <ToastContent>This is a toast</ToastContent>
-        <Button variant="secondary"><CloseIcon /></Button>
+        <Button variant="secondary">
+          <CloseIcon />
+        </Button>
       </Toast>
     </StackLayout>
   </QAContainer>
