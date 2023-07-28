@@ -3572,45 +3572,56 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@floating-ui/core@npm:1.2.1"
-  checksum: 7a263e15abad4cd98ce3938075c90f76bafef71c67964c83dd7cf1e1916c92ccfa46a4f2b95b403bb180f70b3e7ded118db1cbc3426269ec70e948edf0d19ae2
+"@floating-ui/core@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@floating-ui/core@npm:1.4.0"
+  dependencies:
+    "@floating-ui/utils": ^0.1.0
+  checksum: 8549ad349dab33498d79a3fb558616eb80c2d0301ee7739832e49d51398da6e7fa2b2e4f4088af2c346c011ce2c4a61a2d1348838c6e0119e15e81a827ba00a7
   languageName: node
   linkType: hard
 
-"@floating-ui/dom@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@floating-ui/dom@npm:1.2.1"
+"@floating-ui/dom@npm:^1.3.0":
+  version: 1.5.0
+  resolution: "@floating-ui/dom@npm:1.5.0"
   dependencies:
-    "@floating-ui/core": ^1.2.1
-  checksum: ad6928d5dd934ca8b3dcffdfcacde9d147afc0db4db0c0294b23d5f897224d73c7f0ae578b46d813f0d7ae22a86e7a3f8914fdbcdf4a8d42a1b430d0518f45be
+    "@floating-ui/core": ^1.4.0
+    "@floating-ui/utils": ^0.1.0
+  checksum: 61e97e0625279deb2e9fba9d7f85491ce3bfdbaf0adc31f2ee101a82e2879dd62945ee9ea0c83cf82481a711af9a43ccfd31b9ec017718be8b9028ff2a1da5b2
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@floating-ui/react-dom@npm:1.3.0"
+"@floating-ui/react-dom@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@floating-ui/react-dom@npm:2.0.1"
   dependencies:
-    "@floating-ui/dom": ^1.2.1
+    "@floating-ui/dom": ^1.3.0
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: ce0ad3e3bbe43cfd15a6a0d5cccede02175c845862bfab52027995ab99c6b29630180dc7d146f76ebb34730f90a6ab9bf193c8984fe8d7f56062308e4ca98f77
+  checksum: 00fef2cf69ac2b15952e47505fd9e23f6cc5c20a26adc707862932826d1682f3c30f83c9887abfc93574fdca2d34dd2fc00271527318b1db403549cd6bc9eb00
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "@floating-ui/react@npm:0.23.0"
+"@floating-ui/react@npm:^0.25.0":
+  version: 0.25.0
+  resolution: "@floating-ui/react@npm:0.25.0"
   dependencies:
-    "@floating-ui/react-dom": ^1.3.0
-    aria-hidden: ^1.1.3
+    "@floating-ui/react-dom": ^2.0.1
+    "@floating-ui/utils": ^0.1.0
+    aria-hidden: ^1.2.3
     tabbable: ^6.0.1
   peerDependencies:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
-  checksum: 3b9e9b4f5ae970fceefe6aa363326d7abe9a1a3e6b15735c316a3dc6e69c201abe86d636b67e029f8ef434dd5688381bf9df41acd396a3dca8987f2db05ff7f1
+  checksum: 0ca24f5e44b8c20fe06ad957f3b5c9fc8a8c3a46a5bf9bcd5ab4acf0a45884db3297e65959a12ee8d922ef5fa14fb5163d3a6b2ec967f9e642131c8f1a26b6ec
+  languageName: node
+  linkType: hard
+
+"@floating-ui/utils@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@floating-ui/utils@npm:0.1.0"
+  checksum: 71c865f0c6ab3f0a66355b80ca1b6438ea4bbf3aaa66421fc9bbddea08e814b94a75b25cb9c0cba09fd8775b8952b8e59affecf5db4dc3235849e25b2c011dbe
   languageName: node
   linkType: hard
 
@@ -5607,7 +5618,7 @@ __metadata:
     "@changesets/cli": ^2.25.2
     "@cypress/code-coverage": ^3.10.0
     "@faker-js/faker": ^8.0.0
-    "@floating-ui/react": ^0.23.0
+    "@floating-ui/react": ^0.25.0
     "@fluentui/react-overflow": ^9.0.19
     "@fontsource/open-sans": ^4.5.13
     "@internationalized/date": ^3.0.0
@@ -9921,12 +9932,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aria-hidden@npm:^1.1.1, aria-hidden@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "aria-hidden@npm:1.1.3"
+"aria-hidden@npm:^1.1.1, aria-hidden@npm:^1.2.3":
+  version: 1.2.3
+  resolution: "aria-hidden@npm:1.2.3"
   dependencies:
-    tslib: ^1.0.0
-  checksum: 2d40a328246baac7ae0b243ebe0cbef53c836c5f78c9212e9c1ff93f3aee185bd9aa51773e161e0025722d691c9d5f125070f6175a7074c4a57778ddc30d9e74
+    tslib: ^2.0.0
+  checksum: 7d7d211629eef315e94ed3b064c6823d13617e609d3f9afab1c2ed86399bb8e90405f9bdd358a85506802766f3ecb468af985c67c846045a34b973bcc0289db9
   languageName: node
   linkType: hard
 
@@ -30866,7 +30877,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.0.0, tslib@npm:^1.11.1, tslib@npm:^1.13.0, tslib@npm:^1.8.1, tslib@npm:^1.9.3":
+"tslib@npm:^1.11.1, tslib@npm:^1.13.0, tslib@npm:^1.8.1, tslib@npm:^1.9.3":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd

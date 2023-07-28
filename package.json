@@ -51,7 +51,7 @@
     "@changesets/cli": "^2.25.2",
     "@cypress/code-coverage": "^3.10.0",
     "@faker-js/faker": "^8.0.0",
-    "@floating-ui/react": "^0.23.0",
+    "@floating-ui/react": "^0.25.0",
     "@fluentui/react-overflow": "^9.0.19",
     "@fontsource/open-sans": "^4.5.13",
     "@internationalized/date": "^3.0.0",
