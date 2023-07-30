@@ -16,7 +16,7 @@ import toggleButtonCss from "./ToggleButton.css";
 export interface ToggleButtonProps extends ComponentProps<"button"> {
   selected?: boolean;
   onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
-  value: string | ReadonlyArray<string> | number | undefined;
+  value?: string | ReadonlyArray<string> | number;
 }
 
 const withBaseName = makePrefixer("saltToggleButton");
