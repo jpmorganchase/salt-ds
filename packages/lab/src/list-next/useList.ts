@@ -238,7 +238,7 @@ export const useList = ({
   };
 
   // takes care of keydown when using keyboard navigation
-  const keyDownHandler = (event: KeyboardEvent<HTMLUListElement>) => {
+  const keyDownHandler = (event: KeyboardEvent<HTMLElement>) => {
     const { key } = event;
     const currentItem = getActiveItem();
     let nextItem = currentItem;
@@ -278,6 +278,8 @@ export const useList = ({
           onChange?.(event, { value: nextItem.dataset.value || "" });
         }
         break;
+      case "Tab":
+        break;
       case "PageDown":
       case "PageUp":
       default:
@@ -308,6 +310,8 @@ export const useList = ({
     activeDescendant,
     selectedItem,
     highlightedItem,
+    setSelectedItem,
+    setHighlightedItem,
     contextValue,
     focusVisibleRef,
   };
