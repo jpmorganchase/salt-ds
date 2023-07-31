@@ -24,7 +24,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 const withBaseName = makePrefixer("saltBadge");
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
-  { value, max, className, children, ...rest },
+  { value, max = 999, className, children, ...rest },
   ref
 ) {
   const targetWindow = useWindow();
@@ -34,13 +34,8 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     window: targetWindow,
   });
 
-  let valueText = value;
-
-  if (typeof value === "number" && !max) {
-    valueText = value > 999 ? "999+" : value;
-  } else if (typeof value === "number" && max) {
-    valueText = value > max ? `${max}+` : value;
-  }
+  const valueText =
+    typeof value === "number" && value > max ? `${max}+` : value;
 
   return (
     <span className={clsx(withBaseName(), className)} ref={ref} {...rest}>
