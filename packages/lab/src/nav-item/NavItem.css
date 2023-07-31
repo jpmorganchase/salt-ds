@@ -7,9 +7,9 @@
   --navItem-indicator-background: var(--salt-navigable-indicator-active);
 }
 
-/* Vars applied to NavItem component on hover and when active */
-.saltNavItem:hover,
-.saltNavItem-active {
+/* Vars applied to NavItem component when active or selected */
+.saltNavItem-active,
+.saltNavItem-selected {
   --navItem-color: var(--salt-text-primary-foreground);
   --navItem-fill: var(--salt-text-primary-foreground);
 }
@@ -44,7 +44,7 @@
 
 /* Styles applied to NavItem label on hover */
 .saltNavItem-label:hover {
-  --link-color-hover: inherit;
+  --link-color-hover: var(--navItem-color);
 }
 
 /* Styles applied to NavItem label */
@@ -105,7 +105,7 @@
   transition: all var(--salt-duration-perceptible) ease-in-out;
 }
 
-/* Styles applied to activation line when item is active but is also a parent that is not expanded */
+/* Styles applied to activation line when item has active children */
 .saltNavItem.saltNavItem-selected::after,
 .saltNavItem.saltNavItem-selected:hover::after,
 .saltNavItem.saltNavItem-selected:focus::after {

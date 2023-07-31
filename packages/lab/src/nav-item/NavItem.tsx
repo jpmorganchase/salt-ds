@@ -20,6 +20,10 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   active?: boolean;
   /**
+   * Whether the nav item has active children.
+   */
+  selected?: boolean;
+  /**
    * Whether the nav item is expanded.
    */
   expanded?: boolean;
@@ -55,6 +59,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
   function NavItem(props, ref) {
     const {
       active,
+      selected,
       children,
       className,
       expanded = false,
@@ -91,7 +96,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
           withBaseName(),
           {
             [withBaseName("active")]: active,
-            [withBaseName("selected")]: active && !expanded && parent,
+            [withBaseName("selected")]: selected,
             [withBaseName("nested")]: level !== 0,
           },
           withBaseName(orientation),

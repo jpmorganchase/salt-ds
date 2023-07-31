@@ -1,4 +1,10 @@
-import { LayerLayout, NavItem, NavItemProps } from "@salt-ds/lab";
+import {
+  LayerLayout,
+  ListNext,
+  ListItemNext,
+  NavItem,
+  NavItemProps,
+} from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { useState } from "react";
 import { Card, H2, Link } from "@salt-ds/core";
@@ -32,20 +38,20 @@ WithIcon.args = {
 const itemsWithSubNav = [
   {
     name: "Nav Item 1",
+    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
   },
   {
     name: "Nav Item 2",
+    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
   },
   {
     name: "Nav Item 3",
   },
   {
     name: "Nav Item 4",
-    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
   },
   {
     name: "Nav Item 5",
-    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
   },
 ];
 
@@ -96,6 +102,77 @@ export const HorizontalGroup = () => {
   );
 };
 
+export const HorizontalGroupWithDropdown = () => {
+  const [active, setActive] = useState(itemsWithSubNav[0].name);
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  const listPosition = itemsWithSubNav.findIndex(
+    (item) => item.name === expanded
+  );
+
+  const currentSubNav = itemsWithSubNav.find(
+    (item) => item.name === expanded
+  )?.subNav;
+
+  return (
+    <div className="container">
+      <nav>
+        <ul className="horizontal">
+          {itemsWithSubNav.map(({ name, subNav }) => (
+            <li key={name}>
+              <NavItem
+                active={active === name}
+                href="#"
+                onClick={(event) => {
+                  // Prevent default to avoid navigation
+                  event.preventDefault();
+                  setActive(name);
+                  setExpanded((old) => {
+                    if (old === name) {
+                      return null;
+                    }
+                    return name;
+                  });
+                }}
+                onExpand={() => {
+                  setExpanded((old) => {
+                    if (old === name) {
+                      return null;
+                    }
+                    return name;
+                  });
+                }}
+                expanded={expanded === name}
+                aria-haspopup={expanded === name}
+                parent={subNav && subNav.length > 0}
+                IconComponent={NotificationIcon}
+              >
+                {name}
+              </NavItem>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      {currentSubNav && (
+        <ListNext
+          aria-label="Nav item list"
+          onChange={(e, { value }) => {
+            console.log("new selection", value);
+          }}
+          className="list"
+          style={{ left: listPosition * 135 }}
+        >
+          {currentSubNav.map((item, index) => (
+            <ListItemNext key={index} value={item}>
+              {item}
+            </ListItemNext>
+          ))}
+        </ListNext>
+      )}
+    </div>
+  );
+};
+
 export const VerticalGroup = () => {
   const [active, setActive] = useState(items[0]);
   return (
@@ -121,7 +198,7 @@ export const VerticalGroup = () => {
     </nav>
   );
 };
-export const NestedGroup = () => {
+export const VerticalNestedGroup = () => {
   const [active, setActive] = useState(multipleLevelNesting[0].name);
 
   const [expanded, setExpanded] = useState<string[]>([]);
@@ -136,6 +213,17 @@ export const NestedGroup = () => {
                 active === name ||
                 (!expanded.includes(name) &&
                   subNav?.some((item) => active === `${name} - ${item.name}`))
+              }
+              selected={
+                !expanded.includes(name) &&
+                subNav?.some(
+                  (item) =>
+                    active === `${name} - ${item.name}` ||
+                    item.subNav.some(
+                      (nestedItem) =>
+                        active === `${name} - ${item.name} - ${nestedItem}`
+                    )
+                )
               }
               href="#"
               orientation="vertical"
@@ -172,6 +260,14 @@ export const NestedGroup = () => {
                               (item) => active === `${name} - ${item}`
                             ))
                         }
+                        selected={
+                          !expanded.includes(item.name) &&
+                          item.subNav?.some(
+                            (nestedItem) =>
+                              active ===
+                              `${name} - ${item.name} - ${nestedItem}`
+                          )
+                        }
                         href="#"
                         orientation="vertical"
                         onClick={(event) => {
@@ -199,8 +295,8 @@ export const NestedGroup = () => {
 
                       {expanded.includes(item.name) && (
                         <ul className="nestedGroup">
-                          {item.subNav.map((item) => {
-                            const itemValue = `${name} - ${item}`;
+                          {item.subNav.map((nestedItem) => {
+                            const itemValue = `${name} - ${item.name} - ${nestedItem}`;
 
                             return (
                               <li key={itemValue}>
@@ -215,7 +311,7 @@ export const NestedGroup = () => {
                                   }}
                                   level={2}
                                 >
-                                  {item}
+                                  {nestedItem}
                                 </NavItem>
                               </li>
                             );
