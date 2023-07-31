@@ -1,0 +1,34 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Examples
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Basic Features">
+
+The SteppedTracker contains multiple TrackerStep child components. Each TrackerStep indicates its status through its icon. The connectors indicate current active step progress through the process. You should add a label to the TrackerStep using the StepLabel component as follows:
+
+</LivePreview>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Step Progression">
+
+In normal circumstances, once a step is completed you should both advance the active step, and change the status of the current active step in unison.
+
+</LivePreview>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Auto Progression">
+
+It may however be appropriate to control the state of steps, and the active step independently if users are able to revisit previous steps or complete step non-sequentially.
+
+</LivePreview>
+
+{/* Add more <LivePreview>...</LivePreview> blocks here as needed */}
+
+</LivePreviewControls>
