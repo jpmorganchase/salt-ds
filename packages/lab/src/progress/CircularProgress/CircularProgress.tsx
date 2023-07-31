@@ -67,12 +67,7 @@ export const CircularProgress = forwardRef<
 
   const circleStyle: CSSProperties = {};
   const railCircleStyle: CSSProperties = {};
-  const rootStyle: CSSProperties = {};
-  const rootProps: HTMLAttributes<any> = {};
-
   const progress = (value / max) * 100;
-
-  rootProps["aria-valuenow"] = Math.round(value);
 
   const progressStrokeLength = `calc(${progress} * var(--circularProgress-progressCircle-circumference) / 100)`;
   const progressGapLength = `calc((100 - ${progress}) * var(--circularProgress-progressCircle-circumference) / 100)`;
@@ -99,7 +94,6 @@ export const CircularProgress = forwardRef<
         className={withBaseName("progressValue")}
         unit="%"
         value={Math.round(progress)}
-        {...rest}
       />
     );
   }
@@ -113,7 +107,7 @@ export const CircularProgress = forwardRef<
       aria-label={ariaLabel}
       aria-valuemax={max}
       aria-valuemin={0}
-      aria-valuenow={value}
+      aria-valuenow={Math.round(value)}
       {...rest}
     >
       <svg className={withBaseName("svg")}>

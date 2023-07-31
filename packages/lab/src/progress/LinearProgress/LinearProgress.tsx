@@ -64,13 +64,9 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       );
     }
 
-    const rootProps: HTMLAttributes<HTMLDivElement> = {};
     const barStyle: CSSProperties = {};
     const trackStyle: CSSProperties = {};
 
-    rootProps["aria-valuenow"] = Math.round(value);
-    rootProps["aria-valuemin"] = 0;
-    rootProps["aria-valuemax"] = 100;
     barStyle.transform = `translateX(${progress - 100}%)`;
     trackStyle.transform = `translateX(${progress}%)`;
 
@@ -80,7 +76,9 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         ref={ref}
         data-testid="linear-progress"
         role="progressbar"
-        {...rootProps}
+        aria-valuemax={max}
+        aria-valuemin={0}
+        aria-valuenow={Math.round(value)}
         {...rest}
       >
         <div className={withBaseName("barContainer")}>
