@@ -3,6 +3,7 @@
   --navItem-font-weight: var(--salt-text-fontWeight);
   --navItem-fill: var(--salt-text-secondary-foreground);
   --navItem-bar-inset: var(--salt-spacing-25);
+  --navItem-indicator-background: var(--salt-navigable-indicator-active);
 }
 
 .saltNavItem:hover,
@@ -93,10 +94,16 @@
   transition: all var(--salt-duration-perceptible) ease-in-out;
 }
 
+.saltNavItem.saltNavItem-selected::after,
+.saltNavItem.saltNavItem-selected:hover::after,
+.saltNavItem.saltNavItem-selected:focus::after {
+  --navItem-indicator-background: none;
+}
+
 .saltNavItem.saltNavItem-active::after,
 .saltNavItem.saltNavItem-active:hover::after,
 .saltNavItem.saltNavItem-active:focus::after {
-  background: var(--salt-navigable-indicator-active);
+  background: var(--navItem-indicator-background);
   /* Hover on */
   transition: all var(--salt-duration-perceptible) ease-in-out;
 }

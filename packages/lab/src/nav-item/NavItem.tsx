@@ -76,6 +76,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
           withBaseName(),
           {
             [withBaseName("active")]: active,
+            [withBaseName("selected")]: active && !expanded && parent,
             [withBaseName("nested")]: level !== 0,
           },
           withBaseName(orientation),
