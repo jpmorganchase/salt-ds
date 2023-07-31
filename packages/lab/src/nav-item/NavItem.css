@@ -1,9 +1,9 @@
 /* Vars applied to root NavItem component */
 .saltNavItem {
   --navItem-color: var(--salt-text-secondary-foreground);
-  --navItem-fontWeight: var(--salt-text-fontWeight);
   --navItem-fill: var(--salt-text-secondary-foreground);
   --navItem-bar-inset: var(--salt-spacing-25);
+  --navItem-bar-size: calc(var(--salt-size-bar) / 2);
   --navItem-indicator-background: var(--salt-navigable-indicator-active);
 }
 
@@ -11,7 +11,6 @@
 .saltNavItem:hover,
 .saltNavItem-active {
   --navItem-color: var(--salt-text-primary-foreground);
-  --navItem-fontWeight: var(--salt-text-fontWeight-strong);
   --navItem-fill: var(--salt-text-primary-foreground);
 }
 
@@ -21,7 +20,7 @@
   align-items: center;
   position: relative;
   gap: var(--salt-spacing-100);
-  font-weight: var(--navItem-fontWeight);
+  font-weight: var(--salt-text-fontWeight-strong);
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
 }
@@ -66,6 +65,8 @@
 /* Styles applied to expand button icon */
 .saltNavItem .saltNavItem-expandButton {
   --saltIcon-color: var(--navItem-fill);
+  --saltButton-background-hover: none;
+  --saltButton-background-active: none;
 }
 
 /* Styles applied to NavItem when focus is visible */
@@ -85,13 +86,13 @@
 /* Styles applied to activation line when orientation = "horizontal" */
 .saltNavItem-horizontal::after {
   width: 100%;
-  height: var(--salt-size-bar);
+  height: var(--navItem-bar-size);
   top: var(--navItem-bar-inset);
 }
 
 /* Styles applied to activation line when orientation = "vertical" */
 .saltNavItem-vertical::after {
-  width: var(--salt-size-bar);
+  width: var(--navItem-bar-size);
   height: 100%;
   left: var(--navItem-bar-inset);
 }
