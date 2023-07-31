@@ -1,0 +1,38 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Usage
+data:
+  $ref: ./#/data
+---
+
+### Using the Badge component
+
+#### When not to use Component Name
+
+- Badge must not indicate status through color, such as red-amber-green or progress. Instead, use the Pill component.
+- Don’t allow users to edit the contents of Badge. To accept user input, consider using an interactive Pill.
+
+### Import
+
+{/* Update the text and code snippet below as needed: */}
+
+To import Badge from the core Salt package, use:
+
+```js
+import { Badge } from "@salt-ds/core";
+```
+
+### Props
+
+{/* TODO: Update this to grab from core package when component is released */}
+
+<PropsTable packageName="labs" componentName="Badge" />
+
+### Content
+
+- If a numeric annotation exceeds the max value passed as a prop, a plus (+) sign will be displayed after the max value stated. In the case that no max value is passed to the component, the value will truncate after 3 digits and therefore display 999+ for any values over 999.
+- For strings there is no inbuilt truncation but it is advised to not exceed 4 characters.

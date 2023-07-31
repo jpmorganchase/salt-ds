@@ -1,0 +1,38 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Examples
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Icon badge">
+
+Badge is positioned in the top right corner when placed on a child component, for example with Icon.
+
+</LivePreview>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Words Badge">
+
+</LivePreview>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Badge with maximum number">
+
+Specify the maximum number to be displayed with `max`. If `value` exceeds `max`, suffix `+` will be appended.
+
+</LivePreview>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" title="Badge with string">
+
+`value` can accept both number and string.
+
+</LivePreview>
+
+{/* Add more <LivePreview>...</LivePreview> blocks here as needed */}
+
+</LivePreviewControls>
