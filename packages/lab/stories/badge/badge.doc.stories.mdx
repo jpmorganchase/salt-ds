@@ -1,6 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Badge } from "@salt-ds/lab";
-import { ClockIcon, MessageIcon, UserBadgeIcon } from "@salt-ds/icons";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -20,10 +19,8 @@ A Badge is a numeric annotation that indicates the number of outstanding items t
 
 ## Icon Badge
 
-The default element is `MessageIcon`
-
 <Canvas>
-  <Story id="lab-badge--default" />
+  <Story id="lab-badge--icon" />
 </Canvas>
 
 ## Words Badge
@@ -32,20 +29,28 @@ The default element is `MessageIcon`
   <Story id="lab-badge--words" />
 </Canvas>
 
-## Badge with text
-
-`badgeContent` can accept both number and string
-
-<Canvas>
-  <Story id="lab-badge--text" />
-</Canvas>
-
 ## Badge with maximum number
 
-Specify the maximum number to be displayed with `max`. If `badgeContent` exceeds `max`, suffix `+` will be appended.
+Specify the maximum number to be displayed with `max`. If `value` exceeds `max`, suffix `+` will be appended.
 
 <Canvas>
   <Story id="lab-badge--max-number" />
+</Canvas>
+
+## Badge with string
+
+`value` can accept both number and string
+
+<Canvas>
+  <Story id="lab-badge--string" />
+</Canvas>
+
+## Badge with truncated string
+
+When a string of greater than 4 characters is passed to `value` it is truncated and appended with `...`
+
+<Canvas>
+  <Story id="lab-badge--truncated" />
 </Canvas>
 
 # API

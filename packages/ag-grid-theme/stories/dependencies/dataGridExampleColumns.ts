@@ -34,5 +34,11 @@ const dataGridExampleColumns: ColDef[] = [
     editable: true,
     cellClass: ["numeric-cell", "editable-cell"],
   },
+  {
+    headerName: "Date",
+    type: "dateColumn",
+    field: "date",
+    filter: "agDateColumnFilter",
+  },
 ];
 export default dataGridExampleColumns;

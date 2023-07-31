@@ -19,6 +19,7 @@ export {
   ContextMenu,
   CustomFilter,
   DragRowOrder,
+  Icons,
   FloatingFilter,
   InfiniteScroll,
   LoadingOverlay,
