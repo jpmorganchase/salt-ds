@@ -19,14 +19,29 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
    * Whether the nav item is active.
    */
   active?: boolean;
+  /**
+   * Whether the nav item is expanded.
+   */
   expanded?: boolean;
+  /**
+   * Level of nesting.
+   */
   level?: number;
   /**
    * The orientation of the nav item.
    */
   orientation?: "horizontal" | "vertical";
+  /**
+   * Whether the nav item is a parent with nested children.
+   */
   parent?: boolean;
+  /**
+   * Action to be triggered when the nav item is expanded.
+   */
   onExpand?: MouseEventHandler<HTMLButtonElement>;
+  /**
+   * Href to be passed to the Link element.
+   */
   href?: string;
   /**
    * Icon component to be displayed next to the nav item label.

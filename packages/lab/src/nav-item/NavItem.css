@@ -1,3 +1,4 @@
+/* Vars applied to root NavItem component */
 .saltNavItem {
   --navItem-color: var(--salt-text-secondary-foreground);
   --navItem-fontWeight: var(--salt-text-fontWeight);
@@ -6,6 +7,7 @@
   --navItem-indicator-background: var(--salt-navigable-indicator-active);
 }
 
+/* Vars applied to NavItem component on hover and when active */
 .saltNavItem:hover,
 .saltNavItem-active {
   --navItem-color: var(--salt-text-primary-foreground);
@@ -13,60 +15,65 @@
   --navItem-fill: var(--salt-text-primary-foreground);
 }
 
+/* Styles applied to root NavItem component */
 .saltNavItem {
   display: flex;
   align-items: center;
   position: relative;
   gap: var(--salt-spacing-100);
   font-weight: var(--navItem-fontWeight);
-  /* Hover off */
+  /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
 }
 
+/* Styles applied to NavItem icon */
 .saltNavItem .saltNavItem-icon {
   fill: var(--navItem-fill);
 }
 
+/* Styles applied when orientation = "horizontal" */
 .saltNavItem-horizontal {
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-spacing-100));
   padding: calc(var(--salt-spacing-100) + var(--navItem-bar-inset)) var(--salt-spacing-100) var(--salt-spacing-100) var(--salt-spacing-100);
 }
 
+/* Styles applied when orientation = "vertical" */
 .saltNavItem-vertical {
   min-height: var(--salt-size-stackable);
   padding-left: calc(var(--salt-spacing-100) + var(--navItem-bar-inset));
 }
 
-.saltNavItem-label {
-  flex: 1;
-}
-
+/* Styles applied to NavItem label on hover */
 .saltNavItem-label:hover {
   --link-color-hover: inherit;
 }
 
+/* Styles applied to NavItem label */
 .saltNavItem .saltNavItem-label {
   text-decoration: none;
   color: var(--navItem-color);
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
   padding-left: calc(var(--saltNavItem-level, 0) * var(--salt-spacing-100));
+  flex: 1;
 }
 
+/* Styles applied when level is not 0 */
 .saltNavItem-nested {
   padding-left: calc(var(--salt-spacing-250) + (var(--saltNavItem-level, 0) * var(--salt-spacing-100)));
 }
 
-.saltNavItem-vertical .saltNavItem-expandButton {
+/* Styles applied to expand button icon */
+.saltNavItem .saltNavItem-expandButton {
   --saltIcon-color: var(--navItem-fill);
-
-  margin: var(--salt-spacing-50);
 }
 
+/* Styles applied to NavItem when focus is visible */
 .saltNavItem:focus-visible {
   outline: var(--salt-focused-outline);
 }
 
+/* Styles applied to activation line */
 .saltNavItem::after {
   content: "";
   position: absolute;
@@ -75,35 +82,40 @@
   display: block;
 }
 
+/* Styles applied to activation line when orientation = "horizontal" */
 .saltNavItem-horizontal::after {
   width: 100%;
   height: var(--salt-size-bar);
   top: var(--navItem-bar-inset);
 }
 
+/* Styles applied to activation line when orientation = "vertical" */
 .saltNavItem-vertical::after {
   width: var(--salt-size-bar);
   height: 100%;
   left: var(--navItem-bar-inset);
 }
 
+/* Styles applied to activation line on hover and on focus */
 .saltNavItem:hover::after,
 .saltNavItem:focus::after {
   background: var(--salt-navigable-indicator-hover);
-  /* Hover on */
+  /* Hover on animation */
   transition: all var(--salt-duration-perceptible) ease-in-out;
 }
 
+/* Styles applied to activation line when item is active but is also a parent that is not expanded */
 .saltNavItem.saltNavItem-selected::after,
 .saltNavItem.saltNavItem-selected:hover::after,
 .saltNavItem.saltNavItem-selected:focus::after {
   --navItem-indicator-background: none;
 }
 
+/* Styles applied to activation line when item is active */
 .saltNavItem.saltNavItem-active::after,
 .saltNavItem.saltNavItem-active:hover::after,
 .saltNavItem.saltNavItem-active:focus::after {
   background: var(--navItem-indicator-background);
-  /* Hover on */
+  /* Hover on animation */
   transition: all var(--salt-duration-perceptible) ease-in-out;
 }
