@@ -1,6 +1,6 @@
 .saltNavItem {
   --navItem-color: var(--salt-text-secondary-foreground);
-  --navItem-font-weight: var(--salt-text-fontWeight);
+  --navItem-fontWeight: var(--salt-text-fontWeight);
   --navItem-fill: var(--salt-text-secondary-foreground);
   --navItem-bar-inset: var(--salt-spacing-25);
   --navItem-indicator-background: var(--salt-navigable-indicator-active);
@@ -9,7 +9,7 @@
 .saltNavItem:hover,
 .saltNavItem-active {
   --navItem-color: var(--salt-text-primary-foreground);
-  --navItem-font-weight: var(--salt-text-fontWeight-strong);
+  --navItem-fontWeight: var(--salt-text-fontWeight-strong);
   --navItem-fill: var(--salt-text-primary-foreground);
 }
 
@@ -18,7 +18,7 @@
   align-items: center;
   position: relative;
   gap: var(--salt-spacing-100);
-  font-weight: var(--navItem-font-weight);
+  font-weight: var(--navItem-fontWeight);
   /* Hover off */
   transition: all var(--salt-duration-instant) ease-in-out;
 }
