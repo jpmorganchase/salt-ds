@@ -1,0 +1,49 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Usage
+data:
+  $ref: ./#/data
+---
+
+### Using the Component Name component
+
+Use this component by wrapping it around your content and setting the desired position. For example:
+
+```jsx
+<Drawer isOpen={open} position="right">
+  <DrawerContentExample />
+</Drawer>
+```
+
+Provide a component like a Button so that users can open and close the Drawer.
+
+The Drawer displays a visual overlay, also known as a scrim, over the existing content. It also plays relevant animations when opening and closing. You can disable all of these visuals via props.
+
+#### When to use Drawer
+
+Use Drawer when you need additional content, such as a form or sidebar navigation, to be displayed in a specific area of the screen.
+
+#### When not to use Component Name
+
+If you want your content split between pages or tabs, consider Deck Layout instead.
+
+### Import
+
+{/* Update the text and code snippet below as needed: */}
+
+To import Component Name from the core Salt package, use:
+
+```js
+import { Drawer } from "@salt-ds/core";
+```
+
+### Props
+
+{/* Update packageName and componentName below as needed */}
+{/* packageName is optional and defaults to "core" if omitted */}
+
+<PropsTable packageName="core" componentName="Drawer" />
