@@ -7,7 +7,7 @@
     "README.md"
   ],
   "dependencies": {
-    "js-beautify": "1.14.8",
+    "js-beautify": "1.14.9",
     "tinycolor2": "1.6.0"
   }
 }
