@@ -167,7 +167,7 @@ label.saltText,
 /* Label emphasis strong */
 label.saltText strong,
 .saltText-label.saltText strong {
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-label-fontWeight-strong);
 }
 /* Label emphasis small */
 label.saltText small,

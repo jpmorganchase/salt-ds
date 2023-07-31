@@ -5,6 +5,7 @@ const dataGridExampleData = [
     capital: "Montgomery",
     rating: 10,
     population: 8446790,
+    date: "29/07/2004",
   },
   {
     name: "Alaska",
@@ -12,6 +13,7 @@ const dataGridExampleData = [
     capital: "Juneau",
     rating: 20,
     population: 5492139,
+    date: "20/05/2009",
   },
   {
     name: "Arizona",
@@ -19,6 +21,7 @@ const dataGridExampleData = [
     capital: "Phoenix",
     rating: 30,
     population: 806007,
+    date: "23/02/2020",
   },
   {
     name: "Arkansas",
@@ -26,6 +29,7 @@ const dataGridExampleData = [
     capital: "Little Rock",
     rating: 40,
     population: 59453,
+    date: "19/02/1999",
   },
   {
     name: "California",
@@ -33,6 +37,7 @@ const dataGridExampleData = [
     capital: "Sacramento",
     rating: 10,
     population: 8319396,
+    date: "29/04/1967",
   },
   {
     name: "Colorado",
@@ -40,6 +45,7 @@ const dataGridExampleData = [
     capital: "Denver",
     rating: 10,
     population: 8822592,
+    date: "19/02/1944",
   },
   {
     name: "Connecticut",
@@ -47,6 +53,7 @@ const dataGridExampleData = [
     capital: "Hartford",
     rating: 10,
     population: 2465263,
+    date: "30/03/2015",
   },
   {
     name: "Delaware",
@@ -54,6 +61,7 @@ const dataGridExampleData = [
     capital: "Dover",
     rating: 10,
     population: 3075357,
+    date: "04/03/1949",
   },
   {
     name: "Florida",
@@ -61,6 +69,7 @@ const dataGridExampleData = [
     capital: "Tallahassee",
     rating: 10,
     population: 7597316,
+    date: "03/10/2005",
   },
   {
     name: "Georgia",
@@ -68,6 +77,7 @@ const dataGridExampleData = [
     capital: "Atlanta",
     rating: 10,
     population: 7271180,
+    date: "16/02/1998",
   },
   {
     name: "Hawaii",
@@ -75,6 +85,7 @@ const dataGridExampleData = [
     capital: "Honolulu",
     rating: 10,
     population: 8534120,
+    date: "17/02/2005",
   },
   {
     name: "Idaho",
@@ -82,6 +93,7 @@ const dataGridExampleData = [
     capital: "Boise",
     rating: 10,
     population: 5806269,
+    date: "19/02/2007",
   },
   {
     name: "Illinois",
@@ -89,6 +101,7 @@ const dataGridExampleData = [
     capital: "Springfield",
     rating: 10,
     population: 525951,
+    date: "08/11/2022",
   },
   {
     name: "Indiana",
@@ -96,6 +109,7 @@ const dataGridExampleData = [
     capital: "Indianapolis",
     rating: 10,
     population: 5220228,
+    date: "19/02/1920",
   },
   {
     name: "Iowa",
@@ -103,6 +117,7 @@ const dataGridExampleData = [
     capital: "Des Moines",
     rating: 10,
     population: 333600,
+    date: "31/05/2020",
   },
   {
     name: "Kansas",
@@ -110,6 +125,7 @@ const dataGridExampleData = [
     capital: "Topeka",
     rating: 10,
     population: 170082,
+    date: "28/02/1999",
   },
   {
     name: "Kentucky",
@@ -117,6 +133,7 @@ const dataGridExampleData = [
     capital: "Frankfort",
     rating: 10,
     population: 1359657,
+    date: "19/02/1920",
   },
   {
     name: "Louisiana",
@@ -124,6 +141,7 @@ const dataGridExampleData = [
     capital: "Baton Rouge",
     rating: 10,
     population: 9267793,
+    date: "17/02/1970",
   },
   {
     name: "Maine",
@@ -131,6 +149,7 @@ const dataGridExampleData = [
     capital: "Augusta",
     rating: 10,
     population: 7366792,
+    date: "13/02/2000",
   },
   {
     name: "Maryland",
@@ -138,6 +157,7 @@ const dataGridExampleData = [
     capital: "Annapolis",
     rating: 10,
     population: 2474500,
+    date: "18/11/1902",
   },
   {
     name: "Massachusetts",
@@ -145,6 +165,7 @@ const dataGridExampleData = [
     capital: "Boston",
     rating: 10,
     population: 7858200,
+    date: "19/02/1902",
   },
   {
     name: "Michigan",
@@ -152,6 +173,7 @@ const dataGridExampleData = [
     capital: "Lansing",
     rating: 10,
     population: 4036589,
+    date: "19/02/2002",
   },
   {
     name: "Minnesota",
@@ -159,6 +181,7 @@ const dataGridExampleData = [
     capital: "St. Paul",
     rating: 10,
     population: 490080,
+    date: "19/02/1920",
   },
   {
     name: "Mississippi",
@@ -166,6 +189,7 @@ const dataGridExampleData = [
     capital: "Jackson",
     rating: 10,
     population: 2021576,
+    date: "19/02/1920",
   },
   {
     name: "Missouri",
@@ -173,6 +197,7 @@ const dataGridExampleData = [
     capital: "Jefferson City",
     rating: 10,
     population: 3511147,
+    date: "19/02/1920",
   },
   {
     name: "Montana",
@@ -180,6 +205,7 @@ const dataGridExampleData = [
     capital: "Helena",
     rating: 10,
     population: 2856628,
+    date: "19/05/0520",
   },
   {
     name: "Nebraska",
@@ -187,6 +213,7 @@ const dataGridExampleData = [
     capital: "Lincoln",
     rating: 10,
     population: 9584904,
+    date: "05/02/0520",
   },
   {
     name: "Nevada",
@@ -194,6 +221,7 @@ const dataGridExampleData = [
     capital: "Carson City",
     rating: 10,
     population: 489695,
+    date: "05/02/2002",
   },
   {
     name: "New Hampshire",
@@ -201,6 +229,7 @@ const dataGridExampleData = [
     capital: "Concord",
     rating: 10,
     population: 8819049,
+    date: "19/02/2002",
   },
   {
     name: "New Jersey",
@@ -208,6 +237,7 @@ const dataGridExampleData = [
     capital: "Trenton",
     rating: 10,
     population: 2500770,
+    date: "19/02/2002",
   },
   {
     name: "New Mexico",
@@ -215,6 +245,7 @@ const dataGridExampleData = [
     capital: "Santa Fe",
     rating: 10,
     population: 536205,
+    date: "19/02/2002",
   },
   {
     name: "New York",
@@ -222,6 +253,7 @@ const dataGridExampleData = [
     capital: "Albany",
     rating: 10,
     population: 5248173,
+    date: "19/02/1920",
   },
   {
     name: "North Carolina",
@@ -229,6 +261,7 @@ const dataGridExampleData = [
     capital: "Raleigh",
     rating: 10,
     population: 1452619,
+    date: "10/02/1020",
   },
   {
     name: "North Dakota",
@@ -236,6 +269,7 @@ const dataGridExampleData = [
     capital: "Bismarck",
     rating: 10,
     population: 8890392,
+    date: "19/02/1920",
   },
   {
     name: "Ohio",
@@ -243,6 +277,7 @@ const dataGridExampleData = [
     capital: "Columbus",
     rating: 10,
     population: 5968829,
+    date: "19/02/1920",
   },
   {
     name: "Oklahoma",
@@ -250,6 +285,7 @@ const dataGridExampleData = [
     capital: "Oklahoma City",
     rating: 10,
     population: 9044655,
+    date: "21/02/1950",
   },
   {
     name: "Oregon",
@@ -257,6 +293,7 @@ const dataGridExampleData = [
     capital: "Salem",
     rating: 10,
     population: 8054969,
+    date: "12/10/1920",
   },
   {
     name: "Pennsylvania",
@@ -264,6 +301,7 @@ const dataGridExampleData = [
     capital: "Harrisburg",
     rating: 10,
     population: 1359410,
+    date: "19/02/1920",
   },
   {
     name: "Rhode Island",
@@ -271,6 +309,7 @@ const dataGridExampleData = [
     capital: "Providence",
     rating: 10,
     population: 4473590,
+    date: "19/02/1920",
   },
   {
     name: "South Carolina",
@@ -278,6 +317,7 @@ const dataGridExampleData = [
     capital: "Columbia",
     rating: 10,
     population: 6527907,
+    date: "19/02/1920",
   },
   {
     name: "South Dakota",
@@ -285,6 +325,7 @@ const dataGridExampleData = [
     capital: "Pierre",
     rating: 10,
     population: 3152416,
+    date: "19/02/1920",
   },
   {
     name: "Tennessee",
@@ -292,6 +333,7 @@ const dataGridExampleData = [
     capital: "Nashville",
     rating: 10,
     population: 9717114,
+    date: "19/02/1920",
   },
   {
     name: "Texas",
@@ -299,6 +341,7 @@ const dataGridExampleData = [
     capital: "Austin",
     rating: 10,
     population: 6552290,
+    date: "19/02/1920",
   },
   {
     name: "Utah",
@@ -306,6 +349,7 @@ const dataGridExampleData = [
     capital: "Salt Lake City",
     rating: 10,
     population: 2815416,
+    date: "19/02/1920",
   },
   {
     name: "Vermont",
@@ -313,6 +357,7 @@ const dataGridExampleData = [
     capital: "Montpelier",
     rating: 10,
     population: 2845360,
+    date: "19/02/1920",
   },
   {
     name: "Virginia",
@@ -320,6 +365,7 @@ const dataGridExampleData = [
     capital: "Richmond",
     rating: 10,
     population: 4919143,
+    date: "20/02/1920",
   },
   {
     name: "Washington",
@@ -327,6 +373,7 @@ const dataGridExampleData = [
     capital: "Olympia",
     rating: 10,
     population: 4614717,
+    date: "22/02/2009",
   },
   {
     name: "West Virginia",
@@ -334,6 +381,7 @@ const dataGridExampleData = [
     capital: "Charleston",
     rating: 10,
     population: 6413104,
+    date: "19/11/2002",
   },
   {
     name: "Wisconsin",
@@ -341,6 +389,7 @@ const dataGridExampleData = [
     capital: "Madison",
     rating: 10,
     population: 3934168,
+    date: "01/08/2005",
   },
   {
     name: "Wyoming",
@@ -348,6 +397,7 @@ const dataGridExampleData = [
     capital: "Cheyenne",
     rating: 10,
     population: 901078,
+    date: "01/01/2000",
   },
 ];
 

@@ -107,13 +107,12 @@
 
   .ag-menu {
     background-color: var(--agGrid-background);
-    padding: var(--salt-spacing-200);
+    padding: var(--salt-spacing-100);
     color: var(--agGrid-menu-color);
   }
 
   .ag-menu .ag-tabs-body {
     padding: 0;
-    padding-top: var(--salt-size-unit);
   }
 
   // start filter input
@@ -126,6 +125,22 @@
 
   .ag-menu .ag-filter-body-wrapper > * {
     margin: 0;
+  }
+
+  .ag-menu-header {
+    background-color: var(--agGrid-background);
+  }
+
+  .ag-menu-list {
+    padding: 0;
+  }
+
+  .ag-menu-separator {
+    height: var(--salt-size-border);
+  }
+
+  .ag-menu-option {
+    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   }
 
   // start filter input
@@ -160,18 +175,9 @@
   }
   // end filter input
 
-  .ag-menu-header {
-    background-color: var(--agGrid-background);
-    padding-top: 1px;
-  }
-
   .ag-tabs-header {
     @include ag-border(primary, bottom);
     min-width: 220px;
-  }
-
-  .ag-tabs-body {
-    padding: 4px 0;
   }
 
   .ag-tab {

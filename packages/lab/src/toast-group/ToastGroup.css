@@ -1,0 +1,38 @@
+.saltToastGroup {
+  width: var(--toastGroup-width);
+  max-height: calc(100% - var(--salt-spacing-300) * 2);
+  margin: var(--salt-spacing-300) var(--salt-spacing-200) var(--salt-spacing-100) var(--salt-spacing-200);
+  overflow: auto;
+  display: flex-inline;
+  flex-direction: column;
+  position: fixed;
+  z-index: var(--salt-zIndex-flyover);
+}
+
+.saltToastGroup-bottom-right {
+  bottom: 0;
+  right: 0;
+  justify-content: flex-end;
+}
+
+.saltToastGroup-top-right {
+  top: 0;
+  right: 0;
+  justify-content: flex-start;
+}
+
+.salt-density-high {
+  --toastGroup-width: 210px;
+}
+
+.salt-density-medium {
+  --toastGroup-width: 260px;
+}
+
+.salt-density-low {
+  --toastGroup-width: 310px;
+}
+
+.salt-density-touch {
+  --toastGroup-width: 360px;
+}
