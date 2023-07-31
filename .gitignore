@@ -38,8 +38,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # IDEs
-.idea/*
-!.idea/runConfigurations
+.idea
 .vscode/launch.json
 /.VSCodeCounter
 *.iml
