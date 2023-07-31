@@ -6,34 +6,12 @@
   font-size: var(--linearProgress-fontSize);
 }
 
-/* TODO: Odyssey now has only 2 sizes */
-.saltLinearProgress-large {
-  --linearProgress-after-top: 3px;
-  --linearProgress-value-paddingLeft: 12px;
-  --linearProgress-height: 7px;
-  --linearProgress-fontSize: 16px;
-}
-
-.saltLinearProgress-medium {
-  --linearProgress-after-top: 2px;
-  --linearProgress-value-paddingLeft: 8px;
-  --linearProgress-height: 5px;
-  --linearProgress-fontSize: 14px;
-}
-
-.saltLinearProgress-small {
-  --linearProgress-after-top: 1px;
-  --linearProgress-value-paddingLeft: 4px;
-  --linearProgress-height: 3px;
-  --linearProgress-fontSize: 11px;
-}
-
 .saltLinearProgress-disabled .saltLinearProgress-bar {
   background: var(--salt-accent-background-disabled);
 }
 
-.saltLinearProgress-disabled .saltLinearProgress-barContainer :after {
-  background: var(--salt-accent-background-disabled);
+.saltLinearProgress-disabled .saltLinearProgress-track {
+  background: var(--salt-track-borderColor-disabled);
 }
 
 .saltLinearProgress-disabled .saltLinearProgress-progressValue {
@@ -46,29 +24,7 @@
   position: relative;
   width: calc(100% - 10px);
   overflow: hidden;
-  height: var(--linearProgress-height);
-}
-
-/* Horizontal line under the progress indicator bar */
-.saltLinearProgress-barContainer:after {
-  top: var(--linearProgress-after-top);
-  background: var(--salt-track-borderColor);
-  content: "";
-  display: block;
-  height: 1px;
-  left: 0;
-  position: absolute;
-  right: 0;
-}
-
-.saltLinearProgress-determinate {
-}
-
-.saltLinearProgress-indeterminate {
-}
-
-.saltLinearProgress-query {
-  transform: rotate(180deg);
+  height: var(--salt-size-adornment);
 }
 
 .saltLinearProgress-bar {
@@ -83,58 +39,22 @@
   z-index: 2;
 }
 
-.saltLinearProgress-determinate .saltLinearProgress-bar1 {
-  transition: transform 0.4s linear;
-}
-
-.saltLinearProgress-indeterminate .saltLinearProgress-bar1 {
-  width: auto;
-  animation: Indeterminate1 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
-}
-
-.saltLinearProgress-query .saltLinearProgress-bar1 {
-  width: auto;
-  animation: Indeterminate1 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
-}
-
-.saltLinearProgress-bar2 {
-  width: auto;
-  animation: Indeterminate2 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite;
+.saltLinearProgress-track {
+  background: var(--salt-track-borderColor);
+  width: 100%;
+  height: var(--salt-track-borderWidth);
+  position: absolute;
+  top: calc((var(--salt-size-adornment) - var(--salt-track-borderWidth)) / 2);
+  transition: transform 0.2s linear;
+  transform-origin: left;
 }
 
 .saltLinearProgress-progressValue {
   color: inherit;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight-strong);
   margin: 0;
   white-space: nowrap;
-  padding-left: var(--linearProgress-value-paddingLeft);
-}
-
-@keyframes Indeterminate1 {
-  0% {
-    left: -35%;
-    right: 100%;
-  }
-  60% {
-    left: 100%;
-    right: -90%;
-  }
-  100% {
-    left: 100%;
-    right: -90%;
-  }
-}
-
-@keyframes Indeterminate2 {
-  0% {
-    left: -200%;
-    right: 100%;
-  }
-  60% {
-    left: 107%;
-    right: -8%;
-  }
-  100% {
-    left: 107%;
-    right: -8%;
-  }
+  padding-left: var(--salt-spacing-100);
 }

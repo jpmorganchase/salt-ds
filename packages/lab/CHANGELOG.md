@@ -1,5 +1,106 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.14
+
+### Minor Changes
+
+- 05c77e70: Add PillNext
+
+  ```tsx
+  <PillNext onClick={handleClick}>
+      Pill
+  </PillNext>
+
+
+  <PillNext icon={<FavoriteIcon/>} onClick={handleClick}>
+      Pill With Icon
+  </PillNext>
+  ```
+
+### Patch Changes
+
+- 7857a11d: Added a story to show how character count can be implemented as an adornment.
+- 2c6d86dd: Drawer
+
+  - Added `Drawer` component
+
+  ```
+  const [open, setOpen] = useState(false);
+  const show = () => setOpen(true);
+  const hide = () => setOpen(false);
+  <>
+   <Button onClick={show}>Open Drawer</Button>
+   <Drawer isOpen={open}>
+    <div>
+     <p>Drawer content</p>
+     <Button onClick={hide}>Close Drawer</Button>
+    </div>
+   </Drawer>
+  </>
+  ```
+
+- a5bb0a41: Remove Toast and ToastContent from lab and promote to core.
+- abfc4364: Corrected the minimum supported version of React. It has been updated to 16.14.0 due to the support for the new [JSX transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)
+- b93d2e4a: Changes to `CircularProgress` and `LinearProgress`:
+
+  - Removed size prop
+  - Added max prop for custom max value
+  - Removed variant props
+
+  Changes to `StatusIndicator`:
+
+  - Removed use of `size` prop from CircularProgress
+
+- a3ac536a: MultilineInput design update: When there is only a status adornment present, adornment is at the end of the row, inline with the text area. When there is a status adornment along with end adornments, these will take up an entire row below the textarea.
+- 722228c6: SteppedTracker
+
+  - Added `SteppedTracker` component
+  - Includes the `TrackerStep` and `StepLabel` subcomponents
+
+  Usage:
+
+  ```jsx
+  <SteppedTracker activeStep={1}>
+    <TrackerStep>
+      <StepLabel state="completed">Step 1</StepLabel>
+    <TrackerStep>
+    <TrackerStep>
+      <StepLabel>Step 2</StepLabel>
+    <TrackerStep>
+    <TrackerStep>
+      <StepLabel>Step 3</StepLabel>
+    <TrackerStep>
+  </SteppedTracker>
+  ```
+
+- 6ff7c9a7: Fixed alignment styling of adornments in MultilineInput
+  Fixed padding of Multiline when readonly with and without a full border
+  Fixed height of textarea fixed to number of rows
+  Fixed placeholder styling in MultilineInput
+- ea867cd2: Rename `fullBorder` prop in MultilineInput to `bordered`
+
+## 1.0.0-alpha.13
+
+### Minor Changes
+
+- 00f04b17: Remove ToggleButton and ToggleButtonGroup from lab and promote to core.
+- 58cf03cf: Remove AccordionGroup, AccordionPanel, Accordion, AccordionHeader from lab and promote to core
+
+### Patch Changes
+
+- ff3eea5d: Add Toast component
+
+  - Add ToastContent component
+
+  ```js
+  <Toast {...args}>
+    <ToastContent>Toast content</ToastContent>
+    <Button variant="secondary">
+      <CloseIcon />
+    </Button>
+  </Toast>
+  ```
+
 ## 1.0.0-alpha.12
 
 ### Minor Changes

@@ -46,7 +46,6 @@ export function StatusIndicator({
             withBaseName("determinateLoading"),
             circularProgressClassName
           )}
-          size="small"
           unit={unit}
           value={value}
           {...restCircularProgressProps}

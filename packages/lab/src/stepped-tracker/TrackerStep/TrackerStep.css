@@ -1,0 +1,51 @@
+.saltTrackerStep {
+  --trackerStep-icon-color-active: var(--saltTrackerStep-icon-color-active, var(--salt-status-info-foreground));
+  --trackerStep-icon-color-completed: var(--saltTrackerStep-icon-color-completed, var(--salt-status-success-foreground));
+
+  --trackerStep-icon-color: var(--saltTrackerStep-icon-color, var(--salt-status-static-foreground));
+
+  --saltIcon-color: var(--trackerStep-icon-color);
+  /* We redefine Icon Size so we can use it in calc functions in the trackerConnector */
+  --saltIcon-size: var(--saltTrackerStep-icon-size, max(var(--salt-icon-size-base), 12px));
+}
+
+.saltTrackerStep {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: var(--saltTrackerStep-width, 100%);
+  gap: var(--salt-spacing-50);
+  color: var(--salt-text-primary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  padding: 0 var(--salt-spacing-25);
+}
+
+/* Pseudo-class applied to the root element on focus */
+.saltTrackerStep:focus-visible {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+
+.saltTrackerStep .saltTrackerStep-body {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.saltTrackerStep.saltTrackerStep-active {
+  --trackerStep-icon-color: var(--trackerStep-icon-color-active);
+}
+
+.saltTrackerStep.saltTrackerStep-completed {
+  --trackerStep-icon-color: var(--trackerStep-icon-color-completed);
+}

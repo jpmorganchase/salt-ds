@@ -21,10 +21,10 @@ import {
   GridLayout,
   FormFieldLabelPlacement,
   Button,
+  MultilineInput,
 } from "@salt-ds/core";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
-import { MultilineInput } from "@salt-ds/lab";
 
 export default {
   title: "Core/Form Field",
@@ -140,10 +140,10 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
 export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
   return (
     <FormField {...props}>
-      <FormLabel pronounced>
+      <FormLabel intent="sentence">
         Do your current qualifications align with the role? Please describe.
       </FormLabel>
-      <MultilineInput fullBorder defaultValue="Answer" />
+      <MultilineInput bordered defaultValue="Answer" />
     </FormField>
   );
 };
@@ -430,14 +430,19 @@ export const WithMultilineInput: ComponentStory<typeof FormField> = (props) => {
         <MultilineInput defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
+      <FormField disabled {...props}>
+        <FormLabel>Form Field label</FormLabel>
+        <MultilineInput defaultValue="Value" />
+        <FormHelperText>Helper text</FormHelperText>
+      </FormField>
       <FormField readOnly {...props}>
         <FormLabel>Form Field label</FormLabel>
         <MultilineInput defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
-      <FormField disabled {...props}>
+      <FormField readOnly {...props}>
         <FormLabel>Form Field label</FormLabel>
-        <MultilineInput defaultValue="Value" />
+        <MultilineInput bordered defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
       <FormField validationStatus="error" {...props}>
@@ -455,7 +460,7 @@ export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField necessity="required" {...props}>
-        <FormLabel pronounced>
+        <FormLabel intent="sentence">
           Will data related to the new initiative be shared across lines of
           business, external to the firm, or across-jurisdictions? Please
           explain.
@@ -463,11 +468,11 @@ export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
         <MultilineInput defaultValue="Value" />
       </FormField>
       <FormField necessity="optional" {...props}>
-        <FormLabel pronounced>
+        <FormLabel intent="sentence">
           For the legal entity country of incorporation, are you aware of any
           specific regulations relating to oversight of third parties?
         </FormLabel>
-        <MultilineInput variant="secondary" fullBorder defaultValue="Value" />
+        <MultilineInput variant="secondary" bordered defaultValue="Value" />
         <FormHelperText>Helper text</FormHelperText>
       </FormField>
     </FlowLayout>

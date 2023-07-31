@@ -1,5 +1,94 @@
 # @salt-ds/core
 
+## 1.8.0-rc.5
+
+### Minor Changes
+
+- 6c86e078: Add Toast and ToastContent.
+
+  Displays a small pop-up notification that’s usually short-lived and shown in response to a user action or system event unrelated to the user’s current focus.
+
+  ```tsx
+  <Toast>
+    <ToastContent>Toast content</ToastContent>
+    <Button variant="secondary">
+      <CloseIcon />
+    </Button>
+  </Toast>
+  ```
+
+### Patch Changes
+
+- 6099c82a: Removed "user-select:none" from Button
+- 087496e3: Fixed placeholder styling in Input
+  Fixed activation indicator width on readonly variant in Input when active
+  Fixed spacing between multiple adornment buttons
+  Fixed adornment button height and width
+- b5e70f08: Fixed Checkbox Group crashing when a Checkbox was toggled in React 16
+- 58a6de9a: The `pronounced` prop has been replaced with the `intent` prop.
+
+  ```diff
+  - <FormLabel pronounced />
+  + <FormLabel intent="sentence" />
+  ```
+
+- abfc4364: Corrected the minimum supported version of React. It has been updated to 16.14.0 due to the support for the new [JSX transform](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)
+
+## 1.8.0-rc.4
+
+### Minor Changes
+
+- 00f04b17: Add ToggleButton and ToggleButtonGroup.
+
+  The Toggle Button Group allows users to make a mutually exclusive selection from a set of related commands—with only one option selected at a time.
+  This Toggle Button allows users to enable or disable a single command.
+
+  ```tsx
+  <ToggleButtonGroup>
+    <ToggleButton value="all">
+      <AppSwitcherIcon aria-hidden />
+      All
+    </ToggleButton>
+    <ToggleButton value="active">
+      <VisibleIcon aria-hidden />
+      Active
+    </ToggleButton>
+    <ToggleButton disabled value="search">
+      <FolderClosedIcon aria-hidden />
+      Archived
+    </ToggleButton>
+  </ToggleButtonGroup>
+  ```
+
+- 58cf03cf: Add AccordionGroup, AccordionPanel, Accordion, AccordionHeader.
+
+  A pane containing summary content, which can then be expanded or collapsed to allow the user to show or hide content.
+
+  ```tsx
+  <AccordionGroup>
+    <Accordion
+      expanded={expanded === "accordion-0"}
+      value="accordion-0"
+      onToggle={onChange}
+    >
+      <AccordionHeader>AccordionHeader0</AccordionHeader>
+      <AccordionPanel>AccordionPanel0</AccordionPanel>
+    </Accordion>
+    <Accordion
+      expanded={expanded === "accordion-1"}
+      value="accordion-1"
+      onToggle={onChange}
+    >
+      <AccordionHeader>AccordionHeader1</AccordionHeader>
+      <AccordionPanel>AccordionPanel1</AccordionPanel>
+    </Accordion>
+  </AccordionGroup>
+  ```
+
+### Patch Changes
+
+- 89a3da4c: Fixed Checkbox and Radio Button border style incorrectly using `--salt-container-borderStyle`.
+
 ## 1.8.0-rc.3
 
 ### Minor Changes

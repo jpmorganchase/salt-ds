@@ -14,24 +14,23 @@
   position: relative;
   align-items: center;
   white-space: nowrap;
+  margin-block: var(--salt-size-border);
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) transparent;
 }
 
 /* Class applied to list item on focus using keyboard navigation only */
 .saltListItemNext-focused {
-  outline: var(--salt-focused-outline);
-  outline-offset: calc(var(--salt-focused-outlineWidth) * -1);
+  border: var(--salt-focused-outline);
 }
 
-/* Active list item on hover using mouse */
-.saltListItemNext:hover:not([aria-disabled="true"]),
 /* Active list item on focus using keyboard navigation  */
-.saltListItemNext-focused {
+.saltListItemNext-highlighted:not([aria-disabled="true"]) {
   --listNext-item-background: var(--salt-selectable-background-hover);
   cursor: var(--salt-selectable-cursor-hover);
 }
 
 .saltListItemNext[aria-selected="true"] {
-  border-block: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
+  outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
   --listNext-item-background: var(--salt-selectable-background-selected);
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
@@ -47,6 +46,6 @@
 
 /* disabled list item when selected */
 .saltListItemNext[aria-disabled="true"][aria-selected="true"] {
-  border-block: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selectedDisabled);
+  outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selectedDisabled);
   --listNext-item-background: var(--salt-selectable-background-selectedDisabled);
 }
