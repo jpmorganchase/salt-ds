@@ -7,6 +7,7 @@ import { Data, Relationship } from "./DetailComponent";
 import { useAllExamplesView } from "../../utils/useAllExamplesView";
 
 import styles from "./SecondarySidebar.module.css";
+import { useRoute } from "@jpmorganchase/mosaic-store";
 
 type LinkWithLogoProps = {
   href: string;
@@ -28,6 +29,8 @@ type SecondarySidebarProps = {
   tableOfContents?: ReactNode;
 };
 
+const examplesTabRoute = /\/examples$/;
+
 const SecondarySidebar: FC<SecondarySidebarProps> = ({
   additionalData,
   tableOfContents,
@@ -42,6 +45,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
     askQuestion,
   } = additionalData || {};
 
+  const { route = "" } = useRoute();
   const { allExamplesView } = useAllExamplesView();
 
   const alsoKnownAsPills = alsoKnownAs && alsoKnownAs.length > 0 && (
@@ -129,9 +133,10 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
 
   return (
     <div className={styles.sidebar}>
-      {allExamplesView && tableOfContents && (
-        <div className={styles.tableOfContents}>{tableOfContents}</div>
-      )}
+      {(!examplesTabRoute.test(route) || allExamplesView) &&
+        tableOfContents && (
+          <div className={styles.tableOfContents}>{tableOfContents}</div>
+        )}
       <div className={styles.wrapper}>
         {alsoKnownAsPills}
         {relatedComponentsPills("similarTo", "Similar to")}
