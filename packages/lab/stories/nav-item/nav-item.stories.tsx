@@ -4,6 +4,7 @@ import {
   ListItemNext,
   NavItem,
   NavItemProps,
+  Badge,
 } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { useState } from "react";
@@ -30,6 +31,15 @@ export const WithIcon: Story<NavItemProps> = (args) => (
   <NavItem IconComponent={NotificationIcon} {...args} />
 );
 WithIcon.args = {
+  active: false,
+  children: "Nav Item",
+  href: "#",
+};
+
+export const WithBadge: Story<NavItemProps> = (args) => (
+  <NavItem BadgeComponent={<Badge value="NEW" />} {...args} />
+);
+WithBadge.args = {
   active: false,
   children: "Nav Item",
   href: "#",

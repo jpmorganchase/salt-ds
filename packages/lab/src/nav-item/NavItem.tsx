@@ -4,6 +4,7 @@ import {
   MouseEventHandler,
   MouseEvent,
   ComponentType,
+  ReactNode,
 } from "react";
 import { makePrefixer, Link } from "@salt-ds/core";
 import { IconProps } from "@salt-ds/icons";
@@ -51,6 +52,10 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
    * Icon component to be displayed next to the nav item label.
    */
   IconComponent?: ComponentType<IconProps> | null;
+  /**
+   * Badge component to be displayed next to the nav item label.
+   */
+  BadgeComponent?: ReactNode;
 }
 
 const withBaseName = makePrefixer("saltNavItem");
@@ -69,6 +74,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       onExpand,
       href,
       IconComponent,
+      BadgeComponent,
       style: styleProp,
       ...rest
     } = props;
@@ -116,6 +122,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         >
           <span>{children}</span>
         </Link>
+        {BadgeComponent && BadgeComponent}
         {parent && (
           <ExpansionButton
             aria-expanded={expanded}
