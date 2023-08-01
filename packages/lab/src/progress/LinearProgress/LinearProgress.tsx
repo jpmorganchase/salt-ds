@@ -82,9 +82,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         {...rest}
       >
         <div className={withBaseName("barContainer")}>
-          {progress !== 0 && (
-            <div className={withBaseName("bar")} style={barStyle} />
-          )}
+          <div className={withBaseName("bar")} style={barStyle} />
           <div className={withBaseName("track")} style={trackStyle} />
         </div>
         {progressInfo}
