@@ -278,12 +278,11 @@ export const useList = ({
           onChange?.(event, { value: nextItem.dataset.value || "" });
         }
         break;
-      case "Tab":
-        break;
       case "PageDown":
       case "PageUp":
-      default:
         event.preventDefault();
+        break;
+      default:
         break;
     }
   };
