@@ -40,6 +40,11 @@
   color: var(--salt-selectable-foreground-hover);
 }
 
+.saltRadioButton-input:focus-visible + .saltRadioButtonIcon-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+
 .saltRadioButton-error .saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
   outline-color: var(--salt-status-error-foreground);
   border-color: var(--salt-status-error-foreground);
