@@ -4,9 +4,7 @@ import clsx from "clsx";
 import { Switch } from "@salt-ds/lab";
 import { SaltProvider } from "@salt-ds/core";
 import { Pre } from "../mdx/pre";
-import { Heading3 } from "../mdx/h3";
 import { useLivePreviewControls } from "./useLivePreviewControls";
-import { formatComponentExampleName } from "./formatComponentExampleName";
 import useIsMobileView from "../../utils/useIsMobileView";
 
 import styles from "./LivePreview.module.css";
@@ -22,7 +20,6 @@ type LivePreviewProps = {
 export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
   exampleName,
-  title,
   list,
   children,
 }) => {
@@ -46,12 +43,6 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
   return (
     <>
-      {!list && (
-        <Heading3>
-          {title ? title : formatComponentExampleName(exampleName)}
-        </Heading3>
-      )}
-
       {children}
       <div className={styles.container}>
         <div
