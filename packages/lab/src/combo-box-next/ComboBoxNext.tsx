@@ -20,12 +20,10 @@ import { FloatingPortal, Placement } from "@floating-ui/react";
 import { useComboBox } from "./useComboBox";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import comboBoxNextCss from "./comboBoxNext.css";
+import comboBoxNextCss from "./ComboBoxNext.css";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { defaultFilter, defaultItemRenderer } from "./utils";
 import { clsx } from "clsx";
-import { usStateExampleData } from "@stories/assets/exampleData";
-import { log } from "util";
 import { UsePortalProps } from "./useComboboxPortal";
 import { UseListProps } from "../list-next/useList";
 
