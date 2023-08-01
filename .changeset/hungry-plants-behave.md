@@ -2,9 +2,10 @@
 "@salt-ds/lab": patch
 ---
 
+Updated Switch's styling
 Refactored Switch and updated its change handler.
 
-```tsx
+```diff
 - const Controlled: ComponentStory<typeof Switch> = (args) => {
 -   const [checked, setChecked] = useState(false);
 -
