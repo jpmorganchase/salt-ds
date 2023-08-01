@@ -44,7 +44,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
 
   const { allExamplesView } = useAllExamplesView();
 
-  const alsoKnownAsPills = alsoKnownAs && (
+  const alsoKnownAsPills = alsoKnownAs && alsoKnownAs.length > 0 && (
     <>
       <Heading4>Also known as</Heading4>
       <div className={styles.pills}>
@@ -58,19 +58,27 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
   const relatedComponentsPills = (
     relationshipName: Relationship,
     heading: string
-  ) =>
-    relatedComponents && (
-      <>
-        <Heading4>{heading}</Heading4>
-        <div className={styles.pills}>
-          {relatedComponents
-            .filter(({ relationship }) => relationship === relationshipName)
-            .map(({ name }) => (
+  ) => {
+    const components =
+      (relatedComponents &&
+        relatedComponents.filter(
+          ({ relationship }) => relationship === relationshipName
+        )) ||
+      [];
+
+    return (
+      components.length > 0 && (
+        <>
+          <Heading4>{heading}</Heading4>
+          <div className={styles.pills}>
+            {components.map(({ name }) => (
               <Pill key={name} label={name} />
             ))}
-        </div>
-      </>
+          </div>
+        </>
+      )
     );
+  };
 
   const componentResourcesList = (
     <>
