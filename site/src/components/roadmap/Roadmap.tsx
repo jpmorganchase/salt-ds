@@ -1,22 +1,24 @@
 import { Key, ReactNode, useEffect, useState } from "react";
 import {
   GridLayout,
-  Card,
-  CardProps,
   Input,
-  Link,
   Banner,
   BannerContent,
+  InteractableCard,
+  InteractableCardProps,
+  H3,
+  Spinner,
 } from "@salt-ds/core";
+
 import styles from "./style.module.css";
 import {
+  FilterIcon,
   ProgressInprogressIcon,
-  ProgressPendingIcon,
-  SearchIcon,
+  ProgressTodoIcon,
 } from "@salt-ds/icons";
-import { Heading3 } from "../mdx/h3";
-import { Heading2 } from "../mdx/h2";
+
 import { formatDate } from "src/utils/formatDate";
+import { Heading4 } from "../mdx/h4";
 
 type RoadmapProps = { title: string; children: ReactNode; endpoint: string };
 
@@ -52,8 +54,12 @@ function sortRoadmapDataByDate(roadmapData: RoadmapData[]): RoadmapData[] {
   return sortedData;
 }
 
-function RoadmapCard(props: CardProps) {
-  return <Card {...props} />;
+function RoadmapCard(props: InteractableCardProps, item: ItemProps) {
+  return (
+    <>
+      <InteractableCard accentPlacement="left" {...props} />
+    </>
+  );
 }
 
 export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
@@ -86,7 +92,9 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
 
         setRoadmapData(extractedData || []);
       } catch (error) {
-        console.error("Could not fetch roadmap data");
+        <Banner status="info">
+          <BannerContent>No data available</BannerContent>
+        </Banner>;
       }
     };
 
@@ -105,21 +113,24 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
   return (
     <div className={styles.content}>
       <Input
-        placeholder="Search"
         value={searchQuery}
+        variant="secondary"
         onChange={(event) =>
           setSearchQuery((event.target as HTMLInputElement).value)
         }
         className={styles.searchInput}
-        startAdornment={<SearchIcon />}
+        startAdornment={<FilterIcon />}
       />
 
       {roadmapData !== null && roadmapData.length > 0 ? (
         <CardView data={sortedRoadmapData} searchQuery={searchQuery} />
       ) : (
-        <Banner status="info">
-          <BannerContent>No data available</BannerContent>
-        </Banner>
+        <Spinner
+          className={styles.loading}
+          aria-label="loading"
+          role="status"
+          size="large"
+        />
       )}
     </div>
   );
@@ -139,19 +150,25 @@ interface ItemProps {
     | null
     | undefined;
 }
-const ColumnData: React.FC<{ item: ItemProps }> = ({ item }) => {
+const ColumnData: React.FC<{ item: ItemProps; future?: boolean }> = ({
+  item,
+  future = true,
+}) => {
   const formattedDate = formatDate(new Date(item.targetDate));
 
   return (
-    <RoadmapCard className={styles.card} key={item.id}>
-      <Link>
-        <Heading3 className={styles.heading3}>
-          <a href={item.issueUrl}>{item.text}</a>
-        </Heading3>
-      </Link>
-      <b>Due Date: </b>
-      <p className={styles.date}>{formattedDate}</p>
-    </RoadmapCard>
+    <>
+      <a href={item.issueUrl}>
+        <RoadmapCard
+          className={future ? styles.cardFuture : styles.cardInProgress}
+          key={item.id}
+        >
+          <Heading4 className={styles.heading4}>{item.text}</Heading4>
+          Due Date:
+          <p className={styles.date}> {formattedDate}</p>
+        </RoadmapCard>
+      </a>
+    </>
   );
 };
 
@@ -180,19 +197,20 @@ export const CardView = ({ data, searchQuery }: CardViewProps) => {
   return (
     <GridLayout className={styles.cardContainer} columns={2}>
       <div className={styles.column}>
-        <Heading2 className={styles.heading}>
-          Future <ProgressPendingIcon className={styles.icon} size={1.4} />
-        </Heading2>
-        {futureData.map((item) => (
-          <ColumnData key={item.id} item={item} />
+        <H3 className={styles.heading}>
+          <ProgressInprogressIcon className={styles.progressIcon} size={2} />
+          In-Progress{" "}
+        </H3>
+        {inProgressData.map((item) => (
+          <ColumnData future={false} key={item.id} item={item} />
         ))}
       </div>
       <div className={styles.column}>
-        <Heading2 className={styles.heading}>
-          In Progress{" "}
-          <ProgressInprogressIcon className={styles.icon} size={1.4} />
-        </Heading2>
-        {inProgressData.map((item) => (
+        <H3 className={styles.heading}>
+          <ProgressTodoIcon className={styles.backlogIcon} size={2} />
+          In backlog
+        </H3>
+        {futureData.map((item) => (
           <ColumnData key={item.id} item={item} />
         ))}
       </div>

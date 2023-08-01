@@ -1,22 +1,25 @@
 .heading {
   margin-bottom: 5%;
-  text-align: center;
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
-.heading3 {
-  padding-bottom: 5%;
+.heading4 {
+  margin: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cardContainer:global(.saltGridLayout) {
   margin-top: 50px;
-  display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
-  gap: 20px; /* Adjust the gap between columns */
+  gap: 20px;
 }
 
 .content {
   flex: 1;
-  display: flex;
   flex-direction: column;
 }
 
@@ -24,37 +27,56 @@
   flex: 1;
   max-width: 400px;
   width: 100%;
+  margin-top: var(--saltCard-padding, var(--salt-size-container-spacing));
 }
 
-.test {
-  width: "400px";
-  margin-bottom: " 50px ";
-}
 .date {
   display: inline;
 }
 
-.icon {
-  margin-left: 9px;
-}
 .column {
-  padding-right: 20px; /* Adjust the padding as per your design */
+  padding-right: 20px;
 }
 
-.iconplace {
-  position: absolute;
-  top: 2;
-  right: 2;
-}
-
-.card {
-  border-radius: 8px;
-  position: relative;
-  width: 250px;
+.cardFuture {
+  width: 400px;
   margin-bottom: 15px;
   min-height: unset;
+  border-left-color: var(--salt-status-static-foreground);
 }
 
-.gridLayout {
-  max-width: 1000px;
+.cardInProgress {
+  width: 400px;
+  margin-bottom: 15px;
+  min-height: unset;
+  border-left-color: var(--salt-status-info-borderColor);
+}
+
+.backlogIcon {
+  color: var(--salt-status-static-foreground);
+  margin-right: 10%;
+}
+
+.progressIcon {
+  color: var(--salt-status-info-borderColor);
+  margin-right: 10%;
+}
+
+.loading {
+  display: flex;
+  margin-left: 50%;
+}
+
+@media (max-width: 767px) {
+  .cardFuture {
+    width: 80%;
+  }
+
+  .cardInProgress {
+    width: 80%;
+  }
+  .cardContainer {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
