@@ -1,0 +1,14 @@
+/*
+  Rendered markdown always seems to be wrapped in
+  <div class="wrapper"><div>...</div></div> (sigh!).
+  So, to select the first item _within_ the actual rendered markdown, we need
+  to use this lenghty selector:
+*/
+.tabPanel > :global(.wrapper) > div > :first-child {
+  /*
+    Ensure there is an appropriate minimum space between the Tabs and the
+    content below, so that if the first thing happens to not be a heading, it
+    doesn't butt up against the Tabs. (3x is the same as H3's margin-top)
+  */
+  margin-top: calc(var(--salt-size-unit) * 3);
+}
