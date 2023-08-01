@@ -160,7 +160,9 @@ export const WrappingLabel: ComponentStory<typeof SteppedTracker> = () => {
           </StepLabel>
         </TrackerStep>
         <TrackerStep state="default">
-          <StepLabel>Step Three</StepLabel>
+          <StepLabel>
+            Step Three: I am a label that wraps on smaller screen sizes
+          </StepLabel>
         </TrackerStep>
         <TrackerStep state="default">
           <StepLabel>Step Four</StepLabel>

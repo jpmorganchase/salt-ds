@@ -6,19 +6,6 @@
   font-size: var(--linearProgress-fontSize);
 }
 
-.saltLinearProgress-disabled .saltLinearProgress-bar {
-  background: var(--salt-accent-background-disabled);
-}
-
-.saltLinearProgress-disabled .saltLinearProgress-track {
-  background: var(--salt-track-borderColor-disabled);
-}
-
-.saltLinearProgress-disabled .saltLinearProgress-progressValue {
-  color: var(--salt-text-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
-}
-
 .saltLinearProgress-barContainer {
   background: none;
   position: relative;

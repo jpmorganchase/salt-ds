@@ -4,12 +4,6 @@
   position: relative;
 }
 
-.saltCircularProgress-disabled .saltCircularProgress-progressValue,
-.saltCircularProgress-disabled circle {
-  color: var(--salt-text-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
-}
-
 .saltCircularProgress-progressValue {
   align-items: center;
   color: var(--salt-text-primary-foreground);
@@ -22,14 +16,6 @@
   left: 0;
   position: absolute;
   width: 100%;
-}
-
-.saltCircularProgress-disabled .saltCircularProgress-bar {
-  border-color: var(--salt-accent-background-disabled);
-}
-
-.saltCircularProgress-disabled .saltCircularProgress-track {
-  border-color: var(--salt-track-borderColor-disabled);
 }
 
 .saltCircularProgress-track {
