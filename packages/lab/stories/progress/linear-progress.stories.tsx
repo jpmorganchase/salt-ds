@@ -39,10 +39,6 @@ export const Default: ComponentStory<typeof LinearProgress> = () => (
   <LinearProgress value={38} />
 );
 
-export const Disabled: ComponentStory<typeof LinearProgress> = () => (
-  <LinearProgress disabled value={38} />
-);
-
 export const ProgressingValue: ComponentStory<typeof LinearProgress> = () => (
   <ProgressWithControls ProgressComponent={LinearProgress} />
 );
@@ -56,8 +52,4 @@ export const MaxValue: ComponentStory<typeof CircularProgress> = () => (
 
 export const ShowNoInfo: ComponentStory<typeof LinearProgress> = () => (
   <LinearProgress showInfo={false} value={38} />
-);
-
-export const Unit: ComponentStory<typeof LinearProgress> = () => (
-  <LinearProgress unit="px" value={38} />
 );
