@@ -83,11 +83,11 @@ export const Controlled: Story<ListNextProps> = ({ onChange, ...rest }) => {
 
   const handleClick = (index: number) => {
     setSelectedItem(usStateExampleData[index]);
-    setHighlightedIndex(index);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value.toLowerCase();
+    setSelectedItem(inputValue);
     const firstMatchingItem =
       inputValue.length - 1 >= 0
         ? usStateExampleData.findIndex((item) =>
