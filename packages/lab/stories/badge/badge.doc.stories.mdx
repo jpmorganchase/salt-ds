@@ -15,8 +15,9 @@ import {
 
 # Badge
 
-A Badge is a numeric annotation that indicates the number of outstanding items that need to be addressed. It can appear in the top right of an element (usually an icon) or inline next to an element. 
+A Badge is a numeric annotation that indicates the number of outstanding items that need to be addressed. It can appear in the top right of an element (usually an icon) or inline next to an element.
 For numerical characters the badge will truncate after 3 digits. For strings there is no inbuilt truncation but it is advised to not exceed 4 characters.
+Badge is used to reflect a change of state and should therefore be used in conjunction with integrative components e.g Button and List
 
 ## Icon Badge
 
@@ -76,6 +77,4 @@ Don’t allow users to edit the contents of Badge. To accept user input, conside
 
 If custom colours are used, consider the minimum contrast guidance outlined in WCAG 2.1 documentation. The document recommends that the visual presentation of text and images of text has a contrast ratio of at least 4.5:1.
 
-We recommend only using the accent colour for Badge. But for overrides, ADA should be considered where possible. 
-
- 
+We recommend only using the accent colour for Badge. But for overrides, ADA should be considered where possible.

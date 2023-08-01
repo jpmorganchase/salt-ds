@@ -1,8 +1,11 @@
 import { Badge, Tabstrip, List, ListItem } from "@salt-ds/lab";
 import { Button } from "@salt-ds/core";
 
-
-import { SettingsSolidIcon, MessageIcon, NotificationIcon } from "@salt-ds/icons";
+import {
+  SettingsSolidIcon,
+  MessageIcon,
+  NotificationIcon,
+} from "@salt-ds/icons";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -62,11 +65,12 @@ export const String: ComponentStory<typeof Badge> = () => {
 export const ListStory: ComponentStory<typeof Badge> = () => {
   return (
     <List aria-label="Declarative List example">
-        <ListItem>Level 1</ListItem>
-        <ListItem>Level 2</ListItem>
-        <ListItem>Level 3</ListItem>
-        <ListItem>Level 4<Badge value={'NEW'}/> </ListItem>
+      <ListItem>Level 1</ListItem>
+      <ListItem>Level 2</ListItem>
+      <ListItem>Level 3</ListItem>
+      <ListItem>
+        Level 4<Badge value={"NEW"} />{" "}
+      </ListItem>
     </List>
   );
 };
-
