@@ -42,7 +42,6 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
       onActionClick,
       status = "info",
       title,
-      unit = "%",
       value,
       ...rest
     },
@@ -92,7 +91,6 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
           message={message}
           status={status}
           title={title}
-          unit={unit}
           value={value}
           {...rest}
         />
