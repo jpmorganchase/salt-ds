@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-Fixed Linear Progress to keep bar visible at 0 for animation
+Fixed Linear Progress's bar not animating to the beginning on reset
