@@ -60,6 +60,15 @@
   padding-right: var(--salt-size-adornmentGap);
 }
 
+.saltDropdownNext-list {
+  --saltDropdownNext-itemCount: 5;
+
+  max-height: calc(
+    (var(--salt-size-base) + var(--salt-spacing-100)) *
+      var(--saltDropdownNext-itemCount)
+  );
+}
+
 /* Styling applied to dropdown button if `disabled={true}` */
 .saltDropdownNext-disabled,
 .saltDropdownNext-disabled:hover,

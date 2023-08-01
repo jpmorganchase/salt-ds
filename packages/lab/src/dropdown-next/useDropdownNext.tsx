@@ -59,7 +59,6 @@ export const useDropdownNext = ({
     keyDownHandler: listKeyDownHandler,
     blurHandler: listBlurHandler,
     mouseOverHandler: listMouseOverHandler,
-    // mouseDownHandler: listMouseDownHandler,
     activeDescendant,
     selectedItem,
     highlightedItem,
@@ -167,30 +166,39 @@ export const useDropdownNext = ({
   };
 
   // HANDLERS
-  const blurHandler = (event: FocusEvent) => {
-    listBlurHandler(event);
+  const blurHandler = () => {
+    listBlurHandler();
     setOpen(false);
   };
 
   const focusHandler = (event: FocusEvent<HTMLElement>) => {
     // console.log("useDD hook: focusHandler");
     // listFocusHandler(event);
+    if (selectedItem) {
+      // console.log("theres selectedItem");
+      // console.log("hightlightedItem is,", highlightedItem);
+      // highlight(selectedItem);
+      listFocusHandler(event as FocusEvent<HTMLUListElement>);
+    }
+  };
+
+  const clickHandler = () => {
     setOpen(true);
   };
 
-  const mouseOverHandler = (event: MouseEvent<HTMLElement>) => {
-    // console.log("useDD hook: mouseOverHandler");
-    listMouseOverHandler(event);
+  const mouseOverHandler = () => {
+    listMouseOverHandler();
   };
 
-  const keyDownHandler = (event: KeyboardEvent) => {
-    // console.log("useDD hook: keyDownHandler");
+  const keyDownHandler = (event: KeyboardEvent<HTMLElement>) => {
     const { key } = event;
     switch (key) {
       case "ArrowUp":
+        listKeyDownHandler(event as KeyboardEvent<HTMLUListElement>);
+        break;
       case "ArrowDown":
         setOpen(true);
-        listKeyDownHandler(event);
+        listKeyDownHandler(event as KeyboardEvent<HTMLUListElement>);
         break;
       case " ":
       case "Enter":
@@ -199,7 +207,7 @@ export const useDropdownNext = ({
           break;
         }
         if (open) {
-          listKeyDownHandler(event);
+          listKeyDownHandler(event as KeyboardEvent<HTMLUListElement>);
           setOpen(false);
           break;
         }
@@ -212,7 +220,7 @@ export const useDropdownNext = ({
       case "Home":
       case "End":
         if (open) {
-          listKeyDownHandler(event);
+          listKeyDownHandler(event as KeyboardEvent<HTMLUListElement>);
           break;
         }
         break;
@@ -234,6 +242,7 @@ export const useDropdownNext = ({
     keyDownHandler,
     blurHandler,
     mouseOverHandler,
+    clickHandler,
     contextValue,
     activeDescendant,
     selectedItem,

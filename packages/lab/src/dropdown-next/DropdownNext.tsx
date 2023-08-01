@@ -1,10 +1,9 @@
 import { clsx } from "clsx";
-import { ListItemNext, ListNext, ListNextProps } from "@salt-ds/lab";
+import { ListNext, ListNextProps } from "@salt-ds/lab";
 import {
   makePrefixer,
   useId,
   useForkRef,
-  useFloatingUI,
   UseFloatingUIProps,
   SaltProvider,
 } from "@salt-ds/core";
@@ -17,13 +16,12 @@ import {
   KeyboardEvent,
   MouseEvent,
   MutableRefObject,
-  ChangeEvent,
 } from "react";
 import { useWindow } from "@salt-ds/window";
 import dropdownNextCss from "./DropdownNext.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { DropdownNextContext } from "./DropdownNextContext";
-import { FloatingPortal } from "@floating-ui/react";
+import { FloatingPortal, Placement } from "@floating-ui/react";
 import { useDropdownNext } from "./useDropdownNext";
 
 const withBaseName = makePrefixer("saltDropdownNext");
@@ -39,22 +37,26 @@ export interface DropdownNextProps<T>
    * Initially selected value for the dropdown.
    */
   defaultSelected?: string;
-  selected?: string;
-  open?: boolean;
-  listId?: string;
+  /**
+   * List of items when using a dropdown. Accepts string or object with `id`, `value` and `disabled`.
+   */
+  source: T[];
+  /**
+   * If `true`, dropdown is read only.
+   */
+  readOnly?: boolean;
   /**
    * Background styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
   /**
-   * List of items when using a Dropdown.
+   * Placement of dropdown list. Defaults to 'bottom'.
    */
-  source: T[];
-  ListProps?: ListNextProps;
+  placement?: Placement;
   /**
-   * If `true`, the component is read only.
+   * Props for dropdown list.
    */
-  readOnly?: boolean;
+  ListProps?: ListNextProps;
 }
 
 export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
@@ -64,10 +66,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       disabled,
       variant = "primary",
       id: dropdownIdProp,
-      listId: listIdProp,
       defaultSelected,
-      selected: selectedProp,
-      open: openProp,
       readOnly,
       source,
       placement = "bottom",
@@ -75,9 +74,10 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       onKeyDown,
       onBlur,
       onMouseOver,
+      onClick,
       style: dropdownStyle,
       ListProps,
-      ...rest
+      ...restProps
     } = props;
 
     const targetWindow = useWindow();
@@ -87,7 +87,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       window: targetWindow,
     });
 
-    const listId = useId(listIdProp);
+    const listId = useId(ListProps?.id);
     const dropdownId = useId(dropdownIdProp);
     const listRef = useRef<HTMLUListElement>(null);
 
@@ -96,6 +96,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       keyDownHandler,
       blurHandler,
       mouseOverHandler,
+      clickHandler,
       contextValue,
       activeDescendant,
       selectedItem,
@@ -121,12 +122,30 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       reference
     ) as MutableRefObject<HTMLButtonElement>;
 
-    const floatingRef = useForkRef(
+    const floatingListRef = useForkRef(
       listRef,
       floating
     ) as MutableRefObject<HTMLUListElement>;
 
-    const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+    const getIcon = () => {
+      const iconClassName = clsx(
+        withBaseName("icon"),
+        {
+          [withBaseName("disabled")]: disabled,
+        },
+        className
+      );
+
+      return readOnly ? (
+        ""
+      ) : open ? (
+        <ChevronUpIcon className={iconClassName} />
+      ) : (
+        <ChevronDownIcon className={iconClassName} />
+      );
+    };
+
+    const handleFocus = (event: FocusEvent<HTMLElement>) => {
       if (disabled || readOnly) return;
 
       focusHandler(event);
@@ -139,99 +158,81 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     };
 
     const handleBlur = (event: FocusEvent<HTMLElement>) => {
-      blurHandler(event);
+      blurHandler();
       onBlur?.(event);
     };
 
     const handleMouseOver = (event: MouseEvent<HTMLElement>) => {
-      mouseOverHandler(event);
+      mouseOverHandler();
       onMouseOver?.(event);
     };
 
-    return (
-      <DropdownNextContext.Provider value={contextValue}>
-        <div className={clsx(withBaseName(), className)}>
-          <button
-            id={dropdownId}
-            disabled={disabled}
-            onFocus={handleFocus}
-            onKeyDown={handleKeyDown}
-            onMouseOver={handleMouseOver}
-            onBlur={handleBlur}
-            value={selectedItem}
-            className={clsx(
-              withBaseName("button"),
-              withBaseName(variant),
-              {
-                [withBaseName("disabled")]: disabled,
-                [withBaseName("readOnly")]: readOnly,
-              },
-              className
-            )}
-            role="combobox"
-            aria-haspopup="listbox"
-            aria-expanded={open}
-            aria-activedescendant={disabled ? undefined : activeDescendant}
-            // aria-labelledby="dropdownLabel" // identifies element that labels the DD
-            tabIndex={disabled ? -1 : 0}
-            aria-owns={listId}
-            aria-controls={listId}
-            ref={triggerRef}
-            style={dropdownStyle}
-          >
-            <span className={clsx(withBaseName("buttonText"), className)}>
-              {selectedItem}
-            </span>
-            {open && readOnly === false ? (
-              <ChevronUpIcon
-                className={clsx(
-                  withBaseName("icon"),
-                  {
-                    [withBaseName("disabled")]: disabled,
-                    [withBaseName("readOnly")]: readOnly,
-                  },
-                  className
-                )}
-              />
-            ) : (
-              <ChevronDownIcon
-                className={clsx(
-                  withBaseName("icon"),
-                  {
-                    [withBaseName("disabled")]: disabled,
-                    [withBaseName("readOnly")]: readOnly,
-                  },
-                  className
-                )}
-              />
-            )}
-          </button>
+    const handleClick = (event: MouseEvent<HTMLElement>) => {
+      clickHandler();
+      onClick?.(event);
+    };
 
-          {open && (
-            <FloatingPortal>
-              <div
-                className={clsx(withBaseName("popup"), className)}
-                {...getDropdownNextProps()}
-              >
+    return (
+      <div className={clsx(withBaseName(), className)}>
+        <button
+          id={dropdownId}
+          disabled={disabled}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          onMouseOver={handleMouseOver}
+          onClick={handleClick}
+          onBlur={handleBlur}
+          value={selectedItem}
+          className={clsx(
+            withBaseName("button"),
+            withBaseName(variant),
+            {
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("readOnly")]: readOnly,
+            },
+            className
+          )}
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-activedescendant={disabled ? undefined : activeDescendant}
+          // aria-labelledby="dropdownLabel" // identifies element that labels the DD
+          tabIndex={disabled ? -1 : 0}
+          aria-owns={listId}
+          aria-controls={listId}
+          ref={triggerRef}
+          style={dropdownStyle}
+          {...restProps}
+        >
+          <span className={clsx(withBaseName("buttonText"), className)}>
+            {selectedItem}
+          </span>
+          {getIcon()}
+        </button>
+
+        {open && (
+          <FloatingPortal>
+            <SaltProvider>
+              <div {...getDropdownNextProps()}>
                 <ListNext
                   id={listId}
+                  className={clsx(withBaseName("list"), ListProps?.className)}
                   disableFocus
                   // aria-labelledby="dropdownLabel"
                   disabled={disabled}
                   selected={selectedItem}
                   highlightedItem={highlightedItem}
-                  // onFocus={handleFocus}
                   onMouseOver={handleMouseOver}
                   {...ListProps}
-                  ref={floatingRef}
+                  ref={floatingListRef}
                 >
                   {getListItems(source)}
                 </ListNext>
               </div>
-            </FloatingPortal>
-          )}
-        </div>
-      </DropdownNextContext.Provider>
+            </SaltProvider>
+          </FloatingPortal>
+        )}
+      </div>
     );
   }
 );
