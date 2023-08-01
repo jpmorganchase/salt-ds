@@ -10,9 +10,9 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * The number to display on the badge
    */
-  value?: number | string;
+  value: number | string;
   /**
-   * The badge will be added relative to this node. Renders the "message" icon by default.
+   * If a child is provided the Badge will render top right. By defualt renders inline.
    */
   children?: ReactNode;
   /**
@@ -20,7 +20,6 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
    */
   max?: number;
 }
-
 const withBaseName = makePrefixer("saltBadge");
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
@@ -42,7 +41,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
       {children}
       <span
         className={clsx(withBaseName("badge"), {
-          [withBaseName("topRight")]: children,
+          [withBaseName("topRight")]: children
         })}
       >
         {valueText}
