@@ -112,6 +112,34 @@ export const HorizontalGroup = () => {
   );
 };
 
+export const HorizontalGroupWithIconAndBadge = () => {
+  const [active, setActive] = useState(items[0]);
+
+  return (
+    <nav>
+      <ul className="horizontal">
+        {items.map((item) => (
+          <li key={item}>
+            <NavItem
+              active={active === item}
+              href="#"
+              onClick={(event) => {
+                // Prevent default to avoid navigation
+                event.preventDefault();
+                setActive(item);
+              }}
+              IconComponent={NotificationIcon}
+              BadgeComponent={<Badge value="NEW" />}
+            >
+              {item}
+            </NavItem>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
+
 export const HorizontalGroupWithDropdown = () => {
   const [active, setActive] = useState(itemsWithSubNav[0].name);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -208,6 +236,35 @@ export const VerticalGroup = () => {
     </nav>
   );
 };
+
+export const VerticalGroupWithIconAndBadge = () => {
+  const [active, setActive] = useState(items[0]);
+  return (
+    <nav>
+      <ul className="vertical">
+        {items.map((item) => (
+          <li key={item}>
+            <NavItem
+              active={active === item}
+              href="#"
+              orientation="vertical"
+              onClick={(event) => {
+                // Prevent default to avoid navigation
+                event.preventDefault();
+                setActive(item);
+              }}
+              IconComponent={NotificationIcon}
+              BadgeComponent={<Badge value="NEW" />}
+            >
+              {item}
+            </NavItem>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
+
 export const VerticalNestedGroup = () => {
   const [active, setActive] = useState(multipleLevelNesting[0].name);
 
