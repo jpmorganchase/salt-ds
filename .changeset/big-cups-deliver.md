@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-Increased the font-weight of SteppedTracker labels
+Increased the font-weight of Stepped Tracker labels
