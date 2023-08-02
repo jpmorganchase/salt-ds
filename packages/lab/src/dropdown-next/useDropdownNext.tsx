@@ -9,15 +9,17 @@ import {
   offset,
   size,
 } from "@floating-ui/react";
-import { useFloatingUI, UseFloatingUIProps } from "@salt-ds/core";
+import {
+  useControlled,
+  useFloatingUI,
+  UseFloatingUIProps,
+} from "@salt-ds/core";
 import { ListItemNext } from "@salt-ds/lab";
 import {
   HTMLProps,
   KeyboardEvent,
   useMemo,
-  useState,
   FocusEvent,
-  MouseEvent,
   RefObject,
 } from "react";
 import { useList } from "../list-next/useList";
@@ -31,27 +33,24 @@ interface UseDropdownNextProps<T>
   disabled?: boolean;
   listRef: RefObject<HTMLUListElement>;
   listId?: string;
+  openProp?: boolean;
 }
 
 export const useDropdownNext = ({
   defaultSelected,
-  source,
   disabled,
   listRef,
   listId,
-  // portal stuffs
-  open: openProp,
+  openProp,
   onOpenChange: onOpenChangeProp,
   placement: placementProp,
 }: UseDropdownNextProps<T>) => {
-  const [open, setOpen] = useState(false);
-
-  // const [open, setOpen] = useControlled({
-  //   controlled: openProp,
-  //   default: false,
-  //   name: "DropdownNext",
-  //   state: "open",
-  // });
+  const [open, setOpen] = useControlled({
+    controlled: openProp,
+    default: false,
+    name: "DropdownNext",
+    state: "open",
+  });
 
   // USELIST HOOK
   const {
@@ -61,7 +60,9 @@ export const useDropdownNext = ({
     mouseOverHandler: listMouseOverHandler,
     activeDescendant,
     selectedItem,
+    setSelectedItem,
     highlightedItem,
+    setHighlightedItem,
     contextValue: listContextValue,
     focusVisibleRef: listFocusVisibleRef,
   } = useList({
@@ -71,6 +72,7 @@ export const useDropdownNext = ({
     ref: listRef,
   });
 
+  console.log("useList hook", selectedItem, highlightedItem);
   const { select, highlight } = listContextValue;
 
   // LIST SOURCE
@@ -85,9 +87,15 @@ export const useDropdownNext = ({
             value={item}
             onMouseDown={(event) => {
               select(event);
+              console.log("mousedown", selectedItem, highlightedItem);
+            }}
+            onClick={(event) => {
+              select(event);
+              console.log("click", selectedItem, highlightedItem);
             }}
             onMouseMove={(event) => {
               highlight(event);
+              console.log("mousemove", selectedItem, highlightedItem);
             }}
           >
             {item}
@@ -101,6 +109,9 @@ export const useDropdownNext = ({
           value={item.value}
           disabled={item?.disabled ?? false}
           onMouseDown={(event) => {
+            select(event);
+          }}
+          onClick={(event) => {
             select(event);
           }}
           onMouseMove={(event) => {
@@ -171,21 +182,20 @@ export const useDropdownNext = ({
     setOpen(false);
   };
 
+  // handles focus on mouse and keyboard
   const focusHandler = (event: FocusEvent<HTMLElement>) => {
-    // console.log("useDD hook: focusHandler");
-    // listFocusHandler(event);
     if (selectedItem) {
-      // console.log("theres selectedItem");
-      // console.log("hightlightedItem is,", highlightedItem);
-      // highlight(selectedItem);
+      // setHighlightedItem(selectedItem);
       listFocusHandler(event as FocusEvent<HTMLUListElement>);
     }
   };
 
-  const clickHandler = () => {
-    setOpen(true);
+  // handles mouse click on dropdown button
+  const mouseDownHandler = () => {
+    setOpen(!open);
   };
 
+  // handles mouse hover on dropdown button
   const mouseOverHandler = () => {
     listMouseOverHandler();
   };
@@ -194,6 +204,7 @@ export const useDropdownNext = ({
     const { key } = event;
     switch (key) {
       case "ArrowUp":
+
         listKeyDownHandler(event as KeyboardEvent<HTMLUListElement>);
         break;
       case "ArrowDown":
@@ -242,11 +253,13 @@ export const useDropdownNext = ({
     keyDownHandler,
     blurHandler,
     mouseOverHandler,
-    clickHandler,
+    mouseDownHandler,
     contextValue,
     activeDescendant,
     selectedItem,
+    setSelectedItem,
     highlightedItem,
+    setHighlightedItem,
     setListRef: listFocusVisibleRef,
     getListItems,
     // portal stuffs

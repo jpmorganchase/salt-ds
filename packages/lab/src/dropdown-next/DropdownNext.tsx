@@ -57,6 +57,11 @@ export interface DropdownNextProps<T>
    * Props for dropdown list.
    */
   ListProps?: ListNextProps;
+  /**
+   * Props for controlled dropdown.
+   */
+  open?: boolean;
+  selected?: T;
 }
 
 export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
@@ -70,6 +75,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       readOnly,
       source,
       placement = "bottom",
+      open: openProp,
       onFocus,
       onKeyDown,
       onBlur,
@@ -77,6 +83,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       onClick,
       style: dropdownStyle,
       ListProps,
+
       ...restProps
     } = props;
 
@@ -96,11 +103,13 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       keyDownHandler,
       blurHandler,
       mouseOverHandler,
-      clickHandler,
+      mouseDownHandler,
       contextValue,
       activeDescendant,
       selectedItem,
+      setSelectedItem,
       highlightedItem,
+      setHighlightedItem,
       setListRef,
       getListItems,
       open,
@@ -115,6 +124,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       listRef,
       listId,
       placement,
+      openProp,
     });
 
     const triggerRef = useForkRef(
@@ -153,6 +163,8 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+      if (disabled || readOnly) return;
+
       keyDownHandler(event);
       onKeyDown?.(event);
     };
@@ -167,10 +179,13 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       onMouseOver?.(event);
     };
 
-    const handleClick = (event: MouseEvent<HTMLElement>) => {
-      clickHandler();
+    const handleMouseDown = (event: MouseEvent<HTMLElement>) => {
+      if (disabled || readOnly) return;
+      mouseDownHandler();
       onClick?.(event);
     };
+
+    // console.log("highlightedItem", highlightedItem);
 
     return (
       <div className={clsx(withBaseName(), className)}>
@@ -180,7 +195,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
           onFocus={handleFocus}
           onKeyDown={handleKeyDown}
           onMouseOver={handleMouseOver}
-          onClick={handleClick}
+          onMouseDown={handleMouseDown}
           onBlur={handleBlur}
           value={selectedItem}
           className={clsx(
@@ -196,10 +211,10 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-activedescendant={disabled ? undefined : activeDescendant}
-          // aria-labelledby="dropdownLabel" // identifies element that labels the DD
           tabIndex={disabled ? -1 : 0}
           aria-owns={listId}
           aria-controls={listId}
+          aria-disabled={disabled}
           ref={triggerRef}
           style={dropdownStyle}
           {...restProps}
@@ -209,7 +224,6 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
           </span>
           {getIcon()}
         </button>
-
         {open && (
           <FloatingPortal>
             <SaltProvider>
@@ -218,7 +232,6 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
                   id={listId}
                   className={clsx(withBaseName("list"), ListProps?.className)}
                   disableFocus
-                  // aria-labelledby="dropdownLabel"
                   disabled={disabled}
                   selected={selectedItem}
                   highlightedItem={highlightedItem}
