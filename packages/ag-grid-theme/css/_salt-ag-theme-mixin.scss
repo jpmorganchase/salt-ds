@@ -25,13 +25,6 @@
     .ag-cell-range-single-cell.ag-cell-range-handle {
       border: var(--agGrid-focused-borderWidth)
         var(--agGrid-focused-borderStyle) var(--agGrid-focused-borderColor) !important;
-      padding-inline: var(--salt-spacing-100);
-      line-height: calc(
-        min(
-            var(--ag-internal-calculated-line-height),
-            var(--ag-internal-padded-row-height)
-          ) - var(--agGrid-focused-borderWidth)
-      );
     }
   }
   // Because we are using a different border thickness on focus than default
@@ -267,6 +260,10 @@
     font-weight: var(--agGrid-header-fontWeight);
   }
 
+  .ag-header-cell {
+    border: 2px solid transparent;
+  }
+
   .ag-header-cell:after {
     top: var(--agGrid-separatorGap);
     bottom: var(--agGrid-separatorGap);
@@ -322,7 +319,13 @@
     z-index: 1;
   }
 
+  .ag-ltr .ag-cell {
+    border: 2px solid transparent;
+    line-height: calc(min(var(--ag-internal-calculated-line-height), var(--ag-internal-padded-row-height)) - var(--agGrid-focused-borderWidth));
+  }
+
   .ag-cell {
+    border-left: 0;
     height: calc(var(--salt-size-base) + var(--salt-spacing-100));
     padding-inline: var(--salt-spacing-100);
   }
