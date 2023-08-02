@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { platform } from "@floating-ui/dom";
+import { platform, offset } from "@floating-ui/dom";
 import { Platform } from "@floating-ui/react";
 
 import {
@@ -126,7 +126,11 @@ const NewWindowTest = (props: NewWindowTestProps) => {
         <StackLayout gap={3}>
           <H3>This is an iframe with a button</H3>
           <Text>It represents a portalled window within an application</Text>
-          <FloatingPlatformProvider platform={customPlatform}>
+          <FloatingPlatformProvider
+            platform={customPlatform}
+            animationFrame
+            middleware={[offset(0)]}
+          >
             <FloatingComponentProvider Component={FloatingUIComponent}>
               <Tooltip {...props}>
                 <Button>Hover Me</Button>

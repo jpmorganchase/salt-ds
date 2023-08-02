@@ -26,6 +26,7 @@ import {
 import { FloatingPortal } from "@floating-ui/react";
 import { SaltProvider } from "../salt-provider";
 
+type CombinedFloatingComponentProps = PropsWithChildren<FloatingComponentProps>;
 export interface FloatingComponentProps extends UseFloatingUIProps {
   /**
    * Option to not render the popper.
@@ -34,11 +35,14 @@ export interface FloatingComponentProps extends UseFloatingUIProps {
 }
 
 export interface FloatingComponentContextType {
-  Component: ComponentType<PropsWithChildren<FloatingComponentProps>>;
+  Component: ComponentType<CombinedFloatingComponentProps>;
 }
 
-const FloatingComponentContext = createContext<FloatingComponentContextType>({
-  Component: forwardRef((props, ref: ForwardedRef<HTMLDivElement>) => {
+const DefaultFloatingComponent = forwardRef(
+  (
+    props: CombinedFloatingComponentProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
     const { open, disabled, ...rest } = props;
     return open && !disabled ? (
       <FloatingPortal>
@@ -47,7 +51,11 @@ const FloatingComponentContext = createContext<FloatingComponentContextType>({
         </SaltProvider>
       </FloatingPortal>
     ) : null;
-  }),
+  }
+);
+
+const FloatingComponentContext = createContext<FloatingComponentContextType>({
+  Component: DefaultFloatingComponent,
 });
 
 if (process.env.NODE_ENV !== "production") {
@@ -93,25 +101,55 @@ export type UseFloatingUIProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
-const PlatformContext = createContext<Platform>(platform);
+type FloatingPlatformContextType = {
+  platform: Platform;
+  middleware: Middleware[];
+  animationFrame: boolean;
+};
+
+const defaultFloatingPlaform = {
+  platform,
+  middleware: [],
+  animationFrame: false,
+};
+
+const FloatingPlatformContext = createContext<FloatingPlatformContextType>(
+  defaultFloatingPlaform
+);
 
 export interface FloatingPlatformProviderProps {
-  platform: Platform;
+  platform?: Platform;
+  middleware?: Middleware[];
   children: ReactNode;
+  animationFrame?: boolean;
 }
 
 export function FloatingPlatformProvider(props: FloatingPlatformProviderProps) {
-  const { platform: platformProp, children } = props;
+  const {
+    platform: platformProp,
+    middleware,
+    animationFrame,
+    children,
+  } = props;
+
+  const floatingPlatformContextValue = useMemo<FloatingPlatformContextType>(
+    () => ({
+      platform: platformProp ?? platform,
+      middleware: middleware ?? [],
+      animationFrame: animationFrame ?? false,
+    }),
+    [platformProp, middleware, animationFrame]
+  );
 
   return (
-    <PlatformContext.Provider value={platformProp}>
+    <FloatingPlatformContext.Provider value={floatingPlatformContextValue}>
       {children}
-    </PlatformContext.Provider>
+    </FloatingPlatformContext.Provider>
   );
 }
 
-export function usePlatform() {
-  return useContext(PlatformContext);
+export function useFloatingPlatform() {
+  return useContext(FloatingPlatformContext);
 }
 
 export const DEFAULT_FLOATING_UI_MIDDLEWARE = [
@@ -130,16 +168,24 @@ export function useFloatingUI(
     onOpenChange,
   } = props;
 
-  const platform = usePlatform();
+  const {
+    platform: contextPlaform,
+    middleware: contextMiddleware,
+    animationFrame,
+  } = useFloatingPlatform();
 
   const { reference, floating, refs, update, ...rest } = useFloating({
     placement,
     strategy,
-    middleware,
+    middleware: [...middleware, ...contextMiddleware],
     open,
     onOpenChange,
-    whileElementsMounted: autoUpdate,
-    platform,
+    whileElementsMounted: (...args) => {
+      const cleanup = autoUpdate(...args, { animationFrame });
+
+      return cleanup;
+    },
+    platform: contextPlaform,
   });
 
   return {
