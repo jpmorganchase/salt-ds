@@ -14,22 +14,20 @@ import useIsMobileView from "../../../src/utils/useIsMobileView";
 import styles from "./ComponentsList.module.css";
 
 const statusClass = (status: ComponentStatus) => {
-  if (status === ComponentStatus.READY) {
+  if (status === ComponentStatus.STABLE) {
     return "ready";
   }
   if (status === ComponentStatus.IN_PROGRESS) {
     return "progress";
   }
-  if (status === ComponentStatus.IN_BACKLOG) {
-    return "backlog";
-  }
   return "none";
 };
 
 const statusSortList = [
-  ComponentStatus.READY,
+  ComponentStatus.STABLE,
+  ComponentStatus.RC,
+  ComponentStatus.EXPERIMENTAL,
   ComponentStatus.IN_PROGRESS,
-  ComponentStatus.IN_BACKLOG,
   ComponentStatus.NOT_APPLICABLE,
 ];
 
@@ -57,9 +55,10 @@ const componentsListSorting = (
 };
 
 const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
-  const { devStatus, name, storybookUrl } = component;
+  // @ts-ignore
+  const { name, storybookUrl } = component;
 
-  return devStatus === ComponentStatus.READY && storybookUrl ? (
+  return storybookUrl ? (
     <Link href={storybookUrl}>
       <span>{name}</span>
     </Link>
@@ -75,7 +74,7 @@ const ComponentStatusData = ({
   status: ComponentStatus;
   availableSince?: string;
 }) => {
-  const showReleaseDate = availableSince && status === ComponentStatus.READY;
+  const showReleaseDate = availableSince && status === ComponentStatus.STABLE;
   const isMobileView = useIsMobileView();
   const mobileView = (
     <span>{showReleaseDate ? `v${availableSince}` : null}</span>
@@ -199,15 +198,16 @@ export const ComponentsList = () => {
                 <td>
                   <ComponentStatusData
                     status={component.devStatus}
-                    availableSince={component.availableInCoreSince}
+                    availableSince={
+                      component.devStatus === ComponentStatus.STABLE
+                        ? component.availableInCoreSince
+                        : undefined
+                    }
                   />
                 </td>
 
                 <td>
-                  <ComponentStatusData
-                    status={component.designStatus}
-                    availableSince={component.availableInFigmaSince}
-                  />
+                  <ComponentStatusData status={component.designStatus} />
                 </td>
               </tr>
             );
