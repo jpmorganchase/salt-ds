@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { Button, FlexLayout } from "@salt-ds/core";
+import { PropsWithChildren, useState } from "react";
+import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
 import {
   DialogNext,
   DialogNextTitle,
   DialogNextActions,
   DialogNextContent,
   NavItem,
+  DialogNextBody,
 } from "@salt-ds/lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import "./dialog-next.stories.css";
@@ -52,9 +53,7 @@ const DialogTemplate: ComponentStory<typeof DialogNext> = ({
           <Button variant="cta" onClick={handleClose}>
             CTA BUTTON
           </Button>
-          <Button style={{ cursor: "pointer" }} onClick={handleClose}>
-            REGULAR BUTTON
-          </Button>
+          <Button onClick={handleClose}>REGULAR BUTTON</Button>
           <Button variant="secondary" onClick={handleClose}>
             SECONDARY BUTTON
           </Button>
@@ -133,7 +132,14 @@ export const PreferencesDialog: ComponentStory<typeof DialogNext> = (args) => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Click to open dialog
       </Button>
-      <DialogNext {...args} open={open} onOpenChange={onOpenChange}>
+      <DialogNext
+        {...args}
+        open={open}
+        onOpenChange={onOpenChange}
+        style={{
+          width: "calc(20 * var(--salt-size-base))",
+        }}
+      >
         <DialogNextTitle>Preferences</DialogNextTitle>
         <FlexLayout gap={0}>
           <nav>
@@ -159,11 +165,56 @@ export const PreferencesDialog: ComponentStory<typeof DialogNext> = (args) => {
           <DialogNextContent>Hello</DialogNextContent>
         </FlexLayout>
         <DialogNextActions>
-          <Button style={{ cursor: "pointer" }} onClick={handleClose}>
-            Save
-          </Button>
+          <Button onClick={handleClose}>Save</Button>
         </DialogNextActions>
       </DialogNext>
     </>
+  );
+};
+
+function FakeWindow({ children }: PropsWithChildren) {
+  return (
+    <div
+      style={{
+        border: "1px solid black",
+        width: "calc(20 * var(--salt-size-base))",
+      }}
+    >
+      <div
+        style={{
+          borderBottom: "1px solid black",
+          paddingBlock: "var(--salt-spacing-200)",
+        }}
+      ></div>
+      {children}
+    </div>
+  );
+}
+
+export const DesktopDialog = () => {
+  return (
+    <StackLayout>
+      <FakeWindow>
+        <DialogNextBody>
+          <DialogNextTitle>Window Dialog</DialogNextTitle>
+          <DialogNextContent>Hello world!</DialogNextContent>
+          <DialogNextActions>
+            <Button variant="secondary">Cancel</Button>
+            <Button>Save</Button>
+          </DialogNextActions>
+        </DialogNextBody>
+      </FakeWindow>
+
+      <FakeWindow>
+        <DialogNextBody status="warning">
+          <DialogNextTitle>Warning Dialog</DialogNextTitle>
+          <DialogNextContent>Potential issues abound!</DialogNextContent>
+          <DialogNextActions>
+            <Button variant="secondary">Cancel</Button>
+            <Button>Ok</Button>
+          </DialogNextActions>
+        </DialogNextBody>
+      </FakeWindow>
+    </StackLayout>
   );
 };
