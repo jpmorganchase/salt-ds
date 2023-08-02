@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import {
   StackLayout,
@@ -27,10 +27,17 @@ const statusBar = {
 const HDCompact = (props: AgGridReactProps) => {
   const [compact, setCompact] = useState(false);
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
+  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
     `ag-theme-${themeName}`,
     compact
   );
+
+  useEffect(() => {
+    if (isGridReady) {
+      api?.sizeColumnsToFit();
+    }
+  }, [isGridReady]);
+
   const density = useDensity();
 
   const handleCompactChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +50,7 @@ const HDCompact = (props: AgGridReactProps) => {
         {switcher}
         <FlexItem>
           <Checkbox
-            checked={compact}
+            checked={compact && density === "high"}
             label="Compact (for high density only)"
             onChange={handleCompactChange}
             disabled={density !== "high"}
