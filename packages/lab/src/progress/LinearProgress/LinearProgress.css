@@ -9,7 +9,7 @@
 .saltLinearProgress-barContainer {
   background: none;
   position: relative;
-  width: calc(100% - 10px);
+  width: 100%;
   overflow: hidden;
   height: var(--salt-size-adornment);
 }

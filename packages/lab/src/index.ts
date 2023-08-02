@@ -26,7 +26,6 @@ export * from "./combo-box";
 export * from "./combo-box-deprecated";
 export * from "./contact-details";
 export * from "./content-status";
-export * from "./control-label";
 export * from "./deck-item";
 export * from "./deck-layout";
 export * from "./dialog";
