@@ -42,7 +42,7 @@
 }
 
 .saltAccordionHeader-error:focus-visible {
-  outline-color: var(--salt-status-error-foreground);
+  outline-color: var(--salt-status-error-borderColor);
 }
 
 .saltAccordionHeader-warning {
@@ -50,7 +50,7 @@
 }
 
 .saltAccordionHeader-warning:focus-visible {
-  outline-color: var(--salt-status-warning-foreground);
+  outline-color: var(--salt-status-warning-borderColor);
 }
 
 .saltAccordionHeader-success {
@@ -58,7 +58,7 @@
 }
 
 .saltAccordionHeader-success:focus-visible {
-  outline-color: var(--salt-status-error-foreground);
+  outline-color: var(--salt-status-error-borderColor);
 }
 
 .saltAccordionHeader .saltAccordionHeader-statusIndicator {
