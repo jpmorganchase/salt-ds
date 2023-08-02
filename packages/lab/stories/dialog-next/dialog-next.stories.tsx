@@ -243,8 +243,8 @@ export const DesktopDialog = () => {
           <DialogNextTitle>Window Dialog</DialogNextTitle>
           <DialogNextContent>Hello world!</DialogNextContent>
           <DialogNextActions>
-            <Button variant="secondary">Cancel</Button>
             <Button>Save</Button>
+            <Button variant="secondary">Cancel</Button>
           </DialogNextActions>
         </DialogNextBody>
       </FakeWindow>
@@ -254,8 +254,8 @@ export const DesktopDialog = () => {
           <DialogNextTitle>Warning Dialog</DialogNextTitle>
           <DialogNextContent>Potential issues abound!</DialogNextContent>
           <DialogNextActions>
-            <Button variant="secondary">Cancel</Button>
             <Button>Ok</Button>
+            <Button variant="secondary">Cancel</Button>
           </DialogNextActions>
         </DialogNextBody>
       </FakeWindow>
