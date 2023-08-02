@@ -10,6 +10,7 @@ import { Story } from "@storybook/react";
 import { useState } from "react";
 import { Card, H2, Link, useDensity } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
+import { megaMenuData } from "./nav-item.data";
 
 import "./nav-item.stories.css";
 
@@ -529,6 +530,88 @@ export const HorizontalExpandableGroup = () => {
           </ul>
         </LayerLayout>
       </div>
+    </div>
+  );
+};
+
+export const HorizontalMegaMenu = () => {
+  const [active, setActive] = useState(itemsWithSubNav[0].name);
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const currentSubNav = itemsWithSubNav.find(
+    (item) => item.name === expanded
+  )?.subNav;
+  return (
+    <div className="container">
+      <nav className="center">
+        <ul className="horizontal">
+          {itemsWithSubNav.map(({ name, subNav }) => (
+            <li key={name}>
+              <NavItem
+                active={active === name}
+                href="#"
+                onClick={(event) => {
+                  // Prevent default to avoid navigation
+                  event.preventDefault();
+                  setActive(name);
+                  setExpanded((old) => {
+                    if (old === name) {
+                      return null;
+                    }
+                    return name;
+                  });
+                }}
+                onExpand={() => {
+                  setExpanded((old) => {
+                    if (old === name) {
+                      return null;
+                    }
+                    return name;
+                  });
+                }}
+                expanded={expanded === name}
+                aria-haspopup={expanded === name}
+                parent={subNav && subNav.length > 0}
+              >
+                {name}
+              </NavItem>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      {currentSubNav && (
+        <div className="megaMenu">
+          {megaMenuData.map(({ title, list, sections }) => (
+            <div>
+              <h3>{title}</h3>
+              {sections &&
+                sections.map(({ title, list }) => (
+                  <>
+                    <h4>{title}</h4>
+                    <ListNext
+                      aria-label="Mega menu list"
+                      className="megaMenuList"
+                    >
+                      {list.map((item, index) => (
+                        <ListItemNext key={index} value={item}>
+                          {item}
+                        </ListItemNext>
+                      ))}
+                    </ListNext>
+                  </>
+                ))}
+              {list && (
+                <ListNext aria-label="Mega menu list" className="megaMenuList">
+                  {list.map((item, index) => (
+                    <ListItemNext key={index} value={item}>
+                      {item}
+                    </ListItemNext>
+                  ))}
+                </ListNext>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
