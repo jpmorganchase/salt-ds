@@ -35,11 +35,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
   const exampleJSX = ComponentExample && ComponentExample();
 
-  const handleChange = (
-    _: ChangeEvent<HTMLInputElement>,
-    isChecked: boolean
-  ) => {
-    setChecked(isChecked);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
   };
 
   const { density, mode } = useLivePreviewControls();

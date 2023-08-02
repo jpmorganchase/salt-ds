@@ -94,8 +94,6 @@
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
   --formFieldLegacy-helperText-opacity: var(--salt-palette-opacity-disabled);
 
-  --saltControlLabel-color: var(--salt-text-primary-foreground-disabled);
-
   --saltInputLegacy-cursor: var(--salt-editable-cursor-disabled);
 }
 
