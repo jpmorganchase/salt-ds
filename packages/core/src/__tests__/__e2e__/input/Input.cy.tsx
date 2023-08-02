@@ -208,7 +208,7 @@ describe("GIVEN an Input", () => {
           </FormField>
         );
         cy.wait(1000);
-        cy.findByLabelText("Form Field*").should("have.attr", "required");
+        cy.findByLabelText("Form Field *").should("have.attr", "required");
       });
     });
 

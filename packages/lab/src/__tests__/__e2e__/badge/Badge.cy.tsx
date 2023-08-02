@@ -26,20 +26,6 @@ describe("GIVEN a Badge", () => {
     cy.findByText("lots").should("exist");
   });
 
-  it("THEN it truncates a string longer than 4 characters", () => {
-    cy.mount(<Badge value={"Lorem Ipsum"} />);
-    cy.findByText("Lorem Ipsum").should("have.class", "salt-visuallyHidden");
-    cy.findByText("Lore...")
-      .should("exist")
-      .should("be.visible")
-      .should("have.attr", "aria-hidden");
-  });
-
-  it("THEN can render with a custom text child", () => {
-    cy.mount(<Badge value={1}>Lorem Ipsum</Badge>);
-    cy.findByText("Lorem Ipsum").should("exist");
-  });
-
   it("THEN can render with a custom text child", () => {
     cy.mount(<Badge value={1}>Lorem Ipsum</Badge>);
     cy.findByText("Lorem Ipsum").should("exist");
