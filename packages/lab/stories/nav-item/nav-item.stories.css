@@ -50,7 +50,7 @@ ul {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  height: 400px;
+  min-height: 500px;
 }
 
 .container nav {
@@ -91,4 +91,26 @@ ul {
 .center {
   display: flex;
   justify-content: center;
+}
+
+.megaMenu {
+  padding: var(--salt-spacing-300);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-300);
+}
+
+.megaMenu h3 {
+  margin-top: 0;
+  margin-bottom: var(--salt-spacing-100);
+}
+
+.megaMenu h4 {
+  font-weight: var(--salt-text-label-fontWeight-strong);
+  color: var(--salt-text-secondary-foreground);
+  padding-bottom: var(--salt-spacing-100);
+}
+
+.megaMenuList {
+  height: auto;
 }
