@@ -33,12 +33,12 @@
 /* Styles applied when orientation = "horizontal" */
 .saltNavItem-horizontal {
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-spacing-100));
-  padding: calc(var(--salt-spacing-100) + var(--navItem-bar-inset)) var(--salt-spacing-100) var(--salt-spacing-100) var(--salt-spacing-100);
+  padding: calc(var(--salt-spacing-100) + var(--navItem-bar-inset)) 0 var(--salt-spacing-100) 0;
 }
 
 /* Styles applied when orientation = "vertical" */
 .saltNavItem-vertical {
-  min-height: var(--salt-size-stackable);
+  min-height: calc(var(--salt-size-base));
   padding-left: calc(var(--salt-spacing-100) + var(--navItem-bar-inset));
 }
 
