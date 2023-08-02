@@ -34,6 +34,7 @@
 .saltNavItem-horizontal {
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-spacing-100));
   padding: calc(var(--salt-spacing-100) + var(--navItem-bar-inset)) 0 var(--salt-spacing-100) 0;
+  margin: 0 var(--salt-spacing-100);
 }
 
 /* Styles applied when orientation = "vertical" */
