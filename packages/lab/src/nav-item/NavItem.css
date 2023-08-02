@@ -44,13 +44,11 @@
   margin: var(--salt-spacing-50) 0;
 }
 
-/* Styles applied to NavItem label on hover */
-.saltNavItem-label:hover {
-  --link-color-hover: var(--navItem-color);
-}
-
 /* Styles applied to NavItem label */
 .saltNavItem .saltNavItem-label {
+  --link-color-visited: var(--navItem-color);
+  --link-color-hover: var(--navItem-color);
+
   text-decoration: none;
   color: var(--navItem-color);
   line-height: var(--salt-text-lineHeight);
