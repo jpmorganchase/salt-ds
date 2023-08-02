@@ -1,0 +1,72 @@
+/* Styles applied to DialogNext component */
+.saltDialogNext {
+  background: var(--salt-container-primary-background);
+  display: flex;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: auto;
+  box-shadow: var(--salt-overlayable-shadow-modal);
+  min-width: calc(10 * var(--salt-size-base));
+  max-width: calc(20 * var(--salt-size-base));
+  z-index: calc(var(--salt-zIndex-appHeader) - 1);
+  overflow-y: auto;
+}
+
+/* Styles applied to DialogNext background overlay */
+.saltDialogNext-overlay {
+  background: var(--salt-overlayable-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--salt-spacing-400);
+  z-index: var(--salt-zIndex-dialogNext);
+}
+
+.saltDialogNext-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-self: flex-start;
+  gap: var(--salt-spacing-200);
+  padding-block: var(--salt-spacing-300);
+}
+
+.saltDialogNext-withStatus {
+  padding-left: var(--salt-spacing-300);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.saltDialogNext-withStatus .saltDialogNext-body {
+  margin-left: calc(var(--salt-spacing-200) * -1);
+}
+
+.saltDialogNext .saltStatusIndicator {
+  margin-top: calc(var(--salt-spacing-50) + var(--salt-spacing-300));
+}
+
+.saltDialogNext-info {
+  border-color: var(--salt-status-info-borderColor);
+}
+
+.saltDialogNext-error {
+  border-color: var(--salt-status-error-borderColor);
+}
+
+.saltDialogNext-warning {
+  border-color: var(--salt-status-warning-borderColor);
+}
+
+.saltDialogNext-success {
+  border-color: var(--salt-status-success-borderColor);
+}
+
+/* Styles applied when the component mounts */
+.saltDialogNext.saltDialogNext-enterAnimation {
+  animation: var(--salt-animation-fade-in-center);
+}
+
+/* Styles applied when the component unmounts */
+.saltDialogNext.saltDialogNext-exitAnimation {
+  animation: var(--salt-animation-fade-out-back);
+}
