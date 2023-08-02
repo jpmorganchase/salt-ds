@@ -41,6 +41,7 @@
 .saltNavItem-vertical {
   min-height: calc(var(--salt-size-base));
   padding-left: calc(var(--salt-spacing-100) + var(--navItem-bar-inset));
+  margin: var(--salt-spacing-50) 0;
 }
 
 /* Styles applied to NavItem label on hover */
