@@ -11,9 +11,9 @@ const Template: ComponentStory<typeof Switch> = (args) => {
   return <Switch {...args} />;
 };
 
-export const FeatureSwitch = Template.bind({});
+export const Default = Template.bind({});
 
-FeatureSwitch.args = {
+Default.args = {
   label: "Default",
 };
 
@@ -42,11 +42,8 @@ DisabledChecked.args = {
 export const Controlled: ComponentStory<typeof Switch> = (args) => {
   const [checked, setChecked] = useState(false);
 
-  const handleChange = (
-    _: ChangeEvent<HTMLInputElement>,
-    isChecked: boolean
-  ) => {
-    setChecked(isChecked);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
   };
 
   return <Switch {...args} checked={checked} onChange={handleChange} />;
