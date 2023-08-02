@@ -1,9 +1,6 @@
 import { Story, ComponentMeta } from "@storybook/react";
 
-import { DropdownNext, DropdownNextProps, ListItemNext } from "@salt-ds/lab";
-import { Button, FlexLayout, Text } from "@salt-ds/core";
-import { ArrowDownIcon, ArrowUpIcon, Icon } from "@salt-ds/icons";
-import { useRef, useState } from "react";
+import { DropdownNext, DropdownNextProps } from "@salt-ds/lab";
 
 export default {
   title: "Lab/Dropdown Next",
@@ -24,190 +21,61 @@ const SimpleListExample = [
 ];
 
 const ListExample = [
-  { value: "OrangeIcon", name: "Orange", disabled: false },
-  { value: "AppleIcon", name: "Apple", disabled: false },
-  { value: "MelonIcon", name: "Melon", disabled: true },
-  { value: "PineappleIcon", name: "Pineapple", disabled: false },
-  { value: "PearIcon", name: "Pear", disabled: false },
+  { value: "🍊", id: "Orange", disabled: false },
+  { value: "🍏", id: "Apple", disabled: false },
+  {
+    value: "🍈",
+    id: "Melon",
+    disabled: true,
+  },
+  { value: "🍍", id: "Pineapple", disabled: false },
+  { value: "🍐", id: "Pear", disabled: false },
 ];
 
-// example using source
-export const Default: Story<DropdownNextProps<T>> = ({
-  source,
-  defaultSelected,
-  ...props
-}) => {
-  const handleSelect = (event) => {
-    console.log("handleSelect", event?.target?.value);
-  };
-
-  return (
-    <>
-      <FlexLayout
-        style={{
-          maxHeight: "100%",
-          maxWidth: "100%",
-          width: "300vw",
-          margin: "auto",
-        }}
-      >
-        <Text>Salt DropdownNext component</Text>
-        <br />
-        <DropdownNext
-          defaultSelected="California"
-          source={SimpleListExample}
-          onMouseDown={(event) => {
-            console.log("MouseDown");
-            handleSelect(event);
-          }}
-          onKeyDown={(event) => {
-            console.log("KeyDown");
-            handleSelect(event);
-          }}
-          {...props}
-        />
-      </FlexLayout>
-    </>
-  );
+const DropdownTemplate: Story<DropdownNextProps<T>> = ({ ...args }) => {
+  return <DropdownNext {...args} />;
 };
 
-// example using source
-export const Second: Story<DropdownNextProps<T>> = ({
-  source,
-  defaultSelected,
-  ...props
-}) => {
-  return (
-    <>
-      <Text>Salt DropdownNext component</Text>
-      <br />
-      <DropdownNext
-        defaultSelected="MelonIcon"
-        source={ListExample}
-        {...props}
-      />
-    </>
-  );
+export const Default = DropdownTemplate.bind({});
+Default.args = {
+  source: SimpleListExample,
 };
 
-// example using source
-export const Third: Story<DropdownNextProps<T>> = ({
-  source,
-  defaultSelected,
-  ...props
-}) => {
-  return (
-    <>
-      <Text>Salt DropdownNext component</Text>
-      <br />
-      <DropdownNext
-        defaultSelected="MelonIcon Melon"
-        source={ListExample.map((item) => {
-          return `${item.value} ${item.name}`;
-        })}
-        {...props}
-      />
-    </>
-  );
+export const Secondary = DropdownTemplate.bind({});
+const getDisabledItems = () => {
+  let d: number[] = [];
+  ListExample.map((item, index) => {
+    if (item.disabled) {
+      d.push(index);
+    }
+  });
+  return d;
+};
+Secondary.args = {
+  source: ListExample.map((item) => {
+    return `${item.value} ${item.id}`;
+  }),
+  defaultSelected: `${ListExample[4].value} ${ListExample[4].id}`,
+  disabledListItems: getDisabledItems(),
+  variant: "secondary",
 };
 
-// example using source
-export const Controlled: Story<DropdownNextProps<T>> = ({
-  source,
-  defaultSelected,
-  ...props
-}) => {
-  const buttonsRef = useRef(null);
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    undefined
-  );
-  const [open, setOpen] = useState(false);
-
-  const handleOpenClose = () => {
-    console.log("handleOpenClose");
-    setOpen(!open);
-  };
-
-  const handleArrowDown = () => {
-    setOpen(true);
-    setHighlightedIndex((prevHighlightedIndex) =>
-      Math.min(SimpleListExample.length - 1, prevHighlightedIndex + 1)
-    );
-  };
-
-  const handleArrowUp = () => {
-    setOpen(true);
-    setHighlightedIndex((prevHighlightedIndex) =>
-      Math.max(0, prevHighlightedIndex - 1)
-    );
-  };
-
-  const handleSelect = () => {
-    highlightedIndex && setSelectedItem(SimpleListExample[highlightedIndex]);
-  };
-
-  const handleClick = (index: number) => {
-    setSelectedItem(SimpleListExample[index]);
-    setHighlightedIndex(index);
-  };
-
-  return (
-    <>
-      <Text>Salt DropdownNext component</Text>
-      <br />
-      <div
-        ref={buttonsRef}
-        style={{ display: "flex", justifyContent: "flex-end", zIndex: 1 }}
-      >
-        <Button onClick={handleOpenClose}>
-          {open ? "Close DD" : "Open DD"}
-        </Button>
-        <Button
-          disabled={highlightedIndex === SimpleListExample.length - 1}
-          onClick={handleArrowDown}
-        >
-          <ArrowDownIcon />
-        </Button>
-        <Button disabled={highlightedIndex <= 0} onClick={handleArrowUp}>
-          <ArrowUpIcon />
-        </Button>
-        <Button
-          disabled={highlightedIndex === undefined}
-          onClick={handleSelect}
-        >
-          Select
-        </Button>
-      </div>
-      <DropdownNext
-        selected={selectedItem}
-        defaultSelected="California"
-        source={SimpleListExample}
-        // onOpenChange={handleOpenClose}
-        open={open}
-        listId={"list-id"}
-        {...props}
-      />
-    </>
-  );
+export const Readonly = DropdownTemplate.bind({});
+Readonly.args = {
+  source: ListExample,
+  defaultSelected: `${ListExample[3].value} ${ListExample[3].id}`,
+  readOnly: true,
 };
 
-// example using source
-export const Empty: Story<DropdownNextProps<T>> = ({
-  source,
-  defaultSelected,
-  ...props
-}) => {
-  return (
-    <>
-      <Text>Salt DropdownNext component</Text>
-      <br />
-      <DropdownNext source={[]} {...props} />
-    </>
-  );
-};
-
-export const Disabled = Default.bind({});
-Disabled.args = {
+export const DisabledDropdown = DropdownTemplate.bind({});
+DisabledDropdown.args = {
+  source: SimpleListExample,
+  defaultSelected: SimpleListExample[7],
   disabled: true,
+};
+
+export const DisabledListItems = DropdownTemplate.bind({});
+DisabledListItems.args = {
+  source: SimpleListExample,
+  disabledListItems: [2, 5],
 };

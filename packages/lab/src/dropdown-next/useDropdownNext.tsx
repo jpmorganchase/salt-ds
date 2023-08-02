@@ -72,11 +72,10 @@ export const useDropdownNext = ({
     ref: listRef,
   });
 
-  console.log("useList hook", selectedItem, highlightedItem);
   const { select, highlight } = listContextValue;
 
   // LIST SOURCE
-  const getListItems = (source: T[]) => {
+  const getListItems = (source: T[], disabledListItems?: number[]) => {
     if (!source) return;
 
     return source.map((item, index) => {
@@ -85,17 +84,12 @@ export const useDropdownNext = ({
           <ListItemNext
             key={index}
             value={item}
+            disabled={disabledListItems?.includes(index)}
             onMouseDown={(event) => {
               select(event);
-              console.log("mousedown", selectedItem, highlightedItem);
-            }}
-            onClick={(event) => {
-              select(event);
-              console.log("click", selectedItem, highlightedItem);
             }}
             onMouseMove={(event) => {
               highlight(event);
-              console.log("mousemove", selectedItem, highlightedItem);
             }}
           >
             {item}
@@ -109,9 +103,6 @@ export const useDropdownNext = ({
           value={item.value}
           disabled={item?.disabled ?? false}
           onMouseDown={(event) => {
-            select(event);
-          }}
-          onClick={(event) => {
             select(event);
           }}
           onMouseMove={(event) => {
@@ -204,12 +195,11 @@ export const useDropdownNext = ({
     const { key } = event;
     switch (key) {
       case "ArrowUp":
-
-        listKeyDownHandler(event as KeyboardEvent<HTMLUListElement>);
+        listKeyDownHandler(event);
         break;
       case "ArrowDown":
         setOpen(true);
-        listKeyDownHandler(event as KeyboardEvent<HTMLUListElement>);
+        listKeyDownHandler(event);
         break;
       case " ":
       case "Enter":
@@ -218,7 +208,7 @@ export const useDropdownNext = ({
           break;
         }
         if (open) {
-          listKeyDownHandler(event as KeyboardEvent<HTMLUListElement>);
+          listKeyDownHandler(event);
           setOpen(false);
           break;
         }
@@ -231,7 +221,7 @@ export const useDropdownNext = ({
       case "Home":
       case "End":
         if (open) {
-          listKeyDownHandler(event as KeyboardEvent<HTMLUListElement>);
+          listKeyDownHandler(event);
           break;
         }
         break;

@@ -38,9 +38,13 @@ export interface DropdownNextProps<T>
    */
   defaultSelected?: string;
   /**
-   * List of items when using a dropdown. Accepts string or object with `id`, `value` and `disabled`.
+   * List of options when using a dropdown. Accepts string or object with `id`, `value` and `disabled`.
    */
   source: T[];
+  /**
+   * Disabled list options in dropdown.
+   */
+  disabledListItems?: number[];
   /**
    * If `true`, dropdown is read only.
    */
@@ -74,6 +78,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       defaultSelected,
       readOnly,
       source,
+      disabledListItems = [],
       placement = "bottom",
       open: openProp,
       onFocus,
@@ -83,7 +88,6 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       onClick,
       style: dropdownStyle,
       ListProps,
-
       ...restProps
     } = props;
 
@@ -185,8 +189,6 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       onClick?.(event);
     };
 
-    // console.log("highlightedItem", highlightedItem);
-
     return (
       <div className={clsx(withBaseName(), className)}>
         <button
@@ -215,9 +217,9 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
           aria-owns={listId}
           aria-controls={listId}
           aria-disabled={disabled}
-          ref={triggerRef}
           style={dropdownStyle}
           {...restProps}
+          ref={triggerRef}
         >
           <span className={clsx(withBaseName("buttonText"), className)}>
             {selectedItem}
@@ -239,7 +241,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
                   {...ListProps}
                   ref={floatingListRef}
                 >
-                  {getListItems(source)}
+                  {getListItems(source, disabledListItems)}
                 </ListNext>
               </div>
             </SaltProvider>
