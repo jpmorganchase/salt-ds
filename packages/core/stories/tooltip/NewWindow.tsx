@@ -139,8 +139,6 @@ export const TooltipWindow = forwardRef(
         }
       : { opacity, ...style };
 
-    console.log(iframeStyle, opacity);
-
     return (
       <iframe
         {...rest}
