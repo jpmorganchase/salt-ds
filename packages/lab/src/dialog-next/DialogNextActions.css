@@ -1,3 +1,7 @@
 .saltDialogNextActions {
   padding-inline: var(--salt-spacing-300);
+  display: flex;
+  gap: var(--salt-spacing-100);
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
 }
