@@ -75,7 +75,7 @@ export const useDropdownNext = ({
   const { select, highlight } = listContextValue;
 
   // LIST SOURCE
-  const getListItems = (source: T[], disabledListItems?: number[]) => {
+  const getListItems = (source: T[]) => {
     if (!source) return;
 
     return source.map((item, index) => {
@@ -84,7 +84,6 @@ export const useDropdownNext = ({
           <ListItemNext
             key={index}
             value={item}
-            disabled={disabledListItems?.includes(index)}
             onMouseDown={(event) => {
               select(event);
             }}
@@ -97,11 +96,11 @@ export const useDropdownNext = ({
         );
       }
 
+      console.log("source", source);
       return (
         <ListItemNext
-          key={item?.id ?? index}
+          key={item.id ?? index}
           value={item.value}
-          disabled={item?.disabled ?? false}
           onMouseDown={(event) => {
             select(event);
           }}

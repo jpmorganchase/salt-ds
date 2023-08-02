@@ -42,10 +42,6 @@ export interface DropdownNextProps<T>
    */
   source: T[];
   /**
-   * Disabled list options in dropdown.
-   */
-  disabledListItems?: number[];
-  /**
    * If `true`, dropdown is read only.
    */
   readOnly?: boolean;
@@ -78,7 +74,6 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       defaultSelected,
       readOnly,
       source,
-      disabledListItems = [],
       placement = "bottom",
       open: openProp,
       onFocus,
@@ -234,14 +229,14 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
                   id={listId}
                   className={clsx(withBaseName("list"), ListProps?.className)}
                   disableFocus
-                  disabled={disabled}
+                  disabled={disabled || ListProps?.disabled}
                   selected={selectedItem}
                   highlightedItem={highlightedItem}
                   onMouseOver={handleMouseOver}
                   {...ListProps}
                   ref={floatingListRef}
                 >
-                  {getListItems(source, disabledListItems)}
+                  {getListItems(source)}
                 </ListNext>
               </div>
             </SaltProvider>
