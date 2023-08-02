@@ -69,7 +69,7 @@ export const ListStory: ComponentStory<typeof Badge> = () => {
       <ListItem>Level 2</ListItem>
       <ListItem>Level 3</ListItem>
       <ListItem>
-        Level 4<Badge value={"NEW"} />{" "}
+        Level 4<Badge value={"NEW"} />
       </ListItem>
     </List>
   );
