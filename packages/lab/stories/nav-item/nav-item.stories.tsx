@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { useState } from "react";
-import { Card, H2, Link } from "@salt-ds/core";
+import { Card, H2, Link, useDensity } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 
 import "./nav-item.stories.css";
@@ -148,6 +148,18 @@ export const HorizontalGroupWithDropdown = () => {
     (item) => item.name === expanded
   )?.subNav;
 
+  const density = useDensity();
+
+  const listWidth = [
+    { density: "high", width: 110 },
+    { density: "medium", width: 120 },
+    { density: "low", width: 140 },
+    { density: "touch", width: 160 },
+  ];
+
+  const getWidthByDensity = () =>
+    listWidth.find((item) => item.density === density)?.width;
+
   return (
     <div className="container">
       <nav>
@@ -190,6 +202,7 @@ export const HorizontalGroupWithDropdown = () => {
                     console.log("new selection", value);
                   }}
                   className="list"
+                  style={{ width: getWidthByDensity() }}
                 >
                   {currentSubNav?.map((item, index) => (
                     <ListItemNext key={index} value={item}>

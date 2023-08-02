@@ -85,6 +85,7 @@ ul {
 
 .list {
   height: auto;
+  margin-left: var(--salt-spacing-100);
 }
 
 .center {

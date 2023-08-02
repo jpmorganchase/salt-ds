@@ -122,7 +122,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         >
           <span>{children}</span>
         </Link>
-        {BadgeComponent && BadgeComponent}
+        {BadgeComponent}
         {parent && (
           <ExpansionButton
             aria-expanded={expanded}
