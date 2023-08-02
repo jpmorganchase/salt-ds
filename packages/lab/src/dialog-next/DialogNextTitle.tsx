@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import { H1, makePrefixer } from "@salt-ds/core";
-import { useDialogNextContext } from "./DialogNext";
+import { useDialogNextContext } from "./DialogNextContext";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogNextTitleCss from "./DialogNextTitle.css";

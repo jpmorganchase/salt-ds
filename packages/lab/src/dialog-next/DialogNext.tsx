@@ -1,8 +1,6 @@
 import {
-  createContext,
   forwardRef,
   HTMLAttributes,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -25,6 +23,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useDialogNext } from "./useDialogNext";
 
 import dialogNextCss from "./DialogNext.css";
+import { DialogNextContext } from "./DialogNextContext";
 
 export interface DialogNextProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -42,22 +41,6 @@ export interface DialogNextProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const withBaseName = makePrefixer("saltDialogNext");
-
-const DialogNextContext = createContext<{
-  open: boolean;
-  headingId: string;
-  status?: DialogNextProps["status"];
-  headingRef?: React.RefObject<HTMLHeadingElement>;
-}>({
-  open: false,
-  headingId: "dialog-next-heading",
-  status: undefined,
-  headingRef: undefined,
-});
-
-export const useDialogNextContext = () => {
-  return useContext(DialogNextContext);
-};
 
 export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
   function DialogNext(props, ref) {

@@ -1,8 +1,4 @@
 .saltDialogNextTitle {
-  position: relative;
   padding-inline: var(--salt-spacing-300);
   margin: 0;
-  display: flex;
-  gap: var(--salt-spacing-200);
-  align-items: center;
 }
