@@ -1,8 +1,4 @@
-import {
-  ChevronDownIcon,
-  ChevronRightIcon,
-  ChevronUpIcon,
-} from "@salt-ds/icons";
+import { ChevronDownIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { ComponentPropsWithoutRef } from "react";
 import { Button } from "@salt-ds/core";
 import { NavItemProps } from "./NavItem";
@@ -14,7 +10,7 @@ const iconExpansionMap = {
   },
   horizontal: {
     expanded: ChevronDownIcon,
-    collapsed: ChevronUpIcon,
+    collapsed: ChevronDownIcon,
   },
 };
 
