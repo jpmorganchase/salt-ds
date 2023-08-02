@@ -49,7 +49,7 @@ export function useAgGridHelpers(
   }, [density, agThemeName, compact]);
 
   const className = `${agThemeName}-${density}${
-    compact ? `-compact` : ``
+    compact && density === "high" ? `-compact` : ``
   }-${mode}`;
 
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
