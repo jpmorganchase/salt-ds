@@ -1,23 +1,11 @@
-import {
-  FocusEvent,
-  KeyboardEvent,
-  MouseEvent,
-  RefObject,
-  useEffect,
-  useState,
-} from "react";
+import { FocusEvent, KeyboardEvent, SyntheticEvent } from "react";
 import { useList, UseListProps } from "../list-next/useList";
 import { useComboboxPortal, UsePortalProps } from "./useComboboxPortal";
 
 interface UseComboBoxProps {
-  disabled?: boolean;
-  defaultSelected?: string;
-  listId?: string;
-  listRef: RefObject<HTMLUListElement>;
-  //
-  onBlur?: FocusEvent<HTMLInputElement>;
-  onFocus?: FocusEvent<HTMLInputElement>;
-  onMouseOver?: FocusEvent<HTMLUListElement>;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  onMouseOver?: (event: SyntheticEvent) => void;
   PortalProps?: UsePortalProps;
   listProps: UseListProps;
 }
@@ -59,13 +47,13 @@ export const useComboBox = ({
     setOpen(false);
     if (!selectedItem) {
       setSelectedItem(undefined);
+      setHighlightedItem(undefined);
     }
     onBlur?.(event);
   };
 
-  const mouseOverHandler = (event: MouseEvent<HTMLElement>) => {
-    const hoveredElement = event.target;
-    setHighlightedItem(hoveredElement?.dataset.value);
+  const mouseOverHandler = (event: SyntheticEvent<HTMLElement>) => {
+    setHighlightedItem(event.currentTarget.dataset.value);
     onMouseOver?.(event);
   };
 

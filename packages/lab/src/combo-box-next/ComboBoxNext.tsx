@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  FocusEvent,
   forwardRef,
   InputHTMLAttributes,
   ReactNode,
@@ -63,6 +64,10 @@ export interface ComboBoxNextProps extends UseListProps {
    * The source of combobox items.
    */
   source: string[];
+  //
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  onMouseOver?: (event: SyntheticEvent) => void;
 
   /**
    * Optional ref for the input component
@@ -71,6 +76,7 @@ export interface ComboBoxNextProps extends UseListProps {
   /**
    * Optional ref for the list component
    */
+  matchPattern?: (item: string, filterValue: string) => boolean;
   listRef?: Ref<HTMLUListElement>;
   itemRenderer?: (
     key: number,
@@ -80,7 +86,6 @@ export interface ComboBoxNextProps extends UseListProps {
   itemFilter?: (source: string[], filterValue?: string) => string[];
   /* Callback for change event. */
   onChange?: (event: SyntheticEvent, data: { value: string }) => void;
-  // onFocus?:
   /**
    * Styling variant. Defaults to "primary".
    */
@@ -90,8 +95,6 @@ export interface ComboBoxNextProps extends UseListProps {
    */
   readOnly?: boolean;
 }
-const matchingItem = (input: string, value: string) =>
-  input.toLowerCase().includes(value.toLowerCase());
 
 export const ComboBoxNext = forwardRef<HTMLElement, ComboBoxNextProps>(
   function ComboBoxNext(
@@ -100,25 +103,22 @@ export const ComboBoxNext = forwardRef<HTMLElement, ComboBoxNextProps>(
       ListProps,
       PortalProps,
       disabled,
-      // placement,
-      // onFocus,
       filterRegex,
       highlightedItem: highlightedItemProp,
       selected,
       defaultSelected,
       // onKeyDown,
       onChange,
-      // onBlur,
-      // onSelect,
+      onBlur,
+      onFocus,
+      onMouseOver,
       source,
       defaultValue,
       itemRenderer = defaultItemRenderer,
       itemFilter = defaultFilter,
       variant = "primary",
-      // // stringToItem= defaultStringToItem,
-      matchPattern = matchingItem,
+      listRef: listRefProp,
       readOnly,
-
       ...rest
     },
     ref
@@ -132,6 +132,7 @@ export const ComboBoxNext = forwardRef<HTMLElement, ComboBoxNextProps>(
     const listId = useId(ListProps?.id);
     const listRef = useRef<HTMLUListElement>(null);
 
+    const setListRef = useForkRef(listRefProp, listRef);
     const listProps = {
       highlightedItem: highlightedItemProp,
       selected,
@@ -141,11 +142,8 @@ export const ComboBoxNext = forwardRef<HTMLElement, ComboBoxNextProps>(
       ref: listRef,
     };
 
-    // HOOK
     const {
-      // portal
       portalProps,
-      // list
       selectedItem,
       highlightedItem,
       activeDescendant,
@@ -157,13 +155,9 @@ export const ComboBoxNext = forwardRef<HTMLElement, ComboBoxNextProps>(
       setHighlightedItem,
       mouseOverHandler,
     } = useComboBox({
-      disabled,
-      defaultSelected,
-      listId,
-      listRef,
-      onChange,
-      defaultValue,
-      // for portal
+      onBlur,
+      onFocus,
+      onMouseOver,
       listProps,
       PortalProps,
     });
@@ -179,21 +173,14 @@ export const ComboBoxNext = forwardRef<HTMLElement, ComboBoxNextProps>(
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
+      // open if it is closed
       setSelectedItem(value);
       if (value === "") {
         setHighlightedItem(undefined);
       } else {
-        const firstMatchingItem = filteredSource.findIndex((item) =>
-          matchPattern(item, value)
-        );
-        setHighlightedItem(
-          firstMatchingItem !== undefined
-            ? filteredSource[firstMatchingItem]
-            : undefined
-        );
+        setHighlightedItem(filteredSource[0]);
       }
-
-      // onChange?.(event);
+      onChange?.(event, { value: selectedItem || "" });
     };
 
     const adornment = (
@@ -227,7 +214,7 @@ export const ComboBoxNext = forwardRef<HTMLElement, ComboBoxNextProps>(
         />
         {open && (
           <FloatingPortal>
-            {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
+            {/* The provider is needed to support the use case where an app has nested modes. The portal element needs to have the same style as the current scope */}
             <SaltProvider>
               <div ref={floating} {...getPortalProps()}>
                 <ListNext
@@ -235,16 +222,14 @@ export const ComboBoxNext = forwardRef<HTMLElement, ComboBoxNextProps>(
                   selected={selectedItem}
                   highlightedItem={highlightedItem}
                   disableFocus
-                  onMouseDown={(event) =>
-                    setSelectedItem(event.target.dataset.value)
-                  }
                   onMouseOver={mouseOverHandler}
                   {...ListProps}
-                  ref={listRef}
+                  ref={setListRef}
                 >
                   {filteredSource.map((value: string, index) => {
-                    const key = index;
-                    return itemRenderer(key, value, selectedItem);
+                    return itemRenderer(index, value, selectedItem, (event) => {
+                      setSelectedItem(event.currentTarget.dataset.value);
+                    });
                   })}
                 </ListNext>
               </div>

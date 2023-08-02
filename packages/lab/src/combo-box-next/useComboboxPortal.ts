@@ -54,7 +54,7 @@ export function useComboboxPortal(props?: UsePortalProps) {
     useDismiss(context),
   ]);
 
-  const getPortalProps = (): HTMLProps<HTMLElement> => {
+  const getPortalProps = (): HTMLProps<HTMLDivElement> => {
     return getFloatingProps({
       ref: floating,
       style: {
