@@ -1,4 +1,4 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useWindow } from "@salt-ds/window";
@@ -10,9 +10,9 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * The number to display on the badge
    */
-  value?: number | string;
+  value: number | string;
   /**
-   * The badge will be added relative to this node. Renders the "message" icon by default.
+   * If a child is provided the Badge will render top right. By defualt renders inline.
    */
   children?: ReactNode;
   /**
@@ -20,11 +20,10 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
    */
   max?: number;
 }
-
 const withBaseName = makePrefixer("saltBadge");
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
-  { value, max, className, children, ...rest },
+  { value, max = 999, className, children, ...rest },
   ref
 ) {
   const targetWindow = useWindow();
@@ -34,39 +33,19 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
     window: targetWindow,
   });
 
-  let valueText = value;
+  const valueText =
+    typeof value === "number" && value > max ? `${max}+` : value;
 
-  if (typeof value === "number" && !max) {
-    valueText = value > 999 ? "999+" : value;
-  } else if (typeof value === "number" && max) {
-    valueText = value > max ? `${max}+` : value;
-  } else if (typeof value === "string") {
-    valueText = value.length > 4 ? `${value.slice(0, 4)}...` : value;
-  }
   return (
     <span className={clsx(withBaseName(), className)} ref={ref} {...rest}>
       {children}
-      {typeof value === "string" && value.length > 4 ? (
-        <>
-          <span
-            className={clsx(withBaseName("badge"), {
-              [withBaseName("topRight")]: children,
-            })}
-            aria-hidden="true"
-          >
-            {valueText}
-          </span>
-          <span className="salt-visuallyHidden">{value}</span>
-        </>
-      ) : (
-        <span
-          className={clsx(withBaseName("badge"), {
-            [withBaseName("topRight")]: children,
-          })}
-        >
-          {valueText}
-        </span>
-      )}
+      <span
+        className={clsx(withBaseName("badge"), {
+          [withBaseName("topRight")]: children,
+        })}
+      >
+        {valueText}
+      </span>
     </span>
   );
 });

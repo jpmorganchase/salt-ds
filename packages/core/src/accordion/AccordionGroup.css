@@ -1,0 +1,3 @@
+.saltAccordionGroup {
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}
