@@ -144,10 +144,6 @@ export const HorizontalGroupWithDropdown = () => {
   const [active, setActive] = useState(itemsWithSubNav[0].name);
   const [expanded, setExpanded] = useState<string | null>(null);
 
-  const listPosition = itemsWithSubNav.findIndex(
-    (item) => item.name === expanded
-  );
-
   const currentSubNav = itemsWithSubNav.find(
     (item) => item.name === expanded
   )?.subNav;
@@ -187,26 +183,25 @@ export const HorizontalGroupWithDropdown = () => {
               >
                 {name}
               </NavItem>
+              {expanded === name && (
+                <ListNext
+                  aria-label="Nav item list"
+                  onChange={(e, { value }) => {
+                    console.log("new selection", value);
+                  }}
+                  className="list"
+                >
+                  {currentSubNav?.map((item, index) => (
+                    <ListItemNext key={index} value={item}>
+                      {item}
+                    </ListItemNext>
+                  ))}
+                </ListNext>
+              )}
             </li>
           ))}
         </ul>
       </nav>
-      {currentSubNav && (
-        <ListNext
-          aria-label="Nav item list"
-          onChange={(e, { value }) => {
-            console.log("new selection", value);
-          }}
-          className="list"
-          style={{ left: listPosition * 135 }}
-        >
-          {currentSubNav.map((item, index) => (
-            <ListItemNext key={index} value={item}>
-              {item}
-            </ListItemNext>
-          ))}
-        </ListNext>
-      )}
     </div>
   );
 };
