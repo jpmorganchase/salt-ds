@@ -322,7 +322,12 @@
 
   .ag-ltr .ag-cell {
     border: 2px solid transparent;
-    line-height: calc(min(var(--ag-internal-calculated-line-height), var(--ag-internal-padded-row-height)) - var(--agGrid-focused-borderWidth));
+    line-height: calc(
+      min(
+          var(--ag-internal-calculated-line-height),
+          var(--ag-internal-padded-row-height)
+        ) - var(--agGrid-focused-borderWidth)
+    );
   }
 
   .ag-cell {
