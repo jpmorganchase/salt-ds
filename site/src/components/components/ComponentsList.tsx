@@ -13,14 +13,16 @@ import useIsMobileView from "../../../src/utils/useIsMobileView";
 
 import styles from "./ComponentsList.module.css";
 
+const statusMap: Record<ComponentStatus, string> = {
+  [ComponentStatus.STABLE]: "stable",
+  [ComponentStatus.RC]: "rc",
+  [ComponentStatus.EXPERIMENTAL]: "experimental",
+  [ComponentStatus.IN_PROGRESS]: "progress",
+  [ComponentStatus.NOT_APPLICABLE]: "",
+};
+
 const statusClass = (status: ComponentStatus) => {
-  if (status === ComponentStatus.STABLE) {
-    return "ready";
-  }
-  if (status === ComponentStatus.IN_PROGRESS) {
-    return "progress";
-  }
-  return "none";
+  return statusMap[status] || "none";
 };
 
 const statusSortList = [

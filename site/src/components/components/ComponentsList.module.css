@@ -55,16 +55,9 @@
 
 .status svg {
   --icon-size: 12px;
+  --saltIcon-color: var(--salt-status-warning-foreground);
 }
 
 .status.ready svg {
   --saltIcon-color: var(--salt-status-success-foreground);
-}
-
-.status.progress svg {
-  --saltIcon-color: var(--salt-status-warning-foreground);
-}
-
-.status.backlog svg {
-  --saltIcon-color: var(--salt-status-error-foreground);
 }
