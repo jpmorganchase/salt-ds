@@ -13,10 +13,15 @@ import "./dialog-next.stories.css";
 export default {
   title: "Lab/Dialog Next",
   component: DialogNext,
+  args: {
+    title: "Congratulations! You have created a Dialog.",
+    content: "This is the content of the dialog.",
+  },
 } as ComponentMeta<typeof DialogNext>;
 
 const DialogTemplate: ComponentStory<typeof DialogNext> = ({
   title,
+  // @ts-ignore
   content,
   open: openProp = true,
   ...args
@@ -61,15 +66,11 @@ const DialogTemplate: ComponentStory<typeof DialogNext> = ({
 
 export const Default = DialogTemplate.bind({});
 
-Default.args = {
-  title: "Congratulations! You have created a Dialog.",
-  content: "This is the content of the dialog.",
-};
-
 export const LongContent = DialogTemplate.bind({});
 
 LongContent.args = {
   title: "Congratulations! You have created a Dialog.",
+  // @ts-ignore
   content: `
     jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj jkahsd jhas kdhaskj dajks dkjashdhas djhas dkjhaskj hdjk ashjd kjas dkjhas kdhkjas hdjkas hdaksjdjkasjkdhsjhds shjdhsjhd shhs djs hsjd sjh s jhdj
     `,
@@ -77,29 +78,21 @@ LongContent.args = {
 
 export const InfoStatus = DialogTemplate.bind({});
 InfoStatus.args = {
-  title: "Congratulations! You have created a Dialog.",
-  content: "This is the content of the dialog.",
   status: "info",
 };
 
 export const SuccessStatus = DialogTemplate.bind({});
 SuccessStatus.args = {
-  title: "Congratulations! You have created a Dialog.",
-  content: "This is the content of the dialog.",
   status: "success",
 };
 
 export const WarningStatus = DialogTemplate.bind({});
 WarningStatus.args = {
-  title: "Congratulations! You have created a Dialog.",
-  content: "This is the content of the dialog.",
   status: "warning",
 };
 
 export const ErrorStatus = DialogTemplate.bind({});
 ErrorStatus.args = {
-  title: "Congratulations! You have created a Dialog.",
-  content: "This is the content of the dialog.",
   status: "error",
 };
 
