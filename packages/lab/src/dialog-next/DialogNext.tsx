@@ -12,18 +12,14 @@ import {
   FloatingOverlay,
   FloatingPortal,
 } from "@floating-ui/react";
-import {
-  makePrefixer,
-  StatusIndicator,
-  useForkRef,
-  useId,
-} from "@salt-ds/core";
+import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useDialogNext } from "./useDialogNext";
 
 import dialogNextCss from "./DialogNext.css";
 import { DialogNextContext } from "./DialogNextContext";
+import { DialogNextBody } from "./DialogNextBody";
 
 export interface DialogNextProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -78,8 +74,8 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
     }, [open, showComponent]);
 
     const contextValue = useMemo(
-      () => ({ open, status, headingRef, headingId }),
-      [open, status, headingId]
+      () => ({ headingRef, headingId }),
+      [headingId]
     );
 
     return (
@@ -110,8 +106,7 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
                   {...getFloatingProps()}
                   {...rest}
                 >
-                  {status && <StatusIndicator size={2} status={status} />}
-                  <div className={withBaseName("body")}>{children}</div>
+                  <DialogNextBody status={status}>{children}</DialogNextBody>
                 </div>
               </DialogNextContext.Provider>
             </FloatingFocusManager>

@@ -1,7 +1,6 @@
 /* Styles applied to DialogNext component */
 .saltDialogNext {
   background: var(--salt-container-primary-background);
-  display: flex;
   max-height: 100%;
   max-width: 100%;
   overflow: auto;
@@ -22,27 +21,9 @@
   z-index: var(--salt-zIndex-dialogNext);
 }
 
-.saltDialogNext-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-self: flex-start;
-  gap: var(--salt-spacing-200);
-  padding-block: var(--salt-spacing-300);
-}
-
 .saltDialogNext-withStatus {
-  padding-left: var(--salt-spacing-300);
   border-width: 1px;
   border-style: solid;
-}
-
-.saltDialogNext-withStatus .saltDialogNext-body {
-  margin-left: calc(var(--salt-spacing-200) * -1);
-}
-
-.saltDialogNext .saltStatusIndicator {
-  margin-top: calc(var(--salt-spacing-50) + var(--salt-spacing-300));
 }
 
 .saltDialogNext-info {
