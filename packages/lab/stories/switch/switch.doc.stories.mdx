@@ -1,6 +1,5 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
 import { Switch } from "@salt-ds/lab";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 import {
   CharacteristicUsage,
   CSSClassTable,
@@ -23,7 +22,7 @@ A Switch is a control that behaves like a checkbox but should only be used if th
 By default the Switch will handle the checkbox state automatically. The value can be set using the defaultChecked prop. The checked prop should only be used if you want a controlled Switch that requires some logic for validating value. The `onChange` event can be used to read the value using the second parameter.
 
 <Canvas>
-  <Story id="lab-switch--feature-switch" />
+  <Story id="lab-switch--default" />
 </Canvas>
 
 ## Checked

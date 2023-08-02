@@ -26,6 +26,11 @@
   color: var(--salt-selectable-foreground-hover);
 }
 
+.saltCheckbox-input:focus-visible + .saltCheckboxIcon-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+
 .saltCheckbox-error .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
   outline-color: var(--salt-status-error-foreground);
   border-color: var(--salt-status-error-foreground);
