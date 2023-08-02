@@ -167,7 +167,8 @@
     height: var(--agGrid-input-height);
     min-height: var(--agGrid-input-height);
     line-height: var(--agGrid-input-height);
-    padding-inline: var(--salt-spacing-100);
+    padding-left: var(--salt-spacing-100);
+    padding-right: var(--salt-spacing-100);
     font-size: inherit;
     border: dotted 2px transparent;
 
@@ -326,8 +327,8 @@
 
   .ag-cell {
     border-left: 0;
-    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-    padding-inline: var(--salt-spacing-100);
+    padding-left: var(--salt-spacing-100);
+    padding-right: var(--salt-spacing-100);
   }
 
   .editable-numeric-cell,
@@ -514,17 +515,20 @@
   .ag-set-filter-item {
     height: calc(var(--salt-size-base) + var(--salt-spacing-100));
     margin: 0;
-    padding-inline: var(--salt-spacing-100);
+    padding-left: var(--salt-spacing-100);
+    padding-right: var(--salt-spacing-100);
   }
 
   .ag-mini-filter {
     margin: 0;
-    padding-inline: var(--salt-spacing-50);
+    padding-left: var(--salt-spacing-50);
+    padding-right: var(--salt-spacing-50);
   }
 
   .ag-ltr .ag-floating-filter-button {
     margin: 0;
-    padding-inline: var(--salt-spacing-100);
+    padding-left: var(--salt-spacing-100);
+    padding-right: var(--salt-spacing-100);
   }
 
   .ag-floating-filter-button-button .ag-icon-filter:before {
