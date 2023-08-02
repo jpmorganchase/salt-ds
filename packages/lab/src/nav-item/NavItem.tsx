@@ -23,7 +23,7 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Whether the nav item has active children.
    */
-  selected?: boolean;
+  blurSelected?: boolean;
   /**
    * Whether the nav item is expanded.
    */
@@ -64,7 +64,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
   function NavItem(props, ref) {
     const {
       active,
-      selected,
+      blurSelected,
       children,
       className,
       expanded = false,
@@ -102,7 +102,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
           withBaseName(),
           {
             [withBaseName("active")]: active,
-            [withBaseName("selected")]: selected,
+            [withBaseName("blurSelected")]: blurSelected,
             [withBaseName("nested")]: level !== 0,
           },
           withBaseName(orientation),
