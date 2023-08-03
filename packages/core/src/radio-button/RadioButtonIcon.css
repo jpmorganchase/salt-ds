@@ -20,7 +20,8 @@
   color: var(--salt-selectable-foreground-hover);
 }
 
-.saltRadioButtonIcon-checked {
+.saltRadioButtonIcon-checked,
+.saltRadioButton:hover .saltRadioButtonIcon-checked {
   border-color: var(--salt-selectable-borderColor-selected);
   color: var(--salt-selectable-foreground-selected);
 }

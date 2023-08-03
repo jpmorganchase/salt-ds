@@ -62,6 +62,27 @@ describe("GIVEN an Accordion", () => {
     cy.findByRole("button").should("have.attr", "aria-expanded", "false");
   });
 
+  it("SHOULD not allow content to be focused in collapsed state", () => {
+    cy.mount(
+      <div>
+        <button>start</button>
+        <Accordion value="example">
+          <AccordionHeader>Summary Text</AccordionHeader>
+          <AccordionPanel>
+            <button>do not receive focus</button>
+          </AccordionPanel>
+        </Accordion>
+        <button>end</button>
+      </div>
+    );
+
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "start" }).should("have.focus");
+    cy.realPress("Tab");
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "end" }).should("have.focus");
+  });
+
   it("THEN it should render the details", () => {
     const mountSpy = cy.stub().as("mountSpy");
     cy.mount(<AccordionExample onMount={mountSpy} />);
