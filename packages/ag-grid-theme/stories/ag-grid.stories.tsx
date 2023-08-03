@@ -21,6 +21,7 @@ export {
   DragRowOrder,
   Icons,
   FloatingFilter,
+  HDCompact,
   InfiniteScroll,
   LoadingOverlay,
   MasterDetail,
