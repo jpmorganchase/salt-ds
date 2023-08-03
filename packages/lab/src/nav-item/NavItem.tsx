@@ -3,8 +3,11 @@ import {
   forwardRef,
   MouseEventHandler,
   MouseEvent,
+  ComponentType,
+  ReactNode,
 } from "react";
 import { makePrefixer, Link } from "@salt-ds/core";
+import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ExpansionButton } from "./ExpansionButton";
 
@@ -17,15 +20,42 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
    * Whether the nav item is active.
    */
   active?: boolean;
+  /**
+   * Whether the nav item has active children.
+   */
+  blurSelected?: boolean;
+  /**
+   * Whether the nav item is expanded.
+   */
   expanded?: boolean;
+  /**
+   * Level of nesting.
+   */
   level?: number;
   /**
    * The orientation of the nav item.
    */
   orientation?: "horizontal" | "vertical";
+  /**
+   * Whether the nav item is a parent with nested children.
+   */
   parent?: boolean;
+  /**
+   * Action to be triggered when the nav item is expanded.
+   */
   onExpand?: MouseEventHandler<HTMLButtonElement>;
+  /**
+   * Href to be passed to the Link element.
+   */
   href?: string;
+  /**
+   * Icon component to be displayed next to the nav item label.
+   */
+  IconComponent?: ComponentType<IconProps> | null;
+  /**
+   * Badge component to be displayed next to the nav item label.
+   */
+  BadgeComponent?: ReactNode;
 }
 
 const withBaseName = makePrefixer("saltNavItem");
@@ -34,6 +64,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
   function NavItem(props, ref) {
     const {
       active,
+      blurSelected,
       children,
       className,
       expanded = false,
@@ -42,6 +73,8 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       level = 0,
       onExpand,
       href,
+      IconComponent,
+      BadgeComponent,
       style: styleProp,
       ...rest
     } = props;
@@ -69,6 +102,8 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
           withBaseName(),
           {
             [withBaseName("active")]: active,
+            [withBaseName("blurSelected")]: blurSelected,
+            [withBaseName("nested")]: level !== 0,
           },
           withBaseName(orientation),
           className
@@ -77,6 +112,9 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         style={style}
         {...rest}
       >
+        {IconComponent && (
+          <IconComponent aria-hidden className={withBaseName("icon")} />
+        )}
         <Link
           className={withBaseName("label")}
           aria-current={active ? "page" : undefined}
@@ -84,6 +122,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         >
           <span>{children}</span>
         </Link>
+        {BadgeComponent}
         {parent && (
           <ExpansionButton
             aria-expanded={expanded}

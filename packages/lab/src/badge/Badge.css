@@ -1,33 +1,37 @@
 /* Style applied to the root element */
 .saltBadge {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   display: inline-flex;
+  position: relative;
   flex-shrink: 0;
-  justify-content: center;
+  vertical-align: middle;
 }
 
 .saltBadge-badge {
   /* Should this vary according to touch size */
   padding-inline: var(--salt-spacing-50);
   line-height: var(--salt-accent-lineHeight);
+  height: var(--salt-accent-lineHeight);
   min-width: var(--salt-accent-lineHeight);
-  max-width: 50px;
   border-radius: 9999px;
+  white-space: nowrap;
+  z-index: var(--salt-zIndex-notification);
 
   align-items: center;
   justify-content: center;
-  display: inline;
+  display: inline-flex;
   margin: auto;
 
   font-size: var(--salt-accent-fontSize);
   font-weight: var(--salt-accent-fontWeight);
   background: var(--salt-accent-background);
   color: var(--salt-accent-foreground);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .saltBadge-topRight {
   position: relative;
-  top: -7px;
-  right: 4px;
+  top: calc(-1 * var(--salt-spacing-100));
+  right: var(--salt-spacing-100);
 }
