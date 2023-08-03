@@ -16,10 +16,12 @@
   --saltIcon-color: currentColor;
   --saltIcon-size: 100%;
   display: flex;
+  flex-shrink: 0;
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-border)) * 2);
   align-items: center;
   color: var(--salt-selectable-foreground);
+  background: var(--salt-container-primary-background);
 }
 
 /* Styles applied to the icon component if focused */
@@ -45,6 +47,7 @@
 .saltSwitch-disabled:hover .saltSwitch-track {
   border-color: var(--salt-selectable-borderColor-disabled);
   color: var(--salt-selectable-foreground-disabled);
+  background: var(--salt-container-primary-background-disabled);
 }
 
 .saltSwitch-checked.saltSwitch-disabled .saltSwitch-track,
@@ -54,7 +57,7 @@
 }
 
 .saltSwitch-thumb {
-  display: block;
+  display: flex;
   aspect-ratio: 1;
   height: var(--salt-size-selectable);
   background: currentColor;
@@ -73,6 +76,11 @@
   background: transparent;
   border-color: var(--salt-selectable-borderColor-selected);
   transform: translateX(100%);
+}
+
+.saltSwitch-disabled .saltSwitch-thumb,
+.saltSwitch-disabled:hover .saltSwitch-thumb {
+  border: 0;
 }
 
 /* Styles applied to input element */
