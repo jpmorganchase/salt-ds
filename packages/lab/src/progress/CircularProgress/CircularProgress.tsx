@@ -84,15 +84,6 @@ export const CircularProgress = forwardRef<
     subOverlayLeftStyle.transform = `rotate(${rotationAngle}deg)`;
   }
 
-  useEffect(() => {
-    if (process.env.NODE_ENV !== "production" && !ariaLabel) {
-      // eslint-disable-next-line no-console
-      console.error(
-        "Salt: aria-label value not supplied to CircularProgress. This may affect the ADA compliance level of the component and owning application, and may generate errors in automated accessibility testing software"
-      );
-    }
-  }, [ariaLabel]);
-
   let progressInfo: ReactNode = null;
   if (showInfo) {
     progressInfo = (
