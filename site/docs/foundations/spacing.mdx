@@ -3,19 +3,21 @@ title: Spacing
 layout: DetailTechnical
 sidebar:
   label: Spacing
-data:
-  status: In progress
 ---
 
 The organization of space is a key aspect of design. Spatial tokens help align layouts and create consistent visual rhythm.
 
-The spacing system is structured around a base unit for each density (`--salt-spacing-100`). This determines the spacing ramp for each density across the design system and helps create a consistent visual aesthetic.
+The spacing system is structured around a base unit (`--salt-spacing-100`) for each [density](density). This token determines the scale used across the design system.
 
-## Spacing scale
+Every space token within the system is a multiple of `--salt-spacing-100`. The numerical suffix indicates the percentage of the base unit each token represents. The scale is proportional across all densities.
+
+## Spacing tokens
 
 | Token                | Formula | High Density (HD) | Medium (MD) | Low (LD) | Touch (TD) |
 | -------------------- | ------- | ----------------- | ----------- | -------- | ---------- |
+| `--salt-spacing-25`  | 0.25x   | 1                 | 2           | 3        | 4          |
 | `--salt-spacing-50`  | 0.50x   | 2                 | 4           | 6        | 8          |
+| `--salt-spacing-75`  | 0.75x   | 3                 | 6           | 9        | 12         |
 | `--salt-spacing-100` | 1.00x   | 4                 | 8           | 12       | 16         |
 | `--salt-spacing-150` | 1.50x   | 6                 | 12          | 18       | 24         |
 | `--salt-spacing-200` | 2.00x   | 8                 | 16          | 24       | 32         |
@@ -24,8 +26,112 @@ The spacing system is structured around a base unit for each density (`--salt-sp
 | `--salt-spacing-350` | 3.50x   | 14                | 28          | 42       | 56         |
 | `--salt-spacing-400` | 4.00x   | 16                | 32          | 48       | 64         |
 
+## Vertical spacing
+
+The vertical separation of items such as headings, blocks of text, form elements and cards should follow a consistent pattern to create visual rhythm throughout a layout.
+
+### Headings
+
+Headings provide visual separation and help to establish hierarchy. All headings should be accompanied by standard spacing above and below. the amount of spacing should be based on the following:
+
+- Add `salt-spacing-200` directly above the heading regardless of the level of heading.
+- The amount of spacing placed directly below a heading is dependent on the level of focus placed on the following item.
+
+### Hierarchical spacing
+
+When content directly following a header is a primary focus, for instance the first paragraph of an article, the spacing between the header and the text is relative to the level of the heading. An H1 is followed by `--salt-spacing-300`, H2 by `--salt-spacing-200`, and H3 by `--salt-spacing-100`. For text accompanied by an H4 there is no spacing between the elements. Additionally:
+
+- Spacing after a section is consistently implemented using `--salt-spacing-300` regardless of the heading level below.
+- Although the following example indicates each section as starting with a heading, this is not always required.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/spacing-hierarchical.svg", alt: "" },
+    { src: "/img/foundations/spacing-hierarchical-annotated.svg", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+| Heading | Space above          | Space below          |
+| ------- | -------------------- | -------------------- |
+| H1      | `--salt-spacing-200` | `--salt-spacing-300` |
+| H2      | `--salt-spacing-200` | `--salt-spacing-200` |
+| H3      | `--salt-spacing-200` | `--salt-spacing-100` |
+| H4      | `--salt-spacing-200` | None                 |
+
+### Non-hierarchical spacing
+
+When text following a header is a secondary focus, such as a section description intended as a supporting element to the section's content, spacing is a standard size regardless of the heading level. Keep the following in mind:
+
+- Headings followed by secondary focus text are consistently separated by `--salt-spacing-100`.
+- When a heading is followed by a description the spacing is reduced to reinforce the relationship between heading and description.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/spacing-nonhierarchical.svg", alt: "" },
+    { src: "/img/foundations/spacing-nonhierarchical-annotated.svg", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+| Heading | Space above          | Space below          |
+| ------- | -------------------- | -------------------- |
+| H1      | `--salt-spacing-200` | `--salt-spacing-100` |
+| H2      | `--salt-spacing-200` | `--salt-spacing-100` |
+| H3      | `--salt-spacing-200` | `--salt-spacing-100` |
+| H4      | `--salt-spacing-200` | `--salt-spacing-100` |
+
+### Headings and non-textual content
+
+For content following a heading that is not text, such as an image, form, card or data visualisation, the spacing between the elements is treated consistently, as with non-hierarchical spacing. To clarify:
+
+- Anything that is not text is separated from its heading by `--salt-spacing-300`
+- Spacing above the header is maintained consistently at `--salt-spacing-200`
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/spacing-nontextual.svg", alt: "" },
+    { src: "/img/foundations/spacing-nontextual-annotated.svg", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+Maintaining consistent spacing between headings, text, content blocks and sections provides visual rhythm when managing large amounts of content. Note that:
+
+- When elements repeat at regular intervals visual rhythm is maintained
+- Consistency and rhythm helps people to comprehend and navigate an interface more easily
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/spacing-repetition.svg", alt: "" },
+    { src: "/img/foundations/spacing-repetition-annotated.svg", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+### Sections and separators
+
+Horizontal separators are used to divide regions of a layout, sections of content, or groups of components and/or data.
+
+For the purposes of spacing, separators are considered as a type of content and therefore spaced consistently. This means that:
+
+- Separators do not come with any pre-defined spacing of their own.
+- `--salt-spacing-300` should appear above and below a separator when placed between sections.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/spacing-sections.svg", alt: "" },
+    { src: "/img/foundations/spacing-sections-annotated.svg", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+Only use separators only if the content cannot be effectively divided in another way. Too many repeating lines can overload a design and create unnecessary visual noise.
+
+The [Division](division) foundation provides further guidance on the use of separators and their alternatives.
+
 <Callout title="Have some feedback?">
 
-The Salt Foundations are still in progress, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or questions.
+We're still in the process of rolling out the Salt Foundations, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or suggestions.
 
 </Callout>
