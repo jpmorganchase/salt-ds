@@ -1,16 +1,8 @@
-import {
-  LayerLayout,
-  ListNext,
-  ListItemNext,
-  NavItem,
-  NavItemProps,
-  Badge,
-} from "@salt-ds/lab";
+import { NavItem, NavItemProps, Badge } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { useState } from "react";
-import { Card, H2, Link, Drawer, useDrawer } from "@salt-ds/core";
+import { H2 } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
-import { megaMenuData } from "./nav-item.data";
 
 import "./nav-item.stories.css";
 

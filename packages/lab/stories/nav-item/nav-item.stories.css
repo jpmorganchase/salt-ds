@@ -32,23 +32,6 @@ ul {
   gap: var(--salt-size-border);
 }
 
-.cardList {
-  padding: var(--salt-spacing-200);
-}
-
-.cardItem {
-  padding: var(--salt-spacing-100);
-}
-
-.cardItem .saltLink {
-  text-decoration: none;
-}
-
-.linkCard {
-  --saltCard-padding: calc(var(--salt-size-unit) * 2);
-  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
-}
-
 .container {
   min-height: 200px;
 }
@@ -57,71 +40,7 @@ ul {
   z-index: var(--salt-zIndex-appHeader);
 }
 
-.content {
-  position: relative;
-  flex: 1;
-}
-
-.content .saltLayerLayout,
-.content .saltScrim {
-  position: relative;
-  width: 80vw;
-  align-items: flex-start;
-}
-
-.content .saltLayerLayout {
-  padding-top: var(--salt-spacing-100);
-}
-
-.container .saltScrim {
-  z-index: calc(var(--salt-zIndex-appHeader) - 1);
-}
-
-.menu {
-  list-style: none;
-  margin: 0;
-  width: 500px;
-}
-
 .list {
   height: auto;
   margin-left: var(--salt-spacing-100);
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-}
-
-.megaMenuContainer {
-  min-height: 95vh;
-}
-
-.megaMenu {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--salt-spacing-300);
-}
-
-.megaMenuDrawer {
-  position: relative;
-}
-
-.saltDrawer-overlay {
-  margin-top: 60px;
-}
-
-.megaMenu h3 {
-  margin-top: 0;
-  margin-bottom: var(--salt-spacing-100);
-}
-
-.megaMenu h4 {
-  font-weight: var(--salt-text-label-fontWeight-strong);
-  color: var(--salt-text-secondary-foreground);
-  padding-bottom: var(--salt-spacing-100);
-}
-
-.megaMenuList {
-  height: auto;
 }
