@@ -5,6 +5,7 @@
   --navItem-bar-inset: var(--salt-spacing-25);
   --navItem-bar-size: calc(var(--salt-size-bar) / 2);
   --navItem-indicator-background: var(--salt-navigable-indicator-active);
+  --navItem-gap: var(--salt-spacing-100);
 }
 
 /* Vars applied to NavItem component when active or selected */
@@ -15,68 +16,85 @@
 }
 
 /* Styles applied to root NavItem component */
-.saltNavItem {
+.saltNavItem-wrapper {
   display: flex;
   align-items: center;
   position: relative;
-  gap: var(--salt-spacing-100);
+  gap: var(--navItem-gap);
   font-weight: var(--salt-text-fontWeight-strong);
+  text-decoration: none;
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
 }
 
+/* Styles applied to NavItem link */
+.saltNavItem-wrapper.saltLink {
+  --link-textDecoration: none;
+}
+
 /* Styles applied to NavItem icon */
-.saltNavItem .saltNavItem-icon {
+.saltNavItem-wrapper .saltNavItem-icon {
   fill: var(--navItem-fill);
 }
 
 /* Styles applied when orientation = "horizontal" */
-.saltNavItem-horizontal {
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-spacing-100));
-  padding: calc(var(--salt-spacing-100) + var(--navItem-bar-inset)) 0 var(--salt-spacing-100) 0;
-  margin: 0 var(--salt-spacing-100);
+.saltNavItem {
+  margin: 0 var(--navItem-gap);
+}
+
+/* Styles applied when orientation = "horizontal" */
+.saltNavItem-wrapper.saltNavItem-horizontal {
+  min-height: calc(var(--salt-size-base) + var(--navItem-gap) + var(--navItem-gap));
+  padding: calc(var(--navItem-gap) + var(--navItem-bar-inset)) 0 var(--navItem-gap) 0;
 }
 
 /* Styles applied when orientation = "vertical" */
-.saltNavItem-vertical {
+.saltNavItem-wrapper.saltNavItem-vertical {
   min-height: calc(var(--salt-size-base));
-  padding-left: calc(var(--salt-spacing-100) + var(--navItem-bar-inset));
+  padding-left: calc(var(--navItem-gap) + var(--navItem-bar-inset));
   margin: var(--salt-spacing-50) 0;
 }
 
 /* Styles applied to NavItem label */
-.saltNavItem .saltNavItem-label {
+.saltNavItem-wrapper .saltNavItem-label {
   --link-color-visited: var(--navItem-color);
   --link-color-hover: var(--navItem-color);
 
-  text-decoration: none;
   color: var(--navItem-color);
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
-  padding-left: calc(var(--saltNavItem-level, 0) * var(--salt-spacing-100));
+  padding-left: calc(var(--saltNavItem-level, 0) * var(--navItem-gap));
   flex: 1;
+  text-align: left;
 }
 
 /* Styles applied when level is not 0 */
-.saltNavItem-nested {
-  padding-left: calc(var(--salt-spacing-250) + (var(--saltNavItem-level, 0) * var(--salt-spacing-100)));
+.saltNavItem-wrapper.saltNavItem-nested {
+  padding-left: calc(var(--salt-spacing-250) + (var(--saltNavItem-level, 0) * var(--navItem-gap)));
 }
 
-/* Styles applied to expand button icon */
-.saltNavItem .saltNavItem-expandButton {
-  --saltIcon-color: var(--navItem-fill);
+/* Styles applied to expand button */
+.saltNavItem-wrapper.saltNavItem-expandButton {
   --saltButton-background-hover: none;
   --saltButton-background-active: none;
-  --saltButton-padding: 0;
+  --saltButton-textTransform: none;
+  --saltButton-width: 100%;
+
+  gap: var(--navItem-gap);
+}
+
+/* Styles applied to expand icon */
+.saltNavItem-wrapper .saltNavItem-expandIcon {
+  --saltIcon-color: var(--navItem-fill);
 }
 
 /* Styles applied to NavItem when focus is visible */
-.saltNavItem:focus-visible {
+.saltNavItem-wrapper:focus-visible {
   outline: var(--salt-focused-outline);
 }
 
 /* Styles applied to activation line */
-.saltNavItem::after {
+.saltNavItem-wrapper::after {
   content: "";
   position: absolute;
   top: 0;
@@ -99,24 +117,24 @@
 }
 
 /* Styles applied to activation line on hover and on focus */
-.saltNavItem:hover::after,
-.saltNavItem:focus::after {
+.saltNavItem-wrapper:hover::after,
+.saltNavItem-wrapper:focus::after {
   background: var(--salt-navigable-indicator-hover);
   /* Hover on animation */
   transition: all var(--salt-duration-perceptible) ease-in-out;
 }
 
 /* Styles applied to activation line when item has active children */
-.saltNavItem.saltNavItem-blurSelected::after,
-.saltNavItem.saltNavItem-blurSelected:hover::after,
-.saltNavItem.saltNavItem-blurSelected:focus::after {
+.saltNavItem-wrapper.saltNavItem-blurSelected::after,
+.saltNavItem-wrapper.saltNavItem-blurSelected:hover::after,
+.saltNavItem-wrapper.saltNavItem-blurSelected:focus::after {
   --navItem-indicator-background: none;
 }
 
 /* Styles applied to activation line when item is active */
-.saltNavItem.saltNavItem-active::after,
-.saltNavItem.saltNavItem-active:hover::after,
-.saltNavItem.saltNavItem-active:focus::after {
+.saltNavItem-wrapper.saltNavItem-active::after,
+.saltNavItem-wrapper.saltNavItem-active:hover::after,
+.saltNavItem-wrapper.saltNavItem-active:focus::after {
   background: var(--navItem-indicator-background);
   /* Hover on animation */
   transition: all var(--salt-duration-perceptible) ease-in-out;

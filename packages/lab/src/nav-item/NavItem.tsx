@@ -6,10 +6,10 @@ import {
   ComponentType,
   ReactNode,
 } from "react";
-import { makePrefixer, Link } from "@salt-ds/core";
+import { makePrefixer, Link, Button } from "@salt-ds/core";
 import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { ExpansionButton } from "./ExpansionButton";
+import { ExpansionIcon } from "./ExpansionIcon";
 
 import navItemCss from "./NavItem.css";
 import { useWindow } from "@salt-ds/window";
@@ -60,6 +60,11 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltNavItem");
 
+type ConditionalWrapper = {
+  children: ReactNode;
+  className: string;
+};
+
 export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
   function NavItem(props, ref) {
     const {
@@ -96,42 +101,64 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       onExpand?.(event);
     };
 
-    return (
-      <div
-        className={clsx(
-          withBaseName(),
-          {
-            [withBaseName("active")]: active,
-            [withBaseName("blurSelected")]: blurSelected,
-            [withBaseName("nested")]: level !== 0,
-          },
-          withBaseName(orientation),
-          className
-        )}
-        ref={ref}
-        style={style}
-        {...rest}
-      >
-        {IconComponent && (
-          <IconComponent aria-hidden className={withBaseName("icon")} />
-        )}
+    const ConditionalWrapper = ({
+      children,
+      className,
+      ...rest
+    }: ConditionalWrapper) =>
+      parent ? (
+        <Button
+          aria-label="expand"
+          variant="secondary"
+          aria-expanded={expanded}
+          className={clsx(withBaseName("expandButton"), className)}
+          onClick={handleExpand}
+          {...rest}
+        >
+          {children}
+        </Button>
+      ) : (
         <Link
-          className={withBaseName("label")}
           aria-current={active ? "page" : undefined}
           href={href}
+          className={className}
+          {...rest}
         >
-          <span>{children}</span>
+          {children}
         </Link>
-        {BadgeComponent}
-        {parent && (
-          <ExpansionButton
-            aria-expanded={expanded}
-            className={withBaseName("expandButton")}
-            expanded={expanded}
-            onClick={handleExpand}
-            orientation={orientation}
-          />
-        )}
+      );
+
+    return (
+      <div
+        ref={ref}
+        style={style}
+        className={clsx(withBaseName(), className)}
+        {...rest}
+      >
+        <ConditionalWrapper
+          className={clsx(
+            withBaseName("wrapper"),
+            {
+              [withBaseName("active")]: active,
+              [withBaseName("blurSelected")]: blurSelected,
+              [withBaseName("nested")]: level !== 0,
+            },
+            withBaseName(orientation)
+          )}
+        >
+          {IconComponent && (
+            <IconComponent aria-hidden className={withBaseName("icon")} />
+          )}
+          <span className={withBaseName("label")}>{children}</span>
+          {BadgeComponent}
+          {parent && (
+            <ExpansionIcon
+              expanded={expanded}
+              orientation={orientation}
+              className={withBaseName("expandIcon")}
+            />
+          )}
+        </ConditionalWrapper>
       </div>
     );
   }

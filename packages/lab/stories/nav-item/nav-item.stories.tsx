@@ -162,6 +162,7 @@ export const HorizontalGroupWithDropdown = () => {
                   });
                 }}
                 onExpand={() => {
+                  setActive(name);
                   setExpanded((old) => {
                     if (old === name) {
                       return null;
@@ -176,7 +177,7 @@ export const HorizontalGroupWithDropdown = () => {
               >
                 {name}
               </NavItem>
-              {expanded === name && (
+              {expanded === name && currentSubNav && (
                 <ul className="list">
                   <H2>{expanded}</H2>
                   {currentSubNav?.map((item) => (
@@ -282,7 +283,6 @@ export const VerticalNestedGroup = () => {
               onClick={(event) => {
                 // Prevent default to avoid navigation
                 event.preventDefault();
-                setActive(name);
               }}
               onExpand={() => {
                 if (expanded.includes(name)) {
@@ -325,7 +325,6 @@ export const VerticalNestedGroup = () => {
                         onClick={(event) => {
                           // Prevent default to avoid navigation
                           event.preventDefault();
-                          setActive(itemValue);
                         }}
                         level={1}
                         onExpand={() => {
