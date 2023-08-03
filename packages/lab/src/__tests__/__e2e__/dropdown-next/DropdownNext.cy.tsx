@@ -107,7 +107,7 @@ describe("GIVEN an active Dropdown component", () => {
     it("THEN it should show default selected value on first render", () => {
       cy.mount(<Secondary />);
 
-      cy.findByRole("combobox").should("have.value", "MelonIcon Melon");
+      cy.findByRole("combobox").should("have.value", "🍈 Melon");
     });
 
     // TODO: update once KeyNav fixed
@@ -118,7 +118,7 @@ describe("GIVEN an active Dropdown component", () => {
       cy.realPress("ArrowDown");
       cy.realPress("Enter");
 
-      cy.findByRole("combobox").should("have.value", "AppleIcon Apple");
+      cy.findByRole("combobox").should("have.value", "🍏 Apple");
     });
   });
 });

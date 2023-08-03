@@ -6,10 +6,7 @@
   --dropdownNext-padding: var(--salt-size-unit);
 
   align-items: center;
-  background: var(
-    --saltDropdownNext-background,
-    var(--dropdownNext-background)
-  );
+  background: var(--saltDropdownNext-background, var(--dropdownNext-background));
   color: var(--saltDropdownNext-color, var(--salt-text-primary-foreground));
   display: flex;
   font-family: var(--salt-text-fontFamily);
@@ -18,19 +15,12 @@
   line-height: var(--saltDropdownNext-lineHeight, var(--salt-text-lineHeight));
   min-height: var(--saltDropdownNext-minHeight, var(--salt-size-base));
   min-width: var(--saltDropdownNext-minWidth, 160px);
-  padding-left: var(
-    --saltDropdownNext-paddingLeft,
-    var(--dropdownNext-padding)
-  );
-  padding-right: var(
-    --saltDropdownNext-paddingRight,
-    var(--dropdownNext-padding)
-  );
+  padding-left: var(--saltDropdownNext-paddingLeft, var(--dropdownNext-padding));
+  padding-right: var(--saltDropdownNext-paddingRight, var(--dropdownNext-padding));
   position: relative;
   width: 100%;
   border: none;
-  border-bottom: var(--dropdownNext-borderWidth) var(--dropdownNext-borderStyle)
-    var(--dropdownNext-borderColor);
+  border-bottom: var(--dropdownNext-borderWidth) var(--dropdownNext-borderStyle) var(--dropdownNext-borderColor);
   justify-content: space-between;
 }
 
@@ -45,11 +35,7 @@
   --dropdownNext-borderColor: var(--salt-editable-borderColor-active);
   --dropdownNext-borderWidth: var(--salt-editable-borderWidth-active);
 
-  outline: var(
-    --saltDropdownNext-outline,
-    var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-      var(--dropdownNext-outlineColor)
-  );
+  outline: var(--saltDropdownNext-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--dropdownNext-outlineColor));
 }
 
 .saltDropdownNext-buttonText {
@@ -64,10 +50,7 @@
   --saltDropdownNext-itemCount: 5;
 
   border-color: var(--salt-selectable-borderColor-selected);
-  max-height: calc(
-    (var(--salt-size-base) + var(--salt-spacing-100)) *
-      var(--saltDropdownNext-itemCount)
-  );
+  max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * var(--saltDropdownNext-itemCount));
 }
 
 /* Styling applied to dropdown button if `disabled={true}` */
@@ -80,10 +63,7 @@
 
   cursor: var(--salt-selectable-cursor-disabled);
   background: var(--dropdownNext-background-disabled);
-  color: var(
-    --saltDropdownNext-color-disabled,
-    var(--salt-text-primary-foreground-disabled)
-  );
+  color: var(--saltDropdownNext-color-disabled, var(--salt-text-primary-foreground-disabled));
   outline: 0;
 }
 
@@ -116,33 +96,17 @@
 /* Class applied if `variant="primary"` */
 .saltDropdownNext-primary {
   --dropdownNext-background: var(--salt-editable-primary-background);
-  --dropdownNext-background-active: var(
-    --salt-editable-primary-background-active
-  );
-  --dropdownNext-background-hover: var(
-    --salt-editable-primary-background-hover
-  );
-  --dropdownNext-background-disabled: var(
-    --salt-editable-primary-background-disabled
-  );
-  --dropdownNext-background-readonly: var(
-    --salt-editable-primary-background-readonly
-  );
+  --dropdownNext-background-active: var(--salt-editable-primary-background-active);
+  --dropdownNext-background-hover: var(--salt-editable-primary-background-hover);
+  --dropdownNext-background-disabled: var(--salt-editable-primary-background-disabled);
+  --dropdownNext-background-readonly: var(--salt-editable-primary-background-readonly);
 }
 
 /* Class applied if `variant="secondary"` */
 .saltDropdownNext-secondary {
   --dropdownNext-background: var(--salt-editable-secondary-background);
-  --dropdownNext-background-active: var(
-    --salt-editable-secondary-background-active
-  );
-  --dropdownNext-background-hover: var(
-    --salt-editable-secondary-background-active
-  );
-  --dropdownNext-background-disabled: var(
-    --salt-editable-secondary-background-disabled
-  );
-  --dropdownNext-background-readonly: var(
-    --salt-editable-secondary-background-readonly
-  );
+  --dropdownNext-background-active: var(--salt-editable-secondary-background-active);
+  --dropdownNext-background-hover: var(--salt-editable-secondary-background-active);
+  --dropdownNext-background-disabled: var(--salt-editable-secondary-background-disabled);
+  --dropdownNext-background-readonly: var(--salt-editable-secondary-background-readonly);
 }

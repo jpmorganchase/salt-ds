@@ -56,11 +56,11 @@ export interface DropdownNextProps<T>
    * Props for dropdown list.
    */
   ListProps?: ListNextProps;
-  /* Props for controlled dropdown. */
+  /* Status open or close for use in controlled component.  */
   open?: boolean;
-  /* Props for controlled dropdown. */
+  /* Selected item prop for use in controlled component. */
   selectedItem?: string;
-  /* Props for controlled dropdown. */
+  /* Highlighted item prop for use in controlled component. */
   highlightedItem?: string;
 }
 
@@ -155,14 +155,12 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
 
     const handleFocus = (event: FocusEvent<HTMLElement>) => {
       if (disabled || readOnly) return;
-
       focusHandler(event);
       onFocus?.(event);
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
       if (disabled || readOnly) return;
-
       keyDownHandler(event);
       onKeyDown?.(event);
     };

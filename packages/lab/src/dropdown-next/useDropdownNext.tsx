@@ -131,13 +131,13 @@ export const useDropdownNext = ({
     reference,
     x,
     y,
-    strategy, // 'absolute' | 'fixed'
+    strategy,
     placement,
     context,
   } = useFloatingUI({
     open,
     onOpenChange,
-    placement: placementProp, //  "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end"
+    placement: placementProp,
     middleware: [
       offset(0),
       size({
@@ -156,7 +156,6 @@ export const useDropdownNext = ({
     useDismiss(context),
     useRole(context, { role: "listbox" }),
     useClick(context),
-    // useFocus(context), // Opens the floating element while the reference element has focus, like CSS
   ]);
 
   const getDropdownNextProps = (): HTMLProps<HTMLDivElement> => {
@@ -181,7 +180,6 @@ export const useDropdownNext = ({
   // handles focus on mouse and keyboard
   const focusHandler = (event: FocusEvent<HTMLElement>) => {
     if (selectedItem) {
-      // setHighlightedItem(selectedItem);
       listFocusHandler(event as FocusEvent<HTMLUListElement>);
     }
   };
@@ -257,7 +255,6 @@ export const useDropdownNext = ({
     setHighlightedItem,
     setListRef: listFocusVisibleRef,
     getListItems,
-    // portal stuffs
     open,
     setOpen,
     floating,
