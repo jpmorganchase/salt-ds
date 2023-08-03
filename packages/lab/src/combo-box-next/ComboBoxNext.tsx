@@ -1,23 +1,25 @@
 import {
   ChangeEvent,
+  ComponentPropsWithoutRef,
   FocusEvent,
+  ForwardedRef,
   forwardRef,
-  InputHTMLAttributes,
+  KeyboardEvent,
   ReactNode,
   Ref,
   SyntheticEvent,
   useRef,
 } from "react";
 import {
-  Button,
   Input,
   makePrefixer,
   SaltProvider,
   useForkRef,
   useId,
+  InputProps,
 } from "@salt-ds/core";
 import { ListNext, ListNextProps } from "../list-next";
-import { FloatingPortal, Placement } from "@floating-ui/react";
+import { FloatingPortal } from "@floating-ui/react";
 import { useComboBox } from "./useComboBox";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -25,16 +27,16 @@ import comboBoxNextCss from "./ComboBoxNext.css";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { defaultFilter, defaultItemRenderer } from "./utils";
 import { clsx } from "clsx";
-import { UsePortalProps } from "./useComboboxPortal";
-import { UseListProps } from "../list-next/useList";
+import { UseComboBoxPortalProps } from "./useComboboxPortal";
 
 const withBaseName = makePrefixer("saltComboBoxNext");
 
-export interface ComboBoxNextProps extends UseListProps {
+export interface ComboBoxNextProps<T>
+  extends Omit<ComponentPropsWithoutRef<"input">, "onChange"> {
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * Additional props for the input component.
    */
-  InputProps?: InputHTMLAttributes<HTMLInputElement>;
+  InputProps?: InputProps;
   /**
    * Additional props for the list component.
    */
@@ -42,33 +44,37 @@ export interface ComboBoxNextProps extends UseListProps {
   /**
    * Additional props for the portal.
    */
-  PortalProps?: UsePortalProps;
-  /**
-   * Placement of the List, default is 'bottom'
-   */
-  placement?: Placement;
+  PortalProps?: UseComboBoxPortalProps;
   /**
    * If `true`, the component will be disabled.
    */
   disabled: boolean;
-  /**
-   * Function that takes a string input and returns a regex that can be used for filtering list.
-   */
-  // TODO: rename this prop?
-  filterRegex?: () => void;
-  comboBoxId?: string;
-  defaultValue?: string;
+  /* Highlighted index for when the list is controlled. */
+  highlightedItem?: string;
+  /* Selected value for when the list is controlled. */
+  selected?: string;
+  /* Initial selected value for when the list is controlled. */
   defaultSelected?: string;
-  value?: string;
   /**
    * The source of combobox items.
    */
-  source: string[];
-  //
+  source: T[];
+  /**
+   * Callback for blur event
+   */
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  /**
+   * Callback for focus event
+   */
   onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  /**
+   * Callback for keyDown event
+   */
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  /**
+   * Callback for mouse over event
+   */
   onMouseOver?: (event: SyntheticEvent) => void;
-
   /**
    * Optional ref for the input component
    */
@@ -76,167 +82,189 @@ export interface ComboBoxNextProps extends UseListProps {
   /**
    * Optional ref for the list component
    */
-  matchPattern?: (item: string, filterValue: string) => boolean;
   listRef?: Ref<HTMLUListElement>;
+  /**
+   * Item renderer function.
+   */
   itemRenderer?: (
     key: number,
-    value?: string,
-    matchPattern?: string
+    value?: T,
+    matchPattern?: string,
+    onMouseDown?: (event: SyntheticEvent<HTMLLIElement>) => void
   ) => ReactNode | null | undefined;
-  itemFilter?: (source: string[], filterValue?: string) => string[];
-  /* Callback for change event. */
+  /**
+   * Function to be used as filter.
+   */
+  itemFilter?: (source: T[], filterValue?: string) => T[];
+  /* Callback for change event in input. */
   onChange?: (event: SyntheticEvent, data: { value: string }) => void;
   /**
    * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
-  /**
-   * If `true`, the component is read only.
-   */
-  readOnly?: boolean;
 }
 
-export const ComboBoxNext = forwardRef<HTMLElement, ComboBoxNextProps>(
-  function ComboBoxNext(
-    {
-      InputProps = {},
-      ListProps,
-      PortalProps,
-      disabled,
-      filterRegex,
-      highlightedItem: highlightedItemProp,
-      selected,
-      defaultSelected,
-      // onKeyDown,
-      onChange,
-      onBlur,
-      onFocus,
-      onMouseOver,
-      source,
-      defaultValue,
-      itemRenderer = defaultItemRenderer,
-      itemFilter = defaultFilter,
-      variant = "primary",
-      listRef: listRefProp,
-      readOnly,
-      ...rest
-    },
-    ref
-  ) {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-combo-box-next",
-      css: comboBoxNextCss,
-      window: targetWindow,
-    });
-    const listId = useId(ListProps?.id);
-    const listRef = useRef<HTMLUListElement>(null);
+export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
+  {
+    InputProps = {},
+    ListProps = {},
+    PortalProps = {},
+    disabled,
+    highlightedItem: highlightedItemProp,
+    selected,
+    defaultSelected,
+    onKeyDown,
+    onChange,
+    onBlur,
+    onFocus,
+    onMouseOver,
+    source,
+    itemRenderer = defaultItemRenderer as unknown as ComboBoxNextProps<T>["itemRenderer"],
+    itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
+    variant = "primary",
+    listRef: listRefProp,
+    ...rest
+  }: ComboBoxNextProps<T>,
+  ref?: ForwardedRef<HTMLInputElement>
+) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-combo-box-next",
+    css: comboBoxNextCss,
+    window: targetWindow,
+  });
+  const listId = useId(ListProps?.id);
+  const listRef = useRef<HTMLUListElement>(null);
 
-    const setListRef = useForkRef(listRefProp, listRef);
-    const listProps = {
-      highlightedItem: highlightedItemProp,
-      selected,
-      defaultSelected,
-      onChange,
-      id: listId,
-      ref: listRef,
-    };
+  const setListRef = useForkRef(listRefProp, listRef);
+  const listProps = {
+    highlightedItem: highlightedItemProp,
+    selected,
+    defaultSelected,
+    onChange,
+    id: listId,
+    ref: listRef,
+  };
 
-    const {
-      portalProps,
-      selectedItem,
-      highlightedItem,
-      activeDescendant,
-      focusVisibleRef,
-      keyDownHandler,
-      focusHandler,
-      blurHandler,
-      setSelectedItem,
-      setHighlightedItem,
-      mouseOverHandler,
-    } = useComboBox({
-      onBlur,
-      onFocus,
-      onMouseOver,
-      listProps,
-      PortalProps,
-    });
+  const {
+    inputValue,
+    setInputValue,
+    portalProps,
+    selectedItem,
+    highlightedItem,
+    activeDescendant,
+    focusVisibleRef,
+    keyDownHandler,
+    focusHandler,
+    blurHandler,
+    setSelectedItem,
+    setHighlightedItem,
+    mouseOverHandler,
+  } = useComboBox({
+    onBlur,
+    onFocus,
+    onMouseOver,
+    onKeyDown,
+    listProps,
+    PortalProps,
+  });
 
-    const { open, floating, reference, getTriggerProps, getPortalProps } =
-      portalProps;
+  const {
+    open,
+    setOpen,
+    floating,
+    reference,
+    getTriggerProps,
+    getPortalProps,
+  } = portalProps;
 
-    // floating references
-    const triggerRef = useForkRef(ref, reference);
-    const inputRef = useForkRef(triggerRef, focusVisibleRef);
+  // floating references
+  const triggerRef = useForkRef(ref, reference);
+  const inputRef = useForkRef(triggerRef, focusVisibleRef);
 
-    const filteredSource = source && itemFilter(source, selectedItem);
+  const getFilteredSource = () => {
+    if (selectedItem) return source;
+    return itemFilter && itemFilter(source, inputValue);
+  };
+  const filteredSource = getFilteredSource();
 
-    const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
-      // open if it is closed
+  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setInputValue(value);
+    if (value === "") {
+      setHighlightedItem(undefined);
       setSelectedItem(value);
-      if (value === "") {
-        setHighlightedItem(undefined);
-      } else {
-        setHighlightedItem(filteredSource[0]);
+    } else {
+      if (!open) {
+        setOpen(true);
       }
-      onChange?.(event, { value: selectedItem || "" });
-    };
+      if (filteredSource) {
+        setHighlightedItem(filteredSource[0] as unknown as string);
+      }
+    }
+    onChange?.(event, { value: inputValue || "" });
+  };
 
-    const adornment = (
-      <Button variant={"secondary"}>
-        {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
-      </Button>
-    );
+  const adornment = open ? (
+    <ChevronUpIcon className={withBaseName("chevron")} />
+  ) : (
+    <ChevronDownIcon className={withBaseName("chevron")} />
+  );
 
-    return (
-      <>
-        <Input
-          variant={variant}
-          endAdornment={adornment}
-          disabled={disabled}
-          value={selectedItem}
-          aria-controls={listId}
-          role="combobox"
-          onChange={onInputChange}
-          onBlur={blurHandler}
-          readOnly={readOnly}
-          aria-activedescendant={disabled ? undefined : activeDescendant}
-          inputProps={{
-            "aria-expanded": open,
-            tabIndex: disabled ? -1 : 0,
-            onFocus: focusHandler,
-            onKeyDown: keyDownHandler,
-          }}
-          {...getTriggerProps()}
-          {...InputProps}
-          inputRef={inputRef as Ref<HTMLInputElement>}
-        />
-        {open && (
-          <FloatingPortal>
-            {/* The provider is needed to support the use case where an app has nested modes. The portal element needs to have the same style as the current scope */}
-            <SaltProvider>
-              <div ref={floating} {...getPortalProps()}>
-                <ListNext
-                  className={clsx(withBaseName("list"), ListProps?.className)}
-                  selected={selectedItem}
-                  highlightedItem={highlightedItem}
-                  disableFocus
-                  onMouseOver={mouseOverHandler}
-                  {...ListProps}
-                  ref={setListRef}
-                >
-                  {filteredSource.map((value: string, index) => {
-                    return itemRenderer(index, value, selectedItem, (event) => {
-                      setSelectedItem(event.currentTarget.dataset.value);
-                    });
-                  })}
-                </ListNext>
-              </div>
-            </SaltProvider>
-          </FloatingPortal>
-        )}
-      </>
-    );
-  }
-);
+  const { className: listClassName, ...restListProps } = ListProps;
+  const { className: inputClassName, ...restInputProps } = InputProps;
+
+  return (
+    <>
+      <Input
+        variant={variant}
+        endAdornment={adornment}
+        disabled={disabled}
+        value={inputValue}
+        className={clsx(withBaseName("input"), inputClassName)}
+        aria-controls={listId}
+        role="combobox"
+        onChange={onInputChange}
+        onBlur={blurHandler}
+        aria-activedescendant={disabled ? undefined : activeDescendant}
+        inputProps={{
+          "aria-expanded": open,
+          tabIndex: disabled ? -1 : 0,
+          onFocus: focusHandler,
+          onKeyDown: keyDownHandler,
+        }}
+        {...getTriggerProps()}
+        {...restInputProps}
+        inputRef={inputRef as Ref<HTMLInputElement>}
+      />
+      {open && filteredSource && (
+        <FloatingPortal>
+          {/* The provider is needed to support the use case where an app has nested modes. The portal element needs to have the same style as the current scope */}
+          <SaltProvider>
+            <div ref={floating} {...getPortalProps()}>
+              <ListNext
+                className={clsx(withBaseName("list"), listClassName)}
+                selected={selectedItem}
+                highlightedItem={highlightedItem}
+                disableFocus
+                onMouseOver={mouseOverHandler}
+                {...restListProps}
+                ref={setListRef}
+              >
+                {filteredSource.map((value, index) => {
+                  return (
+                    itemRenderer &&
+                    itemRenderer(index, value, inputValue, (event) => {
+                      setSelectedItem(event.currentTarget?.dataset.value);
+                      setInputValue(event.currentTarget?.dataset.value);
+                    })
+                  );
+                })}
+              </ListNext>
+            </div>
+          </SaltProvider>
+        </FloatingPortal>
+      )}
+    </>
+  );
+});

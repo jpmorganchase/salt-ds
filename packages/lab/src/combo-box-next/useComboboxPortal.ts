@@ -12,13 +12,13 @@ import {
 import { HTMLProps, useState } from "react";
 import { useFloatingUI } from "@salt-ds/core";
 
-export interface UsePortalProps {
+export interface UseComboBoxPortalProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   placement?: Placement;
 }
 
-export function useComboboxPortal(props?: UsePortalProps) {
+export function useComboboxPortal(props?: UseComboBoxPortalProps) {
   const {
     open: openProp = false,
     onOpenChange: onOpenChangeProp,

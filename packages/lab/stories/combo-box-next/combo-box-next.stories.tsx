@@ -5,10 +5,13 @@ import {
   ListItemNext,
 } from "@salt-ds/lab";
 import { ComponentMeta, Story } from "@storybook/react";
-import { largestCities, shortColorData } from "../assets/exampleData";
+import {
+  LargeCity,
+  largestCities,
+  shortColorData,
+} from "../assets/exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
-import { Suspense, useState } from "react";
-import { Button } from "@salt-ds/core";
+import { MouseEvent, Suspense, SyntheticEvent } from "react";
 
 export default {
   title: "Lab/Combo Box Next",
@@ -17,36 +20,41 @@ export default {
 
 const customItemRenderer = (
   key: number,
-  value: string,
-  matchPattern?: RegExp | string
+  value: LargeCity,
+  matchPattern?: RegExp | string,
+  onMouseDown?: (event: MouseEvent<HTMLLIElement>) => void
 ) => (
-  <ListItemNext value={value.name} key={key}>
+  <ListItemNext value={value.name} key={key} onMouseDown={onMouseDown}>
     <Suspense fallback={null}>
+      {/*@ts-ignore */}
       <LazyCountrySymbol code={value.countryCode} />
     </Suspense>
     <Highlighter matchPattern={matchPattern} text={value.name} />
   </ListItemNext>
 );
 
-const custommatchPattern = (input: string, filterValue: string) => {
+const customMatchPattern = (
+  input: { name: string; countryCode: string },
+  filterValue: string
+) => {
   return (
     input.name.toLowerCase().includes(filterValue.toLowerCase()) ||
     filterValue === input.countryCode
   );
 };
 
-const customItemFilter = (source: any[], filterValue: string) =>
+const customItemFilter = (source: LargeCity[], filterValue?: string) =>
   source.filter((item) =>
-    !filterValue ? item : custommatchPattern(item, filterValue)
+    !filterValue ? item : customMatchPattern(item, filterValue)
   );
 
-const ComboBoxTemplate: Story<ComboBoxNextProps> = (args) => {
-  const handleChange = (event) => {
-    console.log("input value changed", event.target.value);
+const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
+  const handleChange = (event: SyntheticEvent, data: { value: string }) => {
+    console.log("input value changed", data);
   };
 
-  const handleSelect = (event) => {
-    console.log("selected item", event.target.value);
+  const handleSelect = (event: SyntheticEvent<HTMLInputElement>) => {
+    console.log("selected item", event.currentTarget.value);
   };
   return (
     <ComboBoxNext onChange={handleChange} onSelect={handleSelect} {...args} />
@@ -63,7 +71,6 @@ CustomRenderer.args = {
   source: largestCities,
   itemRenderer: customItemRenderer,
   itemFilter: customItemFilter,
-  matchPattern: custommatchPattern,
 };
 
 export const Empty = ComboBoxTemplate.bind({});
@@ -75,12 +82,6 @@ export const Secondary = ComboBoxTemplate.bind({});
 Secondary.args = {
   source: shortColorData,
   variant: "secondary",
-};
-
-export const ReadOnly = ComboBoxTemplate.bind({});
-ReadOnly.args = {
-  source: shortColorData,
-  readOnly: true,
 };
 
 export const Disabled = ComboBoxTemplate.bind({});

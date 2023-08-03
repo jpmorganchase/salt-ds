@@ -1,12 +1,13 @@
-import { FocusEvent, KeyboardEvent, SyntheticEvent } from "react";
+import { FocusEvent, KeyboardEvent, SyntheticEvent, useState } from "react";
 import { useList, UseListProps } from "../list-next/useList";
-import { useComboboxPortal, UsePortalProps } from "./useComboboxPortal";
+import { useComboboxPortal, UseComboBoxPortalProps } from "./useComboboxPortal";
 
 interface UseComboBoxProps {
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
   onMouseOver?: (event: SyntheticEvent) => void;
-  PortalProps?: UsePortalProps;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  PortalProps?: UseComboBoxPortalProps;
   listProps: UseListProps;
 }
 
@@ -14,9 +15,12 @@ export const useComboBox = ({
   onFocus,
   onBlur,
   onMouseOver,
+  onKeyDown,
   PortalProps,
   listProps,
 }: UseComboBoxProps) => {
+  const [inputValue, setInputValue] = useState<string | undefined>(undefined);
+
   const {
     open,
     setOpen,
@@ -28,6 +32,7 @@ export const useComboBox = ({
 
   const {
     keyDownHandler: listKeyDownHandler,
+    focusHandler: listFocusHandler,
     activeDescendant,
     focusVisibleRef,
     selectedItem,
@@ -40,6 +45,7 @@ export const useComboBox = ({
 
   const focusHandler = (event: FocusEvent<HTMLInputElement>) => {
     setOpen(true);
+    listFocusHandler(event);
     onFocus?.(event);
   };
 
@@ -47,6 +53,7 @@ export const useComboBox = ({
     setOpen(false);
     if (!selectedItem) {
       setSelectedItem(undefined);
+      setInputValue(undefined);
       setHighlightedItem(undefined);
     }
     onBlur?.(event);
@@ -66,6 +73,7 @@ export const useComboBox = ({
           event.preventDefault();
           if (open && !selectedItem) {
             setSelectedItem(undefined);
+            setInputValue(undefined);
           }
           setOpen(!open);
           break;
@@ -88,6 +96,8 @@ export const useComboBox = ({
           setOpen(true);
         } else {
           setSelectedItem(highlightedItem);
+          setInputValue(highlightedItem);
+          setOpen(false);
         }
         break;
       case "Escape":
@@ -95,6 +105,7 @@ export const useComboBox = ({
           setOpen(false);
           if (!selectedItem) {
             setSelectedItem(undefined);
+            setInputValue(undefined);
           }
         }
         break;
@@ -106,18 +117,22 @@ export const useComboBox = ({
       default:
         break;
     }
+    onKeyDown?.(event);
   };
 
   return {
     // portal
     portalProps: {
       open,
+      setOpen,
       floating,
       reference,
       getTriggerProps,
       getPortalProps,
     },
     // list
+    inputValue,
+    setInputValue,
     selectedItem,
     setSelectedItem,
     highlightedItem,
