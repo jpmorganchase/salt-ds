@@ -21,19 +21,13 @@
 
 .saltAccordionPanel-content {
   padding-left: calc(var(--salt-spacing-200) + var(--salt-size-icon));
-  padding-block: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-100);
+  padding-top: var(--salt-spacing-300);
+  padding-bottom: var(--salt-spacing-300);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .saltAccordionPanel {
     transition: none;
-  }
-
-  .saltAccordionPanel .saltAccordionPanel-inner {
-    overflow: visible;
-  }
-
-  .saltAccordionPanel[aria-hidden="true"] .saltAccordionPanel-inner {
-    overflow: hidden;
   }
 }
