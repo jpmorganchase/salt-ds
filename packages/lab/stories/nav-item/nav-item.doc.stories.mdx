@@ -1,0 +1,50 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { NavItem } from "@salt-ds/lab";
+import { withFlexGap } from "docs/decorators/withFlexGap";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Lab/Nav Item"
+  component={NavItem}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Nav Item
+
+##### Use when
+
+##### Don't use when
+
+## Features
+
+## Configuring Nav Item
+
+### API
+
+```
+import { NavItem } from "@salt-ds/lab";
+```
+
+### Props
+
+<ArgsTable of={NavItem} />
+
+## Related components
+
+### Classes
+
+<CSSClassTable of={NavItem} />
+
+### Characteristics used
+
+<CharacteristicUsage of={NavItem} />
+
+## Accessibility
+
+<HelpAndSupport />
