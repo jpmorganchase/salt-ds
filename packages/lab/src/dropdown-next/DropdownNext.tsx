@@ -20,7 +20,6 @@ import {
 import { useWindow } from "@salt-ds/window";
 import dropdownNextCss from "./DropdownNext.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { DropdownNextContext } from "./DropdownNextContext";
 import { FloatingPortal, Placement } from "@floating-ui/react";
 import { useDropdownNext } from "./useDropdownNext";
 
@@ -38,7 +37,7 @@ export interface DropdownNextProps<T>
    */
   defaultSelected?: string;
   /**
-   * List of options when using a dropdown. Accepts string or object with `id`, `value` and `disabled`.
+   * List of options when using a dropdown.
    */
   source: T[];
   /**
@@ -57,11 +56,12 @@ export interface DropdownNextProps<T>
    * Props for dropdown list.
    */
   ListProps?: ListNextProps;
-  /**
-   * Props for controlled dropdown.
-   */
+  /* Props for controlled dropdown. */
   open?: boolean;
-  selected?: T;
+  /* Props for controlled dropdown. */
+  selectedItem?: string;
+  /* Props for controlled dropdown. */
+  highlightedItem?: string;
 }
 
 export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
@@ -75,12 +75,14 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       readOnly,
       source,
       placement = "bottom",
-      open: openProp,
+      open: openControlProp,
+      selectedItem: selectedItemControlProp,
+      highlightedItem: highlightedItemControlProp,
       onFocus,
       onKeyDown,
       onBlur,
       onMouseOver,
-      onClick,
+      onMouseDown,
       style: dropdownStyle,
       ListProps,
       ...restProps
@@ -103,16 +105,11 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       blurHandler,
       mouseOverHandler,
       mouseDownHandler,
-      contextValue,
       activeDescendant,
       selectedItem,
-      setSelectedItem,
       highlightedItem,
-      setHighlightedItem,
-      setListRef,
       getListItems,
       open,
-      setOpen,
       floating,
       reference,
       getDropdownNextProps,
@@ -123,7 +120,9 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       listRef,
       listId,
       placement,
-      openProp,
+      openControlProp,
+      selectedItemControlProp,
+      highlightedItemControlProp,
     });
 
     const triggerRef = useForkRef(
@@ -181,7 +180,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     const handleMouseDown = (event: MouseEvent<HTMLElement>) => {
       if (disabled || readOnly) return;
       mouseDownHandler();
-      onClick?.(event);
+      onMouseDown?.(event);
     };
 
     return (

@@ -33,7 +33,10 @@ interface UseDropdownNextProps<T>
   disabled?: boolean;
   listRef: RefObject<HTMLUListElement>;
   listId?: string;
-  openProp?: boolean;
+  // props for controlled dropdown
+  openControlProp?: boolean;
+  selectedItemControlProp?: string;
+  highlightedItemControlProp?: string;
 }
 
 export const useDropdownNext = ({
@@ -41,12 +44,14 @@ export const useDropdownNext = ({
   disabled,
   listRef,
   listId,
-  openProp,
+  openControlProp,
+  selectedItemControlProp,
+  highlightedItemControlProp,
   onOpenChange: onOpenChangeProp,
   placement: placementProp,
 }: UseDropdownNextProps<T>) => {
   const [open, setOpen] = useControlled({
-    controlled: openProp,
+    controlled: openControlProp,
     default: false,
     name: "DropdownNext",
     state: "open",
@@ -70,6 +75,8 @@ export const useDropdownNext = ({
     defaultSelected,
     id: listId,
     ref: listRef,
+    highlightedItem: highlightedItemControlProp,
+    selected: selectedItemControlProp,
   });
 
   const { select, highlight } = listContextValue;
@@ -96,7 +103,6 @@ export const useDropdownNext = ({
         );
       }
 
-      console.log("source", source);
       return (
         <ListItemNext
           key={item.id ?? index}

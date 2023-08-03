@@ -16,7 +16,6 @@ const SimpleListExample = [
   "Arizona",
   "Arkansas",
   "California",
-  "Colorsfddhehrehyyhado",
   "Connecticut",
   "Delaware",
   "Florida",
@@ -66,4 +65,83 @@ Disabled.args = {
   disabled: true,
   defaultSelected: SimpleListExample[7],
   source: SimpleListExample,
+};
+
+export const Controlled: Story<DropdownNextProps<T>> = ({
+  source = SimpleListExample,
+  defaultSelected = "California",
+  ...props
+}) => {
+  const buttonsRef = useRef(null);
+  const [highlightedIndex, setHighlightedIndex] = useState(
+    SimpleListExample.indexOf(defaultSelected) ?? 0
+  );
+  const [selectedItem, setSelectedItem] = useState(
+    defaultSelected ?? undefined
+  );
+  const [open, setOpen] = useState(false);
+
+  const handleOpenClose = () => {
+    setOpen(!open);
+  };
+
+  const handleArrowDown = () => {
+    setOpen(true);
+    const nextIndex = highlightedIndex === undefined ? 0 : highlightedIndex + 1;
+    setHighlightedIndex(nextIndex);
+  };
+
+  const handleArrowUp = () => {
+    setOpen(true);
+    const prevIndex = highlightedIndex === undefined ? 0 : highlightedIndex - 1;
+    setHighlightedIndex(prevIndex);
+  };
+
+  const handleSelect = () => {
+    highlightedIndex && setSelectedItem(SimpleListExample[highlightedIndex]);
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <div
+        ref={buttonsRef}
+        style={{
+          display: "flex",
+          paddingBottom: "20px",
+        }}
+      >
+        <Button onClick={handleOpenClose}>{open ? "Close" : "Open"}</Button>
+        <Button
+          disabled={highlightedIndex === SimpleListExample.length - 1}
+          onClick={handleArrowDown}
+          style={{ marginLeft: "5px" }}
+        >
+          <ArrowDownIcon />
+        </Button>
+        <Button
+          disabled={!highlightedIndex || highlightedIndex === 0}
+          onClick={handleArrowUp}
+          style={{ marginLeft: "5px" }}
+        >
+          <ArrowUpIcon />
+        </Button>
+        <Button
+          disabled={highlightedIndex === undefined}
+          onClick={handleSelect}
+          style={{ marginLeft: "5px" }}
+        >
+          Select
+        </Button>
+      </div>
+      <DropdownNext
+        {...props}
+        defaultSelected={defaultSelected}
+        source={source}
+        open={open}
+        selectedItem={selectedItem}
+        highlightedItem={SimpleListExample[highlightedIndex]}
+      />
+    </>
+  );
 };
