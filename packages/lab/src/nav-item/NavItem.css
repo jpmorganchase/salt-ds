@@ -67,6 +67,7 @@
   --saltIcon-color: var(--navItem-fill);
   --saltButton-background-hover: none;
   --saltButton-background-active: none;
+  --saltButton-padding: 0;
 }
 
 /* Styles applied to NavItem when focus is visible */
