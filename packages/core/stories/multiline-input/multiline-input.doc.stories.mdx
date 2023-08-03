@@ -52,7 +52,7 @@ Tip: For recommendations on variant choice, see the Forms pattern.
 
 ## Number of Rows
 
-Multiline Input shows 3 rows by default. This can be adjusted by setting the `rows` prop. This example demonstrates a Multiline Input with 4 rows.
+Multiline Input shows three rows by default. This can be adjusted by setting the `rows` prop. This example demonstrates a Multiline Input with four rows.
 
 Tip: Set the number of rows that you think best reflects the amount of content that your user will input in the context that your Multiline Input is being displayed.
 
@@ -62,13 +62,13 @@ Tip: Set the number of rows that you think best reflects the amount of content t
 
 ## Bordered
 
-Multiline Input can be styled with a full border by setting the `bordered` prop to `true`.
+To style Multiline Input with a full border, set the `bordered` prop to `true`.
 
 <Canvas>
   <Story id="core-multiline-input--bordered" />
 </Canvas>
 
-- Bordered styling is recommended when the field uses the same fill colour as the background (i.e., a primary fill colour on a primary background).
+- We recommend this styling when the field uses the same fill colour as the background (i.e., a primary fill colour on a primary background).
 
 ### Disabled
 
@@ -94,7 +94,7 @@ You can set Multiline Input to a read-only state. The value text can’t be edit
 
 ### Validation
 
-Multiline Input can show validation states (error, warning, success) with the prop `validationStatus`.
+Use the `validationStatus` prop to show validation states (error, warning, or success) in a Multiline Input.
 
 <Canvas>
   <Story id="core-multiline-input--validation-states" />
@@ -111,11 +111,11 @@ You can use a placeholder to prompt user input if no default value is provided.
   <Story id="core-multiline-input--placeholder" />
 </Canvas>
 
-- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use Helper Text beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the Placeholder Text to support, or provide an example of, the help message. More information can be found [here](https://www.w3.org/WAI/tutorials/forms/instructions/)
+- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use Helper Text beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the Placeholder Text to support the help message, or provide an example of the input. More information can be found [here](https://www.w3.org/WAI/tutorials/forms/instructions/)
 
 ### Adornments
 
-Custom adornments can be added at the beginning or end of the Multiline Input field using the `startAdornment` and `endAdornment` props respectively.
+You can use custom adornments at the beginning or end of the Multiline Input field using the `startAdornment` and `endAdornment` props respectively.
 
 <Canvas>
   <Story id="core-multiline-input--with-adornments" />
@@ -123,7 +123,7 @@ Custom adornments can be added at the beginning or end of the Multiline Input fi
 
 ## Spellcheck
 
-Automatic spellchecking can be turned on by using `inputProps`.
+Turn on automatic spellchecking by using `inputProps`.
 
 <Canvas>
   <Story id="core-multiline-input--spellcheck" />
@@ -131,7 +131,7 @@ Automatic spellchecking can be turned on by using `inputProps`.
 
 ### Character Count
 
-A character count can be added as a label using ‘endAdornment’ props. This example demonstrates the expected behaviour when the count is exceeded, with the field dynamically displaying an error state and the count continuing to display the number of characters over the limit.
+You can add a character count as a label using ‘endAdornment’ props. This example demonstrates the expected behaviour when the count is exceeded, with the field dynamically displaying an error state and the count continuing to display the number of characters over the limit.
 
 <Canvas>
   <Story id="core-multiline-input--character-count" />
