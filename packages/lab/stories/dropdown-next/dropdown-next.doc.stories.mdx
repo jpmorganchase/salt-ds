@@ -1,0 +1,95 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { DropdownNext } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+
+<Meta title="Documentation/Lab/Dropdown Next" component={DropdownNext} />
+
+# Dropdown Next
+
+A Dropdown allows the user to select an item from an array of options displayed in a list overlay – with the selected value displayed in the dropdown field.
+
+Use the Dropdown component when you have a list of options that don’t require filtering, and you want to display all available options alongside the current selection.
+
+To enable filtering, use Combobox component.
+
+Dropdown contains a Button with a chevron Icon, that opens a List on mouse and keyboard interactions.
+When `defaultSelected` prop is passed, Dropdown displays its value on initial render, otherwise it’s empty by default.
+
+<Canvas>
+  <Story id="lab-dropdown-next--default" />
+</Canvas>
+
+### Secondary
+
+Dropdown when variant is set to `secondary`.
+
+<Canvas>
+  <Story id="lab-dropdown-next--secondary" />
+</Canvas>
+
+### Readonly
+
+When ` readOnly={true}`, user will not be able to interact with Dropdown, it does not receive focus on any interaction.
+Use when you would like the user to know that the pre-selected value is valid but changes are not permitted.
+
+<Canvas>
+  <Story id="lab-dropdown-next--readonly" />
+</Canvas>
+
+### Disabled
+
+When `disabled={true}`, user will not be able to interact with Dropdown, it does not receive focus on any interaction.
+
+<Canvas>
+  <Story id="lab-dropdown-next--disabled" />
+</Canvas>
+
+### Controlled
+
+Controlled Dropdown allows states and behaviours to be controlled by the application, not within the component.
+It allows for finer control of Dropdown interactions.
+
+<Canvas>
+  <Story id="lab-dropdown-next--controlled" />
+</Canvas>
+
+## How to use
+
+### When to use Dropdown
+
+- When you want to allow user to choose 1 value from a set of options
+- When you want user to see only the selected value when Dropdown is inactive
+- When you want to preserve screen space
+
+### When not to use Dropdown
+
+- When you need to filter or search from available List options, use Combobox
+- When you have many List options, i.e. more than 10, use Combobox
+- When you have little List options, i.e. less than 5, use Checkbox or Radio Button
+- When you have exactly 2 options, use Switch
+
+# API
+
+```
+import { DropdownNext } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={DropdownNext} />
+
+## Classes
+
+<CSSClassTable of={DropdownNext} />
+
+## Characteristics used
+
+<CharacteristicUsage of={DropdownNext} />
+
+## Accessibility
+
+Dropdown Next is accessible by assistive technologies like screen readers, and
+provides full WAI-ARIA support.

@@ -29,7 +29,7 @@ export interface DropdownNextProps<T>
   extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
     HTMLAttributes<HTMLElement> {
   /**
-   * If true, dropdown will be disabled.
+   * If `true`, dropdown will be disabled.
    */
   disabled?: boolean;
   /**
@@ -45,11 +45,11 @@ export interface DropdownNextProps<T>
    */
   readOnly?: boolean;
   /**
-   * Background styling variant. Defaults to "primary".
+   * Background styling variant. Defaults to `primary` .
    */
   variant?: "primary" | "secondary";
   /**
-   * Placement of dropdown list. Defaults to 'bottom'.
+   * Placement of dropdown list. Defaults to `bottom` .
    */
   placement?: Placement;
   /**
