@@ -98,32 +98,37 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     const listId = useId(ListProps?.id);
     const dropdownId = useId(dropdownIdProp);
     const listRef = useRef<HTMLUListElement>(null);
+    const listProps = {
+      defaultSelected,
+      disabled,
+      ref: listRef,
+      id: listId,
+      selected: selectedItemControlProp,
+      highlightedItem: highlightedItemControlProp,
+    };
 
+    const {
+      handlers,
+      activeDescendant,
+      selectedItem,
+      highlightedItem,
+      getListItems,
+      portalProps,
+    } = useDropdownNext({
+      source,
+      placement,
+      listProps,
+      openControlProp,
+    });
+
+    const { open, floating, reference, getDropdownNextProps } = portalProps;
     const {
       focusHandler,
       keyDownHandler,
       blurHandler,
       mouseOverHandler,
       mouseDownHandler,
-      activeDescendant,
-      selectedItem,
-      highlightedItem,
-      getListItems,
-      open,
-      floating,
-      reference,
-      getDropdownNextProps,
-    } = useDropdownNext({
-      source,
-      defaultSelected,
-      disabled,
-      listRef,
-      listId,
-      placement,
-      openControlProp,
-      selectedItemControlProp,
-      highlightedItemControlProp,
-    });
+    } = handlers;
 
     const triggerRef = useForkRef(
       ref,

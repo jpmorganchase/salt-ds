@@ -15,38 +15,22 @@ import {
   UseFloatingUIProps,
 } from "@salt-ds/core";
 import { ListItemNext } from "@salt-ds/lab";
-import {
-  HTMLProps,
-  KeyboardEvent,
-  useMemo,
-  FocusEvent,
-  RefObject,
-} from "react";
-import { useList } from "../list-next/useList";
+import { HTMLProps, KeyboardEvent, useMemo, FocusEvent } from "react";
+import { useList, UseListProps } from "../list-next/useList";
 
 interface UseDropdownNextProps<T>
   extends Partial<
     Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
-  defaultSelected?: string;
   source: T[];
-  disabled?: boolean;
-  listRef: RefObject<HTMLUListElement>;
-  listId?: string;
+  listProps: UseListProps;
   // props for controlled dropdown
   openControlProp?: boolean;
-  selectedItemControlProp?: string;
-  highlightedItemControlProp?: string;
 }
 
 export const useDropdownNext = ({
-  defaultSelected,
-  disabled,
-  listRef,
-  listId,
+  listProps,
   openControlProp,
-  selectedItemControlProp,
-  highlightedItemControlProp,
   onOpenChange: onOpenChangeProp,
   placement: placementProp,
 }: UseDropdownNextProps<T>) => {
@@ -69,14 +53,9 @@ export const useDropdownNext = ({
     highlightedItem,
     setHighlightedItem,
     contextValue: listContextValue,
-    focusVisibleRef: listFocusVisibleRef,
+    focusVisibleRef,
   } = useList({
-    disabled,
-    defaultSelected,
-    id: listId,
-    ref: listRef,
-    highlightedItem: highlightedItemControlProp,
-    selected: selectedItemControlProp,
+    ...listProps,
   });
 
   const { select, highlight } = listContextValue;
@@ -126,36 +105,28 @@ export const useDropdownNext = ({
     onOpenChangeProp?.(open);
   };
 
-  const {
-    floating,
-    reference,
-    x,
-    y,
-    strategy,
-    placement,
-    context,
-  } = useFloatingUI({
-    open,
-    onOpenChange,
-    placement: placementProp,
-    middleware: [
-      offset(0),
-      size({
-        apply({ rects, elements }) {
-          Object.assign(elements.floating.style, {
-            width: `${rects.reference.width}px`,
-          });
-        },
-      }),
-      flip(),
-      shift({ limiter: limitShift() }),
-    ],
-  });
+  const { floating, reference, x, y, strategy, placement, context } =
+    useFloatingUI({
+      open,
+      onOpenChange,
+      placement: placementProp,
+      middleware: [
+        offset(0),
+        size({
+          apply({ rects, elements }) {
+            Object.assign(elements.floating.style, {
+              width: `${rects.reference.width}px`,
+            });
+          },
+        }),
+        flip(),
+        shift({ limiter: limitShift() }),
+      ],
+    });
 
   const { getFloatingProps } = useInteractions([
     useDismiss(context),
     useRole(context, { role: "listbox" }),
-    useClick(context),
   ]);
 
   const getDropdownNextProps = (): HTMLProps<HTMLDivElement> => {
@@ -233,32 +204,27 @@ export const useDropdownNext = ({
     }
   };
 
-  // CONTEXT
-  const contextValue = useMemo(
-    () => ({
-      ...listContextValue,
-    }),
-    [listContextValue]
-  );
-
   return {
-    focusHandler,
-    keyDownHandler,
-    blurHandler,
-    mouseOverHandler,
-    mouseDownHandler,
-    contextValue,
+    handlers: {
+      focusHandler,
+      keyDownHandler,
+      blurHandler,
+      mouseOverHandler,
+      mouseDownHandler,
+    },
     activeDescendant,
     selectedItem,
     setSelectedItem,
     highlightedItem,
     setHighlightedItem,
-    setListRef: listFocusVisibleRef,
+    focusVisibleRef,
     getListItems,
-    open,
-    setOpen,
-    floating,
-    reference,
-    getDropdownNextProps,
+    portalProps: {
+      open,
+      setOpen,
+      floating,
+      reference,
+      getDropdownNextProps,
+    },
   };
 };

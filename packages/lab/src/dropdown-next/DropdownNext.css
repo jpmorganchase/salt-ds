@@ -18,7 +18,6 @@
   padding-left: var(--saltDropdownNext-paddingLeft, var(--dropdownNext-padding));
   padding-right: var(--saltDropdownNext-paddingRight, var(--dropdownNext-padding));
   position: relative;
-  width: 100%;
   border: none;
   border-bottom: var(--dropdownNext-borderWidth) var(--dropdownNext-borderStyle) var(--dropdownNext-borderColor);
   justify-content: space-between;
