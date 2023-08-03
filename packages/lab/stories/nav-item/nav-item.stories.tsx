@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { useState } from "react";
-import { Card, H2, Link, useDensity, Drawer, useDrawer } from "@salt-ds/core";
+import { Card, H2, Link, Drawer, useDrawer } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 import { megaMenuData } from "./nav-item.data";
 
@@ -149,18 +149,6 @@ export const HorizontalGroupWithDropdown = () => {
     (item) => item.name === expanded
   )?.subNav;
 
-  const density = useDensity();
-
-  const listWidth = [
-    { density: "high", width: 110 },
-    { density: "medium", width: 120 },
-    { density: "low", width: 140 },
-    { density: "touch", width: 160 },
-  ];
-
-  const getWidthByDensity = () =>
-    listWidth.find((item) => item.density === density)?.width;
-
   return (
     <div className="container">
       <nav>
@@ -197,20 +185,12 @@ export const HorizontalGroupWithDropdown = () => {
                 {name}
               </NavItem>
               {expanded === name && (
-                <ListNext
-                  aria-label="Nav item list"
-                  onChange={(e, { value }) => {
-                    console.log("new selection", value);
-                  }}
-                  className="list"
-                  style={{ width: getWidthByDensity() }}
-                >
-                  {currentSubNav?.map((item, index) => (
-                    <ListItemNext key={index} value={item}>
-                      {item}
-                    </ListItemNext>
+                <ul className="list">
+                  <H2>{expanded}</H2>
+                  {currentSubNav?.map((item) => (
+                    <li key={item}>{item}</li>
                   ))}
-                </ListNext>
+                </ul>
               )}
             </li>
           ))}
@@ -403,214 +383,5 @@ export const VerticalNestedGroup = () => {
         ))}
       </ul>
     </nav>
-  );
-};
-
-export const NestedCardGroup = () => {
-  const [active, setActive] = useState(itemsWithSubNav[0].name);
-  const [expanded, setExpanded] = useState<string[]>([]);
-
-  return (
-    <nav>
-      <ul className="vertical">
-        {itemsWithSubNav.map(({ name, subNav }) => (
-          <li key={name}>
-            <NavItem
-              active={
-                active === name ||
-                (!expanded.includes(name) &&
-                  subNav?.some((item) => active === `${name} - ${item}`))
-              }
-              href="#"
-              orientation="vertical"
-              onClick={(event) => {
-                // Prevent default to avoid navigation
-                event.preventDefault();
-                setActive(name);
-              }}
-              onExpand={() => {
-                if (expanded.includes(name)) {
-                  setExpanded(expanded.filter((item) => item !== name));
-                } else {
-                  setExpanded([...expanded, name]);
-                }
-              }}
-              parent={subNav && subNav.length > 0}
-              expanded={expanded.includes(name)}
-            >
-              {name}
-            </NavItem>
-            {expanded.includes(name) && (
-              <ul className="cardList">
-                {subNav?.map((item) => (
-                  <li key={item} className="cardItem">
-                    <Link
-                      href="https://saltdesignsystem.com/"
-                      IconComponent={null}
-                      target="_blank"
-                    >
-                      <Card className="linkCard">{item}</Card>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-};
-
-export const HorizontalExpandableGroup = () => {
-  const [active, setActive] = useState(itemsWithSubNav[0].name);
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const currentSubNav = itemsWithSubNav.find(
-    (item) => item.name === expanded
-  )?.subNav;
-  return (
-    <div className="container">
-      <nav className="center">
-        <ul className="horizontal">
-          {itemsWithSubNav.map(({ name, subNav }) => (
-            <li key={name}>
-              <NavItem
-                active={active === name}
-                href="#"
-                onClick={(event) => {
-                  // Prevent default to avoid navigation
-                  event.preventDefault();
-                  setActive(name);
-                  setExpanded((old) => {
-                    if (old === name) {
-                      return null;
-                    }
-                    return name;
-                  });
-                }}
-                onExpand={() => {
-                  setExpanded((old) => {
-                    if (old === name) {
-                      return null;
-                    }
-                    return name;
-                  });
-                }}
-                expanded={expanded === name}
-                aria-haspopup={expanded === name}
-                parent={subNav && subNav.length > 0}
-              >
-                {name}
-              </NavItem>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className="content">
-        <LayerLayout
-          position="top"
-          isOpen={currentSubNav !== undefined}
-          fullScreenAtBreakpoint={"sm"}
-        >
-          <ul className="menu">
-            <H2>{expanded}</H2>
-            {currentSubNav?.map((item) => {
-              return (
-                <li key={item} className="cardItem">
-                  <Link
-                    href="https://saltdesignsystem.com/"
-                    IconComponent={null}
-                    target="_blank"
-                  >
-                    <Card className="linkCard">{item}</Card>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </LayerLayout>
-      </div>
-    </div>
-  );
-};
-
-export const HorizontalMegaMenu = () => {
-  const [active, setActive] = useState(itemsWithSubNav[0].name);
-  const [open, setOpen] = useState(false);
-
-  const toggleDrawer = () => setOpen((prevOpen) => !prevOpen);
-
-  const { getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
-
-  return (
-    <div className="megaMenuContainer">
-      <nav className="center">
-        <ul className="horizontal">
-          {itemsWithSubNav.map(({ name, subNav }) => (
-            <li key={name}>
-              <NavItem
-                active={active === name}
-                href="#"
-                onClick={(event) => {
-                  // Prevent default to avoid navigation
-                  event.preventDefault();
-                  setActive(name);
-                }}
-                onExpand={toggleDrawer}
-                expanded={open}
-                aria-haspopup={open}
-                parent={subNav && subNav.length > 0}
-              >
-                {name}
-              </NavItem>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <Drawer
-        open={open}
-        onOpenChange={setOpen}
-        position="top"
-        className="megaMenuDrawer"
-        {...getFloatingProps()}
-      >
-        <div className="megaMenu">
-          {megaMenuData.map(({ title, list, sections }) => (
-            <div>
-              <h3>{title}</h3>
-              {sections &&
-                sections.map(({ title, list }) => (
-                  <>
-                    <h4>{title}</h4>
-                    <ListNext
-                      aria-label="Mega menu list"
-                      className="megaMenuList"
-                    >
-                      {list.map((item, index) => (
-                        <ListItemNext key={index} value={item}>
-                          {item}
-                        </ListItemNext>
-                      ))}
-                    </ListNext>
-                  </>
-                ))}
-              {list && (
-                <ListNext aria-label="Mega menu list" className="megaMenuList">
-                  {list.map((item, index) => (
-                    <ListItemNext key={index} value={item}>
-                      {item}
-                    </ListItemNext>
-                  ))}
-                </ListNext>
-              )}
-            </div>
-          ))}
-        </div>
-      </Drawer>
-    </div>
   );
 };
