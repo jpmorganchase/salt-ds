@@ -9,13 +9,17 @@ ul {
 }
 
 .vertical {
-  width: 500px;
+  width: 250px;
   height: 500px;
 }
 
 .horizontal,
 .vertical {
   display: flex;
+}
+
+.horizontal {
+  flex-wrap: wrap;
 }
 
 .vertical {
@@ -46,11 +50,7 @@ ul {
 }
 
 .container {
-  width: 80vw;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-height: 500px;
+  min-height: 200px;
 }
 
 .container nav {
