@@ -11,5 +11,5 @@ DropdownNext
   source={source}
   defaultSelected={defaultSelected}
   {...props}
-/>;
+/>
 ```

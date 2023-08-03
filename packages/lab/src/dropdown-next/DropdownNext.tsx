@@ -141,17 +141,13 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     ) as MutableRefObject<HTMLUListElement>;
 
     const getIcon = () => {
-      const iconClassName = clsx(
-        withBaseName("icon"),
-        {
-          [withBaseName("disabled")]: disabled,
-        },
-        className
-      );
+      if (readOnly) return;
 
-      return readOnly ? (
-        ""
-      ) : open ? (
+      const iconClassName = clsx(withBaseName("icon"), {
+        [withBaseName("disabled")]: disabled,
+      });
+
+      return open ? (
         <ChevronUpIcon className={iconClassName} />
       ) : (
         <ChevronDownIcon className={iconClassName} />
@@ -187,7 +183,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
     };
 
     return (
-      <div className={clsx(withBaseName(), className)}>
+      <div className={clsx(withBaseName())}>
         <button
           id={dropdownId}
           disabled={disabled}
@@ -218,7 +214,7 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
           {...restProps}
           ref={triggerRef}
         >
-          <span className={clsx(withBaseName("buttonText"), className)}>
+          <span className={clsx(withBaseName("buttonText"))}>
             {selectedItem}
           </span>
           {getIcon()}

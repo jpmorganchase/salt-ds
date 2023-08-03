@@ -1,9 +1,7 @@
 .saltDropdownNext-button {
   --dropdownNext-borderColor: var(--salt-editable-borderColor);
   --dropdownNext-borderStyle: var(--salt-editable-borderStyle);
-  --dropdownNext-outlineColor: var(--salt-focused-outlineColor);
   --dropdownNext-borderWidth: var(--salt-size-border);
-  --dropdownNext-padding: var(--salt-size-unit);
 
   align-items: center;
   background: var(--saltDropdownNext-background, var(--dropdownNext-background));
@@ -15,8 +13,8 @@
   line-height: var(--saltDropdownNext-lineHeight, var(--salt-text-lineHeight));
   min-height: var(--saltDropdownNext-minHeight, var(--salt-size-base));
   min-width: var(--saltDropdownNext-minWidth, 160px);
-  padding-left: var(--saltDropdownNext-paddingLeft, var(--dropdownNext-padding));
-  padding-right: var(--saltDropdownNext-paddingRight, var(--dropdownNext-padding));
+  padding-left: var(--saltDropdownNext-paddingLeft, var(--salt-spacing-100));
+  padding-right: var(--saltDropdownNext-paddingRight, var(--salt-spacing-100));
   position: relative;
   border: none;
   border-bottom: var(--dropdownNext-borderWidth) var(--dropdownNext-borderStyle) var(--dropdownNext-borderColor);
@@ -34,7 +32,7 @@
   --dropdownNext-borderColor: var(--salt-editable-borderColor-active);
   --dropdownNext-borderWidth: var(--salt-editable-borderWidth-active);
 
-  outline: var(--saltDropdownNext-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--dropdownNext-outlineColor));
+  outline: var(--saltDropdownNext-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor));
 }
 
 .saltDropdownNext-buttonText {
@@ -42,7 +40,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding-right: var(--salt-size-adornmentGap);
+  padding-right: var(--salt-spacing-100);
 }
 
 .saltDropdownNext-list {
@@ -87,9 +85,7 @@
 .saltDropdownNext-icon.saltDropdownNext-readOnly,
 .saltDropdownNext-icon.saltDropdownNext-readOnly:hover,
 .saltDropdownNext-icon.saltDropdownNext-readOnly:active {
-  --icon-color: var(--salt-text-primary-foreground-disabled);
-
-  color: var(--icon-color);
+  color: var(--salt-text-primary-foreground-disabled);
 }
 
 /* Class applied if `variant="primary"` */
