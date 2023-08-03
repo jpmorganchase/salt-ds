@@ -93,11 +93,22 @@ ul {
   justify-content: center;
 }
 
+.megaMenuContainer {
+  min-height: 95vh;
+}
+
 .megaMenu {
-  padding: var(--salt-spacing-300);
   display: flex;
   flex-wrap: wrap;
   gap: var(--salt-spacing-300);
+}
+
+.megaMenuDrawer {
+  position: relative;
+}
+
+.saltDrawer-overlay {
+  margin-top: 60px;
 }
 
 .megaMenu h3 {

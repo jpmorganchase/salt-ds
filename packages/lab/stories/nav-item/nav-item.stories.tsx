@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { useState } from "react";
-import { Card, H2, Link, useDensity } from "@salt-ds/core";
+import { Card, H2, Link, useDensity, Drawer, useDrawer } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 import { megaMenuData } from "./nav-item.data";
 
@@ -536,12 +536,17 @@ export const HorizontalExpandableGroup = () => {
 
 export const HorizontalMegaMenu = () => {
   const [active, setActive] = useState(itemsWithSubNav[0].name);
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const currentSubNav = itemsWithSubNav.find(
-    (item) => item.name === expanded
-  )?.subNav;
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = () => setOpen((prevOpen) => !prevOpen);
+
+  const { getFloatingProps } = useDrawer({
+    open,
+    onOpenChange: setOpen,
+  });
+
   return (
-    <div className="container">
+    <div className="megaMenuContainer">
       <nav className="center">
         <ul className="horizontal">
           {itemsWithSubNav.map(({ name, subNav }) => (
@@ -553,23 +558,10 @@ export const HorizontalMegaMenu = () => {
                   // Prevent default to avoid navigation
                   event.preventDefault();
                   setActive(name);
-                  setExpanded((old) => {
-                    if (old === name) {
-                      return null;
-                    }
-                    return name;
-                  });
                 }}
-                onExpand={() => {
-                  setExpanded((old) => {
-                    if (old === name) {
-                      return null;
-                    }
-                    return name;
-                  });
-                }}
-                expanded={expanded === name}
-                aria-haspopup={expanded === name}
+                onExpand={toggleDrawer}
+                expanded={open}
+                aria-haspopup={open}
                 parent={subNav && subNav.length > 0}
               >
                 {name}
@@ -578,7 +570,14 @@ export const HorizontalMegaMenu = () => {
           ))}
         </ul>
       </nav>
-      {currentSubNav && (
+
+      <Drawer
+        open={open}
+        onOpenChange={setOpen}
+        position="top"
+        className="megaMenuDrawer"
+        {...getFloatingProps()}
+      >
         <div className="megaMenu">
           {megaMenuData.map(({ title, list, sections }) => (
             <div>
@@ -611,7 +610,7 @@ export const HorizontalMegaMenu = () => {
             </div>
           ))}
         </div>
-      )}
+      </Drawer>
     </div>
   );
 };
