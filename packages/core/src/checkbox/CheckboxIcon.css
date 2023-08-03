@@ -19,7 +19,8 @@
   color: var(--salt-selectable-foreground-hover);
 }
 
-.saltCheckboxIcon-checked {
+.saltCheckboxIcon-checked,
+.saltCheckbox:hover .saltCheckboxIcon-checked {
   border-color: var(--salt-selectable-borderColor-selected);
   color: var(--salt-selectable-foreground-selected);
 }

@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import { Button, FlowLayout, Panel } from "@salt-ds/core";
+import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
 
@@ -39,15 +39,11 @@ export const Default: ComponentStory<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" value={38} />
 );
 
-export const Disabled: ComponentStory<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" disabled value={38} />
-);
-
 export const MaxValue: ComponentStory<typeof CircularProgress> = () => (
-  <div>
+  <StackLayout align="center">
     <h3> max = 500, value = 250</h3>
     <CircularProgress aria-label="Download" value={250} max={500} />
-  </div>
+  </StackLayout>
 );
 
 export const ProgressingValue: ComponentStory<typeof CircularProgress> = () => (
@@ -56,8 +52,4 @@ export const ProgressingValue: ComponentStory<typeof CircularProgress> = () => (
 
 export const ShowNoInfo: ComponentStory<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" showInfo={false} value={38} />
-);
-
-export const Unit: ComponentStory<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" unit="px" value={38} />
 );

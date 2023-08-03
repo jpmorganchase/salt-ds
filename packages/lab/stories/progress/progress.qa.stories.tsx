@@ -13,9 +13,7 @@ export const ExamplesGrid: Story<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={3} {...props}>
       <LinearProgress className={className} value={38} />
-      <LinearProgress className={className} disabled value={38} />
       <CircularProgress aria-label="Download" value={38} />
-      <CircularProgress aria-label="Download" disabled value={38} />
     </QAContainer>
   );
 };

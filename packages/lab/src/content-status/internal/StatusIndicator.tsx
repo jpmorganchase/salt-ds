@@ -12,7 +12,7 @@ import { CircularProgress, CircularProgressProps } from "../../progress";
 
 export interface StatusIndicatorProps
   extends Pick<SpinnerProps, "disableAnnouncer">,
-    Pick<CircularProgressProps, "unit" | "value"> {
+    Pick<CircularProgressProps, "value"> {
   title?: string;
   message?: string;
   CircularProgressProps?: Partial<CircularProgressProps>;
@@ -26,7 +26,6 @@ const withBaseName = makePrefixer("saltContentStatus");
 export function StatusIndicator({
   status = "info",
   disableAnnouncer,
-  unit,
   value,
   title,
   message,
@@ -46,7 +45,6 @@ export function StatusIndicator({
             withBaseName("determinateLoading"),
             circularProgressClassName
           )}
-          unit={unit}
           value={value}
           {...restCircularProgressProps}
         />

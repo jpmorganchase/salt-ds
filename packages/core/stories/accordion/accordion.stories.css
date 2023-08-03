@@ -3,6 +3,7 @@
   padding: var(--salt-spacing-200);
 }
 
-.saltAccordion {
-  width: 60vw;
+.saltAccordion,
+.saltAccordionGroup {
+  width: 300px;
 }
