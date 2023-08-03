@@ -1,4 +1,5 @@
 import { NavItem } from "@salt-ds/lab";
+import { NotificationIcon } from "@salt-ds/icons";
 
 describe("GIVEN a NavItem", () => {
   describe("AND `href` is passed", () => {
@@ -38,6 +39,13 @@ describe("GIVEN a NavItem", () => {
     it("should render the children as the label", () => {
       cy.mount(<NavItem>NavItem</NavItem>);
       cy.findByText("NavItem").should("exist");
+    });
+  });
+
+  describe("AND an icon is passed", () => {
+    it("should render the icon component", () => {
+      cy.mount(<NavItem IconComponent={NotificationIcon}>NavItem</NavItem>);
+      cy.get('[data-testid="NotificationIcon"]').should("exist");
     });
   });
 
