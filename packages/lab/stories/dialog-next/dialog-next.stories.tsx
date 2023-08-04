@@ -58,6 +58,7 @@ const DialogTemplate: ComponentStory<typeof DialogNext> = ({
         <DialogNextContent>{content}</DialogNextContent>
         <DialogNextActions>
           <SplitLayout
+            style={{ flex: 1 }}
             startItem={
               <Button variant="secondary" onClick={handleClose}>
                 Cancel
@@ -180,18 +181,12 @@ const AlertDialogTemplate: ComponentStory<typeof DialogNext> = ({
           This is a description for an alert dialog.
         </DialogNextContent>
         <DialogNextActions>
-          <SplitLayout
-            endItem={
-              <FlowLayout gap={1}>
-                <Button variant="secondary" onClick={handleClose}>
-                  Cancel
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                  Ok
-                </Button>
-              </FlowLayout>
-            }
-          />
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Ok
+          </Button>
         </DialogNextActions>
       </DialogNext>
     </>
@@ -288,7 +283,7 @@ export const PreferencesDialog: ComponentStory<typeof DialogNext> = (args) => {
           <DialogNextContent>Hello</DialogNextContent>
         </FlexLayout>
         <DialogNextActions>
-          <SplitLayout endItem={<Button onClick={handleClose}>Save</Button>} />
+          <Button onClick={handleClose}>Save</Button>
         </DialogNextActions>
       </DialogNext>
     </>
@@ -311,8 +306,8 @@ export const DesktopDialog = () => {
         <DialogNextTitle>Window Dialog</DialogNextTitle>
         <DialogNextContent>Hello world!</DialogNextContent>
         <DialogNextActions>
-          <Button>Save</Button>
           <Button variant="secondary">Cancel</Button>
+          <Button>Save</Button>
         </DialogNextActions>
       </FakeWindow>
 
@@ -320,8 +315,8 @@ export const DesktopDialog = () => {
         <DialogNextTitle accent>Window Dialog</DialogNextTitle>
         <DialogNextContent>Accent world!</DialogNextContent>
         <DialogNextActions>
-          <Button>Save</Button>
           <Button variant="secondary">Cancel</Button>
+          <Button>Save</Button>
         </DialogNextActions>
       </FakeWindow>
 
@@ -329,8 +324,8 @@ export const DesktopDialog = () => {
         <DialogNextTitle status="warning">Warning Dialog</DialogNextTitle>
         <DialogNextContent>Potential issues abound!</DialogNextContent>
         <DialogNextActions>
-          <Button>Ok</Button>
           <Button variant="secondary">Cancel</Button>
+          <Button>Ok</Button>
         </DialogNextActions>
       </FakeWindow>
     </StackLayout>

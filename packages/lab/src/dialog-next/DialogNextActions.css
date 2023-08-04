@@ -1,4 +1,7 @@
 .saltDialogNextActions {
   padding: var(--salt-spacing-300);
   padding-bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--salt-spacing-100);
 }
