@@ -7,13 +7,10 @@ import {
 
 <Meta title="Documentation/Lab/Dropdown Next" component={DropdownNext} />
 
-# Dropdown Next
+# Dropdown
 
-A Dropdown allows the user to select an item from an array of options displayed in a list overlay – with the selected value displayed in the dropdown field.
-
-Use the Dropdown component when you have a list of options that don’t require filtering, and you want to display all available options alongside the current selection.
-
-To enable filtering, use Combobox component.
+A Dropdown allows the user to select an item from an array of options displayed in an overlay list– with the selected value displayed in the dropdown field.
+Use the Dropdown component when you have a limited list of options (5-10) that don’t require filtering to narrow down.
 
 Dropdown contains a Button with a chevron Icon, that opens a List on mouse and keyboard interactions.
 When `defaultSelected` prop is passed, Dropdown displays its value on initial render, otherwise it’s empty by default.
@@ -29,6 +26,8 @@ Dropdown when variant is set to `secondary`.
 <Canvas>
   <Story id="lab-dropdown-next--secondary" />
 </Canvas>
+
+Tip: See the [Forms pattern](https://www.saltdesignsystem.com/salt/patterns/forms) for guidance on primary vs secondary control selection.
 
 ### Readonly
 
@@ -60,16 +59,14 @@ It allows for finer control of Dropdown interactions.
 
 ### When to use Dropdown
 
-- When you want to allow user to choose 1 value from a set of options
-- When you want user to see only the selected value when Dropdown is inactive
-- When you want to preserve screen space
+- When you want to allow the user to choose 1 value from a set of 5-10 options and if you only want the selected value to be visible in your UI (e.g., to preserve screen space).
 
 ### When not to use Dropdown
 
-- When you need to filter or search from available List options, use Combobox
-- When you have many List options, i.e. more than 10, use Combobox
-- When you have little List options, i.e. less than 5, use Checkbox or Radio Button
-- When you have exactly 2 options, use Switch
+- When you have 10+ options and users would benefit from filtering to narrow down the visible options, use [Combo Box]().
+- When you have less than 5 options, and multiple selection is enabled, use a [Checkbox group](https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-checkbox--page).
+- When you have less than 5 options, and single selection only, use a [Radio Button group](https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-radio-button--page).
+- If you have a Boolean selection (on/off) consider using a [Switch](https://storybook.saltdesignsystem.com/?path=/docs/documentation-lab-switch--page).
 
 # API
 
@@ -91,5 +88,4 @@ import { DropdownNext } from "@salt-ds/lab";
 
 ## Accessibility
 
-Dropdown Next is accessible by assistive technologies like screen readers, and
-provides full WAI-ARIA support.
+The Dropdown control must be wrapped in a [Form Field](https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-form-field--page) control to be compliant with WCAG 2.1 standards. The Form Field provides a visible label and help and status information.
