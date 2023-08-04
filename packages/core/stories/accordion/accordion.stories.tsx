@@ -19,17 +19,13 @@ export default {
   component: Accordion,
 } as ComponentMeta<typeof Accordion>;
 
-interface AccordionStoryProps {
-  disabled?: boolean;
-}
-
 export const Default: Story<AccordionProps> = (props) => (
   <div className="story-root">
     <Accordion {...props}>
-      <AccordionHeader>Accordion label</AccordionHeader>
+      <AccordionHeader>Internal form</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
-          This is content inside of an Accordion.
+          Please fill out the following details.
           <FormField labelPlacement="left">
             <FormLabel>Disclosure ID</FormLabel>
             <Input />
@@ -57,10 +53,10 @@ export const DefaultGroup: Story<AccordionGroupProps> = (props) => (
     <AccordionGroup {...props}>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
         <Accordion value={`accordion-${i}`} key={`accordion-${i}`}>
-          <AccordionHeader>Accordion label</AccordionHeader>
+          <AccordionHeader>Internal form</AccordionHeader>
           <AccordionPanel>
             <FlowLayout>
-              This is content inside of an Accordion.
+              Please fill out the following details.
               <FormField labelPlacement="left">
                 <FormLabel>Disclosure ID</FormLabel>
                 <Input />
@@ -99,10 +95,10 @@ export const ExclusiveGroup: Story<AccordionGroupProps> = (props) => {
             onToggle={onChange}
             key={`accordion-${i}`}
           >
-            <AccordionHeader>Accordion label</AccordionHeader>
+            <AccordionHeader>Internal form</AccordionHeader>
             <AccordionPanel>
               <FlowLayout>
-                This is content inside of an Accordion.
+                Please fill out the following details.
                 <FormField labelPlacement="left">
                   <FormLabel>Disclosure ID</FormLabel>
                   <Input />
@@ -133,10 +129,10 @@ export const Disabled: Story<AccordionGroupProps> = (props) => (
           key={`accordion-${i}`}
           disabled={i === 2}
         >
-          <AccordionHeader>Accordion label</AccordionHeader>
+          <AccordionHeader>Internal form</AccordionHeader>
           <AccordionPanel>
             <FlowLayout>
-              This is content inside of an Accordion.
+              Please fill out the following details.
               <FormField labelPlacement="left">
                 <FormLabel>Disclosure ID</FormLabel>
                 <Input />
@@ -173,10 +169,10 @@ export const Status: Story<AccordionGroupProps> = (props) => (
           key={`accordion-${i}`}
           status={statuses[i]}
         >
-          <AccordionHeader>Accordion label</AccordionHeader>
+          <AccordionHeader>Internal form</AccordionHeader>
           <AccordionPanel>
-            <FlowLayout>
-              This is content inside of an Accordion.
+            <FlowLayout>   
+            Please fill out the following details.
               <FormField labelPlacement="left">
                 <FormLabel>Disclosure ID</FormLabel>
                 <Input />

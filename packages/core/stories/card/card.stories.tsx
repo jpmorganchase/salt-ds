@@ -48,9 +48,9 @@ const ExampleRow = ({ name, children }: ExampleRowProps) => (
 );
 
 const Examples = () => (
-  <ExampleRow name="Default">
+  <ExampleRow name="Sustainable investing products">
     <Card>
-      <Text>Content</Text>
+      <Text>We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.</Text>
     </Card>
   </ExampleRow>
 );
@@ -58,7 +58,7 @@ const Examples = () => (
 const InteractableExamples = () => (
   <ExampleRow name="Default">
     <InteractableCard>
-      <Text>Content</Text>
+      <Text>{exampleData[0].title}</Text>
     </InteractableCard>
   </ExampleRow>
 );
@@ -74,41 +74,49 @@ export const AllDefault: ComponentStory<typeof Card> = () => (
   </div>
 );
 
+const exampleData = [
+  { title: "Sustainable investing products", content: "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values."},
+ {title: "Our expertise", content: "Our team of more than 200 experts in 28 offices worldwide is on hand to help you with your investment decisions."},
+ {title: "Market-leading insights", content: "Our award-winning strategists provide unique and regular insights about market events and current trends."},
+ {title: "Events", content: "We have a full calendar of online and in-person events with expert guest speakers for you to attend."}
+]
+
 export const Default: ComponentStory<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
-    <H1 styleAs="h3">Card</H1>
+    <H1 styleAs="h3">{exampleData[0].title}</H1>
     <Text>
-      A card displays information about a single subject, and acts as entry
-      point to more detailed information.
+      {exampleData[0].content}
     </Text>
   </Card>
 );
 
 export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
   <FlexLayout>
-    {Array.from({ length: 4 }, (_, index) => (
+    {exampleData.map((example, index) => {
+      return (
       <Card key={index}>
-        <H1 styleAs="h3">Card</H1>
+        <H1 styleAs="h3">{example.title}</H1>
         <Text>
-          A card displays information about a single subject, and acts as entry
-          point to more detailed information.
+          {example.content}
         </Text>
       </Card>
-    ))}
+    );
+    })}
   </FlexLayout>
 );
 
 export const CardsInGridLayout: ComponentStory<typeof Card> = () => (
   <GridLayout style={{ maxWidth: "700px" }} rows={2} columns={2}>
-    {Array.from({ length: 4 }, (_, index) => (
+    {exampleData.map((example, index) => {
+      return (
       <Card key={index}>
-        <H1 styleAs="h3">Card</H1>
+        <H1 styleAs="h3">{example.title}</H1>
         <Text>
-          A card displays information about a single subject, and acts as entry
-          point to more detailed information.
+          {example.content}
         </Text>
       </Card>
-    ))}
+    );
+    })}
   </GridLayout>
 );
 
@@ -120,10 +128,9 @@ export const DefaultWithImage: ComponentStory<typeof Card> = () => (
       className="card-demo-image"
       style={{ width: "-webkit-fill-available" }}
     />
-    <H1 styleAs="h3">Card</H1>
+    <H1 styleAs="h3">{exampleData[0].title}</H1>
     <Text>
-      A card displays information about a single subject, and acts as entry
-      point to more detailed information.
+      {exampleData[0].content}
     </Text>
   </Card>
 );
@@ -131,18 +138,17 @@ export const DefaultWithImage: ComponentStory<typeof Card> = () => (
 export const DefaultWithLink: ComponentStory<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-      <H1 styleAs="h3">Card</H1>
+      <H1 styleAs="h3">{exampleData[0].title}</H1>
       <Text>
-        A card displays information about a single subject, and acts as entry
-        point to more detailed information.
+        {exampleData[0].content}
       </Text>
     </div>
     <Link
-      href="https://www.figma.com/@jpmorgan_salt"
+      href="#"
       IconComponent={null}
       target="_blank"
     >
-      Visit Specs
+      View our range of funds
     </Link>
   </Card>
 );
@@ -162,18 +168,17 @@ export const DefaultWithLinkAndImage: ComponentStory<typeof Card> = () => (
       }}
     >
       <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-        <H1 styleAs="h3">Card</H1>
+        <H1 styleAs="h3">{exampleData[0].title}</H1>
         <Text>
-          A card displays information about a single subject, and acts as entry
-          point to more detailed information.
+        {exampleData[0].content}
         </Text>
       </div>
       <Link
-        href="https://www.figma.com/@jpmorgan_salt"
+        href="#"
         IconComponent={null}
         target="_blank"
       >
-        Visit Specs
+        View our range of funds
       </Link>
     </div>
   </Card>
@@ -182,14 +187,13 @@ export const DefaultWithLinkAndImage: ComponentStory<typeof Card> = () => (
 export const DefaultWithButton: ComponentStory<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-      <H1 styleAs="h3">Card</H1>
+      <H1 styleAs="h3">{exampleData[0].title}</H1>
       <Text>
-        A card displays information about a single subject, and acts as entry
-        point to more detailed information.
+      {exampleData[0].content}
       </Text>
     </div>
-    <Button onClick={() => window.open("https://www.figma.com/@jpmorgan_salt")}>
-      Visit Specs
+    <Button onClick={() => window.open("#")}>
+      View funds
     </Button>
   </Card>
 );
@@ -209,16 +213,15 @@ export const DefaultWithButtonAndImage: ComponentStory<typeof Card> = () => (
       }}
     >
       <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-        <H1 styleAs="h3">Card</H1>
+        <H1 styleAs="h3">{exampleData[0].title}</H1>
         <Text>
-          A card displays information about a single subject, and acts as entry
-          point to more detailed information.
+          {exampleData[0].content}
         </Text>
       </div>
       <Button
-        onClick={() => window.open("https://www.figma.com/@jpmorgan_salt")}
+        onClick={() => window.open("#")}
       >
-        Visit Specs
+        View funds
       </Button>
     </div>
   </Card>
@@ -237,8 +240,8 @@ export const InteractableAll: ComponentStory<typeof Card> = () => (
 
 export const Interactable: ComponentStory<typeof Card> = () => (
   <InteractableCard style={{ width: "256px" }}>
-    <H1 styleAs="h3">Card</H1>
-    <Text>An entry point to more detailed information.</Text>
+    <H1 styleAs="h3">{exampleData[0].title}</H1>
+    <Text>{exampleData[0].content}</Text>
   </InteractableCard>
 );
 
@@ -250,50 +253,35 @@ export const InteractableDisabled: ComponentStory<typeof Card> = () => (
     disabled
   >
     <H1 styleAs="h3" disabled>
-      Card
+    {exampleData[0].title}
     </H1>
-    <Text disabled>This component has been disabled.</Text>
+    <Text disabled>{exampleData[0].content}</Text>
   </InteractableCard>
 );
 
-export const InteractableAccentVariations: ComponentStory<typeof Card> = () => (
-  <div
-    style={{
-      display: "grid",
-      gap: "calc(2 * var(--salt-size-unit))",
-      width: "266px",
-    }}
-  >
-    <InteractableCard>
-      <H1 styleAs="h3">Card</H1>
-      <Text>
-        A card displays information about a single subject, and acts as entry
-        point to more detailed information.
-      </Text>
-    </InteractableCard>
-    <InteractableCard accentPlacement="left">
-      <H1 styleAs="h3">Card</H1>
-      <Text>
-        A card displays information about a single subject, and acts as entry
-        point to more detailed information.
-      </Text>
-    </InteractableCard>
-    <InteractableCard accentPlacement="top">
-      <H1 styleAs="h3">Card</H1>
-      <Text>
-        A card displays information about a single subject, and acts as entry
-        point to more detailed information.
-      </Text>
-    </InteractableCard>
-    <InteractableCard accentPlacement="right">
-      <H1 styleAs="h3">Card</H1>
-      <Text>
-        A card displays information about a single subject, and acts as entry
-        point to more detailed information.
-      </Text>
-    </InteractableCard>
-  </div>
-);
+export const InteractableAccentVariations: ComponentStory<typeof Card> = () => {
+  const placements = ["left","right","top","bottom"];
+  return (
+    <div
+      style={{
+        display: "grid",
+        gap: "calc(2 * var(--salt-size-unit))",
+        width: "266px",
+      }}
+    >
+        {exampleData.map((example, index) => {
+          return (
+            <InteractableCard accentPlacement={placements[index] as "left" | "right" | "top" | "bottom"} key={index}>
+              <H1 styleAs="h3">{example.title}</H1>
+              <Text>
+                {example.content}
+              </Text>
+            </InteractableCard>
+          );
+        })}
+    </div>
+  );
+};
 
 export const InteractableAsBlockLink: ComponentStory<typeof Card> = () => {
   return (
@@ -304,10 +292,9 @@ export const InteractableAsBlockLink: ComponentStory<typeof Card> = () => {
       target="_blank"
     >
       <InteractableCard style={{ width: "266px" }}>
-        <H1 styleAs="h3">Card</H1>
+        <H1 styleAs="h3">{exampleData[0].title}</H1>
         <Text>
-          A card displays information about a single subject, and acts as entry
-          point to more detailed information.
+          {exampleData[0].content}
         </Text>
       </InteractableCard>
     </Link>
@@ -337,10 +324,9 @@ export const InteractableAsBlockLinkWithImage: ComponentStory<
               "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
           }}
         >
-          <H1 styleAs="h3">Card</H1>
+          <H1 styleAs="h3">{exampleData[0].title}</H1>
           <Text>
-            A card displays information about a single subject, and acts as
-            entry point to more detailed information.
+          {exampleData[0].content}
           </Text>
         </div>
       </InteractableCard>
@@ -362,10 +348,9 @@ export const InteractableAsBlockLinkWithImageBackground: ComponentStory<
         <div
           style={{ paddingTop: "calc(3 * var(--salt-size-container-spacing))" }}
         >
-          <H1 styleAs="h3">Card</H1>
+          <H1 styleAs="h3">{exampleData[0].title}</H1>
           <Text>
-            A card displays information about a single subject, and acts as
-            entry point to more detailed information.
+          {exampleData[0].content}
           </Text>
         </div>
       </InteractableCard>
