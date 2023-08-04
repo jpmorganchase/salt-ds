@@ -1,8 +1,7 @@
 .saltAccordionHeader {
   display: flex;
   gap: var(--salt-spacing-100);
-  padding-block: var(--salt-spacing-50);
-  padding-inline: var(--salt-spacing-100);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
   align-items: center;
   border: 0;
   width: 100%;

@@ -6,9 +6,11 @@ import "./FontBlock.css";
 export const FontSizeBlock = ({
   fontSize,
   className,
+  hideToken,
 }: {
   fontSize: string;
   className?: string;
+  hideToken?: boolean;
 }) => {
   return (
     <>
@@ -18,7 +20,7 @@ export const FontSizeBlock = ({
       >
         T
       </div>
-      <code className="DocGrid-code">{fontSize}</code>
+      {!hideToken && <code className="DocGrid-code">{fontSize}</code>}
     </>
   );
 };
