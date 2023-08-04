@@ -3,74 +3,91 @@ title: Responsiveness
 layout: DetailTechnical
 sidebar:
   label: Responsiveness
-data:
-  status: In progress
 ---
 
-A responsive layout dynamically changes the appearance of a product in response to a user's behavior and/or environment based on screen size, platform, orientation or zoom level.
+A responsive layout makes dynamic changes to the appearance of a product in response to the size of the screen.
 
-Responsiveness provides a fluid, flexible layout that adapts to screen size and offers an optimized experience.
+Responsiveness provides a fluid and flexible layout that adapts to screen size and offers an optimized experience.
 
-## Types
+A responsive design changes the layout of elements on the screen (including hiding/showing some elements) based on the size of the screen, e.g. a design will reflow as you resize the browser window to ensure the application remains usable.
 
-There are two types of layout behavior: responsive and adaptive.
+## Layout grid
 
-### Responsive
+A responsive layout is made up of a set of consistently proportioned columns, separated by gutters, and flanked by margins.
 
-Responsive design adjusts the layout of elements on the screen including hiding or showing some elements based on the size of the screen, e.g. a design will reflow as you resize the browser window to ensure the application remains usable.
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/responsive-grid-off.svg", alt: "" },
+    { src: "/img/foundations/responsive-grid-on.svg", alt: "" },
+  ]}
+  label="Show columns"
+/>
 
-### Adaptive
+Basic layout grids are included in the design system to provide a starting point for designing any user interface.
 
-In adaptive design, the types of components used on a screen changes based on the device e.g., a desktop browser window and a tablet browser, both set to the same size, would display different componentry to suit a keyboard/mouse vs. touch context.
+The gutters and margins are set using `--salt-spacing-300` across all densities. The number of columns and their widths vary depending on the density and breakpoint set. Find all you need to know about densities on the [Density foundation](density)
 
-In other words, an adaptive user interface (UI) adapts itself to the device capabilities, while a responsive UI simply responds to changes in viewport size.
+| Token                | High density (px) | Medium | Low | Touch |
+| -------------------- | ----------------- | ------ | --- | ----- |
+| `--salt-spacing-300` | 12                | 24     | 36  | 48    |
+
+- Gutters - The gutter is the space between columns.
+- Margins - Left and right spacing on the screen are margins.
+- Columns - Columns divide the content of the page into various numbers of columns depending on the breakpoint.
 
 ## Breakpoints
 
-In responsive and adaptive design, a breakpoint is the point (width) at which a layout will adapt to provide the best user experience. The number of columns in a layout varies based on the breakpoint and [density](density) set. The margin and gutter size remains constant for each combination, whereas column width will vary as a percentage of the overall width.
+In responsive design, a breakpoint is the width at which a layout will adapt in order to provide the best possible user experience.
+
+<Image
+  src="/img/foundations/responsive-breakpoints.svg"
+  alt="Illustration of individual breakpoints"
+/>
+
+The number of columns in a layout varies dependent on the breakpoint and the density chosen for that breakpoint. For each combination, the margin and gutter size remains constant, whereas the width of each column will vary as a percentage of the overall width.
 
 ### High density
 
-| Breakpoint  | Width (pixels) | Columns | Margin and gutter size (token) |
-| ----------- | -------------- | ------- | ------------------------------ |
-| Extra small | 0–599          | 2       | `--salt-spacing-300`           |
-| Small       | 600–959        | 4       | `--salt-spacing-300`           |
-| Medium      | 960–1279       | 6       | `--salt-spacing-300`           |
-| Large       | 1280–1919      | 8       | `--salt-spacing-300`           |
-| Extra Large | >1920          | 12      | `--salt-spacing-300`           |
+| Breakpoint  | Width (pixels) | Columns | Margin size          | Gutter size          |
+| ----------- | -------------- | ------- | -------------------- | -------------------- |
+| Extra Small | 0 - 599        | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Small       | 600 - 959      | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Medium      | 960 - 1279     | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Large       | 1280-1919      | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Extra Large | >1920          | 12      | `--salt-spacing-300` | `--salt-spacing-300` |
 
 ### Medium density
 
-| Breakpoint  | Width (pixels) | Columns | Margin and gutter size (token) |
-| ----------- | -------------- | ------- | ------------------------------ |
-| Extra Small | 0–599          | 2       | `--salt-spacing-300`           |
-| Small       | 600–959        | 4       | `--salt-spacing-300`           |
-| Medium      | 960–1,279      | 6       | `--salt-spacing-300`           |
-| Large       | 1,280–1,919    | 8       | `--salt-spacing-300`           |
-| Extra Large | >1,920         | 12      | `--salt-spacing-300`           |
+| Breakpoint  | Width (pixels) | Columns | Margin size          | Gutter size          |
+| ----------- | -------------- | ------- | -------------------- | -------------------- |
+| Extra Small | 0 - 599        | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Small       | 600 - 959      | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Medium      | 960 - 1279     | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Large       | 1280-1919      | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Extra Large | >1920          | 12      | `--salt-spacing-300` | `--salt-spacing-300` |
 
 ### Low density
 
-| Breakpoint  | Width (pixels) | Columns | Margin and gutter size (token) |
-| ----------- | -------------- | ------- | ------------------------------ |
-| Extra Small | 0–599          | 1       | `--salt-spacing-300`           |
-| Small       | 600–959        | 2       | `--salt-spacing-300`           |
-| Medium      | 960–1,279      | 4       | `--salt-spacing-300`           |
-| Large       | 1,280–1,919    | 6       | `--salt-spacing-300`           |
-| Extra Large | >1,920         | 8       | `--salt-spacing-300`           |
+| Breakpoint  | Width (pixels) | Columns | Margin size          | Gutter size          |
+| ----------- | -------------- | ------- | -------------------- | -------------------- |
+| Extra Small | 0 - 599        | 1       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Small       | 600 - 959      | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Medium      | 960 - 1279     | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Large       | 1280-1919      | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Extra Large | >1920          | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
 
 ### Touch density
 
-| Breakpoint  | Width (pixels) | Columns | Margin and gutter size (token) |
-| ----------- | -------------- | ------- | ------------------------------ |
-| Extra Small | 0–599          | 1       | `--salt-spacing-300`           |
-| Small       | 600–959        | 2       | `--salt-spacing-300`           |
-| Medium      | 960–1,279      | 4       | `--salt-spacing-300`           |
-| Large       | 1,280–1,919    | 6       | `--salt-spacing-300`           |
-| Extra Large | >1,920         | 8       | `--salt-spacing-300`           |
+| Breakpoint  | Width (pixels) | Columns | Margin size          | Gutter size          |
+| ----------- | -------------- | ------- | -------------------- | -------------------- |
+| Extra Small | 0 - 599        | 1       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Small       | 600 - 959      | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Medium      | 960 - 1279     | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Large       | 1280-1919      | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Extra Large | >1920          | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
 
 <Callout title="Have some feedback?">
 
-The Salt Foundations are still in progress, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or questions.
+We're still in the process of rolling out the Salt Foundations, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or suggestions.
 
 </Callout>

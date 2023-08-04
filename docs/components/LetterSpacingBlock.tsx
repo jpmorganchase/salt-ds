@@ -4,8 +4,10 @@ import "./LetterSpacingBlock.css";
 
 export const LetterSpacingBlock = ({
   letterSpacing,
+  hideToken,
 }: {
   letterSpacing: string;
+  hideToken?: boolean;
 }) => {
   return (
     <>
@@ -15,7 +17,7 @@ export const LetterSpacingBlock = ({
       >
         abc
       </div>
-      <code className="DocGrid-code">{letterSpacing}</code>
+      {!hideToken && <code className="DocGrid-code">{letterSpacing}</code>}
     </>
   );
 };

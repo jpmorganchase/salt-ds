@@ -7,12 +7,16 @@ import { LicenseManager } from "ag-grid-enterprise";
 LicenseManager.setLicenseKey("your license key");
 
 // Helps to set className, rowHeight and headerHeight depending on the current density
-export function useAgGridHelpers(agThemeName: string = "ag-theme-uitk"): {
+export function useAgGridHelpers(
+  agThemeName = "ag-theme-uitk",
+  compact = false
+): {
   containerProps: HTMLAttributes<HTMLDivElement>;
   agGridProps: AgGridReactProps;
   isGridReady: boolean;
   api?: GridApi;
   columnApi?: ColumnApi;
+  compact?: boolean;
 } {
   const apiRef = useRef<{ api: GridApi; columnApi: ColumnApi }>();
   const [isGridReady, setGridReady] = useState(false);
@@ -29,6 +33,8 @@ export function useAgGridHelpers(agThemeName: string = "ag-theme-uitk"): {
         return [32, 48];
       case "ag-theme-uitk-touch":
         return [32, 60];
+      case compact && "ag-theme-salt-high":
+        return [20, 20];
       case "ag-theme-salt-high":
         return [24, 24];
       case "ag-theme-salt-medium":
@@ -40,9 +46,11 @@ export function useAgGridHelpers(agThemeName: string = "ag-theme-uitk"): {
       default:
         return [20, 24];
     }
-  }, [density, agThemeName]);
+  }, [density, agThemeName, compact]);
 
-  const className = `${agThemeName}-${density}-${mode}`;
+  const className = `${agThemeName}-${density}${
+    compact && density === "high" ? `-compact` : ``
+  }-${mode}`;
 
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
     apiRef.current = { api, columnApi };
@@ -60,7 +68,7 @@ export function useAgGridHelpers(agThemeName: string = "ag-theme-uitk"): {
         // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height?
       }
     }, 0);
-  }, [density, isGridReady, agThemeName]);
+  }, [rowHeight, isGridReady, agThemeName]);
 
   return {
     containerProps: {

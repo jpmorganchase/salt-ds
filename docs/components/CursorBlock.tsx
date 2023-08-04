@@ -4,14 +4,20 @@ import "./CursorBlock.css";
 
 /* TODO: Add cursor icons */
 
-export const CursorBlock = ({ cursor }: { cursor: string }) => {
+export const CursorBlock = ({
+  cursor,
+  hideToken,
+}: {
+  cursor: string;
+  hideToken?: boolean;
+}) => {
   return (
     <>
       <div
         className="CursorBlock-cell"
         style={{ cursor: `var(${cursor})` } as CSSProperties}
       />
-      <code className="DocGrid-code">{cursor}</code>
+      {!hideToken && <code className="DocGrid-code">{cursor}</code>}
     </>
   );
 };
