@@ -12,7 +12,15 @@ import styles from "./LivePreview.module.css";
 type LivePreviewProps = {
   componentName: string;
   exampleName: string;
-  title?: string;
+
+  /**
+   * Text label that will be used for this example in the list view in place
+   * of an auto-generated one based on the `exampleName`.
+   *
+   * Should ideally match the H3 text in the description content that
+   * accompanies this example (provided via the `children` prop).
+   */
+  displayName?: string;
   list?: ReactElement;
   children?: ReactNode;
 };

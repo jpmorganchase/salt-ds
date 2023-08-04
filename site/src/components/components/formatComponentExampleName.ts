@@ -1,9 +1,12 @@
 const exampleNameRegex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
 
-export const formatComponentExampleName = (name: string, title?: string) => {
-  if (title) {
-    return title;
+export const formatComponentExampleName = (
+  exampleName: string,
+  displayName?: string
+) => {
+  if (displayName) {
+    return displayName;
   }
-  const formattedName = name.match(exampleNameRegex);
-  return formattedName ? formattedName.join(" ") : name;
+  const formattedName = exampleName.match(exampleNameRegex);
+  return formattedName ? formattedName.join(" ") : exampleName;
 };

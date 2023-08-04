@@ -14,7 +14,7 @@ type ExamplesListViewProps = { examples: ReactElement[] };
 
 const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
   const examplesList: string[] = Children.map(examples, ({ props }) =>
-    formatComponentExampleName(props.exampleName, props.title)
+    formatComponentExampleName(props.exampleName, props.displayName)
   );
 
   const [selectedItem, setSelectedItem] = useState<string | null>(
@@ -32,7 +32,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
   const selectedExample: ReactElement =
     examplesArray.find(
       ({ props }) =>
-        formatComponentExampleName(props.exampleName, props.title) ===
+        formatComponentExampleName(props.exampleName, props.displayName) ===
         selectedItem
     ) || examplesArray[0];
 
