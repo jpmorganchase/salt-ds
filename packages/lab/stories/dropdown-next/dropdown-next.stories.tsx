@@ -72,7 +72,6 @@ export const Controlled: Story<DropdownNextProps<T>> = ({
   defaultSelected = "California",
   ...props
 }) => {
-  const buttonsRef = useRef(null);
   const [highlightedIndex, setHighlightedIndex] = useState(
     SimpleListExample.indexOf(defaultSelected) ?? 0
   );
@@ -103,12 +102,15 @@ export const Controlled: Story<DropdownNextProps<T>> = ({
   };
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+      }}
+    >
       <div
-        ref={buttonsRef}
         style={{
           display: "flex",
-          paddingBottom: "20px",
+          paddingRight: "20px",
         }}
       >
         <Button onClick={handleOpenClose}>{open ? "Close" : "Open"}</Button>
@@ -142,6 +144,6 @@ export const Controlled: Story<DropdownNextProps<T>> = ({
         selectedItem={selectedItem}
         highlightedItem={SimpleListExample[highlightedIndex]}
       />
-    </>
+    </div>
   );
 };
