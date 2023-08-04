@@ -18,7 +18,7 @@
   left: calc(var(--salt-spacing-300) * -1);
   width: var(--salt-size-accent);
   bottom: 0;
-  background: var(--salt-palette-accent-background);
+  background: var(--salt-accent-background);
 }
 
 .saltDialogNextTitle .saltStatusIndicator {
