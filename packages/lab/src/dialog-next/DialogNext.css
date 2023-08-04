@@ -1,9 +1,13 @@
 /* Styles applied to DialogNext component */
 .saltDialogNext {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--salt-spacing-300);
+  padding-bottom: var(--salt-spacing-300);
   background: var(--salt-container-primary-background);
   max-height: 100%;
   max-width: 100%;
-  overflow: auto;
   box-shadow: var(--salt-overlayable-shadow-modal);
   min-width: calc(10 * var(--salt-size-base));
   max-width: calc(20 * var(--salt-size-base));
@@ -50,4 +54,10 @@
 /* Styles applied when the component unmounts */
 .saltDialogNext.saltDialogNext-exitAnimation {
   animation: var(--salt-animation-fade-out-back);
+}
+
+.saltDialogNext .saltDialogNext-closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

@@ -11,3 +11,13 @@ ul {
 .verticalDialogNav {
   width: 150px;
 }
+
+.fakeDialogWindow {
+  border: 1px solid black;
+  width: calc(20 * var(--salt-size-base));
+}
+
+.fakeDialogWindowHeader {
+  border-bottom: 1px solid black;
+  padding-block: var(--salt-spacing-200);
+}

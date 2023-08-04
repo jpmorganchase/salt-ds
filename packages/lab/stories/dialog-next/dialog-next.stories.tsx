@@ -1,12 +1,17 @@
 import { PropsWithChildren, useState } from "react";
-import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  FlexLayout,
+  FlowLayout,
+  SplitLayout,
+  StackLayout,
+} from "@salt-ds/core";
 import {
   DialogNext,
   DialogNextTitle,
   DialogNextActions,
   DialogNextContent,
   NavItem,
-  DialogNextBody,
 } from "@salt-ds/lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import "./dialog-next.stories.css";
@@ -22,6 +27,8 @@ export default {
 
 const DialogTemplate: ComponentStory<typeof DialogNext> = ({
   title,
+  // @ts-ignore
+  accent,
   // @ts-ignore
   content,
   open: openProp = true,
@@ -47,16 +54,24 @@ const DialogTemplate: ComponentStory<typeof DialogNext> = ({
         Click to open dialog
       </Button>
       <DialogNext {...args} open={open} onOpenChange={onOpenChange}>
-        <DialogNextTitle>{title}</DialogNextTitle>
+        <DialogNextTitle accent={accent as boolean}>{title}</DialogNextTitle>
         <DialogNextContent>{content}</DialogNextContent>
         <DialogNextActions>
-          <Button variant="cta" onClick={handleClose}>
-            CTA BUTTON
-          </Button>
-          <Button onClick={handleClose}>REGULAR BUTTON</Button>
-          <Button variant="secondary" onClick={handleClose}>
-            SECONDARY BUTTON
-          </Button>
+          <SplitLayout
+            startItem={
+              <Button variant="secondary" onClick={handleClose}>
+                Cancel
+              </Button>
+            }
+            endItem={
+              <FlowLayout gap={1}>
+                <Button onClick={handleClose}>Previous</Button>
+                <Button variant="cta" onClick={handleClose}>
+                  Next
+                </Button>
+              </FlowLayout>
+            }
+          />
         </DialogNextActions>
       </DialogNext>
     </>
@@ -64,6 +79,12 @@ const DialogTemplate: ComponentStory<typeof DialogNext> = ({
 };
 
 export const Default = DialogTemplate.bind({});
+
+export const Accent = DialogTemplate.bind({});
+Accent.args = {
+  // @ts-ignore
+  accent: true,
+};
 
 export const LongContent = DialogTemplate.bind({});
 
@@ -119,22 +140,80 @@ LongContent.args = {
   ),
 };
 
-export const InfoStatus = DialogTemplate.bind({});
+const AlertDialogTemplate: ComponentStory<typeof DialogNext> = ({
+  open: openProp = true,
+  status,
+  ...args
+}) => {
+  const [open, setOpen] = useState(openProp);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Click to open dialog
+      </Button>
+      <DialogNext
+        {...args}
+        status={status}
+        open={open}
+        onOpenChange={onOpenChange}
+        // focus the ok instead of the cancel button
+        initialFocus={1}
+      >
+        <DialogNextTitle>
+          {status![0].toUpperCase()}
+          {status!.slice(1)}
+        </DialogNextTitle>
+        <DialogNextContent>
+          This is a description for an alert dialog.
+        </DialogNextContent>
+        <DialogNextActions>
+          <SplitLayout
+            endItem={
+              <FlowLayout gap={1}>
+                <Button variant="secondary" onClick={handleClose}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                  Ok
+                </Button>
+              </FlowLayout>
+            }
+          />
+        </DialogNextActions>
+      </DialogNext>
+    </>
+  );
+};
+
+export const InfoStatus = AlertDialogTemplate.bind({});
 InfoStatus.args = {
   status: "info",
 };
 
-export const SuccessStatus = DialogTemplate.bind({});
+export const SuccessStatus = AlertDialogTemplate.bind({});
 SuccessStatus.args = {
   status: "success",
 };
 
-export const WarningStatus = DialogTemplate.bind({});
+export const WarningStatus = AlertDialogTemplate.bind({});
 WarningStatus.args = {
   status: "warning",
 };
 
-export const ErrorStatus = DialogTemplate.bind({});
+export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
 };
@@ -209,7 +288,7 @@ export const PreferencesDialog: ComponentStory<typeof DialogNext> = (args) => {
           <DialogNextContent>Hello</DialogNextContent>
         </FlexLayout>
         <DialogNextActions>
-          <Button onClick={handleClose}>Save</Button>
+          <SplitLayout endItem={<Button onClick={handleClose}>Save</Button>} />
         </DialogNextActions>
       </DialogNext>
     </>
@@ -218,18 +297,8 @@ export const PreferencesDialog: ComponentStory<typeof DialogNext> = (args) => {
 
 function FakeWindow({ children }: PropsWithChildren) {
   return (
-    <div
-      style={{
-        border: "1px solid black",
-        width: "calc(20 * var(--salt-size-base))",
-      }}
-    >
-      <div
-        style={{
-          borderBottom: "1px solid black",
-          paddingBlock: "var(--salt-spacing-200)",
-        }}
-      ></div>
+    <div className="fakeDialogWindow">
+      <div className="fakeDialogWindowHeader"></div>
       {children}
     </div>
   );
@@ -239,25 +308,30 @@ export const DesktopDialog = () => {
   return (
     <StackLayout>
       <FakeWindow>
-        <DialogNextBody>
-          <DialogNextTitle>Window Dialog</DialogNextTitle>
-          <DialogNextContent>Hello world!</DialogNextContent>
-          <DialogNextActions>
-            <Button>Save</Button>
-            <Button variant="secondary">Cancel</Button>
-          </DialogNextActions>
-        </DialogNextBody>
+        <DialogNextTitle>Window Dialog</DialogNextTitle>
+        <DialogNextContent>Hello world!</DialogNextContent>
+        <DialogNextActions>
+          <Button>Save</Button>
+          <Button variant="secondary">Cancel</Button>
+        </DialogNextActions>
       </FakeWindow>
 
       <FakeWindow>
-        <DialogNextBody status="warning">
-          <DialogNextTitle>Warning Dialog</DialogNextTitle>
-          <DialogNextContent>Potential issues abound!</DialogNextContent>
-          <DialogNextActions>
-            <Button>Ok</Button>
-            <Button variant="secondary">Cancel</Button>
-          </DialogNextActions>
-        </DialogNextBody>
+        <DialogNextTitle accent>Window Dialog</DialogNextTitle>
+        <DialogNextContent>Accent world!</DialogNextContent>
+        <DialogNextActions>
+          <Button>Save</Button>
+          <Button variant="secondary">Cancel</Button>
+        </DialogNextActions>
+      </FakeWindow>
+
+      <FakeWindow>
+        <DialogNextTitle status="warning">Warning Dialog</DialogNextTitle>
+        <DialogNextContent>Potential issues abound!</DialogNextContent>
+        <DialogNextActions>
+          <Button>Ok</Button>
+          <Button variant="secondary">Cancel</Button>
+        </DialogNextActions>
       </FakeWindow>
     </StackLayout>
   );

@@ -3,8 +3,8 @@ import {
   HTMLAttributes,
   useEffect,
   useMemo,
-  useRef,
   useState,
+  ComponentProps,
 } from "react";
 import { clsx } from "clsx";
 import {
@@ -12,14 +12,20 @@ import {
   FloatingOverlay,
   FloatingPortal,
 } from "@floating-ui/react";
-import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import {
+  Button,
+  makePrefixer,
+  useForkRef,
+  useId,
+  ValidationStatus,
+} from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { useDialogNext } from "./useDialogNext";
+import { CloseIcon } from "@salt-ds/icons";
 
+import { useDialogNext } from "./useDialogNext";
 import dialogNextCss from "./DialogNext.css";
 import { DialogNextContext } from "./DialogNextContext";
-import { DialogNextBody } from "./DialogNextBody";
 
 export interface DialogNextProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -33,7 +39,12 @@ export interface DialogNextProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Status indicator
    * */
-  status?: "info" | "success" | "warning" | "error";
+  status?: ValidationStatus;
+  /**
+   * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
+   * Default value is 0 (first tabbable element).
+   * */
+  initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
 }
 
 const withBaseName = makePrefixer("saltDialogNext");
@@ -46,6 +57,7 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
       open = true,
       onOpenChange,
       status,
+      initialFocus,
       ...rest
     } = props;
     const dialogId = useId() || "dialog-next";
@@ -58,7 +70,6 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
     });
 
     const [showComponent, setShowComponent] = useState(false);
-    const headingRef = useRef<HTMLHeadingElement>(null);
 
     const { floating, context, getFloatingProps } = useDialogNext({
       open,
@@ -74,17 +85,22 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
     }, [open, showComponent]);
 
     const contextValue = useMemo(
-      () => ({ headingRef, headingId }),
-      [headingId]
+      () => ({ headingId, status }),
+      [headingId, status]
     );
 
     return (
       <FloatingPortal>
         {showComponent && (
           <FloatingOverlay className={withBaseName("overlay")} lockScroll>
-            <FloatingFocusManager context={context} initialFocus={headingRef}>
+            <FloatingFocusManager
+              context={context}
+              modal
+              initialFocus={initialFocus}
+            >
               <DialogNextContext.Provider value={contextValue}>
                 <div
+                  id={dialogId}
                   className={clsx(
                     withBaseName(),
                     {
@@ -106,7 +122,18 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
                   {...getFloatingProps()}
                   {...rest}
                 >
-                  <DialogNextBody status={status}>{children}</DialogNextBody>
+                  {children}
+                  <Button
+                    aria-controls={dialogId}
+                    aria-label="Close dialog"
+                    className={withBaseName("closeButton")}
+                    variant="secondary"
+                    onClick={() => {
+                      onOpenChange?.(false);
+                    }}
+                  >
+                    <CloseIcon aria-hidden />
+                  </Button>
                 </div>
               </DialogNextContext.Provider>
             </FloatingFocusManager>
