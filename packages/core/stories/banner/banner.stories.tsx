@@ -21,7 +21,9 @@ export default {
 export const Default: ComponentStory<typeof Banner> = (props) => (
   <div style={{ width: 500 }}>
     <Banner {...props}>
-      <BannerContent>There has been an update to the terms and conditions</BannerContent>
+      <BannerContent>
+        There has been an update to the terms and conditions
+      </BannerContent>
     </Banner>
   </div>
 );
@@ -147,15 +149,24 @@ export const Success: ComponentStory<typeof Banner> = () => {
     </Banner>
   );
 };
-const statuses: {status: ValidationStatus, content: string}[] = [{
-  status: "info",
-  content: "You are now using version 3.32.4"}, {
+const statuses: { status: ValidationStatus; content: string }[] = [
+  {
+    status: "info",
+    content: "You are now using version 3.32.4",
+  },
+  {
     status: "warning",
-    content: "We were not able to find your details"}, {
-      status: "error",
-      content: "Your password will expire in 3 days"}, {
-        status: "success",
-        content: "Document signed"}];
+    content: "We were not able to find your details",
+  },
+  {
+    status: "error",
+    content: "Your password will expire in 3 days",
+  },
+  {
+    status: "success",
+    content: "Document signed",
+  },
+];
 
 export const StatusesPrimary: ComponentStory<typeof Banner> = (props) => {
   const { status, ...restProps } = props;

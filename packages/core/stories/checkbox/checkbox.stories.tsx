@@ -106,7 +106,10 @@ export const Warning: ComponentStory<typeof Checkbox> = () => {
   return (
     <StackLayout>
       <CheckboxGroup validationStatus={warningState ? "warning" : undefined}>
-        <Checkbox onChange={() => setWarningState(false)} label="Alternatives" />
+        <Checkbox
+          onChange={() => setWarningState(false)}
+          label="Alternatives"
+        />
         <Checkbox
           onChange={() => setWarningState(false)}
           defaultChecked
@@ -128,11 +131,7 @@ export const Disabled: ComponentStory<typeof Checkbox> = () => {
   return (
     <CheckboxGroup>
       <Checkbox disabled label="Alternatives" />
-      <Checkbox
-        disabled
-        indeterminate
-        label="Equities"
-      />
+      <Checkbox disabled indeterminate label="Equities" />
       <Checkbox disabled checked label="Fixed income" />
     </CheckboxGroup>
   );
@@ -142,11 +141,7 @@ export const Readonly: ComponentStory<typeof Checkbox> = () => {
   return (
     <CheckboxGroup>
       <Checkbox readOnly label="Alternatives" />
-      <Checkbox
-        readOnly
-        indeterminate
-        label="Equities"
-      />
+      <Checkbox readOnly indeterminate label="Equities" />
       <Checkbox readOnly checked label="Fixed income" />
     </CheckboxGroup>
   );

@@ -25,7 +25,7 @@ const ButtonGrid = ({
   label1,
   label2,
   label3,
-  variant
+  variant,
 }: {
   className?: string;
   label1: string;
@@ -90,15 +90,36 @@ export const All: ComponentStory<typeof Button> = () => {
 };
 
 export const CTA: ComponentStory<typeof Button> = () => {
-  return <ButtonGrid variant="cta" label1="Submit" label2="Search" label3="Continue" />;
+  return (
+    <ButtonGrid
+      variant="cta"
+      label1="Submit"
+      label2="Search"
+      label3="Continue"
+    />
+  );
 };
 
 export const Primary: ComponentStory<typeof Button> = () => {
-  return <ButtonGrid variant="primary" label1="Submit" label2="Search" label3="Continue" />;
+  return (
+    <ButtonGrid
+      variant="primary"
+      label1="Submit"
+      label2="Search"
+      label3="Continue"
+    />
+  );
 };
 
 export const Secondary: ComponentStory<typeof Button> = () => {
-  return <ButtonGrid variant="secondary" label1="Cancel" label2="Find address" label3="Save as draft" />;
+  return (
+    <ButtonGrid
+      variant="secondary"
+      label1="Cancel"
+      label2="Find address"
+      label3="Save as draft"
+    />
+  );
 };
 
 export const FeatureButton = SingleButtonTemplate.bind({});

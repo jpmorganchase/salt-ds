@@ -78,12 +78,7 @@ export const WrapGroup: ComponentStory<typeof RadioButtonGroup> = ({
     <RadioButtonGroup name="fx" direction={"horizontal"} wrap={wrap}>
       <RadioButton key="option1" label="NAMR" value="option1" />
       <RadioButton key="option2" label="APAC" value="option2" />
-      <RadioButton
-        disabled
-        key="option3"
-        label="EMEA"
-        value="option3"
-      />
+      <RadioButton disabled key="option3" label="EMEA" value="option3" />
     </RadioButtonGroup>
   </div>
 );

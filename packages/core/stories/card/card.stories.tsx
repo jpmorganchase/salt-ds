@@ -50,7 +50,10 @@ const ExampleRow = ({ name, children }: ExampleRowProps) => (
 const Examples = () => (
   <ExampleRow name="Sustainable investing products">
     <Card>
-      <Text>We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.</Text>
+      <Text>
+        We have a commitment to provide a wide range of investment solutions to
+        enable you to align your financial goals to your values.
+      </Text>
     </Card>
   </ExampleRow>
 );
@@ -75,18 +78,32 @@ export const AllDefault: ComponentStory<typeof Card> = () => (
 );
 
 const exampleData = [
-  { title: "Sustainable investing products", content: "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values."},
- {title: "Our expertise", content: "Our team of more than 200 experts in 28 offices worldwide is on hand to help you with your investment decisions."},
- {title: "Market-leading insights", content: "Our award-winning strategists provide unique and regular insights about market events and current trends."},
- {title: "Events", content: "We have a full calendar of online and in-person events with expert guest speakers for you to attend."}
-]
+  {
+    title: "Sustainable investing products",
+    content:
+      "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.",
+  },
+  {
+    title: "Our expertise",
+    content:
+      "Our team of more than 200 experts in 28 offices worldwide is on hand to help you with your investment decisions.",
+  },
+  {
+    title: "Market-leading insights",
+    content:
+      "Our award-winning strategists provide unique and regular insights about market events and current trends.",
+  },
+  {
+    title: "Events",
+    content:
+      "We have a full calendar of online and in-person events with expert guest speakers for you to attend.",
+  },
+];
 
 export const Default: ComponentStory<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <H1 styleAs="h3">{exampleData[0].title}</H1>
-    <Text>
-      {exampleData[0].content}
-    </Text>
+    <Text>{exampleData[0].content}</Text>
   </Card>
 );
 
@@ -94,13 +111,11 @@ export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
   <FlexLayout>
     {exampleData.map((example, index) => {
       return (
-      <Card key={index}>
-        <H1 styleAs="h3">{example.title}</H1>
-        <Text>
-          {example.content}
-        </Text>
-      </Card>
-    );
+        <Card key={index}>
+          <H1 styleAs="h3">{example.title}</H1>
+          <Text>{example.content}</Text>
+        </Card>
+      );
     })}
   </FlexLayout>
 );
@@ -109,13 +124,11 @@ export const CardsInGridLayout: ComponentStory<typeof Card> = () => (
   <GridLayout style={{ maxWidth: "700px" }} rows={2} columns={2}>
     {exampleData.map((example, index) => {
       return (
-      <Card key={index}>
-        <H1 styleAs="h3">{example.title}</H1>
-        <Text>
-          {example.content}
-        </Text>
-      </Card>
-    );
+        <Card key={index}>
+          <H1 styleAs="h3">{example.title}</H1>
+          <Text>{example.content}</Text>
+        </Card>
+      );
     })}
   </GridLayout>
 );
@@ -129,9 +142,7 @@ export const DefaultWithImage: ComponentStory<typeof Card> = () => (
       style={{ width: "-webkit-fill-available" }}
     />
     <H1 styleAs="h3">{exampleData[0].title}</H1>
-    <Text>
-      {exampleData[0].content}
-    </Text>
+    <Text>{exampleData[0].content}</Text>
   </Card>
 );
 
@@ -139,15 +150,9 @@ export const DefaultWithLink: ComponentStory<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
       <H1 styleAs="h3">{exampleData[0].title}</H1>
-      <Text>
-        {exampleData[0].content}
-      </Text>
+      <Text>{exampleData[0].content}</Text>
     </div>
-    <Link
-      href="#"
-      IconComponent={null}
-      target="_blank"
-    >
+    <Link href="#" IconComponent={null} target="_blank">
       View our range of funds
     </Link>
   </Card>
@@ -169,15 +174,9 @@ export const DefaultWithLinkAndImage: ComponentStory<typeof Card> = () => (
     >
       <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
         <H1 styleAs="h3">{exampleData[0].title}</H1>
-        <Text>
-        {exampleData[0].content}
-        </Text>
+        <Text>{exampleData[0].content}</Text>
       </div>
-      <Link
-        href="#"
-        IconComponent={null}
-        target="_blank"
-      >
+      <Link href="#" IconComponent={null} target="_blank">
         View our range of funds
       </Link>
     </div>
@@ -188,13 +187,9 @@ export const DefaultWithButton: ComponentStory<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
       <H1 styleAs="h3">{exampleData[0].title}</H1>
-      <Text>
-      {exampleData[0].content}
-      </Text>
+      <Text>{exampleData[0].content}</Text>
     </div>
-    <Button onClick={() => window.open("#")}>
-      View funds
-    </Button>
+    <Button onClick={() => window.open("#")}>View funds</Button>
   </Card>
 );
 
@@ -214,15 +209,9 @@ export const DefaultWithButtonAndImage: ComponentStory<typeof Card> = () => (
     >
       <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
         <H1 styleAs="h3">{exampleData[0].title}</H1>
-        <Text>
-          {exampleData[0].content}
-        </Text>
+        <Text>{exampleData[0].content}</Text>
       </div>
-      <Button
-        onClick={() => window.open("#")}
-      >
-        View funds
-      </Button>
+      <Button onClick={() => window.open("#")}>View funds</Button>
     </div>
   </Card>
 );
@@ -253,14 +242,14 @@ export const InteractableDisabled: ComponentStory<typeof Card> = () => (
     disabled
   >
     <H1 styleAs="h3" disabled>
-    {exampleData[0].title}
+      {exampleData[0].title}
     </H1>
     <Text disabled>{exampleData[0].content}</Text>
   </InteractableCard>
 );
 
 export const InteractableAccentVariations: ComponentStory<typeof Card> = () => {
-  const placements = ["left","right","top","bottom"];
+  const placements = ["left", "right", "top", "bottom"];
   return (
     <div
       style={{
@@ -269,16 +258,19 @@ export const InteractableAccentVariations: ComponentStory<typeof Card> = () => {
         width: "266px",
       }}
     >
-        {exampleData.map((example, index) => {
-          return (
-            <InteractableCard accentPlacement={placements[index] as "left" | "right" | "top" | "bottom"} key={index}>
-              <H1 styleAs="h3">{example.title}</H1>
-              <Text>
-                {example.content}
-              </Text>
-            </InteractableCard>
-          );
-        })}
+      {exampleData.map((example, index) => {
+        return (
+          <InteractableCard
+            accentPlacement={
+              placements[index] as "left" | "right" | "top" | "bottom"
+            }
+            key={index}
+          >
+            <H1 styleAs="h3">{example.title}</H1>
+            <Text>{example.content}</Text>
+          </InteractableCard>
+        );
+      })}
     </div>
   );
 };
@@ -293,9 +285,7 @@ export const InteractableAsBlockLink: ComponentStory<typeof Card> = () => {
     >
       <InteractableCard style={{ width: "266px" }}>
         <H1 styleAs="h3">{exampleData[0].title}</H1>
-        <Text>
-          {exampleData[0].content}
-        </Text>
+        <Text>{exampleData[0].content}</Text>
       </InteractableCard>
     </Link>
   );
@@ -325,9 +315,7 @@ export const InteractableAsBlockLinkWithImage: ComponentStory<
           }}
         >
           <H1 styleAs="h3">{exampleData[0].title}</H1>
-          <Text>
-          {exampleData[0].content}
-          </Text>
+          <Text>{exampleData[0].content}</Text>
         </div>
       </InteractableCard>
     </Link>
@@ -349,9 +337,7 @@ export const InteractableAsBlockLinkWithImageBackground: ComponentStory<
           style={{ paddingTop: "calc(3 * var(--salt-size-container-spacing))" }}
         >
           <H1 styleAs="h3">{exampleData[0].title}</H1>
-          <Text>
-          {exampleData[0].content}
-          </Text>
+          <Text>{exampleData[0].content}</Text>
         </div>
       </InteractableCard>
     </Link>

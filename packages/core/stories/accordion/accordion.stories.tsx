@@ -171,8 +171,8 @@ export const Status: Story<AccordionGroupProps> = (props) => (
         >
           <AccordionHeader>Internal form</AccordionHeader>
           <AccordionPanel>
-            <FlowLayout>   
-            Please fill out the following details.
+            <FlowLayout>
+              Please fill out the following details.
               <FormField labelPlacement="left">
                 <FormLabel>Disclosure ID</FormLabel>
                 <Input />
