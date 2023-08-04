@@ -2859,7 +2859,7 @@ __metadata:
 
 "@changesets/assemble-release-plan@patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch::locator=%40salt-ds%2Froot%40workspace%3A.":
   version: 5.2.2
-  resolution: "@changesets/assemble-release-plan@patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch::version=5.2.2&hash=d6a223&locator=%40salt-ds%2Froot%40workspace%3A."
+  resolution: "@changesets/assemble-release-plan@patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch::version=5.2.2&hash=e1a9b5&locator=%40salt-ds%2Froot%40workspace%3A."
   dependencies:
     "@babel/runtime": ^7.10.4
     "@changesets/errors": ^0.1.4
@@ -2867,7 +2867,7 @@ __metadata:
     "@changesets/types": ^5.2.0
     "@manypkg/get-packages": ^1.1.3
     semver: ^5.4.1
-  checksum: 5f9ab8943e1bcb9436dd982fd0ca82e7899dcc0c51737cb366c2438c5a7f42ffbbf365016545b5dcd6ef9beccb6fd84a17f92fcff8783b61a52f80f6df3b79b0
+  checksum: 6e710986afae1c11031b36d0bf50ad3b6994e21e77632d5b4ff191499901cd68a4d78a6fa21abd70038d5af095a8464f1b6c7f1d1479544af9efbc44c456ce0a
   languageName: node
   linkType: hard
 
