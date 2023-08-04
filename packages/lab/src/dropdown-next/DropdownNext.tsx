@@ -16,6 +16,7 @@ import {
   KeyboardEvent,
   MouseEvent,
   MutableRefObject,
+  ElementType,
 } from "react";
 import { useWindow } from "@salt-ds/window";
 import dropdownNextCss from "./DropdownNext.css";
@@ -25,7 +26,7 @@ import { useDropdownNext } from "./useDropdownNext";
 
 const withBaseName = makePrefixer("saltDropdownNext");
 
-export interface DropdownNextProps<T>
+export interface DropdownNextProps
   extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
     HTMLAttributes<HTMLElement> {
   /**
@@ -39,7 +40,7 @@ export interface DropdownNextProps<T>
   /**
    * List of options when using a dropdown.
    */
-  source: T[];
+  source: string[];
   /**
    * If `true`, dropdown is read only.
    */
@@ -53,18 +54,29 @@ export interface DropdownNextProps<T>
    */
   placement?: Placement;
   /**
-   * Props for dropdown list.
+   * Additional props for dropdown list.
    */
   ListProps?: ListNextProps;
+
   /* Status open or close for use in controlled component.  */
   open?: boolean;
   /* Selected item prop for use in controlled component. */
   selectedItem?: string;
   /* Highlighted item prop for use in controlled component. */
   highlightedItem?: string;
+  /* Callback for blur event. */
+  onBlur?: (event: FocusEvent) => void;
+  /* Callback for focus event. */
+  onFocus?: (event: FocusEvent) => void;
+  /* Callback for mouse over event. */
+  onMouseOver?: (event: MouseEvent) => void;
+  /* Callback for mouse down event. */
+  onMouseDown?: (event: MouseEvent) => void;
+  /* Callback for key down event. */
+  onKeyDown?: (event: KeyboardEvent) => void;
 }
 
-export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
+export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps>(
   function DropdownNext(props, ref) {
     const {
       className,
@@ -115,9 +127,8 @@ export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps<T>>(
       getListItems,
       portalProps,
     } = useDropdownNext({
-      source,
-      placement,
       listProps,
+      placement,
       openControlProp,
     });
 

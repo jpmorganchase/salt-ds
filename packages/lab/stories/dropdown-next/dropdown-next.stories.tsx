@@ -3,7 +3,7 @@ import { Story, ComponentMeta } from "@storybook/react";
 import { DropdownNext, DropdownNextProps } from "@salt-ds/lab";
 import { Button } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default {
   title: "Lab/Dropdown Next",
@@ -33,7 +33,7 @@ const ListExample = [
   { value: "🍐", id: "Pear" },
 ];
 
-const DropdownTemplate: Story<DropdownNextProps<T>> = ({ ...args }) => {
+const DropdownTemplate: Story<DropdownNextProps> = ({ ...args }) => {
   return <DropdownNext {...args} />;
 };
 
@@ -67,7 +67,7 @@ Disabled.args = {
   source: SimpleListExample,
 };
 
-export const Controlled: Story<DropdownNextProps<T>> = ({
+export const Controlled: Story<DropdownNextProps> = ({
   source = SimpleListExample,
   defaultSelected = "California",
   ...props

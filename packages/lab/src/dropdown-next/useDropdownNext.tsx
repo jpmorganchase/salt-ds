@@ -15,14 +15,13 @@ import {
   UseFloatingUIProps,
 } from "@salt-ds/core";
 import { ListItemNext } from "@salt-ds/lab";
-import { HTMLProps, KeyboardEvent, useMemo, FocusEvent } from "react";
+import { HTMLProps, KeyboardEvent, FocusEvent } from "react";
 import { useList, UseListProps } from "../list-next/useList";
 
-interface UseDropdownNextProps<T>
+interface UseDropdownNextProps
   extends Partial<
     Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
-  source: T[];
   listProps: UseListProps;
   // props for controlled dropdown
   openControlProp?: boolean;
@@ -33,7 +32,7 @@ export const useDropdownNext = ({
   openControlProp,
   onOpenChange: onOpenChangeProp,
   placement: placementProp,
-}: UseDropdownNextProps<T>) => {
+}: UseDropdownNextProps) => {
   const [open, setOpen] = useControlled({
     controlled: openControlProp,
     default: false,
@@ -61,31 +60,12 @@ export const useDropdownNext = ({
   const { select, highlight } = listContextValue;
 
   // LIST SOURCE
-  const getListItems = (source: T[]) => {
-    if (!source) return;
-
+  const getListItems = (source: string[]) => {
     return source.map((item, index) => {
-      if (typeof item === "string") {
-        return (
-          <ListItemNext
-            key={index}
-            value={item}
-            onMouseDown={(event) => {
-              select(event);
-            }}
-            onMouseMove={(event) => {
-              highlight(event);
-            }}
-          >
-            {item}
-          </ListItemNext>
-        );
-      }
-
       return (
         <ListItemNext
-          key={item.id ?? index}
-          value={item.value}
+          key={index}
+          value={item}
           onMouseDown={(event) => {
             select(event);
           }}
@@ -93,7 +73,7 @@ export const useDropdownNext = ({
             highlight(event);
           }}
         >
-          {item.value}
+          {item}
         </ListItemNext>
       );
     });
