@@ -19,7 +19,10 @@ export const useComboBox = ({
   PortalProps,
   listProps,
 }: UseComboBoxProps) => {
-  const [inputValue, setInputValue] = useState<string | undefined>(undefined);
+  const { defaultSelected, ...restListProps } = listProps;
+  const [inputValue, setInputValue] = useState<string | undefined>(
+    defaultSelected
+  );
 
   const {
     open,
@@ -40,7 +43,7 @@ export const useComboBox = ({
     setHighlightedItem,
     highlightedItem,
   } = useList({
-    ...listProps,
+    ...restListProps,
   });
 
   const focusHandler = (event: FocusEvent<HTMLInputElement>) => {

@@ -7,7 +7,6 @@
 }
 
 .saltComboBoxNext-list {
-  --comboBoxNext-itemCount: 5;
   border-color: var(--salt-selectable-borderColor-selected);
-  max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * var(--comboBoxNext-itemCount));
+  max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * var(--comboBoxNext-itemCount, 5));
 }

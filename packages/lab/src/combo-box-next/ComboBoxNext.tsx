@@ -217,25 +217,25 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   return (
     <>
       <Input
-        variant={variant}
-        endAdornment={adornment}
-        disabled={disabled}
-        value={inputValue}
-        className={clsx(withBaseName("input"), inputClassName)}
         aria-controls={listId}
-        role="combobox"
+        aria-activedescendant={disabled ? undefined : activeDescendant}
+        className={clsx(withBaseName("input"), inputClassName)}
+        disabled={disabled}
+        endAdornment={adornment}
         onChange={onInputChange}
         onBlur={blurHandler}
-        aria-activedescendant={disabled ? undefined : activeDescendant}
+        inputRef={inputRef as Ref<HTMLInputElement>}
         inputProps={{
           "aria-expanded": open,
           tabIndex: disabled ? -1 : 0,
           onFocus: focusHandler,
           onKeyDown: keyDownHandler,
         }}
+        role="combobox"
+        variant={variant}
+        value={inputValue}
         {...getTriggerProps()}
         {...restInputProps}
-        inputRef={inputRef as Ref<HTMLInputElement>}
       />
       {open && filteredSource && (
         <FloatingPortal>
@@ -244,10 +244,10 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
             <div ref={floating} {...getPortalProps()}>
               <ListNext
                 className={clsx(withBaseName("list"), listClassName)}
-                selected={selectedItem}
-                highlightedItem={highlightedItem}
                 disableFocus
+                highlightedItem={highlightedItem}
                 onMouseOver={mouseOverHandler}
+                selected={selectedItem}
                 {...restListProps}
                 ref={setListRef}
               >
