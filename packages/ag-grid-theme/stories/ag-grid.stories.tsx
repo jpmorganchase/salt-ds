@@ -21,6 +21,7 @@ export {
   DragRowOrder,
   Icons,
   FloatingFilter,
+  HDCompact,
   InfiniteScroll,
   LoadingOverlay,
   MasterDetail,
@@ -32,4 +33,5 @@ export {
   PinnedRows,
   StatusBar,
   Variants,
+  WrappedHeader,
 } from "./examples";

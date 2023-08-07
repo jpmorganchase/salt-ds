@@ -1,42 +1,51 @@
 @import "./salt-ag-theme-mixin";
 
 div[class*="ag-theme-salt-touch"] {
-  --agGrid-row-height-default: 61px;
   --agGrid-padding-default: 16px;
-  --agGrid-fontSize-default: 16px;
-  --agGrid-header-fontSize-default: 14px;
-  --agGrid-separatorGap-default: 20px;
   --agGrid-cornerTag-size-default: 14px;
 }
 
 div[class*="ag-theme-salt-low"] {
-  --agGrid-row-height-default: 49px;
   --agGrid-padding-default: 12px;
-  --agGrid-fontSize-default: 14px;
-  --agGrid-header-fontSize-default: 12px;
-  --agGrid-separatorGap-default: 16px;
   --agGrid-cornerTag-size-default: 12px;
 }
 
 div[class*="ag-theme-salt-medium"] {
-  --agGrid-row-height-default: 37px;
   --agGrid-padding-default: 8px;
-  --agGrid-fontSize-default: 12px;
-  --agGrid-header-fontSize-default: 11px;
-  --agGrid-separatorGap-default: 12px;
   --agGrid-cornerTag-size-default: 10px;
 }
 
 div[class*="ag-theme-salt-high"] {
-  --agGrid-row-height-default: 25px;
   --agGrid-padding-default: 8px;
-  --agGrid-fontSize-default: 11px;
-  --agGrid-header-fontSize-default: 10px;
-  --agGrid-separatorGap-default: 8px;
+  --agGrid-cornerTag-size-default: 8px;
+}
+
+div[class*="ag-theme-salt-high-compact"] {
+  --salt-size-base: 16px;
+
+  --agGrid-padding-default: 8px;
   --agGrid-cornerTag-size-default: 8px;
 }
 
 div[class*="ag-theme-salt"] {
+  --agGrid-input-height: var(
+    --saltAgGrid-input-height,
+    calc(var(--salt-size-base) + var(--salt-spacing-100))
+  );
+  --agGrid-row-height-default: calc(
+    var(--salt-size-base) + var(--salt-spacing-100)
+  );
+  --agGrid-fontSize-default: var(--salt-text-fontSize);
+  --agGrid-header-fontSize-default: var(--salt-text-label-fontSize);
+  --agGrid-header-fontSize: var(
+    --saltAgGrid-header-fontSize,
+    var(--salt-text-label-fontSize)
+  );
+  --agGrid-paging-fontSize: var(
+    --saltAgGrid-paging-fontSize,
+    var(--salt-text-label-fontSize)
+  );
+
   --agGrid-background: var(
     --saltAgGrid-background,
     var(--salt-container-primary-background)
@@ -77,17 +86,12 @@ div[class*="ag-theme-salt"] {
 
   --agGrid-header-foreground: var(
     --saltAgGrid-header-foreground,
-    var(--salt-text-secondary-foreground)
+    var(--salt-text-primary-foreground)
   );
 
   --agGrid-header-fontWeight: var(
     --saltAgGrid-header-fontWeight,
     var(--salt-text-label-fontWeight-strong)
-  );
-
-  --agGrid-separatorGap: var(
-    --saltAgGrid-separatorGap,
-    var(--agGrid-separatorGap-default)
   );
 
   --agGrid-row-background-selected: var(
@@ -125,31 +129,41 @@ div[class*="ag-theme-salt"] {
   );
 }
 
+.ag-theme-salt-high-compact-light,
 .ag-theme-salt-high-light,
 .ag-theme-salt-medium-light,
 .ag-theme-salt-low-light,
 .ag-theme-salt-touch-light {
   --agGrid-tab-borderColor-active: var(
     --saltAgGrid-tab-borderColor-active,
-    #e06519
+    var(--salt-navigable-indicator-active)
   );
 
-  --agGrid-button-color: var(--saltAgGrid-button-color, #161616);
+  --agGrid-button-color: var(
+    --saltAgGrid-button-color,
+    var(--salt-text-primary-foreground)
+  );
   --agGrid-button-background-hover: var(
     --saltAgGrid-button-background-hover,
-    #d9dde3
+    var(--salt-container-primary-background)
   );
 
   --agGrid-toggle-background-checked: var(
     --saltAgGrid-toggle-background-checked,
-    #2670a9
+    var(--salt-selectable-background-selected)
   );
-  --agGrid-header-icon-color: var(--saltAgGrid-header-icon-color, #61656e);
+  --agGrid-header-icon-color: var(
+    --saltAgGrid-header-icon-color,
+    var(--salt-text-secondary-foreground)
+  );
   --agGrid-menu-header-icon-color: var(
     --saltAgGrid-menu-header-icon-color,
-    #61656e
+    var(--salt-text-secondary-foreground)
   );
-  --agGrid-icon-color: var(--saltAgGrid-icon-color, #61656e);
+  --agGrid-icon-color: var(
+    --saltAgGrid-icon-color,
+    var(--salt-text-primary-foreground)
+  );
   --agGrid-menu-option-color-hover: var(
     --saltAgGrid-menu-option-color-hover,
     #f2f4f6
@@ -169,7 +183,7 @@ div[class*="ag-theme-salt"] {
   );
   --agGrid-list-item-color-hover: var(
     --saltAgGrid-list-item-color-hover,
-    var(--salt-color-blue-10)
+    var(--salt-selectable-background-hover)
   );
 
   --agGrid-column-drop-cell-horizontal-background: var(
@@ -185,20 +199,24 @@ div[class*="ag-theme-salt"] {
     rgba(22, 22, 22, 0.4)
   );
 
-  --agGrid-placeholder-color: var(--saltAgGrid-placeholder-color, #61656e);
+  --agGrid-placeholder-color: var(
+    --saltAgGrid-placeholder-color,
+    var(--salt-text-secondary-foreground)
+  );
   --agGrid-ghost-icon-color: var(
     --saltAgGrid-ghost-icon-color,
     rgba(0, 0, 0, 0.87)
   );
 }
 
+.ag-theme-salt-high-compact-dark,
 .ag-theme-salt-high-dark,
 .ag-theme-salt-medium-dark,
 .ag-theme-salt-low-dark,
 .ag-theme-salt-touch-dark {
   --agGrid-tab-borderColor-active: var(
     --saltAgGrid-tab-borderColor-active,
-    #e06519
+    var(--salt-navigable-indicator-active)
   );
 
   --agGrid-button-color: var(--saltAgGrid-button-color, white);
@@ -277,8 +295,7 @@ $ag-theme-salt-params-high: map-merge(
     row-height: 24px,
     header-height: 24,
     font-size: 11px,
-    header-column-separator-height: 10px,
-    cell-horizontal-padding: 8px,
+    cell-horizontal-padding: 4px,
     list-item-height: 24px,
     icon-size: 12px,
   )
@@ -294,13 +311,34 @@ $ag-theme-salt-params-high-dark: map-merge(
   $ag-theme-salt-params-dark
 );
 
+$ag-theme-salt-params-high-compact: map-merge(
+  $salt-ag-theme-default-params,
+  (
+    row-height: 20px,
+    header-height: 20,
+    font-size: 11px,
+    cell-horizontal-padding: 4px,
+    list-item-height: 20px,
+    icon-size: 12px,
+  )
+);
+
+$ag-theme-salt-params-high-compact-light: map-merge(
+  $ag-theme-salt-params-high-compact,
+  $ag-theme-salt-params-light
+);
+
+$ag-theme-salt-params-high-compact-dark: map-merge(
+  $ag-theme-salt-params-high-compact,
+  $ag-theme-salt-params-dark
+);
+
 $ag-theme-salt-params-medium: map-merge(
   $salt-ag-theme-default-params,
   (
     row-height: 36px,
     header-height: 36px,
     font-size: 12px,
-    header-column-separator-height: 10px,
     cell-horizontal-padding: 8px,
     list-item-height: 36px,
     icon-size: 12px,
@@ -323,7 +361,6 @@ $ag-theme-salt-params-low: map-merge(
     row-height: 48px,
     header-height: 48,
     font-size: 14px,
-    header-column-separator-height: 10px,
     cell-horizontal-padding: 12px,
     list-item-height: 48px,
     icon-size: 12px,
@@ -346,7 +383,6 @@ $ag-theme-salt-params-touch: map-merge(
     row-height: 60px,
     header-height: 60,
     font-size: 16px,
-    header-column-separator-height: 10px,
     cell-horizontal-padding: 16px,
     list-item-height: 60px,
     icon-size: 12px,
@@ -377,27 +413,32 @@ $ag-theme-salt-params-touch-dark: map-merge(
   color-scheme: light;
 }
 
+.ag-theme-salt-high-compact-dark,
+.ag-theme-salt-high-compact-light {
+  --agGrid-button-padding: var(--saltAgGrid-button-padding, 4px);
+  --agGrid-editableCell-cornerTag-size-default: 10px;
+  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 10px);
+  --agGrid-input-padding: var(--saltAgGrid-input-padding, 4px);
+  --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 2px);
+  --agGrid-switch-height: var(--saltAgGrid-switch-height, 16px);
+}
+
+.ag-theme-salt-high-compact-dark {
+  @include ag-theme-salt($ag-theme-salt-params-high-compact-dark);
+}
+
+.ag-theme-salt-high-compact-light {
+  @include ag-theme-salt($ag-theme-salt-params-high-compact-light);
+}
+
 .ag-theme-salt-high-dark,
 .ag-theme-salt-high-light {
-  --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 12px);
-  --agGrid-input-padding: var(--saltAgGrid-input-padding, 4px);
-  --agGrid-input-height: var(--saltAgGrid-input-height, 20px);
-  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 10px);
-  --agGrid-button-fontSize: var(--saltAgGrid-button-fontSize, 11px);
-  --agGrid-button-height: var(--saltAgGrid-button-height, 20px);
   --agGrid-button-padding: var(--saltAgGrid-button-padding, 4px);
-
-  --agGrid-list-item-fontSize: var(--saltAgGrid-list-item-fontSize, 13px);
-
-  --agGrid-switch-height: var(--saltAgGrid-switch-height, 16px);
-  --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 2px);
-
-  --agGrid-header-fontSize: var(--saltAgGrid-header-fontSize, 10px);
-
-  --agGrid-paging-button-width: var(--saltAgGrid-paging-button-width, 20px);
-  --agGrid-paging-fontSize: var(--saltAgGrid-paging-fontSize, 11px);
-
   --agGrid-editableCell-cornerTag-size-default: 10px;
+  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 10px);
+  --agGrid-input-padding: var(--saltAgGrid-input-padding, 4px);
+  --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 2px);
+  --agGrid-switch-height: var(--saltAgGrid-switch-height, 16px);
 }
 
 .ag-theme-salt-high-dark {
@@ -410,25 +451,12 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-medium-dark,
 .ag-theme-salt-medium-light {
-  --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 14px);
-  --agGrid-input-padding: var(--saltAgGrid-input-padding, 8px);
-  --agGrid-input-height: var(--saltAgGrid-input-height, 28px);
-  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 12px);
-
-  --agGrid-button-fontSize: var(--saltAgGrid-button-fontSize, 12px);
-  --agGrid-button-height: var(--saltAgGrid-button-height, 28px);
   --agGrid-button-padding: var(--saltAgGrid-button-padding, 8px);
-
-  --agGrid-list-item-fontSize: var(--saltAgGrid-list-item-fontSize, 13px);
-
-  --agGrid-switch-height: var(--saltAgGrid-switch-height, 18px);
-  --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 2px);
-
-  --agGrid-header-fontSize: var(--saltAgGrid-header-fontSize, 11px);
-  --agGrid-paging-button-width: var(--saltAgGrid-paging-button-width, 28px);
-  --agGrid-paging-fontSize: var(--saltAgGrid-paging-fontSize, 12px);
-
   --agGrid-editableCell-cornerTag-size-default: 12px;
+  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 12px);
+  --agGrid-input-padding: var(--saltAgGrid-input-padding, 8px);
+  --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 2px);
+  --agGrid-switch-height: var(--saltAgGrid-switch-height, 18px);
 }
 
 .ag-theme-salt-medium-dark {
@@ -441,25 +469,12 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-low-dark,
 .ag-theme-salt-low-light {
-  --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 16px);
-  --agGrid-input-padding: var(--saltAgGrid-input-padding, 12px);
-  --agGrid-input-height: var(--saltAgGrid-input-height, 36px);
-  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 14px);
-
-  --agGrid-button-fontSize: var(--saltAgGrid-button-fontSize, 14px);
-  --agGrid-button-height: var(--saltAgGrid-button-height, 36px);
   --agGrid-button-padding: var(--saltAgGrid-button-padding, 12px);
-
-  --agGrid-list-item-fontSize: var(--saltAgGrid-list-item-fontSize, 13px);
-
-  --agGrid-switch-height: var(--saltAgGrid-switch-height, 20px);
-  --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 2px);
-
-  --agGrid-header-fontSize: var(--saltAgGrid-header-fontSize, 12px);
-  --agGrid-paging-button-width: var(--saltAgGrid-paging-button-width, 36px);
-  --agGrid-paging-fontSize: var(--saltAgGrid-paging-fontSize, 14px);
-
   --agGrid-editableCell-cornerTag-size-default: 14px;
+  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 14px);
+  --agGrid-input-padding: var(--saltAgGrid-input-padding, 12px);
+  --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 2px);
+  --agGrid-switch-height: var(--saltAgGrid-switch-height, 20px);
 }
 
 .ag-theme-salt-low-dark {
@@ -472,25 +487,12 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-touch-dark,
 .ag-theme-salt-touch-light {
-  --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 18px);
-  --agGrid-input-padding: var(--saltAgGrid-input-padding, 8px);
-  --agGrid-input-height: var(--saltAgGrid-input-height, 28px);
-  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 14px);
-
-  --agGrid-button-fontSize: var(--saltAgGrid-button-fontSize, 16px);
-  --agGrid-button-height: var(--saltAgGrid-button-height, 44px);
   --agGrid-button-padding: var(--saltAgGrid-button-padding, 14px);
-
-  --agGrid-list-item-fontSize: var(--saltAgGrid-list-item-fontSize, 13px);
-
-  --agGrid-switch-height: var(--saltAgGrid-switch-height, 24px);
-  --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 3px);
-
-  --agGrid-header-fontSize: var(--saltAgGrid-header-fontSize, 14px);
-  --agGrid-paging-button-width: var(--saltAgGrid-paging-button-width, 44px);
-  --agGrid-paging-fontSize: var(--saltAgGrid-paging-fontSize, 16px);
-
   --agGrid-editableCell-cornerTag-size-default: 16px;
+  --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 14px);
+  --agGrid-input-padding: var(--saltAgGrid-input-padding, 8px);
+  --agGrid-switch-borderWidth: var(--saltAgGrid-switch-borderWidth, 3px);
+  --agGrid-switch-height: var(--saltAgGrid-switch-height, 24px);
 }
 
 .ag-theme-salt-touch-light {
@@ -501,6 +503,8 @@ $ag-theme-salt-params-touch-dark: map-merge(
   @include ag-theme-salt($ag-theme-salt-params-touch-dark);
 }
 
+.ag-theme-salt-high-compact-dark,
+.ag-theme-salt-high-compact-light,
 .ag-theme-salt-touch-dark,
 .ag-theme-salt-touch-light,
 .ag-theme-salt-low-dark,
@@ -509,6 +513,24 @@ $ag-theme-salt-params-touch-dark: map-merge(
 .ag-theme-salt-medium-light,
 .ag-theme-salt-high-dark,
 .ag-theme-salt-high-light {
+  --agGrid-button-fontSize: var(
+    --saltAgGrid-button-fontSize,
+    var(--salt-text-fontSize)
+  );
+  --agGrid-button-height: var(
+    --saltAgGrid-button-height,
+    var(--salt-size-base)
+  );
+  --agGrid-checkbox-size: var(
+    --saltAgGrid-checkbox-size,
+    var(--salt-size-selectable)
+  );
+  --agGrid-list-item-fontSize: var(--saltAgGrid-list-item-fontSize, 13px);
+  --agGrid-paging-button-width: var(
+    --saltAgGrid-paging-button-width,
+    var(--salt-size-base)
+  );
+
   --agGrid-checkbox-background: var(
     --saltAgGrid-checkbox-background,
     var(--salt-selectable-background)

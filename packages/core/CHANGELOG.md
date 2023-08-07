@@ -1,5 +1,37 @@
 # @salt-ds/core
 
+## 1.8.0
+
+### Minor Changes
+
+- b2ca1f11: Add MultilineInput.
+
+  Multiline Input provides an editable text area in which users can enter multiple lines of text and numeric values.
+
+  ```tsx
+  <MultilineInput defaultValue="Value" />
+  ```
+
+### Patch Changes
+
+- ce0c73b7: Remove selected hover styles from Checkbox and Radio Button.
+- 90e4604b: Add scrollIntoView on Toast mount
+- 73bb60df: Add margin bottom on Toast
+- a1c95484: Fixed spacing between status icon and helper text in Form Field
+- e070e76d: Fix alignment of label in Form Field when positioned left or right
+- a6f83794: Fix Radio Button read-only icon
+- 1f10586c: Fixed spacing between necessity asterisk and label in Form Field
+- 8f99ee39: Updated font-weight of strong Label to use --salt-text-label-fontWeight-strong
+- 6fcf20a3: Fixed control size in Radio Button to match the shown icon size.
+- ecb9893c: Fixed interactable card styles clashing with card styles in the production build
+- 4c5fe903: Updated the Accordion styling.
+
+  - Added `status` to the `Accordion` component.
+  - Removed the hover styling from the `Accordion` component.
+  - Moved the border from the bottom of the accordion to the top.
+  - Added a fade animation to the accordion contents.
+  - Updated the arrow rotation animation.
+
 ## 1.8.0-rc.5
 
 ### Minor Changes
