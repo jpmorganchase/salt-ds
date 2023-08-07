@@ -70,6 +70,7 @@
 
 /* Styles applied when level is not 0 */
 .saltNavItem-wrapper.saltNavItem-nested {
+  font-weight: var(--salt-text-fontWeight);
   padding-left: calc(var(--salt-spacing-250) + (var(--saltNavItem-level, 0) * var(--navItem-gap)));
 }
 
