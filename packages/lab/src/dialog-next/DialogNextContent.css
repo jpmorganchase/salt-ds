@@ -1,6 +1,0 @@
-.saltDialogNextContent {
-  color: var(--salt-text-primary-foreground);
-  padding-inline: var(--salt-spacing-300);
-  min-height: 0;
-  overflow-y: auto;
-}

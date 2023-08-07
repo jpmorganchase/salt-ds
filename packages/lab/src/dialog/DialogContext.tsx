@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
 import { ValidationStatus } from "@salt-ds/core";
 
-export const DialogNextContext = createContext<{
+export const DialogContext = createContext<{
   dialogId?: string;
   status?: ValidationStatus;
 }>({});
 
-export const useDialogNextContext = () => {
-  return useContext(DialogNextContext);
+export const useDialogContext = () => {
+  return useContext(DialogContext);
 };

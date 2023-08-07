@@ -6,11 +6,11 @@ import {
 } from "@floating-ui/react";
 import { useFloatingUI, UseFloatingUIProps } from "@salt-ds/core";
 
-export type UseDialogNextProps = Partial<
+export type UseDialogProps = Partial<
   Pick<UseFloatingUIProps, "onOpenChange" | "open">
 >;
 
-export function useDialogNext(props: UseDialogNextProps) {
+export function useDialog(props: UseDialogProps) {
   const { open, onOpenChange } = props;
 
   const { context, floating } = useFloatingUI({
