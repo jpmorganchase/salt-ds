@@ -5,6 +5,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import dialogNextContentCss from "./DialogNextContent.css";
+import { useDialogNextContext } from "./DialogNextContext";
 
 const withBaseName = makePrefixer("saltDialogNextContent");
 
@@ -13,6 +14,7 @@ export const DialogNextContent = forwardRef<
   HTMLAttributes<HTMLDivElement>
 >(function DialogNextContent(props, ref) {
   const { children, className, ...rest } = props;
+  const { descriptionId } = useDialogNextContext();
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -22,7 +24,12 @@ export const DialogNextContent = forwardRef<
   });
 
   return (
-    <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
+    <div
+      id={descriptionId}
+      className={clsx(withBaseName(), className)}
+      {...rest}
+      ref={ref}
+    >
       {children}
     </div>
   );
