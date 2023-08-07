@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/core",
-  "version": "1.8.0-rc.5",
+  "version": "1.8.0",
   "license": "Apache-2.0",
   "main": "src/index.ts",
   "sideEffects": false,
