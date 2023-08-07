@@ -265,9 +265,15 @@
     border: 2px solid transparent;
   }
 
-  .ag-header-cell:after {
-    top: var(--agGrid-separatorGap);
-    bottom: var(--agGrid-separatorGap);
+  .ag-header-container .ag-header-cell:after {
+    height: calc(var(--salt-size-base) - 2 * var(--salt-size-adornment));
+    top: calc(
+      50% - 0.5 * (var(--salt-size-base) - 2 * var(--salt-size-adornment))
+    );
+  }
+
+  .ag-pinned-left-header .ag-header-cell:after {
+    height: 0;
   }
 
   .ag-keyboard-focus .ag-header-cell:focus:after {
@@ -557,5 +563,11 @@
   .ag-header-cell.ag-floating-filter {
     padding-left: 0;
     padding-right: 1px;
+    border-bottom: 0;
+  }
+
+  .ag-header-cell-auto-height .ag-header-cell-text {
+    overflow: auto;
+    white-space: pre-wrap;
   }
 }

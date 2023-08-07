@@ -30,6 +30,7 @@ export * from "./deck-item";
 export * from "./deck-layout";
 export * from "./dialog";
 export * from "./dialog-next";
+export * from "./drawer";
 export * from "./dropdown";
 export * from "./editable-label";
 export * from "./file-drop-zone";
