@@ -7,6 +7,10 @@
   margin: 0;
 }
 
+.saltDialogTitle .saltStatusIndicator.saltIcon {
+  --icon-size: var(--salt-text-h2-lineHeight);
+}
+
 .saltDialogTitle-withAccent {
   position: relative;
 }

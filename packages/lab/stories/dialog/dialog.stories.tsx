@@ -184,10 +184,8 @@ const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
           This is a description for an alert dialog.
         </DialogContent>
         <DialogActions>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant="cta" onClick={handleClose}>
             Ok
           </Button>
         </DialogActions>
@@ -286,7 +284,9 @@ export const PreferencesDialog: ComponentStory<typeof Dialog> = (args) => {
           <DialogContent>Hello</DialogContent>
         </FlexLayout>
         <DialogActions>
-          <Button onClick={handleClose}>Save</Button>
+          <Button variant="cta" onClick={handleClose}>
+            Save
+          </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />
       </Dialog>
@@ -310,8 +310,8 @@ export const DesktopDialog = () => {
         <DialogTitle>Window Dialog</DialogTitle>
         <DialogContent>Hello world!</DialogContent>
         <DialogActions>
-          <Button variant="secondary">Cancel</Button>
-          <Button>Save</Button>
+          <Button>Cancel</Button>
+          <Button variant="cta">Save</Button>
         </DialogActions>
       </FakeWindow>
 
@@ -319,8 +319,8 @@ export const DesktopDialog = () => {
         <DialogTitle accent>Window Dialog</DialogTitle>
         <DialogContent>Accent world!</DialogContent>
         <DialogActions>
-          <Button variant="secondary">Cancel</Button>
-          <Button>Save</Button>
+          <Button>Cancel</Button>
+          <Button variant="cta">Save</Button>
         </DialogActions>
       </FakeWindow>
 
@@ -328,8 +328,8 @@ export const DesktopDialog = () => {
         <DialogTitle status="warning">Warning Dialog</DialogTitle>
         <DialogContent>Potential issues abound!</DialogContent>
         <DialogActions>
-          <Button variant="secondary">Cancel</Button>
-          <Button>Ok</Button>
+          <Button>Cancel</Button>
+          <Button variant="cta">Ok</Button>
         </DialogActions>
       </FakeWindow>
     </StackLayout>

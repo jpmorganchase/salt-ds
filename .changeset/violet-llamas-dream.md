@@ -11,8 +11,8 @@ Alert dialog example:
     <DialogTitle>Warning Alert Title</DialogTitle>
     <DialogContent>Alert description<DialogContent>
     <DialogActions>
-        <Button variant="secondary">Cancel</Button>
-        <Button>Ok</Button>
+        <Button>Cancel</Button>
+        <Button variant="cta">Ok</Button>
     </DialogActions>
 </Dialog>
 ```
@@ -24,8 +24,11 @@ Content dialog example:
     <DialogTitle accent>Dialog Title</DialogTitle>
     <DialogContent>Dialog content...<DialogContent>
     <DialogActions>
-        <Button variant="secondary">Previous</Button>
-        <Button>Next</Button>
+        <SplitLayout
+            startItem={<Button variant="secondary">Cancel</Button>}
+        />
+        <Button>Previous</Button>
+        <Button variant="cta">Next</Button>
     </DialogActions>
     <DialogCloseButton onClick={() => handleOpenChange(false)}/>
 </Dialog>
