@@ -59,8 +59,6 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
       ...rest
     } = props;
     const dialogId = useId() || "dialog-next";
-    const headingId = `${dialogId}-heading`;
-    const descriptionId = `${dialogId}-description`;
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-dialog-next",
@@ -84,8 +82,8 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
     }, [open, showComponent]);
 
     const contextValue = useMemo(
-      () => ({ dialogId, headingId, descriptionId, status }),
-      [dialogId, headingId, status, descriptionId]
+      () => ({ dialogId, status }),
+      [dialogId, status]
     );
 
     return (
@@ -116,8 +114,8 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
                     }
                   }}
                   ref={floatingRef}
-                  aria-labelledby={headingId}
-                  aria-describedby={descriptionId}
+                  aria-labelledby={`${dialogId}-heading`}
+                  aria-describedby={`${dialogId}-description`}
                   aria-modal="true"
                   {...getFloatingProps()}
                   {...rest}

@@ -3,8 +3,6 @@ import { ValidationStatus } from "@salt-ds/core";
 
 export const DialogNextContext = createContext<{
   dialogId?: string;
-  headingId?: string;
-  descriptionId?: string;
   status?: ValidationStatus;
 }>({});
 

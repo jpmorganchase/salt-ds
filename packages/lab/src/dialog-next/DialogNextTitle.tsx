@@ -25,7 +25,7 @@ export const DialogNextTitle = ({
   status: statusProp,
   ...rest
 }: DialogNextTitleProps) => {
-  const { headingId, status: statusContext } = useDialogNextContext();
+  const { dialogId, status: statusContext } = useDialogNextContext();
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-dialog-next-title",
@@ -37,7 +37,7 @@ export const DialogNextTitle = ({
 
   return (
     <H2
-      id={headingId}
+      id={`${dialogId}-heading`}
       className={clsx(
         withBaseName(),
         {

@@ -14,7 +14,7 @@ export const DialogNextContent = forwardRef<
   HTMLAttributes<HTMLDivElement>
 >(function DialogNextContent(props, ref) {
   const { children, className, ...rest } = props;
-  const { descriptionId } = useDialogNextContext();
+  const { dialogId } = useDialogNextContext();
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -25,7 +25,7 @@ export const DialogNextContent = forwardRef<
 
   return (
     <div
-      id={descriptionId}
+      id={`${dialogId!}-description`}
       className={clsx(withBaseName(), className)}
       {...rest}
       ref={ref}
