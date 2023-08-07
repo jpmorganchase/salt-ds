@@ -57,10 +57,10 @@ export function Scrollable<T>(props: ScrollableProps<T>) {
     }
     const { scrollLeft, scrollTop } = scrollerRef.current;
     const top = topRef.current;
-    const bottom = bottomRef.current;
     if (top) {
       top.scrollLeft = scrollLeft;
     }
+    const bottom = bottomRef.current;
     if (bottom) {
       bottom.scrollLeft = scrollLeft;
     }
