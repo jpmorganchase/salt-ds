@@ -67,8 +67,8 @@ describe("GIVEN a Drawer", () => {
     });
   });
 
-  describe("WHEN close button is pressed", () => {
-    it("THEN it close the Dialog", () => {
+  describe("WHEN close button is clicked", () => {
+    it("THEN it should close the Dialog", () => {
       cy.mount(<Default />);
 
       cy.findByRole("dialog").should("be.visible");
@@ -78,6 +78,32 @@ describe("GIVEN a Drawer", () => {
       }).click();
 
       cy.findByRole("dialog").should("not.exist");
+    });
+  });
+
+  describe("WHEN a number is passed as initialFocus prop", () => {
+    it("THEN it should focus the button at that index", () => {
+      cy.mount(<Default initialFocus={1} />);
+
+      cy.findByRole("dialog").should("be.visible");
+      cy.findAllByRole("button").eq(1).should("be.focused");
+    });
+  });
+
+  describe("WHEN a status is passed", () => {
+    it("THEN it should add the status to the dialog", () => {
+      cy.mount(<Default status="error" />);
+
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("dialog").should("have.class", "saltDialog-error");
+      cy.findByRole("img", { name: "error" }).should("exist");
+    });
+
+    it("THEN it should render a StatusIcon with that status", () => {
+      cy.mount(<Default status="error" />);
+
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("img", { name: "error" }).should("exist");
     });
   });
 });
