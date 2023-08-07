@@ -21,3 +21,4 @@ export { default as RowGrouping } from "./RowGrouping";
 export { default as RowGroupPanel } from "./RowGroupPanel";
 export { default as StatusBar } from "./StatusBar";
 export { default as Variants } from "./Variants";
+export { default as WrappedHeader } from "./WrappedHeader";

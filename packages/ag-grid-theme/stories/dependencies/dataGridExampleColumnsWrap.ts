@@ -1,45 +1,50 @@
 import { ColDef } from "ag-grid-community";
 
-const dataGridExampleColumns: ColDef[] = [
+const dataGridExampleColumnsWrap: ColDef[] = [
   {
     headerName: "",
     field: "on",
-    width: 70,
+    width: 38,
     checkboxSelection: true,
     headerCheckboxSelection: true,
     pinned: "left",
     suppressMenu: true,
-    resizable: false,
   },
   {
-    headerName: "Name",
+    headerName: "Name of State",
     field: "name",
+    width: 90,
     filterParams: {
       buttons: ["reset", "apply"],
     },
     editable: false,
+    suppressMenu: true,
   },
   {
-    headerName: "Code",
+    headerName: "State code",
     field: "code",
+    width: 80,
   },
   {
-    headerName: "Capital",
+    headerName: "State capital",
     field: "capital",
+    width: 80,
   },
   {
-    headerName: "Population",
+    headerName: "Population at time of data gathering",
     type: "numericColumn",
     field: "population",
     filter: "agNumberColumnFilter",
     editable: true,
     cellClass: ["numeric-cell", "editable-cell"],
+    width: 100,
   },
   {
     headerName: "Date",
     type: "dateColumn",
     field: "date",
     filter: "agDateColumnFilter",
+    width: 80,
   },
 ];
-export default dataGridExampleColumns;
+export default dataGridExampleColumnsWrap;
