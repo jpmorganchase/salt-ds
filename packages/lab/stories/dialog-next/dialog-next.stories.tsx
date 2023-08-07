@@ -12,6 +12,7 @@ import {
   DialogNextActions,
   DialogNextContent,
   NavItem,
+  DialogNextCloseButton,
 } from "@salt-ds/lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import "./dialog-next.stories.css";
@@ -74,6 +75,7 @@ const DialogTemplate: ComponentStory<typeof DialogNext> = ({
             }
           />
         </DialogNextActions>
+        <DialogNextCloseButton />
       </DialogNext>
     </>
   );
@@ -167,6 +169,7 @@ const AlertDialogTemplate: ComponentStory<typeof DialogNext> = ({
       </Button>
       <DialogNext
         {...args}
+        role="alertdialog"
         status={status}
         open={open}
         onOpenChange={onOpenChange}
@@ -285,6 +288,7 @@ export const PreferencesDialog: ComponentStory<typeof DialogNext> = (args) => {
         <DialogNextActions>
           <Button onClick={handleClose}>Save</Button>
         </DialogNextActions>
+        <DialogNextCloseButton />
       </DialogNext>
     </>
   );

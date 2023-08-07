@@ -13,7 +13,6 @@ import {
   FloatingPortal,
 } from "@floating-ui/react";
 import {
-  Button,
   makePrefixer,
   useForkRef,
   useId,
@@ -21,7 +20,6 @@ import {
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { CloseIcon } from "@salt-ds/icons";
 
 import { useDialogNext } from "./useDialogNext";
 import dialogNextCss from "./DialogNext.css";
@@ -86,8 +84,8 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
     }, [open, showComponent]);
 
     const contextValue = useMemo(
-      () => ({ headingId, descriptionId, status }),
-      [headingId, status, descriptionId]
+      () => ({ dialogId, headingId, descriptionId, status }),
+      [dialogId, headingId, status, descriptionId]
     );
 
     return (
@@ -125,17 +123,6 @@ export const DialogNext = forwardRef<HTMLDivElement, DialogNextProps>(
                   {...rest}
                 >
                   {children}
-                  <Button
-                    aria-controls={dialogId}
-                    aria-label="Close dialog"
-                    className={withBaseName("closeButton")}
-                    variant="secondary"
-                    onClick={() => {
-                      onOpenChange?.(false);
-                    }}
-                  >
-                    <CloseIcon aria-hidden />
-                  </Button>
                 </div>
               </DialogNextContext.Provider>
             </FloatingFocusManager>
