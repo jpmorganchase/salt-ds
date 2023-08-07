@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import {
-  H1,
+  H2,
   StatusIndicator,
   ValidationStatus,
   makePrefixer,
@@ -36,19 +36,20 @@ export const DialogNextTitle = ({
   const status = statusProp || statusContext;
 
   return (
-    <H1
+    <H2
       id={headingId}
       className={clsx(
         withBaseName(),
         {
-          [withBaseName("withAccent")]: !status && accent,
+          [withBaseName("withAccent")]: accent,
+          [withBaseName(status!)]: !!status,
         },
         className
       )}
       {...rest}
     >
       {status && <StatusIndicator size={2} status={status} />}
-      <span className={withBaseName("text")}>{children}</span>
-    </H1>
+      {children}
+    </H2>
   );
 };

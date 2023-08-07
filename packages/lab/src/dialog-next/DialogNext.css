@@ -22,12 +22,12 @@
   align-items: center;
   justify-content: center;
   padding: var(--salt-spacing-400);
-  z-index: var(--salt-zIndex-dialog;
+  z-index: var(--salt-zIndex-dialog);
 }
 
 .saltDialogNext-withStatus {
   border-width: var(--salt-size-border);
-  border-style: solid;
+  border-style: var(--salt-container-borderStyle);
 }
 
 .saltDialogNext-info {
