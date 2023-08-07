@@ -5,7 +5,7 @@ import {
   FloatingOverlay,
   FloatingPortal,
 } from "@floating-ui/react";
-import { makePrefixer, useForkRef } from "../utils";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useDrawer } from "./useDrawer";
