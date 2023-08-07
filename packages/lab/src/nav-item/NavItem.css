@@ -15,7 +15,7 @@
   --navItem-fill: var(--salt-text-primary-foreground);
 }
 
-/* Styles applied to root NavItem component */
+/* Styles applied to NavItem wrapper */
 .saltNavItem-wrapper {
   display: flex;
   align-items: center;
