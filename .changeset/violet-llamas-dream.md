@@ -9,7 +9,7 @@ Alert dialog example:
 ```tsx
 <Dialog status="warning" role="alertdialog" open={open} onOpenChange={handleOpenChange}>
     <DialogTitle>Warning Alert Title</DialogTitle>
-    <DialogContents>Alert description<DialogContents>
+    <DialogContent>Alert description<DialogContent>
     <DialogActions>
         <Button variant="secondary">Cancel</Button>
         <Button>Ok</Button>
@@ -22,7 +22,7 @@ Content dialog example:
 ```tsx
 <Dialog open={open} onOpenChange={handleOpenChange}>
     <DialogTitle accent>Dialog Title</DialogTitle>
-    <DialogContents>Dialog content...<DialogContents>
+    <DialogContent>Dialog content...<DialogContent>
     <DialogActions>
         <Button variant="secondary">Previous</Button>
         <Button>Next</Button>
