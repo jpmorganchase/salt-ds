@@ -1,6 +1,6 @@
 /* Style applied to the root element */
 .saltInput {
-  --input-borderColor: var(--salt-editable-borderColor);
+  --input-borderColor: var(--saltInput-borderColor, --salt-editable-borderColor);
   --input-borderStyle: var(--salt-editable-borderStyle);
   --input-outlineColor: var(--salt-focused-outlineColor);
   --input-borderWidth: var(--salt-size-border);
