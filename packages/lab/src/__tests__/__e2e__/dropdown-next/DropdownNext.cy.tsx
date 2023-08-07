@@ -61,7 +61,7 @@ describe("GIVEN an active Dropdown component", () => {
         .should("have.attr", "aria-expanded", "false");
     });
 
-    // TODO: update once KeyNav fixed
+    // TODO: update once KeyNav fixed in List
     it("THEN it should update value on different list item selection using keyboard", () => {
       cy.mount(<Default />);
       cy.findByRole("combobox").focus().realPress("Enter");
@@ -107,10 +107,10 @@ describe("GIVEN an active Dropdown component", () => {
     it("THEN it should show default selected value on first render", () => {
       cy.mount(<Secondary />);
 
-      cy.findByRole("combobox").should("have.value", "🍈 Melon");
+      cy.findByRole("combobox").should("have.value", "🇲🇬 Madagascar");
     });
 
-    // TODO: update once KeyNav fixed
+    // TODO: update once KeyNav fixed in List
     it("THEN it should update value on different list item selection", () => {
       cy.mount(<Secondary />);
       cy.findByRole("combobox").focus().realPress("Enter");
@@ -118,7 +118,7 @@ describe("GIVEN an active Dropdown component", () => {
       cy.realPress("ArrowDown");
       cy.realPress("Enter");
 
-      cy.findByRole("combobox").should("have.value", "🍏 Apple");
+      cy.findByRole("combobox").should("have.value", "🇧🇷 Brazil");
     });
   });
 });
