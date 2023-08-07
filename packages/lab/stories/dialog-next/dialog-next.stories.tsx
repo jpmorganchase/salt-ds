@@ -75,7 +75,7 @@ const DialogTemplate: ComponentStory<typeof DialogNext> = ({
             }
           />
         </DialogNextActions>
-        <DialogNextCloseButton />
+        <DialogNextCloseButton onClick={handleClose} />
       </DialogNext>
     </>
   );
@@ -288,7 +288,7 @@ export const PreferencesDialog: ComponentStory<typeof DialogNext> = (args) => {
         <DialogNextActions>
           <Button onClick={handleClose}>Save</Button>
         </DialogNextActions>
-        <DialogNextCloseButton />
+        <DialogNextCloseButton onClick={handleClose} />
       </DialogNext>
     </>
   );
