@@ -1,7 +1,6 @@
 import {
   useInteractions,
   useDismiss,
-  useClick,
   useRole,
   flip,
   shift,

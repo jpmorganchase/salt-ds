@@ -1,7 +1,7 @@
 import { Story, ComponentMeta } from "@storybook/react";
 
 import { DropdownNext, DropdownNextProps } from "@salt-ds/lab";
-import { Button } from "@salt-ds/core";
+import { Button, FlexLayout } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 import { useState } from "react";
 
@@ -23,14 +23,14 @@ const SimpleListExample = [
 ];
 
 const ListExample = [
-  { value: "🍊", id: "Orange" },
-  { value: "🍏", id: "Apple" },
+  { value: "🇦🇺", id: "Australia" },
+  { value: "🇧🇷", id: "Brazil" },
   {
-    value: "🍈",
-    id: "Melon",
+    value: "🇲🇬",
+    id: "Madagascar",
   },
-  { value: "🍍", id: "Pineapple" },
-  { value: "🍐", id: "Pear" },
+  { value: "🇵🇦", id: "Panama" },
+  { value: "🇸🇪", id: "Sweden" },
 ];
 
 const DropdownTemplate: Story<DropdownNextProps> = ({ ...args }) => {
@@ -102,17 +102,8 @@ export const Controlled: Story<DropdownNextProps> = ({
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          paddingRight: "20px",
-        }}
-      >
+    <FlexLayout>
+      <FlexLayout gap={0.1}>
         <Button onClick={handleOpenClose}>{open ? "Close" : "Open"}</Button>
         <Button
           disabled={highlightedIndex === SimpleListExample.length - 1}
@@ -135,7 +126,7 @@ export const Controlled: Story<DropdownNextProps> = ({
         >
           Select
         </Button>
-      </div>
+      </FlexLayout>
       <DropdownNext
         {...props}
         defaultSelected={defaultSelected}
@@ -144,6 +135,6 @@ export const Controlled: Story<DropdownNextProps> = ({
         selectedItem={selectedItem}
         highlightedItem={SimpleListExample[highlightedIndex]}
       />
-    </div>
+    </FlexLayout>
   );
 };
