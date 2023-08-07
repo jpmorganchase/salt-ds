@@ -37,46 +37,32 @@ WithBadge.args = {
   href: "#",
 };
 
-const itemsWithSubNav = [
-  {
-    name: "Nav Item 1",
-    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
-  },
-  {
-    name: "Nav Item 2",
-    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
-  },
-  {
-    name: "Nav Item 3",
-  },
-  {
-    name: "Nav Item 4",
-  },
-  {
-    name: "Nav Item 5",
-  },
+const items = [
+  "Nav Item 1",
+  "Nav Item 2",
+  "Nav Item 3",
+  "Nav Item 4",
+  "Nav Item 5",
 ];
 
 const multipleLevelNesting = [
   {
-    name: "Nav Item 1",
+    name: "Nav Item 1 - Level 0",
   },
   {
-    name: "Nav Item 2",
+    name: "Nav Item 2 - Level 0",
     subNav: [
       {
-        name: "Sub Nav Item 1",
+        name: "Nav Item 1 - Level 1",
         subNav: [
-          "Nested Sub Nav Item 1",
-          "Nested Sub Nav Item 2",
-          "Nested Sub Nav Item 3",
+          "Nav Item 1 - Level 2",
+          "Nav Item 2 - Level 2",
+          "Nav Item 3 - Level 2",
         ],
       },
     ],
   },
 ];
-
-const items = itemsWithSubNav.map((item) => item.name);
 
 export const HorizontalGroup = () => {
   const [active, setActive] = useState(items[0]);
