@@ -45,7 +45,7 @@
 
 .saltDropdownNext-list {
   border-color: var(--salt-selectable-borderColor-selected);
-  max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * var(--dropdownNext-itemCount, 5));
+  max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5);
 }
 
 /* Styling applied to dropdown button if `disabled={true}` */

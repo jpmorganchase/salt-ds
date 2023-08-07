@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { ListNext, ListNextProps } from "@salt-ds/lab";
+import { ListNext, ListNextProps } from "../list-next";
 import {
   makePrefixer,
   useId,
@@ -16,7 +16,6 @@ import {
   KeyboardEvent,
   MouseEvent,
   MutableRefObject,
-  ElementType,
 } from "react";
 import { useWindow } from "@salt-ds/window";
 import dropdownNextCss from "./DropdownNext.css";

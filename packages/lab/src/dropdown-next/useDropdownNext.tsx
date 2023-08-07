@@ -13,7 +13,7 @@ import {
   useFloatingUI,
   UseFloatingUIProps,
 } from "@salt-ds/core";
-import { ListItemNext } from "@salt-ds/lab";
+import { ListItemNext } from "../list-next";
 import { HTMLProps, KeyboardEvent, FocusEvent } from "react";
 import { useList, UseListProps } from "../list-next/useList";
 
