@@ -4,10 +4,7 @@
   --dropdownNext-borderWidth: var(--salt-size-border);
 
   align-items: center;
-  background: var(
-    --saltDropdownNext-background,
-    var(--dropdownNext-background)
-  );
+  background: var(--saltDropdownNext-background, var(--dropdownNext-background));
   color: var(--saltDropdownNext-color, var(--salt-text-primary-foreground));
   display: flex;
   font-family: var(--salt-text-fontFamily);
@@ -20,8 +17,7 @@
   padding-right: var(--saltDropdownNext-paddingRight, var(--salt-spacing-100));
   position: relative;
   border: none;
-  border-bottom: var(--dropdownNext-borderWidth) var(--dropdownNext-borderStyle)
-    var(--dropdownNext-borderColor);
+  border-bottom: var(--dropdownNext-borderWidth) var(--dropdownNext-borderStyle) var(--dropdownNext-borderColor);
   justify-content: space-between;
 }
 
@@ -36,11 +32,7 @@
   --dropdownNext-borderColor: var(--salt-editable-borderColor-active);
   --dropdownNext-borderWidth: var(--salt-editable-borderWidth-active);
 
-  outline: var(
-    --saltDropdownNext-outline,
-    var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-      var(--salt-focused-outlineColor)
-  );
+  outline: var(--saltDropdownNext-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor));
 }
 
 .saltDropdownNext-buttonText {
@@ -53,10 +45,7 @@
 
 .saltDropdownNext-list {
   border-color: var(--salt-selectable-borderColor-selected);
-  max-height: calc(
-    (var(--salt-size-base) + var(--salt-spacing-100)) *
-      var(--dropdownNext-itemCount, 5)
-  );
+  max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * var(--dropdownNext-itemCount, 5));
 }
 
 /* Styling applied to dropdown button if `disabled={true}` */
@@ -69,10 +58,7 @@
 
   cursor: var(--salt-selectable-cursor-disabled);
   background: var(--dropdownNext-background-disabled);
-  color: var(
-    --saltDropdownNext-color-disabled,
-    var(--salt-text-primary-foreground-disabled)
-  );
+  color: var(--saltDropdownNext-color-disabled, var(--salt-text-primary-foreground-disabled));
   outline: 0;
 }
 
@@ -103,33 +89,17 @@
 /* Class applied if `variant="primary"` */
 .saltDropdownNext-primary {
   --dropdownNext-background: var(--salt-editable-primary-background);
-  --dropdownNext-background-active: var(
-    --salt-editable-primary-background-active
-  );
-  --dropdownNext-background-hover: var(
-    --salt-editable-primary-background-hover
-  );
-  --dropdownNext-background-disabled: var(
-    --salt-editable-primary-background-disabled
-  );
-  --dropdownNext-background-readonly: var(
-    --salt-editable-primary-background-readonly
-  );
+  --dropdownNext-background-active: var(--salt-editable-primary-background-active);
+  --dropdownNext-background-hover: var(--salt-editable-primary-background-hover);
+  --dropdownNext-background-disabled: var(--salt-editable-primary-background-disabled);
+  --dropdownNext-background-readonly: var(--salt-editable-primary-background-readonly);
 }
 
 /* Class applied if `variant="secondary"` */
 .saltDropdownNext-secondary {
   --dropdownNext-background: var(--salt-editable-secondary-background);
-  --dropdownNext-background-active: var(
-    --salt-editable-secondary-background-active
-  );
-  --dropdownNext-background-hover: var(
-    --salt-editable-secondary-background-active
-  );
-  --dropdownNext-background-disabled: var(
-    --salt-editable-secondary-background-disabled
-  );
-  --dropdownNext-background-readonly: var(
-    --salt-editable-secondary-background-readonly
-  );
+  --dropdownNext-background-active: var(--salt-editable-secondary-background-active);
+  --dropdownNext-background-hover: var(--salt-editable-secondary-background-active);
+  --dropdownNext-background-disabled: var(--salt-editable-secondary-background-disabled);
+  --dropdownNext-background-readonly: var(--salt-editable-secondary-background-readonly);
 }
