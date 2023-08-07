@@ -2,25 +2,21 @@
 
 div[class*="ag-theme-salt-touch"] {
   --agGrid-padding-default: 16px;
-  --agGrid-separatorGap-default: 20px;
   --agGrid-cornerTag-size-default: 14px;
 }
 
 div[class*="ag-theme-salt-low"] {
   --agGrid-padding-default: 12px;
-  --agGrid-separatorGap-default: 16px;
   --agGrid-cornerTag-size-default: 12px;
 }
 
 div[class*="ag-theme-salt-medium"] {
   --agGrid-padding-default: 8px;
-  --agGrid-separatorGap-default: 12px;
   --agGrid-cornerTag-size-default: 10px;
 }
 
 div[class*="ag-theme-salt-high"] {
   --agGrid-padding-default: 8px;
-  --agGrid-separatorGap-default: 8px;
   --agGrid-cornerTag-size-default: 8px;
 }
 
@@ -28,7 +24,6 @@ div[class*="ag-theme-salt-high-compact"] {
   --salt-size-base: 16px;
 
   --agGrid-padding-default: 8px;
-  --agGrid-separatorGap-default: 8px;
   --agGrid-cornerTag-size-default: 8px;
 }
 
@@ -97,11 +92,6 @@ div[class*="ag-theme-salt"] {
   --agGrid-header-fontWeight: var(
     --saltAgGrid-header-fontWeight,
     var(--salt-text-label-fontWeight-strong)
-  );
-
-  --agGrid-separatorGap: var(
-    --saltAgGrid-separatorGap,
-    var(--agGrid-separatorGap-default)
   );
 
   --agGrid-row-background-selected: var(
@@ -305,7 +295,6 @@ $ag-theme-salt-params-high: map-merge(
     row-height: 24px,
     header-height: 24,
     font-size: 11px,
-    header-column-separator-height: 8px,
     cell-horizontal-padding: 4px,
     list-item-height: 24px,
     icon-size: 12px,
@@ -328,7 +317,6 @@ $ag-theme-salt-params-high-compact: map-merge(
     row-height: 20px,
     header-height: 20,
     font-size: 11px,
-    header-column-separator-height: 8px,
     cell-horizontal-padding: 4px,
     list-item-height: 20px,
     icon-size: 12px,
@@ -351,7 +339,6 @@ $ag-theme-salt-params-medium: map-merge(
     row-height: 36px,
     header-height: 36px,
     font-size: 12px,
-    header-column-separator-height: 10px,
     cell-horizontal-padding: 8px,
     list-item-height: 36px,
     icon-size: 12px,
@@ -374,7 +361,6 @@ $ag-theme-salt-params-low: map-merge(
     row-height: 48px,
     header-height: 48,
     font-size: 14px,
-    header-column-separator-height: 10px,
     cell-horizontal-padding: 12px,
     list-item-height: 48px,
     icon-size: 12px,
@@ -397,7 +383,6 @@ $ag-theme-salt-params-touch: map-merge(
     row-height: 60px,
     header-height: 60,
     font-size: 16px,
-    header-column-separator-height: 10px,
     cell-horizontal-padding: 16px,
     list-item-height: 60px,
     icon-size: 12px,
