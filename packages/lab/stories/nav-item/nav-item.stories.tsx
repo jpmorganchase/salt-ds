@@ -1,7 +1,6 @@
 import { NavItem, NavItemProps, Badge } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { useState } from "react";
-import { H2 } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 
 import "./nav-item.stories.css";
@@ -130,66 +129,6 @@ export const HorizontalGroupWithIconAndBadge = () => {
         ))}
       </ul>
     </nav>
-  );
-};
-
-export const HorizontalGroupWithDropdown = () => {
-  const [active, setActive] = useState(itemsWithSubNav[0].name);
-  const [expanded, setExpanded] = useState<string | null>(null);
-
-  const currentSubNav = itemsWithSubNav.find(
-    (item) => item.name === expanded
-  )?.subNav;
-
-  return (
-    <div className="container">
-      <nav>
-        <ul className="horizontal">
-          {itemsWithSubNav.map(({ name, subNav }) => (
-            <li key={name}>
-              <NavItem
-                active={active === name}
-                href="#"
-                onClick={(event) => {
-                  // Prevent default to avoid navigation
-                  event.preventDefault();
-                  setActive(name);
-                  setExpanded((old) => {
-                    if (old === name) {
-                      return null;
-                    }
-                    return name;
-                  });
-                }}
-                onExpand={() => {
-                  setActive(name);
-                  setExpanded((old) => {
-                    if (old === name) {
-                      return null;
-                    }
-                    return name;
-                  });
-                }}
-                expanded={expanded === name}
-                aria-haspopup={expanded === name}
-                parent={subNav && subNav.length > 0}
-                IconComponent={NotificationIcon}
-              >
-                {name}
-              </NavItem>
-              {expanded === name && currentSubNav && (
-                <ul className="list">
-                  <H2>{expanded}</H2>
-                  {currentSubNav?.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
   );
 };
 
