@@ -9,15 +9,14 @@ import {
   FormFieldLabel,
   FormFieldHelperText,
   Input,
-  Drawer,
-  useDrawer,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
+import { Drawer, useDrawer } from "@salt-ds/lab";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "./drawer.stories.css";
 
 export default {
-  title: "Core/Drawer",
+  title: "Lab/Drawer",
   component: Drawer,
 } as ComponentMeta<typeof Drawer>;
 
