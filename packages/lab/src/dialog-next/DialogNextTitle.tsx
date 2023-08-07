@@ -41,7 +41,7 @@ export const DialogNextTitle = ({
       className={clsx(
         withBaseName(),
         {
-          [withBaseName("withAccent")]: accent,
+          [withBaseName("withAccent")]: accent && !status,
           [withBaseName(status!)]: !!status,
         },
         className
