@@ -254,7 +254,7 @@ export const VerticalNestedGroup = () => {
               {name}
             </NavItem>
             {expanded.includes(name) && (
-              <ul className="nestedGroup">
+              <ul className="vertical">
                 {subNav?.map((item) => {
                   const itemValue = `${name} - ${item.name}`;
 
@@ -301,7 +301,7 @@ export const VerticalNestedGroup = () => {
                       </NavItem>
 
                       {expanded.includes(item.name) && (
-                        <ul className="nestedGroup">
+                        <ul className="vertical">
                           {item.subNav.map((nestedItem) => {
                             const itemValue = `${name} - ${item.name} - ${nestedItem}`;
 

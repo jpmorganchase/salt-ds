@@ -24,11 +24,6 @@ ul {
 
 .vertical {
   flex-direction: column;
-}
-
-.nestedGroup {
-  display: flex;
-  flex-direction: column;
   gap: var(--salt-size-border);
 }
 
