@@ -48,7 +48,7 @@ export const DialogTitle = ({
       )}
       {...rest}
     >
-      {status && <StatusIndicator size={2} status={status} />}
+      {status && <StatusIndicator status={status} />}
       {children}
     </H2>
   );

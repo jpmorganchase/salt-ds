@@ -1,3 +1,4 @@
+/* Styles applied to the root element */
 .saltDialogTitle {
   display: flex;
   gap: var(--salt-spacing-100);
@@ -7,10 +8,12 @@
   margin: 0;
 }
 
+/* Styles applied to the status indicator icon overriding its default size */
 .saltDialogTitle .saltStatusIndicator.saltIcon {
   --icon-size: var(--salt-text-h2-lineHeight);
 }
 
+/* Styles applied to DialogTitle when accent={true} */
 .saltDialogTitle-withAccent {
   position: relative;
 }
