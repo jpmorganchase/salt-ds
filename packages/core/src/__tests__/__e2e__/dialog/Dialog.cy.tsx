@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/testing-react";
-import * as drawerStories from "@stories/dialog-next/dialog-next.stories";
+import * as drawerStories from "@stories/dialog/dialog.stories";
 
 const composedStories = composeStories(drawerStories);
 
@@ -10,7 +10,7 @@ describe("GIVEN a Drawer", () => {
     it("THEN it should display an overlay by default", () => {
       cy.mount(<Default />);
 
-      cy.get(".saltDialogNext-overlay").should("be.visible");
+      cy.get(".saltDialog-overlay").should("be.visible");
       cy.findByRole("dialog").should("be.visible");
       cy.findAllByRole("button").eq(0).should("be.focused");
     });
@@ -20,12 +20,12 @@ describe("GIVEN a Drawer", () => {
     it("THEN it should close the Dialog", () => {
       cy.mount(<Default />);
 
-      cy.get(".saltDialogNext-overlay").should("be.visible");
+      cy.get(".saltDialog-overlay").should("be.visible");
       cy.findAllByRole("button").eq(0).should("be.focused");
 
       cy.realPress("Escape");
 
-      cy.get(".saltDialogNext-overlay").should("not.exist");
+      cy.get(".saltDialog-overlay").should("not.exist");
       cy.findByRole("dialog").should("not.exist");
     });
 
