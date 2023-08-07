@@ -3,7 +3,7 @@
 }
 
 .saltComboBoxNext-input:hover {
-  --input-borderColor: var(--salt-focused-outlineColor);
+  --saltInput-borderColor: var(--salt-focused-outlineColor);
 }
 
 .saltComboBoxNext-list {
