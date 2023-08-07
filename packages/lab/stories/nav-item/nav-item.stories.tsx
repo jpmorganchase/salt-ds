@@ -10,29 +10,60 @@ export default {
   component: NavItem,
 };
 
-const Template: Story<NavItemProps> = (args) => <NavItem {...args} />;
+const Template: Story<NavItemProps> = (args) => {
+  const [active, setActive] = useState(false);
+
+  const handleActiveToggle = () => {
+    setActive((current) => !current);
+  };
+
+  return <NavItem active={active} onClick={handleActiveToggle} {...args} />;
+};
 
 export const Default = Template.bind({});
 Default.args = {
-  active: false,
   children: "Nav Item",
   href: "#",
 };
 
-export const WithIcon: Story<NavItemProps> = (args) => (
-  <NavItem IconComponent={NotificationIcon} {...args} />
-);
+export const WithIcon: Story<NavItemProps> = (args) => {
+  const [active, setActive] = useState(false);
+
+  const handleActiveToggle = () => {
+    setActive((current) => !current);
+  };
+
+  return (
+    <NavItem
+      active={active}
+      onClick={handleActiveToggle}
+      IconComponent={NotificationIcon}
+      {...args}
+    />
+  );
+};
 WithIcon.args = {
-  active: false,
   children: "Nav Item",
   href: "#",
 };
 
-export const WithBadge: Story<NavItemProps> = (args) => (
-  <NavItem BadgeComponent={<Badge value="NEW" />} {...args} />
-);
+export const WithBadge: Story<NavItemProps> = (args) => {
+  const [active, setActive] = useState(false);
+
+  const handleActiveToggle = () => {
+    setActive((current) => !current);
+  };
+
+  return (
+    <NavItem
+      active={active}
+      onClick={handleActiveToggle}
+      BadgeComponent={<Badge value="NEW" />}
+      {...args}
+    />
+  );
+};
 WithBadge.args = {
-  active: false,
   children: "Nav Item",
   href: "#",
 };
