@@ -22,7 +22,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--salt-spacing-400);
-  z-index: var(--salt-zIndex-dialogNext);
+  z-index: var(--salt-zIndex-dialog;
 }
 
 .saltDialogNext-withStatus {
