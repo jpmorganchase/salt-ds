@@ -157,6 +157,7 @@ const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
         Click to open dialog
       </Button>
       <Dialog
+        style={{ width: 500 }}
         {...args}
         role="alertdialog"
         status={status}
