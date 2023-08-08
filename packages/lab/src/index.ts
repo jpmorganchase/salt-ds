@@ -23,6 +23,7 @@ export * from "./carousel";
 export * from "./cascading-menu";
 export * from "./color-chooser";
 export * from "./combo-box";
+export * from "./combo-box-next";
 export * from "./combo-box-deprecated";
 export * from "./contact-details";
 export * from "./content-status";

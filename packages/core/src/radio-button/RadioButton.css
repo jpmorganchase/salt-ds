@@ -32,6 +32,11 @@
   z-index: var(--salt-zIndex-default);
 }
 
+.saltRadioButtonIcon > svg {
+  /* ensures svg is centered in all browsers */
+  transform: translate(0px, 0px);
+}
+
 /* Styles applied to icon when :focus-visible */
 .saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
   outline: var(--saltRadioButton-outline, var(--salt-focused-outline));
