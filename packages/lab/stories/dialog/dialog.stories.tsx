@@ -1,11 +1,10 @@
 import { PropsWithChildren, useState } from "react";
-import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
+import { Button, StackLayout } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
-  NavItem,
   DialogCloseButton,
 } from "@salt-ds/lab";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
@@ -81,6 +80,7 @@ Accent.args = {
 export const LongContent = DialogTemplate.bind({});
 
 LongContent.args = {
+  style: { width: 600 },
   title: "Congratulations! You have created a Dialog.",
   // @ts-ignore
   content: (
@@ -170,7 +170,8 @@ const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
           {status!.slice(1)}
         </DialogTitle>
         <DialogContent>
-          This is a description for an alert dialog.
+          A Dialog is a window that opens over the application content, focusing
+          the user's attention on a particular task or piece of information.
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
@@ -201,86 +202,6 @@ WarningStatus.args = {
 export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
-};
-
-const itemsWithSubNav = [
-  {
-    name: "Nav Item 1",
-  },
-  {
-    name: "Nav Item 2",
-    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
-  },
-  {
-    name: "Nav Item 3",
-    subNav: ["Sub Nav Item 1", "Sub Nav Item 2", "Sub Nav Item 3"],
-  },
-];
-
-const items = itemsWithSubNav.map((item) => item.name);
-
-export const PreferencesDialog: ComponentStory<typeof Dialog> = (args) => {
-  const [open, setOpen] = useState(false);
-  const [active, setActive] = useState(items[0]);
-
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-
-  const onOpenChange = (value: boolean) => {
-    setOpen(value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Click to open dialog
-      </Button>
-      <Dialog
-        {...args}
-        open={open}
-        onOpenChange={onOpenChange}
-        style={{
-          width: "calc(20 * var(--salt-size-base))",
-        }}
-      >
-        <DialogTitle>Preferences</DialogTitle>
-        <FlexLayout gap={0}>
-          <nav>
-            <ul className="verticalDialogNav">
-              {items.map((item) => (
-                <li key={item}>
-                  <NavItem
-                    active={active === item}
-                    href="#"
-                    orientation="vertical"
-                    onClick={(event) => {
-                      // Prevent default to avoid navigation
-                      event.preventDefault();
-                      setActive(item);
-                    }}
-                  >
-                    {item}
-                  </NavItem>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <DialogContent>Hello</DialogContent>
-        </FlexLayout>
-        <DialogActions>
-          <Button variant="cta" onClick={handleClose}>
-            Save
-          </Button>
-        </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
-      </Dialog>
-    </>
-  );
 };
 
 function FakeWindow({ children }: PropsWithChildren) {

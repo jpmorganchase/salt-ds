@@ -7,11 +7,27 @@
   padding-bottom: var(--salt-spacing-300);
   background: var(--salt-container-primary-background);
   max-height: 100%;
+  max-width: 100%;
+  min-width: var(--saltDialog-minWidth);
   box-shadow: var(--salt-overlayable-shadow-modal);
-  min-width: calc(10 * var(--salt-size-base));
-  max-width: calc(20 * var(--salt-size-base));
   z-index: calc(var(--salt-zIndex-appHeader) - 1);
   overflow-y: auto;
+}
+
+.salt-density-high {
+  --saltDialog-minWidth: 240px;
+}
+
+.salt-density-medium {
+  --saltDialog-minWidth: 320px;
+}
+
+.salt-density-low {
+  --saltDialog-minWidth: 400px;
+}
+
+.salt-density-touch {
+  --saltDialog-minWidth: 480px;
 }
 
 /* Styles applied to Dialog background overlay */

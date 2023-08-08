@@ -1,17 +1,3 @@
-nav {
-  position: relative;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-.verticalDialogNav {
-  width: 150px;
-}
-
 .fakeDialogWindow {
   border: 1px solid black;
   width: calc(20 * var(--salt-size-base));
