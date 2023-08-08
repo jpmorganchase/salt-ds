@@ -28,20 +28,6 @@ describe("GIVEN a Drawer", () => {
       cy.get(".saltDialog-overlay").should("not.exist");
       cy.findByRole("dialog").should("not.exist");
     });
-
-    // it("THEN it should return focus to button that opened it", () => {
-    //   cy.mount(<Default open={false} />);
-
-    //   cy.findByRole("button", { name: /Open Dialog/gi }).click();
-
-    //   cy.findByRole("dialog").should("be.visible");
-
-    //   cy.realPress("Escape");
-
-    //   cy.findByRole("dialog").should("not.exist");
-    //   // TODO: fix, this is flakey
-    //   cy.findByRole("button", { name: /Open Dialog/gi }).should("be.focused");
-    // });
   });
 
   describe("WHEN Tab key is repeatedly pressed", () => {
