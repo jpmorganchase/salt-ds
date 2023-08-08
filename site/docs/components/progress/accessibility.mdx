@@ -1,0 +1,16 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Accessibility
+data:
+  $ref: ./#/data
+---
+
+Improve accessibility by customizing the `aria-label` prop to provide additional context about what is loading. For example:
+
+```jsx
+<LinearProgress aria-label="loading settings panel 0%" />
+```
