@@ -11,21 +11,21 @@ import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ExpansionIcon } from "./ExpansionIcon";
 
-import navItemCss from "./NavItem.css";
+import navigationItemCss from "./NavigationItem.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
+export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Whether the nav item is active.
+   * Whether the navigation item is active.
    */
   active?: boolean;
   /**
-   * Whether the nav item has active children.
+   * Whether the navigation item has active children.
    */
   blurSelected?: boolean;
   /**
-   * Whether the nav item is expanded.
+   * Whether the navigation item is expanded.
    */
   expanded?: boolean;
   /**
@@ -33,15 +33,15 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   level?: number;
   /**
-   * The orientation of the nav item.
+   * The orientation of the navigation item.
    */
   orientation?: "horizontal" | "vertical";
   /**
-   * Whether the nav item is a parent with nested children.
+   * Whether the navigation item is a parent with nested children.
    */
   parent?: boolean;
   /**
-   * Action to be triggered when the nav item is expanded.
+   * Action to be triggered when the navigation item is expanded.
    */
   onExpand?: MouseEventHandler<HTMLButtonElement>;
   /**
@@ -49,24 +49,24 @@ export interface NavItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   href?: string;
   /**
-   * Icon component to be displayed next to the nav item label.
+   * Icon component to be displayed next to the navigation item label.
    */
   IconComponent?: ComponentType<IconProps> | null;
   /**
-   * Badge component to be displayed next to the nav item label.
+   * Badge component to be displayed next to the navigation item label.
    */
   BadgeComponent?: ReactNode;
 }
 
-const withBaseName = makePrefixer("saltNavItem");
+const withBaseName = makePrefixer("saltNavigationItem");
 
 type ConditionalWrapper = {
   children: ReactNode;
   className: string;
 };
 
-export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
-  function NavItem(props, ref) {
+export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
+  function NavigationItem(props, ref) {
     const {
       active,
       blurSelected,
@@ -86,14 +86,14 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
 
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-nav-item",
-      css: navItemCss,
+      testId: "salt-navigation-item",
+      css: navigationItemCss,
       window: targetWindow,
     });
 
     const style = {
       ...styleProp,
-      "--saltNavItem-level": `${level}`,
+      "--saltNavigationItem-level": `${level}`,
     };
 
     const handleExpand = (event: MouseEvent<HTMLButtonElement>) => {

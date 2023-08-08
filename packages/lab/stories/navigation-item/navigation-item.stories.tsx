@@ -1,23 +1,25 @@
-import { NavItem, NavItemProps, Badge } from "@salt-ds/lab";
+import { NavigationItem, NavigationItemProps, Badge } from "@salt-ds/lab";
 import { Story } from "@storybook/react";
 import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
 
-import "./nav-item.stories.css";
+import "./navigation-item.stories.css";
 
 export default {
-  title: "Lab/Nav Item",
-  component: NavItem,
+  title: "Lab/Navigation Item",
+  component: NavigationItem,
 };
 
-const Template: Story<NavItemProps> = (args) => {
+const Template: Story<NavigationItemProps> = (args) => {
   const [active, setActive] = useState(false);
 
   const handleActiveToggle = () => {
     setActive((current) => !current);
   };
 
-  return <NavItem active={active} onClick={handleActiveToggle} {...args} />;
+  return (
+    <NavigationItem active={active} onClick={handleActiveToggle} {...args} />
+  );
 };
 
 export const Default = Template.bind({});
@@ -26,7 +28,7 @@ Default.args = {
   href: "#",
 };
 
-export const WithIcon: Story<NavItemProps> = (args) => {
+export const WithIcon: Story<NavigationItemProps> = (args) => {
   const [active, setActive] = useState(false);
 
   const handleActiveToggle = () => {
@@ -34,7 +36,7 @@ export const WithIcon: Story<NavItemProps> = (args) => {
   };
 
   return (
-    <NavItem
+    <NavigationItem
       active={active}
       onClick={handleActiveToggle}
       IconComponent={NotificationIcon}
@@ -47,7 +49,7 @@ WithIcon.args = {
   href: "#",
 };
 
-export const WithBadge: Story<NavItemProps> = (args) => {
+export const WithBadge: Story<NavigationItemProps> = (args) => {
   const [active, setActive] = useState(false);
 
   const handleActiveToggle = () => {
@@ -55,7 +57,7 @@ export const WithBadge: Story<NavItemProps> = (args) => {
   };
 
   return (
-    <NavItem
+    <NavigationItem
       active={active}
       onClick={handleActiveToggle}
       BadgeComponent={<Badge value="NEW" />}
@@ -103,7 +105,7 @@ export const HorizontalGroup = () => {
       <ul className="horizontal">
         {items.map((item) => (
           <li key={item}>
-            <NavItem
+            <NavigationItem
               active={active === item}
               href="#"
               onClick={(event) => {
@@ -113,7 +115,7 @@ export const HorizontalGroup = () => {
               }}
             >
               {item}
-            </NavItem>
+            </NavigationItem>
           </li>
         ))}
       </ul>
@@ -129,7 +131,7 @@ export const HorizontalGroupWithIconAndBadge = () => {
       <ul className="horizontal">
         {items.map((item, index) => (
           <li key={item}>
-            <NavItem
+            <NavigationItem
               active={active === item}
               href="#"
               onClick={(event) => {
@@ -141,7 +143,7 @@ export const HorizontalGroupWithIconAndBadge = () => {
               BadgeComponent={index === 2 && <Badge value="NEW" />}
             >
               {item}
-            </NavItem>
+            </NavigationItem>
           </li>
         ))}
       </ul>
@@ -156,7 +158,7 @@ export const VerticalGroup = () => {
       <ul className="vertical">
         {items.map((item) => (
           <li key={item}>
-            <NavItem
+            <NavigationItem
               active={active === item}
               href="#"
               orientation="vertical"
@@ -167,7 +169,7 @@ export const VerticalGroup = () => {
               }}
             >
               {item}
-            </NavItem>
+            </NavigationItem>
           </li>
         ))}
       </ul>
@@ -184,7 +186,7 @@ export const VerticalGroupWithIconAndBadge = () => {
       <ul className="vertical">
         {items.map((item, index) => (
           <li key={item}>
-            <NavItem
+            <NavigationItem
               active={active === item}
               href="#"
               orientation="vertical"
@@ -199,7 +201,7 @@ export const VerticalGroupWithIconAndBadge = () => {
               }
             >
               {item}
-            </NavItem>
+            </NavigationItem>
           </li>
         ))}
       </ul>
@@ -217,7 +219,7 @@ export const VerticalNestedGroup = () => {
       <ul className="vertical">
         {multipleLevelNesting.map(({ name, subNav }) => (
           <li key={name}>
-            <NavItem
+            <NavigationItem
               active={
                 active === name ||
                 (!expanded.includes(name) &&
@@ -252,7 +254,7 @@ export const VerticalNestedGroup = () => {
               IconComponent={NotificationIcon}
             >
               {name}
-            </NavItem>
+            </NavigationItem>
             {expanded.includes(name) && (
               <ul className="vertical">
                 {subNav?.map((item) => {
@@ -260,7 +262,7 @@ export const VerticalNestedGroup = () => {
 
                   return (
                     <li key={itemValue}>
-                      <NavItem
+                      <NavigationItem
                         active={
                           active === itemValue ||
                           (!expanded.includes(item.name) &&
@@ -298,7 +300,7 @@ export const VerticalNestedGroup = () => {
                         expanded={expanded.includes(item.name)}
                       >
                         {item.name}
-                      </NavItem>
+                      </NavigationItem>
 
                       {expanded.includes(item.name) && (
                         <ul className="vertical">
@@ -307,7 +309,7 @@ export const VerticalNestedGroup = () => {
 
                             return (
                               <li key={itemValue}>
-                                <NavItem
+                                <NavigationItem
                                   active={active === itemValue}
                                   href="#"
                                   orientation="vertical"
@@ -319,7 +321,7 @@ export const VerticalNestedGroup = () => {
                                   level={2}
                                 >
                                   {nestedItem}
-                                </NavItem>
+                                </NavigationItem>
                               </li>
                             );
                           })}

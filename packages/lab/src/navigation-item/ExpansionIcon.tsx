@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { ComponentPropsWithoutRef } from "react";
-import { NavItemProps } from "./NavItem";
+import { NavigationItemProps } from "./NavigationItem";
 
 const iconExpansionMap = {
   vertical: {
@@ -17,7 +17,7 @@ export function ExpansionIcon({
   expanded = false,
   orientation = "horizontal",
   className,
-}: Pick<NavItemProps, "expanded" | "orientation"> &
+}: Pick<NavigationItemProps, "expanded" | "orientation"> &
   ComponentPropsWithoutRef<"button">) {
   const Icon =
     iconExpansionMap[orientation][expanded ? "expanded" : "collapsed"];
