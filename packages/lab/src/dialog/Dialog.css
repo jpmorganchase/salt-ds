@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   padding: var(--salt-spacing-400);
-  z-index: var(--salt-zIndex-dialog);
+  z-index: var(--salt-zIndex-modal);
 }
 
 /* Styles applied to Dialog when any status prop is applied */
