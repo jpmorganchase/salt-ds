@@ -1,5 +1,25 @@
 # @salt-ds/icons
 
+## 1.6.0
+
+### Minor Changes
+
+- 48b09972: Added:
+
+  - Scales
+  - ScalesSolid
+  - SortAscend
+  - SortDescend
+  - Weight
+  - WeightSolid
+
+- a4ebd655: Added:
+
+  - Group
+  - GroupSolid
+  - Ungroup
+  - UngroupSolid
+
 ## 1.5.1
 
 ### Patch Changes
