@@ -1,11 +1,13 @@
-import { NavItem } from "@salt-ds/lab";
+import { NavigationItem } from "@salt-ds/lab";
 import { NotificationIcon } from "@salt-ds/icons";
 
 describe("GIVEN a NavItem", () => {
   describe("AND `href` is passed", () => {
     it("should render a link with a href", () => {
       cy.mount(
-        <NavItem href="https://www.saltdesignsystem.com">NavItem</NavItem>
+        <NavigationItem href="https://www.saltdesignsystem.com">
+          NavigationItem
+        </NavigationItem>
       );
       cy.findByRole("link").should(
         "have.attr",
@@ -18,18 +20,18 @@ describe("GIVEN a NavItem", () => {
   describe("AND it is active", () => {
     it('sets `aria-current="page"` when `active` is true', () => {
       cy.mount(
-        <NavItem href="#" active={true}>
-          NavItem
-        </NavItem>
+        <NavigationItem href="#" active={true}>
+          NavigationItem
+        </NavigationItem>
       );
       cy.findByRole("link").should("have.attr", "aria-current", "page");
     });
 
     it("should not have `aria-current` when `active` is false", () => {
       cy.mount(
-        <NavItem href="#" active={false}>
-          NavItem
-        </NavItem>
+        <NavigationItem href="#" active={false}>
+          NavigationItem
+        </NavigationItem>
       );
       cy.findByRole("link").should("not.have.attr", "aria-current");
     });
@@ -37,21 +39,25 @@ describe("GIVEN a NavItem", () => {
 
   describe("AND `children` is passed", () => {
     it("should render the children as the label", () => {
-      cy.mount(<NavItem>NavItem</NavItem>);
-      cy.findByText("NavItem").should("exist");
+      cy.mount(<NavigationItem>NavigationItem</NavigationItem>);
+      cy.findByText("NavigationItem").should("exist");
     });
   });
 
   describe("AND an icon is passed", () => {
     it("should render the icon component", () => {
-      cy.mount(<NavItem IconComponent={NotificationIcon}>NavItem</NavItem>);
+      cy.mount(
+        <NavigationItem IconComponent={NotificationIcon}>
+          NavigationItem
+        </NavigationItem>
+      );
       cy.get('[data-testid="NotificationIcon"]').should("exist");
     });
   });
 
   describe("AND it is a parent", () => {
     it("should render an expansion button", () => {
-      cy.mount(<NavItem parent={true}>NavItem</NavItem>);
+      cy.mount(<NavigationItem parent={true}>NavigationItem</NavigationItem>);
       cy.findByRole("button", { name: "expand" }).should("exist");
       cy.findByRole("button", { name: "expand" }).should(
         "have.attr",
@@ -63,9 +69,9 @@ describe("GIVEN a NavItem", () => {
     it("should call `onExpand` when the expansion button is clicked", () => {
       const expandSpy = cy.stub().as("expandSpy");
       cy.mount(
-        <NavItem parent={true} onExpand={expandSpy}>
-          NavItem
-        </NavItem>
+        <NavigationItem parent={true} onExpand={expandSpy}>
+          NavigationItem
+        </NavigationItem>
       );
       cy.findByRole("button", { name: "expand" }).realClick();
       cy.get("@expandSpy").should("have.been.calledOnce");
@@ -74,9 +80,9 @@ describe("GIVEN a NavItem", () => {
     describe("AND it is expanded", () => {
       it("should set `aria-expanded` to `true`", () => {
         cy.mount(
-          <NavItem parent={true} expanded={true}>
-            NavItem
-          </NavItem>
+          <NavigationItem parent={true} expanded={true}>
+            NavigationItem
+          </NavigationItem>
         );
         cy.findByRole("button", { name: "expand" }).should(
           "have.attr",
