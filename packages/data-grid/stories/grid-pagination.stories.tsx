@@ -61,7 +61,7 @@ const GridPaginationTemplate: Story<{}> = (props) => {
         />
       </Grid>
       <Pagination page={page} onPageChange={onPageChange} count={pageCount}>
-        <Paginator />
+        <Paginator data-testid="paginator" />
       </Pagination>
     </FlexLayout>
   );
