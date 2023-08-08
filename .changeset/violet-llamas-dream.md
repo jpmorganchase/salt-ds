@@ -25,10 +25,15 @@ Content dialog example:
     <DialogContent>Dialog content...<DialogContent>
     <DialogActions>
         <SplitLayout
+            style={{flex: 1}}
             startItem={<Button variant="secondary">Cancel</Button>}
+            endItem={
+                <FlowLayout gap={1}>
+                    <Button>Previous</Button>
+                    <Button variant="cta">Next</Button>
+                </FlowLayout>
+            }
         />
-        <Button>Previous</Button>
-        <Button variant="cta">Next</Button>
     </DialogActions>
     <DialogCloseButton onClick={() => handleOpenChange(false)}/>
 </Dialog>
