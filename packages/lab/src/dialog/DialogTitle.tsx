@@ -13,7 +13,7 @@ import dialogTitleCss from "./DialogTitle.css";
 
 const withBaseName = makePrefixer("saltDialogTitle");
 
-interface DialogTitleProps extends ComponentPropsWithoutRef<"h1"> {
+interface DialogTitleProps extends ComponentPropsWithoutRef<"h2"> {
   status?: ValidationStatus;
   accent?: boolean;
 }
