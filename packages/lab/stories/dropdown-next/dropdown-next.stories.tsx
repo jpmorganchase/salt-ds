@@ -103,26 +103,23 @@ export const Controlled: Story<DropdownNextProps> = ({
 
   return (
     <FlexLayout>
-      <FlexLayout gap={0.1}>
+      <FlexLayout gap={1}>
         <Button onClick={handleOpenClose}>{open ? "Close" : "Open"}</Button>
         <Button
           disabled={highlightedIndex === SimpleListExample.length - 1}
           onClick={handleArrowDown}
-          style={{ marginLeft: "5px" }}
         >
           <ArrowDownIcon />
         </Button>
         <Button
           disabled={!highlightedIndex || highlightedIndex === 0}
           onClick={handleArrowUp}
-          style={{ marginLeft: "5px" }}
         >
           <ArrowUpIcon />
         </Button>
         <Button
           disabled={highlightedIndex === undefined}
           onClick={handleSelect}
-          style={{ marginLeft: "5px" }}
         >
           Select
         </Button>

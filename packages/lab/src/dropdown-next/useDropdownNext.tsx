@@ -60,6 +60,8 @@ export const useDropdownNext = ({
 
   // LIST SOURCE
   const getListItems = (source: string[]) => {
+    if (!source) return;
+
     return source.map((item, index) => {
       return (
         <ListItemNext

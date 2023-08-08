@@ -41,6 +41,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   padding-right: var(--salt-spacing-100);
+  user-select: text;
 }
 
 .saltDropdownNext-list {

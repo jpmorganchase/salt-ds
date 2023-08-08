@@ -15,7 +15,8 @@ import {
   FocusEvent,
   KeyboardEvent,
   MouseEvent,
-  MutableRefObject,
+  Ref,
+  ForwardedRef,
 } from "react";
 import { useWindow } from "@salt-ds/window";
 import dropdownNextCss from "./DropdownNext.css";
@@ -27,7 +28,7 @@ const withBaseName = makePrefixer("saltDropdownNext");
 
 export interface DropdownNextProps
   extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
-    HTMLAttributes<HTMLElement> {
+    HTMLAttributes<HTMLButtonElement> {
   /**
    * If `true`, dropdown will be disabled.
    */
@@ -53,10 +54,13 @@ export interface DropdownNextProps
    */
   placement?: Placement;
   /**
+   * Optional ref for the list component.
+   */
+  listRef?: Ref<HTMLUListElement>;
+  /**
    * Additional props for dropdown list.
    */
   ListProps?: ListNextProps;
-
   /* Status open or close for use in controlled component.  */
   open?: boolean;
   /* Selected item prop for use in controlled component. */
@@ -75,182 +79,174 @@ export interface DropdownNextProps
   onKeyDown?: (event: KeyboardEvent) => void;
 }
 
-export const DropdownNext = forwardRef<HTMLDivElement, DropdownNextProps>(
-  function DropdownNext(props, ref) {
-    const {
-      className,
-      disabled,
-      variant = "primary",
-      id: dropdownIdProp,
-      defaultSelected,
-      readOnly,
-      source,
-      placement = "bottom",
-      open: openControlProp,
-      selectedItem: selectedItemControlProp,
-      highlightedItem: highlightedItemControlProp,
-      onFocus,
-      onKeyDown,
-      onBlur,
-      onMouseOver,
-      onMouseDown,
-      style: dropdownStyle,
-      ListProps,
-      ...restProps
-    } = props;
+export const DropdownNext = forwardRef(function DropdownNext(
+  props: DropdownNextProps,
+  ref: ForwardedRef<HTMLButtonElement>
+) {
+  const {
+    className,
+    disabled,
+    variant = "primary",
+    id: dropdownIdProp,
+    defaultSelected,
+    readOnly,
+    source,
+    placement = "bottom",
+    open: openControlProp,
+    selectedItem: selectedItemControlProp,
+    highlightedItem: highlightedItemControlProp,
+    onFocus,
+    onKeyDown,
+    onBlur,
+    onMouseOver,
+    onMouseDown,
+    listRef: listRefProp,
+    ListProps,
+    ...restProps
+  } = props;
 
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-dropdown-next",
-      css: dropdownNextCss,
-      window: targetWindow,
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-dropdown-next",
+    css: dropdownNextCss,
+    window: targetWindow,
+  });
+
+  const listId = useId(ListProps?.id);
+  const dropdownId = useId(dropdownIdProp);
+  const listRef = useRef<HTMLUListElement>(null);
+
+  const setListRef = useForkRef(listRefProp, listRef);
+  const listProps = {
+    defaultSelected,
+    disabled,
+    ref: listRef,
+    id: listId,
+    selected: selectedItemControlProp,
+    highlightedItem: highlightedItemControlProp,
+  };
+
+  const {
+    handlers,
+    activeDescendant,
+    selectedItem,
+    highlightedItem,
+    getListItems,
+    portalProps,
+  } = useDropdownNext({
+    listProps,
+    placement,
+    openControlProp,
+  });
+
+  const { open, floating, reference, getDropdownNextProps } = portalProps;
+  const {
+    focusHandler,
+    keyDownHandler,
+    blurHandler,
+    mouseOverHandler,
+    mouseDownHandler,
+  } = handlers;
+
+  const triggerRef = useForkRef<HTMLButtonElement>(ref, reference);
+
+  const getIcon = () => {
+    if (readOnly) return;
+
+    const iconClassName = clsx(withBaseName("icon"), {
+      [withBaseName("disabled")]: disabled,
     });
 
-    const listId = useId(ListProps?.id);
-    const dropdownId = useId(dropdownIdProp);
-    const listRef = useRef<HTMLUListElement>(null);
-    const listProps = {
-      defaultSelected,
-      disabled,
-      ref: listRef,
-      id: listId,
-      selected: selectedItemControlProp,
-      highlightedItem: highlightedItemControlProp,
-    };
-
-    const {
-      handlers,
-      activeDescendant,
-      selectedItem,
-      highlightedItem,
-      getListItems,
-      portalProps,
-    } = useDropdownNext({
-      listProps,
-      placement,
-      openControlProp,
-    });
-
-    const { open, floating, reference, getDropdownNextProps } = portalProps;
-    const {
-      focusHandler,
-      keyDownHandler,
-      blurHandler,
-      mouseOverHandler,
-      mouseDownHandler,
-    } = handlers;
-
-    const triggerRef = useForkRef(
-      ref,
-      reference
-    ) as MutableRefObject<HTMLButtonElement>;
-
-    const floatingListRef = useForkRef(
-      listRef,
-      floating
-    ) as MutableRefObject<HTMLUListElement>;
-
-    const getIcon = () => {
-      if (readOnly) return;
-
-      const iconClassName = clsx(withBaseName("icon"), {
-        [withBaseName("disabled")]: disabled,
-      });
-
-      return open ? (
-        <ChevronUpIcon className={iconClassName} />
-      ) : (
-        <ChevronDownIcon className={iconClassName} />
-      );
-    };
-
-    const handleFocus = (event: FocusEvent<HTMLElement>) => {
-      if (disabled || readOnly) return;
-      focusHandler(event);
-      onFocus?.(event);
-    };
-
-    const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-      if (disabled || readOnly) return;
-      keyDownHandler(event);
-      onKeyDown?.(event);
-    };
-
-    const handleBlur = (event: FocusEvent<HTMLElement>) => {
-      blurHandler();
-      onBlur?.(event);
-    };
-
-    const handleMouseOver = (event: MouseEvent<HTMLElement>) => {
-      mouseOverHandler();
-      onMouseOver?.(event);
-    };
-
-    const handleMouseDown = (event: MouseEvent<HTMLElement>) => {
-      if (disabled || readOnly) return;
-      mouseDownHandler();
-      onMouseDown?.(event);
-    };
-
-    return (
-      <div className={clsx(withBaseName())}>
-        <button
-          id={dropdownId}
-          disabled={disabled}
-          onFocus={handleFocus}
-          onKeyDown={handleKeyDown}
-          onMouseOver={handleMouseOver}
-          onMouseDown={handleMouseDown}
-          onBlur={handleBlur}
-          value={selectedItem}
-          className={clsx(
-            withBaseName("button"),
-            withBaseName(variant),
-            {
-              [withBaseName("disabled")]: disabled,
-              [withBaseName("readOnly")]: readOnly,
-            },
-            className
-          )}
-          role="combobox"
-          aria-haspopup="listbox"
-          aria-expanded={open}
-          aria-activedescendant={disabled ? undefined : activeDescendant}
-          tabIndex={disabled ? -1 : 0}
-          aria-owns={listId}
-          aria-controls={listId}
-          aria-disabled={disabled}
-          style={dropdownStyle}
-          {...restProps}
-          ref={triggerRef}
-        >
-          <span className={clsx(withBaseName("buttonText"))}>
-            {selectedItem}
-          </span>
-          {getIcon()}
-        </button>
-        {open && (
-          <FloatingPortal>
-            <SaltProvider>
-              <div {...getDropdownNextProps()}>
-                <ListNext
-                  id={listId}
-                  className={clsx(withBaseName("list"), ListProps?.className)}
-                  disableFocus
-                  disabled={disabled || ListProps?.disabled}
-                  selected={selectedItem}
-                  highlightedItem={highlightedItem}
-                  onMouseOver={handleMouseOver}
-                  {...ListProps}
-                  ref={floatingListRef}
-                >
-                  {getListItems(source)}
-                </ListNext>
-              </div>
-            </SaltProvider>
-          </FloatingPortal>
-        )}
-      </div>
+    return open ? (
+      <ChevronUpIcon className={iconClassName} />
+    ) : (
+      <ChevronDownIcon className={iconClassName} />
     );
-  }
-);
+  };
+
+  const handleFocus = (event: FocusEvent<HTMLElement>) => {
+    if (disabled || readOnly) return;
+    focusHandler(event);
+    onFocus?.(event);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (disabled || readOnly) return;
+    keyDownHandler(event);
+    onKeyDown?.(event);
+  };
+
+  const handleBlur = (event: FocusEvent<HTMLElement>) => {
+    blurHandler();
+    onBlur?.(event);
+  };
+
+  const handleMouseOver = (event: MouseEvent<HTMLElement>) => {
+    mouseOverHandler();
+    onMouseOver?.(event);
+  };
+
+  const handleMouseDown = (event: MouseEvent<HTMLElement>) => {
+    if (disabled || readOnly) return;
+    mouseDownHandler();
+    onMouseDown?.(event);
+  };
+
+  return (
+    <div className={clsx(withBaseName())}>
+      <button
+        id={dropdownId}
+        disabled={disabled}
+        onFocus={handleFocus}
+        onKeyDown={handleKeyDown}
+        onMouseOver={handleMouseOver}
+        onMouseDown={handleMouseDown}
+        onBlur={handleBlur}
+        value={selectedItem}
+        className={clsx(
+          withBaseName("button"),
+          withBaseName(variant),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("readOnly")]: readOnly,
+          },
+          className
+        )}
+        role="combobox"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-activedescendant={disabled ? undefined : activeDescendant}
+        tabIndex={disabled ? -1 : 0}
+        aria-owns={listId}
+        aria-controls={listId}
+        aria-disabled={disabled}
+        {...restProps}
+        ref={triggerRef}
+      >
+        <span className={clsx(withBaseName("buttonText"))}>{selectedItem}</span>
+        {getIcon()}
+      </button>
+      {open && (
+        <FloatingPortal>
+          <SaltProvider>
+            <div ref={floating} {...getDropdownNextProps()}>
+              <ListNext
+                id={listId}
+                className={clsx(withBaseName("list"), ListProps?.className)}
+                disableFocus
+                disabled={disabled || ListProps?.disabled}
+                selected={selectedItem}
+                highlightedItem={highlightedItem}
+                onMouseOver={handleMouseOver}
+                {...ListProps}
+                ref={setListRef}
+              >
+                {getListItems(source)}
+              </ListNext>
+            </div>
+          </SaltProvider>
+        </FloatingPortal>
+      )}
+    </div>
+  );
+});
