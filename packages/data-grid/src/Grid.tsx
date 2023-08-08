@@ -820,7 +820,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         rangeSelection.onKeyboardRangeSelectionEnd();
       }
     },
-    [rangeSelection.onKeyboardRangeSelectionEnd]
+    [rangeSelection]
   );
 
   const editModeKeyHandler = useCallback(
@@ -1151,6 +1151,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       rangeSelection?.selectedCellRange,
     ]
   );
+
+
+  useEffect(() => {
+    setScrollTop(0);
+  }, [rowData]);
 
   useEffect(() => {
     if (onVisibleRowRangeChange) {

@@ -185,11 +185,13 @@ export function useVisibleRowRange(
       return NumberRange.empty;
     }
     const firstRowHeight = rowHeight + 1; // First row has an extra 1px
+
     const start =
       scrollTop > firstRowHeight
         ? 1 + Math.floor((scrollTop - firstRowHeight) / rowHeight)
         : 0;
     let endPos = scrollTop + clientMidHeight;
+
     if (start === 0) {
       endPos -= 1;
     }
@@ -197,6 +199,7 @@ export function useVisibleRowRange(
       rowCount,
       Math.max(start, Math.ceil(endPos / rowHeight))
     );
+
     return new NumberRange(start, end);
   }, [scrollTop, clientMidHeight, rowHeight, rowCount]);
 }
