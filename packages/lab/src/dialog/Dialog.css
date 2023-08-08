@@ -1,28 +1,86 @@
+/* Styles applied to Dialog component */
 .saltDialog {
-  --dialog-background: var(--saltDialog-background, var(--salt-container-primary-background));
-  --dialog-borderBottomWidth: var(--saltDialog-borderBottomWidth, 2px);
-  --dialog-borderColor: var(--saltDialog-borderColor, var(--salt-container-primary-borderColor));
-  --dialog-borderStyle: var(--saltDialog-borderStyle, var(--salt-container-borderStyle));
-  --dialog-borderWidth: var(--saltDialog-borderColor, var(--salt-size-border));
-  --dialog-boxShadow: var(--saltDialog-boxShadow, var(--salt-overlayable-shadow-modal));
-  --dialog-margin: var(--saltDialog-margin, var(--salt-size-container-spacing));
-  --dialog-padding: var(--saltDialog-padding, var(--salt-size-container-spacing));
-}
-
-.saltDialog {
-  background: var(--dialog-background);
-  border-color: var(--dialog-borderColor);
-  border-width: var(--dialog-borderWidth);
-  border-style: var(--dialog-borderStyle);
-  border-bottom-width: var(--dialog-borderBottomWidth);
+  position: relative;
   display: flex;
   flex-direction: column;
-  inset: 0; /* what does this do ? */
+  padding-top: var(--salt-spacing-300);
+  padding-bottom: var(--salt-spacing-300);
+  background: var(--salt-container-primary-background);
   max-height: 100%;
   max-width: 100%;
-  overflow: auto;
-  padding: var(--dialog-padding);
-  position: relative;
-  box-shadow: var(--saltDialog-boxShadow, var(--dialog-boxShadow));
-  margin: var(--saltDialog-margin, var(--dialog-margin));
+  box-shadow: var(--salt-overlayable-shadow-modal);
+  z-index: calc(var(--salt-zIndex-appHeader) - 1);
+  overflow-y: auto;
+}
+
+.salt-density-high {
+  --saltDialog-minWidth: 240px;
+}
+
+.salt-density-medium {
+  --saltDialog-minWidth: 320px;
+}
+
+.salt-density-low {
+  --saltDialog-minWidth: 400px;
+}
+
+.salt-density-touch {
+  --saltDialog-minWidth: 480px;
+}
+
+/* Styles applied to Dialog background overlay */
+.saltDialog-overlay {
+  background: var(--salt-overlayable-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--salt-spacing-100);
+  z-index: var(--salt-zIndex-modal);
+}
+
+/* Styles applied to Dialog when any status prop is applied */
+.saltDialog-withStatus {
+  border-width: var(--salt-size-border);
+  border-style: var(--salt-container-borderStyle);
+}
+
+/* Styles applied to Dialog when a status="info" */
+.saltDialog-info {
+  border-color: var(--salt-status-info-borderColor);
+}
+
+/* Styles applied to Dialog when a status="error" */
+.saltDialog-error {
+  border-color: var(--salt-status-error-borderColor);
+}
+
+/* Styles applied to Dialog when a status="warning" */
+.saltDialog-warning {
+  border-color: var(--salt-status-warning-borderColor);
+}
+
+/* Styles applied to Dialog when a status="success" */
+.saltDialog-success {
+  border-color: var(--salt-status-success-borderColor);
+}
+
+/* Styles applied when the component mounts */
+.saltDialog.saltDialog-enterAnimation {
+  animation: var(--salt-animation-fade-in-center);
+}
+
+/* Styles applied when the component unmounts */
+.saltDialog.saltDialog-exitAnimation {
+  animation: var(--salt-animation-fade-out-back);
+}
+
+@media screen and (min-width: 480px) {
+  .saltDialog {
+    min-width: var(--saltDialog-minWidth);
+  }
+
+  .saltDialog-overlay {
+    padding: var(--salt-spacing-400);
+  }
 }

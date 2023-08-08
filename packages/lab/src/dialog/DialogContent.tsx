@@ -1,46 +1,36 @@
-import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, useContext } from "react";
-import { DialogContext } from "./internal/DialogContext";
-
+import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import dialogContentCss from "./DialogContent.css";
-
-export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {}
+import { useDialogContext } from "./DialogContext";
 
 const withBaseName = makePrefixer("saltDialogContent");
 
-export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
-  function DialogContent(props, ref) {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-dialog-content",
-      css: dialogContentCss,
-      window: targetWindow,
-    });
+export const DialogContent = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement>
+>(function DialogContent(props, ref) {
+  const { children, className, ...rest } = props;
+  const { dialogId } = useDialogContext();
 
-    const { children, className, ...rest } = props;
-    const { status, dialogId, setContentElement } = useContext(DialogContext);
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-dialog-content",
+    css: dialogContentCss,
+    window: targetWindow,
+  });
 
-    const handleRef = useForkRef(ref, setContentElement);
-
-    return (
-      <div
-        {...rest}
-        className={clsx(
-          withBaseName(),
-          {
-            [withBaseName("leftGutter")]: !!status,
-          },
-          className
-        )}
-        id={`${dialogId}-body`}
-        ref={handleRef}
-      >
-        {children}
-      </div>
-    );
-  }
-);
+  return (
+    <div
+      id={`${dialogId!}-description`}
+      className={clsx(withBaseName(), className)}
+      {...rest}
+      ref={ref}
+    >
+      {children}
+    </div>
+  );
+});
