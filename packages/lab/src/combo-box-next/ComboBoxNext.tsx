@@ -183,6 +183,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   const inputRef = useForkRef(triggerRef, focusVisibleRef);
 
   const getFilteredSource = () => {
+    if (!source) return null;
     if (selectedItem) return source;
     return itemFilter && itemFilter(source, inputValue);
   };
