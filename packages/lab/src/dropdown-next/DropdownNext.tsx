@@ -67,16 +67,6 @@ export interface DropdownNextProps
   selectedItem?: string;
   /* Highlighted item prop for use in controlled component. */
   highlightedItem?: string;
-  /* Callback for blur event. */
-  onBlur?: (event: FocusEvent) => void;
-  /* Callback for focus event. */
-  onFocus?: (event: FocusEvent) => void;
-  /* Callback for mouse over event. */
-  onMouseOver?: (event: MouseEvent) => void;
-  /* Callback for mouse down event. */
-  onMouseDown?: (event: MouseEvent) => void;
-  /* Callback for key down event. */
-  onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 export const DropdownNext = forwardRef(function DropdownNext(
@@ -164,7 +154,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     );
   };
 
-  const handleFocus = (event: FocusEvent<HTMLElement>) => {
+  const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
     if (disabled || readOnly) return;
     focusHandler(event);
     onFocus?.(event);
@@ -176,17 +166,17 @@ export const DropdownNext = forwardRef(function DropdownNext(
     onKeyDown?.(event);
   };
 
-  const handleBlur = (event: FocusEvent<HTMLElement>) => {
+  const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
     blurHandler();
     onBlur?.(event);
   };
 
-  const handleMouseOver = (event: MouseEvent<HTMLElement>) => {
+  const handleMouseOver = (event: MouseEvent<HTMLButtonElement>) => {
     mouseOverHandler();
     onMouseOver?.(event);
   };
 
-  const handleMouseDown = (event: MouseEvent<HTMLElement>) => {
+  const handleMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
     if (disabled || readOnly) return;
     mouseDownHandler();
     onMouseDown?.(event);
@@ -237,7 +227,6 @@ export const DropdownNext = forwardRef(function DropdownNext(
                 disabled={disabled || ListProps?.disabled}
                 selected={selectedItem}
                 highlightedItem={highlightedItem}
-                onMouseOver={handleMouseOver}
                 {...ListProps}
                 ref={setListRef}
               >
