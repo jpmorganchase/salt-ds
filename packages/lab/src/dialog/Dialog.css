@@ -8,7 +8,6 @@
   background: var(--salt-container-primary-background);
   max-height: 100%;
   max-width: 100%;
-  min-width: var(--saltDialog-minWidth);
   box-shadow: var(--salt-overlayable-shadow-modal);
   z-index: calc(var(--salt-zIndex-appHeader) - 1);
   overflow-y: auto;
@@ -36,7 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--salt-spacing-400);
+  padding: var(--salt-spacing-100);
   z-index: var(--salt-zIndex-modal);
 }
 
@@ -74,4 +73,14 @@
 /* Styles applied when the component unmounts */
 .saltDialog.saltDialog-exitAnimation {
   animation: var(--salt-animation-fade-out-back);
+}
+
+@media screen and (min-width: 480px) {
+  .saltDialog {
+    min-width: var(--saltDialog-minWidth);
+  }
+
+  .saltDialog-overlay {
+    padding: var(--salt-spacing-400);
+  }
 }
