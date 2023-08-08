@@ -1,4 +1,4 @@
-import { Button, FlowLayout, SplitLayout, StackLayout } from "@salt-ds/core";
+import { Button, StackLayout } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -45,16 +45,11 @@ const DialogTemplate: ComponentStory<typeof Dialog> = ({
           <DialogTitle accent>This is Dialog title</DialogTitle>
           <DialogContent>This is dialog content...</DialogContent>
           <DialogActions>
-            <SplitLayout
-              style={{ flex: 1 }}
-              startItem={<Button variant="secondary">Cancel</Button>}
-              endItem={
-                <FlowLayout gap={1}>
-                  <Button>Previous</Button>
-                  <Button variant="cta">Next</Button>
-                </FlowLayout>
-              }
-            />
+            <Button style={{ marginRight: "auto" }} variant="secondary">
+              Cancel
+            </Button>
+            <Button>Previous</Button>
+            <Button variant="cta">Next</Button>
           </DialogActions>
           <DialogCloseButton />
         </FakeDialog>
@@ -62,16 +57,11 @@ const DialogTemplate: ComponentStory<typeof Dialog> = ({
           <DialogTitle accent>This is Dialog title</DialogTitle>
           <DialogContent>This is dialog content...</DialogContent>
           <DialogActions>
-            <SplitLayout
-              style={{ flex: 1 }}
-              startItem={<Button variant="secondary">Cancel</Button>}
-              endItem={
-                <FlowLayout gap={1}>
-                  <Button>Previous</Button>
-                  <Button variant="cta">Next</Button>
-                </FlowLayout>
-              }
-            />
+            <Button style={{ marginRight: "auto" }} variant="secondary">
+              Cancel
+            </Button>
+            <Button>Previous</Button>
+            <Button variant="cta">Next</Button>
           </DialogActions>
           <DialogCloseButton />
         </FakeDialog>

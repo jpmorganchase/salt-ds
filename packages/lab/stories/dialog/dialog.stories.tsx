@@ -1,11 +1,5 @@
 import { PropsWithChildren, useState } from "react";
-import {
-  Button,
-  FlexLayout,
-  FlowLayout,
-  SplitLayout,
-  StackLayout,
-} from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -58,22 +52,17 @@ const DialogTemplate: ComponentStory<typeof Dialog> = ({
         <DialogTitle accent={accent as boolean}>{title}</DialogTitle>
         <DialogContent>{content}</DialogContent>
         <DialogActions>
-          <SplitLayout
-            style={{ flex: 1 }}
-            startItem={
-              <Button variant="secondary" onClick={handleClose}>
-                Cancel
-              </Button>
-            }
-            endItem={
-              <FlowLayout gap={1}>
-                <Button onClick={handleClose}>Previous</Button>
-                <Button variant="cta" onClick={handleClose}>
-                  Next
-                </Button>
-              </FlowLayout>
-            }
-          />
+          <Button
+            style={{ marginRight: "auto" }}
+            variant="secondary"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleClose}>Previous</Button>
+          <Button variant="cta" onClick={handleClose}>
+            Next
+          </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />
       </Dialog>

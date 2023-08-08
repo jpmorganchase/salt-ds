@@ -24,16 +24,13 @@ Content dialog example:
     <DialogTitle accent>Dialog Title</DialogTitle>
     <DialogContent>Dialog content...<DialogContent>
     <DialogActions>
-        <SplitLayout
-            style={{flex: 1}}
-            startItem={<Button variant="secondary">Cancel</Button>}
-            endItem={
-                <FlowLayout gap={1}>
-                    <Button>Previous</Button>
-                    <Button variant="cta">Next</Button>
-                </FlowLayout>
-            }
-        />
+        <Button style={{ marginRight: "auto" }} variant="secondary" onClick={handleClose}>
+            Cancel
+        </Button>
+        <Button onClick={handleClose}>Previous</Button>
+        <Button variant="cta" onClick={handleClose}>
+            Next
+        </Button>
     </DialogActions>
     <DialogCloseButton onClick={() => handleOpenChange(false)}/>
 </Dialog>
