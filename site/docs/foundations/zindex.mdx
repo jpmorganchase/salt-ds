@@ -13,6 +13,61 @@ A component with a greater z-index, or stack order, will always appear in front 
 
 Z-index is often used in combination with [Shadow](shadow) to help distinguish each layer in the stack.
 
+## Z-Index tokens
+
+| Token                           | Value        |
+| ------------------------------- | ------------ |
+| `--salt-zIndex-flyover`         | 1,500        |
+| `--salt-zIndex-contextMenu`     | 1,450        |
+| `--salt-zIndex-dragObject`      | 1,420        |
+| `--salt-zIndex-notification`    | 1,400        |
+| `--salt-zIndex-modal`           | 1,300        |
+| `--salt-zIndex-drawer`          | 1,200        |
+| `--salt-zIndex-appHeader`       | 1,100        |
+| `--salt-zIndex-docked`          | 1,050        |
+| `--salt-zIndex-popout`          | 1,000        |
+| `--salt-zIndex-default`         | 1            |
+
+## Default
+`--salt-zIndex-default` represents the lowest layer in the stack. Its intended for any object that sits within the application layout, not over it. 
+
+## Popout
+`--salt-zIndex-popout`is used for any object that appears over the app layout in response to a user interaction and remains rooted to the element that triggered it, such as a [Tooltip](https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-tooltip--page). 
+
+## Docked
+`--salt-zIndex-docked` is intended for any panel that is aligned to one side of the app layout. 
+
+## App header
+`--salt-zIndex-appHeader` allows a 'header' object to sit at the top of an application. The placement of the header in combination with the z-index level allows content to scroll beneath it. 
+
+## Drawer
+`--salt-zIndex-drawer` is intended for use by the [Drawer](https://storybook.saltdesignsystem.com/?path=/docs/lab-drawer--default) component. A Drawer aligns to one edge of an application; either top, right, bottom or left. It appears to sit above the app layout and header.
+
+## Modal
+`--salt-zIndex-modal` is used by a modal [Dialog](https://storybook.saltdesignsystem.com/?path=/docs/lab-dialog--basic) which sits over the application and, through the inclusion of a scrim, blocks any underlying interactions in order to focus attention on the content of the dialog. 
+
+## Notification
+`--salt-zIndex-notification` allows an object to sit over the entire user interface in order to provide a status update or message, such as [Toast](https://storybook.saltdesignsystem.com/?path=/docs/core-toast--default).  
+
+## Drag object
+`--salt-zIndex-dragObject` is intended to be used by any object that can be lifted off of the app layout and dragged over the interface.
+
+## Context menu
+`--salt-zIndex-contextMenu` a menu which appears over the UI on right-click.
+
+## Flyover
+`--salt-zIndex-contextMenu` an object that appears over the UI on hover. 
+
+
+
+
+
+
+
+
+
+
+
 
 
 <Callout title="Have some feedback?">
