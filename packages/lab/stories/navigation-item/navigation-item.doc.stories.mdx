@@ -12,16 +12,35 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
   component={NavigationItem}
   parameters={{
     viewMode: "docs",
+    layout: "centered",
   }}
 />
 
 # Navigation Item
 
+A navigation item component is a repeatable UI element that facilitates the movement and exploration within a website or application. It typically consists of a group of links, buttons, or other interactive elements that allow users to navigate between different sections, pages, or features of the system.
+
 ##### Use when
+
+- When your website or application requires deep navigation structures, implement multi-level navigation to allow users to orient themselves whilst navigating through different levels of content hierarchy or sections.
+
+- When a sticky or fixed navigation option that is needed, which remains visible as users scroll down the page, always ensuring they have easy access to the website or applications main navigation.
 
 ##### Don't use when
 
+- When content lacks clear categorization or hierarchy.
+
+- When your content is very specific, in this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure.
+
+- When the navigation becomes overly complicated, leading to confusion and difficulty for users to find what they need.
+
 ## Features
+
+The default configuration of the navigation item comes in two orientations; horizontal or vertical. In either orientation, the width of the navigation item is customisable and can be adjusted to fit any preferred width. The navigation item contains a Link which can be selected on mouse and receive focus via keyboard interaction. When the item contains an expandable action it will display a Button instead.
+
+<Canvas>
+  <Story id="lab-navigation-item--default" />
+</Canvas>
 
 ## Configuring Nav Item
 
@@ -46,5 +65,7 @@ import { NavigationItem } from "@salt-ds/lab";
 <CharacteristicUsage of={NavigationItem} />
 
 ## Accessibility
+
+The navigation item component is accessible by keyboard, screen readers and provides full WAI-ARIA support, to be compliant with WCAG.2.1 standards.
 
 <HelpAndSupport />
