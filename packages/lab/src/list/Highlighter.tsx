@@ -24,13 +24,12 @@ export const Highlighter = (
     css: highligherCss,
     window: targetWindow,
   });
-
   const matchRegex =
     typeof matchPattern === "string"
       ? new RegExp(`(${escapeRegExp(matchPattern)})`, "gi")
       : matchPattern;
 
-  if (matchRegex === undefined) {
+  if (matchRegex === undefined || matchPattern === "") {
     return <>{text}</>;
   }
   return (
