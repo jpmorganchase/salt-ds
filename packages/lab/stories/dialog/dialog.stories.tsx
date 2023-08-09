@@ -1,43 +1,155 @@
-import { useRef, useState } from "react";
-import { Button, useDensity } from "@salt-ds/core";
+import { PropsWithChildren, useState } from "react";
+import { Button, StackLayout } from "@salt-ds/core";
 import {
-  ButtonBar,
   Dialog,
+  DialogTitle,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  OrderedButton,
+  DialogCloseButton,
 } from "@salt-ds/lab";
-
-import "./dialog.stories.css";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
+import "./dialog.stories.css";
 
 export default {
   title: "Lab/Dialog",
   component: Dialog,
+  args: {
+    title: "Congratulations! You have created a Dialog.",
+    content: "This is the content of the dialog.",
+  },
 } as ComponentMeta<typeof Dialog>;
 
-const densityDialogWidths = {
-  touch: 640,
-  low: 600,
-  medium: 500,
-  high: 500,
-};
-
-const DialogTemplate: ComponentStory<typeof Dialog> = (args) => {
-  const [open, setOpen] = useState(false);
+const DialogTemplate: ComponentStory<typeof Dialog> = ({
+  title,
+  // @ts-ignore
+  accent,
+  // @ts-ignore
+  content,
+  open: openProp = true,
+  ...args
+}) => {
+  const [open, setOpen] = useState(openProp);
 
   const handleRequestOpen = () => {
     setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const density = useDensity();
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Click to open dialog
+      </Button>
+      <Dialog {...args} open={open} onOpenChange={onOpenChange}>
+        <DialogTitle accent={accent as boolean}>{title}</DialogTitle>
+        <DialogContent>{content}</DialogContent>
+        <DialogActions>
+          <Button
+            style={{ marginRight: "auto" }}
+            variant="secondary"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleClose}>Previous</Button>
+          <Button variant="cta" onClick={handleClose}>
+            Next
+          </Button>
+        </DialogActions>
+        <DialogCloseButton onClick={handleClose} />
+      </Dialog>
+    </>
+  );
+};
 
-  const densityBreakpoint = density === "touch" ? "xl" : "xs";
+export const Default = DialogTemplate.bind({});
+
+export const Accent = DialogTemplate.bind({});
+Accent.args = {
+  // @ts-ignore
+  accent: true,
+};
+
+export const LongContent = DialogTemplate.bind({});
+
+LongContent.args = {
+  style: { width: 600 },
+  title: "Congratulations! You have created a Dialog.",
+  // @ts-ignore
+  content: (
+    <StackLayout>
+      <div>
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        since the 1500s, when an unknown printer took a galley of type and
+        scrambled it to make a type specimen book.
+      </div>
+      <div>
+        It has survived not only five centuries, but also the leap into
+        electronic typesetting, remaining essentially unchanged. It was
+        popularised in the 1960s with the release of Letraset sheets containing
+        Lorem Ipsum passages, and more recently with desktop publishing software
+        like Aldus PageMaker including versions of Lorem Ipsum.
+      </div>
+      <div>
+        It is a long established fact that a reader will be distracted by the
+        readable content of a page when looking at its layout. The point of
+        using Lorem Ipsum is that it has a more-or-less normal distribution of
+        letters, as opposed to using 'Content here, content here', making it
+        look like readable English.
+      </div>
+      <div>
+        Many desktop publishing packages and web page editors now use Lorem
+        Ipsum as their default model text, and a search for 'lorem ipsum' will
+        uncover many web sites still in their infancy. Various versions have
+        evolved over the years, sometimes by accident, sometimes on purpose
+        (injected humour and the like).
+      </div>
+      <div>
+        Contrary to popular belief, Lorem Ipsum is not simply random text. It
+        has roots in a piece of classical Latin literature from 45 BC, making it
+        over 2000 years old. Richard McClintock, a Latin professor at
+        Hampden-Sydney College in Virginia, looked up one of the more obscure
+        Latin words, consectetur, from a Lorem Ipsum passage, and going through
+        the cites of the word in classical literature, discovered the
+        undoubtable source.
+      </div>
+      <div>
+        Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
+        Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written
+        in 45 BC. This book is a treatise on the theory of ethics, very popular
+        during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum
+        dolor sit amet..", comes from a line in section 1.10.32.
+      </div>
+    </StackLayout>
+  ),
+};
+
+const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
+  open: openProp = true,
+  status,
+  ...args
+}) => {
+  const [open, setOpen] = useState(openProp);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -45,155 +157,92 @@ const DialogTemplate: ComponentStory<typeof Dialog> = (args) => {
         Click to open dialog
       </Button>
       <Dialog
-        open={open}
-        onClose={handleClose}
-        width={densityDialogWidths[density]}
+        style={{ width: 500 }}
         {...args}
+        role="alertdialog"
+        status={status}
+        open={open}
+        onOpenChange={onOpenChange}
+        // focus the ok instead of the cancel button
+        initialFocus={1}
       >
-        <DialogTitle>Congratulations! You have created a Dialog.</DialogTitle>
-        <DialogContent>This is a dialog</DialogContent>
+        <DialogTitle>
+          {status![0].toUpperCase()}
+          {status!.slice(1)}
+        </DialogTitle>
+        <DialogContent>
+          A Dialog is a window that opens over the application content, focusing
+          the user's attention on a particular task or piece of information.
+        </DialogContent>
         <DialogActions>
-          <ButtonBar
-            className={`DialogButtonBar-${density}Density`}
-            stackAtBreakpoint={densityBreakpoint}
-          >
-            <OrderedButton variant="cta" onClick={handleClose}>
-              CTA BUTTON
-            </OrderedButton>
-            <OrderedButton style={{ cursor: "pointer" }} onClick={handleClose}>
-              REGULAR BUTTON
-            </OrderedButton>
-            <OrderedButton
-              className="DialogButton"
-              variant="secondary"
-              onClick={handleClose}
-            >
-              SECONDARY BUTTON
-            </OrderedButton>
-          </ButtonBar>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant="cta" onClick={handleClose}>
+            Ok
+          </Button>
         </DialogActions>
       </Dialog>
     </>
   );
 };
 
-export const Basic = DialogTemplate.bind({});
-
-export const Info = DialogTemplate.bind({});
-
-Info.args = {
+export const InfoStatus = AlertDialogTemplate.bind({});
+InfoStatus.args = {
   status: "info",
 };
 
-export const Warning = DialogTemplate.bind({});
-Warning.args = {
+export const SuccessStatus = AlertDialogTemplate.bind({});
+SuccessStatus.args = {
+  status: "success",
+};
+
+export const WarningStatus = AlertDialogTemplate.bind({});
+WarningStatus.args = {
   status: "warning",
 };
 
-export const Close: ComponentStory<typeof Dialog> = () => {
-  const [open, setOpen] = useState(false);
-  const headerRef = useRef(null);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const density = useDensity();
-
-  // Comment out the ButtonBar references until we have ButtonBar in the repo
-  const densityBreakpoint = density === "touch" ? "xl" : "xs";
-
-  return (
-    <>
-      <Button data-testid="dialog-button" onClick={handleOpen}>
-        Click to open dialog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        width={densityDialogWidths[density]}
-      >
-        <DialogTitle ref={headerRef} onClose={handleClose}>
-          Congratulations! You have created a Dialog.
-        </DialogTitle>
-        <DialogContent>
-          If you delete this file, you won’t be able to recover it again. Are
-          you sure you want to delete it?
-        </DialogContent>
-        <DialogActions>
-          <ButtonBar
-            className={`DialogButtonBar-${density}Density`}
-            stackAtBreakpoint={densityBreakpoint}
-          >
-            <OrderedButton variant="cta">CTA BUTTON</OrderedButton>
-            <OrderedButton style={{ cursor: "pointer" }}>
-              REGULAR BUTTON
-            </OrderedButton>
-            <OrderedButton
-              className="DialogButtonBar-secondary"
-              variant="secondary"
-            >
-              SECONDARY BUTTON
-            </OrderedButton>
-          </ButtonBar>
-        </DialogActions>
-      </Dialog>
-    </>
-  );
+export const ErrorStatus = AlertDialogTemplate.bind({});
+ErrorStatus.args = {
+  status: "error",
 };
-export const AlignTop: ComponentStory<typeof Dialog> = () => {
-  const [open, setOpen] = useState(false);
-  const headerRef = useRef(null);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
-  const density = useDensity();
-
-  // Comment out the ButtonBar references until we have ButtonBar in the repo
-  const densityBreakpoint = density === "touch" ? "xl" : "xs";
-
+function FakeWindow({ children }: PropsWithChildren) {
   return (
-    <>
-      <Button data-testid="dialog-button" onClick={handleOpen}>
-        Click to open dialog
-      </Button>
-      <Dialog
-        className="Dialog-alignTop"
-        open={open}
-        onClose={handleClose}
-        width={densityDialogWidths[density]}
-      >
-        <DialogTitle ref={headerRef} onClose={handleClose}>
-          Congratulations! You have created a Dialog.{" "}
-        </DialogTitle>
-        <DialogContent>
-          If you delete this file, you won’t be able to recover it again. Are
-          you sure you want to delete it?
-        </DialogContent>
+    <div className="fakeDialogWindow">
+      <div className="fakeDialogWindowHeader"></div>
+      {children}
+    </div>
+  );
+}
+
+export const DesktopDialog = () => {
+  return (
+    <StackLayout>
+      <FakeWindow>
+        <DialogTitle>Window Dialog</DialogTitle>
+        <DialogContent>Hello world!</DialogContent>
         <DialogActions>
-          <ButtonBar
-            className={`DialogButtonBar-${density}Density`}
-            stackAtBreakpoint={densityBreakpoint}
-          >
-            <OrderedButton variant="cta">CTA BUTTON</OrderedButton>
-            <OrderedButton style={{ cursor: "pointer" }}>
-              REGULAR BUTTON
-            </OrderedButton>
-            <OrderedButton
-              className="DialogButtonBar-secondary"
-              variant="secondary"
-            >
-              SECONDARY BUTTON
-            </OrderedButton>
-          </ButtonBar>
+          <Button>Cancel</Button>
+          <Button variant="cta">Save</Button>
         </DialogActions>
-      </Dialog>
-    </>
+      </FakeWindow>
+
+      <FakeWindow>
+        <DialogTitle accent>Window Dialog</DialogTitle>
+        <DialogContent>Accent world!</DialogContent>
+        <DialogActions>
+          <Button>Cancel</Button>
+          <Button variant="cta">Save</Button>
+        </DialogActions>
+      </FakeWindow>
+
+      <FakeWindow>
+        <DialogTitle status="warning">Warning Dialog</DialogTitle>
+        <DialogContent>Potential issues abound!</DialogContent>
+        <DialogActions>
+          <Button>Cancel</Button>
+          <Button variant="cta">Ok</Button>
+        </DialogActions>
+      </FakeWindow>
+    </StackLayout>
   );
 };
