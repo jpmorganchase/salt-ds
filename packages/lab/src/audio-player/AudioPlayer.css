@@ -1,12 +1,13 @@
 .saltAudioPlayer {
   position: 'relative';
-      left: '0px';
-      top: '0px';
-      display: 'flex';
-      flex-direction: 'column';
-      padding: var(--salt-spacing-50);
-      margin: var(--salt-spacing-50);
-      background-color: var(--salt-actionable-secondary-background);
+  left: '0px';
+  top: '0px';
+  display: 'flex';
+  flex-direction: 'column';
+  padding: var(--salt-spacing-50);
+  margin: var(--salt-spacing-50);
+  background-color: var(--salt-actionable-secondary-background);
+  font-size: var(--salt-text-fontSize);
 }
 
 .saltAudioPlayer-titile{

@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { makePrefixer } from "@salt-ds/core";
+import { useEffect, useState, useCallback } from 'react';
+import { makePrefixer, Text } from "@salt-ds/core";
+import { PauseSolidIcon, PlaySolidIcon, VolumeOffIcon, VolumeUpIcon, Forward5Icon, Forward10Icon, Forward15Icon, Forward30Icon, Replay5Icon, Replay10Icon, Replay15Icon, Replay30Icon, DownloadIcon } from 'packages/icons/src';
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { useWindow } from "@salt-ds/window";
@@ -8,11 +9,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import audioPlayerCss from "./AudioPlayer.css";
 
 import { ButtonBar, OrderedButton, Slider } from '@salt-ds/lab';
-import { Icon } from '../Icon';
-
-import { Caption3, Caption6 } from '../Typography';
-import styles from './styles.css';
-
 export interface AudioPlayerProps {
   src: string;
   skipDuration: 5 | 10 | 15;
@@ -27,21 +23,24 @@ function timeFormat(durationS: number): string {
   return timeString;
 }
 
-const forwardIconByVariant = {
-  5: 'forward5',
-  10: 'forward10',
-  15: 'forward15',
-  20: 'forward20'
+const ForwardIconByVariant = {
+  5: <Forward5Icon size={10}/>,
+  10: <Forward10Icon size={10}/>,
+  15: <Forward15Icon size={10}/>,
+  20: <Forward30Icon size={10}/>,
 };
 
-const replayIconByVariant = {
-  5: 'replay5',
-  10: 'replay10',
-  15: 'replay15',
-  30: 'replay30'
+const ReplayIconByVariant = {
+  5: <Replay5Icon size={10}/>,
+  10: <Replay10Icon size={10}/>,
+  15: <Replay15Icon size={10}/>,
+  30: <Replay30Icon size={10}/>,
 };
 
-export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, title, skipDuration = 15, className, ...rest }, ref) => {
+// export const ButtonBar = forwardRef<HTMLDivElement, AudioPlayerProps>(
+
+export const AudioPlayer = forwardRef<HTMLDivElement, AudioPlayerProps> (
+  function AudioPlayer({ src, title, skipDuration = 15, className, ...rest }, ref) {
   const [audioElem, setAudioElem] = useState<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [mute, setMute] = useState(false);
@@ -52,6 +51,13 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, title, skipDurati
   const [timeNowSeconds, setTimeNowSeconds] = useState(0);
 
   const withBaseName = makePrefixer("saltBadge");
+  const targetWindow = useWindow();
+
+  useComponentCssInjection({
+    testId: "salt-list-item",
+    css: audioPlayerCss,
+    window: targetWindow,
+  });
 
   const audioRef = useCallback(audioNode => {
     setAudioElem(audioNode);
@@ -129,45 +135,50 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, title, skipDurati
   return (
     <div className={clsx(withBaseName(), className)} ref={ref} {...rest}>
       <audio ref={audioRef} aria-label="audio" src={`${src}`} />
-      <Caption3 className={styles.title}>{title}</Caption3>
-      <div className={styles.sliderContainer}>
-        <Caption6>{timeNowString}</Caption6>
+      <span className={withBaseName("title")}>{title}</span>
+      {/* <Caption3 className={withBaseName("title")}>{title}</Caption3> */}
+      <div className={withBaseName("sliderContainer")}>
+      <span>{timeNowString}</span>
+      <Text styleAs={"h4"}> {timeNowString} </Text>
         <Slider
-          className={styles.slider}
+          className={withBaseName("slider")}
           min={0}
           max={durationSeconds}
           value={timeNowSeconds}
           onChange={handleSliderInput}
         />
-        <Caption6>{durationString}</Caption6>
+        <Text styleAs={"h4"}> {durationString} </Text>
       </div>
 
-      <ButtonBar className={styles.buttonBar} stackAtBreakpoint={0} disableAutoAlignment={true}>
+      <ButtonBar className={withBaseName("buttonBar")} stackAtBreakpoint={0} disableAutoAlignment={true}>
         <div>
           <a href={src} download target="_blank" rel="noreferrer">
-            <OrderedButton variant="secondary" className={styles.button}>
-              <Icon name="download" size="small" />
+            <OrderedButton variant="secondary" className={withBaseName("button")}>
+              <DownloadIcon size={10} />
             </OrderedButton>
           </a>
         </div>
-        <OrderedButton className={styles.button} variant="secondary" onClick={handleRewind}>
-          <Icon name={replayIconByVariant[skipDuration]} />
+        <OrderedButton className={withBaseName("button")} variant="secondary" onClick={handleRewind}>
+          {/* <Replay10Icon size={10}/> */}
+          {ReplayIconByVariant[skipDuration]}
         </OrderedButton>
         <OrderedButton
-          className={styles.button}
+          className={withBaseName("button")}
           variant="secondary"
           onClick={handlePlay}
           disabled={playDisabled}
         >
-          {isPlaying ? <Icon name="pauseSolid" /> : <Icon name="playSolid" />}
+          {isPlaying ? <PlaySolidIcon size={10}/> : <PauseSolidIcon size={10}/>}
         </OrderedButton>
-        <OrderedButton className={styles.button} variant="secondary" onClick={handleFastforward}>
-          <Icon name={forwardIconByVariant[skipDuration]} />
+        <OrderedButton className={withBaseName("button")} variant="secondary" onClick={handleFastforward}>
+          {/* <Forward10Icon size={10}/> */}
+          {ForwardIconByVariant[skipDuration]}
         </OrderedButton>
-        <OrderedButton variant="secondary" onClick={handleMute} className={styles.button}>
-          {mute ? <Icon name="volumeOff" /> : <Icon name="volumeUp" />}
+        <OrderedButton variant="secondary" onClick={handleMute} className={withBaseName("button")}>
+          {mute ? <VolumeOffIcon/> : <VolumeUpIcon/> }
         </OrderedButton>
       </ButtonBar>
     </div>
-  );
-};
+    );
+  }
+);
