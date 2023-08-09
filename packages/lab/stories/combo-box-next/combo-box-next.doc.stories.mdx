@@ -9,9 +9,9 @@ import {
 
 # Combo Box
 
-Combo Box helps users select an item from a large list of options without scrolling. The typeahead functionality makes this selection quicker, easier, and reduces errors.
+Combo Box helps users select an item from a large list of options without scrolling. The typeahead functionality makes this selection process quicker, easier, and reduces errors.
 
-Users can see a list of available options when they click on the component and filter the list as they type. Once they’ve made their selection, it populates the field and the overlay list closes.
+Users can see a list of available options when they click on the component and then filter the list as they type. Once they’ve made their selection, it populates the field and the overlay list closes.
 
 <Canvas>
   <Story id="lab-combo-box-next--default" />
@@ -25,9 +25,7 @@ You should use Combo Box when you have a list of 10 or more items, that don’t 
 
 ### When not to use Combo Box
 
-There may be occasions where a different component would suit your needs better, for Combo Box these could include:
-
-- If you have a short list of five to 10 options that don’t require filtering, use a `Dropdown`.
+- If you have a short list of five to 10 options that doesn’t require filtering, use a `Dropdown`.
 - If you have fewer than five options, use `Checkbox` or `Radio Button` groups.
 
 ## Features
@@ -42,9 +40,9 @@ A single item can be selected from the Combo Box options.
 
 ### Customized renderer and filter
 
-You can give users a quicker and easier experience when they’re choosing their options by changing the logic of the component’s typeahead filter. In this example, you can define a filter that matches country and code.
+The typeahead filter logic can be modified to assist the user selection. This example filters on both the country and code. You can use the `itemFilter` prop to customize the filter that applies to the elements.
 
-Occasionally, your users will benefit from seeing a particular visual with your overlay list items, so you can customize the display as you see fit. For example, if displaying a list of countries it may help to provide flags.
+Additionally, the display of list items can be customized to visually assist users, like the rendering of flag icons next to the names of countries seen below. You can achieve this by passing an `itemRenderer` prop.
 
 <Canvas>
   <Story id="lab-combo-box-next--custom-renderer" />
@@ -53,6 +51,8 @@ Occasionally, your users will benefit from seeing a particular visual with your 
 ### Variants
 
 Combo Box has two variants: primary (default) and secondary.
+
+Tip: For recommendations on variant choice, see the <Link href="https://www.saltdesignsystem.com/salt/patterns/forms">Forms pattern</Link>.
 
 <Canvas>
   <Story id="lab-combo-box-next--secondary" />
