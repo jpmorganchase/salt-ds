@@ -32,6 +32,7 @@ export * from "./deck-layout";
 export * from "./dialog";
 export * from "./drawer";
 export * from "./dropdown";
+export * from "./dropdown-next";
 export * from "./editable-label";
 export * from "./file-drop-zone";
 export {

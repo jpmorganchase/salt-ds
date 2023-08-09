@@ -1,90 +1,83 @@
-import { SaltProvider, useDensity } from "@salt-ds/core";
+import { Button, StackLayout } from "@salt-ds/core";
 import {
-  ButtonBar,
   Dialog,
+  DialogTitle,
   DialogActions,
   DialogContent,
+  DialogCloseButton,
   DialogProps,
-  DialogTitle,
-  OrderedButton,
+  DialogContext,
 } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
-import "./dialog.qa.stories.css";
+import { ComponentStory, ComponentMeta, Story } from "@storybook/react";
+import { QAContainer, QAContainerProps } from "docs/components";
+
+import "./dialog.stories.css";
+
+function FakeDialog({ children, status }: DialogProps) {
+  return (
+    <DialogContext.Provider value={{ status, dialogId: "1" }}>
+      <div className="saltDialog-overlay">
+        <div className="saltDialog">{children}</div>
+      </div>
+    </DialogContext.Provider>
+  );
+}
 
 export default {
   title: "Lab/Dialog/QA",
   component: Dialog,
+  args: {
+    title: "Congratulations! You have created a Dialog.",
+    content: "This is the content of the dialog.",
+  },
 } as ComponentMeta<typeof Dialog>;
 
-const densityDialogWidths = {
-  touch: 640,
-  low: 600,
-  medium: 500,
-  high: 500,
-};
-
-type BasicDialogExampleProps = Pick<DialogProps, "status">;
-
-const BasicDialogExample = ({ status }: BasicDialogExampleProps) => {
-  const density = useDensity();
-  const densityBreakpoint = density === "touch" ? "xl" : "xs";
-
+const DialogTemplate: ComponentStory<typeof Dialog> = ({
+  open: openProp = true,
+  ...args
+}) => {
   return (
-    <Dialog
-      open
-      width={densityDialogWidths[density]}
-      status={status}
-      disablePortal={true}
-    >
-      <DialogTitle>Controlled Dialog</DialogTitle>
-      <DialogContent>This is a dialog</DialogContent>
-      <DialogActions>
-        <ButtonBar
-          className={`DialogButtonBar-${density}Density`}
-          stackAtBreakpoint={densityBreakpoint}
-        >
-          <OrderedButton variant="cta">CTA BUTTON</OrderedButton>
-          <OrderedButton style={{ cursor: "pointer" }}>
-            REGULAR BUTTON
-          </OrderedButton>
-          <OrderedButton className="DialogButton" variant="secondary">
-            SECONDARY BUTTON
-          </OrderedButton>
-        </ButtonBar>
-      </DialogActions>
-    </Dialog>
+    <>
+      {/* this is necessary to render the dialog styles, because we are using .saltDialog cn in FakeDialog */}
+      <Dialog open={false} />
+      <StackLayout>
+        <FakeDialog>
+          <DialogTitle accent>This is Dialog title</DialogTitle>
+          <DialogContent>This is dialog content...</DialogContent>
+          <DialogActions>
+            <Button style={{ marginRight: "auto" }} variant="secondary">
+              Cancel
+            </Button>
+            <Button>Previous</Button>
+            <Button variant="cta">Next</Button>
+          </DialogActions>
+          <DialogCloseButton />
+        </FakeDialog>
+        <FakeDialog status="warning">
+          <DialogTitle accent>This is Dialog title</DialogTitle>
+          <DialogContent>This is dialog content...</DialogContent>
+          <DialogActions>
+            <Button style={{ marginRight: "auto" }} variant="secondary">
+              Cancel
+            </Button>
+            <Button>Previous</Button>
+            <Button variant="cta">Next</Button>
+          </DialogActions>
+          <DialogCloseButton />
+        </FakeDialog>
+      </StackLayout>
+    </>
   );
 };
 
-const BasicDialog = () => <BasicDialogExample status={"info"} />;
-const ErrorDialog = () => <BasicDialogExample status={"error"} />;
-const WarningDialog = () => <BasicDialogExample status={"warning"} />;
-const SuccessDialog = () => <BasicDialogExample status={"success"} />;
-
-export const ExamplesGrid: Story = () => (
-  <div className={"examples-container"}>
-    <SaltProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
-      <div>
-        <BasicDialog />
-      </div>
-    </SaltProvider>
-    <SaltProvider applyClassesTo={"child"} density={"medium"} mode={"dark"}>
-      <div>
-        <ErrorDialog />
-      </div>
-    </SaltProvider>
-    <SaltProvider applyClassesTo={"child"} density={"low"} mode={"light"}>
-      <div>
-        <WarningDialog />
-      </div>
-    </SaltProvider>
-    <SaltProvider applyClassesTo={"child"} density={"touch"} mode={"dark"}>
-      <div>
-        <SuccessDialog />
-      </div>
-    </SaltProvider>
-  </div>
-);
+export const ExamplesGrid: Story<QAContainerProps> = (props) => {
+  const { className, ...rest } = props;
+  return (
+    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
+      <DialogTemplate />
+    </QAContainer>
+  );
+};
 
 ExamplesGrid.parameters = {
   chromatic: { disableSnapshot: false },
