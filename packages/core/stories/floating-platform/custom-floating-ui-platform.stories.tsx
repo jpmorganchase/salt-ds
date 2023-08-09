@@ -22,11 +22,14 @@ import {
   FloatingComponentProps,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import floatingCss from "./floating-platform.css";
 
 import { NewWindow, TooltipWindow } from "./NewWindow";
 
 export default {
-  title: "Core/Tooltip",
+  title: "Core/Floating Platform",
   component: Tooltip,
 } as ComponentMeta<typeof Tooltip>;
 
@@ -55,6 +58,8 @@ const NewWindowTest = (props: NewWindowTestProps) => {
    */
   const [iframe, setIframe] = useState<HTMLIFrameElement | null>(null);
 
+  const rootBody = useWindow()?.document.body;
+
   const customPlatform: Platform = useMemo(
     () => ({
       ...platform,
@@ -82,8 +87,6 @@ const NewWindowTest = (props: NewWindowTestProps) => {
     }),
     [iframe]
   );
-
-  const rootBody = useWindow()?.document.body;
 
   const FloatingUIComponent = useMemo(
     () =>
@@ -147,13 +150,50 @@ export const CustomFloatingUiPlatform: Story<TooltipProps> = (
   props: TooltipProps
 ) => {
   return (
-    <StackLayout gap={2}>
-      <H3>This is the root of the application</H3>
-      <Text>It represents a global coordinate space (e.g. a users screen)</Text>
-      <StackLayout gap={10} direction="row">
-        <NewWindowTest {...props} />
+    <NewWindow style={{ width: "600px", height: "400px", border: "none" }}>
+      <StackLayout gap={2}>
+        <H3>This is the root of the application</H3>
+        <Text>
+          It represents a global coordinate space (e.g. a users screen)
+        </Text>
+        <StackLayout gap={10} direction="row">
+          <NewWindowTest {...props} />
+        </StackLayout>
       </StackLayout>
-    </StackLayout>
+    </NewWindow>
+  );
+};
+CustomFloatingUiPlatform.args = defaultArgs;
+
+export const AnimationFrame: Story<TooltipProps> = (props: TooltipProps) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({ css: floatingCss, window: targetWindow });
+
+  return (
+    <div className="animated-container">
+      <FloatingPlatformProvider animationFrame>
+        <Tooltip
+          content="I move with the Button due to animationFrame being enabled"
+          open
+        >
+          <Button>I am a moving button</Button>
+        </Tooltip>
+      </FloatingPlatformProvider>
+    </div>
+  );
+};
+CustomFloatingUiPlatform.args = defaultArgs;
+
+export const CustomMiddleware: Story<TooltipProps> = (props: TooltipProps) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({ css: floatingCss, window: targetWindow });
+
+  return (
+    <FloatingPlatformProvider middleware={[offset(100)]}>
+      <Tooltip content="I am offset due to custom middleware" open>
+        <Button>I am a button</Button>
+      </Tooltip>
+    </FloatingPlatformProvider>
   );
 };
 CustomFloatingUiPlatform.args = defaultArgs;
