@@ -81,7 +81,7 @@
   --saltButton-background-active: none;
   --saltButton-textTransform: none;
   --saltButton-width: 100%;
-  --saltButton-letterSpacing: none
+  --saltButton-letterSpacing: none;
 
   gap: var(--navigationItem-gap);
 }
