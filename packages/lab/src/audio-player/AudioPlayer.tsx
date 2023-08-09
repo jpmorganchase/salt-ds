@@ -18,7 +18,6 @@ export interface AudioPlayerProps {
   skipDuration: 5 | 10 | 15;
   title?: string;
   className?: string;
-
 }
 
 function timeFormat(durationS: number): string {
