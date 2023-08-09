@@ -820,7 +820,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         rangeSelection.onKeyboardRangeSelectionEnd();
       }
     },
-    [rangeSelection]
+    [rangeSelection.onKeyboardRangeSelectionEnd]
   );
 
   const editModeKeyHandler = useCallback(
