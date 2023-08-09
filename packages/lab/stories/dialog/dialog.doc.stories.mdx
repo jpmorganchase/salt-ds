@@ -1,0 +1,155 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Dialog } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Lab/Dialog"
+  component={Dialog}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Dialog
+
+A Dialog is a window that opens over the application content, focusing the user's attention on a particular task or piece of information.
+
+<Canvas>
+  <Story inline={false} height="500px" id="lab-dialog--default" />
+</Canvas>
+
+## Usage
+
+Use a Dialog to present or gather critical information that requires immediate action, whether it's directly or indirectly part of the user's current task. For example, a warning Dialog that appears when a document is closed without being saved--and asks how the user wishes to proceed--is indirectly related to the user's task.
+
+Dialogs are interruptive by nature and should be used sparingly. Only display a Dialog as the result of a user's action within their workflow, to ensure it remains relevant and is perceived as high-priority.
+
+### Best practices
+
+- Avoid using a Dialog if a less intrusive component will suffice. If the information you're displaying is mostly unrelated to the current task, consider a Toast instead-or use a Banner if the information's not critical to completion of the task.
+- Do not launch a Dialog from another Dialog. They'll be difficult to dismiss and the priority order could become confusing. Consider an alternative solution, such as progressively disclosing information in the first Dialog.
+
+## Interactions and behaviors
+
+### Modal
+
+The Dialog component is modal, meaning it prevents interaction with the rest of the UI whilst open and must be addressed by clicking one of the action buttons or dismissing with the close button. The close button should be rendered only in content Dialogs. For alert dialgs, you should rely on users acknowledgment of the message by clicking the action button.
+
+### Focus
+
+The Dialog component will trap focus within the Dialog when open. This means that the user will not be able to tab out of the Dialog and focus will be set to the first focusable element within the Dialog. When the Dialog is closed, focus will be returned to the element that was focused before the Dialog was opened.
+
+#### Initial focus
+
+You can control which element receives focus when the Dialog is opened by passing a `initialFocus` prop to the Dialog component. This prop accepts a number, which is the index of all tabbable elements within the Dialog that should receive focus. If no element is found, focus will be set to the first focusable element within the Dialog. The `initialFocus` can also be a ref to an element within the Dialog.
+
+## Alert dialogs
+
+For alert dialogs you can set the `status` prop to `error`, `warning`, `success`, or `info` to render a status icon in the title of the Dialog. For accessibility reasons, you should pass a `role="alertdialog"` to the Dialog component when rendering an alert dialog.
+
+### Error
+
+Use this Dialog to communicate a system error or an error relating to the user's current task, which fundamentally prevents them from continuing or completing it.
+An error icon displays alongside a title and supporting message.
+
+<Canvas>
+  <Story inline={false} height="500px" id="lab-dialog--error-status" />
+</Canvas>
+
+### Warning
+
+You can warn users of an issue that's related to their current task. Although the issue does not prevent the user from continuing or completing their task, it may have repercussions or an indirect impact elsewhere. This Dialog is displayed with a warning icon.
+
+<Canvas>
+  <Story inline={false} height="500px" id="lab-dialog--warning-status" />
+</Canvas>
+
+### Info
+
+<Canvas>
+  <Story inline={false} height="500px" id="lab-dialog--info-status" />
+</Canvas>
+
+### Success
+
+Use this Dialog to confirm that a user's action has been completed successfully. This Dialog is displayed with a success icon.
+
+<Canvas>
+  <Story inline={false} height="500px" id="lab-dialog--success-status" />
+</Canvas>
+
+## Content dialogs
+
+### Accent
+
+For content dialogs, you can pass the `accent` prop to `DialogTitle` which accepts a boolean to render a accent bar in the title of the Dialog. You cannot render the accent bar when a status is also being rendered.
+
+<Canvas>
+  <Story inline={false} height="500px" id="lab-dialog--accent" />
+</Canvas>
+
+### Dialog Close Button
+
+For content dialogs, you can render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right cornder of the Dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+
+```tsx
+<Dialog open={open} onOpenChange={handleOpenChange}>
+  <DialogTitle>Dialog title</DialogTitle>
+  <DialogContent>Dialog content</DialogContent>
+  <DialogActions>
+    <Button variant="cta">OK</Button>
+  </DialogActions>
+  <DialogCloseButton onClick={handleCloseDialog} />
+</Dialog>
+```
+
+### Scroll
+
+If the content of the Dialog makes it so that the Dialog stretches to the end of the screen, the `DialogContent` area will become scrollable.
+
+<Canvas>
+  <Story inline={false} height="500px" id="lab-dialog--long-content" />
+</Canvas>
+
+## Configuring Dialog
+
+```
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogCloseButton
+} from '@salt-ds/lab';
+```
+
+```tsx
+<Dialog open={open} onOpenChange={handleOpenChange}>
+  <DialogTitle>Dialog title</DialogTitle>
+  <DialogContent>Dialog content</DialogContent>
+  <DialogActions>
+    <Button>Cancel</Button>
+    <Button variant="cta">OK</Button>
+  </DialogActions>
+</Dialog>
+```
+
+### Props
+
+<ArgsTable of={Dialog} />
+
+### Characteristics Used
+
+#### Dialog
+
+<CharacteristicUsage of={Dialog} />
+
+## Accessibility
+
+Dialog is accessible by assistive technologies like screen readers, and provides full WAI-ARIA support.
+
+<HelpAndSupport />
