@@ -1,0 +1,51 @@
+.saltAudioPlayer {
+  position: 'relative';
+      left: '0px';
+      top: '0px';
+      display: 'flex';
+      flex-direction: 'column';
+      padding: var(--salt-spacing-50);
+      margin: var(--salt-spacing-50);
+      background-color: var(--salt-actionable-secondary-background);
+}
+
+.saltAudioPlayer-titile{
+    display: 'flex';
+    position: 'relative';
+    justify-content: 'center';
+    align-items: 'center';
+    flex-direction: 'row';
+  }
+
+.saltAudioPlayer-sliderContainer{
+    display: 'flex';
+    position: 'relative';
+    justify-content: 'center';
+    align-items: 'center';
+    flex-direction: 'row';
+    margin: var(--salt-spacing-50);
+}
+
+.saltAudioPlayer-sliderContainer:hover{
+  cursor: 'pointer'
+}
+
+.saltAudioPlayer-slider{
+  position: 'relative';
+  top: '-7px';
+  margin: var(--salt-spacing-50);
+}
+
+.saltAudioPlayer-buttonBar{
+  position: 'relative';
+  justify-content: 'center !important';
+  align-items: 'center';
+  flex-direction: 'row'
+  }
+
+.saltAudioPlayer-button{
+  height: '32px';
+  width: '32px';
+  color: 'inherit';
+  fill: 'currentColor'
+}
