@@ -1,10 +1,11 @@
-.DialogButtonBar-mediumDensity {
+.fakeDialogWindow {
+  border: 1px solid black;
+  width: calc(20 * var(--salt-size-base));
+  padding-bottom: var(--salt-spacing-300);
 }
 
-.DialogButton {
-}
-
-.Dialog-alignTop {
-  align-self: flex-start;
-  margin-top: 25px;
+.fakeDialogWindowHeader {
+  border-bottom: 1px solid black;
+  padding-block: var(--salt-spacing-200);
+  margin-bottom: var(--salt-spacing-300);
 }
