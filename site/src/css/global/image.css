@@ -1,0 +1,4 @@
+.salt-theme[data-mode="dark"] main img:not(.no-filter) {
+  -webkit-filter: unset;
+  filter: unset;
+}

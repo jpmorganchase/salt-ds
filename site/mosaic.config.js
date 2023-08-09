@@ -34,7 +34,6 @@ module.exports = deepmerge(saltConfig, {
       namespace: "salt",
       options: {
         rootDir: "./docs",
-        prefixDir: "salt",
         extensions: [".mdx"],
       },
     },
