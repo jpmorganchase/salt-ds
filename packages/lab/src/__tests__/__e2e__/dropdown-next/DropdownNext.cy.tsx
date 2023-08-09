@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as dropdownNextStories from "@stories/dropdown-next/dropdown-next.stories";
 
-const { Default, Secondary, Readonly, Disabled } =
+const { Default, WithDefaultSelected, Readonly, Disabled } =
   composeStories(dropdownNextStories);
 
 describe("GIVEN an active Dropdown component", () => {
@@ -105,20 +105,20 @@ describe("GIVEN an active Dropdown component", () => {
 
   describe("WHEN the Dropdown is rendered with defaultSelected prop", () => {
     it("THEN it should show default selected value on first render", () => {
-      cy.mount(<Secondary />);
+      cy.mount(<WithDefaultSelected />);
 
-      cy.findByRole("combobox").should("have.value", "🇲🇬 Madagascar");
+      cy.findByRole("combobox").should("have.value", "California");
     });
 
     // TODO: update once KeyNav fixed in List
     it("THEN it should update value on different list item selection", () => {
-      cy.mount(<Secondary />);
+      cy.mount(<WithDefaultSelected />);
       cy.findByRole("combobox").focus().realPress("Enter");
       cy.realPress("ArrowDown");
       cy.realPress("ArrowDown");
       cy.realPress("Enter");
 
-      cy.findByRole("combobox").should("have.value", "🇧🇷 Brazil");
+      cy.findByRole("combobox").should("have.value", "Alaska");
     });
   });
 });

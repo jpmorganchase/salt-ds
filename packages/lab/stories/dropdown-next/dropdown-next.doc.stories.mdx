@@ -9,22 +9,29 @@ import {
 
 # Dropdown
 
-A Dropdown allows the user to select an item from an array of options displayed in an overlay list– with the selected value displayed in the dropdown field.
+A Dropdown allows the user to select an item from an array of options displayed in an overlay list–with the selected value displayed in the dropdown field.
 Use the Dropdown component when you have a limited list of options (5-10) that don’t require filtering to narrow down.
 
 Dropdown contains a Button with a chevron Icon, that opens a List on mouse and keyboard interactions.
-When `defaultSelected` prop is passed, Dropdown displays its value on initial render, otherwise it’s empty by default.
 
 <Canvas>
   <Story id="lab-dropdown-next--default" />
 </Canvas>
 
-### Secondary
+### With `defaultSelected` prop
 
-Dropdown when variant is set to `secondary`.
+When `defaultSelected` prop is passed, Dropdown displays its value on initial render, otherwise it’s empty by default.
 
 <Canvas>
-  <Story id="lab-dropdown-next--secondary" />
+  <Story id="lab-dropdown-next--with-default-selected" />
+</Canvas>
+
+### Variants
+
+Dropdown has two variants: `primary` (default) and `secondary`.
+
+<Canvas>
+  <Story id="lab-dropdown-next--variants" />
 </Canvas>
 
 Tip: See the [Forms pattern](https://www.saltdesignsystem.com/salt/patterns/forms) for guidance on primary vs secondary control selection.
