@@ -24,7 +24,7 @@ const Template: Story<NavigationItemProps> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  children: "Navigation Item",
+  children: "Label",
   href: "#",
 };
 
@@ -45,7 +45,7 @@ export const WithIcon: Story<NavigationItemProps> = (args) => {
   );
 };
 WithIcon.args = {
-  children: "Navigation Item",
+  children: "Label",
   href: "#",
 };
 
@@ -66,32 +66,22 @@ export const WithBadge: Story<NavigationItemProps> = (args) => {
   );
 };
 WithBadge.args = {
-  children: "Navigation Item",
+  children: "Label",
   href: "#",
 };
 
-const items = [
-  "Navigation Item 1",
-  "Navigation Item 2",
-  "Navigation Item 3",
-  "Navigation Item 4",
-  "Navigation Item 5",
-];
+const items = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
 
 const multipleLevelNesting = [
   {
-    name: "Navigation Item 1 - Level 0",
+    name: "Label 1 - Level 0",
   },
   {
-    name: "Navigation Item 2 - Level 0",
+    name: "Label 2 - Level 0",
     subNav: [
       {
-        name: "Navigation Item 1 - Level 1",
-        subNav: [
-          "Navigation Item 1 - Level 2",
-          "Navigation Item 2 - Level 2",
-          "Navigation Item 3 - Level 2",
-        ],
+        name: "Label 1 - Level 1",
+        subNav: ["Label 1 - Level 2", "Label 2 - Level 2", "Label 3 - Level 2"],
       },
     ],
   },
