@@ -37,7 +37,7 @@
   fill: var(--navigationItem-fill);
 }
 
-/* Styles applied when orientation = "horizontal" */
+/* Styles applied to root NavigationItem component */
 .saltNavigationItem {
   margin: 0 var(--navigationItem-gap);
 }
@@ -46,6 +46,7 @@
 .saltNavigationItem-wrapper.saltNavigationItem-horizontal {
   min-height: calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap));
   padding: calc(var(--navigationItem-gap) + var(--navigationItem-bar-inset)) 0 var(--navigationItem-gap) 0;
+  width: fit-content;
 }
 
 /* Styles applied when orientation = "vertical" */
@@ -80,6 +81,7 @@
   --saltButton-background-active: none;
   --saltButton-textTransform: none;
   --saltButton-width: 100%;
+  --saltButton-letterSpacing: none
 
   gap: var(--navigationItem-gap);
 }

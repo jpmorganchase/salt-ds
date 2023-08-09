@@ -60,7 +60,7 @@ export const WithBadge: Story<NavigationItemProps> = (args) => {
     <NavigationItem
       active={active}
       onClick={handleActiveToggle}
-      BadgeComponent={<Badge value="NEW" />}
+      BadgeComponent={<Badge value="New" />}
       {...args}
     />
   );
@@ -130,7 +130,7 @@ export const HorizontalGroupWithIconAndBadge = () => {
                 setActive(item);
               }}
               IconComponent={NotificationIcon}
-              BadgeComponent={index === 2 && <Badge value="NEW" />}
+              BadgeComponent={index === 2 && <Badge value="New" />}
             >
               {item}
             </NavigationItem>
@@ -169,7 +169,7 @@ export const VerticalGroup = () => {
 
 export const VerticalGroupWithIconAndBadge = () => {
   const [active, setActive] = useState(items[0]);
-  const badgeValues = ["NEW", 1, 22, "Vanilla", 3, "Chocolate"];
+  const badgeValues = ["New", 1, 22, "Vanilla", 3, "Chocolate"];
 
   return (
     <nav>
