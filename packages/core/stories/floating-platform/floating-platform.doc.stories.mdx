@@ -1,0 +1,128 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Button, Text, Tooltip } from "@salt-ds/core";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Core/Floating Platform"
+  component={Tooltip}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+## Custom Floating UI Platform
+
+Note: The following section should not be necessary for the majority of users and is only fot specialised use-cases of floating components
+
+### Background
+
+Certain components within the design system use 'floating' . These are elements which are anchored to another component, but appear outside of the normal flow of the document, and re-posiiton themselves according to factors such as proximaty to the ege of the document. Salt uses [Floating UI](https://floating-ui.com) to implement these aspect of our components.
+
+In certain specialised use-cases consumers may want to customise the behaviour of floating-ui. For example when dealing with multi-window applications, where floating components should spawn in a new window and re-position with proximaty to the user's screen.
+
+### Custom Platforms
+
+To facilitate this advanced usage consumer's can pass a custom platform, based on [Floating UI's Platform feature](https://floating-ui.com/docs/platform)
+
+You can provide a custom Floating UI platform to be used in these components by importing `<FloatingPlatformProvider>` and passing a custom [Floating UI Platform](https://floating-ui.com/docs/platform) as the `platform` prop. This will then be used within the floating component.
+
+Using the FloatingPlatformProvider you can also pass custom [Floating UI Middleware](https://floating-ui.com/docs/middleware) to be applied on top of the defaults for tweaking the position of floating components using the `middleware` prop.
+
+You can also adjust the autoUpdate functionality to run on animation frame (e.g. to keep a Tooltip in sync with an external moving window) using the `animationFrame` prop.
+
+```
+import { platform, offset } from "@floating-ui/dom";
+import { FloatingPlatformProvider, Tooltip } from "@salt-ds/core";
+
+const customPlatfrom = {
+    ...platform,
+    // Add custom platform configuration
+}
+
+const customMiddleware = [offset(10)];
+
+const CustomFloatingPlatformTooltip = ({...props}) => {
+    return (
+        <FloatingPlatformProvider
+            platform={customPlatform}
+            animationFrame
+            middleware={customMiddleware}
+          >
+            <Tooltip {...props} />
+        </FloatingPlatformProvider>
+    )
+}
+
+```
+
+You may also need to pass a custom component to be used as the root of the floating component (e.g. to spawn an external window). This can be achieved by importing `<FloatingComponentProvider>` and providing a component. This component can be used as the trigger to spawn a new window, or other advanced functionality.
+
+This custom component will probably need to use [FloatingPortal](https://floating-ui.com/docs/FloatingPortal) and also add a `SaltProvider` at it's root.
+
+```
+import { Salt } from "@salt-ds/core";
+import { FloatingComponentProvider } from "@salt-ds/window";
+import { FloatingPortal } from "@floating-ui/react";
+```
+
+```
+const FloatingComponent = forwardRef(
+  (
+    props: CombinedFloatingComponentProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ) => {
+    const { open, disabled, ...rest } = props;
+    return open && !disabled ? (
+      <FloatingPortal>
+        <SaltProvider>
+          <div {...rest} ref={ref} />
+        </SaltProvider>
+      </FloatingPortal>
+    ) : null;
+  }
+);
+
+const CustomFloatingComponentTooltip = ({...props}) => {
+    return (
+        <FloatingComponentProvider
+            Component={FloatingComponent}
+        >
+            <Tooltip {...props} />
+        </FloatingComponentProvider>
+    )
+}
+```
+
+### Custom Platform Example
+
+The following example shows the two providers in action. The application is rendered in an iframe, representing a windowed applicationinside a global coordinate space (e.g. a users desktop).
+
+When the Button is hovered the Tooltip is rendered in it's own iframe (representing a popout window) which has been portalled to the global coordinate space.
+
+The example uses the `FloatingComponentProvider` to trigger creating the new window when the Tooltip is opened.
+
+It also uses the `FloatingPlatformProvider` to customise the positioning of the Tooltip based on the global coordinates of the anchor, rather than the position within it's own window.
+
+<Canvas>
+  <Story id="core-floating-platform--custom-floating-ui-platform" />
+</Canvas>
+
+### Custom Middleware Example
+
+In the following example custom `offset` middleware has been added to offset the tooltip by an additional amount on top of the default
+
+<Canvas>
+  <Story id="core-floating-platform--custom-middleware" />
+</Canvas>
+
+### Animation Frame autoUpdate
+
+In the following example the Tooltip is being positioned on animation frame, allowing it to remain anchored to a component suring an animation
+
+<Canvas>
+  <Story id="core-floating-platform--animation-frame" />
+</Canvas>
