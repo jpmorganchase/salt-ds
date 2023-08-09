@@ -1152,7 +1152,6 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     ]
   );
 
-
   useEffect(() => {
     setScrollTop(0);
   }, [rowData]);
