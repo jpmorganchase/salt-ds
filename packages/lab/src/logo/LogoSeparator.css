@@ -1,6 +1,5 @@
 /* Styles for LogoSeparator */
 .saltLogoSeparator {
   height: var(--salt-size-separator-height);
-  margin: 0 var(--salt-spacing-100);
   border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
 }
