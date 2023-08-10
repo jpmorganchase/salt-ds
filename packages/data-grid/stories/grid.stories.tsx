@@ -342,13 +342,14 @@ const dummyData = [...new Array(40).keys()].map((i) => {
 const rowIdGetter = (row: any) => row.id;
 
 const LotsOfColumnsTemplate: Story<GridProps> = (props) => {
+  const { style, ...rest } = props;
   return (
     <Grid
+      style={style}
       rowData={dummyData}
       rowKeyGetter={rowIdGetter}
       className="grid"
       columnSeparators={true}
-      {...props}
     >
       {dummyColumnNames.map((name) => (
         <GridColumn

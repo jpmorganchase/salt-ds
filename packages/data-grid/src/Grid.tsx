@@ -421,7 +421,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       if (s) {
         s.scrollLeft += deltaX;
         s.scrollTop += deltaY;
-        console.log(s.scrollHeight, s.scrollTop, s.clientHeight)
+        console.log(s.scrollHeight, s.scrollTop, s.clientHeight);
         if (
           !(
             (

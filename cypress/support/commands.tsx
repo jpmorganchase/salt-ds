@@ -40,7 +40,7 @@ declare global {
        * @example
        * cy.get('button').isNotInViewport()
        */
-       isNotInViewport(): Chainable<void>;
+      isNotInViewport(): Chainable<void>;
 
       /**
        * Is In Viewport
@@ -48,7 +48,7 @@ declare global {
        * @example
        * cy.get('button').isInViewport()
        */
-       isInViewport(): Chainable<void>;
+      isInViewport(): Chainable<void>;
 
       /**
        * Set Density
@@ -92,8 +92,9 @@ Cypress.Commands.add("setDensity", function (density) {
   }
 });
 
-Cypress.Commands.add('isInViewport', { prevSubject: true },(subject) => {
-  const bottom = Cypress.$(cy.state('window')).height();
+Cypress.Commands.add("isInViewport", { prevSubject: true }, function (subject) {
+  // @ts-ignore
+  const bottom = cy.state("window").height();
   const rect = subject[0].getBoundingClientRect();
 
   expect(rect.top).not.to.be.greaterThan(bottom);
@@ -102,15 +103,20 @@ Cypress.Commands.add('isInViewport', { prevSubject: true },(subject) => {
   return subject;
 });
 
-Cypress.Commands.add('isNotInViewport', { prevSubject: true },(subject) => {
-  const bottom = Cypress.$(cy.state('window')).height();
-  const rect = subject[0].getBoundingClientRect();
+Cypress.Commands.add(
+  "isNotInViewport",
+  { prevSubject: true },
+  function (subject) {
+    // @ts-ignore
+    const bottom = cy.state("window").height();
+    const rect = subject[0].getBoundingClientRect();
 
-  expect(rect.top).to.be.gte(bottom);
-  expect(rect.bottom).to.be.gte(bottom);
+    expect(rect.top).to.be.gte(bottom);
+    expect(rect.bottom).to.be.gte(bottom);
 
-  return subject;
-});
+    return subject;
+  }
+);
 
 Cypress.Commands.add(
   "checkAxeComponent",
