@@ -16,21 +16,37 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Navigation Item
 
-A navigation item component is a repeatable UI element that facilitates the movement and exploration within a website or application. It typically consists of a group of links, buttons, or other interactive elements that allow users to navigate between different sections, pages, or features of the system.
+Navigation Item allows users to navigate between distinct applications and website pages.
+
+When the Navigation Item is not a parent, it contains a link, which users can click, and which receives focus via a keyboard interaction. When the navigation item is a parent, it will contain an expandable action, which contains a button instead.
+
+A Navigation Item hugs its content by default, but is customisable so that its container can be adjusted to fit any preferred width.
 
 ##### Use when
 
-- When your website or application requires deep navigation structures, implement multi-level navigation to allow users to orient themselves whilst navigating through different levels of content hierarchy or sections.
+- Use Navigation Item when you have multiple levels of navigation in your application or website.
 
-- When a sticky or fixed navigation option that is needed, which remains visible as users scroll down the page, always ensuring they have easy access to the website or applications main navigation.
+- We suggest first considering a horizontal group of navigation items for distinct webpages or applications. If you have multiple (more than 8) services to navigate to at a platform level, or have navigation across distinct apps, consider using a vertical group instead.
+
+- Our recommendation is to display Navigation Items in a fixed App Header (or header area) if you need your items to remain visible on scroll.
 
 ##### Don't use when
 
-- When content lacks clear categorization or hierarchy.
+- When you need to show different views of content within the same page, consider using [Tabs](?path=/docs/documentation-lab-tabs--page) instead.
 
-- When your content is very specific, in this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure.
+- When your content is very specific. ,in this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Consider using the [Interactable Card](?path=/docs/documentation-core-card--page), or a [Link](?path=/docs/documentation-core-link--page) component within the body of the page.
 
-- When the navigation becomes overly complicated, leading to confusion and difficulty for users to find what they need.
+## Content
+
+- Our recommendation is that all labels should be short and concise.
+
+- Always use labels in sentence case in a Navigation item.
+
+- When using a [Badge](?path=/docs/documentation-lab-badge--page) component within a Navigation Item, we recommend using sentence case.
+
+- In a Horizontal Navigation Item, do not wrap labels, use truncation with [Tooltip](<(?path=/docs/documentation-core-tooltip--page)>) if necessary.
+
+- In a Vertical Navigation Item, labels can wrap onto multiple lines if necessary, and is preferred over truncation.
 
 ## Features
 
@@ -124,8 +140,6 @@ import { NavigationItem } from "@salt-ds/lab";
 
 <ArgsTable of={NavigationItem} />
 
-## Related components
-
 ### Classes
 
 <CSSClassTable of={NavigationItem} />
@@ -136,6 +150,16 @@ import { NavigationItem } from "@salt-ds/lab";
 
 ## Accessibility
 
-The navigation item component is accessible by keyboard, screen readers and provides full WAI-ARIA support, to be compliant with WCAG.2.1 standards.
+The Navigation Item component is accessible by keyboard and screen readers, providing full WAI-ARIA support, to be compliant with WCAG.2.1 standards.
+
+### Horizontal Navigation Items
+
+| Key            | Function                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tab            | <ul><li>Moves focus into the first Navigation item in the group. Focus is set to the entire component.</li><li> If a Navigation item is selected before the Navigation item receives focus, focus is set on the selected item.</li> <li>When the Navigation item has children, tab again, to move focus on to the arrow icon.</li> <li>When Navigation item has focus, move focus out of Navigation item to next component in tab order.</li></ul> |
+| Shift and Tab  | <ul><li>When Navigation item has focus, move focus out of Navigation item to previous component in tab order. </li></ul>                                                                                                                                                                                                                                                                                                                           |
+| Enter or Space | <ul><li>Selects the focused Navigation item.</li><li>Triggers Navigation item to reveal expanded list or mega-menu.</li><li>Use `Space` and `Enter` to trigger a Nav item with children, or just `Enter` to trigger a Navigation item without children.</li></ul>                                                                                                                                                                                  |
+
+### Vertical Navigation Items
 
 <HelpAndSupport />
