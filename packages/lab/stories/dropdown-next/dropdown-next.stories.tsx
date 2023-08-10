@@ -116,7 +116,7 @@ export const Controlled: Story<DropdownNextProps> = ({
         {...props}
         source={source}
         open={open}
-        selectedItem={selectedItem}
+        selected={selectedItem}
         highlightedItem={ListExample[highlightedIndex]}
       />
     </FlexLayout>

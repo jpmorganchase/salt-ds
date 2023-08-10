@@ -63,8 +63,8 @@ export interface DropdownNextProps
   ListProps?: ListNextProps;
   /* Status open or close for use in controlled component.  */
   open?: boolean;
-  /* Selected item prop for use in controlled component. */
-  selectedItem?: string;
+  /* Selected prop for use in controlled component. */
+  selected?: string;
   /* Highlighted item prop for use in controlled component. */
   highlightedItem?: string;
 }
@@ -83,7 +83,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     source,
     placement = "bottom",
     open: openControlProp,
-    selectedItem: selectedItemControlProp,
+    selected: selectedControlProp,
     highlightedItem: highlightedItemControlProp,
     onFocus,
     onKeyDown,
@@ -112,7 +112,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     disabled,
     ref: listRef,
     id: listId,
-    selected: selectedItemControlProp,
+    selected: selectedControlProp,
     highlightedItem: highlightedItemControlProp,
   };
 
