@@ -68,7 +68,6 @@ export function useTooltip(props?: UseTooltipProps) {
     reference,
     x,
     y,
-
     strategy,
     middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
     placement,
@@ -120,11 +119,6 @@ export function useTooltip(props?: UseTooltipProps) {
       // @ts-ignore
       "data-placement": placement,
       ref: floating,
-      style: {
-        top: y ?? 0,
-        left: x ?? 0,
-        position: strategy,
-      },
     });
   };
 
@@ -133,6 +127,12 @@ export function useTooltip(props?: UseTooltipProps) {
       ref: reference,
     });
 
+  const getTooltipPosition = () => ({
+    top: y ?? 0,
+    left: x ?? 0,
+    position: strategy,
+  });
+
   return {
     arrowProps,
     open,
@@ -140,5 +140,6 @@ export function useTooltip(props?: UseTooltipProps) {
     reference,
     getTooltipProps,
     getTriggerProps,
+    getTooltipPosition,
   };
 }

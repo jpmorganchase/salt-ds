@@ -92,7 +92,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
     () =>
       forwardRef(
         (
-          { style, open, ...rest }: RootComponentProps,
+          { style, open, top, left, position, ...rest }: RootComponentProps,
           ref: ForwardedRef<HTMLIFrameElement>
         ) => {
           const FloatingRoot = (
@@ -104,6 +104,8 @@ const NewWindowTest = (props: NewWindowTestProps) => {
             <TooltipWindow
               style={{
                 ...style,
+                top,
+                left,
                 border: "none",
                 padding: 0,
                 position: "fixed",

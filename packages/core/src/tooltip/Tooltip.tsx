@@ -110,6 +110,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       reference,
       getTriggerProps,
       getTooltipProps,
+      getTooltipPosition,
     } = useTooltip(hookProps);
 
     const triggerRef = useForkRef(
@@ -133,6 +134,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           disabled={disabled}
           ref={floatingRef}
           {...getTooltipProps()}
+          {...getTooltipPosition()}
         >
           <TooltipBase
             hideIcon={hideIcon}
