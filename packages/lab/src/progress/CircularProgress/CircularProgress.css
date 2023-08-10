@@ -1,9 +1,4 @@
 .saltCircularProgress {
-  --circularProgress-progressCircle-radius: calc(var(--salt-size-base) - (var(--salt-size-adornment) * 0.25));
-  --circularProgress-progressCircle-circumference: calc(var(--circularProgress-progressCircle-radius) * 2 * PI);
-  --circularProgress-railCircle-radius: calc(var(--salt-size-base) - (var(--salt-track-borderWidth) * 0.5));
-  --circularProgress-railCircle-circumference: calc(var(--circularProgress-railCircle-radius) * 2 * PI);
-
   color: var(--salt-text-primary-foreground);
   display: inline-flex;
   position: relative;
@@ -23,23 +18,51 @@
   width: 100%;
 }
 
-.saltCircularProgress-railCircle {
-  stroke: var(--salt-track-borderColor);
-  stroke-width: var(--salt-track-borderWidth);
-  r: var(--circularProgress-railCircle-radius);
+.saltCircularProgress-track {
+  inline-size: calc(var(--salt-size-base) * 2);
+  block-size: calc(var(--salt-size-base) * 2);
+  border-style: var(--salt-track-borderStyle);
+  border-width: var(--salt-track-borderWidth);
+  border-radius: var(--salt-size-base);
+  border-color: var(--salt-track-borderColor);
 }
 
-.saltCircularProgress-svg {
-  height: calc(var(--salt-size-base) * 2);
-  width: calc(var(--salt-size-base) * 2);
-  fill: var(--salt-accent-background);
-  transform: rotate(-90deg);
-  display: block;
+.saltCircularProgress-bar {
+  inline-size: calc(var(--salt-size-base) * 2);
+  block-size: calc(var(--salt-size-base) * 2);
+  border-style: var(--salt-track-borderStyle);
+  border-width: calc(var(--salt-size-adornment) * 0.5);
+  border-radius: var(--salt-size-base);
+  border-color: var(--salt-accent-background);
 }
 
-.saltCircularProgress-circle {
-  r: var(--circularProgress-progressCircle-radius);
-  stroke-width: calc(var(--salt-size-adornment) * 0.5);
-  stroke: var(--salt-accent-background);
-  transition: stroke-dashoffset 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+.saltCircularProgress-bars {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.saltCircularProgress-barOverlayRight,
+.saltCircularProgress-barOverlayLeft {
+  inline-size: 50%;
+  block-size: 100%;
+  transform-origin: 100% center;
+  transform: rotate(180deg);
+  overflow: hidden;
+  position: absolute;
+}
+
+.saltCircularProgress-barSubOverlayRight,
+.saltCircularProgress-barSubOverlayLeft {
+  inline-size: 100%;
+  block-size: 100%;
+  transform-origin: 100% center;
+  overflow: hidden;
+  transform: rotate(-180deg);
+}
+
+.saltCircularProgress-barOverlayLeft {
+  transform: rotate(0deg);
 }

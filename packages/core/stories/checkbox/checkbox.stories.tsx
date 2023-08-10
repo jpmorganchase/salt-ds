@@ -14,7 +14,7 @@ const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => {
 export const Default = CheckboxTemplate.bind({});
 
 Default.args = {
-  label: "Checkbox",
+  label: "Fixed income",
 };
 
 export const WithoutLabel = CheckboxTemplate.bind({});
@@ -40,7 +40,7 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
     <Checkbox
       checked={checkboxState.checked}
       indeterminate={checkboxState.indeterminate}
-      label="Indeterminate checkbox"
+      label="Equities"
       onChange={handleChange}
     />
   );
@@ -67,17 +67,17 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
   return (
     <StackLayout>
       <CheckboxGroup validationStatus={errorState ? "error" : undefined}>
-        <Checkbox onChange={() => setErrorState(false)} label="Option 1" />
+        <Checkbox onChange={() => setErrorState(false)} label="Alternatives" />
         <Checkbox
           onChange={() => setErrorState(false)}
           defaultChecked
-          label="Option 2"
+          label="Equities"
         />
         <Checkbox
           checked={checkboxState.checked}
           indeterminate={checkboxState.indeterminate}
           onChange={handleChange}
-          label="Option 3"
+          label="Fixed income"
         />
       </CheckboxGroup>
       <Button onClick={() => setErrorState(true)}>Reset</Button>
@@ -106,17 +106,20 @@ export const Warning: ComponentStory<typeof Checkbox> = () => {
   return (
     <StackLayout>
       <CheckboxGroup validationStatus={warningState ? "warning" : undefined}>
-        <Checkbox onChange={() => setWarningState(false)} label="Option 1" />
+        <Checkbox
+          onChange={() => setWarningState(false)}
+          label="Alternatives"
+        />
         <Checkbox
           onChange={() => setWarningState(false)}
           defaultChecked
-          label="Option 2"
+          label="Equities"
         />
         <Checkbox
           checked={checkboxState.checked}
           indeterminate={checkboxState.indeterminate}
           onChange={handleChange}
-          label="Option 3"
+          label="Fixed income"
         />
       </CheckboxGroup>
       <Button onClick={() => setWarningState(true)}>Reset</Button>
@@ -127,13 +130,9 @@ export const Warning: ComponentStory<typeof Checkbox> = () => {
 export const Disabled: ComponentStory<typeof Checkbox> = () => {
   return (
     <CheckboxGroup>
-      <Checkbox disabled label="disabled checkbox" />
-      <Checkbox
-        disabled
-        indeterminate
-        label="disabled indeterminate checkbox"
-      />
-      <Checkbox disabled checked label="disabled checked checkbox" />
+      <Checkbox disabled label="Alternatives" />
+      <Checkbox disabled indeterminate label="Equities" />
+      <Checkbox disabled checked label="Fixed income" />
     </CheckboxGroup>
   );
 };
@@ -141,13 +140,9 @@ export const Disabled: ComponentStory<typeof Checkbox> = () => {
 export const Readonly: ComponentStory<typeof Checkbox> = () => {
   return (
     <CheckboxGroup>
-      <Checkbox readOnly label="readonly checkbox" />
-      <Checkbox
-        readOnly
-        indeterminate
-        label="readonly indeterminate checkbox"
-      />
-      <Checkbox readOnly checked label="readonly checked checkbox" />
+      <Checkbox readOnly label="Alternatives" />
+      <Checkbox readOnly indeterminate label="Equities" />
+      <Checkbox readOnly checked label="Fixed income" />
     </CheckboxGroup>
   );
 };
@@ -158,9 +153,9 @@ export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
       defaultCheckedValues={["option-1", "option-2"]}
       direction={"horizontal"}
     >
-      <Checkbox label="option 1" value="option-1" />
-      <Checkbox label="option 2" value="option-2" />
-      <Checkbox label="option 3" value="option-3" />
+      <Checkbox label="Alternatives" value="option-1" />
+      <Checkbox label="Equities" value="option-2" />
+      <Checkbox label="Fixed income" value="option-3" />
     </CheckboxGroup>
   );
 };
@@ -172,13 +167,13 @@ export const WrapGroup: ComponentStory<typeof CheckboxGroup> = ({ wrap }) => (
     }}
   >
     <CheckboxGroup name="fx" direction={"horizontal"} wrap={wrap}>
-      <Checkbox key="option1" label="Checkbox label 1" value="option1" />
-      <Checkbox key="option2" label="Checkbox label 2" value="option2" />
+      <Checkbox key="option1" label="Alternatives" value="alternatives" />
+      <Checkbox key="option2" label="Equities" value="equities" />
       <Checkbox
         disabled
         key="option3"
-        label="Checkbox label 3 (disabled)"
-        value="option3"
+        label="Fixed income"
+        value="fixed income"
       />
     </CheckboxGroup>
   </div>
@@ -194,9 +189,9 @@ export const UncontrolledGroup: ComponentStory<typeof CheckboxGroup> = (
 ) => {
   return (
     <CheckboxGroup {...args} defaultCheckedValues={["option-1", "option-2"]}>
-      <Checkbox label="option 1" value="option-1" />
-      <Checkbox label="option 2" value="option-2" />
-      <Checkbox label="option 3" value="option-3" />
+      <Checkbox label="Alternatives" value="option-1" />
+      <Checkbox label="Equities" value="option-2" />
+      <Checkbox label="Fixed income" value="option-3" />
     </CheckboxGroup>
   );
 };
@@ -204,21 +199,21 @@ export const UncontrolledGroup: ComponentStory<typeof CheckboxGroup> = (
 export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
   const checkboxesData = [
     {
-      label: "Spot",
-      value: "spot",
+      label: "Alternatives",
+      value: "alternatives",
     },
     {
-      label: "Forward",
-      value: "forward",
+      label: "Equities",
+      value: "equities",
     },
     {
       disabled: true,
-      label: "Option (disabled)",
-      value: "option",
+      label: "Fixed income",
+      value: "Fixed income",
     },
   ];
 
-  const [controlledValues, setControlledValues] = useState(["forward"]);
+  const [controlledValues, setControlledValues] = useState(["equities"]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

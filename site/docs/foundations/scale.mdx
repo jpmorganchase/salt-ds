@@ -3,18 +3,56 @@ title: Scale
 layout: DetailTechnical
 sidebar:
   label: Scale
-data:
-  status: In progress
 ---
 
-Scale allows components to be given greater or lesser prominence within an interface through a multiplier of their default size.
+Scale allows you to give components greater or lesser prominence within an interface through a multiplier of their default size.
 
-Scale works hand-in-hand with [density](density) to allow the prominence of certain simple components, such as Avatar and Country Symbol, to be changed within a layout. This is acheived by applying a basic multiplier (x2, x3, x4 etc.) to the base size of the component.
+Scale works hand-in-hand with [density](density) to allow the prominence of components such as Avatar and Country Symbol to be changed within a layout.
 
-By using a multiplier, the component maintains a consistent spatial relationship to the elements around it.
+This is achieved by applying a multiplier to the component. By default, scale is set to x1, applying x2 will double the size of the component, x3 will triple the size, etc. Scale can be used in conjunction with a size-token, as the following examples and tables show.
+
+## Scale and size
+
+The [Size](size) foundation establishes standard dimensions across the system. This ensures components maintain a consistent spatial relationship to the elements around them.
+
+### Scaling size-base
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/scale-country.svg", alt: "" },
+    { src: "/img/foundations/scale-country-annotated.svg", alt: "" },
+  ]}
+  label="Show multipliers"
+/>
+
+| Size token         | Multiplier | High density (px) | Medium | Low | Touch |
+| ------------------ | ---------- | ----------------- | ------ | --- | ----- |
+| `--salt-size-base` | x1         | 20                | 28     | 36  | 44    |
+|                    | x2         | 40                | 56     | 72  | 88    |
+|                    | x3         | 60                | 84     | 108 | 132   |
+|                    | x4         | 80                | 112    | 144 | 176   |
+
+### Scaling size-icon
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/scale-icon.svg", alt: "" },
+    { src: "/img/foundations/scale-icon-annotated.svg", alt: "" },
+  ]}
+  label="Show multipliers"
+/>
+
+| Size token         | Multiplier | High density (px) | Medium | Low | Touch |
+| ------------------ | ---------- | ----------------- | ------ | --- | ----- |
+| `--salt-size-icon` | x1         | 12\*              | 12     | 14  | 16    |
+|                    | x2         | 20                | 24     | 28  | 32    |
+|                    | x3         | 30                | 36     | 42  | 48    |
+|                    | x4         | 40                | 48     | 56  | 64    |
+
+\* Icons have a minimum size set at 12px and should not be displayed any smaller. For high density this means the default size of an icon is 12px, but the rest of the scale grows based on small base dimension.
 
 <Callout title="Have some feedback?">
 
-The Salt Foundations are still in progress, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or questions.
+We're still in the process of rolling out the Salt Foundations, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or suggestions.
 
 </Callout>

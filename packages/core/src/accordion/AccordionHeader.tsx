@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef, MouseEvent } from "react";
 import { clsx } from "clsx";
+import { StatusIndicator } from "../status-indicator";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -18,7 +19,7 @@ export const AccordionHeader = forwardRef<
   AccordionHeaderProps
 >(function AccordionHeader(props, ref) {
   const { children, className, onClick, ...rest } = props;
-  const { value, expanded, toggle, disabled, id } = useAccordion();
+  const { value, expanded, toggle, disabled, id, status } = useAccordion();
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -35,7 +36,11 @@ export const AccordionHeader = forwardRef<
   return (
     <button
       ref={ref}
-      className={clsx(withBaseName(), className)}
+      className={clsx(
+        withBaseName(),
+        { [withBaseName(status ?? "")]: status },
+        className
+      )}
       disabled={disabled}
       onClick={handleClick}
       aria-expanded={expanded}
@@ -46,6 +51,12 @@ export const AccordionHeader = forwardRef<
     >
       <ChevronRightIcon aria-hidden="true" className={withBaseName("icon")} />
       {children}
+      {status && (
+        <StatusIndicator
+          className={withBaseName("statusIndicator")}
+          status={status}
+        />
+      )}
     </button>
   );
 });

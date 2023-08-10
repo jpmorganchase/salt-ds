@@ -1,11 +1,18 @@
 .saltAccordionPanel {
   display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows var(--salt-duration-perceptible) cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-rows var(--salt-duration-perceptible) ease-in-out, opacity var(--salt-duration-perceptible) ease-in-out, visibility var(--salt-duration-perceptible) ease-in-out;
 }
 
-.saltAccordionHeader[aria-expanded="true"] + .saltAccordionPanel {
+.saltAccordionPanel[aria-hidden="true"] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.saltAccordionPanel {
   grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
 }
 
 .saltAccordionPanel-inner {
@@ -13,6 +20,14 @@
 }
 
 .saltAccordionPanel-content {
-  padding: var(--salt-spacing-200);
   padding-left: calc(var(--salt-spacing-200) + var(--salt-size-icon));
+  padding-right: var(--salt-spacing-100);
+  padding-top: var(--salt-spacing-300);
+  padding-bottom: var(--salt-spacing-300);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saltAccordionPanel {
+    transition: none;
+  }
 }
