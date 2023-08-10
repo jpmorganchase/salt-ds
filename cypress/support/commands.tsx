@@ -35,6 +35,22 @@ declare global {
       setDensity(theme: SupportedDensity): Chainable<void>;
 
       /**
+       * Is Not In Viewport
+       *
+       * @example
+       * cy.get('button').isNotInViewport()
+       */
+       isNotInViewport(): Chainable<void>;
+
+      /**
+       * Is In Viewport
+       *
+       * @example
+       * cy.get('button').isInViewport()
+       */
+       isInViewport(): Chainable<void>;
+
+      /**
        * Set Density
        *
        * @example
@@ -74,6 +90,26 @@ Cypress.Commands.add("setDensity", function (density) {
   } else {
     cy.log("Unsupported density", density);
   }
+});
+
+Cypress.Commands.add('isInViewport', { prevSubject: true },(subject) => {
+  const bottom = Cypress.$(cy.state('window')).height();
+  const rect = subject[0].getBoundingClientRect();
+
+  expect(rect.top).not.to.be.greaterThan(bottom);
+  expect(rect.bottom).not.to.be.greaterThan(bottom);
+
+  return subject;
+});
+
+Cypress.Commands.add('isNotInViewport', { prevSubject: true },(subject) => {
+  const bottom = Cypress.$(cy.state('window')).height();
+  const rect = subject[0].getBoundingClientRect();
+
+  expect(rect.top).to.be.gte(bottom);
+  expect(rect.bottom).to.be.gte(bottom);
+
+  return subject;
 });
 
 Cypress.Commands.add(
