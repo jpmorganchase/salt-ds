@@ -94,7 +94,7 @@ Cypress.Commands.add("setDensity", function (density) {
 
 Cypress.Commands.add("isInViewport", { prevSubject: true }, function (subject) {
   // @ts-ignore
-  const bottom = cy.state("window").height();
+  const bottom = Cypress.config(`viewportHeight`);
   const rect = subject[0].getBoundingClientRect();
 
   expect(rect.top).not.to.be.greaterThan(bottom);
@@ -108,7 +108,7 @@ Cypress.Commands.add(
   { prevSubject: true },
   function (subject) {
     // @ts-ignore
-    const bottom = cy.state("window").height();
+    const bottom = Cypress.config(`viewportHeight`);
     const rect = subject[0].getBoundingClientRect();
 
     expect(rect.top).to.be.gte(bottom);

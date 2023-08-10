@@ -817,13 +817,7 @@ describe("Grid", () => {
       </div>
     );
     assertGridReady();
-    // cy.findByTestId("grid-scrollable").scrollTo(0, 100, {
-    //   easing: "linear",
-    //   duration: 100,
-    // });
-
-    // clickCell(0, 1);
-    // cy.get(`[aria-rowindex="2"] [aria-colindex="2"]`).scrollTo(0, 100, {
+    
     cy.findByTestId("scroll-past").isNotInViewport();
 
     cy.findByTestId("grid-middle-part").realHover().realClick();
@@ -833,7 +827,7 @@ describe("Grid", () => {
       ensureScrollable: false,
     });
     cy.pause();
-
+    
     cy.findByTestId("scroll-past").isInViewport();
   });
 });
