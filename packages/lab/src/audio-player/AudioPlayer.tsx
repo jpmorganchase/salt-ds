@@ -132,9 +132,9 @@ export const AudioPlayer = forwardRef<HTMLDivElement, AudioPlayerProps> (
   };
 
   return (
-      <div className={clsx(withBaseName(), className)} ref={ref} {...rest} >
+      <span style={{background: 'pink', display: 'flex', flexDirection: 'row', position: 'relative'}} className={clsx(withBaseName(), className)} ref={ref} {...rest} >
       <audio ref={audioRef} aria-label="audio" src={`${src}`} />
-      <span className={withBaseName("title")}>{title}</span>
+      <Text className={withBaseName("title")} styleAs={"h4"}>{title}</Text>
       <div className={withBaseName("sliderContainer")}>
       <Text styleAs={"h4"}>{timeNowString}</Text>
         <Slider
@@ -155,26 +155,24 @@ export const AudioPlayer = forwardRef<HTMLDivElement, AudioPlayerProps> (
             </OrderedButton>
           </a>
         </div>
-        <OrderedButton className={withBaseName("button")} variant="secondary" onClick={handleRewind}>
+        <OrderedButton className={withBaseName("button")} onClick={handleRewind}>
         {ReplayIconByVariant[skipDuration]}
         </OrderedButton>
         <OrderedButton
           className={withBaseName("button")}
-          variant="secondary"
           onClick={handlePlay}
           disabled={playDisabled}
         >
           {isPlaying ? <PlaySolidIcon/> : <PauseSolidIcon/>}
         </OrderedButton>
-        <OrderedButton className={withBaseName("button")} variant="secondary" onClick={handleFastforward}> 
+        <OrderedButton className={withBaseName("button")} onClick={handleFastforward}> 
         {ForwardIconByVariant[skipDuration]}
         </OrderedButton>
-        <OrderedButton variant="secondary" onClick={handleMute} className={withBaseName("button")}>
-          Mute
-          {/* {mute ? <VolumeOffIcon/> : <VolumeUpIcon/> } */}
+        <OrderedButton onClick={handleMute} className={withBaseName("button")}>
+          {mute ? <VolumeOffIcon/> : <VolumeUpIcon/> }
         </OrderedButton>
       </ButtonBar>
-    </div>
+    </span>
     );
   }
 );
