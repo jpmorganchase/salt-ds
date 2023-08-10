@@ -39,7 +39,7 @@
     "next-auth": "^4.20.1"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "13.4.7",
+    "@next/eslint-plugin-next": "13.4.13",
     "@types/node": "^16.0.0",
     "concurrently": "^8.0.0",
     "cross-env": "^7.0.3",
