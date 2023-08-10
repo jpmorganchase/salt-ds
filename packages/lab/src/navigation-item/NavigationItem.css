@@ -96,6 +96,20 @@
   outline: var(--salt-focused-outline);
 }
 
+/* Styles applied to NavigationItem when when orientation = "horizontal" and focus is visible */
+.saltNavigationItem-horizontal:focus-visible {
+  border-right: var(--navigationItem-gap) solid transparent;
+  border-left: var(--navigationItem-gap) solid transparent;
+  margin: 0 calc(var(--navigationItem-gap) * -1);
+}
+
+/* Styles applied to NavigationItem when when orientation = "vertical" and focus is visible */
+/* .saltNavigationItem-vertical:focus-visible {
+  border-top: var(--navigationItem-gap) solid transparent;
+  border-bottom: var(--navigationItem-gap) solid transparent;
+  margin: calc(((var(--navigationItem-gap) - var(--salt-spacing-50)) * -1)) 0;
+} */
+
 /* Styles applied to NavigationItem for non-keyboard focus */
 .saltNavigationItem-wrapper:focus:not(:focus-visible) {
   outline: 0;
