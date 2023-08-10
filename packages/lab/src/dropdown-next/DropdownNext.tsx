@@ -34,7 +34,7 @@ export interface DropdownNextProps
    */
   disabled?: boolean;
   /**
-   * Initially selected value for the dropdown.
+   * Initially selected value for the dropdown, for use only in uncontrolled component.
    */
   defaultSelected?: string;
   /**

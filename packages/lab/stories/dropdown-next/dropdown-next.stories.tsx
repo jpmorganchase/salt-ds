@@ -58,15 +58,14 @@ export const Variants: Story<DropdownNextProps> = ({
 
 export const Controlled: Story<DropdownNextProps> = ({
   source = ListExample,
-  defaultSelected = "California",
   ...props
 }) => {
+  const initialValue = "California";
+
   const [highlightedIndex, setHighlightedIndex] = useState(
-    ListExample.indexOf(defaultSelected) ?? 0
+    ListExample.indexOf(initialValue) ?? 0
   );
-  const [selectedItem, setSelectedItem] = useState(
-    defaultSelected ?? undefined
-  );
+  const [selectedItem, setSelectedItem] = useState(initialValue ?? undefined);
   const [open, setOpen] = useState(false);
 
   const handleOpenClose = () => {
@@ -115,7 +114,6 @@ export const Controlled: Story<DropdownNextProps> = ({
       </FlexLayout>
       <DropdownNext
         {...props}
-        defaultSelected={defaultSelected}
         source={source}
         open={open}
         selectedItem={selectedItem}
