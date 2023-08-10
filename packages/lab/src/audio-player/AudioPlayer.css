@@ -6,7 +6,8 @@
   flex-direction: 'column';
   padding: var(--salt-spacing-50);
   margin: var(--salt-spacing-50);
-  background-color: var(--salt-actionable-secondary-background);
+  background-color: 'pink';
+  /* background-color: var(--salt-actionable-secondary-background); */
   font-size: var(--salt-text-fontSize);
 }
 
