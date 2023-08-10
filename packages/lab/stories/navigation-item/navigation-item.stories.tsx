@@ -28,7 +28,7 @@ Default.args = {
   href: "#",
 };
 
-export const WithIcon: Story<NavigationItemProps> = (args) => {
+export const Vertical: Story<NavigationItemProps> = (args) => {
   const [active, setActive] = useState(false);
 
   const handleActiveToggle = () => {
@@ -36,38 +36,124 @@ export const WithIcon: Story<NavigationItemProps> = (args) => {
   };
 
   return (
-    <NavigationItem
-      active={active}
-      onClick={handleActiveToggle}
-      IconComponent={NotificationIcon}
-      {...args}
-    />
+    <NavigationItem active={active} onClick={handleActiveToggle} {...args} />
   );
 };
-WithIcon.args = {
+Vertical.args = {
   children: "Label",
+  orientation: "vertical",
   href: "#",
 };
 
-export const WithBadge: Story<NavigationItemProps> = (args) => {
-  const [active, setActive] = useState(false);
+export const WithIcon: Story<NavigationItemProps> = () => {
+  const [horizontalActive, setHorizontalActive] = useState(false);
 
-  const handleActiveToggle = () => {
-    setActive((current) => !current);
+  const [verticalActive, setVerticalActive] = useState(false);
+
+  const handleHorizontalActiveToggle = () => {
+    setHorizontalActive((current) => !current);
+  };
+
+  const handleVerticalActiveToggle = () => {
+    setVerticalActive((current) => !current);
   };
 
   return (
-    <NavigationItem
-      active={active}
-      onClick={handleActiveToggle}
-      BadgeComponent={<Badge value="New" />}
-      {...args}
-    />
+    <div className="navigationItemContainer">
+      <NavigationItem
+        active={horizontalActive}
+        onClick={handleHorizontalActiveToggle}
+        IconComponent={NotificationIcon}
+        href="#"
+      >
+        Label
+      </NavigationItem>
+
+      <NavigationItem
+        active={verticalActive}
+        onClick={handleVerticalActiveToggle}
+        IconComponent={NotificationIcon}
+        href="#"
+        orientation="vertical"
+      >
+        Label
+      </NavigationItem>
+    </div>
   );
 };
-WithBadge.args = {
-  children: "Label",
-  href: "#",
+
+export const WithBadge: Story<NavigationItemProps> = () => {
+  const [horizontalActive, setHorizontalActive] = useState(false);
+
+  const [verticalActive, setVerticalActive] = useState(false);
+
+  const handleHorizontalActiveToggle = () => {
+    setHorizontalActive((current) => !current);
+  };
+
+  const handleVerticalActiveToggle = () => {
+    setVerticalActive((current) => !current);
+  };
+
+  return (
+    <div className="navigationItemContainer">
+      <NavigationItem
+        active={horizontalActive}
+        onClick={handleHorizontalActiveToggle}
+        BadgeComponent={<Badge value="New" />}
+        href="#"
+      >
+        Label
+      </NavigationItem>
+
+      <NavigationItem
+        active={verticalActive}
+        onClick={handleVerticalActiveToggle}
+        BadgeComponent={<Badge value="New" />}
+        href="#"
+        orientation="vertical"
+      >
+        Label
+      </NavigationItem>
+    </div>
+  );
+};
+
+export const WithNestedChildren: Story<NavigationItemProps> = () => {
+  const [horizontalActive, setHorizontalActive] = useState(false);
+
+  const [verticalActive, setVerticalActive] = useState(false);
+
+  const handleHorizontalActiveToggle = () => {
+    setHorizontalActive((current) => !current);
+  };
+
+  const handleVerticalActiveToggle = () => {
+    setVerticalActive((current) => !current);
+  };
+
+  return (
+    <div className="navigationItemContainer">
+      <NavigationItem
+        active={horizontalActive}
+        onExpand={handleHorizontalActiveToggle}
+        href="#"
+        parent
+      >
+        Label
+      </NavigationItem>
+
+      <NavigationItem
+        active={verticalActive}
+        onExpand={handleVerticalActiveToggle}
+        href="#"
+        orientation="vertical"
+        parent
+      >
+        Label
+      </NavigationItem>
+    </div>
+  );
 };
 
 const items = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
