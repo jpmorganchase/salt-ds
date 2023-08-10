@@ -29,9 +29,21 @@ import { SaltProvider } from "../salt-provider";
 type CombinedFloatingComponentProps = PropsWithChildren<FloatingComponentProps>;
 export interface FloatingComponentProps extends UseFloatingUIProps {
   /**
-   * Option to not render the popper.
+   * Whether the floating component is disabled (used for determinig whether to show the component)
    */
   disabled: boolean;
+  /**
+   * Whether the floating component is open (used for determinig whether to show the component)
+   * We pass this as a prop rather than not rendering the component to allow more advanced use-cases e.g.
+   * for caching windows and reusing them, rather than always spawning a new one
+   */
+  open: boolean;
+  /**
+   * Position props for the floating component
+   */
+  top: number;
+  left: number;
+  position: Strategy;
 }
 
 export interface FloatingComponentContextType {
@@ -43,11 +55,16 @@ const DefaultFloatingComponent = forwardRef(
     props: CombinedFloatingComponentProps,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-    const { open, disabled, ...rest } = props;
+    const { open, disabled, top, left, position, ...rest } = props;
+    const style = {
+      top,
+      left,
+      position,
+    };
     return open && !disabled ? (
       <FloatingPortal>
         <SaltProvider>
-          <div {...rest} ref={ref} />
+          <div style={style} {...rest} ref={ref} />
         </SaltProvider>
       </FloatingPortal>
     ) : null;
