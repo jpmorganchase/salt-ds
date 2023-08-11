@@ -53,6 +53,7 @@
 .saltNavigationItem-wrapper.saltNavigationItem-vertical {
   min-height: calc(var(--salt-size-base));
   padding-left: calc(var(--navigationItem-gap) + var(--navigationItem-bar-inset));
+  padding-right: var(--navigationItem-gap);
   margin: var(--salt-spacing-50) 0;
 }
 
@@ -84,6 +85,8 @@
   --saltButton-letterSpacing: none;
 
   gap: var(--navigationItem-gap);
+  /* Required to match link's outline offset */
+  outline-offset: var(--salt-size-border);
 }
 
 /* Styles applied to expand icon */
