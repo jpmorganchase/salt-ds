@@ -17,21 +17,22 @@ import {
   ReactNode,
   useContext,
   useMemo,
-  ForwardedRef,
   forwardRef,
   PropsWithChildren,
-  ComponentType,
+  ForwardRefExoticComponent,
+  Ref,
+  RefAttributes,
 } from "react";
 
 import { FloatingPortal } from "@floating-ui/react";
 import { SaltProvider } from "../salt-provider";
 
 type CombinedFloatingComponentProps = PropsWithChildren<FloatingComponentProps>;
-export interface FloatingComponentProps extends UseFloatingUIProps {
+export type FloatingComponentProps = {
   /**
    * Whether the floating component is disabled (used for determinig whether to show the component)
    */
-  disabled: boolean;
+  disabled?: boolean;
   /**
    * Whether the floating component is open (used for determinig whether to show the component)
    * We pass this as a prop rather than not rendering the component to allow more advanced use-cases e.g.
@@ -44,32 +45,30 @@ export interface FloatingComponentProps extends UseFloatingUIProps {
   top: number;
   left: number;
   position: Strategy;
-}
+};
+
+const DefaultFloatingComponent = forwardRef<
+  HTMLElement,
+  CombinedFloatingComponentProps
+>((props, ref) => {
+  const { open, disabled = false, top, left, position, ...rest } = props;
+  const style = {
+    top,
+    left,
+    position,
+  };
+  return open && !disabled ? (
+    <FloatingPortal>
+      <SaltProvider>
+        <div style={style} {...rest} ref={ref as Ref<HTMLDivElement>} />
+      </SaltProvider>
+    </FloatingPortal>
+  ) : null;
+});
 
 export interface FloatingComponentContextType {
-  Component: ComponentType<CombinedFloatingComponentProps>;
+  Component: typeof DefaultFloatingComponent;
 }
-
-const DefaultFloatingComponent = forwardRef(
-  (
-    props: CombinedFloatingComponentProps,
-    ref: ForwardedRef<HTMLDivElement>
-  ) => {
-    const { open, disabled, top, left, position, ...rest } = props;
-    const style = {
-      top,
-      left,
-      position,
-    };
-    return open && !disabled ? (
-      <FloatingPortal>
-        <SaltProvider>
-          <div style={style} {...rest} ref={ref} />
-        </SaltProvider>
-      </FloatingPortal>
-    ) : null;
-  }
-);
 
 const FloatingComponentContext = createContext<FloatingComponentContextType>({
   Component: DefaultFloatingComponent,

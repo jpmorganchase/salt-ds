@@ -5,6 +5,7 @@ import React, {
   useMemo,
   ComponentPropsWithoutRef,
   useState,
+  Ref,
 } from "react";
 import { createPortal } from "react-dom";
 import { platform, offset } from "@floating-ui/dom";
@@ -93,7 +94,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
       forwardRef(
         (
           { style, open, top, left, position, ...rest }: RootComponentProps,
-          ref: ForwardedRef<HTMLIFrameElement>
+          ref: ForwardedRef<HTMLElement>
         ) => {
           const FloatingRoot = (
             /* In thise case to avoid Flash of Unstyled Text (FOUT) in the tooltip, due to being in an iframe, we are always rendering the tooltip.
@@ -111,7 +112,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
                 position: "fixed",
                 ...(!open ? offscreenStyles : undefined),
               }}
-              ref={ref}
+              ref={ref as Ref<HTMLIFrameElement>}
             >
               {/* max-content allows tooltip to size itself, the TooltipWindow will resize to fit this */}
               <div style={{ width: "max-content" }} {...rest} />

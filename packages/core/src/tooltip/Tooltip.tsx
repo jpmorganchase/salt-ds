@@ -5,7 +5,6 @@ import {
   HTMLAttributes,
   isValidElement,
   ReactNode,
-  Ref,
 } from "react";
 
 import { ValidationStatus } from "../status-indicator";
@@ -93,7 +92,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const disabled = formFieldDisabled ?? disabledProp;
     const status = formFieldValidationStatus ?? statusProp;
 
-    const { Component } = useFloatingComponent();
+    const { Component: FloatingComponent } = useFloatingComponent();
 
     const hookProps: UseTooltipProps = {
       open: openProp,
@@ -118,7 +117,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       isValidElement(children) ? children.ref : null,
       reference
     );
-    const floatingRef = useForkRef(floating, ref) as Ref<HTMLDivElement>;
+    const floatingRef = useForkRef<HTMLElement>(floating, ref);
 
     return (
       <>
@@ -128,13 +127,12 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             ref: triggerRef,
           })}
 
-        <Component
+        <FloatingComponent
           className={clsx(withBaseName(), withBaseName(status), className)}
-          open={open}
-          disabled={disabled}
-          ref={floatingRef}
-          {...getTooltipProps()}
+          open={open && !disabled}
           {...getTooltipPosition()}
+          {...getTooltipProps()}
+          ref={floatingRef}
         >
           <TooltipBase
             hideIcon={hideIcon}
@@ -143,7 +141,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             hideArrow={hideArrow}
             arrowProps={arrowProps}
           />
-        </Component>
+        </FloatingComponent>
       </>
     );
   }
