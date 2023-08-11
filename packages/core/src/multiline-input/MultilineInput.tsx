@@ -169,7 +169,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           {
             [withBaseName("withAdornmentRow")]: endAdornment,
             [withBaseName("bordered")]: bordered,
-            [withBaseName("focused")]: !isDisabled && !isReadOnly && focused,
+            [withBaseName("focused")]: !isDisabled && focused,
             [withBaseName("disabled")]: isDisabled,
             [withBaseName("readOnly")]: isReadOnly,
             [withBaseName(validationStatus || "")]: validationStatus,
@@ -196,10 +196,10 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           required={isRequired}
           role={role}
           rows={rows}
-          tabIndex={isReadOnly || isDisabled ? -1 : 0}
+          tabIndex={isDisabled ? -1 : 0}
           onBlur={handleBlur}
           onChange={handleChange}
-          onFocus={!isDisabled && !isReadOnly ? handleFocus : undefined}
+          onFocus={!isDisabled ? handleFocus : undefined}
           placeholder={placeholder}
           value={value}
           {...restA11yProps}

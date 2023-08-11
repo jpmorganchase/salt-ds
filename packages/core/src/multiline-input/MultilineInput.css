@@ -3,7 +3,6 @@
   --multilineInput-borderColor: var(--salt-editable-borderColor);
   --multilineInput-borderStyle: var(--salt-editable-borderStyle);
   --multilineInput-outlineColor: var(--salt-focused-outlineColor);
-  --multilineInput-paddingInline: var(--salt-spacing-100);
   --multilineInput-border: none;
   --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
 
@@ -18,7 +17,8 @@
   line-height: var(--salt-text-lineHeight);
   min-height: var(--salt-size-base);
   min-width: 4em;
-  padding-inline: var(--multilineInput-paddingInline);
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
   position: relative;
   width: 100%;
 }
@@ -144,7 +144,6 @@
   --multilineInput-borderColor: var(--salt-editable-borderColor-readonly);
   --multilineInput-borderStyle: var(--salt-editable-borderStyle-readonly);
   --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
-  --multilineInput-paddingInline: 0;
 
   background: var(--multilineInput-background-readonly);
   cursor: var(--salt-editable-cursor-readonly);
@@ -180,7 +179,6 @@
 /* Style applied if `bordered={true}` */
 .saltMultilineInput.saltMultilineInput-bordered {
   --multilineInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--multilineInput-borderColor);
-  --multilineInput-paddingInline: var(--salt-spacing-100);
   --multilineInput-activationIndicator-borderWidth: 0;
 }
 
@@ -225,7 +223,7 @@
 
 /* Style applied to end adornment container */
 .saltMultilineInput-endAdornmentContainer {
-  padding-left: var(--multilineInput-paddingInline);
+  padding-left: var(--salt-spacing-100);
 }
 
 /* Style applied to status adornment container */

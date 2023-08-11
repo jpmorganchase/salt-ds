@@ -4,7 +4,6 @@
   --input-borderStyle: var(--salt-editable-borderStyle);
   --input-outlineColor: var(--salt-focused-outlineColor);
   --input-borderWidth: var(--salt-size-border);
-  --input-paddingLeft: var(--salt-spacing-100);
 
   align-items: center;
   background: var(--saltInput-background, var(--input-background));
@@ -16,7 +15,7 @@
   line-height: var(--saltInput-lineHeight, var(--salt-text-lineHeight));
   min-height: var(--saltInput-minHeight, var(--salt-size-base));
   min-width: var(--saltInput-minWidth, 4em);
-  padding-left: var(--saltInput-paddingLeft, var(--input-paddingLeft));
+  padding-left: var(--saltInput-paddingLeft, var(--salt-spacing-100));
   padding-right: var(--saltInput-paddingRight, var(--salt-spacing-100));
   position: relative;
   width: 100%;
@@ -135,17 +134,20 @@
   --input-borderColor: var(--salt-editable-borderColor-readonly);
   --input-borderStyle: var(--salt-editable-borderStyle-readonly);
   --input-borderWidth: var(--salt-size-border);
-  --input-paddingLeft: 0;
 
   background: var(--input-background-readonly);
   cursor: var(--salt-editable-cursor-readonly);
 }
 
-/* Styling when focused if `disabled={true}` or `readOnly={true}` */
-.saltInput-focused.saltInput-readOnly,
+/* Styling when focused if `disabled={true}` */
 .saltInput-focused.saltInput-disabled {
   --input-borderWidth: var(--salt-size-border);
   outline: none;
+}
+
+/* Styling when focused if `readOnly={true}` */
+.saltInput-focused.saltInput-readOnly {
+  --input-borderWidth: var(--salt-size-border);
 }
 
 /* Style applied to selected input if `disabled={true}` */
