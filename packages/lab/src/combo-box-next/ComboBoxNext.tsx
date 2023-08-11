@@ -5,7 +5,6 @@ import {
   ForwardedRef,
   forwardRef,
   KeyboardEvent,
-  ReactNode,
   Ref,
   SyntheticEvent,
   useRef,
@@ -24,7 +23,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import comboBoxNextCss from "./ComboBoxNext.css";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { defaultFilter, defaultItemRenderer } from "./utils";
+import { DefaultListItem, defaultFilter } from "./utils";
 import { clsx } from "clsx";
 import { UseComboBoxPortalProps } from "./useComboboxPortal";
 
@@ -54,8 +53,13 @@ export interface ComboBoxNextProps<T>
    */
   selected?: string;
   /* UNCONTROLLED PROPS*/
+  /**
+   * Initial input value for when the list is uncontrolled.
+   */
   defaultValue?: string;
-  /* Initial selected value for when the list is controlled. */
+  /**
+   * Initial selected value for when the list is uncontrolled.
+   */
   defaultSelected?: string;
   /**
    * If `true`, the component will be disabled.
@@ -78,14 +82,9 @@ export interface ComboBoxNextProps<T>
    */
   listRef?: Ref<HTMLUListElement>;
   /**
-   * Item renderer function.
+   * The component used for item instead of the default.
    */
-  itemRenderer?: (
-    key: number,
-    value?: T,
-    matchPattern?: string,
-    onMouseDown?: (event: SyntheticEvent<HTMLLIElement>) => void
-  ) => ReactNode | null | undefined;
+  ListItem: any;
   /**
    * Function to be used as filter.
    */
@@ -140,7 +139,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     onInputChange: onInputChangeProp,
     source,
     variant,
-    itemRenderer = defaultItemRenderer as unknown as ComboBoxNextProps<T>["itemRenderer"],
+    ListItem = DefaultListItem,
     itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
     listRef: listRefProp,
     ...rest
@@ -279,13 +278,19 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
                 ref={setListRef}
               >
                 {filteredSource.map((value, index) => {
+                  const onMouseDown = (
+                    event: SyntheticEvent<HTMLLIElement>
+                  ) => {
+                    setSelectedItem(event.currentTarget?.dataset.value);
+                    setInputValue(event.currentTarget?.dataset.value);
+                  };
                   return (
-                    itemRenderer &&
-                    itemRenderer(index, value, inputValue, (event) => {
-                      setSelectedItem(event.currentTarget?.dataset.value);
-                      setInputValue(event.currentTarget?.dataset.value);
-                      setHighlightedItem(event.currentTarget?.dataset.value);
-                    })
+                    <ListItem
+                      key={index}
+                      value={value}
+                      matchPattern={inputValue}
+                      onMouseDown={onMouseDown}
+                    />
                   );
                 })}
               </ListNext>

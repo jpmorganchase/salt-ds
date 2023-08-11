@@ -31,7 +31,7 @@ export const useComboBox = ({
 }: UseComboBoxProps) => {
   const [inputValue, setInputValue] = useControlled({
     controlled: value,
-    default: defaultValue,
+    default: listHookProps.defaultSelected || defaultValue,
     name: "Combobox Next",
     state: "open",
   });

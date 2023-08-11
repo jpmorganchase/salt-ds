@@ -26,7 +26,7 @@ describe("GIVEN a Combobox", () => {
     cy.findByText("Mexico City").should("exist");
     cy.findByText("MX").should("not.exist");
     cy.realType("MX");
-    // cy.findAllByRole("option").should("have.length", 1);
+    cy.findAllByRole("option").should("have.length", 1);
   });
   it("SHOULD allow passing an initial selected item", () => {
     cy.mount(<Default defaultSelected={"Brown"} />);

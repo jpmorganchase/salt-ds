@@ -7,14 +7,20 @@ export const defaultFilter = (source: string[], filterValue?: string) =>
     !filterValue ? item : item.toLowerCase().includes(filterValue.toLowerCase())
   );
 
-export const defaultItemRenderer = (
-  key: number,
-  value: string,
-  matchPattern?: RegExp | string,
-  onMouseDown?: (event: SyntheticEvent<HTMLLIElement>) => void
-) => {
+export interface ComboBoxDefaultItemProps {
+  value: string;
+  matchPattern?: RegExp | string;
+  onMouseDown?: (event: SyntheticEvent<HTMLLIElement>) => void;
+}
+
+export const DefaultListItem = ({
+  value,
+  matchPattern,
+  onMouseDown,
+  ...rest
+}: ComboBoxDefaultItemProps) => {
   return (
-    <ListItemNext value={value} key={key} onMouseDown={onMouseDown}>
+    <ListItemNext value={value} onMouseDown={onMouseDown} {...rest}>
       <Highlighter matchPattern={matchPattern} text={value} />
     </ListItemNext>
   );
