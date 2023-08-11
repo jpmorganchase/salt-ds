@@ -3,11 +3,9 @@ import {
   forwardRef,
   MouseEventHandler,
   MouseEvent,
-  ComponentType,
   ReactNode,
 } from "react";
 import { makePrefixer, Link, Button } from "@salt-ds/core";
-import { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ExpansionIcon } from "./ExpansionIcon";
 
@@ -48,14 +46,6 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    * Href to be passed to the Link element.
    */
   href?: string;
-  /**
-   * Icon component to be displayed next to the navigation item label.
-   */
-  IconComponent?: ComponentType<IconProps> | null;
-  /**
-   * Badge component to be displayed next to the navigation item label.
-   */
-  BadgeComponent?: ReactNode;
 }
 
 const withBaseName = makePrefixer("saltNavigationItem");
@@ -78,8 +68,6 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       level = 0,
       onExpand,
       href,
-      IconComponent,
-      BadgeComponent,
       style: styleProp,
       ...rest
     } = props;
@@ -146,11 +134,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             withBaseName(orientation)
           )}
         >
-          {IconComponent && (
-            <IconComponent aria-hidden className={withBaseName("icon")} />
-          )}
           <span className={withBaseName("label")}>{children}</span>
-          {BadgeComponent}
           {parent && (
             <ExpansionIcon
               expanded={expanded}

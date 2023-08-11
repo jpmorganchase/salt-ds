@@ -63,19 +63,19 @@ export const WithIcon: Story<NavigationItemProps> = () => {
       <NavigationItem
         active={horizontalActive}
         onClick={handleHorizontalActiveToggle}
-        IconComponent={NotificationIcon}
         href="#"
       >
+        <NotificationIcon />
         Label
       </NavigationItem>
 
       <NavigationItem
         active={verticalActive}
         onClick={handleVerticalActiveToggle}
-        IconComponent={NotificationIcon}
         href="#"
         orientation="vertical"
       >
+        <NotificationIcon />
         Label
       </NavigationItem>
     </div>
@@ -100,20 +100,20 @@ export const WithBadge: Story<NavigationItemProps> = () => {
       <NavigationItem
         active={horizontalActive}
         onClick={handleHorizontalActiveToggle}
-        BadgeComponent={<Badge value="New" />}
         href="#"
       >
         Label
+        <Badge value="New" />
       </NavigationItem>
 
       <NavigationItem
         active={verticalActive}
         onClick={handleVerticalActiveToggle}
-        BadgeComponent={<Badge value="New" />}
         href="#"
         orientation="vertical"
       >
         Label
+        <Badge value="New" />
       </NavigationItem>
     </div>
   );
@@ -215,10 +215,10 @@ export const HorizontalGroupWithIconAndBadge = () => {
                 event.preventDefault();
                 setActive(item);
               }}
-              IconComponent={NotificationIcon}
-              BadgeComponent={index === 2 && <Badge value="New" />}
             >
+              <NotificationIcon />
               {item}
+              {index === 2 && <Badge value="New" />}
             </NavigationItem>
           </li>
         ))}
@@ -271,12 +271,10 @@ export const VerticalGroupWithIconAndBadge = () => {
                 event.preventDefault();
                 setActive(item);
               }}
-              IconComponent={NotificationIcon}
-              BadgeComponent={
-                badgeValues[index] && <Badge value={badgeValues[index]} />
-              }
             >
+              <NotificationIcon />
               {item}
+              {badgeValues[index] && <Badge value={badgeValues[index]} />}
             </NavigationItem>
           </li>
         ))}
@@ -327,8 +325,8 @@ export const VerticalNestedGroup = () => {
               }}
               parent={subNav && subNav.length > 0}
               expanded={expanded.includes(name)}
-              IconComponent={NotificationIcon}
             >
+              <NotificationIcon />
               {name}
             </NavigationItem>
             {expanded.includes(name) && (

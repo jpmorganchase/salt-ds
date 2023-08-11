@@ -33,8 +33,13 @@
 }
 
 /* Styles applied to NavigationItem icon */
-.saltNavigationItem-wrapper .saltNavigationItem-icon {
+.saltNavigationItem-wrapper .saltIcon {
   fill: var(--navigationItem-fill);
+}
+
+/* Styles applied to NavigationItem Badge */
+.saltNavigationItem-label .saltBadge {
+  margin-left: auto;
 }
 
 /* Styles applied to root NavigationItem component */
@@ -68,6 +73,9 @@
   padding-left: calc(var(--saltNavigationItem-level, 0) * var(--navigationItem-gap));
   flex: 1;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: var(--navigationItem-gap);
 }
 
 /* Styles applied when level is not 0 */
