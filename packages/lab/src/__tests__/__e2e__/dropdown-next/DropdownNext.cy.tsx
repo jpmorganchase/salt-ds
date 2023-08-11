@@ -140,11 +140,10 @@ describe("GIVEN a disabled Dropdown component", () => {
 });
 
 describe("GIVEN a readonly Dropdown component", () => {
-  it("THEN it should not show icon and not be focusable", () => {
+  it("THEN it should not show icon and be focusable", () => {
     cy.mount(<Readonly />);
 
-    // not focusable
-    cy.findByRole("combobox").focused().should("not.exist");
+    cy.findByRole("combobox").focus().should("have.focus");
 
     cy.findByRole("combobox")
       .should("have.attr", "aria-expanded", "false")
