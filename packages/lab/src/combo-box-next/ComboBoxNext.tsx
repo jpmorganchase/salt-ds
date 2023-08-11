@@ -39,7 +39,6 @@ export interface ComboBoxNextProps<T>
    * Additional props for the portal.
    */
   PortalProps?: UseComboBoxPortalProps;
-  /* CONTROLLED PROPS*/
   /**
    * Controlled prop. Controls the value for the Combo Box input.
    */
@@ -52,7 +51,6 @@ export interface ComboBoxNextProps<T>
    * Controlled prop. Controls the Selected value in the Combo Box list.
    */
   selected?: string;
-  /* UNCONTROLLED PROPS*/
   /**
    * Initial input value for when the list is uncontrolled.
    */

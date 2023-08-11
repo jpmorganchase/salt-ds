@@ -28,7 +28,7 @@ export function useComboboxPortal(props?: UseComboBoxPortalProps) {
   const [open, setOpen] = useControlled({
     controlled: openProp,
     default: openProp,
-    name: "DropdownNext",
+    name: "ComboBox Next",
     state: "open",
   });
 
