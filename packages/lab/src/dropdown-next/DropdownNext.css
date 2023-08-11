@@ -46,6 +46,7 @@
 
 .saltDropdownNext-list {
   border-color: var(--salt-selectable-borderColor-selected);
+  box-shadow: var(--salt-overlayable-shadow-popout);
   max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5);
 }
 
@@ -73,8 +74,8 @@
 
   cursor: var(--salt-editable-cursor-readonly);
   background: var(--dropdownNext-background-readonly);
-  padding-left: 0;
-  outline: 0;
+  /* no padding-right when there's no dropdown button icon */
+  padding-right: 0;
 }
 
 /* Styling applied to dropdown button icon if `disabled={true}` or `readOnly={true}` */

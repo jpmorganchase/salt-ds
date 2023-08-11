@@ -155,7 +155,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
   };
 
   const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
-    if (disabled || readOnly) return;
+    if (disabled) return;
     focusHandler(event);
     onFocus?.(event);
   };
@@ -206,7 +206,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-activedescendant={activeDescendant}
-        tabIndex={disabled || readOnly ? -1 : 0}
+        tabIndex={disabled ? -1 : 0}
         aria-owns={listId}
         aria-controls={listId}
         aria-disabled={disabled}
