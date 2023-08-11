@@ -11,8 +11,8 @@ import {
   shortColorData,
 } from "../assets/exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
-import { MouseEvent, Suspense, SyntheticEvent } from "react";
-import { FlowLayout } from "@salt-ds/core";
+import { MouseEvent, Suspense, SyntheticEvent, useState } from "react";
+import { FlexItem, FlexLayout, FlowLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/Combo Box Next",
@@ -59,7 +59,11 @@ const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
   };
   return (
     <FlowLayout style={{ width: "266px" }}>
-      <ComboBoxNext onChange={handleChange} onSelect={handleSelect} {...args} />
+      <ComboBoxNext
+        onInputChange={handleChange}
+        onSelect={handleSelect}
+        {...args}
+      />
     </FlowLayout>
   );
 };
@@ -81,14 +85,89 @@ Empty.args = {
   source: undefined,
 };
 
+const InputPropsTemplate: Story<ComboBoxNextProps<any>> = (args) => {
+  const handleChange = (event: SyntheticEvent, data: { value: string }) => {
+    console.log("input value changed", data);
+  };
+
+  const handleSelect = (event: SyntheticEvent<HTMLInputElement>) => {
+    console.log("selected item", event.currentTarget.value);
+  };
+  return (
+    <FlowLayout style={{ width: "266px" }}>
+      <FlexItem>
+        <p>Variant</p>
+        <ComboBoxNext
+          onInputChange={handleChange}
+          onSelect={handleSelect}
+          variant={"secondary"}
+          {...args}
+        />
+      </FlexItem>
+      <FlexItem>
+        <p>Read only</p>
+        <ComboBoxNext
+          onInputChange={handleChange}
+          onSelect={handleSelect}
+          readOnly
+          {...args}
+        />
+      </FlexItem>
+      <FlexItem>
+        <p>With placeholder</p>
+        <ComboBoxNext
+          onInputChange={handleChange}
+          onSelect={handleSelect}
+          placeholder={"Select a color"}
+          {...args}
+        />
+      </FlexItem>
+    </FlowLayout>
+  );
+};
 export const Secondary = ComboBoxTemplate.bind({});
 Secondary.args = {
   source: shortColorData,
   variant: "secondary",
 };
 
+export const WithInputProps = InputPropsTemplate.bind({});
+WithInputProps.args = {
+  source: shortColorData,
+};
+
 export const Disabled = ComboBoxTemplate.bind({});
 Disabled.args = {
   source: shortColorData,
   disabled: true,
+};
+
+export const Controlled: Story<ComboBoxNextProps<any>> = (args) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleChange = (event: SyntheticEvent, data: { value: string }) => {
+    setInputValue(data.value.toUpperCase());
+  };
+
+  const handleSelect = (
+    event: SyntheticEvent<HTMLInputElement>,
+    data: { value?: string }
+  ) => {
+    const newValue = data.value || "";
+    setInputValue(newValue.toUpperCase());
+  };
+
+  return (
+    <FlexLayout style={{ width: "200px" }} direction={"column"}>
+      <ComboBoxNext
+        value={inputValue}
+        onInputChange={handleChange}
+        onSelect={handleSelect}
+        {...args}
+      />
+    </FlexLayout>
+  );
+};
+Controlled.args = {
+  source: shortColorData,
 };

@@ -1,28 +1,40 @@
-import { FocusEvent, KeyboardEvent, SyntheticEvent, useState } from "react";
+import { FocusEvent, KeyboardEvent, SyntheticEvent } from "react";
 import { useList, UseListProps } from "../list-next/useList";
 import { useComboboxPortal, UseComboBoxPortalProps } from "./useComboboxPortal";
+import { useControlled } from "@salt-ds/core";
 
 interface UseComboBoxProps {
+  value?: string;
+  defaultValue?: string;
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
   onMouseOver?: (event: SyntheticEvent) => void;
   onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  onSelect?: (
+    event: SyntheticEvent<HTMLInputElement>,
+    data: { value?: string }
+  ) => void;
   PortalProps?: UseComboBoxPortalProps;
-  listProps: UseListProps;
+  listHookProps: UseListProps;
 }
 
 export const useComboBox = ({
+  value,
+  defaultValue,
   onFocus,
   onBlur,
   onMouseOver,
   onKeyDown,
   PortalProps,
-  listProps,
+  listHookProps,
+  onSelect,
 }: UseComboBoxProps) => {
-  const { defaultSelected, ...restListProps } = listProps;
-  const [inputValue, setInputValue] = useState<string | undefined>(
-    defaultSelected
-  );
+  const [inputValue, setInputValue] = useControlled({
+    controlled: value,
+    default: defaultValue,
+    name: "Combobox Next",
+    state: "open",
+  });
 
   const {
     open,
@@ -43,9 +55,14 @@ export const useComboBox = ({
     setHighlightedItem,
     highlightedItem,
   } = useList({
-    ...restListProps,
+    ...listHookProps,
   });
 
+  const resetSelected = () => {
+    setSelectedItem(undefined);
+    setInputValue(undefined);
+    setHighlightedItem(undefined);
+  };
   const focusHandler = (event: FocusEvent<HTMLInputElement>) => {
     setOpen(true);
     listFocusHandler(event);
@@ -55,9 +72,7 @@ export const useComboBox = ({
   const blurHandler = (event: FocusEvent<HTMLInputElement>) => {
     setOpen(false);
     if (!selectedItem) {
-      setSelectedItem(undefined);
-      setInputValue(undefined);
-      setHighlightedItem(undefined);
+      resetSelected();
     }
     onBlur?.(event);
   };
@@ -75,8 +90,7 @@ export const useComboBox = ({
         if (altKey) {
           event.preventDefault();
           if (open && !selectedItem) {
-            setSelectedItem(undefined);
-            setInputValue(undefined);
+            resetSelected();
           }
           setOpen(!open);
           break;
@@ -100,6 +114,7 @@ export const useComboBox = ({
         } else {
           setSelectedItem(highlightedItem);
           setInputValue(highlightedItem);
+          onSelect?.(event, { value: highlightedItem });
           setOpen(false);
         }
         break;
@@ -107,8 +122,7 @@ export const useComboBox = ({
         if (open) {
           setOpen(false);
           if (!selectedItem) {
-            setSelectedItem(undefined);
-            setInputValue(undefined);
+            resetSelected();
           }
         }
         break;
@@ -124,6 +138,8 @@ export const useComboBox = ({
   };
 
   return {
+    inputValue,
+    setInputValue,
     // portal
     portalProps: {
       open,
@@ -134,14 +150,13 @@ export const useComboBox = ({
       getPortalProps,
     },
     // list
-    inputValue,
-    setInputValue,
     selectedItem,
     setSelectedItem,
     highlightedItem,
     setHighlightedItem,
     activeDescendant,
     focusVisibleRef,
+    // handlers
     keyDownHandler,
     focusHandler,
     blurHandler,

@@ -16,7 +16,6 @@ import {
   SaltProvider,
   useForkRef,
   useId,
-  InputProps,
 } from "@salt-ds/core";
 import { ListNext, ListNextProps } from "../list-next";
 import { FloatingPortal } from "@floating-ui/react";
@@ -32,11 +31,7 @@ import { UseComboBoxPortalProps } from "./useComboboxPortal";
 const withBaseName = makePrefixer("saltComboBoxNext");
 
 export interface ComboBoxNextProps<T>
-  extends Omit<ComponentPropsWithoutRef<"input">, "onChange"> {
-  /**
-   * Additional props for the input component.
-   */
-  InputProps?: InputProps;
+  extends Omit<ComponentPropsWithoutRef<"input">, "onChange" | "onSelect"> {
   /**
    * Additional props for the list component.
    */
@@ -45,36 +40,35 @@ export interface ComboBoxNextProps<T>
    * Additional props for the portal.
    */
   PortalProps?: UseComboBoxPortalProps;
+  /* CONTROLLED PROPS*/
+  /**
+   * Controlled prop. Controls the value for the Combo Box input.
+   */
+  value?: string;
+  /**
+   * Controlled prop. Controls the Highlighted item in the Combo Box list.
+   */
+  highlightedItem?: string;
+  /**
+   * Controlled prop. Controls the Selected value in the Combo Box list.
+   */
+  selected?: string;
+  /* UNCONTROLLED PROPS*/
+  defaultValue?: string;
+  /* Initial selected value for when the list is controlled. */
+  defaultSelected?: string;
   /**
    * If `true`, the component will be disabled.
    */
   disabled: boolean;
-  /* Highlighted index for when the list is controlled. */
-  highlightedItem?: string;
-  /* Selected value for when the list is controlled. */
-  selected?: string;
-  /* Initial selected value for when the list is controlled. */
-  defaultSelected?: string;
+  /**
+   * Styling variant. Defaults to "primary".
+   */
+  variant?: "primary" | "secondary";
   /**
    * The source of combobox items.
    */
   source: T[];
-  /**
-   * Callback for blur event
-   */
-  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
-  /**
-   * Callback for focus event
-   */
-  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
-  /**
-   * Callback for keyDown event
-   */
-  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
-  /**
-   * Callback for mouse over event
-   */
-  onMouseOver?: (event: SyntheticEvent) => void;
   /**
    * Optional ref for the input component
    */
@@ -96,32 +90,58 @@ export interface ComboBoxNextProps<T>
    * Function to be used as filter.
    */
   itemFilter?: (source: T[], filterValue?: string) => T[];
-  /* Callback for change event in input. */
-  onChange?: (event: SyntheticEvent, data: { value: string }) => void;
   /**
-   * Styling variant. Defaults to "primary".
+   * Callback for blur event
    */
-  variant?: "primary" | "secondary";
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+  /**
+   * Callback for focus event
+   */
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  /**
+   * Callback for keyDown event
+   */
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  /**
+   * Callback for mouse over event
+   */
+  onMouseOver?: (event: SyntheticEvent) => void;
+  /**
+   * Callback fired when item is selected.
+   */
+  onSelect?: (
+    event: SyntheticEvent<HTMLInputElement>,
+    data: { value?: string }
+  ) => void;
+  /**
+   * Callback for input change event
+   */
+  onInputChange?: (
+    event: ChangeEvent<HTMLInputElement>,
+    data: { value: string }
+  ) => void;
 }
 
 export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   {
-    InputProps = {},
     ListProps = {},
     PortalProps = {},
-    disabled,
     highlightedItem: highlightedItemProp,
+    value,
     selected,
+    defaultValue,
     defaultSelected,
+    disabled,
     onKeyDown,
-    onChange,
+    onSelect,
     onBlur,
     onFocus,
     onMouseOver,
+    onInputChange: onInputChangeProp,
     source,
+    variant,
     itemRenderer = defaultItemRenderer as unknown as ComboBoxNextProps<T>["itemRenderer"],
     itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
-    variant = "primary",
     listRef: listRefProp,
     ...rest
   }: ComboBoxNextProps<T>,
@@ -133,15 +153,23 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     css: comboBoxNextCss,
     window: targetWindow,
   });
-  const listId = useId(ListProps?.id);
-  const listRef = useRef<HTMLUListElement>(null);
+  const {
+    id: listPropsId,
+    onChange: onListChange,
+    className: listClassName,
+    ...restListProps
+  } = ListProps;
+  const { className: inputClassName, ...restInputProps } = rest;
 
+  const listId = useId(listPropsId);
+  const listRef = useRef<HTMLUListElement>(null);
   const setListRef = useForkRef(listRefProp, listRef);
-  const listProps = {
+
+  const listHookProps = {
     highlightedItem: highlightedItemProp,
     selected,
     defaultSelected,
-    onChange,
+    onSelect: onSelect,
     id: listId,
     ref: listRef,
   };
@@ -161,11 +189,13 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     setHighlightedItem,
     mouseOverHandler,
   } = useComboBox({
+    value,
     onBlur,
     onFocus,
     onMouseOver,
     onKeyDown,
-    listProps,
+    onSelect,
+    listHookProps,
     PortalProps,
   });
 
@@ -188,7 +218,6 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     return itemFilter && itemFilter(source, inputValue);
   };
   const filteredSource = getFilteredSource();
-
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
@@ -203,7 +232,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         setHighlightedItem(filteredSource[0] as unknown as string);
       }
     }
-    onChange?.(event, { value: inputValue || "" });
+    onInputChangeProp?.(event, { value });
   };
 
   const adornment = open ? (
@@ -211,9 +240,6 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   ) : (
     <ChevronDownIcon className={withBaseName("chevron")} />
   );
-
-  const { className: listClassName, ...restListProps } = ListProps;
-  const { className: inputClassName, ...restInputProps } = InputProps;
 
   return (
     <>
@@ -223,14 +249,14 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         className={clsx(withBaseName("input"), inputClassName)}
         disabled={disabled}
         endAdornment={adornment}
-        onChange={onInputChange}
-        onBlur={blurHandler}
         inputRef={inputRef as Ref<HTMLInputElement>}
         inputProps={{
           "aria-expanded": open,
           tabIndex: disabled ? -1 : 0,
           onFocus: focusHandler,
+          onBlur: blurHandler,
           onKeyDown: keyDownHandler,
+          onChange: onInputChange,
         }}
         role="combobox"
         variant={variant}
@@ -258,6 +284,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
                     itemRenderer(index, value, inputValue, (event) => {
                       setSelectedItem(event.currentTarget?.dataset.value);
                       setInputValue(event.currentTarget?.dataset.value);
+                      setHighlightedItem(event.currentTarget?.dataset.value);
                     })
                   );
                 })}
