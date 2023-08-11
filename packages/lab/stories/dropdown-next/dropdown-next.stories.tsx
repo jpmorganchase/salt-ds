@@ -1,7 +1,7 @@
 import { Story, ComponentMeta } from "@storybook/react";
 
 import { DropdownNext, DropdownNextProps } from "@salt-ds/lab";
-import { Button, FlexLayout } from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 import { useState } from "react";
 
@@ -10,7 +10,7 @@ export default {
   component: DropdownNext,
 } as ComponentMeta<typeof DropdownNext>;
 
-const SimpleListExample = [
+const ListExample = [
   "Alabama",
   "Alaska",
   "Arizona",
@@ -22,62 +22,50 @@ const SimpleListExample = [
   "Georgia",
 ];
 
-const ListExample = [
-  { value: "🇦🇺", id: "Australia" },
-  { value: "🇧🇷", id: "Brazil" },
-  {
-    value: "🇲🇬",
-    id: "Madagascar",
-  },
-  { value: "🇵🇦", id: "Panama" },
-  { value: "🇸🇪", id: "Sweden" },
-];
-
-const DropdownTemplate: Story<DropdownNextProps> = ({ ...args }) => {
-  return <DropdownNext {...args} />;
+const DropdownTemplate: Story<DropdownNextProps> = ({ source, ...args }) => {
+  return <DropdownNext source={ListExample} {...args} />;
 };
 
 export const Default = DropdownTemplate.bind({});
-Default.args = {
-  source: SimpleListExample,
-};
 
-export const Secondary = DropdownTemplate.bind({});
-Secondary.args = {
-  variant: "secondary",
-  defaultSelected: `${ListExample[2].value} ${ListExample[2].id}`,
-  source: ListExample.map((item) => {
-    return `${item.value} ${item.id}`;
-  }),
+export const WithDefaultSelected = DropdownTemplate.bind({});
+WithDefaultSelected.args = {
+  defaultSelected: "California",
 };
 
 export const Readonly = DropdownTemplate.bind({});
 Readonly.args = {
   readOnly: true,
-  defaultSelected: `${ListExample[3].value} ${ListExample[3].id}`,
-  source: ListExample.map((item) => {
-    return `${item.value} ${item.id}`;
-  }),
+  defaultSelected: "California",
 };
 
-export const Disabled = Default.bind({});
+export const Disabled = DropdownTemplate.bind({});
 Disabled.args = {
   disabled: true,
-  defaultSelected: SimpleListExample[7],
-  source: SimpleListExample,
+  defaultSelected: "California",
+};
+
+export const Variants: Story<DropdownNextProps> = ({
+  source = ListExample,
+}) => {
+  return (
+    <StackLayout>
+      <DropdownNext source={source} />
+      <DropdownNext source={source} variant="secondary" />
+    </StackLayout>
+  );
 };
 
 export const Controlled: Story<DropdownNextProps> = ({
-  source = SimpleListExample,
-  defaultSelected = "California",
+  source = ListExample,
   ...props
 }) => {
+  const initialValue = "California";
+
   const [highlightedIndex, setHighlightedIndex] = useState(
-    SimpleListExample.indexOf(defaultSelected) ?? 0
+    ListExample.indexOf(initialValue) ?? 0
   );
-  const [selectedItem, setSelectedItem] = useState(
-    defaultSelected ?? undefined
-  );
+  const [selectedItem, setSelectedItem] = useState(initialValue);
   const [open, setOpen] = useState(false);
 
   const handleOpenClose = () => {
@@ -97,7 +85,7 @@ export const Controlled: Story<DropdownNextProps> = ({
   };
 
   const handleSelect = () => {
-    highlightedIndex && setSelectedItem(SimpleListExample[highlightedIndex]);
+    highlightedIndex && setSelectedItem(ListExample[highlightedIndex]);
     setOpen(false);
   };
 
@@ -106,7 +94,7 @@ export const Controlled: Story<DropdownNextProps> = ({
       <FlexLayout gap={1}>
         <Button onClick={handleOpenClose}>{open ? "Close" : "Open"}</Button>
         <Button
-          disabled={highlightedIndex === SimpleListExample.length - 1}
+          disabled={highlightedIndex === ListExample.length - 1}
           onClick={handleArrowDown}
         >
           <ArrowDownIcon />
@@ -126,11 +114,10 @@ export const Controlled: Story<DropdownNextProps> = ({
       </FlexLayout>
       <DropdownNext
         {...props}
-        defaultSelected={defaultSelected}
         source={source}
         open={open}
-        selectedItem={selectedItem}
-        highlightedItem={SimpleListExample[highlightedIndex]}
+        selected={selectedItem}
+        highlightedItem={ListExample[highlightedIndex]}
       />
     </FlexLayout>
   );
