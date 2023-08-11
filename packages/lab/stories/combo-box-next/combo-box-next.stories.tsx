@@ -116,19 +116,19 @@ Controlled.args = {
 
 export const Variant = ComboBoxTemplate.bind({});
 Variant.args = {
-  source: undefined,
+  source: shortColorData,
   variant: "secondary",
 };
 
 export const ReadOnly = ComboBoxTemplate.bind({});
 ReadOnly.args = {
-  source: undefined,
+  source: shortColorData,
   readOnly: true,
 };
 
 export const Placeholder = ComboBoxTemplate.bind({});
 Placeholder.args = {
-  source: undefined,
+  source: shortColorData,
   placeholder: "Select a color",
 };
 export const Empty = ComboBoxTemplate.bind({});
