@@ -128,7 +128,7 @@
 .saltNavigationItem-vertical::after {
   width: var(--navigationItem-bar-size);
   left: var(--navigationItem-bar-inset);
-  top: calc(var(--salt-spacing-50) / 2);
+  top: var(--navigationItem-bar-inset);
   height: calc(100% - var(--salt-spacing-50));
 }
 
