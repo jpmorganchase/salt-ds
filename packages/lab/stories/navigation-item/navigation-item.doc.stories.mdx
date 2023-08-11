@@ -34,7 +34,7 @@ A Navigation Item hugs its content by default, but is customisable so that its c
 
 - When you need to show different views of content within the same page, consider using [Tabs](?path=/docs/documentation-lab-tabs--page) instead.
 
-- When your content is very specific. ,in this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Consider using the [Interactable Card](?path=/docs/documentation-core-card--page), or a [Link](?path=/docs/documentation-core-link--page) component within the body of the page.
+- When your content is very specific ,in this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Consider using the [Interactable Card](?path=/docs/documentation-core-card--page), or a [Link](?path=/docs/documentation-core-link--page) component within the body of the page.
 
 ## Content
 
@@ -70,7 +70,7 @@ The orientation of the default Navigation Item can be changed by passing a verti
 
 An icon can effectively signify the Navigation Item’s purpose, whether it’s related to a product's identity, a specific tool, function, or a configuration setting.
 
-Tip: Ensure that icon descriptors are used consistently across all items within the same hierarchy level. This keeps the parent-child relationships clear and maintains the navigation hierarchy.
+**Tip** Ensure that icon descriptors are used consistently across all items within the same hierarchy level. This keeps the parent-child relationships clear and maintains the navigation hierarchy.
 
 <Canvas>
   <Story id="lab-navigation-item--with-icon" />
@@ -80,25 +80,25 @@ Tip: Ensure that icon descriptors are used consistently across all items within 
 
 Navigation Items can feature a [Badge](?path=/docs/documentation-lab-badge--page) that serves as a visual cue. They can inform users of additional context, notifications, signpost new content or indicate a status.
 
-Note: A badge should only be placed in a Navigation Item that does not nest, i.e. it will not have a chevron.
+**Note**: A badge should only be placed in a Navigation Item that does not nest, i.e. it will not have a chevron.
 
 <Canvas>
   <Story id="lab-navigation-item--with-badge" />
 </Canvas>
 
-### With nested children
+### With nested items
 
-Navigation Items that feature a chevron indicate that they are a parent item which nest additional child items inside it.
+Navigation Items that feature a chevron indicate that they are a parent item which nest additional navigation items inside it.
 
 <Canvas>
-  <Story id="lab-navigation-item--with-nested-children" />
+  <Story id="lab-navigation-item--with-nested-items" />
 </Canvas>
 
 ### Horizontal group
 
 Use horizontal Navigation Items within a horizontal group to establish a consistent and easily accessible pathway for users, while conserving valuable screen estate. Users will be able to easily scan and identify navigation options in a seamless user experience.
 
-Tip: Use a horizontal group of Navigation Items when you have less than 8 items, otherwise consider a vertical group of items.
+**Tip** Use a horizontal group of Navigation Items when you have less than 8 items, otherwise consider a vertical group of items.
 
 <Canvas>
   <Story id="lab-navigation-item--horizontal-group" />
@@ -108,9 +108,9 @@ Tip: Use a horizontal group of Navigation Items when you have less than 8 items,
 
 A vertical navigation group provides a simple, single-level list of links that users can select within an application or website.
 
-Note: Use a vertical Navigation Item in a vertical orientation, with a descriptive [Icon](?path=/docs/documentation-icons-icon--page) and a [Badge](?path=/docs/documentation-lab-badge--page) when providing the user with a quick and informative way to assess the relevance or significance of a Navigation Item, aiding their decision-making process and overall navigation experience.
+**Note**: Use a vertical Navigation Item in a vertical orientation, with a descriptive [Icon](?path=/docs/documentation-icons-icon--page) and a [Badge](?path=/docs/documentation-lab-badge--page) when providing the user with a quick and informative way to assess the relevance or significance of a Navigation Item, aiding their decision-making process and overall navigation experience.
 
-Tip: Use a vertical group of Navigation Items when you have more than 8 items, otherwise, consider a horizontal group of items.
+**Tip** Use a vertical group of Navigation Items when you have more than 8 items, otherwise, consider a horizontal group of items.
 
 <Canvas>
   <Story id="lab-navigation-item--vertical-group" />
@@ -118,11 +118,11 @@ Tip: Use a vertical group of Navigation Items when you have more than 8 items, o
 
 ### Vertical group nested
 
-Use vertical navigation when handling a hierarchical structure of nested pages, encompassing both parent and child levels of Navigation Items. This configuration allows users to reveal child items when selecting a parent item, facilitating an intuitive exploration of the content hierarchy.
+Use vertical navigation when handling a hierarchical structure of nested pages. This configuration allows users to reveal nested items when selecting a parent item, facilitating an intuitive exploration of the content hierarchy.
 
-When a vertical nested group is collapsed, and there is an active child item within it, the parent item will obtain a blur-selected state.
+When a vertical nested group is collapsed, and there is an active nested item within it, the parent item will obtain a blur-selected state.
 
-Note: If a Navigation Item has children, it will act as a trigger to show and hide its nested items. A parent item cannot act as a link and navigate to an overview page. If you require an overview page, use the first child item to achieve this.
+**Note**: If a Navigation Item has nested items within it, it will act as a trigger to show and hide the nested items. A parent item cannot act as a link and navigate to an overview page. If you require an overview page, use the first nested item to achieve this.
 
 <Canvas>
   <Story id="lab-navigation-item--vertical-nested-group" />

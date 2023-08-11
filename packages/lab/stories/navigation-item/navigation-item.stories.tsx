@@ -119,7 +119,7 @@ export const WithBadge: Story<NavigationItemProps> = () => {
   );
 };
 
-export const WithNestedChildren: Story<NavigationItemProps> = () => {
+export const WithNestedItems: Story<NavigationItemProps> = () => {
   const [horizontalActive, setHorizontalActive] = useState(false);
 
   const [verticalActive, setVerticalActive] = useState(false);
