@@ -18,15 +18,45 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 Toast displays a small pop-up notification that provides short feedback and disappears quickly. It is displayed in response to a user action or system event that relates to a workflow or application outside the user’s current focus.
 
-## Content
+## Examples
 
-Toast can be customised to contain custom content such as actionable components (e.g. buttons). This allows the user to act on the message where appropriate, e.g. if toast is tied to a level of urgency when displaying a warning or error alert. Toast should always have the option to be dismissed or closed by the user.
+### Toast status
 
-Custom content should be kept relatively short and concise where possible. If the custom content or action within the toast is important enough to interrupt the user’s current task, consider using a Dialog instead.
+#### Info
+
+Display an informational status message
 
 <Canvas>
-  <Story id="core-toast--default" />
+  <Story id="core-toast--info" />
 </Canvas>
+
+#### Error
+
+Signify a system error
+
+<Canvas>
+  <Story id="core-toast--error" />
+</Canvas>
+
+#### Warning
+
+Signify a system alert
+
+<Canvas>
+  <Story id="core-toast--warning" />
+</Canvas>
+
+#### Success
+
+Signify the successful completion of a system or user action
+
+<Canvas>
+  <Story id="core-toast--success" />
+</Canvas>
+
+### Placement and multiple toasts
+
+We advise using [Toast Group](?path=/story/lab-toast-group--bottom-right) from `lab` when you have multiple toasts and/or need to position them.
 
 ## When to use Toast
 
@@ -50,43 +80,15 @@ Custom content should be kept relatively short and concise where possible. If th
 
 - If the notification requires immediate action and is related to the user’s current task, consider using Dialog to interrupt their workflow.
 
-## Toast status
+## Content
 
-### Info
+Toast can be customised to contain custom content such as actionable components (e.g. buttons). This allows the user to act on the message where appropriate, e.g. if toast is tied to a level of urgency when displaying a warning or error alert. Toast should always have the option to be dismissed or closed by the user.
 
-Display an informational status message
-
-<Canvas>
-  <Story id="core-toast--info" />
-</Canvas>
-
-### Error
-
-Signify a system error
+Custom content should be kept relatively short and concise where possible. If the custom content or action within the toast is important enough to interrupt the user’s current task, consider using a Dialog instead.
 
 <Canvas>
-  <Story id="core-toast--error" />
+  <Story id="core-toast--default" />
 </Canvas>
-
-## Warning
-
-Signify a system alert
-
-<Canvas>
-  <Story id="core-toast--warning" />
-</Canvas>
-
-### Success
-
-Signify the successful completion of a system or user action
-
-<Canvas>
-  <Story id="core-toast--success" />
-</Canvas>
-
-## Placement and multiple toasts
-
-We advise using [Toast Group](?path=/story/lab-toast-group--bottom-right) from `lab` when you have multiple toasts and/or need to position them.
 
 ## Configuring Toast
 
