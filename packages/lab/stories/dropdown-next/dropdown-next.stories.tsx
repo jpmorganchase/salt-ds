@@ -65,7 +65,7 @@ export const Controlled: Story<DropdownNextProps> = ({
   const [highlightedIndex, setHighlightedIndex] = useState(
     ListExample.indexOf(initialValue) ?? 0
   );
-  const [selectedItem, setSelectedItem] = useState(initialValue ?? undefined);
+  const [selectedItem, setSelectedItem] = useState(initialValue);
   const [open, setOpen] = useState(false);
 
   const handleOpenClose = () => {
