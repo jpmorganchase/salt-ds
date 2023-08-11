@@ -162,7 +162,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   const listRef = useRef<HTMLUListElement>(null);
   const setListRef = useForkRef(listRefProp, listRef);
 
-  const listHookProps = {
+  const useListProps = {
     highlightedItem: highlightedItemProp,
     selected,
     defaultSelected,
@@ -192,7 +192,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     onMouseOver,
     onKeyDown,
     onSelect,
-    listHookProps,
+    useListProps,
     PortalProps,
   });
 

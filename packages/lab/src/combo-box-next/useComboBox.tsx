@@ -15,7 +15,7 @@ interface UseComboBoxProps {
     data: { value?: string }
   ) => void;
   PortalProps?: UseComboBoxPortalProps;
-  listHookProps: UseListProps;
+  useListProps: UseListProps;
 }
 
 export const useComboBox = ({
@@ -26,12 +26,12 @@ export const useComboBox = ({
   onMouseOver,
   onKeyDown,
   PortalProps,
-  listHookProps,
+  useListProps,
   onSelect,
 }: UseComboBoxProps) => {
   const [inputValue, setInputValue] = useControlled({
     controlled: value,
-    default: listHookProps.defaultSelected || defaultValue,
+    default: useListProps.defaultSelected || defaultValue,
     name: "ComboBox Next",
     state: "value",
   });
@@ -55,7 +55,7 @@ export const useComboBox = ({
     setHighlightedItem,
     highlightedItem,
   } = useList({
-    ...listHookProps,
+    ...useListProps,
   });
 
   const resetSelected = () => {
