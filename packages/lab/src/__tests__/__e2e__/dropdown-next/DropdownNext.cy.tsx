@@ -26,6 +26,7 @@ describe("GIVEN an active Dropdown component", () => {
         "have.class",
         "saltListItemNext-highlighted"
       );
+      cy.findByRole("combobox").should("have.attr", "aria-activedescendant");
     });
 
     it("THEN it should select list items on keyboard enter", () => {
@@ -126,23 +127,29 @@ describe("GIVEN an active Dropdown component", () => {
 describe("GIVEN a disabled Dropdown component", () => {
   it("THEN it should be disabled and not focusable", () => {
     cy.mount(<Disabled />);
-    cy.findByRole("combobox").focus().realPress("Enter");
+
+    // not focusable
+    cy.findByRole("combobox").focused().should("not.exist");
 
     cy.findByRole("combobox")
       .should("have.attr", "aria-expanded", "false")
       .should("have.attr", "aria-disabled", "true");
     cy.get('[data-testid="ChevronDownIcon"]').should("exist");
+    cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
   });
 });
 
 describe("GIVEN a readonly Dropdown component", () => {
   it("THEN it should not show icon and not be focusable", () => {
     cy.mount(<Readonly />);
-    cy.findByRole("combobox").focus().realPress("Enter");
+
+    // not focusable
+    cy.findByRole("combobox").focused().should("not.exist");
 
     cy.findByRole("combobox")
       .should("have.attr", "aria-expanded", "false")
       .should("not.have.attr", "aria-disabled");
     cy.get(".saltDropdownNext-icon").should("not.exist");
+    cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
   });
 });
