@@ -18,7 +18,15 @@ const Template: Story<NavigationItemProps> = (args) => {
   };
 
   return (
-    <NavigationItem active={active} onClick={handleActiveToggle} {...args} />
+    <NavigationItem
+      active={active}
+      onClick={(event) => {
+        // Prevent default to avoid navigation
+        event.preventDefault();
+        handleActiveToggle();
+      }}
+      {...args}
+    />
   );
 };
 
@@ -36,7 +44,15 @@ export const Vertical: Story<NavigationItemProps> = (args) => {
   };
 
   return (
-    <NavigationItem active={active} onClick={handleActiveToggle} {...args} />
+    <NavigationItem
+      active={active}
+      onClick={(event) => {
+        // Prevent default to avoid navigation
+        event.preventDefault();
+        handleActiveToggle();
+      }}
+      {...args}
+    />
   );
 };
 Vertical.args = {
@@ -62,7 +78,11 @@ export const WithIcon: Story<NavigationItemProps> = () => {
     <div className="navigationItemContainer">
       <NavigationItem
         active={horizontalActive}
-        onClick={handleHorizontalActiveToggle}
+        onClick={(event) => {
+          // Prevent default to avoid navigation
+          event.preventDefault();
+          handleHorizontalActiveToggle();
+        }}
         href="#"
       >
         <NotificationIcon />
@@ -71,7 +91,11 @@ export const WithIcon: Story<NavigationItemProps> = () => {
 
       <NavigationItem
         active={verticalActive}
-        onClick={handleVerticalActiveToggle}
+        onClick={(event) => {
+          // Prevent default to avoid navigation
+          event.preventDefault();
+          handleVerticalActiveToggle();
+        }}
         href="#"
         orientation="vertical"
       >
@@ -99,7 +123,11 @@ export const WithBadge: Story<NavigationItemProps> = () => {
     <div className="navigationItemContainer">
       <NavigationItem
         active={horizontalActive}
-        onClick={handleHorizontalActiveToggle}
+        onClick={(event) => {
+          // Prevent default to avoid navigation
+          event.preventDefault();
+          handleHorizontalActiveToggle();
+        }}
         href="#"
       >
         Label
@@ -108,7 +136,11 @@ export const WithBadge: Story<NavigationItemProps> = () => {
 
       <NavigationItem
         active={verticalActive}
-        onClick={handleVerticalActiveToggle}
+        onClick={(event) => {
+          // Prevent default to avoid navigation
+          event.preventDefault();
+          handleVerticalActiveToggle();
+        }}
         href="#"
         orientation="vertical"
       >
