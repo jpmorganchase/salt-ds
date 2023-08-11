@@ -4,7 +4,7 @@ import { useComboboxPortal, UseComboBoxPortalProps } from "./useComboboxPortal";
 import { useControlled } from "@salt-ds/core";
 
 interface UseComboBoxProps {
-  value?: string;
+  inputValue?: string;
   defaultValue?: string;
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
@@ -19,7 +19,7 @@ interface UseComboBoxProps {
 }
 
 export const useComboBox = ({
-  value,
+  inputValue: inputValueProp,
   defaultValue,
   onFocus,
   onBlur,
@@ -30,7 +30,7 @@ export const useComboBox = ({
   onSelect,
 }: UseComboBoxProps) => {
   const [inputValue, setInputValue] = useControlled({
-    controlled: value,
+    controlled: inputValueProp,
     default: useListProps.defaultSelected || defaultValue,
     name: "ComboBox Next",
     state: "value",
@@ -138,7 +138,7 @@ export const useComboBox = ({
   };
 
   return {
-    inputValue,
+    value: inputValue,
     setInputValue,
     // portal
     portalProps: {

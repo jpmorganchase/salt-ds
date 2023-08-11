@@ -42,7 +42,7 @@ export interface ComboBoxNextProps<T>
   /**
    * Controlled prop. Controls the value for the Combo Box input.
    */
-  value?: string;
+  inputValue?: string;
   /**
    * Controlled prop. Controls the Highlighted item in the Combo Box list.
    */
@@ -124,7 +124,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     ListProps = {},
     PortalProps = {},
     highlightedItem: highlightedItemProp,
-    value,
+    inputValue,
     selected,
     defaultValue,
     defaultSelected,
@@ -172,7 +172,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   };
 
   const {
-    inputValue,
+    value,
     setInputValue,
     portalProps,
     selectedItem,
@@ -186,7 +186,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     setHighlightedItem,
     mouseOverHandler,
   } = useComboBox({
-    value,
+    inputValue,
     onBlur,
     onFocus,
     onMouseOver,
@@ -257,7 +257,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         }}
         role="combobox"
         variant={variant}
-        value={inputValue}
+        value={value}
         {...getTriggerProps()}
         {...restInputProps}
       />

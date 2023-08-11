@@ -90,7 +90,7 @@ export const Controlled: Story<ComboBoxNextProps<any>> = (args) => {
   return (
     <ComboBoxNext
       style={{ width: "200px" }}
-      value={inputValue}
+      inputValue={inputValue}
       onInputChange={handleChange}
       onSelect={handleSelect}
       {...args}
