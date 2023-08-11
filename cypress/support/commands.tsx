@@ -33,23 +33,6 @@ declare global {
        * cy.setDensity('medium')
        */
       setDensity(theme: SupportedDensity): Chainable<void>;
-
-      /**
-       * Is Not In Viewport
-       *
-       * @example
-       * cy.get('button').isNotInViewport()
-       */
-      isNotInViewport(): Chainable<void>;
-
-      /**
-       * Is In Viewport
-       *
-       * @example
-       * cy.get('button').isInViewport()
-       */
-      isInViewport(): Chainable<void>;
-
       /**
        * Set Density
        *
@@ -91,32 +74,6 @@ Cypress.Commands.add("setDensity", function (density) {
     cy.log("Unsupported density", density);
   }
 });
-
-Cypress.Commands.add("isInViewport", { prevSubject: true }, function (subject) {
-  // @ts-ignore
-  const bottom = Cypress.config(`viewportHeight`);
-  const rect = subject[0].getBoundingClientRect();
-
-  expect(rect.top).not.to.be.greaterThan(bottom);
-  expect(rect.bottom).not.to.be.greaterThan(bottom);
-
-  return subject;
-});
-
-Cypress.Commands.add(
-  "isNotInViewport",
-  { prevSubject: true },
-  function (subject) {
-    // @ts-ignore
-    const bottom = Cypress.config(`viewportHeight`);
-    const rect = subject[0].getBoundingClientRect();
-
-    expect(rect.top).to.be.gte(bottom);
-    expect(rect.bottom).to.be.gte(bottom);
-
-    return subject;
-  }
-);
 
 Cypress.Commands.add(
   "checkAxeComponent",

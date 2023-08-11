@@ -421,11 +421,10 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       if (s) {
         s.scrollLeft += deltaX;
         s.scrollTop += deltaY;
-        console.log(s.scrollHeight, s.scrollTop, s.clientHeight);
         if (
           !(
             (
-              s?.scrollHeight - s?.scrollTop === s?.clientHeight || // reached the bottom
+              Math.round(s.scrollHeight - s.scrollTop) === s.clientHeight || // reached the bottom
               (s.scrollTop === 0 && deltaY < 0)
             ) // reached the top (upward scroll)
           )

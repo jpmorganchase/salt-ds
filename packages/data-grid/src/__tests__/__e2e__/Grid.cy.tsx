@@ -809,25 +809,21 @@ describe("Grid", () => {
   // });
 
   it("Scrolls past data grid when no rows left to scroll", () => {
-    const onKeyDownSpy = cy.stub().as("onKeyDownSpy");
     cy.mount(
-      <div style={{ height: "1024px" }} onKeyDown={onKeyDownSpy}>
-        <LotsOfColumns style={{ height: "1025px" }} />
-        <div data-testid="scroll-past">Hello</div>
+      <div style={{ height: "1024px" }}>
+        <LotsOfColumns style={{ height: "1024px", marginBottom: "100px" }} />
+        <div
+          data-testid="scroll-past"
+          style={{ height: "10px", width: "10px", background: "red" }}
+        />
       </div>
     );
     assertGridReady();
-    
-    cy.findByTestId("scroll-past").isNotInViewport();
 
-    cy.findByTestId("grid-middle-part").realHover().realClick();
-    cy.findByTestId("grid-middle-part").scrollTo(0, "150%", {
-      easing: "linear",
-      duration: 100,
-      ensureScrollable: false,
-    });
-    cy.pause();
-    
-    cy.findByTestId("scroll-past").isInViewport();
+    cy.findByTestId("scroll-past").should("not.be.inTheViewport");
+
+    cy.findByTestId("grid-scrollable").realMouseWheel({ deltaY: 1500 });
+    cy.wait(100);
+    cy.findByTestId("scroll-past").should("be.inTheViewport");
   });
 });
