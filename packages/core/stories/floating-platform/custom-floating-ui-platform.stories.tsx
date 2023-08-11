@@ -27,7 +27,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import floatingCss from "./floating-platform.css";
 
-import { NewWindow, TooltipWindow } from "./NewWindow";
+import { NewWindow, TooltipWindow, useIframe } from "./NewWindow";
 
 export default {
   title: "Core/Floating Platform",
@@ -58,12 +58,13 @@ const NewWindowTest = (props: NewWindowTestProps) => {
    * but the iframe element isn't rendered until the tooltip is open which requires the Platform
    */
   const [iframe, setIframe] = useState<HTMLIFrameElement | null>(null);
+  const [showExtraContent, setShowExtraContent] = useState(false);
 
   const rootBody = useWindow()?.document.body;
 
   const customPlatform: Platform = useMemo(
     () => ({
-      ...platform,
+      // ...platform,
       async getElementRects({ ...data }) {
         const result = await platform.getElementRects({
           ...data,
@@ -83,8 +84,15 @@ const NewWindowTest = (props: NewWindowTestProps) => {
         return {
           ...result,
           reference: reference,
+          floating: {
+            ...result.floating,
+            x: 0,
+            y: 0,
+          },
         };
       },
+      getDimensions: platform.getDimensions,
+      getClippingRect: () => window.document.body.getBoundingClientRect(),
     }),
     [iframe]
   );
@@ -93,7 +101,16 @@ const NewWindowTest = (props: NewWindowTestProps) => {
     () =>
       forwardRef(
         (
-          { style, open, top, left, position, ...rest }: RootComponentProps,
+          {
+            style,
+            open,
+            top,
+            left,
+            width,
+            height,
+            position,
+            ...rest
+          }: RootComponentProps,
           ref: ForwardedRef<HTMLElement>
         ) => {
           const FloatingRoot = (
@@ -110,12 +127,17 @@ const NewWindowTest = (props: NewWindowTestProps) => {
                 border: "none",
                 padding: 0,
                 position: "fixed",
+                width,
+                height,
                 ...(!open ? offscreenStyles : undefined),
               }}
-              ref={ref as Ref<HTMLIFrameElement>}
             >
               {/* max-content allows tooltip to size itself, the TooltipWindow will resize to fit this */}
-              <div style={{ width: "max-content" }} {...rest} />
+              <div
+                style={{ width: "max-content" }}
+                {...rest}
+                ref={ref as Ref<HTMLIFrameElement>}
+              />
             </TooltipWindow>
           );
 
@@ -127,19 +149,26 @@ const NewWindowTest = (props: NewWindowTestProps) => {
   );
 
   return (
-    <NewWindow ref={setIframe} style={{ height: 200 }}>
+    <NewWindow ref={setIframe} style={{ height: 300 }}>
       <div style={{ padding: 10 }}>
         <StackLayout gap={3}>
           <H3>This is an iframe with a button</H3>
           <Text>It represents a portalled window within an application</Text>
+          {showExtraContent && <H3>Some Extra Content!</H3>}
           <FloatingPlatformProvider
             platform={customPlatform}
             animationFrame
             middleware={[offset(0)]}
           >
             <FloatingComponentProvider Component={FloatingUIComponent}>
-              <Tooltip {...props}>
-                <Button>Hover Me</Button>
+              <Tooltip {...props} open>
+                <Button
+                  onClick={() => {
+                    setShowExtraContent((old) => !old);
+                  }}
+                >
+                  Click to show extra content
+                </Button>
               </Tooltip>
             </FloatingComponentProvider>
           </FloatingPlatformProvider>
