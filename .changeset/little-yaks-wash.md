@@ -17,7 +17,7 @@ const handleSelect = (event: SyntheticEvent<HTMLInputElement>) => {
 console.log("selected item", event.currentTarget.value);
 };
 return (
-<ComboBoxNext onChange={handleChange} onSelect={handleSelect} source={['Option 1','Option 2','Option 3']} />
+<ComboBoxNext onInputChange={handleInputChange} onSelect={handleSelect} source={['Option 1','Option 2','Option 3']} />
 );
 
 ```
