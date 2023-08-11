@@ -5,7 +5,6 @@ import {
   createContext,
   useContext,
   ForwardedRef,
-  useLayoutEffect,
   useMemo,
 } from "react";
 import { WindowProvider, useWindow } from "@salt-ds/window";
@@ -67,46 +66,6 @@ const StyleInjection = () => {
   return null;
 };
 
-type Size = {
-  width: number;
-  height: number;
-};
-
-const useElementSize = (element?: HTMLElement) => {
-  const [size, setSize] = useState<Size | null>(null);
-
-  const [observer] = useState(() => {
-    return new ResizeObserver((entries) => {
-      const observedSize = entries[0].target.getBoundingClientRect();
-
-      if (
-        !size ||
-        observedSize.width !== size.width ||
-        observedSize.height !== size.height
-      ) {
-        setSize({
-          width: observedSize.width,
-          height: observedSize.height,
-        });
-      }
-    });
-  });
-
-  useLayoutEffect(() => {
-    if (element) {
-      observer.observe(element);
-    }
-
-    return () => {
-      if (element) {
-        observer.unobserve(element);
-      }
-    };
-  }, [element, observer]);
-
-  return size;
-};
-
 export const TooltipWindow = forwardRef(
   (
     { children, title, style, ...rest }: Props,
@@ -123,28 +82,12 @@ export const TooltipWindow = forwardRef(
       [children]
     );
 
-    const size = useElementSize(
-      mountNode?.querySelector(".saltTooltip") || undefined
-    );
-
-    const iframeRef = useForkRef(ref, setContentRef);
-
-    const opacity = !size || !contentRef ? 0 : undefined;
-
-    const iframeStyle = size
-      ? {
-          ...size,
-          opacity,
-          ...style,
-        }
-      : { opacity, ...style };
-
     return (
       <iframe
         {...rest}
-        style={iframeStyle}
+        style={style}
         title={title}
-        ref={iframeRef as ForwardedRef<HTMLIFrameElement>}
+        ref={setContentRef as ForwardedRef<HTMLIFrameElement>}
       >
         {mountNode && (
           <IframeProvider value={contentRef}>
