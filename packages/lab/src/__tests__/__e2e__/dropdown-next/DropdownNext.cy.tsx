@@ -129,7 +129,7 @@ describe("GIVEN a disabled Dropdown component", () => {
     cy.mount(<Disabled />);
 
     // not focusable
-    cy.findByRole("combobox").focused().should("not.exist");
+    cy.findByRole("combobox").focus().should("not.have.focus");
 
     cy.findByRole("combobox")
       .should("have.attr", "aria-expanded", "false")
