@@ -44,6 +44,8 @@ export type FloatingComponentProps = {
    */
   top: number;
   left: number;
+  width: number;
+  height: number;
   position: Strategy;
 };
 
