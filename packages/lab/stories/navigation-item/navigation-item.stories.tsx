@@ -347,6 +347,7 @@ export const VerticalNestedGroup = () => {
               onClick={(event) => {
                 // Prevent default to avoid navigation
                 event.preventDefault();
+                setActive(name);
               }}
               onExpand={() => {
                 if (expanded.includes(name)) {
