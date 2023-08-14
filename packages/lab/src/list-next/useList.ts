@@ -21,8 +21,10 @@ export interface UseListProps {
   selected?: string;
   /* Initial selected value for when the list is controlled. */
   defaultSelected?: string;
-  /* Callback for when the list is controlled. */
-  onChange?: (e: SyntheticEvent, data: { value: string }) => void;
+  /* Callback for when the list is controlled. Returns the event and full selection. */
+  onChange?: (e: SyntheticEvent, data: { value: string | undefined }) => void;
+  /* Callback for when the list is controlled. Returns the event and new selection. */
+  onSelect?: (e: SyntheticEvent, data: { value: string }) => void;
   /* List id. */
   id?: string;
   /* List ref. */
@@ -35,6 +37,7 @@ export const useList = ({
   selected: selectedProp,
   defaultSelected,
   onChange,
+  onSelect,
   id,
   ref,
 }: UseListProps) => {
@@ -52,7 +55,7 @@ export const useList = ({
 
   const [highlightedItem, setHighlightedItem] = useControlled({
     controlled: highLightedItemProp,
-    default: highLightedItemProp,
+    default: undefined,
     name: "ListNext",
     state: "highlighted",
   });
@@ -173,10 +176,11 @@ export const useList = ({
         activeOptions.findIndex((i) => i.id === event.currentTarget.id) !== -1;
       if (newValue && selectedItem !== newValue && isActiveOption) {
         selectItem(event.currentTarget);
-        onChange?.(event, { value: newValue });
+        onChange?.(event, { value: selectedItem });
+        onSelect?.(event, { value: newValue });
       }
     },
-    [selectItem, selectedItem, onChange, getOptions]
+    [selectItem, selectedItem, onChange, onSelect, getOptions]
   );
 
   const isSelected = useCallback(

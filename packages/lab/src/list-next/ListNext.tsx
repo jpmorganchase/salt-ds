@@ -18,7 +18,7 @@ import { ListNextContext } from "./ListNextContext";
 const withBaseName = makePrefixer("saltListNext");
 
 export interface ListNextProps
-  extends Omit<ComponentPropsWithoutRef<"ul">, "onChange"> {
+  extends Omit<ComponentPropsWithoutRef<"ul">, "onChange" | "onSelect"> {
   /**
    * If true, all items in list will be disabled.
    */
@@ -29,8 +29,10 @@ export interface ListNextProps
   highlightedItem?: string;
   /* Value for the controlled version. */
   selected?: string;
-  /* Callback for change event. */
-  onChange?: (event: SyntheticEvent, data: { value: string }) => void;
+  /* Callback for change event. Returns current selection.*/
+  onChange?: (event: SyntheticEvent, data: { value: string | undefined }) => void;
+  /* Callback for select event. Returns new selected item.*/
+  onSelect?: (event: SyntheticEvent, data: { value: string }) => void;
   /* Initial selection. */
   defaultSelected?: string;
 }
@@ -80,6 +82,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       selected,
       defaultSelected,
       onChange,
+      onSelect,
       id: listId,
       ref: listRef,
     });
