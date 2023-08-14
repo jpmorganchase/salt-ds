@@ -192,14 +192,14 @@ const items = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
 
 const multipleLevelNesting = [
   {
-    name: "Label 1 - Level 0",
+    name: "Label 1 - level 0",
   },
   {
-    name: "Label 2 - Level 0",
+    name: "Label 2 - level 0",
     subNav: [
       {
-        name: "Label 1 - Level 1",
-        subNav: ["Label 1 - Level 2", "Label 2 - Level 2", "Label 3 - Level 2"],
+        name: "Label 1 - level 1",
+        subNav: ["Label 1 - level 2", "Label 2 - level 2", "Label 3 - level 2"],
       },
     ],
   },

@@ -20,8 +20,6 @@ Navigation Item allows users to navigate between distinct applications and websi
 
 When the Navigation Item is not a parent, it contains a link, which users can click, and which receives focus via a keyboard interaction. When the Navigation Item is a parent, it will contain an expandable action, which contains a button instead.
 
-A Navigation Item hugs its content by default, but is customisable so that its container can be adjusted to fit any preferred width.
-
 ##### Use when
 
 - Use Navigation Item when you have multiple levels of navigation in your application or website.
@@ -53,6 +51,8 @@ A Navigation Item hugs its content by default, but is customisable so that its c
 ### Horizontal (default)
 
 The default configuration of the Navigation Item comes in a horizontal orientation.
+
+**Tip:** A Navigation Item hugs its content by default, but is customisable so that its container can be adjusted to fit any preferred width.
 
 <Canvas>
   <Story id="lab-navigation-item--default" />
@@ -154,11 +154,11 @@ The Navigation Item component is accessible by keyboard and screen readers, prov
 
 ### Horizontal Navigation Items
 
-| Key            | Function                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tab            | <ul><li>Moves focus into the first Navigation Item in the group. Focus is set to the entire component.</li><li> If a Navigation Item is selected before the Navigation Item receives focus, focus is set on the selected item.</li> <li>When the Navigation Item has children, tab again, to move focus on to the arrow icon.</li> <li>When Navigation Item has focus, move focus out of Navigation Item to next component in tab order.</li></ul> |
-| Shift and Tab  | <ul><li>When Navigation Item has focus, move focus out of Navigation Item to previous component in tab order. </li></ul>                                                                                                                                                                                                                                                                                                                           |
-| Enter or Space | <ul><li>Selects the focused Navigation Item.</li><li>Triggers Navigation Item to reveal expanded list or mega-menu.</li><li>Use `Space` and `Enter` to trigger a Nav item with children, or just `Enter` to trigger a Navigation Item without children.</li></ul>                                                                                                                                                                                  |
+| Key            | Function                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tab            | <ul><li>Moves focus into the first Navigation item in the group. Focus is set to the entire component.</li><li>If a Navigation item is selected before the Navigation item receives focus, focus is set on the selected item.</li><li>When the Navigation item has nested items, tab again, to move focus on to the next item within the group.</li><li>When Navigation item has focus, move focus out of Navigation item to next component in tab order.</li></ul> |
+| Shift and Tab  | <ul><li>When Navigation Item has focus, move focus out of Navigation Item to previous component in tab order. </li></ul>                                                                                                                                                                                                                                                                                                                                            |
+| Enter or Space | <ul><li>Use `Enter` to select the focused Navigation item.</li><li>Use `Space` to trigger the Navigation item to expand or collapse nested items within the group.</li><li>Use `Space` and `Enter` to trigger a Nav item with nested items, or just `Enter` to trigger a Navigation item without nested items.</li></ul>                                                                                                                                            |
 
 ### Vertical Navigation Items
 
