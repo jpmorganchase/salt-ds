@@ -137,7 +137,7 @@
     "yup": "^1.0.2"
   },
   "resolutions": {
-    "esbuild": "0.14.51",
+    "esbuild": "0.19.2",
     "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
     "rollup": "2.79.1",
