@@ -1,15 +1,11 @@
 ---
-"@salt-ds/lab": patch
+"@salt-ds/lab": minor
 ---
 
 DropdownNext
 
 - Added `DropdownNext` component
 
-```
-<DropdownNext
-  source={source}
-  defaultSelected={defaultSelected}
-  {...props}
-/>
+```tsx
+<DropdownNext source={source} defaultSelected={defaultSelected} {...props} />
 ```
