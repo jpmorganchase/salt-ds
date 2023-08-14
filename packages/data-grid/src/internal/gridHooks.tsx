@@ -37,7 +37,7 @@ import { FocusedPart } from "../CursorContext";
 // Attaches active onWheel event to a table element
 // Grid needs to prevent default onWheel event handling for situations when a
 // scrollable grid is on a scrollable page. Page should not scroll when the grid
-// is being scrolled.
+// is being scrolled, unless reached top or bottom of scrollable grid.
 export function useActiveOnWheel(onWheel: EventListener) {
   const tableRef = useRef<HTMLTableElement>(null);
 

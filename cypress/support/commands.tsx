@@ -33,7 +33,6 @@ declare global {
        * cy.setDensity('medium')
        */
       setDensity(theme: SupportedDensity): Chainable<void>;
-
       /**
        * Set Density
        *

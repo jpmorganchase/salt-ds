@@ -329,7 +329,7 @@ const getColName = (n: number) => {
 
 const dummyColumnNames = [...new Array(1000).keys()].map((i) => getColName(i));
 
-const dummyData = [...new Array(30).keys()].map((i) => {
+const dummyData = [...new Array(40).keys()].map((i) => {
   const row: any = {
     id: `row${i}`,
   };
@@ -342,8 +342,10 @@ const dummyData = [...new Array(30).keys()].map((i) => {
 const rowIdGetter = (row: any) => row.id;
 
 const LotsOfColumnsTemplate: Story<GridProps> = (props) => {
+  const { style, ...rest } = props;
   return (
     <Grid
+      style={style}
       rowData={dummyData}
       rowKeyGetter={rowIdGetter}
       className="grid"
