@@ -92,7 +92,7 @@ export interface ComboBoxNextProps<T>
    */
   itemFilter?: (source: T[], filterValue?: string) => T[];
   /* Callback for change event in input. */
-  onChange?: (event: SyntheticEvent, data: { value: string }) => void;
+  onChange?: (event: SyntheticEvent, data: { value: string | undefined }) => void;
   /**
    * Styling variant. Defaults to "primary".
    */
