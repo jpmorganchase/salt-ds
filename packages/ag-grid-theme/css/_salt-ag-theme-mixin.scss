@@ -315,7 +315,7 @@
     z-index: 1;
   }
 
-  .ag-ltr .ag-cell {    
+  .ag-ltr .ag-cell {
     border: 2px solid transparent;
     line-height: calc(
       min(
@@ -332,7 +332,8 @@
     padding-right: var(--salt-spacing-100);
   }
 
-  .ag-header-cell, .ag-header-group-cell {
+  .ag-header-cell,
+  .ag-header-group-cell {
     padding: 0px calc(var(--salt-spacing-100) + 2px);
   }
 
