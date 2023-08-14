@@ -34,7 +34,7 @@ export interface DropdownNextProps
    */
   disabled?: boolean;
   /**
-   * Initially selected value for the dropdown.
+   * Initially selected value for the dropdown, for use only in uncontrolled component.
    */
   defaultSelected?: string;
   /**
@@ -63,8 +63,8 @@ export interface DropdownNextProps
   ListProps?: ListNextProps;
   /* Status open or close for use in controlled component.  */
   open?: boolean;
-  /* Selected item prop for use in controlled component. */
-  selectedItem?: string;
+  /* Selected prop for use in controlled component. */
+  selected?: string;
   /* Highlighted item prop for use in controlled component. */
   highlightedItem?: string;
 }
@@ -83,7 +83,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     source,
     placement = "bottom",
     open: openControlProp,
-    selectedItem: selectedItemControlProp,
+    selected: selectedControlProp,
     highlightedItem: highlightedItemControlProp,
     onFocus,
     onKeyDown,
@@ -112,7 +112,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     disabled,
     ref: listRef,
     id: listId,
-    selected: selectedItemControlProp,
+    selected: selectedControlProp,
     highlightedItem: highlightedItemControlProp,
   };
 
@@ -155,7 +155,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
   };
 
   const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
-    if (disabled || readOnly) return;
+    if (disabled) return;
     focusHandler(event);
     onFocus?.(event);
   };
@@ -205,7 +205,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
         role="combobox"
         aria-haspopup="listbox"
         aria-expanded={open}
-        aria-activedescendant={disabled ? undefined : activeDescendant}
+        aria-activedescendant={activeDescendant}
         tabIndex={disabled ? -1 : 0}
         aria-owns={listId}
         aria-controls={listId}

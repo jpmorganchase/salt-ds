@@ -12,6 +12,7 @@ import {
 } from "../assets/exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
 import { MouseEvent, Suspense, SyntheticEvent } from "react";
+import { FlowLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/Combo Box Next",
@@ -57,7 +58,9 @@ const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
     console.log("selected item", event.currentTarget.value);
   };
   return (
-    <ComboBoxNext onChange={handleChange} onSelect={handleSelect} {...args} />
+    <FlowLayout style={{ width: "266px" }}>
+      <ComboBoxNext onChange={handleChange} onSelect={handleSelect} {...args} />
+    </FlowLayout>
   );
 };
 

@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   height: var(--salt-size-base);
+  gap: var(--salt-spacing-100);
 }
 
 .saltLogo svg {
