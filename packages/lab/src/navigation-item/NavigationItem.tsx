@@ -19,7 +19,7 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   active?: boolean;
   /**
-   * Whether the navigation item has active children.
+   * Whether the parent navigation item has active nested items.
    */
   blurSelected?: boolean;
   /**
@@ -35,7 +35,7 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   orientation?: "horizontal" | "vertical";
   /**
-   * Whether the navigation item is a parent with nested children.
+   * Whether the navigation item is a parent with nested items.
    */
   parent?: boolean;
   /**
