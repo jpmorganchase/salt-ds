@@ -8,9 +8,14 @@ ul {
   margin: 0;
 }
 
+.navigationItemContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-300);
+}
+
 .vertical {
   width: 250px;
-  height: 500px;
 }
 
 .horizontal,
