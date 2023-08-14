@@ -135,6 +135,8 @@ LongContent.args = {
 const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
   open: openProp = true,
   status,
+  // @ts-ignore
+  content,
   ...args
 }) => {
   const [open, setOpen] = useState(openProp);
@@ -171,8 +173,7 @@ const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
           {status!.slice(1)}
         </DialogTitle>
         <DialogContent>
-          A Dialog is a window that opens over the application content, focusing
-          the user's attention on a particular task or piece of information.
+          {content}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
