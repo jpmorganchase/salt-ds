@@ -286,30 +286,35 @@ export const VerticalGroup = () => {
 };
 
 export const VerticalGroupWithIconAndBadge = () => {
-  const [active, setActive] = useState(items[0]);
   const badgeValues = ["New", 1, 22, "Vanilla", 3, "Chocolate"];
+
+  const [active, setActive] = useState(items[0]);
 
   return (
     <nav>
       <ul className="vertical">
-        {items.map((item, index) => (
-          <li key={item}>
-            <NavigationItem
-              active={active === item}
-              href="#"
-              orientation="vertical"
-              onClick={(event) => {
-                // Prevent default to avoid navigation
-                event.preventDefault();
-                setActive(item);
-              }}
-            >
-              <NotificationIcon />
-              {item}
-              {badgeValues[index] && <Badge value={badgeValues[index]} />}
-            </NavigationItem>
-          </li>
-        ))}
+        {items.map((item, index) => {
+          return (
+            <li key={item}>
+              <NavigationItem
+                active={active === item}
+                href="#"
+                orientation="vertical"
+                onClick={(event) => {
+                  // Prevent default to avoid navigation
+                  event.preventDefault();
+                  setActive(item);
+                }}
+              >
+                <NotificationIcon />
+                {index === 0
+                  ? "This is a very long label across two lines"
+                  : item}
+                {badgeValues[index] && <Badge value={badgeValues[index]} />}
+              </NavigationItem>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
