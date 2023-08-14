@@ -35,6 +35,7 @@
 /* Styles applied to NavigationItem icon */
 .saltNavigationItem-wrapper .saltIcon {
   fill: var(--navigationItem-fill);
+  top: var(--salt-size-border);
 }
 
 /* Styles applied to NavigationItem Badge */
@@ -74,7 +75,7 @@
   flex: 1;
   text-align: left;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--navigationItem-gap);
 }
 
