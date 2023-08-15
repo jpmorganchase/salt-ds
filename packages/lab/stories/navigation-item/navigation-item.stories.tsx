@@ -1,4 +1,5 @@
 import { NavigationItem, NavigationItemProps, Badge } from "@salt-ds/lab";
+import { FlexLayout } from "@salt-ds/core";
 import { Story } from "@storybook/react";
 import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
@@ -75,7 +76,7 @@ export const WithIcon: Story<NavigationItemProps> = () => {
   };
 
   return (
-    <div className="navigationItemContainer">
+    <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
         onClick={(event) => {
@@ -102,7 +103,7 @@ export const WithIcon: Story<NavigationItemProps> = () => {
         <NotificationIcon />
         Label
       </NavigationItem>
-    </div>
+    </FlexLayout>
   );
 };
 
@@ -120,7 +121,7 @@ export const WithBadge: Story<NavigationItemProps> = () => {
   };
 
   return (
-    <div className="navigationItemContainer">
+    <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
         onClick={(event) => {
@@ -147,7 +148,7 @@ export const WithBadge: Story<NavigationItemProps> = () => {
         Label
         <Badge value="New" />
       </NavigationItem>
-    </div>
+    </FlexLayout>
   );
 };
 
@@ -165,7 +166,7 @@ export const WithNestedItems: Story<NavigationItemProps> = () => {
   };
 
   return (
-    <div className="navigationItemContainer">
+    <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
         onExpand={handleHorizontalActiveToggle}
@@ -184,7 +185,7 @@ export const WithNestedItems: Story<NavigationItemProps> = () => {
       >
         Label
       </NavigationItem>
-    </div>
+    </FlexLayout>
   );
 };
 
