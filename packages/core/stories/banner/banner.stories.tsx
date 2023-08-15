@@ -21,7 +21,9 @@ export default {
 export const Default: ComponentStory<typeof Banner> = (props) => (
   <div style={{ width: 500 }}>
     <Banner {...props}>
-      <BannerContent>Default banner</BannerContent>
+      <BannerContent>
+        There has been an update to the terms and conditions
+      </BannerContent>
     </Banner>
   </div>
 );
@@ -147,17 +149,33 @@ export const Success: ComponentStory<typeof Banner> = () => {
     </Banner>
   );
 };
+const statuses: { status: ValidationStatus; content: string }[] = [
+  {
+    status: "info",
+    content: "You are now using version 3.32.4",
+  },
+  {
+    status: "warning",
+    content: "We were not able to find your details",
+  },
+  {
+    status: "error",
+    content: "Your password will expire in 3 days",
+  },
+  {
+    status: "success",
+    content: "Document signed",
+  },
+];
 
 export const StatusesPrimary: ComponentStory<typeof Banner> = (props) => {
   const { status, ...restProps } = props;
 
-  const statuses: ValidationStatus[] = ["info", "error", "warning", "success"];
-
   return (
     <StackLayout style={{ width: 500 }}>
-      {statuses.map((status, i) => (
-        <Banner status={status} {...restProps} key={i}>
-          <BannerContent>Banners with status {status}.</BannerContent>
+      {statuses.map((example, i) => (
+        <Banner status={example.status} {...restProps} key={i}>
+          <BannerContent>{example.content}</BannerContent>
         </Banner>
       ))}
     </StackLayout>
@@ -183,7 +201,7 @@ export const Dismissible = () => {
       {!open && <Button onClick={reset}>Reset</Button>}
       {open && (
         <Banner>
-          <BannerContent>Controlled banner</BannerContent>
+          <BannerContent>You are now using version 3.32.4</BannerContent>
           <BannerActions>
             <Button
               aria-label="close banner"
@@ -205,12 +223,12 @@ export const MultipleLines = (props: BannerProps) => {
       <Banner status="error" {...props}>
         <BannerContent>
           <Text>
-            <strong>Invalid Form</strong>
+            <strong>Information missing in form submission</strong>
           </Text>
           <div>
             <ul style={{ paddingLeft: 0 }}>
-              <li>Missing username</li>
-              <li>Missing password</li>
+              <li>Username</li>
+              <li>Password</li>
             </ul>
           </div>
         </BannerContent>
@@ -222,18 +240,11 @@ export const MultipleLines = (props: BannerProps) => {
 export const MultipleBanners: ComponentStory<typeof Banner> = () => {
   return (
     <StackLayout gap={3} style={{ width: 800 }}>
-      <Banner status="info">
-        <BannerContent>This is an info banner</BannerContent>
-      </Banner>
-      <Banner status="error">
-        <BannerContent>This is an error banner</BannerContent>
-      </Banner>
-      <Banner status="warning">
-        <BannerContent>This is a warning banner</BannerContent>
-      </Banner>
-      <Banner status="success">
-        <BannerContent>This is a success banner</BannerContent>
-      </Banner>
+      {statuses.map((example, i) => (
+        <Banner status={example.status} key={i}>
+          <BannerContent>{example.content}</BannerContent>
+        </Banner>
+      ))}
       <Text styleAs="h1">Title</Text>
       <Text>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -251,7 +262,7 @@ export const MultipleBanners: ComponentStory<typeof Banner> = () => {
 export const MultipleActions: ComponentStory<typeof Banner> = (args) => {
   return (
     <Banner {...args} style={{ width: 500 }}>
-      <BannerContent>This is a banner</BannerContent>
+      <BannerContent>The one-time PIN you entered has expired</BannerContent>
       <BannerActions>
         <Link>See more</Link>
         <Button aria-label="refresh" variant="secondary">

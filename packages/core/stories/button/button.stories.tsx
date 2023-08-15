@@ -22,18 +22,21 @@ const SingleButtonTemplate: ComponentStory<typeof Button> = (props) => {
 
 const ButtonGrid = ({
   className = "",
-  label,
+  label1,
+  label2,
+  label3,
   variant,
 }: {
   className?: string;
-  label: string;
+  label1: string;
+  label2: string;
+  label3: string;
   variant: ButtonProps["variant"];
 }) => {
   const handleClick = () => {
     console.log("clicked");
   };
 
-  const buttonLabel = `${label} Button`;
   return (
     <>
       <div
@@ -46,20 +49,20 @@ const ButtonGrid = ({
         }}
       >
         <Button variant={variant} onClick={handleClick}>
-          {buttonLabel}
+          {label1}
         </Button>
         <Button variant={variant} onClick={handleClick} aria-label="search">
           <SearchIcon aria-hidden />
         </Button>
         <Button variant={variant} onClick={handleClick}>
           <SearchIcon aria-hidden />
-          {` ${buttonLabel}`}
+          {label2}
         </Button>
       </div>
       <br />
       <div>
         <Button variant={variant} onClick={handleClick} disabled>
-          {`${buttonLabel} (disabled)`}
+          {label3}
         </Button>
       </div>
     </>
@@ -74,46 +77,67 @@ export const All: ComponentStory<typeof Button> = () => {
   return (
     <div style={{ display: "flex", gap: "8px" }}>
       <Button variant={"cta"} onClick={handleClick}>
-        CTA
+        Submit
       </Button>
       <Button variant={"primary"} onClick={handleClick}>
-        Primary
+        Search
       </Button>
       <Button variant={"secondary"} onClick={handleClick}>
-        Secondary
+        Cancel
       </Button>
     </div>
   );
 };
 
 export const CTA: ComponentStory<typeof Button> = () => {
-  return <ButtonGrid variant="cta" label="CTA" />;
+  return (
+    <ButtonGrid
+      variant="cta"
+      label1="Submit"
+      label2="Search"
+      label3="Continue"
+    />
+  );
 };
 
 export const Primary: ComponentStory<typeof Button> = () => {
-  return <ButtonGrid variant="primary" label="Primary" />;
+  return (
+    <ButtonGrid
+      variant="primary"
+      label1="Submit"
+      label2="Search"
+      label3="Continue"
+    />
+  );
 };
 
 export const Secondary: ComponentStory<typeof Button> = () => {
-  return <ButtonGrid variant="secondary" label="Secondary" />;
+  return (
+    <ButtonGrid
+      variant="secondary"
+      label1="Cancel"
+      label2="Find address"
+      label3="Save as draft"
+    />
+  );
 };
 
 export const FeatureButton = SingleButtonTemplate.bind({});
 FeatureButton.args = {
-  children: "Feature Button",
+  children: "Activate",
 };
 
 export const Disabled = SingleButtonTemplate.bind({});
 Disabled.args = {
   disabled: true,
-  children: "Disabled",
+  children: "Submit",
 };
 
 export const FocusableWhenDisabled = SingleButtonTemplate.bind({});
 FocusableWhenDisabled.args = {
   focusableWhenDisabled: true,
   disabled: true,
-  children: "Focusable When Disabled",
+  children: "Save as draft",
 };
 
 export const WithIcon: ComponentStory<typeof Button> = () => {

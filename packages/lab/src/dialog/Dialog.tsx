@@ -1,59 +1,66 @@
-import { makePrefixer, useId, ValidationStatus } from "@salt-ds/core";
-import { clsx } from "clsx";
 import {
   forwardRef,
   HTMLAttributes,
-  useCallback,
   useEffect,
-  useRef,
+  useMemo,
   useState,
+  ComponentProps,
 } from "react";
-import { DialogContext } from "./internal/DialogContext";
-import { Scrim, ScrimProps } from "../scrim";
-import { useWindow as usePortalWindow } from "../window";
-import { Portal } from "../portal";
-
+import { clsx } from "clsx";
+import {
+  FloatingFocusManager,
+  FloatingOverlay,
+  FloatingPortal,
+} from "@floating-ui/react";
+import {
+  makePrefixer,
+  useForkRef,
+  useId,
+  ValidationStatus,
+} from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
+import { useDialog } from "./useDialog";
 import dialogCss from "./Dialog.css";
+import { DialogContext } from "./DialogContext";
 
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
-  autoFocusRef?: ScrimProps["autoFocusRef"];
-  height?: string | number;
-  onClose?: () => void;
+  /**
+   * Display or hide the component.
+   */
   open?: boolean;
+  /**
+   * Callback function triggered when open state changes.
+   */
+  onOpenChange?: (open: boolean) => void;
+  /**
+   * Status indicator
+   * */
   status?: ValidationStatus;
-  width?: string | number;
-  enableBackdropClick?: boolean;
-  disablePortal?: boolean;
+  /**
+   * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
+   * Default value is 0 (first tabbable element).
+   * */
+  initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
 }
 
 const withBaseName = makePrefixer("saltDialog");
 
-/**
- * The Dialog is a window that contains text and interactive components.
- * By default, Dialog is non-modal, but supports modal behaviour as well.
- */
 export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   props,
   ref
 ) {
   const {
-    autoFocusRef,
     children,
     className,
-    height,
-    id,
-    onClose,
-    open: openProp,
+    open = true,
+    onOpenChange,
     status,
-    width,
-    enableBackdropClick,
-    disablePortal,
+    initialFocus,
     ...rest
   } = props;
-
+  const dialogId = useId() || "dialog";
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-dialog",
@@ -61,63 +68,66 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     window: targetWindow,
   });
 
-  const Window = usePortalWindow();
-  const [open, setOpen] = useState(openProp);
+  const [showComponent, setShowComponent] = useState(false);
+
+  const { floating, context, getFloatingProps } = useDialog({
+    open,
+    onOpenChange,
+  });
+
+  const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
   useEffect(() => {
-    setOpen(openProp);
-  }, [openProp]);
-
-  const dialogId = useId();
-
-  const handleClose = useCallback(() => {
-    onClose?.();
-    setOpen(false);
-  }, [onClose, setOpen]);
-
-  const handleBackdropClick = useCallback(() => {
-    if (enableBackdropClick) {
-      handleClose();
+    if (open && !showComponent) {
+      setShowComponent(true);
     }
-  }, [enableBackdropClick, handleClose]);
+  }, [open, showComponent]);
 
-  const contentElementRef = useRef<HTMLDivElement | null>(null);
-
-  const setContentElement = useCallback((node: HTMLDivElement) => {
-    contentElementRef.current = node;
-  }, []);
-
-  if (!open) {
-    return null;
-  }
+  const contextValue = useMemo(
+    () => ({ dialogId, status }),
+    [dialogId, status]
+  );
 
   return (
-    <DialogContext.Provider value={{ status, dialogId, setContentElement }}>
-      <Portal disablePortal={disablePortal}>
-        <Scrim
-          autoFocusRef={autoFocusRef}
-          fallbackFocusRef={contentElementRef}
-          open={open}
-          closeWithEscape
-          onBackDropClick={handleBackdropClick}
-          onClose={handleClose}
-          aria-labelledby={`${dialogId}-heading`}
-          aria-describedby={`${dialogId}-body`}
-        >
-          <Window id={id}>
-            <div
-              {...rest}
-              className={clsx(withBaseName(), className, {
-                [withBaseName("infoShadow")]: status === "info",
-              })}
-              style={{ width }}
-              ref={ref}
-            >
-              {children}
-            </div>
-          </Window>
-        </Scrim>
-      </Portal>
-    </DialogContext.Provider>
+    <FloatingPortal>
+      {showComponent && (
+        <FloatingOverlay className={withBaseName("overlay")} lockScroll>
+          <FloatingFocusManager
+            context={context}
+            modal
+            initialFocus={initialFocus}
+          >
+            <DialogContext.Provider value={contextValue}>
+              <div
+                id={dialogId}
+                className={clsx(
+                  withBaseName(),
+                  {
+                    [withBaseName("enterAnimation")]: open,
+                    [withBaseName("exitAnimation")]: !open,
+                    [withBaseName("withStatus")]: status,
+                    [withBaseName(status as string)]: status,
+                  },
+                  className
+                )}
+                onAnimationEnd={() => {
+                  if (!open && showComponent) {
+                    setShowComponent(false);
+                  }
+                }}
+                ref={floatingRef}
+                aria-labelledby={`${dialogId}-heading`}
+                aria-describedby={`${dialogId}-description`}
+                aria-modal="true"
+                {...getFloatingProps()}
+                {...rest}
+              >
+                {children}
+              </div>
+            </DialogContext.Provider>
+          </FloatingFocusManager>
+        </FloatingOverlay>
+      )}
+    </FloatingPortal>
   );
 });

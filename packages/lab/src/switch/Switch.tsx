@@ -1,49 +1,104 @@
 import { clsx } from "clsx";
 import {
-  ChangeEvent,
-  FocusEvent,
+  ChangeEventHandler,
+  ComponentPropsWithoutRef,
+  FocusEventHandler,
   forwardRef,
-  InputHTMLAttributes,
-  useCallback,
-  useRef,
-  useState,
+  ReactNode,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
-import { ControlLabel, ControlLabelProps } from "../control-label";
-import { useFormFieldLegacyProps } from "../form-field-context-legacy";
-import { CheckedIcon } from "./assets/CheckedIcon";
+import {
+  makePrefixer,
+  useControlled,
+  useDensity,
+  useFormFieldProps,
+} from "@salt-ds/core";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import switchCss from "./Switch.css";
+import {
+  IconProps,
+  SuccessSmallSolidIcon,
+  SuccessSolidIcon,
+} from "@salt-ds/icons";
 
 export interface SwitchProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
-  label?: ControlLabelProps["label"];
-  LabelProps?: Partial<ControlLabelProps>;
-  onChange?: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  extends Omit<
+    ComponentPropsWithoutRef<"label">,
+    "children" | "onFocus" | "onBlur" | "onChange"
+  > {
+  /**
+   * If `true`, the checkbox will be checked.
+   */
+  checked?: boolean;
+  /**
+   * Whether the checkbox component is checked by default
+   * This will be disregarded if checked is already set.
+   */
+  defaultChecked?: boolean;
+  /**
+   * If `true`, the checkbox will be disabled.
+   */
+  disabled?: boolean;
+  /**
+   * Properties applied to the input element.
+   */
+  inputProps?: Partial<ComponentPropsWithoutRef<"input">>;
+  /**
+   * The label to be shown next to the checkbox.
+   */
+  label?: ReactNode;
+  /**
+   * The name applied to the input.
+   */
+  name?: string;
+  /**
+   * Callback when checkbox loses focus.
+   */
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * Callback when checked state is changed.
+   */
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  /**
+   * Callback when checkbox gains focus.
+   */
+  onFocus?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * The value of the checkbox.
+   */
+  value?: string;
 }
 
 const withBaseName = makePrefixer("saltSwitch");
+
+function CheckedIcon(props: IconProps) {
+  const density = useDensity();
+  return density === "high" ? (
+    <SuccessSmallSolidIcon {...props} />
+  ) : (
+    <SuccessSolidIcon {...props} />
+  );
+}
 
 export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   props,
   ref
 ) {
-  const { a11yProps } = useFormFieldLegacyProps();
-
   const {
     checked: checkedProp,
     className,
     color,
     defaultChecked,
-    disabled,
+    disabled: disabledProp,
+    inputProps = {},
     label,
-    LabelProps,
+    name,
     onBlur,
     onChange,
     onFocus,
+    value,
     ...rest
   } = props;
 
@@ -54,7 +109,13 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     window: targetWindow,
   });
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const {
+    "aria-describedby": inputDescribedBy,
+    "aria-labelledby": inputLabelledBy,
+    className: inputClassName,
+    onChange: inputOnChange,
+    ...restInputProps
+  } = inputProps;
 
   const [checked, setChecked] = useControlled({
     controlled: checkedProp,
@@ -63,81 +124,63 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
     state: "checked",
   });
 
-  const [focusVisible, setFocusVisible] = useState(false);
+  const { a11yProps: formFieldA11yProps, disabled: formFieldDisabled } =
+    useFormFieldProps();
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const disabled = formFieldDisabled ?? disabledProp;
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    // Workaround for https://github.com/facebook/react/issues/9023
+    if (event.nativeEvent.defaultPrevented) {
+      return;
+    }
+
     const value = event.target.checked;
     setChecked(value);
-    onChange?.(event, value);
+    onChange?.(event);
+    inputOnChange?.(event);
   };
 
-  const handleFocus = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      // Fix for https://github.com/facebook/react/issues/7769
-      if (!inputRef.current) {
-        inputRef.current = event.currentTarget;
-      }
-
-      // TODO :focus-visible not yet supported on Safari, so we'll need to use the
-      // useIsFocusVisible polyfill
-      if (inputRef.current?.matches(":focus-visible")) {
-        setFocusVisible(true);
-      }
-
-      onFocus?.(event);
-    },
-    [onFocus]
-  );
-
-  const handleBlur = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      setFocusVisible(false);
-      onBlur?.(event);
-    },
-    [onBlur]
-  );
-
   return (
-    <ControlLabel
-      {...LabelProps}
+    <label
       className={clsx(
-        withBaseName("label"),
-        { [withBaseName("disabled")]: disabled },
+        withBaseName(),
+        {
+          [withBaseName("disabled")]: disabled,
+          [withBaseName("checked")]: checked,
+        },
         className
       )}
-      disabled={disabled}
-      label={label}
       ref={ref}
+      {...rest}
     >
-      <span className={clsx(withBaseName(), className)}>
-        <span
-          className={clsx(withBaseName("base"), {
-            [withBaseName("checked")]: checked,
-            [withBaseName("focusVisible")]: focusVisible,
-          })}
-        >
-          <span className={withBaseName("inputContainer")}>
-            <input
-              className={withBaseName("input")}
-              checked={checked}
-              disabled={disabled}
-              onBlur={handleBlur}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              ref={inputRef}
-              type="checkbox"
-              {...a11yProps}
-              {...rest}
-            />
-            {checked ? (
-              <CheckedIcon className={withBaseName("icon")} />
-            ) : (
-              <span className={withBaseName("thumb")} />
-            )}
-          </span>
+      <input
+        aria-describedby={clsx(
+          formFieldA11yProps?.["aria-describedby"],
+          inputDescribedBy
+        )}
+        aria-labelledby={clsx(
+          formFieldA11yProps?.["aria-labelledby"],
+          inputLabelledBy
+        )}
+        name={name}
+        value={value}
+        checked={checked}
+        className={clsx(withBaseName("input"), inputClassName)}
+        defaultChecked={defaultChecked}
+        disabled={disabled}
+        onBlur={onBlur}
+        onChange={handleChange}
+        onFocus={onFocus}
+        type="checkbox"
+        {...restInputProps}
+      />
+      <span className={withBaseName("track")}>
+        <span className={withBaseName("thumb")}>
+          {checked && <CheckedIcon className={withBaseName("icon")} />}
         </span>
-        <span className={withBaseName("track")} />
       </span>
-    </ControlLabel>
+      {label}
+    </label>
   );
 });

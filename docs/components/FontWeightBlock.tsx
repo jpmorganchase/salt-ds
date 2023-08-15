@@ -6,9 +6,11 @@ import "./FontBlock.css";
 export const FontWeightBlock = ({
   fontWeight,
   replacementToken,
+  hideToken,
 }: {
   fontWeight: string;
   replacementToken?: string;
+  hideToken?: boolean;
 }) => {
   return (
     <>
@@ -18,7 +20,7 @@ export const FontWeightBlock = ({
       >
         T
       </div>
-      <code className="DocGrid-code">{fontWeight}</code>
+      {!hideToken && <code className="DocGrid-code">{fontWeight}</code>}
       {replacementToken && (
         <ReplacementToken replacementToken={replacementToken} />
       )}

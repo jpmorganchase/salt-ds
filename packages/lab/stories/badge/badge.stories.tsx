@@ -1,6 +1,11 @@
-import { Badge } from "@salt-ds/lab";
+import { Badge, Tabstrip, List, ListItem } from "@salt-ds/lab";
+import { Button } from "@salt-ds/core";
 
-import { SettingsSolidIcon, UserBadgeIcon } from "@salt-ds/icons";
+import {
+  SettingsSolidIcon,
+  MessageIcon,
+  NotificationIcon,
+} from "@salt-ds/icons";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -9,76 +14,63 @@ export default {
   component: Badge,
 } as ComponentMeta<typeof Badge>;
 
-export const All: ComponentStory<typeof Badge> = () => {
+export const Icon: ComponentStory<typeof Badge> = () => {
   return (
-    <div style={{ display: "inline-block" }}>
-      <div>
-        <Badge value={1}>
+    <div>
+      <Badge value={9}>
+        <Button>
           <SettingsSolidIcon />
-        </Badge>
-        <Badge value={"hi"}>
-          <UserBadgeIcon />
-        </Badge>
-      </div>
-      <div>
-        <Badge value={1}>Lorem Ipsum</Badge>
-        <Badge value={2000} max={99}>
-          Lorem Ipsum
-        </Badge>
-        <Badge value={"hi"}> Lorem Ipsum </Badge>
-        <Badge value={"lots and lots"}> Lorem Ipsum </Badge>
-      </div>
-      <div
-        style={{
-          display: "flex",
-        }}
-      >
-        Inline
-        <Badge value={83} />
-      </div>
+        </Button>
+      </Badge>
     </div>
   );
 };
 
-const Template: ComponentStory<typeof Badge> = (args) => {
-  return <Badge {...args} />;
+export const MaxNumber: ComponentStory<typeof Badge> = () => {
+  return (
+    <div>
+      <Badge max={99} value={150}>
+        <Button>
+          <NotificationIcon />
+        </Button>
+      </Badge>
+    </div>
+  );
 };
 
-export const Icon = Template.bind({});
-Icon.args = {
-  value: 9,
-  children: <SettingsSolidIcon />,
+export const DefaultTruncation: ComponentStory<typeof Badge> = () => {
+  return (
+    <div>
+      <Badge value={1000}>
+        <Button>
+          <MessageIcon />
+        </Button>
+      </Badge>
+    </div>
+  );
 };
 
-export const Number = Template.bind({});
-Number.args = {
-  max: 99,
-  value: 150,
-  children: <UserBadgeIcon />,
+export const String: ComponentStory<typeof Badge> = () => {
+  return (
+    <div>
+      <Badge value={"NEW"}>
+        <Button>
+          <MessageIcon />
+        </Button>
+      </Badge>
+    </div>
+  );
 };
 
-export const MaxNumber = Template.bind({});
-MaxNumber.args = {
-  max: 99,
-  value: 100,
-  children: "Lorem Ipsum",
-};
-
-export const String = Template.bind({});
-String.args = {
-  value: "lots",
-  children: "Lorem Ipsum",
-};
-
-export const Truncated = Template.bind({});
-Truncated.args = {
-  value: "lots and lots",
-  children: "Lorem Ipsum",
-};
-
-export const Words = Template.bind({});
-Words.args = {
-  max: 1000,
-  value: 1,
-  children: "Lorem Ipsum",
+export const ListStory: ComponentStory<typeof Badge> = () => {
+  return (
+    <List aria-label="Declarative List example">
+      <ListItem>Level 1</ListItem>
+      <ListItem>Level 2</ListItem>
+      <ListItem>Level 3</ListItem>
+      <ListItem>
+        Level 4<Badge value={"NEW"} />{" "}
+      </ListItem>
+    </List>
+  );
 };

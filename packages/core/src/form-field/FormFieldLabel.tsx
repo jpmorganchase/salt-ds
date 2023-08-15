@@ -36,7 +36,7 @@ export const FormFieldLabel = ({
 
   const necessityLabel = necessity
     ? necessity === "asterisk"
-      ? "*"
+      ? " *"
       : ` (${capitalize(necessity)})`
     : undefined;
 

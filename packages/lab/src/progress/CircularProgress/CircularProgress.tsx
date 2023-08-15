@@ -65,27 +65,24 @@ export const CircularProgress = forwardRef<
     window: targetWindow,
   });
 
-  const circleStyle: CSSProperties = {};
-  const railCircleStyle: CSSProperties = {};
+  const subOverlayRightStyle: CSSProperties = {};
+  const subOverlayLeftStyle: CSSProperties = {};
+
+  const getRotationAngle = (progress: number, shift = 0) => {
+    return -180 + ((progress - shift) / 50) * 180;
+  };
+
   const progress = (value / max) * 100;
 
-  const progressStrokeLength = `calc(${progress} * var(--circularProgress-progressCircle-circumference) / 100)`;
-  const progressGapLength = `calc((100 - ${progress}) * var(--circularProgress-progressCircle-circumference) / 100)`;
-  const railStrokeLength = `calc((100 - ${progress}) * var(--circularProgress-railCircle-circumference) / 100)`;
-  const railGapLength = `calc((${progress}) * var(--circularProgress-railCircle-circumference) / 100)`;
-
-  circleStyle.strokeDasharray = `${progressStrokeLength} ${progressGapLength}`;
-  railCircleStyle.strokeDashoffset = `${railStrokeLength}`;
-  railCircleStyle.strokeDasharray = `${railStrokeLength} ${railGapLength}`;
-
-  useEffect(() => {
-    if (process.env.NODE_ENV !== "production" && !ariaLabel) {
-      // eslint-disable-next-line no-console
-      console.error(
-        "Salt: aria-label value not supplied to CircularProgress. This may affect the ADA compliance level of the component and owning application, and may generate errors in automated accessibility testing software"
-      );
-    }
-  }, [ariaLabel]);
+  if (progress <= 50) {
+    const rotationAngle = getRotationAngle(progress);
+    subOverlayRightStyle.transform = `rotate(${rotationAngle}deg)`;
+    subOverlayLeftStyle.transform = "rotate(-180deg)";
+  } else {
+    const rotationAngle = getRotationAngle(progress, 50);
+    subOverlayRightStyle.transform = "rotate(0deg)";
+    subOverlayLeftStyle.transform = `rotate(${rotationAngle}deg)`;
+  }
 
   let progressInfo: ReactNode = null;
   if (showInfo) {
@@ -110,23 +107,27 @@ export const CircularProgress = forwardRef<
       aria-valuenow={Math.round(value)}
       {...rest}
     >
-      <svg className={withBaseName("svg")}>
-        <circle
-          cx="50%"
-          cy="50%"
-          fill="none"
-          style={railCircleStyle}
-          className={withBaseName("railCircle")}
-        />
-
-        <circle
-          cx="50%"
-          cy="50%"
-          fill="none"
-          style={circleStyle}
-          className={withBaseName("circle")}
-        />
-      </svg>
+      <div className={withBaseName("track")} />
+      <div className={withBaseName("bars")}>
+        <div className={withBaseName("barOverlayRight")}>
+          <div
+            className={withBaseName("barSubOverlayRight")}
+            data-testid="barSubOverlayRight"
+            style={subOverlayRightStyle}
+          >
+            <div className={withBaseName("bar")} />
+          </div>
+        </div>
+        <div className={withBaseName("barOverlayLeft")}>
+          <div
+            className={withBaseName("barSubOverlayLeft")}
+            data-testid="barSubOverlayLeft"
+            style={subOverlayLeftStyle}
+          >
+            <div className={withBaseName("bar")} />
+          </div>
+        </div>
+      </div>
       {progressInfo}
     </div>
   );

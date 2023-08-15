@@ -1,0 +1,41 @@
+.alignButton {
+  right: 0;
+}
+
+.cellContainer {
+  position: relative;
+}
+
+.table {
+  width: unset;
+}
+
+.tooltip {
+  display: none;
+}
+
+.description {
+  margin-bottom: 5%;
+  font-size: 15px;
+}
+
+.searchBar {
+  margin-bottom: 20px;
+}
+
+.loading {
+  display: flex;
+  margin-left: 50%;
+}
+
+@media (max-width: 768px) {
+  .viewColumn {
+    display: none;
+  }
+  .tooltip {
+    display: block;
+  }
+  .hideView {
+    display: none;
+  }
+}

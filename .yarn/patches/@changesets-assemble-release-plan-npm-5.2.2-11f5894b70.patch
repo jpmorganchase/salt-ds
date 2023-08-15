@@ -6,7 +6,7 @@ index 3a37c62c975518f975c22e1b4b3974d9b325a5da..8c2b0b2cb13e714faa6e2e52065dd92a
    }
 
    let version = semver.inc(release.oldVersion, release.type);
-+  if (release.name === "@salt-ds/lab" || release.name === "@salt-ds/data-grid" || release.name === "@salt-ds/core") {
++  if (release.name === "@salt-ds/lab" || release.name === "@salt-ds/data-grid") {
 +      version = semver.inc(release.oldVersion, 'prerelease');
 +  }
 
@@ -20,7 +20,7 @@ index 87b4c104bf3fa53ba498ced6f81eda0ed4c86436..720216128636871d9e20967ea0741896
  function incrementVersion(release, preInfo) {
    if ("none" === release.type) return release.oldVersion;
    let version = semver.inc(release.oldVersion, release.type);
-+  if (release.name === "@salt-ds/lab" || release.name === "@salt-ds/data-grid" || release.name === "@salt-ds/core") {
++  if (release.name === "@salt-ds/lab" || release.name === "@salt-ds/data-grid") {
 +      version = semver.inc(release.oldVersion, 'prerelease');
 +  }
    if (void 0 !== preInfo && "exit" !== preInfo.state.mode) {

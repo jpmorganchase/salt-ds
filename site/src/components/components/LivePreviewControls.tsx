@@ -60,11 +60,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     setMode(event.currentTarget.value as Mode);
   };
 
-  const handleAllExamplesChange = (
-    _: ChangeEvent<HTMLInputElement>,
-    isChecked: boolean
-  ) => {
-    setAllExamplesView(isChecked);
+  const handleAllExamplesChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setAllExamplesView(event.target.checked);
   };
 
   return (

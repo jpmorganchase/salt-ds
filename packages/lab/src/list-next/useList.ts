@@ -10,7 +10,7 @@ import {
 } from "react";
 import { useControlled, useIsFocusVisible } from "@salt-ds/core";
 
-interface UseListProps {
+export interface UseListProps {
   /**
    * If true, all items in list will be disabled.
    */
@@ -224,7 +224,7 @@ export const useList = ({
   };
 
   // takes care of focus when using keyboard navigation
-  const focusHandler = (event: FocusEvent<HTMLUListElement>) => {
+  const focusHandler = (event: FocusEvent<HTMLUListElement | HTMLElement>) => {
     handleFocusVisible(event);
     if (isFocusVisibleRef.current) {
       setFocusVisible(true);

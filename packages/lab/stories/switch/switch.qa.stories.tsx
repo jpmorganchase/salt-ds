@@ -5,10 +5,6 @@ import { QAContainer, QAContainerProps } from "docs/components";
 export default {
   title: "Lab/Switch/QA",
   component: Switch,
-  // Manually specify onClick action to test Actions panel
-  // react-docgen-typescript-loader doesn't support detecting interface extension
-  // https://github.com/strothj/react-docgen-typescript-loader/issues/47
-  argTypes: { onClick: { action: "clicked" } },
 } as ComponentMeta<typeof Switch>;
 
 export const AllExamplesGrid: Story<

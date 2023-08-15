@@ -115,6 +115,24 @@ declare global {
        * */
       (chainer: "not.be.focusVisible"): Chainable<Subject>;
       (chainer: "not.have.focusVisible"): Chainable<Subject>;
+      /**
+       * Checks if the element is in the viewport.
+       *
+       * @example
+       ```
+       cy.findByRole('option).should('be.inTheViewport')
+       ```
+       * */
+      (chainer: "be.inTheViewport"): Chainable<Subject>;
+      /**
+       * Checks if the element is not in the viewport.
+       *
+       * @example
+       ```
+       cy.findByRole('option).should('not.be.inTheViewport')
+       ```
+       * */
+      (chainer: "not.be.inTheViewport"): Chainable<Subject>;
     }
   }
 }
@@ -361,5 +379,37 @@ const hasAriaSelected: ChaiPlugin = (_chai, utils) => {
 
 // registers our assertion function "isHighlighted" with Chai
 chai.use(hasAriaSelected);
+
+/**
+ * Checks if the element is in the viewport
+ *
+ * @example
+ * cy.findByRole('option).should('be.inTheViewport')
+ */
+const isInTheViewport: ChaiPlugin = (_chai, utils) => {
+  function assertIsInTheViewport(this: AssertionStatic) {
+    const root = this._obj.get(0);
+    // make sure it's an Element
+    new _chai.Assertion(
+      root.nodeType,
+      `Expected an Element but got '${String(root)}'`
+    ).to.equal(1);
+
+    const viewportHeight = Cypress.config(`viewportHeight`);
+    const rect = root.getBoundingClientRect();
+
+    this.assert(
+      !(rect.bottom < 0 || rect.top - viewportHeight >= 0),
+      `expected \n${elementToString(root)} to be in the viewport.`,
+      `expected \n${elementToString(root)} to not be in the viewport`,
+      null
+    );
+  }
+
+  _chai.Assertion.addMethod("inTheViewport", assertIsInTheViewport);
+};
+
+// registers our assertion function "isInTheViewport" with Chai
+chai.use(isInTheViewport);
 
 export {};

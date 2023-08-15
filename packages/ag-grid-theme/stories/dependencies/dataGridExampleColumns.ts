@@ -4,11 +4,12 @@ const dataGridExampleColumns: ColDef[] = [
   {
     headerName: "",
     field: "on",
+    width: 70,
     checkboxSelection: true,
     headerCheckboxSelection: true,
-    width: 38,
     pinned: "left",
     suppressMenu: true,
+    resizable: false,
   },
   {
     headerName: "Name",

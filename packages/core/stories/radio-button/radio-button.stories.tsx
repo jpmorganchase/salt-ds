@@ -8,18 +8,18 @@ export default {
 } as ComponentMeta<typeof RadioButton>;
 
 export const Default = () => {
-  return <RadioButton label="Default" value="Unchecked" />;
+  return <RadioButton label="Subscribe" value="Unchecked" />;
 };
 
 export const Checked = () => {
-  return <RadioButton label="Checked" value="Checked" checked />;
+  return <RadioButton label="Subscribe" value="subscribe" checked />;
 };
 
 export const Disabled = () => {
   return (
     <RadioButtonGroup disabled>
-      <RadioButton label="Disabled" value="Disabled" />
-      <RadioButton label="Checked Disabled" value="Disabled-checked" checked />
+      <RadioButton label="Validate with email" value="email" />
+      <RadioButton label="Validate with text message" value="text" checked />
     </RadioButtonGroup>
   );
 };
@@ -27,8 +27,8 @@ export const Disabled = () => {
 export const Readonly = () => {
   return (
     <RadioButtonGroup readOnly>
-      <RadioButton label="Readonly" value="Readonly" />
-      <RadioButton label="Checked Readonly" value="Readonly-checked" checked />
+      <RadioButton label="Validate with email" value="email" />
+      <RadioButton label="Validate with text message" value="text" checked />
     </RadioButtonGroup>
   );
 };
@@ -53,17 +53,17 @@ export const Warning = () => {
 
 export const VerticalGroup = () => (
   <RadioButtonGroup>
-    <RadioButton key="option1" label="Radio Option 1" value="option1" />
-    <RadioButton key="option2" label="Radio Option 2" value="option2" />
-    <RadioButton key="option3" label="Radio Option 3" value="option3" />
+    <RadioButton key="option1" label="NAMR" value="option1" />
+    <RadioButton key="option2" label="APAC" value="option2" />
+    <RadioButton key="option3" label="EMEA" value="option3" />
   </RadioButtonGroup>
 );
 
 export const HorizontalGroup = () => (
   <RadioButtonGroup direction={"horizontal"}>
-    <RadioButton key="option1" label="Radio Option 1" value="option1" />
-    <RadioButton key="option2" label="Radio Option 2" value="option2" />
-    <RadioButton key="option3" label="Radio Option 3" value="option3" />
+    <RadioButton key="option1" label="NAMR" value="option1" />
+    <RadioButton key="option2" label="APAC" value="option2" />
+    <RadioButton key="option3" label="EMEA" value="option3" />
   </RadioButtonGroup>
 );
 
@@ -76,12 +76,12 @@ export const WrapGroup: ComponentStory<typeof RadioButtonGroup> = ({
     }}
   >
     <RadioButtonGroup name="fx" direction={"horizontal"} wrap={wrap}>
-      <RadioButton key="option1" label="Radio Option 1" value="option1" />
-      <RadioButton key="option2" label="Radio Option 2" value="option2" />
+      <RadioButton key="option1" label="North America" value="option1" />
+      <RadioButton key="option2" label="Asia, Pacific" value="option2" />
       <RadioButton
         disabled
         key="option3"
-        label="Radio Option 3 (disabled)"
+        label="Europe, Middle East, Africa"
         value="option3"
       />
     </RadioButtonGroup>
@@ -97,16 +97,16 @@ NoWrapGroup.args = { wrap: false };
 
 const radioData = [
   {
-    label: "Controlled Radio Option 1",
+    label: "NAMR",
     value: "option1",
   },
   {
-    label: "Controlled Radio Option 2",
+    label: "APAC",
     value: "option2",
   },
   {
     disabled: true,
-    label: "Controlled Radio Option 3 (disabled)",
+    label: "EMEA",
     value: "option3",
   },
 ];
@@ -125,7 +125,7 @@ export const ControlledGroup: ComponentStory<typeof RadioButtonGroup> = ({
   return (
     <RadioButtonGroup
       aria-label="Controlled Example"
-      name="fx"
+      name="region"
       onChange={handleChange}
       value={controlledValue}
     >

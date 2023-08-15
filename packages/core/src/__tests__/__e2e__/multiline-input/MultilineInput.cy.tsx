@@ -203,7 +203,7 @@ describe("GIVEN an MultilineInput", () => {
             <MultilineInput defaultValue="Value" />
           </FormField>
         );
-        cy.findByLabelText("Form Field*").should("have.attr", "required");
+        cy.findByLabelText("Form Field *").should("have.attr", "required");
       });
     });
 

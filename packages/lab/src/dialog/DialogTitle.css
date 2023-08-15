@@ -1,31 +1,45 @@
-.saltDialogTitle {
-  --dialog-closeButton-padding: var(--saltDialog-closeButton-padding, var(--salt-size-unit));
-  --dialog-closeButton-offset: var(--saltDialog-closeButton-offset, calc(var(--dialog-padding) * -1));
-
-  --dialog-title-icon-marginRight: var(--saltDialog-title-icon-marginRight, var(--salt-spacing-100));
-}
-
+/* Styles applied to the root element */
 .saltDialogTitle {
   display: flex;
-  flex: 0 0 auto;
-  min-height: 16px;
+  gap: var(--salt-spacing-100);
+  padding-bottom: var(--salt-spacing-100);
+  padding-left: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
+  margin: 0;
+}
+
+/* Styles applied to the status indicator icon overriding its default size */
+.saltDialogTitle .saltStatusIndicator.saltIcon {
+  --icon-size: var(--salt-text-h2-lineHeight);
+}
+
+/* Styles applied to DialogTitle when accent={true} */
+.saltDialogTitle-withAccent {
   position: relative;
-  margin: 0;
 }
 
-.saltDialogTitle-close {
+.saltDialogTitle-withAccent::before {
+  content: "";
   position: absolute;
-  padding-top: var(--dialog-closeButton-padding);
-  padding-bottom: var(--dialog-closeButton-padding);
-  right: var(--dialog-closeButton-offset);
-  top: var(--dialog-closeButton-offset);
+  top: 0;
+  left: 0;
+  bottom: var(--salt-spacing-100);
+  width: var(--salt-size-accent);
+  background: var(--salt-accent-background);
 }
 
-.saltDialogTitle .saltDialogTitle-statusIndicator {
-  min-height: var(--salt-text-h1-lineHeight);
-  margin-right: var(--dialog-title-icon-marginRight);
+.saltDialogTitle-error::before {
+  background: var(--salt-status-error-borderColor);
 }
 
-.saltDialogTitle-text {
-  margin: 0;
+.saltDialogTitle-info::before {
+  background: var(--salt-status-info-borderColor);
+}
+
+.saltDialogTitle-success::before {
+  background: var(--salt-status-success-borderColor);
+}
+
+.saltDialogTitle-warning::before {
+  background: var(--salt-status-warning-borderColor);
 }

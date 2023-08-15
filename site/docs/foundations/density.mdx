@@ -3,34 +3,71 @@ title: Density
 layout: DetailTechnical
 sidebar:
   label: Density
-data:
-  status: In progress
 ---
 
-Density relates to the amount of content that can fit on a screen based on the component size and spacing.
+Density relates to the amount of content that can fit on a screen based on the [size](size) and [spacing](spacing) of components.
 
-Choose a base density as a starting point when creating a product using the design system. All components, spacing, and typographic elements will align and remain proportionate regardless of the density you choose.
+When creating a product using the design system, choose a base density as a starting point. All components, spacing, and typographic elements will align and remain proportionate regardless of the density you choose.
 
-Four densities are available: high, medium, low and touch.
+There are four densities available to choose from:
 
-### High density
+- High
+- Medium
+- Low
+- Touch.
 
-High density scales components down to their smallest size. High density is optimized for data-heavy or complex applications, such as trading platforms.
+<Image
+  src="/img/foundations/density-example.svg"
+  alt="Example of all densities side-by-side"
+/>
 
-### Medium density
+## High density (HD)
+
+High density scales components down to their smallest size and reduces the size between elements to ensure a compact layout.
+
+High density is optimized for data-heavy or complex applications, such as trading platforms. It is optimized for frequent use by experienced power users.
+
+## Medium density (MD)
 
 Medium density is the default solution for most use cases. It is ideal for most standard applications or content-rich websites.
 
-### Low density
+## Low density (LD)
 
-Low density is optimized for data or content-light interfaces. It's ideal for marketing, communications, or onboarding experiences.
+Low density is optimized for data or content-light interfaces. It's ideal for marketing, communications, or onboarding experiences. In contrast to 'high density', low density is intended for infrequently used applications by inexperienced users.
 
-### Touch density
+## Touch density (TD)
 
-Touch density scales components to their largest increment, and is intended only for mobile or tablet devices.
+Touch density scales components to their largest increment and is intended for mobile or tablet devices only.
+
+<ExampleContainer type="negative">
+
+Don't use touch density for anything other than mobile or tablet experiences. For simple interfaces use low density.
+
+</ExampleContainer>
+
+## Mixing densities
+
+Density is intended to be used one density at a time, only changing when part of a [responsive layout](responsiveness). When applying density:
+
+- Pick a density and be consistent with it across your application
+- Alternatively, set density to align to breakpoints and define which density to use per breakpoint
+- If the use case requires it, mix densities, but do it sparingly in order to provide greater emphasis to a single component or small group of components, such as log-in fields.
+
+The [Responsiveness](responsiveness) foundation includes guidance on recommended breakpoints for each density.
+
+Before mixing densities, consider other ways to establish hierarchy or emphasise certain elements, such as:
+
+- Using typographic hierarchy or weight.
+- Mixing primary and secondary background colors.
+- Applying greater spacing between elements.
+- Scaling components.
+
+If you still need to mix densities, do it sparingly. Although possible, the components within the system are not designed to be mixed. This does not mean they can't be mixed, but they are designed around a specific scaling system that ensures components of the same density align. The components are not designed to 'fit' together across densities.
+
+Mixing the density of components sparingly can help to create emphasis without visual disruption. However, if overused, there may be issues with component alignment and use of [spacing tokens](spacing).
 
 <Callout title="Have some feedback?">
 
-The Salt Foundations are still in progress, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or questions.
+We're still in the process of rolling out the Salt Foundations, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or suggestions.
 
 </Callout>

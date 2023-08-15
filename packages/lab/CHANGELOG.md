@@ -1,5 +1,119 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.15
+
+### Minor Changes
+
+- b2ca1f11: Remove MultilineInput from labs and promote to core
+- f353c3ac: Removed `ControlLabel`.
+- 8c77cdb2: - Fixed tab in `ListNext` keyboard navigation
+  - Exposed `setSelectedItem` and `setHighlightedItem` from useList.
+- 894f7e07: Changes to Badge:
+
+  - Renamed `BadgeContent` to `value`
+  - Addition of inline styling when no child is passed to the component, enabling the badge to be used in other components e.g App Header
+  - Truncation of numerical values > 3 characters or when max value is exceeded
+  - Truncation of string values > 4 characters
+
+  With Child:
+
+  ```
+  <Badge value={number} max={99}>
+  <SettingsIcon/>
+  <Badge/>
+  ```
+
+  No Child - Inline:
+
+  ```
+  <Badge value={string} />
+  ```
+
+### Patch Changes
+
+- b0b58a0b: Increased the font-weight of Stepped Tracker labels
+- fa6f54b3: Fixed Linear Progress's bar not animating to the beginning on reset
+- f9291944: Removed truncation and tooltip behaviour from Stepped Tracker. After re-assessment it was judged that simply wrapping advising against long labels and wrapping text where necessary was preferable.
+- 97719a52: Removed unit, renderInfo and disabled props from Circular Progress and Linear Progress.
+- f353c3ac: Updated Switch's styling
+  Refactored Switch and updated its change handler.
+
+  ```diff
+  - const Controlled: ComponentStory<typeof Switch> = (args) => {
+  -   const [checked, setChecked] = useState(false);
+  -
+  -   const handleChange = (
+  -     _: ChangeEvent<HTMLInputElement>,
+  -     isChecked: boolean
+  -   ) => {
+  -     setChecked(isChecked);
+  -   };
+  -
+  -   return <Switch {...args} checked={checked} onChange={handleChange} />;
+  - };
+  + const Controlled: ComponentStory<typeof Switch> = (args) => {
+  +   const [checked, setChecked] = useState(false);
+  +
+  +   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  +     setChecked(event.target.checked);
+  +   };
+  +
+  +   return <Switch {...args} checked={checked} onChange={handleChange} />;
+  + };
+  ```
+
+- 52d7284e: Added controlled version of ListNext
+
+  - Added `highlightedItem`, `selected` and `onChange` props to `ListNext` in order to support a controlled list.
+  - Removed `selected`, from `ListNextItem` so state only gets controlled by list.
+  - Exposed `selectedItem` and `highlightedItem` from useList.
+  - Fixed `onChange` not being called on keyboard selection.
+  - Fixed focus ring when focusing on disabled `ListNextItem`.
+
+- 4f20e54c: Remove string truncation from Badge.
+  Change default max to `999` for Badge.
+- 678ec785: NavItem
+
+  - Add nav item props for `blurSelected` state (when a nav item has active children), `IconComponent` and `BadgeComponent`
+  - Update component styling to match designs
+  - Remove `ChevronDownIcon` from horizontal expansion button as per designs
+
+- bc24788c: Fix spacing imbalance in SteppedTracker
+- 00feb5f9: Drawer
+
+  - Replace `Scrim` with `FloatingFocusManager`
+  - Remove `disableScrim`, `disableAnimations` and `scrimProps` props
+  - Rename prop `isOpen` to `open` and add `onOpenChange` prop to allow component to be dismissed when clicking outside or pressing `Esc`
+
+- 90e4604b: Add ToastGroup
+
+  ```
+  <ToastGroup>
+    <Toast status="success">
+      <ToastContent>
+        <Text>
+          <strong>Project file upload</strong>
+        </Text>
+        <div>Project file has successfully uploaded to the shared drive. </div>
+      </ToastContent>
+      <Button variant="secondary" onClick={closeToast}>
+        <CloseIcon />
+      </Button>
+    </Toast>
+    <Toast>
+      <ToastContent>
+        <Text>
+          <strong>File update</strong>
+        </Text>
+        <div>A new version of this file is available with 37 updates. </div>
+      </ToastContent>
+      <Button variant="secondary" onClick={closeToast}>
+        <CloseIcon />
+      </Button>
+    </Toast>
+  </ToastGroup>
+  ```
+
 ## 1.0.0-alpha.14
 
 ### Minor Changes

@@ -1,0 +1,94 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import { Drawer } from "@salt-ds/lab";
+import { CSSClassTable } from "css-variable-docgen-components";
+import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+
+<Meta
+  title="Documentation/Lab/Drawer"
+  component={Drawer}
+  parameters={{
+    viewMode: "docs",
+  }}
+/>
+
+# Drawer
+
+A Drawer is an expandable panel that users can open and close with a sliding animation.
+
+Use this component to display content as an overlay within the application layout. With Drawer, the user can view additional content without navigating away from the current screen.
+
+## How to use
+
+Use this component by wrapping it around your content and setting the desired position. For example:
+
+<Canvas>
+  <Story id="lab-drawer--default" inline={false} height="500px" />
+</Canvas>
+
+Provide a component like a Button so that users can open and close the Drawer.
+
+The Drawer displays a visual overlay, also known as a scrim, over the existing content. It also plays relevant animations when opening and closing. You can customize all of these visuals via CSS.
+
+### When to use Drawer
+
+Use Drawer when you need additional content, such as a form or sidebar navigation, to be displayed in a specific area of the screen.
+
+### When not to use Drawer
+
+If you want your content split between pages or tabs, consider Deck Layout instead.
+
+## Features
+
+### Drawer positioning
+
+The component will be displayed in the left position by default but you can customize this via the `position` prop as per the following examples.
+
+#### Top positioned
+
+<Canvas>
+  <Story id="lab-drawer--top" inline={false} height="500px" />
+</Canvas>
+
+#### Right positioned
+
+<Canvas>
+  <Story id="lab-drawer--right" inline={false} height="500px" />
+</Canvas>
+
+#### Left positioned
+
+<Canvas>
+  <Story id="lab-drawer--default" inline={false} height="500px" />
+</Canvas>
+
+#### Bottom positioned
+
+<Canvas>
+  <Story id="lab-drawer--bottom" inline={false} height="500px" />
+</Canvas>
+
+## Configuring Drawer
+
+### API
+
+```
+import { Drawer } from "@salt-ds/lab";
+```
+
+### Props
+
+<ArgsTable of={Drawer} />
+
+### Classes
+
+<CSSClassTable of={Drawer} />
+
+## Accessibility
+
+You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
+
+<Canvas>
+  <Story id="lab-drawer--reduced-motion" inline={false} height="500px" />
+</Canvas>
+
+<HelpAndSupport />

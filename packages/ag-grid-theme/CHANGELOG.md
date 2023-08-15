@@ -1,5 +1,21 @@
 # @salt-ds/ag-grid-theme
 
+## 1.3.0
+
+### Minor Changes
+
+- 6cc395d0: Use Salt icons in Salt ag-grid theme
+- ce2b6d4c: Add color-scheme to Salt AG grid theme to ensure native light and dark mode
+
+### Patch Changes
+
+- c2348ac2: Reduced spacing in context menu styles
+- a453cec8: Fixed status bar and floating filter styles
+
+  Added HD compact density styling
+
+- dcd83052: Fixed column separator height and floating filter height
+
 ## 1.2.0
 
 ### Minor Changes

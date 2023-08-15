@@ -7,6 +7,7 @@ export interface AccordionContextValue {
   toggle: (event: SyntheticEvent<HTMLButtonElement>) => void;
   disabled: boolean;
   id: string;
+  status?: "error" | "warning" | "success";
 }
 
 export const AccordionContext = createContext<AccordionContextValue>(

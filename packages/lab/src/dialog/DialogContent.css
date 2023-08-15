@@ -1,24 +1,9 @@
 .saltDialogContent {
-  --dialog-content-fontSize: var(--saltDialog-content-fontSize, var(--salt-text-fontSize));
-  --dialog-content-lineHeight: var(--saltDialog-content-lineHeight, var(--salt-text-lineHeight));
-  --dialog-content-paddingTop: var(--saltDialog-content-paddingTop, calc(var(--salt-size-unit) * 2));
-  --dialog-content-paddingBottom: var(--saltDialog-content-paddingBottom, var(--salt-size-container-spacing));
-  --dialog-content-minHeight: var(--saltDialog-content-minHeight, var(--dialog-content-fontSize));
-  --dialog-content-color: var(--saltDialog-content-color, var(--salt-text-primary-foreground));
-}
-
-.saltDialogContent {
+  color: var(--salt-text-primary-foreground);
+  padding-inline: var(--salt-spacing-300);
   flex: 1 1 auto;
-  overflow: visible;
-  font-weight: var(--salt-text-fontWeight);
-  font-size: var(--dialog-content-fontSize);
-  padding-top: var(--dialog-content-paddingTop);
-  padding-bottom: var(--dialog-content-paddingBottom);
-  min-height: var(--dialog-content-minHeight);
-  line-height: var(--dialog-content-lineHeight);
-  color: var(--dialog-content-color);
-}
-
-.saltDialogContent-leftGutter {
-  padding-left: 32px;
+  min-height: var(--salt-text-lineHeight);
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  overflow-y: auto;
 }

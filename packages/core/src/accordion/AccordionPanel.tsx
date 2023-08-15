@@ -32,6 +32,7 @@ export const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(
         id={`${id}-panel`}
         aria-labelledby={`${id}-header`}
         aria-hidden={!expanded ? "true" : undefined}
+        hidden={!expanded}
         {...rest}
       >
         <div className={withBaseName("inner")}>

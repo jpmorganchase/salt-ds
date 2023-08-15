@@ -195,8 +195,7 @@ describe("GIVEN a FormField", () => {
           </FormField>
         );
 
-        cy.findByText("*").should("exist");
-        cy.findByLabelText("Label*").should("have.attr", "required");
+        cy.findByLabelText("Label *").should("have.attr", "required");
       });
     });
 

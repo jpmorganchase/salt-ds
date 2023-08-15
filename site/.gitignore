@@ -3,7 +3,6 @@
 
 # Misc
 .DS_Store
-.env.local
 
 # Generated files
 /.tmp/
@@ -11,3 +10,4 @@
 /snapshots/
 /public/sitemap.xml
 /src/props/*.json
+/src/components/css-display/cssVariables.json

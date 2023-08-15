@@ -20,8 +20,16 @@ export const CloseTabWarningDialog = ({
   onConfirm: () => void;
   open?: boolean;
 }) => (
-  <Dialog open={open} status="warning" onClose={onClose}>
-    <DialogTitle onClose={onClose}>Do you want to close this tab?</DialogTitle>
+  <Dialog
+    open={open}
+    status="warning"
+    onOpenChange={(value) => {
+      if (!value) {
+        onClose();
+      }
+    }}
+  >
+    <DialogTitle>Do you want to close this tab?</DialogTitle>
     <DialogContent>
       {`Closing the tab will cause any changes made to
                   '${closedTab.label}' to be lost.`}

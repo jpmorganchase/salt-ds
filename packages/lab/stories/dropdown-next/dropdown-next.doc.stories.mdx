@@ -1,0 +1,107 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { DropdownNext } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+
+<Meta title="Documentation/Lab/Dropdown Next" component={DropdownNext} />
+
+# Dropdown
+
+A Dropdown allows the user to select an item from an array of options displayed in an overlay list–with the selected value displayed in the dropdown field.
+Use the Dropdown component when you have a limited list of options (five to ten) that doesn't require filtering to narrow down.
+
+Dropdown contains a Button that opens a List on mouse and keyboard interactions. This button has a chevron icon.
+
+<Canvas>
+  <Story id="lab-dropdown-next--default" />
+</Canvas>
+
+### With `defaultSelected` prop
+
+By default the Dropdown is empty on initial render. When the `defaultSelected` prop is passed, Dropdown displays its value.
+Use only in uncontrolled Dropdown.
+
+<Canvas>
+  <Story id="lab-dropdown-next--with-default-selected" />
+</Canvas>
+
+### Variants
+
+Dropdown has two variants: `primary` (default) and `secondary`.
+
+<Canvas>
+  <Story id="lab-dropdown-next--variants" />
+</Canvas>
+
+Tip: See the [Forms pattern](https://www.saltdesignsystem.com/salt/patterns/forms) for guidance on primary vs secondary control selection.
+
+### Readonly
+
+When `readOnly={true}`, users will not be able to interact with Dropdown apart from focusing on it.
+Use to indicate that the pre-selected value is valid but changes are not permitted.
+
+<Canvas>
+  <Story id="lab-dropdown-next--readonly" />
+</Canvas>
+
+### Disabled
+
+When `disabled={true}`, user will not be able to interact with Dropdown, it does not receive focus on any interaction.
+
+<Canvas>
+  <Story id="lab-dropdown-next--disabled" />
+</Canvas>
+
+### Controlled
+
+Controlled Dropdown allows states and behaviours to be controlled by the application, not within the component.
+It allows for finer control of Dropdown interactions.
+
+You can control the following:
+
+- the opening and closing of Dropdown List (`open`)
+- movement up or down of highlighted List items (`highlightedItem`)
+- selection of List items (`selected`)
+
+<Canvas>
+  <Story id="lab-dropdown-next--controlled" />
+</Canvas>
+
+## How to use
+
+### When to use Dropdown
+
+- When you want to allow the user to choose one value from a set of five to ten options and if you want only the selected value to be visible in your UI (e.g., to preserve screen space).
+
+### When not to use Dropdown
+
+- When you have 10+ options and users would benefit from filtering to narrow down the visible options, in this case use [Combo Box](?path=/story/documentation-lab-combo-box-next--page).
+- When you have fewer than five options; and multiple selection is required, in this case use a [Checkbox group](?path=/docs/documentation-core-checkbox--page).
+- When you have fewer than five options; and only single selection is required, use a [Radio Button group](?path=/docs/documentation-core-radio-button--page).
+- If you have a Boolean selection (on/off) consider using a [Switch](?path=/docs/documentation-lab-switch--page).
+
+# API
+
+```
+import { DropdownNext } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={DropdownNext} />
+
+## Classes
+
+<CSSClassTable of={DropdownNext} />
+
+## Characteristics used
+
+<CharacteristicUsage of={DropdownNext} />
+
+## Accessibility
+
+The Dropdown control must be wrapped in a [Form Field](https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-form-field--page) control to be compliant with WCAG 2.1 standards.
+
+The Form Field provides a visible label and help and status information.

@@ -1,3 +1,15 @@
 .saltAccordion {
-  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}
+
+.saltAccordion-error {
+  border-top-color: var(--salt-status-error-borderColor);
+}
+
+.saltAccordion-warning {
+  border-top-color: var(--salt-status-warning-borderColor);
+}
+
+.saltAccordion-success {
+  border-top-color: var(--salt-status-success-borderColor);
 }

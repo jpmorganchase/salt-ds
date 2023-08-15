@@ -27,6 +27,10 @@ export interface AccordionProps extends ComponentPropsWithoutRef<"div"> {
    * Whether the accordion is disabled.
    */
   disabled?: boolean;
+  /**
+   * The status of the accordion.
+   */
+  status?: "error" | "warning" | "success";
 }
 
 const withBaseName = makePrefixer("saltAccordion");
@@ -40,6 +44,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       disabled,
       id: idProp,
       onToggle,
+      status,
       value,
       ...rest
     } = props;
@@ -72,9 +77,18 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
           expanded,
           disabled: Boolean(disabled),
           id: id ?? "",
+          status,
         }}
       >
-        <div ref={ref} className={clsx(withBaseName(), className)} {...rest} />
+        <div
+          ref={ref}
+          className={clsx(
+            withBaseName(),
+            { [withBaseName(status ?? "")]: status },
+            className
+          )}
+          {...rest}
+        />
       </AccordionContext.Provider>
     );
   }

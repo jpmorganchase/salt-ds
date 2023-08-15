@@ -1,0 +1,100 @@
+import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { ComboBoxNext } from "@salt-ds/lab";
+import {
+  CharacteristicUsage,
+  CSSClassTable,
+} from "css-variable-docgen-components";
+
+<Meta title="Documentation/Lab/Combo Box Next" component={ComboBoxNext} />
+
+# Combo Box
+
+Combo Box helps users select an item from a large list of options without scrolling. The typeahead functionality makes this selection process quicker, easier, and reduces errors.
+
+Users can see a list of available options when they click on the component and then filter the list as they type. Once they’ve made their selection, it populates the field and the overlay list closes.
+
+<Canvas>
+  <Story id="lab-combo-box-next--default" />
+</Canvas>
+
+## How to use
+
+### When to use Combo Box
+
+You should use Combo Box when you have a list of 10 or more items, that don’t need to be permanently visible to the user like they would be in a filter panel or form.
+
+### When not to use Combo Box
+
+- If you have a short list of five to 10 options that doesn’t require filtering, use a `Dropdown`.
+- If you have fewer than five options, use `Checkbox` or `Radio Button` groups.
+
+## Features
+
+### Single select
+
+A single item can be selected from the Combo Box options.
+
+<Canvas>
+  <Story id="lab-combo-box-next--default" />
+</Canvas>
+
+### Customized renderer and filter
+
+The typeahead filter logic can be modified to assist the user selection. This example filters on both the country and code. You can use the `itemFilter` prop to customize the filter that applies to the elements.
+
+Additionally, the display of list items can be customized to visually assist users, like the rendering of flag icons next to the names of countries seen below. You can achieve this by passing an `itemRenderer` prop.
+
+<Canvas>
+  <Story id="lab-combo-box-next--custom-renderer" />
+</Canvas>
+
+### Variants
+
+Combo Box has two variants: primary (default) and secondary.
+
+Tip: For recommendations on variant choice, see the <Link href="https://www.saltdesignsystem.com/salt/patterns/forms">Forms pattern</Link>.
+
+<Canvas>
+  <Story id="lab-combo-box-next--secondary" />
+</Canvas>
+
+# API
+
+```
+import { ComboBoxNext } from "@salt-ds/lab";
+```
+
+## Props
+
+<ArgsTable of={ComboBoxNext} />
+
+## Classes
+
+<CSSClassTable of={ComboBoxNext} />
+
+## Characteristics used
+
+<CharacteristicUsage of={ComboBoxNext} />
+
+## Accessibility
+
+Combo Box is accessible by assistive technologies like screen readers, and
+provides full WAI-ARIA support.
+
+### Keyboard Interactions
+
+| Key                      | Function                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tab                      | If focus is above the component, sets focus in the input field. The input becomes active, with a visible text cursor, and the list is opened. <br/>If focus is in the input, moves focus out of the component to the next element in the tab order. If there’s text in the input, the text is cleared when the component loses focus.                     |
+| Shift + Tab              | If focus is below the component, always sets focus in the input field. The input becomes active, with a visible text cursor, and the list is opened.<br/>If focus is in the text input area, moves focus out of the component to the previous element in the tab order. If there’s text in the input, the text is cleared when the component loses focus. |
+| Enter                    | If the list is closed and the input field has focus, opens the list. Focus remains in the field.<br/>If focus is on a list item it selects it.                                                                                                                                                                                                            |
+| Space                    | Types a space character into the input field.                                                                                                                                                                                                                                                                                                             |
+| Escape                   | Clears text that is currently in the input field.<br/>If the list is expanded, closes the list without making a selection.                                                                                                                                                                                                                                |
+| Arrow up                 | If focus is on the input, and the list is closed, opens the list and moves focus to the first focusable item in the list. <br/>If the list is open, moves focus to the previous list item. <br/>If focus is on the first list item, does nothing.                                                                                                         |
+| Arrow down               | Moves focus to next item in the list. <br /> If focus is on the last item, the next DownArrow key press should NOT wrap focus back to the first item                                                                                                                                                                                                      |
+| Backspace/ Delete        | Removes any text. When by a backspace the input value is empty, deselects. When backspaced when list is closed, it will open the list.                                                                                                                                                                                                                    |
+| Alt + Arrow up           | Toggles list expansion state. The list does not receive focus.                                                                                                                                                                                                                                                                                            |
+| Alt + Arrow down         | Toggles list expansion state. The list does not receive focus.                                                                                                                                                                                                                                                                                            |
+| Ctrl + Backspace         | Removes the entire word immediately preceding the text cursor.                                                                                                                                                                                                                                                                                            |
+| Ctrl + Arrow Left/Right  | Moves the cursor one word at a time. When the start/end of the field is reached, does nothing.                                                                                                                                                                                                                                                            |
+| Shift + Arrow Left/Right | Drags selection over text characters, one at a time.                                                                                                                                                                                                                                                                                                      |

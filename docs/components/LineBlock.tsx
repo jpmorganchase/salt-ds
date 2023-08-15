@@ -22,11 +22,13 @@ export const LineBlock = ({
   lineWidth,
   lineStyle,
   replacementToken,
+  hideToken,
 }: {
   token: string;
   lineWidth?: string;
   lineStyle?: string;
   replacementToken?: string;
+  hideToken?: boolean;
 }) => {
   return (
     <>
@@ -46,7 +48,7 @@ export const LineBlock = ({
           />
         </svg>
       </div>
-      <code className="DocGrid-code">{token}</code>
+      {!hideToken && <code className="DocGrid-code">{token}</code>}
       {replacementToken && (
         <ReplacementToken replacementToken={replacementToken} />
       )}

@@ -1,6 +1,6 @@
 import styles from "./ImageSwitcher.module.css";
 import { Switch } from "@salt-ds/lab";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Image } from "@jpmorganchase/mosaic-site-components";
 
 export interface ImageSwitcherProps {
@@ -12,8 +12,8 @@ export function ImageSwitcher(props: ImageSwitcherProps): JSX.Element {
   const { label, images } = props;
   const [toggle, setToggle] = useState(false);
 
-  const handleToggle = () => {
-    setToggle((old) => !old);
+  const handleToggle = (event: ChangeEvent<HTMLInputElement>) => {
+    setToggle(event.target.checked);
   };
 
   const currentImage = toggle ? images[1] : images[0];

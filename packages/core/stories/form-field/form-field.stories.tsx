@@ -647,7 +647,7 @@ export const GroupedWithLabelLeft: ComponentStory<typeof FormField> = (
   props
 ) => {
   const groupedProps: { labelPlacement: FormFieldLabelPlacement } = {
-    labelPlacement: "right",
+    labelPlacement: "left",
   };
 
   return (
