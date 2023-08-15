@@ -132,11 +132,11 @@ export const AudioPlayer = forwardRef<HTMLDivElement, AudioPlayerProps> (
   };
 
   return (
-      <span style={{background: 'pink', display: 'flex', flexDirection: 'row', position: 'relative'}} className={clsx(withBaseName(), className)} ref={ref} {...rest} >
+      <div className={clsx(withBaseName(), className)} ref={ref} {...rest} >
       <audio ref={audioRef} aria-label="audio" src={`${src}`} />
-      <Text className={withBaseName("title")} styleAs={"h4"}>{title}</Text>
+      <Text className={withBaseName("title")} styleAs={"label"}>{title}</Text>    
       <div className={withBaseName("sliderContainer")}>
-      <Text styleAs={"h4"}>{timeNowString}</Text>
+      <Text styleAs={"label"}>{timeNowString}</Text>
         <Slider
           className={withBaseName("slider")}
           min={0}
@@ -145,9 +145,9 @@ export const AudioPlayer = forwardRef<HTMLDivElement, AudioPlayerProps> (
           value={timeNowSeconds}
           onChange={handleSliderInput}
         />
-        <Text styleAs={"h4"}>{durationString}</Text>
+        <Text styleAs={"label"}>{durationString}</Text>
       </div>
-      <ButtonBar className={withBaseName("buttonBar")} stackAtBreakpoint={0} disableAutoAlignment={true}>
+      <ButtonBar className={withBaseName("buttonBar")} stackAtBreakpoint={0} disableAutoAlignment={false}>
         <div>
           <a href={src} download target="_blank" rel="noreferrer">
           <OrderedButton className={withBaseName("button")}>
@@ -172,7 +172,7 @@ export const AudioPlayer = forwardRef<HTMLDivElement, AudioPlayerProps> (
           {mute ? <VolumeOffIcon/> : <VolumeUpIcon/> }
         </OrderedButton>
       </ButtonBar>
-    </span>
+    </div>
     );
   }
 );

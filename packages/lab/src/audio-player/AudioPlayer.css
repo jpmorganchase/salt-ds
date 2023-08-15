@@ -1,55 +1,51 @@
 .saltAudioPlayer {
-  position: 'relative';
-  left: '0px';
-  top: '0px';
-  display: 'flex';
-  flex-direction: 'column';
+  position: relative;
+  left: 50px;
+  top: 0px;
+  display: flex;
+  flex-direction: column;
   padding: var(--salt-spacing-50);
   margin: var(--salt-spacing-50);
-  /* background-color: 'pink'; */
-  background-color: var(--salt-actionable-secondary-background);
+  background-color: var(--salt-actionable-primary-background);
   font-size: var(--salt-text-fontSize);
 }
 
-.saltAudioPlayer-titile{
-    display: 'flex';
-    position: 'relative';
-    justify-content: 'center';
-    align-items: 'center';
-    flex-direction: 'row';
-    background-color: blue;
+.saltAudioPlayer-title{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
   }
 
 .saltAudioPlayer-sliderContainer{
-    display: 'flex';
-    position: 'relative';
-    justify-content: 'center';
-    align-items: 'center';
-    flex-direction: 'row';
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
     margin: var(--salt-spacing-50);
 }
 
 .saltAudioPlayer-sliderContainer:hover{
-  cursor: 'pointer'
+  cursor: pointer
 }
 
 .saltAudioPlayer-slider{
-  position: 'relative';
-  top: '-7px';
+  position: relative;
+  top: -7px;
   margin: var(--salt-spacing-50);
 }
 
 .saltAudioPlayer-buttonBar{
-  position: 'relative';
-  justify-content: 'center !important';
-  align-items: 'center';
-  background-color: red;
-  
+  position: relative;
+  justify-content: center !important;
+  align-items: center;
   }
 
 .saltAudioPlayer-button{
-  height: '32px';
-  width: '32px';
-  color: 'inherit';
-  fill: 'currentColor'
+  height: 32px;
+  width: 32px;
+  color: inherit;
+  fill: currentColor
 }
