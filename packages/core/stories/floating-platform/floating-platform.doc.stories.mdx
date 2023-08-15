@@ -30,9 +30,31 @@ To facilitate this advanced usage consumer's can pass a custom platform, based o
 
 You can provide a custom Floating UI platform to be used in these components by importing `<FloatingPlatformProvider>` and passing a custom [Floating UI Platform](https://floating-ui.com/docs/platform) as the `platform` prop. This will then be used within the floating component.
 
+### Custom Middleware
+
 Using the FloatingPlatformProvider you can also pass custom [Floating UI Middleware](https://floating-ui.com/docs/middleware) to be applied on top of the defaults for tweaking the position of floating components using the `middleware` prop.
 
+The `middleware` prop takes a function which is passed the default middleware used by a component. As a consumer you can then choose to replace it:
+
+```
+const customMiddleware = [offset(10)];
+const middleware = (defaultMiddleware) => customMiddleware;
+
+```
+
+or extend it
+
+```
+const customMiddleware = [offset(10)];
+const middleware = (defaultMiddleware) => ([...defaultMiddleware, ...customMiddleware]);
+
+```
+
+### Custom Auto-update
+
 You can also adjust the autoUpdate functionality to run on animation frame (e.g. to keep a Tooltip in sync with an external moving window) using the `animationFrame` prop.
+
+### Full example
 
 ```
 import { platform, offset } from "@floating-ui/dom";
@@ -50,7 +72,7 @@ const CustomFloatingPlatformTooltip = ({...props}) => {
         <FloatingPlatformProvider
             platform={customPlatform}
             animationFrame
-            middleware={customMiddleware}
+            middleware={(defaultMiddleware) => ([...defaultMiddleware, ...customMiddleware])}
           >
             <Tooltip {...props} />
         </FloatingPlatformProvider>
@@ -58,6 +80,8 @@ const CustomFloatingPlatformTooltip = ({...props}) => {
 }
 
 ```
+
+### Custom Floating Compoennt
 
 You may also need to pass a custom component to be used as the root of the floating component (e.g. to spawn an external window). This can be achieved by importing `<FloatingComponentProvider>` and providing a component. This component can be used as the trigger to spawn a new window, or other advanced functionality.
 

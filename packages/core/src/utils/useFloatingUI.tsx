@@ -19,9 +19,7 @@ import {
   useMemo,
   forwardRef,
   PropsWithChildren,
-  ForwardRefExoticComponent,
   Ref,
-  RefAttributes,
 } from "react";
 
 import { FloatingPortal } from "@floating-ui/react";
@@ -108,6 +106,9 @@ export type UseFloatingUIProps = {
    */
   placement?: Placement;
   strategy?: Strategy;
+  /**
+   * Function to update the default middleware used to extend or replace it
+   */
   middleware?: Middleware[];
   /**
    * Sets visible state.
@@ -119,15 +120,20 @@ export type UseFloatingUIProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
+type GetMiddleware = (middleware: Middleware[]) => Middleware[];
+
+const defaultGetMiddleware: GetMiddleware = (defaultMiddleware) =>
+  defaultMiddleware;
+
 type FloatingPlatformContextType = {
   platform: Platform;
-  middleware: Middleware[];
+  middleware: GetMiddleware;
   animationFrame: boolean;
 };
 
-const defaultFloatingPlaform = {
+const defaultFloatingPlaform: FloatingPlatformContextType = {
   platform,
-  middleware: [],
+  middleware: defaultGetMiddleware,
   animationFrame: false,
 };
 
@@ -137,7 +143,7 @@ const FloatingPlatformContext = createContext<FloatingPlatformContextType>(
 
 export interface FloatingPlatformProviderProps {
   platform?: Platform;
-  middleware?: Middleware[];
+  middleware?: GetMiddleware;
   children: ReactNode;
   animationFrame?: boolean;
 }
@@ -153,7 +159,7 @@ export function FloatingPlatformProvider(props: FloatingPlatformProviderProps) {
   const floatingPlatformContextValue = useMemo<FloatingPlatformContextType>(
     () => ({
       platform: platformProp ?? platform,
-      middleware: middleware ?? [],
+      middleware: middleware ?? defaultGetMiddleware,
       animationFrame: animationFrame ?? false,
     }),
     [platformProp, middleware, animationFrame]
@@ -195,7 +201,7 @@ export function useFloatingUI(
   const { reference, floating, refs, update, ...rest } = useFloating({
     placement,
     strategy,
-    middleware: [...middleware, ...contextMiddleware],
+    middleware: contextMiddleware(middleware),
     open,
     onOpenChange,
     whileElementsMounted: (...args) => {
