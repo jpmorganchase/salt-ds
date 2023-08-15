@@ -5,6 +5,7 @@ import {
   ForwardedRef,
   forwardRef,
   KeyboardEvent,
+  ReactElement,
   Ref,
   SyntheticEvent,
   useRef,
@@ -24,7 +25,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import comboBoxNextCss from "./ComboBoxNext.css";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { DefaultListItem, defaultFilter } from "./utils";
+import { DefaultListItem, defaultFilter, ComboBoxItemProps } from "./utils";
 import { clsx } from "clsx";
 import { UseComboBoxPortalProps } from "./useComboboxPortal";
 
@@ -85,7 +86,7 @@ export interface ComboBoxNextProps<T>
   /**
    * The component used for item instead of the default.
    */
-  ListItem: any;
+  ListItem: (props: ComboBoxItemProps<T>) => ReactElement<ComboBoxItemProps<T>>;
   /**
    * Function to be used as filter.
    */
@@ -113,7 +114,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     onFocus,
     onMouseOver,
     source,
-    ListItem = DefaultListItem,
+    ListItem = DefaultListItem as unknown as ComboBoxNextProps<T>["ListItem"],
     itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
     variant = "primary",
     listRef: listRefProp,

@@ -9,8 +9,8 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { HTMLProps, useState } from "react";
-import { useFloatingUI } from "@salt-ds/core";
+import { HTMLProps } from "react";
+import { useControlled, useFloatingUI } from "@salt-ds/core";
 
 export interface UseComboBoxPortalProps {
   open?: boolean;
@@ -24,7 +24,12 @@ export function useComboboxPortal(props?: UseComboBoxPortalProps) {
     onOpenChange: onOpenChangeProp,
     placement: placementProp = "bottom",
   } = props || {};
-  const [open, setOpen] = useState<boolean>(openProp);
+  const [open, setOpen] = useControlled({
+    controlled: openProp,
+    default: false,
+    name: "Combo Box",
+    state: "open",
+  });
 
   const onOpenChange = (open: boolean) => {
     setOpen(open);

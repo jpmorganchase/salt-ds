@@ -6,7 +6,8 @@ export const defaultFilter = (source: string[], filterValue?: string) =>
     !filterValue ? item : item.toLowerCase().includes(filterValue.toLowerCase())
   );
 
-export interface ComboBoxDefaultItemProps extends ListItemNextProps {
+export interface ComboBoxItemProps<T> extends Omit<ListItemNextProps, "value"> {
+  value: T;
   matchPattern?: RegExp | string;
 }
 
@@ -15,7 +16,7 @@ export const DefaultListItem = ({
   matchPattern,
   onMouseDown,
   ...rest
-}: ComboBoxDefaultItemProps) => {
+}: ComboBoxItemProps<string>) => {
   return (
     <ListItemNext value={value} onMouseDown={onMouseDown} {...rest}>
       <Highlighter matchPattern={matchPattern} text={value} />
