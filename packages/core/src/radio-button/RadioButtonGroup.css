@@ -26,11 +26,3 @@
 .saltRadioButtonGroup-noWrap .saltRadioButton {
   white-space: break-spaces;
 }
-
-/* Styles applied to radio group's legend */
-.saltRadioButtonGroup-legend {
-  display: inline-block;
-  font-size: var(--formFieldLegacy-label-fontSize); /* TODO: V2 Form Field work */
-  color: var(--salt-text-primary-foreground);
-  margin-bottom: var(--salt-spacing-200);
-}
