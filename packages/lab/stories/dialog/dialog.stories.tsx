@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState } from "react";
-import { Button, capitalize, StackLayout } from "@salt-ds/core";
+import { Button, StackLayout } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -140,7 +140,7 @@ LongContent.args = {
 const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
   open: openProp = true,
   status,
-  title = undefined,
+  title,
   // @ts-ignore
   content,
   ...args
