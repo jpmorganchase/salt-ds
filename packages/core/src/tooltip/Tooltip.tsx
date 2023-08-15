@@ -130,8 +130,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         <FloatingComponent
           className={clsx(withBaseName(), withBaseName(status), className)}
           open={open && !disabled}
-          {...getTooltipPosition()}
           {...getTooltipProps()}
+          {...getTooltipPosition()}
           ref={floatingRef}
         >
           <TooltipBase
