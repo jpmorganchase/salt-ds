@@ -30,7 +30,10 @@ export interface ListNextProps
   /* Value for the controlled version. */
   selected?: string;
   /* Callback for change event. Returns current selection.*/
-  onChange?: (event: SyntheticEvent, data: { value: string | undefined }) => void;
+  onChange?: (
+    event: SyntheticEvent,
+    data: { value: string | undefined }
+  ) => void;
   /* Callback for select event. Returns new selected item.*/
   onSelect?: (event: SyntheticEvent, data: { value: string }) => void;
   /* Initial selection. */

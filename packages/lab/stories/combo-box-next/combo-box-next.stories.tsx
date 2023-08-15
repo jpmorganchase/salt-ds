@@ -52,7 +52,10 @@ const customItemFilter = (source: LargeCity[], filterValue?: string) =>
   );
 
 const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
-  const handleChange = (event: SyntheticEvent, data: { value: string }) => {
+  const handleChange = (
+    event: SyntheticEvent,
+    data: { value: string | undefined }
+  ) => {
     console.log("input value changed", data);
   };
 
