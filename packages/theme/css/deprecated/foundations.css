@@ -32,4 +32,7 @@
   --salt-size-divider-strokeWidth: var(--salt-size-separator-strokeWidth);
 
   --salt-size-detail: var(--salt-size-compact);
+
+  /* Z Index */
+  --salt-zIndex-docked: 1050;
 }
