@@ -34,15 +34,27 @@ describe("GIVEN a list", () => {
     });
 
     it("SHOULD allow a single item to be selected", () => {
-      cy.mount(<SingleSelectList />);
+      cy.mount(
+        <SingleSelectList
+          onChange={cy.spy().as("onChange")}
+          onSelect={cy.spy().as("onSelect")}
+        />
+      );
 
       cy.findByRole("option", { name: ITEMS[1].label })
         .click()
         .should("have.attr", "aria-selected", "true");
+      cy.get("@onChange").should("have.been.calledOnce");
+      cy.get("@onSelect").should("have.been.calledOnce");
     });
 
     it("SHOULD keep its selected item when the same item is selected", () => {
-      cy.mount(<SingleSelectList />);
+      cy.mount(
+        <SingleSelectList
+          onChange={cy.spy().as("onChange")}
+          onSelect={cy.spy().as("onSelect")}
+        />
+      );
 
       cy.findByRole("option", { name: ITEMS[1].label })
         .click()
@@ -51,6 +63,8 @@ describe("GIVEN a list", () => {
       cy.findByRole("option", { name: ITEMS[1].label })
         .click()
         .should("have.attr", "aria-selected", "true");
+      cy.get("@onChange").should("have.been.calledOnce");
+      cy.get("@onSelect").should("have.been.calledTwice");
     });
 
     it("SHOULD deselect previous list item when a new list one is selected", () => {
