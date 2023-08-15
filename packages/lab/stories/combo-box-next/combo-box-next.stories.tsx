@@ -11,28 +11,34 @@ import {
   shortColorData,
 } from "../assets/exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
-import { MouseEvent, Suspense, SyntheticEvent } from "react";
-import { FlowLayout } from "@salt-ds/core";
+import { Suspense, SyntheticEvent } from "react";
 
 export default {
   title: "Lab/Combo Box Next",
   component: ComboBoxNext,
 } as ComponentMeta<typeof ComboBoxNext>;
 
-const customItemRenderer = (
-  key: number,
-  value: LargeCity,
-  matchPattern?: RegExp | string,
-  onMouseDown?: (event: MouseEvent<HTMLLIElement>) => void
-) => (
-  <ListItemNext value={value.name} key={key} onMouseDown={onMouseDown}>
-    <Suspense fallback={null}>
-      {/*@ts-ignore */}
-      <LazyCountrySymbol code={value.countryCode} />
-    </Suspense>
-    <Highlighter matchPattern={matchPattern} text={value.name} />
-  </ListItemNext>
-);
+interface CustomItemProps {
+  value: LargeCity;
+  matchPattern?: RegExp | string;
+  onMouseDown?: (event: SyntheticEvent<HTMLLIElement>) => void;
+}
+const CustomListItem = ({
+  value,
+  matchPattern,
+  onMouseDown,
+  ...rest
+}: CustomItemProps) => {
+  return (
+    <ListItemNext value={value.name} onMouseDown={onMouseDown} {...rest}>
+      <Suspense fallback={null}>
+        {/*@ts-ignore */}
+        <LazyCountrySymbol code={value.countryCode} />
+      </Suspense>
+      <Highlighter matchPattern={matchPattern} text={value.name} />
+    </ListItemNext>
+  );
+};
 
 const customMatchPattern = (
   input: { name: string; countryCode: string },
@@ -58,9 +64,12 @@ const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
     console.log("selected item", event.currentTarget.value);
   };
   return (
-    <FlowLayout style={{ width: "266px" }}>
-      <ComboBoxNext onChange={handleChange} onSelect={handleSelect} {...args} />
-    </FlowLayout>
+    <ComboBoxNext
+      style={{ width: "266px" }}
+      onChange={handleChange}
+      onSelect={handleSelect}
+      {...args}
+    />
   );
 };
 
@@ -72,7 +81,7 @@ Default.args = {
 export const CustomRenderer = ComboBoxTemplate.bind({});
 CustomRenderer.args = {
   source: largestCities,
-  itemRenderer: customItemRenderer,
+  ListItem: CustomListItem,
   itemFilter: customItemFilter,
 };
 
