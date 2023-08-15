@@ -155,11 +155,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
           <H3>This is an iframe with a button</H3>
           <Text>It represents a portalled window within an application</Text>
           {showExtraContent && <H3>Some Extra Content!</H3>}
-          <FloatingPlatformProvider
-            platform={customPlatform}
-            animationFrame
-            middleware={[offset(0)]}
-          >
+          <FloatingPlatformProvider platform={customPlatform} animationFrame>
             <FloatingComponentProvider Component={FloatingUIComponent}>
               <Tooltip {...props} open>
                 <Button
@@ -221,7 +217,9 @@ export const CustomMiddleware: Story<TooltipProps> = (props: TooltipProps) => {
   useComponentCssInjection({ css: floatingCss, window: targetWindow });
 
   return (
-    <FloatingPlatformProvider middleware={[offset(100)]}>
+    <FloatingPlatformProvider
+      middleware={(defaultMiddleware) => [...defaultMiddleware, offset(100)]}
+    >
       <Tooltip content="I am offset due to custom middleware" open>
         <Button>I am a button</Button>
       </Tooltip>
