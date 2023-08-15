@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState } from "react";
-import { Button, StackLayout } from "@salt-ds/core";
+import { Button, capitalize, StackLayout } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -135,6 +135,7 @@ LongContent.args = {
 const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
   open: openProp = true,
   status,
+  title = undefined,
   // @ts-ignore
   content,
   ...args
@@ -169,8 +170,7 @@ const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
         initialFocus={1}
       >
         <DialogTitle>
-          {status![0].toUpperCase()}
-          {status!.slice(1)}
+          {title}
         </DialogTitle>
         <DialogContent>
           {content}
@@ -189,21 +189,25 @@ const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
 export const InfoStatus = AlertDialogTemplate.bind({});
 InfoStatus.args = {
   status: "info",
+  title: "Info"
 };
 
 export const SuccessStatus = AlertDialogTemplate.bind({});
 SuccessStatus.args = {
   status: "success",
+  title: "Success"
 };
 
 export const WarningStatus = AlertDialogTemplate.bind({});
 WarningStatus.args = {
   status: "warning",
+  title: "Warning"
 };
 
 export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
+  title: "Error"
 };
 
 function FakeWindow({ children }: PropsWithChildren) {
