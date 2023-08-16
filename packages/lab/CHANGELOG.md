@@ -1,5 +1,104 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.16
+
+### Minor Changes
+
+- 0a07e0cf: Added ComboBox component to labs
+
+  Combo Box helps users select an item from a large list of options without scrolling. The typeahead functionality makes this selection quicker, easier, and reduces errors.
+  Users can see a list of available options when they click on the component and filter the list as they type. Once they’ve made their selection, it populates the field and the overlay list closes.
+
+  ```tsx
+  const handleChange = (
+    event: SyntheticEvent,
+    data: {
+      value: string;
+    }
+  ) => {
+    console.log("input value changed", data);
+  };
+
+  const handleSelect = (event: SyntheticEvent<HTMLInputElement>) => {
+    console.log("selected item", event.currentTarget.value);
+  };
+  return (
+    <ComboBoxNext
+      onChange={handleChange}
+      onSelect={handleSelect}
+      source={["Option 1", "Option 2", "Option 3"]}
+    />
+  );
+  ```
+
+- fb7f67f7: Combo box changes
+
+  - changed `itemRenderer` for `ListItem`.
+  - Added box shadow `--salt-overlayable-shadow-popout` to internal `List`.
+
+- e067c4ab: DropdownNext
+
+  - Added `DropdownNext` component
+
+  ```tsx
+  <DropdownNext source={source} defaultSelected={defaultSelected} {...props} />
+  ```
+
+- cbfc1b99: Change Dialog to use floating-ui, add useDialog hook.
+
+  Alert dialog example:
+
+  ```tsx
+  <Dialog
+    status="warning"
+    role="alertdialog"
+    open={open}
+    onOpenChange={handleOpenChange}
+  >
+    <DialogTitle>Warning Alert Title</DialogTitle>
+    <DialogContent>Alert description</DialogContent>
+    <DialogActions>
+      <Button>Cancel</Button>
+      <Button variant="cta">Ok</Button>
+    </DialogActions>
+  </Dialog>
+  ```
+
+  Content dialog example:
+
+  ```tsx
+  <Dialog open={open} onOpenChange={handleOpenChange}>
+    <DialogTitle accent>Dialog Title</DialogTitle>
+    <DialogContent>Dialog content...</DialogContent>
+    <DialogActions>
+      <Button
+        style={{ marginRight: "auto" }}
+        variant="secondary"
+        onClick={handleClose}
+      >
+        Cancel
+      </Button>
+      <Button onClick={handleClose}>Previous</Button>
+      <Button variant="cta" onClick={handleClose}>
+        Next
+      </Button>
+    </DialogActions>
+    <DialogCloseButton onClick={() => handleOpenChange(false)} />
+  </Dialog>
+  ```
+
+### Patch Changes
+
+- a58e83ae: - Rename `NavItem` to `NavigationItem`
+  - Change component so it either renders a `Button` or a `Link` depending on whether it has children
+  - Rename `ExpansionButton` to `ExpansionIcon` as this is no longer a button
+  - Small styling tweaks
+- 0930d64a: Fixed Logo Image sometimes being too large and made Logo work better when a separator is omitted.
+- 92a5e3ef: Navigation Item
+
+  - Remove `IconComponent` and `BadgeComponent` props (these can be passed as children)
+  - Small styling tweaks
+
 ## 1.0.0-alpha.15
 
 ### Minor Changes
