@@ -4,6 +4,8 @@ import {
   MouseEventHandler,
   MouseEvent,
   ReactNode,
+  useEffect,
+  useRef,
 } from "react";
 import { makePrefixer, Link, Button } from "@salt-ds/core";
 import { clsx } from "clsx";
@@ -89,6 +91,12 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       onExpand?.(event);
     };
 
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+    useEffect(() => {
+      expanded && buttonRef.current?.focus();
+    }, [expanded]);
+
     const ConditionalWrapper = ({
       children,
       className,
@@ -96,6 +104,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
     }: ConditionalWrapper) =>
       parent ? (
         <Button
+          ref={buttonRef}
           aria-label="expand"
           variant="secondary"
           aria-expanded={expanded}
