@@ -51,9 +51,16 @@ const customItemFilter = (source: LargeCity[], filterValue?: string) =>
     !filterValue ? item : customMatchPattern(item, filterValue)
   );
 
-const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
-  const handleChange = (event: SyntheticEvent, data: { value: string }) => {
+const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = ({
+  onChange,
+  ...rest
+}) => {
+  const handleChange = (
+    event: SyntheticEvent,
+    data: { value: string | undefined }
+  ) => {
     console.log("input value changed", data);
+    onChange?.(event, data);
   };
 
   const handleSelect = (event: SyntheticEvent<HTMLInputElement>) => {
@@ -64,7 +71,7 @@ const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
       style={{ width: "266px" }}
       onChange={handleChange}
       onSelect={handleSelect}
-      {...args}
+      {...rest}
     />
   );
 };
