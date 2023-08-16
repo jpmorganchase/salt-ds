@@ -22,12 +22,13 @@ import {
   FloatingComponentProvider,
   FloatingComponentProps,
 } from "@salt-ds/core";
+import { ComboBoxNext } from "@salt-ds/lab";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import floatingCss from "./floating-platform.css";
 
-import { NewWindow, TooltipWindow, useIframe } from "./NewWindow";
+import { NewWindow, FloatingComponentWindow } from "./NewWindow";
 
 export default {
   title: "Core/Floating Platform",
@@ -119,7 +120,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
              * In a more realistic example e.g. desktop you would take a different approach e.g. re-using an existing window which could have fonts loaded in advance
              * Alternatively you could use the Font Loader API to check fonts have been loaded before showing the tooltip, or use a better fallback system font which would cause less layout shift
              */
-            <TooltipWindow
+            <FloatingComponentWindow
               style={{
                 ...style,
                 top,
@@ -138,7 +139,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
                 {...rest}
                 ref={ref as Ref<HTMLIFrameElement>}
               />
-            </TooltipWindow>
+            </FloatingComponentWindow>
           );
 
           // In this case tooltip is portalled back to the root document this may not be the case if tooltips were opened as new windows
@@ -166,6 +167,22 @@ const NewWindowTest = (props: NewWindowTestProps) => {
                   Click to show extra content
                 </Button>
               </Tooltip>
+              <ComboBoxNext
+                disabled={false}
+                source={[
+                  "Baby blue",
+                  "Black",
+                  "Blue",
+                  "Brown",
+                  "Green",
+                  "Orange",
+                  "Pink",
+                  "Purple",
+                  "Red",
+                  "White",
+                  "Yellow",
+                ]}
+              />
             </FloatingComponentProvider>
           </FloatingPlatformProvider>
         </StackLayout>
@@ -178,7 +195,7 @@ export const CustomFloatingUiPlatform: Story<TooltipProps> = (
   props: TooltipProps
 ) => {
   return (
-    <NewWindow style={{ width: "600px", height: "400px", border: "none" }}>
+    <NewWindow style={{ width: "600px", height: "500px", border: "none" }}>
       <StackLayout gap={2}>
         <H3>This is the root of the application</H3>
         <Text>
@@ -200,12 +217,32 @@ export const AnimationFrame: Story<TooltipProps> = (props: TooltipProps) => {
   return (
     <div className="animated-container">
       <FloatingPlatformProvider animationFrame>
-        <Tooltip
-          content="I move with the Button due to animationFrame being enabled"
-          open
-        >
-          <Button>I am a moving button</Button>
-        </Tooltip>
+        <StackLayout align="start" direction={"column"}>
+          <Tooltip
+            content="I move with the Button due to animationFrame being enabled"
+            open
+          >
+            <Button>I am a moving button</Button>
+          </Tooltip>
+          <div style={{ width: 200, position: "relative" }}>
+            <ComboBoxNext
+              disabled={false}
+              source={[
+                "Baby blue",
+                "Black",
+                "Blue",
+                "Brown",
+                "Green",
+                "Orange",
+                "Pink",
+                "Purple",
+                "Red",
+                "White",
+                "Yellow",
+              ]}
+            />
+          </div>
+        </StackLayout>
       </FloatingPlatformProvider>
     </div>
   );
@@ -220,9 +257,29 @@ export const CustomMiddleware: Story<TooltipProps> = (props: TooltipProps) => {
     <FloatingPlatformProvider
       middleware={(defaultMiddleware) => [...defaultMiddleware, offset(100)]}
     >
-      <Tooltip content="I am offset due to custom middleware" open>
-        <Button>I am a button</Button>
-      </Tooltip>
+      <StackLayout align="start" direction={"column"}>
+        <div style={{ width: 200, position: "relative" }}>
+          <ComboBoxNext
+            disabled={false}
+            source={[
+              "Baby blue",
+              "Black",
+              "Blue",
+              "Brown",
+              "Green",
+              "Orange",
+              "Pink",
+              "Purple",
+              "Red",
+              "White",
+              "Yellow",
+            ]}
+          />
+        </div>
+        <Tooltip content="I am offset due to custom middleware" open>
+          <Button>I am a button</Button>
+        </Tooltip>
+      </StackLayout>
     </FloatingPlatformProvider>
   );
 };

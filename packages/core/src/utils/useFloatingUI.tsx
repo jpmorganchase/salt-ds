@@ -20,6 +20,7 @@ import {
   forwardRef,
   PropsWithChildren,
   Ref,
+  ForwardRefExoticComponent,
 } from "react";
 
 import { FloatingPortal } from "@floating-ui/react";
@@ -67,7 +68,7 @@ const DefaultFloatingComponent = forwardRef<
 });
 
 export interface FloatingComponentContextType {
-  Component: typeof DefaultFloatingComponent;
+  Component: ForwardRefExoticComponent<CombinedFloatingComponentProps>;
 }
 
 const FloatingComponentContext = createContext<FloatingComponentContextType>({

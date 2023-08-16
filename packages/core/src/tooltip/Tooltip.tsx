@@ -117,7 +117,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       isValidElement(children) ? children.ref : null,
       reference
     );
-    const floatingRef = useForkRef<HTMLElement>(floating, ref);
+
+    const floatingRef = useForkRef(floating, ref);
 
     return (
       <>
@@ -130,9 +131,9 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         <FloatingComponent
           className={clsx(withBaseName(), withBaseName(status), className)}
           open={open && !disabled}
+          ref={floatingRef}
           {...getTooltipProps()}
           {...getTooltipPosition()}
-          ref={floatingRef}
         >
           <TooltipBase
             hideIcon={hideIcon}

@@ -26,10 +26,6 @@ import font700iCss from "@fontsource/open-sans/700-italic.css";
 import font800Css from "@fontsource/open-sans/800.css";
 import font800iCss from "@fontsource/open-sans/800-italic.css";
 
-const IframeContext = createContext<HTMLIFrameElement | null>(null);
-export const useIframe = () => useContext(IframeContext);
-const IframeProvider = IframeContext.Provider;
-
 const globalCss = `
     html,body {
         margin: 0;
@@ -66,7 +62,7 @@ const StyleInjection = () => {
   return null;
 };
 
-export const TooltipWindow = forwardRef(
+export const FloatingComponentWindow = forwardRef(
   (
     { children, title, style, ...rest }: Props,
     ref: ForwardedRef<HTMLIFrameElement>
@@ -90,12 +86,10 @@ export const TooltipWindow = forwardRef(
         ref={setContentRef as ForwardedRef<HTMLIFrameElement>}
       >
         {mountNode && (
-          <IframeProvider value={contentRef}>
-            <WindowProvider window={contentRef?.contentWindow}>
-              <StyleInjection />
-              {createPortal(wrappedChildren, mountNode)}
-            </WindowProvider>
-          </IframeProvider>
+          <WindowProvider window={contentRef?.contentWindow}>
+            <StyleInjection />
+            {createPortal(wrappedChildren, mountNode)}
+          </WindowProvider>
         )}
       </iframe>
     );
@@ -128,12 +122,10 @@ export const NewWindow = forwardRef(
         ref={iframeRef as ForwardedRef<HTMLIFrameElement>}
       >
         {mountNode && (
-          <IframeProvider value={contentRef}>
-            <WindowProvider window={contentRef?.contentWindow}>
-              <StyleInjection />
-              {createPortal(wrappedChildren, mountNode)}
-            </WindowProvider>
-          </IframeProvider>
+          <WindowProvider window={contentRef?.contentWindow}>
+            <StyleInjection />
+            {createPortal(wrappedChildren, mountNode)}
+          </WindowProvider>
         )}
       </iframe>
     );
