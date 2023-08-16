@@ -19,7 +19,7 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   active?: boolean;
   /**
-   * Whether the parent navigation item has active nested items.
+   * Whether the nested group is collapsed and there is an active nested item within it.
    */
   blurSelected?: boolean;
   /**
