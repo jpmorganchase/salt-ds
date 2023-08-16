@@ -189,7 +189,6 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
 
   const getFilteredSource = () => {
     if (!source) return null;
-    console.log(inputValue);
     if (selectedItem && inputValue === selectedItem) return source;
     return itemFilter && itemFilter(source, inputValue);
   };
