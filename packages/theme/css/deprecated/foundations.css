@@ -32,4 +32,41 @@
   --salt-size-divider-strokeWidth: var(--salt-size-separator-strokeWidth);
 
   --salt-size-detail: var(--salt-size-compact);
+  --salt-size-basis-unit: 4px;
+
+  --salt-size-adornmentGap: calc(0.75 * var(--salt-size-unit));
+  --salt-size-container-spacing: calc(3 * var(--salt-size-unit));
+  --salt-size-separator-strokeWidth: 1px;
+  --salt-size-selectable: calc(var(--salt-size-base) - (1.5 * var(--salt-size-unit)) - (0.5 * var(--salt-size-basis-unit)));
+  --salt-size-separator-height: calc(var(--salt-size-compact) + 1.5 * var(--salt-size-basis-unit));
+  --salt-size-sharktooth-height: 5px;
+  --salt-size-sharktooth-width: 10px;
+  --salt-size-stackable: calc(var(--salt-size-base) + var(--salt-size-unit));
+
+  /* Z Index */
+  --salt-zIndex-docked: 1050;
+}
+
+.salt-density-high {
+  --salt-size-unit: calc(var(--salt-size-basis-unit) * 1);
+  --salt-size-compact: calc(var(--salt-size-basis-unit) * 1.5);
+  --salt-size-accent: calc(var(--salt-size-basis-unit) * 0.5);
+}
+
+.salt-density-medium {
+  --salt-size-unit: calc(var(--salt-size-basis-unit) * 2);
+  --salt-size-compact: calc(var(--salt-size-basis-unit) * 2);
+  --salt-size-accent: calc(var(--salt-size-basis-unit) * 1);
+}
+
+.salt-density-low {
+  --salt-size-unit: calc(var(--salt-size-basis-unit) * 3);
+  --salt-size-compact: calc(var(--salt-size-basis-unit) * 2.5);
+  --salt-size-accent: calc(var(--salt-size-basis-unit) * 1.5);
+}
+
+.salt-density-touch {
+  --salt-size-unit: calc(var(--salt-size-basis-unit) * 4);
+  --salt-size-compact: calc(var(--salt-size-basis-unit) * 3);
+  --salt-size-accent: calc(var(--salt-size-basis-unit) * 2);
 }

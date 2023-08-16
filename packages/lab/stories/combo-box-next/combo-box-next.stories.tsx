@@ -11,28 +11,30 @@ import {
   shortColorData,
 } from "../assets/exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
-import { MouseEvent, Suspense, SyntheticEvent } from "react";
-import { FlowLayout } from "@salt-ds/core";
+import { Suspense, SyntheticEvent } from "react";
+import { ComboBoxItemProps } from "../../src/combo-box-next/utils";
 
 export default {
   title: "Lab/Combo Box Next",
   component: ComboBoxNext,
 } as ComponentMeta<typeof ComboBoxNext>;
 
-const customItemRenderer = (
-  key: number,
-  value: LargeCity,
-  matchPattern?: RegExp | string,
-  onMouseDown?: (event: MouseEvent<HTMLLIElement>) => void
-) => (
-  <ListItemNext value={value.name} key={key} onMouseDown={onMouseDown}>
-    <Suspense fallback={null}>
-      {/*@ts-ignore */}
-      <LazyCountrySymbol code={value.countryCode} />
-    </Suspense>
-    <Highlighter matchPattern={matchPattern} text={value.name} />
-  </ListItemNext>
-);
+const CustomListItem = ({
+  value,
+  matchPattern,
+  onMouseDown,
+  ...rest
+}: ComboBoxItemProps<LargeCity>) => {
+  return (
+    <ListItemNext value={value.name} onMouseDown={onMouseDown} {...rest}>
+      <Suspense fallback={null}>
+        {/*@ts-ignore */}
+        <LazyCountrySymbol code={value.countryCode} />
+      </Suspense>
+      <Highlighter matchPattern={matchPattern} text={value.name} />
+    </ListItemNext>
+  );
+};
 
 const customMatchPattern = (
   input: { name: string; countryCode: string },
@@ -49,18 +51,28 @@ const customItemFilter = (source: LargeCity[], filterValue?: string) =>
     !filterValue ? item : customMatchPattern(item, filterValue)
   );
 
-const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
-  const handleChange = (event: SyntheticEvent, data: { value: string }) => {
+const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = ({
+  onChange,
+  ...rest
+}) => {
+  const handleChange = (
+    event: SyntheticEvent,
+    data: { value: string | undefined }
+  ) => {
     console.log("input value changed", data);
+    onChange?.(event, data);
   };
 
   const handleSelect = (event: SyntheticEvent<HTMLInputElement>) => {
     console.log("selected item", event.currentTarget.value);
   };
   return (
-    <FlowLayout style={{ width: "266px" }}>
-      <ComboBoxNext onChange={handleChange} onSelect={handleSelect} {...args} />
-    </FlowLayout>
+    <ComboBoxNext
+      style={{ width: "266px" }}
+      onChange={handleChange}
+      onSelect={handleSelect}
+      {...rest}
+    />
   );
 };
 
@@ -72,7 +84,7 @@ Default.args = {
 export const CustomRenderer = ComboBoxTemplate.bind({});
 CustomRenderer.args = {
   source: largestCities,
-  itemRenderer: customItemRenderer,
+  ListItem: CustomListItem,
   itemFilter: customItemFilter,
 };
 

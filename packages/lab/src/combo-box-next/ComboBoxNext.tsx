@@ -5,7 +5,7 @@ import {
   ForwardedRef,
   forwardRef,
   KeyboardEvent,
-  ReactNode,
+  ReactElement,
   Ref,
   SyntheticEvent,
   useRef,
@@ -25,7 +25,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import comboBoxNextCss from "./ComboBoxNext.css";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { defaultFilter, defaultItemRenderer } from "./utils";
+import { DefaultListItem, defaultFilter, ComboBoxItemProps } from "./utils";
 import { clsx } from "clsx";
 import { UseComboBoxPortalProps } from "./useComboboxPortal";
 
@@ -84,20 +84,18 @@ export interface ComboBoxNextProps<T>
    */
   listRef?: Ref<HTMLUListElement>;
   /**
-   * Item renderer function.
+   * The component used for item instead of the default.
    */
-  itemRenderer?: (
-    key: number,
-    value?: T,
-    matchPattern?: string,
-    onMouseDown?: (event: SyntheticEvent<HTMLLIElement>) => void
-  ) => ReactNode | null | undefined;
+  ListItem: (props: ComboBoxItemProps<T>) => ReactElement<ComboBoxItemProps<T>>;
   /**
    * Function to be used as filter.
    */
   itemFilter?: (source: T[], filterValue?: string) => T[];
   /* Callback for change event in input. */
-  onChange?: (event: SyntheticEvent, data: { value: string }) => void;
+  onChange?: (
+    event: SyntheticEvent,
+    data: { value: string | undefined }
+  ) => void;
   /**
    * Styling variant. Defaults to "primary".
    */
@@ -119,7 +117,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     onFocus,
     onMouseOver,
     source,
-    itemRenderer = defaultItemRenderer as unknown as ComboBoxNextProps<T>["itemRenderer"],
+    ListItem = DefaultListItem as unknown as ComboBoxNextProps<T>["ListItem"],
     itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
     variant = "primary",
     listRef: listRefProp,
@@ -253,12 +251,19 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
                 ref={setListRef}
               >
                 {filteredSource.map((value, index) => {
+                  const onMouseDown = (
+                    event: SyntheticEvent<HTMLLIElement>
+                  ) => {
+                    setSelectedItem(event.currentTarget?.dataset.value);
+                    setInputValue(event.currentTarget?.dataset.value);
+                  };
                   return (
-                    itemRenderer &&
-                    itemRenderer(index, value, inputValue, (event) => {
-                      setSelectedItem(event.currentTarget?.dataset.value);
-                      setInputValue(event.currentTarget?.dataset.value);
-                    })
+                    <ListItem
+                      key={index}
+                      value={value}
+                      matchPattern={inputValue}
+                      onMouseDown={onMouseDown}
+                    />
                   );
                 })}
               </ListNext>
