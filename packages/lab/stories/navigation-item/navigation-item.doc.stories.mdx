@@ -24,15 +24,15 @@ When the Navigation Item is not a parent, it contains a link, which users can cl
 
 - Use Navigation Item when you have multiple levels of navigation in your application or website.
 
-- We suggest first considering a horizontal group of Navigation Items for distinct webpages or applications. If you have multiple (more than 8) services to navigate to at a platform level, or have navigation across distinct apps, consider using a vertical group instead.
+- We suggest first considering a horizontal group of Navigation Items for distinct webpages or applications. If you have multiple (more than eight) services to navigate to at a platform level, or have navigation across distinct apps, consider using a vertical group instead.
 
-- Our recommendation is to display Navigation Items in a fixed App Header (or header area) if you need your items to remain visible on scroll.
+- If you need your items to remain visible on scroll, we recommend displaying Navigation Items in a fixed App Header (or header area)
 
 ##### Don't use when
 
 - When you need to show different views of content within the same page, consider using [Tabs](?path=/docs/documentation-lab-tabs--page) instead.
 
-- When your content is very specific ,in this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Consider using the [Interactable Card](?path=/docs/documentation-core-card--page), or a [Link](?path=/docs/documentation-core-link--page) component within the body of the page.
+- When your content is very specific. In this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Consider using the [Interactable Card](?path=/docs/documentation-core-card--page), or a [Link](?path=/docs/documentation-core-link--page) component within the body of the page.
 
 ## Content
 
@@ -50,7 +50,7 @@ When the Navigation Item is not a parent, it contains a link, which users can cl
 
 ### Horizontal (default)
 
-The default configuration of the Navigation Item comes in a horizontal orientation.
+By default the Navigation Item is oriented horizontally.
 
 **Tip:** A Navigation Item hugs its content by default, but is customisable so that its container can be adjusted to fit any preferred width.
 
@@ -60,7 +60,7 @@ The default configuration of the Navigation Item comes in a horizontal orientati
 
 ### Vertical
 
-The orientation of the default Navigation Item can be changed by passing a vertical orientation prop.
+To change the orientation of the Navigation Item you can use the vertical orientation prop.
 
 <Canvas>
   <Story id="lab-navigation-item--vertical" />
@@ -80,7 +80,7 @@ An icon can effectively signify the Navigation Item’s purpose, whether it’s 
 
 Navigation Items can feature a [Badge](?path=/docs/documentation-lab-badge--page) that serves as a visual cue. They can inform users of additional context, notifications, signpost new content or indicate a status.
 
-**Note**: A badge should only be placed in a Navigation Item that does not nest, i.e. it will not have a chevron.
+**Note**: A badge should only be placed in a Navigation Item that does not include nested items, i.e. it will not have a chevron.
 
 <Canvas>
   <Story id="lab-navigation-item--with-badge" />
@@ -88,7 +88,7 @@ Navigation Items can feature a [Badge](?path=/docs/documentation-lab-badge--page
 
 ### With nested items
 
-A Navigation Item can be set as a parent which nests other Navigation Items inside it. Parent Nav Items are displayed with a chevron on right side. To set as parent level use Parent prop.
+A Navigation Item can be set as a parent which nests other Navigation Items inside it. Parent Nav Items are displayed with a chevron on the right-hand side. To set a Navigation Item as a parent use the `Parent` prop.
 
 <Canvas>
   <Story id="lab-navigation-item--with-nested-items" />
@@ -98,7 +98,7 @@ A Navigation Item can be set as a parent which nests other Navigation Items insi
 
 Use horizontal Navigation Items within a horizontal group to establish a consistent and easily accessible pathway for users, while conserving valuable screen estate. Users will be able to easily scan and identify navigation options in a seamless user experience.
 
-**Tip** Use a horizontal group of Navigation Items when you have less than 8 items, otherwise consider a vertical group of items.
+**Tip** Use a horizontal group of Navigation Items when you have fewer than eight items, otherwise consider a vertical group of items.
 
 <Canvas>
   <Story id="lab-navigation-item--horizontal-group" />
@@ -110,7 +110,7 @@ A vertical navigation group provides a simple, single-level list of links that u
 
 **Note**: Use a vertical Navigation Item in a vertical orientation, with a descriptive [Icon](?path=/docs/documentation-icons-icon--page) and a [Badge](?path=/docs/documentation-lab-badge--page) when providing the user with a quick and informative way to assess the relevance or significance of a Navigation Item, aiding their decision-making process and overall navigation experience.
 
-**Tip** Use a vertical group of Navigation Items when you have more than 8 items, otherwise, consider a horizontal group of items.
+**Tip** Use a vertical group of Navigation Items when you have more than eight items, otherwise, consider a horizontal group of items.
 
 <Canvas>
   <Story id="lab-navigation-item--vertical-group" />
@@ -150,7 +150,7 @@ import { NavigationItem } from "@salt-ds/lab";
 
 ## Accessibility
 
-The Navigation Item component is accessible by keyboard and screen readers, providing full WAI-ARIA support, to be compliant with WCAG.2.1 standards.
+The Navigation Item component is accessible by keyboard and screen readers, providing full WAI-ARIA support to be compliant with WCAG.2.1 standards.
 
 ### Horizontal Navigation Items
 
