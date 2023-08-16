@@ -20,7 +20,7 @@ export interface UseComboBoxPortalProps {
 
 export function useComboboxPortal(props?: UseComboBoxPortalProps) {
   const {
-    open: openProp = false,
+    open: openProp,
     onOpenChange: onOpenChangeProp,
     placement: placementProp = "bottom",
   } = props || {};

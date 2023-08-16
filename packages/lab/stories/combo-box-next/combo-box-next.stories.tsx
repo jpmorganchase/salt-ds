@@ -12,13 +12,12 @@ import {
 } from "../assets/exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
 import { Suspense, SyntheticEvent } from "react";
-import {ComboBoxItemProps} from "../../src/combo-box-next/utils";
+import { ComboBoxItemProps } from "../../src/combo-box-next/utils";
 
 export default {
   title: "Lab/Combo Box Next",
   component: ComboBoxNext,
 } as ComponentMeta<typeof ComboBoxNext>;
-
 
 const CustomListItem = ({
   value,

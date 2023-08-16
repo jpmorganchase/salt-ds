@@ -79,6 +79,14 @@ describe("GIVEN a Combobox", () => {
     });
   });
 
+  it("WHEN controlled prop open is passed", () => {
+    it("SHOULD be able to control the open property of portal", () => {
+      cy.mount(<Default PortalProps={{ open: true }} />);
+      Default.args!.source!.forEach((item) => {
+        cy.findByRole("option", { name: item }).should("exist");
+      });
+    });
+  });
   // TODO: check we fix UITK bugs
   // When combobox is nested inside an overlay (or a similar component? drawer?)
 });
