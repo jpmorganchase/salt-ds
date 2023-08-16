@@ -13,7 +13,7 @@ Every space token within the system is a multiple of `--salt-spacing-100`. The n
 
 ## Spacing tokens
 
-| Token                | Formula | High Density (HD) | Medium (MD) | Low (LD) | Touch (TD) |
+| Token                | Formula | High Density      | Medium      | Low      | Touch      |
 | -------------------- | ------- | ----------------- | ----------- | -------- | ---------- |
 | `--salt-spacing-25`  | 0.25x   | 1                 | 2           | 3        | 4          |
 | `--salt-spacing-50`  | 0.50x   | 2                 | 4           | 6        | 8          |
@@ -32,14 +32,14 @@ The vertical separation of items such as headings, blocks of text, form elements
 
 ### Headings
 
-Headings provide visual separation and help to establish hierarchy. All headings should be accompanied by standard spacing above and below. the amount of spacing should be based on the following:
+Headings provide visual separation and help to establish hierarchy. All headings should be accompanied by standard spacing above and below. The amount of spacing should be based on the following:
 
 - Add `salt-spacing-200` directly above the heading regardless of the level of heading.
-- The amount of spacing placed directly below a heading is dependent on the level of focus placed on the following item.
+- The spacing placed directly below a heading depends on the level of focus placed on the following item.
 
 ### Hierarchical spacing
 
-When content directly following a header is a primary focus, for instance the first paragraph of an article, the spacing between the header and the text is relative to the level of the heading. An H1 is followed by `--salt-spacing-300`, H2 by `--salt-spacing-200`, and H3 by `--salt-spacing-100`. For text accompanied by an H4 there is no spacing between the elements. Additionally:
+When content directly following a header is a primary focus, for instance, the first paragraph of an article, the spacing between the header and the text is relative to the level of the heading. An H1 is followed by `--salt-spacing-300`, H2 by `--salt-spacing-200`, and H3 by `--salt-spacing-100`. For text accompanied by an H4, there is no spacing between the elements. Additionally:
 
 - Spacing after a section is consistently implemented using `--salt-spacing-300` regardless of the heading level below.
 - Although the following example indicates each section as starting with a heading, this is not always required.
@@ -64,7 +64,7 @@ When content directly following a header is a primary focus, for instance the fi
 When text following a header is a secondary focus, such as a section description intended as a supporting element to the section's content, spacing is a standard size regardless of the heading level. Keep the following in mind:
 
 - Headings followed by secondary focus text are consistently separated by `--salt-spacing-100`.
-- When a heading is followed by a description the spacing is reduced to reinforce the relationship between heading and description.
+- When a description follows a heading, the spacing is reduced to reinforce the relationship between the heading and description.
 
 <ImageSwitcher
   images={[
@@ -83,7 +83,7 @@ When text following a header is a secondary focus, such as a section description
 
 ### Headings and non-textual content
 
-For content following a heading that is not text, such as an image, form, card or data visualisation, the spacing between the elements is treated consistently, as with non-hierarchical spacing. To clarify:
+For content following a heading that is not text, such as an image, form, card or data visualization, the spacing between the elements is treated consistently, as with non-hierarchical spacing. To clarify:
 
 - Anything that is not text is separated from its heading by `--salt-spacing-300`
 - Spacing above the header is maintained consistently at `--salt-spacing-200`
@@ -98,8 +98,8 @@ For content following a heading that is not text, such as an image, form, card o
 
 Maintaining consistent spacing between headings, text, content blocks and sections provides visual rhythm when managing large amounts of content. Note that:
 
-- When elements repeat at regular intervals visual rhythm is maintained
-- Consistency and rhythm helps people to comprehend and navigate an interface more easily
+- Visual rhythm is maintained when elements repeat at regular intervals
+- Consistency and rhythm help people comprehend and navigate an interface more easily
 
 <ImageSwitcher
   images={[
@@ -113,10 +113,10 @@ Maintaining consistent spacing between headings, text, content blocks and sectio
 
 Horizontal separators are used to divide regions of a layout, sections of content, or groups of components and/or data.
 
-For the purposes of spacing, separators are considered as a type of content and therefore spaced consistently. This means that:
+For spacing purposes, separators are considered as a type of content and therefore spaced consistently. This means that:
 
 - Separators do not come with any pre-defined spacing of their own.
-- `--salt-spacing-300` should appear above and below a separator when placed between sections.
+- `--salt-spacing-300` should appear above and below a separator between sections.
 
 <ImageSwitcher
   images={[
@@ -126,12 +126,12 @@ For the purposes of spacing, separators are considered as a type of content and 
   label="Show spacing"
 />
 
-Only use separators only if the content cannot be effectively divided in another way. Too many repeating lines can overload a design and create unnecessary visual noise.
+Only use separators if the content cannot be effectively divided in another way. Too many repeating lines can overload a design and create unnecessary visual noise.
 
-The [Division](division) foundation provides further guidance on the use of separators and their alternatives.
+The [Division](division) Foundation provides further guidance on the use of separators and their alternatives.
 
 <Callout title="Have some feedback?">
 
-We're still in the process of rolling out the Salt Foundations, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or suggestions.
+We're still rolling out the Salt Foundations, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or suggestions.
 
 </Callout>
