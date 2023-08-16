@@ -543,22 +543,15 @@
   }
 
   .ag-floating-filter-button-button .ag-icon-filter:before {
-    content: "\e9e5";
+    color: var(--salt-text-secondary-foreground);
+    content: "\e9ac";
   }
 
   .ag-floating-filter-input {
     border: var(--salt-size-border) var(--salt-editable-borderStyle)
-      var(--salt-editable-borderColor);
-    padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-50));
-  }
-
-  .ag-floating-filter-input:before {
+    var(--salt-separable-tertiary-borderColor);
     color: var(--salt-text-secondary-foreground);
-    content: "\e9ac";
-    font-family: "salt-icons";
-    position: absolute;
-    left: var(--salt-spacing-100);
-    z-index: 10;
+    padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-50));
   }
 
   .ag-header-cell.ag-floating-filter {
