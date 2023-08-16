@@ -293,7 +293,7 @@ $ag-theme-salt-params-high: map-merge(
   $salt-ag-theme-default-params,
   (
     row-height: 24px,
-    header-height: 24,
+    header-height: 24px,
     font-size: 11px,
     cell-horizontal-padding: 4px,
     list-item-height: 24px,
@@ -315,7 +315,7 @@ $ag-theme-salt-params-high-compact: map-merge(
   $salt-ag-theme-default-params,
   (
     row-height: 20px,
-    header-height: 20,
+    header-height: 20px,
     font-size: 11px,
     cell-horizontal-padding: 4px,
     list-item-height: 20px,
@@ -359,7 +359,7 @@ $ag-theme-salt-params-low: map-merge(
   $salt-ag-theme-default-params,
   (
     row-height: 48px,
-    header-height: 48,
+    header-height: 48px,
     font-size: 14px,
     cell-horizontal-padding: 12px,
     list-item-height: 48px,
@@ -381,7 +381,7 @@ $ag-theme-salt-params-touch: map-merge(
   $salt-ag-theme-default-params,
   (
     row-height: 60px,
-    header-height: 60,
+    header-height: 60px,
     font-size: 16px,
     cell-horizontal-padding: 16px,
     list-item-height: 60px,
