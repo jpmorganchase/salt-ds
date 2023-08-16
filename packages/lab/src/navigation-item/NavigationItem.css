@@ -3,7 +3,7 @@
   --navigationItem-color: var(--salt-text-secondary-foreground);
   --navigationItem-fill: var(--salt-text-secondary-foreground);
   --navigationItem-bar-inset: var(--salt-spacing-25);
-  --navigationItem-bar-size: calc(var(--salt-size-bar) / 2);
+  --navigationItem-bar-size: var(--salt-size-indicator);
   --navigationItem-indicator-background: var(--salt-navigable-indicator-active);
   --navigationItem-gap: var(--salt-spacing-100);
 }
