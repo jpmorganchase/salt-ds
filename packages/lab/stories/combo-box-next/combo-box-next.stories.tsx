@@ -75,9 +75,13 @@ const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = ({
   );
 };
 
-export const Controlled: Story<ComboBoxNextProps<any>> = (args) => {
+export const Controlled: Story<ComboBoxNextProps<any>> = ({
+  inputValue,
+  ...rest
+}) => {
   const [index, setIndex] = useState(0);
 
+  const selected = shortColorData[index];
   const handleSelect = (event: SyntheticEvent, data: { value: string }) => {
     const newValue = data.value || "";
     console.log("new selection", newValue);
@@ -108,9 +112,11 @@ export const Controlled: Story<ComboBoxNextProps<any>> = (args) => {
 
       <ComboBoxNext
         style={{ width: "200px" }}
-        selected={shortColorData[index]}
+        selected={selected}
+        inputValue={selected}
+        PortalProps={{ open: false }}
         onSelect={handleSelect}
-        {...args}
+        {...rest}
       />
     </FlexLayout>
   );
