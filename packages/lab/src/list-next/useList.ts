@@ -21,8 +21,10 @@ export interface UseListProps {
   selected?: string;
   /* Initial selected value for when the list is controlled. */
   defaultSelected?: string;
-  /* Callback for when the list is controlled. */
-  onChange?: (e: SyntheticEvent, data: { value: string }) => void;
+  /* Callback for change event. This is called when the selected value changes */
+  onChange?: (e: SyntheticEvent, data: { value: string | undefined }) => void;
+  /* Callback for select event. This is called when any selection occurs, even if a previously selected value is selected again. */
+  onSelect?: (e: SyntheticEvent, data: { value: string }) => void;
   /* List id. */
   id?: string;
   /* List ref. */
@@ -31,10 +33,11 @@ export interface UseListProps {
 
 export const useList = ({
   disabled = false,
-  highlightedItem: highLightedItemProp,
+  highlightedItem: highlightedItemProp,
   selected: selectedProp,
   defaultSelected,
   onChange,
+  onSelect,
   id,
   ref,
 }: UseListProps) => {
@@ -51,8 +54,8 @@ export const useList = ({
   );
 
   const [highlightedItem, setHighlightedItem] = useControlled({
-    controlled: highLightedItemProp,
-    default: highLightedItemProp,
+    controlled: highlightedItemProp,
+    default: undefined,
     name: "ListNext",
     state: "highlighted",
   });
@@ -171,12 +174,15 @@ export const useList = ({
       const activeOptions = getOptions();
       const isActiveOption =
         activeOptions.findIndex((i) => i.id === event.currentTarget.id) !== -1;
-      if (newValue && selectedItem !== newValue && isActiveOption) {
-        selectItem(event.currentTarget);
-        onChange?.(event, { value: newValue });
+      if (newValue && isActiveOption) {
+        onSelect?.(event, { value: newValue });
+        if (selectedItem !== newValue) {
+          selectItem(event.currentTarget);
+          onChange?.(event, { value: selectedItem });
+        }
       }
     },
-    [selectItem, selectedItem, onChange, getOptions]
+    [selectItem, selectedItem, onChange, onSelect, getOptions]
   );
 
   const isSelected = useCallback(

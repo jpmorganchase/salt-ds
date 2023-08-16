@@ -1,5 +1,12 @@
 # @salt-ds/core
 
+## 1.8.1
+
+### Patch Changes
+
+- fa77a894: Input and MultilineInput readonly states made focusable by default
+- 83c537a5: Fix svg centering when used as icon in `Checkbox` and `RadioButton`.
+
 ## 1.8.0
 
 ### Minor Changes
