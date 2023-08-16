@@ -21,9 +21,9 @@ export interface UseListProps {
   selected?: string;
   /* Initial selected value for when the list is controlled. */
   defaultSelected?: string;
-  /* Callback for change event. Returns the event and full selection. */
+  /* Callback for change event. This is called when the selected value changes */
   onChange?: (e: SyntheticEvent, data: { value: string | undefined }) => void;
-  /* Callback for select event. Returns the event and new selection. */
+  /* Callback for select event. This is called when any selection occurs, even if a previously selected value is selected again. */
   onSelect?: (e: SyntheticEvent, data: { value: string }) => void;
   /* List id. */
   id?: string;
@@ -33,7 +33,7 @@ export interface UseListProps {
 
 export const useList = ({
   disabled = false,
-  highlightedItem: highLightedItemProp,
+  highlightedItem: highlightedItemProp,
   selected: selectedProp,
   defaultSelected,
   onChange,
@@ -54,7 +54,7 @@ export const useList = ({
   );
 
   const [highlightedItem, setHighlightedItem] = useControlled({
-    controlled: highLightedItemProp,
+    controlled: highlightedItemProp,
     default: undefined,
     name: "ListNext",
     state: "highlighted",
