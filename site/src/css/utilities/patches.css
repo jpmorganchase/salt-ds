@@ -1,0 +1,6 @@
+/* Temporary (hopefully!) patches and work-arounds to override/undo issues from 3rd party CSS */
+
+/* Prevent Mosaic theme from inverting all images */
+.salt-theme[data-mode="dark"] main img:not(.no-filter) {
+  filter: none;
+}

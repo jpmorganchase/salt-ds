@@ -100,7 +100,7 @@
     "csstree-validator": "^3.0.0",
     "cypress": "^12.3.0",
     "cypress-axe": "^1.2.0",
-    "cypress-real-events": "^1.7.6",
+    "cypress-real-events": "^1.10.0",
     "deepmerge": "^4.2.2",
     "del": "^7.0.0",
     "dom-accessibility-api": "^0.5.10",

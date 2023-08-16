@@ -47,7 +47,8 @@ describe("GIVEN a NavItem", () => {
   describe("AND an icon is passed", () => {
     it("should render the icon component", () => {
       cy.mount(
-        <NavigationItem IconComponent={NotificationIcon}>
+        <NavigationItem>
+          <NotificationIcon />
           NavigationItem
         </NavigationItem>
       );
