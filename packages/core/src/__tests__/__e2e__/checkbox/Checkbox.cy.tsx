@@ -81,7 +81,7 @@ describe("GIVEN a Checkbox", () => {
     it("THEN should be focusable", () => {
       const selectSpy = cy.stub().as("selectSpy");
       cy.mount(<Checkbox readOnly onChange={selectSpy} />);
-      cy.findByRole("checkbox").should("have.attr", "readonly", "true");
+      cy.findByRole("checkbox").should("have.attr", "readonly");
       cy.realPress("Tab");
       cy.findByRole("checkbox").should("be.focused");
       cy.realPress("Enter");

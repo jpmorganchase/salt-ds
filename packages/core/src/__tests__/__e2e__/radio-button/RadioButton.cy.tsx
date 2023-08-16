@@ -34,7 +34,7 @@ describe("GIVEN a RadioButton component", () => {
     it("THEN should be focusable", () => {
       const selectSpy = cy.stub().as("selectSpy");
       cy.mount(<RadioButton readOnly onChange={selectSpy} />);
-      cy.findByRole("radio").should("have.attr", "readonly", "true");
+      cy.findByRole("radio").should("have.attr", "readonly");
       cy.realPress("Tab");
       cy.findByRole("radio").should("be.focused");
       cy.realPress("Enter");
