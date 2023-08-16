@@ -6,15 +6,19 @@ sidebar:
   priority: 1
 ---
 
-TOKENS ARE X. Characteristic design tokens, also known as _semantics_, sit between the foundational tokens and the component-specific tokens.
+A design token stores design decisions in a single place, so teams can use them across their work to create consistent experiences.
 
-Characteristics can form sets of CSS variables that define a visual attribute, SUCH AS X AND Y. They can then be reused by components where necessary, allowing for design consistency and logical patterns. They help to define the rules that style each component and aid the cohesiveness of the overall user interface.
+The Salt Design System uses three types of tokens. From most generalized to to most specific, they are:
+
+1. Foundational tokens
+2. Characteristic design tokens
+3. Component-specific tokens
+
+Characteristics form sets of CSS variables that define a visual attribute, such as text or colors that denote status. They can then be reused by components where necessary, allowing for design consistency and logical patterns. They help to define the rules that style each component and aid the cohesiveness of the overall user interface.
 
 ## Benefits
 
-For designers, they offer aesthetic flexibility without decreasing the efficiency of build or the effectiveness of the components when implemented.
-
-For designers, they enable visual changes without XYZ.
+For designers, they enable visual changes without impacting efficiency or effectiveness of components.
 
 For developers, they offer an easy way to reuse the same values. It creates a single point of reference for commonly-used values, which means you only have to update in one place to reflect everywhere.
 
@@ -27,16 +31,12 @@ Characteristics offer the following benefits:
 
 You can look at the Salt components' CSS files to see how they are styled.
 
-## When to use
-
-## Examples
-
 ## Token name convention
 
 When defining characteristic design tokens, they should generally be in the format `--salt-<characteristic name>-<variant>-<attribute>-<state>`
 
 1. Always begin with `--salt-`
-2. Follow with the foundation name, e.g. `---salt-actionable-`, `---salt-text-`, `--salt-focused-`
+2. Follow with the foundation name, e.g. `--salt-actionable-`, `--salt-text-`, `--salt-focused-`
 3. Append the variant if applicable, e.g. `--salt-actionable-cta-`, `--salt-text-h2-`
 4. Append the attribute, e.g. `--salt-actionable-cta-background`, `--salt-text-h2-fontSize`, `--salt-focused-outlineColor`
 5. Append the state if applicable, e.g. `--salt-actionable-cta-background-hover`
