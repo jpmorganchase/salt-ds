@@ -5,4 +5,4 @@
 - Change `NavigationItem` flex alignment so it works well with longer labels
 - Add new `--salt-size-indicator` to `--navigationItem-bar-size` css var
 - Update description on `blurSelected` prop
-- Focus `NavigationItem` button when expanded
+- Move `ConditionalWrapper` outside `NavigationItem`

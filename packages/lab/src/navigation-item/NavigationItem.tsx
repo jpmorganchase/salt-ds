@@ -4,8 +4,6 @@ import {
   MouseEventHandler,
   MouseEvent,
   ReactNode,
-  useEffect,
-  useRef,
 } from "react";
 import { makePrefixer, Link, Button } from "@salt-ds/core";
 import { clsx } from "clsx";
@@ -52,9 +50,48 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltNavigationItem");
 
-type ConditionalWrapper = {
+interface ConditionalWrapperProps
+  extends Pick<
+    NavigationItemProps,
+    "parent" | "expanded" | "onExpand" | "active" | "href"
+  > {
   children: ReactNode;
   className: string;
+}
+
+const ConditionalWrapper = ({
+  children,
+  className,
+  parent,
+  expanded,
+  onExpand,
+  active,
+  href,
+}: ConditionalWrapperProps) => {
+  const handleExpand = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onExpand?.(event);
+  };
+
+  return parent ? (
+    <Button
+      aria-label="expand"
+      variant="secondary"
+      aria-expanded={expanded}
+      className={clsx(withBaseName("expandButton"), className)}
+      onClick={handleExpand}
+    >
+      {children}
+    </Button>
+  ) : (
+    <Link
+      aria-current={active ? "page" : undefined}
+      href={href}
+      className={className}
+    >
+      {children}
+    </Link>
+  );
 };
 
 export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
@@ -86,45 +123,6 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       "--saltNavigationItem-level": `${level}`,
     };
 
-    const handleExpand = (event: MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
-      onExpand?.(event);
-    };
-
-    const buttonRef = useRef<HTMLButtonElement | null>(null);
-
-    useEffect(() => {
-      expanded && buttonRef.current?.focus();
-    }, [expanded]);
-
-    const ConditionalWrapper = ({
-      children,
-      className,
-      ...rest
-    }: ConditionalWrapper) =>
-      parent ? (
-        <Button
-          ref={buttonRef}
-          aria-label="expand"
-          variant="secondary"
-          aria-expanded={expanded}
-          className={clsx(withBaseName("expandButton"), className)}
-          onClick={handleExpand}
-          {...rest}
-        >
-          {children}
-        </Button>
-      ) : (
-        <Link
-          aria-current={active ? "page" : undefined}
-          href={href}
-          className={className}
-          {...rest}
-        >
-          {children}
-        </Link>
-      );
-
     return (
       <div
         ref={ref}
@@ -142,6 +140,11 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             },
             withBaseName(orientation)
           )}
+          parent={parent}
+          expanded={expanded}
+          onExpand={onExpand}
+          active={active}
+          href={href}
         >
           <span className={withBaseName("label")}>{children}</span>
           {parent && (
