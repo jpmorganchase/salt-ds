@@ -262,8 +262,8 @@
   }
 
   .ag-header-container .ag-header-cell.ag-floating-filter:after {
-    height: 0;
-    width: 0;
+    height: 100%;
+    top: 0;
   }
 
   .ag-pinned-left-header .ag-header-cell:after {
@@ -565,7 +565,7 @@
   .ag-header-cell.ag-floating-filter {
     padding-left: 0;
     padding-right: 1px;
-    border-bottom: 0;
+    border-right-color: transparent;
   }
 
   .ag-header-cell-auto-height .ag-header-cell-text {
