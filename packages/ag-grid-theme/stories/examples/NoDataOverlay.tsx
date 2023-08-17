@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Button, Card } from "@salt-ds/core";
-import { WarningIcon } from "@salt-ds/icons";
+import { Button, Card, H2, StatusIndicator } from "@salt-ds/core";
+import { ErrorIcon, WarningIcon } from "@salt-ds/icons";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
@@ -44,14 +44,14 @@ const NoDataOverlay = (props: AgGridReactProps) => {
       <Card
         data-jpmui-test="card-default-example"
         style={{
+          minHeight: "auto",
           width: "500px",
           height: "160px",
           position: "relative",
           padding: 0,
-          borderBottom: `8px solid red`,
+          border: `var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-status-error-borderColor)`,
         }}
       >
-        <div>
           <div
             aria-atomic="true"
             aria-live="polite"
@@ -63,12 +63,10 @@ const NoDataOverlay = (props: AgGridReactProps) => {
             tabIndex={0}
           >
             <div aria-atomic="true" style={{ textAlign: "left" }}>
-              <WarningIcon
-                aria-label="alert"
-                size={2}
-                style={{ color: "red", marginRight: 5 }}
-              />
-              <h2 style={{ display: "inline" }}>No data to display</h2>
+        <div style={{alignItems: "center", gap: "var(--salt-spacing-100)", display: "flex", height: "var(--salt-text-h2-lineHeight"}}>
+              <StatusIndicator style={{"--saltIcon-size": "var(--salt-text-h2-lineHeight)"} as CSSProperties} status={"error"} />
+              <H2 style={{ display: "inline" }}>No data to display</H2>
+              </div>
               <p
                 style={{
                   textAlign: "left",
@@ -91,7 +89,6 @@ const NoDataOverlay = (props: AgGridReactProps) => {
               <Button aria-label="reload" onClick={reloadData} variant="cta">
                 Reload
               </Button>
-            </div>
           </div>
         </div>
       </Card>

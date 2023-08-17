@@ -10,6 +10,7 @@ const dataGridExampleColumns: ColDef[] = [
     pinned: "left",
     suppressMenu: true,
     resizable: false,
+    suppressColumnsToolPanel: true
   },
   {
     headerName: "Name",
