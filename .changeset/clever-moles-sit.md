@@ -10,3 +10,4 @@ Fixed bugs:
 - Alignment of header cell separators with column group cell separators
 - Status bar style enhancements
 - Clipping of sort arrow in header row
+- New floating filter design

@@ -268,7 +268,8 @@
   }
 
   .ag-header-cell.ag-floating-filter:focus-within {
-    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+      var(--salt-focused-outlineColor);
   }
 
   .ag-header-cell.ag-floating-filter:focus-within .ag-header-cell:after {
