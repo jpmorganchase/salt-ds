@@ -11,8 +11,9 @@ import {
   shortColorData,
 } from "../assets/exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
-import { Suspense, SyntheticEvent } from "react";
+import { Suspense, SyntheticEvent, useState } from "react";
 import { ComboBoxItemProps } from "../../src/combo-box-next/utils";
+import { Button, FlexItem, FlexLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/Combo Box Next",
@@ -55,17 +56,15 @@ const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = ({
   onChange,
   ...rest
 }) => {
-  const handleChange = (
-    event: SyntheticEvent,
-    data: { value: string | undefined }
-  ) => {
-    console.log("input value changed", data);
+  const handleChange = (event: SyntheticEvent, data: { value: string }) => {
+    console.log("input value changed", data.value);
     onChange?.(event, data);
   };
 
-  const handleSelect = (event: SyntheticEvent<HTMLInputElement>) => {
-    console.log("selected item", event.currentTarget.value);
+  const handleSelect = (event: SyntheticEvent, data: { value: string }) => {
+    console.log("selected item", data.value);
   };
+
   return (
     <ComboBoxNext
       style={{ width: "266px" }}
@@ -73,6 +72,53 @@ const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = ({
       onSelect={handleSelect}
       {...rest}
     />
+  );
+};
+
+export const Controlled: Story<ComboBoxNextProps<any>> = ({
+  inputValue,
+  ...rest
+}) => {
+  const [index, setIndex] = useState(0);
+
+  const selected = shortColorData[index];
+  const handleSelect = (event: SyntheticEvent, data: { value: string }) => {
+    const newValue = data.value || "";
+    console.log("new selection", newValue);
+  };
+
+  return (
+    <FlexLayout direction={"column"}>
+      <FlexItem>
+        <Button
+          onClick={() => {
+            setIndex(index - 1);
+          }}
+          disabled={index <= 0}
+        >
+          {" "}
+          Previous
+        </Button>
+        <Button
+          onClick={() => {
+            setIndex(index + 1);
+          }}
+          disabled={index >= shortColorData.length - 1}
+        >
+          {" "}
+          Next
+        </Button>
+      </FlexItem>
+
+      <ComboBoxNext
+        style={{ width: "200px" }}
+        selected={selected}
+        inputValue={selected}
+        PortalProps={{ open: false }}
+        onSelect={handleSelect}
+        {...rest}
+      />
+    </FlexLayout>
   );
 };
 
@@ -88,6 +134,10 @@ CustomRenderer.args = {
   itemFilter: customItemFilter,
 };
 
+Controlled.args = {
+  source: shortColorData,
+};
+
 export const Empty = ComboBoxTemplate.bind({});
 Empty.args = {
   source: undefined,
@@ -97,6 +147,12 @@ export const Secondary = ComboBoxTemplate.bind({});
 Secondary.args = {
   source: shortColorData,
   variant: "secondary",
+};
+
+export const Placeholder = ComboBoxTemplate.bind({});
+Placeholder.args = {
+  source: shortColorData,
+  placeholder: "Select a color",
 };
 
 export const Disabled = ComboBoxTemplate.bind({});
