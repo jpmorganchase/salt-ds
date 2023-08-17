@@ -261,6 +261,11 @@
     top: var(--agGrid-column-separator-top);
   }
 
+  .ag-header-container .ag-header-cell.ag-floating-filter:after {
+    height: 0;
+    width: 0;
+  }
+
   .ag-pinned-left-header .ag-header-cell:after {
     height: 0;
   }
@@ -536,6 +541,11 @@
     padding-right: var(--salt-spacing-50);
   }
 
+  .ag-floating-filter {
+    border: var(--salt-size-border) var(--salt-editable-borderStyle)
+      var(--salt-separable-tertiary-borderColor);
+  }
+
   .ag-ltr .ag-floating-filter-button {
     margin: 0;
     padding-left: var(--salt-spacing-100);
@@ -548,10 +558,8 @@
   }
 
   .ag-floating-filter-input {
-    border: var(--salt-size-border) var(--salt-editable-borderStyle)
-      var(--salt-separable-tertiary-borderColor);
     color: var(--salt-text-secondary-foreground);
-    padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-50));
+    padding-left: var(--salt-spacing-100);
   }
 
   .ag-header-cell.ag-floating-filter {
