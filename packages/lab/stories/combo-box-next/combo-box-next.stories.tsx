@@ -12,23 +12,19 @@ import {
 } from "../assets/exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
 import { Suspense, SyntheticEvent } from "react";
+import { ComboBoxItemProps } from "../../src/combo-box-next/utils";
 
 export default {
   title: "Lab/Combo Box Next",
   component: ComboBoxNext,
 } as ComponentMeta<typeof ComboBoxNext>;
 
-interface CustomItemProps {
-  value: LargeCity;
-  matchPattern?: RegExp | string;
-  onMouseDown?: (event: SyntheticEvent<HTMLLIElement>) => void;
-}
 const CustomListItem = ({
   value,
   matchPattern,
   onMouseDown,
   ...rest
-}: CustomItemProps) => {
+}: ComboBoxItemProps<LargeCity>) => {
   return (
     <ListItemNext value={value.name} onMouseDown={onMouseDown} {...rest}>
       <Suspense fallback={null}>
@@ -55,9 +51,16 @@ const customItemFilter = (source: LargeCity[], filterValue?: string) =>
     !filterValue ? item : customMatchPattern(item, filterValue)
   );
 
-const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
-  const handleChange = (event: SyntheticEvent, data: { value: string }) => {
+const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = ({
+  onChange,
+  ...rest
+}) => {
+  const handleChange = (
+    event: SyntheticEvent,
+    data: { value: string | undefined }
+  ) => {
     console.log("input value changed", data);
+    onChange?.(event, data);
   };
 
   const handleSelect = (event: SyntheticEvent<HTMLInputElement>) => {
@@ -68,7 +71,7 @@ const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = (args) => {
       style={{ width: "266px" }}
       onChange={handleChange}
       onSelect={handleSelect}
-      {...args}
+      {...rest}
     />
   );
 };
