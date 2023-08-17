@@ -41,7 +41,6 @@ export const ExampleContainer: FC<ExampleContainerProps> = ({
   customPillText,
   className,
 }) => {
-  console.log({ customPillText });
   return (
     <div
       className={clsx(
