@@ -1,13 +1,8 @@
-import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  MouseEventHandler,
-  MouseEvent,
-  ReactNode,
-} from "react";
-import { makePrefixer, Link, Button } from "@salt-ds/core";
+import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
+import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { ExpansionIcon } from "./ExpansionIcon";
+import { ConditionalWrapper } from "./ConditionalWrapper";
 
 import navigationItemCss from "./NavigationItem.css";
 import { useWindow } from "@salt-ds/window";
@@ -49,50 +44,6 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 const withBaseName = makePrefixer("saltNavigationItem");
-
-interface ConditionalWrapperProps
-  extends Pick<
-    NavigationItemProps,
-    "parent" | "expanded" | "onExpand" | "active" | "href"
-  > {
-  children: ReactNode;
-  className: string;
-}
-
-const ConditionalWrapper = ({
-  children,
-  className,
-  parent,
-  expanded,
-  onExpand,
-  active,
-  href,
-}: ConditionalWrapperProps) => {
-  const handleExpand = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    onExpand?.(event);
-  };
-
-  return parent ? (
-    <Button
-      aria-label="expand"
-      variant="secondary"
-      aria-expanded={expanded}
-      className={clsx(withBaseName("expandButton"), className)}
-      onClick={handleExpand}
-    >
-      {children}
-    </Button>
-  ) : (
-    <Link
-      aria-current={active ? "page" : undefined}
-      href={href}
-      className={className}
-    >
-      {children}
-    </Link>
-  );
-};
 
 export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
   function NavigationItem(props, ref) {
@@ -137,6 +88,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
               [withBaseName("active")]: active,
               [withBaseName("blurActive")]: blurActive,
               [withBaseName("nested")]: level !== 0,
+              [withBaseName("expandButton")]: parent,
             },
             withBaseName(orientation)
           )}
