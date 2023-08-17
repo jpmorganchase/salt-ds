@@ -52,43 +52,57 @@ const NoDataOverlay = (props: AgGridReactProps) => {
           border: `var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-status-error-borderColor)`,
         }}
       >
-          <div
-            aria-atomic="true"
-            aria-live="polite"
-            style={{
-              fontSize: "16px",
-              position: "relative",
-              top: 0,
-            }}
-            tabIndex={0}
-          >
-            <div aria-atomic="true" style={{ textAlign: "left" }}>
-        <div style={{alignItems: "center", gap: "var(--salt-spacing-100)", display: "flex", height: "var(--salt-text-h2-lineHeight"}}>
-              <StatusIndicator style={{"--saltIcon-size": "var(--salt-text-h2-lineHeight)"} as CSSProperties} status={"error"} />
+        <div
+          aria-atomic="true"
+          aria-live="polite"
+          style={{
+            fontSize: "16px",
+            position: "relative",
+            top: 0,
+          }}
+          tabIndex={0}
+        >
+          <div aria-atomic="true" style={{ textAlign: "left" }}>
+            <div
+              style={{
+                alignItems: "center",
+                gap: "var(--salt-spacing-100)",
+                display: "flex",
+                height: "var(--salt-text-h2-lineHeight",
+              }}
+            >
+              <StatusIndicator
+                style={
+                  {
+                    "--saltIcon-size": "var(--salt-text-h2-lineHeight)",
+                  } as CSSProperties
+                }
+                status={"error"}
+              />
               <H2 style={{ display: "inline" }}>No data to display</H2>
-              </div>
-              <p
-                style={{
-                  textAlign: "left",
-                  fontSize: "12px",
-                  lineHeight: "1.5em",
-                }}
-              >
-                We didn&apos;t find any row data to display. Please try
-                reloading the page or contacting your local help desk.
-              </p>
             </div>
-            <div style={{ position: "absolute", right: "0" }}>
-              <Button
-                aria-label="help desk"
-                style={{ marginRight: 10, border: "1px solid" }}
-                variant="secondary"
-              >
-                Help Desk
-              </Button>
-              <Button aria-label="reload" onClick={reloadData} variant="cta">
-                Reload
-              </Button>
+            <p
+              style={{
+                textAlign: "left",
+                fontSize: "12px",
+                lineHeight: "1.5em",
+              }}
+            >
+              We didn&apos;t find any row data to display. Please try reloading
+              the page or contacting your local help desk.
+            </p>
+          </div>
+          <div style={{ position: "absolute", right: "0" }}>
+            <Button
+              aria-label="help desk"
+              style={{ marginRight: 10, border: "1px solid" }}
+              variant="secondary"
+            >
+              Help Desk
+            </Button>
+            <Button aria-label="reload" onClick={reloadData} variant="cta">
+              Reload
+            </Button>
           </div>
         </div>
       </Card>

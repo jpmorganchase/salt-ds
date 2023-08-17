@@ -32,7 +32,7 @@ const LoadingOverlay = (props: AgGridReactProps) => {
       {switcher}
       <div style={{ position: "relative" }}>
         <div className="modal" style={getModalStyle}>
-          <Card style={{minHeight: "auto"}}>
+          <Card style={{ minHeight: "auto" }}>
             <div>
               <Spinner style={{ margin: "0 auto" }} />
               <div
