@@ -77,5 +77,19 @@ describe("GIVEN a Checkbox", () => {
       cy.mount(<Checkbox readOnly />);
       cy.findByRole("checkbox").should("have.attr", "readonly");
     });
+
+    it("THEN should be focusable", () => {
+      const selectSpy = cy.stub().as("selectSpy");
+      cy.mount(<Checkbox readOnly onChange={selectSpy} />);
+      cy.findByRole("checkbox").should("have.attr", "readonly");
+      cy.realPress("Tab");
+      cy.findByRole("checkbox").should("be.focused");
+      cy.realPress("Enter");
+      cy.get("@selectSpy").should("not.be.called");
+      cy.realPress("Space");
+      cy.get("@selectSpy").should("not.be.called");
+      cy.findByRole("checkbox").realClick();
+      cy.get("@selectSpy").should("not.be.called");
+    });
   });
 });
