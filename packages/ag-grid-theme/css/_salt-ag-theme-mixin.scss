@@ -549,7 +549,7 @@
 
   .ag-floating-filter-input {
     border: var(--salt-size-border) var(--salt-editable-borderStyle)
-    var(--salt-separable-tertiary-borderColor);
+      var(--salt-separable-tertiary-borderColor);
     color: var(--salt-text-secondary-foreground);
     padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-50));
   }
