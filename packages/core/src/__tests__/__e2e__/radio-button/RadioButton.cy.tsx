@@ -30,5 +30,19 @@ describe("GIVEN a RadioButton component", () => {
       cy.mount(<RadioButton readOnly />);
       cy.findByRole("radio").should("have.attr", "readonly");
     });
+
+    it("THEN should be focusable", () => {
+      const selectSpy = cy.stub().as("selectSpy");
+      cy.mount(<RadioButton readOnly onChange={selectSpy} />);
+      cy.findByRole("radio").should("have.attr", "readonly");
+      cy.realPress("Tab");
+      cy.findByRole("radio").should("be.focused");
+      cy.realPress("Enter");
+      cy.get("@selectSpy").should("not.be.called");
+      cy.realPress("Space");
+      cy.get("@selectSpy").should("not.be.called");
+      cy.findByRole("radio").realClick();
+      cy.get("@selectSpy").should("not.be.called");
+    });
   });
 });
