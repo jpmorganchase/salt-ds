@@ -41,6 +41,7 @@ export const ExampleContainer: FC<ExampleContainerProps> = ({
   customPillText,
   className,
 }) => {
+  console.log({ customPillText });
   return (
     <div
       className={clsx(
@@ -52,7 +53,7 @@ export const ExampleContainer: FC<ExampleContainerProps> = ({
       {customPillText || type !== "neutral" ? (
         <TypePill
           type={type}
-          text={customPillText || type === "positive" ? "Do" : "Don't"}
+          text={customPillText || (type === "positive" ? "Do" : "Don't")}
         />
       ) : null}
       <div className={styles.content}>{children}</div>
