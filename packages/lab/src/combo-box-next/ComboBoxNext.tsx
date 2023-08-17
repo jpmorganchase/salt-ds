@@ -61,7 +61,7 @@ export interface ComboBoxNextProps<T>
   /**
    * If `true`, the component will be disabled.
    */
-  disabled: boolean;
+  disabled?: boolean;
   /**
    * Styling variant. Defaults to "primary".
    */
@@ -78,7 +78,9 @@ export interface ComboBoxNextProps<T>
   /**
    * The component used for item instead of the default.
    */
-  ListItem: (props: ComboBoxItemProps<T>) => ReactElement<ComboBoxItemProps<T>>;
+  ListItem?: (
+    props: ComboBoxItemProps<T>
+  ) => ReactElement<ComboBoxItemProps<T>>;
   /**
    * Function to be used as filter.
    */
@@ -268,12 +270,14 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
                     setInputValue(event.currentTarget?.dataset.value);
                   };
                   return (
-                    <ListItem
-                      key={index}
-                      value={value}
-                      matchPattern={inputValue}
-                      onMouseDown={onMouseDown}
-                    />
+                    ListItem && (
+                      <ListItem
+                        key={index}
+                        value={value}
+                        matchPattern={inputValue}
+                        onMouseDown={onMouseDown}
+                      />
+                    )
                   );
                 })}
               </ListNext>
