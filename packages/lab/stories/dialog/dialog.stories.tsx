@@ -47,7 +47,12 @@ const DialogTemplate: ComponentStory<typeof Dialog> = ({
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Click to open dialog
       </Button>
-      <Dialog {...args} open={open} onOpenChange={onOpenChange}>
+      <Dialog
+        {...args}
+        style={{ width: 500 }}
+        open={open}
+        onOpenChange={onOpenChange}
+      >
         <DialogTitle accent={accent as boolean}>{title}</DialogTitle>
         <DialogContent>{content}</DialogContent>
         <DialogActions>
@@ -135,6 +140,9 @@ LongContent.args = {
 const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
   open: openProp = true,
   status,
+  title,
+  // @ts-ignore
+  content,
   ...args
 }) => {
   const [open, setOpen] = useState(openProp);
@@ -166,14 +174,8 @@ const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
         // focus the ok instead of the cancel button
         initialFocus={1}
       >
-        <DialogTitle>
-          {status![0].toUpperCase()}
-          {status!.slice(1)}
-        </DialogTitle>
-        <DialogContent>
-          A Dialog is a window that opens over the application content, focusing
-          the user's attention on a particular task or piece of information.
-        </DialogContent>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button variant="cta" onClick={handleClose}>
@@ -188,21 +190,25 @@ const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
 export const InfoStatus = AlertDialogTemplate.bind({});
 InfoStatus.args = {
   status: "info",
+  title: "Info",
 };
 
 export const SuccessStatus = AlertDialogTemplate.bind({});
 SuccessStatus.args = {
   status: "success",
+  title: "Success",
 };
 
 export const WarningStatus = AlertDialogTemplate.bind({});
 WarningStatus.args = {
   status: "warning",
+  title: "Warning",
 };
 
 export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
+  title: "Error",
 };
 
 function FakeWindow({ children }: PropsWithChildren) {
