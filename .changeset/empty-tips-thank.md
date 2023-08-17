@@ -3,6 +3,6 @@
 ---
 
 - Change `NavigationItem` flex alignment so it works well with longer labels
-- Add new `--salt-size-indicator` to `--navigationItem-bar-size` css var
+- Rename `blurSelected` prop to `blurActive`
 - Update description on `blurSelected` prop
-- Move `ConditionalWrapper` outside `NavigationItem`
+- Move `ConditionalWrapper` into separate file
