@@ -337,7 +337,7 @@ export const VerticalNestedGroup = () => {
                 (!expanded.includes(name) &&
                   subNav?.some((item) => active === `${name} - ${item.name}`))
               }
-              blurSelected={
+              blurActive={
                 !expanded.includes(name) &&
                 subNav?.some(
                   (item) =>
@@ -383,7 +383,7 @@ export const VerticalNestedGroup = () => {
                               (item) => active === `${name} - ${item}`
                             ))
                         }
-                        blurSelected={
+                        blurActive={
                           !expanded.includes(item.name) &&
                           item.subNav?.some(
                             (nestedItem) =>

@@ -10,7 +10,7 @@
 
 /* Vars applied to NavigationItem component when active or selected */
 .saltNavigationItem-active,
-.saltNavigationItem-blurSelected {
+.saltNavigationItem-blurActive {
   --navigationItem-color: var(--salt-text-primary-foreground);
   --navigationItem-fill: var(--salt-text-primary-foreground);
 }
@@ -153,9 +153,9 @@
 }
 
 /* Styles applied to activation line when item has active children */
-.saltNavigationItem-wrapper.saltNavigationItem-blurSelected::after,
-.saltNavigationItem-wrapper.saltNavigationItem-blurSelected:hover::after,
-.saltNavigationItem-wrapper.saltNavigationItem-blurSelected:focus::after {
+.saltNavigationItem-wrapper.saltNavigationItem-blurActive::after,
+.saltNavigationItem-wrapper.saltNavigationItem-blurActive:hover::after,
+.saltNavigationItem-wrapper.saltNavigationItem-blurActive:focus::after {
   --navigationItem-indicator-background: none;
 }
 

@@ -21,7 +21,7 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Whether the nested group is collapsed and there is an active nested item within it.
    */
-  blurSelected?: boolean;
+  blurActive?: boolean;
   /**
    * Whether the navigation item is expanded.
    */
@@ -98,7 +98,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
   function NavigationItem(props, ref) {
     const {
       active,
-      blurSelected,
+      blurActive,
       children,
       className,
       expanded = false,
@@ -135,7 +135,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             withBaseName("wrapper"),
             {
               [withBaseName("active")]: active,
-              [withBaseName("blurSelected")]: blurSelected,
+              [withBaseName("blurActive")]: blurActive,
               [withBaseName("nested")]: level !== 0,
             },
             withBaseName(orientation)
