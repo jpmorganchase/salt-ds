@@ -1,7 +1,8 @@
 import { composeStories } from "@storybook/testing-react";
 import * as comboBoxNextStories from "@stories/combo-box-next/combo-box-next.stories";
 
-const { Default, CustomRenderer } = composeStories(comboBoxNextStories);
+const { Default, CustomRenderer, Controlled } =
+  composeStories(comboBoxNextStories);
 
 describe("GIVEN a Combobox", () => {
   it("SHOULD render all its items", () => {
@@ -79,11 +80,30 @@ describe("GIVEN a Combobox", () => {
     });
   });
 
-  it("WHEN controlled prop open is passed", () => {
-    it("SHOULD be able to control the open property of portal", () => {
-      cy.mount(<Default PortalProps={{ open: true }} />);
-      Default.args!.source!.forEach((item) => {
-        cy.findByRole("option", { name: item }).should("exist");
+  describe("WHEN combo box is controlled", () => {
+    describe("WHEN controlled prop open is passed", () => {
+      it("SHOULD be able to control the open property of portal", () => {
+        cy.mount(<Default PortalProps={{ open: true }} />);
+        Default.args!.source!.forEach((item) => {
+          cy.findByRole("option", { name: item }).should("exist");
+        });
+      });
+    });
+    describe("WHEN controlled selected is passed", () => {
+      it("SHOULD be able to control the open property of portal", () => {
+        cy.mount(<Controlled />);
+        cy.findByRole("combobox").should("have.value", "Baby blue");
+        cy.findByRole("button", { name: "Next" }).should("exist");
+        cy.findByRole("button", { name: "Next" }).realClick();
+        cy.findByRole("combobox").should("have.value", "Black");
+      });
+    });
+    describe("WHEN controlled prop input value is passed", () => {
+      it("SHOULD be able to control the open property of portal", () => {
+        cy.mount(<Default inputValue="Blue" />);
+        cy.findByRole("combobox").should("have.value", "Blue");
+        cy.realPress("Tab");
+        cy.findAllByRole("option").should("have.length", 2);
       });
     });
   });
