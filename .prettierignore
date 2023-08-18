@@ -23,4 +23,6 @@ storybook-static
 /docs/public/mockServiceWorker.js
 
 # Prettier doesn't support MDX v2 yet
+site/docs/patterns/forms.mdx
 site/docs/patterns/index.mdx
+site/docs/patterns/interntional-address-input.mdx
