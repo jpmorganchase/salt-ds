@@ -7,10 +7,6 @@ import "./tabstrip-next.stories.css";
 export default {
   title: "Lab/Tabs Next/Tabstrip Next/QA",
   component: TabstripNext,
-  args: {
-    selected: undefined,
-    onSelectTab: undefined,
-  },
 };
 
 type TabstripStory = Story<
@@ -43,15 +39,15 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
   width = 300,
   ...tabstripProps
 }) => {
-  const [selected, setSelected] = useState<string | undefined>("Home");
+  const [value, setValue] = useState<string | undefined>("Home");
   return (
     <QAContainer itemPadding={10} itemWidthAuto>
       <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
         <TabstripNext
           {...tabstripProps}
-          selected={selected}
-          onChange={(event, { value }) => {
-            setSelected(value);
+          value={value}
+          onChange={(_, { value }) => {
+            setValue(value);
           }}
         >
           {tabs.map((label) => (
