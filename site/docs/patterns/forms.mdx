@@ -8,9 +8,17 @@ aliases:
 data:
   resources:
     [
-      { href: "https://www.figma.com/community/plugin/1243516701438091943", label: "Form Builder plugin (Beta)", internal: true },
-      { href: "https://www.figma.com/file/6QFnnVZo4a7lBY1s16rZcN/Untitled?type=design&node-id=1%3A4775&mode=design", label: "Form examples", internal: true },
-    ]  
+      {
+        href: "https://www.figma.com/community/plugin/1243516701438091943",
+        label: "Form Builder plugin (Beta)",
+        internal: true,
+      },
+      {
+        href: "https://www.figma.com/file/6QFnnVZo4a7lBY1s16rZcN/Untitled?type=design&node-id=1%3A4775&mode=design",
+        label: "Form examples",
+        internal: true,
+      },
+    ]
 ---
 
 Forms allow you to capture data, gather opinions and receive information in a consistent format.
@@ -22,6 +30,7 @@ This pattern provides practical and visually enriched guidelines for creating fo
 Form controls align to a column layout with an even number of columns across breakpoints.
 
 A form control consists of a [Form Field](https://storybook.saltdesignsystem.com/?path=/story/documentation-core-form-field--page) wrapped around:
+
 - An Input
 - A Combo Box
 - A Dropdown
@@ -38,9 +47,11 @@ A form control consists of a [Form Field](https://storybook.saltdesignsystem.com
 \*You can find more information on the Salt spacing system [here](../foundations/spacing).
 
 <ExampleContainer type="positive">
-- Align the width of a Form Field to the number of columns that best reflect the length of its expected text.
-- Use the Figma “Salt Layout Grid” style library, which aligns to Salt Breakpoints. Simply pick the style that fits to your density and frame width.
-- Use “Compact layout” for very data-dense forms.
+  - Align the width of a Form Field to the number of columns that best reflect
+  the length of its expected text. - Use the Figma “Salt Layout Grid” style
+  library, which aligns to Salt Breakpoints. Simply pick the style that fits to
+  your density and frame width. - Use “Compact layout” for very data-dense
+  forms.
 </ExampleContainer>
 
 ## Form container
@@ -51,21 +62,19 @@ A form control consists of a [Form Field](https://storybook.saltdesignsystem.com
     alt="Example showing full page form container"
     contentPosition="top"
   >
-    ### Full page
-    Embed your form in the application layout when the form is:
-    - Long and complex, or requires multiple columns.
-    - A self-contained workflow, such as a log-in page—which may include an element of background branding.
+    ### Full page Embed your form in the application layout when the form is: -
+    Long and complex, or requires multiple columns. - A self-contained workflow,
+    such as a log-in page—which may include an element of background branding.
   </Diagram>
   <Diagram
     src="/img/patterns/forms/form_container_2.png"
     alt="Example showing overlay form container"
     contentPosition="top"
   >
-    ### Overlay (Dialog/Drawer)
-    Typically displays smaller forms that:
-    - Collect information to inform a larger workflow.
-    - Are displayed on application boot (i.e., as the app loads).
-    - Enable access/feedback (i.e., credentials input, reviews).
+    ### Overlay (Dialog/Drawer) Typically displays smaller forms that: - Collect
+    information to inform a larger workflow. - Are displayed on application boot
+    (i.e., as the app loads). - Enable access/feedback (i.e., credentials input,
+    reviews).
   </Diagram>
 </Diagrams>
 
@@ -78,12 +87,14 @@ A form control consists of a [Form Field](https://storybook.saltdesignsystem.com
 Salt provides primary and secondary variants of both Form Field and backgrounds.
 
 To keep busy forms as simple as possible, choose a combination of these fills to achieve visual hierarchy. Rather than adding additional background colours, if further visual separation is required, use:
+
 1. [Headings](#headings)
 2. [Sections and separators](#sections-and-separators)
 3. [Progressive disclosure](#progressive-disclosure)
 4. [Multiple columns](#multiple-columns)
 
 Choose the combination that best fits:
+
 - The visual priority of the form (i.e., is it the primary focus?).
 - The volume, and type of data, being collected.
 - The user familiarity with the form.
@@ -95,19 +106,17 @@ Choose the combination that best fits:
     contentPosition="top"
     border
   >
-    ### 1a Primary field on primary background
-    Effective for a form that:
-    - Is 'non-specialist' or infrequently used.
-    - Isn't space constrained/ doesn't need to be entirely visible.
-    - Has minimal sections/ columns.
+    ### 1a Primary field on primary background Effective for a form that: - Is
+    'non-specialist' or infrequently used. - Isn't space constrained/ doesn't
+    need to be entirely visible. - Has minimal sections/ columns.
   </Diagram>
   <Diagram
     src="/img/patterns/forms/field_background_2.png"
     alt="Example showing secondary field on secondary background"
     contentPosition="top"
   >
-    ### 1b Secondary field on secondary background
-    Alternate option to form 1a, but not a common combination.
+    ### 1b Secondary field on secondary background Alternate option to form 1a,
+    but not a common combination.
   </Diagram>
   <Diagram
     src="/img/patterns/forms/field_background_3.png"
@@ -115,29 +124,29 @@ Choose the combination that best fits:
     contentPosition="bottom"
     border
   >
-    ### 2a Secondary field on primary background
-    Effective for a form that:
-    - Is used by experts/ is frequently used.
-    - Is compact and data-dense.
-    - Has multiple sections/columns.
+    ### 2a Secondary field on primary background Effective for a form that: - Is
+    used by experts/ is frequently used. - Is compact and data-dense. - Has
+    multiple sections/columns.
   </Diagram>
   <Diagram
     src="/img/patterns/forms/field_background_4.png"
     alt="Example showing secondary field on secondary background"
     contentPosition="bottom"
   >
-    ### 2a Primary field on secondary background
-    Alternate option to form 2a, when form is displayed as a secondary priority.
+    ### 2a Primary field on secondary background Alternate option to form 2a,
+    when form is displayed as a secondary priority.
   </Diagram>
 </Diagrams>
 
 <ExampleContainer type="positive">
-  Use a bordered multiline field when Form Field fill matches the background fill.
+  Use a bordered multiline field when Form Field fill matches the background
+  fill.
 </ExampleContainer>
 
 ## Label vs. question
 
 Form fields can be displayed with either:
+
 - A short label
 - A comprehensive question
 
@@ -148,10 +157,9 @@ Form fields can be displayed with either:
     alt="Example showing field label"
     contentPosition="top"
   >
-    ### Label
-    - Default choice for form Fields.
-    - Field labels are short and descriptive, with no more than 3-5 words.
-    - Uses a secondary ‘Label strong’ type style.
+    ### Label - Default choice for form Fields. - Field labels are short and
+    descriptive, with no more than 3-5 words. - Uses a secondary ‘Label strong’
+    type style.
   </Diagram>
   <Diagram
     border
@@ -159,17 +167,16 @@ Form fields can be displayed with either:
     alt="Example showing field question"
     contentPosition="top"
   >
-    ### Question
-    - Label with "sentence" intent 
-    - Generally no limit to the word count of a field question (it will wrap over multiple lines).
-    - Brings emphasis to the question, over the field content.
-    - Commonly used to create questionnaires and surveys.
-    - Uses a primary ‘Body strong’ type style.
+    ### Question - Label with "sentence" intent - Generally no limit to the word
+    count of a field question (it will wrap over multiple lines). - Brings
+    emphasis to the question, over the field content. - Commonly used to create
+    questionnaires and surveys. - Uses a primary ‘Body strong’ type style.
   </Diagram>
 </Diagrams>
 
 <ExampleContainer type="positive">
-  Labels and questions can be combined in the same form (although not on the same form field). In this case, use top placed labels.
+  Labels and questions can be combined in the same form (although not on the
+  same form field). In this case, use top placed labels.
 </ExampleContainer>
 
 ## Label placement
@@ -179,6 +186,7 @@ Forms support either a top or left label placement.
 ### Top placement
 
 The default label placement for form fields. Top placement offers:
+
 - Most scannable solution, allowing users to traverse the left edge of the form through labels, fields and, finally, onward actions.
 - Fastest completion times.
 - Best label placement across varying devices and viewport sizes.
@@ -202,10 +210,9 @@ The default label placement for form fields. Top placement offers:
     alt="Example showing right aligned labels"
     contentPosition="top"
   >
-    #### Right aligned
-    - Default alignment for left placement.
-    - Maintains proximity of labels to fields.
-    - Often used for dense editable forms, such as tickets.
+    #### Right aligned - Default alignment for left placement. - Maintains
+    proximity of labels to fields. - Often used for dense editable forms, such
+    as tickets.
   </Diagram>
   <Diagram
     border
@@ -213,17 +220,19 @@ The default label placement for form fields. Top placement offers:
     alt="Example showing left aligned labels"
     contentPosition="top"
   >
-    #### Left aligned
-    - Commonly when users need to review, or take care entering form information.
-    - Generally slower completion time (due to variable label proximity to field).
-    - Use cases include form summaries or to collect sensitive information.
+    #### Left aligned - Commonly when users need to review, or take care
+    entering form information. - Generally slower completion time (due to
+    variable label proximity to field). - Use cases include form summaries or to
+    collect sensitive information.
   </Diagram>
 </Diagrams>
 
 <ExampleContainer type="positive">
-  - Ensure both top and left placed labels align to the same layout grid configuration.
-  - All left placement labels in the form should have the same width (determined by the field with the longest label).
-  - Avoid left placement when the form is displayed in different languages, or on mobile/smaller viewports.
+  - Ensure both top and left placed labels align to the same layout grid
+  configuration. - All left placement labels in the form should have the same
+  width (determined by the field with the longest label). - Avoid left placement
+  when the form is displayed in different languages, or on mobile/smaller
+  viewports.
 </ExampleContainer>
 
 <ExampleContainer type="negative">
@@ -233,6 +242,7 @@ The default label placement for form fields. Top placement offers:
 ## Headings
 
 Headings create additional visual separation (after choosing field and background fill colour) and group related fields, to help users complete forms:
+
 - Space is added above each heading for additional separation in the form.
 - If your heading is followed by a description, spacing is reduced to reinforce the relationship between heading and description.
 
@@ -257,13 +267,15 @@ Horizontal separators are used to increase visual hierarchy in addition to backg
 />
 
 <ExampleContainer type="positive">
-  - Break a long form up into sections (or sequential steps) of, ideally, 7 (+/-2) form fields (Miller’s Law).
-  - Inset separators so that they don’t extend into the column layout margin.
+  - Break a long form up into sections (or sequential steps) of, ideally, 7
+  (+/-2) form fields (Miller’s Law). - Inset separators so that they don’t
+  extend into the column layout margin.
 </ExampleContainer>
 
 ## Multiple columns
 
 Form fields can be displayed across multiple columns, and are best:
+
 - For experienced users or routine user tasks, where the form is familiar.
 - When vertical space is at a premium and you need to reduce scrolling.
 - When an additional “summary” column (typically the left column) is required for comparison.
@@ -284,8 +296,11 @@ Form fields can be displayed across multiple columns, and are best:
 />
 
 <ExampleContainer type="positive">
-  - Use top-placed labels with columns to maintain a clear relationship between field and label.
-  - For ADA compliance, forms must adhere to WCAG 2.1 Reflow, which requires the relationship between content to remain clear at 400% zoom. Use a top-down reading order to ensure form fields maintain a logical order as they reposition at different browser zoom levels.
+  - Use top-placed labels with columns to maintain a clear relationship between
+  field and label. - For ADA compliance, forms must adhere to WCAG 2.1 Reflow,
+  which requires the relationship between content to remain clear at 400% zoom.
+  Use a top-down reading order to ensure form fields maintain a logical order as
+  they reposition at different browser zoom levels.
 </ExampleContainer>
 
 ### Unrelated columns
@@ -299,14 +314,17 @@ If form fields in different columns aren’t related to one another, use heading
 />
 
 <ExampleContainer type="positive">
-  In this case, align each column to its own layout grid, with the separator attached to the right margin of the preceding column. This ensures adequate separation between columns and separator.
+  In this case, align each column to its own layout grid, with the separator
+  attached to the right margin of the preceding column. This ensures adequate
+  separation between columns and separator.
 </ExampleContainer>
 
 ## Progressive disclosure
 
-Progressive disclosure is the reveal of content (i.e., fields or information) at the right time for your user. It helps to avoid overwhelming  users by hiding sections of fields until they need to be seen.
+Progressive disclosure is the reveal of content (i.e., fields or information) at the right time for your user. It helps to avoid overwhelming users by hiding sections of fields until they need to be seen.
 
 Common use cases are:
+
 - A long form must be displayed in single page.
 - The fields displayed will vary depending on a user selection or change in context.
 - The user must opt in to sections, or fields, before completing them.
@@ -325,8 +343,9 @@ Common use cases are:
 />
 
 <ExampleContainer type="positive">
-  - Expand the first section on displaying the form.
-  - Align the left edge of fields to the accordion label and the right edge to the underlying layout grid.
+  - Expand the first section on displaying the form. - Align the left edge of
+  fields to the accordion label and the right edge to the underlying layout
+  grid.
 </ExampleContainer>
 
 #### Combining non-expandable and expandable sections
@@ -358,6 +377,7 @@ Checkboxes are commonly used as a mechanism to allow users to opt in to certain 
 Occasionally it’s necessary for a data-rich form to be displayed in a small viewport without reducing the component density. In this case, spacing can be reduced or removed to achieve a compact form layout.
 
 These layouts are often used to display a:
+
 - Dense editable form, such as trade tickets.
 - (Read-only) summary of a form (on their own page or an accompanying left summary column).
 
@@ -372,10 +392,8 @@ These layouts are often used to display a:
 />
 
 <ExampleContainer type="positive">
-  If a compact form is editable, it’s often displayed with:
-  - Secondary fields.
-  - Primary background.
-  - Right-aligned labels (see “Label placement”).
+  If a compact form is editable, it’s often displayed with: - Secondary fields.
+  - Primary background. - Right-aligned labels (see “Label placement”).
 </ExampleContainer>
 
 ### Read-only summary
@@ -387,11 +405,9 @@ These layouts are often used to display a:
 />
 
 <ExampleContainer type="positive">
-  If a compact form is for reference (e.g., a summary/comparison), it’s often displayed with:
-  - Primary fields.
-  - Primary background.
-  - Read-only state.
-  - Left-aligned labels (see “Label placement”).
+  If a compact form is for reference (e.g., a summary/comparison), it’s often
+  displayed with: - Primary fields. - Primary background. - Read-only state. -
+  Left-aligned labels (see “Label placement”).
 </ExampleContainer>
 
 ## Button bar layout
@@ -409,11 +425,10 @@ There are two ways to position the button bar:
     alt="Example of fixed button bar"
     contentPosition="top"
   >
-    #### Fixed
-    The button bar is fixed at the bottom of the viewport when:
-    - A user can proceed (or step back) regardless of form field completion.
-    - If form content overflows, the button bar is displayed with a secondary border style.
-    - The form is in a wizard.
+    #### Fixed The button bar is fixed at the bottom of the viewport when: - A
+    user can proceed (or step back) regardless of form field completion. - If
+    form content overflows, the button bar is displayed with a secondary border
+    style. - The form is in a wizard.
   </Diagram>
   <Diagram
     border
@@ -421,15 +436,17 @@ There are two ways to position the button bar:
     alt="Example of in line bar"
     contentPosition="top"
   >
-    #### In line
-    The button bar is displayed at the end of the form when:
-    - The user needs to complete the entire form, or mandatory fields in the form, before proceeding.
-    - The system needs the user to acknowledge all information on the page.
+    #### In line The button bar is displayed at the end of the form when: - The
+    user needs to complete the entire form, or mandatory fields in the form,
+    before proceeding. - The system needs the user to acknowledge all
+    information on the page.
   </Diagram>
 </Diagrams>
 
 <ExampleContainer type="positive">
-  Hide the button bar border if form content isn’t overflowing behind a fixed button bar (i.e., user has reached the bottom of the form or the form is displayed entirely above the fold).
+  Hide the button bar border if form content isn’t overflowing behind a fixed
+  button bar (i.e., user has reached the bottom of the form or the form is
+  displayed entirely above the fold).
 </ExampleContainer>
 
 ### Button order
@@ -443,9 +460,9 @@ The position of actions (CTA, primary, secondary buttons) is determined by the t
     alt="Example of a single-step form"
     contentPosition="top"
   >
-    #### Single-step form
-    - Core actions are grouped on the left.
-    - Follows an F-pattern reading model, to easily scan down the left edge through the form to the actions.
+    #### Single-step form - Core actions are grouped on the left. - Follows an
+    F-pattern reading model, to easily scan down the left edge through the form
+    to the actions.
   </Diagram>
   <Diagram
     border
@@ -453,9 +470,9 @@ The position of actions (CTA, primary, secondary buttons) is determined by the t
     alt="Example of a multi-step form"
     contentPosition="top"
   >
-    #### Multi-step form
-    - Core actions are grouped on the right.
-    - ‘Next’ always positioned right of ‘Previous’ and ‘Cancel’ to reflect the direction of the steps.
+    #### Multi-step form - Core actions are grouped on the right. - ‘Next’
+    always positioned right of ‘Previous’ and ‘Cancel’ to reflect the direction
+    of the steps.
   </Diagram>
   <Diagram
     border
@@ -463,9 +480,9 @@ The position of actions (CTA, primary, secondary buttons) is determined by the t
     alt="Example of a dialog"
     contentPosition="bottom"
   >
-    #### Dialog
-    - Core actions are always displayed on the right.
-    - Follows a Z-pattern reading model, where actions are the last focal point in the dialog.
+    #### Dialog - Core actions are always displayed on the right. - Follows a
+    Z-pattern reading model, where actions are the last focal point in the
+    dialog.
   </Diagram>
   <Diagram
     border
@@ -473,13 +490,17 @@ The position of actions (CTA, primary, secondary buttons) is determined by the t
     alt="Example of a small viewport"
     contentPosition="bottom"
   >
-    #### Small viewport
-    In a small viewport (below the xs breakpoint), actions can fill the width for a cleaner layout if button width doesn’t need to drastically increase.
+    #### Small viewport In a small viewport (below the xs breakpoint), actions
+    can fill the width for a cleaner layout if button width doesn’t need to
+    drastically increase.
   </Diagram>
 </Diagrams>
 
 <ExampleContainer type="positive">
-  - Core onward actions for the form are grouped together to ensure they remain accessible on browser zoom (e.g., Previous, Next, Cancel, or Submit, Cancel).
-  - Secondary actions which aren’t core to the workflow should be displayed at the opposite end of the button bar.
-  - For a mobile application, buttons can stack (CTA top > Primary > Secondary bottom) to increase button hit area, proximity to thumb, and to utilise mobile scrolling.
+  - Core onward actions for the form are grouped together to ensure they remain
+  accessible on browser zoom (e.g., Previous, Next, Cancel, or Submit, Cancel).
+  - Secondary actions which aren’t core to the workflow should be displayed at
+  the opposite end of the button bar. - For a mobile application, buttons can
+  stack (CTA top > Primary > Secondary bottom) to increase button hit area,
+  proximity to thumb, and to utilise mobile scrolling.
 </ExampleContainer>
