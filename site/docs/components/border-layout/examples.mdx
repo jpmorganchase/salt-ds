@@ -9,39 +9,50 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="button" exampleName="CTA" >
+<LivePreview componentName="border-layout" exampleName="Default" >
 
-Use the CTA button for high priority actions.
+Border Layout can be set to display 5 regions: North, East, South, West and Center. At least one Center region must be defined in the layout.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Primary" >
-
-Use the primary button for routine, non-urgent actions.
+By default, there is no gap between regions.
 
 </LivePreview>
 
-<LivePreview componentName="button" exampleName="Secondary" >
+<LivePreview componentName="border-layout" exampleName="CustomRegionSize" >
 
-Use the secondary button for non-critical actions that support the user but do not impact a flow.
+The size of regions can be manually defined. This example demonstrates how to set the West and East regions to a fixed width, with a responsive Center region.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="IconAndLabel" >
-
-Add an icon before the text to reinforce the button label, or add an icon after the button label to suggest movement or a direction.
+**Tip**: This layout would work well where a fixed-width side navigation is required, alongside responsive page content.
 
 </LivePreview>
 
-<LivePreview componentName="button" exampleName="IconOnly" >
+<LivePreview componentName="border-layout" exampleName="GapBetweenRegions" >
 
-Display an icon-only button with no label when you have limited on-screen space and the icon is globally understood.
+A gap can be added between each region. `Gap` is a multiplier that aligns to the [Salt spacing system](https://www.saltdesignsystem.com/salt/foundations/spacing).
+
+**Tip**:
+
+- The standard gap between column and row elements is 3x.
+
+- Use `columnGap` and `rowGap` properties to set a specific gap in a particular dimension or `gap` to update both values simultaneously.
 
 </LivePreview>
 
-<LivePreview componentName="button" exampleName="Disabled" >
+<LivePreview componentName="border-layout" exampleName="HideRegions" >
 
-Indicates a button that the user can’t interact with.
+Border Layout can display any combination of Border Items. This example demonstrates a layout with North, East and Center regions.
 
 </LivePreview>
+
+<LivePreview componentName="border-layout" exampleName="BorderItemPosition" >
+
+Set the `position` property of the Border Item wrapper to define where content should be displayed in the layout: North, East, South, West, Center.
+
+</LivePreview>
+
+<LivePreview componentName="border-layout" exampleName="BorderItemAlignment" >
+
+User the `verticalAlignment` and `horizontalAlignment` properties of the Border Item wrapper to determine how content should be aligned in the region.
+
+</LivePreview>
+
 </LivePreviewControls>
