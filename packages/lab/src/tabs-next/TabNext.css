@@ -28,11 +28,11 @@
 }
 
 .saltTabNext-primary {
-  --tabnext-background-active: var(--salt-container-primary-background);
+  --tabNext-background-active: var(--salt-container-primary-background);
 }
 
 .saltTabNext-secondary {
-  --tabnext-background-active: var(--salt-container-secondary-background);
+  --tabNext-background-active: var(--salt-container-secondary-background);
 }
 
 .saltTabNext::after {
@@ -66,7 +66,7 @@
 }
 
 .saltTabNext-main[aria-selected="true"] {
-  background: var(--tabnext-background-active);
+  background: var(--tabNext-background-active);
   border-left: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
   border-right: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
 }
