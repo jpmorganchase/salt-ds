@@ -1,0 +1,30 @@
+---
+title: Badge
+layout: DetailComponent
+sidebar:
+  label: How to use
+data:
+  $ref: ./#/data
+---
+
+### Using the Badge component
+
+- If a numeric annotation exceeds the max value passed as a prop, a plus (+) sign will be displayed after the max value stated. In the case that no max value is passed to the component, the value will truncate after 3 digits and therefore display 999+ for any values over 999.
+
+- If an alpha or text annotation in Badge exceeds four characters an ellipsis is used to truncate the annotation after the fourth character.
+
+### When not to use Badge
+
+- Badge must not indicate status through colour, such as red-amber-green or progress.
+
+### Import
+
+To import badge from the lab Salt package, use:
+
+```
+import { Badge } from "@salt-ds/lab";
+```
+
+### Props
+
+<PropsTable componentName="Badge" packageName="lab" />
