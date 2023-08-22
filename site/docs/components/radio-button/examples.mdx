@@ -1,0 +1,81 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Examples
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="radio-button" exampleName="HorizontalGroup" title="Radio Button Group">
+
+Radio Button groups allow users to select one or more values from a given set of choices. They can be aligned horizontally or vertically. Do not truncate radio button values. Keep values short and as concise as possible in the horizontal orientation. The radio should always be placed left aligned to the value.
+
+Best practises:
+• Always use a label for a Radio Group.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="HorizontalGroup" title="When `direction="horizontal"` (default)" />
+<LivePreview componentName="radio-button" exampleName="VerticalGroup" title="When `direction="vertical"`" />
+
+<LivePreview componentName="radio-button" exampleName="WrapGroup" title="Wrapping behaviour">
+
+Wrapping behaviour:
+
+The default behaviour for radio button groups in a horizontal alignment allows radio button options to wrap onto the next line as the viewport size changes, if they don’t fit within a container.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="NoWrapGroup" title="Text label wrapping">
+
+You can configure radio button groups to maintain a horizontal alignment but allow text label wrapping in response to viewport changes. To enable label wrapping, set the prop `wrap=false`.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Disabled" title="Disabled Radio Button">
+
+A disabled Radio Button is not interactive or focusable, as it is not relevant to the user’s current use case. A Radio Button can be disabled by setting the disabled prop to true. This will disable all functionality.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Readonly" title="Readonly Radio Button">
+
+A readonly Radio Button permits the user to only read or copy the value, but not edit the value or change the state of the radio.
+
+A Radio Button with the prop `readOnly="true"` will suppress all functionality along with displaying readonly styling.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Error" title="Validation states: error">
+
+Error state can be indicated stylistically by setting the `validationStatus` prop to "error".
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Warning" title="Validation states: warning">
+
+Warning state can be indicated stylistically by setting the `validationStatus` prop to "warning
+
+• When used in a group, use `validationStatus` on the group rather than the individual controls. Any status provided to the group will take precedence over the statuses applied directly to the nested controls.
+• Avoid using `validationStatus` when a Radio Button is disabled. If provided, disabled functionality and styling will take precedence over any validation status styling.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="LongTextGroup" title="Long value support">
+
+Radio button supports long values. If a text value wraps to multiple lines, align the text to the top of the radio.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="ControlledGroup" title="Controlled Radio Button group">
+
+Controlled radio buttons require events to trigger the state change. The application must track state and update radio props manually. Useful when logic or validation needs to be applied or a request should happen when updating a form.
+
+</LivePreview>
+
+</LivePreviewControls>
