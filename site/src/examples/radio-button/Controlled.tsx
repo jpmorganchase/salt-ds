@@ -17,7 +17,7 @@ const radioData = [
   },
 ];
 
-export const ControlledGroup = (): ReactElement => {
+export const Controlled = (): ReactElement => {
   const [controlledValue, setControlledValue] = useState("option2");
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { RadioButton, RadioButtonGroup } from "@salt-ds/core";
 
-export const LongTextGroup = (): ReactElement => (
+export const LongText = (): ReactElement => (
   <div style={{ width: 500 }}>
     <RadioButtonGroup aria-label="Long Text Example" name="selectionControls">
       <RadioButton
