@@ -1,4 +1,5 @@
 import { NavigationItem, NavigationItemProps, Badge } from "@salt-ds/lab";
+import { FlexLayout } from "@salt-ds/core";
 import { Story } from "@storybook/react";
 import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
@@ -18,17 +19,25 @@ const Template: Story<NavigationItemProps> = (args) => {
   };
 
   return (
-    <NavigationItem active={active} onClick={handleActiveToggle} {...args} />
+    <NavigationItem
+      active={active}
+      onClick={(event) => {
+        // Prevent default to avoid navigation
+        event.preventDefault();
+        handleActiveToggle();
+      }}
+      {...args}
+    />
   );
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  children: "Navigation Item",
+  children: "Label",
   href: "#",
 };
 
-export const WithIcon: Story<NavigationItemProps> = (args) => {
+export const Vertical: Story<NavigationItemProps> = (args) => {
   const [active, setActive] = useState(false);
 
   const handleActiveToggle = () => {
@@ -38,60 +47,160 @@ export const WithIcon: Story<NavigationItemProps> = (args) => {
   return (
     <NavigationItem
       active={active}
-      onClick={handleActiveToggle}
-      IconComponent={NotificationIcon}
+      onClick={(event) => {
+        // Prevent default to avoid navigation
+        event.preventDefault();
+        handleActiveToggle();
+      }}
       {...args}
     />
   );
 };
-WithIcon.args = {
-  children: "Navigation Item",
+Vertical.args = {
+  children: "Label",
+  orientation: "vertical",
   href: "#",
 };
 
-export const WithBadge: Story<NavigationItemProps> = (args) => {
-  const [active, setActive] = useState(false);
+export const WithIcon: Story<NavigationItemProps> = () => {
+  const [horizontalActive, setHorizontalActive] = useState(false);
 
-  const handleActiveToggle = () => {
-    setActive((current) => !current);
+  const [verticalActive, setVerticalActive] = useState(false);
+
+  const handleHorizontalActiveToggle = () => {
+    setHorizontalActive((current) => !current);
+  };
+
+  const handleVerticalActiveToggle = () => {
+    setVerticalActive((current) => !current);
   };
 
   return (
-    <NavigationItem
-      active={active}
-      onClick={handleActiveToggle}
-      BadgeComponent={<Badge value="NEW" />}
-      {...args}
-    />
+    <FlexLayout align="center">
+      <NavigationItem
+        active={horizontalActive}
+        onClick={(event) => {
+          // Prevent default to avoid navigation
+          event.preventDefault();
+          handleHorizontalActiveToggle();
+        }}
+        href="#"
+      >
+        <NotificationIcon />
+        Label
+      </NavigationItem>
+
+      <NavigationItem
+        active={verticalActive}
+        onClick={(event) => {
+          // Prevent default to avoid navigation
+          event.preventDefault();
+          handleVerticalActiveToggle();
+        }}
+        href="#"
+        orientation="vertical"
+      >
+        <NotificationIcon />
+        Label
+      </NavigationItem>
+    </FlexLayout>
   );
 };
-WithBadge.args = {
-  children: "Navigation Item",
-  href: "#",
+
+export const WithBadge: Story<NavigationItemProps> = () => {
+  const [horizontalActive, setHorizontalActive] = useState(false);
+
+  const [verticalActive, setVerticalActive] = useState(false);
+
+  const handleHorizontalActiveToggle = () => {
+    setHorizontalActive((current) => !current);
+  };
+
+  const handleVerticalActiveToggle = () => {
+    setVerticalActive((current) => !current);
+  };
+
+  return (
+    <FlexLayout align="center">
+      <NavigationItem
+        active={horizontalActive}
+        onClick={(event) => {
+          // Prevent default to avoid navigation
+          event.preventDefault();
+          handleHorizontalActiveToggle();
+        }}
+        href="#"
+      >
+        Label
+        <Badge value="New" />
+      </NavigationItem>
+
+      <NavigationItem
+        active={verticalActive}
+        onClick={(event) => {
+          // Prevent default to avoid navigation
+          event.preventDefault();
+          handleVerticalActiveToggle();
+        }}
+        href="#"
+        orientation="vertical"
+      >
+        Label
+        <Badge value="New" />
+      </NavigationItem>
+    </FlexLayout>
+  );
 };
 
-const items = [
-  "Navigation Item 1",
-  "Navigation Item 2",
-  "Navigation Item 3",
-  "Navigation Item 4",
-  "Navigation Item 5",
-];
+export const WithNestedItems: Story<NavigationItemProps> = () => {
+  const [horizontalActive, setHorizontalActive] = useState(false);
+
+  const [verticalActive, setVerticalActive] = useState(false);
+
+  const handleHorizontalActiveToggle = () => {
+    setHorizontalActive((current) => !current);
+  };
+
+  const handleVerticalActiveToggle = () => {
+    setVerticalActive((current) => !current);
+  };
+
+  return (
+    <FlexLayout align="center">
+      <NavigationItem
+        active={horizontalActive}
+        onExpand={handleHorizontalActiveToggle}
+        href="#"
+        parent
+      >
+        Label
+      </NavigationItem>
+
+      <NavigationItem
+        active={verticalActive}
+        onExpand={handleVerticalActiveToggle}
+        href="#"
+        orientation="vertical"
+        parent
+      >
+        Label
+      </NavigationItem>
+    </FlexLayout>
+  );
+};
+
+const items = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
 
 const multipleLevelNesting = [
   {
-    name: "Navigation Item 1 - Level 0",
+    name: "Label 1 - level 0",
   },
   {
-    name: "Navigation Item 2 - Level 0",
+    name: "Label 2 - level 0",
     subNav: [
       {
-        name: "Navigation Item 1 - Level 1",
-        subNav: [
-          "Navigation Item 1 - Level 2",
-          "Navigation Item 2 - Level 2",
-          "Navigation Item 3 - Level 2",
-        ],
+        name: "Label 1 - level 1",
+        subNav: ["Label 1 - level 2", "Label 2 - level 2", "Label 3 - level 2"],
       },
     ],
   },
@@ -139,10 +248,10 @@ export const HorizontalGroupWithIconAndBadge = () => {
                 event.preventDefault();
                 setActive(item);
               }}
-              IconComponent={NotificationIcon}
-              BadgeComponent={index === 2 && <Badge value="NEW" />}
             >
+              <NotificationIcon />
               {item}
+              {index === 2 && <Badge value="New" />}
             </NavigationItem>
           </li>
         ))}
@@ -178,32 +287,35 @@ export const VerticalGroup = () => {
 };
 
 export const VerticalGroupWithIconAndBadge = () => {
+  const badgeValues = ["New", 1, 22, "Vanilla", 3, "Chocolate"];
+
   const [active, setActive] = useState(items[0]);
-  const badgeValues = ["NEW", 1, 22, "Vanilla", 3, "Chocolate"];
 
   return (
     <nav>
       <ul className="vertical">
-        {items.map((item, index) => (
-          <li key={item}>
-            <NavigationItem
-              active={active === item}
-              href="#"
-              orientation="vertical"
-              onClick={(event) => {
-                // Prevent default to avoid navigation
-                event.preventDefault();
-                setActive(item);
-              }}
-              IconComponent={NotificationIcon}
-              BadgeComponent={
-                badgeValues[index] && <Badge value={badgeValues[index]} />
-              }
-            >
-              {item}
-            </NavigationItem>
-          </li>
-        ))}
+        {items.map((item, index) => {
+          return (
+            <li key={item}>
+              <NavigationItem
+                active={active === item}
+                href="#"
+                orientation="vertical"
+                onClick={(event) => {
+                  // Prevent default to avoid navigation
+                  event.preventDefault();
+                  setActive(item);
+                }}
+              >
+                <NotificationIcon />
+                {index === 0
+                  ? "This is a very long label across two lines"
+                  : item}
+                {badgeValues[index] && <Badge value={badgeValues[index]} />}
+              </NavigationItem>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
@@ -225,7 +337,7 @@ export const VerticalNestedGroup = () => {
                 (!expanded.includes(name) &&
                   subNav?.some((item) => active === `${name} - ${item.name}`))
               }
-              blurSelected={
+              blurActive={
                 !expanded.includes(name) &&
                 subNav?.some(
                   (item) =>
@@ -241,6 +353,7 @@ export const VerticalNestedGroup = () => {
               onClick={(event) => {
                 // Prevent default to avoid navigation
                 event.preventDefault();
+                setActive(name);
               }}
               onExpand={() => {
                 if (expanded.includes(name)) {
@@ -251,8 +364,8 @@ export const VerticalNestedGroup = () => {
               }}
               parent={subNav && subNav.length > 0}
               expanded={expanded.includes(name)}
-              IconComponent={NotificationIcon}
             >
+              <NotificationIcon />
               {name}
             </NavigationItem>
             {expanded.includes(name) && (
@@ -270,7 +383,7 @@ export const VerticalNestedGroup = () => {
                               (item) => active === `${name} - ${item}`
                             ))
                         }
-                        blurSelected={
+                        blurActive={
                           !expanded.includes(item.name) &&
                           item.subNav?.some(
                             (nestedItem) =>

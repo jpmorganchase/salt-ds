@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/testing-react";
 import * as dropdownNextStories from "@stories/dropdown-next/dropdown-next.stories";
 
-const { Default, Secondary, Readonly, Disabled } =
+const { Default, WithDefaultSelected, Readonly, Disabled } =
   composeStories(dropdownNextStories);
 
 describe("GIVEN an active Dropdown component", () => {
@@ -26,6 +26,7 @@ describe("GIVEN an active Dropdown component", () => {
         "have.class",
         "saltListItemNext-highlighted"
       );
+      cy.findByRole("combobox").should("have.attr", "aria-activedescendant");
     });
 
     it("THEN it should select list items on keyboard enter", () => {
@@ -105,20 +106,20 @@ describe("GIVEN an active Dropdown component", () => {
 
   describe("WHEN the Dropdown is rendered with defaultSelected prop", () => {
     it("THEN it should show default selected value on first render", () => {
-      cy.mount(<Secondary />);
+      cy.mount(<WithDefaultSelected />);
 
-      cy.findByRole("combobox").should("have.value", "🇲🇬 Madagascar");
+      cy.findByRole("combobox").should("have.value", "California");
     });
 
     // TODO: update once KeyNav fixed in List
     it("THEN it should update value on different list item selection", () => {
-      cy.mount(<Secondary />);
+      cy.mount(<WithDefaultSelected />);
       cy.findByRole("combobox").focus().realPress("Enter");
       cy.realPress("ArrowDown");
       cy.realPress("ArrowDown");
       cy.realPress("Enter");
 
-      cy.findByRole("combobox").should("have.value", "🇧🇷 Brazil");
+      cy.findByRole("combobox").should("have.value", "Alaska");
     });
   });
 });
@@ -126,23 +127,28 @@ describe("GIVEN an active Dropdown component", () => {
 describe("GIVEN a disabled Dropdown component", () => {
   it("THEN it should be disabled and not focusable", () => {
     cy.mount(<Disabled />);
-    cy.findByRole("combobox").focus().realPress("Enter");
+
+    // not focusable
+    cy.findByRole("combobox").focus().should("not.have.focus");
 
     cy.findByRole("combobox")
       .should("have.attr", "aria-expanded", "false")
       .should("have.attr", "aria-disabled", "true");
     cy.get('[data-testid="ChevronDownIcon"]').should("exist");
+    cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
   });
 });
 
 describe("GIVEN a readonly Dropdown component", () => {
-  it("THEN it should not show icon and not be focusable", () => {
+  it("THEN it should not show icon and be focusable", () => {
     cy.mount(<Readonly />);
-    cy.findByRole("combobox").focus().realPress("Enter");
+
+    cy.findByRole("combobox").focus().should("have.focus");
 
     cy.findByRole("combobox")
       .should("have.attr", "aria-expanded", "false")
       .should("not.have.attr", "aria-disabled");
     cy.get(".saltDropdownNext-icon").should("not.exist");
+    cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
   });
 });
