@@ -5,22 +5,13 @@
   border-width: var(--salt-size-border);
   border-style: var(--salt-container-borderStyle);
   border-color: var(--salt-container-primary-borderColor);
-  color: var(--saltCard-color, var(--salt-text-primary-foreground));
-  height: var(--saltCard-height, auto);
-  min-height: var(--saltCard-minHeight, 100%);
-  overflow: hidden;
-}
-
-/* Styles applied to Card content */
-.saltCard-content {
-  height: 100%;
-  padding: var(--saltCard-padding, var(--salt-size-container-spacing));
+  padding: var(--saltCard-padding, var(--salt-spacing-100));
 }
 
 /*
  * **Deprecated:** The following styles are deprecated
- *  Use Interactable Card component instead 
- *  for interactable styling 
+ *  Use Interactable Card component instead
+ *  for interactable styling
  */
 
 /* **Deprecated:** Styles applied if `interactable={true}` */
