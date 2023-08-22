@@ -1,0 +1,34 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Accessibility
+data:
+  $ref: ./#/data
+---
+
+- If you are using a Checkbox without a label, pass an `aria-label` to Checkbox that describes its purpose.
+- Screen reader behaviour: Upon focus, the screen reader should announce the following: identify itself as a checkbox, read out the value, express the checkbox state.
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Moves focus to the checkbox.
+- If tabbing into a checkbox group, moves focus to the first checkbox in the group.
+- Press tab to move focus between all available checkbox options.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space">
+
+- Press space to change the state of the checkbox, select or deselect.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- Move focus to outside of the checkbox component and to the previous element in the tabbing order.
+- If focus is inside a checkbox group, moves focus to the previous checkbox option within the tabbing order.
+
+</KeyboardControl>
+</KeyboardControls>
