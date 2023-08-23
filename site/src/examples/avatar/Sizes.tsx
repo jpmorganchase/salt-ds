@@ -1,7 +1,7 @@
 import { Avatar, FlowLayout, Label, StackLayout } from "@salt-ds/core";
 import { ReactElement } from "react";
 
-const sizes = [1, 2, 3, 4] as const;
+const sizes = [1, 2, 3] as const;
 
 export const Sizes = (): ReactElement => {
     return (
