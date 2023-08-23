@@ -1,0 +1,44 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Usage
+data:
+  $ref: ./#/data
+---
+
+### Using the List component
+
+- Use a List to present a set of selectable options that allow users to define choices for an onward action, for instance filtering a data grid, selecting a country, or assigning a task.
+
+#### When not to use List
+
+- If the List items are intended to provide navigation consider using stacked navigation items to form a vertical navigation pattern.
+- If the List is likely to contain five items or fewer consider using a [radio button group](https://www.saltdesignsystem.com/salt/components/radio-button).
+- If the List is likely to contain between five and ten items and does not need to be visible at all times, consider placing the list of items within a [Dropdown](https://www.saltdesignsystem.com/salt/components/dropdown).
+- If the List contains more than ten items and screen space is limited, consider using a [Combobox]((https://www.saltdesignsystem.com/salt/components/combobox).
+
+### Import
+
+{/* Update the text and code snippet below as needed: */}
+
+To import List from the lab Salt package, use:
+
+```js
+import { ListNext } from “@salt-ds/labs”;
+```
+
+### Props
+
+{/* Update packageName and componentName below as needed */}
+{/* packageName is optional and defaults to "core" if omitted */}
+
+<PropsTable packageName="lab" componentName="ListNext" />
+
+### References
+
+- Listboxes vs. Dropdown Lists, ( https://www.nngroup.com/articles/listbox-dropdown/ ) NN Group, April 12, 2020
+- Listbox patterns, (https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) W3C
+- Scrollable Listbox, (https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) W3C

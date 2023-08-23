@@ -1,0 +1,54 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Accessibility
+data:
+  $ref: ./#/data
+---
+
+The List component is accessible by assistive technologies such as screen readers, and provides full WAI-ARIA support.
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+If focus is above the List, Tab moves focus to one of the following items depending on previous user interaction:
+
+- The last selected item
+- The last item with focus
+- The first item in the list
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+If focus is below the List, Shift + Tab moves focus into the list item which last had focus or the first item in the List.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space / Enter">
+
+When focus is on a List item, Enter or Space selects the item and deselects the previously selected item, if any.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="ArrowUp">
+
+Moves focus to the previous item in the List. If focus is on the first item, the next Arrow-up key press retains focus on the first item, it does not wrap focus to the last item in the List.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="ArrowDown">
+
+Moves focus to the next item in the List. If focus is on the last item, the next Arrow-down key press retains focus on the last item, it does not wrap focus back to the first item in the List.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+When focus is within the List, Home moves focus to the first List item.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+When focus is within the List, End moves focus to the last List item.
+
+</KeyboardControl>
+</KeyboardControls>
