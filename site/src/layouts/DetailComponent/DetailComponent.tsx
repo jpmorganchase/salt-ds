@@ -18,6 +18,7 @@ import TitleWithDrawer from "./TitleWithDrawer";
 import MobileDrawer from "./MobileDrawer";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
+import styles from "./DetailComponent.module.css";
 
 const tabs = [
   { id: 0, name: "examples", label: "Examples" },
@@ -138,7 +139,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
           onActiveChange={updateRouteWhenTabChanges}
         >
           {tabs.map(({ id, label }) => (
-            <TabPanel key={id} label={label}>
+            <TabPanel key={id} label={label} className={styles.tabPanel}>
               {children}
             </TabPanel>
           ))}

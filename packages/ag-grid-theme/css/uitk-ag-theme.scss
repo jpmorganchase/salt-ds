@@ -235,7 +235,7 @@ $ag-theme-uitk-params-high: map-merge(
   $uitk-ag-theme-default-params,
   (
     row-height: 20px,
-    header-height: 20,
+    header-height: 20px,
     font-size: 10px,
     header-column-separator-height: 10px,
     cell-horizontal-padding: 5px,
@@ -258,7 +258,7 @@ $ag-theme-uitk-params-medium: map-merge(
   $uitk-ag-theme-default-params,
   (
     row-height: 24px,
-    header-height: 24,
+    header-height: 24px,
     font-size: 12px,
     header-column-separator-height: 10px,
     cell-horizontal-padding: 6px,
@@ -281,7 +281,7 @@ $ag-theme-uitk-params-low: map-merge(
   $uitk-ag-theme-default-params,
   (
     row-height: 32px,
-    header-height: 32,
+    header-height: 32px,
     font-size: 14px,
     header-column-separator-height: 10px,
     cell-horizontal-padding: 6px,
@@ -304,7 +304,7 @@ $ag-theme-uitk-params-touch: map-merge(
   $uitk-ag-theme-default-params,
   (
     row-height: 32px,
-    header-height: 32,
+    header-height: 32px,
     font-size: 14px,
     header-column-separator-height: 10px,
     cell-horizontal-padding: 6px,
