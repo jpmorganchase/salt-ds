@@ -1,0 +1,14 @@
+.gridItem {
+  --gridItem-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
+
+  border: var(--gridItem-border);
+  font-weight: var(--salt-text-fontWeight-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--salt-spacing-200);
+}
+
+.active {
+  background: var(--salt-container-secondary-background);
+}
