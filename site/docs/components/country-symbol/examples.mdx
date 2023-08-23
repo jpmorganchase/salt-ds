@@ -1,0 +1,29 @@
+---
+title: Country Symbol
+layout: DetailComponent
+sidebar:
+  label: Examples
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+  <LivePreview componentName="country-symbol" exampleName="BasicUsage" title="Basic Usage">
+    Each Country Symbol should be imported and used individually. 
+  </LivePreview>
+  <LivePreview componentName="country-symbol" exampleName="Size" title="Size">
+    To change the size of a Country Symbol, use the size prop to multiply the base size.
+  </LivePreview>
+  <LivePreview componentName="country-symbol" exampleName="AllCountrySymbols" title="AllCountrySymbols">
+    The following example shows all the available country symbols. Each component can be imported individually and is named via its country code. 
+    
+    For example the Country Symbol for Belgium has the code BE and can be imported as:
+
+    `import { BE } from @salt-ds/countries;`
+
+  </LivePreview>
+  <LivePreview componentName="country-symbol" exampleName="LazyLoading" title="LazyLoading">
+    For situations like a list where you may be importing many Country Symbol components at once, you may not want all the components to be included in your initial bundle size. To avoid this you can lazily load the country symbol components using [React Suspense](https://react.dev/reference/react/Suspense), alongside the `LazyCountrySymbol` component. LazyCountrySymbol takes a `code` prop to load the appropriate Country Symbol component.
+  </LivePreview>
+
+</LivePreviewControls>
