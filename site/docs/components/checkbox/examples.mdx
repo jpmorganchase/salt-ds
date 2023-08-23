@@ -20,13 +20,12 @@ A single checkbox can be either selected or deselected.
 
 ### Checkbox group: vertical (default)
 
-A checkbox group allow selection of one or more values from a given set of choices. They can be aligned horizontally or vertically.
+A checkbox group allows selection of one or more values from a given set of choices. They can be aligned horizontally or vertically. By default, the group is aligned vertically.
 
 Guidance:
 
-- Keep values short and as concise as possible in the horizontal orientation.
-- Do not truncate checkbox values.
-- The checkbox should always be placed left aligned to the value.
+- Do not truncate checkbox values as this can hide important content relevant to the user’s workflow. Consider shortening or rewording the label if space is limited.
+- The checkbox should always be placed left aligned to the text.
 
 </LivePreview>
 
@@ -34,11 +33,11 @@ Guidance:
 
 ### Chekcbox group: horizontal
 
-The checkbox group layout can be set to horizontal by setting `direction="horizontal"`.
+By default, a checkbox group is aligned vertically. To align horizontally, set `direction="horizontal"`.
 
 Guidance:
 
-- Keep values short and as concise as possible in the horizontal orientation.
+Keep text as clear and concise as possible in the horizontal orientation.
 
 </LivePreview>
 
@@ -46,7 +45,7 @@ Guidance:
 
 ### Wrapping checkbox group
 
-The default behaviour for checkbox group in a horizontal alignment allows checkbox options to wrap onto the next line as the viewport size changes, if they don’t fit within a container.
+By default, a checkbox group in a horizontal alignment wraps onto the next line as the viewport size changes if they don’t fit within a container.
 
 </LivePreview>
 
@@ -54,7 +53,7 @@ The default behaviour for checkbox group in a horizontal alignment allows checkb
 
 ### Value text wrapping
 
-You can configure Checkbox groups to maintain a horizontal alignment but allow text label wrapping by setting the prop `wrap=false`.
+To configure checkbox groups to maintain a horizontal alignment but allow text wrapping, set the prop `wrap=false`.
 
 </LivePreview>
 
@@ -62,7 +61,9 @@ You can configure Checkbox groups to maintain a horizontal alignment but allow t
 
 ### Indeterminate checkbox
 
-When a checkbox value is neither selected nor deselected, it is indeterminate. This is a third, separate state. A Checkbox with the prop `indeterminate="true"` will display the checkbox with an indeterminate icon. The most common use case is a nested checkbox group which shows a hierarchy of selections. If a group contains a mix of selected and unselected children, the parent will show an indeterminate state.
+When a checkbox option is neither selected nor deselected, it is indeterminate. This is a third, separate state.
+
+A Checkbox with the prop `indeterminate="true"` will display an indeterminate icon. The most common use is a nested checkbox group with a hierarchy of selections. When the group contains a mix of selected and unselected children, the parent will show an indeterminate state.
 
 </LivePreview>
 
@@ -70,7 +71,12 @@ When a checkbox value is neither selected nor deselected, it is indeterminate. T
 
 ### Disabled checkbox
 
-A disabled Checkbox is not interactive or focusable, as it is not relevant to the user’s current use case. A Checkbox can be disabled by setting the disabled prop to true. This will disable all functionality.
+A disabled Checkbox is not interactive or focusable.
+
+A Checkbox can be disabled by setting `disabled=”true”`.
+
+Guidance:
+Use a disabled state for checkboxes that have permissions, dependencies or pre-requisites. For example, a checkbox in a Form may be disabled because the user has not yet completed an earlier section of the form.
 
 </LivePreview>
 
@@ -78,7 +84,7 @@ A disabled Checkbox is not interactive or focusable, as it is not relevant to th
 
 ### ReadOnly checkbox
 
-A readonly Checkbox permits the user to only read or copy the value, but not edit the value or change the state of the Checkbox.
+A readonly Checkbox permits the user to only read or copy the text description, but not edit the text or change the state of the Checkbox.
 
 A Checkbox with the prop `readOnly="true"` will suppress all functionality along with displaying readonly styling.
 
@@ -88,7 +94,7 @@ A Checkbox with the prop `readOnly="true"` will suppress all functionality along
 
 ### Validation states: error
 
-Error state can be indicated stylistically by setting the `validationStatus` prop to "error". Use this state when you want to alert the user of a critical issue that is related to the checkbox.
+Indicate an error state by setting the `validationStatus` prop to "error". Use when you want to alert the user to a critical issue related to the checkbox.
 
 </LivePreview>
 
@@ -96,7 +102,7 @@ Error state can be indicated stylistically by setting the `validationStatus` pro
 
 ### Validation states: warning
 
-Warning state can be indicated stylistically by setting the `validationStatus` prop to "warning". Use this state when you want to alert the user of an issue that is related to the checkbox.
+Indicate a warning state by setting the `validationStatus` prop to "warning". Use when you want to alert the user to a non-critical issue related to the checkbox.
 
 Guidance:
 
@@ -109,7 +115,7 @@ Guidance:
 
 ### Long value support
 
-Checkbox supports long values. If a text value wraps to multiple lines, it align the text to the top of the checkbox.
+Checkbox supports long text descriptions. If a text value wraps to multiple lines, it aligns to the top of the checkbox.
 
 </LivePreview>
 
