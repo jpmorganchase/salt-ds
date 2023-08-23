@@ -1,3 +1,3 @@
-export * from "./Sizes"
-export * from "./Image"
-export * from "./Initials"
+export * from "./Sizes";
+export * from "./Image";
+export * from "./Initials";
