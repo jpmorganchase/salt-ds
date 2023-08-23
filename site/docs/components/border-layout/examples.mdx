@@ -11,27 +11,25 @@ data:
 <LivePreviewControls>
 <LivePreview componentName="border-layout" exampleName="Default" >
 
-Border Layout can be set to display 5 regions: North, East, South, West and Center. At least one Center region must be defined in the layout.
+Border Layout can be set to display five regions: North, East, South, West and Center. At least one region but must be displayed alongside the Center region in the layout.
 
-By default, there is no gap between regions.
+By default, there are no gaps between regions.
 
 </LivePreview>
 
 <LivePreview componentName="border-layout" exampleName="CustomRegionSize" >
 
-The size of regions can be manually defined. This example demonstrates how to set the West and East regions to a fixed width, with a responsive Center region.
+You can manually define the size of regions. This example shows how to set the West and East regions to a fixed width, with a responsive Center region.
 
-**Tip**: This layout would work well where a fixed-width side navigation is required, alongside responsive page content.
+This layout would work well where a fixed-width side navigation is required, alongside responsive page content.
 
 </LivePreview>
 
 <LivePreview componentName="border-layout" exampleName="GapBetweenRegions" >
 
-A gap can be added between each region. `Gap` is a multiplier that aligns to the [Salt spacing system](https://www.saltdesignsystem.com/salt/foundations/spacing).
+A gap can be added between each region. The`gap` property is a multiplier that aligns to the [Salt spacing system](https://www.saltdesignsystem.com/salt/foundations/spacing).
 
-**Tip**:
-
-- The standard gap between column and row elements is 3x.
+- The standard gap between column and row elements in Salt is 3 times the base unit.
 
 - Use `columnGap` and `rowGap` properties to set a specific gap in a particular dimension or `gap` to update both values simultaneously.
 
@@ -57,7 +55,7 @@ User the `verticalAlignment` and `horizontalAlignment` properties of the Border 
 
 <LivePreview componentName="border-layout" exampleName="StickyPositioning" >
 
-Use the `sticky` property of the Border Item wrapper to define a region as sticky. When set to `true`, content in surrounding regions will scroll beneath a ‘sticky’ Border Item.
+Use the `sticky` property of the Border Item wrapper to define a region as sticky. When set to `true`, content in surrounding regions will scroll beneath a `sticky` Border Item.
 
 This is particularly useful if you require a header, (in the North region) or side navigation (in the West) to remain visible at all times.
 
