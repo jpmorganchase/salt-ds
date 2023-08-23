@@ -7,35 +7,18 @@ data:
   $ref: ./#/data
 ---
 
-### Best practises
+Any focusable elements included in the Banner content will need to be checked and tested accordingly.
 
-#### When a Button has both an icon and a label
+### Guidance
 
-- Pass `aria-hidden=”true”` to the icon so that its label is not announced by screen readers.
-
-#### When a Button has an icon only and no label
-
-- Pass an `aria-label` to Button that describes its purpose.
+When using Banner to alert the user, apply role="alert". When using Banner to notify the user, apply role="status".
 
 ### Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is above the button, Tab key press moves focus onto the button.
-- If the button is disabled and is set to receive focus, receives focus.
-- If the button has focus, Tab moves focus out of the button, to next focusable component in the tab order.
-
-</KeyboardControl>
-<KeyboardControl keyOrCombos="Tab + Shift">
-
-- If focused, Tab+Shift combo moves focus out of the component to the previous component in the tab order.
-
-</KeyboardControl>
-<KeyboardControl keyOrCombos="Enter / Space">
-
-- If the button has focus, Enter or Space key press activates the button.
-- If the button is disabled and can receive focus, does nothing.
+Use Tab key to navigate through the interactive elements added.
 
 </KeyboardControl>
 </KeyboardControls>

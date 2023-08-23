@@ -9,11 +9,37 @@ data:
 
 ### Using the Banner component
 
-- Keep the text label short. Ideally one to three words and no more than five. If you’re including an icon in the label, use no more than three words.
+You should always position the Banner component in the main content area, directly below the navigation, or in the related container component.
 
-- When including icons, use the Salt Figma icon library. If the icon you need isn’t available, follow the steps in our Creating Salt icons guide.
+You should configure it to close when:
 
-- Consider a Link instead of the Banner component if the user is navigating to a new page or window rather than carrying out an action.
+- The user performs an action that fixes an issue. For example, they correct a validation error.
+
+- The system status that triggered the notification is resolved. For example, a server connection is restored.
+
+#### When to use Banner
+
+**When you need to display general information**
+
+You should use the information Banner to draw attention to information your user was unaware of, for example, a link to updated terms and conditions.
+
+**When you need to let users know about an issue**
+
+If your users have a problem that prevents them from completing a task, such as a system error or technical failure, the error Banner will guide them to the right action to resolve it.
+
+You should use the warning Banner to let users know about an issue that won’t prevent them from continuing the task, but may cause errors if it’s not addressed, such as a restriction due to entitlements or current system status.
+
+**When you need to reassure your users**
+
+You should use the success Banner to reassure your users that an event or process related to the user’s current task has been successfully completed.
+
+#### When not to use Banner
+
+- Do not use Banner to notify users of an event that’s occurred in a peripheral application or workflow, consider using Toast.
+
+- If the notification is low priority and caused by events, not requiring user feedback, consider using Toast.
+
+- If the notification relates to a workflow external to the user’s current task or view, consider using Toast.
 
 ### Import
 
