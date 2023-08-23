@@ -1,7 +1,6 @@
 export * from "./Default";
 export * from "./Disabled";
 export * from "./Readonly";
-export * from "./ControlledGroup";
 export * from "./Error";
 export * from "./Warning";
 export * from "./HorizontalGroup";
@@ -10,3 +9,4 @@ export * from "./LongTextGroup";
 export * from "./NoWrapGroup";
 export * from "./WrapGroup";
 export * from "./Indeterminate";
+export * from "./WithFormField";
