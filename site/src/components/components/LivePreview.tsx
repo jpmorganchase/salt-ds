@@ -4,9 +4,7 @@ import clsx from "clsx";
 import { Switch } from "@salt-ds/lab";
 import { SaltProvider } from "@salt-ds/core";
 import { Pre } from "../mdx/pre";
-import { Heading3 } from "../mdx/h3";
 import { useLivePreviewControls } from "./useLivePreviewControls";
-import { formatComponentExampleName } from "./formatComponentExampleName";
 import useIsMobileView from "../../utils/useIsMobileView";
 
 import styles from "./LivePreview.module.css";
@@ -14,7 +12,15 @@ import styles from "./LivePreview.module.css";
 type LivePreviewProps = {
   componentName: string;
   exampleName: string;
-  title?: string;
+
+  /**
+   * Text label that will be used for this example in the list view in place
+   * of an auto-generated one based on the `exampleName`.
+   *
+   * Should ideally match the H3 text in the description content that
+   * accompanies this example (provided via the `children` prop).
+   */
+  displayName?: string;
   list?: ReactElement;
   children?: ReactNode;
 };
@@ -22,7 +28,6 @@ type LivePreviewProps = {
 export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
   exampleName,
-  title,
   list,
   children,
 }) => {
@@ -43,12 +48,6 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
   return (
     <>
-      {!list && (
-        <Heading3>
-          {title ? title : formatComponentExampleName(exampleName)}
-        </Heading3>
-      )}
-
       {children}
       <div className={styles.container}>
         <div
