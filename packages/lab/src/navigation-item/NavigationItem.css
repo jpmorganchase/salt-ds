@@ -3,14 +3,14 @@
   --navigationItem-color: var(--salt-text-secondary-foreground);
   --navigationItem-fill: var(--salt-text-secondary-foreground);
   --navigationItem-bar-inset: var(--salt-spacing-25);
-  --navigationItem-bar-size: calc(var(--salt-size-bar) / 2);
+  --navigationItem-bar-size: var(--salt-size-indicator);
   --navigationItem-indicator-background: var(--salt-navigable-indicator-active);
   --navigationItem-gap: var(--salt-spacing-100);
 }
 
 /* Vars applied to NavigationItem component when active or selected */
 .saltNavigationItem-active,
-.saltNavigationItem-blurSelected {
+.saltNavigationItem-blurActive {
   --navigationItem-color: var(--salt-text-primary-foreground);
   --navigationItem-fill: var(--salt-text-primary-foreground);
 }
@@ -35,6 +35,7 @@
 /* Styles applied to NavigationItem icon */
 .saltNavigationItem-wrapper .saltIcon {
   fill: var(--navigationItem-fill);
+  top: var(--salt-size-border);
 }
 
 /* Styles applied to NavigationItem Badge */
@@ -74,7 +75,7 @@
   flex: 1;
   text-align: left;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--navigationItem-gap);
 }
 
@@ -152,9 +153,9 @@
 }
 
 /* Styles applied to activation line when item has active children */
-.saltNavigationItem-wrapper.saltNavigationItem-blurSelected::after,
-.saltNavigationItem-wrapper.saltNavigationItem-blurSelected:hover::after,
-.saltNavigationItem-wrapper.saltNavigationItem-blurSelected:focus::after {
+.saltNavigationItem-wrapper.saltNavigationItem-blurActive::after,
+.saltNavigationItem-wrapper.saltNavigationItem-blurActive:hover::after,
+.saltNavigationItem-wrapper.saltNavigationItem-blurActive:focus::after {
   --navigationItem-indicator-background: none;
 }
 

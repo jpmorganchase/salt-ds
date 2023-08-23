@@ -180,8 +180,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
             inputLabelledBy
           )}
           className={clsx(withBaseName("input"), inputClassName)}
-          // From ADA: read-only field doesn't need to be focusable since it's not a field but text
-          tabIndex={readOnly ? -1 : undefined}
           checked={checked}
           disabled={disabled}
           readOnly={readOnly}

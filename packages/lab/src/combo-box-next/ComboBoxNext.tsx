@@ -1,10 +1,9 @@
 import {
   ChangeEvent,
   ComponentPropsWithoutRef,
-  FocusEvent,
   ForwardedRef,
   forwardRef,
-  KeyboardEvent,
+  ReactElement,
   Ref,
   SyntheticEvent,
   useRef,
@@ -15,7 +14,6 @@ import {
   SaltProvider,
   useForkRef,
   useId,
-  InputProps,
 } from "@salt-ds/core";
 import { ListNext, ListNextProps } from "../list-next";
 import { FloatingPortal } from "@floating-ui/react";
@@ -24,18 +22,14 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import comboBoxNextCss from "./ComboBoxNext.css";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { DefaultListItem, defaultFilter } from "./utils";
+import { DefaultListItem, defaultFilter, ComboBoxItemProps } from "./utils";
 import { clsx } from "clsx";
 import { UseComboBoxPortalProps } from "./useComboboxPortal";
 
 const withBaseName = makePrefixer("saltComboBoxNext");
 
 export interface ComboBoxNextProps<T>
-  extends Omit<ComponentPropsWithoutRef<"input">, "onChange"> {
-  /**
-   * Additional props for the input component.
-   */
-  InputProps?: InputProps;
+  extends Omit<ComponentPropsWithoutRef<"input">, "onChange" | "onSelect"> {
   /**
    * Additional props for the list component.
    */
@@ -45,39 +39,38 @@ export interface ComboBoxNextProps<T>
    */
   PortalProps?: UseComboBoxPortalProps;
   /**
+   * Controlled prop. Controls the Input value in the Combo Box Input.
+   */
+  inputValue: string;
+  /**
+   * Controlled prop. Controls the Highlighted item in the Combo Box list.
+   */
+  highlightedItem?: string;
+  /**
+   * Controlled prop. Controls the Selected value in the Combo Box list.
+   */
+  selected?: string;
+  /**
+   * Initial input value for when the list is uncontrolled.
+   */
+  defaultInputValue?: string;
+  /**
+   * Initial selected value for when the list is uncontrolled.
+   */
+  defaultSelected?: string;
+  /**
    * If `true`, the component will be disabled.
    */
-  disabled: boolean;
-  /* Highlighted index for when the list is controlled. */
-  highlightedItem?: string;
-  /* Selected value for when the list is controlled. */
-  selected?: string;
-  /* Initial selected value for when the list is controlled. */
-  defaultSelected?: string;
+  disabled?: boolean;
+  /**
+   * Styling variant. Defaults to "primary".
+   */
+  variant?: "primary" | "secondary";
+  /**
   /**
    * The source of combobox items.
    */
   source: T[];
-  /**
-   * Callback for blur event
-   */
-  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
-  /**
-   * Callback for focus event
-   */
-  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
-  /**
-   * Callback for keyDown event
-   */
-  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
-  /**
-   * Callback for mouse over event
-   */
-  onMouseOver?: (event: SyntheticEvent) => void;
-  /**
-   * Optional ref for the input component
-   */
-  inputRef?: Ref<HTMLInputElement>;
   /**
    * Optional ref for the list component
    */
@@ -85,38 +78,57 @@ export interface ComboBoxNextProps<T>
   /**
    * The component used for item instead of the default.
    */
-  ListItem: any;
+  ListItem?: (
+    props: ComboBoxItemProps<T>
+  ) => ReactElement<ComboBoxItemProps<T>>;
   /**
    * Function to be used as filter.
    */
   itemFilter?: (source: T[], filterValue?: string) => T[];
-  /* Callback for change event in input. */
-  onChange?: (event: SyntheticEvent, data: { value: string }) => void;
   /**
-   * Styling variant. Defaults to "primary".
+   * Callback for mouse over event
    */
-  variant?: "primary" | "secondary";
+  onMouseOver?: (event: SyntheticEvent) => void;
+  /**
+   * Callback for list selection event
+   */
+  onSelect?: (event: SyntheticEvent, data: { value: string }) => void;
+  /**
+  /**
+   * Callback for list change event
+   */
+  onListChange?: (
+    event: SyntheticEvent,
+    data: { value: string | undefined }
+  ) => void;
+  /**
+   * Callback for input change event
+   */
+  onChange?: (event: SyntheticEvent, data: { value: string }) => void;
 }
 
 export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   {
-    InputProps = {},
     ListProps = {},
     PortalProps = {},
-    disabled,
+    inputValue: inputValueProp,
     highlightedItem: highlightedItemProp,
-    selected,
+    selected: selectedProp,
+    defaultInputValue,
     defaultSelected,
-    onKeyDown,
-    onChange,
+    disabled,
+    variant = "primary",
+    source,
+    listRef: listRefProp,
+    ListItem = DefaultListItem as unknown as ComboBoxNextProps<T>["ListItem"],
+    itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
+    onMouseOver,
     onBlur,
     onFocus,
-    onMouseOver,
-    source,
-    ListItem = DefaultListItem,
-    itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
-    variant = "primary",
-    listRef: listRefProp,
+    onKeyDown,
+    onSelect,
+    onListChange,
+    onChange: onInputChange,
     ...rest
   }: ComboBoxNextProps<T>,
   ref?: ForwardedRef<HTMLInputElement>
@@ -132,10 +144,12 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
 
   const setListRef = useForkRef(listRefProp, listRef);
   const listProps = {
+    disabled,
     highlightedItem: highlightedItemProp,
-    selected,
+    selected: selectedProp,
     defaultSelected,
-    onChange,
+    onChange: onListChange,
+    onSelect: onSelect,
     id: listId,
     ref: listRef,
   };
@@ -155,6 +169,8 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     setHighlightedItem,
     mouseOverHandler,
   } = useComboBox({
+    defaultInputValue,
+    inputValue: inputValueProp,
     onBlur,
     onFocus,
     onMouseOver,
@@ -178,12 +194,12 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
 
   const getFilteredSource = () => {
     if (!source) return null;
-    if (selectedItem) return source;
+    if (selectedItem && inputValue === selectedItem) return source;
     return itemFilter && itemFilter(source, inputValue);
   };
   const filteredSource = getFilteredSource();
 
-  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
     if (value === "") {
@@ -197,7 +213,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         setHighlightedItem(filteredSource[0] as unknown as string);
       }
     }
-    onChange?.(event, { value: inputValue || "" });
+    onInputChange?.(event, { value: inputValue || "" });
   };
 
   const adornment = open ? (
@@ -207,7 +223,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   );
 
   const { className: listClassName, ...restListProps } = ListProps;
-  const { className: inputClassName, ...restInputProps } = InputProps;
+  const { className: inputClassName, ...restInputProps } = rest;
 
   return (
     <>
@@ -217,7 +233,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         className={clsx(withBaseName("input"), inputClassName)}
         disabled={disabled}
         endAdornment={adornment}
-        onChange={onInputChange}
+        onChange={onChange}
         onBlur={blurHandler}
         inputRef={inputRef as Ref<HTMLInputElement>}
         inputProps={{
@@ -254,12 +270,14 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
                     setInputValue(event.currentTarget?.dataset.value);
                   };
                   return (
-                    <ListItem
-                      key={index}
-                      value={value}
-                      matchPattern={inputValue}
-                      onMouseDown={onMouseDown}
-                    />
+                    ListItem && (
+                      <ListItem
+                        key={index}
+                        value={value}
+                        matchPattern={inputValue}
+                        onMouseDown={onMouseDown}
+                      />
+                    )
                   );
                 })}
               </ListNext>

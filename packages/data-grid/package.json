@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/data-grid",
-  "version": "1.0.4-alpha.5",
+  "version": "1.0.4-alpha.6",
   "license": "Apache-2.0",
   "main": "src/index.ts",
   "sideEffects": false,

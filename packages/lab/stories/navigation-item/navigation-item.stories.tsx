@@ -1,4 +1,5 @@
 import { NavigationItem, NavigationItemProps, Badge } from "@salt-ds/lab";
+import { FlexLayout } from "@salt-ds/core";
 import { Story } from "@storybook/react";
 import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
@@ -75,7 +76,7 @@ export const WithIcon: Story<NavigationItemProps> = () => {
   };
 
   return (
-    <div className="navigationItemContainer">
+    <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
         onClick={(event) => {
@@ -102,7 +103,7 @@ export const WithIcon: Story<NavigationItemProps> = () => {
         <NotificationIcon />
         Label
       </NavigationItem>
-    </div>
+    </FlexLayout>
   );
 };
 
@@ -120,7 +121,7 @@ export const WithBadge: Story<NavigationItemProps> = () => {
   };
 
   return (
-    <div className="navigationItemContainer">
+    <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
         onClick={(event) => {
@@ -147,7 +148,7 @@ export const WithBadge: Story<NavigationItemProps> = () => {
         Label
         <Badge value="New" />
       </NavigationItem>
-    </div>
+    </FlexLayout>
   );
 };
 
@@ -165,7 +166,7 @@ export const WithNestedItems: Story<NavigationItemProps> = () => {
   };
 
   return (
-    <div className="navigationItemContainer">
+    <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
         onExpand={handleHorizontalActiveToggle}
@@ -184,7 +185,7 @@ export const WithNestedItems: Story<NavigationItemProps> = () => {
       >
         Label
       </NavigationItem>
-    </div>
+    </FlexLayout>
   );
 };
 
@@ -286,30 +287,35 @@ export const VerticalGroup = () => {
 };
 
 export const VerticalGroupWithIconAndBadge = () => {
-  const [active, setActive] = useState(items[0]);
   const badgeValues = ["New", 1, 22, "Vanilla", 3, "Chocolate"];
+
+  const [active, setActive] = useState(items[0]);
 
   return (
     <nav>
       <ul className="vertical">
-        {items.map((item, index) => (
-          <li key={item}>
-            <NavigationItem
-              active={active === item}
-              href="#"
-              orientation="vertical"
-              onClick={(event) => {
-                // Prevent default to avoid navigation
-                event.preventDefault();
-                setActive(item);
-              }}
-            >
-              <NotificationIcon />
-              {item}
-              {badgeValues[index] && <Badge value={badgeValues[index]} />}
-            </NavigationItem>
-          </li>
-        ))}
+        {items.map((item, index) => {
+          return (
+            <li key={item}>
+              <NavigationItem
+                active={active === item}
+                href="#"
+                orientation="vertical"
+                onClick={(event) => {
+                  // Prevent default to avoid navigation
+                  event.preventDefault();
+                  setActive(item);
+                }}
+              >
+                <NotificationIcon />
+                {index === 0
+                  ? "This is a very long label across two lines"
+                  : item}
+                {badgeValues[index] && <Badge value={badgeValues[index]} />}
+              </NavigationItem>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
@@ -331,7 +337,7 @@ export const VerticalNestedGroup = () => {
                 (!expanded.includes(name) &&
                   subNav?.some((item) => active === `${name} - ${item.name}`))
               }
-              blurSelected={
+              blurActive={
                 !expanded.includes(name) &&
                 subNav?.some(
                   (item) =>
@@ -377,7 +383,7 @@ export const VerticalNestedGroup = () => {
                               (item) => active === `${name} - ${item}`
                             ))
                         }
-                        blurSelected={
+                        blurActive={
                           !expanded.includes(item.name) &&
                           item.subNav?.some(
                             (nestedItem) =>
