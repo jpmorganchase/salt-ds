@@ -1,0 +1,47 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: How to use
+data:
+  $ref: ./#/data
+---
+
+### Positioning
+
+Position Toast where it won’t interfere with navigation or important content in the user interface, for example in the lower right corner of the screen or application viewport.
+
+### Stacking
+
+Stack Toasts in chronological order if multiple Toasts need to appear on screen at the same time.
+
+When Toasts are stacked from the top, the newest one should be on top. When they’re stacked from the bottom, the newest Toast should be at the bottom.
+
+### When to use Toast
+
+- Use Toast to notify users of an event that’s occurred in a peripheral application or workflow. A toast should be noticeable without disrupting the user’s experience or requiring immediate action.
+
+- Toasts are generally low priority and caused by events. They usually don’t require feedback from the user.
+
+- They should relate to a workflow external to the user’s current task or view, and are located in an unintrusive location on an interface.
+
+- System generated alerts, independent of the user’s actions, are persistent and must allow the user to either take action or dismiss it. Toasts can contain customisable content such as actionable buttons.
+
+### When not to use Toast
+
+- To show a notification that applies to the user’s current task, consider using Banner instead of Toast. Banner sits either on the top of a page or component, or inline, and usually addresses issues inside the user’s current content area.
+
+- If the notification requires immediate action and is related to the user’s current task, consider using Dialog to interrupt their workflow.
+
+### Import
+
+To import Toast from the core Salt package, use:
+
+```js
+import { Toast, ToastContent } from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable componentName="Toast" />
