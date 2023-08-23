@@ -1,17 +1,27 @@
 ---
 title: Button
 data:
-  description: Button is an interactive component that allows the user to execute an action. There are three Button variants—CTA (call to action), primary and secondary—that you can display with or without a label or icon, and in various states.
+  description: Button is an interactive component that allows the user to execute an action. There are three Button variants—CTA (call to action), primary (default) and secondary—that you can display with or without a label or icon, and in various states.
+
+  # Fill in the info from the content template's "Metadata" table below.
+  # To omit optional items, comment them out with #
   sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/button/Button.tsx"
   package:
     name: "@salt-ds/core"
-    initialVersion: "1.0.0"
   alsoKnownAs: ["Action", "UI action"]
-  relatedComponents:
-    [
+  relatedComponents: [
+      # Add a { name: "...", relationship: "..." } block for each
+      # related component here (separated by commas).
+      # Permitted values for relationship are: "similarTo" or
+      # "contains".
       { name: "Link", relationship: "similarTo" },
       { name: "Icon", relationship: "contains" },
+      { name: "StatusIndicator", relationship: "contains" },
     ]
-  stickerSheet: ""
+  # stickerSheet: "https://figma.com/..."
+
+# Leave this as is
 layout: DetailComponent
 ---
+
+{/* This area stays blank */}

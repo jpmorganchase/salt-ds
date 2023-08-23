@@ -1,5 +1,7 @@
 ---
-title: Button
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
 layout: DetailComponent
 sidebar:
   label: Examples
@@ -14,13 +16,17 @@ data:
 
 Use the CTA button for high priority actions.
 
+Guidance:
+
+CTA buttons should be used sparingly within an application page. They represent the default/expected action on the page.
+
 </LivePreview>
 
 <LivePreview componentName="button" exampleName="Primary" >
 
 ### Primary
 
-Use the primary button for routine, non-urgent actions.
+This is the default variant if unspecified. Use the primary button for routine, non-urgent actions.
 
 </LivePreview>
 
@@ -36,7 +42,12 @@ Use the secondary button for non-critical actions that support the user but do n
 
 ### Icon and label
 
-Add an icon before the text to reinforce the button label, or add an icon after the button label to suggest movement or a direction.
+Add an icon before the text to reinforce the button label or add an icon after the button label to suggest movement or a direction.
+
+Guidance:
+
+- An icon should be placed to the left of the label if it’s being used to further describe the action, such as upload, submit, play, done. This can be useful in busy environments where additional description can improve speed to locate actions.
+- An icon placed to the right of a label is typically suggestive of direction or movement, such as opening a menu overlay, expanding a panel or opening a document. On button click, there is typically an immediate visual change.
 
 </LivePreview>
 
@@ -46,6 +57,11 @@ Add an icon before the text to reinforce the button label, or add an icon after 
 
 Display an icon-only button with no label when you have limited on-screen space and the icon is globally understood.
 
+Guidance:
+
+- An icon-only button with an icon only should be self-explanatory, ideally using well known symbols which are easily understood. If the purpose of the button isn’t clear, a label should be added.
+- Use tooltip on an icon-only button to add context to the action such as 'Edit this form', 'Print this document', or 'Lock document state'.
+
 </LivePreview>
 
 <LivePreview componentName="button" exampleName="Disabled" >
@@ -53,6 +69,8 @@ Display an icon-only button with no label when you have limited on-screen space 
 ### Disabled
 
 Indicates a button that the user can’t interact with.
+
+A Button with the prop `disabled="true"` will suppress all functionality along with disabling the Button. If you need a disabled Button to be focusable, you also need to pass focusableWhenDisabled="true".
 
 </LivePreview>
 </LivePreviewControls>

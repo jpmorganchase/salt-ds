@@ -1,5 +1,7 @@
 ---
-title: Button
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
 layout: DetailComponent
 sidebar:
   label: Accessibility
@@ -11,20 +13,24 @@ data:
 
 #### When a Button has both an icon and a label
 
-- Pass `aria-hidden=”true”` to the icon so that its label is not announced by screen readers.
+- Pass aria-hidden=”true” to the icon so that its label is not announced by screen readers.
 
 #### When a Button has an icon only and no label
 
 - Pass an `aria-label` to Button that describes its purpose.
+
+#### Focusable disabled button
+
+- By default, a disabled button is not focusable. However, in certain scenarios it may be preferable for a disabled button to receive focus. To determine if this is necessary, the following rule of thumb can be followed: "If a disabled element can be enabled (either by the user or by the system) it should be made focusable.”
 
 ### Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is above the button, Tab key press moves focus onto the button.
+- Tab key press moves focus onto the button.
 - If the button is disabled and is set to receive focus, receives focus.
-- If the button has focus, Tab moves focus out of the button, to next focusable component in the tab order.
+- If the button has focus, Tab moves focus out of the button, to next focusable component in the tabbing order.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Tab + Shift">
