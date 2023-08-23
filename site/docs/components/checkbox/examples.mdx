@@ -18,6 +18,8 @@ A single checkbox can be either selected or deselected.
 
 <LivePreview componentName="checkbox" exampleName="VerticalGroup" >
 
+### Checkbox group: vertical (default)
+
 A checkbox group allow selection of one or more values from a given set of choices. They can be aligned horizontally or vertically.
 
 Guidance:
@@ -30,6 +32,8 @@ Guidance:
 
 <LivePreview componentName="checkbox" exampleName="HorizontalGroup" >
 
+### Chekcbox group: horizontal
+
 The checkbox group layout can be set to horizontal by setting `direction="horizontal"`.
 
 Guidance:
@@ -40,11 +44,15 @@ Guidance:
 
 <LivePreview componentName="checkbox" exampleName="WrapGroup" >
 
+### Wrapping checkbox group
+
 The default behaviour for checkbox group in a horizontal alignment allows checkbox options to wrap onto the next line as the viewport size changes, if they don’t fit within a container.
 
 </LivePreview>
 
 <LivePreview componentName="checkbox" exampleName="NoWrapGroup" >
+
+### Value text wrapping
 
 You can configure Checkbox groups to maintain a horizontal alignment but allow text label wrapping by setting the prop `wrap=false`.
 
@@ -52,17 +60,23 @@ You can configure Checkbox groups to maintain a horizontal alignment but allow t
 
 <LivePreview componentName="checkbox" exampleName="Indeterminate" >
 
+### Indeterminate checkbox
+
 When a checkbox value is neither selected nor deselected, it is indeterminate. This is a third, separate state. A Checkbox with the prop `indeterminate="true"` will display the checkbox with an indeterminate icon. The most common use case is a nested checkbox group which shows a hierarchy of selections. If a group contains a mix of selected and unselected children, the parent will show an indeterminate state.
 
 </LivePreview>
 
 <LivePreview componentName="checkbox" exampleName="Disabled">
 
+### Disabled checkbox
+
 A disabled Checkbox is not interactive or focusable, as it is not relevant to the user’s current use case. A Checkbox can be disabled by setting the disabled prop to true. This will disable all functionality.
 
 </LivePreview>
 
 <LivePreview componentName="checkbox" exampleName="Readonly">
+
+### ReadOnly checkbox
 
 A readonly Checkbox permits the user to only read or copy the value, but not edit the value or change the state of the Checkbox.
 
@@ -72,11 +86,15 @@ A Checkbox with the prop `readOnly="true"` will suppress all functionality along
 
 <LivePreview componentName="checkbox" exampleName="Error">
 
+### Validation states: error
+
 Error state can be indicated stylistically by setting the `validationStatus` prop to "error". Use this state when you want to alert the user of a critical issue that is related to the checkbox.
 
 </LivePreview>
 
 <LivePreview componentName="checkbox" exampleName="Warning">
+
+### Validation states: warning
 
 Warning state can be indicated stylistically by setting the `validationStatus` prop to "warning". Use this state when you want to alert the user of an issue that is related to the checkbox.
 
@@ -89,14 +107,19 @@ Guidance:
 
 <LivePreview componentName="checkbox" exampleName="LongTextGroup">
 
+### Long value support
+
 Checkbox supports long values. If a text value wraps to multiple lines, it align the text to the top of the checkbox.
 
 </LivePreview>
 
-<LivePreview componentName="checkbox" exampleName="ControlledGroup" >
+<LivePreview componentName="checkbox" exampleName="WithFormField" >
 
-A controlled checkbox requires events to trigger the state change. The application must track state and update checkbox props manually. This is useful when logic or validation needs to be applied or a request should happen when updating a form.
+### Form Field compatibility
+
+Checkbox group can be wrapped in a Form Field when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility.
+
+For more information, refer to the [Form Field](https://www.saltdesignsystem.com/salt/patterns/forms) guidance.
 
 </LivePreview>
-
 </LivePreviewControls>
