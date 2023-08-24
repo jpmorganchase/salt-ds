@@ -1,0 +1,65 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+    <LivePreview componentName="salt-provider" exampleName="Theme" >
+
+      ### Theme
+
+      Use Salt Provider to change the theme of your application with the `theme` prop. By default, this is set to `salt-theme`.
+
+      Use the `useTheme` hook to access the current active theme.
+
+    </LivePreview>
+
+    <LivePreview componentName="salt-provider" exampleName="Modes" >
+
+        ### Modes
+
+        Use the `mode` prop to change the mode for all nested components. Modes enable the color palette to change from light to dark. You can read more about it on the [Modes Foundation](/salt/foundations/modes) page. The default mode is `light` mode.
+
+        You can use the mode toggle at the top of this page to change the mode in the example. Note how the Card background and text changes.
+
+        Use the `useTheme` hook to access the current mode.
+
+    </LivePreview>
+
+    <LivePreview componentName="salt-provider" exampleName="Density" >
+
+        ### Density
+
+        Use the `density` prop to change the density for all nested components. Density controls the amount of content that can fit on a screen based on the size and spacing of components. You can read more about it on the [Density Foundation](/salt/foundations/density) page. The default density is `medium` density.
+
+        You can use the density toggle at the top of this page to change the density in the example. See how the spacing changes between the squares.
+
+        Use the `useDensity` hook to access the current density.
+
+    </LivePreview>
+
+    <LivePreview componentName="salt-provider" exampleName="Breakpoints" >
+
+        ### Breakpoints
+
+        Use the `breakpoints` prop to customize the CSS media queries that hooks like `useBreakpoints` and `useCurrentBreakpoint` use internally. These hooks are used for the responsive props, when you can pass multiple values (one per breakpoint) or a single value that would take affect across all screen sizes. You can read the [Responsiveness Foundation page](/salt/foundations/responsiveness) for more information about Salt's default breakpoints.
+
+        Use the `useBreakpoints` hook to access the current breakpoints defined via the Salt Provider. This is a low-level hook that is used internally in other hooks.
+
+    </LivePreview>
+
+    <LivePreview componentName="salt-provider" exampleName="NestedProviders" >
+
+        ### Nested Providers
+
+        You can used Salt Provider to create scoped themes, allowing you to mix themes, modes, densities and breakpoints in your application. Familiarize yourself with the guidance on our [Foundations](/salt/foundations/index) pages, where we recommend that you use this sparingly. Nested providers will inherit values from parent providers.
+
+    </LivePreview>
+
+</LivePreviewControls>
