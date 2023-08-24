@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
-import { StackLayout } from '@salt-ds/core'
-import { SteppedTracker, TrackerStep, StepLabel } from '@salt-ds/lab'
+import { StackLayout } from "@salt-ds/core";
+import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 
 export const Basic = (): ReactElement => {
   return (
