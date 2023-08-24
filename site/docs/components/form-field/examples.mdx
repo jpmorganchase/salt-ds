@@ -1,0 +1,159 @@
+---
+title: Form Field
+layout: DetailComponent
+sidebar:
+  label: Examples
+data:
+  $ref: ./#/data
+---
+
+All examples demonstrate Salt form controls inside the Form Field, including Input, Checkbox and Radio Button. These components are available as part of the Salt component library in addition to Form Field. 
+
+<LivePreviewControls>
+<LivePreview componentName="form-field" exampleName="Default" >
+
+### Default
+
+Form Field is a wrapper for UI controls that are typically found in a form (for example, Input, Combobox or Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements. 
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="Disabled" >
+
+### Disabled
+
+Form Field can be disabled via the prop ‘disabled’.  
+ 
+- The prop should be applied to the field, not the control it contains, for expected results. 
+
+- Fields are typically disabled if the context or required permissions prevent the user from interacting with a field.  
+
+- Text contrast is not WCAG AA compliant; an editable field is only disabled if the field is not relevant at the current time. 
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="HelperText" >
+
+### Helper Text
+
+Form Field can display Helper Text using the `FormFieldHelperText` component. 
+
+- Use Helper Text to provide additional guidance to users, such as an instruction (when it’s not obvious what action the user must take), or if you need to show an example of acceptable formats to increase the likelihood of successful entry. 
+
+- Keep your Form Field Label short by moving guidance to the Helper Text. 
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="HelperTextAsTooltip" >
+
+### Helper Text As Tooltip
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="Label" >
+
+### Label
+
+Form field provides a visible label which should be used to describe the form control in the field. The label is placed above the form control by default. Display the label via the `FormFieldLabel` component. 
+
+- The label should be easy to scan and be no more than 3 words long. 
+
+- Use the label to describe the information/data the field is collecting (e.g., Name, Location, Currency). 
+
+- Use `FormFieldHelperText` to provide additional information and context to help the user complete the field. See the ‘Helper Text’ section below. 
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="LabelLeft" >
+
+### Label placement left
+
+The form field label can be positioned to the left of the form control via the prop ‘labelPlacement’. 
+
+- Place your label to the left of the control if your application is limited in vertical real estate or if you have a very data heavy, dense form where it’s preferable to have as many fields visible as possible without scrolling. 
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="LabelQuestion" >
+
+### Label as Question
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="MultipleChildren" >
+
+### Multiple Children
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="NecessityLabel" >
+
+### Necessity Label
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="Readonly" >
+
+### Readonly
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="Validation" >
+
+### Validation
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="WithControls" >
+
+### With Controls
+
+Form Field can wrap any Salt UI control that is typically found in a form, such as Input, Checkbox and Radio Button components. 
+
+- Form Field doesn’t have primary and secondary variants. Any variants apply to the field controls contained within Form Field and can be displayed via the components `variant` prop if supported.  
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="GroupedWithLabelLeft" >
+
+### Grouped With Label Left
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="GroupedWithLabelTop" >
+
+### Grouped With Label Top
+ 
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="GroupedWithLabelRight" >
+
+### Grouped With Label Right
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="GroupedWithMultipleColumns" >
+
+### Grouped With Multiple Columns
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="GroupedWithEmptySlot" >
+
+### Grouped With Empty Slot
+
+
+
+</LivePreview>
+<LivePreview componentName="form-field" exampleName="GroupedWithVariant" >
+
+### Grouped With Variant
+
+
+
+</LivePreview>
+</LivePreviewControls>
