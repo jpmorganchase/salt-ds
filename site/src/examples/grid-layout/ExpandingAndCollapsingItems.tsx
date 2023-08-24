@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useState } from "react";
 import { GridLayout, GridItem, Button } from "@salt-ds/core";
 import { ExpandIcon, MinimizeIcon } from "@salt-ds/icons";
 import clsx from "clsx";
@@ -17,27 +17,11 @@ export const ExpandingAndCollapsingItems = (): ReactElement => {
     }
   };
 
-  const ItemWithExpandingButton = () => {
-    return (
-      <GridItem
-        key={0}
-        colSpan={expanded ? 3 : 1}
-        rowSpan={expanded ? 2 : 1}
-        className={clsx(styles.gridItem, styles.active, {
-          [expandingAndCollapsingItemsStyles.expanded]: expanded,
-          [expandingAndCollapsingItemsStyles.collapsed]:
-            shouldAnimate && !expanded,
-        })}
-      >
-        <Button variant="cta" onClick={onExpand}>
-          {expanded ? <MinimizeIcon /> : <ExpandIcon />}
-        </Button>
-      </GridItem>
-    );
-  };
-
   return (
-    <GridLayout columns={4} rows={2}>
+    <GridLayout
+      columns={4}
+      className={expandingAndCollapsingItemsStyles.gridLayout}
+    >
       <GridItem
         colSpan={expanded ? 3 : 1}
         rowSpan={expanded ? 2 : 1}

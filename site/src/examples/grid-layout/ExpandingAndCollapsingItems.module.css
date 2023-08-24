@@ -1,3 +1,7 @@
+.gridLayout {
+  width: 320px;
+}
+
 .expanded {
   animation: scale-up-left var(--salt-duration-perceptible) cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
