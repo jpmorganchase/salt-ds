@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { FlowLayout, Input } from "@salt-ds/core";
 
-export const Validation = (): ReactElement => (
+export const Placeholder = (): ReactElement => (
 <FlowLayout style={{width: "256px"}}>
     <Input placeholder={"Enter a value"} />
     <Input disabled placeholder={"Enter a value"} />
