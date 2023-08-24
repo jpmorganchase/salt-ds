@@ -1,0 +1,40 @@
+---
+title: Spinner
+layout: DetailComponent
+sidebar:
+  label: How to use
+data:
+  $ref: ./#/data
+---
+
+### How to use Spinner
+
+#### When to use Spinner
+
+- To indicate that content is loading.
+
+- To reassure the user that the system is still working.
+
+- For full screen and widget loading experiences.
+
+- For actions that you expect will take between 1-9 seconds to load or where it is not possible to determine the length of time remaining.
+
+- For more guidance on duration see the Salt [duration foundation recommendations](/salt/foundations/duration)
+
+#### When not to use Spinner
+
+- - Don't use for actions that will run for a determinable length of time. Use Progress component instead.
+
+Don't use for actions which you think could take 10 seconds or more. Use Progress component instead.
+
+### Import
+
+To import Spinner from the core Salt package, use:
+
+```js
+import { Spinner } from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable componentName="Spinner" />
