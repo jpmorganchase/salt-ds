@@ -28,7 +28,7 @@ export const MultipleCards = (): ReactElement => {
     <div
       style={{
         display: "grid",
-        gap: "calc(2 * var(--salt-size-unit))",
+        gap: "var(--salt-spacing-200)",
         width: "400px",
       }}
     >
