@@ -1,27 +1,35 @@
 import { Suspense, useState } from "react";
+import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
 import {
-  countryMetaMap,
-  LazyCountrySymbol,
-} from "@salt-ds/countries";
-import { FlexLayout, StackLayout } from "@salt-ds/core";
-import { FormField, Input } from "@salt-ds/lab";
+  FlowLayout,
+  StackLayout,
+  Text,
+  FormField,
+  Input,
+  FormFieldLabel,
+} from "@salt-ds/core";
 
 export const AllCountrySymbols = () => {
   const [inputText, setInputText] = useState("");
 
   return (
     <Suspense fallback="Loading...">
-      <StackLayout separators>
-        <FormField
-          label={"Search country symbols"}
-          style={{ marginBlock: "1rem", maxWidth: "300px" }}
-        >
+      <StackLayout
+        separators
+        style={{ width: "100%", height: "100%", padding: 10 }}
+      >
+        <FormField>
+          <FormFieldLabel>"Search country symbols"</FormFieldLabel>
           <Input
             value={inputText}
-            onChange={(_, value) => setInputText(value)}
+            inputProps={{
+              onChange: (event) => {
+                setInputText(event.target.value);
+              },
+            }}
           />
         </FormField>
-        <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
+        <FlowLayout gap={3}>
           {Object.values(countryMetaMap)
             .filter(({ countryCode, countryName }) => {
               const searchText = inputText.toLowerCase();
@@ -33,20 +41,19 @@ export const AllCountrySymbols = () => {
             })
             .map(({ countryCode, countryName }) => {
               return (
-                <StackLayout style={{ width: "150px" }} gap={1} align="center">
-                  <LazyCountrySymbol
-                    key={countryCode}
-                    code={countryCode}
-                    size={2}
-                  />
-                  <p style={{ margin: 0 }}>{countryCode}</p>
-                  <p style={{ margin: 0, textAlign: "center" }}>
-                    {countryName}
-                  </p>
+                <StackLayout
+                  style={{ width: 140 }}
+                  gap={1}
+                  align="center"
+                  key={countryCode}
+                >
+                  <LazyCountrySymbol code={countryCode} size={2} />
+                  <Text>{countryCode}</Text>
+                  <Text style={{ textAlign: "center" }}>{countryName}</Text>
                 </StackLayout>
               );
             })}
-        </FlexLayout>
+        </FlowLayout>
       </StackLayout>
     </Suspense>
   );
