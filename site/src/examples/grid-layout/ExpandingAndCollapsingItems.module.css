@@ -1,5 +1,6 @@
 .gridLayout {
   width: 320px;
+  padding: calc(var(--salt-spacing-400) * 2) 0;
 }
 
 .expanded {

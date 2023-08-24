@@ -20,7 +20,6 @@ export const ExpandingAndCollapsingItems = (): ReactElement => {
   return (
     <GridLayout
       columns={4}
-      rows={3}
       className={expandingAndCollapsingItemsStyles.gridLayout}
     >
       <GridItem
