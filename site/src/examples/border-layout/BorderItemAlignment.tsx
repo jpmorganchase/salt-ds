@@ -23,14 +23,14 @@ export const BorderItemAlignment = (): ReactElement => {
     event
   ) => {
     const { value } = event.target;
-    setVerticalAlignment(value);
+    setVerticalAlignment(value as BorderItemAlignmentType);
   };
 
   const handleHorizontalChange: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
     const { value } = event.target;
-    setHorizontalAlignment(value);
+    setHorizontalAlignment(value as BorderItemAlignmentType);
   };
 
   return (
