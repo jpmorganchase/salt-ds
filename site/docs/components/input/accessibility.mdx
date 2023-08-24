@@ -9,9 +9,9 @@ data:
 
 ### Best practises
 
-- To be considered accessible within a form, the Input must be wrapped in a [Form Field](/salt/components/form-field), which will provide the field with a visible label, help text and a status message for validation feedback. 
+- To be considered accessible within a form, the Input must be wrapped in a [Form Field](/salt/components/form-field), which will provide the field with a visible label, help text and a status message for validation feedback.
 
-- Text that extends beyond the visible area of the Input is clipped. This behavior is common to all states, i.e., default, read-only and disabled—whether or not the Input has focus. To view the text in its entirety, the user can traverse the characters using the cursor. 
+- Text that extends beyond the visible area of the Input is clipped. This behavior is common to all states, i.e., default, read-only and disabled—whether or not the Input has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
 
 ### Keyboard interactions
 
@@ -30,44 +30,46 @@ data:
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">
 
-- If an interactive adornment, e.g., a button, has focus, the element is actioned. 
+- If an interactive adornment, e.g., a button, has focus, the element is actioned.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Space">
 
-- When the Input area has focus, a space character is inserted at the point where the text cursor is positioned. 
-- If an interactive adornment, e.g., a button, has focus, the element is actioned. 
+- When the Input area has focus, a space character is inserted at the point where the text cursor is positioned.
+- If an interactive adornment, e.g., a button, has focus, the element is actioned.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Right Arrow">
 
-When the Input area has focus: 
-- If text is highlighted, the highlight is removed and the text cursor is positioned at the right edge of the highlight. 
-- If the text cursor is displayed, it is positioned on the alternative side of the following character. If is there is no following character, there is no effect. 
+When the Input area has focus:
+
+- If text is highlighted, the highlight is removed and the text cursor is positioned at the right edge of the highlight.
+- If the text cursor is displayed, it is positioned on the alternative side of the following character. If is there is no following character, there is no effect.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Left Arrow">
 
-When the Input area has focus: 
-- If text is highlighted, the highlight is removed and the text cursor is positioned at the left edge of the highlight. 
-- If the text cursor is displayed, it is positioned on the alternative side of the following character. If is there is no preceding character, there is no effect. 
+When the Input area has focus:
+
+- If text is highlighted, the highlight is removed and the text cursor is positioned at the left edge of the highlight.
+- If the text cursor is displayed, it is positioned on the alternative side of the following character. If is there is no preceding character, there is no effect.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Left/Right Arrow">
  
-Drags selection over text characters, one at a time. 
+Drags selection over text characters, one at a time.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Backspace">
  
 When Input area has focus and: 
 - Text is highlighted, all highlighted characters are removed. 
-- The text cursor is positioned to the right of text, the preceding character is removed. 
+- The text cursor is positioned to the right of text, the preceding character is removed.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Alphanumeric/Special keys">
  
-When the Input area has focus, the relevant character is inserted at the point where the text cursor is positioned. 
+When the Input area has focus, the relevant character is inserted at the point where the text cursor is positioned.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Control/Command + A">

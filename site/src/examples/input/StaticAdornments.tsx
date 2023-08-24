@@ -1,13 +1,15 @@
 import { ReactElement } from "react";
 import { FlowLayout, Input, Text } from "@salt-ds/core";
-import { FilterIcon, CallIcon, FlagIcon, FilterClearIcon } from "@salt-ds/icons";
+import {
+  FilterIcon,
+  CallIcon,
+  FlagIcon,
+  FilterClearIcon,
+} from "@salt-ds/icons";
 
 export const StaticAdornments = (): ReactElement => (
-    <FlowLayout style={{ width: "256px" }}>
-    <Input
-      startAdornment={<FilterIcon />}
-      defaultValue="Value"
-    />
+  <FlowLayout style={{ width: "256px" }}>
+    <Input startAdornment={<FilterIcon />} defaultValue="Value" />
     <Input
       variant="secondary"
       startAdornment={
@@ -18,10 +20,7 @@ export const StaticAdornments = (): ReactElement => (
       }
       defaultValue="Value"
     />
-    <Input
-      endAdornment={<Text>USD</Text>}
-      defaultValue="Value"
-    />
+    <Input endAdornment={<Text>USD</Text>} defaultValue="Value" />
     <Input
       variant="secondary"
       startAdornment={<FlagIcon />}
