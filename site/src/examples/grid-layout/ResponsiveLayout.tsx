@@ -24,14 +24,6 @@ const getFirstItemColSpan = (columns: number) => {
   return 1;
 };
 
-const getSecondItemColSpan = (columns: number) => {
-  if (columns === 1) {
-    return 1;
-  }
-
-  return 2;
-};
-
 export const ResponsiveLayout = (): ReactElement => {
   const [columns, setColumns] = useState(6);
 
@@ -71,7 +63,7 @@ export const ResponsiveLayout = (): ReactElement => {
           }
 
           if (index === 1) {
-            colSpan = getSecondItemColSpan(columns);
+            colSpan = columns === 1 ? 1 : 2;
           }
 
           return (
