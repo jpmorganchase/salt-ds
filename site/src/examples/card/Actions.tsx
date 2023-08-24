@@ -4,7 +4,7 @@ import { Card, H3, Text, Link } from "@salt-ds/core";
 export const Actions = (): ReactElement => {
   return (
     <Card style={{ width: "256px" }}>
-      <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+      <div style={{ paddingBottom: "var(--salt-spacing-100)" }}>
         <H3 styleAs="h3">Sustainable investing products</H3>
         <Text>
           We have a commitment to provide a wide range of investment solutions
