@@ -12,36 +12,27 @@ import clsx from "clsx";
 import styles from "./index.module.css";
 import positioningItemsStyles from "./PositioningItems.module.css";
 
-const alignmentOptions = gridItemAlignment.map((alignment, index) => ({
-  label: alignment,
-  value: `option${index + 1}`,
-}));
+type GridItemAlignmentType = typeof gridItemAlignment[number];
 
 export const PositioningItems = (): ReactElement => {
-  const [verticalOption, setVerticalOption] = useState("option4");
-  const [horizontalOption, setHorizontalOption] = useState("option4");
+  const [verticalAlignment, setVerticalAlignment] =
+    useState<GridItemAlignmentType>("stretch");
+  const [horizontalAlignment, setHorizontalAlignment] =
+    useState<GridItemAlignmentType>("stretch");
 
   const handleVerticalChange: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
     const { value } = event.target;
-    setVerticalOption(value);
+    setVerticalAlignment(value as GridItemAlignmentType);
   };
 
   const handleHorizontalChange: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
     const { value } = event.target;
-    setHorizontalOption(value);
+    setHorizontalAlignment(value as GridItemAlignmentType);
   };
-
-  const verticalAlignment =
-    alignmentOptions.find(({ value }) => value === verticalOption)?.label ||
-    "stretch";
-
-  const horizontalAlignment =
-    alignmentOptions.find(({ value }) => value === horizontalOption)?.label ||
-    "stretch";
 
   return (
     <div className={positioningItemsStyles.container}>
@@ -74,10 +65,16 @@ export const PositioningItems = (): ReactElement => {
             aria-label="Vertical alignment Controls"
             name="verticalAlignment"
             onChange={handleVerticalChange}
-            value={verticalOption}
+            value={verticalAlignment}
           >
-            {alignmentOptions.map(({ label, value }) => (
-              <RadioButton key={value} label={label} value={value} />
+            {gridItemAlignment.map((alignment) => (
+              <RadioButton
+                key={alignment}
+                label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
+                  1
+                )}`}
+                value={alignment}
+              />
             ))}
           </RadioButtonGroup>
         </FormField>
@@ -89,10 +86,16 @@ export const PositioningItems = (): ReactElement => {
             aria-label="Horizontal alignment Controls"
             name="horizontalAlignment"
             onChange={handleHorizontalChange}
-            value={horizontalOption}
+            value={horizontalAlignment}
           >
-            {alignmentOptions.map(({ label, value }) => (
-              <RadioButton key={value} label={label} value={value} />
+            {gridItemAlignment.map((alignment) => (
+              <RadioButton
+                key={alignment}
+                label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
+                  1
+                )}`}
+                value={alignment}
+              />
             ))}
           </RadioButtonGroup>
         </FormField>
