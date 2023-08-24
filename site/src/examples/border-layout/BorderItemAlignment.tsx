@@ -64,7 +64,9 @@ export const BorderItemAlignment = (): ReactElement => {
             {borderItemAlignment.map((alignment) => (
               <RadioButton
                 key={alignment}
-                label={alignment}
+                label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
+                  1
+                )}`}
                 value={alignment}
               />
             ))}
@@ -83,7 +85,9 @@ export const BorderItemAlignment = (): ReactElement => {
             {borderItemAlignment.map((alignment) => (
               <RadioButton
                 key={alignment}
-                label={alignment}
+                label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
+                  1
+                )}`}
                 value={alignment}
               />
             ))}

@@ -76,7 +76,13 @@ export const BorderItemPosition = (): ReactElement => {
             value={position}
           >
             {borderPosition.map((position) => (
-              <RadioButton key={position} label={position} value={position} />
+              <RadioButton
+                key={position}
+                label={`${position.charAt(0).toUpperCase()}${position.slice(
+                  1
+                )}`}
+                value={position}
+              />
             ))}
           </RadioButtonGroup>
         </FormField>

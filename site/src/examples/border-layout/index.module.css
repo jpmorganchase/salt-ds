@@ -6,7 +6,6 @@
   align-items: center;
   justify-content: center;
   font-weight: var(--salt-text-fontWeight-small);
-  text-transform: capitalize;
   border: var(--borderLayout-border);
   margin: calc(var(--salt-size-border) * -1) 0 0 calc(var(--salt-size-border) * -1);
 }

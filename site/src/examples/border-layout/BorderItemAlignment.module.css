@@ -9,7 +9,6 @@
 
 .radioButtonGroups {
   margin-top: var(--salt-spacing-300);
-  text-transform: capitalize;
   display: flex;
   flex-direction: column;
   gap: var(--salt-spacing-100);
