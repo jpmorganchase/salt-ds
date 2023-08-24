@@ -1,0 +1,51 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Usage
+data:
+  $ref: ./#/data
+---
+
+### Using the Toggle Button component
+
+#### When to use Toggle Button
+
+- To make a single selection when switching between opposing yet mutually exclusive options.
+- To visually prioritize options higher than [Radio Button](/salt/components/radio-button) or [Switch](/salt/components/switch).
+
+#### When not to use Toggle Button
+
+- To present an instantaneous or binary choice between two options. Instead, use [Switch](/salt/components/switch)
+- When the options in the group are not high priority and high affordance is not required. Instead, use [Radio Button Group](/salt/components/radio-button).
+- When all options in the group don’t need to be visible at once, consider using [Dropdown](/salt/components/dropdown).
+- To present options in a Toggle Button Group within a compact UI, or they’re subject to change depending on context. Instead, use [Selectable Pill](/salt/components/pill).
+
+### Import
+
+{/* Update the text and code snippet below as needed: */}
+
+To import Toggle Button from the core Salt package, use:
+
+```js
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
+```
+
+### Props
+
+{/* Update packageName and componentName below as needed */}
+{/* packageName is optional and defaults to "core" if omitted */}
+
+<PropsTable packageName="core" componentName="ToggleButton" />
+
+### Content
+
+- Always style button text in all caps for prominence. This also avoids confusion with body text or general writing.
+- Never use ampersand (&) in button text to save space.
+- Keep the text description short, ideally one to three words and no more than five. If you’re including an icon with the text, use no more than three words.
+
+### References
+
+- Button Pattern (https://www.w3.org/WAI/ARIA/apg/patterns/button/) W3C
