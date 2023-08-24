@@ -8,29 +8,32 @@ data:
   $ref: ./#/data
 ---
 
-### Using the Grid Layout component
+### When to use Grid Layout
 
-Usage information for this component. Copy the content from the content
-template's "How to use" section here.
+- Your content is best displayed using a configurable number of columns and rows, such as a [Form](https://www.saltdesignsystem.com/salt/patterns/forms) or a Dashboard.
+
+- For content regions where blocks, or groups, of content are displayed alongside each other, such as the main content area of the application, a Dialog, or a Drawer.
+
+- The application or webpage will be displayed across different viewport, screen, or device sizes. Grid Layout provides control over how the content is displayed and responsively organized across the different spaces, and ensures a reliable, usable experience.
+
+### When not to use Grid Layout
+
+- To define the high-level layout of your application surrounding the content area (i.e., header, footer, navigation areas. Instead, use the Border Layout component.
+
+- To lay out your content in a single dimension only, for example a horizontal summary bar containing a row of metric components, or a vertical stack of Accordion components. Instead, use Stack Layout, Flow Layout or Flex Layout.
 
 ### Import
 
 To import Grid Layout from the core Salt package, use:
 
 ```js
-import { GridLayout } from "@salt-ds/core";
+import { GridLayout, GridItem } from "@salt-ds/core";
 ```
 
 ### Props
 
 <PropsTable packageName="core" componentName="GridLayout" />
 
-### Content
-
-Add text from "Content" section here when available, or else remove this
-section.
-
 ### References
 
-Add text from "References" section here when available, or else remove this
-section.
+Grid Layout has a complementary Layout grid style library for Figma. J.P. Morgan employees can enable the Salt Layout Grid library from the Assets panel. External designers can install the library from the [Salt community page](https://www.figma.com/community/file/1184561028332139679/Salt%3A-Layout-Grid).
