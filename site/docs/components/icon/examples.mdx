@@ -1,0 +1,58 @@
+---
+title: Icon
+layout: DetailComponent
+sidebar:
+  label: Examples
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+  <LivePreview componentName="icon" exampleName="BasicIcon">
+    ### Basic Icon
+
+    Icons should be individually imported and used from the `@salt-ds/icons`
+    package
+
+  </LivePreview>
+  <LivePreview componentName="icon" exampleName="Size">
+    ### Size
+
+    You can change the size of each Icon using the `size` prop. This is a
+    multiplier to be used for the base size. We have a default icon set that
+    starts from 12px for high and medium density (MD), then 14px for low density
+    (LD), and 16px for touch density (TD). (Since our base size of high density
+    (HD)/default is 10px but we don’t allow icons size smaller than 12px. The
+    HD/default will start from 12px, and its 2X is 20px, 3X is 30px and onwards
+    through the multiples) You have more size choices by adding multiplies to
+    2x, 3x, 4x and onwards.
+
+  </LivePreview>
+  <LivePreview componentName="icon" exampleName="SolidIcons">
+    ### Solid Icons
+
+    We provide two types of icons: default and solid. Most of our icons will
+    have the two versions, except cases in which the icon shape is too narrow to
+    have a solid version like plus and loader
+
+  </LivePreview>
+  <LivePreview componentName="icon" exampleName="Color">
+    ### Color
+
+    To override the default color of the icon, you can use the `--saltIcon-color` CSS variable.
+
+  </LivePreview>
+  <LivePreview componentName="icon" exampleName="CustomIcon">
+    ### Custom Icons
+
+    If you need a custom SVG icon you can use the `Icon` component. `Icon` has the same API as the native `<svg>` element. Whenever you add a custom icon you need to pass an `aria-label` to the `Icon`.
+
+  </LivePreview>
+  <LivePreview componentName="icon" exampleName="AllIcons">
+    ### All Icons
+
+    The following is a searchable list of all the Icons included in the `@salt-ds/icons` package
+
+  </LivePreview>
+  
+</LivePreviewControls>
