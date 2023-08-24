@@ -1,0 +1,66 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Best practices
+
+#### Focus
+
+The Dialog component will trap focus within the Dialog when open. This means that the user will not be able to tab out of the Dialog and focus will be set to the first focusable element within the Dialog. When the Dialog is closed, focus will be returned to the element that was focused before the Dialog was opened.
+
+#### Initial focus
+
+You can control which element receives focus when the Dialog is opened by passing an `initialFocus` prop to the Dialog component. This prop accepts a number, which indicates the order in which each tabbable element within the Dialog should receive focus. If no element is found, focus will be set to the first focusable element within the Dialog. The `initialFocus` can also be a ref to an element within the Dialog.
+
+#### Focus sequence
+
+For Dialogs that prompt for user confirmation, the CTA button takes focus first.
+
+<Diagram
+  src="/img/components/dialog/dialog-confirmation.png"
+  alt="Example showing for dialogs that prompt for user confirmation, the CTA button takes focus first"
+  border
+/>
+
+For Dialogs with destructive interactions, the CANCEL button takes focus first.
+
+<Diagram
+  src="/img/components/dialog/destructive-dialog.png"
+  alt="Example showing for dialogs with destructive interactions, the cancel button takes focus first"
+  border
+/>
+
+### Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- When the Dialog is opened, sets focus to the first focusable component in the Dialog.
+- If focus is in the Dialog, sets focus to the next focusable component in the tab order.
+- If the last element in the Dialog has focus, wraps to the first focusable element in the Dialog.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Tab + Shift">
+
+-If focus is in the Dialog, sets focus to the previous focusable component in the tab order. 
+- If the first element in the Dialog has focus, wraps to the last focusable element in the Dialog. 
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Escape">
+
+- If focus is in the Dialog, closes the Dialog and returns focus to the triggering element.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- If focus is on a button in the Dialog button bar, activates the button. 
+- If focus is on the close button, activates the close button, closes the Dialog and returns focus to the triggering element. 
+
+</KeyboardControl>
+</KeyboardControls>
