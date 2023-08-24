@@ -1,28 +1,30 @@
 ---
-title: Button
+title: Panel
 layout: DetailComponent
 sidebar:
-  label: How to use
+  exclude: true
 data:
   $ref: ./#/data
 ---
 
 ### Using the Button component
 
-- Keep the text label short. Ideally one to three words and no more than five. If you’re including an icon in the label, use no more than three words.
+Pick the background that reflects the level of importance for the content (primary or secondary) and that will drive the types of components that are therefore displayed in the Panel. 
 
-- When including icons, use the Salt Figma icon library. If the icon you need isn’t available, follow the steps in our Creating Salt icons guide.
+#### When to use Panel 
 
-- Consider a Link instead of the Button component if the user is navigating to a new page or window rather than carrying out an action.
+- To organize and divide the application into clear content areas.  
+- To create visual hierarchy within the application layout.  
+- With the Border Layout component to define the main content regions of your app with responsive behaviour.  
 
 ### Import
 
-To import Button from the core Salt package, use:
+To import Panel from the core Salt package, use:
 
 ```js
-import { Button } from "@salt-ds/core";
+import { Panel } from "@salt-ds/core";
 ```
 
 ### Props
 
-<PropsTable componentName="Button" />
+<PropsTable componentName="Panel" />
