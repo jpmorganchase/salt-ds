@@ -12,23 +12,24 @@ data:
 <LivePreviewControls>
 <LivePreview componentName="radio-button" exampleName="Default">
 
-### Radio Button group (vertical)
+### Radio Button Group (vertical)
 
-Radio Button groups allow users to select one or more values from a given set of choices. They can be aligned horizontally or vertically.
+Radio Button Groups allows users to select one or more values from a given set of choices. They can be aligned horizontally or vertically.
 
 When `direction="vertical"`
 
 Guidance:
 
-- Keep values short and as concise as possible in the horizontal orientation.
-- Do not truncate radio button values.
-- The radio should always be placed left aligned to the value.
+- Keep text short and as concise as possible in the horizontal orientation.
+- Do not truncate text descriptions as this can hide important content relevant to the user’s workflow. Consider shortening or rewording the label if space is limited.
+- The radio button icon should always be placed left aligned to the text.
+- We recommend that you always use a text description for a radio button.
 
 </LivePreview>
 
 <LivePreview componentName="radio-button" exampleName="Horizontal" >
 
-### Radio Button group (horizontal)
+### Radio Button Group (horizontal)
 
 When `direction="horizontal"`
 
@@ -38,7 +39,7 @@ When `direction="horizontal"`
 
 ### Wrapping Radio Button group
 
-The default behaviour for radio button groups in a horizontal alignment allows radio button options to wrap onto the next line as the viewport size changes, if they don’t fit within a container.
+The default behaviour for Radio Button Group in a horizontal alignment allows radio button options to wrap onto the next line as the viewport size changes, if they don’t fit within a container.
 
 </LivePreview>
 
@@ -46,7 +47,7 @@ The default behaviour for radio button groups in a horizontal alignment allows r
 
 ### Text wrapping
 
-You can configure radio button groups to maintain a horizontal alignment but allow text label wrapping in response to viewport changes. To enable label wrapping, set the prop `wrap=false`.
+You can configure radio button groups to maintain a horizontal alignment but allow text wrapping by setting the prop `wrap=false`.
 
 </LivePreview>
 
@@ -54,17 +55,29 @@ You can configure radio button groups to maintain a horizontal alignment but all
 
 ### Disabled Radio Button
 
-A disabled Radio Button is not interactive or focusable, as it is not relevant to the user’s current use case. You can disable a radio button by setting the `disabled` prop to true. This will disable all functionality.
+A disabled radio button is not interactive or focusable.
+
+A radio button can be disabled by setting `disabled=”true”`.
+
+Guidance:
+
+Use a disabled state for radio buttons that have permissions, dependencies or pre-requisites. For example, a radio button in a [Form](/salt/components/formfield) may be disabled because the user has not yet completed an earlier section of the form.
+
+If a disabled radio button's text description contains information that is valuable to the user, consider using a read-only radio button instead.
 
 </LivePreview>
 
 <LivePreview componentName="radio-button" exampleName="Readonly" >
 
-### ReadOnly Radio Button
+### Read-only Radio Button
 
-A read-only Radio Button permits the user to only read or copy the value, but not edit the value or change the state of the radio.
+A read-only radio button permits the user to only read or copy the value, but not edit the value or change the state of the radio.
 
-A Radio Button with the prop `readOnly="true"` will suppress all functionality along with displaying read-only styling.
+A radio button with the prop `readOnly="true"` will suppress all functionality along with displaying read-only styling.
+
+Guidance:
+
+Read-only radio buttons are navigable using keyboard shortcuts. This means that, unlike disabled radio buttons, users can interact with the text description. Use a readonly radio button instead of a disabled radio button when the text description contains information that is valuable to the user.
 
 </LivePreview>
 
@@ -91,7 +104,7 @@ You can indicate a warning state stylistically by setting the `validationStatus`
 
 ### Long text support
 
-Radio Button supports long values. If a text value wraps to multiple lines, align the text to the top of the Radio Button.
+Radio Button supports long text descriptions. If text wraps to multiple lines, align it to the top of the Radio Button.
 
 </LivePreview>
 
