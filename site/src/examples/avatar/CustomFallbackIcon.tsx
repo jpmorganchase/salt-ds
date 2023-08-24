@@ -3,5 +3,5 @@ import { WomanIcon } from "@salt-ds/icons";
 import { ReactElement } from "react";
 
 export const CustomFallbackIcon = (): ReactElement => {
-  return <Avatar name="Alex Brailescu" fallbackIcon={<WomanIcon />} />;
+  return <Avatar aria-label="Woman Avatar" fallbackIcon={<WomanIcon />} />;
 };
