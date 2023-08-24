@@ -1,0 +1,28 @@
+---
+title: Input
+layout: DetailComponent
+sidebar:
+  label: How to use
+data:
+  $ref: ./#/data
+---
+
+### Using the Input component
+
+An Input is recommended when a user is asked a subjective question and the length of their answer is likely to be less than a single line. To avoid misleading users, set the width to correlates to the length of the answer you’re expecting. For example, an input for a three-digit value should not be wide enough to accommodate a sentence worth of characters. 
+
+#### When not to use Input 
+
+Input field width and height should always reflect the amount of content expected in the field. If the content is likely to exceed a single line, always use a [Multiline Input](/salt/components/multiline-input), rather than an Input.  
+
+### Import
+
+To import Input from the core Salt package, use:
+
+```js
+import { Input } from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable componentName="Input" />
