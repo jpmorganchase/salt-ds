@@ -1,0 +1,9 @@
+.square {
+  background: var(--salt-color-orange-20);
+  aspect-ratio: 1;
+  width: 50px;
+}
+
+.squares {
+  margin-top: var(--salt-spacing-100);
+}
