@@ -16,7 +16,7 @@ You should configure it to close when:
 
 - The system status that triggered the notification is resolved. For example, a server connection is restored.
 
-#### When to use Banner
+### When to use Banner
 
 - When you need to display general information - You should use the information Banner to draw attention to information your user was unaware of, for example, a link to updated terms and conditions.
 
@@ -25,13 +25,17 @@ You should configure it to close when:
 
 - When you need to reassure your users - You should use the success Banner to reassure your users that an event or process related to the user’s current task has been successfully completed.
 
-#### When not to use Banner
+### When not to use Banner
 
-- Do not use Banner to notify users of an event that’s occurred in a peripheral application or workflow, consider using Toast.
+- Do not use Banner to notify users of an event that’s occurred in a peripheral application or workflow, consider using [Toast](../toast).
 
-- If the notification is low priority and caused by events, not requiring user feedback, consider using Toast.
+- If the notification is low priority and caused by events, not requiring user feedback, consider using [Toast](../toast).
 
-- If the notification relates to a workflow external to the user’s current task or view, consider using Toast.
+- If the notification relates to a workflow external to the user’s current task or view, consider using [Toast](../toast).
+
+### Content 
+
+The content is set to body text by default. However, if Titles are needed, they should be configured to display the Body Strong typography style across density. Banner is typically used with one or two lines of text; therefore, content should be short and concise allowing users to quickly scan the notification and understand the situation and/or next steps. 
 
 ### Import
 
