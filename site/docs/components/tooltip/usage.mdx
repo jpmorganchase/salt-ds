@@ -1,0 +1,34 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### When to use Tooltip
+
+- When you want to display a brief message to the user that provides additional information about a UI element.
+
+### When not to use Tooltip
+
+- When the content would contain interactive elements, like a link, input, or button. Consider always making this content visible or use an Overlay or a Dialog instead.
+
+- When there is information in the Tooltip that the user needs to know to complete a task. Important help text should always be visible and not hidden from the user.
+
+- When the message always needs to be visible. Instead, place the message directly on the page.
+
+- When the message is not about a UI element. Consider adding the message directly on the page or use an Overlay, a Dialog, or a Banner instead.
+
+### Import
+
+```js
+import { Tooltip } from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable packageName="core" componentName="Tooltip" />

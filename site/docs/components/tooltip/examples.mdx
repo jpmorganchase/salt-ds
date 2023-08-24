@@ -1,0 +1,88 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="tooltip" exampleName="Default" displayName="Default Tooltip">
+
+### Default Tooltip
+
+By default, Tooltip displays a status icon alongside a supporting message and an arrow pointing to the relevant UI element. Its default placement is ‘right’ and appears after 300 milliseconds.
+
+</LivePreview>
+
+<LivePreview componentName="tooltip" exampleName="Status" displayName="Status">
+
+### Status
+
+Use the `status` prop to define Tooltip’s icon and border color. You can choose between the following statuses:
+
+Info: use this when you need to display general information.
+
+Warning: use this when you need to let users know about an issue.
+
+Error: use this when you need to let users know about an error.
+
+Success: use this when you need to reassure your users.
+
+</LivePreview>
+
+<LivePreview componentName="tooltip" exampleName="HideArrow" displayName="Hide Arrow">
+
+### Hide Arrow
+
+Use the `hideArrow` prop if you would like to display the Tooltip without the arrow.
+
+</LivePreview>
+
+<LivePreview componentName="tooltip" exampleName="HideIcon" displayName="Hide Icon">
+
+### Hide Icon
+
+Use the `hideIcon` prop to display the Tooltip with text only, and no status icon.
+
+</LivePreview>
+
+<LivePreview componentName="tooltip" exampleName="Content" displayName="Content">
+
+### Content
+
+Use the `content` prop to pass either a simple string or a React component that is displayed inside the Tooltip.
+
+</LivePreview>
+
+<LivePreview componentName="tooltip" exampleName="Placement" displayName="Placement">
+
+### Placement
+
+Use the `placement` prop to position the Tooltip on its targeted UI element.
+
+</LivePreview>
+
+<LivePreview componentName="tooltip" exampleName="FlipAndShift" displayName="Flip and shift">
+
+### Flip and shift
+
+The component moves automatically when there's limited screen space, so it remains visible.
+
+</LivePreview>
+
+<LivePreview componentName="tooltip" exampleName="DelayBeforeShown" displayName="Delay before shown">
+
+### Delay before shown
+
+Use the `enterDelay` prop to change the delay before the Tooltip appears.
+
+</LivePreview>
+
+{/* Add more <LivePreview>...</LivePreview> blocks here as needed */}
+
+</LivePreviewControls>
