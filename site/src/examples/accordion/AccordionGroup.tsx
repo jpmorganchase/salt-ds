@@ -1,18 +1,19 @@
 import { ReactElement } from "react";
 import {
   Accordion,
-  AccordionGroup,
+  AccordionGroup as Group,
   AccordionHeader,
   AccordionPanel,
+  FlexLayout,
   FlowLayout,
   FormField,
   FormFieldLabel as FormLabel,
   Input,
 } from "@salt-ds/core";
 
-export const AccordionGroups = (): ReactElement => (
-  <div style={{ padding: "var(--salt-spacing-100)" }}>
-    <AccordionGroup style={{ alignSelf: "self-start" }}>
+export const AccordionGroup = (): ReactElement => (
+  <FlexLayout style={{ width: "80%" }}>
+    <Group style={{ alignSelf: "self-start" }}>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
         <Accordion value={`accordion-${i}`} key={`accordion-${i}`}>
           <AccordionHeader>Internal form</AccordionHeader>
@@ -35,6 +36,6 @@ export const AccordionGroups = (): ReactElement => (
           </AccordionPanel>
         </Accordion>
       ))}
-    </AccordionGroup>
-  </div>
+    </Group>
+  </FlexLayout>
 );

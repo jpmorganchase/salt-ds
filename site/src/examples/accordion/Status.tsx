@@ -9,6 +9,7 @@ import {
   FormField,
   FormFieldLabel as FormLabel,
   Input,
+  FlexLayout,
 } from "@salt-ds/core";
 
 const statuses: AccordionProps["status"][] = [
@@ -19,7 +20,7 @@ const statuses: AccordionProps["status"][] = [
 ];
 
 export const Status = (): ReactElement => (
-  <div style={{ padding: "var(--salt-spacing-100)" }}>
+  <FlexLayout style={{ width: "80%" }}>
     <AccordionGroup style={{ alignSelf: "self-start" }}>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
         <Accordion
@@ -48,5 +49,5 @@ export const Status = (): ReactElement => (
         </Accordion>
       ))}
     </AccordionGroup>
-  </div>
+  </FlexLayout>
 );

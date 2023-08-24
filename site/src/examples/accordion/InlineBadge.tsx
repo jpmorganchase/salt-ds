@@ -3,6 +3,7 @@ import {
   Accordion,
   AccordionHeader,
   AccordionPanel,
+  FlexLayout,
   FlowLayout,
   FormField,
   FormFieldLabel as FormLabel,
@@ -11,7 +12,7 @@ import {
 import { Badge } from "@salt-ds/lab";
 
 export const InlineBadge = (): ReactElement => (
-  <div style={{ padding: "var(--salt-spacing-100)" }}>
+  <FlexLayout style={{ width: "80%" }}>
     <Accordion value="accordion-example" style={{ alignSelf: "self-start" }}>
       <AccordionHeader>
         Internal form <Badge value={"NEW"} />
@@ -34,5 +35,5 @@ export const InlineBadge = (): ReactElement => (
         </FlowLayout>
       </AccordionPanel>
     </Accordion>
-  </div>
+  </FlexLayout>
 );
