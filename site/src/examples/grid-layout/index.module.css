@@ -1,7 +1,5 @@
 .gridItem {
-  --gridItem-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
-
-  border: var(--gridItem-border);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
   font-weight: var(--salt-text-fontWeight-small);
   display: flex;
   align-items: center;
