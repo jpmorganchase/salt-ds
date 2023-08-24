@@ -2,7 +2,8 @@ import { ReactElement } from "react";
 import { AccordionGroup, Accordion, AccordionHeader, AccordionPanel, FlowLayout, FormField, FormFieldLabel as FormLabel, Input } from "@salt-ds/core";
 
 export const Disabled = (): ReactElement => (
-    <AccordionGroup>
+    <div style={{padding: "var(--salt-spacing-100)"}}>
+    <AccordionGroup style={{alignSelf: "self-start"}}>
     {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
       <Accordion
         value={`accordion-${i}`}
@@ -29,5 +30,5 @@ export const Disabled = (): ReactElement => (
         </AccordionPanel>
       </Accordion>
     ))}
-  </AccordionGroup>
+  </AccordionGroup></div>
 );

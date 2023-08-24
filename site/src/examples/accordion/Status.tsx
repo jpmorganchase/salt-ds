@@ -9,7 +9,8 @@ const statuses: AccordionProps["status"][] = [
   ];
 
 export const Status = (): ReactElement => (
-    <AccordionGroup>
+    <div style={{padding: "var(--salt-spacing-100)"}}>
+    <AccordionGroup style={{alignSelf: "self-start"}}>
     {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
       <Accordion
         value={`accordion-${i}`}
@@ -37,4 +38,5 @@ export const Status = (): ReactElement => (
       </Accordion>
     ))}
   </AccordionGroup>
+  </div>
 );

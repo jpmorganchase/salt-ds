@@ -2,7 +2,8 @@ import { ReactElement } from "react";
 import { Accordion, AccordionHeader, AccordionPanel, FlowLayout, FormField, FormFieldLabel as FormLabel, Input } from "@salt-ds/core";
 
 export const Default = (): ReactElement => (
-    <Accordion value="accordion-example">
+    <div style={{padding: "var(--salt-spacing-100)"}}>
+    <Accordion value="accordion-example" style={{alignSelf: "self-start"}}>
         <AccordionHeader>Internal form</AccordionHeader>
         <AccordionPanel>
         <FlowLayout>
@@ -21,5 +22,5 @@ export const Default = (): ReactElement => (
             </FormField>
         </FlowLayout>
         </AccordionPanel>
-    </Accordion>
+    </Accordion></div>
 );
