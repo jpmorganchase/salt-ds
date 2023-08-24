@@ -4,6 +4,7 @@ import {
   BorderLayout,
   BorderItem,
   BORDER_POSITION as borderPosition,
+  BorderPosition,
   RadioButtonGroup,
   RadioButton,
   FormField,
@@ -12,21 +13,13 @@ import {
 import styles from "./index.module.css";
 import borderItemPositionStyles from "./BorderItemPosition.module.css";
 
-const positionOptions = borderPosition.map((position, index) => ({
-  label: position,
-  value: `option${index + 1}`,
-}));
-
 export const BorderItemPosition = (): ReactElement => {
-  const [option, setOption] = useState("option2");
+  const [position, setPosition] = useState<BorderPosition>("west");
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
-    setOption(value);
+    setPosition(value as BorderPosition);
   };
-
-  const position =
-    positionOptions.find(({ value }) => value === option)?.label || "west";
 
   return (
     <div className={borderItemPositionStyles.container}>
@@ -80,10 +73,10 @@ export const BorderItemPosition = (): ReactElement => {
             aria-label="Position Controls"
             name="position"
             onChange={handleChange}
-            value={option}
+            value={position}
           >
-            {positionOptions.map(({ label, value }) => (
-              <RadioButton key={value} label={label} value={value} />
+            {borderPosition.map((position) => (
+              <RadioButton key={position} label={position} value={position} />
             ))}
           </RadioButtonGroup>
         </FormField>
