@@ -65,16 +65,17 @@ const openSans = Open_Sans({
 // Declare the --site-font-family* props so that they are available
 // anywhere on the page. This makes them visible in portals too and
 // ensures that text renders in the correct fonts there too.
-const HeadWithFontStyles = ({ children } : { children: ReactNode }) => (<Head>
-  { children }
-  <style>{`
+const HeadWithFontStyles = ({ children }: { children: ReactNode }) => (
+  <Head>
+    {children}
+    <style>{`
     :root {
       --site-font-family: ${openSans.style.fontFamily};
       --site-font-family-code: ${ptMono.style.fontFamily};
     }
   `}</style>
-</Head>);
-
+  </Head>
+);
 
 export default function MyApp({
   Component,
@@ -100,9 +101,7 @@ export default function MyApp({
     <SessionProvider>
       <StoreProvider value={createStore()}>
         <Metadata Component={HeadWithFontStyles} />
-        <ThemeProvider
-          className={themeClassName}
-        >
+        <ThemeProvider className={themeClassName}>
           <DensityProvider>
             <BaseUrlProvider>
               <ImageProvider value={Image}>
