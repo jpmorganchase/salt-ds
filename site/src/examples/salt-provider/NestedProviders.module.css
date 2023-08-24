@@ -1,0 +1,9 @@
+.card {
+  min-height: unset;
+  max-width: 80%;
+}
+
+.nestedCard {
+  min-height: unset;
+  margin-top: var(--salt-spacing-100);
+}
