@@ -7,21 +7,21 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { RefreshIcon } from "@salt-ds/icons";
+import { CloseIcon } from "@salt-ds/icons";
 
 export const Warning = (): ReactElement => (
   <StackLayout gap={3} style={{ width: "80%" }}>
     <Banner status="warning">
       <BannerContent role="status">
-        System is under increased load
+        Your connection is unstable. Please proceed with caution.
       </BannerContent>
       <BannerActions>
-        <Button aria-label="refresh" variant="secondary">
-          <RefreshIcon />
+        <Button aria-label="close" variant="secondary">
+          <CloseIcon />
         </Button>
       </BannerActions>
     </Banner>
-    <Text styleAs="h1">Title</Text>
+    <Text styleAs="h1">Header</Text>
     <Text>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim

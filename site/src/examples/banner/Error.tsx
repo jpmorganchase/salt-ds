@@ -7,24 +7,25 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { RefreshIcon } from "@salt-ds/icons";
+import { RefreshIcon, CloseIcon } from "@salt-ds/icons";
 
 export const Error = (): ReactElement => (
   <StackLayout gap={3} style={{ width: "80%" }}>
     <Banner status="error" role="alert">
       <BannerContent>
-        <Text>
-          <strong>Failed to connect to the server</strong>
-        </Text>
-        Error connecting to the server. Please refresh
+        There was an error connecting to the server. Please click refresh to try
+        again.
       </BannerContent>
       <BannerActions>
         <Button aria-label="refresh" variant="secondary">
           <RefreshIcon />
         </Button>
+        <Button aria-label="close" variant="secondary">
+          <CloseIcon />
+        </Button>
       </BannerActions>
     </Banner>
-    <Text styleAs="h1">Title</Text>
+    <Text styleAs="h1">Header</Text>
     <Text>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
