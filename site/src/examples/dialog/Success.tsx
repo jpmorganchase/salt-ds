@@ -8,7 +8,7 @@ import {
   DialogCloseButton,
 } from "@salt-ds/lab";
 
-export const Info = (): ReactElement => {
+export const Success = (): ReactElement => {
   const [open, setOpen] = useState(true);
 
   const handleRequestOpen = () => {
@@ -26,16 +26,16 @@ export const Info = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open info dialog
+        Open success dialog
       </Button>
       <Dialog
         style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
         role="alertdialog"
-        status="info"
+        status="success"
       >
-        <DialogTitle>Info</DialogTitle>
+        <DialogTitle>Success</DialogTitle>
         <DialogContent>This is the content of the dialog.</DialogContent>
         <DialogActions>
           <Button
