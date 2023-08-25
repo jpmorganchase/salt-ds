@@ -1,26 +1,17 @@
 ---
 title: Flex Layout
 data:
-  description: Brief (~1 paragraph) description of the component. Copy the text from "Introduction" section in the content template here
-
-  # Fill in the info from the content template's "Metadata" table below.
-  # To omit optional items, comment them out with #
-  sourceCodeUrl: "https://github.com/..."
+  description: Flex Layout controls the direction, size and position of items displayed in a UI container. Use when the direction needs complex customization that can't be achieved by Stack, Flow or Split Layout. For additional control of the size and position of content, use Flex Item for each content item inside Flex Layout.
+  sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/flex-layout/FlexLayout.tsx"
   package:
     name: "@salt-ds/core"
-  alsoKnownAs: ["Other Name", "Another Name"]
-  relatedComponents: [
-      # Add a { name: "...", relationship: "..." } block for each
-      # related component here (separated by commas).
-      # Permitted values for relationship are: "similarTo" or
-      # "contains".
-      { name: "Similar Component", relationship: "similarTo" },
-      { name: "Contained Component", relationship: "contains" },
+  alsoKnownAs: ["CSS Flexbox", "Flexible Box", "Responsive Layout"]
+  relatedComponents:
+    [
+      { name: "Split Layout", relationship: "similarTo" },
+      { name: "Flow Layout", relationship: "similarTo" },
+      { name: "Stack Layout", relationship: "similarTo" },
     ]
-  # stickerSheet: "https://figma.com/..."
 
-# Leave this as is
 layout: DetailComponent
 ---
-
-{/* This area stays blank */}
