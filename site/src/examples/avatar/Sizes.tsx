@@ -1,7 +1,7 @@
 import { Avatar, FlowLayout, Label, StackLayout } from "@salt-ds/core";
 import { ReactElement } from "react";
 
-const sizes = [1, 2, 3] as const;
+const sizes = [1, 2, 4] as const;
 
 export const Sizes = (): ReactElement => {
   return (
@@ -9,7 +9,7 @@ export const Sizes = (): ReactElement => {
       {sizes.map((size) => (
         <StackLayout key={size} align="center">
           <Avatar key={size} size={size} />
-          <Label>size: {size}</Label>
+          <Label>size: {size}x</Label>
         </StackLayout>
       ))}
     </FlowLayout>
