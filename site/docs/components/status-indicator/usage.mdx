@@ -2,18 +2,24 @@
 title: Status Indicator
 layout: DetailComponent
 sidebar:
-  label: How to use
+  exclude: true
 data:
   $ref: ./#/data
 ---
 
 ### When to use Status Indicator
 
-- An error indicator should be used when there is critical information preventing an action.
+- Use the info indicator when you need to highlight general information.
 
-- A warning or info (depending on the severity) indicator should be used when there is important, but non blocking, information to be conveyed to the user.
+- Use the error indicator when communicating a critical issue that prevents the user from continuing or completing it.
 
-- Use a success indicator to confirm that an action has been completed.
+- Use the warning indicator to inform users of an issue or potential issue related to their current task. Use this for issues that do not prevent the user from continuing or completing their task.
+
+- Use the success indicator to confirm that a user's action has been completed successfully.
+
+### When not to use Status Indicator
+
+- Use an existing Salt component which integrates Status such as [Banner](/salt/components/banner), [Toast](/salt/components/toast) or [Tooltip](/salt/components/tooltip) where appropriate
 
 ### Import
 

@@ -2,20 +2,25 @@
 title: Status Indicator
 layout: DetailComponent
 sidebar:
-  label: Examples
+  exclude: true
 data:
   $ref: ./#/data
 ---
 
 <LivePreviewControls>
   <LivePreview componentName="status-indicator" exampleName="Status">
-    Use the `status` property to change the status displayed. This will affect
-    both the Icon and color of the `StatusIndicator`. The status indicator
-    offers four severity levels that set a distinctive indicator and color.
+    Use the `status` prop to change the status displayed. This will affect both
+    the icon and the color of the `StatusIndicator`. The status indicator offers
+    four severity levels that set a distinctive indicator and color.
   </LivePreview>
   <LivePreview componentName="status-indicator" exampleName="Size">
-    The size of the StatusIndicator can be controlled with the `size` property.
-    This number will be used as a multiplier of the base size, in the same way
-    as the `Icon` components.
+    You can control the size of the Status Indicator with the `size` prop. This
+    number will be used as a multiplier of the base size as described in the
+    [scale](/salt/foundations/scale) and [size](/salt/foundations/size)
+    foundations.
+  </LivePreview>
+  <LivePreview componentName="status-indicator" exampleName="Labelling">
+    We recommend that you add a self-explanatory header/label next to the status
+    indicator to help end-users to understand the type of status indicated.
   </LivePreview>
 </LivePreviewControls>
