@@ -8,4 +8,30 @@ data:
   $ref: ./#/data
 ---
 
-This component has no accessibility guidance.
+#### Default Cards focus sequence  
+
+For default Cards group, focus moves through interactive elements within the cards in a logical tabbing order. 
+
+#### Interactable cards focus sequence  
+
+For Interactable cards group, focus moves through cards in a logical tabbing order.  
+
+### Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Move focus through cards (if interactable); or through interactive elements within the cards (if default) in a logical tabbing order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Tab + Shift">
+
+When focus is on a target element, move focus to the previous interactive element within the tabbing order. 
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+
+If the target element has focus, Enter key press performs an action. 
+
+</KeyboardControl>
+</KeyboardControls>
