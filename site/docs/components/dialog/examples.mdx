@@ -49,15 +49,22 @@ data:
     - A success icon displays alongside a title and supporting message.
     </LivePreview>
 
-    <LivePreview componentName="dialog" exampleName="Content" >
-    ### Content dialogs
+    <LivePreview componentName="dialog" exampleName="Accent" >
+    ### Accent
 
-    ## Accent
+    For content Dialogs, you can pass the `accent` prop to `DialogTitle` which accepts a boolean to render an accent bar in the title of the Dialog. You cannot render the accent bar when a status is also being rendered.
+    </LivePreview>
 
-    For content dialogs, you can pass the `accent` prop to `DialogTitle` which accepts a boolean to render an accent bar in the title of the Dialog. You cannot render the accent bar when a status is also being rendered.
-    ## Dialog Close Button
+    <LivePreview componentName="dialog" exampleName="DialogCloseButton" >
+    ### Dialog Close Button
 
-    For content dialogs, you can render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the Dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+    For content Dialogs, you can render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the dDialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+    </LivePreview>
+
+    <LivePreview componentName="dialog" exampleName="Scroll" >
+     ### Scroll
+
+     If the content of the dDialog extends beyond the end of the screen, the `DialogContent` area will become scrollable.
     </LivePreview>
 
 </LivePreviewControls>
