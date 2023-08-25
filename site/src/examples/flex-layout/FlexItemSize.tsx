@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
 import { FlexLayout, FlexItem } from "@salt-ds/core";
 import styles from "./index.module.css";
-import itemSizeStyles from "./ItemSize.module.css";
+import flexItemSizeStyles from "./FlexItemSize.module.css";
 
-export const ItemSize = (): ReactElement => (
-  <FlexLayout className={itemSizeStyles.flexLayout}>
+export const FlexItemSize = (): ReactElement => (
+  <FlexLayout className={flexItemSizeStyles.flexLayout}>
     <FlexItem grow={1} className={styles.flexItem}>
       1
     </FlexItem>

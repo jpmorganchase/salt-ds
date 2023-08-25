@@ -11,9 +11,9 @@ import {
 } from "@salt-ds/core";
 import clsx from "clsx";
 import styles from "./index.module.css";
-import positioningItemsStyles from "./PositioningItems.module.css";
+import flexItemPositionStyles from "./FlexItemPosition.module.css";
 
-export const PositioningItems = (): ReactElement => {
+export const FlexItemPosition = (): ReactElement => {
   const [align, setAlign] = useState<flexItemAlignment>("start");
 
   const handleAlignChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -22,18 +22,18 @@ export const PositioningItems = (): ReactElement => {
   };
 
   return (
-    <div className={positioningItemsStyles.container}>
+    <div className={flexItemPositionStyles.container}>
       <FlexLayout>
         <FlexItem
           align={align}
-          className={clsx(styles.flexItem, positioningItemsStyles.active)}
+          className={clsx(styles.flexItem, flexItemPositionStyles.active)}
         >
           1
         </FlexItem>
         {Array.from({ length: 3 }, (_, index) => (
           <FlexItem
             key={index}
-            className={clsx(styles.flexItem, positioningItemsStyles.flexItem)}
+            className={clsx(styles.flexItem, flexItemPositionStyles.flexItem)}
           >
             {index + 2}
           </FlexItem>
