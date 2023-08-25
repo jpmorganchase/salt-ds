@@ -17,7 +17,7 @@ export const Error = (): ReactElement => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast status="error">
+    {/* <Toast status="error">
       <ToastContent>
         <div>
           <Text>
@@ -34,6 +34,6 @@ export const Error = (): ReactElement => (
           <Button variant="cta">Try again</Button>
         </FlowLayout>
       </ToastContent>
-    </Toast>
+    </Toast> */}
   </div>
 );

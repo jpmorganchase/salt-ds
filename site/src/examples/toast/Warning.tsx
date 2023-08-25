@@ -17,7 +17,7 @@ export const Warning = (): ReactElement => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast status="warning">
+    {/* <Toast status="warning">
       <ToastContent>
         <div>
           <Text>
@@ -32,6 +32,6 @@ export const Warning = (): ReactElement => (
           <Button style={{ width: "100%" }}>Dismiss</Button>
         </FlowLayout>
       </ToastContent>
-    </Toast>
+    </Toast> */}
   </div>
 );
