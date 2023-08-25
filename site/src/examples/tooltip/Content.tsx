@@ -6,7 +6,6 @@ export const Content = (): ReactElement => (
     content={
       <>
         <Text styleAs="h3">Persona B</Text>
-        <Text styleAs="h4">personab@example.com</Text>
         <ul style={{ paddingLeft: 20, margin: 0 }}>
           <li>Role</li>
           <li>Position</li>
