@@ -7,9 +7,9 @@ export const Error = (): ReactElement => (
     <ToastContent>
       <div>
         <Text>
-          <strong>System error</strong>
+          <strong>A system error occurred</strong>
         </Text>
-        <div>Connection timed out. Failed to retrieve data. </div>
+        <div>The connection timed out and failed to retrieve data.</div>
       </div>
     </ToastContent>
     <Button variant="secondary">
