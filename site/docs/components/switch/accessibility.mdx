@@ -1,0 +1,36 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Accessibility
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+- On focus, the screen reader should:
+  - Identify the switch
+  - Read out the text
+  - Express the state
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is on the previous element in the tab order, move focus onto Switch.
+- If focus is on Switch, moves focus to the next focusable element within the tabbing order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space">
+
+- Activate Switch to change state.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is on Switch, moves focus out of the component. Focus is set to the previous component in the tab order.
+- If focus is below Switch, move focus to Switch.
+
+</KeyboardControl>
+</KeyboardControls>

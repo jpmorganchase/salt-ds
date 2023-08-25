@@ -1,0 +1,61 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Examples
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="switch" exampleName="Default">
+
+### Switch
+
+By default, the switch thumb sits to the left side of the track and is in an unchecked state.
+
+- The switch state can be set using the optional `defaultChecked` prop.
+- The `onChange` event can be used to read the value using the second parameter.
+
+Guidance:
+
+- Only use the `checked` prop for a controlled switch that requires some logic for validating value.
+- We recommend that you always use a text description for a switch.
+
+</LivePreview>
+
+<LivePreview componentName="switch" exampleName="DefaultChecked" displayName="Checked" >
+
+### Checked
+
+When ` defaultChecked=”true”`, Switch is in a `checked` state and the switch thumb sits to the right side of the track.
+
+</LivePreview>
+
+<LivePreview componentName="switch" exampleName="Disabled" >
+
+### Disabled
+
+You can set Switch to a disabled state. When `disabled`, it is not interactive or focusable.
+
+Guidance:
+
+Use a disabled state for switches that have permissions, dependencies or pre-requisites. For example, a switch in a Form may be disabled because the user has not yet completed an earlier section of the form.
+
+</LivePreview>
+
+<LivePreview componentName="switch" exampleName="DisabledChecked" >
+
+### Disabled checked
+
+You can set a `checked` switch to a disabled state. When `disabled`, it is not interactive or focusable. This shows an option has been toggled to be “checked” but cannot be changed.
+
+Guidance:
+
+Use a disabled checked state for switches that have permissions, dependencies or pre-requisites. For example, a switch in a Form may be checked but disabled as the user does not have permissions to edit their selection during a later stage in a form.
+
+</LivePreview>
+</LivePreviewControls>
