@@ -8,9 +8,25 @@ data:
   $ref: ./#/data
 ---
 
+### How to use
+
+Use Dialog to present or gather critical information that requires immediate action, whether it’s directly or indirectly part of the user’s current task. For example, a warning Dialog that appears when a document is closed without being saved—and asks how the user wishes to proceed—is indirectly related to the user’s task.
+
+Dialogs are interruptive by nature and should be used sparingly. Only display a Dialog as the result of a user’s action within their workflow, to ensure it remains relevant and is perceived as high priority.
+
+#### When to use Dialog
+
+- When the notification requires immediate action. Use Dialog to interrupt a user’s workflow.
+
+#### When not to use Dialog
+
+- When a less intrusive component will suffice. If the information you’re displaying is mostly unrelated to the current task, use Toast instead. If the information you’re displaying is not critical to completion of the task, use a Banner instead. .
+
+- To launch a Dialog from another Dialog. Users may struggle to dismiss the two Dialogs and may not understand which Dialog is higher priority. Consider an alternative solution, such as progressively disclosing information in the first Dialog.
+
 ### Import
 
-To import Dialog from the core Salt package, use:
+To import Dialog from the lab Salt package, use:
 
 ```
 import { Dialog,
@@ -23,4 +39,4 @@ import { Dialog,
 
 ### Props
 
-<PropsTable packageName="core" componentName="Dialog" />
+<PropsTable packageName="lab" componentName="Dialog" />
