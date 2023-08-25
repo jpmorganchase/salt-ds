@@ -29,31 +29,33 @@ export const AllCountrySymbols = () => {
             }}
           />
         </FormField>
-        <FlowLayout gap={3}>
-          {Object.values(countryMetaMap)
-            .filter(({ countryCode, countryName }) => {
-              const searchText = inputText.toLowerCase();
+        <div style={{ overflow: "auto", maxHeight: 300 }}>
+          <FlowLayout gap={3}>
+            {Object.values(countryMetaMap)
+              .filter(({ countryCode, countryName }) => {
+                const searchText = inputText.toLowerCase();
 
-              return (
-                countryCode.toLowerCase().includes(searchText) ||
-                countryName.toLowerCase().includes(searchText)
-              );
-            })
-            .map(({ countryCode, countryName }) => {
-              return (
-                <StackLayout
-                  style={{ width: 140 }}
-                  gap={1}
-                  align="center"
-                  key={countryCode}
-                >
-                  <LazyCountrySymbol code={countryCode} size={2} />
-                  <Text>{countryCode}</Text>
-                  <Text style={{ textAlign: "center" }}>{countryName}</Text>
-                </StackLayout>
-              );
-            })}
-        </FlowLayout>
+                return (
+                  countryCode.toLowerCase().includes(searchText) ||
+                  countryName.toLowerCase().includes(searchText)
+                );
+              })
+              .map(({ countryCode, countryName }) => {
+                return (
+                  <StackLayout
+                    style={{ width: 140 }}
+                    gap={1}
+                    align="center"
+                    key={countryCode}
+                  >
+                    <LazyCountrySymbol code={countryCode} size={2} />
+                    <Text>{countryCode}</Text>
+                    <Text style={{ textAlign: "center" }}>{countryName}</Text>
+                  </StackLayout>
+                );
+              })}
+          </FlowLayout>
+        </div>
       </StackLayout>
     </Suspense>
   );
