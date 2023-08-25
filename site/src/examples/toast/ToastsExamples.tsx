@@ -13,7 +13,7 @@ export const InfoToast = () => {
         <Text>
           <strong>File update</strong>
         </Text>
-        <div>A new version of this file is available with 37 updates. </div>
+        <div>A new version of this file is available with 37 updates.</div>
       </ToastContent>
       <Button variant="secondary" onClick={closeToast}>
         <CloseIcon />
@@ -34,9 +34,9 @@ export const ErrorToast = () => {
       <ToastContent>
         <div>
           <Text>
-            <strong>System error</strong>
+            <strong>A system error occurred</strong>
           </Text>
-          <div>Connection timed out. Failed to retrieve data. </div>
+          <div>The connection timed out and failed to retrieve data.</div>
         </div>
         <FlowLayout
           gap={1}
@@ -65,7 +65,7 @@ export const WarningToast = () => {
           <Text>
             <strong>File access</strong>
           </Text>
-          <div>Viewers of this file can see comments and suggestions. </div>
+          <div>Viewers of this file can see comments and suggestions.</div>
         </div>
         <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
           <Button variant="cta" style={{ width: "100%" }}>
@@ -91,9 +91,11 @@ export const SuccessToast = () => {
     <Toast status="success">
       <ToastContent>
         <Text>
-          <strong>Project file upload</strong>
+          <strong>File uploaded</strong>
         </Text>
-        <div>Project file has successfully uploaded to the shared drive. </div>
+        <div>
+          The project file has been successfully uploaded to the shared drive.
+        </div>
       </ToastContent>
       <Button variant="secondary" onClick={closeToast}>
         <CloseIcon />
