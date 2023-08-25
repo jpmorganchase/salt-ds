@@ -6,9 +6,11 @@ export const Success = (): ReactElement => (
   <Toast status="success" style={{ width: 260 }}>
     <ToastContent>
       <Text>
-        <strong>Project file upload</strong>
+        <strong>File uploaded</strong>
       </Text>
-      <div>Project file has successfully uploaded to the shared drive. </div>
+      <div>
+        The project file has been successfully uploaded to the shared drive.
+      </div>
     </ToastContent>
     <Button variant="secondary">
       <CloseIcon />
