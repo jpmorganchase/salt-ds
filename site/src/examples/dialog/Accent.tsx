@@ -29,7 +29,9 @@ export const Content = (): ReactElement => {
         Open default dialog
       </Button>
       <Dialog style={{ width: 500 }} open={open} onOpenChange={onOpenChange}>
-        <DialogTitle accent>Congratulations! You have created a Dialog.</DialogTitle>
+        <DialogTitle accent>
+          Congratulations! You have created a Dialog.
+        </DialogTitle>
         <DialogContent>This is the content of the dialog.</DialogContent>
         <DialogActions>
           <Button
