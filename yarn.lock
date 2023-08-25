@@ -2204,7 +2204,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime-corejs3@npm:^7.10.2, @babel/runtime-corejs3@npm:^7.18.9, @babel/runtime-corejs3@npm:^7.20.13, @babel/runtime-corejs3@npm:^7.20.7, @babel/runtime-corejs3@npm:^7.22.6":
+"@babel/runtime-corejs3@npm:^7.10.2, @babel/runtime-corejs3@npm:^7.20.13, @babel/runtime-corejs3@npm:^7.20.7, @babel/runtime-corejs3@npm:^7.22.6":
   version: 7.22.10
   resolution: "@babel/runtime-corejs3@npm:7.22.10"
   dependencies:
@@ -2274,13 +2274,6 @@ __metadata:
   version: 0.2.3
   resolution: "@bcoe/v8-coverage@npm:0.2.3"
   checksum: 850f9305536d0f2bd13e9e0881cb5f02e4f93fad1189f7b2d4bebf694e3206924eadee1068130d43c11b750efcc9405f88a8e42ef098b6d75239c0f047de1a27
-  languageName: node
-  linkType: hard
-
-"@braintree/sanitize-url@npm:=6.0.0":
-  version: 6.0.0
-  resolution: "@braintree/sanitize-url@npm:6.0.0"
-  checksum: 409ce7709dc1a0c67bc887d20af1becd4145d5c62cc5124b1c4c1f3ea2a8d69b0ee9f582d446469c6f5294b56442b99048cbbba6861dd5c834d4e019b95e1f40
   languageName: node
   linkType: hard
 
@@ -3532,15 +3525,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-cli@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-cli@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-cli@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-cli@npm:0.1.0-beta.43"
   dependencies:
     "@aws-sdk/client-s3": ^3.359.0
-    "@jpmorganchase/mosaic-core": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-plugins": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-core": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-plugins": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.43
     commander: ^9.4.1
     cors: ^2.8.5
     deepmerge: ^4.2.2
@@ -3550,22 +3543,22 @@ __metadata:
     mkdirp: ^1.0.4
   bin:
     mosaic: dist/index.mjs
-  checksum: 93d2208a64536633b4a1202fceb651e91d6b56c279618f480ac322b9f9e43a56ea20546b0488f07761370aa5501b336db84c87cf04502882111d4564a54bfff2
+  checksum: e34cb78931cfb57c6951dfe9a47078f865c23a77bb73afe73278a7ec2f1f144c45beb1a1a8861d6b88f3a627402d35a8098ce5c55b73fcf354e14fa97c1ffd9f
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-components@npm:0.1.0-beta.37":
-  version: 0.1.0-beta.37
-  resolution: "@jpmorganchase/mosaic-components@npm:0.1.0-beta.37"
+"@jpmorganchase/mosaic-components@npm:0.1.0-beta.43, @jpmorganchase/mosaic-components@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-components@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-store": ^0.1.0-beta.37
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.37
-    "@salt-ds/core": ^1.8.0-rc.0
-    "@salt-ds/lab": 1.0.0-alpha.10
+    "@jpmorganchase/mosaic-store": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.43
+    "@salt-ds/core": ^1.8.1
+    "@salt-ds/lab": 1.0.0-alpha.16
     "@vanilla-extract/css": ^1.6.0
     "@vanilla-extract/recipes": ^0.2.1
     "@vanilla-extract/sprinkles": ^1.3.0
-    clsx: ^1.2.1
+    clsx: ^2.0.0
     deepmerge: ^2.0.1
     hoist-non-react-statics: ^3.3.2
     lodash: ^4.17.21
@@ -3574,55 +3567,24 @@ __metadata:
     react-markdown: ^6.0.2
     react-responsive-carousel: 3.2.10
     react-table: ^7.8.0
-    swagger-ui-react: ^4.5.2
+    swagger-ui-react: ^5.0.0
     use-memo-one: ^1.1.1
     warning: ^3.0.0
   peerDependencies:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: c2b987b49e1d01476af2310424fc1aadfc26c5d65435f1f0d9b0842cc2829f46cd429a379daeffc25bc55226030e6ba412c6473b44a38811e383dc02a5e21b3b
+  checksum: e1b4b059404b0b9015de58e222e03cee8f3bae862c3aa11fa860d57c71d899a824edf597e3ef00f7f0cd242ed7880b238399aa10bbe4b414075207f8d653616e
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-components@patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.37#./.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.37-6d8686e3dc.patch::locator=%40salt-ds%2Froot%40workspace%3A.":
-  version: 0.1.0-beta.37
-  resolution: "@jpmorganchase/mosaic-components@patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.37#./.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.37-6d8686e3dc.patch::version=0.1.0-beta.37&hash=8ac3ba&locator=%40salt-ds%2Froot%40workspace%3A."
-  dependencies:
-    "@jpmorganchase/mosaic-store": ^0.1.0-beta.37
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.37
-    "@salt-ds/core": ^1.8.0-rc.0
-    "@salt-ds/lab": 1.0.0-alpha.10
-    "@vanilla-extract/css": ^1.6.0
-    "@vanilla-extract/recipes": ^0.2.1
-    "@vanilla-extract/sprinkles": ^1.3.0
-    clsx: ^1.2.1
-    deepmerge: ^2.0.1
-    hoist-non-react-statics: ^3.3.2
-    lodash: ^4.17.21
-    prism-react-renderer: ^1.1.1
-    react-live: ^2.2.3
-    react-markdown: ^6.0.2
-    react-responsive-carousel: 3.2.10
-    react-table: ^7.8.0
-    swagger-ui-react: ^4.5.2
-    use-memo-one: ^1.1.1
-    warning: ^3.0.0
-  peerDependencies:
-    "@types/react": ^18.0.26
-    react: ^18.2.0
-    react-dom: ^18.2.0
-  checksum: 5df779a5e35364b3b26634e42b327dcf2969c48eaf089303ffd69cdccc3999f0d2f0a334a41b5efba61fd86f5490d8511096b13d956abde1dce85a767b970d5d
-  languageName: node
-  linkType: hard
-
-"@jpmorganchase/mosaic-content-editor-plugin@npm:0.1.0-beta.42, @jpmorganchase/mosaic-content-editor-plugin@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-content-editor-plugin@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-content-editor-plugin@npm:0.1.0-beta.43, @jpmorganchase/mosaic-content-editor-plugin@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-content-editor-plugin@npm:0.1.0-beta.43"
   dependencies:
     "@floating-ui/react": ^0.23.0
-    "@jpmorganchase/mosaic-components": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-components": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.43
     "@lexical/code": ^0.11.1
     "@lexical/link": ^0.11.1
     "@lexical/list": ^0.11.1
@@ -3632,12 +3594,12 @@ __metadata:
     "@lexical/selection": ^0.11.1
     "@lexical/table": ^0.11.1
     "@lexical/utils": ^0.11.1
-    "@salt-ds/core": ^1.8.0-rc.0
-    "@salt-ds/icons": ^1.4.0
-    "@salt-ds/lab": 1.0.0-alpha.10
-    "@salt-ds/theme": ^1.5.1
+    "@salt-ds/core": ^1.8.1
+    "@salt-ds/icons": ^1.6.0
+    "@salt-ds/lab": 1.0.0-alpha.16
+    "@salt-ds/theme": ^1.8.0
     "@vanilla-extract/css": ^1.6.0
-    clsx: ^1.2.1
+    clsx: ^2.0.0
     gray-matter: ^4.0.3
     lexical: ^0.11.1
     lodash: ^4.17.21
@@ -3648,18 +3610,18 @@ __metadata:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 353a7e1ca96aede5766cfec3baa1da645b823e5de0ea3b4500ab497846520cd2340998919f9e207ff422dffef5d2caecb8b856be593ae3cf00531dadc55dec7a
+  checksum: cddcc6b307dda47dc527fc8f6a78565be7ca4a61f0846354c4781a183ed5df7edcd0e2050046cd6c47b8371b53a06f0c4875e3abf1bf7cae357b4e54ff775aa5
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-core@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-core@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-core@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-core@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-plugins": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-serialisers": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-types": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-plugins": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-serialisers": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-types": ^0.1.0-beta.43
     fast-glob: "*"
     gray-matter: ^4.0.3
     lodash-es: ^4.17.21
@@ -3667,15 +3629,15 @@ __metadata:
     memfs: ^3.4.12
     rxjs: ^7.5.5
     unionfs: ^4.4.0
-  checksum: 19d6e5e25b827e583bf580c22c17b011ac2f115cad6a8dbb91b85d8c6bc39d41f9f95524b2eb68806f2c09654989c4bf9f1d2d2275feb1e356110f7dd524efa9
+  checksum: 1aba97b925acf91d25354a80470ba1bd34bb88a36b65b9392b61283b29b9c134e893bc9477e3e3c3e09cd9379afb1f0571c0946a2e044e287c9b4b0e0f3084d3
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-create-site@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-create-site@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-create-site@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-create-site@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.43
     "@types/inquirer": ^8.2.4
     "@types/node": ^18.7.19
     commander: ^9.4.0
@@ -3684,18 +3646,18 @@ __metadata:
     resolve-global: ^1.0.0
   bin:
     mosaic-create-site: bin/mosaic-create-site.js
-  checksum: 088d2967114d7c37570ecf8eda2792e6a7fa74f6fb5d6b773018414eee0e6b0232dcc1b3d28e9a8b5c1100de7fc8660b3ce45666014c19dcae75b46ca788d4a4
+  checksum: 0ee7ca39a1d70477ab64cb61e1781fe6b7abee76ba83b57ce19c6fda3f840fd5f96a4cf9eb9522694f7fade7cc63d749b8c531bb7f6c6af2be824a04fb78ed9f
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-labs-components@npm:0.1.0-beta.42, @jpmorganchase/mosaic-labs-components@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-labs-components@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-labs-components@npm:0.1.0-beta.43, @jpmorganchase/mosaic-labs-components@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-labs-components@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-components": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.42
-    "@salt-ds/core": ^1.8.0-rc.0
-    "@salt-ds/lab": 1.0.0-alpha.10
+    "@jpmorganchase/mosaic-components": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.43
+    "@salt-ds/core": ^1.8.1
+    "@salt-ds/lab": 1.0.0-alpha.16
     "@vanilla-extract/css": ^1.6.0
     "@vanilla-extract/recipes": ^0.2.1
     "@vanilla-extract/sprinkles": ^1.3.0
@@ -3708,23 +3670,23 @@ __metadata:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 6c86bde92ca7d8e468911196db8272341bc1512867fff6cdac3f7441346af02ba68609211505b6f5144ce2d39e1cc304e9e8ae7816a0377e0eba64cc5c569909
+  checksum: 2d70fe251f116a3226e67e184d1b38088dfede767ec320ec094a52051e569b4ba736ed1ac11a33fb162500c933c30ec3ae1f8acb0091cb9e1e35df1300a8010b
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-layouts@npm:0.1.0-beta.42, @jpmorganchase/mosaic-layouts@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-layouts@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-layouts@npm:0.1.0-beta.43, @jpmorganchase/mosaic-layouts@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-layouts@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-components": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-content-editor-plugin": 0.1.0-beta.42
-    "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-store": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.42
-    "@salt-ds/lab": 1.0.0-alpha.10
+    "@jpmorganchase/mosaic-components": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-content-editor-plugin": 0.1.0-beta.43
+    "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-store": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.43
+    "@salt-ds/lab": 1.0.0-alpha.16
     "@vanilla-extract/css": ^1.6.0
     "@vanilla-extract/sprinkles": ^1.3.0
-    clsx: ^1.2.1
+    clsx: ^2.0.0
     lodash: ^4.17.21
     next: ^13.4.1
     react-transition-group: ^4.4.5
@@ -3732,21 +3694,21 @@ __metadata:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 03ed59ff783baa5813b42e6c5df18659a0c55dbee732925a580c59c014b0a77ddf0b5a99a1869829f4d91d486ade406db7c52086eaf2d91f2719ffe0b4b595c2
+  checksum: 89a87f84a1d7bdb5fdea3efe319bc497fa7f78061d8fa0f648ea2e471098f7da09be6e4d4706372c7cefd72f7f1576652eb0cdb5d6572e1251a8a5e5aebc958c
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-open-api-component@npm:0.1.0-beta.42, @jpmorganchase/mosaic-open-api-component@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-open-api-component@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-open-api-component@npm:0.1.0-beta.43, @jpmorganchase/mosaic-open-api-component@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-open-api-component@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-components": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-components": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.43
     "@types/swagger-ui-react": ^4.18.0
     "@vanilla-extract/css": ^1.6.0
     "@vanilla-extract/recipes": ^0.2.1
     "@vanilla-extract/sprinkles": ^1.3.0
-    clsx: ^1.2.1
+    clsx: ^2.0.0
     deepmerge: ^2.0.1
     lodash: ^4.17.21
     react-live: ^2.2.3
@@ -3758,20 +3720,20 @@ __metadata:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 106d578b351c9089c4d625cd155ffa4e9dbee06e9be163cca94215933847bf30074ade6fa4885b1267f5ec81cd4778c25325ee6accf164546d9cf02efb8382f9
+  checksum: 15d55ed04091d27e166d601582c7e49775f6a650a00f082e5159b6965b8594f0f29d653de75d15a3ba17df7fb2a3f52e637932ce5c3e493f673a12dd3bf26cf2
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-plugins@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-plugins@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-plugins@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-plugins@npm:0.1.0-beta.43"
   dependencies:
     "@apidevtools/json-schema-ref-parser": ^10.1.0
-    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-serialisers": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-types": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-serialisers": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-types": ^0.1.0-beta.43
     "@types/github-slugger": ^1.3.0
     "@vcarl/remark-headings": ^0.1.0
     check-links: ^2.0.0
@@ -3794,48 +3756,48 @@ __metadata:
     unist-util-visit: ^4.1.1
     uuid: ^7.0.3
     vfile-reporter: ^7.0.5
-  checksum: 022525f33c213faf286a04c426a428c730d4fb85b8af8f14320ff21d66a6887ad3f9c99f33a77e00d201be178c36dc53222663428e1c56406b107d79802f0525
+  checksum: 1b6273051aa6cff997d6a144917654dad9775b5c557820fb0323d94a728ac46a506fb2f0bca34cc60b2d74c1618db9b2b5a7c9c79c4a1e3324fec89ee5979aa6
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-schemas@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-schemas@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-schemas@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-schemas@npm:0.1.0-beta.43"
   dependencies:
     zod: ^3.19.1
-  checksum: dbfd4eba3e73fe506c3d66cc4ace5332c24553ab9bf52448709753d77798c2966d2bee7fc8e2595be48b3812751b0c49f92cb8890292e8a4cc49e478ae1458ce
+  checksum: 2adc782f96ad2f15e36db076ef668067ee0b34f097edbb53d3013b5799bc86656a862ef022b3895a46d66801e9318fb1bf6246795e7a7676b2298aa49cc00c9f
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-serialisers@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-serialisers@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-serialisers@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-serialisers@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-types": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-types": ^0.1.0-beta.43
     gray-matter: ^4.0.3
-  checksum: 27faa2285bd7506f04f8f3e119e2e828cf4cefbf955d263d08b2a2791b5065dd561bf468edaf2553239ce75e2cb5a221db34208e8c15134428a9bec7b91c4a3e
+  checksum: b24c9000cfb7adb488327fbfcdc8242664d0db85fc41e8b8f42f359ad5344ba8114d7beefa9ec1f28f826e4b4022cb16a0730f916c9386e53fb079b03076ff36
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-site-components@npm:0.1.0-beta.42, @jpmorganchase/mosaic-site-components@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-site-components@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-site-components@npm:0.1.0-beta.43, @jpmorganchase/mosaic-site-components@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-site-components@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-components": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-labs-components": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-open-api-component": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-site-middleware": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-store": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.42
-    "@salt-ds/lab": 1.0.0-alpha.10
+    "@jpmorganchase/mosaic-components": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-labs-components": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-open-api-component": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-site-middleware": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-store": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.43
+    "@salt-ds/lab": 1.0.0-alpha.16
     "@types/mdast": ^3.0.0
     "@vanilla-extract/css": ^1.6.0
     "@vanilla-extract/recipes": ^0.2.1
     "@vanilla-extract/sprinkles": ^1.3.0
     acorn: ^8.0.0
     acorn-jsx: ^5.0.0
-    clsx: ^1.2.1
+    clsx: ^2.0.0
     deepmerge: ^4.2.2
     fuse.js: ^6.6.2
     https-proxy-agent: ^5.0.1
@@ -3856,18 +3818,18 @@ __metadata:
     next-auth: ^4.22.1
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 687ebdce1d0bba7fdba539f05aa68215038ca099d1d71576b267a31fbc5b5024137a7772b9677e263283f613efae1e74de1b8d5a1172c1daa56de79dee433896
+  checksum: 0f17862aabee450bfecd0ccd48bed7edc5dc2a4974bb7009885dcb8e4cb53803f0e890b8a1e0a5ffb49dcbdb759771e7e3dd625edf57ea5e651b548d88479324
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-site-middleware@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-site-middleware@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-site-middleware@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-site-middleware@npm:0.1.0-beta.43"
   dependencies:
     "@aws-sdk/client-s3": ^3.256.0
-    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-store": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-types": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-store": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-types": ^0.1.0-beta.43
     "@types/mdast": ^3.0.0
     acorn: ^8.0.0
     acorn-jsx: ^5.0.0
@@ -3886,71 +3848,71 @@ __metadata:
     warning: ^3.0.0
   peerDependencies:
     next-auth: ^4.22.1
-  checksum: e3a8b7448b362a03fe1e8d621f4ec33ac6c5257072e67ff80dc96733b65fa71d28eb6df2771c213060cf2f1cb235e8cac76f9a6617e5b3aa6f0bb3cc746b5591
+  checksum: 81da99fddb9400cbf4fd9d77c52e2c89d0721615803fe92d9e78b10bdd1e7c0d884b6d7cbf09a698385251b89aacbcde6759d9d1c82189974b03a0054feb5e2c
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-site-preset-styles@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-site-preset-styles@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-site-preset-styles@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-site-preset-styles@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-components": 0.1.0-beta.42
-    "@jpmorganchase/mosaic-content-editor-plugin": 0.1.0-beta.42
-    "@jpmorganchase/mosaic-labs-components": 0.1.0-beta.42
-    "@jpmorganchase/mosaic-layouts": 0.1.0-beta.42
-    "@jpmorganchase/mosaic-open-api-component": 0.1.0-beta.42
-    "@jpmorganchase/mosaic-site-components": 0.1.0-beta.42
-    "@jpmorganchase/mosaic-theme": 0.1.0-beta.42
-    "@salt-ds/icons": ^1.4.0
-    "@salt-ds/theme": ^1.5.1
+    "@jpmorganchase/mosaic-components": 0.1.0-beta.43
+    "@jpmorganchase/mosaic-content-editor-plugin": 0.1.0-beta.43
+    "@jpmorganchase/mosaic-labs-components": 0.1.0-beta.43
+    "@jpmorganchase/mosaic-layouts": 0.1.0-beta.43
+    "@jpmorganchase/mosaic-open-api-component": 0.1.0-beta.43
+    "@jpmorganchase/mosaic-site-components": 0.1.0-beta.43
+    "@jpmorganchase/mosaic-theme": 0.1.0-beta.43
+    "@salt-ds/icons": ^1.6.0
+    "@salt-ds/theme": ^1.8.0
     prismjs: ^1.23.0
-  checksum: c47109f835020e1ae62d2795eb12955fe203b1117cb0a47511dedf29565e21b69433a31a7635504d429a31a82b170e755d4eb3ee517d9ef1fbc21d100b925c26
+  checksum: 660601718c89666b06cc465e849bd6360a82b64b8aa437f3b73062810cd87322fa8e42bb233021ae4ca155ef29f90ba90820a1b87776bb2d3dcd1e17d7b53fc5
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-source-git-repo@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-source-git-repo@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-source-git-repo@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-source-git-repo@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-types": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-types": ^0.1.0-beta.43
     deepmerge: ^4.2.2
     fs-extra: ^9.1.0
     lodash-es: ^4.17.21
     rxjs: ^7.5.5
     zod: ^3.19.1
-  checksum: 095c25197977f64ca07212d57698dbbd1a3a0b354be14e01815ca753561cb09c65a220a7f54bd4fccda1eb19fa230d6e1124c42d835db26f99ff1bf576c78af9
+  checksum: 0c1bde75e2a67d131644dd7588da9f92b7d7ad808cda94c2b438206f6dda262011160d0cd66c79a29bf757c5e48b7c647759d348fd74792a231122dbf42ee116
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-source-local-folder@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-source-local-folder@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-source-local-folder@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-source-local-folder@npm:0.1.0-beta.43"
   dependencies:
-    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-types": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-schemas": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-types": ^0.1.0-beta.43
     chokidar: ^3.5.3
     fast-glob: ^3.2.12
     lodash-es: ^4.17.21
     rxjs: ^7.5.5
     zod: ^3.19.1
-  checksum: 01fa6af88e6596883262630834880d79f9fa7b4a952ddf99634d99a2e07f0ff48ebda71baf91fc9445a7235357fb945e707a2a93ac1d16f2afbf875130413c4a
+  checksum: c5d2454c02d0eceba279790686fb53edccd6b668f14278da36474e87ee15e79b55d4c85a9647329609c4e94d2bc271a83d416a6217e2378a315021b5fe5d3aaf
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.43"
   dependencies:
     dotenv-load: ^2.0.1
-  checksum: e9eba58eccac63dd246379eaa438d76a58c5bf9ddafb399673125816bcefcae1fe27787fc5303eb4c554cf34532cf72e54c4a8b346d8a236397f02ed764180ca
+  checksum: 1e8ff0096ed45bec2b2706fc7041b1fb5e65cc3649b71344eb7497e649ad4bf6a945c2d575729673e089ce0cfbf5c652fb1f2ab25362922d1fbe94cf7851f2cd
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-store@npm:^0.1.0-beta.37, @jpmorganchase/mosaic-store@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-store@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-store@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-store@npm:0.1.0-beta.43"
   dependencies:
     "@testing-library/react": ^13.4.0
     zustand: ^4.1.1
@@ -3958,15 +3920,15 @@ __metadata:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 371907459a4eba5d23ffeb5b30ae68715696719b4c466d146c5329aee0079f37e23f90b4320733540336b2fd901397c11bdd6358cb179fd87e6e87188bc0243a
+  checksum: ee42477c55b7bbe524a7e36c499233fe8f5e7e5a7f187c0dda6bfb9844c4e47912342019ed3972ff0eb7804423d3c272af903b357f3d167cd7753ca4869f5f65
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-theme@npm:0.1.0-beta.42, @jpmorganchase/mosaic-theme@npm:^0.1.0-beta.37, @jpmorganchase/mosaic-theme@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-theme@npm:0.1.0-beta.42"
+"@jpmorganchase/mosaic-theme@npm:0.1.0-beta.43, @jpmorganchase/mosaic-theme@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-theme@npm:0.1.0-beta.43"
   dependencies:
-    "@salt-ds/icons": ^1.4.0
+    "@salt-ds/icons": ^1.6.0
     "@vanilla-extract/css": ^1.6.0
     "@vanilla-extract/css-utils": ^0.1.1
     "@vanilla-extract/recipes": ^0.2.1
@@ -3976,14 +3938,14 @@ __metadata:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 6402a9dc828fa7dd307374aa53b9b2b27099dca55375dff56f97c19d4bc92f7a34543ef5856df6f217e701a1335adaa5e9aec3f71913d07a180205fd3fa84bf5
+  checksum: 3e5709e31a702155ba2916e0d53e7e8eb2e8c2169bb6a374543c1c4e5107e1955ce08e1e91265cb7e9afd83c60912936655390442e76a35ffb0c35003f804617
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-types@npm:^0.1.0-beta.42":
-  version: 0.1.0-beta.42
-  resolution: "@jpmorganchase/mosaic-types@npm:0.1.0-beta.42"
-  checksum: c918a88661ee3e0bb72ea292cc5eb57b1845931dd2e9d2129f87d1c4d012518868121014daeddb9da0c18d695f056d73b91ba512d537cdcc89fca00fd359cd8a
+"@jpmorganchase/mosaic-types@npm:^0.1.0-beta.43":
+  version: 0.1.0-beta.43
+  resolution: "@jpmorganchase/mosaic-types@npm:0.1.0-beta.43"
+  checksum: edd0edad8604def3987b59aae1ec0ce3b7c4794ac8f9b568097cc6e6c8b851f3a32c58de634ed640323812b91be00269ac859d7bb44bb905bc5fc57b84868fee
   languageName: node
   linkType: hard
 
@@ -4998,7 +4960,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/core@^1.8.0-rc.0, @salt-ds/core@workspace:packages/core":
+"@salt-ds/core@^1.8.1, @salt-ds/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@salt-ds/core@workspace:packages/core"
   peerDependencies:
@@ -5042,7 +5004,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/icons@^1.4.0, @salt-ds/icons@workspace:packages/icons":
+"@salt-ds/icons@^1.6.0, @salt-ds/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@salt-ds/icons@workspace:packages/icons"
   dependencies:
@@ -5083,7 +5045,7 @@ __metadata:
     "@fluentui/react-overflow": ^9.0.19
     "@fontsource/open-sans": ^4.5.13
     "@internationalized/date": ^3.0.0
-    "@jpmorganchase/mosaic-create-site": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-create-site": ^0.1.0-beta.43
     "@mswjs/data": ^0.13.0
     "@storybook/addon-a11y": ^6.5.16
     "@storybook/addon-actions": ^6.5.16
@@ -5170,17 +5132,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/site@workspace:site"
   dependencies:
-    "@jpmorganchase/mosaic-cli": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-components": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-layouts": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-site-preset-styles": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-store": ^0.1.0-beta.42
-    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.42
+    "@jpmorganchase/mosaic-cli": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-components": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-content-editor-plugin": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-layouts": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-site-components": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-site-preset-styles": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-source-git-repo": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-source-local-folder": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-standard-generator": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-store": ^0.1.0-beta.43
+    "@jpmorganchase/mosaic-theme": ^0.1.0-beta.43
     "@next/eslint-plugin-next": 13.4.7
     "@philpl/buble": ^0.19.7
     "@types/node": ^16.0.0
@@ -5226,7 +5188,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/theme@^1.5.1, @salt-ds/theme@workspace:packages/theme":
+"@salt-ds/theme@^1.8.0, @salt-ds/theme@workspace:packages/theme":
   version: 0.0.0-use.local
   resolution: "@salt-ds/theme@workspace:packages/theme"
   languageName: unknown
@@ -8205,7 +8167,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/hoist-non-react-statics@npm:^3.3.0, @types/hoist-non-react-statics@npm:^3.3.1":
+"@types/hoist-non-react-statics@npm:^3.3.1":
   version: 3.3.1
   resolution: "@types/hoist-non-react-statics@npm:3.3.1"
   dependencies:
@@ -8642,18 +8604,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: db571047af1a567631758700b9f7d143e566df939cfe5fbf7535347cc0c726a1cdbb5e3f8566d076e54cf708b6c1166689de194a9ba09ee35efc9e1d45911685
-  languageName: node
-  linkType: hard
-
-"@types/react-redux@npm:^7.1.20":
-  version: 7.1.25
-  resolution: "@types/react-redux@npm:7.1.25"
-  dependencies:
-    "@types/hoist-non-react-statics": ^3.3.0
-    "@types/react": "*"
-    hoist-non-react-statics: ^3.3.0
-    redux: ^4.0.0
-  checksum: a61ec25cbf8bb3720850402d3c49493fcff4afb73ad447d161460b5d4c600c984ad48708e8564d2fd32052eaa3c3b3f655c5b300ce813429637cce9e5958329f
   languageName: node
   linkType: hard
 
@@ -12400,13 +12350,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "clsx@npm:1.2.1"
-  checksum: 30befca8019b2eb7dbad38cff6266cf543091dae2825c856a62a8ccf2c3ab9c2907c4d12b288b73101196767f66812365400a227581484a05f968b0307cfaf12
-  languageName: node
-  linkType: hard
-
 "clsx@npm:^2.0.0":
   version: 2.0.0
   resolution: "clsx@npm:2.0.0"
@@ -13098,7 +13041,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^6.0.0, cross-spawn@npm:^6.0.5":
+"cross-spawn@npm:^6.0.0":
   version: 6.0.5
   resolution: "cross-spawn@npm:6.0.5"
   dependencies:
@@ -14702,13 +14645,6 @@ __metadata:
   version: 2.4.1
   resolution: "dompurify@npm:2.4.1"
   checksum: 1169177465b3cbb25a44322937fba549f6c4e1a91b83245d144471be26619c835cccf0f8e20aa78c25ac11a06efd17cc1b9db9cacadceb78a4c08a1029eafee5
-  languageName: node
-  linkType: hard
-
-"dompurify@npm:=2.3.10":
-  version: 2.3.10
-  resolution: "dompurify@npm:2.3.10"
-  checksum: ee343876b4c065e82d194818c66af76a6d2290264c7db583ad71761c11781fd626f0245f9f4670175d5707c4b8fcfb89adae80bed0418a9426a47ee7f36b0ffc
   languageName: node
   linkType: hard
 
@@ -25155,30 +25091,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"patch-package@npm:^6.5.0":
-  version: 6.5.1
-  resolution: "patch-package@npm:6.5.1"
-  dependencies:
-    "@yarnpkg/lockfile": ^1.1.0
-    chalk: ^4.1.2
-    cross-spawn: ^6.0.5
-    find-yarn-workspace-root: ^2.0.0
-    fs-extra: ^9.0.0
-    is-ci: ^2.0.0
-    klaw-sync: ^6.0.0
-    minimist: ^1.2.6
-    open: ^7.4.2
-    rimraf: ^2.6.3
-    semver: ^5.6.0
-    slash: ^2.0.0
-    tmp: ^0.0.33
-    yaml: ^1.10.2
-  bin:
-    patch-package: index.js
-  checksum: 8530ffa30f11136b527c6eddf6da48fa12856ee510a47edb1f9cdf8a025636adb82968f5fae778b5e04ce8c87915ebdf5911422b54add59a5a42e372a8f30eb2
-  languageName: node
-  linkType: hard
-
 "patch-package@npm:^7.0.2":
   version: 7.0.2
   resolution: "patch-package@npm:7.0.2"
@@ -27339,7 +27251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:17.0.2, react-is@npm:^17.0.0, react-is@npm:^17.0.1, react-is@npm:^17.0.2":
+"react-is@npm:17.0.2, react-is@npm:^17.0.0, react-is@npm:^17.0.1":
   version: 17.0.2
   resolution: "react-is@npm:17.0.2"
   checksum: 9d6d111d8990dc98bc5402c1266a808b0459b5d54830bbea24c12d908b536df7883f268a7868cfaedde3dd9d4e0d574db456f84d2e6df9c4526f99bb4b5344d8
@@ -27488,27 +27400,6 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   checksum: a98dffd1f78f1c91cb713bdbff87b4dbb3c4dbd88eb425852eae777e7e5226c822fad6a4e8bec6c5484f915dcda90d96ae3ebc065a8d3513664c660aadfd94e5
-  languageName: node
-  linkType: hard
-
-"react-redux@npm:^7.2.4":
-  version: 7.2.9
-  resolution: "react-redux@npm:7.2.9"
-  dependencies:
-    "@babel/runtime": ^7.15.4
-    "@types/react-redux": ^7.1.20
-    hoist-non-react-statics: ^3.3.2
-    loose-envify: ^1.4.0
-    prop-types: ^15.7.2
-    react-is: ^17.0.2
-  peerDependencies:
-    react: ^16.8.3 || ^17 || ^18
-  peerDependenciesMeta:
-    react-dom:
-      optional: true
-    react-native:
-      optional: true
-  checksum: 369a2bdcf87915659af9e5c55abfd9f52a84e43e0d12dcc108ed17dbe6933558b7b7fc12caa9c10c1a10a8be7df89454b6c96989d8573fedec1a772c94a1f145
   languageName: node
   linkType: hard
 
@@ -27934,7 +27825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:^4.0.0, redux@npm:^4.1.2":
+"redux@npm:^4.1.2":
   version: 4.2.1
   resolution: "redux@npm:4.2.1"
   dependencies:
@@ -28440,7 +28331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:^4.1.5, reselect@npm:^4.1.8":
+"reselect@npm:^4.1.8":
   version: 4.1.8
   resolution: "reselect@npm:4.1.8"
   checksum: a4ac87cedab198769a29be92bc221c32da76cfdad6911eda67b4d3e7136dca86208c3b210e31632eae31ebd2cded18596f0dd230d3ccc9e978df22f233b5583e
@@ -30664,7 +30555,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swagger-client@npm:^3.18.5, swagger-client@npm:^3.20.0":
+"swagger-client@npm:^3.20.0":
   version: 3.20.0
   resolution: "swagger-client@npm:3.20.0"
   dependencies:
@@ -30686,51 +30577,6 @@ __metadata:
     traverse: ~0.6.6
     url: ~0.11.0
   checksum: c61452d0c810e05ec319dfc9bf8b876a87d1d5ed74156764ccc627e79e8a6c0d84f4660754dd1e2f7570adfa17a89c2d16cc337421b7da3bec0b428224a70436
-  languageName: node
-  linkType: hard
-
-"swagger-ui-react@npm:^4.5.2":
-  version: 4.15.5
-  resolution: "swagger-ui-react@npm:4.15.5"
-  dependencies:
-    "@babel/runtime-corejs3": ^7.18.9
-    "@braintree/sanitize-url": =6.0.0
-    base64-js: ^1.5.1
-    classnames: ^2.3.1
-    css.escape: 1.5.1
-    deep-extend: 0.6.0
-    dompurify: =2.3.10
-    ieee754: ^1.2.1
-    immutable: ^3.x.x
-    js-file-download: ^0.4.12
-    js-yaml: =4.1.0
-    lodash: ^4.17.21
-    patch-package: ^6.5.0
-    prop-types: ^15.8.1
-    randexp: ^0.5.3
-    randombytes: ^2.1.0
-    react-copy-to-clipboard: 5.1.0
-    react-debounce-input: =3.3.0
-    react-immutable-proptypes: 2.2.0
-    react-immutable-pure-component: ^2.2.0
-    react-inspector: ^6.0.1
-    react-redux: ^7.2.4
-    react-syntax-highlighter: ^15.5.0
-    redux: ^4.1.2
-    redux-immutable: ^4.0.0
-    remarkable: ^2.0.1
-    reselect: ^4.1.5
-    serialize-error: ^8.1.0
-    sha.js: ^2.4.11
-    swagger-client: ^3.18.5
-    url-parse: ^1.5.8
-    xml: =1.0.1
-    xml-but-prettier: ^1.0.1
-    zenscroll: ^4.0.2
-  peerDependencies:
-    react: ">=17.0.0"
-    react-dom: ">=17.0.0"
-  checksum: 22a72947da865ebfa9269f66b42c2b50105b6285bcb6546f8f356cf73961f76e397b7d79003641c9569bfb2163ea98e2f3f73a27b5b66843d308786c37362e1c
   languageName: node
   linkType: hard
 
@@ -32305,7 +32151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"url-parse@npm:^1.5.10, url-parse@npm:^1.5.8":
+"url-parse@npm:^1.5.10":
   version: 1.5.10
   resolution: "url-parse@npm:1.5.10"
   dependencies:
