@@ -15,15 +15,11 @@ data:
 
 ### Default
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+Flow Layout displays items in a row which will responsively wrap onto a new line.
 
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
+By default, items will stretch across the layout, with a `gap` between items of 3, which is a multiple of the [Salt base unit](/salt/foundations/spacing).
 
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+The height and width of the layout area are driven by the items contained within it.
 
 </LivePreview>
 
@@ -31,15 +27,11 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 ### Layout position
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+Control the position of Flow Layout and its items using `align` and `justify` props.
 
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
+Use `justify` to define how to distribute any remaining space between or at the ends of items in the row.
 
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+If there is additional space available above or below the row, use the `align` property to define how items should be positioned within that space.
 
 </LivePreview>
 
@@ -47,15 +39,9 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 ### Flex Item position
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+Use the Flex Item `align` prop to set an alignment for a specific item in the layout.
 
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
-
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+Set the item’s position along the cross-axis of the layout (i.e., perpendicular to the row).
 
 </LivePreview>
 
@@ -63,15 +49,17 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 ### Flex Item size
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+The Flex Item `grow` prop enables specific items in the layout to grow and fill any remaining space in the row:
 
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
+- By default, `grow` is set to 0 and items will be displayed in their ‘normal’ size.
 
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+- If an item is set to ‘1’ it will fill the available space.
+
+- If an item is set to ‘2’ it will fill twice as much space as other items that have `grow` set to ‘1’.
+
+#### Guidance
+
+- In contrast to `grow`, `shrink` makes a specific item as small as possible within the row. By default, `shrink` is set to `1`. If an item is set to `2`, that item will attempt to take half as much space.
 
 </LivePreview>
 

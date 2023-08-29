@@ -1,21 +1,23 @@
 ---
 title: Flow Layout
 data:
-  description: Brief (~1 paragraph) description of the component. Copy the text from "Introduction" section in the content template here
+  description: Flow Layout displays items in a horizontal order and wraps them onto a subsequent row if they don’t fit within the defined width. It is built on top of the Flex Layout component (LINK) and is specifically intended for small-scale layouts where components need to be displayed in a responsive row, such as a row of metrics or a filter bar where fields can wrap over multiple lines. For additional control of the size and position of content, use Flex Item for each content item inside Flow Layout.
 
   # Fill in the info from the content template's "Metadata" table below.
   # To omit optional items, comment them out with #
-  sourceCodeUrl: "https://github.com/..."
+  sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/flow-layout/FlowLayout.tsx"
   package:
     name: "@salt-ds/core"
-  alsoKnownAs: ["Other Name", "Another Name"]
+  alsoKnownAs: ["CSS Flexbox", "Responsive Layout", "Wrap"]
   relatedComponents: [
       # Add a { name: "...", relationship: "..." } block for each
       # related component here (separated by commas).
       # Permitted values for relationship are: "similarTo" or
       # "contains".
-      { name: "Similar Component", relationship: "similarTo" },
-      { name: "Contained Component", relationship: "contains" },
+      { name: "Split Layout", relationship: "similarTo" },
+      { name: "Stack Layout", relationship: "similarTo" },
+      { name: "Flex Layout", relationship: "similarTo" },
+      { name: "Flex Layout", relationship: "contains" },
     ]
   # stickerSheet: "https://figma.com/..."
 
