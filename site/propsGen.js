@@ -2,7 +2,7 @@ const docgen = require("react-docgen-typescript");
 const path = require("path");
 const { writeFile } = require("fs");
 
-const componentPackages = ["core", "data-grid", "icons"]; // Adding more packages here will generate additional prop files
+const componentPackages = ["lab", "core", "data-grid", "icons"]; // Adding more packages here will generate additional prop files
 
 const componentFiles = componentPackages.map((package) =>
   path.join(__dirname, "..", "packages", package, "src", "index.ts")
