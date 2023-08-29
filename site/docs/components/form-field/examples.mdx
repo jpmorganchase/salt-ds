@@ -14,7 +14,7 @@ All examples demonstrate Salt form controls inside the Form Field, including Inp
 
 ### Default
 
-Form Field is a wrapper for UI controls that are typically found in a form (for example, Input, Combobox or Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements. 
+Form Field is a wrapper for UI controls that are typically found in a form (for example, [Input](../input), [Combobox](../combo-box) or [Radio Button](../radio-button)). Form Field makes these controls accessible by providing them with a visible label, validation control, states and descriptive text elements. 
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="Disabled" >
@@ -45,7 +45,7 @@ Form Field can display Helper Text using the `FormFieldHelperText` component.
 
 ### Helper Text As Tooltip
 
-
+Display the helper text in a Tooltip when you are low on screen real-estate.  
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="Label" >
@@ -74,35 +74,47 @@ The form field label can be positioned to the left of the form control via the p
 
 ### Label as Question
 
-
+Form Field labels can be styled with a different intent by setting the `intent` prop. Use “sentence” intent for sentences and questions. See more about [displaying labels](/salt/patterns/forms#label-vs-question).
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="MultipleChildren" >
 
 ### Multiple Children
 
-
+You can display multiple controls within a single Form Field. Wrap the controls in a Stack Layout for the correct styling.
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="NecessityLabel" >
 
 ### Necessity Label
 
-
+If a field is required, it can be marked with a "Required”, “Optional”, or “*” indicator using the `necessity` prop.   
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="Readonly" >
 
 ### Readonly
 
+Form Field can be set as read-only via the prop ‘readOnly’.  
 
+- The prop should be applied to the field, not the control it contains, for expected results. 
+
+- Set the field to read-only if you’re displaying values that are predefined and not editable, e.g., entry that’s populated and fixed by template selection.  
+
+- Adheres to WCAG AA text contrast for legibility; read-only field content is always relevant to the form, but cannot be changed. 
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="Validation" >
 
 ### Validation
 
+Form Fields can show validation states (warning, success, error) with the prop `validationStatus`.  
 
+- The prop should be applied to the field,not the control it contains, for expected results. 
+
+- Use the error state to alert the user of a critical issue that’s related to the field entry. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.  
+
+- Display the warning state when you need to alert the user of a potential issue that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.  
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="WithControls" >
@@ -118,42 +130,60 @@ Form Field can wrap any Salt UI control that is typically found in a form, such 
 
 ### Grouped With Label Left
 
+Wrap multiple Form Fields in a Stack Layout to form a group. 
 
+- Use the same label placement on each field.
+- Spread grouped props on the Form Fields to reduce code repetition.
+- Set the `role` on the Stack layout to "group" to enhance accessibility.
+
+This example shows a group with the fields `labelPlacement` props set to "left". 
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="GroupedWithLabelTop" >
 
 ### Grouped With Label Top
  
+Wrap multiple Form Fields in a Stack Layout to form a group. 
 
+- Use the same label placement on each field.
+- Spread grouped props on the Form Fields to reduce code repetition.
+- Set the `role` on the Stack layout to "group" to enhance accessibility.
+
+This example shows a group with the fields `labelPlacement` props set to "top". 
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="GroupedWithLabelRight" >
 
 ### Grouped With Label Right
 
+Wrap multiple Form Fields in a Stack Layout to form a group. 
 
+- Use the same label placement on each field.
+- Spread grouped props on the Form Fields to reduce code repetition.
+- Set the `role` on the Stack layout to "group" to enhance accessibility.
+
+This example shows a group with the fields `labelPlacement` props set to "right". 
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="GroupedWithMultipleColumns" >
 
 ### Grouped With Multiple Columns
 
-
+Use more Stack Layouts inside a group to create a multiple column layout.
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="GroupedWithEmptySlot" >
 
 ### Grouped With Empty Slot
 
-
+Use a Grid Layout within a group to create multiple columns where empty slots may be present.
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="GroupedWithVariant" >
 
 ### Grouped With Variant
 
-
+Grouped Form Fields should all have the same variant. Set the `variant` prop on each field to the same. To avoid code repetition, spread the props onto the fields. 
 
 </LivePreview>
 </LivePreviewControls>
