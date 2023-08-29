@@ -1,0 +1,9 @@
+.borderItem {
+  padding: var(--salt-spacing-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--salt-text-fontWeight-small);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
+  margin: calc(var(--salt-size-border) * -1) 0 0 calc(var(--salt-size-border) * -1);
+}
