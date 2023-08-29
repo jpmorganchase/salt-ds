@@ -11,7 +11,7 @@ export const Density = (): ReactElement => {
 
   return (
     <div>
-      <Text styleAs="h4">{capitalize(density)} Density</Text>
+      <Text>{capitalize(density)} Density</Text>
       <StackLayout direction="row" className={styles.squares}>
         <Square />
         <Square />
