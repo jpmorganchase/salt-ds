@@ -2,7 +2,7 @@
 title: Spinner
 layout: DetailComponent
 sidebar:
-  label: How to use
+  exclude: true
 data:
   $ref: ./#/data
 ---
@@ -11,21 +11,15 @@ data:
 
 #### When to use Spinner
 
-- To indicate that content is loading.
+- To indicate that content is loading and reassure the user that the system is still working.
 
-- To reassure the user that the system is still working.
-
-- For full screen and widget loading experiences.
-
-- For actions that you expect will take between 1-9 seconds to load or where it is not possible to determine the length of time remaining.
-
-- For more guidance on duration see the Salt [duration foundation recommendations](/salt/foundations/duration)
+- For actions that you expect will take either between 1-9 seconds to load, or for processes that are taking an indeterminate amount of time to complete.
 
 #### When not to use Spinner
 
-- - Don't use for actions that will run for a determinable length of time. Use Progress component instead.
+- For actions that will run for a determinable length of time. Instead, use [Progress](/salt/components/progress).
 
-Don't use for actions which you think could take 10 seconds or more. Use Progress component instead.
+- For a process that is taking longer than 10 seconds to complete, as this is the point at which any attempt for a system to respond should finish, and a status message should be displayed instead. For further guidance, view the [Salt Duration Foundation](/salt/foundations/duration).
 
 ### Import
 

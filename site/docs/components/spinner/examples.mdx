@@ -2,17 +2,46 @@
 title: Spinner
 layout: DetailComponent
 sidebar:
-  label: Examples
+  exclude: true
 data:
   $ref: ./#/data
 ---
 
 <LivePreviewControls>
-  <LivePreview componentName="spinner" exampleName="Size" >
+  <LivePreview componentName="spinner" exampleName="SizeDefault" >
 
-    ### Size
+    ### Size (default)
 
-    Spinners have two sizes, “default” and “large”. Large Spinners can be beneficial for full screen loading experiences; while default Spinners can be reserved for widget loading experiences. Set the `size` prop to `"default"` or `"large"` to change the size of the Spinner
+    The default spinner is typically used for widget loading experiences.
+
+    For the default size, set the `size` prop to `”default”` or leave it as `undefined`.
+
+  </LivePreview>
+  <LivePreview componentName="spinner" exampleName="SizeLarge" >
+
+    ### Size (large)
+
+    The large spinner is useful for full screen loading experiences.
+
+    For the large size set the `size` prop to `”large”`.
+
+  </LivePreview>
+  <LivePreview componentName="spinner" exampleName="Loading" >
+
+    ### Loading
+
+    Center spinner in the middle of a page or content that is loading.
+
+    We recommend placing a scrim underneath a spinner during full page loading to obscure the underlying content. This prevents keyboard or mouse interactions from reaching this content until the scrim and spinner are closed by the user or system.
+
+  </LivePreview>
+  <LivePreview componentName="spinner" exampleName="LoadingPartial" >
+
+    ### Partial Loading
+
+    When updating only a portion of a page, position the spinner within that specific area.
+
+    We recommend placing a scrim underneath a spinner during partial loading to obscure the underlying content. Not only does this prevent keyboard or mouse interactions from reaching this content until the scrim and spinner are closed by the user or system, but this also gives prominence to the portion of the page that is loading or unavailable.
 
   </LivePreview>
 </LivePreviewControls>
