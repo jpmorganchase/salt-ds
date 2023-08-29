@@ -38,7 +38,6 @@ import * as saltLayouts from "../layouts";
 import * as saltComponents from "../components";
 
 import { MyAppProps } from "../types/mosaic";
-import clsx from "clsx";
 
 const components = {
   ...mosaicComponents,
@@ -66,13 +65,27 @@ const ptMono = PT_Mono({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
-  variable: "--site-font-family-code",
 });
 const openSans = Open_Sans({
   subsets: ["latin"],
-  variable: "--site-font-family",
   display: "swap",
 });
+
+// Declare the --site-font-family* props so that they are available
+// anywhere on the page. This makes them visible in portals too and
+// ensures that text renders in the correct fonts there too.
+const HeadWithFontStyles = ({ children }: { children: ReactNode }) => (
+  <Head>
+    {children}
+    <style>{`
+    :root {
+      --site-font-family: ${openSans.style.fontFamily};
+      --site-font-family-code: ${ptMono.style.fontFamily};
+    }
+  `}</style>
+  </Head>
+);
+
 export default function MyApp({
   Component,
   pageProps = {},
@@ -96,10 +109,8 @@ export default function MyApp({
   return (
     <SessionProvider>
       <StoreProvider value={createStore()}>
-        <Metadata Component={Head} />
-        <ThemeProvider
-          className={clsx(themeClassName, ptMono.variable, openSans.variable)}
-        >
+        <Metadata Component={HeadWithFontStyles} />
+        <ThemeProvider className={themeClassName}>
           <DensityProvider>
             <BaseUrlProvider>
               <ImageProvider value={Image}>

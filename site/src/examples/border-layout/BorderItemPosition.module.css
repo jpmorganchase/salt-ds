@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container .active {
+  font-weight: var(--salt-text-fontWeight-strong);
+  background: var(--salt-container-secondary-background);
+}
+
+.radioButtonGroup {
+  margin-top: var(--salt-spacing-300);
+}
