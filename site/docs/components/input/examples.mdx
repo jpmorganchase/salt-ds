@@ -16,7 +16,7 @@ Input comprises value text and a focus ring. The component is initially empty an
 
 The default variant for Input is "primary".
 
-- Tip: Input is responsive to the size of its parent container, filling it 100%. To disable responsiveness, apply a fixed width and height using the CSS API.
+- Input is responsive to the size of its parent container, filling it 100%. To disable responsiveness, apply a fixed width and height using the CSS API.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="Secondary" >
@@ -25,7 +25,7 @@ The default variant for Input is "primary".
 
 Input has a "secondary" variant.
 
-Tip: For recommendations on variant choice, see the [Forms pattern](salt/patterns/forms).
+For recommendations on variant choice, see the [Forms pattern](salt/patterns/forms).
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="Disabled" >
@@ -43,23 +43,16 @@ You can set Input to a read-only state. The value text can’t be edited in this
 
 By default, the marker is set to an em dash. If your application requires a different marker it can be set via the emptyReadOnlyMarker prop.
 
-- Tip: Use the read-only state when the value is necessary for the users flow or current task but cannot be edited, for example, because of user permissions.
+- Use the read-only state when the value is necessary for the users flow or current task but cannot be edited, for example, because of user permissions.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="EmptyReadonlyMarker" >
-
-### Empty Readonly Marker
-
-For accessibility purposes, we recommend you use the `emptyReadOnlyMarker` prop to add a marker for empty read only fields . This ensures it’s clear that for the current selection or configuration a value is not necessary.
-
-</LivePreview>
-<LivePreview componentName="input" exampleName="Placeholder" >
 
 ### Placeholder
 
 You can use a placeholder to prompt user input if no default value is provided.
 
-- Tip: Placeholder Text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use Helper Text beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the Placeholder Text to support the help message, or provide an example of the suggested content.
+- Placeholder Text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use Helper Text beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the Placeholder Text to support the help message, or provide an example of the suggested content.
 
 More information can be found [here](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
@@ -102,9 +95,9 @@ Input can show validation states (warning, success, error) with the prop `valida
 
 Text is left-aligned by default. Use the `textAlign` prop to change the alignment to “center” or “right”.
 
-- Tip: Numeric values are often displayed right aligned to make them easier to compare. However, sometimes number fields are unrelated or are mixed with text fields in a form, so left-alignment may promote better visual flow. Consider your use case when deciding on Input field alignment.
+- Numeric values are often displayed right aligned to make them easier to compare. However, sometimes number fields are unrelated or are mixed with text fields in a form, so left-alignment may promote better visual flow. Consider your use case when deciding on Input field alignment.
 
-You may choose to centre-align an input field to bring emphasis to a value, however, this should be the exception and used sparingly.
+You may choose to center-align an input field to bring emphasis to a value, however, this should be the exception and used sparingly.
 
 </LivePreview>
 </LivePreviewControls>

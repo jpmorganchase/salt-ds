@@ -9,9 +9,19 @@ data:
 
 ### Best practises
 
-- To be considered accessible within a form, the Input must be wrapped in a [Form Field](/salt/components/form-field), which will provide the field with a visible label, help text and a status message for validation feedback.
+- To be considered accessible within a form, the Input must be wrapped in a [Form Field](/salt/components/form-field). This will provide the field with a visible label, help text and a status message for validation feedback.
 
 - Text that extends beyond the visible area of the Input is clipped. This behavior is common to all states, i.e., default, read-only and disabled—whether or not the Input has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
+
+<LivePreviewControls>
+<LivePreview componentName="input" exampleName="EmptyReadonlyMarker" >
+
+### Empty Readonly Marker
+
+For accessibility purposes, we recommend you use the `emptyReadOnlyMarker` prop to add a marker for empty read only fields . This ensures it’s clear that for the current selection or configuration a value is not necessary. 
+
+</LivePreview>
+</LivePreviewControls>
 
 ### Keyboard interactions
 
@@ -55,7 +65,7 @@ When the Input area has focus:
 - If the text cursor is displayed, it is positioned on the alternative side of the following character. If is there is no preceding character, there is no effect.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Shift + Left/Right Arrow">
+<KeyboardControl keyOrCombos="Shift + Left or Right Arrow">
  
 Drags selection over text characters, one at a time.
 
