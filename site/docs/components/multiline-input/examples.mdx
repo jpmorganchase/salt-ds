@@ -1,0 +1,123 @@
+---
+title: MultilineInput
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="multiline-input" exampleName="Primary" >
+
+### Primary
+
+Values entered into the Multiline Input are set to wrap based on the width of the component. Initially, the component is empty. Once it has focus it accepts text across multiple lines. By default, the component presents three rows of text at a time.
+
+If entering more than through rows of text, the user can review the entered value using keyboard controls.
+
+- Multiline Input has two variants: "primary" and "secondary". The primary variant is default. The choice between primary and secondary variants should be considered alongside the background color it sits upon. For recommendations on variant choice, see the [Forms pattern](/salt/patterns/forms).
+
+</LivePreview>
+
+<LivePreview componentName="multiline-input" exampleName="Secondary">
+
+### Secondary
+
+Secondary variant is an effective option if included as part of a data-dense or compact interface, or within a form with multiple columns or sections.
+
+The choice between primary and secondary variants should be considered alongside the background color it sits upon.
+
+- For recommendations on variant choice, see the [Forms pattern](/salt/patterns/forms).
+
+</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="Disabled">
+
+### Disabled
+
+Multiline Input can be set to a disabled state, with no resultant action when the user interacts with it. Showing it in a disabled state allows the user to be aware of its presents or an entered value while restricting their ability to edit it.
+
+</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="Readonly">
+
+### Readonly
+
+Multiline Input can be set to a read-only state. The entered text cannot be edited in this state, but it can be highlighted and copied.
+
+Read-only fields are not focusable since they are treated as a static representation rather than a form control.
+
+Use the read-only state when the value is necessary for the users’ flow or current task but cannot be edited, for instance when a users permissions are restricted.
+
+When setting Multiline Input to a read-only state, ensure to also disable any nested interactive adornments, such as buttons.
+
+</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="Bordered">
+
+### Bordered
+
+To style Multiline Input with a full border set the `bordered` prop to `true`.
+
+- We recommend this styling when the field uses the same fill color as the background (i.e., a primary fill color on a primary background).
+
+</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="NumberOfRows">
+
+### Number Of Rows
+
+The Multiline Input shows three rows of text by default. This can be adjusted, using the ‘rows’ prop, to provide a larger input allowing the user to review more of the entered text without the need for further interactions. This example demonstrates a Multiline Input customised to show four rows.
+
+Set the number of rows to best reflects the amount of content that users are likely to input in the context that your Multiline Input is being displayed.
+
+</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="CharacterCount">
+
+### Character Count
+
+You can add a character count as a label using ‘endAdornment’ props. The example demonstrates the expected behaviour when the count is exceeded, with the field dynamically displaying an error state and the count continuing to display the number of characters over the limit.
+
+If the user goes over the character count limit, display an error state and change the Label to `primary` variant with a weight of ‘strong’.
+
+</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="ValidationState">
+
+### Validation State
+
+Indicate validation state by setting the `validationStatus` prop.
+
+- Use the “error” state when you want to alert the user to a critical issue related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
+
+- Display the “warning” state when you need to alert the user of a non-critical issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
+
+</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="Placeholder">
+
+### Placeholder
+
+A placeholder can be used to prompt user input if no default value is provided.
+
+Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use helper text beneath the input to provide instructions, and reserve the placeholder text to support the help message, or provide an example of the input.
+
+More information can be found [here](https://www.w3.org/WAI/tutorials/forms/instructions/)
+
+</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="StaticAdornments" >
+
+### Static Adornments
+
+You can add custom adornments at the beginning or end of the Multiline Input area using the `startAdornment` and `endAdornment` props.
+
+Start adornments are typically used to describe the purpose of the field (eg., a phone number input, or a currency), whereas end adornments are typically used to indicate a reveal of more information (eg., using an arrow icon) or to trigger a new UI (such as a date picker).
+
+Salt [Text](/salt/components/text) and [Icons](/salt/foundations/iconography) can be used to add Salt styled alphanumeric text or symbols as adornments. Multiple start or end adornments should be wrapped in a parent container and passed to the respective prop as a single fragment. Adornments can be dynamic, with their value depending on the current state.
+
+</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="ButtonAdornments" >
+
+### Button Adornments
+
+You can use a [Button](/salt/components/button) the beginning or end of the Multiline Input using the `startAdornment` and `endAdornment` props. Buttons can allow for custom interactivity within the Input field itself, or elsewhere in the app via the Input field.
+
+Ensure to make your interactive Buttons disabled or readonly should it match the state of the containing Input field.
+
+</LivePreview>
+</LivePreviewControls>

@@ -1,0 +1,28 @@
+---
+title: MultilineInput
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### When to use Multiline Input
+
+A Multiline Input is recommended when a user is asked a subjective question and the length of their answer is unknown. The input can give them plenty of space to answer the question and review the answer. Set the height accordingly if you can take an educated guess at the possible length of their answer–see the Number of Rows example.
+
+### When not to use Multiline Input
+
+Multiline Input field width and height should always reflect the amount of content expected in the field. If the content is unlikely to exceed a single line, always use an [Input component](../input), rather than a Multiline.
+
+### Import
+
+To import MultilineInput from the core Salt package, use:
+
+```js
+import { MultilineInput } from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable componentName="MultilineInput" />
