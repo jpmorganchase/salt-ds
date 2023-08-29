@@ -8,23 +8,23 @@ data:
   $ref: ./#/data
 ---
 
-Dialogs are interruptive by nature and should be used sparingly. Use Dialog to present or gather critical information that requires immediate action, whether it’s directly or indirectly part of the user’s current task. For example, a warning dialog that appears when a document is closed without being saved—and asks how the user wishes to proceed—is indirectly related to the user’s task. 
+Dialogs are interruptive by nature and should be used sparingly. Use Dialog to present or gather critical information that requires immediate action, whether it’s directly or indirectly part of the user’s current task. For example, a warning dialog that appears when a document is closed without being saved—and asks how the user wishes to proceed—is indirectly related to the user’s task.
 
 #### Status
 
-For status dialogs you can set the `status` prop to `error`, `warning`, `success`, or `info` to render a status icon in the title and change the border color of the Dialog. For accessibility reasons, you should pass a `role="alertdialog"` to the Dialog component when rendering an alert dialog. You should rely on users' acknowledgment of the message by clicking the action button. 
+For status dialogs you can set the `status` prop to `error`, `warning`, `success`, or `info` to render a status icon in the title and change the border color of the Dialog. For accessibility reasons, you should pass a `role="alertdialog"` to the Dialog component when rendering an alert dialog. You should rely on users' acknowledgment of the message by clicking the action button.
 
-#### When to use Dialog 
+#### When to use Dialog
 
-- To notify critical information that requires immediate action. 
+- To notify critical information that requires immediate action.
 
-- Only display a dialog as the result of a user’s action within their workflow, to ensure it remains relevant and is perceived as high priority. 
+- Only display a dialog as the result of a user’s action within their workflow, to ensure it remains relevant and is perceived as high priority.
 
-- Use dialog to interrupt user's flow.  
+- Use dialog to interrupt user's flow.
 
-#### When not to use Dialog 
+#### When not to use Dialog
 
-- When non-disruptive feedback will suffice. If the information you’re displaying is part of an event that’s occurred in a peripheral application or workflow, use [Toast](../toast) instead. If the information you're displaying is related to the current workflow, use [Banner](../banner) instead.  
+- When non-disruptive feedback will suffice. If the information you’re displaying is part of an event that’s occurred in a peripheral application or workflow, use [Toast](../toast) instead. If the information you're displaying is related to the current workflow, use [Banner](../banner) instead.
 
 - To launch a dialog from another dialog. Users may struggle to dismiss the two dialogs and may not understand which dialog is higher priority. Consider an alternative solution, such as progressively disclosing information in the first dialog.
 

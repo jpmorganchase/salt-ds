@@ -27,7 +27,12 @@ export const Accent = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open dialog with accent
       </Button>
-      <Dialog accent style={{ width: 500 }} open={open} onOpenChange={onOpenChange}>
+      <Dialog
+        accent
+        style={{ width: 500 }}
+        open={open}
+        onOpenChange={onOpenChange}
+      >
         <DialogTitle>Congratulations! You have created a Dialog.</DialogTitle>
         <DialogContent>
           <StackLayout>
