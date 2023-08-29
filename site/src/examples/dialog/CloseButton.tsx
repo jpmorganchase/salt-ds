@@ -8,7 +8,7 @@ import {
   DialogCloseButton,
 } from "@salt-ds/lab";
 
-export const Scroll = (): ReactElement => {
+export const CloseButton = (): ReactElement => {
   const [open, setOpen] = useState(true);
 
   const handleRequestOpen = () => {
@@ -31,7 +31,6 @@ export const Scroll = (): ReactElement => {
       <Dialog style={{ width: 500 }} open={open} onOpenChange={onOpenChange}>
         <DialogTitle>Congratulations! You have created a Dialog.</DialogTitle>
         <DialogContent>
-          {" "}
           <StackLayout>
             <div>
               Lorem Ipsum is simply dummy text of the printing and typesetting
