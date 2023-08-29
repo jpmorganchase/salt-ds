@@ -1,8 +1,14 @@
 import { ReactElement } from "react";
-import { FormField, FlowLayout, FormFieldLabel, FormFieldHelperText, Input } from "@salt-ds/core";
+import {
+  FormField,
+  FlowLayout,
+  FormFieldLabel,
+  FormFieldHelperText,
+  Input,
+} from "@salt-ds/core";
 
 export const LabelLeft = (): ReactElement => (
-    <FlowLayout style={{ width: "366px" }}>
+  <FlowLayout style={{ width: "366px" }}>
     <FormField labelPlacement="left">
       <FormFieldLabel>Form Field label left</FormFieldLabel>
       <Input defaultValue="Value" />
