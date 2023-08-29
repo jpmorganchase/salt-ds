@@ -15,7 +15,10 @@ export const InlineBadge = (): ReactElement => (
   <FlexLayout style={{ width: "80%" }}>
     <Accordion value="accordion-example" style={{ alignSelf: "self-start" }}>
       <AccordionHeader>
-        Internal form <Badge value={"NEW"} />
+        <div style={{justifyContent: "space-between"}}>
+          Internal form
+          <Badge value={"NEW"} />
+        </div>
       </AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
