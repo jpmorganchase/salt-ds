@@ -1,0 +1,78 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="border-layout" exampleName="Default" >
+
+### Default
+
+Border Layout can be set to display five regions: North, East, South, West and Center. At least one region but must be displayed alongside the Center region in the layout.
+
+By default, there are no gaps between regions.
+
+</LivePreview>
+
+<LivePreview componentName="border-layout" exampleName="CustomRegionSize" >
+
+### Custom region size
+
+You can manually define the size of regions. This example shows how to set the West and East regions to a fixed width, with a responsive Center region.
+
+This layout would work well where a fixed-width side navigation is required, alongside responsive page content.
+
+</LivePreview>
+
+<LivePreview componentName="border-layout" exampleName="GapBetweenRegions" >
+
+### Gap between regions
+
+A gap can be added between each region. The `gap` property is a multiplier that aligns to the [Salt spacing system](/salt/foundations/spacing).
+
+- The standard gap between column and row elements in Salt is 3 times the base unit.
+
+- Use `columnGap` and `rowGap` properties to set a specific gap in a particular dimension or `gap` to update both values simultaneously.
+
+</LivePreview>
+
+<LivePreview componentName="border-layout" exampleName="HideRegions" >
+
+### Hide regions
+
+Border Layout can display any combination of Border Items. This example demonstrates a layout with North, East and Center regions.
+
+</LivePreview>
+
+<LivePreview componentName="border-layout" exampleName="BorderItemPosition" >
+
+### Border Item position
+
+Set the `position` property of the Border Item wrapper to define where content should be displayed in the layout: North, East, South, West, Center.
+
+</LivePreview>
+
+<LivePreview componentName="border-layout" exampleName="BorderItemAlignment" >
+
+### Border Item alignment
+
+Use the `verticalAlignment` and `horizontalAlignment` properties of the Border Item wrapper to determine how content should be aligned in the region.
+
+</LivePreview>
+
+<LivePreview componentName="border-layout" exampleName="StickyPositioning" >
+
+### Sticky positioning
+
+Use the `sticky` property of the Border Item wrapper to define a region as sticky. When set to `true`, content in surrounding regions will scroll beneath a `sticky` Border Item.
+
+This is particularly useful if you require a header, (in the North region) or side navigation (in the West) to remain visible at all times.
+
+</LivePreview>
+
+</LivePreviewControls>
