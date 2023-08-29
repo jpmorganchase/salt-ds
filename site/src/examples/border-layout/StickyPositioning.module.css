@@ -1,0 +1,11 @@
+.borderLayout {
+  height: 200px;
+  width: 260px;
+}
+
+.center {
+  flex-direction: column;
+  overflow: auto;
+  justify-content: unset;
+  text-align: center;
+}
