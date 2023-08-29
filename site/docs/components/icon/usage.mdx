@@ -2,7 +2,7 @@
 title: Icon
 layout: DetailComponent
 sidebar:
-  label: How to use
+  exclude: true
 data:
   $ref: ./#/data
 ---
@@ -11,9 +11,11 @@ data:
 
 #### When to use Icons
 
-- You need a visual representation of a concept.
+- Use an icon to aid recognition and to help users make choices by providing context (e.g. an office phone number vs mobile phone number in contact information).
 
-- An icon doesn't need to be interactive.
+#### When not to use Icons
+
+- When you need an interactive icon. Instead, use [Button](/salt/components/status-indicator/Button) (CTA, Primary or Secondary variant).
 
 ### Import
 
@@ -32,3 +34,7 @@ import { Icon } from "@salt-ds/icons";
 ### Props
 
 <PropsTable componentName="Icon" packageName="icons" />
+
+### References
+
+Icon has a complementary Icon style library for Figma including Icon design principles and creation guidelines. J.P. Morgan employees can enable the Salt Icons library from the Assets panel. External designers can install the library from the [Salt community page](https://www.figma.com/community/file/1184561977727107234/Salt%3A-Icons)
