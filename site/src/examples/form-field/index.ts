@@ -1,4 +1,5 @@
 export * from "./Default";
+export * from "./Disabled";
 export * from "./GroupedWithEmptySlot";
 export * from "./GroupedWithLabelLeft";
 export * from "./GroupedWithLabelRight";
