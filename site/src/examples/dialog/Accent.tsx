@@ -5,10 +5,9 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogCloseButton,
 } from "@salt-ds/lab";
 
-export const Content = (): ReactElement => {
+export const Accent = (): ReactElement => {
   const [open, setOpen] = useState(true);
 
   const handleRequestOpen = () => {
@@ -26,12 +25,10 @@ export const Content = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open default dialog
+        Open dialog with accent
       </Button>
-      <Dialog style={{ width: 500 }} open={open} onOpenChange={onOpenChange}>
-        <DialogTitle accent>
-          Congratulations! You have created a Dialog.
-        </DialogTitle>
+      <Dialog accent style={{ width: 500 }} open={open} onOpenChange={onOpenChange}>
+        <DialogTitle>Congratulations! You have created a Dialog.</DialogTitle>
         <DialogContent>
           <StackLayout>
             <div>

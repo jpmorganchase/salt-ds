@@ -5,7 +5,6 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogCloseButton,
 } from "@salt-ds/lab";
 
 export const Default = (): ReactElement => {
