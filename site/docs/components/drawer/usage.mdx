@@ -1,0 +1,36 @@
+---
+title: Drawer
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Using the Drawer component
+
+Use the Drawer component by wrapping it around your content and setting the desired position. Provide a mechanism, such as a Button, for users to open and close it.
+
+When open, the Drawer displays a visual overlay, also known as a scrim, over the underlying content. It also plays relevant animations when opening and closing that can be visually customized via CSS.
+
+#### When to use Component Name
+
+- Use Drawer when you need additional content, such as a form or sidebar navigation, to be displayed in a specific area of the screen.
+
+#### When not to use Component Name
+
+- If you want your content split between pages or tabs, consider [Deck Layout](../deck-layout) instead.
+
+- Pick the background that reflects the level of importance for the content (primary or secondary) and that will drive the types of components that are therefore displayed in the Panel.
+
+### Import
+
+To import Panel from the lab Salt package, use:
+
+```js
+import { Drawer, useDrawer } from "@salt-ds/lab";
+```
+
+### Props
+
+<PropsTable componentName="Lab" />
