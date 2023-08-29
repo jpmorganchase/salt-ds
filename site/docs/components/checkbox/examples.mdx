@@ -1,0 +1,140 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="checkbox" exampleName="Default">
+
+### Checkbox
+
+A single checkbox can be either selected or deselected.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="VerticalGroup" >
+
+### Checkbox Group: vertical (default)
+
+Checkbox Group allows selection of one or more values from a given set of choices. They can be aligned horizontally or vertically. By default, the group is aligned vertically.
+
+Guidance:
+
+- Do not truncate checkbox text descriptions as this can hide important content relevant to the user’s workflow. Consider shortening or rewording the label if space is limited.
+- The checkbox should always be placed left aligned to the text.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="HorizontalGroup" >
+
+### Chekcbox Group: horizontal
+
+By default, a checkbox group is aligned vertically. To align horizontally, set `direction="horizontal"`.
+
+Guidance:
+
+Keep text as clear and concise as possible in the horizontal orientation.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="WrapGroup" >
+
+### Wrapping Checkbox Group
+
+By default, a checkbox group in a horizontal alignment wraps onto the next line as the viewport size changes if they don’t fit within a container.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="NoWrapGroup" >
+
+### Text wrapping
+
+To configure checkbox groups to maintain a horizontal alignment but allow text wrapping, set the prop `wrap=false`.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="Indeterminate" >
+
+### Indeterminate checkbox
+
+When a checkbox option is neither selected nor deselected, it is indeterminate. This is a third, separate state.
+
+A checkbox with the prop `indeterminate="true"` will display an indeterminate icon. The most common use is a nested checkbox group with a hierarchy of selections. When the group contains a mix of selected and unselected children, the parent will show an indeterminate state.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="Disabled">
+
+### Disabled checkbox
+
+A disabled checkbox is not interactive or focusable.
+
+A checkbox can be disabled by setting `disabled=”true”`.
+
+Guidance:
+
+Use a disabled state for checkboxes that have permissions, dependencies or pre-requisites. For example, a checkbox in a [Form](/salt/patterns/forms) may be disabled because the user has not yet completed an earlier section of the form.
+
+If a disabled checkbox's text description contains information that is valuable to the user, consider using a read-only checkbox instead.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="Readonly">
+
+### Read-only checkbox
+
+A read-only checkbox permits the user to only read or copy the text description, but not edit the text or change the state of the checkbox.
+
+A checkbox with the prop `readOnly="true"` will suppress all functionality along with displaying read-only styling.
+
+Guidance:
+
+Read-only checkboxes are navigable using keyboard shortcuts. This means that, unlike disabled checkboxes, users can interact with the text description. Use a read-only checkbox instead of a disabled checkbox when the text description contains information that is valuable to the user.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="Error">
+
+### Validation states: error
+
+Indicate an error state by setting the `validationStatus` prop to "error". Use when you want to alert the user to a critical issue related to the checkbox.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="Warning">
+
+### Validation states: warning
+
+Indicate a warning state by setting the `validationStatus` prop to "warning". Use when you want to alert the user to a non-critical issue related to the checkbox.
+
+Guidance:
+
+- When used in a group, use `validationStatus` on the group rather than the individual controls. Any status provided to the group will take precedence over the statuses applied directly to the nested controls.
+- Avoid using `validationStatus` when a checkbox is disabled. If provided, disabled functionality and styling will take precedence over any validation status styling.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="LongTextGroup">
+
+### Long text support
+
+Checkbox supports long text descriptions. If text wraps to multiple lines, it aligns to the top of the checkbox.
+
+</LivePreview>
+
+<LivePreview componentName="checkbox" exampleName="WithFormField" >
+
+### Form Field compatibility
+
+Checkbox group can be wrapped in a Form Field when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility.
+
+For more information, refer to the [Form Field](/salt/patterns/forms) guidance.
+
+</LivePreview>
+</LivePreviewControls>
