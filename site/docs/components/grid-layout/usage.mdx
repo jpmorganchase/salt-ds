@@ -1,0 +1,39 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### When to use Grid Layout
+
+- Your content is best displayed using a configurable number of columns and rows, such as a [Form](/salt/patterns/forms) or a Dashboard.
+
+- For content regions where blocks, or groups, of content are displayed alongside each other, such as the main content area of the application, a [Dialog](/salt/components/dialog), or a [Drawer](/salt/components/drawer).
+
+- The application or webpage will be displayed across different viewport, screen, or device sizes. Grid Layout provides control over how the content is displayed and responsively organized across the different spaces, and ensures a reliable, usable experience.
+
+### When not to use Grid Layout
+
+- To define the high-level layout of your application surrounding the content area (i.e., header, footer, navigation areas. Instead, use the [Border Layout](/salt/components/border-layout) component.
+
+- To lay out your content in a single dimension only, for example a horizontal summary bar containing a row of metric components, or a vertical stack of Accordion components. Instead, use [Stack Layout](/salt/components/stack-layout), [Flow Layout](/salt/components/flow-layout) or [Flex Layout](/salt/components/flex-layout).
+
+### Import
+
+To import Grid Layout from the core Salt package, use:
+
+```js
+import { GridLayout, GridItem } from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable packageName="core" componentName="GridLayout" />
+
+### References
+
+Grid Layout has a complementary Layout grid style library for Figma. J.P. Morgan employees can enable the Salt Layout Grid library from the Assets panel. External designers can install the library from the [Salt community page](https://www.figma.com/community/file/1184561028332139679/Salt%3A-Layout-Grid).
