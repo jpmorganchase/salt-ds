@@ -1,0 +1,120 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="radio-button" exampleName="Default">
+
+### Radio Button Group (vertical)
+
+Radio Button Groups allows users to select one or more values from a given set of choices. They can be aligned horizontally or vertically.
+
+When `direction="vertical"`
+
+Guidance:
+
+- Keep text short and as concise as possible in the horizontal orientation.
+- Do not truncate text descriptions as this can hide important content relevant to the user’s workflow. Consider shortening or rewording the label if space is limited.
+- The radio button icon should always be placed left aligned to the text.
+- We recommend that you always use a text description for a radio button.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Horizontal" >
+
+### Radio Button Group (horizontal)
+
+When `direction="horizontal"`
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Wrap" >
+
+### Wrapping Radio Button group
+
+The default behaviour for Radio Button Group in a horizontal alignment allows radio button options to wrap onto the next line as the viewport size changes if they don’t fit within a container.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="NoWrap" >
+
+### Text wrapping
+
+You can configure radio button groups to maintain a horizontal alignment but allow text wrapping by setting the prop `wrap=false`.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Disabled" >
+
+### Disabled Radio Button
+
+A disabled radio button is not interactive or focusable.
+
+A radio button can be disabled by setting `disabled=”true”`.
+
+Guidance:
+
+Use a disabled state for radio buttons that have permissions, dependencies or pre-requisites. For example, a radio button in a [Form](/salt/patterns/forms) may be disabled because the user has not yet completed an earlier section of the form.
+
+If a disabled radio button's text description contains information that is valuable to the user, consider using a read-only radio button instead.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Readonly" >
+
+### Read-only Radio Button
+
+A read-only radio button permits the user to only read or copy the value, but not edit the value or change the state of the radio.
+
+A radio button with the prop `readOnly="true"` will suppress all functionality along with displaying read-only styling.
+
+Guidance:
+
+Read-only radio buttons are navigable using keyboard shortcuts. This means that, unlike disabled radio buttons, users can interact with the text description. Use a read-only radio button instead of a disabled radio button when the text description contains information that is valuable to the user.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Error">
+
+### Validation states: error
+
+You can indicate an error state stylistically by setting the `validationStatus` prop to "error".
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="Warning">
+
+### Validation states: warning
+
+You can indicate a warning state stylistically by setting the `validationStatus` prop to "warning".
+
+- When used in a group, use `validationStatus` on the group rather than the individual controls. Any status provided to the group will take precedence over the statuses applied directly to the nested controls.
+- Avoid using `validationStatus` when a Radio Button is disabled. If provided, disabled functionality and styling will take precedence over any validation status styling.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="LongText">
+
+### Long text support
+
+Radio Button supports long text descriptions. If text wraps to multiple lines, align it to the top of the radio button.
+
+</LivePreview>
+
+<LivePreview componentName="radio-button" exampleName="WithFormField" >
+
+### Form Field compatibility
+
+Radio Button group can be wrapped in a Form Field when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility.
+
+For more information, refer to the [Form Field](/salt/patterns/forms) guidance.
+
+</LivePreview>
+</LivePreviewControls>
