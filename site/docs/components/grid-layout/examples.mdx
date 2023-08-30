@@ -1,0 +1,90 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="grid-layout" exampleName="Default">
+
+### Default
+
+Grid Layout defaults to a 12 column grid with one row. The spacing between rows and columns is driven by the prop `gap` and is set to 3.
+
+Content in the Grid Layout is displayed inside Grid Item components. This helps control the size and position of content.
+
+#### Guidance
+
+- Grid Item components are recommended for displaying content in the layout. If the layout is very simple (i.e., does not span multiple columns or rows) content (e.g., components, text, divs, etc) can be placed directly into the Grid Layout component.
+- Any items displayed beyond 12 columns (or the number of defined columns) will wrap to a subsequent row.
+- Use `columnGap` and `rowGap` properties to set a specific gap in a particular dimension or `gap` to update both values simultaneously.
+
+</LivePreview>
+
+<LivePreview componentName="grid-layout" exampleName="ColumnsAndRows">
+
+### Columns and rows
+
+Use Grid Layout `column` and `row` properties to control the number of columns and rows in the layout.
+
+</LivePreview>
+
+<LivePreview componentName="grid-layout" exampleName="ResponsiveLayout">
+
+### Responsive layout
+
+The Grid Layout’s responsive properties allow you to customize specific properties of the grid (such as the number of columns and rows) per breakpoint.
+
+You can use the default [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) or pass in your own using [SaltProvider](/salt/components/salt-provider).
+
+#### What are responsive properties?
+
+A responsive property is a property that takes either multiple values (one value per breakpoint), or a single value that would take effect across all different screen sizes. For example, a layout that will responsively change from 12 columns to two and then to one as the space decreases:
+
+```js
+columns={{ xs: 1, sm: 2, lg: 12, md: 12, xl: 12 }}
+```
+
+#### Guidance
+
+- Use Grid Layout’s responsive properties when the flow of the grid is dependent on the viewport size, such as when a user typically resizes their application or webpage and content needs to remain visible.
+
+- Define specific layout behaviours per breakpoint to optimize the content display across different device sizes.
+
+</LivePreview>
+
+<LivePreview componentName="grid-layout" exampleName="SpanningColumnsAndRows">
+
+### Spanning columns and rows
+
+We strongly recommend that you display content in Grid Layout inside Grid Items. Using a Grid Item you can control the size and position of content in the grid. By default, a Grid Item will span one column and one row. Use the `colSpan` and `rowSpan` props to increase the size of individual items to span multiple rows and columns.
+
+#### Guidance
+
+- Spanning multiple columns and rows is an effective way to drive visual hierarchy in the layout. For example, Grid Items at the top of an analytical dashboard are typically larger in size to emphasize data visualisations, such as charts or metrics.
+
+</LivePreview>
+
+<LivePreview componentName="grid-layout" exampleName="ExpandingAndCollapsingItems">
+
+### Expanding and collapsing items
+
+Use the `colSpan` and `rowSpan` props to dynamically control the size of an item in the grid to show more or less content to the user. This example shows how to expand a Grid Item in the layout and reposition surrounding Grid Items at the same time.
+
+</LivePreview>
+
+<LivePreview componentName="grid-layout" exampleName="PositioningItems">
+
+### Positioning items
+
+Use the `verticalAlignment` and `horizontalAlignment` props to control the position of content in the Grid Layout.
+
+</LivePreview>
+
+</LivePreviewControls>
