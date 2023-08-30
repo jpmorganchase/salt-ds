@@ -1,0 +1,51 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Best practices
+
+- On focus, the screen reader should:
+  - Identify the toggle button
+  - Read out the text
+  - Expresses the state
+  - Read the position of the option within the total number of buttons available
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Moves focus into the toggle button group. Focus is set to the active button.
+- If focus is inside the toggle button group, moves focus out of the toggle button group. Focus is set to the next component in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space / Enter">
+
+- When focus is on the toggle button and the button is inactive, it activates the button.
+- If focus is on an active button, the button remains active.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is inside the toggle button group, moves focus out of the component. Focus is set to the previous component in the tab order.
+- If focus is below the toggle button group, move focus into the toggle button group. Focus is set to the active button.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="ArrowRight / ArrowDown">
+
+- Moves focus to the next toggle button in the toggle button group.
+- If focus is on the last toggle button, wrap focus to the first toggle button.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="ArrowLeft / ArrowUp">
+
+- Moves focus to the previous toggle button in the toggle button group.
+- If focus is on the first toggle button, wrap focus to the last toggle button.
+
+</KeyboardControl>
+</KeyboardControls>
