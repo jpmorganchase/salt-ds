@@ -58,7 +58,7 @@ Form field provides a visible label which should be used to describe the form co
 
 - Use the label to describe the information/data the field is collecting (e.g., Name, Location, Currency).
 
-- Use `FormFieldHelperText` to provide additional information and context to help the user complete the field. See the ‘Helper Text’ section below.
+- Use `FormFieldHelperText` to provide additional information and context to help the user complete the field. 
 
 </LivePreview>
 <LivePreview componentName="form-field" exampleName="LabelLeft" >
@@ -117,11 +117,11 @@ Form Fields can show validation states (warning, success, error) with the prop `
 - Display the warning state when you need to alert the user of a potential issue that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
 
 </LivePreview>
-<LivePreview componentName="form-field" exampleName="WithControls" >
+<LivePreview componentName="form-field" exampleName="WithCheckboxAndRadioButton" >
 
-### With Controls
+### With Checkbox and Radio Button
 
-Form Field can wrap any Salt UI control that is typically found in a form, such as Input, Checkbox and Radio Button components.
+Form Field can wrap any Salt UI control that is typically found in a form, such as Input, Checkbox and Combo Box components. This example shows Radio Button and Checkbox controls used within a Form Field.
 
 - Form Field doesn’t have primary and secondary variants. Any variants apply to the field controls contained within Form Field and can be displayed via the components `variant` prop if supported.
 
@@ -134,7 +134,7 @@ Wrap multiple Form Fields in a Stack Layout to form a group.
 
 - Use the same label placement on each field.
 - Spread grouped props on the Form Fields to reduce code repetition.
-- Set the `role` on the Stack layout to "group" to enhance accessibility.
+- Set `role="group"` or `as="fieldset"` on the layout component for accessibility. If using a fieldset, browser fieldset styling should be overridden.
 
 This example shows a group with the fields `labelPlacement` props set to "left".
 
@@ -147,7 +147,7 @@ Wrap multiple Form Fields in a Stack Layout to form a group.
 
 - Use the same label placement on each field.
 - Spread grouped props on the Form Fields to reduce code repetition.
-- Set the `role` on the Stack layout to "group" to enhance accessibility.
+- Set `role="group"` or `as="fieldset"` on the layout component for accessibility. If using a fieldset, browser fieldset styling should be overridden.
 
 This example shows a group with the fields `labelPlacement` props set to "top".
 
@@ -160,7 +160,7 @@ Wrap multiple Form Fields in a Stack Layout to form a group.
 
 - Use the same label placement on each field.
 - Spread grouped props on the Form Fields to reduce code repetition.
-- Set the `role` on the Stack layout to "group" to enhance accessibility.
+- Set `role="group"` or `as="fieldset"` on the layout component for accessibility. If using a fieldset, browser fieldset styling should be overridden.
 
 This example shows a group with the fields `labelPlacement` props set to "right".
 
