@@ -20,7 +20,6 @@ export interface AccordionProps extends ComponentPropsWithoutRef<"div"> {
   defaultExpanded?: boolean;
   /**
    * Callback fired when the accordion is toggled.
-   * @param event
    */
   onToggle?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   /**
