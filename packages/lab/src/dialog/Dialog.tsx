@@ -92,44 +92,44 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   return (
     <FloatingPortal>
       <SaltProvider>
-      {showComponent && (
-        <FloatingOverlay className={withBaseName("overlay")} lockScroll>
-          <FloatingFocusManager
-            context={context}
-            modal
-            initialFocus={initialFocus}
-          >
-            <DialogContext.Provider value={contextValue}>
-              <div
-                id={dialogId}
-                className={clsx(
-                  withBaseName(),
-                  {
-                    [withBaseName("enterAnimation")]: open,
-                    [withBaseName("exitAnimation")]: !open,
-                    [withBaseName("withStatus")]: status,
-                    [withBaseName(status as string)]: status,
-                  },
-                  className
-                )}
-                onAnimationEnd={() => {
-                  if (!open && showComponent) {
-                    setShowComponent(false);
-                  }
-                }}
-                ref={floatingRef}
-                aria-labelledby={`${dialogId}-heading`}
-                aria-describedby={`${dialogId}-description`}
-                aria-modal="true"
-                {...getFloatingProps()}
-                {...rest}
-              >
-                {children}
-              </div>
-            </DialogContext.Provider>
-          </FloatingFocusManager>
-        </FloatingOverlay>
-      )}
+        {showComponent && (
+          <FloatingOverlay className={withBaseName("overlay")} lockScroll>
+            <FloatingFocusManager
+              context={context}
+              modal
+              initialFocus={initialFocus}
+            >
+              <DialogContext.Provider value={contextValue}>
+                <div
+                  id={dialogId}
+                  className={clsx(
+                    withBaseName(),
+                    {
+                      [withBaseName("enterAnimation")]: open,
+                      [withBaseName("exitAnimation")]: !open,
+                      [withBaseName("withStatus")]: status,
+                      [withBaseName(status as string)]: status,
+                    },
+                    className
+                  )}
+                  onAnimationEnd={() => {
+                    if (!open && showComponent) {
+                      setShowComponent(false);
+                    }
+                  }}
+                  ref={floatingRef}
+                  aria-labelledby={`${dialogId}-heading`}
+                  aria-describedby={`${dialogId}-description`}
+                  aria-modal="true"
+                  {...getFloatingProps()}
+                  {...rest}
+                >
+                  {children}
+                </div>
+              </DialogContext.Provider>
+            </FloatingFocusManager>
+          </FloatingOverlay>
+        )}
       </SaltProvider>
     </FloatingPortal>
   );
