@@ -128,7 +128,9 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
           </div>
         </div>
       </SaltProvider>
-      <LivePreviewContext.Provider value={{ density, mode, showCode, onShowCodeToggle: setShowCode }}>
+      <LivePreviewContext.Provider
+        value={{ density, mode, showCode, onShowCodeToggle: setShowCode }}
+      >
         {allExamplesView ? children : <ExamplesListView examples={children} />}
       </LivePreviewContext.Provider>
     </>

@@ -40,15 +40,19 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
   const exampleJSX = ComponentExample && ComponentExample();
 
-  const { density, mode, showCode: contextShowCode, onShowCodeToggle: contextOnShowCodeToggle } = useLivePreviewControls();
+  const {
+    density,
+    mode,
+    showCode: contextShowCode,
+    onShowCodeToggle: contextOnShowCodeToggle,
+  } = useLivePreviewControls();
 
   const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
     const newShowCode = event.target.checked;
     if (contextOnShowCodeToggle) {
       // Context is controlling the show code state
       contextOnShowCodeToggle(newShowCode);
-    }
-    else {
+    } else {
       setOwnShowCode(newShowCode);
     }
   };
