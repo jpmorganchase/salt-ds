@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/lab";
 
 export const Accent = (): ReactElement => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleRequestOpen = () => {
     setOpen(true);
