@@ -5,7 +5,7 @@ import {
   FloatingOverlay,
   FloatingPortal,
 } from "@floating-ui/react";
-import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { makePrefixer, SaltProvider, useForkRef } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useDrawer } from "./useDrawer";
@@ -75,33 +75,35 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
 
   return (
     <FloatingPortal>
-      {showComponent && (
-        <FloatingOverlay className={withBaseName("overlay")} lockScroll>
-          <FloatingFocusManager context={context}>
-            <div
-              ref={floatingRef}
-              className={clsx(
-                withBaseName(),
-                withBaseName(position),
-                {
-                  [withBaseName("enterAnimation")]: open,
-                  [withBaseName("exitAnimation")]: !open,
-                  [withBaseName(variant)]: variant,
-                },
-                className
-              )}
-              onAnimationEnd={() => {
-                if (!open && showComponent) {
-                  setShowComponent(false);
-                }
-              }}
-              {...rest}
-            >
-              {children}
-            </div>
-          </FloatingFocusManager>
-        </FloatingOverlay>
-      )}
+      <SaltProvider>
+        {showComponent && (
+          <FloatingOverlay className={withBaseName("overlay")} lockScroll>
+            <FloatingFocusManager context={context}>
+              <div
+                ref={floatingRef}
+                className={clsx(
+                  withBaseName(),
+                  withBaseName(position),
+                  {
+                    [withBaseName("enterAnimation")]: open,
+                    [withBaseName("exitAnimation")]: !open,
+                    [withBaseName(variant)]: variant,
+                  },
+                  className
+                )}
+                onAnimationEnd={() => {
+                  if (!open && showComponent) {
+                    setShowComponent(false);
+                  }
+                }}
+                {...rest}
+              >
+                {children}
+              </div>
+            </FloatingFocusManager>
+          </FloatingOverlay>
+        )}
+      </SaltProvider>
     </FloatingPortal>
   );
 });
