@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-300);
+  align-items: center;
+}
+
+.active {
+  background: var(--salt-container-secondary-background);
+}
+
+.flexItem {
+  padding: var(--salt-spacing-300) var(--salt-spacing-200);
+}
