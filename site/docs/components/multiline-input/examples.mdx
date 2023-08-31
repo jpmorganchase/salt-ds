@@ -27,7 +27,7 @@ If entering more than three rows of text, the user can review the entered value 
 
 Secondary variant is an effective option if included as part of a data-dense or compact interface, or within a form with multiple columns or sections.
 
-The choice between primary and secondary variants should be considered alongside the background color it sits upon.
+The choice between primary and secondary variants should be considered in the context of the background color it sits upon.
 
 - For recommendations on variant choice, see the [Forms pattern](/salt/patterns/forms).
 
@@ -36,12 +36,12 @@ The choice between primary and secondary variants should be considered alongside
 
 ### Disabled
 
-Multiline Input can be set to a disabled state, with no resultant action when the user interacts with it. Showing it in a disabled state allows the user to be aware of its presence or an entered value while restricting their ability to edit it.
+Multiline Input can be set to a disabled state, with no resultant action when the user interacts with it. Showing it in a disabled state means the user is aware of its presence or an entered value but is not able to edit it.
 
 </LivePreview>
 <LivePreview componentName="multiline-input" exampleName="Readonly">
 
-### Readonly
+### Read-only
 
 Multiline Input can be set to a read-only state. The entered text cannot be edited in this state, but it can be highlighted and copied.
 
@@ -63,7 +63,7 @@ To style Multiline Input with a full border set the `bordered` prop to `true`.
 
 ### Number Of Rows
 
-The Multiline Input shows three rows of text by default. This can be adjusted, using the `rows` prop, to provide a larger input allowing the user to review more of the entered text without the need for further interactions. This example demonstrates a Multiline Input customised to show four rows.
+The Multiline Input shows three rows of text by default. This can be adjusted, using the `rows` prop, to provide a larger input allowing the user to review more of the entered text without the need for further interactions. This example demonstrates a Multiline Input customized to show four rows.
 
 Set the number of rows to best reflect the context that your Multiline Input is being displayed, and how much user input would be expected in that context.
 
@@ -83,7 +83,7 @@ If the user goes over the character count limit, display an error state and chan
 
 Indicate validation state by setting the `validationStatus` prop.
 
-- Use the “error” state when you want to alert the user to a critical issue related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
+- Use the “error” state when you want to alert the user to a critical issue related to the input. This issue, which will jeopardize completion of the task, usually requires action from the user to resolve the error.
 
 - Display the “warning” state when you need to alert the user of a non-critical issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
 
@@ -116,7 +116,7 @@ Salt [Text](../text) and [Icons](/salt/foundations/iconography) can be used to a
 
 You can use a [Button](../button) at the beginning or end of the Multiline Input using the `startAdornment` and `endAdornment` props. Buttons can allow for custom interactivity within the Multiline Input area itself, or elsewhere in the app via the Multiline Input.
 
-Ensure to make your interactive buttons disabled or read-only should it match the state of the containing Multiline Input.
+If the containing Multiline Input is disabled or read-only, ensure your interactive buttons match that state.
 
 </LivePreview>
 </LivePreviewControls>
