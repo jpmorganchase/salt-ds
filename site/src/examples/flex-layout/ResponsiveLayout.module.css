@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-300);
+  align-items: center;
+  padding: calc(var(--salt-spacing-250) * 2) 0;
+  align-self: flex-start;
+}
+
+.radioButtonGroup {
+  margin: 0 auto;
+}
