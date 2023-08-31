@@ -1,7 +1,7 @@
 import { CSSProperties, ReactElement } from "react";
 import { AddDocumentIcon } from "@salt-ds/icons";
 
-export const Color = (): ReactElement => (
+export const IconColor = (): ReactElement => (
   <AddDocumentIcon
     style={
       {
