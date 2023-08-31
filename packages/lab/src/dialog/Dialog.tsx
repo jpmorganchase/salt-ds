@@ -14,6 +14,7 @@ import {
 } from "@floating-ui/react";
 import {
   makePrefixer,
+  SaltProvider,
   useForkRef,
   useId,
   ValidationStatus,
@@ -90,6 +91,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   return (
     <FloatingPortal>
+      <SaltProvider>
       {showComponent && (
         <FloatingOverlay className={withBaseName("overlay")} lockScroll>
           <FloatingFocusManager
@@ -128,6 +130,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
           </FloatingFocusManager>
         </FloatingOverlay>
       )}
+      </SaltProvider>
     </FloatingPortal>
   );
 });
