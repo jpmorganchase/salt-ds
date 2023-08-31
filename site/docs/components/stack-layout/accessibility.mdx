@@ -9,30 +9,12 @@ data:
   $ref: ./#/data
 ---
 
-Accessibility best practices and things to be aware of for this component.
-Copy the contents of the "Accessibility" section in the content template here.
+When building a sub-section of a page using Stack Layout, it is important to make sure you use semantic HTML, which means using the correct HTML elements for their intended purpose as much as possible.
 
-Where needed, a table of keyboard controls can be created as shown below (just
-delete it, if not needed)
+Stack Layout supports this behavior by allowing access to a prop called `as` that allows you to render the appropriate HTML instead of a plain `"div"`.
 
-<KeyboardControls>
-<KeyboardControl keyOrCombos="Tab">
-
-A description of what pressing the Tab key will do to this component.
-
-Descriptions may contain _any_ **markdown** formatting!
-
-</KeyboardControl>
-<KeyboardControl keyOrCombos="Shift + Tab">
-
-A description of what pressing Shift and Tab at the same time will do.
-
-</KeyboardControl>
-<KeyboardControl keyOrCombos="Space / Enter">
-
-A description of what pressing either Space or Enter will do.
-
-You can have as many Keyboard control blocks as you need.
-
-</KeyboardControl>
-</KeyboardControls>
+```tsx
+<StackLayout as="ul">
+  <FlexItem as="li">List item</FlexItem>
+</StackLayout>
+```
