@@ -3,6 +3,7 @@ import { ReactElement, useState } from "react";
 import { Drawer, useDrawer } from "@salt-ds/lab";
 import { Button } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
+import styles from "./index.module.css";
 
 export const RightPositioned = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -26,7 +27,7 @@ export const RightPositioned = (): ReactElement => {
         <Button
           onClick={hide}
           variant="secondary"
-          className="drawer-close-button"
+          className={styles.closeButton}
         >
           <CloseIcon />
         </Button>
