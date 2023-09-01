@@ -35,8 +35,10 @@ export const Success = (): ReactElement => {
         role="alertdialog"
         status="success"
       >
-        <DialogTitle>Success</DialogTitle>
-        <DialogContent>This is the content of the dialog.</DialogContent>
+        <DialogTitle>File uploa</DialogTitle>
+        <DialogContent>
+          Trades 2023 file has been successfully uploaded to the shared drive.
+        </DialogContent>
         <DialogActions>
           <Button
             style={{ marginRight: "auto" }}
@@ -45,9 +47,9 @@ export const Success = (): ReactElement => {
           >
             Cancel
           </Button>
-          <Button onClick={handleClose}>Previous</Button>
+          <Button onClick={handleClose}>Close</Button>
           <Button variant="cta" onClick={handleClose}>
-            Next
+            Go to file
           </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />

@@ -35,8 +35,11 @@ export const Warning = (): ReactElement => {
         role="alertdialog"
         status="warning"
       >
-        <DialogTitle>Warning</DialogTitle>
-        <DialogContent>This is the content of the dialog.</DialogContent>
+        <DialogTitle>File access</DialogTitle>
+        <DialogContent>
+          Users will be able to make edits and modify Trades 2023 file. Give
+          access anyway?
+        </DialogContent>
         <DialogActions>
           <Button
             style={{ marginRight: "auto" }}
@@ -47,7 +50,7 @@ export const Warning = (): ReactElement => {
           </Button>
           <Button onClick={handleClose}>Previous</Button>
           <Button variant="cta" onClick={handleClose}>
-            Next
+            Continue
           </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />
