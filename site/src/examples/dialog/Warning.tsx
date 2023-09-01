@@ -41,16 +41,9 @@ export const Warning = (): ReactElement => {
           access anyway?
         </DialogContent>
         <DialogActions>
-          <Button
-            style={{ marginRight: "auto" }}
-            variant="secondary"
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
-          <Button onClick={handleClose}>Previous</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button variant="cta" onClick={handleClose}>
-            Continue
+            Give access
           </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />

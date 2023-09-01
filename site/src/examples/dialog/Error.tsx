@@ -35,19 +35,13 @@ export const Error = (): ReactElement => {
         role="alertdialog"
         status="error"
       >
-        <DialogTitle>Error</DialogTitle>
-        <DialogContent>This is the content of the dialog.</DialogContent>
+        <DialogTitle>Can't move file</DialogTitle>
+        <DialogContent>
+          You don’t have permission to move or delete this file.
+        </DialogContent>
         <DialogActions>
-          <Button
-            style={{ marginRight: "auto" }}
-            variant="secondary"
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
-          <Button onClick={handleClose}>Previous</Button>
           <Button variant="cta" onClick={handleClose}>
-            Next
+            Close
           </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />

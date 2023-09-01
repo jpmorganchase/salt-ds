@@ -67,16 +67,9 @@ export const CloseButton = (): ReactElement => {
           </StackLayout>
         </DialogContent>
         <DialogActions>
-          <Button
-            style={{ marginRight: "auto" }}
-            variant="secondary"
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
-          <Button onClick={handleClose}>Previous</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button variant="cta" onClick={handleClose}>
-            Next
+            Accept
           </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />

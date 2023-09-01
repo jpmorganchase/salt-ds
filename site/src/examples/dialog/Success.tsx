@@ -40,13 +40,6 @@ export const Success = (): ReactElement => {
           Trades 2023 file has been successfully uploaded to the shared drive.
         </DialogContent>
         <DialogActions>
-          <Button
-            style={{ marginRight: "auto" }}
-            variant="secondary"
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
           <Button onClick={handleClose}>Close</Button>
           <Button variant="cta" onClick={handleClose}>
             Go to file

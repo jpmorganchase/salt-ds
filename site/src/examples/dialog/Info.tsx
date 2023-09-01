@@ -35,19 +35,14 @@ export const Info = (): ReactElement => {
         role="alertdialog"
         status="info"
       >
-        <DialogTitle>Info</DialogTitle>
-        <DialogContent>This is the content of the dialog.</DialogContent>
+        <DialogTitle>File update</DialogTitle>
+        <DialogContent>
+          A new version of this file is available with 26 updates.
+        </DialogContent>
         <DialogActions>
-          <Button
-            style={{ marginRight: "auto" }}
-            variant="secondary"
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
-          <Button onClick={handleClose}>Previous</Button>
+          <Button onClick={handleClose}>Close</Button>
           <Button variant="cta" onClick={handleClose}>
-            Next
+            Update
           </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />
