@@ -32,49 +32,36 @@ export const Default = (): ReactElement => {
         <DialogContent>
           <StackLayout>
             <div>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
+              When you add a Chase Card to a Wallet, you agree to these Terms:
+            </div>
+            <H3>Adding Your Chase Card</H3>
+            <div>
+              You can add an eligible Chase Card to a Wallet by either following
+              our instructions as they appear on a Chase proprietary platform
+              (e.g., Chase Mobile® app or chase.com) or by following the
+              instructions of the Wallet provider. Only Chase Cards that we
+              determine are eligible can be added to the Wallet.
             </div>
             <div>
-              It has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
+              If your Chase Card or underlying account is not in good standing,
+              that Chase Card will not be eligible to be added to or enrolled in
+              the Wallet. We may determine other eligibility criteria in our
+              sole discretion.
             </div>
+            When you add a Chase Card to a Wallet, the Wallet may allow you to
+            (a) use the Chase Card to (i) enable transfers of money between you
+            and others who are enrolled with the Wallet provider or a partner of
+            such Wallet provider, and/or (ii) enter into transactions where the
+            Wallet is accepted, including the ability to use the Chase Card to
+            complete transactions at participating merchants' physical
+            locations, e-commerce locations, and at ATMs; and (b) use other
+            services that are described in the Wallet provider's agreement or
+            that they may offer from time to time. The Wallet may not be
+            accepted at all places where your Chase Card is accepted.
             <div>
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout. The
-              point of using Lorem Ipsum is that it has a more-or-less normal
-              distribution of letters, as opposed to using 'Content here,
-              content here', making it look like readable English.
-            </div>
-            <div>
-              Many desktop publishing packages and web page editors now use
-              Lorem Ipsum as their default model text, and a search for 'lorem
-              ipsum' will uncover many web sites still in their infancy. Various
-              versions have evolved over the years, sometimes by accident,
-              sometimes on purpose (injected humour and the like).
-            </div>
-            <div>
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin literature from 45 BC,
-              making it over 2000 years old. Richard McClintock, a Latin
-              professor at Hampden-Sydney College in Virginia, looked up one of
-              the more obscure Latin words, consectetur, from a Lorem Ipsum
-              passage, and going through the cites of the word in classical
-              literature, discovered the undoubtable source.
-            </div>
-            <div>
-              Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-              Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,
-              written in 45 BC. This book is a treatise on the theory of ethics,
-              very popular during the Renaissance. The first line of Lorem
-              Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in
-              section 1.10.32.
+              We reserve the right to terminate our participation in a Wallet or
+              with a Wallet provider at any time and the right to designate a
+              maximum number of Chase Cards that may be added to a Wallet.
             </div>
           </StackLayout>
         </DialogContent>
