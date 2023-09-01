@@ -15,4 +15,4 @@ export * from "./MultipleChildren";
 export * from "./NecessityLabel";
 export * from "./Readonly";
 export * from "./Validation";
-export * from "./WithControls";
+export * from "./WithCheckboxAndRadioButton";
