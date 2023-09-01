@@ -13,12 +13,15 @@ import { Badge } from "@salt-ds/lab";
 
 export const InlineBadge = (): ReactElement => (
   <FlexLayout style={{ width: "80%" }}>
-    <Accordion
-      value="accordion-example"
-      style={{ alignSelf: "self-start", display: "flex", width: "100%" }}
-    >
+    <Accordion value="accordion-example" style={{ alignSelf: "self-start" }}>
       <AccordionHeader>
-        <div style={{ justifyContent: "space-between" }}>
+        <div
+          style={{
+            justifyContent: "space-between",
+            display: "flex",
+            width: "100%",
+          }}
+        >
           Internal form
           <Badge value={"NEW"} />
         </div>
