@@ -75,6 +75,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
 
   return (
     <FloatingPortal>
+      {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
       <SaltProvider>
         {showComponent && (
           <FloatingOverlay className={withBaseName("overlay")} lockScroll>
