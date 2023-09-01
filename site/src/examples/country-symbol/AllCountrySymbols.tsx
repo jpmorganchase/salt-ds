@@ -19,7 +19,7 @@ export const AllCountrySymbols = () => {
         style={{ width: "100%", height: "100%", padding: 10 }}
       >
         <FormField>
-          <FormFieldLabel>"Search country symbols"</FormFieldLabel>
+          <FormFieldLabel>Search country symbols</FormFieldLabel>
           <Input
             value={inputText}
             inputProps={{

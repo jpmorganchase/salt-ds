@@ -10,7 +10,7 @@ data:
 <LivePreviewControls>
   <LivePreview componentName="country-symbol" exampleName="BasicUsage">
     
-    ### Basic Usage
+    ### Basic usage
 
     Each country symbol should be imported and used individually.
 
@@ -19,7 +19,7 @@ data:
 
     ### Size
 
-    To change the size of a country symbol, use the `size` prop to multiply the base size.
+    You can change the size of each country symbol using the `size` property which acts as a multiplier for the base size, as described in the [Scale Foundation](/salt/foundations/scale). The base size of Country Symbol is based on the active density as described in the [Size Foundation](/salt/foundations/size).
 
   </LivePreview>
   <LivePreview componentName="country-symbol" exampleName="AllCountrySymbols">
@@ -37,9 +37,9 @@ data:
   </LivePreview>
   <LivePreview componentName="country-symbol" exampleName="LazyLoading">
 
-    ### Lazy Loading
+    ### Lazy loading
 
-    For situations like a list where you may be importing many country symbol components at once, you may not want all the components to be included in your initial bundle size. To avoid this you can lazily load the Country Symbol components using [React Suspense](https://react.dev/reference/react/Suspense), alongside the `LazyCountrySymbol` component. `LazyCountrySymbol` takes a `code` prop to load the appropriate Country Symbol component.
+    When importing many country symbol components at once, such as with List, you may not want all the components in your initial bundle size. Instead, you can lazily load the Country Symbol components using [React Suspense](https://react.dev/reference/react/Suspense), alongside the `LazyCountrySymbol` component. `LazyCountrySymbol` takes a `code` prop to load the appropriate Country Symbol component.
 
   </LivePreview>
 
