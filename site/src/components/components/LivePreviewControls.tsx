@@ -37,6 +37,8 @@ const defaultMode = modes[0];
 export type LivePreviewContextType = {
   density?: Density;
   mode?: Mode;
+  showCode?: boolean;
+  onShowCodeToggle?: (showCode: boolean) => void;
 };
 
 export const LivePreviewContext = createContext<LivePreviewContextType>({});
@@ -47,6 +49,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
   const [density, setDensity] = useState<Density>(defaultDensity);
 
   const [mode, setMode] = useState<Mode>(defaultMode);
+
+  const [showCode, setShowCode] = useState<boolean>(false);
 
   const { allExamplesView, setAllExamplesView } = useAllExamplesView();
 
@@ -124,7 +128,9 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
           </div>
         </div>
       </SaltProvider>
-      <LivePreviewContext.Provider value={{ density, mode }}>
+      <LivePreviewContext.Provider
+        value={{ density, mode, showCode, onShowCodeToggle: setShowCode }}
+      >
         {allExamplesView ? children : <ExamplesListView examples={children} />}
       </LivePreviewContext.Provider>
     </>
