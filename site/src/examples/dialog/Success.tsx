@@ -35,9 +35,9 @@ export const Success = (): ReactElement => {
         role="alertdialog"
         status="success"
       >
-        <DialogTitle>File uploa</DialogTitle>
+        <DialogTitle>File uploaded</DialogTitle>
         <DialogContent>
-          Trades 2023 file has been successfully uploaded to the shared drive.
+          File has been successfully uploaded to the shared drive.
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
