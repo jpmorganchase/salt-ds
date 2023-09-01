@@ -38,7 +38,7 @@ const checkboxesData = [
   },
 ];
 
-export const WithControls = (): ReactElement => {
+export const WithCheckboxAndRadioButton = (): ReactElement => {
   const [isRadioError, setIsRadioError] = useState(true);
 
   const [radioGroupValue, setRadioGroupValue] = useState("");
