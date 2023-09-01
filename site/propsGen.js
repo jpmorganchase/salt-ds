@@ -4,6 +4,8 @@ const { writeFile } = require("fs");
 
 const componentPackages = ["lab", "core", "data-grid", "icons"]; // Adding more packages here will generate additional prop files
 
+console.log("Generating props in packages:", componentPackages);
+
 const componentFiles = componentPackages.map((package) =>
   path.join(__dirname, "..", "packages", package, "src", "index.ts")
 );
