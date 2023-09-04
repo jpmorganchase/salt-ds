@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Button, StackLayout } from "@salt-ds/core";
+import { Button, H3, StackLayout } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
