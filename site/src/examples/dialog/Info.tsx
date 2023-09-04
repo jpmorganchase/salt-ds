@@ -42,7 +42,7 @@ export const Info = (): ReactElement => {
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
           <Button variant="cta" onClick={handleClose}>
-            Update
+            See updates
           </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />
