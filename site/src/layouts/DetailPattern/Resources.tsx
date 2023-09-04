@@ -55,4 +55,5 @@ export function Resources() {
       </div>
     );
   }
+  return null;
 }
