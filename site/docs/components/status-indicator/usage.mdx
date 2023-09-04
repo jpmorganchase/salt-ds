@@ -1,0 +1,32 @@
+---
+title: Status Indicator
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+#### When to use Status Indicator
+
+- Use the info indicator when you need to highlight general information.
+
+- Use the error indicator when communicating a critical issue that prevents the user from continuing or completing it.
+
+- Use the warning indicator to inform users of an issue or potential issue related to their current task. Use this for issues that do not prevent the user from continuing or completing their task.
+
+- Use the success indicator to confirm that a user's action has been completed successfully.
+
+- When you need to indicate a status to the user. Where possible, we recommend using a Salt component that uses Status Indicator, such as [Banner](/salt/components/banner), [Toast](/salt/components/toast) or [Tooltip](/salt/components/tooltip), instead of using Status Indicator directly.
+
+### Import
+
+To import Status Indicator from the core Salt package, use:
+
+```
+import { StatusIndicator } from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable componentName="StatusIndicator" />

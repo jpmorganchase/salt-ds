@@ -1,0 +1,27 @@
+---
+title: Pill
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Keyboard interactions
+
+<KeyboardControls>
+  <KeyboardControl keyOrCombos="Enter or Space">
+    - When focus is on Pill, it is activated.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Tab">
+
+    - Moves focus into Pill. Focus is set to the entire Pill.
+
+    - When Pill has focus, move focus out of Pill to next component in tab order.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Shift + Tab">
+    - When Pill has focus, move focus out of Pill to previous component in tab
+    order.
+  </KeyboardControl>
+</KeyboardControls>

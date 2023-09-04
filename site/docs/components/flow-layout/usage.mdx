@@ -1,0 +1,34 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### When to use Flow Layout
+
+- When you want to build responsive layouts that will wrap across multiple rows as soon as there is not enough space on the viewport.
+
+- For small-scale layouts within the application, such as a card in a Dashboard displaying metrics or a header bar containing filter controls.
+
+### When not to use Flow Layout
+
+- Flow Layout will always wrap. If you want to create a layout in a row that doesn’t wrap, use [Stack Layout](/salt/components/stack-layout).
+
+- You want the layout to have more complex customization. In this case we recommend you having a look at [Flex Layout](/salt/components/flex-layout).
+
+### Import
+
+To import Flow Layout from the core Salt package, use:
+
+```js
+import { FlowLayout } from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable packageName="core" componentName="FlowLayout" />
