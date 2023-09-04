@@ -29,29 +29,30 @@ export function Resources() {
 
   const internalResources = resources.filter(({ internal }) => internal);
   const externalResources = resources.filter(({ internal }) => !internal);
-
-  return (
-    <div className={styles.root}>
-      <Heading4>{title} resources</Heading4>
-      {externalResources.length > 0 && (
-        <div className={styles.list}>
-          {externalResources.map(({ href, label }) => (
-            <LinkWithLogo key={href} href={href} label={label} />
-          ))}
-        </div>
-      )}
-      {internalResources.length > 0 && (
-        <>
-          <Text className={styles.subtitle} styleAs="label">
-            JPM employees only:
-          </Text>
+  if (resources.length) {
+    return (
+      <div className={styles.root}>
+        <Heading4>{title} resources</Heading4>
+        {externalResources.length > 0 && (
           <div className={styles.list}>
-            {internalResources.map(({ href, label }) => (
+            {externalResources.map(({ href, label }) => (
               <LinkWithLogo key={href} href={href} label={label} />
             ))}
           </div>
-        </>
-      )}
-    </div>
-  );
+        )}
+        {internalResources.length > 0 && (
+          <>
+            <Text className={styles.subtitle} styleAs="label">
+              JPM employees only:
+            </Text>
+            <div className={styles.list}>
+              {internalResources.map(({ href, label }) => (
+                <LinkWithLogo key={href} href={href} label={label} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    );
+  }
 }
