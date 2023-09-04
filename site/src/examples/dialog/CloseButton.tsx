@@ -29,7 +29,7 @@ export const CloseButton = (): ReactElement => {
         Open dialog with close button
       </Button>
       <Dialog style={{ width: 500 }} open={open} onOpenChange={onOpenChange}>
-        <DialogTitle>Congratulations! You have created a Dialog.</DialogTitle>
+        <DialogTitle>Terms and conditions</DialogTitle>
         <DialogContent>
           <StackLayout>
             <div>

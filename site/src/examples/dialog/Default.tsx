@@ -28,7 +28,7 @@ export const Default = (): ReactElement => {
         Open default dialog
       </Button>
       <Dialog style={{ width: 500 }} open={open} onOpenChange={onOpenChange}>
-        <DialogTitle>Congratulations! You have created a Dialog.</DialogTitle>
+        <DialogTitle>Terms and conditions</DialogTitle>
         <DialogContent>
           <StackLayout>
             <div>
