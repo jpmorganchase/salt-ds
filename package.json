@@ -55,7 +55,7 @@
     "@fluentui/react-overflow": "^9.0.19",
     "@fontsource/open-sans": "^4.5.13",
     "@internationalized/date": "^3.0.0",
-    "@jpmorganchase/mosaic-create-site": "^0.1.0-beta.43",
+    "@jpmorganchase/mosaic-create-site": "^0.1.0-beta.45",
     "@mswjs/data": "^0.13.0",
     "@storybook/addon-a11y": "^6.5.16",
     "@storybook/addon-actions": "^6.5.16",
