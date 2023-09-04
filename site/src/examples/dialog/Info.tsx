@@ -5,7 +5,6 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogCloseButton,
 } from "@salt-ds/lab";
 
 export const Info = (): ReactElement => {
@@ -45,7 +44,6 @@ export const Info = (): ReactElement => {
             See updates
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );

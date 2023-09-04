@@ -5,7 +5,6 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogCloseButton,
 } from "@salt-ds/lab";
 
 export const Error = (): ReactElement => {
@@ -44,7 +43,6 @@ export const Error = (): ReactElement => {
             Close
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );

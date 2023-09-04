@@ -5,7 +5,6 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogCloseButton,
 } from "@salt-ds/lab";
 
 export const Success = (): ReactElement => {
@@ -45,7 +44,6 @@ export const Success = (): ReactElement => {
             Go to file
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );
