@@ -43,5 +43,5 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  background-color: var(--salt-actionable-primary-foreground-active);
+  background: var(--salt-container-primary-background);
 }

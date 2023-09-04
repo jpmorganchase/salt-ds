@@ -55,7 +55,7 @@
     "@fluentui/react-overflow": "^9.0.19",
     "@fontsource/open-sans": "^4.5.13",
     "@internationalized/date": "^3.0.0",
-    "@jpmorganchase/mosaic-create-site": "^0.1.0-beta.42",
+    "@jpmorganchase/mosaic-create-site": "^0.1.0-beta.43",
     "@mswjs/data": "^0.13.0",
     "@storybook/addon-a11y": "^6.5.16",
     "@storybook/addon-actions": "^6.5.16",
@@ -92,7 +92,7 @@
     "attr-accept": "^2.0.0",
     "axe-core": "^4.4.3",
     "chokidar": "^3.5.3",
-    "chromatic": "^6.14.0",
+    "chromatic": "^7.0.0",
     "ci-info": "^3.3.1",
     "clipboard-copy": "^4.0.1",
     "clsx": "^2.0.0",
@@ -141,8 +141,7 @@
     "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
     "rollup": "2.79.1",
-    "@salt-ds/lab": "workspace:*",
-    "@jpmorganchase/mosaic-components": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.37#./.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.37-6d8686e3dc.patch"
+    "@salt-ds/lab": "workspace:*"
   },
   "browserslist": {
     "production": [

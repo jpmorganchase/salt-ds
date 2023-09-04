@@ -1,8 +1,10 @@
 ---
-title: Button
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
 layout: DetailComponent
 sidebar:
-  label: Examples
+  exclude: true
 data:
   $ref: ./#/data
 ---
@@ -10,37 +12,65 @@ data:
 <LivePreviewControls>
 <LivePreview componentName="button" exampleName="CTA" >
 
-Use the CTA button for high priority actions.
+### CTA
+
+Use the CTA button for high priority actions. For example, a CTA button may prompt a user to register, sign up, submit or buy.
+
+Guidance:
+
+We recommend that you use CTA buttons sparingly. They represent the default or expected action on the page.
 
 </LivePreview>
 
 <LivePreview componentName="button" exampleName="Primary" >
 
-Use the primary button for routine, non-urgent actions.
+### Primary
+
+This is the default variant. Use the primary button for routine, non-urgent actions. For example, a primary button should be used for moving to the next page or completing a task.
 
 </LivePreview>
 
 <LivePreview componentName="button" exampleName="Secondary" >
 
-Use the secondary button for non-critical actions that support the user but do not impact a flow.
+### Secondary
+
+Use the secondary button for non-critical actions that support the user but do not impact a flow. They are typically the alternative option available alongside a primary action. For example, a primary “next” button may be supported by a secondary “back” button.
 
 </LivePreview>
 
-<LivePreview componentName="button" exampleName="IconAndLabel" >
+<LivePreview componentName="button" exampleName="IconAndText">
 
-Add an icon before the text to reinforce the button label, or add an icon after the button label to suggest movement or a direction.
+### Icon and text
+
+Add an icon before the text to reinforce the button text. Add an icon after the button text to suggest movement or a direction.
+
+Guidance:
+
+- Place an icon to the left of the text to further describe the action, such as “upload”, “submit”, “play” or “done”. Additional description can make it easier for users to locate actions.
+- Place an icon to the right of the text to suggest direction or movement, such as opening a menu overlay, expanding a panel or opening a document. When the button is activated, there is typically an immediate visual change.
 
 </LivePreview>
 
-<LivePreview componentName="button" exampleName="IconOnly" >
+<LivePreview componentName="button" exampleName="IconOnly">
 
-Display an icon-only button with no label when you have limited on-screen space and the icon is globally understood.
+### Icon only
+
+Display an icon-only button with no text when you have limited on-screen space, and the icon is easily understood.
+
+Guidance:
+
+- An icon-only button should be self-explanatory, ideally using well known symbols. If the purpose of the button isn’t clear from the icon alone, add a text description.
+- Use [Tooltip](../tooltip) on an icon-only button to describe the action such as “Edit this form”, “Print this document”, or “Lock document state”.
 
 </LivePreview>
 
 <LivePreview componentName="button" exampleName="Disabled" >
 
-Indicates a button that the user can’t interact with.
+### Disabled
+
+Use disabled state for a button that the user can’t press.
+
+A button with the prop `disabled={true}` will suppress all functionality. If you need a disabled button to be focusable, you also need to pass `focusableWhenDisabled={true}`.
 
 </LivePreview>
 </LivePreviewControls>
