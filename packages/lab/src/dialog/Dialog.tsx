@@ -14,6 +14,7 @@ import {
 } from "@floating-ui/react";
 import {
   makePrefixer,
+  SaltProvider,
   useForkRef,
   useId,
   ValidationStatus,
@@ -90,44 +91,47 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   return (
     <FloatingPortal>
-      {showComponent && (
-        <FloatingOverlay className={withBaseName("overlay")} lockScroll>
-          <FloatingFocusManager
-            context={context}
-            modal
-            initialFocus={initialFocus}
-          >
-            <DialogContext.Provider value={contextValue}>
-              <div
-                id={dialogId}
-                className={clsx(
-                  withBaseName(),
-                  {
-                    [withBaseName("enterAnimation")]: open,
-                    [withBaseName("exitAnimation")]: !open,
-                    [withBaseName("withStatus")]: status,
-                    [withBaseName(status as string)]: status,
-                  },
-                  className
-                )}
-                onAnimationEnd={() => {
-                  if (!open && showComponent) {
-                    setShowComponent(false);
-                  }
-                }}
-                ref={floatingRef}
-                aria-labelledby={`${dialogId}-heading`}
-                aria-describedby={`${dialogId}-description`}
-                aria-modal="true"
-                {...getFloatingProps()}
-                {...rest}
-              >
-                {children}
-              </div>
-            </DialogContext.Provider>
-          </FloatingFocusManager>
-        </FloatingOverlay>
-      )}
+      {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
+      <SaltProvider>
+        {showComponent && (
+          <FloatingOverlay className={withBaseName("overlay")} lockScroll>
+            <FloatingFocusManager
+              context={context}
+              modal
+              initialFocus={initialFocus}
+            >
+              <DialogContext.Provider value={contextValue}>
+                <div
+                  id={dialogId}
+                  className={clsx(
+                    withBaseName(),
+                    {
+                      [withBaseName("enterAnimation")]: open,
+                      [withBaseName("exitAnimation")]: !open,
+                      [withBaseName("withStatus")]: status,
+                      [withBaseName(status as string)]: status,
+                    },
+                    className
+                  )}
+                  onAnimationEnd={() => {
+                    if (!open && showComponent) {
+                      setShowComponent(false);
+                    }
+                  }}
+                  ref={floatingRef}
+                  aria-labelledby={`${dialogId}-heading`}
+                  aria-describedby={`${dialogId}-description`}
+                  aria-modal="true"
+                  {...getFloatingProps()}
+                  {...rest}
+                >
+                  {children}
+                </div>
+              </DialogContext.Provider>
+            </FloatingFocusManager>
+          </FloatingOverlay>
+        )}
+      </SaltProvider>
     </FloatingPortal>
   );
 });

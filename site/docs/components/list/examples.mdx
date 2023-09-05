@@ -1,0 +1,31 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Examples
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="list" exampleName="Default">
+
+### Single-select List
+
+The default List allows a user to make a single selection from the options available.
+
+</LivePreview>
+
+<LivePreview componentName="list" exampleName="Disabled">
+
+### Disabled List
+
+If the options within the List are not applicable or relevant to the current user, the List can be presented as disabled.
+
+The user retains the ability to scroll through the List items but can’t make a selection. If a List item has already been selected, for instance as a default selection, it will be displayed as such, the user can view it but can’t change the state.
+
+</LivePreview>
+</LivePreviewControls>

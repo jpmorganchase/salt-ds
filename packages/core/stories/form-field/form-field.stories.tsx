@@ -148,7 +148,7 @@ export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const MultiChild: ComponentStory<typeof FormField> = (props) => {
+export const MultipleChildren: ComponentStory<typeof FormField> = (props) => {
   const [firstValue, setFirstValue] = useState("Five");
   const [secondValue, setSecondValue] = useState("");
 
