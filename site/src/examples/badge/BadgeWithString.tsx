@@ -3,7 +3,7 @@ import { Button } from "@salt-ds/core";
 import { Badge } from "@salt-ds/lab";
 import { MessageIcon } from "@salt-ds/icons";
 
-export const String = (): ReactElement => (
+export const BadgeWithString = (): ReactElement => (
   <Badge value={"NEW"}>
     <Button>
       <MessageIcon />
