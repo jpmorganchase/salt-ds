@@ -1,0 +1,47 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Using the Combo Box component
+
+#### When to use Combo Box
+
+- To display and select from a list of 10 or more options that don't need to be permanently visible to the user without selecting from a dropdown menu.
+- When only the selected value from a set of options needs to be visible once the selection is made.
+- If a workflow benefits from having a filter to quickly narrow down the available options.
+- If there are more than 100 options and you would like to prevent performance issues without virtualization.
+
+#### When not to use Combo Box
+
+- To choose one value from a set of five to 10 options that does not require filtering. Instead, use [Dropdown](../dropdown).
+- To select a single option from fewer than five. Instead, use [Radio Button Group](../radio-button).
+- To select multiple options from fewer than five. Instead, use [Checkbox group](../checkbox).
+- To make an instantaneous selection between two binary choices, for example “on” and “off”. Instead, use [Switch](../switch).
+
+### Import
+
+{/* Update the text and code snippet below as needed: */}
+
+To import Combo Box from the lab Salt package, use:
+
+```js
+import { ComboBoxNext } from "@salt-ds/lab";
+```
+
+### References
+
+- Combo Box pattern (https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) W3C
+
+### Props
+
+{/* Update packageName and componentName below as needed */}
+{/* packageName is optional and defaults to "core" if omitted */}
+
+<PropsTable packageName="lab" componentName="ComboBoxNext" />

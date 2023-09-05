@@ -41,7 +41,7 @@ export interface ComboBoxNextProps<T>
   /**
    * Controlled prop. Controls the Input value in the Combo Box Input.
    */
-  inputValue: string;
+  inputValue?: string;
   /**
    * Controlled prop. Controls the Highlighted item in the Combo Box list.
    */

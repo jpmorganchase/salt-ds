@@ -1,0 +1,78 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="combo-box" exampleName="Default">
+
+### Default (single select)
+
+A single item can be selected from the Combo Box options.
+
+Combo Box contains an input field that opens a list. As users' type, the list displays all filtered options based on the user’s input.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="CustomizedFilter" >
+
+### Customized filter
+
+Define a filter that only matches the first letter of a word.
+
+Use the `itemFilter` prop to customize the filter that applies to the elements.
+
+Guidance:
+
+Give users a quicker and easier experience when they’re choosing their options by changing the logic of the component’s typeahead filter.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="CustomizedRenderer" >
+
+### Customized renderer
+
+Customize the list item display to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example.
+
+Use the `itemRenderer` prop to customize list items.
+
+Guidance:
+
+- Users can benefit from seeing a particular visual with list items. Customize the display as you see fit. For example, if displaying a list of contacts, it may help to provide headshots alongside the option text.
+- Place any visual support such as icons, country symbols or avatars to the left of the option text.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="Variants" >
+
+### Variants
+
+Combo box has two variants: `primary` and `secondary`. The primary variant is set by default. Set to secondary variant with `variants=”secondary”`.
+
+Guidance:
+
+- Use the secondary variant when in a data-dense or compact interface, or for a form with multiple columns or sections.
+- When deciding which variant to use, consider the background color of the application.
+- Tip: The [Forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. Combo box can be wrapped in a Form Field when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [Form Field](../form-field) guidance.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="Disabled" >
+
+### Disabled
+
+When `disabled={true}`, users will not be able to interact with Combo Box and it does not receive focus on any interaction.
+
+Guidance:
+
+- Disable Combo Box if you need to restrict access to options based on the current context.
+- Showing Combo Box in a disabled state makes the user aware of the control without enabling access to its functionality.
+
+</LivePreview>
+</LivePreviewControls>
