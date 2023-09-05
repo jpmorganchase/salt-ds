@@ -5,7 +5,7 @@
   border-width: var(--salt-size-border);
   border-style: var(--salt-container-borderStyle);
   border-color: var(--salt-container-primary-borderColor);
-  padding: var(--saltCard-padding, var(--salt-spacing-100));
+  padding: var(--saltCard-padding, var(--salt-spacing-300));
 }
 
 /*
