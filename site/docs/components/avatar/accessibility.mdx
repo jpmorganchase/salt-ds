@@ -9,6 +9,6 @@ data:
 
 ### Best practices
 
-Decorative Avatars (Avatars that repeat the information already expressed by the accompanied text) should be hidden from the screen reader to avoid repetition. If you are adding an Avatar for decorative purposes, pass `aria-hidden={true}` to hide its label from the screen reader.
+Decorative Avatars (Avatars that repeat the information already expressed by the accompanying text) should be hidden from the screen reader to avoid repetition. If you are adding an Avatar for decorative purposes, use `aria-hidden` to hide its label from the screen reader.
 
 If an alternative icon is used inside an Avatar, the icon's `aria-label` should be descriptive in relation to the Avatar context, not the icon context. For example, when using `<BuildingSolidIcon/>` to represent a company `aria-label` should read "Company profile" rather than the Icon's default label "building solid".
