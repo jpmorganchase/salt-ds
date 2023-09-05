@@ -1,0 +1,42 @@
+---
+title: Pill
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+#### When to use Pill
+
+- To organize content that may be mapped to more than one category. This provides users with a way of distinguishing different types of content and categories.
+
+- To trigger an immediate action—such as changing the view of content that’s currently on display or navigating to a new page that is contextually related to the pill.
+
+- To enable an action that may change depending on the context. In a messaging application, you could use pills to display predefined replies that change depending on the received message.
+
+#### When not to use Pill
+
+- For actions that may change depending on the context, and are not fixed, are better represented by Button than Pill.
+
+- When the content is a system message and does not support interaction. Instead, use [Badge](/salt/components/badge).
+
+### Import
+
+To import Pill from the lab Salt package, use:
+
+```
+import { PillNext } from “@salt-ds/lab”;
+```
+
+### Props
+
+<PropsTable componentName="PillNext" packageName="lab" />
+
+### Using the Pill component
+
+Use title or sentence case when labelling Pill. This maintains a visual distinction between Pill and Button, which always has uppercase labels.
+
+Position any Pill you’re using to tag content below or on the right of the related content, so that it’s not the primary focus.
+
+Never apply RAG (status) colors to Pill to differentiate between categories. Use [Icons](/salt/components/icon) or text instead.
