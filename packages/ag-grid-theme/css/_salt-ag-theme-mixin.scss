@@ -390,8 +390,8 @@
 
   .ag-standard-button {
     appearance: none;
-    background: var(--salt-actionable-secondary-background);
     -webkit-appearance: none;
+    background: var(--salt-actionable-secondary-background);
     border-radius: ag-param(border-radius);
     border: 1px transparent;
     cursor: pointer;

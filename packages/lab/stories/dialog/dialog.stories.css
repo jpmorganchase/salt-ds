@@ -6,6 +6,7 @@
 
 .fakeDialogWindowHeader {
   border-bottom: 1px solid black;
-  padding-block: var(--salt-spacing-200);
+  padding-top: var(--salt-spacing-200);
+  padding-bottom: var(--salt-spacing-200);
   margin-bottom: var(--salt-spacing-300);
 }
