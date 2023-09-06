@@ -1,15 +1,8 @@
-import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  MouseEventHandler,
-  MouseEvent,
-  ComponentType,
-  ReactNode,
-} from "react";
-import { makePrefixer, Link, Button } from "@salt-ds/core";
-import { IconProps } from "@salt-ds/icons";
+import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
+import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { ExpansionIcon } from "./ExpansionIcon";
+import { ConditionalWrapper } from "./ConditionalWrapper";
 
 import navigationItemCss from "./NavigationItem.css";
 import { useWindow } from "@salt-ds/window";
@@ -21,9 +14,9 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   active?: boolean;
   /**
-   * Whether the navigation item has active children.
+   * Whether the nested group is collapsed and there is an active nested item within it.
    */
-  blurSelected?: boolean;
+  blurActive?: boolean;
   /**
    * Whether the navigation item is expanded.
    */
@@ -37,7 +30,7 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   orientation?: "horizontal" | "vertical";
   /**
-   * Whether the navigation item is a parent with nested children.
+   * Whether the navigation item is a parent with nested items.
    */
   parent?: boolean;
   /**
@@ -48,28 +41,15 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    * Href to be passed to the Link element.
    */
   href?: string;
-  /**
-   * Icon component to be displayed next to the navigation item label.
-   */
-  IconComponent?: ComponentType<IconProps> | null;
-  /**
-   * Badge component to be displayed next to the navigation item label.
-   */
-  BadgeComponent?: ReactNode;
 }
 
 const withBaseName = makePrefixer("saltNavigationItem");
-
-type ConditionalWrapper = {
-  children: ReactNode;
-  className: string;
-};
 
 export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
   function NavigationItem(props, ref) {
     const {
       active,
-      blurSelected,
+      blurActive,
       children,
       className,
       expanded = false,
@@ -78,8 +58,6 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       level = 0,
       onExpand,
       href,
-      IconComponent,
-      BadgeComponent,
       style: styleProp,
       ...rest
     } = props;
@@ -96,38 +74,6 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       "--saltNavigationItem-level": `${level}`,
     };
 
-    const handleExpand = (event: MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
-      onExpand?.(event);
-    };
-
-    const ConditionalWrapper = ({
-      children,
-      className,
-      ...rest
-    }: ConditionalWrapper) =>
-      parent ? (
-        <Button
-          aria-label="expand"
-          variant="secondary"
-          aria-expanded={expanded}
-          className={clsx(withBaseName("expandButton"), className)}
-          onClick={handleExpand}
-          {...rest}
-        >
-          {children}
-        </Button>
-      ) : (
-        <Link
-          aria-current={active ? "page" : undefined}
-          href={href}
-          className={className}
-          {...rest}
-        >
-          {children}
-        </Link>
-      );
-
     return (
       <div
         ref={ref}
@@ -140,17 +86,19 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             withBaseName("wrapper"),
             {
               [withBaseName("active")]: active,
-              [withBaseName("blurSelected")]: blurSelected,
+              [withBaseName("blurActive")]: blurActive,
               [withBaseName("nested")]: level !== 0,
+              [withBaseName("expandButton")]: parent,
             },
             withBaseName(orientation)
           )}
+          parent={parent}
+          expanded={expanded}
+          onExpand={onExpand}
+          active={active}
+          href={href}
         >
-          {IconComponent && (
-            <IconComponent aria-hidden className={withBaseName("icon")} />
-          )}
           <span className={withBaseName("label")}>{children}</span>
-          {BadgeComponent}
           {parent && (
             <ExpansionIcon
               expanded={expanded}

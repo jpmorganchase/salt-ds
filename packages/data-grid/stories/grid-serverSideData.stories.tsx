@@ -56,7 +56,7 @@ const ServerSideDataTemplate: Story<{}> = (props) => {
   const onVisibleRowRangeChange = useCallback(
     (start: number, end: number) => {
       if (end + 10 > lastRow) {
-        fetchNextPage();
+        void fetchNextPage();
       }
     },
     [lastRow]
@@ -72,32 +72,32 @@ const ServerSideDataTemplate: Story<{}> = (props) => {
       headerIsFocusable={true}
     >
       <RowSelectionCheckboxColumn id="rowSelection" />
-      <GridColumn
+      <GridColumn<Investor>
         name="Name"
         id="name"
         defaultWidth={200}
         getValue={(x) => x.name}
       />
-      <GridColumn
+      <GridColumn<Investor>
         name="Location"
         id="location"
         defaultWidth={150}
         getValue={(x) => x.location}
       />
-      <GridColumn
+      <GridColumn<Investor>
         name="Cohort"
         id="cohort"
         defaultWidth={200}
         getValue={(x) => x.cohort}
       />
-      <GridColumn
+      <GridColumn<Investor>
         name="Amount"
         id="amount"
         defaultWidth={200}
         getValue={(x) => x.amount}
         align="right"
       />
-      <GridColumn
+      <GridColumn<Investor>
         name="Strategy"
         id="strategy"
         getValue={(x) => x.strategy.join(", ")}

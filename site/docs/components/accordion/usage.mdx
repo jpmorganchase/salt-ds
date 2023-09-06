@@ -1,0 +1,37 @@
+---
+title: Accordion
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### When to use Accordion
+
+- To organize related content within expandable groups/categories/sections.
+
+- To reduce scrolling or overall page length when it is not critical that content is displayed in full.
+
+- When content cannot be displayed all at once due to restricted screen real estate.
+
+### When not to use Accordion
+
+- This component is not intended for use with grids to replace grouped rows.
+
+### Import
+
+To import Accordion and Accordion Group from the core Salt package, use:
+
+```js
+import {
+  Accordion,
+  AccordionGroup,
+  AccordionHeader,
+  AccordionPanel,
+} from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable componentName="Accordion" />

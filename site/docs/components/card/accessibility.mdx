@@ -1,0 +1,29 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Moves focus through cards (if interactable); or through interactive elements within the cards (if default) in a logical tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+When focus is on a target element, move focus to the previous interactive element within the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+
+If the target element has focus, Enter key press performs an action.
+
+</KeyboardControl>
+</KeyboardControls>

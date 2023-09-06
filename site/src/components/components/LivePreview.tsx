@@ -4,9 +4,7 @@ import clsx from "clsx";
 import { Switch } from "@salt-ds/lab";
 import { SaltProvider } from "@salt-ds/core";
 import { Pre } from "../mdx/pre";
-import { Heading3 } from "../mdx/h3";
 import { useLivePreviewControls } from "./useLivePreviewControls";
-import { formatComponentExampleName } from "./formatComponentExampleName";
 import useIsMobileView from "../../utils/useIsMobileView";
 
 import styles from "./LivePreview.module.css";
@@ -14,7 +12,15 @@ import styles from "./LivePreview.module.css";
 type LivePreviewProps = {
   componentName: string;
   exampleName: string;
-  title?: string;
+
+  /**
+   * Text label that will be used for this example in the list view in place
+   * of an auto-generated one based on the `exampleName`.
+   *
+   * Should ideally match the H3 text in the description content that
+   * accompanies this example (provided via the `children` prop).
+   */
+  displayName?: string;
   list?: ReactElement;
   children?: ReactNode;
 };
@@ -22,11 +28,10 @@ type LivePreviewProps = {
 export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
   exampleName,
-  title,
   list,
   children,
 }) => {
-  const [checked, setChecked] = useState(false);
+  const [ownShowCode, setOwnShowCode] = useState<boolean>(false);
 
   const isMobileView = useIsMobileView();
 
@@ -35,20 +40,29 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
   const exampleJSX = ComponentExample && ComponentExample();
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
+  const {
+    density,
+    mode,
+    showCode: contextShowCode,
+    onShowCodeToggle: contextOnShowCodeToggle,
+  } = useLivePreviewControls();
+
+  const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
+    const newShowCode = event.target.checked;
+    if (contextOnShowCodeToggle) {
+      // Context is controlling the show code state
+      contextOnShowCodeToggle(newShowCode);
+    } else {
+      setOwnShowCode(newShowCode);
+    }
   };
 
-  const { density, mode } = useLivePreviewControls();
+  // If no context is provided (e.g. <LivePreview> is being used standalone
+  // somewhere), then fallback to using own state
+  const showCode = contextOnShowCodeToggle ? contextShowCode : ownShowCode;
 
   return (
     <>
-      {!list && (
-        <Heading3>
-          {title ? title : formatComponentExampleName(exampleName)}
-        </Heading3>
-      )}
-
       {children}
       <div className={styles.container}>
         <div
@@ -66,8 +80,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
               </div>
               <SaltProvider density="medium">
                 <Switch
-                  checked={checked}
-                  onChange={handleChange}
+                  checked={showCode}
+                  onChange={handleShowCodeToggle}
                   className={styles.switch}
                   label="Show code"
                 />
@@ -76,7 +90,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
           </SaltProvider>
         </div>
 
-        {checked && (
+        {showCode && (
           <Pre className={styles.codePreview}>
             <div className="language-tsx">
               {reactElementToJSXString(exampleJSX, {

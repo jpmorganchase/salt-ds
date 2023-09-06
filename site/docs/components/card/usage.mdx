@@ -1,0 +1,51 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### When to use Card
+
+- To group related information with the same visual hierarchy.
+- To present a summary of a larger idea.
+- To link to more detailed information.
+
+### When not to use Card
+
+- To display sequential information or emphasize ranking. Consider [List](../list) instead.
+- As a stand-alone call to action. Consider [Button](../button) instead.
+- For decoration purposes only.
+
+### Card groups
+
+- Group cards together in a layout using similar size and content length. If the content and size differs among Cards, consider layout customisation. (i.e. Mosaic grid).
+- Avoid repeating images or content in a group of Cards.
+- Use the same accent placement in a group if interactable.
+
+### Interactable elements
+
+A default Card can contain any UI elements, such as actionable components like [Buttons](../button) or [Links](../link). You can use this, for example, to link to more detailed information.
+
+Interactable Cards should not contain actionable components ([Buttons](../button) or [Links](../link)) because the card itself is the interactive element.
+
+### Import
+
+To import Card from the core Salt package, use:
+
+```
+import { Card, InteractableCard } from "@salt-ds/core";
+```
+
+### Props
+
+#### Card Props
+
+<PropsTable packageName="core" componentName="Card" />
+
+#### Interactable Card Props
+
+<PropsTable packageName="core" componentName="InteractableCard" />

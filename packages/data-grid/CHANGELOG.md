@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.6
+
+### Patch Changes
+
+- 6a95567c: Fixed overscroll behaviour when reaching end of scroll and hovering over the grid
+
 ## 1.0.4-alpha.5
 
 ### Patch Changes

@@ -4,7 +4,6 @@
 .salt-density-high {
   --salt-zIndex-default: 1;
   --salt-zIndex-popout: 1000;
-  --salt-zIndex-docked: 1050;
   --salt-zIndex-appHeader: 1100;
   --salt-zIndex-drawer: 1200;
   --salt-zIndex-modal: 1300;

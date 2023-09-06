@@ -381,11 +381,6 @@
     border: 2px dotted var(--agGrid-color-focus);
   }
 
-  .ag-header-cell:after {
-    top: var(--agGrid-separatorGap);
-    bottom: var(--agGrid-separatorGap);
-  }
-
   .ag-header-cell.ag-floating-filter::after {
     display: none;
   }

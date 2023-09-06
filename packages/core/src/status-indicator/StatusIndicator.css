@@ -3,20 +3,22 @@
   --statusIndicator-info-color: var(--salt-status-info-foreground);
   --statusIndicator-success-color: var(--salt-status-success-foreground);
   --statusIndicator-error-color: var(--salt-status-error-foreground);
+  --saltIcon-color: var(--statusIndicator-Color);
+  color: var(--statusIndicator-Color);
 }
 
 .saltStatusIndicator-error {
-  --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-error-color));
+  --statusIndicator-Color: var(--saltStatusIndicator-color, var(--statusIndicator-error-color));
 }
 
 .saltStatusIndicator-warning {
-  --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-warning-color));
+  --statusIndicator-Color: var(--saltStatusIndicator-color, var(--statusIndicator-warning-color));
 }
 
 .saltStatusIndicator-success {
-  --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-success-color));
+  --statusIndicator-Color: var(--saltStatusIndicator-color, var(--statusIndicator-success-color));
 }
 
 .saltStatusIndicator-info {
-  --saltIcon-color: var(--saltStatusIndicator-color, var(--statusIndicator-info-color));
+  --statusIndicator-Color: var(--saltStatusIndicator-color, var(--statusIndicator-info-color));
 }

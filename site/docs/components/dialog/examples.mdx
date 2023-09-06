@@ -1,0 +1,65 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+    <LivePreview componentName="dialog" exampleName="Default" >
+      ### Default
+
+      The dialog displays with a title, content area, and action bar. The component is modal, meaning it prevents interaction with the rest of the UI while open and must be addressed by clicking one of the action buttons or dismissing with the close button. If the content of the dialog extends beyond the end of the screen, the `DialogContent` area will become scrollable.
+
+    </LivePreview>
+
+        <LivePreview componentName="dialog" exampleName="Accent" >
+    ### Accent
+
+    For default dialogs, you can pass the `accent` prop to `DialogTitle` which accepts a boolean to render an accent bar in the title of the dialog. You cannot render the accent bar when a status is also being rendered.
+    </LivePreview>
+
+    <LivePreview componentName="dialog" exampleName="CloseButton" >
+    ### Close Button
+
+You can also render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+
+</LivePreview>
+
+    <LivePreview componentName="dialog" exampleName="Info" >
+      ### Info
+
+      - Use the info status when you need to display general information.
+      - An info icon displays alongside a title and supporting message.
+      - Don’t use the info dialog when the information concerns an issue. Instead, use the error or warning dialog.
+      - Don’t use the info dialog when the information concerns a successful action. Instead, use the success dialog.
+    </LivePreview>
+
+    <LivePreview componentName="dialog" exampleName="Error" >
+      ### Error
+
+    - Use the error status to communicate a critical issue that prevents the user from continuing or completing it.
+    - An error icon displays alongside a title and supporting message.
+    - Don’t use the error dialog when the issue does not prevent the user from completing their task. Instead, use the warning dialog.
+    </LivePreview>
+
+    <LivePreview componentName="dialog" exampleName="Warning" >
+      ### Warning
+
+    - Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that does not prevent the user from continuing or completing their task.
+    - A warning icon displays alongside a title and supporting message.
+    - Don’t use the warning dialog when the issue prevents the user from completing their task. Instead, use the error dialog.
+    </LivePreview>
+
+    <LivePreview componentName="dialog" exampleName="Success" >
+    ### Success
+
+    - Use the success status to confirm that a user's action has been completed successfully.
+    - A success icon displays alongside a title and supporting message.
+    </LivePreview>
+
+</LivePreviewControls>

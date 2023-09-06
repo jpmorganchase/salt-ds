@@ -39,7 +39,7 @@ yarn-error.log*
 
 # IDEs
 .idea
-.vscode/launch.json
+.vscode
 /.VSCodeCounter
 *.iml
 
