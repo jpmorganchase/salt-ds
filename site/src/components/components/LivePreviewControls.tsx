@@ -68,6 +68,16 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     setAllExamplesView(event.target.checked);
   };
 
+  // Only set this handler function when we are displaying the combined list
+  // view, so that showing/hiding code persists when switching between
+  // examples. For the "All examples" view, we leave it undefined, which causes
+  // each LivePreview to show/hide its code individually.
+  const handleShowCodeToggle = !allExamplesView
+    ? (showCode: boolean) => {
+        setShowCode(showCode);
+      }
+    : undefined;
+
   return (
     <>
       <SaltProvider density="medium">
@@ -129,7 +139,12 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
         </div>
       </SaltProvider>
       <LivePreviewContext.Provider
-        value={{ density, mode, showCode, onShowCodeToggle: setShowCode }}
+        value={{
+          density,
+          mode,
+          showCode,
+          onShowCodeToggle: handleShowCodeToggle,
+        }}
       >
         {allExamplesView ? children : <ExamplesListView examples={children} />}
       </LivePreviewContext.Provider>
