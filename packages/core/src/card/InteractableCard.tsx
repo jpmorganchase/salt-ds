@@ -70,7 +70,7 @@ export const InteractableCard = forwardRef<
       {...rest}
       ref={ref}
     >
-      <div className={withBaseName("content")}>{children}</div>
+      {children}
     </div>
   );
 });

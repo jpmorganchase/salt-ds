@@ -51,7 +51,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
       ref={ref}
       {...rest}
     >
-      <div className={withBaseName("content")}>{children}</div>
+      {children}
     </div>
   );
 });
