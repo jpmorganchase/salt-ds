@@ -2,22 +2,13 @@
 .saltInteractableCard {
   background: var(--saltCard-background, var(--salt-container-primary-background));
   box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
-  color: var(--saltCard-color, var(--salt-text-primary-foreground));
-  height: var(--saltCard-height, auto);
-  min-height: var(--saltCard-minHeight, 100%);
-  overflow: hidden;
   border-width: var(--saltCard-borderWidth, var(--card-borderWidth));
   border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
   border-color: var(--saltCard-borderColor, var(--salt-accent-borderColor));
   border-radius: var(--saltCard-borderRadius, 0);
   display: block;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Styles applied to Card content */
-.saltInteractableCard-content {
-  height: 100%;
-  padding: var(--saltCard-padding, var(--salt-size-container-spacing));
+  padding: var(--saltCard-padding, var(--salt-spacing-300));
 }
 
 /* Styles applied to InteractableCard if `accentPlacement="bottom"` (default) */
