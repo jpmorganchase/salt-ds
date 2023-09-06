@@ -10,7 +10,7 @@
 
 /* Styles applied to the status indicator icon overriding its default size */
 .saltDialogTitle .saltStatusIndicator.saltIcon {
-  --saltIcon-size: var(--salt-text-h2-lineHeight);
+  --icon-size: var(--salt-text-h2-lineHeight);
 }
 
 /* Styles applied to DialogTitle when accent={true} */

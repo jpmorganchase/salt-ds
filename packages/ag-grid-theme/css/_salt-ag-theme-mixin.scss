@@ -40,9 +40,9 @@
       > :not(.ag-cell-value):not(.ag-group-value) {
       height: calc(
         min(
-            var(--ag-internal-calculated-line-height),
-            var(--ag-internal-padded-row-height)
-          )
+          var(--ag-internal-calculated-line-height),
+          var(--ag-internal-padded-row-height)
+        )
       );
     }
   }
@@ -280,7 +280,9 @@
     height: 0;
   }
 
-  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
+  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
+      .ag-cell-range-single-cell
+    ) {
     border-right: none;
   }
 
@@ -288,7 +290,10 @@
     Due to having a transparent 2px border to avoid shifting content on focus,
     we have to mimic a RHS border on left pinned cells
      */
-  .ag-row .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell):after {
+  .ag-row
+    .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
+      .ag-cell-range-single-cell
+    ):after {
     background-color: var(--salt-palette-neutral-tertiary-separator);
     content: "";
     height: calc(100% + 4px);
@@ -299,7 +304,9 @@
     z-index: 1;
   }
 
-  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell):focus:after {
+  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
+      .ag-cell-range-single-cell
+    ):focus:after {
     background-color: var(--salt-palette-neutral-tertiary-separator);
     content: "";
     height: calc(100% + 4px);
@@ -368,9 +375,9 @@
     border: 2px solid transparent;
     line-height: calc(
       min(
-          var(--ag-internal-calculated-line-height),
-          var(--ag-internal-padded-row-height)
-        )
+        var(--ag-internal-calculated-line-height),
+        var(--ag-internal-padded-row-height)
+      )
     );
   }
 
@@ -393,7 +400,8 @@
 
   .editable-numeric-cell,
   .ag-cell.editable-cell {
-    border: var(--salt-size-border) var(--salt-container-borderStyle) var(--agGrid-cell-borderColor-editable);
+    border: var(--salt-size-border) var(--salt-container-borderStyle)
+      var(--agGrid-cell-borderColor-editable);
   }
 
   .editable-numeric-cell.ag-cell-focus:focus,
