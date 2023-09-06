@@ -8,6 +8,9 @@
     "build": "yarn clean && yarn node ./scripts/generateIcons.mjs '*.svg'",
     "clean": "rimraf ./src/components"
   },
+  "dependencies": {
+    "clsx": "^2.0.0"
+  },
   "peerDependencies": {
     "@types/react": ">=16.14.0",
     "react": ">=16.14.0",
@@ -19,6 +22,7 @@
     }
   },
   "devDependencies": {
+    "glob": "^8.0.0",
     "mustache": "^4.2.0",
     "rimraf": "^4.4.0",
     "svgo": "^3.0.0"
