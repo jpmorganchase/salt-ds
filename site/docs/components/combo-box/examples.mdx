@@ -20,32 +20,22 @@ Combo Box contains an input field that opens a list. As users' type, the list di
 
 </LivePreview>
 
-<LivePreview componentName="combo-box" exampleName="CustomizedFilter" >
+<LivePreview componentName="combo-box" exampleName="CustomRenderer" >
 
-### Customized filter
+### Custom renderer
 
-Define a filter that only matches the first letter of a word.
-
-Use the `itemFilter` prop to customize the filter that applies to the elements.
-
-Guidance:
-
-Give users a quicker and easier experience when they’re choosing their options by changing the logic of the component’s typeahead filter.
-
-</LivePreview>
-
-<LivePreview componentName="combo-box" exampleName="CustomizedRenderer" >
-
-### Customized renderer
-
-Customize the list item display to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example.
-
-Use the `itemRenderer` prop to customize list items.
+Customize the list item display to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example. Use the `ListItem` prop to customize list items.
 
 Guidance:
 
 - Users can benefit from seeing a particular visual with list items. Customize the display as you see fit. For example, if displaying a list of contacts, it may help to provide headshots alongside the option text.
 - Place any visual support such as icons, country symbols or avatars to the left of the option text.
+
+Define a filter that only matches the first letter of a word. Use the `itemFilter` prop to customize the filter that applies to the elements.
+
+Guidance:
+
+- Give users a quicker and easier experience when they’re choosing their options by changing the logic of the component’s typeahead filter.
 
 </LivePreview>
 

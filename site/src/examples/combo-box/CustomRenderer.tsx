@@ -20,28 +20,28 @@ const CustomListItem = ({
   );
 };
 
-// const customMatchPattern = (
-//   input: { name: string; countryCode: string },
-//   filterValue: string
-// ) => {
-//   return (
-//     input.name.toLowerCase().includes(filterValue.toLowerCase()) ||
-//     filterValue === input.countryCode
-//   );
-// };
+const customMatchPattern = (
+  input: { name: string; countryCode: string },
+  filterValue: string
+) => {
+  return (
+    input.name.toLowerCase().includes(filterValue.toLowerCase()) ||
+    filterValue === input.countryCode
+  );
+};
 
-// const customItemFilter = (source: any[], filterValue?: string) =>
-//   source.filter((item) =>
-//     !filterValue ? item : customMatchPattern(item, filterValue)
-//   );
+const customItemFilter = (source: any[], filterValue?: string) =>
+  source.filter((item) =>
+    !filterValue ? item : customMatchPattern(item, filterValue)
+  );
 
-export const CustomizedRenderer = (): ReactElement => {
+export const CustomRenderer = (): ReactElement => {
   return (
     <ComboBoxNext
       style={{ width: "266px" }}
       source={largestCities}
       ListItem={CustomListItem}
-      // itemFilter={customItemFilter}
+      itemFilter={customItemFilter}
     />
   );
 };
