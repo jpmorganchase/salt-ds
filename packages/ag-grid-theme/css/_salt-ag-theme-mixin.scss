@@ -284,12 +284,34 @@
     border-right: none;
   }
 
-  .ag-pinned-left-header .ag-header-cell:after {
-    height: 0;
+  /** 
+    Due to having a transparent 2px border to avoid shifting content on focus,
+    we have to mimic a RHS border on left pinned cells
+     */
+  .ag-row .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell):after {
+    background-color: var(--salt-palette-neutral-tertiary-separator);
+    content: "";
+    height: calc(100% + 4px);
+    position: absolute;
+    right: 0;
+    top: -2px;
+    width: 1px;
+    z-index: 1;
   }
 
-  .ag-pinned-left-cols-container {
-    border-right: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-palette-neutral-tertiary-separator);
+  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell):focus:after {
+    background-color: var(--salt-palette-neutral-tertiary-separator);
+    content: "";
+    height: calc(100% + 4px);
+    position: absolute;
+    right: -1px;
+    top: -2px;
+    width: 1px;
+    z-index: 1;
+  }
+
+  .ag-pinned-left-header .ag-header-cell:after {
+    height: 0;
   }
 
   .ag-keyboard-focus .ag-header-cell:focus:after {
