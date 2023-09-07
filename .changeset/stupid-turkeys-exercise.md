@@ -6,4 +6,4 @@
 
 Browser compatibility CSS changes.
 
-Added missing prefix to `appearance` and revert `inline` and `block` `margin`/`paddings` to improve browser compatibility with Chrome 79
+Added missing prefix to `appearance` and revert `padding-inline`, `padding-block` and `margin-block` to improve browser compatibility with Chrome 79
