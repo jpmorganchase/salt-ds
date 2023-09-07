@@ -18,6 +18,7 @@ export function range(
 
 export class NumberRange {
   public readonly start: number;
+
   public readonly end: number;
 
   public constructor(start: number, end: number) {

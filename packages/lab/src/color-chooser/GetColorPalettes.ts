@@ -57,16 +57,16 @@ export function getColorPalettes(
     grayPalette(saltColorOverrides).slice(7, 14),
     [
       saltColorOverrides
-        ? saltColorOverrides["saltwhite"]
-          ? saltColorOverrides["saltwhite"]
+        ? saltColorOverrides.saltwhite
+          ? saltColorOverrides.saltwhite
           : "rgb(255, 255, 255)"
-        : saltColorMap["saltwhite"],
+        : saltColorMap.saltwhite,
       ...grayPalette(saltColorOverrides).slice(14, 18),
       saltColorOverrides
-        ? saltColorOverrides["saltblack"]
-          ? saltColorOverrides["saltblack"]
+        ? saltColorOverrides.saltblack
+          ? saltColorOverrides.saltblack
           : "rgb(0, 0, 0)"
-        : saltColorMap["saltblack"],
+        : saltColorMap.saltblack,
       "rgba(0, 0, 0, 0)",
     ],
   ];

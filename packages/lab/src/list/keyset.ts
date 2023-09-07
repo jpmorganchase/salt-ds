@@ -1,6 +1,8 @@
 export class KeySet {
   private keys: Map<number, number>;
+
   private free: number[];
+
   private nextKeyValue: number;
 
   constructor(from = 0, to = 0) {
