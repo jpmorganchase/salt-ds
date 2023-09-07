@@ -10,7 +10,6 @@ function getCssVariablesFromDir(dirPath) {
   files.forEach((file) => {
     const filePath = path.join(dirPath, file);
     const stats = fs.statSync(filePath);
-
     if (stats.isDirectory()) {
       // Recursively process subdirectories
       Object.assign(cssVariables, getCssVariablesFromDir(filePath));
@@ -30,22 +29,26 @@ function getCssVariablesFromDir(dirPath) {
   return cssVariables;
 }
 
-const themeDirPath = path.resolve(
-  __dirname,
-  "../packages/theme/css/characteristics"
-);
+const themeBuildingBlocks = ["foundations", "characteristics", "palette", "deprecated"];
 
-const allCssVariables = getCssVariablesFromDir(themeDirPath);
-const jsonData = JSON.stringify(allCssVariables, null, 2);
+const cssDirPath = path.resolve(__dirname, "../packages/theme/css");
 const cssFolderPath = path.resolve(
   __dirname,
-  "../site/src/components/css-display"
+  "../site/src/components/css-variables/json"
 );
 
-const outputPath = path.join(cssFolderPath, "cssVariables.json");
-
 try {
-  fs.writeFileSync(outputPath, jsonData, "utf8");
+  for (var block of themeBuildingBlocks) {
+    const tokens = getCssVariablesFromDir(
+      path.join(cssDirPath, block)
+    );
+    const jsonData = JSON.stringify(tokens, null, 2);
+    const blockPath = path.join(
+      cssFolderPath,
+      `${block}Variables.json`
+    );
+    fs.writeFileSync(blockPath, jsonData, "utf8");
+  }
 } catch (err) {
   console.error("Error writing JSON file:", err);
 }

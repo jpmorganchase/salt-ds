@@ -1,9 +1,8 @@
 ---
-title: Characteristics
+title: Characteristic tokens
 layout: DetailTechnical
 sidebar:
-  label: Characteristics
-  priority: 1
+  label: Characteristic tokens
 ---
 
 A design token stores design decisions in a single place, enabling teams to use them to create consistent experiences.
@@ -70,3 +69,7 @@ Just because you have assigned a characteristic to a component does not mean it 
 A good example of this is the `focused` characteristic, which offers both border and outline styles. You would use the outline token if setting the outline attribute, and the border token if setting the border attribute.
 
 Think carefully when deciding which characteristics are most appropriate. For example, should your component background come from container because that's its general purpose, or should it come from the selectable, since it can be selected? Many characteristics define the same attribute (e.g., background color), and deciding which characteristic your component should use is important. This will ensure consistent styling across your user interface, especially when different themes are applied.
+
+## Tokens
+
+<CSSVariables value="characteristics" />
