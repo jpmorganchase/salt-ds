@@ -12,6 +12,7 @@
 
 .saltPillNext {
   appearance: none;
+  -webkit-appearance: none;
   display: inline-flex;
   align-items: center;
   background: var(--pillNext-background);
@@ -23,7 +24,8 @@
   outline: 0;
   position: relative;
   gap: var(--salt-spacing-50);
-  padding-inline: var(--salt-spacing-50);
+  padding-left: var(--salt-spacing-50);
+  padding-right: var(--salt-spacing-50);
   color: var(--pillNext-text-color);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);

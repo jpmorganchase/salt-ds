@@ -2,6 +2,7 @@
   align-items: center;
   justify-content: center;
   appearance: none;
+  -webkit-appearance: none;
   display: inline-flex;
   background: var(--salt-actionable-secondary-background);
   border: 0 solid transparent;
@@ -15,7 +16,8 @@
   letter-spacing: var(--salt-actionable-letterSpacing);
   line-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);
-  padding-inline: var(--salt-spacing-100);
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
   gap: var(--salt-spacing-50);
   --saltIcon-color: var(--salt-actionable-secondary-foreground);
 }
