@@ -1,5 +1,4 @@
 import { FC, ChangeEvent, useState, ReactNode, ReactElement } from "react";
-import reactElementToJSXString from "react-element-to-jsx-string";
 import clsx from "clsx";
 import { Switch } from "@salt-ds/lab";
 import { SaltProvider } from "@salt-ds/core";
@@ -38,7 +37,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
   const ComponentExample: () => ReactElement =
     require(`../../examples/${componentName}`)[exampleName];
 
-  const exampleJSX = ComponentExample && ComponentExample();
+  const codePreview =
+    require(`!!raw-loader!../../examples/${componentName}/${exampleName}.tsx`).default;
 
   const {
     density,
@@ -92,11 +92,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
         {showCode && (
           <Pre className={styles.codePreview}>
-            <div className="language-tsx">
-              {reactElementToJSXString(exampleJSX, {
-                showFunctions: true,
-              })}
-            </div>
+            <div className="language-tsx">{codePreview}</div>
           </Pre>
         )}
       </div>
