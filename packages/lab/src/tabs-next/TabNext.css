@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   appearance: none;
+  -webkit-appearance: none;
   display: inline-flex;
   background: var(--salt-navigable-primary-background);
   border: 0 solid transparent;
@@ -10,8 +11,7 @@
   white-space: pre;
   min-width: 4em;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  padding-inline: var(--salt-spacing-100);
-  padding-block: var(--salt-spacing-50);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
   position: relative;
   flex-shrink: 0;
 
