@@ -4,6 +4,9 @@
   "license": "Apache-2.0",
   "main": "src/index.ts",
   "sideEffects": false,
+  "dependencies": {
+    "clsx": "^2.0.0"
+  },
   "peerDependencies": {
     "@types/react": ">=16.14.0",
     "react": ">=16.14.0",
