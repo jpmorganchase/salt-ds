@@ -4,7 +4,7 @@ title:
   $ref: ./#/title
 layout: DetailComponent
 sidebar:
-  label: Examples
+  exclude: true
 data:
   $ref: ./#/data
 ---
@@ -13,29 +13,25 @@ data:
 
 <LivePreview componentName="example-container" exampleName="Neutral" >
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+By default, the Example Container will just display a frame around whatever content has been placed inside.
 
 </LivePreview>
 
 <LivePreview componentName="example-container" exampleName="DoAndDont" >
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+To display contrasting positive ("Do") and negative ("Don't") examples, you can use the `type` prop. The example container will then display a pill-like indicator in its top right corner.
+
+As shown in this example, you can use Salt's layout components to position related example containers side-by-side.
 
 </LivePreview>
 
 <LivePreview componentName="example-container" exampleName="WithImage" >
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
-
 </LivePreview>
 
 <LivePreview componentName="example-container" exampleName="KitchenSink" >
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+As shown here, any HTML content or React components can be placed inside an Example Container.
 
 </LivePreview>
 

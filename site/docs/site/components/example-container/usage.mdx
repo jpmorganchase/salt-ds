@@ -4,24 +4,26 @@ title:
   $ref: ./#/title
 layout: DetailComponent
 sidebar:
-  label: Usage
+  exclude: true
 data:
   $ref: ./#/data
 ---
 
 ### Using the Example container component
 
-Use the Example Container to visually distinguish an example of something mentioned in documentation. Can optionally display "Do" and "Don't" labels for situations where contrasting good and bad examples are used.
+Use the Example Container to visually distinguish an example of something mentioned in the surrounding page content. Can optionally display "Do" and "Don't" labels for situations where contrasting good and bad examples are used.
 
 #### Best practices
 
-- Use Example Containers to distinguish example content (e.g. sample text or code, screenshots, diagrams) from the surrounding documentation
+- Use Example Containers to distinguish example content (e.g. sample text or code, screenshots, diagrams) from the surrounding documentation.
 - When using pairs of Do and Don't examples, consider laying them out side-by-side (on wider viewports). You can use Salt's layout component to achieve this.
 
 #### Things to avoid
 
-- Do not use Example Containers to wrap the actual documentation content (this should be _outside_ of the Example Container)
-- Avoid having multiple examples within a single Example Container, instead use one container per example
+- Do not use Example Containers to wrap explantions or descriptions of the example. Those should be _outside_ of the Example Container.
+- When using "Do" and "Don't", do not incorporate a duplicate "Do" or "Don't" indicator within the example itself (e.g. a tick or cross within an image)
+- When using images with transparent areas, ensure that image contents will remain visible against light and dark backgrounds.
+- Avoid having multiple examples within a single Example Container, instead use one container per example.
 
 ### Import
 
@@ -38,13 +40,3 @@ import { ExampleContainer } from "path/to/src/components";
 ### Props
 
 <PropsTable packageName="salt-site" componentName="ExampleContainer" />
-
-### Content
-
-Add text from "Content" section here when available, or else remove this
-section.
-
-### References
-
-Add text from "References" section here when available, or else remove this
-section.
