@@ -1,6 +1,32 @@
 module.exports = {
-  extends: ["modular-app", "plugin:storybook/recommended"],
-  plugins: ["eslint-plugin-local-rules"],
+  root: true,
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: [
+      "./tsconfig.json",
+      "./packages/**/tsconfig.json",
+      "./site/tsconfig.json",
+    ],
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
+  plugins: ["@typescript-eslint", "eslint-plugin-local-rules"],
+  extends: [
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "airbnb-typescript",
+    "prettier",
+    "plugin:storybook/recommended",
+  ],
+  rules: {
+    "import/no-extraneous-dependencies": "off",
+  },
   overrides: [
     {
       files: ["packages/**/src/**/*.ts", "packages/**/src/**/*.tsx"],
@@ -29,14 +55,14 @@ module.exports = {
       },
     },
     {
-      files: ["stories/**/*.stories.*"],
+      files: ["*.stories.*"],
       rules: {
-        "import/no-anonymous-default-export": "off",
+        "react/prop-types": "off",
       },
     },
     {
       files: ["*.cy.tsx"],
-      extends: ["plugin:cypress/recommended"],
+      plugins: ["cypress"],
     },
   ],
 };
