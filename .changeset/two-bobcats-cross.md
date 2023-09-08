@@ -2,4 +2,5 @@
 "@salt-ds/lab": patch
 ---
 
-add z-index to dropdown list
+- Add z-index to dropdown list
+- Increase specificity for list css
