@@ -41,7 +41,13 @@ module.exports = {
               "(useIsomorphicLayoutEffect|useLayoutEffectOnce|useLayoutEffectSkipFirst)",
           },
         ],
-        "@typescript-eslint/explicit-module-boundary-types": 0,
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/no-unsafe-assignment ": "off",
+        // TypeScript provides the same checks as part of standard type checking.
+        "import/named": "off",
+        "import/namespace": "off",
+        "import/default": "off",
+        "import/no-named-as-default-member": "off",
       },
     },
     {
