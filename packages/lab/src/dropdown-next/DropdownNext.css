@@ -48,6 +48,7 @@
   border-color: var(--salt-selectable-borderColor-selected);
   box-shadow: var(--salt-overlayable-shadow-popout);
   max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5);
+  z-index: var(--salt-zIndex-flyover);
 }
 
 /* Styling applied to dropdown button if `disabled={true}` */
