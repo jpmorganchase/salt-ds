@@ -45,7 +45,10 @@ export const ExampleContainer: FC<ExampleContainerProps> = ({
     <div
       className={clsx(
         styles.root,
-        type === "positive" ? styles.positive : styles.negative,
+        {
+          [styles.positive]: type === "positive",
+          [styles.negative]: type === "negative",
+        },
         className
       )}
     >
