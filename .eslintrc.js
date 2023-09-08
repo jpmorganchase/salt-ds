@@ -4,7 +4,7 @@ module.exports = {
   parserOptions: {
     project: [
       "./tsconfig.json",
-      "./packages/**/tsconfig.json",
+      "./packages/*/tsconfig.json",
       "./site/tsconfig.json",
     ],
   },
@@ -26,6 +26,11 @@ module.exports = {
   ],
   rules: {
     "import/no-extraneous-dependencies": "off",
+    // Disabled due to typescript-eslint guidance (https://typescript-eslint.io/linting/troubleshooting/performance-troubleshooting/#eslint-plugin-import)
+    "import/default": "off",
+    "import/no-named-as-default-member": "off",
+    "import/named": "off",
+    "import/namespace": "off",
   },
   overrides: [
     {
