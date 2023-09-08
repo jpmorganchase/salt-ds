@@ -40,9 +40,9 @@
       > :not(.ag-cell-value):not(.ag-group-value) {
       height: calc(
         min(
-          var(--ag-internal-calculated-line-height),
-          var(--ag-internal-padded-row-height)
-        ) - 2px
+            var(--ag-internal-calculated-line-height),
+            var(--ag-internal-padded-row-height)
+          ) - 2px
       );
     }
   }
@@ -376,9 +376,9 @@
     border: 2px solid transparent;
     line-height: calc(
       min(
-        var(--ag-internal-calculated-line-height),
-        var(--ag-internal-padded-row-height)
-      ) - 2px
+          var(--ag-internal-calculated-line-height),
+          var(--ag-internal-padded-row-height)
+        ) - 2px
     );
   }
 
