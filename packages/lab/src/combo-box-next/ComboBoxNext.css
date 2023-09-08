@@ -6,7 +6,7 @@
   --saltInput-borderColor: var(--salt-focused-outlineColor);
 }
 
-.saltComboBoxNext-list {
+.saltComboBoxNext-list.saltListNext {
   border-color: var(--salt-selectable-borderColor-selected);
   box-shadow: var(--salt-overlayable-shadow-popout);
   max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * var(--comboBoxNext-itemCount, 5));
