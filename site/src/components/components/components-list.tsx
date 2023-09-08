@@ -604,7 +604,8 @@ export const componentDetails: ComponentDetails[] = [
       "Defines left and right regions for UI elements within a span, such as a button bar.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
-    docsUrl: "./split-layout",
+    docsUrl:
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-split-layout--page",
   },
   {
     name: "Stack Layout",
