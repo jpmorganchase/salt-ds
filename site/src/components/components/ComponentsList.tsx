@@ -98,7 +98,7 @@ const ComponentStatusData = ({
 };
 
 type ComponentHeaderProps = {
-  logo: JSX.Element;
+  logo?: JSX.Element;
   label: string;
   isSorted: boolean;
   ascendingOrder: boolean;
@@ -118,7 +118,7 @@ const ComponentHeader = ({
     <Button onClick={handleClick}>
       <span className={styles.headerContainer}>
         <span>
-          {logo}
+          {logo || (isMobileView && label)}
           {!isMobileView && <span>{label}</span>}
         </span>
         {isSorted && arrowIcon}
@@ -160,9 +160,6 @@ export const ComponentsList = () => {
           <tr>
             <th aria-sort={isSortedBy === "name" ? ariaSort : "none"}>
               <ComponentHeader
-                logo={
-                  <Image src="/img/storybook_logo.svg" alt="storybook logo" />
-                }
                 label="Component"
                 isSorted={isSortedBy === "name"}
                 ascendingOrder={hasAscendingOrder}
