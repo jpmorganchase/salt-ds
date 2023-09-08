@@ -107,7 +107,7 @@ export interface ComponentDetails {
   previewImage?: string;
 
   /**
-   * The URL to this component's page on the Salt Storybook site.
+   * The URL to this component's page on the Salt site or on the Storybook site.
    *
    * Only needed for components in the READY status.
    */

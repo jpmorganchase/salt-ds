@@ -10,7 +10,7 @@
   table-layout: fixed;
 }
 
-.componentList td :first-child {
+.statusData :first-child {
   display: flex;
   align-items: baseline;
   gap: calc(var(--salt-size-unit) / 2);

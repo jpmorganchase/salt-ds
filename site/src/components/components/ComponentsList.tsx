@@ -56,11 +56,16 @@ const componentsListSorting = (
   );
 };
 
+const isExternalLink = (url: string) => /(http(s?)):\/\//i.test(url);
+
 const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
   const { name, docsUrl } = component;
 
   return docsUrl ? (
-    <Link href={docsUrl}>
+    <Link
+      href={docsUrl}
+      target={isExternalLink(docsUrl) ? "_blank" : undefined}
+    >
       <span>{name}</span>
     </Link>
   ) : (
@@ -193,14 +198,14 @@ export const ComponentsList = () => {
                 <td>
                   <ComponentNameData component={component} />
                 </td>
-                <td>
+                <td className={styles.statusData}>
                   <ComponentStatusData
                     status={component.devStatus}
                     availableSince={component.availableInCoreSince}
                   />
                 </td>
 
-                <td>
+                <td className={styles.statusData}>
                   <ComponentStatusData
                     status={component.designStatus}
                     availableSince={component.availableInFigmaSince}
