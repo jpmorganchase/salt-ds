@@ -8,29 +8,17 @@ module.exports = {
       "./site/tsconfig.json",
     ],
   },
-  settings: {
-    react: {
-      version: "detect",
-    },
-  },
   plugins: ["@typescript-eslint", "eslint-plugin-local-rules"],
   extends: [
     "plugin:import/recommended",
-    "plugin:import/typescript",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
-    "airbnb-typescript",
     "prettier",
     "plugin:storybook/recommended",
   ],
   rules: {
     "import/no-extraneous-dependencies": "off",
-    // Disabled due to typescript-eslint guidance (https://typescript-eslint.io/linting/troubleshooting/performance-troubleshooting/#eslint-plugin-import)
-    "import/default": "off",
-    "import/no-named-as-default-member": "off",
-    "import/named": "off",
-    "import/namespace": "off",
   },
   overrides: [
     {
@@ -40,14 +28,11 @@ module.exports = {
       },
     },
     {
+      extends: [
+        "plugin:@typescript-eslint/recommended-type-checked",
+        "plugin:@typescript-eslint/stylistic-type-checked",
+      ],
       files: ["*.ts", "*.tsx"],
-      parserOptions: {
-        project: [
-          "./tsconfig.json",
-          "./packages/**/tsconfig.json",
-          "./site/tsconfig.json",
-        ],
-      },
       rules: {
         "react-hooks/exhaustive-deps": [
           "warn",
@@ -70,4 +55,9 @@ module.exports = {
       plugins: ["cypress"],
     },
   ],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
 };
