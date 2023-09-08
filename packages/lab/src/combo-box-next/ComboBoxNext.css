@@ -10,4 +10,5 @@
   border-color: var(--salt-selectable-borderColor-selected);
   box-shadow: var(--salt-overlayable-shadow-popout);
   max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * var(--comboBoxNext-itemCount, 5));
+  z-index: var(--salt-zIndex-flyover);
 }
