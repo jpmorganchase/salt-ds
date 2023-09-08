@@ -57,10 +57,10 @@ const componentsListSorting = (
 };
 
 const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
-  const { devStatus, name, storybookUrl } = component;
+  const { name, docsUrl } = component;
 
-  return devStatus === ComponentStatus.READY && storybookUrl ? (
-    <Link href={storybookUrl}>
+  return docsUrl ? (
+    <Link href={docsUrl}>
       <span>{name}</span>
     </Link>
   ) : (
