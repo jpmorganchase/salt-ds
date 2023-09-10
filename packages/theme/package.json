@@ -2,6 +2,12 @@
   "name": "@salt-ds/theme",
   "version": "1.8.0",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/theme"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "style": "index.css",
   "files": [
     "/index.css",
