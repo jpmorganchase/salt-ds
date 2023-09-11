@@ -17,6 +17,9 @@ const statusClass = (status: ComponentStatus) => {
   if (status === ComponentStatus.READY) {
     return "ready";
   }
+  if (status === ComponentStatus.IN_LAB) {
+    return "lab";
+  }
   if (status === ComponentStatus.IN_PROGRESS) {
     return "progress";
   }
@@ -28,6 +31,7 @@ const statusClass = (status: ComponentStatus) => {
 
 const statusSortList = [
   ComponentStatus.READY,
+  ComponentStatus.IN_LAB,
   ComponentStatus.IN_PROGRESS,
   ComponentStatus.IN_BACKLOG,
   ComponentStatus.NOT_APPLICABLE,
@@ -80,7 +84,9 @@ const ComponentStatusData = ({
   status: ComponentStatus;
   availableSince?: string;
 }) => {
-  const showReleaseDate = availableSince && status === ComponentStatus.READY;
+  const showReleaseDate =
+    availableSince &&
+    (status === ComponentStatus.READY || status === ComponentStatus.IN_LAB);
   const isMobileView = useIsMobileView();
   const mobileView = (
     <span>{showReleaseDate ? `v${availableSince}` : null}</span>
@@ -95,7 +101,11 @@ const ComponentStatusData = ({
         mobileView
       ) : (
         <span>
-          {showReleaseDate ? `Released in v${availableSince}` : status}
+          {showReleaseDate
+            ? status === ComponentStatus.READY
+              ? `Released in v${availableSince}`
+              : `In lab v${availableSince}`
+            : status}
         </span>
       )}
     </div>
@@ -201,7 +211,7 @@ export const ComponentsList = () => {
                 <td>
                   <ComponentStatusData
                     status={component.devStatus}
-                    availableSince={component.availableInCoreSince}
+                    availableSince={component.availableInCodeSince}
                   />
                 </td>
 

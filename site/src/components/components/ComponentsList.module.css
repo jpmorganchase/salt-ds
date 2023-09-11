@@ -61,6 +61,10 @@
   --saltIcon-color: var(--salt-status-success-foreground);
 }
 
+.status.lab svg {
+  --saltIcon-color: var(--salt-status-success-foreground);
+}
+
 .status.progress svg {
   --saltIcon-color: var(--salt-status-warning-foreground);
 }
