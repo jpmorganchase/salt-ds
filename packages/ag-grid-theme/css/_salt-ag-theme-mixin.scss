@@ -245,8 +245,6 @@
     color: var(--agGrid-header-foreground);
   }
 
-  .ag-header-row-column-filter:hover,
-  .ag-header-row-column-filter:hover .ag-input-field-input,
   .ag-list-item:hover,
   .ag-virtual-list-item:hover {
     background-color: var(--agGrid-list-item-color-hover) !important;
@@ -390,7 +388,7 @@
 
   .ag-header-cell,
   .ag-header-group-cell {
-    padding: 0px calc(var(--salt-spacing-100) + 2px);
+    padding: 0px calc(var(--salt-spacing-100) + 3px);
   }
 
   .editable-numeric-cell,
@@ -618,8 +616,8 @@
     padding-right: 1px;
   }
 
-  .ag-header-icon .ag-icon-filter:before {
-    content: none;
+  .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
+    margin-left: var(--salt-spacing-100);
   }
 
   .ag-header-cell-auto-height .ag-header-cell-text {
