@@ -661,4 +661,9 @@
     overflow: auto;
     white-space: pre-wrap;
   }
+
+  .ag-react-container {
+    display: flex;
+    align-items: center;
+  }
 }
