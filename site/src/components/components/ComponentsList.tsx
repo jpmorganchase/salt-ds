@@ -62,11 +62,11 @@ const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
   const { name, docsUrl } = component;
 
   return docsUrl ? (
-    <Link
-      href={docsUrl}
-      target={isExternalLink(docsUrl) ? "_blank" : undefined}
-    >
+    <Link href={docsUrl}>
       <span>{name}</span>
+      {isExternalLink(docsUrl) && (
+        <Image src="/img/storybook_logo.svg" alt="storybook logo" />
+      )}
     </Link>
   ) : (
     <span>{name}</span>
@@ -198,14 +198,14 @@ export const ComponentsList = () => {
                 <td>
                   <ComponentNameData component={component} />
                 </td>
-                <td className={styles.statusData}>
+                <td>
                   <ComponentStatusData
                     status={component.devStatus}
                     availableSince={component.availableInCoreSince}
                   />
                 </td>
 
-                <td className={styles.statusData}>
+                <td>
                   <ComponentStatusData
                     status={component.designStatus}
                     availableSince={component.availableInFigmaSince}

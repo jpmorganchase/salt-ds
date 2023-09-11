@@ -10,9 +10,9 @@
   table-layout: fixed;
 }
 
-.statusData :first-child {
+.componentList td :first-child {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: calc(var(--salt-size-unit) / 2);
 }
 
