@@ -1,14 +1,22 @@
-import { composeStories } from "@storybook/testing-react";
-import * as dropdownNextStories from "@stories/dropdown-next/dropdown-next.stories";
 import { SyntheticEvent } from "react";
+import { DropdownNext } from "@salt-ds/lab";
 
-const { Default, WithDefaultSelected, Readonly, Disabled } =
-  composeStories(dropdownNextStories);
+const ListExample = [
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
+];
 
 describe("GIVEN an active Dropdown component", () => {
   describe("WHEN the Dropdown is rendered", () => {
     it("THEN it should open source list", () => {
-      cy.mount(<Default />);
+      cy.mount(<DropdownNext source={ListExample} />);
       cy.findByRole("combobox").focus().realPress("Enter");
 
       cy.findByRole("combobox").should("have.attr", "aria-expanded", "true");
@@ -16,7 +24,7 @@ describe("GIVEN an active Dropdown component", () => {
     });
 
     it("THEN it should move and highlight list items on keyboard arrow up or arrow down", () => {
-      cy.mount(<Default />);
+      cy.mount(<DropdownNext source={ListExample} />);
       cy.findByRole("combobox").focus().realPress("Enter");
       cy.realPress("ArrowDown");
       cy.realPress("ArrowDown");
@@ -31,7 +39,7 @@ describe("GIVEN an active Dropdown component", () => {
     });
 
     it("THEN it should select list items on keyboard enter", () => {
-      cy.mount(<Default />);
+      cy.mount(<DropdownNext source={ListExample} />);
       cy.findByRole("combobox").focus().realPress("Enter");
       cy.realPress("ArrowDown");
       cy.realPress("ArrowDown");
@@ -45,7 +53,7 @@ describe("GIVEN an active Dropdown component", () => {
     });
 
     it("THEN it should highlight list items on mouse move", () => {
-      cy.mount(<Default />);
+      cy.mount(<DropdownNext source={ListExample} />);
       cy.findByRole("combobox").realClick();
 
       cy.findByRole("option", { name: "Georgia" })
@@ -54,7 +62,7 @@ describe("GIVEN an active Dropdown component", () => {
     });
 
     it("THEN it should select list items on mouse click", () => {
-      cy.mount(<Default />);
+      cy.mount(<DropdownNext source={ListExample} />);
       cy.findByRole("combobox").realClick();
       cy.findByRole("option", { name: "Florida" }).trigger("mousemove").click();
 
@@ -65,7 +73,7 @@ describe("GIVEN an active Dropdown component", () => {
 
     // TODO: update once KeyNav fixed in List
     it("THEN it should update value on different list item selection using keyboard", () => {
-      cy.mount(<Default />);
+      cy.mount(<DropdownNext source={ListExample} />);
       cy.findByRole("combobox").focus().realPress("Enter");
       cy.realPress("ArrowDown");
       cy.realPress("ArrowDown");
@@ -90,7 +98,7 @@ describe("GIVEN an active Dropdown component", () => {
     });
 
     it("THEN it should update value on different list item selection using mouse", () => {
-      cy.mount(<Default />);
+      cy.mount(<DropdownNext source={ListExample} />);
       cy.findByRole("combobox").realClick();
 
       cy.findByRole("option", { name: "Florida" }).trigger("mousemove").click();
@@ -108,7 +116,7 @@ describe("GIVEN an active Dropdown component", () => {
   describe("WHEN the Dropdown is rendered with an onSelect prop", () => {
     it("SHOULD call the onSelect prop when an item is selected and confirm the selected value", () => {
       const onSelectSpy = cy.stub().as("onSelectSpy");
-      const onSelect = (
+      const handleSelect = (
         event: SyntheticEvent<Element, Event>,
         data: { value: string }
       ) => {
@@ -117,14 +125,12 @@ describe("GIVEN an active Dropdown component", () => {
         onSelectSpy(data);
       };
 
-      cy.mount(<Default onSelect={onSelect} />);
+      cy.mount(<DropdownNext onSelect={handleSelect} source={ListExample} />);
 
       cy.findByRole("combobox").focus().realPress("Enter");
       cy.realPress("ArrowDown");
       cy.realPress("ArrowDown");
-      cy.findByRole("option", { name: "Alaska" })
-        .should("have.class", "saltListItemNext-highlighted")
-        .realPress("Enter");
+      cy.findByRole("option", { name: "Alaska" }).realClick();
 
       cy.get("@onSelectSpy").should("be.calledWithMatch", { value: "Alaska" });
     });
@@ -132,14 +138,18 @@ describe("GIVEN an active Dropdown component", () => {
 
   describe("WHEN the Dropdown is rendered with defaultSelected prop", () => {
     it("THEN it should show default selected value on first render", () => {
-      cy.mount(<WithDefaultSelected />);
+      cy.mount(
+        <DropdownNext source={ListExample} defaultSelected="California" />
+      );
 
       cy.findByRole("combobox").should("have.value", "California");
     });
 
     // TODO: update once KeyNav fixed in List
     it("THEN it should update value on different list item selection", () => {
-      cy.mount(<WithDefaultSelected />);
+      cy.mount(
+        <DropdownNext source={ListExample} defaultSelected="California" />
+      );
       cy.findByRole("combobox").focus().realPress("Enter");
       cy.realPress("ArrowDown");
       cy.realPress("ArrowDown");
@@ -152,7 +162,13 @@ describe("GIVEN an active Dropdown component", () => {
 
 describe("GIVEN a disabled Dropdown component", () => {
   it("THEN it should be disabled and not focusable", () => {
-    cy.mount(<Disabled />);
+    cy.mount(
+      <DropdownNext
+        source={ListExample}
+        defaultSelected="California"
+        disabled
+      />
+    );
 
     // not focusable
     cy.findByRole("combobox").focus().should("not.have.focus");
@@ -167,8 +183,13 @@ describe("GIVEN a disabled Dropdown component", () => {
 
 describe("GIVEN a readonly Dropdown component", () => {
   it("THEN it should not show icon and be focusable", () => {
-    cy.mount(<Readonly />);
-
+    cy.mount(
+      <DropdownNext
+        source={ListExample}
+        defaultSelected="California"
+        readOnly
+      />
+    );
     cy.findByRole("combobox").focus().should("have.focus");
 
     cy.findByRole("combobox")
