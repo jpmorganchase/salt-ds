@@ -56,12 +56,17 @@ const componentsListSorting = (
   );
 };
 
-const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
-  const { devStatus, name, storybookUrl } = component;
+const isExternalLink = (url: string) => /(http(s?)):\/\//i.test(url);
 
-  return devStatus === ComponentStatus.READY && storybookUrl ? (
-    <Link href={storybookUrl}>
+const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
+  const { name, docsUrl } = component;
+
+  return docsUrl ? (
+    <Link href={docsUrl}>
       <span>{name}</span>
+      {isExternalLink(docsUrl) && (
+        <Image src="/img/storybook_logo.svg" alt="storybook logo" />
+      )}
     </Link>
   ) : (
     <span>{name}</span>
@@ -98,7 +103,7 @@ const ComponentStatusData = ({
 };
 
 type ComponentHeaderProps = {
-  logo: JSX.Element;
+  logo?: JSX.Element;
   label: string;
   isSorted: boolean;
   ascendingOrder: boolean;
@@ -118,7 +123,7 @@ const ComponentHeader = ({
     <Button onClick={handleClick}>
       <span className={styles.headerContainer}>
         <span>
-          {logo}
+          {logo || (isMobileView && label)}
           {!isMobileView && <span>{label}</span>}
         </span>
         {isSorted && arrowIcon}
@@ -160,9 +165,6 @@ export const ComponentsList = () => {
           <tr>
             <th aria-sort={isSortedBy === "name" ? ariaSort : "none"}>
               <ComponentHeader
-                logo={
-                  <Image src="/img/storybook_logo.svg" alt="storybook logo" />
-                }
                 label="Component"
                 isSorted={isSortedBy === "name"}
                 ascendingOrder={hasAscendingOrder}
