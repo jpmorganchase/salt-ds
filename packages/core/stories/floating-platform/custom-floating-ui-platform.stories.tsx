@@ -22,7 +22,7 @@ import {
   FloatingComponentProvider,
   FloatingComponentProps,
 } from "@salt-ds/core";
-import { ComboBoxNext } from "@salt-ds/lab";
+import { ComboBoxNext, DropdownNext } from "@salt-ds/lab";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -52,6 +52,20 @@ const offscreenStyles: React.CSSProperties = {
   position: "fixed",
   opacity: 0,
 };
+
+const source = [
+  "Baby blue",
+  "Black",
+  "Blue",
+  "Brown",
+  "Green",
+  "Orange",
+  "Pink",
+  "Purple",
+  "Red",
+  "White",
+  "Yellow",
+];
 
 const NewWindowTest = (props: NewWindowTestProps) => {
   /*
@@ -167,22 +181,8 @@ const NewWindowTest = (props: NewWindowTestProps) => {
                   Click to show extra content
                 </Button>
               </Tooltip>
-              <ComboBoxNext
-                disabled={false}
-                source={[
-                  "Baby blue",
-                  "Black",
-                  "Blue",
-                  "Brown",
-                  "Green",
-                  "Orange",
-                  "Pink",
-                  "Purple",
-                  "Red",
-                  "White",
-                  "Yellow",
-                ]}
-              />
+              <ComboBoxNext disabled={false} source={source} />
+              <DropdownNext source={source} />
             </FloatingComponentProvider>
           </FloatingPlatformProvider>
         </StackLayout>
@@ -195,7 +195,7 @@ export const CustomFloatingUiPlatform: Story<TooltipProps> = (
   props: TooltipProps
 ) => {
   return (
-    <NewWindow style={{ width: "600px", height: "500px", border: "none" }}>
+    <NewWindow style={{ width: "600px", height: "550px", border: "none" }}>
       <StackLayout gap={2}>
         <H3>This is the root of the application</H3>
         <Text>
@@ -225,22 +225,8 @@ export const AnimationFrame: Story<TooltipProps> = (props: TooltipProps) => {
             <Button>I am a moving button</Button>
           </Tooltip>
           <div style={{ width: 200, position: "relative" }}>
-            <ComboBoxNext
-              disabled={false}
-              source={[
-                "Baby blue",
-                "Black",
-                "Blue",
-                "Brown",
-                "Green",
-                "Orange",
-                "Pink",
-                "Purple",
-                "Red",
-                "White",
-                "Yellow",
-              ]}
-            />
+            <ComboBoxNext disabled={false} source={source} />
+            <DropdownNext source={source} />
           </div>
         </StackLayout>
       </FloatingPlatformProvider>
@@ -259,22 +245,8 @@ export const CustomMiddleware: Story<TooltipProps> = (props: TooltipProps) => {
     >
       <StackLayout align="start" direction={"column"}>
         <div style={{ width: 200, position: "relative" }}>
-          <ComboBoxNext
-            disabled={false}
-            source={[
-              "Baby blue",
-              "Black",
-              "Blue",
-              "Brown",
-              "Green",
-              "Orange",
-              "Pink",
-              "Purple",
-              "Red",
-              "White",
-              "Yellow",
-            ]}
-          />
+          <ComboBoxNext disabled={false} source={source} />
+          <DropdownNext source={source} />
         </div>
         <Tooltip content="I am offset due to custom middleware" open>
           <Button>I am a button</Button>
