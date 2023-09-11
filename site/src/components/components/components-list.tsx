@@ -504,7 +504,6 @@ export const componentDetails: ComponentDetails[] = [
       "Indicates how long a system operation will take. Two variants are available for different layouts—Linear and Circular—with each in small, medium, and large.",
     devStatus: ComponentStatus.IN_BACKLOG,
     designStatus: ComponentStatus.IN_BACKLOG,
-    docsUrl: "./progress",
   },
   {
     name: "Query Input",
