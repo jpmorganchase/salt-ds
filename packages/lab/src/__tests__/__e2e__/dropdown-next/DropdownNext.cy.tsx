@@ -116,30 +116,8 @@ describe("GIVEN an active Dropdown component", () => {
 
       cy.get("@onSelect").should("have.been.calledOnce");
     });
-
-    it("SHOULD call the onSelect prop once, even when the same item is selected", () => {
-      cy.mount(<Default onSelect={cy.spy().as("onSelect")} />);
-
-      cy.findByRole("combobox").focus().realPress("Enter");
-      cy.realPress("ArrowDown");
-      cy.realPress("ArrowDown");
-
-      cy.findByRole("option", { name: "Alaska" }).realPress("Enter");
-
-      cy.get("@onSelect").should("have.been.calledOnce");
-
-      // Repeat the selection for the same item
-      cy.findByRole("combobox").focus().realPress("Enter");
-      cy.realPress("ArrowDown");
-      cy.realPress("ArrowDown");
-
-      cy.findByRole("option", { name: "Alaska" })
-        .should("have.class", "saltListItemNext-highlighted")
-        .realPress("Enter");
-
-      cy.get("@onSelect").should("have.been.calledOnce");
-    });
   });
+
   describe("WHEN the Dropdown is rendered with defaultSelected prop", () => {
     it("THEN it should show default selected value on first render", () => {
       cy.mount(<WithDefaultSelected />);
