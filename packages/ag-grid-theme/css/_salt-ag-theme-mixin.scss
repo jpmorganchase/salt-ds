@@ -260,8 +260,8 @@
     font-weight: var(--agGrid-header-fontWeight);
   }
 
-  .ag-header-container .ag-header-cell:after,
-  .ag-header-container .ag-header-group-cell:after {
+  .ag-header-cell:after,
+  .ag-header-group-cell:after {
     height: var(--agGrid-column-separator-height);
     top: var(--agGrid-column-separator-top);
   }
@@ -282,12 +282,18 @@
   .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
       .ag-cell-range-single-cell
     ) {
-    border-right: none;
+    border-right: 2px solid transparent;
+  }
+  
+  .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
+    .ag-cell-range-single-cell
+    ) {
+      border-left: 2px solid transparent;
   }
 
   /** 
     Due to having a transparent 2px border to avoid shifting content on focus,
-    we have to mimic a RHS border on left pinned cells
+    we have to mimic a RHS border on pinned cells
      */
   .ag-row
     .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
@@ -316,8 +322,39 @@
     z-index: 1;
   }
 
-  .ag-pinned-left-header .ag-header-cell:after {
-    height: 0;
+  .ag-row
+  .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
+    .ag-cell-range-single-cell
+  ):after {
+  background-color: var(--salt-palette-neutral-tertiary-separator);
+  content: "";
+  height: calc(100% + 4px);
+  position: absolute;
+  left: -3px;
+  top: -2px;
+  width: 1px;
+  z-index: 1;
+}
+
+.ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
+    .ag-cell-range-single-cell
+  ):focus:after {
+  background-color: var(--salt-palette-neutral-tertiary-separator);
+  content: "";
+  height: calc(100% + 4px);
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: 1px;
+  z-index: 1;
+}
+
+  .ag-pinned-left-header {
+    border-right: none;
+  }
+
+  .ag-pinned-right-header {
+    border-left: none;
   }
 
   .ag-keyboard-focus .ag-header-cell:focus:after {
