@@ -3,7 +3,7 @@ import { Story, ComponentMeta } from "@storybook/react";
 import { DropdownNext, DropdownNextProps } from "@salt-ds/lab";
 import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 
 export default {
   title: "Lab/Dropdown Next",
@@ -23,12 +23,7 @@ const ListExample = [
 ];
 
 const DropdownTemplate: Story<DropdownNextProps> = ({ source, ...args }) => {
-  const handleSelect = (_event: SyntheticEvent, data: { value: string }) => {
-    console.log("selected item", data.value);
-  };
-  return (
-    <DropdownNext onSelect={handleSelect} source={ListExample} {...args} />
-  );
+  return <DropdownNext source={ListExample} {...args} />;
 };
 
 export const Default = DropdownTemplate.bind({});
