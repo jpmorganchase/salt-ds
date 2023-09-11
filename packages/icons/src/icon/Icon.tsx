@@ -14,6 +14,10 @@ export const makePrefixer =
 const withBaseName = makePrefixer("saltIcon");
 
 export interface IconProps extends SVGAttributes<SVGSVGElement> {
+  /*
+   * The color of the icon. Defaults to "secondary".
+   */
+  color?: "inherit" | "primary" | "secondary";
   /**
    * Multiplier for the base icon size. Should be a positive integer to conform to the rest of the design system.
    */
@@ -23,7 +27,14 @@ export interface IconProps extends SVGAttributes<SVGSVGElement> {
 export const DEFAULT_ICON_SIZE = 1;
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
-  { children, className, size = DEFAULT_ICON_SIZE, style: styleProp, ...rest },
+  {
+    children,
+    className,
+    color = "inherit",
+    size = DEFAULT_ICON_SIZE,
+    style: styleProp,
+    ...rest
+  },
   ref
 ) {
   const targetWindow = useWindow();
@@ -40,7 +51,11 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
 
   return (
     <svg
-      className={clsx(withBaseName(), className)}
+      className={clsx(
+        withBaseName(),
+        { [withBaseName(color)]: color !== "inherit" },
+        className
+      )}
       style={style}
       role="img"
       {...rest}
