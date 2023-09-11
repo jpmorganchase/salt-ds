@@ -1,5 +1,10 @@
-import { ReactElement } from "react";
+import { ReactElement, SyntheticEvent } from "react";
 import { DropdownNext } from "@salt-ds/lab";
 import { StateNames } from "./exampleData";
 
-export const Default = (): ReactElement => <DropdownNext source={StateNames} />;
+const handleSelect = (_event: SyntheticEvent, data: { value: string }) => {
+  console.log("selected item", data.value);
+};
+
+
+export const Default = (): ReactElement => <DropdownNext source={StateNames} onSelect={handleSelect}/>;
