@@ -9,23 +9,23 @@ data:
 
 ### Using the Badge component
 
-- If a numeric annotation exceeds the max value passed as a prop, a plus (`+`) sign will be displayed after the max value stated. In the case that no max value is passed to the component, the value will truncate after 3 digits and therefore display 999+ for any values over 999.
+If a numeric annotation exceeds the max value passed as a prop, a plus (`+`) sign will be displayed after the max value stated. In the case that no max value is passed to the component, the value will truncate after 3 digits and therefore display 999+ for any values over 999.
 
-### When to use Badge
+#### When to use Badge
 
 - To communicate a non-interactive, system driven change to the underlying component it is anchored to. For example, in tabs, pages and containers.
 
 - Typically, if a badge is used to indicate an unread notification, the badge is hidden once the notification is addressed. However, badges can remain persistent depending on context.
 
-### When not to use Badge
+#### When not to use Badge
 
-- To organize content within categories, trigger an immediate action, or enable an action that may change depending on context. Instead, use [Pill](/salt/components/pill).
+- To organize content within categories, trigger an immediate action, or enable an action that may change depending on context. Instead, use [Pill](../pill).
 
 - To communicate status through color, such as RAG statuses. Instead, use Pill. Badges are independent of user action and therefore should not be used to communicate something the user can directly influence through a task.
 
 ### Import
 
-To import badge from the lab Salt package, use:
+To import Badge from the lab Salt package, use:
 
 ```
 import { Badge } from "@salt-ds/lab";
