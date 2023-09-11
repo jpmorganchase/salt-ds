@@ -8,5 +8,6 @@ export const Default = (): ReactElement => {
   const handleSelect = (_event: SyntheticEvent, data: { value: string }) => {
     setSelected(data.value);
   };
+
   return <DropdownNext source={StateNames} onSelect={handleSelect} />;
 };
