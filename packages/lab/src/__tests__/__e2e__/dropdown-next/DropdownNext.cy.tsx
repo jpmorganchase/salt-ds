@@ -1,5 +1,6 @@
 import { composeStories } from "@storybook/testing-react";
 import * as dropdownNextStories from "@stories/dropdown-next/dropdown-next.stories";
+import { SyntheticEvent } from "react";
 
 const { Default, WithDefaultSelected, Readonly, Disabled } =
   composeStories(dropdownNextStories);
@@ -105,16 +106,27 @@ describe("GIVEN an active Dropdown component", () => {
   });
 
   describe("WHEN the Dropdown is rendered with an onSelect prop", () => {
-    it("SHOULD call onSelect prop when an item is selected", () => {
-      cy.mount(<Default onSelect={cy.spy().as("onSelect")} />);
+    it("SHOULD call the onSelect prop when an item is selected and confirm the selected value", () => {
+      const onSelectSpy = cy.stub().as("onSelectSpy");
+      const onSelect = (
+        event: SyntheticEvent<Element, Event>,
+        data: { value: string }
+      ) => {
+        // React 16 backwards compatibility
+        event.persist();
+        onSelectSpy(data);
+      };
+
+      cy.mount(<Default onSelect={onSelect} />);
 
       cy.findByRole("combobox").focus().realPress("Enter");
       cy.realPress("ArrowDown");
       cy.realPress("ArrowDown");
+      cy.findByRole("option", { name: "Alaska" })
+        .should("have.class", "saltListItemNext-highlighted")
+        .realPress("Enter");
 
-      cy.findByRole("option", { name: "Alaska" }).realPress("Enter");
-
-      cy.get("@onSelect").should("have.been.calledOnce");
+      cy.get("@onSelectSpy").should("be.calledWithMatch", { value: "Alaska" });
     });
   });
 
