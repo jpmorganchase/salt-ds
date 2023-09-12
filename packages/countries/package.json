@@ -2,6 +2,12 @@
   "name": "@salt-ds/countries",
   "version": "1.1.2",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/countries"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "./src/index.ts",
   "modular": {
     "type": "package"
