@@ -136,7 +136,7 @@ export const componentDetails: ComponentDetails[] = [
       "Displays a series of panes containing summary content, which can then be expanded or collapsed to allow the user to show or hide content.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCodeSince: "1.8.0-rc.4",
+    availableInCodeSince: "1.8.0",
     docsUrl: "./accordion",
   },
   {
@@ -187,7 +187,7 @@ export const componentDetails: ComponentDetails[] = [
       "Notifies the user of an error, a warning, a successfully-completed task or an information update. It spans the page or container width to give quick, non-disruptive feedback.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCodeSince: "1.8.0-rc.0",
+    availableInCodeSince: "1.8.0",
     docsUrl: "./banner",
   },
   {
@@ -392,7 +392,7 @@ export const componentDetails: ComponentDetails[] = [
       "Form Field is a wrapper for UI controls that are typically found in a form (for example, Input, Combobox or Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCodeSince: "1.8.0-rc.0",
+    availableInCodeSince: "1.8.0",
     docsUrl: "./form-field",
   },
   {
@@ -426,7 +426,7 @@ export const componentDetails: ComponentDetails[] = [
       "Allows the user to enter arbitrary text and numeric values into an editable field, with no specific format defined.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCodeSince: "1.8.0-rc.0",
+    availableInCodeSince: "1.8.0",
     docsUrl: "./input",
   },
   {
@@ -714,7 +714,7 @@ export const componentDetails: ComponentDetails[] = [
       "Displays a small pop-up notification that’s usually short-lived and shown in response to a user action or system event that’s unrelated to the user’s current focus.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCodeSince: "1.8.0-rc.5",
+    availableInCodeSince: "1.8.0",
     docsUrl: "./toast",
   },
   {
@@ -723,7 +723,7 @@ export const componentDetails: ComponentDetails[] = [
       "Allows the user to switch between two possible states, or a related, grouped set of options.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCodeSince: "1.8.0-rc.4",
+    availableInCodeSince: "1.8.0",
     docsUrl: "./toggle-button",
   },
   {
