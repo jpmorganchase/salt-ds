@@ -66,7 +66,6 @@ const WrappedHeader = (props: AgGridReactProps) => {
           rowSelection="multiple"
           defaultColDef={{
             ...propsColDefs,
-            autoHeight: true,
             autoHeaderHeight: true,
           }}
           {...restAgGridProps}
