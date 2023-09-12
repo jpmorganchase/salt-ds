@@ -58,7 +58,7 @@ const WrappedHeader = (props: AgGridReactProps) => {
           />
         </FlexItem>
       </FlexLayout>
-      <div {...containerProps} style={{ height: "400px", width: "600px" }}>
+      <div {...containerProps} style={{ height: "400px", width: "500px" }}>
         <AgGridReact
           columnDefs={dataGridExampleColumnsWrap}
           rowData={dataGridExampleData}
