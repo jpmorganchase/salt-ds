@@ -521,7 +521,7 @@ export const componentDetails: ComponentDetails[] = [
     description:
       "Provides multiple ways to label, tag or categorize content to allow users to trigger actions, make selections or filter results.",
     devStatus: ComponentStatus.IN_LAB,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.READY,
     availableInCodeSince: "1.0.0-alpha.14",
     docsUrl: "./pill",
   },
