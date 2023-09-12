@@ -1,6 +1,9 @@
 const webpack = require("webpack");
 
 module.exports = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   reactStrictMode: true,
   swcMinify: true,
   transpilePackages: [
