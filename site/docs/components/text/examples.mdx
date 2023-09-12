@@ -1,0 +1,69 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="text" exampleName="Styles">
+
+### Styles
+
+The Text component supports these sets of styles:
+
+- Display
+- Headings
+- Body
+- Label
+
+These alternative components display text in commonly used styles. Where relevant, use them instead of Text to simplify syntax:
+
+- Display1
+- Display2
+- Display3
+- H1
+- H2
+- H3
+- H4
+- Label
+
+</LivePreview>
+
+<LivePreview componentName="text" exampleName="Truncation">
+
+### Truncation
+
+The component wraps by default, but you can use the `maxRows` prop to force truncation. Truncation will occur when `maxRows` is greater than 0. If a value is not provided, the text content will wrap.
+
+#### Guidance
+
+Truncated text must comply to WCAG SC 1.4.4. If you use truncated text, you must ensure that a screen reader can read the full value. Read the Accessibility section for further guidance.
+
+</LivePreview>
+
+<LivePreview componentName="text" exampleName="Styling">
+
+### Styling
+
+Although we do not encourage it, you may find it necessary to need to change an element’s mapped styling to another from our typography set. In this case you would use the `styleAs` prop.
+
+Using the `styleAs` prop you can maintain the correct HTML hierarchy as well as the appropriate visual priority. You can style headings to visually appear as different heading levels, irrespective of the underlying DOM element of a heading on the page.
+
+</LivePreview>
+
+<LivePreview componentName="text" exampleName="Variant">
+
+### Variant
+
+Use the `variant` prop to adjust the foreground color of any nested text. Use the `primary` variant most of the time, and the `secondary` variant for supporting text or to create visual hierarchy.
+
+Read our [guidance on how to use text color](/salt/foundations/typography#color).
+
+</LivePreview>
+
+</LivePreviewControls>

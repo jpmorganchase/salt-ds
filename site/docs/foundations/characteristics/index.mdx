@@ -6,42 +6,44 @@ sidebar:
   priority: 1
 ---
 
-## About Characteristics
+A design token stores design decisions in a single place, enabling teams to use them to create consistent experiences.
 
-Characteristic design tokens are a level of abstraction sitting between the foundational tokens and the component-specific tokens.
+The Salt Design System uses three tiers of tokens. From most generalized to most specific, they are:
 
-Each grouping of characteristics (also known in other design systems as _semantics_) is a set of CSS variables which encapsulates a specific concept. These tokens can then be reused by multiple components where necessary, allowing for consistency across design and logical, reusable patterns.
+1. Foundational tokens
+2. Characteristic design tokens (characteristics)
+3. Component-specific tokens
 
-### What are characteristics?
+Characteristics form sets of Cascading Style Sheet (CSS) variables that define a visual attribute, such as text or colors denoting status. Components can then reuse them, allowing for design consistency and logical patterns. They help to define the rules that style each component and aid the cohesiveness of the overall user interface.
 
-Characteristics are semantic groupings of visual attributes that are applied across relevant components. They drive consistency and support theming across complex libraries. They help to define the rules that style each component and aid the cohesiveness of the UI.
-
-### Why characteristics?
-
-From a design perspective, there is a need for aesthetic flexibility without decreasing the efficiency of build or the effectiveness of the components when implemented. From a dev perspective, it provides an easy way to reuse the same values, without the overhead of having to remember details such as hex values. Any time you want to tweak the value of a characteristic, you only have to do it in one place for it to reflect everywhere.
+## Benefits
 
 Characteristics offer the following benefits:
 
-- Ability to theme the Salt inline with third-parties or CIB sub brand guidelines.
-- Increase consistency across all components, with the knock-on effect of improving the overall user experience e.g. reduced cognitive load.
-- Simplified design of new components and patterns e.g. drag-and-drop behavior.
-- Streamlined evolution – a single change to a characteristic will automatically cascade down through all related components within the library.
+- Ability to theme Salt in line with third parties or sub-brand guidelines
+- Increased consistency across all components, improving the overall user experience, e.g., reduced cognitive load
+- Simplified design of new components and patterns e.g., drag-and-drop behavior
+- Single reference points for commonly used values
+- Streamlined design changes, e.g., a characteristic tweak automatically applying to all related components
+- Shared language enabling smooth handovers from design to development
 
-### Token name convention
+You can look at the Salt components' CSS files to see how they are styled.
+
+## Token name convention
 
 When defining characteristic design tokens, they should generally be in the format `--salt-<characteristic name>-<variant>-<attribute>-<state>`
 
-1. Always begin with `--salt-`
-2. Follow this by the foundation name, e.g. `---salt-actionable-`, `---salt-text-`, `--salt-focused-`
-3. Append the variant if applicable, e.g. `--salt-actionable-cta-`, `--salt-text-h2-`
-4. Append the attribute, e.g. `--salt-actionable-cta-background`, `--salt-text-h2-fontSize`, `--salt-focused-outlineColor`
-5. Append the state if applicable, e.g. `--salt-actionable-cta-background-hover`
+1. Always begin with `--salt-`.
+2. Follow with the foundation name, e.g., `--salt-actionable-`, `--salt-text-`, `--salt-focused-`.
+3. Append the variant if applicable, e.g., `--salt-actionable-cta-`, `--salt-text-h2-`.
+4. Append the attribute, e.g., `--salt-actionable-cta-background`, `--salt-text-h2-fontSize`, `--salt-focused-outlineColor`.
+5. Append the state if applicable, e.g., `--salt-actionable-cta-background-hover`.
 
-### Styling with Characteristics
+## Styling with characteristics
 
 Remember to wrap the characteristic you wish to use inside a `var()` function.
 
-For example, a Button is a component on which a user can perform an action, so you could use the following characteristics to style the component:
+For example, a Button is a component on which a user can perform an action, so you can use the following characteristics to style the component:
 
 ```css
 .saltButton {
@@ -50,22 +52,21 @@ For example, a Button is a component on which a user can perform an action, so y
 }
 ```
 
-Characteristics are both light/dark and density scoped, meaning that the value the characteristic points to will change according to the values given in the nearest `SaltProvider`. Considering the above, we would get that in light
-theme, `--salt-actionable-primary-background` resolves to `var(--salt-palette-interact-primary-background)`, which in light theme is `var(--salt-color-gray-60)` and in dark theme is `var(--salt-color-gray-300)`, of which foundation tokens then in turn resolve to their respective RGBA values.
+Characteristics are both light/dark and density scoped, meaning that the value the characteristic points to will change according to the values given in the nearest `SaltProvider`.
 
-### How do I know which characteristics to apply?
+In the above example, `--salt-actionable-primary-background` resolves to `var(--salt-palette-interact-primary-background)`. In the light theme, this is `var(--salt-color-gray-60)`; in the dark theme, this is `var(--salt-color-gray-300)`. Foundation tokens then resolve to their respective RGBA values.
+
+## When to apply
 
 Generally, the characteristics appropriate for the component should be given by the design team. To decide which characteristics to use when styling a new component, it may be useful to ask questions like:
 
-- What can the user do with this component? Can they click it, drag it, etc?
-- What state can this component be in? Can it be focused, disabled, etc?
-- What is the purpose of this component? Will it contain other elements, lead me to a new page, etc?
-- Should this component give feedback? Can it be submitted, does it have a success state, etc?
+- What can the user do with this component? Can they click it, drag it, etc.
+- What state can this component be in? Can it be focused, disabled, etc.
+- What is the purpose of this component? Will it contain other elements, lead the user to a new page, etc.
+- Should this component give feedback? Can it be submitted, does it have a success state, etc.
 
-It is important to note that just because you have assigned a characteristic to a component, does not mean it consumes _all_ of those characteristics. We can freely pick which characteristics we want. A good example of this may be to notice that the `focused` characteristic offers both a border and outline style. From this you would want to use the outline token if you're setting the outline attribute, and the border token if setting the border attribute.
+Just because you have assigned a characteristic to a component does not mean it consumes _all_ of those characteristics. You can specify which characteristics you want to apply.
 
-Think carefully when deciding which characteristics are most appropriate. For example, should the background color of your component be coming from container, because that's its general purpose, or should it be coming from selectable, since it can be selected? Many characteristics host for the same attribute (e.g. background color), and it's important to make the correct decision as to which characteristic your component should adopt the token from. Taking time to consider this will ensure you have the most consistent styling possible across your app, especially when different themes are applied.
+A good example of this is the `focused` characteristic, which offers both border and outline styles. You would use the outline token if setting the outline attribute, and the border token if setting the border attribute.
 
-## How do I know which characteristics the Salt components are using?
-
-Each component has a breakdown of the characteristics used on its documentation page within Storybook. You can also dive into the components CSS files to see exactly how they are styled.
+Think carefully when deciding which characteristics are most appropriate. For example, should your component background come from container because that's its general purpose, or should it come from the selectable, since it can be selected? Many characteristics define the same attribute (e.g., background color), and deciding which characteristic your component should use is important. This will ensure consistent styling across your user interface, especially when different themes are applied.
