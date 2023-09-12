@@ -63,7 +63,7 @@ const getInvestors = async (sortModel: SortModel) => {
     url.searchParams.set("sort_by", `${sortModel.column}.${sortModel.order}`);
   }
   const res = await fetch(url.toString());
-  return await res.json();
+  return res.json();
 };
 
 const useInvestors = (sortModel: SortModel) => {

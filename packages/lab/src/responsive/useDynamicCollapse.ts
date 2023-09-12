@@ -6,8 +6,8 @@ import {
   OverflowHookProps,
   DynamicCollapseHookResult,
 } from "./overflowTypes";
-import { byDescendingPriority } from "./overflowUtils";
 import {
+  byDescendingPriority,
   getElementForItem,
   getRuntimePadding,
   isCollapsed,
