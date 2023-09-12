@@ -1,5 +1,12 @@
 import { useState, MouseEvent } from "react";
-import { ContentStatus, ContentStatusProps } from "@salt-ds/lab";
+import {
+  ContentStatus,
+  ContentStatusProps,
+  FormField,
+  Input,
+  LayerLayout,
+  LAYER_POSITIONS,
+} from "@salt-ds/lab";
 import {
   Button,
   FlowLayout,
@@ -7,7 +14,7 @@ import {
   FlexItem,
   FlexLayout,
 } from "@salt-ds/core";
-import { FormField, Input, LayerLayout, LAYER_POSITIONS } from "@salt-ds/lab";
+
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import "../layout/layout.stories.css";
 

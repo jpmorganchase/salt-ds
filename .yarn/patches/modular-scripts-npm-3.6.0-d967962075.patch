@@ -1,0 +1,100 @@
+diff --git a/dist-cjs/build/buildPackage/makeBundle.js b/dist-cjs/build/buildPackage/makeBundle.js
+index ec658b3e7d3e05e99e8f4f547da1597cf6b7c709..cd8139ad7eb7d6e7584d16617fddc95e52154cb6 100644
+--- a/dist-cjs/build/buildPackage/makeBundle.js
++++ b/dist-cjs/build/buildPackage/makeBundle.js
+@@ -96,7 +96,8 @@ async function makeBundle(packageName, preserveModules, includePrivate) {
+       include: [`packages/**/*`],
+       exclude: 'node_modules/**'
+     }), (0, _rollupPluginPostcss.default)({
+-      extract: false
++      extract: false,
++	  inject: false
+     }), // TODO: add sass, dotenv
+     (0, _pluginJson.default)()] // TODO: support for css modules, sass, dotenv,
+     // and anything else create-react-app supports
+@@ -166,7 +167,8 @@ async function makeBundle(packageName, preserveModules, includePrivate) {
+           // we publish to the registry
+           // TODO: make sure local workspaces are NOT explicitly included in package.json
+           if (includePrivate || packageJsons[importedPackage].private !== true) {
+-            localImports[importedPackage] = packageJsons[importedPackage].version;
++			// Adding ^ prevents multiple versions of an local workspace from being installed
++            localImports[importedPackage] = "^" + packageJsons[importedPackage].version;
+           } else {
+             throw new Error(`referencing a private package: ${importedPackage}`); // TODO - lineNo, filename
+           }
+diff --git a/dist-cjs/check/verifyPackageTree.js b/dist-cjs/check/verifyPackageTree.js
+index 3173ab0eb0ab508676a4e09c68c6da07f6d54070..60ed60feb3653cf56a1e7890681f187e34993c07 100644
+--- a/dist-cjs/check/verifyPackageTree.js
++++ b/dist-cjs/check/verifyPackageTree.js
+@@ -32,7 +32,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
+  * Customized for modular
+  */
+ const DEPS_TO_CHECK = [// These are packages most likely to break in practice.
+-'esbuild', 'eslint', 'webpack', 'webpack-dev-server']; // We assume that having wrong versions of these
++'esbuild', 'webpack', 'webpack-dev-server']; // We assume that having wrong versions of these
+ // in the tree will likely break your setup.
+ // This is a relatively low-effort way to find common issues.
+ 
+diff --git a/dist-cjs/typecheck.js b/dist-cjs/typecheck.js
+index 862bc50e7be846106cd3647be9dd50f747eb2b15..9f78bf7620f32e4044a2d9b58a4f555ba2d23ef0 100644
+--- a/dist-cjs/typecheck.js
++++ b/dist-cjs/typecheck.js
+@@ -36,7 +36,7 @@ async function typecheck() {
+     ...rest
+   } = typescriptConfig;
+   const tsConfig = { ...rest,
+-    exclude: ['node_modules', 'bower_components', 'jspm_packages', 'tmp', '**/dist-types', '**/dist-cjs', '**/dist-es', 'dist', '**/__fixtures__'],
++    exclude: ['node_modules', 'bower_components', 'jspm_packages', 'tmp', '**/dist-types', '**/dist-cjs', '**/dist-es', 'dist', '**/__fixtures__', ...(Array.isArray(rest.exclude) ? rest.exclude : [])],
+     compilerOptions: {
+       noEmit: true
+     }
+diff --git a/dist-cjs/utils/getPackageMetadata.js b/dist-cjs/utils/getPackageMetadata.js
+index f77a29810ef1ccaf429c0ea69f9154a2da1ea6ce..1e09a784bddb1358cae89bcbfcacc3afc2697e13 100644
+--- a/dist-cjs/utils/getPackageMetadata.js
++++ b/dist-cjs/utils/getPackageMetadata.js
+@@ -64,7 +64,8 @@ async function getPackageMetadata() {
+   Object.assign(typescriptConfig, configObject, {
+     // TODO: should probably include the original exclude in this
+     exclude: distinct([// all TS test files, regardless whether co-located or in test/ etc
+-    '**/*.stories.ts', '**/*.stories.tsx', '**/*.spec.ts', '**/*.test.ts', '**/*.e2e.ts', '**/*.spec.tsx', '**/*.test.tsx', '**/__tests__', '**/dist-cjs', '**/dist-es', '**/dist-types', // TS defaults below
++    // We removed stories.tsx? from modular
++	'**/*.spec.ts', '**/*.test.ts', '**/*.e2e.ts', '**/*.spec.tsx', '**/*.test.tsx', '**/__tests__', '**/dist-cjs', '**/dist-es', '**/dist-types', // TS defaults below
+     'node_modules', 'bower_components', 'jspm_packages', 'tmp', // Casting so that configObject.exclude is set to the correct typing
+     // Since configObject is a index type all values are "any" implicitly.
+     ...(configObject.exclude || [])])
+diff --git a/react-scripts/config/parts/styleLoadersConfig.js b/react-scripts/config/parts/styleLoadersConfig.js
+index ebd208fd1df2eb0f1dab4e32de678043e17b6155..d9887fdd4f5d5f70a8b3fb462bf45b0636ac2737 100644
+--- a/react-scripts/config/parts/styleLoadersConfig.js
++++ b/react-scripts/config/parts/styleLoadersConfig.js
+@@ -25,15 +25,7 @@ function createConfig({
+           options: { info, dependencyMap },
+         };
+       },
+-    isEnvDevelopment && require.resolve('style-loader'),
+-    isEnvProduction && {
+-      loader: MiniCssExtractPlugin.loader,
+-      // css is located in `static/css`, use '../../' to locate index.html folder
+-      // in production `paths.publicUrlOrPath` can be a relative path
+-      options: paths.publicUrlOrPath.startsWith('.')
+-        ? { publicPath: '../../' }
+-        : {},
+-    },
++    require.resolve('style-loader'),
+     {
+       loader: require.resolve('css-loader'),
+       options: cssOptions,
+diff --git a/react-scripts/config/paths.js b/react-scripts/config/paths.js
+index 5587b7cda8a2841b4fd7c2950127cc3a102f3f19..37834f78e09e6464d1ea87e0eb2c328f86f4efc5 100644
+--- a/react-scripts/config/paths.js
++++ b/react-scripts/config/paths.js
+@@ -88,6 +88,10 @@ module.exports = {
+   appSrc: resolveApp('src'),
+   modularSrc: [
+     resolveModular('packages'),
++	// Needed to make `modular start app` to work, so webpack can resolve ts/tsx files, see more around `paths.modularSrc` in
++	// node_modules/modular-scripts/react-scripts/config/parts/baseConfig.js
++	resolveModular('playground'),
++	resolveModular('tooling'),
+     resolveModular('node_modules/.modular'),
+   ],
+   appTsConfig: resolveApp('tsconfig.json'),

@@ -41,7 +41,7 @@ const useInvestors = () => {
       const url = new URL("/api/investors", window.location.origin);
       url.searchParams.set("start", pageParam.toString());
       const res = await fetch(url.toString());
-      return await res.json();
+      return res.json();
     },
     keepPreviousData: true,
     getNextPageParam: (_lastGroup, groups) => groups.flat().length,

@@ -3,6 +3,7 @@ import {
   useDensity,
   useForkRef,
   ownerWindow,
+  usePrevious,
 } from "@salt-ds/core";
 import {
   cloneElement,
@@ -19,7 +20,7 @@ import {
   KeyboardEvent,
 } from "react";
 import { useEventCallback } from "../utils";
-import { usePrevious } from "@salt-ds/core";
+
 import { CascadingMenuProps, MenuDescriptor } from "./CascadingMenuProps";
 
 import { CascadingMenuList } from "./CascadingMenuList";

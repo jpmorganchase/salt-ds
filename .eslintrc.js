@@ -1,6 +1,25 @@
 module.exports = {
-  extends: ["modular-app", "plugin:storybook/recommended"],
-  plugins: ["eslint-plugin-local-rules"],
+  root: true,
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: [
+      "./tsconfig.json",
+      "./packages/*/tsconfig.json",
+      "./site/tsconfig.json",
+    ],
+  },
+  plugins: ["@typescript-eslint", "eslint-plugin-local-rules"],
+  extends: [
+    "plugin:import/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "prettier",
+    "plugin:storybook/recommended",
+  ],
+  rules: {
+    "import/no-extraneous-dependencies": "off",
+  },
   overrides: [
     {
       files: ["packages/**/src/**/*.ts", "packages/**/src/**/*.tsx"],
@@ -9,14 +28,11 @@ module.exports = {
       },
     },
     {
+      extends: [
+        "plugin:@typescript-eslint/recommended-type-checked",
+        "plugin:@typescript-eslint/stylistic-type-checked",
+      ],
       files: ["*.ts", "*.tsx"],
-      parserOptions: {
-        project: [
-          "./tsconfig.json",
-          "./packages/**/tsconfig.json",
-          "./site/tsconfig.json",
-        ],
-      },
       rules: {
         "react-hooks/exhaustive-deps": [
           "warn",
@@ -25,18 +41,29 @@ module.exports = {
               "(useIsomorphicLayoutEffect|useLayoutEffectOnce|useLayoutEffectSkipFirst)",
           },
         ],
-        "@typescript-eslint/explicit-module-boundary-types": 0,
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/no-unsafe-assignment ": "off",
+        // TypeScript provides the same checks as part of standard type checking.
+        "import/named": "off",
+        "import/namespace": "off",
+        "import/default": "off",
+        "import/no-named-as-default-member": "off",
       },
     },
     {
-      files: ["stories/**/*.stories.*"],
+      files: ["*.stories.*"],
       rules: {
-        "import/no-anonymous-default-export": "off",
+        "react/prop-types": "off",
       },
     },
     {
       files: ["*.cy.tsx"],
-      extends: ["plugin:cypress/recommended"],
+      plugins: ["cypress"],
     },
   ],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
 };
