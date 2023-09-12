@@ -29,7 +29,12 @@ function getCssVariablesFromDir(dirPath) {
   return cssVariables;
 }
 
-const themeBuildingBlocks = ["foundations", "characteristics", "palette", "deprecated"];
+const themeBuildingBlocks = [
+  "foundations",
+  "characteristics",
+  "palette",
+  "deprecated",
+];
 
 const cssDirPath = path.resolve(__dirname, "../packages/theme/css");
 const cssFolderPath = path.resolve(
@@ -39,14 +44,9 @@ const cssFolderPath = path.resolve(
 
 try {
   for (var block of themeBuildingBlocks) {
-    const tokens = getCssVariablesFromDir(
-      path.join(cssDirPath, block)
-    );
+    const tokens = getCssVariablesFromDir(path.join(cssDirPath, block));
     const jsonData = JSON.stringify(tokens, null, 2);
-    const blockPath = path.join(
-      cssFolderPath,
-      `${block}Variables.json`
-    );
+    const blockPath = path.join(cssFolderPath, `${block}Variables.json`);
     fs.writeFileSync(blockPath, jsonData, "utf8");
   }
 } catch (err) {
