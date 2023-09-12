@@ -77,6 +77,24 @@ const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
   );
 };
 
+function getStatusMessage(
+  status: ComponentStatus,
+  isMobile: boolean,
+  isActive: boolean,
+  availableSince?: string
+): string | null {
+  if (!!availableSince) {
+    if (status === ComponentStatus.READY) {
+      return isMobile ? availableSince : `Released in v${availableSince}`;
+    }
+    if (status === ComponentStatus.IN_LAB) {
+      return isMobile ? availableSince : `In lab v${availableSince}`;
+    }
+  }
+
+  return isMobile && isActive ? null : (status as string);
+}
+
 const ComponentStatusData = ({
   status,
   availableSince,
@@ -84,30 +102,16 @@ const ComponentStatusData = ({
   status: ComponentStatus;
   availableSince?: string;
 }) => {
-  const showReleaseDate =
-    availableSince &&
-    (status === ComponentStatus.READY || status === ComponentStatus.IN_LAB);
   const isMobileView = useIsMobileView();
-  const mobileView = (
-    <span>{showReleaseDate ? `v${availableSince}` : null}</span>
-  );
 
   const activeStatus = status !== ComponentStatus.NOT_APPLICABLE;
 
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
       {activeStatus ? <StepActiveIcon /> : null}
-      {isMobileView && activeStatus ? (
-        mobileView
-      ) : (
-        <span>
-          {showReleaseDate
-            ? status === ComponentStatus.READY
-              ? `Released in v${availableSince}`
-              : `In lab v${availableSince}`
-            : status}
-        </span>
-      )}
+      <span>
+        {getStatusMessage(status, isMobileView, activeStatus, availableSince)}
+      </span>
     </div>
   );
 };
