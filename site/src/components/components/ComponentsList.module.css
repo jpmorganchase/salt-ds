@@ -57,7 +57,8 @@
   --icon-size: 12px;
 }
 
-.status.ready svg {
+.status.ready svg,
+.status.lab svg {
   --saltIcon-color: var(--salt-status-success-foreground);
 }
 
