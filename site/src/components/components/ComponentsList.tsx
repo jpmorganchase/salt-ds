@@ -17,6 +17,9 @@ const statusClass = (status: ComponentStatus) => {
   if (status === ComponentStatus.READY) {
     return "ready";
   }
+  if (status === ComponentStatus.IN_LAB) {
+    return "lab";
+  }
   if (status === ComponentStatus.IN_PROGRESS) {
     return "progress";
   }
@@ -28,6 +31,7 @@ const statusClass = (status: ComponentStatus) => {
 
 const statusSortList = [
   ComponentStatus.READY,
+  ComponentStatus.IN_LAB,
   ComponentStatus.IN_PROGRESS,
   ComponentStatus.IN_BACKLOG,
   ComponentStatus.NOT_APPLICABLE,
@@ -73,6 +77,24 @@ const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
   );
 };
 
+function getStatusMessage(
+  status: ComponentStatus,
+  isMobile: boolean,
+  isActive: boolean,
+  availableSince?: string
+): string | null {
+  if (!!availableSince) {
+    if (status === ComponentStatus.READY) {
+      return isMobile ? availableSince : `Released in v${availableSince}`;
+    }
+    if (status === ComponentStatus.IN_LAB) {
+      return isMobile ? availableSince : `In lab v${availableSince}`;
+    }
+  }
+
+  return isMobile && isActive ? null : (status as string);
+}
+
 const ComponentStatusData = ({
   status,
   availableSince,
@@ -80,24 +102,16 @@ const ComponentStatusData = ({
   status: ComponentStatus;
   availableSince?: string;
 }) => {
-  const showReleaseDate = availableSince && status === ComponentStatus.READY;
   const isMobileView = useIsMobileView();
-  const mobileView = (
-    <span>{showReleaseDate ? `v${availableSince}` : null}</span>
-  );
 
   const activeStatus = status !== ComponentStatus.NOT_APPLICABLE;
 
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
       {activeStatus ? <StepActiveIcon /> : null}
-      {isMobileView && activeStatus ? (
-        mobileView
-      ) : (
-        <span>
-          {showReleaseDate ? `Released in v${availableSince}` : status}
-        </span>
-      )}
+      <span>
+        {getStatusMessage(status, isMobileView, activeStatus, availableSince)}
+      </span>
     </div>
   );
 };
@@ -201,7 +215,7 @@ export const ComponentsList = () => {
                 <td>
                   <ComponentStatusData
                     status={component.devStatus}
-                    availableSince={component.availableInCoreSince}
+                    availableSince={component.availableInCodeSince}
                   />
                 </td>
 
