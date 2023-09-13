@@ -1,6 +1,9 @@
 const webpack = require("webpack");
 
 module.exports = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   reactStrictMode: true,
   swcMinify: true,
   transpilePackages: [
@@ -60,8 +63,6 @@ module.exports = {
     } else {
       config.resolve.fallback = { fs: false };
     }
-
-    config.optimization.minimize = false;
 
     return config;
   },

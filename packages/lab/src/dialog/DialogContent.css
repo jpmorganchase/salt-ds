@@ -1,6 +1,7 @@
 .saltDialogContent {
   color: var(--salt-text-primary-foreground);
-  padding-inline: var(--salt-spacing-300);
+  padding-left: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
   flex: 1 1 auto;
   min-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);

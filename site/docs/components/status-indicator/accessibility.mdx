@@ -1,0 +1,12 @@
+---
+title: Status Indicator
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Best practices
+
+Decorative status indicators (status indicators that repeat the information already expressed by the accompanied text) should be hidden from the screen reader to avoid repetition. If you are adding a status indicator for decorative purposes, pass `aria-hidden=”true”` to hide its label from the screen reader.

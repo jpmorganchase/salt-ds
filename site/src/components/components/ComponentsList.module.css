@@ -12,7 +12,7 @@
 
 .componentList td :first-child {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: calc(var(--salt-size-unit) / 2);
 }
 
@@ -57,7 +57,8 @@
   --icon-size: 12px;
 }
 
-.status.ready svg {
+.status.ready svg,
+.status.lab svg {
   --saltIcon-color: var(--salt-status-success-foreground);
 }
 

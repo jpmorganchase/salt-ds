@@ -2,8 +2,31 @@
   "name": "@salt-ds/lab",
   "version": "1.0.0-alpha.16",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/lab"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
   "sideEffects": false,
+  "dependencies": {
+    "@floating-ui/react": "^0.23.0",
+    "@fluentui/react-overflow": "^9.0.19",
+    "@internationalized/date": "^3.0.0",
+    "@types/react-window": "^1.8.2",
+    "aria-hidden": "^1.1.1",
+    "attr-accept": "^2.0.0",
+    "clipboard-copy": "^4.0.1",
+    "clsx": "^2.0.0",
+    "compute-scroll-into-view": "^3.0.0",
+    "deepmerge": "^4.2.2",
+    "no-scroll": "^2.1.1",
+    "react-color": "^2.19.3",
+    "react-window": "^1.8.6",
+    "rifm": "^0.12.0",
+    "tinycolor2": "^1.4.2"
+  },
   "peerDependencies": {
     "@types/react": ">=16.14.0",
     "react": ">=16.14.0",

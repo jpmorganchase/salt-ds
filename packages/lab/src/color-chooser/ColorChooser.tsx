@@ -29,7 +29,7 @@ function getActiveTab(
   tabs: ColorChooserTabs,
   saltColorOverrides: Record<string, string> | undefined
 ): number {
-  if (tabs["Swatches"] && tabs["Color Picker"]) {
+  if (tabs.Swatches && tabs["Color Picker"]) {
     const hexNoAlpha: string | undefined = hexValueWithoutAlpha(hexValue);
     const colors = saltColorOverrides ?? saltColorMap;
     // if hexNoAlpha is a Salt color or null/undefined then set the active tab as Swatches

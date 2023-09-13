@@ -51,7 +51,7 @@ const cohorts = [
 
 export const db = factory({
   investor: {
-    id: primaryKey(faker.datatype.uuid),
+    id: primaryKey(() => faker.string.uuid()),
     name: () =>
       `${faker.helpers.arrayElement(fruits)} ${faker.helpers.arrayElement(
         types
@@ -63,7 +63,7 @@ export const db = factory({
     score: () => "",
     date: () =>
       faker.date
-        .between("2000-01-01", "2020-12-31")
+        .between({ from: "2000-01-01", to: "2020-12-31" })
         .toISOString()
         .substring(0, 10),
   },
@@ -85,7 +85,7 @@ export interface DummyRow {
 
 export const dummyRowKeyGetter: RowKeyGetter<DummyRow> = (r) => r.id;
 
-export const rowData: DummyRow[] = [...new Array(50)].map((_, i) => ({
+export const rowData: DummyRow[] = Array.from({ length: 50 }, (_, i) => ({
   id: `Row${i}`,
   a: `A${i}`,
   b: i * 100,

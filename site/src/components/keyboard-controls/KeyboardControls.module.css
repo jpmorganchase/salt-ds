@@ -1,6 +1,5 @@
 .table {
   table-layout: initial;
-  margin-top: calc(2 * var(--salt-size-unit));
   margin-bottom: calc(2 * var(--salt-size-unit));
 }
 

@@ -8,13 +8,15 @@
   color: var(--listNext-item-text-color);
   background: var(--listNext-item-background);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  padding-inline: var(--salt-spacing-100);
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
   display: flex;
   gap: var(--salt-size-unit);
   position: relative;
   align-items: center;
   white-space: nowrap;
-  margin-block: var(--salt-size-border);
+  margin-top: var(--salt-size-border);
+  margin-bottom: var(--salt-size-border);
   border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) transparent;
 }
 

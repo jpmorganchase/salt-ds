@@ -1,0 +1,52 @@
+---
+title: Badge
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+  <LivePreview componentName="badge" exampleName="Default">
+    ### Default (top-right)
+
+    Badge is positioned in the top-right corner when attached to a child component such as an icon.
+
+
+    #### Guidance
+
+    - Badge is visually anchored to the attached component. As the number of alphanumeric characters increases, the Badge width expands, but stays in the same place.
+    - Use badge in the top-right corner if you want to provide a summary of the overall state of the content the badge is anchored to. For example, you may want to provide a quick overview of how many new or unread items there are, using numeric values.
+
+  </LivePreview>
+  <LivePreview componentName="badge" exampleName="InlineBadge">
+
+    ### Inline Badge
+
+    To place a badge inline, instead of in the top-right corner of an element simply do not pass `children` to Badge.
+
+    #### Guidance
+
+    Using Badge inline with text makes clear which part of the content the badge relates to and allows specific details to be highlighted within the content to draw the user’s attention. For example, you may use Badge within Tab, inline to the text.
+
+  </LivePreview>
+  <LivePreview componentName="badge" exampleName="BadgeWithMaximumDigits">
+
+    ### Badge with maximum digits
+
+    Specify the maximum number to be displayed with the `max` property. If `value` exceeds `max`, the value will be clamped and a (`+`) suffix will be appended.
+
+    #### Guidance
+
+    - In the case that no max value is passed to the component, the value will be limited to 3 digits by default and therefore display 999+ for any values over 999.
+
+  </LivePreview>
+  <LivePreview componentName="badge" exampleName="BadgeWithString">
+    
+    ### Badge with string
+
+    The `value` property can accept both a `number` and a `string`.
+
+  </LivePreview>
+</LivePreviewControls>

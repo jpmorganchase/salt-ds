@@ -17,6 +17,8 @@ import {
   MouseEvent,
   Ref,
   ForwardedRef,
+  SyntheticEvent,
+  ComponentPropsWithoutRef,
 } from "react";
 import { useWindow } from "@salt-ds/window";
 import dropdownNextCss from "./DropdownNext.css";
@@ -27,8 +29,7 @@ import { useDropdownNext } from "./useDropdownNext";
 const withBaseName = makePrefixer("saltDropdownNext");
 
 export interface DropdownNextProps
-  extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
-    HTMLAttributes<HTMLButtonElement> {
+  extends Omit<ComponentPropsWithoutRef<"button">, "onSelect"> {
   /**
    * If `true`, dropdown will be disabled.
    */
@@ -63,6 +64,11 @@ export interface DropdownNextProps
   ListProps?: ListNextProps;
   /* Status open or close for use in controlled component.  */
   open?: boolean;
+  /**
+   * Callback for list selection event
+   */
+  onSelect?: (event: SyntheticEvent, data: { value: string }) => void;
+  /**
   /* Selected prop for use in controlled component. */
   selected?: string;
   /* Highlighted item prop for use in controlled component. */
@@ -90,6 +96,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     onBlur,
     onMouseOver,
     onMouseDown,
+    onSelect,
     listRef: listRefProp,
     ListProps,
     ...restProps
@@ -112,6 +119,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     disabled,
     ref: listRef,
     id: listId,
+    onSelect: onSelect,
     selected: selectedControlProp,
     highlightedItem: highlightedItemControlProp,
   };

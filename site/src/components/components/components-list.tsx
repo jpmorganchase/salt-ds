@@ -9,6 +9,11 @@ export const enum ComponentStatus {
   READY = "Ready",
 
   /**
+   * A near complete version of the component is available in the lab package.
+   */
+  IN_LAB = "In lab",
+
+  /**
    * Work on the component has begun (and therefore it MAY be
    * available in the labs package), but it is not yet complete
    * and therefore consumers are discouraged from using it in
@@ -62,7 +67,7 @@ export interface ComponentDetails {
    *
    * A `READY` status implies that a production-quality version of the
    * component has been released in the core NPM package. The
-   * `availableInCoreSince` property should therefore also be set.
+   * `availableInCodeSince` property should therefore also be set.
    */
   devStatus: ComponentStatus;
 
@@ -76,15 +81,15 @@ export interface ComponentDetails {
   designStatus: ComponentStatus;
 
   /**
-   * The version of Salt's core npm package in which this component was
+   * The version of one of Salt's npm packages in which this component was
    * first released.
    *
    * Should be the semantic version number without the 'v' prefix
    * (just as it appears in a `package.json`). E.g. "2.14.9".
    *
-   * Only needed for components in the READY status.
+   * Only needed for components in the READY and IN_LAB statuses.
    */
-  availableInCoreSince?: string;
+  availableInCodeSince?: string;
 
   /**
    * The version of Salt's Figma library in which this component was
@@ -107,11 +112,11 @@ export interface ComponentDetails {
   previewImage?: string;
 
   /**
-   * The URL to this component's page on the Salt Storybook site.
+   * The URL to this component's page on the Salt site or on the Storybook site.
    *
    * Only needed for components in the READY status.
    */
-  storybookUrl?: string;
+  docsUrl?: string;
 }
 
 /**
@@ -129,8 +134,10 @@ export const componentDetails: ComponentDetails[] = [
     name: "Accordion",
     description:
       "Displays a series of panes containing summary content, which can then be expanded or collapsed to allow the user to show or hide content.",
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.8.0",
+    docsUrl: "./accordion",
   },
   {
     name: "Announcement Dialog",
@@ -148,29 +155,31 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Avatar",
-    availableInCoreSince: "1.3.0",
+    availableInCodeSince: "1.3.0",
     description:
       "Represents a person. It has three variants to account for different types of data: photo, initials and a default version when neither is available.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-avatar--page",
+    docsUrl: "./avatar",
   },
   {
     name: "AG Grid Theme",
     // TODO: add description
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
+    availableInCodeSince: "1.0.0",
+    docsUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-data-grid-ag-grid-theme--page",
   },
   {
     name: "Badge",
     description:
       "Indicates the number of outstanding items that need to be addressed. It appears on the top right of an element, that’s usually an icon.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_LAB,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.15",
+    docsUrl:
+      "https://storybook.saltdesignsystem.com/?path=/story/documentation-lab-badge--page",
   },
   {
     name: "Banner",
@@ -178,9 +187,8 @@ export const componentDetails: ComponentDetails[] = [
       "Notifies the user of an error, a warning, a successfully-completed task or an information update. It spans the page or container width to give quick, non-disruptive feedback.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.8.0-rc.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-banner--page",
+    availableInCodeSince: "1.8.0",
+    docsUrl: "./banner",
   },
   {
     name: "Border Layout",
@@ -188,9 +196,8 @@ export const componentDetails: ComponentDetails[] = [
       "Defines the main content regions of an application, region or widget, such as a footer, header or side navigation.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-border-layout--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./border-layout",
   },
   {
     name: "Breadcrumbs",
@@ -205,9 +212,8 @@ export const componentDetails: ComponentDetails[] = [
       "Executes an action when the user interacts with it. There are three variants: Call-to-Action (CTA), primary and secondary buttons.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-button--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./button",
   },
   {
     name: "Button Bar",
@@ -229,9 +235,8 @@ export const componentDetails: ComponentDetails[] = [
       "Conveniently displays content that’s composed of different elements that have varied sizes or supported actions.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.1.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-card--page",
+    availableInCodeSince: "1.1.0",
+    docsUrl: "./card",
   },
   {
     name: "Carousel",
@@ -253,9 +258,8 @@ export const componentDetails: ComponentDetails[] = [
       "Enables the user to turn a specific value on or off. The value can be independent or a selection of one or more values from a given set of choices.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.5.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-checkbox--page",
+    availableInCodeSince: "1.5.0",
+    docsUrl: "./checkbox",
   },
   {
     name: "Color Chooser",
@@ -267,8 +271,10 @@ export const componentDetails: ComponentDetails[] = [
     name: "Combo Box",
     description:
       "Helps users select an item from a large list of options without scrolling. Typeahead functionality makes selection quicker and easier, while reducing errors.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_LAB,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.16",
+    docsUrl: "./combo-box",
   },
   {
     // TODO: Not really a component. Should this be moved elsewhere?
@@ -295,17 +301,16 @@ export const componentDetails: ComponentDetails[] = [
     name: "Country Symbol",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-country-symbols-country-symbol--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./country-symbol",
   },
   {
     name: "Data Grid",
     // TODO: add description
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
+    availableInCodeSince: "1.0.0",
+    docsUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-data-grid-data-grid--page",
   },
   {
@@ -319,15 +324,28 @@ export const componentDetails: ComponentDetails[] = [
     name: "Dialog",
     description:
       "Focuses the user’s attention on a particular task or piece of information by displaying a message in a window that opens over the application content.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_LAB,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.16",
+    docsUrl: "./dialog",
+  },
+  {
+    name: "Drawer",
+    description:
+      "A Drawer is an expandable panel that users can open and close with a sliding animation.",
+    devStatus: ComponentStatus.IN_LAB,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.15",
+    docsUrl: "./drawer",
   },
   {
     name: "Dropdown",
     description:
       "Allows the user to select an item from an array of options that’s displayed in a list overlay—with the selected value displayed in the dropdown field.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.IN_LAB,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.16",
+    docsUrl: "./dropdown",
   },
   {
     name: "Experience Customization Wizard",
@@ -356,9 +374,8 @@ export const componentDetails: ComponentDetails[] = [
       "Dictates a vertical or horizontal order and direction for UI elements. Does not wrap by default.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flex-layout--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./flex-layout",
   },
   {
     name: "Flow Layout",
@@ -366,9 +383,8 @@ export const componentDetails: ComponentDetails[] = [
       "Dictates a horizontal order and direction for UI elements. Wraps by default.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-flow-layout--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./flow-layout",
   },
   {
     name: "Form Field",
@@ -376,9 +392,8 @@ export const componentDetails: ComponentDetails[] = [
       "Form Field is a wrapper for UI controls that are typically found in a form (for example, Input, Combobox or Radio Button). It is required to make these controls accessible by providing them with a visible label, validation control and states and descriptive text elements.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.8.0-rc.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-form-field--page",
+    availableInCodeSince: "1.8.0",
+    docsUrl: "./form-field",
   },
   {
     name: "Formatted Input",
@@ -393,9 +408,8 @@ export const componentDetails: ComponentDetails[] = [
       "Defines an equally distributed layout system using columns and rows.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-grid-layout--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./grid-layout",
   },
   {
     name: "Icon",
@@ -403,9 +417,8 @@ export const componentDetails: ComponentDetails[] = [
       "Graphically represents an idea, concept or action. Icons visually reinforce or provide information for a specific task or context.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-icons-icon--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./icon",
   },
   {
     name: "Input",
@@ -413,9 +426,8 @@ export const componentDetails: ComponentDetails[] = [
       "Allows the user to enter arbitrary text and numeric values into an editable field, with no specific format defined.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.8.0-rc.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-input--page",
+    availableInCodeSince: "1.8.0",
+    docsUrl: "./input",
   },
   {
     name: "Layer Layout",
@@ -430,16 +442,18 @@ export const componentDetails: ComponentDetails[] = [
       "Navigates the user to a new page, and displays link text with a meaningful description.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
+    availableInCodeSince: "1.0.0",
+    docsUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-link--page",
   },
   {
     name: "List",
     description:
       "Allows the user to select one or more items from an array of options. Long Lists are shown in a scrolling pane to provide access to all options in a space-efficient way.",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.IN_LAB,
     designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.15",
+    docsUrl: "./list",
   },
   {
     name: "Menu Button",
@@ -459,20 +473,25 @@ export const componentDetails: ComponentDetails[] = [
     name: "Multiline Input",
     description:
       "Provides a text area with multiple rows for users to enter arbitrary text and numeric values for input requiring more detail.",
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.8.0",
+    docsUrl: "./multiline-input",
   },
   {
-    name: "Nav Item",
-    devStatus: ComponentStatus.IN_PROGRESS,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    name: "Navigation Item",
+    devStatus: ComponentStatus.IN_LAB,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.16",
+    docsUrl:
+      "https://storybook.saltdesignsystem.com/?path=/story/documentation-lab-navigation-item--page",
   },
   {
     name: "Overlay",
     description:
       "Mimics the behavior of a tooltip, while containing rich formatting.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Pagination",
@@ -487,9 +506,8 @@ export const componentDetails: ComponentDetails[] = [
       'Organizes content areas in an application by providing expand/collapse behavior, its own scroll bar, and "floating" and "docked" states.',
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.1.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-panel--page",
+    availableInCodeSince: "1.1.0",
+    docsUrl: "./panel",
   },
   {
     name: "Parent Child Layout",
@@ -502,15 +520,17 @@ export const componentDetails: ComponentDetails[] = [
     name: "Pill",
     description:
       "Provides multiple ways to label, tag or categorize content to allow users to trigger actions, make selections or filter results.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.IN_LAB,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.14",
+    docsUrl: "./pill",
   },
   {
     name: "Progress",
     description:
       "Indicates how long a system operation will take. Two variants are available for different layouts—Linear and Circular—with each in small, medium, and large.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Query Input",
@@ -535,9 +555,8 @@ export const componentDetails: ComponentDetails[] = [
       "Allows the user to select one option at a time, from a set that’s vertically or horizontally aligned.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.5.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-radio-button--page",
+    availableInCodeSince: "1.5.0",
+    docsUrl: "./radio-button",
   },
   {
     name: "Salt Provider",
@@ -550,16 +569,15 @@ export const componentDetails: ComponentDetails[] = [
     ),
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-salt-provider--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./salt-provider",
   },
   {
     name: "Scrim",
     description:
       "Allows the user to enter a specific search term into an input field.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_PROGRESS,
+    designStatus: ComponentStatus.IN_PROGRESS,
   },
   {
     name: "Search Input",
@@ -591,13 +609,12 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Spinner",
-    availableInCoreSince: "1.2.0",
+    availableInCodeSince: "1.2.0",
     description:
       "Visually represents a process that is taking an indeterminate time to complete.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-spinner--page",
+    docsUrl: "./spinner",
   },
   {
     name: "Split Button",
@@ -608,12 +625,12 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Split Layout",
-    availableInCoreSince: "1.2.0",
+    availableInCodeSince: "1.2.0",
     description:
       "Defines left and right regions for UI elements within a span, such as a button bar.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
-    storybookUrl:
+    docsUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-split-layout--page",
   },
   {
@@ -621,9 +638,8 @@ export const componentDetails: ComponentDetails[] = [
     description: "Dictates a vertical order and direction for UI elements.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-stack-layout--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./stack-layout",
   },
   {
     name: "Status Indicator",
@@ -631,16 +647,17 @@ export const componentDetails: ComponentDetails[] = [
       "Helps to convey a message when used on its own or within another component. There are four severity levels, each with a distinctive indicator and color.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-status-indicator--page",
+    availableInCodeSince: "1.0.0",
+    docsUrl: "./status-indicator",
   },
   {
     name: "Stepped Tracker",
     description:
       "Visually communicates a user’s progress through a linear process, giving the user context about where they are in the process and indicating the remaining steps.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.IN_LAB,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.14",
+    docsUrl: "./stepped-tracker",
   },
   {
     name: "Stepper Input",
@@ -653,8 +670,10 @@ export const componentDetails: ComponentDetails[] = [
     name: "Switch",
     description:
       "Allows the user to turn a specific value on or off from two choices—with the action having an immediate impact.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_BACKLOG,
+    devStatus: ComponentStatus.IN_LAB,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.0.0-alpha.15",
+    docsUrl: "./switch",
   },
   {
     name: "Tabs",
@@ -676,8 +695,8 @@ export const componentDetails: ComponentDetails[] = [
       "Includes attributes such as font weight, letter spacing, size, line height, paragraph spacing, case, text decoration and emphasis levels.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
+    availableInCodeSince: "1.0.0",
+    docsUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-text--page",
   },
   {
@@ -685,23 +704,27 @@ export const componentDetails: ComponentDetails[] = [
     // TODO: add description
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCoreSince: "1.0.0",
-    storybookUrl:
+    availableInCodeSince: "1.0.0",
+    docsUrl:
       "https://storybook.saltdesignsystem.com/?path=/docs/theme-about-the-salt-theme--page",
   },
   {
     name: "Toast",
     description:
       "Displays a small pop-up notification that’s usually short-lived and shown in response to a user action or system event that’s unrelated to the user’s current focus.",
-    devStatus: ComponentStatus.IN_BACKLOG,
-    designStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
+    designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.8.0",
+    docsUrl: "./toast",
   },
   {
     name: "Toggle Button",
     description:
       "Allows the user to switch between two possible states, or a related, grouped set of options.",
-    devStatus: ComponentStatus.IN_PROGRESS,
+    devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
+    availableInCodeSince: "1.8.0",
+    docsUrl: "./toggle-button",
   },
   {
     name: "Tokenized Input",
@@ -719,13 +742,12 @@ export const componentDetails: ComponentDetails[] = [
   },
   {
     name: "Tooltip",
-    availableInCoreSince: "1.2.0",
+    availableInCodeSince: "1.2.0",
     description:
       "Displays an explanation or provides more information about an error or warning condition, when the user’s  mouse hovers over a target element.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    storybookUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-tooltip--page",
+    docsUrl: "./tooltip",
   },
   {
     name: "Tree",

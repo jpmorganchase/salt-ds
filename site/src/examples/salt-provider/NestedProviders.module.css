@@ -1,0 +1,7 @@
+.card {
+  max-width: 80%;
+}
+
+.nestedCard {
+  margin-top: var(--salt-spacing-100);
+}
