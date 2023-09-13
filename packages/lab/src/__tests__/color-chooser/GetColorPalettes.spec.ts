@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { makePalette, getColorPalettes } from "../../color-chooser";
 
 describe("getColorPalettes", () => {

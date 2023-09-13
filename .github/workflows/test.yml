@@ -91,7 +91,7 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - run: yarn run test --watchAll=false
+      - run: yarn run test
   cypress-tests:
     strategy:
       fail-fast: false

@@ -26,8 +26,8 @@ describe("SwatchesPicker", () => {
     );
     cy.findByTestId("swatch-#333333").should(
       "have.css",
-      "background",
-      "rgba(51, 51, 51, 0.102)"
+      "background-color",
+      "rgba(51, 51, 51, 0.1)"
     );
   });
 
@@ -44,14 +44,14 @@ describe("SwatchesPicker", () => {
     cy.get("@changeSpy").should("not.have.been.called");
     cy.findByTestId("swatch-#333333").realClick();
     cy.get("@changeSpy").should(
-      "have.been.calledWith",
+      "have.been.calledWithMatch",
       {
-        color: Cypress.sinon.match({
+        color: {
           _a: 1,
           _b: 51,
           _g: 51,
           _r: 51,
-        }),
+        },
       },
       true
     );
@@ -71,8 +71,8 @@ describe("SwatchesPicker", () => {
       );
       cy.findByTestId("swatch-#333").should(
         "have.css",
-        "background",
-        "rgba(51, 51, 51, 0.102)"
+        "background-color",
+        "rgba(51, 51, 51, 0.1)"
       );
     });
     it("Should render a div with a coloured background", () => {
@@ -87,7 +87,7 @@ describe("SwatchesPicker", () => {
       );
       cy.findByTestId("swatch-#333").should(
         "have.css",
-        "background",
+        "background-color",
         "rgb(51, 51, 51)"
       );
     });
