@@ -11,3 +11,4 @@ Fixed bugs:
 - Status bar style enhancements
 - Clipping of sort arrow in header row
 - New floating filter design
+- Pinned right columns styling
