@@ -31,56 +31,7 @@ For the initial release, Dynamic format supports five countries: France, Germany
 
 We recommend using templates in Dynamic format with localized language and terms that are more familiar to the user. This will reduce barriers to input and minimize user errors.
 
-<LivePreview componentName="iai" exampleName="DynamicFormat" />
-
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/international-address-input/select_country.png",
-      alt: "Example showing a Select country dropdown",
-    },
-    {
-      src: "/img/patterns/international-address-input/select_united_states.png",
-      alt: "Example showing Dynamic template with United States selected",
-    },
-  ]}
-  label="Select United States"
-/>
-
-<Diagrams>
-  <Diagram
-    src="/img/patterns/international-address-input/dynamic_france.png"
-    alt="Example showing Dynamic template with France selected"
-    contentPosition="top"
-    border
-  >
-    #### France
-  </Diagram>
-  <Diagram
-    src="/img/patterns/international-address-input/dynamic_germany.png"
-    alt="Example showing Dynamic template with Germany selected"
-    contentPosition="top"
-    border
-  >
-    #### Germany
-  </Diagram>
-  <Diagram
-    src="/img/patterns/international-address-input/dynamic_spain.png"
-    alt="Example showing Dynamic template with Spain selected"
-    contentPosition="top"
-    border
-  >
-    #### Spain
-  </Diagram>
-  <Diagram
-    src="/img/patterns/international-address-input/dynamic_united_kingdom.png"
-    alt="Example showing Dynamic template with United Kingdom selected"
-    contentPosition="top"
-    border
-  >
-    #### United Kingdom
-  </Diagram>
-</Diagrams>
+<LivePreview componentName="international-address-input" exampleName="DynamicFormat" />
 
 ### Generic format
 
@@ -88,7 +39,7 @@ Generic format provides a single template of international address input for all
 
 Sometimes, using templates may be difficult due to requirements or product scope. In these cases, use Generic format.
 
-<LivePreview componentName="iai" exampleName="GenericFormat" />
+<LivePreview componentName="international-address-input" exampleName="GenericFormat" />
 
 <ExampleContainer type="positive" customPillText="Best practices">
   - Choose the format that best fits the technical capabilities of your app, delivery timescales and required locations. 
@@ -102,11 +53,7 @@ There may be cases where an additional address form is needed:
 - The client's address may be different from the business address. We recommend a checkbox after the first form for users to select if they need the additional form.
 - In some countries, such as China, users must input the address twice: first in English and then in Chinese. Add an additional form in the local language.
 
-<Diagram
-  src="/img/patterns/international-address-input/additional_address.png"
-  alt="Example showing additional address input"
-  border
-/>
+<LivePreview componentName="international-address-input" exampleName="AdditionalAddress" />
 
 ## Customized Address Forms
 

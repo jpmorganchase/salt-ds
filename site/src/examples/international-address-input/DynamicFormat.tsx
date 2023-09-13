@@ -37,11 +37,11 @@ export const DynamicFormat = (): ReactElement => {
       <>
         <FormField>
           <FormFieldLabel>Nom complet/Raison sociale</FormFieldLabel>
-          <Input defaultValue="Sylvie Fortnite" />
+          <Input />
         </FormField>
         <FormField>
           <FormFieldLabel>Adresse 1</FormFieldLabel>
-          <Input defaultValue="1 Rue de la Légion d'Honneur" />
+          <Input />
           <FormFieldHelperText>Numérotation des rues</FormFieldHelperText>
         </FormField>
         <FormField>
@@ -52,11 +52,11 @@ export const DynamicFormat = (): ReactElement => {
         <StackLayout gap={2} direction={"row"} role="group">
           <FormField style={{ width: "40%" }}>
             <FormFieldLabel>Code postal</FormFieldLabel>
-            <Input defaultValue="75007" />
+            <Input />
           </FormField>
           <FormField style={{ width: "60%" }}>
             <FormFieldLabel>Ville</FormFieldLabel>
-            <Input defaultValue="Paris" />
+            <Input />
           </FormField>
         </StackLayout>
       </>
@@ -66,11 +66,11 @@ export const DynamicFormat = (): ReactElement => {
       <>
         <FormField>
           <FormFieldLabel>Name/Firmennamen</FormFieldLabel>
-          <Input defaultValue="Albrecht Dürer" />
+          <Input />
         </FormField>
         <FormField>
           <FormFieldLabel>Anschrift zeile 1</FormFieldLabel>
-          <Input defaultValue="Nonnendammallee 25" />
+          <Input />
           <FormFieldHelperText>
             Straßenname und -nummer, Abholort
           </FormFieldHelperText>
@@ -85,11 +85,11 @@ export const DynamicFormat = (): ReactElement => {
         <StackLayout gap={2} direction={"row"} role="group">
           <FormField style={{ width: "40%" }}>
             <FormFieldLabel>PLZ</FormFieldLabel>
-            <Input defaultValue="13599" />
+            <Input />
           </FormField>
           <FormField style={{ width: "60%" }}>
             <FormFieldLabel>Stadt</FormFieldLabel>
-            <Input defaultValue="Berlin" />
+            <Input />
           </FormField>
         </StackLayout>
       </>
@@ -99,30 +99,33 @@ export const DynamicFormat = (): ReactElement => {
       <>
         <FormField>
           <FormFieldLabel>Nombre completo/Razón social</FormFieldLabel>
-          <Input defaultValue="José Pizarro" />
+          <Input />
         </FormField>
         <FormField>
           <FormFieldLabel>Dirección 1</FormFieldLabel>
-          <Input defaultValue="Av. de Sant Julià, 148" />
+          <Input />
           <FormFieldHelperText>nombre de la calle</FormFieldHelperText>
         </FormField>
         <FormField>
           <FormFieldLabel>Dirección 2 (opcional)</FormFieldLabel>
-          <Input placeholder="P.I. Congost, Apartamento, suite, unidad, edificio, piso, etc." />
+          <Input />
+          <FormFieldHelperText>
+            P.I. Congost, Apartamento, suite, unidad, edificio, piso, etc.
+          </FormFieldHelperText>
         </FormField>
         <StackLayout gap={2} direction={"row"} role="group">
           <FormField style={{ width: "40%" }}>
             <FormFieldLabel>Código postal</FormFieldLabel>
-            <Input defaultValue="08400" />
+            <Input />
           </FormField>
           <FormField style={{ width: "60%" }}>
             <FormFieldLabel>Ciudad</FormFieldLabel>
-            <Input defaultValue="Barcelona" />
+            <Input />
           </FormField>
         </StackLayout>
         <FormField>
           <FormFieldLabel>Provincia/Estado (opcional)</FormFieldLabel>
-          <Input defaultValue="Barcelona" />
+          <Input />
         </FormField>
       </>
     ),
@@ -131,24 +134,24 @@ export const DynamicFormat = (): ReactElement => {
       <>
         <FormField>
           <FormFieldLabel>Full name/Company name</FormFieldLabel>
-          <Input defaultValue="JP Morgan" />
+          <Input />
         </FormField>
         <FormField>
           <FormFieldLabel>Address 1</FormFieldLabel>
-          <Input defaultValue="25 Bank Street" />
+          <Input />
         </FormField>
         <FormField>
           <FormFieldLabel>Address 2 (optional)</FormFieldLabel>
-          <Input placeholder="PO Box, c/o, Pakadoo PAK-ID etc." />
+          <Input />
         </FormField>
         <StackLayout gap={2} direction={"row"} role="group">
           <FormField style={{ width: "40%" }}>
             <FormFieldLabel>Postcode</FormFieldLabel>
-            <Input defaultValue="E14 5JP" />
+            <Input />
           </FormField>
           <FormField style={{ width: "60%" }}>
             <FormFieldLabel>Town/City</FormFieldLabel>
-            <Input defaultValue="London" />
+            <Input />
           </FormField>
         </StackLayout>
       </>
