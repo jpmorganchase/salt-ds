@@ -6,7 +6,10 @@ const customFilterExampleColumns: ColDef[] = [
     field: "name",
     filter: "agTextColumnFilter",
     suppressMenu: true,
+    pinned: "right",
     floatingFilter: true,
+    width: 100,
+    resizable: false,
   },
   {
     headerName: "Code",
