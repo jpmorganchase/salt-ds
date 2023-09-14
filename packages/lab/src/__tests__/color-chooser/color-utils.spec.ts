@@ -1,3 +1,4 @@
+import { test, describe, expect } from "vitest";
 import { isTransparent } from "../../color-chooser/color-utils";
 
 describe("isTransparent", () => {

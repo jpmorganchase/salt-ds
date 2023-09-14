@@ -1,3 +1,4 @@
+import { describe, beforeEach, it, expect, vi } from "vitest";
 import { render, fireEvent } from "@testing-library/react";
 import {
   ColorChooser,
@@ -7,13 +8,13 @@ import {
   saltColorMap,
 } from "../../color-chooser";
 
-HTMLCanvasElement.prototype.getContext = jest.fn();
+HTMLCanvasElement.prototype.getContext = vi.fn();
 
 describe("ColorChooser", () => {
-  const selectSpy = jest.fn();
-  const clearSpy = jest.fn();
+  const selectSpy = vi.fn();
+  const clearSpy = vi.fn();
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   const saltColor = Color.makeColorFromHex("#D1F4C9");
   const customColor = Color.makeColorFromHex("#30BC67");

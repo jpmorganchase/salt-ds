@@ -1,8 +1,7 @@
 /* eslint-disable */
 //@ts-nocheck
 import { createTokenMap } from "./createTokenMap";
-
-const css = require("css");
+import css from "@adobe/css-tools";
 
 export type JSONByScope = {
   scope: string;
