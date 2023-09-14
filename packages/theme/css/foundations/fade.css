@@ -15,7 +15,7 @@
   --salt-color-gray-600-fade-disabled: rgba(47, 49, 54, var(--salt-palette-opacity-disabled));
   --salt-color-gray-800-fade-disabled: rgba(36, 37, 38, var(--salt-palette-opacity-disabled));
   --salt-color-gray-900-fade-disabled: rgba(22, 22, 22, var(--salt-palette-opacity-disabled));
-  
+
   --salt-color-green-300-fade-disabled: rgba(60, 171, 96, var(--salt-palette-opacity-disabled));
   --salt-color-green-400-fade-disabled: rgba(48, 156, 90, var(--salt-palette-opacity-disabled));
   --salt-color-green-500-fade-disabled: rgba(36, 135, 75, var(--salt-palette-opacity-disabled));
