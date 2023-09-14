@@ -108,8 +108,8 @@ export function ServerSideSort() {
         // @ts-ignore
         "--salt-overlayable-background":
           mode === "light"
-            ? "var(--salt-color-gray-60-fade-background)"
-            : "var(--salt-color-gray-300-fade-background)",
+            ? "var(--salt-color-gray-60-fade-disabled)"
+            : "var(--salt-color-gray-300-fade-disabled)",
       }}
     >
       <Scrim

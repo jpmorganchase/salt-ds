@@ -423,8 +423,8 @@
   ```diff
   - --salt-palette-interact-foreground: var(--salt-color-gray-900);
   + --salt-palette-interact-foreground: var(--salt-color-gray-200);
-  - --salt-palette-interact-foreground-disabled: var(--salt-color-gray-900-fade-foreground);
-  + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-200-fade-foreground);
+  - --salt-palette-interact-foreground-disabled: var(--salt-color-gray-900-fade-disabled);
+  + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-200-fade-disabled);
   - --salt-palette-interact-foreground-hover: var(--salt-color-gray-500);
   + --salt-palette-interact-foreground-hover: var(--salt-color-blue-500);
   ```
@@ -434,8 +434,8 @@
   ```diff
   - --salt-palette-interact-foreground: var(--salt-color-white);
   + --salt-palette-interact-foreground: var(--salt-color-gray-90);
-  - --salt-palette-interact-foreground-disabled: var(--salt-color-white-fade-foreground);
-  + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-fade-foreground);
+  - --salt-palette-interact-foreground-disabled: var(--salt-color-white-fade-disabled);
+  + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-fade-disabled);
   - --salt-palette-interact-foreground-hover: var(--salt-color-gray-500);
   + --salt-palette-interact-foreground-hover: var(--salt-color-blue-500);
   ```

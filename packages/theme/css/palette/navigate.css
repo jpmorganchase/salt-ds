@@ -13,7 +13,7 @@
   --salt-palette-navigate-foreground-visited: var(--salt-color-purple-800);
   --salt-palette-navigate-indicator-hover: var(--salt-color-gray-90);
   --salt-palette-navigate-indicator-active: var(--salt-color-orange-600);
-  --salt-palette-navigate-indicator-activeDisabled: var(--salt-color-orange-600-fade-border);
+  --salt-palette-navigate-indicator-activeDisabled: var(--salt-color-orange-600-fade-disabled);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -31,5 +31,5 @@
   --salt-palette-navigate-foreground-visited: var(--salt-color-purple-100);
   --salt-palette-navigate-indicator-hover: var(--salt-color-gray-90);
   --salt-palette-navigate-indicator-active: var(--salt-color-orange-400);
-  --salt-palette-navigate-indicator-activeDisabled: var(--salt-color-orange-400-fade-border);
+  --salt-palette-navigate-indicator-activeDisabled: var(--salt-color-orange-400-fade-disabled);
 }
