@@ -13,7 +13,8 @@
         "packages/lab/stories/*",
         "packages/theme/stories/*"
       ]
-    }
+    },
+    "types": ["cypress", "@testing-library/cypress"]
   },
   "include": [
     "modular",
@@ -22,7 +23,7 @@
     "docs",
     "tooling",
     "playground",
+    "cypress",
     "./declarations.d.ts"
-  ],
-  "exclude": ["**/*.cy.*", "**/*.spec.*", "**/*.test.*"]
+  ]
 }

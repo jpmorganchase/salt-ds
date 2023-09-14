@@ -114,169 +114,169 @@ describe("A combo box", () => {
   });
 });
 
-describe.skip("A multi-select combo box", () => {
-  it("should assign correct role and role description to the input", () => {
-    const testId = "my-input";
-
-    cy.mount(
-      <MultiSelect
-        InputProps={{
-          InputProps: { inputProps: { "data-testid": testId } as any },
-        }}
-      />
-    );
-
-    cy.findByTestId(testId)
-      .should("have.attr", "role", "textbox")
-      .and("have.attr", "aria-roledescription", "MultiSelect Combobox");
-  });
-
-  it("should assign correct role and role description to the expand input button", () => {
-    cy.mount(<MultiSelectWithInitialSelection />);
-
-    cy.findByRole("button").should(
-      "have.attr",
-      "aria-roledescription",
-      "Expand combobox button"
-    );
-  });
-
-  describe("when navigating using keyboard", () => {
-    const mockId = "my-combo-box";
-
-    //TODO fix
-    it.skip("should have no aria-activedescendant on focus", () => {
-      cy.mount(<MultiSelectWithInitialSelection />);
-
-      cy.realPress("Tab");
-      cy.findByRole("textbox").should("not.have.attr", "aria-activedescendant");
-    });
-
-    it("should attach correct aria-activedescendant when navigating through list and pills", () => {
-      cy.mount(<MultiSelectWithInitialSelection id={mockId} />);
-
-      cy.realPress("Tab");
-      cy.realType("A");
-      cy.realPress("ArrowDown");
-      cy.findByRole("textbox").should(
-        "have.attr",
-        "aria-activedescendant",
-        `${mockId}-item-1`
-      );
-      cy.realPress("Home");
-      cy.realPress("ArrowLeft");
-
-      cy.findByRole("textbox").should(
-        "have.attr",
-        "aria-activedescendant",
-        `${mockId}-input-pill-4`
-      );
-    });
-
-    it("should re-attach aria-activedescendant when navigating through pills", () => {
-      cy.mount(<MultiSelectWithInitialSelection id={mockId} />);
-
-      cy.realPress("Tab");
-      cy.realType("A");
-      cy.realPress("Home");
-
-      // first time highlight
-      cy.realPress("ArrowLeft");
-      cy.findByRole("textbox").should(
-        "have.attr",
-        "aria-activedescendant",
-        `${mockId}-input-pill-4`
-      );
-
-      // leave pills
-      cy.realPress("ArrowRight");
-      cy.findByRole("textbox").should("not.have.attr", "aria-activedescendant");
-
-      // second time highlight
-      cy.realPress("ArrowLeft");
-      cy.realPress("ArrowLeft");
-      cy.findByRole("textbox").should(
-        "have.attr",
-        "aria-activedescendant",
-        `${mockId}-input-pill-4`
-      );
-    });
-
-    (["ArrowUp", "ArrowDown"] as const).forEach((key) => {
-      it(`should re-attach aria-activedescendant when navigating through list using ${key} key`, () => {
-        cy.mount(<MultiSelectWithInitialSelection id={mockId} />);
-
-        // first time highlight
-        cy.realPress("Tab");
-        cy.realType("A");
-        cy.realPress("ArrowDown");
-
-        // navigate through input
-        cy.realPress("Home");
-        cy.realPress("ArrowLeft");
-        cy.findByRole("textbox").should(
-          "have.attr",
-          "aria-activedescendant",
-          `${mockId}-input-pill-4`
-        );
-
-        // second time highlight
-        cy.realPress(key);
-        // TODO - fix
-        // cy.findByRole("textbox").should(
-        //   "have.attr",
-        //   "aria-activedescendant",
-        //   `${mockId}-list-item-${key === "ArrowDown" ? "2" : "0"}`
-        // );
-      });
-    });
-  });
-
-  describe("when used inside of <FormField/>", () => {
-    it("should inherit correct aria-required value", () => {
-      cy.mount(<MultiSelectWithFormField required />);
-
-      cy.findByRole("textbox").should("have.attr", "aria-required", "true");
-    });
-
-    // TODO fix
-    it.skip("should assign correct aria-labelledby to the input and the list", () => {
-      const mockId = "my-combo-box";
-      const mockInputId = `${mockId}-input-input`;
-      const mockLabelId = `${mockId}-input-label`;
-      cy.mount(
-        <MultiSelectWithFormFieldWithInitialSelection
-          id={mockId}
-          LabelProps={{ id: mockLabelId }}
-        />
-      );
-
-      cy.realPress("Tab");
-      cy.findByRole("textbox").should("have.attr", "aria-label", "5 items");
-      cy.findByRole("textbox").should(
-        "have.attr",
-        "aria-labelledby",
-        `${mockLabelId} ${mockInputId}`
-      );
-    });
-
-    it("should assign correct aria-labelledby to the expand input button", () => {
-      const mockId = "my-combo-box";
-      const mockInputId = `${mockId}-input-input`;
-      const mockLabelId = `${mockId}-input-label`;
-
-      cy.mount(
-        <MultiSelectWithFormFieldWithInitialSelection
-          id={mockId}
-          LabelProps={{ id: mockLabelId }}
-        />
-      );
-
-      cy.findByRole("button").should(
-        "have.attr",
-        "aria-labelledby",
-        `${mockLabelId} ${mockInputId}`
-      );
-    });
-  });
-});
+// describe.skip("A multi-select combo box", () => {
+//   it("should assign correct role and role description to the input", () => {
+//     const testId = "my-input";
+//
+//     cy.mount(
+//       <MultiSelect
+//         InputProps={{
+//           InputProps: { inputProps: { "data-testid": testId } as any },
+//         }}
+//       />
+//     );
+//
+//     cy.findByTestId(testId)
+//       .should("have.attr", "role", "textbox")
+//       .and("have.attr", "aria-roledescription", "MultiSelect Combobox");
+//   });
+//
+//   it("should assign correct role and role description to the expand input button", () => {
+//     cy.mount(<MultiSelectWithInitialSelection />);
+//
+//     cy.findByRole("button").should(
+//       "have.attr",
+//       "aria-roledescription",
+//       "Expand combobox button"
+//     );
+//   });
+//
+//   describe("when navigating using keyboard", () => {
+//     const mockId = "my-combo-box";
+//
+//     //TODO fix
+//     it.skip("should have no aria-activedescendant on focus", () => {
+//       cy.mount(<MultiSelectWithInitialSelection />);
+//
+//       cy.realPress("Tab");
+//       cy.findByRole("textbox").should("not.have.attr", "aria-activedescendant");
+//     });
+//
+//     it("should attach correct aria-activedescendant when navigating through list and pills", () => {
+//       cy.mount(<MultiSelectWithInitialSelection id={mockId} />);
+//
+//       cy.realPress("Tab");
+//       cy.realType("A");
+//       cy.realPress("ArrowDown");
+//       cy.findByRole("textbox").should(
+//         "have.attr",
+//         "aria-activedescendant",
+//         `${mockId}-item-1`
+//       );
+//       cy.realPress("Home");
+//       cy.realPress("ArrowLeft");
+//
+//       cy.findByRole("textbox").should(
+//         "have.attr",
+//         "aria-activedescendant",
+//         `${mockId}-input-pill-4`
+//       );
+//     });
+//
+//     it("should re-attach aria-activedescendant when navigating through pills", () => {
+//       cy.mount(<MultiSelectWithInitialSelection id={mockId} />);
+//
+//       cy.realPress("Tab");
+//       cy.realType("A");
+//       cy.realPress("Home");
+//
+//       // first time highlight
+//       cy.realPress("ArrowLeft");
+//       cy.findByRole("textbox").should(
+//         "have.attr",
+//         "aria-activedescendant",
+//         `${mockId}-input-pill-4`
+//       );
+//
+//       // leave pills
+//       cy.realPress("ArrowRight");
+//       cy.findByRole("textbox").should("not.have.attr", "aria-activedescendant");
+//
+//       // second time highlight
+//       cy.realPress("ArrowLeft");
+//       cy.realPress("ArrowLeft");
+//       cy.findByRole("textbox").should(
+//         "have.attr",
+//         "aria-activedescendant",
+//         `${mockId}-input-pill-4`
+//       );
+//     });
+//
+//     (["ArrowUp", "ArrowDown"] as const).forEach((key) => {
+//       it(`should re-attach aria-activedescendant when navigating through list using ${key} key`, () => {
+//         cy.mount(<MultiSelectWithInitialSelection id={mockId} />);
+//
+//         // first time highlight
+//         cy.realPress("Tab");
+//         cy.realType("A");
+//         cy.realPress("ArrowDown");
+//
+//         // navigate through input
+//         cy.realPress("Home");
+//         cy.realPress("ArrowLeft");
+//         cy.findByRole("textbox").should(
+//           "have.attr",
+//           "aria-activedescendant",
+//           `${mockId}-input-pill-4`
+//         );
+//
+//         // second time highlight
+//         cy.realPress(key);
+//         // TODO - fix
+//         // cy.findByRole("textbox").should(
+//         //   "have.attr",
+//         //   "aria-activedescendant",
+//         //   `${mockId}-list-item-${key === "ArrowDown" ? "2" : "0"}`
+//         // );
+//       });
+//     });
+//   });
+//
+//   describe("when used inside of <FormField/>", () => {
+//     it("should inherit correct aria-required value", () => {
+//       cy.mount(<MultiSelectWithFormField required />);
+//
+//       cy.findByRole("textbox").should("have.attr", "aria-required", "true");
+//     });
+//
+//     // TODO fix
+//     it.skip("should assign correct aria-labelledby to the input and the list", () => {
+//       const mockId = "my-combo-box";
+//       const mockInputId = `${mockId}-input-input`;
+//       const mockLabelId = `${mockId}-input-label`;
+//       cy.mount(
+//         <MultiSelectWithFormFieldWithInitialSelection
+//           id={mockId}
+//           LabelProps={{ id: mockLabelId }}
+//         />
+//       );
+//
+//       cy.realPress("Tab");
+//       cy.findByRole("textbox").should("have.attr", "aria-label", "5 items");
+//       cy.findByRole("textbox").should(
+//         "have.attr",
+//         "aria-labelledby",
+//         `${mockLabelId} ${mockInputId}`
+//       );
+//     });
+//
+//     it("should assign correct aria-labelledby to the expand input button", () => {
+//       const mockId = "my-combo-box";
+//       const mockInputId = `${mockId}-input-input`;
+//       const mockLabelId = `${mockId}-input-label`;
+//
+//       cy.mount(
+//         <MultiSelectWithFormFieldWithInitialSelection
+//           id={mockId}
+//           LabelProps={{ id: mockLabelId }}
+//         />
+//       );
+//
+//       cy.findByRole("button").should(
+//         "have.attr",
+//         "aria-labelledby",
+//         `${mockLabelId} ${mockInputId}`
+//       );
+//     });
+//   });
+// });

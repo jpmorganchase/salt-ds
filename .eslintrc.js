@@ -4,8 +4,9 @@ module.exports = {
   parserOptions: {
     project: [
       "./tsconfig.json",
-      "./packages/*/tsconfig.json",
+      "./cypress/tsconfig.json",
       "./site/tsconfig.json",
+      "playground/*/tsconfig.json",
     ],
   },
   plugins: ["@typescript-eslint", "eslint-plugin-local-rules"],
