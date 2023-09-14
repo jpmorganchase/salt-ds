@@ -33,6 +33,8 @@ div[class*="ag-theme-salt-high-compact"] {
 }
 
 div[class*="ag-theme-salt"] {
+  --agGrid-range-selection-borderColor: var(--salt-selectable-borderColor-selected);
+  --agGrid-range-selection-background: var(--salt-selectable-background-selected);
   --agGrid-column-separator-top: calc(
     50% - 0.5 * var(--agGrid-column-separator-height)
   );
@@ -142,6 +144,7 @@ div[class*="ag-theme-salt"] {
 .ag-theme-salt-medium-light,
 .ag-theme-salt-low-light,
 .ag-theme-salt-touch-light {
+  --agGrid-highlight-text-color: rgb(255,255,255);
   --agGrid-tab-borderColor-active: var(
     --saltAgGrid-tab-borderColor-active,
     var(--salt-navigable-indicator-active)
@@ -222,6 +225,7 @@ div[class*="ag-theme-salt"] {
 .ag-theme-salt-medium-dark,
 .ag-theme-salt-low-dark,
 .ag-theme-salt-touch-dark {
+  --agGrid-highlight-text-color: rgb(22, 22, 22);
   --agGrid-tab-borderColor-active: var(
     --saltAgGrid-tab-borderColor-active,
     var(--salt-navigable-indicator-active)

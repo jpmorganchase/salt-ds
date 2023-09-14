@@ -65,6 +65,7 @@ const HDCompact = (props: AgGridReactProps) => {
           rowSelection="multiple"
           {...agGridProps}
           {...props}
+          enableRangeSelection={true}
         />
       </div>
     </StackLayout>
