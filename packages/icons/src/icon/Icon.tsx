@@ -15,7 +15,7 @@ const withBaseName = makePrefixer("saltIcon");
 
 export interface IconProps extends SVGAttributes<SVGSVGElement> {
   /*
-   * The color of the icon. Defaults to "secondary".
+   * The color of the icon. Defaults to "inherit".
    */
   color?: "inherit" | "primary" | "secondary";
   /**

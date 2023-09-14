@@ -11,4 +11,5 @@ This can be used to specify the color used by Icon and supports: primary, second
 <UserIcon color="secondary" />
 <CloseIcon color="inherit" />
 ```
-*Note:* This changes the default icon color from secondary to primary due to it inheriting the default text style. The previous default of secondary was an error.
+
+_Note:_ This changes the default icon color from secondary to primary due to it inheriting the default text style. The previous default of secondary was an error.
