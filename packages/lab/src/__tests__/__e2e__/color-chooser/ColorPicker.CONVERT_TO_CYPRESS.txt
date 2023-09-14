@@ -1,4 +1,4 @@
-import { ColorPicker, Color } from "../../color-chooser";
+import { ColorPicker, Color } from "../../../color-chooser";
 import { render, fireEvent } from "@testing-library/react";
 
 const color = Color.makeColorFromHex("#D1F4C9");
