@@ -19,75 +19,75 @@
 .salt-theme[data-mode="light"] {
   /* Interact */
   --salt-palette-interact-foreground-partial: var(--salt-color-blue-600);
-  --salt-palette-interact-foreground-partialDisabled: var(--salt-color-blue-600-fade-foreground);
+  --salt-palette-interact-foreground-partialDisabled: var(--salt-color-blue-600-fade-disabled);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-500);
-  --salt-palette-measured-fill-disabled: var(--salt-color-blue-500-fade-fill);
+  --salt-palette-measured-fill-disabled: var(--salt-color-blue-500-fade-disabled);
   --salt-palette-measured-foreground: var(--salt-color-gray-90);
   --salt-palette-measured-foreground-active: var(--salt-color-blue-500);
-  --salt-palette-measured-foreground-disabled: var(--salt-color-gray-90-fade-foreground);
-  --salt-palette-measured-foreground-activeDisabled: var(--salt-color-blue-500-fade-fill);
+  --salt-palette-measured-foreground-disabled: var(--salt-color-gray-90-fade-disabled);
+  --salt-palette-measured-foreground-activeDisabled: var(--salt-color-blue-500-fade-disabled);
   --salt-palette-measured-background: var(--salt-color-gray-60);
-  --salt-palette-measured-background-disabled: var(--salt-color-gray-60-fade-background);
+  --salt-palette-measured-background-disabled: var(--salt-color-gray-60-fade-disabled);
   --salt-palette-measured-border: var(--salt-color-gray-90);
-  --salt-palette-measured-border-disabled: var(--salt-color-gray-90-fade-border);
+  --salt-palette-measured-border-disabled: var(--salt-color-gray-90-fade-disabled);
 
   /* Neutral */
   --salt-palette-neutral-tertiary-background-readonly: transparent;
 
   /* Status */
-  --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
-  --salt-palette-error-border-disabled: var(--salt-color-red-500-fade-border);
+  --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-disabled);
+  --salt-palette-error-border-disabled: var(--salt-color-red-500-fade-disabled);
 
-  --salt-palette-info-border-disabled: var(--salt-color-blue-500-fade-border);
-  --salt-palette-info-foreground-disabled: var(--salt-color-blue-500-fade-foreground);
+  --salt-palette-info-border-disabled: var(--salt-color-blue-500-fade-disabled);
+  --salt-palette-info-foreground-disabled: var(--salt-color-blue-500-fade-disabled);
 
-  --salt-palette-negative-foreground-disabled: var(--salt-color-red-700-fade-foreground);
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-700-fade-disabled);
 
-  --salt-palette-positive-foreground-disabled: var(--salt-color-green-700-fade-foreground);
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-700-fade-disabled);
 
-  --salt-palette-success-border-disabled: var(--salt-color-green-500-fade-border);
-  --salt-palette-success-foreground-disabled: var(--salt-color-green-500-fade-foreground);
+  --salt-palette-success-border-disabled: var(--salt-color-green-500-fade-disabled);
+  --salt-palette-success-foreground-disabled: var(--salt-color-green-500-fade-disabled);
 
-  --salt-palette-warning-foreground-disabled: var(--salt-color-orange-700-fade-foreground);
-  --salt-palette-warning-border-disabled: var(--salt-color-orange-700-fade-border);
+  --salt-palette-warning-foreground-disabled: var(--salt-color-orange-700-fade-disabled);
+  --salt-palette-warning-border-disabled: var(--salt-color-orange-700-fade-disabled);
 }
 
 .salt-theme[data-mode="dark"] {
   /* Interact */
   --salt-palette-interact-foreground-partial: var(--salt-color-blue-100);
-  --salt-palette-interact-foreground-partialDisabled: var(--salt-color-blue-100-fade-foreground);
+  --salt-palette-interact-foreground-partialDisabled: var(--salt-color-blue-100-fade-disabled);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-300);
-  --salt-palette-measured-fill-disabled: var(--salt-color-blue-300-fade-fill);
+  --salt-palette-measured-fill-disabled: var(--salt-color-blue-300-fade-disabled);
   --salt-palette-measured-foreground: var(--salt-color-gray-90);
   --salt-palette-measured-foreground-active: var(--salt-color-blue-300);
-  --salt-palette-measured-foreground-disabled: var(--salt-color-gray-90-fade-foreground);
-  --salt-palette-measured-foreground-activeDisabled: var(--salt-color-blue-300-fade-fill);
+  --salt-palette-measured-foreground-disabled: var(--salt-color-gray-90-fade-disabled);
+  --salt-palette-measured-foreground-activeDisabled: var(--salt-color-blue-300-fade-disabled);
   --salt-palette-measured-background: var(--salt-color-gray-300);
-  --salt-palette-measured-background-disabled: var(--salt-color-gray-300-fade-background);
+  --salt-palette-measured-background-disabled: var(--salt-color-gray-300-fade-disabled);
   --salt-palette-measured-border: var(--salt-color-gray-90);
-  --salt-palette-measured-border-disabled: var(--salt-color-gray-90-fade-border);
+  --salt-palette-measured-border-disabled: var(--salt-color-gray-90-fade-disabled);
 
   /* Neutral */
   --salt-palette-neutral-tertiary-background-readonly: transparent;
 
   /* Status */
-  --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
-  --salt-palette-error-border-disabled: var(--salt-color-red-500-fade-border);
+  --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-disabled);
+  --salt-palette-error-border-disabled: var(--salt-color-red-500-fade-disabled);
 
-  --salt-palette-info-border-disabled: var(--salt-color-blue-500-fade-border);
-  --salt-palette-info-foreground-disabled: var(--salt-color-blue-500-fade-foreground);
+  --salt-palette-info-border-disabled: var(--salt-color-blue-500-fade-disabled);
+  --salt-palette-info-foreground-disabled: var(--salt-color-blue-500-fade-disabled);
 
-  --salt-palette-negative-foreground-disabled: var(--salt-color-red-300-fade-foreground);
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-300-fade-disabled);
 
-  --salt-palette-positive-foreground-disabled: var(--salt-color-green-300-fade-foreground);
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-300-fade-disabled);
 
-  --salt-palette-success-border-disabled: var(--salt-color-green-400-fade-border);
-  --salt-palette-success-foreground-disabled: var(--salt-color-green-400-fade-foreground);
+  --salt-palette-success-border-disabled: var(--salt-color-green-400-fade-disabled);
+  --salt-palette-success-foreground-disabled: var(--salt-color-green-400-fade-disabled);
 
-  --salt-palette-warning-foreground-disabled: var(--salt-color-orange-500-fade-foreground);
-  --salt-palette-warning-border-disabled: var(--salt-color-orange-500-fade-border);
+  --salt-palette-warning-foreground-disabled: var(--salt-color-orange-500-fade-disabled);
+  --salt-palette-warning-border-disabled: var(--salt-color-orange-500-fade-disabled);
 }
