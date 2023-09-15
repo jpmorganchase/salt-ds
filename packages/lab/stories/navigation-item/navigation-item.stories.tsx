@@ -327,7 +327,7 @@ export const VerticalNestedGroup = () => {
   const [expanded, setExpanded] = useState<string[]>([]);
 
   return (
-    <nav>
+    <nav className="verticalNested">
       <ul className="vertical">
         {multipleLevelNesting.map(({ name, subNav }) => (
           <li key={name}>

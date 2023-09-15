@@ -38,3 +38,8 @@ ul {
   height: auto;
   margin-left: var(--salt-spacing-100);
 }
+
+.verticalNested .saltNavigationItem-wrapper.saltNavigationItem-nested {
+  /* padding-left: calc(var(--salt-spacing-250) + (var(--saltNavigationItem-level, 0) * var(--salt-spacing-300))); */
+  padding-left: calc(var(--salt-spacing-250) + var(--salt-spacing-300));
+}
