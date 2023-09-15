@@ -1,5 +1,17 @@
 # @salt-ds/core
 
+## 1.8.2
+
+### Patch Changes
+
+- dfdf4c26: Checkbox and RadioButton readonly states made focusable by default
+- 6c2d10d7: Added new internal --statusIndicator-Color css variable for StatusIndicator. Additionally StatusIndicator will now set `color` as well as the `saltIcon-color` css variable
+- c7ce7642: Remove extra styling from `Card` and `InteractableCard`. This should make them more generic and easier to use.
+- 2b34c155: Fixed bug in GridLayout where `columnGap` and `rowGap` couldn't be set to zero
+- 402e13f7: Browser compatibility CSS changes.
+
+  Added missing prefix to `appearance` and revert `padding-inline`, `padding-block` and `margin-block` to improve browser compatibility with Chrome 79
+
 ## 1.8.1
 
 ### Patch Changes
