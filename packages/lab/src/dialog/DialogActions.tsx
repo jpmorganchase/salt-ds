@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
@@ -8,22 +8,28 @@ import dialogActionsCss from "./DialogActions.css";
 
 const withBaseName = makePrefixer("saltDialogActions");
 
-export const DialogActions = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLDivElement>
->(function DialogActions(props, ref) {
-  const { children, className, ...rest } = props;
+export interface DialogActionsProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * The content of Dialog Actions
+   */
+  children?: ReactNode;
+}
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-dialog-actions",
-    css: dialogActionsCss,
-    window: targetWindow,
-  });
+export const DialogActions = forwardRef<HTMLDivElement, DialogActionsProps>(
+  function DialogActions(props, ref) {
+    const { children, className, ...rest } = props;
 
-  return (
-    <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
-      {children}
-    </div>
-  );
-});
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-dialog-actions",
+      css: dialogActionsCss,
+      window: targetWindow,
+    });
+
+    return (
+      <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
+        {children}
+      </div>
+    );
+  }
+);
