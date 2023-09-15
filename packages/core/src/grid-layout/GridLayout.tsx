@@ -84,8 +84,8 @@ export const GridLayout: GridLayoutComponent = forwardRef(
       ...style,
       "--gridLayout-columns": gridColumns,
       "--gridLayout-rows": gridRows,
-      "--gridLayout-columnGap": gridColumnGap || gridGap,
-      "--gridLayout-rowGap": gridRowGap || gridGap,
+      "--gridLayout-columnGap": gridColumnGap ?? gridGap,
+      "--gridLayout-rowGap": gridRowGap ?? gridGap,
     };
 
     return (
