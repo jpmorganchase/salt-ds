@@ -58,7 +58,7 @@
 /* Styles applied when orientation = "vertical" */
 .saltNavigationItem-wrapper.saltNavigationItem-vertical {
   min-height: calc(var(--salt-size-base));
-  padding-left: calc(var(--navigationItem-gap) + var(--navigationItem-bar-inset));
+  padding-left: calc(var(--salt-spacing-300) + var(--navigationItem-bar-inset));
   padding-right: var(--navigationItem-gap);
   margin: var(--salt-spacing-50) 0;
 }
