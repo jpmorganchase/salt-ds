@@ -16,6 +16,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "prettier",
     "plugin:storybook/recommended",
+    "plugin:import/typescript", // Or Error: Unable to resolve path to module
   ],
   rules: {
     "import/no-extraneous-dependencies": "off",
@@ -66,4 +67,5 @@ module.exports = {
       version: "detect",
     },
   },
+  ignorePatterns: [".eslintrc.js", "**/vite.config.ts"],
 };
