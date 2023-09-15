@@ -22,7 +22,7 @@ const customFilterExampleColumns: ColDef[] = [
   {
     headerName: "Capital",
     field: "capital",
-    filter: "agTextColumnFilter",
+    filter: "agSetColumnFilter",
     suppressMenu: true,
     floatingFilter: true,
   },
