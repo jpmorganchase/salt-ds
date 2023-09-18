@@ -82,7 +82,7 @@
 /* Styles applied when level is not 0 */
 .saltNavigationItem-wrapper.saltNavigationItem-nested {
   font-weight: var(--salt-text-fontWeight);
-  padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-300) + (var(--saltNavigationItem-level, 0) * var(--salt-spacing-100)));
+  padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-400));
 }
 
 /* Styles applied to expand button */
