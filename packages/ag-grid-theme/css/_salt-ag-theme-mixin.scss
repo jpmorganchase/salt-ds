@@ -568,7 +568,7 @@
     border-bottom-style: dotted;
     border-bottom-width: 2px;
   }
-  .ag-cell.ag-cell-range-selected-1,
+  .ag-cell.ag-cell-range-selected-1:not(.ag-cell-focus),
   .ag-root:not(.ag-context-menu-open)
     .ag-body-viewport:not(.ag-has-focus)
     .ag-cell-range-selected-1:not(.ag-cell-inline-editing) {
