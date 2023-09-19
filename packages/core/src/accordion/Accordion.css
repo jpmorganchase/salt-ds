@@ -1,15 +1,17 @@
 .saltAccordion {
-  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  border-width: var(--salt-size-border) 0 0 0;
+  border-style: var(--salt-separable-borderStyle);
+  border-color: var(--salt-separable-tertiary-borderColor);
 }
 
 .saltAccordion-error {
-  border-top-color: var(--salt-status-error-borderColor);
+  border-color: var(--salt-status-error-borderColor);
 }
 
 .saltAccordion-warning {
-  border-top-color: var(--salt-status-warning-borderColor);
+  border-color: var(--salt-status-warning-borderColor);
 }
 
 .saltAccordion-success {
-  border-top-color: var(--salt-status-success-borderColor);
+  border-color: var(--salt-status-success-borderColor);
 }
