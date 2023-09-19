@@ -1,6 +1,6 @@
 /* Style applied to the root element */
 .saltIcon {
-  --icon-color: var(--saltIcon-color, var(--salt-text-secondary-foreground));
+  --icon-color: currentColor;
   --icon-size-multiplier: var(--saltIcon-size-multiplier, 1);
   --icon-base-size: var(--salt-icon-size-base, 12px);
   /**
@@ -22,10 +22,10 @@
   min-height: var(--icon-size);
 }
 
-.saltIcon:hover {
-  --icon-color: var(--saltIcon-color-hover, var(--salt-text-secondary-foreground));
+.saltIcon-primary {
+  --icon-color: var(--salt-text-primary-foreground);
 }
 
-.saltIcon:active {
-  --icon-color: var(--saltIcon-color-active, var(--salt-text-secondary-foreground));
+.saltIcon-secondary {
+  --icon-color: var(--salt-text-secondary-foreground);
 }

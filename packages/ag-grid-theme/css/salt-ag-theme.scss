@@ -3,31 +3,39 @@
 div[class*="ag-theme-salt-touch"] {
   --agGrid-padding-default: 16px;
   --agGrid-cornerTag-size-default: 14px;
+  --agGrid-column-separator-height: 20px;
 }
 
 div[class*="ag-theme-salt-low"] {
   --agGrid-padding-default: 12px;
   --agGrid-cornerTag-size-default: 12px;
+  --agGrid-column-separator-height: 16px;
 }
 
 div[class*="ag-theme-salt-medium"] {
   --agGrid-padding-default: 8px;
   --agGrid-cornerTag-size-default: 10px;
+  --agGrid-column-separator-height: 12px;
 }
 
 div[class*="ag-theme-salt-high"] {
   --agGrid-padding-default: 8px;
   --agGrid-cornerTag-size-default: 8px;
+  --agGrid-column-separator-height: 8px;
 }
 
 div[class*="ag-theme-salt-high-compact"] {
   --salt-size-base: 16px;
 
+  --agGrid-column-separator-height: 8px;
   --agGrid-padding-default: 8px;
   --agGrid-cornerTag-size-default: 8px;
 }
 
 div[class*="ag-theme-salt"] {
+  --agGrid-column-separator-top: calc(
+    50% - 0.5 * var(--agGrid-column-separator-height)
+  );
   --agGrid-input-height: var(
     --saltAgGrid-input-height,
     calc(var(--salt-size-base) + var(--salt-spacing-100))
@@ -399,6 +407,7 @@ $ag-theme-salt-params-touch-dark: map-merge(
   $ag-theme-salt-params-dark
 );
 
+.ag-theme-salt-high-compact-dark,
 .ag-theme-salt-touch-dark,
 .ag-theme-salt-low-dark,
 .ag-theme-salt-medium-dark,
@@ -406,6 +415,7 @@ $ag-theme-salt-params-touch-dark: map-merge(
   color-scheme: dark;
 }
 
+.ag-theme-salt-high-compact-light,
 .ag-theme-salt-touch-light,
 .ag-theme-salt-low-light,
 .ag-theme-salt-medium-light,

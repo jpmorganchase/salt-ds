@@ -27,7 +27,7 @@
     "build:window": "modular build @salt-ds/window",
     "build:styles": "modular build @salt-ds/styles",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
-    "test": "modular test",
+    "test": "vitest",
     "test:components": "cypress run --component --browser chrome --headless",
     "test:components:local": "cypress open --component --browser electron",
     "lint": "eslint . --cache --report-unused-disable-directives --ext .js,.ts,.tsx",
@@ -42,10 +42,7 @@
     "lint:style:lab": "yarn stylelint -f verbose \"packages/lab/src/**/*.css\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && build-storybook",
-    "typecheck": "yarn typecheck:modular && yarn typecheck:toolkit:test && yarn typecheck:toolkit:e2e",
-    "typecheck:modular": "modular typecheck",
-    "typecheck:toolkit:test": "tsc --noEmit --project packages/core/src/__tests__/tsconfig.json",
-    "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json",
+    "typecheck": "tsc --noEmit",
     "chromatic": "chromatic"
   },
   "dependencies": {
@@ -69,10 +66,7 @@
     "@tanstack/react-query": "^4.28.0",
     "@testing-library/cypress": "^9.0.0",
     "@testing-library/dom": "^9.0.0",
-    "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^26.0.20",
     "@types/no-scroll": "^2.1.0",
     "@types/node": "^14.14.20",
     "@types/react": "^18.0.0",
@@ -118,6 +112,7 @@
     "vite": "^3.1.0",
     "vite-plugin-istanbul": "^4.0.0",
     "vite-tsconfig-paths": "^4.0.3",
+    "vitest": "^0.34.4",
     "webpack": "5.74.0",
     "yup": "^1.0.2"
   },
@@ -140,11 +135,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "<rootDir>/node_modules/csstree-validator"
     ]
   },
   "packageManager": "yarn@3.6.1",

@@ -7,7 +7,7 @@ const dataGridExampleColumnsWrap: ColDef[] = [
     width: 38,
     checkboxSelection: true,
     headerCheckboxSelection: true,
-    pinned: "left",
+    pinned: "right",
     suppressMenu: true,
   },
   {
@@ -18,15 +18,16 @@ const dataGridExampleColumnsWrap: ColDef[] = [
       buttons: ["reset", "apply"],
     },
     editable: false,
+    pinned: "left",
     suppressMenu: true,
   },
   {
     headerName: "State code",
     field: "code",
-    width: 80,
+    width: 150,
   },
   {
-    headerName: "State capital",
+    headerName: "Capital of state",
     field: "capital",
     width: 80,
   },
@@ -37,14 +38,14 @@ const dataGridExampleColumnsWrap: ColDef[] = [
     filter: "agNumberColumnFilter",
     editable: true,
     cellClass: ["numeric-cell", "editable-cell"],
-    width: 100,
+    width: 200,
   },
   {
     headerName: "Date",
     type: "dateColumn",
     field: "date",
     filter: "agDateColumnFilter",
-    width: 80,
+    width: 160,
   },
 ];
 export default dataGridExampleColumnsWrap;

@@ -1,5 +1,41 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.17
+
+### Minor Changes
+
+- da568ca4: Added `onSelect` to `Dropdown`
+- 23abebe7: Changes to Combo Box
+
+  - Fix controlled implementation.
+  - Removed `InputProps`.
+  - Added `onListChange` and controlled props `inputValue` `defaultInputValue`.
+  - Exposed `onSelect` in `ComboBox`.
+  - Added `inputValue` and `defaultInputValue` to `useComboBox`.
+
+- 05275590: Changes to `ListNext`
+
+  - Added `onSelect` to `ListNext` and `useList`
+  - Fixed onChange implementation in `useList`
+
+### Patch Changes
+
+- 3602f2fa: Add SaltProvider to drawer
+- 99fafaee: - Change `NavigationItem` flex alignment so it works well with longer labels
+  - Rename `blurSelected` prop to `blurActive`
+  - Update description on `blurSelected` prop
+  - Move `ConditionalWrapper` into separate file
+- f6a06c7c: Add SaltProvider to Dialog
+- 5247b7bd: - Make combo box controlled prop inputValue optional
+  - Add z-index to combobox list
+  - Increase specificity for list css
+- 402e13f7: Browser compatibility CSS changes.
+
+  Added missing prefix to `appearance` and revert `padding-inline`, `padding-block` and `margin-block` to improve browser compatibility with Chrome 79
+
+- e356a06d: - Add z-index to dropdown list
+  - Increase specificity for list css
+
 ## 1.0.0-alpha.16
 
 ### Minor Changes
