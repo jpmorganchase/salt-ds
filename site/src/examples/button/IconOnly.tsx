@@ -10,7 +10,7 @@ export const IconOnly = (): ReactElement => (
     <Button variant="primary">
       <SearchIcon />
     </Button>
-    <Button variant="primary">
+    <Button variant="secondary">
       <SettingsSolidIcon />
     </Button>
   </>

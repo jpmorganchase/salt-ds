@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { Button } from "@salt-ds/core";
-import { SearchIcon, SendIcon } from "@salt-ds/icons";
+import { RefreshIcon, SearchIcon, SendIcon } from "@salt-ds/icons";
 
 export const IconAndText = (): ReactElement => (
   <>
@@ -9,6 +9,9 @@ export const IconAndText = (): ReactElement => (
     </Button>
     <Button variant="cta">
       Send <SendIcon />
+    </Button>
+    <Button variant="secondary">
+      Refresh <RefreshIcon />
     </Button>
   </>
 );
