@@ -42,10 +42,7 @@
     "lint:style:lab": "yarn stylelint -f verbose \"packages/lab/src/**/*.css\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && build-storybook",
-    "typecheck": "yarn typecheck:modular && yarn typecheck:toolkit:test && yarn typecheck:toolkit:e2e",
-    "typecheck:modular": "modular typecheck",
-    "typecheck:toolkit:test": "tsc --noEmit --project packages/core/src/__tests__/tsconfig.json",
-    "typecheck:toolkit:e2e": "tsc --noEmit --project packages/core/src/__tests__/__e2e__/tsconfig.json",
+    "typecheck": "tsc --noEmit",
     "chromatic": "chromatic"
   },
   "dependencies": {
