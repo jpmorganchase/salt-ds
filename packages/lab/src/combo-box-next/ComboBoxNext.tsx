@@ -252,7 +252,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
       />
 
       <FloatingComponent
-        open={Boolean(open && filteredSource)}
+        open={Boolean(open && !disabled && filteredSource)}
         ref={floating}
         {...getPortalProps()}
         {...getPosition()}

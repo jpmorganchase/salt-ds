@@ -29,10 +29,6 @@ import { SaltProvider } from "../salt-provider";
 type CombinedFloatingComponentProps = PropsWithChildren<FloatingComponentProps>;
 export type FloatingComponentProps = {
   /**
-   * Whether the floating component is disabled (used for determinig whether to show the component)
-   */
-  disabled?: boolean;
-  /**
    * Whether the floating component is open (used for determinig whether to show the component)
    * We pass this as a prop rather than not rendering the component to allow more advanced use-cases e.g.
    * for caching windows and reusing them, rather than always spawning a new one
@@ -52,13 +48,13 @@ const DefaultFloatingComponent = forwardRef<
   HTMLElement,
   CombinedFloatingComponentProps
 >((props, ref) => {
-  const { open, disabled = false, top, left, position, ...rest } = props;
+  const { open, top, left, position, ...rest } = props;
   const style = {
     top,
     left,
     position,
   };
-  return open && !disabled ? (
+  return open ? (
     <FloatingPortal>
       <SaltProvider>
         <div style={style} {...rest} ref={ref as Ref<HTMLDivElement>} />

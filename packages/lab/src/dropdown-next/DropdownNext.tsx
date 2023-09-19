@@ -228,7 +228,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
         {getIcon()}
       </button>
       <FloatingComponent
-        open={open}
+        open={open && !disabled}
         ref={floating}
         {...getDropdownNextProps()}
         {...getPosition()}
