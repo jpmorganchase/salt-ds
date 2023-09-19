@@ -83,7 +83,7 @@
     "chromatic": "^7.0.0",
     "ci-info": "^3.3.1",
     "clsx": "^2.0.0",
-    "cypress": "^12.3.0",
+    "cypress": "^13.0.0",
     "cypress-axe": "^1.2.0",
     "cypress-real-events": "^1.10.0",
     "deepmerge": "^4.2.2",
