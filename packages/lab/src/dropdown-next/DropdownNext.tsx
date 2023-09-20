@@ -4,14 +4,12 @@ import {
   makePrefixer,
   useId,
   useForkRef,
-  UseFloatingUIProps,
   useFloatingComponent,
 } from "@salt-ds/core";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import {
   useRef,
   forwardRef,
-  HTMLAttributes,
   FocusEvent,
   KeyboardEvent,
   MouseEvent,
@@ -23,7 +21,7 @@ import {
 import { useWindow } from "@salt-ds/window";
 import dropdownNextCss from "./DropdownNext.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { FloatingPortal, Placement } from "@floating-ui/react";
+import { Placement } from "@floating-ui/react";
 import { useDropdownNext } from "./useDropdownNext";
 
 const withBaseName = makePrefixer("saltDropdownNext");

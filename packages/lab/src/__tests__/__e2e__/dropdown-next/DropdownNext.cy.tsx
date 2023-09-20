@@ -1,6 +1,5 @@
 import { SyntheticEvent } from "react";
 import { DropdownNext } from "@salt-ds/lab";
-76
 const ListExample = [
   "Alabama",
   "Alaska",
