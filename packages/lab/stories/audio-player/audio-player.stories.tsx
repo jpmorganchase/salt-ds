@@ -7,5 +7,5 @@ export default {
 } as ComponentMeta<typeof AudioPlayer>;
 
 export const Default: ComponentStory<typeof AudioPlayer> = () => {
-  return <AudioPlayer src="" />;
+  return <AudioPlayer title="title" src="" />;
 };

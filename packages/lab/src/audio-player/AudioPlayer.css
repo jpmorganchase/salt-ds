@@ -8,11 +8,6 @@
     justify-content: center;
 }
 
-.saltAudioPlayer-sliderContainer {
-    display: flex;
-    justify-content: center;
-}
-
 .saltAudioPlayer-sliderContainer:hover {
   cursor: pointer
 }
@@ -22,6 +17,6 @@
   top: -7px;
 }
 
-.saltAudioPlayer-buttonBar {
+.saltAudioPlayer-controls {
   justify-content: center !important;
 }

@@ -176,7 +176,7 @@ export const AudioPlayer = forwardRef<HTMLDivElement, AudioPlayerProps>(
           <Text styleAs={"label"}>{durationString}</Text>
         </StackLayout>
         <StackLayout
-          className={withBaseName("buttonBar")}
+          className={withBaseName("controls")}
           direction={"row"}
           gap={1}
         >
@@ -185,7 +185,7 @@ export const AudioPlayer = forwardRef<HTMLDivElement, AudioPlayerProps>(
               <DownloadIcon />
             </Button>
           </a>
-          <Button className={withBaseName("button")} onClick={handleRewind}>
+          <Button onClick={handleRewind}>
             {ReplayIconByVariant[skipDuration]}
           </Button>
           <Button onClick={handlePlay} disabled={playDisabled}>
