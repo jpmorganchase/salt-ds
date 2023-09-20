@@ -266,7 +266,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
           {...restListProps}
           ref={setListRef}
         >
-          {filteredSource.map((value, index) => {
+          {filteredSource?.map((value, index) => {
             const onMouseDown = (event: SyntheticEvent<HTMLLIElement>) => {
               setSelectedItem(event.currentTarget?.dataset.value);
               setInputValue(event.currentTarget?.dataset.value);
