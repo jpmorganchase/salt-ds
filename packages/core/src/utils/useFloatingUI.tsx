@@ -189,6 +189,11 @@ export function useFloatingUI(
     onOpenChange,
   } = props;
 
+  const handleOpenChange = (open: boolean) => {
+    update();
+    onOpenChange?.(open);
+  };
+
   const {
     platform: contextPlaform,
     middleware: contextMiddleware,
@@ -200,7 +205,7 @@ export function useFloatingUI(
     strategy,
     middleware: contextMiddleware(middleware),
     open,
-    onOpenChange,
+    onOpenChange: handleOpenChange,
     whileElementsMounted: (...args) => {
       const cleanup = autoUpdate(...args, { animationFrame });
 

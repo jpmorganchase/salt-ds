@@ -79,7 +79,6 @@ const NewWindowTest = (props: NewWindowTestProps) => {
 
   const customPlatform: Platform = useMemo(
     () => ({
-      // ...platform,
       async getElementRects({ ...data }) {
         const result = await platform.getElementRects({
           ...data,
