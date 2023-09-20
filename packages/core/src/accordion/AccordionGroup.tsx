@@ -1,11 +1,16 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "../utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import accordionGroupCss from "./AccordionGroup.css";
 
-export type AccordionGroupProps = ComponentPropsWithoutRef<"div">;
+export interface AccordionGroupProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The child Accordions to be rendered
+   */
+  children?: ReactNode;
+}
 
 const withBaseName = makePrefixer("saltAccordionGroup");
 

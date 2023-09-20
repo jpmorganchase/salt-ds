@@ -1,5 +1,17 @@
 # @salt-ds/core
 
+## 1.8.2
+
+### Patch Changes
+
+- dfdf4c26: Checkbox and RadioButton readonly states made focusable by default
+- 6c2d10d7: Added new internal --statusIndicator-Color css variable for StatusIndicator. Additionally StatusIndicator will now set `color` as well as the `saltIcon-color` css variable
+- c7ce7642: Remove extra styling from `Card` and `InteractableCard`. This should make them more generic and easier to use.
+- 2b34c155: Fixed bug in GridLayout where `columnGap` and `rowGap` couldn't be set to zero
+- 402e13f7: Browser compatibility CSS changes.
+
+  Added missing prefix to `appearance` and revert `padding-inline`, `padding-block` and `margin-block` to improve browser compatibility with Chrome 79
+
 ## 1.8.1
 
 ### Patch Changes
@@ -423,8 +435,8 @@
   ```diff
   - --salt-palette-interact-foreground: var(--salt-color-gray-900);
   + --salt-palette-interact-foreground: var(--salt-color-gray-200);
-  - --salt-palette-interact-foreground-disabled: var(--salt-color-gray-900-fade-disabled);
-  + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-200-fade-disabled);
+  - --salt-palette-interact-foreground-disabled: var(--salt-color-gray-900-fade-foreground);
+  + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-200-fade-foreground);
   - --salt-palette-interact-foreground-hover: var(--salt-color-gray-500);
   + --salt-palette-interact-foreground-hover: var(--salt-color-blue-500);
   ```
@@ -434,8 +446,8 @@
   ```diff
   - --salt-palette-interact-foreground: var(--salt-color-white);
   + --salt-palette-interact-foreground: var(--salt-color-gray-90);
-  - --salt-palette-interact-foreground-disabled: var(--salt-color-white-fade-disabled);
-  + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-fade-disabled);
+  - --salt-palette-interact-foreground-disabled: var(--salt-color-white-fade-foreground);
+  + --salt-palette-interact-foreground-disabled: var(--salt-color-gray-90-fade-foreground);
   - --salt-palette-interact-foreground-hover: var(--salt-color-gray-500);
   + --salt-palette-interact-foreground-hover: var(--salt-color-blue-500);
   ```
