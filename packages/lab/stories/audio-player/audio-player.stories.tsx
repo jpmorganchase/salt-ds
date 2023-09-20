@@ -7,7 +7,5 @@ export default {
 } as ComponentMeta<typeof AudioPlayer>;
 
 export const Default: ComponentStory<typeof AudioPlayer> = () => {
-  return (
-    <AudioPlayer src='' title='My Podcast' skipDuration={10}/>
-  );
+  return <AudioPlayer src="" />;
 };

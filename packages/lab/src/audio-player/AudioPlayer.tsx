@@ -16,7 +16,7 @@ import {
   DownloadIcon,
 } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import { forwardRef } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -26,7 +26,7 @@ import { Slider } from "@salt-ds/lab";
 
 export interface AudioPlayerProps {
   src: string;
-  skipDuration: 5 | 10 | 15;
+  skipDuration?: 5 | 10 | 15;
   title?: string;
   className?: string;
 }
