@@ -85,8 +85,8 @@ export function useAgGridHelpers(
         resizable: true,
         sortable: true,
         filterParams: {
-          cellHeight: listItemHeight
-        }
+          cellHeight: listItemHeight,
+        },
       },
     },
     isGridReady,

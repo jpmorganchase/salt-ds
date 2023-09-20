@@ -274,8 +274,8 @@
     border-color: var(--agGrid-header-borderColor);
   }
 
-  .ag-header-cell-label {
-    justify-content: inherit;
+  .ag-ltr .ag-header-cell .ag-header-cell-label .ag-header-cell-text {
+    margin-right: auto;
   }
 
   .ag-header-row {
@@ -462,6 +462,10 @@
     background-color: var(--agGrid-row-borderColor-selected);
     background-image: none;
     z-index: 1;
+  }
+
+  .ag-ltr .ag-row-group-leaf-indent {
+    border-left: 2px solid transparent;
   }
 
   /* --- General cell styles --- */
