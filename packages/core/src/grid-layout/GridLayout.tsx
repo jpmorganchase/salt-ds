@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement, ElementType } from "react";
+import { forwardRef, ReactNode, ElementType } from "react";
 import { clsx } from "clsx";
 
 import {
@@ -42,7 +42,7 @@ export type GridLayoutProps<T extends ElementType> =
 
 type GridLayoutComponent = <T extends ElementType = "div">(
   props: GridLayoutProps<T>
-) => ReactElement | null;
+) => ReactNode;
 
 const withBaseName = makePrefixer("saltGridLayout");
 
@@ -68,7 +68,7 @@ export const GridLayout: GridLayoutComponent = forwardRef(
       css: gridLayoutCss,
       window: targetWindow,
     });
-    const Component = as || "div";
+    const Component = as ?? "div";
 
     const gridColumns = useResponsiveProp(columns, 12);
 

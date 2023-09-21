@@ -38,7 +38,8 @@ interface RemoveItemAction {
 
 interface MultiItemAction {
   type: "update-items" | "update-items-remove-overflow-indicator";
-  overflowItems: Partial<Omit<OverflowItem, "id">> & Pick<OverflowItem, "id">[];
+  overflowItems: Partial<Omit<OverflowItem, "id" | "priority">> &
+    Pick<OverflowItem, "id" | "priority">[];
 }
 interface SingleItemAction {
   type:

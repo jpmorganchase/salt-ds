@@ -76,7 +76,9 @@ export const Default: Story = () => {
   const [isOutOfRange, setIsOutOfRange] = useState(false);
 
   const handleChange = (value: number | string) =>
-    value > max || value < min ? setIsOutOfRange(true) : setIsOutOfRange(false);
+    Number(value) > max || Number(value) < min
+      ? setIsOutOfRange(true)
+      : setIsOutOfRange(false);
 
   return (
     <SaltProvider>
@@ -208,7 +210,9 @@ export const Error: Story = () => {
   }, [min, max]);
 
   const handleChange = (value: number | string) => {
-    value > max || value < min ? setIsOutOfRange(true) : setIsOutOfRange(false);
+    Number(value) > max || Number(value) < min
+      ? setIsOutOfRange(true)
+      : setIsOutOfRange(false);
   };
 
   useEffect(() => {
@@ -254,7 +258,7 @@ export const LiveDefaultValue: Story = () => {
     Math.random() * (maxValue - minValue) + minValue;
 
   const handleChange = (nextValue: number | string) =>
-    nextValue > max || nextValue < min
+    Number(nextValue) > max || Number(nextValue) < min
       ? setIsOutOfRange(true)
       : setIsOutOfRange(false);
 

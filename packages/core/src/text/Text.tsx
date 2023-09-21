@@ -4,7 +4,7 @@ import {
   PolymorphicRef,
 } from "../utils";
 import { clsx } from "clsx";
-import { ElementType, forwardRef, ReactElement } from "react";
+import { ElementType, forwardRef, ReactNode } from "react";
 
 import textCss from "./Text.css";
 import { useWindow } from "@salt-ds/window";
@@ -42,7 +42,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
 
 type TextComponent = <T extends ElementType = "div">(
   props: TextProps<T>
-) => ReactElement | null;
+) => ReactNode;
 
 const withBaseName = makePrefixer("saltText");
 
@@ -68,7 +68,7 @@ export const Text: TextComponent = forwardRef(
       window: targetWindow,
     });
 
-    const Component = as || "div";
+    const Component = as ?? "div";
 
     const textStyles = { "--text-max-rows": maxRows, ...style };
 
@@ -79,7 +79,7 @@ export const Text: TextComponent = forwardRef(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName("lineClamp")]: maxRows,
-            [withBaseName(styleAs || "")]: styleAs,
+            [withBaseName(styleAs ?? "")]: styleAs,
             [withBaseName(variant)]: variant,
           },
           className

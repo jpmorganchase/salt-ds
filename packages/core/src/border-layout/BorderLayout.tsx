@@ -4,6 +4,7 @@ import {
   ReactElement,
   useEffect,
   ElementType,
+  ReactNode,
 } from "react";
 import { clsx } from "clsx";
 
@@ -44,7 +45,7 @@ const numberOfColumns = 3;
 
 type BorderLayoutComponent = <T extends ElementType = "div">(
   props: BorderLayoutProps<T>
-) => ReactElement | null;
+) => ReactNode;
 
 export const BorderLayout: BorderLayoutComponent = forwardRef(
   <T extends ElementType>(
@@ -93,7 +94,7 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
       <GridLayout
         className={clsx(withBaseName(), className, "saltGridLayout-area")}
         columns={numberOfColumns}
-        gap={gap || 0}
+        gap={gap ?? 0}
         style={borderLayoutStyles}
         ref={ref}
         {...rest}

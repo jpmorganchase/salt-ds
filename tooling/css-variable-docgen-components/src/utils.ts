@@ -11,7 +11,7 @@ export function getDocgenSection<T>(component: Component, section: string): T {
   return hasDocgen(component) ? component.__docgenInfo[section] : null;
 }
 
-export function getCharacteristics<T>(
+export function getCharacteristics<T extends object>(
   cssVariablesApi: T
 ): Record<string, string[]> {
   const characteristicFoundationTokenMap: Record<string, string[]> = {};

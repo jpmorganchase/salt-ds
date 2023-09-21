@@ -164,13 +164,15 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
         ts.forEachChild(sourceFile, (node) => {
           if (
             ts.isImportDeclaration(node) &&
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
             node.moduleSpecifier.text.endsWith(".css")
           ) {
             cssImports.push(
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              path.resolve(path.dirname(id), node.moduleSpecifier.text)
+              path.resolve(path.dirname(id), String(node.moduleSpecifier.text))
             );
           }
         });
@@ -252,7 +254,9 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                   } catch (e) {
                     console.warn(
                       e,
-                      `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`
+                      `Encountered issue parsing CSS variable declaration "${
+                        node.property
+                      }" in "${String(path)}"`
                     );
                   }
                 }
@@ -279,7 +283,9 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                   };
                 } catch (e) {
                   console.warn(
-                    `Encountered issue parsing CSS variable "${name}" in "${path}"`
+                    `Encountered issue parsing CSS variable "${name}" in "${String(
+                      path
+                    )}"`
                   );
                 }
               }
@@ -338,7 +344,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                 ts.isBinaryExpression(node) &&
                 ts.isPropertyAccessExpression(node.left) &&
                 ts.isIdentifier(node.left.name) &&
-                node.left.name.escapedText === "___docgenInfo" &&
+                String(node.left.name.escapedText) === "___docgenInfo" &&
                 ts.isObjectLiteralExpression(node.right)
               ) {
                 return ts.factory.updateBinaryExpression(
@@ -374,9 +380,13 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
         };
 
         const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
-        const result = ts.transform<ts.SourceFile>(sourceFile, [transformer]);
+        const result = ts.transform(sourceFile, [transformer]);
         const transformedSourceFile = result.transformed[0];
-        const newContent = printer.printFile(transformedSourceFile);
+        const newContent = printer.printNode(
+          ts.EmitHint.Unspecified,
+          transformedSourceFile,
+          sourceFile
+        );
         result.dispose();
 
         return {

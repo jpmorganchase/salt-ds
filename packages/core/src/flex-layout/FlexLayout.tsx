@@ -1,4 +1,4 @@
-import { ElementType, forwardRef, ReactElement } from "react";
+import { ElementType, forwardRef, ReactNode } from "react";
 import { clsx } from "clsx";
 
 import {
@@ -64,7 +64,7 @@ export type FlexLayoutProps<T extends ElementType> =
 
 type FlexLayoutComponent = <T extends ElementType = "div">(
   props: FlexLayoutProps<T>
-) => ReactElement | null;
+) => ReactNode;
 
 export const FlexLayout: FlexLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
@@ -90,7 +90,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
       window: targetWindow,
     });
 
-    const Component = as || "div";
+    const Component = as ?? "div";
     const separatorAlignment = separators === true ? "center" : separators;
     const addPrefix = (style: string) => {
       return style === "start" || style === "end" ? `flex-${style}` : style;

@@ -60,7 +60,7 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
   const [mounted, setMounted] = useState(false);
   const portalRef = useRef<HTMLElement | null>(null);
   const handleRef = useForkRef(
-    // @ts-ignore
+    // @ts-expect-error TODO upstream fix
     isValidElement(children) ? children.ref : null,
     ref
   );
@@ -87,7 +87,7 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
   }, [id, container]);
 
   if (disablePortal) {
-    if (isValidElement(children)) {
+    if (isValidElement<Record<string, unknown>>(children)) {
       return cloneElement(children, {
         ref: handleRef,
       });

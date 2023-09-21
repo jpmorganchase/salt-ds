@@ -1,4 +1,4 @@
-import { ElementType, forwardRef, ReactElement, ReactNode } from "react";
+import { ElementType, forwardRef, ReactNode } from "react";
 import { FlexLayout, FlexLayoutProps } from "../flex-layout";
 import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
 
@@ -31,7 +31,7 @@ export type SplitLayoutProps<T extends ElementType> =
 
 type SplitLayoutComponent = <T extends ElementType = "div">(
   props: SplitLayoutProps<T>
-) => ReactElement | null;
+) => ReactNode;
 
 export const SplitLayout: SplitLayoutComponent = forwardRef(
   <T extends ElementType = "div">(

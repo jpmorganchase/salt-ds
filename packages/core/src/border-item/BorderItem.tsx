@@ -1,4 +1,4 @@
-import { forwardRef, ElementType, ReactElement } from "react";
+import { forwardRef, ElementType, ReactNode } from "react";
 import { clsx } from "clsx";
 import { GridItem, GridItemProps } from "../grid-item";
 import borderItemCss from "./BorderItem.css";
@@ -47,7 +47,7 @@ const withBaseName = makePrefixer("saltBorderItem");
 
 type BorderItemComponent = <T extends ElementType = "div">(
   props: BorderItemProps<T>
-) => ReactElement | null;
+) => ReactNode;
 
 export const BorderItem: BorderItemComponent = forwardRef(
   <T extends ElementType>(

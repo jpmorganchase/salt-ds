@@ -1,4 +1,4 @@
-import { ElementType, forwardRef, ReactElement } from "react";
+import { ElementType, forwardRef, ReactNode } from "react";
 import {
   FlexLayout,
   FlexLayoutProps,
@@ -44,7 +44,7 @@ export type StackLayoutProps<T extends ElementType> =
 
 type StackLayoutComponent = <T extends ElementType = "div">(
   props: StackLayoutProps<T>
-) => ReactElement | null;
+) => ReactNode;
 
 export const StackLayout: StackLayoutComponent = forwardRef(
   <T extends ElementType = "div">(

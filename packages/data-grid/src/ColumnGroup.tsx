@@ -8,7 +8,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { GridColumnPin } from "./GridColumn";
+import { GridColumnPin, GridColumnProps } from "./GridColumn";
 import { GridColumnGroupModel } from "./Grid";
 
 export interface ColumnGroupCellProps {
@@ -29,7 +29,7 @@ export interface ColumnGroupProps {
 }
 
 export function ColumnGroup(props: ColumnGroupProps) {
-  const pinned = props.pinned || null;
+  const pinned = props.pinned ?? null;
   const indexRef = useRef<number>();
   const grid = useGridContext();
   useEffect(() => {
@@ -40,8 +40,10 @@ export function ColumnGroup(props: ColumnGroupProps) {
     };
   });
   const childrenWithPinnedOverridden = Children.map(props.children, (child) => {
-    if (isValidElement(child)) {
-      return cloneElement(child, { pinned });
+    if (isValidElement<GridColumnProps>(child)) {
+      return cloneElement(child, {
+        pinned,
+      });
     }
     return child;
   });

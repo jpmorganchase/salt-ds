@@ -1,4 +1,4 @@
-import { forwardRef, ElementType, ReactElement, CSSProperties } from "react";
+import { forwardRef, ElementType, ReactNode, CSSProperties } from "react";
 import {
   makePrefixer,
   ResponsiveProp,
@@ -46,7 +46,7 @@ export type FlexItemProps<T extends ElementType> =
 
 type FlexItemComponent = <T extends ElementType = "div">(
   props: FlexItemProps<T>
-) => ReactElement | null;
+) => ReactNode;
 
 export const FlexItem: FlexItemComponent = forwardRef(
   <T extends ElementType = "div">(

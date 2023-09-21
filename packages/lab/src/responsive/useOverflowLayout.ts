@@ -13,7 +13,7 @@ import { useOverflow } from "./useOverflow";
 import { useReclaimSpace } from "./useReclaimSpace";
 import { ResizeHandler, useResizeObserver } from "../responsive";
 
-const MONITORED_DIMENSIONS: { [key: string]: string[] } = {
+const MONITORED_DIMENSIONS: Record<string, string[]> = {
   horizontal: ["width", "scrollHeight"],
   vertical: ["height", "scrollWidth"],
   none: [],

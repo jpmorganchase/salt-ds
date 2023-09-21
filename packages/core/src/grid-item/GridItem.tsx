@@ -1,4 +1,4 @@
-import { forwardRef, ElementType, ReactElement } from "react";
+import { forwardRef, ElementType, ReactNode } from "react";
 import { clsx } from "clsx";
 
 import {
@@ -54,7 +54,7 @@ const rowEnd = "auto";
 
 type GridItemComponent = <T extends ElementType = "div">(
   props: GridItemProps<T>
-) => ReactElement | null;
+) => ReactNode;
 
 export const GridItem: GridItemComponent = forwardRef(
   <T extends ElementType = "div">(
@@ -78,7 +78,7 @@ export const GridItem: GridItemComponent = forwardRef(
       window: targetWindow,
     });
 
-    const Component = as || "div";
+    const Component = as ?? "div";
     const gridItemColSpan = useResponsiveProp(colSpan, "auto");
 
     const gridItemRowSpan = useResponsiveProp(rowSpan, "auto");
