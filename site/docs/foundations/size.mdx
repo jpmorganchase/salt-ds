@@ -5,7 +5,7 @@ sidebar:
   label: Size
 ---
 
-Size refers to the restricted dimensions provided within the design system that can refer to the height and/or width of an element.
+Size refers to the restricted dimensions provided within the design system, such as an element's height and/or width.
 
 ## Size tokens
 
@@ -33,7 +33,7 @@ Size refers to the restricted dimensions provided within the design system that 
 
 ### Nesting size-base
 
-Using size-base, in conjunction with a [spacing token](spacing) above and below, creates a consistent height for components that have the ability to nest a `--salt-size-base` component within them. This provides further standardized heights across the design system.
+Using size-base, in conjunction with a [spacing token](spacing) above and below, creates a consistent height for components that can nest a `--salt-size-base` component within them. This provides further standardized heights across the design system.
 
 The following example shows how components can use `--salt-size-base` and `--salt-spacing-50` (top and bottom) to define the height of a component or stackable element, such as a Data Grid row. The height allows a size-base component to be contained within it, but it is not dependent on the component to force the height.
 
@@ -59,13 +59,13 @@ The following example shows how components can use `--salt-size-base` and `--sal
 
 ## Icon
 
-`--salt-size-icon` controls the size of all icons throughout the design system. Icons are designed to be displayed no smaller than 12x12, therefore this is set as a minimum measurement within the token's values. The result of this restriction can be seen in the "Size tokens" table. Following the ramp, HD should be 10px. However, the minimum size fixes it at 12px.
+`--salt-size-icon` controls the size of all icons throughout the design system. Icons are designed to be displayed no smaller than 12px x 12px; therefore this is set as a minimum measurement within the token's values. The result of this restriction can be seen in the Size tokens table. Following the ramp, HD should be 10px. However, the minimum size fixes it at 12px.
 
-The size of an icon can be changed within a density using the [Scale](scale) foundation. For HD, the scale is based on the expected value rather than the minimum. This means an HD icon starts at 12px, when scaled up (x2 its default size) it will be 20px rather than 24px, at x3 its default it will be 30px, etc.
+The size of an icon can be changed within a density using the [Scale](scale) Foundation. For HD, the scale is based on the expected value rather than the minimum. This means an HD icon starts at 12px. When scaled up (x2 its default size) it will be 20px rather than 24px, at x3 its default it will be 30px, etc.
 
-The Scale foundation includes an example of `--salt-size-icon` scaling, and including specific values for each density.
+The Scale Foundation provides an example of `--salt-size-icon` scaling, including specific values for each density.
 
-You can find out more about icons and how to use them in the [Iconography](iconography) foundation.
+You can find out more about icons and how to use them in the [Iconography](iconography) Foundation.
 
 <ImageSwitcher
   images={[
@@ -105,7 +105,7 @@ Bar is used to control the thickness of an accent bar, either in vertical or hor
 
 ## Border
 
-Unlike all other sizes, `--salt-size-border` is a fixed dimension regardless of density. It controls the size of all borders and separators across the design system.
+Unlike other sizes, `--salt-size-border` is a fixed dimension regardless of density. It controls the size of all borders and separators across the design system.
 
 <ImageSwitcher
   images={[
@@ -117,6 +117,6 @@ Unlike all other sizes, `--salt-size-border` is a fixed dimension regardless of 
 
 <Callout title="Have some feedback?">
 
-We're still in the process of rolling out the Salt Foundations, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or suggestions.
+The Salt Foundations are still in progress, and we'd appreciate your thoughts and feedback. Please [contact us](../support-and-contributions/index) if you have any comments or questions.
 
 </Callout>
