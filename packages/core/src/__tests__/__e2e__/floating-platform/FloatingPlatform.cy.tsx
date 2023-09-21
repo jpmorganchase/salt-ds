@@ -11,13 +11,13 @@ import { platform } from "@floating-ui/dom";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
-const TO0LTIP_TEXT = "I am a tooltip";
+const TOOLTIP_TEXT = "I am a tooltip";
 
 describe("Given a floating component in a CustomFloatingComponentProvider", () => {
   const TestComponent = () => {
     return (
       <CustomFloatingComponentProvider>
-        <Tooltip content={TO0LTIP_TEXT} open>
+        <Tooltip content={TOOLTIP_TEXT} open>
           <Button>I am a button</Button>
         </Tooltip>
       </CustomFloatingComponentProvider>
@@ -51,7 +51,7 @@ describe("Given a floating component in a CustomFloatingComponentProvider", () =
           <Tooltip
             content={
               <div style={{ minWidth: TEST_SIZE, minHeight: TEST_SIZE }}>
-                {TO0LTIP_TEXT}
+                {TOOLTIP_TEXT}
               </div>
             }
             open
@@ -95,7 +95,7 @@ describe("Given a floating component in a FloatingPlaformProvider with potential
         }
       >
         <CustomFloatingComponentProvider>
-          <Tooltip content={TO0LTIP_TEXT} open>
+          <Tooltip content={TOOLTIP_TEXT} open>
             <Button>I am a button</Button>
           </Tooltip>
         </CustomFloatingComponentProvider>
@@ -140,7 +140,7 @@ describe("Given a floating component in a FloatingPlaformProvider with animation
       <FloatingPlatformProvider animationFrame={animationFrame}>
         <CustomFloatingComponentProvider>
           {isMoved && <h1>Some other content</h1>}
-          <Tooltip content={TO0LTIP_TEXT} open>
+          <Tooltip content={TOOLTIP_TEXT} open>
             <Button onClick={() => setIsMoved(true)}>Add More Content</Button>
           </Tooltip>
         </CustomFloatingComponentProvider>
@@ -195,7 +195,7 @@ describe("Given a floating component in a FloatingPlaformProvider", () => {
         <FloatingPlatformProvider>
           <CustomFloatingComponentProvider>
             {isMoved && <h1>Some other content</h1>}
-            <Tooltip content={TO0LTIP_TEXT} open={isOpen}>
+            <Tooltip content={TOOLTIP_TEXT} open={isOpen}>
               <Button>I am a button</Button>
             </Tooltip>
           </CustomFloatingComponentProvider>
@@ -272,7 +272,7 @@ describe("Given a floating component with a FloatingPlatformProvider and custom 
     return (
       <FloatingPlatformProvider platform={customPlatform}>
         <CustomFloatingComponentProvider>
-          <Tooltip content={TO0LTIP_TEXT} open>
+          <Tooltip content={TOOLTIP_TEXT} open>
             <Button>I am a button</Button>
           </Tooltip>
         </CustomFloatingComponentProvider>
