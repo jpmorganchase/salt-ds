@@ -175,12 +175,12 @@ const ARIA_SELECTED = "aria-selected";
     });
   });
 
-  describe("A virtualized list", () => {
-    it.skip("should set correct aria position attribute for each item", () => {
-      cy.mount(<List id="list" source={ITEMS} virtualized />);
-
-      cy.get("#list-item-0").should("have.attr", "aria-posinset", 1);
-      cy.get("#list-item-1").should("have.attr", "aria-posinset", 2);
-    });
-  });
+  // describe("A virtualized list", () => {
+  //   it.skip("should set correct aria position attribute for each item", () => {
+  //     cy.mount(<List id="list" source={ITEMS} virtualized />);
+  //
+  //     cy.get("#list-item-0").should("have.attr", "aria-posinset", 1);
+  //     cy.get("#list-item-1").should("have.attr", "aria-posinset", 2);
+  //   });
+  // });
 });

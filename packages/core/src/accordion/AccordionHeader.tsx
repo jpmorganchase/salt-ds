@@ -1,4 +1,9 @@
-import { ComponentPropsWithoutRef, forwardRef, MouseEvent } from "react";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  MouseEvent,
+  ReactNode,
+} from "react";
 import { clsx } from "clsx";
 import { StatusIndicator } from "../status-indicator";
 import { ChevronRightIcon } from "@salt-ds/icons";
@@ -10,7 +15,13 @@ import { makePrefixer } from "../utils";
 import { useAccordion } from "./AccordionContext";
 import accordionHeaderCss from "./AccordionHeader.css";
 
-export type AccordionHeaderProps = ComponentPropsWithoutRef<"button">;
+export interface AccordionHeaderProps
+  extends ComponentPropsWithoutRef<"button"> {
+  /**
+   * The content of the Accordion Header
+   */
+  children?: ReactNode;
+}
 
 const withBaseName = makePrefixer("saltAccordionHeader");
 

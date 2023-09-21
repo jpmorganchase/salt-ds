@@ -58,7 +58,7 @@
 /* Styles applied when orientation = "vertical" */
 .saltNavigationItem-wrapper.saltNavigationItem-vertical {
   min-height: calc(var(--salt-size-base));
-  padding-left: calc(var(--navigationItem-gap) + var(--navigationItem-bar-inset));
+  padding-left: calc(var(--salt-spacing-300) + var(--navigationItem-bar-inset));
   padding-right: var(--navigationItem-gap);
   margin: var(--salt-spacing-50) 0;
 }
@@ -82,7 +82,7 @@
 /* Styles applied when level is not 0 */
 .saltNavigationItem-wrapper.saltNavigationItem-nested {
   font-weight: var(--salt-text-fontWeight);
-  padding-left: calc(var(--salt-spacing-250) + (var(--saltNavigationItem-level, 0) * var(--navigationItem-gap)));
+  padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-400));
 }
 
 /* Styles applied to expand button */
