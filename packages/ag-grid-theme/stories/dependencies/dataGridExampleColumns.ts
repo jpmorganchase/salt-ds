@@ -27,6 +27,7 @@ const dataGridExampleColumns: ColDef[] = [
   {
     headerName: "Capital",
     field: "capital",
+    filter: "agSetColumnFilter",
   },
   {
     headerName: "Population",

@@ -186,7 +186,6 @@
   }
 
   .ag-set-filter-item {
-    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
     margin: 0;
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
@@ -212,7 +211,7 @@
 
   .ag-list-item,
   .ag-virtual-list-item {
-    height: var(--agGrid-list-item-height) !important;
+    height: var(--agGrid-list-item-height);
     font-size: ag-param(font-size);
     color: var(--agGrid-header-foreground);
   }
@@ -252,7 +251,7 @@
   .ag-status-bar {
     color: var(--salt-text-secondary-foreground);
     height: var(--agGrid-row-height-default);
-    font-size: var(--salt-text-label-fontSize);
+    font-size: var(--salt-text-fontSize);
     font-weight: var(--salt-text-label-fontWeight);
     line-height: var(--salt-text-label-lineHeight);
     padding: 0 var(--salt-spacing-100);
@@ -265,13 +264,18 @@
   }
 
   .ag-status-name-value-value {
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-text-primary-foreground);
+    font-weight: var(--salt-text-fontWeight-strong);
   }
 
   /* --- Header styles --- */
 
   .ag-header {
     border-color: var(--agGrid-header-borderColor);
+  }
+
+  .ag-ltr .ag-header-cell .ag-header-cell-label .ag-header-cell-text {
+    margin-right: auto;
   }
 
   .ag-header-row {
@@ -291,7 +295,7 @@
   }
 
   .ag-header-cell-auto-height .ag-header-cell-text {
-    overflow: auto;
+    overflow: hidden;
     white-space: pre-wrap;
   }
 
@@ -460,6 +464,10 @@
     z-index: 1;
   }
 
+  .ag-ltr .ag-row-group-leaf-indent {
+    border-left: 2px solid transparent;
+  }
+
   /* --- General cell styles --- */
 
   .ag-cell {
@@ -532,6 +540,47 @@
   .ag-cell-editor .ag-input-field-input {
     padding-left: ag-param(cell-horizontal-padding) - 2px;
     padding-right: ag-param(cell-horizontal-padding) - 2px;
+  }
+
+  /* --- Cell range --- */
+
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-left {
+    border-left-color: var(--agGrid-range-selection-borderColor);
+    border-left-style: dotted;
+    border-left-width: 2px;
+  }
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-right {
+    border-right-color: var(--agGrid-range-selection-borderColor);
+    border-right-style: dotted;
+    border-right-width: 2px;
+  }
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-top {
+    border-top-color: var(--agGrid-range-selection-borderColor);
+    border-top-style: dotted;
+    border-top-width: 2px;
+  }
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-bottom {
+    border-bottom-color: var(--agGrid-range-selection-borderColor);
+    border-bottom-style: dotted;
+    border-bottom-width: 2px;
+  }
+  .ag-cell.ag-cell-range-selected-1:not(.ag-cell-focus),
+  .ag-root:not(.ag-context-menu-open)
+    .ag-body-viewport:not(.ag-has-focus)
+    .ag-cell-range-selected-1:not(.ag-cell-inline-editing) {
+    background: var(--agGrid-range-selection-background);
+  }
+  .ag-cell.ag-cell-highlight {
+    color: var(--agGrid-highlight-text-color);
+    background: var(--salt-focused-outlineColor) !important;
   }
 
   /* --- Button styles --- */
@@ -744,7 +793,8 @@
     * This react-container class is added as a wrapper for custom components.
     * Adding styling for these components added in the status and tool bars.
     */
-  .ag-status-bar .ag-react-container {
+  .ag-status-bar .ag-react-container,
+  .ag-floating-filter .ag-react-container {
     display: flex;
     align-items: center;
   }

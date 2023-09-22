@@ -6,6 +6,7 @@ import {
   FlexLayout,
   Checkbox,
   useDensity,
+  useTheme,
 } from "@salt-ds/core";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
@@ -24,9 +25,22 @@ const statusBar = {
   ],
 };
 
+const getThemeNames = () => {
+  const densities = ["touch", "low", "medium", "high", "high-compact"];
+  const themes: string[] = [];
+
+  densities.forEach((density) => {
+    themes.push(`ag-theme-salt-${density}-light`);
+    themes.push(`ag-theme-salt-${density}-dark`);
+  });
+
+  return themes;
+};
+
 const HDCompact = (props: AgGridReactProps) => {
   const [compact, setCompact] = useState(false);
   const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { mode } = useTheme();
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
     `ag-theme-${themeName}`,
     compact
@@ -39,6 +53,26 @@ const HDCompact = (props: AgGridReactProps) => {
   }, [isGridReady]);
 
   const density = useDensity();
+
+  useEffect(() => {
+    const gridRoot = document.querySelector<HTMLElement>(`.ag-salt-theme`);
+
+    if (compact) {
+      getThemeNames().forEach((theme) =>
+        gridRoot?.classList.toggle(
+          theme,
+          theme.includes(`${density}-compact`) && theme.includes(mode)
+        )
+      );
+    } else {
+      getThemeNames().forEach((theme) =>
+        gridRoot?.classList.toggle(
+          theme,
+          theme.includes(density) && theme.includes(mode)
+        )
+      );
+    }
+  }, [density, mode]);
 
   const handleCompactChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCompact(event.target.checked);
@@ -65,6 +99,8 @@ const HDCompact = (props: AgGridReactProps) => {
           rowSelection="multiple"
           {...agGridProps}
           {...props}
+          enableRangeSelection={true}
+          className="ag-salt-theme"
         />
       </div>
     </StackLayout>
