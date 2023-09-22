@@ -16,23 +16,23 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 ## Custom Floating UI Platform
 
-Note: The following section should not be necessary for the majority of users and is only fot specialised use-cases of floating components
+Note: The following section should not be necessary for the majority of users and is only fot specialized use-cases of floating components
 
 ### Background
 
-Certain components within the design system use 'floating' . These are elements which are anchored to another component, but appear outside of the normal flow of the document, and re-posiiton themselves according to factors such as proximaty to the ege of the document. Salt uses [Floating UI](https://floating-ui.com) to implement these aspect of our components.
+Certain components within the design system use 'floating' . These are elements which are anchored to another component, but appear outside of the normal flow of the document, and re-position themselves according to factors such as proximity to the edge of the document. Salt uses [Floating UI](https://floating-ui.com) to implement these aspect of our components.
 
-In certain specialised use-cases consumers may want to customise the behaviour of floating-ui. For example when dealing with multi-window applications, where floating components should spawn in a new window and re-position with proximaty to the user's screen.
+In certain specialized use-cases consumers may want to customize the behavior of floating-ui. For example when dealing with multi-window applications, where floating components should spawn in a new window and re-position with proximity to the user's screen.
 
 ### Custom Platforms
 
-To facilitate this advanced usage consumer's can pass a custom platform, based on [Floating UI's Platform feature](https://floating-ui.com/docs/platform)
+To facilitate this advanced usage consumers can pass a custom platform, based on [Floating UI's Platform feature](https://floating-ui.com/docs/platform)
 
 You can provide a custom Floating UI platform to be used in these components by importing `<FloatingPlatformProvider>` and passing a custom [Floating UI Platform](https://floating-ui.com/docs/platform) as the `platform` prop. This will then be used within the floating component.
 
 ### Custom Middleware
 
-Using the FloatingPlatformProvider you can also pass custom [Floating UI Middleware](https://floating-ui.com/docs/middleware) to be applied on top of the defaults for tweaking the position of floating components using the `middleware` prop.
+Using the `FloatingPlatformProvider` you can also pass custom [Floating UI Middleware](https://floating-ui.com/docs/middleware) to be applied on top of the defaults for tweaking the position of floating components using the `middleware` prop.
 
 The `middleware` prop takes a function which is passed the default middleware used by a component. As a consumer you can then choose to replace it:
 
@@ -123,13 +123,13 @@ const CustomFloatingComponentTooltip = ({...props}) => {
 
 ### Custom Platform Example
 
-The following example shows the two providers in action. The application is rendered in an iframe, representing a windowed applicationinside a global coordinate space (e.g. a users desktop).
+The following example shows the two providers in action. The application is rendered in an iframe, representing a windowed application inside a global coordinate space (e.g. a users desktop).
 
 When the Button is hovered the Tooltip is rendered in it's own iframe (representing a popout window) which has been portalled to the global coordinate space.
 
 The example uses the `FloatingComponentProvider` to trigger creating the new window when the Tooltip is opened.
 
-It also uses the `FloatingPlatformProvider` to customise the positioning of the Tooltip based on the global coordinates of the anchor, rather than the position within it's own window.
+It also uses the `FloatingPlatformProvider` to customize the positioning of the Tooltip based on the global coordinates of the anchor, rather than the position within it's own window.
 
 <Canvas>
   <Story id="core-floating-platform--custom-floating-ui-platform" />
