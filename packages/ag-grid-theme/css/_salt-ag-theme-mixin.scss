@@ -753,7 +753,8 @@
   }
 
   /* Ensures content doesn't shift when focus creates 2px border on parent */
-  .ag-floating-filter-body, .ag-floating-filter-button {
+  .ag-floating-filter-body,
+  .ag-floating-filter-button {
     border: 1px solid transparent;
   }
 
