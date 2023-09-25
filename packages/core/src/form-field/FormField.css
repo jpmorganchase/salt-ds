@@ -19,18 +19,16 @@
 .saltFormField-labelLeft {
   align-self: center;
   grid-template-columns: var(--formField-label-width, 40%) 1fr;
-  grid-template-areas:
-    "label controls";
+  grid-template-areas: "label controls";
 }
 
 .saltFormField-labelRight {
   align-self: center;
   grid-template-columns: var(--formField-label-width, 40%) 1fr;
-  grid-template-areas:
-    "label controls";
+  grid-template-areas: "label controls";
 }
 
-.saltFormField-labelLeft .saltFormFieldHelperText, 
+.saltFormField-labelLeft .saltFormFieldHelperText,
 .saltFormField-labelRight .saltFormFieldHelperText {
   grid-area: 2 / 2;
 }
