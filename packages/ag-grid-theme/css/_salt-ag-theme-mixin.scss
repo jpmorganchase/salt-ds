@@ -155,6 +155,7 @@
   .ag-input-field-input[class^="ag-"][type="text"] {
     font-size: var(--salt-text-fontSize);
     font-family: var(--salt-text-fontFamily);
+    padding: 0;
   }
 
   .ag-menu .ag-input-field-input[type="text"] {
@@ -752,12 +753,13 @@
   }
 
   /* Ensures content doesn't shift when focus creates 2px border on parent */
-  .ag-floating-filter-body {
+  .ag-floating-filter-body, .ag-floating-filter-button {
     border: 1px solid transparent;
   }
 
   /* Removes border defined above when focus on parent */
-  .ag-header-cell.ag-floating-filter:focus-within .ag-floating-filter-body {
+  .ag-header-cell.ag-floating-filter:focus-within .ag-floating-filter-body,
+  .ag-header-cell.ag-floating-filter:focus-within .ag-floating-filter-button {
     border: none;
   }
 
