@@ -36,23 +36,24 @@ export function useComboboxPortal(props?: UseComboBoxPortalProps) {
     onOpenChangeProp?.(open);
   };
 
-  const { floating, reference, x, y, strategy, context } = useFloatingUI({
-    open,
-    onOpenChange: onOpenChange,
-    placement: placementProp,
-    middleware: [
-      offset(0),
-      size({
-        apply({ rects, elements }) {
-          Object.assign(elements.floating.style, {
-            width: `${rects.reference.width}px`,
-          });
-        },
-      }),
-      flip(),
-      shift({ limiter: limitShift() }),
-    ],
-  });
+  const { floating, reference, x, y, strategy, context, elements } =
+    useFloatingUI({
+      open,
+      onOpenChange: onOpenChange,
+      placement: placementProp,
+      middleware: [
+        offset(0),
+        size({
+          apply({ rects, elements }) {
+            Object.assign(elements.floating.style, {
+              width: `${rects.reference.width}px`,
+            });
+          },
+        }),
+        flip(),
+        shift({ limiter: limitShift() }),
+      ],
+    });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useRole(context, { role: "listbox" }),
@@ -62,11 +63,6 @@ export function useComboboxPortal(props?: UseComboBoxPortalProps) {
   const getPortalProps = (): HTMLProps<HTMLDivElement> => {
     return getFloatingProps({
       ref: floating,
-      style: {
-        top: y ?? 0,
-        left: x ?? 0,
-        position: strategy,
-      },
     });
   };
 
@@ -75,6 +71,14 @@ export function useComboboxPortal(props?: UseComboBoxPortalProps) {
       ref: reference,
     });
 
+  const getPosition = () => ({
+    top: y ?? 0,
+    left: x ?? 0,
+    position: strategy,
+    width: elements.floating?.clientWidth,
+    height: elements.floating?.clientHeight,
+  });
+
   return {
     open,
     setOpen,
@@ -82,5 +86,6 @@ export function useComboboxPortal(props?: UseComboBoxPortalProps) {
     reference,
     getPortalProps,
     getTriggerProps,
+    getPosition,
   };
 }

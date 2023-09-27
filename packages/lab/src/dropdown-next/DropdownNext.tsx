@@ -4,14 +4,12 @@ import {
   makePrefixer,
   useId,
   useForkRef,
-  UseFloatingUIProps,
-  SaltProvider,
+  useFloatingComponent,
 } from "@salt-ds/core";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import {
   useRef,
   forwardRef,
-  HTMLAttributes,
   FocusEvent,
   KeyboardEvent,
   MouseEvent,
@@ -23,7 +21,7 @@ import {
 import { useWindow } from "@salt-ds/window";
 import dropdownNextCss from "./DropdownNext.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { FloatingPortal, Placement } from "@floating-ui/react";
+import { Placement } from "@floating-ui/react";
 import { useDropdownNext } from "./useDropdownNext";
 
 const withBaseName = makePrefixer("saltDropdownNext");
@@ -137,7 +135,10 @@ export const DropdownNext = forwardRef(function DropdownNext(
     openControlProp,
   });
 
-  const { open, floating, reference, getDropdownNextProps } = portalProps;
+  const { Component: FloatingComponent } = useFloatingComponent();
+
+  const { open, floating, reference, getDropdownNextProps, getPosition } =
+    portalProps;
   const {
     focusHandler,
     keyDownHandler,
@@ -224,26 +225,25 @@ export const DropdownNext = forwardRef(function DropdownNext(
         <span className={clsx(withBaseName("buttonText"))}>{selectedItem}</span>
         {getIcon()}
       </button>
-      {open && (
-        <FloatingPortal>
-          <SaltProvider>
-            <div ref={floating} {...getDropdownNextProps()}>
-              <ListNext
-                id={listId}
-                className={clsx(withBaseName("list"), ListProps?.className)}
-                disableFocus
-                disabled={disabled || ListProps?.disabled}
-                selected={selectedItem}
-                highlightedItem={highlightedItem}
-                {...ListProps}
-                ref={setListRef}
-              >
-                {getListItems(source)}
-              </ListNext>
-            </div>
-          </SaltProvider>
-        </FloatingPortal>
-      )}
+      <FloatingComponent
+        open={open && !disabled}
+        ref={floating}
+        {...getDropdownNextProps()}
+        {...getPosition()}
+      >
+        <ListNext
+          id={listId}
+          className={clsx(withBaseName("list"), ListProps?.className)}
+          disableFocus
+          disabled={disabled || ListProps?.disabled}
+          selected={selectedItem}
+          highlightedItem={highlightedItem}
+          {...ListProps}
+          ref={setListRef}
+        >
+          {getListItems(source)}
+        </ListNext>
+      </FloatingComponent>
     </div>
   );
 });
