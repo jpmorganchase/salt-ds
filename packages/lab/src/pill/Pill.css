@@ -46,7 +46,7 @@
   color: var(--pill-text-color);
   display: inline-flex;
   font-size: var(--pill-fontSize);
-  height: var(--saltPill-height, var(--pill-checkbox-size)); /* TODO: Check with design vs checkbox height */
+  --saltButton-height: var(--saltPill-height, var(--pill-checkbox-size)); /* TODO: Check with design vs checkbox height */
   letter-spacing: var(--saltPill-letterSpacing, 0);
   line-height: var(--saltPill-lineHeight, var(--salt-text-label-lineHeight));
   max-width: var(--saltPill-maxWidth, 160px);

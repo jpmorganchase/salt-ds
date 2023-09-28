@@ -49,6 +49,7 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
           id={subtitleId}
           className={withBaseName("subtitle")}
           data-testid="metric-subtitle"
+          variant="secondary"
         >
           {subtitle}
         </Text>

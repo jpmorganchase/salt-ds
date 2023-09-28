@@ -22,7 +22,7 @@ export const ContactMetadataItem = forwardRef<
   return (
     <div {...restProps} ref={ref} className={withBaseName()}>
       {!Icon ? (
-        <Text maxRows={1} className={withBaseName("label")}>
+        <Text maxRows={1} className={withBaseName("label")} variant="secondary">
           {label}
         </Text>
       ) : null}
