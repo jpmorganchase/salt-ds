@@ -42,7 +42,7 @@
 }
 
 .salt-theme[data-mode="light"] .saltColorChooserSwatch-whiteSwatch {
-  border: var(--salt-size-border) var(--salt-container-borderColor-style) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
 }
 
 .salt-theme[data-mode="light"] .saltColorChooserSwatch-whiteSwatch,
@@ -62,11 +62,11 @@
 }
 
 .salt-theme[data-mode="dark"] .saltColorChooserSwatch-graySwatch {
-  border: var(--salt-size-border) var(--salt-container-borderColor-style) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
 }
 
 .saltColorChooserSwatch-active {
-  outline: var(--salt-size-border) var(--salt-container-borderColor-style) var(--salt-container-primary-borderColor);
+  outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
   border: var(--salt-focused-outlineWidth) var(--salt-container-borderStyle) var(--salt-actionable-cta-foreground-active) !important;
   margin-bottom: 1px;
   margin-left: 1px;

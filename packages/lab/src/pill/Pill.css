@@ -37,20 +37,20 @@
   --saltButton-padding: var(--saltPill-button-padding, 0);
   --saltButton-textTransform: var(--saltPill-button-textTransform, unset);
   --saltButton-cursor: normal;
+  --saltButton-height: var(--saltPill-height, var(--pill-checkbox-size)); /* TODO: Check with design vs checkbox height */
+  --saltButton-background: var(--pill-background);
+  --saltButton-color: var(--pill-text-color);
+  --saltButton-fontSize: var(--pill-fontSize);
+  --saltButton-letterSpacing: var(--saltPill-letterSpacing, 0);
+  --saltButton-lineHeight: var(--saltPill-lineHeight, var(--salt-text-label-lineHeight));
+  --saltButton-minWidth: var(--saltPill-minWidth, 40px);
 }
 
 .saltPill {
   align-items: center;
-  background: var(--pill-background);
   border-radius: var(--saltPill-borderRadius, 0);
-  color: var(--pill-text-color);
   display: inline-flex;
-  font-size: var(--pill-fontSize);
-  --saltButton-height: var(--saltPill-height, var(--pill-checkbox-size)); /* TODO: Check with design vs checkbox height */
-  letter-spacing: var(--saltPill-letterSpacing, 0);
-  line-height: var(--saltPill-lineHeight, var(--salt-text-label-lineHeight));
   max-width: var(--saltPill-maxWidth, 160px);
-  min-width: var(--saltPill-minWidth, 40px);
   min-height: var(--saltPill-minHeight, var(--salt-text-minHeight));
   outline: var(--saltPill-outline, 0);
   position: relative;
