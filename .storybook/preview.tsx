@@ -23,7 +23,7 @@ import { withStrictMode } from "docs/decorators/withStrictMode";
 import { withScaffold } from "docs/decorators/withScaffold";
 import { SaltProvider } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
-import { initialize, mswDecorator } from "msw-storybook-addon";
+import { initialize, mswLoader } from "msw-storybook-addon";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
@@ -163,5 +163,6 @@ export const decorators = [
   withTheme,
   WithTextSpacingWrapper,
   withStrictMode,
-  mswDecorator,
 ];
+
+export const loaders = [mswLoader];

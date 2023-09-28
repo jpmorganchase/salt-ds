@@ -1,6 +1,6 @@
 import "cypress-real-events";
 import "@cypress/code-coverage/support";
-import { setGlobalConfig } from "@storybook/testing-react";
+import { setProjectAnnotations } from "@storybook/react";
 import * as globalStorybookConfig from "../../.storybook/preview"; // path of your preview.js file
 import "./assertions";
 import "./commands";
@@ -10,7 +10,7 @@ import "./cypress.css";
 global.process = global.process || {};
 global.process.env = global.process.env || {};
 
-setGlobalConfig(globalStorybookConfig);
+setProjectAnnotations(globalStorybookConfig);
 
 beforeEach(() => {
   cy.window({ log: false }).focus({ log: false });

@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as toolbarStories from "@stories/toolbar/toolbar.cypress.stories";
 import { version } from "react";
 

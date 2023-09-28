@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as comboBoxNextStories from "@stories/combo-box-next/combo-box-next.stories";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";

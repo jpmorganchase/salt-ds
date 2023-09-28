@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as parentChildStories from "@stories/parent-child-layout/parent-child-layout.stories";
 
 const composedStories = composeStories(parentChildStories);
