@@ -10,7 +10,7 @@ import React, {
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
 import { Density, Mode, ThemeName } from "../theme";
-import { ViewportProvider } from "../viewport";
+import { ViewportProvider, ViewportProviderProps } from "../viewport";
 import { useIsomorphicLayoutEffect } from "../utils";
 
 import saltProviderCss from "./SaltProvider.css";
@@ -94,7 +94,7 @@ type SaltProviderBaseProps = {
   theme?: ThemeName;
   mode?: Mode;
   breakpoints?: Breakpoints;
-};
+} & Pick<ViewportProviderProps, "defaultViewport">;
 
 interface SaltProviderThatAppliesClassesToChild extends SaltProviderBaseProps {
   children: ReactElement;
@@ -122,6 +122,7 @@ export function SaltProvider({
   theme: themeProp,
   mode: modeProp,
   breakpoints: breakpointsProp,
+  defaultViewport,
 }: SaltProviderProps) {
   const inheritedDensity = useContext(DensityContext);
   const { theme: inheritedThemes, mode: inheritedMode } = useTheme();
@@ -191,7 +192,9 @@ export function SaltProvider({
     <DensityContext.Provider value={density}>
       <ThemeContext.Provider value={themeContextValue}>
         <BreakpointContext.Provider value={breakpoints}>
-          <ViewportProvider>{themedChildren}</ViewportProvider>
+          <ViewportProvider defaultViewport={defaultViewport}>
+            {themedChildren}
+          </ViewportProvider>
         </BreakpointContext.Provider>
       </ThemeContext.Provider>
     </DensityContext.Provider>
