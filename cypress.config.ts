@@ -12,6 +12,9 @@ import { cssInline } from "css-inline-plugin";
 
 let viteConfig: UserConfig = {
   plugins: [react(), tsconfigPaths(), IstanbulPlugin(), cssInline()],
+  define: {
+    "process.env": {},
+  },
   server: {
     watch: {
       ignored: ["**/coverage"],
