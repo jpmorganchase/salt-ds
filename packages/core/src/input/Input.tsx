@@ -1,19 +1,21 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   ChangeEvent,
+  ChangeEventHandler,
   ComponentPropsWithoutRef,
   FocusEvent,
+  FocusEventHandler,
   forwardRef,
   InputHTMLAttributes,
   ReactNode,
   Ref,
   useState,
 } from "react";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { useFormFieldProps } from "../form-field-context";
-import { makePrefixer, useControlled } from "../utils";
 import { StatusAdornment } from "../status-adornment";
+import { makePrefixer, useControlled } from "../utils";
 
 import inputCss from "./Input.css";
 
@@ -23,7 +25,13 @@ export interface InputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
       ComponentPropsWithoutRef<"input">,
-      "disabled" | "value" | "defaultValue" | "placeholder"
+      | "disabled"
+      | "value"
+      | "defaultValue"
+      | "placeholder"
+      | "onChange"
+      | "onFocus"
+      | "onBlur"
     > {
   /**
    * The marker to use in an empty read only Input.
@@ -42,6 +50,19 @@ export interface InputProps
    * Optional ref for the input component
    */
   inputRef?: Ref<HTMLInputElement>;
+  /**
+   * An event handler type for the blur event.
+   */
+  onBlur?: FocusEventHandler<HTMLInputElement> | undefined;
+  /**
+   * An Event handler function. Required for controlled inputs. Fires immediately when the input’s value is changed by the user (for example, it fires on every keystroke).
+   * Behaves like the browser input event.
+   */
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
+  /**
+   * An event handler type for the focus event.
+   */
+  onFocus?: FocusEventHandler<HTMLInputElement> | undefined;
   /**
    * If `true`, the component is read only.
    */
@@ -114,8 +135,8 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     "aria-owns": ariaOwns,
   };
 
-  const isDisabled = disabled || formFieldDisabled;
-  const isReadOnly = readOnlyProp || formFieldReadOnly;
+  const isDisabled = disabled ?? formFieldDisabled;
+  const isReadOnly = readOnlyProp ?? formFieldReadOnly;
   const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
   const [focused, setFocused] = useState(false);
@@ -174,7 +195,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
           [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
-          [withBaseName(validationStatus || "")]: validationStatus,
+          [withBaseName(validationStatus ?? "")]: validationStatus,
         },
         classNameProp
       )}
