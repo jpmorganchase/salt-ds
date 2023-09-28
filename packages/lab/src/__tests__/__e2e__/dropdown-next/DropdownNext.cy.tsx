@@ -1,6 +1,5 @@
 import { SyntheticEvent } from "react";
 import { DropdownNext } from "@salt-ds/lab";
-
 const ListExample = [
   "Alabama",
   "Alaska",
@@ -12,6 +11,7 @@ const ListExample = [
   "Florida",
   "Georgia",
 ];
+import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 describe("GIVEN an active Dropdown component", () => {
   describe("WHEN the Dropdown is rendered", () => {
@@ -197,5 +197,22 @@ describe("GIVEN a readonly Dropdown component", () => {
       .should("not.have.attr", "aria-disabled");
     cy.get(".saltDropdownNext-icon").should("not.exist");
     cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
+  });
+});
+
+describe("GIVEN a Dropdown component in a FloatingComponentProvider", () => {
+  it("should render the custom floating component", () => {
+    cy.mount(
+      <CustomFloatingComponentProvider>
+        <DropdownNext
+          source={ListExample}
+          defaultSelected="California"
+          readOnly
+          open
+        />
+      </CustomFloatingComponentProvider>
+    );
+
+    cy.findByTestId(FLOATING_TEST_ID).should("exist");
   });
 });
