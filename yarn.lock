@@ -5881,7 +5881,6 @@ __metadata:
     "@storybook/addon-mdx-gfm": 7.4.5
     "@storybook/addon-storysource": ^7.4.5
     "@storybook/addons": ^7.4.5
-    "@storybook/node-logger": ^7.4.5
     "@storybook/react": ^7.4.5
     "@storybook/react-vite": 7.4.5
     "@storybook/theming": ^7.4.5
@@ -7366,7 +7365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/node-logger@npm:7.4.5, @storybook/node-logger@npm:^7.4.5":
+"@storybook/node-logger@npm:7.4.5":
   version: 7.4.5
   resolution: "@storybook/node-logger@npm:7.4.5"
   checksum: f492408ae489e145e37bf6b03a49c592eeab1c47fc0b63cc0b7787ea7de330874254af468048acbc8ff3fa287aa8584b4f97b985612d48607a7b07b9f7eba225
