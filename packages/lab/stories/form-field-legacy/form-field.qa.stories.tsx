@@ -1,14 +1,14 @@
 import { clsx } from "clsx";
 import { FormField, Input } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Form Field Legacy/QA",
   component: FormField,
-} as ComponentMeta<typeof FormField>;
+} as Meta<typeof FormField>;
 
-export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   const { imgSrc, className } = props;
   return (
     <QAContainer imgSrc={imgSrc}>

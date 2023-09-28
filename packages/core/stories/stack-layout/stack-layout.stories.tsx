@@ -1,5 +1,5 @@
 import { FLEX_ALIGNMENT_BASE, FlexLayout, StackLayout } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 
 export default {
@@ -23,9 +23,9 @@ export default {
       type: "number",
     },
   },
-} as ComponentMeta<typeof StackLayout>;
+} as Meta<typeof StackLayout>;
 
-const DefaultStackLayoutStory: ComponentStory<typeof StackLayout> = (args) => {
+const DefaultStackLayoutStory: StoryFn<typeof StackLayout> = (args) => {
   return (
     <StackLayout {...args} className="layout-container">
       {Array.from({ length: 5 }, (_, index) => (
@@ -39,7 +39,7 @@ const DefaultStackLayoutStory: ComponentStory<typeof StackLayout> = (args) => {
 export const Default = DefaultStackLayoutStory.bind({});
 Default.args = {};
 
-const SeparatorsStory: ComponentStory<typeof FlexLayout> = (args) => {
+const SeparatorsStory: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <StackLayout {...args} className="layout-container">
       {Array.from({ length: 3 }, (_, index) => (

@@ -1,5 +1,5 @@
 import { FlexItem, FlexLayout } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 
 export default {
@@ -14,9 +14,9 @@ export default {
     shrink: { control: { type: "number" } },
     grow: { control: { type: "number" } },
   },
-} as ComponentMeta<typeof FlexItem>;
+} as Meta<typeof FlexItem>;
 
-const FlexItemStory: ComponentStory<typeof FlexItem> = (args) => {
+const FlexItemStory: StoryFn<typeof FlexItem> = (args) => {
   return (
     <FlexLayout className="layout-container">
       <FlexItem className="layout-active-content" {...args}>

@@ -5,16 +5,16 @@ import {
   useOverlay,
   UseOverlayProps,
 } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import "./overlay.stories.css";
 
 export default {
   title: "Lab/Overlay",
   component: Overlay,
-} as ComponentMeta<typeof Overlay>;
+} as Meta<typeof Overlay>;
 
-const OverlayTemplate: Story<OverlayProps & UseOverlayProps> = (props) => {
+const OverlayTemplate: StoryFn<OverlayProps & UseOverlayProps> = (props) => {
   const { placement, open, ...rest } = props;
   const { getTriggerProps, getOverlayProps } = useOverlay({ placement, open });
 
@@ -32,7 +32,7 @@ const OverlayTemplate: Story<OverlayProps & UseOverlayProps> = (props) => {
   );
 };
 
-export const FeatureOverlay: Story<OverlayProps & UseOverlayProps> = (
+export const FeatureOverlay: StoryFn<OverlayProps & UseOverlayProps> = (
   props
 ) => {
   const { placement, open, ...rest } = props;

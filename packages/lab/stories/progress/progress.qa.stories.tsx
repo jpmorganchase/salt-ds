@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
@@ -6,9 +6,9 @@ import { QAContainer, QAContainerProps } from "docs/components";
 export default {
   title: "Lab/Progress/QA",
   component: CircularProgress,
-} as ComponentMeta<typeof CircularProgress | typeof LinearProgress>;
+} as Meta<typeof CircularProgress | typeof LinearProgress>;
 
-export const ExamplesGrid: Story<QAContainerProps> = (props) => {
+export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   const { className } = props;
   return (
     <QAContainer cols={3} {...props}>

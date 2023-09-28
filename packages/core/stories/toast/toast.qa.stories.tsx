@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Button, StackLayout, Toast, ToastContent } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { CloseIcon } from "@salt-ds/icons";
@@ -6,9 +6,9 @@ import { CloseIcon } from "@salt-ds/icons";
 export default {
   title: "Core/Toast/QA",
   component: Toast,
-} as ComponentMeta<typeof Toast>;
+} as Meta<typeof Toast>;
 
-export const ExamplesGrid: Story<QAContainerProps> = (props) => (
+export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer cols={1} itemWidthAuto height={600} width={1000} {...props}>
     <StackLayout>
       <Toast>

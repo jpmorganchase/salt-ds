@@ -1,13 +1,13 @@
 import { FileDropZone } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
   title: "Lab/File Drop Zone/QA",
   component: FileDropZone,
-} as ComponentMeta<typeof FileDropZone>;
+} as Meta<typeof FileDropZone>;
 
-export const AllExamplesGrid: ComponentStory<typeof FileDropZone> = (props) => {
+export const AllExamplesGrid: StoryFn<typeof FileDropZone> = (props) => {
   return (
     <AllRenderer>
       <FileDropZone onFilesAccepted={() => console.log("files accepted")} />

@@ -1,13 +1,13 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Panel } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Panel/QA",
   component: Panel,
-} as ComponentMeta<typeof Panel>;
+} as Meta<typeof Panel>;
 
-export const ExamplesGrid: Story<QAContainerProps> = (props) => (
+export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer cols={1} itemWidthAuto height={600} width={1000} {...props}>
     <Panel>
       <p>This is a panel around some text</p>

@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
   FlowLayout,
@@ -12,9 +12,9 @@ import { CloseIcon } from "@salt-ds/icons";
 export default {
   title: "Core/Toast",
   component: Toast,
-} as ComponentMeta<typeof Toast>;
+} as Meta<typeof Toast>;
 
-const Template: ComponentStory<typeof Toast> = ({ children, ...args }) => (
+const Template: StoryFn<typeof Toast> = ({ children, ...args }) => (
   <Toast {...args} style={{ width: 260 }}>
     <ToastContent>{children}</ToastContent>
     <Button variant="secondary">
@@ -23,7 +23,7 @@ const Template: ComponentStory<typeof Toast> = ({ children, ...args }) => (
   </Toast>
 );
 
-export const Default: ComponentStory<typeof Toast> = (args) => (
+export const Default: StoryFn<typeof Toast> = (args) => (
   <Toast {...args} style={{ width: 260 }}>
     <ToastContent>
       <Text>
@@ -47,7 +47,7 @@ Info.args = {
   ),
 };
 
-export const Error: ComponentStory<typeof Toast> = () => (
+export const Error: StoryFn<typeof Toast> = () => (
   <div style={{ width: 260 }}>
     <Toast status="error">
       <ToastContent>
@@ -83,7 +83,7 @@ export const Error: ComponentStory<typeof Toast> = () => (
   </div>
 );
 
-export const Warning: ComponentStory<typeof Toast> = () => (
+export const Warning: StoryFn<typeof Toast> = () => (
   <div style={{ width: 260 }}>
     <Toast status="warning">
       <ToastContent>

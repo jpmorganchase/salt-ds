@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import {
   ContactAction,
@@ -20,7 +20,7 @@ import avatar1 from "../assets/avatar1.png";
 export default {
   title: "Lab/Contact Details/QA",
   component: ContactDetails,
-} as ComponentMeta<typeof ContactDetails>;
+} as Meta<typeof ContactDetails>;
 
 const actions = [
   { icon: CallIcon, action: () => console.log("Custom Action: Phone") },
@@ -122,7 +122,7 @@ const getComponent = (props: { variant?: string; className?: string }) => {
   );
 };
 
-export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   const { className, imgSrc } = props;
 
   return (

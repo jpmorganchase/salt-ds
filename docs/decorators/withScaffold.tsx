@@ -1,8 +1,8 @@
-import type { DecoratorFn } from "@storybook/react";
+import type { Decorator } from "@storybook/react";
 import { H1, H2, Text, Link, StackLayout } from "@salt-ds/core";
 
 /** A storybook decorator that adds a scaffold around a story */
-export const withScaffold: DecoratorFn = (Story, context) => {
+export const withScaffold: Decorator = (Story, context) => {
   const { scaffold } = context.globals;
 
   if (scaffold === "disable") {

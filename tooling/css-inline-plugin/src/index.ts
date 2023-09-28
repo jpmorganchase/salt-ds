@@ -14,7 +14,7 @@ export interface Options {
 export function cssInline(options: Options = {}): Plugin {
   const {
     exclude = ["**/**.stories.tsx"],
-    include = ["**/packages/**/*.{tsx, jsx}"],
+    include = ["**/packages/**/*.{tsx,jsx}"],
   } = options;
   const filter = createFilter(include, exclude);
 

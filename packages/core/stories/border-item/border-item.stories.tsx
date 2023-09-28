@@ -1,5 +1,5 @@
 import { BorderLayout, BorderItem } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 export default {
   title: "Core/Layout/Border Layout/Border Item",
@@ -10,9 +10,9 @@ export default {
       control: { type: "select" },
     },
   },
-} as ComponentMeta<typeof BorderItem>;
+} as Meta<typeof BorderItem>;
 
-const Template: ComponentStory<typeof BorderItem> = (args) => {
+const Template: StoryFn<typeof BorderItem> = (args) => {
   return (
     <BorderLayout columnGap={1} rowGap={1} className="layout-container">
       <BorderItem position="north" className="border-item">

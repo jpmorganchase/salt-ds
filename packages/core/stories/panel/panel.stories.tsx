@@ -1,15 +1,15 @@
 import { GridLayout, Panel } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
   title: "Core/Panel",
   component: Panel,
-} as ComponentMeta<typeof Panel>;
+} as Meta<typeof Panel>;
 
-const Template: ComponentStory<typeof Panel> = (args) => <Panel {...args} />;
+const Template: StoryFn<typeof Panel> = (args) => <Panel {...args} />;
 
-export const All: ComponentStory<typeof Panel> = (props) => {
+export const All: StoryFn<typeof Panel> = (props) => {
   return (
     <>
       <h1>Primary</h1>
@@ -42,13 +42,13 @@ Secondary.args = {
   variant: "secondary",
 };
 
-export const FixedHeightAndWidth: ComponentStory<typeof Panel> = () => (
+export const FixedHeightAndWidth: StoryFn<typeof Panel> = () => (
   <Panel style={{ height: "500px", width: "800px" }} variant="secondary">
     <p>This is a Panel</p>
   </Panel>
 );
 
-export const PanelInGridLayout: ComponentStory<typeof Panel> = () => (
+export const PanelInGridLayout: StoryFn<typeof Panel> = () => (
   <GridLayout columns={2}>
     <Panel style={{ width: "100vh" }}>
       <p>This is a Panel</p>

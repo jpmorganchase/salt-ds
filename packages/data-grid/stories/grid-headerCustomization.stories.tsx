@@ -25,7 +25,7 @@ import {
 import { ArrowDownIcon, ArrowUpIcon, MenuIcon, HomeIcon } from "@salt-ds/icons";
 import { randomInt, randomNumber } from "./utils";
 import "./grid.stories.css";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -175,7 +175,7 @@ const SummaryCellValue = (props: GridCellValueProps<ExampleRow>) => {
  * An example of how to use the `headerValueComponent` property of columns and
  * column groups.
  * */
-const HeaderCustomizationTemplate: Story<{}> = () => {
+const HeaderCustomizationTemplate: StoryFn<{}> = () => {
   const rowData: ExampleRow[] = useMemo(() => {
     const names = [
       "Espresso",

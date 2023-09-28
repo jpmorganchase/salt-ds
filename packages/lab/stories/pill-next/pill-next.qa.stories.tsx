@@ -1,16 +1,16 @@
 import { PillNext } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { FavoriteIcon } from "@salt-ds/icons";
 
 export default {
   title: "Lab/Pill Next/QA",
   component: PillNext,
-} as ComponentMeta<typeof PillNext>;
+} as Meta<typeof PillNext>;
 
 const noop = () => undefined;
 
-export const ExamplesGrid: Story<QAContainerProps> = (props) => {
+export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   const { className, ...rest } = props;
   return (
     <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>

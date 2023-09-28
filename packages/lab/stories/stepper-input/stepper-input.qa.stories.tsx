@@ -1,11 +1,11 @@
 import { StepperInput } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
   title: "Lab/Stepper Input/QA",
   component: StepperInput,
-} as ComponentMeta<typeof StepperInput>;
+} as Meta<typeof StepperInput>;
 
 const Example = () => (
   <div data-jpmui-test="stepper-input">
@@ -38,7 +38,7 @@ const Example = () => (
   </div>
 );
 
-export const ExamplesGrid: ComponentStory<typeof StepperInput> = (props) => {
+export const ExamplesGrid: StoryFn<typeof StepperInput> = (props) => {
   return (
     <AllRenderer>
       <Example />

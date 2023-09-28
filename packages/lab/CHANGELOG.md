@@ -174,7 +174,7 @@
   Refactored Switch and updated its change handler.
 
   ```diff
-  - const Controlled: ComponentStory<typeof Switch> = (args) => {
+  - const Controlled: StoryFn<typeof Switch> = (args) => {
   -   const [checked, setChecked] = useState(false);
   -
   -   const handleChange = (
@@ -186,7 +186,7 @@
   -
   -   return <Switch {...args} checked={checked} onChange={handleChange} />;
   - };
-  + const Controlled: ComponentStory<typeof Switch> = (args) => {
+  + const Controlled: StoryFn<typeof Switch> = (args) => {
   +   const [checked, setChecked] = useState(false);
   +
   +   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

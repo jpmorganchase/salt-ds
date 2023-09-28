@@ -1,4 +1,4 @@
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { Tabstrip } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
 
@@ -11,7 +11,7 @@ export default {
 
 const initialTabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
-export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
+export const QA: StoryFn<QAContainerProps> = ({ imgSrc }) => (
   <QAContainer cols={1} imgSrc={imgSrc} itemPadding={12} width={1200}>
     <Tabstrip source={initialTabs} />
     <Tabstrip centered source={initialTabs} />

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { ComponentStory } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { Button, SaltProvider, Text } from "@salt-ds/core";
 import { TabPanel, Tabs } from "@salt-ds/lab";
 import { CloseTabWarningDialog } from "../components";
@@ -9,7 +9,7 @@ export default {
   component: Tabs,
 };
 
-type TabsStory = ComponentStory<typeof Tabs>;
+type TabsStory = StoryFn<typeof Tabs>;
 
 export const Default: TabsStory = () => {
   const style = useMemo(() => ({ style: { paddingTop: 20 } }), []);

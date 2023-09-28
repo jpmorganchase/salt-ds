@@ -9,13 +9,13 @@ import {
   StackLayout,
   SaltProvider,
 } from "@salt-ds/core";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Banner/QA",
   component: Banner,
-} as ComponentMeta<typeof Banner>;
+} as Meta<typeof Banner>;
 
 const BasicBannerExample: FC<BannerProps> = ({ status }) => {
   return (
@@ -37,7 +37,7 @@ const ErrorBanner = () => <BasicBannerExample status={"error"} />;
 const WarningBanner = () => <BasicBannerExample status={"warning"} />;
 const SuccessBanner = () => <BasicBannerExample status={"success"} />;
 
-export const ExamplesGrid: Story = () => (
+export const ExamplesGrid: StoryFn = () => (
   <StackLayout gap={2}>
     <SaltProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
       <div style={{ width: "60vw" }}>

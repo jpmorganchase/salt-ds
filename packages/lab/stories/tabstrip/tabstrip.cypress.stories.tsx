@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { Tabstrip, TabstripProps } from "@salt-ds/lab";
 import { AdjustableFlexbox, AdjustableFlexboxProps } from "../components";
 
@@ -8,7 +8,7 @@ export default {
   component: Tabstrip,
 };
 
-type TabstripStory = Story<AdjustableFlexboxProps & TabstripProps>;
+type TabstripStory = StoryFn<AdjustableFlexboxProps & TabstripProps>;
 
 export const SimpleTabstrip: TabstripStory = ({
   width = 600,
