@@ -24,7 +24,7 @@ export function cssInline(options: Options = {}): Plugin {
     transform(src, id) {
       if (filter(id)) {
         const s = new MagicString(src);
-        s.replaceAll(".css", ".css?inline");
+        s.replaceAll('.css";', '.css?inline";');
         return {
           code: s.toString(),
           map: s.generateMap({ hires: true, source: id }),
