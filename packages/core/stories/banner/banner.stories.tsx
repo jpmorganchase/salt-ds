@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import {
   Banner,
   BannerActions,
@@ -16,9 +16,9 @@ import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
 export default {
   title: "Core/Banner",
   component: Banner,
-} as ComponentMeta<typeof Banner>;
+} as Meta<typeof Banner>;
 
-export const Default: ComponentStory<typeof Banner> = (props) => (
+export const Default: StoryFn<typeof Banner> = (props) => (
   <div style={{ width: 500 }}>
     <Banner {...props}>
       <BannerContent>
@@ -28,7 +28,7 @@ export const Default: ComponentStory<typeof Banner> = (props) => (
   </div>
 );
 
-export const Static: ComponentStory<typeof Banner> = (props) => (
+export const Static: StoryFn<typeof Banner> = (props) => (
   <div style={{ width: 500 }}>
     <Banner {...props}>
       <BannerContent>This component is deprecated.</BannerContent>
@@ -36,7 +36,7 @@ export const Static: ComponentStory<typeof Banner> = (props) => (
   </div>
 );
 
-export const Interactive: ComponentStory<typeof Banner> = (props) => (
+export const Interactive: StoryFn<typeof Banner> = (props) => (
   <div style={{ width: 500 }}>
     <Banner status="warning" {...props}>
       <BannerContent>
@@ -54,7 +54,7 @@ export const Interactive: ComponentStory<typeof Banner> = (props) => (
   </div>
 );
 
-export const Inline: ComponentStory<typeof Banner> = (props) => (
+export const Inline: StoryFn<typeof Banner> = (props) => (
   <StackLayout gap={3} style={{ width: 800 }}>
     <Text styleAs="h3">
       <strong>Terms and conditions</strong>
@@ -85,7 +85,7 @@ export const Inline: ComponentStory<typeof Banner> = (props) => (
   </StackLayout>
 );
 
-export const Issue: ComponentStory<typeof Banner> = () => {
+export const Issue: StoryFn<typeof Banner> = () => {
   return (
     <StackLayout gap={3} style={{ width: 800 }}>
       <Banner status="error" role="alert">
@@ -115,7 +115,7 @@ export const Issue: ComponentStory<typeof Banner> = () => {
   );
 };
 
-export const Warning: ComponentStory<typeof Banner> = () => {
+export const Warning: StoryFn<typeof Banner> = () => {
   return (
     <StackLayout gap={3} style={{ width: 800 }}>
       <Banner status="warning">
@@ -142,7 +142,7 @@ export const Warning: ComponentStory<typeof Banner> = () => {
   );
 };
 
-export const Success: ComponentStory<typeof Banner> = () => {
+export const Success: StoryFn<typeof Banner> = () => {
   return (
     <Banner status="success" style={{ width: 500 }}>
       <BannerContent role="status">Database updated</BannerContent>
@@ -168,7 +168,7 @@ const statuses: { status: ValidationStatus; content: string }[] = [
   },
 ];
 
-export const StatusesPrimary: ComponentStory<typeof Banner> = (props) => {
+export const StatusesPrimary: StoryFn<typeof Banner> = (props) => {
   const { status, ...restProps } = props;
 
   return (
@@ -182,7 +182,7 @@ export const StatusesPrimary: ComponentStory<typeof Banner> = (props) => {
   );
 };
 
-export const StatusesSecondary: ComponentStory<typeof Banner> = () => (
+export const StatusesSecondary: StoryFn<typeof Banner> = () => (
   <StatusesPrimary variant="secondary" />
 );
 
@@ -237,7 +237,7 @@ export const MultipleLines = (props: BannerProps) => {
   );
 };
 
-export const MultipleBanners: ComponentStory<typeof Banner> = () => {
+export const MultipleBanners: StoryFn<typeof Banner> = () => {
   return (
     <StackLayout gap={3} style={{ width: 800 }}>
       {statuses.map((example, i) => (
@@ -259,7 +259,7 @@ export const MultipleBanners: ComponentStory<typeof Banner> = () => {
   );
 };
 
-export const MultipleActions: ComponentStory<typeof Banner> = (args) => {
+export const MultipleActions: StoryFn<typeof Banner> = (args) => {
   return (
     <Banner {...args} style={{ width: 500 }}>
       <BannerContent>The one-time PIN you entered has expired</BannerContent>

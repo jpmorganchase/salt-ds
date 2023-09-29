@@ -1,13 +1,13 @@
 import { ButtonBar, OrderedButton } from "@salt-ds/lab";
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/ButtonBar",
   component: ButtonBar,
-} as ComponentMeta<typeof ButtonBar>;
+} as Meta<typeof ButtonBar>;
 
-export const Basic: ComponentStory<typeof ButtonBar> = () => {
+export const Basic: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
       <ButtonBar data-testid="button-bar" stackAtBreakpoint={0}>
@@ -18,7 +18,7 @@ export const Basic: ComponentStory<typeof ButtonBar> = () => {
   );
 };
 
-export const WithSecondaryActions: ComponentStory<typeof ButtonBar> = () => {
+export const WithSecondaryActions: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
       <ButtonBar data-testid="button-bar" stackAtBreakpoint={0}>
@@ -40,7 +40,7 @@ export const WithSecondaryActions: ComponentStory<typeof ButtonBar> = () => {
 /*
  * We pass the stackAtBreakpoint prop of 0 to disable the stacking behaviour for the purposes of the example.
  */
-export const FullPage: ComponentStory<typeof ButtonBar> = () => {
+export const FullPage: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
       <ButtonBar alignLeft data-testid="button-bar" stackAtBreakpoint={0}>
@@ -52,7 +52,7 @@ export const FullPage: ComponentStory<typeof ButtonBar> = () => {
   );
 };
 
-export const DestructiveActions: ComponentStory<typeof ButtonBar> = () => {
+export const DestructiveActions: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
       <ButtonBar data-testid="button-bar" stackAtBreakpoint={0}>
@@ -64,7 +64,7 @@ export const DestructiveActions: ComponentStory<typeof ButtonBar> = () => {
   );
 };
 
-export const Stacked: ComponentStory<typeof ButtonBar> = () => {
+export const Stacked: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: 320 }}>
       <ButtonBar data-testid="button-bar" stackAtBreakpoint="xl">

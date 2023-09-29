@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { MouseEvent, useMemo, useState } from "react";
 import { Button } from "@salt-ds/core";
 import { CallIcon, UserIcon } from "@salt-ds/icons";
@@ -56,9 +56,9 @@ const initialSource: MenuDescriptor = {
 export default {
   title: "Lab/Cascading Menu",
   component: CascadingMenu,
-} as ComponentMeta<typeof CascadingMenu>;
+} as Meta<typeof CascadingMenu>;
 
-export const Default: ComponentStory<typeof CascadingMenu> = () => {
+export const Default: StoryFn<typeof CascadingMenu> = () => {
   return (
     <CascadingMenu
       initialSource={initialSource}
@@ -74,7 +74,7 @@ export const Default: ComponentStory<typeof CascadingMenu> = () => {
   );
 };
 
-export const MaximumWidth: ComponentStory<typeof CascadingMenu> = () => {
+export const MaximumWidth: StoryFn<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -143,7 +143,7 @@ export const MaximumWidth: ComponentStory<typeof CascadingMenu> = () => {
   );
 };
 
-export const WithSeparators: ComponentStory<typeof CascadingMenu> = () => {
+export const WithSeparators: StoryFn<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -202,7 +202,7 @@ export const WithSeparators: ComponentStory<typeof CascadingMenu> = () => {
   );
 };
 
-export const WithDisabledItems: ComponentStory<typeof CascadingMenu> = () => {
+export const WithDisabledItems: StoryFn<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -263,7 +263,7 @@ export const WithDisabledItems: ComponentStory<typeof CascadingMenu> = () => {
 const user: MenuDescriptor["icon"] = UserIcon;
 const phone: MenuDescriptor["icon"] = CallIcon;
 
-export const WithIcons: ComponentStory<typeof CascadingMenu> = () => {
+export const WithIcons: StoryFn<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -335,7 +335,7 @@ export const WithIcons: ComponentStory<typeof CascadingMenu> = () => {
   );
 };
 
-export const ControlledOpenClose: ComponentStory<typeof CascadingMenu> = () => {
+export const ControlledOpenClose: StoryFn<typeof CascadingMenu> = () => {
   const initialSource = useMemo(
     () => ({
       menuItems: [
@@ -411,7 +411,7 @@ export const ControlledOpenClose: ComponentStory<typeof CascadingMenu> = () => {
   );
 };
 
-export const ControlledSource: ComponentStory<typeof CascadingMenu> = () => {
+export const ControlledSource: StoryFn<typeof CascadingMenu> = () => {
   const sourceA: MenuDescriptor = {
     menuItems: [
       {

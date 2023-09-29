@@ -1,15 +1,15 @@
 import { SaltProvider } from "@salt-ds/core";
 import { Dropdown, FormField, FormFieldProps, Input } from "@salt-ds/lab";
 import { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
   title: "Lab/Form Field Legacy",
   component: FormField,
-} as ComponentMeta<typeof FormField>;
+} as Meta<typeof FormField>;
 
-export const Primary: ComponentStory<typeof FormField> = (props) => {
+export const Primary: StoryFn<typeof FormField> = (props) => {
   return (
     <>
       <FormField label="Default Form Field label" {...props}>
@@ -27,7 +27,7 @@ export const Primary: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const Secondary: ComponentStory<typeof FormField> = () => (
+export const Secondary: StoryFn<typeof FormField> = () => (
   <div
     style={{
       display: "grid",
@@ -61,7 +61,7 @@ export const Secondary: ComponentStory<typeof FormField> = () => (
   </div>
 );
 
-export const Tertiary: ComponentStory<typeof FormField> = () => (
+export const Tertiary: StoryFn<typeof FormField> = () => (
   <div style={{ width: "200px" }}>
     <h3>Tertiary</h3>
     <FormField
@@ -74,7 +74,7 @@ export const Tertiary: ComponentStory<typeof FormField> = () => (
   </div>
 );
 
-export const Disabled: ComponentStory<typeof FormField> = () => (
+export const Disabled: StoryFn<typeof FormField> = () => (
   <div style={{ width: "300px" }}>
     <FormField
       label="Default Form Field description label"
@@ -86,7 +86,7 @@ export const Disabled: ComponentStory<typeof FormField> = () => (
   </div>
 );
 
-export const Readonly: ComponentStory<typeof FormField> = () => (
+export const Readonly: StoryFn<typeof FormField> = () => (
   <div style={{ width: "300px" }}>
     <FormField label="Read Only Form Field" readOnly>
       <Input defaultValue="Value" />
@@ -94,7 +94,7 @@ export const Readonly: ComponentStory<typeof FormField> = () => (
   </div>
 );
 
-export const HelperText: ComponentStory<typeof FormField> = () => (
+export const HelperText: StoryFn<typeof FormField> = () => (
   <div style={{ width: "300px" }}>
     <FormField label="Helper Text Form Field" helperText="Helper text value">
       <Input defaultValue="Value" />
@@ -102,7 +102,7 @@ export const HelperText: ComponentStory<typeof FormField> = () => (
   </div>
 );
 
-export const ValidationStatus: ComponentStory<typeof FormField> = () => (
+export const ValidationStatus: StoryFn<typeof FormField> = () => (
   <div
     style={{
       columnGap: 20,
@@ -167,7 +167,7 @@ export const ValidationStatus: ComponentStory<typeof FormField> = () => (
   </div>
 );
 
-export const LabelAlignments: ComponentStory<typeof FormField> = () => (
+export const LabelAlignments: StoryFn<typeof FormField> = () => (
   <div
     style={{
       display: "grid",
@@ -234,7 +234,7 @@ const renderAllDensities = (props?: Partial<FormFieldProps>) => (
 );
 
 // We can't use SB controls here, otherwise SB crashes with circular JSON conversion error (iframe works)
-export const AllDensitiesTwoThemes: ComponentStory<typeof FormField> = () => {
+export const AllDensitiesTwoThemes: StoryFn<typeof FormField> = () => {
   return (
     <div style={{ display: "flex" }}>
       <SaltProvider mode="light">{renderAllDensities()}</SaltProvider>
@@ -283,7 +283,7 @@ const Required = () => {
   );
 };
 
-export const Necessity: ComponentStory<typeof FormField> = () => (
+export const Necessity: StoryFn<typeof FormField> = () => (
   <div style={{ display: "flex", flexDirection: "row" }}>
     <Optional />
     <Required />
@@ -418,7 +418,7 @@ const MultipleMessagesStatusIndicator = (props?: Partial<FormFieldProps>) => {
   );
 };
 
-export const StatusIndicator: ComponentStory<typeof FormField> = () => (
+export const StatusIndicator: StoryFn<typeof FormField> = () => (
   <>
     <div
       style={{
@@ -472,7 +472,7 @@ export const StatusIndicator: ComponentStory<typeof FormField> = () => (
   </>
 );
 
-export const Variants: ComponentStory<typeof FormField> = () => (
+export const Variants: StoryFn<typeof FormField> = () => (
   <>
     <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
       <div style={{ width: "250px" }}>

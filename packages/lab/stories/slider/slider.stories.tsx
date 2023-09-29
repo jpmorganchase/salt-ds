@@ -1,17 +1,17 @@
 import { Button, Card, Checkbox } from "@salt-ds/core";
 import { Slider, SliderProps } from "@salt-ds/lab";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Slider",
   component: Slider,
 };
 
-const SliderTemplate: Story<SliderProps> = (args) => {
+const SliderTemplate: StoryFn<SliderProps> = (args) => {
   return <Slider {...args} />;
 };
 
-const SliderOnACardTemplate: Story<SliderProps> = (props) => {
+const SliderOnACardTemplate: StoryFn<SliderProps> = (props) => {
   return (
     <Card>
       <Checkbox label="Coffee" />

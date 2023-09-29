@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox-deprecated.stories";
 import { version } from "react";
 

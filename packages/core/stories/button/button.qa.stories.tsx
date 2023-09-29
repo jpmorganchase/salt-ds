@@ -1,6 +1,6 @@
 import { Button } from "@salt-ds/core";
 import { SearchIcon } from "@salt-ds/icons";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
@@ -10,9 +10,9 @@ export default {
   // react-docgen-typescript-loader doesn't support detecting interface extension
   // https://github.com/strothj/react-docgen-typescript-loader/issues/47
   argTypes: { onClick: { action: "clicked" } },
-} as ComponentMeta<typeof Button>;
+} as Meta<typeof Button>;
 
-export const AllVariantsGrid: Story<QAContainerProps> = (props) => (
+export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} {...props}>
     <Button variant="primary">Button</Button>
     <Button variant="primary">

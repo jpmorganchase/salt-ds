@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as cardStories from "@stories/card/card.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 

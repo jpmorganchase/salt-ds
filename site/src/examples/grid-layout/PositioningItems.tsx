@@ -12,7 +12,7 @@ import clsx from "clsx";
 import styles from "./index.module.css";
 import positioningItemsStyles from "./PositioningItems.module.css";
 
-type GridItemAlignmentType = typeof gridItemAlignment[number];
+type GridItemAlignmentType = (typeof gridItemAlignment)[number];
 
 export const PositioningItems = (): ReactElement => {
   const [verticalAlignment, setVerticalAlignment] =

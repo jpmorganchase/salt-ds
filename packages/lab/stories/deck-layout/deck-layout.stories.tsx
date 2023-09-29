@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Card } from "@salt-ds/core";
 import { DeckLayout, Tab, Tabstrip } from "@salt-ds/lab";
 import "../layout/layout.stories.css";
@@ -12,7 +12,7 @@ export default {
       control: { type: "number", min: 0, max: 5, defaultValue: 0 },
     },
   },
-} as ComponentMeta<typeof DeckLayout>;
+} as Meta<typeof DeckLayout>;
 
 const deckCards = (slides: number) =>
   Array.from({ length: slides }, (_, index) => (
@@ -25,7 +25,7 @@ const deckCards = (slides: number) =>
     </Card>
   ));
 
-const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
+const DefaultDeckLayoutStory: StoryFn<typeof DeckLayout> = (args) => {
   const slides = 6;
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -62,7 +62,7 @@ const DefaultDeckLayoutStory: ComponentStory<typeof DeckLayout> = (args) => {
 export const Default = DefaultDeckLayoutStory.bind({});
 Default.args = {};
 
-const WithTabStrip: ComponentStory<typeof DeckLayout> = (args) => {
+const WithTabStrip: StoryFn<typeof DeckLayout> = (args) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const tabs = [

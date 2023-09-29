@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import { Button, Toast, ToastContent } from "@salt-ds/core";
 import { ToastGroup } from "@salt-ds/lab";
 import { CloseIcon } from "@salt-ds/icons";

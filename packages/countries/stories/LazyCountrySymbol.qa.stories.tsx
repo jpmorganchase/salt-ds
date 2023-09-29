@@ -1,4 +1,4 @@
-import { Meta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
 import { Suspense } from "react";
 
@@ -8,7 +8,7 @@ export default {
 
 const sizes = [1, 2, 3] as const;
 
-export const AllLazyCountrySymbols: Story = () => {
+export const AllLazyCountrySymbols: StoryFn = () => {
   return (
     <Suspense fallback="Loading...">
       {sizes.map((size) => (

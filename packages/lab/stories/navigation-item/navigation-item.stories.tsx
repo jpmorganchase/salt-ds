@@ -1,6 +1,6 @@
 import { NavigationItem, NavigationItemProps, Badge } from "@salt-ds/lab";
 import { FlexLayout } from "@salt-ds/core";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
 
@@ -11,7 +11,7 @@ export default {
   component: NavigationItem,
 };
 
-const Template: Story<NavigationItemProps> = (args) => {
+const Template: StoryFn<NavigationItemProps> = (args) => {
   const [active, setActive] = useState(false);
 
   const handleActiveToggle = () => {
@@ -37,7 +37,7 @@ Default.args = {
   href: "#",
 };
 
-export const Vertical: Story<NavigationItemProps> = (args) => {
+export const Vertical: StoryFn<NavigationItemProps> = (args) => {
   const [active, setActive] = useState(false);
 
   const handleActiveToggle = () => {
@@ -62,7 +62,7 @@ Vertical.args = {
   href: "#",
 };
 
-export const WithIcon: Story<NavigationItemProps> = () => {
+export const WithIcon: StoryFn<NavigationItemProps> = () => {
   const [horizontalActive, setHorizontalActive] = useState(false);
 
   const [verticalActive, setVerticalActive] = useState(false);
@@ -107,7 +107,7 @@ export const WithIcon: Story<NavigationItemProps> = () => {
   );
 };
 
-export const WithBadge: Story<NavigationItemProps> = () => {
+export const WithBadge: StoryFn<NavigationItemProps> = () => {
   const [horizontalActive, setHorizontalActive] = useState(false);
 
   const [verticalActive, setVerticalActive] = useState(false);
@@ -152,7 +152,7 @@ export const WithBadge: Story<NavigationItemProps> = () => {
   );
 };
 
-export const WithNestedItems: Story<NavigationItemProps> = () => {
+export const WithNestedItems: StoryFn<NavigationItemProps> = () => {
   const [horizontalActive, setHorizontalActive] = useState(false);
 
   const [verticalActive, setVerticalActive] = useState(false);

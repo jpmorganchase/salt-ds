@@ -1,4 +1,4 @@
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { Button, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
@@ -41,7 +41,7 @@ const rangeData = [
 const statusData = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 const typeData = ["Open", "Close", "Discarted", "Resolved"];
 
-export const QA: Story<QAContainerProps> = ({ imgSrc }) => (
+export const QA: StoryFn<QAContainerProps> = ({ imgSrc }) => (
   <QAContainer cols={1} itemPadding={3} imgSrc={imgSrc} itemWidthAuto>
     <Toolbar aria-label="Default toolbar" style={{ minWidth: "100px" }}>
       <FormField data-close-on-click={false} label="Range">

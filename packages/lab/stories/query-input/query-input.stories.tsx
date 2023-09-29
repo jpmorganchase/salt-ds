@@ -1,5 +1,5 @@
 import { BooleanOperator, QueryInput, QueryInputItem } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { useMemo, useState } from "react";
 import { QueryResultRow, QueryResultTable } from "../components";
 
@@ -9,7 +9,7 @@ export default {
   title: "Lab/Query Input",
   component: QueryInput,
   argTypes: {},
-} as ComponentMeta<typeof QueryInput>;
+} as Meta<typeof QueryInput>;
 
 const selectedItems: QueryInputItem[] = [
   {
@@ -85,7 +85,7 @@ const makeFilterFunction = (
   }
 };
 
-const DevelopmentStory: Story<StoryProps> = (props) => {
+const DevelopmentStory: StoryFn<StoryProps> = (props) => {
   const [items, setItems] = useState<QueryInputItem[]>([]);
   const [booleanOperator, setBooleanOperator] = useState<BooleanOperator>("or");
 

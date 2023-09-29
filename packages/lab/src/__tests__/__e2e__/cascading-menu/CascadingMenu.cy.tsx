@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as cascadingMenuStories from "@stories/cascading-menu/cascading-menu.stories";
 import { version } from "react";
 

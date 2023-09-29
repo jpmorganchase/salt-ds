@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { ListItemNext, ListNext, ListNextProps } from "../../src";
 import {
   Button,
@@ -14,7 +14,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 export default {
   title: "Lab/List Next",
   component: ListNext,
-} as ComponentMeta<typeof ListNext>;
+} as Meta<typeof ListNext>;
 
 const getListItems = ({ disabledItems = [] }: { disabledItems?: number[] }) =>
   usStateExampleData.map((item, index) => {
@@ -30,7 +30,7 @@ const getListItems = ({ disabledItems = [] }: { disabledItems?: number[] }) =>
     );
   });
 
-export const Default: Story<ListNextProps> = ({
+export const Default: StoryFn<ListNextProps> = ({
   children,
   onChange,
   ...rest
@@ -55,7 +55,7 @@ export const Default: Story<ListNextProps> = ({
 
 Default.args = {};
 
-export const Controlled: Story<ListNextProps> = ({ onChange, ...rest }) => {
+export const Controlled: StoryFn<ListNextProps> = ({ onChange, ...rest }) => {
   const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
     0
   );
@@ -210,7 +210,7 @@ DisabledSelected.args = {
   defaultSelected: "Alaska",
 };
 
-export const Empty: Story<ListNextProps> = ({ children, ...rest }) => {
+export const Empty: StoryFn<ListNextProps> = ({ children, ...rest }) => {
   const [showList, setShowList] = useState(false);
   const listItems = showList
     ? getListItems({

@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as skipLinkStories from "@stories/skip-link/skip-link.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { SkipLink, SkipLinks } from "@salt-ds/lab";

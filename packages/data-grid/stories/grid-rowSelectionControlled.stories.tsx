@@ -8,7 +8,7 @@ import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { useState } from "react";
 import { FlexLayout } from "@salt-ds/core";
 import "./grid.stories.css";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -16,7 +16,7 @@ export default {
   argTypes: {},
 };
 
-const RowSelectionControlledTemplate: Story<{}> = () => {
+const RowSelectionControlledTemplate: StoryFn<{}> = () => {
   const [selection, setSelection] = useState<number[]>([]);
 
   const onRowSelected = (rowIndices: number[]) => {

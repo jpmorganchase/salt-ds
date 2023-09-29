@@ -1,4 +1,4 @@
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import {
   ChangeEvent,
   createContext,
@@ -55,7 +55,7 @@ const onLocationChange = (row: Investor, rowIndex: number, value: string) => {
   dummyInvestors[rowIndex].location = value;
 };
 
-const GridStoryTemplate: Story<GridProps> = (props) => {
+const GridStoryTemplate: StoryFn<GridProps> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
@@ -117,7 +117,7 @@ const GridStoryTemplate: Story<GridProps> = (props) => {
   );
 };
 
-const SingleRowSelectionTemplate: Story<GridProps> = (props) => {
+const SingleRowSelectionTemplate: StoryFn<GridProps> = (props) => {
   return (
     <Grid
       rowData={dummyInvestors}
@@ -195,7 +195,7 @@ export const SimpleGrid = () => {
   );
 };
 
-const SmallTemplate: Story<GridProps> = () => {
+const SmallTemplate: StoryFn<GridProps> = () => {
   return (
     <Grid
       rowKeyGetter={investorKeyGetter}
@@ -229,7 +229,7 @@ const SmallTemplate: Story<GridProps> = () => {
   );
 };
 
-const PinnedColumnsTemplate: Story<GridProps> = (props) => {
+const PinnedColumnsTemplate: StoryFn<GridProps> = (props) => {
   const [columnSeparators, setColumnSeparators] = useState<boolean>(false);
   const [pinnedSeparators, setPinnedSeparators] = useState<boolean>(true);
 
@@ -341,7 +341,7 @@ const dummyData = [...new Array(40).keys()].map((i) => {
 
 const rowIdGetter = (row: any) => row.id;
 
-const LotsOfColumnsTemplate: Story<GridProps> = (props) => {
+const LotsOfColumnsTemplate: StoryFn<GridProps> = (props) => {
   const { style, ...rest } = props;
   return (
     <Grid
@@ -385,7 +385,7 @@ dummyColumnNames.forEach((name) => {
   group.columns.push(name);
 });
 
-const LotsOfColumnGroupsTemplate: Story<GridProps> = (props) => {
+const LotsOfColumnGroupsTemplate: StoryFn<GridProps> = (props) => {
   return (
     <Grid
       rowData={dummyData}
@@ -456,7 +456,7 @@ const CustomHeader = (props: GridHeaderValueProps<any>) => {
 
 const customHeadersColumnNames = dummyColumnNames.slice(0, 10);
 
-const CustomHeadersTemplate: Story<GridProps> = (props) => {
+const CustomHeadersTemplate: StoryFn<GridProps> = (props) => {
   const [sortBy, setSortBy] = useState<string>("A");
   const [sortDesc, setSortDesc] = useState<boolean>(false);
 
@@ -609,7 +609,7 @@ for (let i = 0; i < 10; i++) {
   }
 }
 
-const CustomCellsTemplate: Story<GridProps> = (props) => {
+const CustomCellsTemplate: StoryFn<GridProps> = (props) => {
   const [data, setData] = useState(dummyTreeData);
 
   const dataById = useMemo(() => {
@@ -678,7 +678,7 @@ const CustomCellsTemplate: Story<GridProps> = (props) => {
   );
 };
 
-const ColumnDragAndDropTemplate: Story<GridProps> = (props) => {
+const ColumnDragAndDropTemplate: StoryFn<GridProps> = (props) => {
   const [columnIds, setColumnIds] = useState<string[]>([
     "name",
     "location",

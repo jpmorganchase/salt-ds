@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as deckStories from "@stories/deck-layout/deck-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 

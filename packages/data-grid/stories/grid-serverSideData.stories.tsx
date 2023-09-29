@@ -1,4 +1,4 @@
-import { DecoratorFn, Story } from "@storybook/react";
+import { Decorator, StoryFn } from "@storybook/react";
 import {
   useInfiniteQuery,
   QueryClient,
@@ -49,7 +49,7 @@ const useInvestors = () => {
 };
 
 const queryClient = new QueryClient();
-const ServerSideDataTemplate: Story<{}> = (props) => {
+const ServerSideDataTemplate: StoryFn<{}> = (props) => {
   const { fetchNextPage, data } = useInvestors();
   const rowData = data?.pages.flat() ?? [];
   const lastRow = rowData.length + 1;
@@ -111,5 +111,5 @@ ServerSideData.decorators = [
     <QueryClientProvider client={queryClient}>
       <Story />
     </QueryClientProvider>
-  )) as DecoratorFn,
+  )) as Decorator,
 ];

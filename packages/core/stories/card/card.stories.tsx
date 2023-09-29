@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
   Card,
@@ -21,7 +21,7 @@ export default {
   title: "Core/Card",
   component: Card,
   argTypes: { onClick: { action: "clicked" } },
-} as ComponentMeta<typeof Card>;
+} as Meta<typeof Card>;
 
 interface ExampleRowProps {
   children: ReactNode;
@@ -66,7 +66,7 @@ const InteractableExamples = () => (
   </ExampleRow>
 );
 
-export const AllDefault: ComponentStory<typeof Card> = () => (
+export const AllDefault: StoryFn<typeof Card> = () => (
   <div>
     <SaltProvider mode="light">
       <Examples />
@@ -100,14 +100,14 @@ const exampleData = [
   },
 ];
 
-export const Default: ComponentStory<typeof Card> = () => (
+export const Default: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <H1 styleAs="h3">{exampleData[0].title}</H1>
     <Text>{exampleData[0].content}</Text>
   </Card>
 );
 
-export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
+export const CardsInFlexLayout: StoryFn<typeof Card> = () => (
   <FlexLayout>
     {exampleData.map((example, index) => {
       return (
@@ -120,7 +120,7 @@ export const CardsInFlexLayout: ComponentStory<typeof Card> = () => (
   </FlexLayout>
 );
 
-export const CardsInGridLayout: ComponentStory<typeof Card> = () => (
+export const CardsInGridLayout: StoryFn<typeof Card> = () => (
   <GridLayout style={{ maxWidth: "700px" }} rows={2} columns={2}>
     {exampleData.map((example, index) => {
       return (
@@ -133,7 +133,7 @@ export const CardsInGridLayout: ComponentStory<typeof Card> = () => (
   </GridLayout>
 );
 
-export const DefaultWithImage: ComponentStory<typeof Card> = () => (
+export const DefaultWithImage: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <img
       alt=""
@@ -146,7 +146,7 @@ export const DefaultWithImage: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const DefaultWithLink: ComponentStory<typeof Card> = () => (
+export const DefaultWithLink: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
       <H1 styleAs="h3">{exampleData[0].title}</H1>
@@ -158,7 +158,7 @@ export const DefaultWithLink: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const DefaultWithLinkAndImage: ComponentStory<typeof Card> = () => (
+export const DefaultWithLinkAndImage: StoryFn<typeof Card> = () => (
   <Card className="withImage">
     <img
       aria-label="The Skies by Dominik Schröder"
@@ -183,7 +183,7 @@ export const DefaultWithLinkAndImage: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const DefaultWithButton: ComponentStory<typeof Card> = () => (
+export const DefaultWithButton: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
       <H1 styleAs="h3">{exampleData[0].title}</H1>
@@ -193,7 +193,7 @@ export const DefaultWithButton: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const DefaultWithButtonAndImage: ComponentStory<typeof Card> = () => (
+export const DefaultWithButtonAndImage: StoryFn<typeof Card> = () => (
   <Card className="withImage">
     <img
       aria-label="The Skies by Dominik Schröder"
@@ -216,7 +216,7 @@ export const DefaultWithButtonAndImage: ComponentStory<typeof Card> = () => (
   </Card>
 );
 
-export const InteractableAll: ComponentStory<typeof Card> = () => (
+export const InteractableAll: StoryFn<typeof Card> = () => (
   <div>
     <SaltProvider mode="light">
       <InteractableExamples />
@@ -227,14 +227,14 @@ export const InteractableAll: ComponentStory<typeof Card> = () => (
   </div>
 );
 
-export const Interactable: ComponentStory<typeof Card> = () => (
+export const Interactable: StoryFn<typeof Card> = () => (
   <InteractableCard style={{ width: "256px" }}>
     <H1 styleAs="h3">{exampleData[0].title}</H1>
     <Text>{exampleData[0].content}</Text>
   </InteractableCard>
 );
 
-export const InteractableDisabled: ComponentStory<typeof Card> = () => (
+export const InteractableDisabled: StoryFn<typeof Card> = () => (
   <InteractableCard
     style={{ width: "256px" }}
     onClick={() => console.log("Clicked")}
@@ -248,7 +248,7 @@ export const InteractableDisabled: ComponentStory<typeof Card> = () => (
   </InteractableCard>
 );
 
-export const InteractableAccentVariations: ComponentStory<typeof Card> = () => {
+export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
   const placements = ["left", "right", "top", "bottom"];
   return (
     <div
@@ -275,7 +275,7 @@ export const InteractableAccentVariations: ComponentStory<typeof Card> = () => {
   );
 };
 
-export const InteractableAsBlockLink: ComponentStory<typeof Card> = () => {
+export const InteractableAsBlockLink: StoryFn<typeof Card> = () => {
   return (
     <Link
       style={{ textDecoration: "none" }}
@@ -291,9 +291,7 @@ export const InteractableAsBlockLink: ComponentStory<typeof Card> = () => {
   );
 };
 
-export const InteractableAsBlockLinkWithImage: ComponentStory<
-  typeof Card
-> = () => {
+export const InteractableAsBlockLinkWithImage: StoryFn<typeof Card> = () => {
   return (
     <Link
       style={{ textDecoration: "none" }}
@@ -322,7 +320,7 @@ export const InteractableAsBlockLinkWithImage: ComponentStory<
   );
 };
 
-export const InteractableAsBlockLinkWithImageBackground: ComponentStory<
+export const InteractableAsBlockLinkWithImageBackground: StoryFn<
   typeof Card
 > = () => {
   return (

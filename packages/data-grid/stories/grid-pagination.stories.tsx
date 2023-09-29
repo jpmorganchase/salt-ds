@@ -1,4 +1,4 @@
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { useMemo, useState } from "react";
 import { FlexLayout } from "@salt-ds/core";
 import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
@@ -14,7 +14,7 @@ export default {
 
 const dummyInvestors = createDummyInvestors();
 
-const GridPaginationTemplate: Story<{}> = (props) => {
+const GridPaginationTemplate: StoryFn<{}> = (props) => {
   const [page, setPage] = useState<number>(1);
   const pageSize = 7;
   const pageCount = Math.ceil(dummyInvestors.length / pageSize);

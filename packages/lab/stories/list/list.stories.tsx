@@ -1,4 +1,4 @@
-import type { ComponentMeta, DecoratorFn, Story } from "@storybook/react";
+import type { Meta, Decorator, StoryFn } from "@storybook/react";
 
 import {
   ChangeEventHandler,
@@ -43,7 +43,7 @@ const containerStyle = {
   width: "calc(100vw - 2em)",
 };
 
-const withFullViewWidth: DecoratorFn = (Story) => (
+const withFullViewWidth: Decorator = (Story) => (
   <div style={containerStyle}>
     <Story />
   </div>
@@ -61,9 +61,9 @@ export default {
   title: "Lab/List",
   component: List,
   decorators: [withFullViewWidth],
-} as ComponentMeta<typeof List>;
+} as Meta<typeof List>;
 
-export const Default: Story<ListProps> = (props) => {
+export const Default: StoryFn<ListProps> = (props) => {
   return (
     <List
       {...props}
@@ -74,7 +74,7 @@ export const Default: Story<ListProps> = (props) => {
   );
 };
 
-export const Borderless: Story<ListProps> = (props) => (
+export const Borderless: StoryFn<ListProps> = (props) => (
   <List
     aria-label="Borderless List example"
     maxWidth={292}
@@ -84,7 +84,7 @@ export const Borderless: Story<ListProps> = (props) => (
   />
 );
 
-export const Declarative: Story<ListProps> = (props) => {
+export const Declarative: StoryFn<ListProps> = (props) => {
   return (
     <List
       {...props}
@@ -106,7 +106,7 @@ export const Declarative: Story<ListProps> = (props) => {
   );
 };
 
-export const VirtualizedListExample: Story<ListProps> = (props) => {
+export const VirtualizedListExample: StoryFn<ListProps> = (props) => {
   return (
     <VirtualizedList
       aria-label="Listbox example"
@@ -117,7 +117,7 @@ export const VirtualizedListExample: Story<ListProps> = (props) => {
   );
 };
 
-export const Deselectable: Story<ListProps> = (props) => {
+export const Deselectable: StoryFn<ListProps> = (props) => {
   return (
     <List
       aria-label="Deselectable List example"
@@ -129,7 +129,7 @@ export const Deselectable: Story<ListProps> = (props) => {
   );
 };
 
-export const DisplayedItemCount: Story<ListProps> = (props) => {
+export const DisplayedItemCount: StoryFn<ListProps> = (props) => {
   return (
     <List
       aria-label="DisplayedItemCount List example"
@@ -141,7 +141,7 @@ export const DisplayedItemCount: Story<ListProps> = (props) => {
   );
 };
 
-export const Controlled: Story<ListProps> = (props) => {
+export const Controlled: StoryFn<ListProps> = (props) => {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -215,7 +215,7 @@ export const Controlled: Story<ListProps> = (props) => {
   );
 };
 
-export const Disabled: Story<ListProps<CustomItem>> = (props) => {
+export const Disabled: StoryFn<ListProps<CustomItem>> = (props) => {
   const source = useMemo(
     () =>
       usa_states.map(
@@ -276,7 +276,7 @@ export const Disabled: Story<ListProps<CustomItem>> = (props) => {
   );
 };
 
-export const Grouped: Story<ListProps> = (props) => (
+export const Grouped: StoryFn<ListProps> = (props) => (
   <>
     <style>{`#grouped-list .saltListItemHeader {
       background: var(--salt-color-gray-20);
@@ -330,7 +330,7 @@ export const Grouped: Story<ListProps> = (props) => (
   </>
 );
 
-export const MultiSelection: Story<ListProps> = (props) => {
+export const MultiSelection: StoryFn<ListProps> = (props) => {
   return (
     <FlexLayout>
       <FlexItem>
@@ -364,11 +364,11 @@ const randomizedData = usa_states
   .sort((a, b) => a.substring(1).localeCompare(b.substring(1)));
 
 // We need an example of list not following alphabetical order to test certain feature, e.g. type to select
-export const RandomOrder: Story<ListProps> = (props) => (
+export const RandomOrder: StoryFn<ListProps> = (props) => (
   <List width={292} source={randomizedData} {...props} />
 );
 
-export const TabToSelect: Story<ListProps> = () => {
+export const TabToSelect: StoryFn<ListProps> = () => {
   return (
     <FlexLayout>
       <FlexItem>
@@ -404,7 +404,7 @@ export const TabToSelect: Story<ListProps> = () => {
   );
 };
 
-export const ScrollToIndex: Story<ListProps> = () => {
+export const ScrollToIndex: StoryFn<ListProps> = () => {
   const inputFieldRef = useRef<HTMLDivElement>(null);
   const listScrollRef = useRef<ListScrollHandles<string>>(null);
   const virtualizedListScrollRef = useRef<ListScrollHandles<string>>(null);
@@ -450,7 +450,7 @@ export const ScrollToIndex: Story<ListProps> = () => {
   );
 };
 
-export const VariableHeight: Story<ListProps> = () => {
+export const VariableHeight: StoryFn<ListProps> = () => {
   const heightByDensity = useMemo(
     () => ({
       high: 24,
@@ -484,7 +484,7 @@ interface State {
   abbrev: string;
 }
 
-export const WithItemRenderer: Story<ListProps<State>> = (props) => {
+export const WithItemRenderer: StoryFn<ListProps<State>> = (props) => {
   const listExampleData = useMemo(
     () =>
       [
@@ -590,7 +590,7 @@ const ListPlaceholder = () => (
   <ContentStatus message="Did you hide it somewhere?" title="No source found" />
 );
 
-export const WithPlaceholder: Story<ListProps> = (props) => {
+export const WithPlaceholder: StoryFn<ListProps> = (props) => {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
   const [displaySource, setDisplaySource] = useState(true);
@@ -635,7 +635,7 @@ export const WithPlaceholder: Story<ListProps> = (props) => {
   );
 };
 
-export const WithTextTruncation: Story<ListProps> = () => {
+export const WithTextTruncation: StoryFn<ListProps> = () => {
   return (
     <List aria-label="Truncated List example" maxWidth={100}>
       <ListItem>69 Manchester Road, London, EC90 6QG</ListItem>
@@ -650,7 +650,7 @@ export const WithTextTruncation: Story<ListProps> = () => {
   );
 };
 
-export const WithLastFocusRestored: Story<ListProps> = () => {
+export const WithLastFocusRestored: StoryFn<ListProps> = () => {
   return (
     <List
       aria-label="RestoreLastFocus List example"
@@ -662,7 +662,7 @@ export const WithLastFocusRestored: Story<ListProps> = () => {
   );
 };
 
-export const WithTextHighlight: Story<ListProps> = () => {
+export const WithTextHighlight: StoryFn<ListProps> = () => {
   const inputFieldRef = useRef<HTMLDivElement>(null);
 
   const [highlightRegex, setHighlightIndex] = useState<RegExp>();
@@ -697,7 +697,7 @@ export const WithTextHighlight: Story<ListProps> = () => {
   );
 };
 
-export const DisableTypeToSelect: Story<ListProps> = () => {
+export const DisableTypeToSelect: StoryFn<ListProps> = () => {
   const handleChange: SelectionChangeHandler = (evt, selected) => {
     console.log(`selectionChanged`, selected);
   };
@@ -713,7 +713,7 @@ export const DisableTypeToSelect: Story<ListProps> = () => {
   );
 };
 
-export const ExtendedSelection: Story<ListProps> = () => {
+export const ExtendedSelection: StoryFn<ListProps> = () => {
   const handleSelectionChange: SelectionChangeHandler = (evt, selected) => {
     console.log({ selected });
   };
@@ -727,7 +727,7 @@ export const ExtendedSelection: Story<ListProps> = () => {
   );
 };
 
-export const WithTextHighlightDeclarative: Story<ListProps> = () => {
+export const WithTextHighlightDeclarative: StoryFn<ListProps> = () => {
   const inputFieldRef = useRef<HTMLDivElement>(null);
 
   const [highlightRegex, setHighlightIndex] = useState<RegExp>();
@@ -781,7 +781,7 @@ export const WithTextHighlightDeclarative: Story<ListProps> = () => {
   );
 };
 
-export const Empty: Story<ListProps> = (props) => {
+export const Empty: StoryFn<ListProps> = (props) => {
   const buttonsRef = useRef<HTMLDivElement>(null);
   const NO_DATA = useMemo<string[]>(() => [], []);
   const [data, setData] = useState<string[]>(NO_DATA);

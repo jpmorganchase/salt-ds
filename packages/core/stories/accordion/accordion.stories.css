@@ -1,4 +1,4 @@
-#root .story-root {
+#storybook-root .story-root {
   height: 80vh;
   padding: var(--salt-spacing-200);
 }

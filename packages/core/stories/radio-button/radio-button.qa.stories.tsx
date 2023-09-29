@@ -1,5 +1,5 @@
 import { RadioButton, RadioButtonGroup } from "@salt-ds/core";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
@@ -9,7 +9,7 @@ export default {
   // react-docgen-typescript-loader doesn't support detecting interface extension
   // https://github.com/strothj/react-docgen-typescript-loader/issues/47
   argTypes: { onClick: { action: "clicked" } },
-} as ComponentMeta<typeof RadioButton>;
+} as Meta<typeof RadioButton>;
 
 const RadioButtonGroups = () => {
   return (
@@ -50,7 +50,7 @@ const RadioButtonGroups = () => {
   );
 };
 
-export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={2} itemPadding={6} itemWidthAuto {...props}>
       <RadioButtonGroups />

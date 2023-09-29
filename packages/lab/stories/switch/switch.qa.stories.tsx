@@ -1,13 +1,13 @@
 import { Switch } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Switch/QA",
   component: Switch,
-} as ComponentMeta<typeof Switch>;
+} as Meta<typeof Switch>;
 
-export const AllExamplesGrid: Story<
+export const AllExamplesGrid: StoryFn<
   QAContainerProps & { className?: string }
 > = (props) => {
   const { className } = props;

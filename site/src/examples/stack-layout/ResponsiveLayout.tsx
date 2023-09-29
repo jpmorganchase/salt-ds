@@ -11,7 +11,7 @@ import styles from "./index.module.css";
 import responsiveLayoutStyles from "./ResponsiveLayout.module.css";
 
 const viewportOptions = ["Large", "Small"] as const;
-type Viewport = typeof viewportOptions[number];
+type Viewport = (typeof viewportOptions)[number];
 
 export const ResponsiveLayout = (): ReactElement => {
   const [viewport, setViewport] = useState<Viewport>("Large");

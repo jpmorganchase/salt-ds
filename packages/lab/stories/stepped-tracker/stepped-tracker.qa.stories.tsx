@@ -1,15 +1,15 @@
 import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 import { StackLayout } from "@salt-ds/core";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Stepped Tracker/QA",
   component: SteppedTracker,
   subcomponents: { TrackerStep, StepLabel },
-} as ComponentMeta<typeof SteppedTracker>;
+} as Meta<typeof SteppedTracker>;
 
-export const Basic: Story<QAContainerProps> = (props) => {
+export const Basic: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer height={500} width={1000} {...props}>
       <StackLayout

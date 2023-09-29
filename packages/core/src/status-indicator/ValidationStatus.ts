@@ -5,4 +5,4 @@ export const VALIDATION_NAMED_STATUS = [
   "info",
 ] as const;
 
-export type ValidationStatus = typeof VALIDATION_NAMED_STATUS[number];
+export type ValidationStatus = (typeof VALIDATION_NAMED_STATUS)[number];

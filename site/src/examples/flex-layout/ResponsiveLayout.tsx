@@ -12,7 +12,7 @@ import styles from "./index.module.css";
 import responsiveLayoutStyles from "./ResponsiveLayout.module.css";
 
 const viewportOptions = ["Large", "Medium", "Small"] as const;
-type Viewport = typeof viewportOptions[number];
+type Viewport = (typeof viewportOptions)[number];
 
 type LayoutProps = {
   width: string | number;

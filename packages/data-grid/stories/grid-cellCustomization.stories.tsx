@@ -7,7 +7,7 @@ import {
 } from "../src";
 import { LinearProgress } from "@salt-ds/lab";
 import "./grid.stories.css";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 
 export default {
   title: "Data Grid/Data Grid",
@@ -55,7 +55,7 @@ const PercentageCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   );
 };
 
-const CellCustomizationTemplate: Story<{}> = () => {
+const CellCustomizationTemplate: StoryFn<{}> = () => {
   const rowData: CurrencyPairRow[] = useMemo(() => {
     const currencies = ["AUD", "USD", "SGD", "GBP", "HKD", "NZD", "EUR"];
     const result: CurrencyPairRow[] = [];

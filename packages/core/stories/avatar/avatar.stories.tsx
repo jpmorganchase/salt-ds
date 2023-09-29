@@ -7,22 +7,22 @@ import {
   useAvatarImage,
 } from "@salt-ds/core";
 import { UserGroupSolidIcon } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import persona1 from "../assets/avatar.png";
 
 export default {
   title: "Core/Avatar",
   component: Avatar,
-} as ComponentMeta<typeof Avatar>;
+} as Meta<typeof Avatar>;
 const sizes = [1, 2, 3, 4] as const;
 
-const Template: ComponentStory<typeof Avatar> = (args) => {
+const Template: StoryFn<typeof Avatar> = (args) => {
   return <Avatar {...args} />;
 };
 
 export const Default = Template.bind({});
 
-export const Sizes: ComponentStory<typeof Avatar> = (args) => {
+export const Sizes: StoryFn<typeof Avatar> = (args) => {
   return (
     <FlowLayout gap={7} align="end">
       {sizes.map((size) => (
@@ -35,7 +35,7 @@ export const Sizes: ComponentStory<typeof Avatar> = (args) => {
   );
 };
 
-export const Fallback: ComponentStory<typeof Avatar> = ({ size }) => {
+export const Fallback: StoryFn<typeof Avatar> = ({ size }) => {
   return (
     <FlowLayout>
       <Avatar size={size} name="Alex Brailescu" src={persona1} />
@@ -65,7 +65,7 @@ WithCustomSvg.args = {
   children: CustomSVG,
 };
 
-export const WithCustomImg: ComponentStory<typeof Avatar> = () => {
+export const WithCustomImg: StoryFn<typeof Avatar> = () => {
   const src = "bad_url";
   const status = useAvatarImage({ src });
 
