@@ -3,7 +3,7 @@ import { Link, StackLayout } from "@salt-ds/core";
 
 export const Variant = (): ReactElement => (
   <StackLayout>
-    <Link href="/" variant="primary">
+    <Link href="#" variant="primary">
       Primary Variant
     </Link>
     <Link href="#" variant="secondary">
