@@ -6,7 +6,10 @@
   -webkit-appearance: none;
   display: inline-flex;
   background: var(--salt-navigable-primary-background);
-  border: 0 solid transparent;
+  gap: var(--salt-spacing-100);
+  border: none;
+  border-left: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
+  border-right: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
   border-radius: 0;
   white-space: pre;
   min-width: 4em;
@@ -15,7 +18,8 @@
   position: relative;
   flex-shrink: 0;
 
-  color: var(--salt-text-secondary-foreground);
+  cursor: var(--salt-navigable-cursor-hover);
+  color: var(--salt-text-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight);
   font-family: var(--salt-text-fontFamily);
   text-align: var(--salt-text-textAlign);
@@ -24,49 +28,55 @@
   font-size: var(--salt-text-fontSize);
 }
 
-.saltTabNext:hover {
-  cursor: var(--salt-navigable-cursor-hover);
-  background: var(--salt-navigable-primary-background-hover);
-  color: var(--salt-text-primary-foreground);
+.saltTabNext-primary {
+  --tabNext-background-active: var(--salt-container-primary-background);
 }
 
-.saltTabNext:hover::before,
-.saltTabNext:focus-visible::before {
+.saltTabNext-secondary {
+  --tabNext-background-active: var(--salt-container-secondary-background);
+}
+
+.saltTabNext::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
+  left: calc(var(--salt-size-border) * -1);
+  right: calc(var(--salt-size-border) * -1);
+  height: var(--salt-size-indicator);
+}
+
+.saltTabNext-main::after {
+  top: 0;
+}
+
+.saltTabNext-inline::after {
   bottom: 0;
-  height: var(--salt-size-bar);
+}
+
+.saltTabNext:hover::after,
+.saltTabNext:focus-visible::after {
   background: var(--salt-navigable-indicator-hover);
+}
+
+.saltTabNext:disabled:hover::after,
+.saltTabNext:disabled:focus-visible::after {
+  background: none;
 }
 
 .saltTabNext:focus-visible {
   outline: var(--salt-focused-outline);
-  background: var(--salt-navigable-primary-background-hover);
-  color: var(--salt-text-primary-foreground);
 }
 
-.saltTabNext[aria-selected="true"] {
-  color: var(--salt-text-primary-foreground);
+.saltTabNext-main[aria-selected="true"] {
+  background: var(--tabNext-background-active);
+  border-left: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-right: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
 }
 
 .saltTabNext[aria-selected="true"]::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: var(--salt-size-bar);
   background: var(--salt-navigable-indicator-active);
 }
 
 .saltTabNext:disabled {
   cursor: var(--salt-navigable-cursor-disabled);
   color: var(--salt-text-primary-foreground-disabled);
-  background: var(--salt-navigable-primary-background);
-}
-
-.saltTabNext:disabled:before {
-  background: transparent;
 }
