@@ -18,11 +18,11 @@
     .ag-cell-range-single-cell,
     .ag-cell-range-single-cell.ag-cell-range-handle {
       // border: var(--agGrid-focused-borderWidth)
-        // var(--agGrid-focused-borderStyle) var(--agGrid-focused-borderColor) !important;
-        outline: var(--agGrid-focused-borderWidth)
+      // var(--agGrid-focused-borderStyle) var(--agGrid-focused-borderColor) !important;
+      outline: var(--agGrid-focused-borderWidth)
         var(--agGrid-focused-borderStyle) var(--agGrid-focused-borderColor);
-        outline-offset: -2px;
-        border: none;
+      outline-offset: -2px;
+      border: none;
     }
   }
   // Because we are using a different border thickness on focus than default
@@ -549,66 +549,66 @@
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
     ).ag-cell-range-left:before {
-      border-left: 2px dotted var(--agGrid-range-selection-borderColor);
-      content: "";
-      height: 99%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 2px;
-      z-index: 1;
+    border-left: 2px dotted var(--agGrid-range-selection-borderColor);
+    content: "";
+    height: 99%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    z-index: 1;
   }
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
     ).ag-cell-range-right:before {
-      border-right: 2px dotted var(--agGrid-range-selection-borderColor);
-      content: "";
-      height: 99%;
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 2px;
-      z-index: 1;
+    border-right: 2px dotted var(--agGrid-range-selection-borderColor);
+    content: "";
+    height: 99%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2px;
+    z-index: 1;
   }
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
     ).ag-cell-range-left.ag-cell-range-bottom:before,
-    .ag-cell.ag-cell-range-selected:not(
-        .ag-cell-range-single-cell
-      ).ag-cell-range-right.ag-cell-range-bottom:before {
-      height: 100%;
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-right.ag-cell-range-bottom:before {
+    height: 100%;
   }
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
     ).ag-cell-range-top:after {
-      border-top: 2px dotted var(--agGrid-range-selection-borderColor);
-      content: "";
-      width: 99%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 2px;
-      z-index: 1;
+    border-top: 2px dotted var(--agGrid-range-selection-borderColor);
+    content: "";
+    width: 99%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 2px;
+    z-index: 1;
   }
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
     ).ag-cell-range-bottom:after {
-      border-bottom: 2px dotted var(--agGrid-range-selection-borderColor);
-      content: "";
-      width: 99%;
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      height: 2px;
-      z-index: 1;
+    border-bottom: 2px dotted var(--agGrid-range-selection-borderColor);
+    content: "";
+    width: 99%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    z-index: 1;
   }
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
     ).ag-cell-range-right.ag-cell-range-bottom:before,
-    .ag-cell.ag-cell-range-selected:not(
-        .ag-cell-range-single-cell
-      ).ag-cell-range-right.ag-cell-range-top:before {
-      width: 100%;
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-right.ag-cell-range-top:before {
+    width: 100%;
   }
   .ag-cell.ag-cell-range-selected-1:not(.ag-cell-focus),
   .ag-root:not(.ag-context-menu-open)
