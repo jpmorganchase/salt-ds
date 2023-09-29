@@ -5889,7 +5889,7 @@ __metadata:
     "@testing-library/dom": ^9.0.0
     "@testing-library/react": ^12.1.0
     "@types/no-scroll": ^2.1.0
-    "@types/node": ^14.14.20
+    "@types/node": ^20.0.0
     "@types/react": ^18.0.0
     "@types/react-color": ^3.0.6
     "@types/react-dom": ^18.0.0
@@ -8823,17 +8823,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.14.20":
-  version: 14.18.16
-  resolution: "@types/node@npm:14.18.16"
-  checksum: 1999799309dc8620a2adf9a5d5e48416af87321bae4c950b4aa8018fcef2c3b6c1fcf98c39eae06f6492c03a643a5a44e2bb3750cd2574d9cf7eac33bac50e24
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:^16.0.0":
   version: 16.18.12
   resolution: "@types/node@npm:16.18.12"
   checksum: fc3271182414f8593018ef8f00b4718116a92f463f619081bd399d9460e7861e1dd7eebc7cf94c23567e418ff397babed077011711aae8d47171b5a81c5bd71d
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.0.0":
+  version: 20.7.1
+  resolution: "@types/node@npm:20.7.1"
+  checksum: 3140bd6c9130f1ed73a78ce7a1765ee43e155c1eea50eea45e18faeb31d11d97a84fffdc5e3a97582101d2f57d2652a50f510ede6c702780267bad74c822d56c
   languageName: node
   linkType: hard
 
