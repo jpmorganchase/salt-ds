@@ -71,14 +71,14 @@ jobs:
               core.setFailed(`Request failed with error ${err}`)
             }
       - name: Checkout pull request
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: refs/pull/${{ github.event.issue.number }}/head
 
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
           cache: "yarn"
           registry-url: "https://registry.npmjs.org"
 
