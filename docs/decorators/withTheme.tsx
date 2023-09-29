@@ -1,4 +1,4 @@
-import { DecoratorFn } from "@storybook/react";
+import { Decorator } from "@storybook/react";
 import {
   getCharacteristicValue,
   ModeValues,
@@ -35,11 +35,17 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
   const selector = viewMode === "docs" ? `.docs-story` : ".sb-show-main";
 
   useEffect(() => {
-    const color = getCharacteristicValue(theme, "text", "primary-foreground");
+    const color = getCharacteristicValue(
+      theme,
+      "text",
+      "primary-foreground",
+      document.querySelector(".salt-theme") as HTMLElement
+    );
     const background = getCharacteristicValue(
       theme,
       "container",
-      "primary-background"
+      "primary-background",
+      document.querySelector(".salt-theme") as HTMLElement
     );
 
     addBackgroundStyle(
@@ -57,7 +63,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
   return null;
 }
 
-export const withTheme: DecoratorFn = (StoryFn, context) => {
+export const withTheme: Decorator = (StoryFn, context) => {
   const { density, mode } = context.globals;
 
   if (mode === "side-by-side" || mode === "stacked") {

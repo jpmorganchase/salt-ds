@@ -1,11 +1,13 @@
-import { StoriesWithPartialProps } from "@storybook/testing-react/dist/types";
-import { Story } from "@storybook/react";
+import { StoriesWithPartialProps } from "@storybook/types";
+import { StoryFn, ReactRenderer } from "@storybook/react";
 import { Options } from "cypress-axe";
 
-export function checkAccessibility(stories: StoriesWithPartialProps<unknown>) {
+export function checkAccessibility(
+  stories: StoriesWithPartialProps<ReactRenderer, unknown>
+) {
   describe("Axe Testing", () => {
     Object.entries(stories).forEach(([name, StoryComponent]) => {
-      const Component = StoryComponent as Story<unknown>;
+      const Component = StoryComponent as StoryFn<unknown>;
 
       const disabledRules: string[] =
         Component.parameters?.axe?.disabledRules ?? [];

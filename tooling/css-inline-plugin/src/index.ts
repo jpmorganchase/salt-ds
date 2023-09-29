@@ -1,5 +1,6 @@
 import type { Plugin } from "vite";
 import { createFilter } from "vite";
+import MagicString from "magic-string";
 
 export interface Options {
   /** Glob patterns to ignore */
@@ -13,18 +14,21 @@ export interface Options {
 export function cssInline(options: Options = {}): Plugin {
   const {
     exclude = ["**/**.stories.tsx"],
-    include = ["**/packages/**/*.tsx"],
+    include = ["**/packages/**/*.{tsx,jsx}"],
   } = options;
   const filter = createFilter(include, exclude);
 
   return {
     name: "css-inline-plugin",
     enforce: "pre",
-    async resolveId(id, importer) {
-      if (filter(importer)) {
-        if (id.endsWith(".css")) {
-          return this.resolve(id + "?inline", importer);
-        }
+    transform(src, id) {
+      if (filter(id)) {
+        const s = new MagicString(src);
+        s.replaceAll('.css";', '.css?inline";');
+        return {
+          code: s.toString(),
+          map: s.generateMap({ hires: true, source: id }),
+        };
       }
     },
   };

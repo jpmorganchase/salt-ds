@@ -12,7 +12,7 @@
   margin: auto;
 }
 
-.docblock-argstable-body td div {
+.docblock-argstable td div {
   height: var(--salt-size-base);
   margin-bottom: var(--salt-size-unit);
 }

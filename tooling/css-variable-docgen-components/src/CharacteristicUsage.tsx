@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { DocsContext, getComponent } from "@storybook/addon-docs";
-import { resetComponents, TableWrapper } from "@storybook/components";
+import { ResetWrapper } from "@storybook/components";
 import { Spinner } from "@salt-ds/core";
 import { CharacteristicUsageRow } from "./CharacteristicUsageRow";
 import { EmptyBlock } from "./EmptyBlock";
 import { getCharacteristics, getDocgenSection } from "./utils";
+import { TableWrapper } from "./TableWrapper";
 
 import "./CharacteristicUsage.css";
-
-const ResetWrapper = resetComponents.resetwrapper;
 
 interface CSSVariable {
   name: string;
@@ -56,7 +55,7 @@ export function CharacteristicUsage(
 
   return (
     <ResetWrapper>
-      <TableWrapper className="docsblock-argstable">
+      <TableWrapper className="docblock-argstable sb-unstyled">
         <thead className="docblock-argstable-head">
           <tr>
             <th>

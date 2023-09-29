@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as gridStories from "@stories/grid.stories";
 import * as gridEditableStories from "@stories/grid-editableCells.stories";
 import * as variantsStories from "@stories/grid-variants.stories";

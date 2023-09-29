@@ -7,7 +7,7 @@ import {
   NumericColumn,
   TextCellEditor,
 } from "../src";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { randomInt, randomNumber, randomText } from "./utils";
 import { useCallback, useState } from "react";
 import "./grid.stories.css";
@@ -96,7 +96,7 @@ const useExampleDataSource = () => {
   return { rows, setAmount, setName, setDiscount, setPrice };
 };
 
-const EditableCellsTemplate: Story<{}> = () => {
+const EditableCellsTemplate: StoryFn<{}> = () => {
   const { setPrice, setDiscount, rows, setAmount, setName } =
     useExampleDataSource();
 

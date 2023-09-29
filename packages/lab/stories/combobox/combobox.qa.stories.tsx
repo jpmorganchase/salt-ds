@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { ComboBox, FormField } from "@salt-ds/lab";
 
@@ -7,9 +7,9 @@ import { usa_states } from "../list/list.data";
 export default {
   title: "Lab/Combo Box/QA",
   component: ComboBox,
-} as ComponentMeta<typeof ComboBox>;
+} as Meta<typeof ComboBox>;
 
-export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
+export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
   <QAContainer
     cols={4}
     imgSrc={imgSrc}

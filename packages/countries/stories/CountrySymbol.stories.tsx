@@ -6,7 +6,7 @@ import {
   countryMetaMap,
   LazyCountrySymbol,
 } from "@salt-ds/countries";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { FlexLayout, StackLayout } from "@salt-ds/core";
 import { FormField, Input } from "@salt-ds/lab";
 
@@ -18,15 +18,13 @@ export default {
       type: "number",
     },
   },
-} as ComponentMeta<typeof CountrySymbol>;
+} as Meta<typeof CountrySymbol>;
 
-export const SaltCountrySymbol: ComponentStory<typeof CountrySymbol> = (
-  args
-) => <TT {...args} />;
+export const SaltCountrySymbol: StoryFn<typeof CountrySymbol> = (args) => (
+  <TT {...args} />
+);
 
-export const CountrySymbolMultipleSizes: ComponentStory<
-  typeof CountrySymbol
-> = () => (
+export const CountrySymbolMultipleSizes: StoryFn<typeof CountrySymbol> = () => (
   <StackLayout direction="row">
     <MX size={1} />
     <MX size={2} />
@@ -36,9 +34,9 @@ export const CountrySymbolMultipleSizes: ComponentStory<
   </StackLayout>
 );
 
-export const AllCountrySymbolsWithSearch: ComponentStory<
-  typeof CountrySymbol
-> = (args) => {
+export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
+  args
+) => {
   const [inputText, setInputText] = useState("");
 
   return (

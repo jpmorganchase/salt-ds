@@ -1,13 +1,13 @@
 import { ContentStatus } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Content Status/QA",
   component: ContentStatus,
-} as ComponentMeta<typeof ContentStatus>;
+} as Meta<typeof ContentStatus>;
 
-export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={4} height={1050} {...props}>
       <ContentStatus

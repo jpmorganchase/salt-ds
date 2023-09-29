@@ -15,7 +15,7 @@ import "@fontsource/open-sans/800.css";
 import "@fontsource/open-sans/800-italic.css";
 import "./styles.css";
 
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps } from "react";
 import { withTheme } from "docs/decorators/withTheme";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
@@ -23,7 +23,7 @@ import { withStrictMode } from "docs/decorators/withStrictMode";
 import { withScaffold } from "docs/decorators/withScaffold";
 import { SaltProvider } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
-import { initialize, mswDecorator } from "msw-storybook-addon";
+import { initialize, mswLoader } from "msw-storybook-addon";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
@@ -141,10 +141,13 @@ export const parameters: Parameters = {
     container: ({
       children,
       context,
-    }: ComponentProps<typeof DocsContainer> & { children?: ReactNode }) => (
-      // @ts-ignore DocsContainer does not support React18 types
-      <DocsContainer context={context}>
-        <SaltProvider mode={context.globals?.mode}>{children}</SaltProvider>
+      ...rest
+    }: ComponentProps<typeof DocsContainer>) => (
+      <DocsContainer context={context} {...rest}>
+        {/* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */}
+        <SaltProvider mode={context.store.globals.globals?.mode}>
+          {children}
+        </SaltProvider>
       </DocsContainer>
     ),
   },
@@ -160,5 +163,6 @@ export const decorators = [
   withTheme,
   WithTextSpacingWrapper,
   withStrictMode,
-  mswDecorator,
 ];
+
+export const loaders = [mswLoader];

@@ -5,7 +5,7 @@ import {
   RadioButton,
   RadioButtonGroup,
 } from "@salt-ds/core";
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as radioButtonStories from "@stories/radio-button/radio-button.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 

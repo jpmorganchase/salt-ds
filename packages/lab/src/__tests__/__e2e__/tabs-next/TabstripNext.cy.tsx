@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as tabstripStories from "@stories/tabstrip-next/tabstrip-next.stories";
 import { StackLayout } from "@salt-ds/core";
 

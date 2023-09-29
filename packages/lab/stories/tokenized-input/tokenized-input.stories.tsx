@@ -1,6 +1,6 @@
 import { Button } from "@salt-ds/core";
 import { ChangeHandler, TokenizedInput, FormField, Input } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import {
   ChangeEventHandler,
   useEffect,
@@ -12,13 +12,13 @@ import {
 export default {
   title: "Lab/Tokenized Input",
   component: TokenizedInput,
-} as ComponentMeta<typeof TokenizedInput>;
+} as Meta<typeof TokenizedInput>;
 
 const NUMBER_REGEX = /^(|[1-9][0-9]*)$/;
 
 const getRandomNumber = () => Math.floor(Math.random() * 99 + 1);
 
-export const Default: ComponentStory<typeof TokenizedInput> = () => {
+export const Default: StoryFn<typeof TokenizedInput> = () => {
   const handleChange = (selectedItems: unknown) => {
     console.log("selection changed", selectedItems);
   };
@@ -49,7 +49,7 @@ export const Default: ComponentStory<typeof TokenizedInput> = () => {
   );
 };
 
-export const Controlled: ComponentStory<typeof TokenizedInput> = () => {
+export const Controlled: StoryFn<typeof TokenizedInput> = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
   const [option, setOption] = useState(42);
@@ -133,7 +133,7 @@ export const Controlled: ComponentStory<typeof TokenizedInput> = () => {
   );
 };
 
-export const Disabled: ComponentStory<typeof TokenizedInput> = () => {
+export const Disabled: StoryFn<typeof TokenizedInput> = () => {
   return (
     <div
       style={{
@@ -153,7 +153,7 @@ export const Disabled: ComponentStory<typeof TokenizedInput> = () => {
 
 type Validator = (values: Array<string>) => string | null;
 
-export const WithValidation: ComponentStory<typeof TokenizedInput> = () => {
+export const WithValidation: StoryFn<typeof TokenizedInput> = () => {
   const [inputValue, setInputValue] = useState("");
   const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
   const [exceptions, setExceptions] = useState<Array<string>>([]);
@@ -228,9 +228,7 @@ export const WithValidation: ComponentStory<typeof TokenizedInput> = () => {
   );
 };
 
-export const WithCustomizedDelimiter: ComponentStory<
-  typeof TokenizedInput
-> = () => {
+export const WithCustomizedDelimiter: StoryFn<typeof TokenizedInput> = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
 
   const savedDelimiter = useRef(",");

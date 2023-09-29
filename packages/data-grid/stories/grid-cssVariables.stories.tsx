@@ -17,7 +17,7 @@ import {
 } from "@salt-ds/core";
 import { DeleteIcon, UndoIcon } from "@salt-ds/icons";
 import "./grid.stories.css";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 
 type Variant = "primary" | "secondary" | "zebra";
 
@@ -35,7 +35,7 @@ interface GridCssVar {
 
 const cssVarKeyGetter: RowKeyGetter<GridCssVar> = (row: GridCssVar) => row.name;
 
-const CssVariablesTemplate: Story<{}> = () => {
+const CssVariablesTemplate: StoryFn<{}> = () => {
   const [separators, setSeparators] = useState(false);
   const [pinnedSeparators, setPinnedSeparators] = useState(true);
   const [variant, setVariant] = useState<Variant>("primary");

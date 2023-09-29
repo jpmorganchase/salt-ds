@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as scrimStories from "@stories/scrim/scrim.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { Scrim } from "../../../scrim";

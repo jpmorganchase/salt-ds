@@ -6,52 +6,55 @@
 }
 
 .salt-theme .sbdocs.sbdocs-content {
-  background: var(--salt-container-primary-background);
   color: var(--salt-text-primary-foreground);
   height: fit-content;
 }
 
-.salt-theme .sbdocs.sbdocs-h1 {
+.salt-theme .sbdocs h1 {
   font-size: var(--salt-text-h1-fontSize);
   font-weight: var(--salt-text-h1-fontWeight);
   line-height: var(--salt-text-h1-lineHeight);
 }
 
-.salt-theme .sbdocs.sbdocs-h2 {
+.salt-theme .sbdocs h2 {
   border-bottom: none;
   font-size: var(--salt-text-h2-fontSize);
   font-weight: var(--salt-text-h2-fontWeight);
   line-height: var(--salt-text-h2-lineHeight);
 }
 
-.salt-theme .sbdocs.sbdocs-h3 {
+.salt-theme .sbdocs h3 {
   font-size: var(--salt-text-h3-fontSize);
   font-weight: var(--salt-text-h3-fontWeight);
   line-height: var(--salt-text-h3-lineHeight);
 }
 
-.salt-theme .sbdocs.sbdocs-h4 {
+.salt-theme .sbdocs h4 {
   font-size: var(--salt-text-h4-fontSize);
   font-weight: var(--salt-text-h4-fontWeight);
   line-height: var(--salt-text-h4-lineHeight);
 }
 
-.salt-theme .sbdocs.sbdocs-code {
+.salt-theme .sbdocs code {
   background-color: unset;
   border: none;
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-color-gray-900);
   font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-typography-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  letter-spacing: var(--salt-text-letterSpacing);
   line-height: var(--salt-text-lineHeight);
   padding: 0;
 }
 
 .salt-theme .sbdocs th,
 .salt-theme .sbdocs td {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-color-gray-900);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
 }
 
-.salt-theme .sbdocs-table tr:nth-of-type(2n) {
-  background: var(--salt-container-secondary-background);
+.salt-theme .sbdocs table tr:nth-of-type(2n) {
+  background: var(--salt-color-gray-20);
 }

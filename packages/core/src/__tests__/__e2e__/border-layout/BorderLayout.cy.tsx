@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as borderStories from "@stories/border-layout/border-layout.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { BORDER_POSITION as borderAreas } from "@salt-ds/core";

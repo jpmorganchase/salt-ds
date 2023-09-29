@@ -1,13 +1,13 @@
 import { FormField, Input } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Form Field Legacy/QA",
   component: FormField,
-} as ComponentMeta<typeof FormField>;
+} as Meta<typeof FormField>;
 
-export const FormFieldWithFocus: Story<QAContainerProps> = (props) => {
+export const FormFieldWithFocus: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer {...props} itemPadding={6}>
       <FormField

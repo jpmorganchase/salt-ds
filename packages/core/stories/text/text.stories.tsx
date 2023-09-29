@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import {
   Text,
@@ -21,17 +21,17 @@ export default {
       exclude: ["elementType", "style"],
     },
   },
-} as ComponentMeta<typeof Text>;
+} as Meta<typeof Text>;
 
-export const Primary: ComponentStory<typeof Text> = () => {
+export const Primary: StoryFn<typeof Text> = () => {
   return <Text>This is a primary text example</Text>;
 };
 
-export const Secondary: ComponentStory<typeof Text> = () => {
+export const Secondary: StoryFn<typeof Text> = () => {
   return <Text variant="secondary">This is a secondary text example</Text>;
 };
 
-export const Disabled: ComponentStory<typeof Text> = () => {
+export const Disabled: StoryFn<typeof Text> = () => {
   return (
     <div>
       <Text disabled>This is a disabled primary text example</Text>
@@ -42,7 +42,7 @@ export const Disabled: ComponentStory<typeof Text> = () => {
   );
 };
 
-export const Strong: ComponentStory<typeof Text> = () => {
+export const Strong: StoryFn<typeof Text> = () => {
   return (
     <Text>
       This is a <strong>strong</strong> text example
@@ -50,7 +50,7 @@ export const Strong: ComponentStory<typeof Text> = () => {
   );
 };
 
-export const Small: ComponentStory<typeof Text> = () => {
+export const Small: StoryFn<typeof Text> = () => {
   return (
     <Text>
       This is a <small>small</small> text example
@@ -58,7 +58,7 @@ export const Small: ComponentStory<typeof Text> = () => {
   );
 };
 
-export const StyleAs: ComponentStory<typeof Text> = () => {
+export const StyleAs: StoryFn<typeof Text> = () => {
   return (
     <Text as="p" styleAs="h1">
       This is a styleAs h1 example
@@ -66,7 +66,7 @@ export const StyleAs: ComponentStory<typeof Text> = () => {
   );
 };
 
-export const Truncation: ComponentStory<typeof Text> = () => {
+export const Truncation: StoryFn<typeof Text> = () => {
   return (
     <div style={{ width: 150 }}>
       <Text maxRows={1}>This is a truncation example</Text>
@@ -76,7 +76,7 @@ export const Truncation: ComponentStory<typeof Text> = () => {
 
 //********** Display 1,2 and 3 ***********/
 
-const FigureTextComponent: ComponentStory<typeof Text> = () => {
+const FigureTextComponent: StoryFn<typeof Text> = () => {
   return (
     <>
       <Display1>Display 1</Display1>
@@ -92,7 +92,7 @@ export const Display = FigureTextComponent.bind({});
 
 //********** Headings H1, H2, H3 and  H4 ***********/
 
-const HeadingsComponent: ComponentStory<typeof Text> = () => (
+const HeadingsComponent: StoryFn<typeof Text> = () => (
   <>
     <H1>
       This is header 1 <strong>emphasis high</strong>
@@ -127,7 +127,7 @@ export const Headings = HeadingsComponent.bind({});
 
 //********** Label ***********/
 
-const LabelCaptionTextComponent: ComponentStory<typeof Text> = () => {
+const LabelCaptionTextComponent: StoryFn<typeof Text> = () => {
   return (
     <>
       <LabelText>

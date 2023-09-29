@@ -1,4 +1,4 @@
-import type { ComponentMeta, Story } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import { Avatar, Button, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
@@ -45,11 +45,11 @@ import "./toolbar.stories.css";
 export default {
   title: "Lab/Toolbar",
   component: Toolbar,
-} as ComponentMeta<typeof Toolbar>;
+} as Meta<typeof Toolbar>;
 
 const statusData = ["All", "New", "Working", "Fully Filled", "Cancelled"];
 
-export const Default: Story = () => {
+export const Default: StoryFn = () => {
   const typeData = ["Open", "Close", "Discarded", "Resolved"];
   const rangeData = [
     "Today",
@@ -94,7 +94,7 @@ export const Default: Story = () => {
   );
 };
 
-export const DefaultAdjustable: Story<AdjustableFlexboxProps> = ({
+export const DefaultAdjustable: StoryFn<AdjustableFlexboxProps> = ({
   width = 600,
 }) => {
   return (
@@ -104,7 +104,7 @@ export const DefaultAdjustable: Story<AdjustableFlexboxProps> = ({
   );
 };
 
-export const TooltrayAlignment: Story = () => {
+export const TooltrayAlignment: StoryFn = () => {
   return (
     <AdjustableFlexbox containerWidth={1000} height={200} width={800}>
       <Toolbar
@@ -180,7 +180,7 @@ export const TooltrayAlignment: Story = () => {
   );
 };
 
-export const TooltrayCollapseOrder: Story<AdjustableFlexboxProps> = ({
+export const TooltrayCollapseOrder: StoryFn<AdjustableFlexboxProps> = ({
   width = 900,
 }) => {
   const viewsData = ["No view selected", "Outstanding", "Closed"];
@@ -306,7 +306,7 @@ export const TooltrayCollapseOrder: Story<AdjustableFlexboxProps> = ({
     </AdjustableFlexbox>
   );
 };
-export const ToolbarOverflowLargeOverflowIndicator: Story<
+export const ToolbarOverflowLargeOverflowIndicator: StoryFn<
   AdjustableFlexboxProps
 > = ({ width = 900 }) => {
   const viewsData = ["No view selected", "Outstanding", "Closed"];
@@ -393,7 +393,7 @@ const ToolbarWithInstantCollapseTooltrays = () => {
   );
 };
 
-export const TooltrayInstantCollapse: Story<AdjustableFlexboxProps> = ({
+export const TooltrayInstantCollapse: StoryFn<AdjustableFlexboxProps> = ({
   width = 1000,
 }) => {
   return (
@@ -454,7 +454,7 @@ const ToolbarWithDynamicCollapseTooltrays = () => {
   );
 };
 
-export const TooltrayDynamicCollapse: Story<AdjustableFlexboxProps> = ({
+export const TooltrayDynamicCollapse: StoryFn<AdjustableFlexboxProps> = ({
   width = 1000,
 }) => {
   return (
@@ -505,9 +505,9 @@ const ToolbarWithNonCollapsingTooltrays = () => {
   );
 };
 
-export const TooltrayNonCollapsingTooltrays: Story<AdjustableFlexboxProps> = ({
-  width = 1000,
-}) => {
+export const TooltrayNonCollapsingTooltrays: StoryFn<
+  AdjustableFlexboxProps
+> = ({ width = 1000 }) => {
   return (
     <AdjustableFlexbox containerWidth={1000} height={200} width={width}>
       <ToolbarWithNonCollapsingTooltrays />
@@ -532,7 +532,7 @@ export const TooltrayCollapseComparison = () => {
   );
 };
 
-export const Simple: Story<AdjustableFlexboxProps & ToolbarProps> = ({
+export const Simple: StoryFn<AdjustableFlexboxProps & ToolbarProps> = ({
   width = 320,
   ...toolbarProps
 }) => {
@@ -581,7 +581,7 @@ export const SimpleWithOverflowLabel = ({ overflowLabel = "more ..." }) => (
   <Simple overflowButtonLabel={overflowLabel} />
 );
 
-export const SimpleWithCollapsibleItems: Story<AdjustableFlexboxProps> = ({
+export const SimpleWithCollapsibleItems: StoryFn<AdjustableFlexboxProps> = ({
   width = 500,
 }) => {
   return (
@@ -860,7 +860,7 @@ export const VerticalToolbar = () => {
   );
 };
 
-export const MockAppHeader: Story = () => {
+export const MockAppHeader: StoryFn = () => {
   const pStyle: CSSProperties = { whiteSpace: "nowrap", overflow: "hidden" };
 
   return (

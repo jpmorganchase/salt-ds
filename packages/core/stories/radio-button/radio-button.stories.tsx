@@ -1,11 +1,11 @@
 import { ChangeEventHandler, useState } from "react";
 import { RadioButton, RadioButtonGroup } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Radio Button",
   component: RadioButton,
-} as ComponentMeta<typeof RadioButton>;
+} as Meta<typeof RadioButton>;
 
 export const Default = () => {
   return <RadioButton label="Subscribe" value="Unchecked" />;
@@ -67,9 +67,7 @@ export const HorizontalGroup = () => (
   </RadioButtonGroup>
 );
 
-export const WrapGroup: ComponentStory<typeof RadioButtonGroup> = ({
-  wrap,
-}) => (
+export const WrapGroup: StoryFn<typeof RadioButtonGroup> = ({ wrap }) => (
   <div
     style={{
       width: 250,
@@ -111,7 +109,7 @@ const radioData = [
   },
 ];
 
-export const ControlledGroup: ComponentStory<typeof RadioButtonGroup> = ({
+export const ControlledGroup: StoryFn<typeof RadioButtonGroup> = ({
   onChange,
 }) => {
   const [controlledValue, setControlledValue] = useState("option2");
@@ -143,7 +141,7 @@ export const ControlledGroup: ComponentStory<typeof RadioButtonGroup> = ({
 
 /* Long Text Radio Button Group */
 
-export const LongTextGroup: ComponentStory<typeof RadioButtonGroup> = () => (
+export const LongTextGroup: StoryFn<typeof RadioButtonGroup> = () => (
   <div style={{ width: 500 }}>
     <RadioButtonGroup aria-label="Long Text Example" name="selectionControls">
       <RadioButton

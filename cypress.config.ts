@@ -8,9 +8,13 @@ import { mergeConfig, UserConfig } from "vite";
 import { version as reactVersion } from "react";
 // @ts-ignore
 import installCoverageTask from "@cypress/code-coverage/task";
+import { cssInline } from "css-inline-plugin";
 
 let viteConfig: UserConfig = {
-  plugins: [react(), tsconfigPaths(), IstanbulPlugin()],
+  plugins: [react(), tsconfigPaths(), IstanbulPlugin(), cssInline()],
+  define: {
+    "process.env": {},
+  },
   server: {
     watch: {
       ignored: ["**/coverage"],

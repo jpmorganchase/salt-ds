@@ -1,4 +1,4 @@
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import {
   Grid,
   GridColumn,
@@ -23,7 +23,7 @@ export default {
   argTypes: {},
 };
 
-const RowSelectionModesTemplate: Story<{}> = () => {
+const RowSelectionModesTemplate: StoryFn<{}> = () => {
   const [rowSelectionMode, setRowSelectionMode] =
     useState<GridRowSelectionMode>("multi");
 

@@ -78,7 +78,7 @@
 
 /* Styles applied to decrement button */
 .saltStepperInput-decrement {
-  margin-top: 0;
+  --saltButton-margin: 0 var(--stepperInput-button-margin) var(--stepperInput-button-margin) var(--stepperInput-button-margin);
 }
 
 /* Styles applied to stepper button icon */

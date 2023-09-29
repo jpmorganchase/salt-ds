@@ -1,4 +1,4 @@
-import { Meta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import { allIcons } from "./icon.all";
 
@@ -8,7 +8,7 @@ export default {
 
 const sizes = [1, 2, 3] as const;
 
-export const AllIcons: Story = () => {
+export const AllIcons: StoryFn = () => {
   return (
     <>
       {sizes.map((size) => (

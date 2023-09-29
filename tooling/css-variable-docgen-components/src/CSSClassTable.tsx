@@ -1,11 +1,10 @@
 import { DocsContext, getComponent } from "@storybook/addon-docs";
 import { useContext } from "react";
-import { resetComponents, TableWrapper } from "@storybook/components";
+import { ResetWrapper } from "@storybook/components";
 import { ClassNameRow } from "./ClassNameRow";
 import { getDocgenSection } from "./utils";
 import { EmptyBlock } from "./EmptyBlock";
-
-const ResetWrapper = resetComponents.resetwrapper;
+import { TableWrapper } from "./TableWrapper";
 
 export interface ClassName {
   name: string;
@@ -28,7 +27,7 @@ export function CSSClassTable(props: Record<string, string>): JSX.Element {
 
   return (
     <ResetWrapper>
-      <TableWrapper className="docsblock-argstable">
+      <TableWrapper className="docblock-argstable sb-unstyled">
         <thead className="docblock-argstable-head">
           <tr>
             <th>

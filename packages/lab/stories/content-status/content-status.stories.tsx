@@ -6,12 +6,12 @@ import {
   useAriaAnnouncer,
 } from "@salt-ds/core";
 import { ContentStatus, ContentStatusProps } from "@salt-ds/lab";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { StoryFn, Meta } from "@storybook/react";
 
 export default {
   title: "Lab/Content Status",
   component: ContentStatus,
-} as ComponentMeta<typeof ContentStatus>;
+} as Meta<typeof ContentStatus>;
 
 const loadData = () =>
   new Promise((_resolve, reject) => {
@@ -20,7 +20,7 @@ const loadData = () =>
     }, 2000);
   });
 
-export const Error: ComponentStory<typeof ContentStatus> = () => {
+export const Error: StoryFn<typeof ContentStatus> = () => {
   const buttonRef = useCallback((node: HTMLButtonElement) => {
     if (node) {
       node.focus();
@@ -50,16 +50,14 @@ export const Error: ComponentStory<typeof ContentStatus> = () => {
   return <ContentStatus {...contentStatusProps} buttonRef={buttonRef} />;
 };
 
-export const IndeterminateLoading: ComponentStory<
-  typeof ContentStatus
-> = () => (
+export const IndeterminateLoading: StoryFn<typeof ContentStatus> = () => (
   <ContentStatus
     message="Supplementary content can go here if required."
     status="loading"
   />
 );
 
-export const DeterminateLoading: ComponentStory<typeof ContentStatus> = () => (
+export const DeterminateLoading: StoryFn<typeof ContentStatus> = () => (
   <ContentStatus
     message="Supplementary content can go here if required."
     status="loading"
@@ -67,7 +65,7 @@ export const DeterminateLoading: ComponentStory<typeof ContentStatus> = () => (
   />
 );
 
-export const Information: ComponentStory<typeof ContentStatus> = () => (
+export const Information: StoryFn<typeof ContentStatus> = () => (
   <ContentStatus
     actionLabel="[CUSTOM ACTION]"
     message="Supplementary content can go here if required."
@@ -76,14 +74,14 @@ export const Information: ComponentStory<typeof ContentStatus> = () => (
   />
 );
 
-export const Success: ComponentStory<typeof ContentStatus> = () => (
+export const Success: StoryFn<typeof ContentStatus> = () => (
   <ContentStatus
     message="Supplementary content can go here if required."
     status="success"
   />
 );
 
-export const Warning: ComponentStory<typeof ContentStatus> = () => (
+export const Warning: StoryFn<typeof ContentStatus> = () => (
   <ContentStatus
     actionLabel="[CUSTOM ACTION]"
     message="Supplementary content can go here if required."
@@ -113,7 +111,7 @@ const RealContent = (props: { messages: string[] }) => {
 /**
  * Example showing content of Card loop between Error => Loading => Content => Loading => ...
  */
-export const CardContent: ComponentStory<typeof ContentStatus> = () => {
+export const CardContent: StoryFn<typeof ContentStatus> = () => {
   const buttonRef = useCallback((node: HTMLButtonElement) => {
     if (node) {
       // Focus the error 'reload' button or the first action button as that's the primary action a user would want to take

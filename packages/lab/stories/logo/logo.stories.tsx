@@ -1,6 +1,6 @@
 import { Link, StackLayout, Text } from "@salt-ds/core";
 import { Logo, LogoImage, LogoSeparator } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 import { ChaseLogo } from "./assets/ChaseLogo";
@@ -9,24 +9,22 @@ import { ChaseCompactLogo } from "./assets/ChaseCompactLogo";
 export default {
   title: "Lab/Logo",
   component: Logo,
-} as ComponentMeta<typeof Logo>;
+} as Meta<typeof Logo>;
 
-export const LogoWithImage: ComponentStory<typeof Logo> = (args) => (
+export const LogoWithImage: StoryFn<typeof Logo> = (args) => (
   <Logo {...args}>
     <LogoImage src={PlaceholderLogo as string} alt="Logo image" />
   </Logo>
 );
 
-export const ImageAndText: ComponentStory<typeof Logo> = (args) => (
+export const ImageAndText: StoryFn<typeof Logo> = (args) => (
   <Logo {...args}>
     <LogoImage src={PlaceholderLogo as string} alt="Logo image" />
     <Text>App title</Text>
   </Logo>
 );
 
-export const ImageAndTextWithSeparator: ComponentStory<typeof Logo> = (
-  args
-) => (
+export const ImageAndTextWithSeparator: StoryFn<typeof Logo> = (args) => (
   <Logo {...args}>
     <LogoImage src={PlaceholderLogo as string} alt="Logo image" />
     <LogoSeparator />
@@ -34,7 +32,7 @@ export const ImageAndTextWithSeparator: ComponentStory<typeof Logo> = (
   </Logo>
 );
 
-export const LinkLogo: ComponentStory<typeof Logo> = (args) => (
+export const LinkLogo: StoryFn<typeof Logo> = (args) => (
   <Link href="">
     <Logo {...args}>
       <ChaseLogo />
@@ -43,7 +41,7 @@ export const LinkLogo: ComponentStory<typeof Logo> = (args) => (
     </Logo>
   </Link>
 );
-export const LinkOnImage: ComponentStory<typeof Logo> = (args) => (
+export const LinkOnImage: StoryFn<typeof Logo> = (args) => (
   <Logo {...args}>
     <Link href="">
       <ChaseLogo />
@@ -53,7 +51,7 @@ export const LinkOnImage: ComponentStory<typeof Logo> = (args) => (
   </Logo>
 );
 
-export const RegularVsCompact: ComponentStory<typeof Logo> = (args) => (
+export const RegularVsCompact: StoryFn<typeof Logo> = (args) => (
   <StackLayout>
     <Logo {...args}>
       <ChaseLogo />

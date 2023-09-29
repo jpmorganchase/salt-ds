@@ -1,27 +1,27 @@
 import { Button, Text, Tooltip, TooltipProps } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { useCallback } from "react";
 
 export default {
   title: "Core/Tooltip",
   component: Tooltip,
-} as ComponentMeta<typeof Tooltip>;
+} as Meta<typeof Tooltip>;
 
 const defaultArgs: Omit<TooltipProps, "children"> = {
   content: "I am a tooltip",
 };
 
-export const Default: Story<TooltipProps> = (props: TooltipProps) => (
+export const Default: StoryFn<TooltipProps> = (props: TooltipProps) => (
   <Tooltip {...props}>
     <Button>Hover</Button>
   </Tooltip>
 );
 Default.args = defaultArgs;
 
-export const Open: Story<TooltipProps> = Default.bind({});
+export const Open: StoryFn<TooltipProps> = Default.bind({});
 Open.args = { ...defaultArgs, open: true };
 
-export const Status: ComponentStory<typeof Tooltip> = (props: TooltipProps) => (
+export const Status: StoryFn<typeof Tooltip> = (props: TooltipProps) => (
   <>
     <div style={{ marginBottom: 10 }}>
       <Tooltip {...props} content="I am a tooltip" status="info">
@@ -45,21 +45,21 @@ export const Status: ComponentStory<typeof Tooltip> = (props: TooltipProps) => (
 );
 Status.args = defaultArgs;
 
-export const WithoutArrow: Story<TooltipProps> = (props) => (
+export const WithoutArrow: StoryFn<TooltipProps> = (props) => (
   <Tooltip {...props} hideArrow>
     <Button>Without Arrow</Button>
   </Tooltip>
 );
 WithoutArrow.args = defaultArgs;
 
-export const WithoutIcon: Story<TooltipProps> = (props) => (
+export const WithoutIcon: StoryFn<TooltipProps> = (props) => (
   <Tooltip {...props} hideIcon>
     <Button>Without Icon</Button>
   </Tooltip>
 );
 WithoutIcon.args = defaultArgs;
 
-export const FlipAndShiftTooltip: Story<TooltipProps> = (props) => {
+export const FlipAndShiftTooltip: StoryFn<TooltipProps> = (props) => {
   const handleScrollButton = useCallback((node: HTMLButtonElement | null) => {
     node?.scrollIntoView({ block: "center", inline: "center" });
   }, []);
@@ -90,7 +90,7 @@ FlipAndShiftTooltip.args = {
   open: true,
 };
 
-export const CustomContent: Story<TooltipProps> = (props) => (
+export const CustomContent: StoryFn<TooltipProps> = (props) => (
   <Tooltip
     {...props}
     content={
@@ -111,7 +111,7 @@ export const CustomContent: Story<TooltipProps> = (props) => (
 );
 CustomContent.args = { ...defaultArgs, hideIcon: true };
 
-export const Placement: Story<TooltipProps> = (props) => (
+export const Placement: StoryFn<TooltipProps> = (props) => (
   <>
     <div style={{ marginBottom: 10 }}>
       <Tooltip {...props} content="I am a tooltip" placement={"top"}>
@@ -135,7 +135,7 @@ export const Placement: Story<TooltipProps> = (props) => (
 );
 Placement.args = defaultArgs;
 
-export const Delay: Story<TooltipProps> = (props) => (
+export const Delay: StoryFn<TooltipProps> = (props) => (
   <>
     <div style={{ marginBottom: 10 }}>
       <Tooltip {...props} content="I am a tooltip" enterDelay={100}>

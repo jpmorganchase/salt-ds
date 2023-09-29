@@ -3,13 +3,13 @@ import { useState } from "react";
 import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 import { Button, StackLayout, FlexLayout, Tooltip } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { StoryFn, Meta } from "@storybook/react";
 
 export default {
   title: "Lab/Stepped Tracker",
   component: SteppedTracker,
   subcomponents: { TrackerStep, StepLabel },
-} as ComponentMeta<typeof SteppedTracker>;
+} as Meta<typeof SteppedTracker>;
 
 type Step = {
   label: string;
@@ -37,7 +37,7 @@ const sampleSteps: Steps = [
   },
 ];
 
-export const Basic: ComponentStory<typeof SteppedTracker> = () => {
+export const Basic: StoryFn<typeof SteppedTracker> = () => {
   return (
     <StackLayout
       direction="column"
@@ -91,7 +91,7 @@ export const Basic: ComponentStory<typeof SteppedTracker> = () => {
   );
 };
 
-export const AutoProgress: ComponentStory<typeof SteppedTracker> = () => {
+export const AutoProgress: StoryFn<typeof SteppedTracker> = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState(sampleSteps);
   const totalSteps = steps.length;
@@ -143,7 +143,7 @@ export const AutoProgress: ComponentStory<typeof SteppedTracker> = () => {
   );
 };
 
-export const WrappingLabel: ComponentStory<typeof SteppedTracker> = () => {
+export const WrappingLabel: StoryFn<typeof SteppedTracker> = () => {
   return (
     <StackLayout
       direction="column"
@@ -172,9 +172,7 @@ export const WrappingLabel: ComponentStory<typeof SteppedTracker> = () => {
   );
 };
 
-export const NonSequentialProgress: ComponentStory<
-  typeof SteppedTracker
-> = () => {
+export const NonSequentialProgress: StoryFn<typeof SteppedTracker> = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState(sampleSteps);
   const totalSteps = steps.length;

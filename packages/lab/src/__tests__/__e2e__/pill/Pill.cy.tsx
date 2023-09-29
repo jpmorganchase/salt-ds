@@ -1,6 +1,6 @@
 import { Pill } from "../../../pill";
 import { CallIcon } from "@salt-ds/icons";
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as pillStories from "@stories/pill/pill.stories";
 
 const composedStories = composeStories(pillStories);

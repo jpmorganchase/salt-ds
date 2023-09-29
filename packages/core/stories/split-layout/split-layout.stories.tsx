@@ -5,7 +5,7 @@ import {
   SplitLayout,
   StackLayout,
 } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 import {
   ChatIcon,
@@ -39,7 +39,7 @@ export default {
       <div style={{ minWidth: "30vw", minHeight: "700px" }}>{Story()}</div>
     ),
   ],
-} as ComponentMeta<typeof SplitLayout>;
+} as Meta<typeof SplitLayout>;
 
 const startItem = (
   <FlowLayout className="layout-container" align="baseline">
@@ -100,7 +100,7 @@ const bottomItem = (
   </StackLayout>
 );
 
-const DefaultSplitLayoutStory: ComponentStory<typeof SplitLayout> = (args) => (
+const DefaultSplitLayoutStory: StoryFn<typeof SplitLayout> = (args) => (
   <SplitLayout {...args} />
 );
 

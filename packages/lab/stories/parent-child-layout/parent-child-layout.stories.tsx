@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import { ChevronLeftIcon, ThumbsUpIcon } from "@salt-ds/icons";
 import {
@@ -27,7 +27,7 @@ export default {
       control: { type: "select" },
     },
   },
-} as ComponentMeta<typeof ParentChildLayout>;
+} as Meta<typeof ParentChildLayout>;
 
 const parentChildItemStyles = {
   display: "flex",
@@ -51,9 +51,9 @@ const child = (
   </div>
 );
 
-const DefaultParentChildLayoutStory: ComponentStory<
-  typeof ParentChildLayout
-> = (args) => {
+const DefaultParentChildLayoutStory: StoryFn<typeof ParentChildLayout> = (
+  args
+) => {
   return (
     <div style={{ width: "90vw", maxWidth: 800 }}>
       <ParentChildLayout {...args} />
@@ -64,7 +64,7 @@ const DefaultParentChildLayoutStory: ComponentStory<
 export const Default = DefaultParentChildLayoutStory.bind({});
 Default.args = { parent, child };
 
-const Stacked: ComponentStory<typeof ParentChildLayout> = (args) => {
+const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
   const handleParent = () => {
@@ -99,7 +99,7 @@ SaltStacked.args = {
   stackedAtBreakpoint: "xl",
 };
 
-const ReducedMotion: ComponentStory<typeof ParentChildLayout> = (args) => {
+const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
   const handleParent = () => {
@@ -152,7 +152,7 @@ const tabs = ["Sint", "Dolor", "Magna"];
 
 const stackedAtBreakpoint = "xs";
 
-const Dashboard: ComponentStory<typeof ParentChildLayout> = (args) => {
+const Dashboard: StoryFn<typeof ParentChildLayout> = (args) => {
   const [selectedTab, handleTabSelection] = useTabSelection();
 
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
