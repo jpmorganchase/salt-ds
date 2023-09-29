@@ -1,0 +1,23 @@
+div[class^="ag-theme-salt"]:before {
+    font-family: "salt-icons";
+}
+
+div[class^="ag-theme-uitk"]:before {
+    font-family: "uitk-icons";
+}
+
+div[class^="ag-theme-salt"]:before,
+div[class^="ag-theme-uitk"]:before {
+    content: var(--icon-content);
+    margin-right: var(--salt-spacing-100);
+}
+
+@font-face {
+    font-family: "salt-icons";
+    src: url(../../fonts/salt-icons.woff) format("woff");
+}
+
+@font-face {
+    font-family: "uitk-icons";
+    src: url(../../fonts/jpmuitk-icons.woff) format("woff");
+}
