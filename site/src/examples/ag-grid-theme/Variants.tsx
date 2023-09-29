@@ -13,9 +13,9 @@ import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultColumns, defaultData } from "./data";
 
 const Variants = (props: AgGridReactProps) => {
-    const [selected, setSelected] = useState("primary");
-    const { agGridProps, containerProps } = useAgGridHelpers();
-    
+  const [selected, setSelected] = useState("primary");
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
     setSelected(event.currentTarget.value);
   };

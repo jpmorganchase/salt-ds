@@ -19,20 +19,20 @@ const StatusBar = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-      <StackLayout gap={2}>
-        <p>Select rows to enable status bar display</p>
-        <div {...containerProps}>
-          <AgGridReact
-            enableRangeSelection
-            rowSelection="multiple"
-            statusBar={statusBar}
-            columnDefs={defaultColumns}
-            rowData={defaultData}
-            {...agGridProps}
-            {...props}
-          />
-        </div>
-      </StackLayout>
+    <StackLayout gap={2}>
+      <p>Select rows to enable status bar display</p>
+      <div {...containerProps}>
+        <AgGridReact
+          enableRangeSelection
+          rowSelection="multiple"
+          statusBar={statusBar}
+          columnDefs={defaultColumns}
+          rowData={defaultData}
+          {...agGridProps}
+          {...props}
+        />
+      </div>
+    </StackLayout>
   );
 };
 

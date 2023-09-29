@@ -1,11 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import {
-  StackLayout,
-  Checkbox,
-  useDensity,
-  useTheme,
-} from "@salt-ds/core";
+import { StackLayout, Checkbox, useDensity, useTheme } from "@salt-ds/core";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultColumns, defaultData } from "./data";
 
@@ -36,7 +31,8 @@ const getThemeNames = () => {
 const HDCompact = () => {
   const [compact, setCompact] = useState(false);
   const { mode } = useTheme();
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(compact);
+  const { api, agGridProps, containerProps, isGridReady } =
+    useAgGridHelpers(compact);
 
   useEffect(() => {
     if (isGridReady) {
@@ -72,12 +68,12 @@ const HDCompact = () => {
 
   return (
     <StackLayout gap={4}>
-        <Checkbox
+      <Checkbox
         checked={compact && density === "high"}
         label="Compact (for high density only)"
         onChange={handleCompactChange}
         disabled={density !== "high"}
-        />
+      />
       <div {...containerProps}>
         <AgGridReact
           columnDefs={defaultColumns}

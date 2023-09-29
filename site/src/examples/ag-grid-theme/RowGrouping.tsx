@@ -6,14 +6,14 @@ const RowGrouping = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          columnDefs={rowGroupColumns}
-          rowData={defaultData}
-          {...agGridProps}
-          {...props}
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        columnDefs={rowGroupColumns}
+        rowData={defaultData}
+        {...agGridProps}
+        {...props}
+      />
+    </div>
   );
 };
 

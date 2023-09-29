@@ -16,16 +16,16 @@ const PagedGrid = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          columnDefs={defaultColumns}
-          pagination
-          paginationPageSize={100}
-          rowData={generateData(defaultData)}
-          {...agGridProps}
-          {...props}
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        columnDefs={defaultColumns}
+        pagination
+        paginationPageSize={100}
+        rowData={generateData(defaultData)}
+        {...agGridProps}
+        {...props}
+      />
+    </div>
   );
 };
 

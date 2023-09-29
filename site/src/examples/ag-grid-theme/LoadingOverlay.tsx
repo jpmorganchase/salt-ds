@@ -23,30 +23,30 @@ const LoadingOverlay = () => {
   };
 
   return (
-      <div style={{ position: "relative" }}>
-        <div className="modal" style={getModalStyle}>
-          <Card style={{ minHeight: "auto" }}>
-            <div>
-              <Spinner style={{ margin: "0 auto" }} />
-              <div
-                aria-atomic="true"
-                aria-live="polite"
-                style={{ fontSize: "16px", marginTop: "18px" }}
-                tabIndex={0}
-              >
-                Loading...
-              </div>
+    <div style={{ position: "relative" }}>
+      <div className="modal" style={getModalStyle}>
+        <Card style={{ minHeight: "auto" }}>
+          <div>
+            <Spinner style={{ margin: "0 auto" }} />
+            <div
+              aria-atomic="true"
+              aria-live="polite"
+              style={{ fontSize: "16px", marginTop: "18px" }}
+              tabIndex={0}
+            >
+              Loading...
             </div>
-          </Card>
-        </div>
-        <div {...containerProps} tabIndex={-1}>
-          <AgGridReact
-            {...agGridProps}
-            columnDefs={defaultColumns}
-            rowData={defaultData}
-          />
-        </div>
+          </div>
+        </Card>
       </div>
+      <div {...containerProps} tabIndex={-1}>
+        <AgGridReact
+          {...agGridProps}
+          columnDefs={defaultColumns}
+          rowData={defaultData}
+        />
+      </div>
+    </div>
   );
 };
 

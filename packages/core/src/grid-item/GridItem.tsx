@@ -19,7 +19,7 @@ export const GRID_ALIGNMENT_BASE = [
   "stretch",
 ] as const;
 
-type GridAlignment = (typeof GRID_ALIGNMENT_BASE)[number];
+type GridAlignment = typeof GRID_ALIGNMENT_BASE[number];
 
 type GridProperty = number | "auto";
 export type GridItemProps<T extends ElementType> =

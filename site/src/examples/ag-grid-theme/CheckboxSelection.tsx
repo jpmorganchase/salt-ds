@@ -6,15 +6,15 @@ const CheckboxSelection = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          rowData={defaultData}
-          columnDefs={defaultColumns}
-          rowSelection="multiple"
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        rowData={defaultData}
+        columnDefs={defaultColumns}
+        rowSelection="multiple"
+      />
+    </div>
   );
 };
 

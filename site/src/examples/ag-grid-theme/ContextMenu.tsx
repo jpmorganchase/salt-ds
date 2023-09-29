@@ -137,16 +137,16 @@ const ContextMenu = (props: AgGridReactProps) => {
   };
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          allowContextMenuWithControlKey
-          getContextMenuItems={getContextMenuItems}
-          columnDefs={defaultColumns}
-          rowData={defaultData}
-          {...agGridProps}
-          {...props}
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        allowContextMenuWithControlKey
+        getContextMenuItems={getContextMenuItems}
+        columnDefs={defaultColumns}
+        rowData={defaultData}
+        {...agGridProps}
+        {...props}
+      />
+    </div>
   );
 };
 

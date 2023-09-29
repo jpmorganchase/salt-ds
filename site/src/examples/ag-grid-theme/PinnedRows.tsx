@@ -30,7 +30,13 @@ const headerRow: any[] = [
 ];
 
 type PinnedRowsExampleProps = AgGridReactProps & {
-  aggregateColumn: "code" | "population" | "name" | "capital" | "rating" | "date";
+  aggregateColumn:
+    | "code"
+    | "population"
+    | "name"
+    | "capital"
+    | "rating"
+    | "date";
   aggregate: "sum" | "min" | "max";
   showFooter: boolean;
   showHeader: boolean;
@@ -72,16 +78,16 @@ const PinnedRowsExample = function PinnedRowsExample({
   const pinnedBottomRowData = showFooter ? footerRow() : undefined;
   const pinnedTopRowData = showHeader ? getHeaderRow() : undefined;
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...rest}
-          columnDefs={defaultColumns}
-          rowData={defaultData}
-          pinnedBottomRowData={pinnedBottomRowData}
-          pinnedTopRowData={pinnedTopRowData}
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        {...rest}
+        columnDefs={defaultColumns}
+        rowData={defaultData}
+        pinnedBottomRowData={pinnedBottomRowData}
+        pinnedTopRowData={pinnedTopRowData}
+      />
+    </div>
   );
 };
 

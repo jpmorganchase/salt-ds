@@ -7,9 +7,7 @@ import { LicenseManager } from "ag-grid-enterprise";
 LicenseManager.setLicenseKey("your license key");
 
 // Helps to set className, rowHeight and headerHeight depending on the current density
-export function useAgGridHelpers(
-  compact = false
-): {
+export function useAgGridHelpers(compact = false): {
   containerProps: HTMLAttributes<HTMLDivElement>;
   agGridProps: AgGridReactProps;
   isGridReady: boolean;

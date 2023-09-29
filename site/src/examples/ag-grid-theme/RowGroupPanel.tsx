@@ -6,18 +6,18 @@ const RowGroupPanel = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          columnDefs={rowGroupPanelColumns}
-          defaultColDef={{
-            enableRowGroup: true,
-          }}
-          rowData={defaultData}
-          rowGroupPanelShow="always"
-          {...agGridProps}
-          {...props}
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        columnDefs={rowGroupPanelColumns}
+        defaultColDef={{
+          enableRowGroup: true,
+        }}
+        rowData={defaultData}
+        rowGroupPanelShow="always"
+        {...agGridProps}
+        {...props}
+      />
+    </div>
   );
 };
 

@@ -105,20 +105,16 @@ const NoDataOverlay = (props: AgGridReactProps) => {
   );
 
   return (
-      <div
-        style={{ marginTop: 25, position: "relative" }}
-        ref={containerRef}
-        tabIndex={0}
-      >
-        {modal}
-        <div style={{ height: 800, width: 800 }} {...containerProps}>
-          <AgGridReact
-            {...agGridProps}
-            {...props}
-            columnDefs={defaultColumns}
-          />
-        </div>
+    <div
+      style={{ marginTop: 25, position: "relative" }}
+      ref={containerRef}
+      tabIndex={0}
+    >
+      {modal}
+      <div style={{ height: 800, width: 800 }} {...containerProps}>
+        <AgGridReact {...agGridProps} {...props} columnDefs={defaultColumns} />
       </div>
+    </div>
   );
 };
 

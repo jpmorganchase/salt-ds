@@ -6,14 +6,14 @@ const FloatingFilter = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          defaultColDef={{ floatingFilter: true }}
-          columnDefs={customFilterColumns}
-          rowData={defaultData}
-          {...agGridProps}
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        defaultColDef={{ floatingFilter: true }}
+        columnDefs={customFilterColumns}
+        rowData={defaultData}
+        {...agGridProps}
+      />
+    </div>
   );
 };
 

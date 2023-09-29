@@ -14,7 +14,7 @@ import drawerCss from "./Drawer.css";
 
 export const DRAWER_POSITIONS = ["left", "top", "right", "bottom"] as const;
 
-export type DrawerPositions = (typeof DRAWER_POSITIONS)[number];
+export type DrawerPositions = typeof DRAWER_POSITIONS[number];
 
 export interface DrawerProps extends HTMLAttributes<HTMLDivElement> {
   /**

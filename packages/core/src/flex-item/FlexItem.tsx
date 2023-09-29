@@ -19,7 +19,7 @@ export const FLEX_ITEM_ALIGNMENTS = [
   "stretch",
 ] as const;
 
-export type flexItemAlignment = (typeof FLEX_ITEM_ALIGNMENTS)[number];
+export type flexItemAlignment = typeof FLEX_ITEM_ALIGNMENTS[number];
 
 export type FlexItemProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<

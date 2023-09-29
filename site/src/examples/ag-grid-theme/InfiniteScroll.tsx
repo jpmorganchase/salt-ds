@@ -41,16 +41,16 @@ const InfiniteScroll = (props: AgGridReactProps) => {
   }, [isGridReady]);
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          columnDefs={infiniteScrollColumns}
-          rowModelType="infinite"
-          infiniteInitialRowCount={100}
-          components={infiniteScrollComponents}
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        columnDefs={infiniteScrollColumns}
+        rowModelType="infinite"
+        infiniteInitialRowCount={100}
+        components={infiniteScrollComponents}
+      />
+    </div>
   );
 };
 

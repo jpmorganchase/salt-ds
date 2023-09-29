@@ -6,14 +6,14 @@ const Coloration = (props: AgGridReactProps) => {
   const { containerProps, agGridProps } = useAgGridHelpers();
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          columnDefs={coloredColumns}
-          rowData={defaultData}
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        columnDefs={coloredColumns}
+        rowData={defaultData}
+      />
+    </div>
   );
 };
 
