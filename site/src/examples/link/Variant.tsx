@@ -6,7 +6,7 @@ export const Variant = (): ReactElement => (
     <Link href="/" variant="primary">
       Primary Variant
     </Link>
-    <Link href="/" variant="secondary">
+    <Link href="#" variant="secondary">
       Secondary Variant
     </Link>
   </StackLayout>
