@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ComponentType } from "react";
 import { StoryFn } from "@storybook/react";
 import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
 import { TabstripNextProps, TabstripNext, TabNext, Badge } from "@salt-ds/lab";
