@@ -10,19 +10,19 @@ import {
   RefreshIcon,
   SendIcon,
 } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
 
 export default {
   title: "Core/Input",
   component: Input,
-} as ComponentMeta<typeof Input>;
+} as Meta<typeof Input>;
 
-export const Default: ComponentStory<typeof Input> = (args) => {
+export const Default: StoryFn<typeof Input> = (args) => {
   return <Input defaultValue={args.defaultValue ?? "Value"} {...args} />;
 };
 
-export const Controlled: ComponentStory<typeof Input> = (args) => {
+export const Controlled: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("Value");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +33,7 @@ export const Controlled: ComponentStory<typeof Input> = (args) => {
   return <Input {...args} value={value} onChange={handleChange} />;
 };
 
-export const Variants: ComponentStory<typeof Input> = (args) => {
+export const Variants: StoryFn<typeof Input> = (args) => {
   return (
     <FlowLayout>
       <Input
@@ -50,7 +50,7 @@ export const Variants: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const Disabled: ComponentStory<typeof Input> = (args) => {
+export const Disabled: StoryFn<typeof Input> = (args) => {
   return (
     <FlowLayout>
       <Input
@@ -69,7 +69,7 @@ export const Disabled: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const Placeholder: ComponentStory<typeof Input> = (args) => {
+export const Placeholder: StoryFn<typeof Input> = (args) => {
   return (
     <FlowLayout>
       <Input placeholder={"Enter a value"} {...args} />
@@ -79,7 +79,7 @@ export const Placeholder: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const Readonly: ComponentStory<typeof Input> = (args) => {
+export const Readonly: StoryFn<typeof Input> = (args) => {
   return (
     <FlowLayout>
       <Input
@@ -98,7 +98,7 @@ export const Readonly: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const EmptyReadonlyMarker: ComponentStory<typeof Input> = (args) => {
+export const EmptyReadonlyMarker: StoryFn<typeof Input> = (args) => {
   return (
     <FlowLayout>
       <Input readOnly={true} {...args} />
@@ -107,7 +107,7 @@ export const EmptyReadonlyMarker: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const TextAlignment: ComponentStory<typeof Input> = (args) => {
+export const TextAlignment: StoryFn<typeof Input> = (args) => {
   return (
     <FlowLayout style={{ maxWidth: "266px" }}>
       <Input defaultValue={args.defaultValue ?? "Value"} {...args} />
@@ -125,7 +125,7 @@ export const TextAlignment: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const Validation: ComponentStory<typeof Input> = (args) => {
+export const Validation: StoryFn<typeof Input> = (args) => {
   return (
     <FlowLayout style={{ maxWidth: "266px" }}>
       <Input
@@ -147,7 +147,7 @@ export const Validation: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const WithStaticAdornments: ComponentStory<typeof Input> = (args) => {
+export const WithStaticAdornments: StoryFn<typeof Input> = (args) => {
   return (
     <FlowLayout style={{ width: "266px" }}>
       <Input
@@ -187,7 +187,7 @@ export const WithStaticAdornments: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const WithButtonAdornment: ComponentStory<typeof Input> = (args) => {
+export const WithButtonAdornment: StoryFn<typeof Input> = (args) => {
   return (
     <FlowLayout style={{ width: "266px" }}>
       <Input
@@ -296,9 +296,7 @@ export const WithButtonAdornment: ComponentStory<typeof Input> = (args) => {
   );
 };
 
-export const WithValidationAndAdornments: ComponentStory<typeof Input> = (
-  args
-) => {
+export const WithValidationAndAdornments: StoryFn<typeof Input> = (args) => {
   const [firstValue, setFirstValue] = useState("1234567890");
   const [secondValue, setSecondValue] = useState("");
 
@@ -347,7 +345,7 @@ export const WithValidationAndAdornments: ComponentStory<typeof Input> = (
   );
 };
 
-export const Spellcheck: ComponentStory<typeof Input> = () => {
+export const Spellcheck: StoryFn<typeof Input> = () => {
   return (
     <Input
       defaultValue="This is a coment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."

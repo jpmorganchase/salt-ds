@@ -1,5 +1,4 @@
 import { FC, ChangeEvent, useState, ReactNode, ReactElement } from "react";
-import reactElementToJSXString from "react-element-to-jsx-string";
 import clsx from "clsx";
 import { Switch } from "@salt-ds/lab";
 import { SaltProvider } from "@salt-ds/core";
@@ -31,20 +30,36 @@ export const LivePreview: FC<LivePreviewProps> = ({
   list,
   children,
 }) => {
-  const [checked, setChecked] = useState(false);
+  const [ownShowCode, setOwnShowCode] = useState<boolean>(false);
 
   const isMobileView = useIsMobileView();
 
   const ComponentExample: () => ReactElement =
     require(`../../examples/${componentName}`)[exampleName];
 
-  const exampleJSX = ComponentExample && ComponentExample();
+  const codePreview =
+    require(`!!raw-loader!../../examples/${componentName}/${exampleName}.tsx`).default;
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
+  const {
+    density,
+    mode,
+    showCode: contextShowCode,
+    onShowCodeToggle: contextOnShowCodeToggle,
+  } = useLivePreviewControls();
+
+  const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
+    const newShowCode = event.target.checked;
+    if (contextOnShowCodeToggle) {
+      // Context is controlling the show code state
+      contextOnShowCodeToggle(newShowCode);
+    } else {
+      setOwnShowCode(newShowCode);
+    }
   };
 
-  const { density, mode } = useLivePreviewControls();
+  // If no context is provided (e.g. <LivePreview> is being used standalone
+  // somewhere), then fallback to using own state
+  const showCode = contextOnShowCodeToggle ? contextShowCode : ownShowCode;
 
   return (
     <>
@@ -65,8 +80,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
               </div>
               <SaltProvider density="medium">
                 <Switch
-                  checked={checked}
-                  onChange={handleChange}
+                  checked={showCode}
+                  onChange={handleShowCodeToggle}
                   className={styles.switch}
                   label="Show code"
                 />
@@ -75,13 +90,9 @@ export const LivePreview: FC<LivePreviewProps> = ({
           </SaltProvider>
         </div>
 
-        {checked && (
+        {showCode && (
           <Pre className={styles.codePreview}>
-            <div className="language-tsx">
-              {reactElementToJSXString(exampleJSX, {
-                showFunctions: true,
-              })}
-            </div>
+            <div className="language-tsx">{codePreview}</div>
           </Pre>
         )}
       </div>

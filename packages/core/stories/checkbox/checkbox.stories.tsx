@@ -1,13 +1,13 @@
 import { ChangeEvent, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Button, Checkbox, CheckboxGroup, StackLayout } from "@salt-ds/core";
 
 export default {
   title: "Core/Checkbox",
   component: Checkbox,
-} as ComponentMeta<typeof Checkbox>;
+} as Meta<typeof Checkbox>;
 
-const CheckboxTemplate: ComponentStory<typeof Checkbox> = (args) => {
+const CheckboxTemplate: StoryFn<typeof Checkbox> = (args) => {
   return <Checkbox {...args} />;
 };
 
@@ -21,7 +21,7 @@ export const WithoutLabel = CheckboxTemplate.bind({});
 
 WithoutLabel.args = { defaultChecked: true, "aria-label": "Select" };
 
-export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
+export const Indeterminate: StoryFn<typeof Checkbox> = () => {
   const [checkboxState, setCheckboxState] = useState({
     checked: false,
     indeterminate: true,
@@ -46,7 +46,7 @@ export const Indeterminate: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
-export const Error: ComponentStory<typeof Checkbox> = () => {
+export const Error: StoryFn<typeof Checkbox> = () => {
   const [errorState, setErrorState] = useState(true);
 
   const [checkboxState, setCheckboxState] = useState({
@@ -85,7 +85,7 @@ export const Error: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
-export const Warning: ComponentStory<typeof Checkbox> = () => {
+export const Warning: StoryFn<typeof Checkbox> = () => {
   const [warningState, setWarningState] = useState(true);
 
   const [checkboxState, setCheckboxState] = useState({
@@ -127,7 +127,7 @@ export const Warning: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
-export const Disabled: ComponentStory<typeof Checkbox> = () => {
+export const Disabled: StoryFn<typeof Checkbox> = () => {
   return (
     <CheckboxGroup>
       <Checkbox disabled label="Alternatives" />
@@ -137,7 +137,7 @@ export const Disabled: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
-export const Readonly: ComponentStory<typeof Checkbox> = () => {
+export const Readonly: StoryFn<typeof Checkbox> = () => {
   return (
     <CheckboxGroup>
       <Checkbox readOnly label="Alternatives" />
@@ -147,7 +147,7 @@ export const Readonly: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
-export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
+export const HorizontalGroup: StoryFn<typeof Checkbox> = () => {
   return (
     <CheckboxGroup
       defaultCheckedValues={["option-1", "option-2"]}
@@ -160,7 +160,7 @@ export const HorizontalGroup: ComponentStory<typeof Checkbox> = () => {
   );
 };
 
-export const WrapGroup: ComponentStory<typeof CheckboxGroup> = ({ wrap }) => (
+export const WrapGroup: StoryFn<typeof CheckboxGroup> = ({ wrap }) => (
   <div
     style={{
       width: 250,
@@ -184,9 +184,7 @@ WrapGroup.args = { wrap: true };
 export const NoWrapGroup = WrapGroup.bind({});
 NoWrapGroup.args = { wrap: false };
 
-export const UncontrolledGroup: ComponentStory<typeof CheckboxGroup> = (
-  args
-) => {
+export const UncontrolledGroup: StoryFn<typeof CheckboxGroup> = (args) => {
   return (
     <CheckboxGroup {...args} defaultCheckedValues={["option-1", "option-2"]}>
       <Checkbox label="Alternatives" value="option-1" />
@@ -196,7 +194,7 @@ export const UncontrolledGroup: ComponentStory<typeof CheckboxGroup> = (
   );
 };
 
-export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
+export const ControlledGroup: StoryFn<typeof CheckboxGroup> = (args) => {
   const checkboxesData = [
     {
       label: "Alternatives",
@@ -243,7 +241,7 @@ export const ControlledGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
   );
 };
 
-export const LongTextGroup: ComponentStory<typeof CheckboxGroup> = (args) => {
+export const LongTextGroup: StoryFn<typeof CheckboxGroup> = (args) => {
   const checkboxesData = [
     {
       label:

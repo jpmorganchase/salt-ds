@@ -1,8 +1,8 @@
+import { ReactElement } from "react";
 import Markdown from "markdown-to-jsx";
 import { characteristic, getCharacteristicValue } from "@salt-ds/core";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { Name, Description, StyledTd } from "./common";
-import { useEffect, useState } from "react";
 import { ShadowBlockCell } from "docs/components/ShadowBlock";
 
 interface CharacteristicUsageRowProps {
@@ -22,10 +22,7 @@ const isShadow = (value: string) => {
   return s.boxShadow.length;
 };
 
-const TokenBlock = (props: {
-  value: string;
-  token: string;
-}): React.ReactElement => {
+const TokenBlock = (props: { value: string; token: string }): ReactElement => {
   const { value, token } = props;
 
   if (isColor(value) || value === "transparent") {
@@ -47,7 +44,8 @@ const TokenInfo = (props: { token: string }) => {
   const value = getCharacteristicValue(
     "salt-theme",
     characteristicName,
-    token.split(`${characteristicName}-`)[1]
+    token.split(`${characteristicName}-`)[1],
+    document.querySelector(".salt-theme") as HTMLElement
   );
 
   return (

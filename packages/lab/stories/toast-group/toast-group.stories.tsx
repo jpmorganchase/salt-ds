@@ -1,4 +1,4 @@
-import { ComponentMeta } from "@storybook/react";
+import { Meta } from "@storybook/react";
 import {
   Button,
   FlowLayout,
@@ -14,7 +14,7 @@ import { Fragment, ReactNode, useState } from "react";
 export default {
   title: "Lab/Toast Group",
   component: ToastGroup,
-} as ComponentMeta<typeof ToastGroup>;
+} as Meta<typeof ToastGroup>;
 
 const InfoToast = () => {
   const [open, setOpen] = useState<boolean>(true);

@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import { Breadcrumb, Breadcrumbs } from "@salt-ds/lab";
 import { HomeIcon, TreeIcon } from "@salt-ds/icons";
@@ -7,9 +7,9 @@ import { QAContainer } from "docs/components";
 export default {
   title: "Lab/Breadcrumbs/QA",
   component: Breadcrumbs,
-} as ComponentMeta<typeof Breadcrumbs>;
+} as Meta<typeof Breadcrumbs>;
 
-export const AllExamplesGrid: Story = (props: {
+export const AllExamplesGrid: StoryFn = (props: {
   className?: string;
   imgSrc?: string;
 }) => {

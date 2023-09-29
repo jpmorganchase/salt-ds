@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.7
+
+### Patch Changes
+
+- 3a22eefe: Fixed the Data Grid crashing when a user scrolls to the bottom and uses the pagination to navigate to the last page. #2065
+
 ## 1.0.4-alpha.6
 
 ### Patch Changes

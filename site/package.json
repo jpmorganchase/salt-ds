@@ -22,32 +22,32 @@
     "gen:css": "yarn node './cssGen.js'"
   },
   "dependencies": {
-    "@jpmorganchase/mosaic-cli": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-components": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-content-editor-plugin": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-layouts": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-site-components": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-site-preset-styles": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-source-git-repo": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-source-local-folder": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-standard-generator": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-store": "^0.1.0-beta.43",
-    "@jpmorganchase/mosaic-theme": "^0.1.0-beta.43",
+    "@jpmorganchase/mosaic-cli": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-components": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-content-editor-plugin": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-layouts": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-site-components": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-site-preset-styles": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-source-git-repo": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-source-local-folder": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-standard-generator": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-store": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-theme": "^0.1.0-beta.45",
     "@philpl/buble": "^0.19.7",
     "@types/react": "^18.0.26",
-    "next": "^13.3.0",
-    "next-auth": "^4.20.1"
+    "next": "^13.5.2",
+    "next-auth": "^4.23.1",
+    "raw-loader": "^4.0.2"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "13.4.7",
+    "@next/eslint-plugin-next": "^13.5.2",
     "@types/node": "^16.0.0",
     "concurrently": "^8.0.0",
     "cross-env": "^7.0.3",
     "dotenv-load": "^2.0.1",
-    "eslint-config-next": "^13.0.0",
+    "eslint-config-next": "^13.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-element-to-jsx-string": "^15.0.0",
     "react-markdown": "^8.0.7"
   }
 }

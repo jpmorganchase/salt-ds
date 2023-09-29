@@ -1,0 +1,55 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+You should always position the Banner component in the main content area or in the related container component. It should sit directly below the navigation and span the page or container horizontally.
+
+You should configure it to close when:
+
+- The user performs an action that fixes an issue. For example, they correct a validation error.
+
+- The system status that triggered the notification is resolved. For example, a server connection is restored.
+
+### When to use Banner
+
+- To show a notification that applies to the user’s current task or workflow.
+
+### When not to use Banner
+
+- To notify users of an event that has occurred in a peripheral application or workflow. Instead, use [Toast](../toast).
+
+- When the notification is caused by a low priority event not requiring user feedback. Instead, use [Toast](../toast).
+
+### Content
+
+A Banner is typically used with one or two lines of text. Content should be short, clear, and concise, allowing users to quickly scan the notification and understand the situation and/or next steps.
+
+The content is set to Body Default, however, if titles are needed, they should be configured to display the Body Strong typography style across densities.
+
+### Import
+
+To import Banner from the core Salt package, use:
+
+```
+import { Banner, BannerContent, BannerActions } from "@salt-ds/core";
+```
+
+### Props
+
+#### Banner
+
+<PropsTable componentName="Banner" />
+
+#### BannerContent
+
+<PropsTable componentName="BannerContent" />
+
+#### BannerActions
+
+<PropsTable componentName="BannerActions" />

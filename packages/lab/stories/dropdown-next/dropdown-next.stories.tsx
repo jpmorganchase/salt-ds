@@ -1,14 +1,14 @@
-import { Story, ComponentMeta } from "@storybook/react";
+import { StoryFn, Meta } from "@storybook/react";
 
 import { DropdownNext, DropdownNextProps } from "@salt-ds/lab";
 import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 export default {
   title: "Lab/Dropdown Next",
   component: DropdownNext,
-} as ComponentMeta<typeof DropdownNext>;
+} as Meta<typeof DropdownNext>;
 
 const ListExample = [
   "Alabama",
@@ -22,8 +22,13 @@ const ListExample = [
   "Georgia",
 ];
 
-const DropdownTemplate: Story<DropdownNextProps> = ({ source, ...args }) => {
-  return <DropdownNext source={ListExample} {...args} />;
+const DropdownTemplate: StoryFn<DropdownNextProps> = ({ source, ...args }) => {
+  const handleSelect = (_event: SyntheticEvent, data: { value: string }) => {
+    console.log("selected item", data.value);
+  };
+  return (
+    <DropdownNext source={ListExample} onSelect={handleSelect} {...args} />
+  );
 };
 
 export const Default = DropdownTemplate.bind({});
@@ -45,7 +50,7 @@ Disabled.args = {
   defaultSelected: "California",
 };
 
-export const Variants: Story<DropdownNextProps> = ({
+export const Variants: StoryFn<DropdownNextProps> = ({
   source = ListExample,
 }) => {
   return (
@@ -56,7 +61,7 @@ export const Variants: Story<DropdownNextProps> = ({
   );
 };
 
-export const Controlled: Story<DropdownNextProps> = ({
+export const Controlled: StoryFn<DropdownNextProps> = ({
   source = ListExample,
   ...props
 }) => {

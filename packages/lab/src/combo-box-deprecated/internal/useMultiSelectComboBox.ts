@@ -4,6 +4,7 @@ import {
   useId,
   useIsFocusVisible,
   useIsomorphicLayoutEffect,
+  usePrevious,
 } from "@salt-ds/core";
 import {
   ChangeEvent,
@@ -21,7 +22,7 @@ import {
 import { useList } from "../../list-deprecated";
 import { ExpandButtonProps, useTokenizedInput } from "../../tokenized-input";
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
-import { usePrevious } from "@salt-ds/core";
+
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
 import { MultiSelectComboBoxProps } from "./MultiSelectComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";

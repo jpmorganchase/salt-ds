@@ -9,7 +9,7 @@ import {
   Spinner,
 } from "@salt-ds/core";
 import { CoffeeIcon } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
@@ -19,13 +19,13 @@ export default {
     "aria-label": "loading",
     role: "status",
   },
-} as ComponentMeta<typeof Spinner>;
+} as Meta<typeof Spinner>;
 
-const Template: ComponentStory<typeof Spinner> = (args) => {
+const Template: StoryFn<typeof Spinner> = (args) => {
   return <Spinner {...args} />;
 };
 
-export const All: Story = () => {
+export const All: StoryFn = () => {
   return (
     <div>
       <H1>Default</H1>
@@ -52,7 +52,7 @@ Large.args = {
 
 type LoadingStatus = "loading" | "loaded" | "idle";
 
-export const Loading: Story = () => {
+export const Loading: StoryFn = () => {
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("loading");
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export const Loading: Story = () => {
   );
 };
 
-export const PartialLoading: Story = () => {
+export const PartialLoading: StoryFn = () => {
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>("idle");
 
   useEffect(() => {
@@ -141,7 +141,7 @@ export const PartialLoading: Story = () => {
   );
 };
 
-export const WithButton: Story = () => {
+export const WithButton: StoryFn = () => {
   const [exampleOneIsLoading, setExampleOneIsLoading] = useState(false);
   const [exampleTwoIsLoading, setExampleTwoIsLoading] = useState(false);
 

@@ -1,4 +1,4 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 import { Metric, MetricContent, MetricHeader } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
@@ -6,9 +6,9 @@ import { QAContainer, QAContainerProps } from "docs/components";
 export default {
   title: "Lab/Metric/QA",
   component: Metric,
-} as ComponentMeta<typeof Metric>;
+} as Meta<typeof Metric>;
 
-export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer
       cols={4}

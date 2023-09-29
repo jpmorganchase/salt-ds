@@ -1,12 +1,12 @@
 import { Tooltip, TooltipProps } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { InfoSolidIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Tooltip/QA",
   component: Tooltip,
-} as ComponentMeta<typeof Tooltip>;
+} as Meta<typeof Tooltip>;
 
 const IconWithTooltip = (props: {
   status?: TooltipProps["status"];
@@ -21,7 +21,7 @@ const IconWithTooltip = (props: {
   );
 };
 
-export const AllExamplesGrid: Story<QAContainerProps> = (props) => {
+export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer height={500} itemPadding={45} width={1200} {...props}>
       <IconWithTooltip content="Hello, World" />

@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { useDensity } from "@salt-ds/core";
 import {
   createFileTypeValidator,
@@ -15,9 +15,9 @@ import { AllRenderer } from "docs/components";
 export default {
   title: "Lab/File Drop Zone",
   component: FileDropZone,
-} as ComponentMeta<typeof FileDropZone>;
+} as Meta<typeof FileDropZone>;
 
-export const All: ComponentStory<typeof FileDropZone> = ({
+export const All: StoryFn<typeof FileDropZone> = ({
   onFilesAccepted,
   ...args
 }) => {
@@ -28,7 +28,7 @@ export const All: ComponentStory<typeof FileDropZone> = ({
   );
 };
 
-export const Default: ComponentStory<typeof FileDropZone> = ({
+export const Default: StoryFn<typeof FileDropZone> = ({
   onFilesAccepted,
   ...args
 }) => {
@@ -57,7 +57,7 @@ export const Default: ComponentStory<typeof FileDropZone> = ({
 };
 Default.args = {};
 
-export const Disabled: ComponentStory<typeof FileDropZone> = ({
+export const Disabled: StoryFn<typeof FileDropZone> = ({
   onFilesAccepted,
   ...args
 }) => {
@@ -81,7 +81,7 @@ export const Disabled: ComponentStory<typeof FileDropZone> = ({
 };
 Disabled.args = {};
 
-export const WithCustomText: ComponentStory<typeof FileDropZone> = ({
+export const WithCustomText: StoryFn<typeof FileDropZone> = ({
   onFilesAccepted,
   ...args
 }) => {
@@ -112,7 +112,7 @@ export const WithCustomText: ComponentStory<typeof FileDropZone> = ({
 };
 WithCustomText.args = {};
 
-export const WithFileTypeValidation: ComponentStory<typeof FileDropZone> = ({
+export const WithFileTypeValidation: StoryFn<typeof FileDropZone> = ({
   onFilesAccepted,
   onFilesRejected,
   ...args
@@ -162,7 +162,7 @@ export const WithFileTypeValidation: ComponentStory<typeof FileDropZone> = ({
 };
 WithFileTypeValidation.args = {};
 
-export const WithMultipleValidations: ComponentStory<typeof FileDropZone> = ({
+export const WithMultipleValidations: StoryFn<typeof FileDropZone> = ({
   onFilesAccepted,
   onFilesRejected,
   ...args
@@ -263,7 +263,7 @@ export const WithMultipleValidations: ComponentStory<typeof FileDropZone> = ({
 };
 WithMultipleValidations.args = {};
 
-export const WithTotalSizeValidation: ComponentStory<typeof FileDropZone> = ({
+export const WithTotalSizeValidation: StoryFn<typeof FileDropZone> = ({
   onFilesAccepted,
   onFilesRejected,
   ...args
@@ -319,7 +319,7 @@ export const WithTotalSizeValidation: ComponentStory<typeof FileDropZone> = ({
 WithTotalSizeValidation.args = {};
 
 // Increase the size, to show content will be centered
-export const StretchSize: ComponentStory<typeof FileDropZone> = (props) => {
+export const StretchSize: StoryFn<typeof FileDropZone> = (props) => {
   return (
     <FileDropZone
       data-testid="file-drop-zone-example"

@@ -12,7 +12,7 @@ import {
   ListItemProps,
   useListItemDeprecated,
 } from "@salt-ds/lab";
-import { ComponentStory, ComponentMeta, Story } from "@storybook/react";
+import { StoryFn, Meta } from "@storybook/react";
 import { Highlighter } from "../../src/list-deprecated/internal/Highlighter";
 import { IndexedListItemProps } from "../../src/list-deprecated";
 import { CloseIcon } from "@salt-ds/icons";
@@ -20,7 +20,7 @@ import { CloseIcon } from "@salt-ds/icons";
 export default {
   title: "Lab/Combo Box Deprecated",
   component: ComboBoxDeprecated,
-} as ComponentMeta<typeof ComboBoxDeprecated>;
+} as Meta<typeof ComboBoxDeprecated>;
 
 const shortColorData = [
   "Baby blue",
@@ -144,11 +144,11 @@ const CityListItem = (props: IndexedListItemProps<LargeCity>) => {
 
 const cityItemToString = ({ name }: LargeCity) => name;
 
-const ComboBoxTemplate: ComponentStory<typeof ComboBoxDeprecated> = (args) => {
+const ComboBoxTemplate: StoryFn<typeof ComboBoxDeprecated> = (args) => {
   return <ComboBoxDeprecated {...args} />;
 };
 
-const FormFieldComboBoxTemplate: Story<
+const FormFieldComboBoxTemplate: StoryFn<
   ComponentProps<typeof ComboBoxDeprecated> &
     Pick<
       ComponentProps<typeof FormField>,
@@ -177,7 +177,7 @@ const FormFieldComboBoxTemplate: Story<
   );
 };
 
-const ControlledComboBoxTemplate: ComponentStory<typeof ComboBoxDeprecated> = (
+const ControlledComboBoxTemplate: StoryFn<typeof ComboBoxDeprecated> = (
   args
 ) => {
   const {
@@ -261,9 +261,7 @@ WithCustomizedFilter.args = {
   getFilterRegex,
 };
 
-export const ItemRenderer: ComponentStory<typeof ComboBoxDeprecated> = (
-  args
-) => {
+export const ItemRenderer: StoryFn<typeof ComboBoxDeprecated> = (args) => {
   return (
     <FormField label="Select a large city" style={{ maxWidth: 292 }}>
       <ComboBoxDeprecated {...args} />
@@ -280,7 +278,7 @@ ItemRenderer.args = {
 
 export const Controlled = ControlledComboBoxTemplate.bind({});
 
-export const ControlledSelection: ComponentStory<typeof ComboBoxDeprecated> = ({
+export const ControlledSelection: StoryFn<typeof ComboBoxDeprecated> = ({
   onChange,
 }) => {
   const [selectedItem, setSelectedItem] = useState<string>(shortColorData[1]);
@@ -371,7 +369,7 @@ WithInitialOpen.args = {
   initialOpen: true,
 };
 
-export const Scrolling: ComponentStory<typeof ComboBoxDeprecated> = (args) => {
+export const Scrolling: StoryFn<typeof ComboBoxDeprecated> = (args) => {
   const key = useRef(1);
   const containerEl = useRef<HTMLDivElement>(null);
   const [offsetTop, setOffsetTop] = useState(200);
@@ -458,9 +456,7 @@ MultiSelectControlled.args = {
   multiSelect: true,
 };
 
-export const Autocomplete: ComponentStory<typeof ComboBoxDeprecated> = (
-  args
-) => {
+export const Autocomplete: StoryFn<typeof ComboBoxDeprecated> = (args) => {
   const { onInputChange, onSelect, source: inputSource, ...restArgs } = args;
   const [inputValue, setInputValue] = useState("");
   const [showList, setShowList] = useState(false);

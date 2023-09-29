@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import { useProgressingValue } from "./useProgressingValue";
@@ -8,7 +8,7 @@ import "./progress.stories.css";
 export default {
   title: "Lab/Progress/Circular",
   component: LinearProgress,
-} as ComponentMeta<typeof LinearProgress>;
+} as Meta<typeof LinearProgress>;
 
 interface ProgressWithControlsProps {
   ProgressComponent: typeof CircularProgress | typeof LinearProgress;
@@ -35,21 +35,21 @@ const ProgressWithControls = ({
   );
 };
 
-export const Default: ComponentStory<typeof CircularProgress> = () => (
+export const Default: StoryFn<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" value={38} />
 );
 
-export const MaxValue: ComponentStory<typeof CircularProgress> = () => (
+export const MaxValue: StoryFn<typeof CircularProgress> = () => (
   <StackLayout align="center">
     <h3> max = 500, value = 250</h3>
     <CircularProgress aria-label="Download" value={250} max={500} />
   </StackLayout>
 );
 
-export const ProgressingValue: ComponentStory<typeof CircularProgress> = () => (
+export const ProgressingValue: StoryFn<typeof CircularProgress> = () => (
   <ProgressWithControls ProgressComponent={CircularProgress} />
 );
 
-export const ShowNoInfo: ComponentStory<typeof CircularProgress> = () => (
+export const ShowNoInfo: StoryFn<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" showInfo={false} value={38} />
 );

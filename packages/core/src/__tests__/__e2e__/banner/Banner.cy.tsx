@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import { Banner, BannerActions, BannerContent, Button } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import * as bannerStories from "@stories/banner/banner.stories";

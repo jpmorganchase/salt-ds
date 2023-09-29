@@ -11,20 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      # Enable lint when all errors are fixed
-      # - run: yarn run lint
-      # Slowly enabling linting back. Start small for now.
-      - run: yarn run lint:core
-      - run: yarn run prettier:ci
-      - run: yarn run lint:style
+      - name: Lint
+        # Continue on error so, we can see lint issues but not fail the build, we should fix them incrementally
+        continue-on-error: true
+        run: yarn run lint:ci
+      - name: Prettier
+        run: yarn run prettier:ci
+      - name: Stylelint
+        run: yarn run lint:style
       - name: Check no import from src
         run: |
           if find ./packages -type f \( -iname \*.ts -o -iname \*.tsx \) -exec grep "@salt-ds/.*/src" {} +; then
@@ -36,11 +38,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -68,11 +70,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -81,15 +83,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - run: yarn run test --watchAll=false
+      - run: yarn run test
   cypress-tests:
     strategy:
       fail-fast: false
@@ -98,11 +100,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
@@ -126,11 +128,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
           cache: "yarn"
       - name: Install dependencies
         run: yarn

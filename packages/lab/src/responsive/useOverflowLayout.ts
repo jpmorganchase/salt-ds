@@ -6,14 +6,12 @@ import {
   OverflowLayoutHookProps,
 } from "./overflowTypes";
 
-import { getIsOverflowed } from "./overflowUtils";
+import { getIsOverflowed, measureContainerOverflow } from "./overflowUtils";
 import { useDynamicCollapse } from "./useDynamicCollapse";
 import { useInstantCollapse } from "./useInstantCollapse";
 import { useOverflow } from "./useOverflow";
 import { useReclaimSpace } from "./useReclaimSpace";
 import { ResizeHandler, useResizeObserver } from "../responsive";
-
-import { measureContainerOverflow } from "./overflowUtils";
 
 const MONITORED_DIMENSIONS: { [key: string]: string[] } = {
   horizontal: ["width", "scrollHeight"],

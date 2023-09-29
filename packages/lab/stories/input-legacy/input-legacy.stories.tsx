@@ -14,14 +14,14 @@ import {
   Input as InputLegacy,
   StaticInputAdornment,
 } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Input Legacy",
   component: InputLegacy,
-} as ComponentMeta<typeof InputLegacy>;
+} as Meta<typeof InputLegacy>;
 
-const Template: ComponentStory<typeof InputLegacy> = (args) => {
+const Template: StoryFn<typeof InputLegacy> = (args) => {
   // let text;
   // @ts-ignore
   // if (args.multiline) {
@@ -67,7 +67,7 @@ FeatureInput.args = {
   textAlign: "left",
 };
 
-export const ReadOnly: ComponentStory<typeof InputLegacy> = () => {
+export const ReadOnly: StoryFn<typeof InputLegacy> = () => {
   return (
     <>
       <InputLegacy
@@ -81,7 +81,7 @@ export const ReadOnly: ComponentStory<typeof InputLegacy> = () => {
   );
 };
 
-export const WithFormField: ComponentStory<typeof InputLegacy> = () => {
+export const WithFormField: StoryFn<typeof InputLegacy> = () => {
   return (
     <FormField label="ADA compliant label" style={{ width: 292 }}>
       <InputLegacy defaultValue="Value" />
@@ -89,9 +89,7 @@ export const WithFormField: ComponentStory<typeof InputLegacy> = () => {
   );
 };
 
-export const WithFormFieldNoInitialValue: ComponentStory<
-  typeof InputLegacy
-> = () => {
+export const WithFormFieldNoInitialValue: StoryFn<typeof InputLegacy> = () => {
   return (
     <FormField label="ADA compliant label" style={{ width: 292 }}>
       <InputLegacy />
@@ -99,7 +97,7 @@ export const WithFormFieldNoInitialValue: ComponentStory<
   );
 };
 
-export const Spellcheck: ComponentStory<typeof InputLegacy> = () => {
+export const Spellcheck: StoryFn<typeof InputLegacy> = () => {
   return (
     <InputLegacy
       defaultValue="This is a comment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
@@ -109,7 +107,7 @@ export const Spellcheck: ComponentStory<typeof InputLegacy> = () => {
   );
 };
 
-export const TouchDensityInput: ComponentStory<typeof InputLegacy> = () => {
+export const TouchDensityInput: StoryFn<typeof InputLegacy> = () => {
   return (
     <SaltProvider density="touch">
       <InputLegacy
@@ -120,7 +118,7 @@ export const TouchDensityInput: ComponentStory<typeof InputLegacy> = () => {
   );
 };
 
-export const LowDensityInput: ComponentStory<typeof InputLegacy> = () => {
+export const LowDensityInput: StoryFn<typeof InputLegacy> = () => {
   return (
     <SaltProvider density="low">
       <InputLegacy
@@ -131,7 +129,7 @@ export const LowDensityInput: ComponentStory<typeof InputLegacy> = () => {
   );
 };
 
-export const HighDensityInput: ComponentStory<typeof InputLegacy> = () => {
+export const HighDensityInput: StoryFn<typeof InputLegacy> = () => {
   return (
     <SaltProvider density="high">
       <InputLegacy
@@ -142,7 +140,7 @@ export const HighDensityInput: ComponentStory<typeof InputLegacy> = () => {
   );
 };
 
-export const Adornments: ComponentStory<typeof InputLegacy> = (args) => {
+export const Adornments: StoryFn<typeof InputLegacy> = (args) => {
   const styles = {
     input: {
       width: 292,

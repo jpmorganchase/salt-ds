@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { clsx } from "clsx";
@@ -7,7 +7,12 @@ import { makePrefixer } from "../utils";
 import { useAccordion } from "./AccordionContext";
 import accordionPanelCss from "./AccordionPanel.css";
 
-export type AccordionPanelProps = ComponentPropsWithoutRef<"div">;
+export interface AccordionPanelProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The content of the Accordion Panel
+   */
+  children?: ReactNode;
+}
 
 const withBaseName = makePrefixer("saltAccordionPanel");
 

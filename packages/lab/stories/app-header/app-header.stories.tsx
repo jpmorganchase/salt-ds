@@ -23,12 +23,12 @@ import PlaceholderLogo from "docs/assets/placeholder.svg";
 
 import "docs/story.css";
 import "./Flexbox.css";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/App Header",
   component: AppHeader,
-} as ComponentMeta<typeof AppHeader>;
+} as Meta<typeof AppHeader>;
 
 // const ToolbarButton = ({ iconName, ...props }) => (
 //   <Button variant="secondary" tabIndex={0} {...props}>
@@ -57,7 +57,7 @@ const useTabSelection = (): [number, TabstripProps["onActiveChange"]] => {
   return [selectedTab, handleTabSelection];
 };
 
-export const Default: ComponentStory<typeof AppHeader> = () => {
+export const Default: StoryFn<typeof AppHeader> = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
 
   const tabs = ["Home", "Transactions", "FX", "Checks", "Loans"];

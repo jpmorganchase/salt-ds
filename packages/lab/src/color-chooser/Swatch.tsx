@@ -1,8 +1,13 @@
 import { ChangeEvent, KeyboardEvent } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
+
+import swatchCss from "./Swatch.css";
 
 const withBaseName = makePrefixer("saltColorChooserSwatch");
 
@@ -27,6 +32,13 @@ export const Swatch = ({
   onDialogClosed,
   transparent = false,
 }: SwatchProps): JSX.Element => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-swatch",
+    css: swatchCss,
+    window: targetWindow,
+  });
+
   const handleClick = () => {
     const newColor = Color.makeColorFromHex(color);
     isTransparent(color) ? newColor?.setAlpha(0) : newColor?.setAlpha(alpha);

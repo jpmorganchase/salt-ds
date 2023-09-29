@@ -1,4 +1,4 @@
-import { forwardRef, ComponentPropsWithoutRef } from "react";
+import { forwardRef, ComponentPropsWithoutRef, ReactNode } from "react";
 import { clsx } from "clsx";
 import { makePrefixer, Label } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -8,7 +8,12 @@ import stepLabelCss from "./StepLabel.css";
 
 const withBaseName = makePrefixer("saltStepLabel");
 
-export type StepLabelProps = ComponentPropsWithoutRef<"label">;
+export interface StepLabelProps extends ComponentPropsWithoutRef<"label"> {
+  /**
+   * The content of Step Label
+   */
+  children?: ReactNode;
+}
 
 export const StepLabel = forwardRef<HTMLLabelElement, StepLabelProps>(
   function StepLabel({ children, className, ...rest }, ref) {

@@ -1,13 +1,13 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Checkbox, CheckboxGroup } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Checkbox/QA",
   component: Checkbox,
-} as ComponentMeta<typeof Checkbox>;
+} as Meta<typeof Checkbox>;
 
-export const AllExamplesGrid: Story<
+export const AllExamplesGrid: StoryFn<
   QAContainerProps & { className?: string }
 > = ({ className, ...props }) => {
   return (

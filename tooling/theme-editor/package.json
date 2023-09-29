@@ -7,6 +7,8 @@
     "README.md"
   ],
   "dependencies": {
+    "@adobe/css-tools": "^4.0.0",
+    "csstree-validator": "^3.0.0",
     "js-beautify": "1.14.8",
     "tinycolor2": "1.6.0"
   }

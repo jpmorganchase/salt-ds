@@ -1,5 +1,5 @@
 import { Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
-import { DecoratorFn } from "@storybook/react";
+import { Decorator } from "@storybook/react";
 import {
   Investor,
   investorKeyGetter,
@@ -63,7 +63,7 @@ const getInvestors = async (sortModel: SortModel) => {
     url.searchParams.set("sort_by", `${sortModel.column}.${sortModel.order}`);
   }
   const res = await fetch(url.toString());
-  return await res.json();
+  return res.json();
 };
 
 const useInvestors = (sortModel: SortModel) => {
@@ -179,7 +179,7 @@ ServerSideSort.decorators = [
     <QueryClientProvider client={queryClient}>
       <Story />
     </QueryClientProvider>
-  )) as DecoratorFn,
+  )) as Decorator,
 ];
 
 const dummyInvestors = createDummyInvestors({ limit: 50 });

@@ -1,6 +1,6 @@
 import { MenuButton, MenuDescriptor } from "@salt-ds/lab";
 import { MicroMenuIcon, UserSolidIcon } from "@salt-ds/icons";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/MenuButton",
@@ -26,7 +26,7 @@ const initialSource = { menuItems: makeMenuItems(3, 3) };
 
 interface PrimaryStoryProps {}
 
-const PrimaryStory: Story<PrimaryStoryProps> = (props) => {
+const PrimaryStory: StoryFn<PrimaryStoryProps> = (props) => {
   return (
     <MenuButton
       CascadingMenuProps={{ initialSource }}
@@ -42,7 +42,7 @@ export const Primary = PrimaryStory.bind({});
 
 interface SecondaryStoryProps {}
 
-const SecondaryStory: Story<SecondaryStoryProps> = (props) => {
+const SecondaryStory: StoryFn<SecondaryStoryProps> = (props) => {
   return (
     <MenuButton
       CascadingMenuProps={{ initialSource }}
@@ -57,7 +57,7 @@ export const Secondary = SecondaryStory.bind({});
 
 interface HideCaretStoryProps {}
 
-const HideCaretStory: Story<HideCaretStoryProps> = (props) => (
+const HideCaretStory: StoryFn<HideCaretStoryProps> = (props) => (
   <MenuButton
     CascadingMenuProps={{ initialSource }}
     data-testid="menu-button-example"

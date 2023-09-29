@@ -6,17 +6,15 @@ import {
   FolderClosedIcon,
   VisibleIcon,
 } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Toggle Button Group",
   component: ToggleButtonGroup,
   subcomponents: { ToggleButton },
-} as ComponentMeta<typeof ToggleButtonGroup>;
+} as Meta<typeof ToggleButtonGroup>;
 
-const IconAndTextTemplate: ComponentStory<typeof ToggleButtonGroup> = (
-  args
-) => {
+const IconAndTextTemplate: StoryFn<typeof ToggleButtonGroup> = (args) => {
   return (
     <ToggleButtonGroup {...args}>
       <ToggleButton value="all">
@@ -35,7 +33,7 @@ const IconAndTextTemplate: ComponentStory<typeof ToggleButtonGroup> = (
   );
 };
 
-const IconOnlyTemplate: ComponentStory<typeof ToggleButtonGroup> = (args) => {
+const IconOnlyTemplate: StoryFn<typeof ToggleButtonGroup> = (args) => {
   return (
     <ToggleButtonGroup aria-label="Modes" {...args}>
       <Tooltip
@@ -58,7 +56,7 @@ const IconOnlyTemplate: ComponentStory<typeof ToggleButtonGroup> = (args) => {
   );
 };
 
-const TextOnlyTemplate: ComponentStory<typeof ToggleButtonGroup> = (args) => {
+const TextOnlyTemplate: StoryFn<typeof ToggleButtonGroup> = (args) => {
   return (
     <ToggleButtonGroup aria-label="Densities" {...args}>
       <ToggleButton value="high" aria-label="High Density">

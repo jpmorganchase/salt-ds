@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import {
   DateFormatter,

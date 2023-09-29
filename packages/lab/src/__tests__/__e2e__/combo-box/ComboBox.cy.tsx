@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox.stories";
 
 const {
@@ -55,39 +55,39 @@ describe("A combo box", () => {
     cy.findByRole("option").should("have.attr", "aria-selected", "true");
   });
 
-  it.skip('should become a multi-select combo box if "initialSelectedItem" is an array', () => {
-    cy.mount(
-      <Default
-        initialSelectedItem={[
-          Default.args!.source![0],
-          Default.args!.source![1],
-        ]}
-      />
-    );
-
-    cy.findByRole("textbox").realClick();
-
-    // multi-select input should be empty
-    cy.findByRole("textbox").should("not.have.value");
-
-    // selection is presented as a group of pills
-    cy.findAllByTestId("pill").should("have.length", 2);
-    cy.findAllByTestId("pill")
-      .eq(0)
-      .should("have.text", Default.args!.source![0]);
-    cy.findAllByTestId("pill")
-      .eq(1)
-      .should("have.text", Default.args!.source![1]);
-
-    // and they should be "selected" in the list
-    cy.findByRole("listbox")
-      .findByRole("option", { name: Default.args!.source![0] })
-      .should("have.attr", "aria-selected", "true");
-
-    cy.findByRole("listbox")
-      .findByRole("option", { name: Default.args!.source![1] })
-      .should("have.attr", "aria-selected", "true");
-  });
+  // it.skip('should become a multi-select combo box if "initialSelectedItem" is an array', () => {
+  //   cy.mount(
+  //     <Default
+  //       initialSelectedItem={[
+  //         Default.args!.source![0],
+  //         Default.args!.source![1],
+  //       ]}
+  //     />
+  //   );
+  //
+  //   cy.findByRole("textbox").realClick();
+  //
+  //   // multi-select input should be empty
+  //   cy.findByRole("textbox").should("not.have.value");
+  //
+  //   // selection is presented as a group of pills
+  //   cy.findAllByTestId("pill").should("have.length", 2);
+  //   cy.findAllByTestId("pill")
+  //     .eq(0)
+  //     .should("have.text", Default.args!.source![0]);
+  //   cy.findAllByTestId("pill")
+  //     .eq(1)
+  //     .should("have.text", Default.args!.source![1]);
+  //
+  //   // and they should be "selected" in the list
+  //   cy.findByRole("listbox")
+  //     .findByRole("option", { name: Default.args!.source![0] })
+  //     .should("have.attr", "aria-selected", "true");
+  //
+  //   cy.findByRole("listbox")
+  //     .findByRole("option", { name: Default.args!.source![1] })
+  //     .should("have.attr", "aria-selected", "true");
+  // });
 
   it("should allow customized item filter", () => {
     cy.mount(<WithCustomizedFilter />);

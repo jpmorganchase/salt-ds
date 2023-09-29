@@ -1,33 +1,57 @@
 @import "./salt-ag-theme-mixin";
 
 div[class*="ag-theme-salt-touch"] {
+  --ag-list-item-height: 60px;
   --agGrid-padding-default: 16px;
   --agGrid-cornerTag-size-default: 14px;
+  --agGrid-column-separator-height: 20px;
 }
 
 div[class*="ag-theme-salt-low"] {
+  --ag-list-item-height: 48px;
   --agGrid-padding-default: 12px;
   --agGrid-cornerTag-size-default: 12px;
+  --agGrid-column-separator-height: 16px;
 }
 
 div[class*="ag-theme-salt-medium"] {
+  --ag-list-item-height: 36px;
   --agGrid-padding-default: 8px;
   --agGrid-cornerTag-size-default: 10px;
+  --agGrid-column-separator-height: 12px;
 }
 
 div[class*="ag-theme-salt-high"] {
+  --ag-list-item-height: 24px;
   --agGrid-padding-default: 8px;
   --agGrid-cornerTag-size-default: 8px;
+  --agGrid-column-separator-height: 8px;
 }
 
 div[class*="ag-theme-salt-high-compact"] {
+  --ag-list-item-height: 20px;
   --salt-size-base: 16px;
+  /**
+   We have to define this because in deprecated.css size-selectable is defined
+   as size-base - (1.5 * size-unit) - (0.5 * size-basis-unit))
+   which doesn't work for HDC- it has to be defined like in size.css
+   for HD as 12px rather than based on a calculation with the new size-base for HDC
+   **/
 
+  --salt-size-selectable: 12px;
+
+  --agGrid-column-separator-height: 8px;
   --agGrid-padding-default: 8px;
   --agGrid-cornerTag-size-default: 8px;
 }
 
 div[class*="ag-theme-salt"] {
+  --agGrid-range-selection-borderColor: var(
+    --salt-selectable-borderColor-selected
+  );
+  --agGrid-column-separator-top: calc(
+    50% - 0.5 * var(--agGrid-column-separator-height)
+  );
   --agGrid-input-height: var(
     --saltAgGrid-input-height,
     calc(var(--salt-size-base) + var(--salt-spacing-100))
@@ -134,6 +158,8 @@ div[class*="ag-theme-salt"] {
 .ag-theme-salt-medium-light,
 .ag-theme-salt-low-light,
 .ag-theme-salt-touch-light {
+  --agGrid-range-selection-background: rgba(0, 0, 0, 0.15);
+  --agGrid-highlight-text-color: rgb(255, 255, 255);
   --agGrid-tab-borderColor-active: var(
     --saltAgGrid-tab-borderColor-active,
     var(--salt-navigable-indicator-active)
@@ -214,6 +240,8 @@ div[class*="ag-theme-salt"] {
 .ag-theme-salt-medium-dark,
 .ag-theme-salt-low-dark,
 .ag-theme-salt-touch-dark {
+  --agGrid-range-selection-background: rgba(255, 255, 255, 0.15);
+  --agGrid-highlight-text-color: rgb(22, 22, 22);
   --agGrid-tab-borderColor-active: var(
     --saltAgGrid-tab-borderColor-active,
     var(--salt-navigable-indicator-active)
@@ -399,6 +427,7 @@ $ag-theme-salt-params-touch-dark: map-merge(
   $ag-theme-salt-params-dark
 );
 
+.ag-theme-salt-high-compact-dark,
 .ag-theme-salt-touch-dark,
 .ag-theme-salt-low-dark,
 .ag-theme-salt-medium-dark,
@@ -406,6 +435,7 @@ $ag-theme-salt-params-touch-dark: map-merge(
   color-scheme: dark;
 }
 
+.ag-theme-salt-high-compact-light,
 .ag-theme-salt-touch-light,
 .ag-theme-salt-low-light,
 .ag-theme-salt-medium-light,
@@ -415,6 +445,7 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-high-compact-dark,
 .ag-theme-salt-high-compact-light {
+  --ag-list-item-height: 20px;
   --agGrid-button-padding: var(--saltAgGrid-button-padding, 4px);
   --agGrid-editableCell-cornerTag-size-default: 10px;
   --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 10px);
@@ -451,6 +482,7 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-medium-dark,
 .ag-theme-salt-medium-light {
+  --ag-list-item-height: 36px;
   --agGrid-button-padding: var(--saltAgGrid-button-padding, 8px);
   --agGrid-editableCell-cornerTag-size-default: 12px;
   --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 12px);
@@ -469,6 +501,7 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-low-dark,
 .ag-theme-salt-low-light {
+  --ag-list-item-height: 48px;
   --agGrid-button-padding: var(--saltAgGrid-button-padding, 12px);
   --agGrid-editableCell-cornerTag-size-default: 14px;
   --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 14px);
@@ -487,6 +520,7 @@ $ag-theme-salt-params-touch-dark: map-merge(
 
 .ag-theme-salt-touch-dark,
 .ag-theme-salt-touch-light {
+  --ag-list-item-height: 60px;
   --agGrid-button-padding: var(--saltAgGrid-button-padding, 14px);
   --agGrid-editableCell-cornerTag-size-default: 16px;
   --agGrid-input-fontSize: var(--saltAgGrid-input-fontSize, 14px);

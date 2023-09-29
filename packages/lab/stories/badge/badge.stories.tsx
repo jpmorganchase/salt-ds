@@ -7,14 +7,14 @@ import {
   NotificationIcon,
 } from "@salt-ds/icons";
 
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Badge",
   component: Badge,
-} as ComponentMeta<typeof Badge>;
+} as Meta<typeof Badge>;
 
-export const Icon: ComponentStory<typeof Badge> = () => {
+export const Icon: StoryFn<typeof Badge> = () => {
   return (
     <div>
       <Badge value={9}>
@@ -26,7 +26,7 @@ export const Icon: ComponentStory<typeof Badge> = () => {
   );
 };
 
-export const MaxNumber: ComponentStory<typeof Badge> = () => {
+export const MaxNumber: StoryFn<typeof Badge> = () => {
   return (
     <div>
       <Badge max={99} value={150}>
@@ -38,7 +38,7 @@ export const MaxNumber: ComponentStory<typeof Badge> = () => {
   );
 };
 
-export const DefaultTruncation: ComponentStory<typeof Badge> = () => {
+export const DefaultTruncation: StoryFn<typeof Badge> = () => {
   return (
     <div>
       <Badge value={1000}>
@@ -50,7 +50,7 @@ export const DefaultTruncation: ComponentStory<typeof Badge> = () => {
   );
 };
 
-export const String: ComponentStory<typeof Badge> = () => {
+export const String: StoryFn<typeof Badge> = () => {
   return (
     <div>
       <Badge value={"NEW"}>
@@ -62,7 +62,7 @@ export const String: ComponentStory<typeof Badge> = () => {
   );
 };
 
-export const ListStory: ComponentStory<typeof Badge> = () => {
+export const ListStory: StoryFn<typeof Badge> = () => {
   return (
     <List aria-label="Declarative List example">
       <ListItem>Level 1</ListItem>

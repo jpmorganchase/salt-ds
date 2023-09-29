@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox.stories";
 
 const { Default /*, MultiSelect*/ } = composeStories(comboBoxStories);
@@ -127,180 +127,180 @@ describe("A combo box", () => {
   });
 });
 
-describe.skip("A multi-select combo box", () => {
-  it("should select clicked items", () => {
-    const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<MultiSelect onChange={changeSpy} />);
-
-    cy.findByRole("textbox").realClick();
-
-    cy.findByRole("option", { name: "Alaska" }).realClick();
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alaska"]
-    );
-    cy.findByRole("option", { name: "Alabama" }).realClick();
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
-    );
-    // pill group updated
-    cy.findAllByTestId("pill").should("have.length", 2);
-    cy.findAllByTestId("pill").eq(0).should("have.text", "Alabama");
-    cy.findAllByTestId("pill").eq(1).should("have.text", "Alaska");
-
-    // list style updated
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alaska" })
-      .should("have.attr", "aria-selected", "true");
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alabama" })
-      .should("have.attr", "aria-selected", "true");
-
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alabama" })
-      .should("have.class", "saltHighlighted");
-  });
-
-  it("should clear input when an item is selected", () => {
-    cy.mount(<MultiSelect />);
-
-    cy.findByRole("textbox").realClick();
-    cy.realType("ama");
-    cy.findByRole("textbox").should("have.value", "ama");
-
-    cy.findByRole("option").realClick();
-
-    cy.findByRole("textbox").should("not.have.value");
-  });
-
-  it("should de-select when the selected item is clicked again", () => {
-    const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<MultiSelect onChange={changeSpy} />);
-
-    cy.findByRole("textbox").realClick();
-
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alabama" })
-      .realClick();
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alabama"]
-    );
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alaska" })
-      .realClick();
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
-    );
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alabama" })
-      .realClick();
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alaska"]
-    );
-    // pill group updated
-    cy.findAllByTestId("pill").should("have.length", 1);
-    cy.findByTestId("pill").should("have.text", "Alaska");
-
-    // list style updated
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alabama" })
-      .should("not.have.attr", "aria-selected", "true");
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alaska" })
-      .should("have.attr", "aria-selected", "true");
-  });
-
-  it("should de-select when the selected term is removed from input", () => {
-    const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<MultiSelect onChange={changeSpy} />);
-
-    cy.findByRole("textbox").realClick();
-
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alabama" })
-      .realClick();
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alabama"]
-    );
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alaska" })
-      .realClick();
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
-    );
-
-    cy.findAllByTestId("pill").should("have.length", 2);
-
-    cy.findAllByTestId("pill")
-      .eq(1)
-      .findByRole("button", { hidden: true })
-      .realClick();
-
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alabama"]
-    );
-
-    // pill group updated
-    cy.findAllByTestId("pill").should("have.length", 1);
-
-    // list style updated
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alabama" })
-      .should("have.attr", "aria-selected", "true");
-  });
-
-  it("should de-select all the selected term when input is cleared", () => {
-    const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<MultiSelect onChange={changeSpy} />);
-
-    cy.findByRole("textbox").realClick();
-
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alabama" })
-      .realClick();
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alabama"]
-    );
-    cy.findByRole("listbox")
-      .findByRole("option", { name: "Alaska" })
-      .realClick();
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
-    );
-
-    cy.findAllByTestId("pill").should("have.length", 2);
-    cy.findByRole("button", { name: "clear input" }).realClick();
-
-    // pill group updated
-    cy.findAllByTestId("pill").should("have.length", 0);
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      []
-    );
-
-    // list style updated
-    cy.findByRole("listbox")
-      .findAllByRole("option")
-      .should("not.have.attr", "aria-selected");
-  });
-});
+// describe.skip("A multi-select combo box", () => {
+//   it("should select clicked items", () => {
+//     const changeSpy = cy.stub().as("changeSpy");
+//     cy.mount(<MultiSelect onChange={changeSpy} />);
+//
+//     cy.findByRole("textbox").realClick();
+//
+//     cy.findByRole("option", { name: "Alaska" }).realClick();
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alaska"]
+//     );
+//     cy.findByRole("option", { name: "Alabama" }).realClick();
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alabama", "Alaska"]
+//     );
+//     // pill group updated
+//     cy.findAllByTestId("pill").should("have.length", 2);
+//     cy.findAllByTestId("pill").eq(0).should("have.text", "Alabama");
+//     cy.findAllByTestId("pill").eq(1).should("have.text", "Alaska");
+//
+//     // list style updated
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alaska" })
+//       .should("have.attr", "aria-selected", "true");
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alabama" })
+//       .should("have.attr", "aria-selected", "true");
+//
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alabama" })
+//       .should("have.class", "saltHighlighted");
+//   });
+//
+//   it("should clear input when an item is selected", () => {
+//     cy.mount(<MultiSelect />);
+//
+//     cy.findByRole("textbox").realClick();
+//     cy.realType("ama");
+//     cy.findByRole("textbox").should("have.value", "ama");
+//
+//     cy.findByRole("option").realClick();
+//
+//     cy.findByRole("textbox").should("not.have.value");
+//   });
+//
+//   it("should de-select when the selected item is clicked again", () => {
+//     const changeSpy = cy.stub().as("changeSpy");
+//     cy.mount(<MultiSelect onChange={changeSpy} />);
+//
+//     cy.findByRole("textbox").realClick();
+//
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alabama" })
+//       .realClick();
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alabama"]
+//     );
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alaska" })
+//       .realClick();
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alabama", "Alaska"]
+//     );
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alabama" })
+//       .realClick();
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alaska"]
+//     );
+//     // pill group updated
+//     cy.findAllByTestId("pill").should("have.length", 1);
+//     cy.findByTestId("pill").should("have.text", "Alaska");
+//
+//     // list style updated
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alabama" })
+//       .should("not.have.attr", "aria-selected", "true");
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alaska" })
+//       .should("have.attr", "aria-selected", "true");
+//   });
+//
+//   it("should de-select when the selected term is removed from input", () => {
+//     const changeSpy = cy.stub().as("changeSpy");
+//     cy.mount(<MultiSelect onChange={changeSpy} />);
+//
+//     cy.findByRole("textbox").realClick();
+//
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alabama" })
+//       .realClick();
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alabama"]
+//     );
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alaska" })
+//       .realClick();
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alabama", "Alaska"]
+//     );
+//
+//     cy.findAllByTestId("pill").should("have.length", 2);
+//
+//     cy.findAllByTestId("pill")
+//       .eq(1)
+//       .findByRole("button", { hidden: true })
+//       .realClick();
+//
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alabama"]
+//     );
+//
+//     // pill group updated
+//     cy.findAllByTestId("pill").should("have.length", 1);
+//
+//     // list style updated
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alabama" })
+//       .should("have.attr", "aria-selected", "true");
+//   });
+//
+//   it("should de-select all the selected term when input is cleared", () => {
+//     const changeSpy = cy.stub().as("changeSpy");
+//     cy.mount(<MultiSelect onChange={changeSpy} />);
+//
+//     cy.findByRole("textbox").realClick();
+//
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alabama" })
+//       .realClick();
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alabama"]
+//     );
+//     cy.findByRole("listbox")
+//       .findByRole("option", { name: "Alaska" })
+//       .realClick();
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       ["Alabama", "Alaska"]
+//     );
+//
+//     cy.findAllByTestId("pill").should("have.length", 2);
+//     cy.findByRole("button", { name: "clear input" }).realClick();
+//
+//     // pill group updated
+//     cy.findAllByTestId("pill").should("have.length", 0);
+//     cy.get("@changeSpy").should(
+//       "have.been.calledWith",
+//       Cypress.sinon.match.any,
+//       []
+//     );
+//
+//     // list style updated
+//     cy.findByRole("listbox")
+//       .findAllByRole("option")
+//       .should("not.have.attr", "aria-selected");
+//   });
+// });

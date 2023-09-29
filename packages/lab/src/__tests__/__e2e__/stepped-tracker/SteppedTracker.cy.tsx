@@ -4,7 +4,7 @@ import {
   StepLabel,
 } from "../../../stepped-tracker";
 import * as steppedTrackerStories from "@stories/stepped-tracker/stepped-tracker.stories";
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 

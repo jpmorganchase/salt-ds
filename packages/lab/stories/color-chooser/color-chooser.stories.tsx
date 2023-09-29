@@ -2,12 +2,12 @@ import { SaltProvider } from "@salt-ds/core";
 import { ColorChooser, Color } from "@salt-ds/lab";
 import { useState, useCallback } from "react";
 import { customColorMap } from "./custom-color-map";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { StoryFn, Meta } from "@storybook/react";
 
 export default {
   title: "Lab/Color Chooser",
   component: ColorChooser,
-} as ComponentMeta<typeof ColorChooser>;
+} as Meta<typeof ColorChooser>;
 
 // # ColorChooser
 
@@ -17,7 +17,7 @@ export default {
 
 // Use the Color Library in order to select a color directly from the list of predefined colors or use the Color Picker by clicking and dragging your cursor inside the picker area to highlight a color on the bottom right.
 
-export const Default: ComponentStory<typeof ColorChooser> = () => {
+export const Default: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#D65513");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
@@ -42,7 +42,7 @@ export const Default: ComponentStory<typeof ColorChooser> = () => {
 
 // ## Color Chooser With Alpha Disabled
 
-export const WithAlphaDisabled: ComponentStory<typeof ColorChooser> = () => {
+export const WithAlphaDisabled: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#D1F4C9");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
@@ -68,7 +68,7 @@ export const WithAlphaDisabled: ComponentStory<typeof ColorChooser> = () => {
 
 // ## Color Picker With Default Alpha
 
-export const WithDefaultAlpha: ComponentStory<typeof ColorChooser> = () => {
+export const WithDefaultAlpha: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#8224B1");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
@@ -95,7 +95,7 @@ export const WithDefaultAlpha: ComponentStory<typeof ColorChooser> = () => {
 
 // ## Color Chooser With Null Default Color
 
-export const WithNullDefaultColor: ComponentStory<typeof ColorChooser> = () => {
+export const WithNullDefaultColor: StoryFn<typeof ColorChooser> = () => {
   const [selectedColor, setSelectedColor] = useState<Color | undefined>();
   const onSelect = useCallback(
     (color?: Color) => {
@@ -113,7 +113,7 @@ export const WithNullDefaultColor: ComponentStory<typeof ColorChooser> = () => {
 
 // ## Color Chooser With Custom Colors
 
-export const WithCustomColors: ComponentStory<typeof ColorChooser> = () => {
+export const WithCustomColors: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#C9AAF0");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
@@ -139,7 +139,7 @@ export const WithCustomColors: ComponentStory<typeof ColorChooser> = () => {
 
 // ## Color Chooser Read Only
 
-export const ReadOnly: ComponentStory<typeof ColorChooser> = () => {
+export const ReadOnly: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#C9AAF0");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
@@ -165,7 +165,7 @@ export const ReadOnly: ComponentStory<typeof ColorChooser> = () => {
 
 // ## Color Picker as Default Tab if Selected Color is Not in the Swatches Library
 
-export const ColorPickerAsDefaultTabIfSelectedColorIsNotInTheSwatchesLibrary: ComponentStory<
+export const ColorPickerAsDefaultTabIfSelectedColorIsNotInTheSwatchesLibrary: StoryFn<
   typeof ColorChooser
 > = () => {
   const defaultColor = Color.makeColorFromHex("#8644B1");
@@ -190,7 +190,7 @@ export const ColorPickerAsDefaultTabIfSelectedColorIsNotInTheSwatchesLibrary: Co
   );
 };
 
-export const JustSwatches: ComponentStory<typeof ColorChooser> = () => {
+export const JustSwatches: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#D65513");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
   const onSelect = useCallback(
@@ -215,7 +215,7 @@ export const JustSwatches: ComponentStory<typeof ColorChooser> = () => {
   );
 };
 
-export const JustColorPicker: ComponentStory<typeof ColorChooser> = () => {
+export const JustColorPicker: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromRGB(10, 40, 67);
   const [selectedColor, setSelectedColor] = useState<Color | undefined>(
     defaultColor

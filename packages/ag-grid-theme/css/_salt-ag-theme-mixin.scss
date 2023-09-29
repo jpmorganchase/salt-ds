@@ -42,7 +42,7 @@
         min(
             var(--ag-internal-calculated-line-height),
             var(--ag-internal-padded-row-height)
-          ) - var(--agGrid-focused-borderWidth)
+          ) - 2px
       );
     }
   }
@@ -87,6 +87,8 @@
     }
   }
 
+  /* --- Menu styles --- */
+
   .ag-menu {
     background-color: var(--agGrid-background);
     padding: var(--salt-spacing-100);
@@ -97,7 +99,6 @@
     padding: 0;
   }
 
-  // start filter input
   .ag-menu .ag-filter-body-wrapper {
     padding: 0;
     display: flex;
@@ -138,7 +139,6 @@
     max-height: 256px;
   }
 
-  // start filter input
   .ag-picker-field-wrapper {
     border-radius: 0;
   }
@@ -155,6 +155,7 @@
   .ag-input-field-input[class^="ag-"][type="text"] {
     font-size: var(--salt-text-fontSize);
     font-family: var(--salt-text-fontFamily);
+    padding: 0;
   }
 
   .ag-menu .ag-input-field-input[type="text"] {
@@ -174,7 +175,54 @@
       opacity: 1;
     }
   }
-  // end filter input
+
+  .ag-menu .ag-input-field-input[type="text"] {
+    font-size: var(--salt-text-fontSize);
+    border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle)
+      var(--salt-editable-borderColor);
+  }
+
+  .ag-set-filter-list {
+    padding-top: 1px;
+  }
+
+  .ag-set-filter-item {
+    margin: 0;
+    padding-left: var(--salt-spacing-100);
+    padding-right: var(--salt-spacing-100);
+  }
+
+  .ag-mini-filter {
+    margin: 0;
+    padding-left: var(--salt-spacing-50);
+    padding-right: var(--salt-spacing-50);
+  }
+
+  .ag-menu-option-part {
+    height: var(--salt-size-stackable);
+    line-height: var(--salt-text-lineHeight);
+    padding: 0 var(--salt-spacing-100);
+    font-size: var(--salt-text-fontSize);
+  }
+
+  .ag-menu-option-text {
+    padding-left: var(--salt-spacing-100);
+    padding-right: var(--salt-spacing-100);
+  }
+
+  .ag-list-item,
+  .ag-virtual-list-item {
+    height: var(--agGrid-list-item-height);
+    font-size: ag-param(font-size);
+    color: var(--agGrid-header-foreground);
+  }
+
+  .ag-list-item:hover,
+  .ag-virtual-list-item:hover {
+    background-color: var(--agGrid-list-item-color-hover) !important;
+  }
+
+  /* --- Tab styles --- */
 
   .ag-tabs-header {
     @include ag-border(primary, bottom);
@@ -199,54 +247,36 @@
       var(--agGrid-tab-borderColor-active);
   }
 
-  .ag-cell-label-container {
-    padding: var(--salt-spacing-100) 0;
-  }
+  /* --- Status bar styles --- */
 
   .ag-status-bar {
+    color: var(--salt-text-secondary-foreground);
     height: var(--agGrid-row-height-default);
-    font-size: var(--agGrid-header-fontSize);
-    line-height: var(--salt-text-lineHeight);
+    font-size: var(--salt-text-fontSize);
+    font-weight: var(--salt-text-label-fontWeight);
+    line-height: var(--salt-text-label-lineHeight);
     padding: 0 var(--salt-spacing-100);
   }
 
   .ag-status-panel {
     align-items: center;
     color: var(--salt-text-secondary-foreground);
-    font-weight: var(--salt-text-fontWeight-strong);
     padding: var(--salt-spacing-100) 0;
   }
 
   .ag-status-name-value-value {
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-text-primary-foreground);
+    font-weight: var(--salt-text-fontWeight-strong);
   }
 
-  .ag-menu-option-part {
-    height: var(--salt-size-stackable);
-    line-height: var(--salt-text-lineHeight);
-    padding: 0 var(--salt-spacing-100);
-    font-size: var(--salt-text-fontSize);
-  }
-
-  .ag-menu-option-text {
-    padding-left: var(--salt-spacing-100);
-    padding-right: var(--salt-spacing-100);
-  }
-
-  .ag-list-item,
-  .ag-virtual-list-item {
-    height: var(--agGrid-list-item-height) !important;
-    font-size: ag-param(font-size);
-    color: var(--agGrid-header-foreground);
-  }
-
-  .ag-list-item:hover,
-  .ag-virtual-list-item:hover {
-    background-color: var(--agGrid-list-item-color-hover) !important;
-  }
+  /* --- Header styles --- */
 
   .ag-header {
     border-color: var(--agGrid-header-borderColor);
+  }
+
+  .ag-ltr .ag-header-cell .ag-header-cell-label .ag-header-cell-text {
+    margin-right: auto;
   }
 
   .ag-header-row {
@@ -255,19 +285,19 @@
     font-weight: var(--agGrid-header-fontWeight);
   }
 
-  .ag-header-cell {
-    border: 2px solid transparent;
+  .ag-header-cell:after,
+  .ag-header-group-cell:after {
+    height: var(--agGrid-column-separator-height);
+    top: var(--agGrid-column-separator-top);
   }
 
-  .ag-header-container .ag-header-cell:after {
-    height: calc(var(--salt-size-base) - 2 * var(--salt-size-adornment));
-    top: calc(
-      50% - 0.5 * (var(--salt-size-base) - 2 * var(--salt-size-adornment))
-    );
+  .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
+    margin-left: var(--salt-spacing-100);
   }
 
-  .ag-pinned-left-header .ag-header-cell:after {
-    height: 0;
+  .ag-header-cell-auto-height .ag-header-cell-text {
+    overflow: hidden;
+    white-space: pre-wrap;
   }
 
   .ag-keyboard-focus .ag-header-cell:focus:after {
@@ -279,6 +309,121 @@
     top: 0;
     border: 2px dotted var(--agGrid-color-focus);
   }
+
+  .ag-header-cell,
+  .ag-header-group-cell {
+    padding: 0px calc(var(--salt-spacing-100) + 2px);
+  }
+
+  /* --- Pinned column styles --- */
+
+  /* Removes border from pinned cells and ensures fake border can be seen */
+  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
+      .ag-cell-range-single-cell
+    ) {
+    border-right: 2px solid transparent;
+    overflow: unset;
+  }
+
+  .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
+      .ag-cell-range-single-cell
+    ) {
+    border-left: 2px solid transparent;
+    overflow: unset;
+  }
+
+  /** 
+    Due to having a transparent 2px border to avoid shifting content on focus,
+    we have to mimic a RHS border on pinned cells
+     */
+  .ag-row
+    .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
+      .ag-cell-range-single-cell
+    ):after {
+    background-color: var(--salt-separable-tertiary-borderColor);
+    content: "";
+    height: calc(100% + 4px);
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    width: 1px;
+    z-index: 1;
+  }
+
+  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
+      .ag-cell-range-single-cell
+    ):focus:after {
+    background-color: var(--salt-separable-tertiary-borderColor);
+    content: "";
+    height: calc(100% + 4px);
+    position: absolute;
+    right: -1px;
+    top: -2px;
+    width: 1px;
+    z-index: 1;
+  }
+
+  .ag-row
+    .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
+      .ag-cell-range-single-cell
+    ):after {
+    background-color: var(--salt-separable-tertiary-borderColor);
+    content: "";
+    height: calc(100% + 4px);
+    position: absolute;
+    left: -3px;
+    top: -2px;
+    width: 1px;
+    z-index: 1;
+  }
+
+  .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
+      .ag-cell-range-single-cell
+    ):focus:after {
+    background-color: var(--salt-separable-tertiary-borderColor);
+    content: "";
+    height: calc(100% + 4px);
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    width: 1px;
+    z-index: 1;
+  }
+
+  .ag-pinned-right-header .ag-header-row-column:after,
+  .ag-pinned-right-header .ag-header-row-column-group:after {
+    background-color: var(--salt-separable-tertiary-borderColor);
+    content: "";
+    height: var(--agGrid-column-separator-height);
+    top: var(--agGrid-column-separator-top);
+    position: absolute;
+    left: -1px;
+    width: 1px;
+    z-index: 1;
+  }
+
+  .ag-pinned-left-header .ag-header-row:first-child:after {
+    background-color: var(--salt-separable-tertiary-borderColor);
+    content: "";
+    height: var(--agGrid-column-separator-height);
+    top: var(--agGrid-column-separator-top);
+    position: absolute;
+    right: 0px;
+    width: 1px;
+    z-index: 1;
+  }
+
+  .ag-pinned-left-header {
+    border-right: none;
+    overflow: unset;
+  }
+
+  .ag-pinned-right-header {
+    border-left: none;
+    overflow: unset;
+  }
+
+  /* --- General row styles --- */
 
   .ag-row {
     color: var(--agGrid-foreground);
@@ -320,20 +465,34 @@
     z-index: 1;
   }
 
+  .ag-ltr .ag-row-group-leaf-indent {
+    border-left: 2px solid transparent;
+  }
+
+  /* --- General cell styles --- */
+
+  .ag-cell {
+    border-left: 0;
+    padding-left: var(--salt-spacing-100);
+    padding-right: var(--salt-spacing-100);
+  }
+
+  .ag-cell-wrapper {
+    height: 100%;
+  }
+
   .ag-ltr .ag-cell {
     border: 2px solid transparent;
     line-height: calc(
       min(
           var(--ag-internal-calculated-line-height),
           var(--ag-internal-padded-row-height)
-        ) - var(--agGrid-focused-borderWidth)
+        ) - 2px
     );
   }
 
-  .ag-cell {
-    border-left: 0;
-    padding-left: var(--salt-spacing-100);
-    padding-right: var(--salt-spacing-100);
+  .ag-cell-label-container {
+    padding: var(--salt-spacing-100) 0;
   }
 
   .editable-numeric-cell,
@@ -344,7 +503,8 @@
 
   .editable-numeric-cell,
   .ag-cell.editable-cell {
-    border: solid 1px var(--agGrid-cell-borderColor-editable);
+    border: var(--salt-size-border) var(--salt-container-borderStyle)
+      var(--agGrid-cell-borderColor-editable);
   }
 
   .editable-numeric-cell.ag-cell-focus:focus,
@@ -378,11 +538,53 @@
     padding: 0 !important;
   }
 
-  .ag-input-field-input {
-    border: 0;
+  .ag-cell-editor .ag-input-field-input {
     padding-left: ag-param(cell-horizontal-padding) - 2px;
     padding-right: ag-param(cell-horizontal-padding) - 2px;
   }
+
+  /* --- Cell range --- */
+
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-left {
+    border-left-color: var(--agGrid-range-selection-borderColor);
+    border-left-style: dotted;
+    border-left-width: 2px;
+  }
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-right {
+    border-right-color: var(--agGrid-range-selection-borderColor);
+    border-right-style: dotted;
+    border-right-width: 2px;
+  }
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-top {
+    border-top-color: var(--agGrid-range-selection-borderColor);
+    border-top-style: dotted;
+    border-top-width: 2px;
+  }
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-bottom {
+    border-bottom-color: var(--agGrid-range-selection-borderColor);
+    border-bottom-style: dotted;
+    border-bottom-width: 2px;
+  }
+  .ag-cell.ag-cell-range-selected-1:not(.ag-cell-focus),
+  .ag-root:not(.ag-context-menu-open)
+    .ag-body-viewport:not(.ag-has-focus)
+    .ag-cell-range-selected-1:not(.ag-cell-inline-editing) {
+    background: var(--agGrid-range-selection-background);
+  }
+  .ag-cell.ag-cell-highlight {
+    color: var(--agGrid-highlight-text-color);
+    background: var(--salt-focused-outlineColor) !important;
+  }
+
+  /* --- Button styles --- */
 
   .ag-side-buttons {
     width: var(--salt-size-stackable);
@@ -390,8 +592,8 @@
 
   .ag-standard-button {
     appearance: none;
-    background: var(--salt-actionable-secondary-background);
     -webkit-appearance: none;
+    background: var(--salt-actionable-secondary-background);
     border-radius: ag-param(border-radius);
     border: 1px transparent;
     cursor: pointer;
@@ -440,13 +642,18 @@
     height: var(--salt-size-stackable);
   }
 
+  /* Checkbox for row selection styles */
+
+  .ag-selection-checkbox {
+    height: 100%;
+  }
+
   .ag-checkbox-input-wrapper {
     height: var(--agGrid-checkbox-size);
     width: var(--agGrid-checkbox-size);
     border: var(--agGrid-checkbox-border);
     background: var(--agGrid-checkbox-background);
     border-radius: 0;
-    margin-left: 3px;
 
     &::after {
       line-height: 1;
@@ -464,6 +671,8 @@
       color: var(--agGrid-checkbox-foreground-selected);
     }
   }
+
+  /* --- Paging styles --- */
 
   .ag-paging-row-summary-panel {
     display: none;
@@ -507,27 +716,15 @@
     outline: none;
   }
 
-  .ag-menu .ag-input-field-input[type="text"] {
-    font-size: var(--salt-text-fontSize);
-    border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle)
-      var(--salt-editable-borderColor);
+  /* --- Floating filter styles --- */
+
+  .ag-input-field-input {
+    border: 0;
   }
 
-  .ag-set-filter-list {
-    padding-top: 1px;
-  }
-
-  .ag-set-filter-item {
-    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-    margin: 0;
-    padding-left: var(--salt-spacing-100);
-    padding-right: var(--salt-spacing-100);
-  }
-
-  .ag-mini-filter {
-    margin: 0;
-    padding-left: var(--salt-spacing-50);
-    padding-right: var(--salt-spacing-50);
+  .ag-floating-filter {
+    border: var(--salt-size-border) var(--salt-editable-borderStyle)
+      var(--salt-separable-tertiary-borderColor);
   }
 
   .ag-ltr .ag-floating-filter-button {
@@ -537,31 +734,74 @@
   }
 
   .ag-floating-filter-button-button .ag-icon-filter:before {
-    content: "\e9e5";
+    color: var(--salt-text-secondary-foreground);
+    content: "\e9ac";
   }
 
   .ag-floating-filter-input {
-    border: var(--salt-size-border) var(--salt-editable-borderStyle)
-      var(--salt-editable-borderColor);
-    padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-50));
-  }
-
-  .ag-floating-filter-input:before {
-    content: "\e9ac";
-    font-family: "salt-icons";
-    position: absolute;
-    left: var(--salt-spacing-100);
-    z-index: 10;
+    color: var(--salt-text-secondary-foreground);
+    padding-left: var(--salt-spacing-100);
   }
 
   .ag-header-cell.ag-floating-filter {
     padding-left: 0;
     padding-right: 1px;
-    border-bottom: 0;
   }
 
-  .ag-header-cell-auto-height .ag-header-cell-text {
-    overflow: auto;
-    white-space: pre-wrap;
+  .ag-header-cell.ag-floating-filter:after {
+    content: none;
+  }
+
+  /* Ensures content doesn't shift when focus creates 2px border on parent */
+  .ag-floating-filter-body,
+  .ag-floating-filter-button {
+    border: 1px solid transparent;
+  }
+
+  /* Removes border defined above when focus on parent */
+  .ag-header-cell.ag-floating-filter:focus-within .ag-floating-filter-body,
+  .ag-header-cell.ag-floating-filter:focus-within .ag-floating-filter-button {
+    border: none;
+  }
+
+  .ag-header-cell.ag-floating-filter:focus-within {
+    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+      var(--salt-focused-outlineColor);
+  }
+
+  /* We have to fake a border (below) to ensure alignment */
+  .ag-pinned-right-header .ag-floating-filter {
+    border-left: 0px;
+  }
+
+  .ag-pinned-right-header .ag-floating-filter:after {
+    background-color: var(--salt-separable-tertiary-borderColor);
+    content: "";
+    height: 100%;
+    position: absolute;
+    left: -1px;
+    top: 0px;
+    width: 1px;
+    z-index: 1;
+  }
+
+  /* Allows for the above :after to be seen */
+  .ag-header-row-column-filter,
+  .ag-header-cell.ag-floating-filter,
+  .ag-pinned-right-header .ag-header-row {
+    overflow: unset;
+  }
+
+  /* 
+    * This react-container class is added as a wrapper for custom components.
+    * Adding styling for these components added in the status and tool bars.
+    */
+  .ag-status-bar .ag-react-container,
+  .ag-floating-filter .ag-react-container {
+    display: flex;
+    align-items: center;
+  }
+  .ag-tool-panel-wrapper .ag-react-container {
+    width: 100%;
   }
 }

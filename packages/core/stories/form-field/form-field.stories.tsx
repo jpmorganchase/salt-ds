@@ -23,15 +23,15 @@ import {
   Button,
   MultilineInput,
 } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Form Field",
   component: FormField,
-} as ComponentMeta<typeof FormField>;
+} as Meta<typeof FormField>;
 
-export const Skeleton: ComponentStory<typeof FormField> = (props) => {
+export const Skeleton: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout>
       <FormField {...props}>
@@ -46,7 +46,7 @@ export const Skeleton: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const Default: ComponentStory<typeof FormField> = (props) => {
+export const Default: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField {...props}>
@@ -58,7 +58,7 @@ export const Default: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const Disabled: ComponentStory<typeof FormField> = (props) => {
+export const Disabled: StoryFn<typeof FormField> = (props) => {
   return (
     <FormField style={{ width: "366px" }} disabled {...props}>
       <FormLabel>Disabled Form Field</FormLabel>
@@ -68,7 +68,7 @@ export const Disabled: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const HelperText: ComponentStory<typeof FormField> = (props) => {
+export const HelperText: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField {...props}>
@@ -88,9 +88,7 @@ export const HelperText: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const HelperTextAsTooltip: ComponentStory<typeof FormField> = (
-  props
-) => {
+export const HelperTextAsTooltip: StoryFn<typeof FormField> = (props) => {
   return (
     <FormField {...props}>
       <FormLabel>Form Field label</FormLabel>
@@ -101,7 +99,7 @@ export const HelperTextAsTooltip: ComponentStory<typeof FormField> = (
   );
 };
 
-export const Label: ComponentStory<typeof FormField> = (props) => {
+export const Label: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField {...props}>
@@ -119,7 +117,7 @@ export const Label: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
+export const LabelLeft: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField labelPlacement="left" {...props}>
@@ -137,7 +135,7 @@ export const LabelLeft: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
+export const LabelQuestion: StoryFn<typeof FormField> = (props) => {
   return (
     <FormField {...props}>
       <FormLabel intent="sentence">
@@ -148,7 +146,7 @@ export const LabelQuestion: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const MultiChild: ComponentStory<typeof FormField> = (props) => {
+export const MultipleChildren: StoryFn<typeof FormField> = (props) => {
   const [firstValue, setFirstValue] = useState("Five");
   const [secondValue, setSecondValue] = useState("");
 
@@ -271,7 +269,7 @@ export const MultiChild: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const Readonly: ComponentStory<typeof FormField> = (props) => {
+export const Readonly: StoryFn<typeof FormField> = (props) => {
   return (
     <FormField style={{ width: "366px" }} readOnly {...props}>
       <FormLabel>Readonly Form Field</FormLabel>
@@ -281,7 +279,7 @@ export const Readonly: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const NecessityLabel: ComponentStory<typeof FormField> = (props) => {
+export const NecessityLabel: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField necessity="optional" {...props}>
@@ -327,7 +325,7 @@ const checkboxesData = [
   },
 ];
 
-export const WithControls: ComponentStory<typeof FormField> = (props) => {
+export const WithControls: StoryFn<typeof FormField> = (props) => {
   const [isRadioError, setIsRadioError] = useState(true);
 
   const [radioGroupValue, setRadioGroupValue] = useState("");
@@ -422,7 +420,7 @@ export const WithControls: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const WithMultilineInput: ComponentStory<typeof FormField> = (props) => {
+export const WithMultilineInput: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField {...props}>
@@ -454,7 +452,7 @@ export const WithMultilineInput: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
+export const WithMultilineInputAsQuestion: StoryFn<typeof FormField> = (
   props
 ) => {
   return (
@@ -479,7 +477,7 @@ export const WithMultilineInputAsQuestion: ComponentStory<typeof FormField> = (
   );
 };
 
-export const WithValidation: ComponentStory<typeof FormField> = (props) => {
+export const WithValidation: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField validationStatus="error" {...props}>
@@ -541,9 +539,7 @@ export const WithValidation: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
-  props
-) => {
+export const WithInputWithAdornments: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <FormField {...props}>
@@ -613,9 +609,7 @@ export const WithInputWithAdornments: ComponentStory<typeof FormField> = (
   );
 };
 
-export const GroupedWithLabelTop: ComponentStory<typeof FormField> = (
-  props
-) => {
+export const GroupedWithLabelTop: StoryFn<typeof FormField> = (props) => {
   return (
     <StackLayout>
       <FormField {...props}>
@@ -643,9 +637,7 @@ export const GroupedWithLabelTop: ComponentStory<typeof FormField> = (
   );
 };
 
-export const GroupedWithLabelLeft: ComponentStory<typeof FormField> = (
-  props
-) => {
+export const GroupedWithLabelLeft: StoryFn<typeof FormField> = (props) => {
   const groupedProps: { labelPlacement: FormFieldLabelPlacement } = {
     labelPlacement: "left",
   };
@@ -677,9 +669,7 @@ export const GroupedWithLabelLeft: ComponentStory<typeof FormField> = (
   );
 };
 
-export const GroupedWithLabelRight: ComponentStory<typeof FormField> = (
-  props
-) => {
+export const GroupedWithLabelRight: StoryFn<typeof FormField> = (props) => {
   const groupedProps: { labelPlacement: FormFieldLabelPlacement } = {
     labelPlacement: "right",
   };
@@ -711,7 +701,7 @@ export const GroupedWithLabelRight: ComponentStory<typeof FormField> = (
   );
 };
 
-export const GroupedWithVariant: ComponentStory<typeof FormField> = (props) => {
+export const GroupedWithVariant: StoryFn<typeof FormField> = (props) => {
   const groupedControlProps = { variant: "secondary" } as Partial<InputProps>;
 
   return (
@@ -745,7 +735,7 @@ export const GroupedWithVariant: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const MultiColumnLayout: ComponentStory<typeof FormField> = (props) => {
+export const MultiColumnLayout: StoryFn<typeof FormField> = (props) => {
   return (
     <StackLayout
       style={{ "--formField-label-width": "100px" } as CSSProperties}
@@ -802,7 +792,7 @@ export const MultiColumnLayout: ComponentStory<typeof FormField> = (props) => {
   );
 };
 
-export const MultiColumnLayoutEmptySlot: ComponentStory<typeof FormField> = (
+export const MultiColumnLayoutEmptySlot: StoryFn<typeof FormField> = (
   props
 ) => {
   return (

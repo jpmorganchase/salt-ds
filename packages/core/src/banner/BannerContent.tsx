@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "../utils";
 
@@ -8,20 +8,26 @@ import { useWindow } from "@salt-ds/window";
 
 const withBaseName = makePrefixer("saltBannerContent");
 
-export const BannerContent = forwardRef<
-  HTMLDivElement,
-  ComponentPropsWithoutRef<"div">
->(function BannerContent(props, ref) {
-  const { className, ...rest } = props;
+interface BannerContentProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The content of BannerContent
+   */
+  children: ReactNode;
+}
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-banner-content",
-    css: bannerContentCss,
-    window: targetWindow,
-  });
+export const BannerContent = forwardRef<HTMLDivElement, BannerContentProps>(
+  function BannerContent(props, ref) {
+    const { className, ...rest } = props;
 
-  return (
-    <div className={clsx(withBaseName(), className)} {...rest} ref={ref} />
-  );
-});
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-banner-content",
+      css: bannerContentCss,
+      window: targetWindow,
+    });
+
+    return (
+      <div className={clsx(withBaseName(), className)} {...rest} ref={ref} />
+    );
+  }
+);

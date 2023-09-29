@@ -17,6 +17,9 @@ const statusClass = (status: ComponentStatus) => {
   if (status === ComponentStatus.READY) {
     return "ready";
   }
+  if (status === ComponentStatus.IN_LAB) {
+    return "lab";
+  }
   if (status === ComponentStatus.IN_PROGRESS) {
     return "progress";
   }
@@ -28,6 +31,7 @@ const statusClass = (status: ComponentStatus) => {
 
 const statusSortList = [
   ComponentStatus.READY,
+  ComponentStatus.IN_LAB,
   ComponentStatus.IN_PROGRESS,
   ComponentStatus.IN_BACKLOG,
   ComponentStatus.NOT_APPLICABLE,
@@ -56,17 +60,40 @@ const componentsListSorting = (
   );
 };
 
-const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
-  const { devStatus, name, storybookUrl } = component;
+const isExternalLink = (url: string) => /(http(s?)):\/\//i.test(url);
 
-  return devStatus === ComponentStatus.READY && storybookUrl ? (
-    <Link href={storybookUrl}>
+const ComponentNameData = ({ component }: { component: ComponentDetails }) => {
+  const { name, docsUrl } = component;
+
+  return docsUrl ? (
+    <Link href={docsUrl}>
       <span>{name}</span>
+      {isExternalLink(docsUrl) && (
+        <Image src="/img/storybook_logo.svg" alt="storybook logo" />
+      )}
     </Link>
   ) : (
     <span>{name}</span>
   );
 };
+
+function getStatusMessage(
+  status: ComponentStatus,
+  isMobile: boolean,
+  isActive: boolean,
+  availableSince?: string
+): string | null {
+  if (!!availableSince) {
+    if (status === ComponentStatus.READY) {
+      return isMobile ? availableSince : `Released in v${availableSince}`;
+    }
+    if (status === ComponentStatus.IN_LAB) {
+      return isMobile ? availableSince : `In lab v${availableSince}`;
+    }
+  }
+
+  return isMobile && isActive ? null : (status as string);
+}
 
 const ComponentStatusData = ({
   status,
@@ -75,30 +102,22 @@ const ComponentStatusData = ({
   status: ComponentStatus;
   availableSince?: string;
 }) => {
-  const showReleaseDate = availableSince && status === ComponentStatus.READY;
   const isMobileView = useIsMobileView();
-  const mobileView = (
-    <span>{showReleaseDate ? `v${availableSince}` : null}</span>
-  );
 
   const activeStatus = status !== ComponentStatus.NOT_APPLICABLE;
 
   return (
     <div className={clsx(styles.status, styles[statusClass(status)])}>
       {activeStatus ? <StepActiveIcon /> : null}
-      {isMobileView && activeStatus ? (
-        mobileView
-      ) : (
-        <span>
-          {showReleaseDate ? `Released in v${availableSince}` : status}
-        </span>
-      )}
+      <span>
+        {getStatusMessage(status, isMobileView, activeStatus, availableSince)}
+      </span>
     </div>
   );
 };
 
 type ComponentHeaderProps = {
-  logo: JSX.Element;
+  logo?: JSX.Element;
   label: string;
   isSorted: boolean;
   ascendingOrder: boolean;
@@ -118,7 +137,7 @@ const ComponentHeader = ({
     <Button onClick={handleClick}>
       <span className={styles.headerContainer}>
         <span>
-          {logo}
+          {logo || (isMobileView && label)}
           {!isMobileView && <span>{label}</span>}
         </span>
         {isSorted && arrowIcon}
@@ -160,9 +179,6 @@ export const ComponentsList = () => {
           <tr>
             <th aria-sort={isSortedBy === "name" ? ariaSort : "none"}>
               <ComponentHeader
-                logo={
-                  <Image src="/img/storybook_logo.svg" alt="storybook logo" />
-                }
                 label="Component"
                 isSorted={isSortedBy === "name"}
                 ascendingOrder={hasAscendingOrder}
@@ -199,7 +215,7 @@ export const ComponentsList = () => {
                 <td>
                   <ComponentStatusData
                     status={component.devStatus}
-                    availableSince={component.availableInCoreSince}
+                    availableSince={component.availableInCodeSince}
                   />
                 </td>
 

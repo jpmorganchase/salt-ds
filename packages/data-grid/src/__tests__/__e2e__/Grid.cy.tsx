@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as gridStories from "@stories/grid.stories";
 import * as gridEditableStories from "@stories/grid-editableCells.stories";
 import * as variantsStories from "@stories/grid-variants.stories";
@@ -8,6 +8,7 @@ import * as rowSelectionControlledStories from "@stories/grid-rowSelectionContro
 import * as cellCustomizationStories from "@stories/grid-cellCustomization.stories";
 import * as columnGroupsStories from "@stories/grid-columnGroups.stories";
 import * as sortColumnsStories from "@stories/grid-sortColumns.stories";
+import * as gridPaginationStories from "@stories/grid-pagination.stories";
 import { Grid, GridColumn, ColumnGroup, SortOrder } from "@salt-ds/data-grid";
 import { db, Investor } from "@stories/dummyData";
 
@@ -16,6 +17,7 @@ const { CellCustomization } = composeStories(cellCustomizationStories);
 const { RowSelectionControlled } = composeStories(
   rowSelectionControlledStories
 );
+const { GridPagination } = composeStories(gridPaginationStories);
 const { RowSelectionModes } = composeStories(rowSelectionModesStories);
 const { CellValidation, RowValidation } = composeStories(cellValidationStories);
 const {
@@ -825,5 +827,30 @@ describe("Grid", () => {
     cy.findByTestId("grid-scrollable").realMouseWheel({ deltaY: 1500 });
     cy.wait(100);
     cy.findByTestId("scroll-past").should("be.inTheViewport");
+  });
+
+  describe("Scrolling and Pagination", () => {
+    it("Does not cause an error", () => {
+      cy.mount(<GridPagination />);
+      assertGridReady();
+
+      cy.findByTestId("grid-scrollable").scrollTo(0, 100, {
+        easing: "linear",
+        duration: 100,
+      });
+
+      const getPage = (n: number) => {
+        cy.findByTestId("paginator").find(`[aria-label="Page ${n}"]`).click();
+      };
+
+      getPage(1);
+      getPage(2);
+      getPage(3);
+      getPage(4);
+      getPage(5);
+      getPage(6);
+      getPage(7);
+      getPage(8);
+    });
   });
 });

@@ -1,5 +1,5 @@
 import { GridItem, GridLayout } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 export default {
   title: "Core/Layout/Grid Layout/Grid Item",
@@ -11,14 +11,14 @@ export default {
     horizontalAlignment: { control: { type: "select" } },
     verticalAlignment: { control: { type: "select" } },
   },
-} as ComponentMeta<typeof GridItem>;
+} as Meta<typeof GridItem>;
 
 const renderGridContent = (
   <div>
     <p>Item</p>
   </div>
 );
-const GridItemStory: ComponentStory<typeof GridItem> = (args) => {
+const GridItemStory: StoryFn<typeof GridItem> = (args) => {
   return (
     <GridLayout
       rows={2}

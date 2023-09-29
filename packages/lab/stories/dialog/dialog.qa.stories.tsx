@@ -8,7 +8,7 @@ import {
   DialogProps,
   DialogContext,
 } from "@salt-ds/lab";
-import { ComponentStory, ComponentMeta, Story } from "@storybook/react";
+import { StoryFn, Meta } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 import "./dialog.stories.css";
@@ -30,9 +30,9 @@ export default {
     title: "Congratulations! You have created a Dialog.",
     content: "This is the content of the dialog.",
   },
-} as ComponentMeta<typeof Dialog>;
+} as Meta<typeof Dialog>;
 
-const DialogTemplate: ComponentStory<typeof Dialog> = ({
+const DialogTemplate: StoryFn<typeof Dialog> = ({
   open: openProp = true,
   ...args
 }) => {
@@ -70,7 +70,7 @@ const DialogTemplate: ComponentStory<typeof Dialog> = ({
   );
 };
 
-export const ExamplesGrid: Story<QAContainerProps> = (props) => {
+export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   const { className, ...rest } = props;
   return (
     <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>

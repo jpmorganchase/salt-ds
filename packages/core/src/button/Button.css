@@ -105,7 +105,6 @@
   margin: var(--saltButton-margin, 0);
   height: var(--saltButton-height, var(--salt-size-base));
   min-width: var(--saltButton-minWidth, unset);
-  min-height: 0;
   position: relative;
   text-align: var(--saltButton-textAlign, var(--salt-actionable-textAlign));
   text-decoration: none;

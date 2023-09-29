@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
 import { TabstripNextProps, TabstripNext, TabNext } from "@salt-ds/lab";
 import { AddIcon } from "@salt-ds/icons";
@@ -14,7 +14,7 @@ export default {
   },
 };
 
-type TabstripStory = Story<
+type TabstripStory = StoryFn<
   TabstripNextProps & {
     width?: number;
   }

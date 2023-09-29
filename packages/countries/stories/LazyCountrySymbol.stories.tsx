@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import {
   countryMetaMap,
   LazyCountrySymbol as LazyCountrySymbolComponent,
@@ -28,11 +28,11 @@ export default {
       },
     },
   },
-} as ComponentMeta<typeof LazyCountrySymbolComponent>;
+} as Meta<typeof LazyCountrySymbolComponent>;
 
-export const LazyCountrySymbol: ComponentStory<
-  typeof LazyCountrySymbolComponent
-> = (args) => {
+export const LazyCountrySymbol: StoryFn<typeof LazyCountrySymbolComponent> = (
+  args
+) => {
   return (
     <Suspense fallback={"Loading..."}>
       <LazyCountrySymbolComponent {...args} />

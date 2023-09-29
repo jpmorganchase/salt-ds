@@ -14,7 +14,7 @@ import {
   useDensity,
 } from "@salt-ds/core";
 import "./grid.stories.css";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { clsx } from "clsx";
 
@@ -26,7 +26,7 @@ export default {
 
 type Variant = "primary" | "secondary" | "zebra";
 
-const GridVariantsTemplate: Story<{}> = () => {
+const GridVariantsTemplate: StoryFn<{}> = () => {
   const [separators, setSeparators] = useState(false);
   const [uhd, setUhd] = useState(false);
   const [variant, setVariant] = useState<Variant>("primary");

@@ -19,7 +19,16 @@ import { components as mosaicComponents } from "@jpmorganchase/mosaic-site-compo
 import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
 import { SessionProvider } from "next-auth/react";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
-import "@jpmorganchase/mosaic-site-preset-styles/index.css";
+import "@salt-ds/theme/index.css";
+import "@jpmorganchase/mosaic-theme/index.css";
+import "@jpmorganchase/mosaic-theme/baseline.css";
+import "@jpmorganchase/mosaic-layouts/index.css";
+import "@jpmorganchase/mosaic-site-components/index.css";
+import "@jpmorganchase/mosaic-components/index.css";
+import "@jpmorganchase/mosaic-labs-components/index.css";
+import "@jpmorganchase/mosaic-content-editor-plugin/index.css";
+import "prismjs/themes/prism.css";
+
 import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
 import { PT_Mono, Open_Sans } from "next/font/google";
 

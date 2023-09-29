@@ -5,7 +5,7 @@ import {
   GridLayout,
   SaltProvider,
 } from "@salt-ds/core";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { ThumbsUpIcon } from "@salt-ds/icons";
 import "../layout/layout.stories.css";
 
@@ -23,11 +23,11 @@ export default {
     rowGap: { type: "number" },
     rows: { type: "number" },
   },
-} as ComponentMeta<typeof GridLayout>;
+} as Meta<typeof GridLayout>;
 
 const customBreakpoints = { xs: 0, sm: 450, md: 450, lg: 700, xl: 700 };
 
-const Template: ComponentStory<typeof GridLayout> = (args) => {
+const Template: StoryFn<typeof GridLayout> = (args) => {
   return (
     <GridLayout {...args} className="layout-container">
       {Array.from({ length: 12 }, (_, index) => (
@@ -43,7 +43,7 @@ Default.args = {
   columns: { xs: 1, sm: 3, md: 6, lg: 9, xl: 12 },
 };
 
-const ResponsiveView: ComponentStory<typeof GridLayout> = (args) => {
+const ResponsiveView: StoryFn<typeof GridLayout> = (args) => {
   return (
     <SaltProvider breakpoints={customBreakpoints}>
       <GridLayout {...args} className="layout-container custom-breaks">
@@ -90,7 +90,7 @@ const footerColumns = Object.keys(footerLinks).map((header, index) => (
   </div>
 ));
 
-const FooterTemplate: ComponentStory<typeof GridLayout> = (args) => {
+const FooterTemplate: StoryFn<typeof GridLayout> = (args) => {
   return (
     <GridLayout {...args}>
       <GridItem
@@ -124,7 +124,7 @@ const renderArticleButtons = (
     </Button>
   </FlowLayout>
 );
-const Blog: ComponentStory<typeof GridLayout> = (args) => {
+const Blog: StoryFn<typeof GridLayout> = (args) => {
   return (
     <div className="grid-blog-container">
       <GridLayout {...args}>
@@ -215,7 +215,7 @@ Composite.args = {
   columns: { xs: 1, sm: 2, lg: 4 },
 };
 
-const GridLayoutNestedExample: ComponentStory<typeof GridLayout> = () => {
+const GridLayoutNestedExample: StoryFn<typeof GridLayout> = () => {
   return (
     <GridLayout columnGap={6} columns={2}>
       <div className="layout-content">Item 1</div>

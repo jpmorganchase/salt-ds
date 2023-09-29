@@ -12,13 +12,13 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { Drawer, useDrawer } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "./drawer.stories.css";
 
 export default {
   title: "Lab/Drawer",
   component: Drawer,
-} as ComponentMeta<typeof Drawer>;
+} as Meta<typeof Drawer>;
 
 type DrawerContentExampleProps = {
   onClick: (evt: MouseEvent) => void;
@@ -51,7 +51,7 @@ const DrawerContentExample = ({ onClick }: DrawerContentExampleProps) => (
   </>
 );
 
-const DefaultDrawerStory: ComponentStory<typeof Drawer> = (args) => {
+const DefaultDrawerStory: StoryFn<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
   const hide = () => setOpen(false);
@@ -83,7 +83,7 @@ Default.args = {
   position: "left",
 };
 
-const TopTemplate: ComponentStory<typeof Drawer> = (args) => {
+const TopTemplate: StoryFn<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
   const hide = () => setOpen(false);
@@ -113,7 +113,7 @@ Top.args = {
   position: "top",
 };
 
-const RightTemplate: ComponentStory<typeof Drawer> = (args) => {
+const RightTemplate: StoryFn<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
   const hide = () => setOpen(false);
@@ -143,7 +143,7 @@ Right.args = {
   position: "right",
 };
 
-const BottomTemplate: ComponentStory<typeof Drawer> = (args) => {
+const BottomTemplate: StoryFn<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
   const hide = () => setOpen(false);
@@ -173,7 +173,7 @@ Bottom.args = {
   position: "bottom",
 };
 
-const ReducedMotionTemplate: ComponentStory<typeof Drawer> = (args) => {
+const ReducedMotionTemplate: StoryFn<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(false);
 
   const hide = () => setOpen(false);
@@ -214,7 +214,7 @@ const FormFieldExample = () => (
   </FormField>
 );
 
-const DrawerLeftExample: ComponentStory<typeof Drawer> = (args) => {
+const DrawerLeftExample: StoryFn<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(true);
 
   const hide = () => setOpen(false);
@@ -260,7 +260,7 @@ LeftSimpleUsage.args = {
   position: "left",
 };
 
-const DrawerTopExample: ComponentStory<typeof Drawer> = (args) => {
+const DrawerTopExample: StoryFn<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(true);
 
   const hide = () => setOpen(false);
@@ -306,7 +306,7 @@ TopSimpleUsage.args = {
   position: "top",
 };
 
-const DrawerRightExample: ComponentStory<typeof Drawer> = (args) => {
+const DrawerRightExample: StoryFn<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(true);
 
   const hide = () => setOpen(false);
@@ -365,7 +365,7 @@ const ArticleExample = () => (
   </StackLayout>
 );
 
-const DrawerBottomExample: ComponentStory<typeof Drawer> = (args) => {
+const DrawerBottomExample: StoryFn<typeof Drawer> = (args) => {
   const [open, setOpen] = useState(true);
 
   const hide = () => setOpen(false);

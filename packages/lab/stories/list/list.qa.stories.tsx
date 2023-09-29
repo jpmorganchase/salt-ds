@@ -1,4 +1,4 @@
-import type { ComponentMeta, Story } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 import { List } from "@salt-ds/lab";
@@ -8,9 +8,9 @@ import { usa_states } from "./list.data";
 export default {
   title: "Lab/List/QA",
   component: List,
-} as ComponentMeta<typeof List>;
+} as Meta<typeof List>;
 
-export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
+export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
   <QAContainer cols={4} height={950} imgSrc={imgSrc} itemPadding={5}>
     <List
       aria-label="Listbox example"

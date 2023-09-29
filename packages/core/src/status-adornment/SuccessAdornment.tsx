@@ -19,8 +19,8 @@ export const SuccessAdornmentIcon = forwardRef<
       ref={ref}
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M2.92089 5.95735L8.96399 0L10 1.02133L2.92088 8L0 5.1205L1.03602 4.09918L2.92089 5.95735Z"
       />
     </svg>
