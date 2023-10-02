@@ -1,23 +1,22 @@
 // TODO close button needs to be a button. Hence tab needs to include 2 buttons
 import { Button, ButtonProps, makePrefixer, useForkRef } from "@salt-ds/core";
-import { CloseIcon, CloseSmallIcon } from "@salt-ds/icons";
+import { CloseIcon } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   FocusEvent,
   ForwardedRef,
-  forwardRef,
   KeyboardEvent,
   MouseEvent,
   ReactElement,
+  forwardRef,
   useCallback,
   useRef,
   useState,
 } from "react";
-import { TabProps } from "./TabsTypes";
 import { EditableLabel, EditableLabelProps } from "../editable-label";
-
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
+import { TabProps } from "./TabsTypes";
 
 import tabCss from "./Tab.css";
 
@@ -25,7 +24,6 @@ const noop = () => undefined;
 
 const withBaseName = makePrefixer("saltTab");
 
-//TODO not ideal - duplicating the Icon then hiding one in css based on density - is there a nicer way ?
 const CloseTabButton = (props: ButtonProps) => (
   // FIXME: use polymorphic button
   <Button
@@ -39,10 +37,6 @@ const CloseTabButton = (props: ButtonProps) => (
     <CloseIcon
       aria-label="Close Tab (Delete or Backspace)"
       className={withBaseName("close-icon")}
-    />
-    <CloseSmallIcon
-      aria-label="Close Tab (Delete or Backspace)"
-      className={withBaseName("close-icon-small")}
     />
   </Button>
 );
