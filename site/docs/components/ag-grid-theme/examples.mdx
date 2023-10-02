@@ -1,0 +1,32 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="component-name" exampleName="ComponentExample" displayName="Component Example Title">
+
+### Component Example Title
+
+Brief description of this example. The text should be copied from the
+corresponding example in the content template's "Examples" section.
+
+The `displayName` prop's value is used to display the example's name in the list
+view and should therefore match the heading within this section.
+
+If you omit it, the `exampleName` will be displayed in the list for this example
+(with spaces inserted, so "ComponentExample" would display as
+"Component Example").
+
+</LivePreview>
+
+{/* Add more <LivePreview>...</LivePreview> blocks here as needed */}
+
+</LivePreviewControls>
