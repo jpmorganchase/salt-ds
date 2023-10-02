@@ -1,17 +1,17 @@
-import type {
+import {
   Middleware,
   Placement,
   Platform,
   Strategy,
-} from "@floating-ui/react";
-import {
   autoUpdate,
   flip,
   limitShift,
   platform,
   shift,
   useFloating,
+  FloatingPortal,
 } from "@floating-ui/react";
+
 import {
   createContext,
   ReactNode,
@@ -23,11 +23,10 @@ import {
   ForwardRefExoticComponent,
 } from "react";
 
-import { FloatingPortal } from "@floating-ui/react";
-import { SaltProvider } from "../salt-provider";
+import { SaltProvider } from "../../salt-provider";
 
 type CombinedFloatingComponentProps = PropsWithChildren<FloatingComponentProps>;
-export type FloatingComponentProps = {
+export interface FloatingComponentProps {
   /**
    * Whether the floating component is open (used for determinig whether to show the component)
    * We pass this as a prop rather than not rendering the component to allow more advanced use-cases e.g.
@@ -42,12 +41,12 @@ export type FloatingComponentProps = {
   width?: number;
   height?: number;
   position: Strategy;
-};
+}
 
 const DefaultFloatingComponent = forwardRef<
   HTMLElement,
   CombinedFloatingComponentProps
->((props, ref) => {
+>(function DefaultFloatingComponent(props, ref) {
   const { open, top, left, position, ...rest } = props;
   const style = {
     top,
@@ -97,7 +96,7 @@ export function useFloatingComponent() {
   return useContext(FloatingComponentContext);
 }
 
-export type UseFloatingUIProps = {
+export interface UseFloatingUIProps {
   /**
    * Sets position relative to trigger.
    */
@@ -115,18 +114,18 @@ export type UseFloatingUIProps = {
    * Callback function triggered when open state changes.
    */
   onOpenChange?: (open: boolean) => void;
-};
+}
 
 type GetMiddleware = (middleware: Middleware[]) => Middleware[];
 
 const defaultGetMiddleware: GetMiddleware = (defaultMiddleware) =>
   defaultMiddleware;
 
-type FloatingPlatformContextType = {
+interface FloatingPlatformContextType {
   platform: Platform;
   middleware: GetMiddleware;
   animationFrame: boolean;
-};
+}
 
 const defaultFloatingPlaform: FloatingPlatformContextType = {
   platform,
