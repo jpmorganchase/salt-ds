@@ -15,9 +15,7 @@
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",
-    "build-watch": "yarn node ./scripts/build.mjs --watch",
-    "sass:build": "sass --load-path node_modules css/salt-ag-theme.scss:salt-ag-theme.css",
-    "sass:watch": "npm run sass:build -- --watch"
+    "build-watch": "yarn node ./scripts/build.mjs --watch"
   },
   "devDependencies": {
     "chokidar": "^3.5.3",

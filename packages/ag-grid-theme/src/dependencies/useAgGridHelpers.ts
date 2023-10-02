@@ -60,7 +60,7 @@ export function useAgGridHelpers({
     }
   }, [density, agThemeName, compact]);
 
-  const className = `${agThemeName}-${density}${
+  const className = `${agThemeName}${
     compact && density === "high" ? `-compact` : ``
   }-${mode}`;
 
@@ -90,14 +90,14 @@ export function useAgGridHelpers({
     agGridProps: {
       onGridReady,
       rowHeight,
-      headerHeight: rowHeight,
+      // headerHeight: rowHeight,
       suppressMenuHide: true,
       defaultColDef: {
         filter: true,
         resizable: true,
         sortable: true,
         filterParams: {
-          cellHeight: listItemHeight,
+          // cellHeight: listItemHeight,
         },
       },
     },

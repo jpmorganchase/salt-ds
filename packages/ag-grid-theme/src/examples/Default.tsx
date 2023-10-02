@@ -35,7 +35,6 @@ const Default = (props: AgGridReactProps) => {
           ]}
           rowData={dataGridExampleData}
           rowSelection="single"
-          className={`ag-theme-${themeName}`}
           {...agGridProps}
           {...props}
         />
