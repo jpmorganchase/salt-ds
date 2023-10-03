@@ -19,6 +19,11 @@
 
   /* Shadow */
   --salt-shadow-0: none;
+  --salt-shadow-1: 0 1px 3px 0 var(--salt-shadow-1-color);
+  --salt-shadow-2: 0 2px 4px 0 var(--salt-shadow-2-color);
+  --salt-shadow-3: 0 4px 8px 0 var(--salt-shadow-3-color);
+  --salt-shadow-4: 0 6px 10px 0 var(--salt-shadow-4-color);
+  --salt-shadow-5: 0 12px 40px 0 var(--salt-shadow-5-color);
 }
 
 .salt-density-touch,

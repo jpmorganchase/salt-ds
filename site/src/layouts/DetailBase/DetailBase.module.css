@@ -85,7 +85,7 @@
 }
 
 .sidebar li:hover {
-  color: var(--salt-text-link-foreground-hover);
+  color: var(--salt-navigable-foreground-hover);
   text-decoration: underline;
 }
 

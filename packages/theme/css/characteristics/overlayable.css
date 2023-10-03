@@ -1,11 +1,11 @@
 .salt-theme {
-  --salt-overlayable-shadow-scroll: var(--salt-shadow-1);
-  --salt-overlayable-shadow-region: var(--salt-shadow-2);
-  --salt-overlayable-shadow: var(--salt-shadow-2);
-  --salt-overlayable-shadow-hover: var(--salt-shadow-3);
-  --salt-overlayable-shadow-popout: var(--salt-shadow-4);
-  --salt-overlayable-shadow-drag: var(--salt-shadow-4);
-  --salt-overlayable-shadow-modal: var(--salt-shadow-5);
+  --salt-overlayable-shadow-scroll: var(--salt-shadow-100);
+  --salt-overlayable-shadow-region: var(--salt-shadow-200);
+  --salt-overlayable-shadow: var(--salt-shadow-200);
+  --salt-overlayable-shadow-hover: var(--salt-shadow-300);
+  --salt-overlayable-shadow-popout: var(--salt-shadow-400);
+  --salt-overlayable-shadow-drag: var(--salt-shadow-400);
+  --salt-overlayable-shadow-modal: var(--salt-shadow-500);
 
   --salt-overlayable-background: var(--salt-palette-neutral-backdrop);
 }
