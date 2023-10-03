@@ -9,9 +9,9 @@ import { SaltProvider } from "@salt-ds/core";
 import { AnnouncementListener } from "./AnnouncementListener";
 
 const SupportedThemeModeValues = ["light", "dark"] as const;
-type SupportedThemeMode = (typeof SupportedThemeModeValues)[number];
+type SupportedThemeMode = typeof SupportedThemeModeValues[number];
 const SupportedDensityValues = ["touch", "low", "medium", "high"];
-type SupportedDensity = (typeof SupportedDensityValues)[number];
+type SupportedDensity = typeof SupportedDensityValues[number];
 
 // Must be declared global to be detected by typescript (allows import/export)
 declare global {

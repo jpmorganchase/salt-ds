@@ -26,8 +26,8 @@ export const FLEX_CONTENT_ALIGNMENT_BASE = [
   "space-evenly",
 ] as const;
 
-export type FlexAlignment = (typeof FLEX_ALIGNMENT_BASE)[number];
-export type FlexContentAlignment = (typeof FLEX_CONTENT_ALIGNMENT_BASE)[number];
+export type FlexAlignment = typeof FLEX_ALIGNMENT_BASE[number];
+export type FlexContentAlignment = typeof FLEX_CONTENT_ALIGNMENT_BASE[number];
 
 export type FlexLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<

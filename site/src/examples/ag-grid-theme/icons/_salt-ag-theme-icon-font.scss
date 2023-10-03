@@ -1,0 +1,115 @@
+$icons: (
+  // key is CSS icon name, comment is Salt icon name
+  aggregation: "\ea2f",
+  // sum-solid
+  arrows: "\e9e7",
+  // move-all
+  asc: "\e954",
+  // arrow-up
+  cancel: "\e975",
+  // close
+  chart: "\e958",
+  // bar-chart
+  columns: "\e981",
+  // column-chooser
+  contracted: "\e96d",
+  // chevron-down
+  copy: "\e973",
+  //clone
+  cross: "\e975",
+  //close
+  cut: "\e98e",
+  // cut
+  csv: "\e98d",
+  // csv
+  desc: "\e951",
+  // arrow-down
+  excel: "\ea62",
+  // xls
+  expanded: "\e96f",
+  // chevron-right
+  eye-slash: "\e9c1",
+  // hidden
+  eye: "\ea5b",
+  // visible
+  filter: "\e9ab",
+  // filter-solid
+  filter-clear: "\e9ac",
+  // filter
+  first: "\e99b",
+  // double-chevron-left
+  group: "\ea68",
+  // group
+  last: "\e99c",
+  // double-chevron-right
+  left: "\e96e",
+  //chevron-left
+  linked: "\e9da",
+  //linked
+  loading: "\e9dc",
+  //loader
+  menu: "\e9e5",
+  // micro-menu
+  next: "\e96f",
+  // chevron-right
+  none: "\e9e9",
+  // move-vertical
+  not-allowed: "\e975",
+  // close
+  paste: "\e9f9",
+  // place-in
+  pin: "\e9f5",
+  // pin-solid
+  pivot: "\e9f8",
+  // pivot
+  previous: "\e96e",
+  // chevron-left
+  right: "\e96f",
+  // chevron-right
+  save: "\ea19",
+  // save
+  small-down: "\ea41",
+  // triangle-down
+  small-left: "\ea42",
+  // triangle-left
+  small-right: "\ea44",
+  // triangle-right
+  small-up: "\ea45",
+  //triangle-up
+  tick: "\ea2e",
+  //success-tick
+  tree-closed: "\e96f",
+  // chevron-right
+  tree-open: "\e96d",
+  // triangle-down
+  unlinked: "\ea47",
+  // unlinked
+);
+
+@font-face {
+  font-family: "salt-icons";
+  src: url("../fonts/salt-icons.woff") format("woff");
+}
+
+@each $name, $glyph in $icons {
+  [class^="ag-theme-salt"] .ag-icon-#{$name} {
+    font-family: "salt-icons";
+  }
+
+  [class^="ag-theme-salt"] .ag-icon-#{$name}::before {
+    content: $glyph;
+  }
+}
+
+[class^="ag-theme-salt"] .ag-checkbox-input-wrapper::after {
+  font-family: "salt-icons";
+  content: "";
+}
+
+[class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked::after {
+  content: "\ea2e";
+}
+
+[class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-indeterminate::after {
+  content: "\ea10";
+}

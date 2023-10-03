@@ -8,7 +8,6 @@ export * from "./Default";
 export * from "./DragRowOrder";
 export * from "./FloatingFilter";
 export * from "./HDCompact";
-export * from "./Icons";
 export * from "./InfiniteScroll";
 export * from "./LoadingOverlay";
 export * from "./MasterDetail";
@@ -21,4 +20,3 @@ export * from "./RowGroupPanel";
 export * from "./StatusBar";
 export * from "./Variants";
 export * from "./WrappedHeader";
-
