@@ -29,7 +29,7 @@ const PagedGrid = (props: AgGridReactProps) => {
   );
 };
 
-const Pagination = () => (
+export const Pagination = () => (
   <div
     style={{
       marginTop: "-150px",
@@ -42,5 +42,3 @@ const Pagination = () => (
     <PagedGrid />
   </div>
 );
-
-export default Pagination;

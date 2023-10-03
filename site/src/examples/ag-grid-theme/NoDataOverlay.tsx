@@ -4,7 +4,7 @@ import { Button, Card, H2, StatusIndicator } from "@salt-ds/core";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultColumns } from "./data";
 
-const NoDataOverlay = (props: AgGridReactProps) => {
+export const NoDataOverlay = (props: AgGridReactProps) => {
   const [showModal, setShowModal] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers();
@@ -117,5 +117,3 @@ const NoDataOverlay = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export default NoDataOverlay;

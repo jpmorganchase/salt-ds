@@ -15,7 +15,7 @@ const statusBar = {
   ],
 };
 
-const StatusBar = (props: AgGridReactProps) => {
+export const StatusBar = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -35,5 +35,3 @@ const StatusBar = (props: AgGridReactProps) => {
     </StackLayout>
   );
 };
-
-export default StatusBar;

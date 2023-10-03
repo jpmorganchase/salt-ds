@@ -17,7 +17,7 @@ const statusBar = {
   ],
 };
 
-const WrappedHeader = (props: AgGridReactProps) => {
+export const WrappedHeader = (props: AgGridReactProps) => {
   const [compact, setCompact] = useState(false);
   const { api, agGridProps, containerProps, isGridReady } =
     useAgGridHelpers(compact);
@@ -60,5 +60,3 @@ const WrappedHeader = (props: AgGridReactProps) => {
     </StackLayout>
   );
 };
-
-export default WrappedHeader;

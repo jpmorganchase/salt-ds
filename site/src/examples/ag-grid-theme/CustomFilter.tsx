@@ -1,10 +1,10 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import React, { useEffect, useState } from "react";
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import { defaultData, customFilterColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-const CustomFilter = () => {
+export const CustomFilter = () => {
   const [hasSavedState, setHasSavedState] = useState(true);
   const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers();
 
@@ -95,5 +95,3 @@ const CustomFilter = () => {
     </StackLayout>
   );
 };
-
-export default CustomFilter;

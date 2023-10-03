@@ -6,7 +6,7 @@ import { useAgGridHelpers } from "./useAgGridHelpers";
 import styles from "../../css/_export-salt-icons.module.scss";
 import iconCss from "./Icons.css";
 
-const Icons = () => {
+export const Icons = () => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-ag-grid-icons",
@@ -33,5 +33,3 @@ const Icons = () => {
     </>
   );
 };
-
-export default Icons;

@@ -4,7 +4,7 @@ import { StackLayout } from "@salt-ds/core";
 import { defaultData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-const Default = (): ReactElement => {
+export const Default = (): ReactElement => {
   const { containerProps, agGridProps } = useAgGridHelpers();
 
   return (
@@ -37,5 +37,3 @@ const Default = (): ReactElement => {
     </StackLayout>
   );
 };
-
-export default Default;

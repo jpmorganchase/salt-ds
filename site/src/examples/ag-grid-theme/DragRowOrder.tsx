@@ -3,7 +3,7 @@ import { StackLayout } from "@salt-ds/core";
 import { defaultData, rowDragColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-const DragRowOrder = (props: AgGridReactProps) => {
+export const DragRowOrder = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -21,5 +21,3 @@ const DragRowOrder = (props: AgGridReactProps) => {
     </StackLayout>
   );
 };
-
-export default DragRowOrder;

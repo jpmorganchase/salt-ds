@@ -2,7 +2,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultData, masterDetailColumns } from "./data";
 
-const MasterDetail = (props: AgGridReactProps) => {
+export const MasterDetail = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -23,5 +23,3 @@ const MasterDetail = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export default MasterDetail;

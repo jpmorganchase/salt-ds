@@ -2,7 +2,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { defaultData, rowGroupPanelColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-const RowGroupPanel = (props: AgGridReactProps) => {
+export const RowGroupPanel = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -20,5 +20,3 @@ const RowGroupPanel = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export default RowGroupPanel;

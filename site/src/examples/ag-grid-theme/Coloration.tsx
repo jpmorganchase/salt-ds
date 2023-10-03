@@ -2,7 +2,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { coloredColumns, defaultData } from "./data";
 
-const Coloration = (props: AgGridReactProps) => {
+export const Coloration = (props: AgGridReactProps) => {
   const { containerProps, agGridProps } = useAgGridHelpers();
 
   return (
@@ -16,5 +16,3 @@ const Coloration = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export default Coloration;

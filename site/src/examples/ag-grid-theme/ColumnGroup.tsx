@@ -1,9 +1,9 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { StackLayout } from "@salt-ds/core";
-import { dataGridExampleData, groupedColumns } from "./data";
+import { defaultData, groupedColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-const ColumnGroup = (props: AgGridReactProps) => {
+export const ColumnGroup = (props: AgGridReactProps) => {
   const { containerProps, agGridProps } = useAgGridHelpers();
 
   return (
@@ -12,12 +12,10 @@ const ColumnGroup = (props: AgGridReactProps) => {
         <AgGridReact
           {...agGridProps}
           {...props}
-          rowData={dataGridExampleData}
+          rowData={defaultData}
           columnDefs={groupedColumns("US States")}
         />
       </div>
     </StackLayout>
   );
 };
-
-export default ColumnGroup;

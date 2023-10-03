@@ -4,7 +4,7 @@ import { Card, Spinner } from "@salt-ds/core";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultColumns, defaultData } from "./data";
 
-const LoadingOverlay = () => {
+export const LoadingOverlay = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   const getModalStyle: CSSProperties = {
@@ -49,5 +49,3 @@ const LoadingOverlay = () => {
     </div>
   );
 };
-
-export default LoadingOverlay;

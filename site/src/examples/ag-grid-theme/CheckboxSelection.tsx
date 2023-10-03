@@ -2,7 +2,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultColumns, defaultData } from "./data";
 
-const CheckboxSelection = (props: AgGridReactProps) => {
+export const CheckboxSelection = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -17,5 +17,3 @@ const CheckboxSelection = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export default CheckboxSelection;

@@ -20,7 +20,7 @@ const generateData = function generateData<T extends { name: string }>(
 
 const dataSourceRows = generateData(defaultData);
 
-const InfiniteScroll = (props: AgGridReactProps) => {
+export const InfiniteScroll = (props: AgGridReactProps) => {
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers();
 
   useEffect(() => {
@@ -63,5 +63,3 @@ const infiniteScrollComponents = {
     }
   },
 };
-
-export default InfiniteScroll;

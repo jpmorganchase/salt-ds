@@ -2,7 +2,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { defaultData, rowGroupColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-const RowGrouping = (props: AgGridReactProps) => {
+export const RowGrouping = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -16,5 +16,3 @@ const RowGrouping = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export default RowGrouping;

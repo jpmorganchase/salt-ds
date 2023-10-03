@@ -2,7 +2,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { customFilterColumns, defaultData } from "./data";
 
-const FloatingFilter = () => {
+export const FloatingFilter = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -16,5 +16,3 @@ const FloatingFilter = () => {
     </div>
   );
 };
-
-export default FloatingFilter;

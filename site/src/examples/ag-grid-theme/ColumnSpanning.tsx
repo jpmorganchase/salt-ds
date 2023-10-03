@@ -2,7 +2,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { defaultData, spannedColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-const ColumnSpanning = (props: AgGridReactProps) => {
+export const ColumnSpanning = (props: AgGridReactProps) => {
   const { containerProps, agGridProps } = useAgGridHelpers();
 
   return (
@@ -16,5 +16,3 @@ const ColumnSpanning = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export default ColumnSpanning;

@@ -2,7 +2,7 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { parentChildColumns, parentChildData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-const ParentChildRows = (props: AgGridReactProps) => {
+export const ParentChildRows = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -22,5 +22,3 @@ const ParentChildRows = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export default ParentChildRows;

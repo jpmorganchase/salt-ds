@@ -28,7 +28,7 @@ const getThemeNames = () => {
   return themes;
 };
 
-const HDCompact = () => {
+export const HDCompact = () => {
   const [compact, setCompact] = useState(false);
   const { mode } = useTheme();
   const { api, agGridProps, containerProps, isGridReady } =
@@ -88,5 +88,3 @@ const HDCompact = () => {
     </StackLayout>
   );
 };
-
-export default HDCompact;

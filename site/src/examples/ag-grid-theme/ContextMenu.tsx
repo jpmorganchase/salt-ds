@@ -5,7 +5,7 @@ import mac from "./images/mac.png";
 import { defaultData, defaultColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
-const ContextMenu = (props: AgGridReactProps) => {
+export const ContextMenu = (props: AgGridReactProps) => {
   const { containerProps, agGridProps } = useAgGridHelpers();
 
   const getContextMenuItems = (params: GetContextMenuItemsParams) => {
@@ -149,5 +149,3 @@ const ContextMenu = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export default ContextMenu;
