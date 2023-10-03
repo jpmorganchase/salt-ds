@@ -15,15 +15,9 @@ data:
 
 ### Default
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+By default, Split Layout displays items horizontally at either end of the container.
 
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
-
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+Its items align centrally within the layout, with a `gap` between items of 3, which is a multiple of the [Salt base unit](/salt/foundations/spacing). The height and width of the layout are driven by the items contained within it.
 
 </LivePreview>
 
@@ -31,15 +25,7 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 ### Column direction
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
-
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
-
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+The Split Layout `direction` prop defines the main axis that items are displayed along. Set `direction` to `column` to display items in a vertical direction along a single line.
 
 </LivePreview>
 
@@ -47,15 +33,7 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 ### Button bar
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
-
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
-
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+This example shows two groups of buttons inside a Split Layout e.g within an App Header. Here Split Layout is being used with its default configuration.
 
 </LivePreview>
 
@@ -63,15 +41,15 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 ### Responsive layout
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+Split Layout supports responsive props, so you can define different behaviors based on viewport size. You can use the default [Salt breakpoints](https://www.saltdesignsystem.com/salt/foundations/responsiveness) or pass in your own using `SaltProvider`.
 
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
+What are responsive props?
 
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+A responsive prop is a prop that takes either multiple values (one value per breakpoint), or a single value that would take effect across all different screen sizes. For example, a layout that will responsively change direction from row to column at specific breakpoints or viewport sizes:
+
+```js
+direction={{ xs: "column", sm: "column", lg: "row", md: "row ", xl: "row" }}
+```
 
 </LivePreview>
 
@@ -79,15 +57,9 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 ### Layout alignment
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+Control the position of Split Layout and its items using the `align` prop.
 
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
-
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+If there is additional space available around the layout (i.e., above or below the row, or beside the column) use the `align` prop to define how items should be positioned within that space.
 
 </LivePreview>
 
@@ -95,15 +67,7 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 ### Flex item position
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
-
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
-
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+Use the Flex Item `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to change the item’s position along the cross-axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
 
 </LivePreview>
 
@@ -111,15 +75,17 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 ### Flex item size
 
-Brief description of this example. The text should be copied from the
-corresponding example in the content template's "Examples" section.
+The Flex Item `grow` prop enables specific items in the layout to grow and fill any remaining space that is available in the layout:
 
-The `displayName` prop's value is used to display the example's name in the list
-view and should therefore match the heading within this section.
+By default, `grow` is set to 0 and items will be displayed in their ‘normal’ size.
 
-If you omit it, the `exampleName` will be displayed in the list for this example
-(with spaces inserted, so "ComponentExample" would display as
-"Component Example").
+If an item is set to ‘1’ it will fill the available space.
+
+If an item is set to ‘2’ it will fill twice as much space as other items that have `grow` set to ‘1’.
+
+#### Guidance
+
+In contrast to the `grow` prop, the `shrink` prop specific item as small as possible within the layout. By default, `shrink` is set to `1`. If an item is set to `2`, that item would attempt to take half as much space.
 
 </LivePreview>
 

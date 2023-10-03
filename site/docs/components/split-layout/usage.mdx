@@ -9,10 +9,15 @@ data:
   $ref: ./#/data
 ---
 
-### Using the Component Name component
+### When to use Split Layout
 
-Usage information for this component. Copy the content from the content
-template's "How to use" section here.
+- If there are two defined areas required to be at the opposite horizontal ends of a container, for example if two Button Bar components need to be in a header.
+
+### When not to use Split Layout
+
+- If your layout requires more than two regions. In this case we recommend you use [Flow Layout](/salt/components/flow-layout) instead.
+
+- If You want the layout to have more complex customization we recommend having a look at [Flex Layout](/salt/components/flex-layout).
 
 ### Import
 
@@ -26,17 +31,4 @@ import { SplitLayout } from "@salt-ds/core";
 
 ### Props
 
-{/* Update packageName and componentName below as needed */}
-{/* packageName is optional and defaults to "core" if omitted */}
-
 <PropsTable packageName="core" componentName="SplitLayout" />
-
-### Content
-
-Add text from "Content" section here when available, or else remove this
-section.
-
-### References
-
-Add text from "References" section here when available, or else remove this
-section.
