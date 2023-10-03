@@ -9,11 +9,11 @@
   border-radius: 0;
   height: var(--salt-size-base);
   color: var(--salt-actionable-secondary-foreground);
-  text-transform: var(--salt-actionable-textTransform);
-  font-weight: var(--salt-actionable-secondary-fontWeight);
+  text-transform: var(--salt-text-action-textTransform);
+  font-weight: var(--salt-text-action-fontWeight);
   font-family: var(--salt-text-fontFamily);
   text-align: var(--salt-actionable-textAlign);
-  letter-spacing: var(--salt-actionable-letterSpacing);
+  letter-spacing: var(--salt-text-action-letterSpacing);
   line-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);
   padding-left: var(--salt-spacing-100);

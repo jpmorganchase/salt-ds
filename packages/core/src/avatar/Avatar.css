@@ -8,7 +8,7 @@
   --avatar-fontSize: calc(var(--avatar-base-fontSize) * var(--avatar-size-multiplier));
   /* Icon styling */
   --saltIcon-color: var(--avatar-foreground);
-  --salt-icon-size-base: calc(var(--avatar-container-size) / 2);
+  --salt-size-icon: calc(var(--avatar-container-size) / 2);
 }
 
 /* Style applied to the root element */

@@ -4,7 +4,7 @@
   --button-background-active: var(--salt-actionable-cta-background-active);
   --button-background-disabled: var(--salt-actionable-cta-background-disabled);
   --button-background-hover: var(--salt-actionable-cta-background-hover);
-  --button-fontWeight: var(--salt-actionable-cta-fontWeight);
+  --button-fontWeight: var(--salt-text-action-fontWeight);
   --button-text-color: var(--salt-actionable-cta-foreground);
   --button-text-color-active: var(--salt-actionable-cta-foreground-active);
   --button-text-color-disabled: var(--salt-actionable-cta-foreground-disabled);
@@ -32,7 +32,7 @@
   --button-background-active: var(--salt-actionable-primary-background-active);
   --button-background-disabled: var(--salt-actionable-primary-background-disabled);
   --button-background-hover: var(--salt-actionable-primary-background-hover);
-  --button-fontWeight: var(--salt-actionable-primary-fontWeight);
+  --button-fontWeight: var(--salt-text-action-fontWeight);
   --button-text-color: var(--salt-actionable-primary-foreground);
   --button-text-color-active: var(--salt-actionable-primary-foreground-active);
   --button-text-color-disabled: var(--salt-actionable-primary-foreground-disabled);
@@ -60,7 +60,7 @@
   --button-background-active: var(--salt-actionable-secondary-background-active);
   --button-background-disabled: var(--salt-actionable-secondary-background-disabled);
   --button-background-hover: var(--salt-actionable-secondary-background-hover);
-  --button-fontWeight: var(--salt-actionable-secondary-fontWeight);
+  --button-fontWeight: var(--salt-text-action-fontWeight);
   --button-text-color: var(--salt-actionable-secondary-foreground);
   --button-text-color-active: var(--salt-actionable-secondary-foreground-active);
   --button-text-color-disabled: var(--salt-actionable-secondary-foreground-disabled);
@@ -99,8 +99,8 @@
   font-size: var(--saltButton-fontSize, var(--salt-text-fontSize));
   font-family: var(--saltButton-fontFamily, var(--salt-text-fontFamily));
   line-height: var(--saltButton-lineHeight, var(--salt-text-lineHeight));
-  letter-spacing: var(--saltButton-letterSpacing, var(--salt-actionable-letterSpacing));
-  text-transform: var(--saltButton-textTransform, var(--salt-actionable-textTransform));
+  letter-spacing: var(--saltButton-letterSpacing, var(--salt-text-action-letterSpacing));
+  text-transform: var(--saltButton-textTransform, var(--salt-text-action-textTransform));
   padding: 0 var(--saltButton-padding, var(--salt-size-unit));
   margin: var(--saltButton-margin, 0);
   height: var(--saltButton-height, var(--salt-size-base));

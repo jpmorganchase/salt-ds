@@ -1,6 +1,6 @@
 .salt-theme {
   --salt-overlayable-shadow-scroll: var(--salt-shadow-1);
-  --salt-overlayable-shadow-borderRegion: var(--salt-shadow-2);
+  --salt-overlayable-shadow-region: var(--salt-shadow-2);
   --salt-overlayable-shadow: var(--salt-shadow-2);
   --salt-overlayable-shadow-hover: var(--salt-shadow-3);
   --salt-overlayable-shadow-popout: var(--salt-shadow-4);
