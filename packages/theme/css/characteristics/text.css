@@ -67,9 +67,9 @@
   --salt-text-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
 
   /* Link */
-  --salt-text-link-foreground-hover: var(--salt-palette-navigate-foreground-hover);
-  --salt-text-link-foreground-active: var(--salt-palette-navigate-foreground-active);
-  --salt-text-link-foreground-visited: var(--salt-palette-navigate-foreground-visited);
+  --salt-navigable-foreground-hover: var(--salt-palette-navigate-foreground-hover);
+  --salt-navigable-foreground-active: var(--salt-palette-navigate-foreground-active);
+  --salt-navigable-foreground-visited: var(--salt-palette-navigate-foreground-visited);
   --salt-text-link-textDecoration: underline;
   --salt-text-link-textDecoration-hover: none;
   --salt-text-link-textDecoration-selected: underline;

@@ -76,4 +76,9 @@
   --salt-actionable-primary-fontWeight: var(--salt-typography-fontWeight-bold);
   --salt-actionable-cta-fontWeight: var(--salt-typography-fontWeight-bold);
   --salt-actionable-secondary-fontWeight: var(--salt-typography-fontWeight-semiBold);
+
+  /* Text */
+  --salt-text-link-foreground-hover: var(--salt-palette-navigate-foreground-hover);
+  --salt-text-link-foreground-active: var(--salt-palette-navigate-foreground-active);
+  --salt-text-link-foreground-visited: var(--salt-palette-navigate-foreground-visited);
 }
