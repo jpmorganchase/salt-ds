@@ -4,59 +4,106 @@
     themes: (
       ag-theme-salt-light: (
         extend-theme: material,
-        --ag-font-size: var(--salt-text-fontSize),
+        background-color: #fff,
+        subheader-background-color: #fff,
+        foreground-color: #161616,
+      ),
+      ag-theme-salt-dark: (
+        extend-theme: material,
+        background-color: #242526,
+        subheader-background-color: #242526,
+        foreground-color: #fff,
       ),
     ),
-    --ag-font-family: var(--salt-typography-fontFamily),
-    --ag-data-color: var(--salt-text-primary-foreground),
-    --ag-secondary-foreground-color: var(--salt-text-primary-foreground),
-    --ag-header-foreground-color: var(--salt-text-primary-foreground),
-    --ag-header-cell-hover-background-color:
+    grid-size: var(--salt-spacing-100),
+    font-size: var(--salt-text-fontSize),
+    font-family: var(--salt-typography-fontFamily),
+    header-background-color: var(--salt-container-primary-background),
+    data-color: var(--salt-text-primary-foreground),
+    secondary-foreground-color: var(--salt-text-primary-foreground),
+    header-foreground-color: var(--salt-text-primary-foreground),
+    header-cell-hover-background-color:
       var(--salt-container-primary-background),
-    --ag-row-height: var(--salt-size-base),
-    --ag-row-hover-color: var(--salt-selectable-background-hover),
-    --ag-selected-row-background-color:
+    selected-tab-underline-color: var(--salt-navigable-indicator-active),
+    row-height: var(--salt-size-base),
+    row-hover-color: var(--salt-selectable-background-hover),
+    selected-row-background-color:
       var(--salt-selectable-background-selected),
-    --ag-icon-size: var(--salt-icon-size-base),
-    // --ag-range-selection-border-color: var(--salt-focused-outlineColor),
-    --ag-range-selection-border-style: var(--salt-focused-outlineStyle),
-    --ag-header-column-separator-display: block,
-    --ag-header-column-separator-height: var(--salt-text-lineHeight),
-    --ag-header-column-separator-width: 1px,
-    --ag-header-column-separator-color: rgba(0, 0, 0, 0.15),
-    --ag-checkbox-border-radius: 0,
-    --ag-checkbox-unchecked-color: var(--salt-text-primary-foreground),
-    --ag-checkbox-indeterminate-color: var(--salt-color-gray-700),
-    --ag-checkbox-checked-color:
+    icon-size: var(--salt-icon-size-base),
+    // range-selection-border-color: var(--salt-focused-outlineColor),
+    range-selection-border-style: var(--salt-focused-outlineStyle),
+    header-column-separator-display: block,
+    header-column-separator-height: var(--salt-text-lineHeight),
+    header-column-separator-width: 1px,
+    header-column-separator-color: rgba(0, 0, 0, 0.15),
+    cell-horizontal-padding: var(--salt-spacing-100),
+    checkbox-border-radius: 0,
+    checkbox-unchecked-color: var(--salt-text-primary-foreground),
+    checkbox-indeterminate-color: var(--salt-color-gray-700),
+    checkbox-checked-color:
       var(--salt-selectable-primary-foreground-selected),
   )
 );
 
-.ag-theme-salt-light .ag-cell.editable-cell {
+div[class*="ag-theme-salt"] .ag-menu {
+  padding: var(--salt-spacing-100);
+  border: 1px solid #cacacb;
+}
+
+div[class*="ag-theme-salt"] .ag-menu-header {
+  border-bottom: 1px solid #cacacb;
+}
+
+div[class*="ag-theme-salt"] .ag-menu-separator {
+  height: 1px;
+}
+
+div[class*="ag-theme-salt"]  .ag-tabs-body {
+  padding: 0;
+}
+
+div[class*="ag-theme-salt"] .ag-menu-list {
+  padding: 0;
+}
+
+div[class*="ag-theme-salt"] .ag-menu-option {
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-menu-option-icon {
+  padding: 0 var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-menu-option-text {
+  padding: 0 var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-cell.editable-cell {
   border: var(--salt-size-border) var(--salt-container-borderStyle)
     var(--salt-editable-borderColor);
 }
-.ag-theme-salt-light .ag-checkbox-input-wrapper {
+div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper {
   border: 1px var(--salt-selectable-borderStyle)
     var(--salt-selectable-borderColor);
   height: var(--salt-size-selectable);
   width: var(--salt-size-selectable);
 }
 
-.ag-theme-salt-light .ag-checkbox-input-wrapper.ag-checked {
+div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked {
   background: var(--salt-selectable-borderColor-selected);
   border-color: var(--salt-selectable-borderColor-selected);
 }
 
-.ag-theme-salt-light .ag-floating-filter {
+div[class*="ag-theme-salt"] .ag-floating-filter {
   border: var(--salt-size-border) var(--salt-editable-borderStyle)
     var(--salt-separable-tertiary-borderColor);
 }
 
-.ag-theme-salt-light .ag-floating-filter:after {
+div[class*="ag-theme-salt"] .ag-floating-filter:after {
   width: 0;
 }
-.ag-theme-salt-light .ag-icon-filter:before {
+
+div[class*="ag-theme-salt"] .ag-icon-filter:before {
   color: var(--salt-text-secondary-foreground);
 }
 
