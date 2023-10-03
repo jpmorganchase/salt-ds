@@ -38,6 +38,7 @@
 
   /* Overlayable */
   --salt-overlayable-shadow-scroll-color: var(--salt-shadow-1-color);
+  --salt-overlayable-shadow-borderRegion: var(--salt-shadow-2);
 
   /* Selectable */
   --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
@@ -68,4 +69,11 @@
   --salt-status-success-borderColor-disabled: var(--salt-palette-success-border-disabled);
   --salt-status-warning-borderColor-disabled: var(--salt-palette-warning-border-disabled);
   --salt-status-error-borderColor-disabled: var(--salt-palette-error-border-disabled);
+
+  /* Actionable */
+  --salt-actionable-letterSpacing: 0.6px;
+  --salt-actionable-textTransform: uppercase;
+  --salt-actionable-primary-fontWeight: var(--salt-typography-fontWeight-bold);
+  --salt-actionable-cta-fontWeight: var(--salt-typography-fontWeight-bold);
+  --salt-actionable-secondary-fontWeight: var(--salt-typography-fontWeight-semiBold);
 }
