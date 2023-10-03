@@ -16,7 +16,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
  */
 
 export const SpinnerSizeValues = ["default", "large"] as const;
-export type SpinnerSize = typeof SpinnerSizeValues[number];
+export type SpinnerSize = (typeof SpinnerSizeValues)[number];
 const withBaseName = makePrefixer("saltSpinner");
 
 export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {

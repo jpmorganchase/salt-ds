@@ -20,7 +20,7 @@ export type LayoutProps = {
     next?: LinkType;
     prev?: LinkType;
   };
-  BreadcrumbsProps?: { breadcrumbs: typeof Breadcrumb[] };
+  BreadcrumbsProps?: { breadcrumbs: (typeof Breadcrumb)[] };
   BackLinkProps?: { label?: string; link: string };
   Footer?: ReactElement;
   FooterProps?: any;
