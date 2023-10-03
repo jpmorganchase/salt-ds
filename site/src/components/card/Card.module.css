@@ -120,7 +120,7 @@
 }
 
 .cardFooter:hover {
-  color: var(--salt-text-link-foreground-hover);
+  color: var(--salt-navigable-foreground-hover);
 }
 
 .keyline {
