@@ -22,13 +22,11 @@
     data-color: var(--salt-text-primary-foreground),
     secondary-foreground-color: var(--salt-text-primary-foreground),
     header-foreground-color: var(--salt-text-primary-foreground),
-    header-cell-hover-background-color:
-      var(--salt-container-primary-background),
+    header-cell-hover-background-color: var(--salt-container-primary-background),
     selected-tab-underline-color: var(--salt-navigable-indicator-active),
     row-height: var(--salt-size-base),
     row-hover-color: var(--salt-selectable-background-hover),
-    selected-row-background-color:
-      var(--salt-selectable-background-selected),
+    selected-row-background-color: var(--salt-selectable-background-selected),
     icon-size: var(--salt-icon-size-base),
     // range-selection-border-color: var(--salt-focused-outlineColor),
     range-selection-border-style: var(--salt-focused-outlineStyle),
@@ -40,8 +38,7 @@
     checkbox-border-radius: 0,
     checkbox-unchecked-color: var(--salt-text-primary-foreground),
     checkbox-indeterminate-color: var(--salt-color-gray-700),
-    checkbox-checked-color:
-      var(--salt-selectable-primary-foreground-selected),
+    checkbox-checked-color: var(--salt-selectable-primary-foreground-selected),
   )
 );
 
@@ -58,7 +55,7 @@ div[class*="ag-theme-salt"] .ag-menu-separator {
   height: 1px;
 }
 
-div[class*="ag-theme-salt"]  .ag-tabs-body {
+div[class*="ag-theme-salt"] .ag-tabs-body {
   padding: 0;
 }
 
