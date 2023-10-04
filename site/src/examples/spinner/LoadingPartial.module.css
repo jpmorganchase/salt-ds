@@ -4,13 +4,13 @@
   justify-content: center;
   font-weight: var(--salt-text-fontWeight-small);
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   background-color: var(--salt-container-secondary-background);
 }
 
 .loadingItem.loading {
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor-disabled);
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-foreground-secondary);
   background-color: initial;
 }
 .loadingGrid {

@@ -3,7 +3,7 @@
  */
 
 .salt-theme {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   font-family: var(--salt-typography-fontFamily);
   font-size: var(--salt-text-fontSize);
   letter-spacing: var(--salt-text-letterSpacing);

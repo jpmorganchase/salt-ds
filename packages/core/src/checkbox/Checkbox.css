@@ -13,13 +13,13 @@
 
 /* Styles applied to root component if `disabled={true}` */
 .saltCheckbox-disabled {
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-foreground-primary-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
 /* Styles applied to root component if `readOnly={true}` */
 .saltCheckbox-readOnly {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   cursor: var(--salt-selectable-cursor-readonly);
 }
 

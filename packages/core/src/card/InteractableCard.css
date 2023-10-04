@@ -36,7 +36,7 @@ a:focus-visible .saltInteractableCard,
 .saltInteractableCard:focus-visible {
   cursor: var(--saltCard-interactable-cursor-focus, var(--salt-selectable-cursor-hover));
   box-shadow: var(--saltCard-interactable-shadow-focus, var(--salt-overlayable-shadow-hover));
-  color: var(--saltCard-color-focus, var(--salt-text-primary-foreground));
+  color: var(--saltCard-color-focus, var(--salt-foreground-primary));
   outline-color: var(--salt-focused-outlineColor);
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
@@ -67,7 +67,7 @@ a:link .saltInteractableCard * {
   border-color: var(--saltCard-borderColor-disabled, var(--salt-accent-borderColor-disabled));
   box-shadow: var(--saltCard-interactable-shadow, var(--salt-overlayable-shadow));
   background: var(--saltCard-background-disabled, var(--salt-container-primary-background-disabled));
-  color: var(--saltCard-color-disabled, var(--salt-text-primary-foreground-disabled));
+  color: var(--saltCard-color-disabled, var(--salt-foreground-primary-disabled));
   cursor: var(--saltCard-interactable-cursor-disabled, var(--salt-selectable-cursor-disabled));
   outline: none;
 }
@@ -79,7 +79,7 @@ a:link .saltInteractableCard * {
 
 /* Class that can be used for anchor tags wrapping InteractableCard */
 .saltInteractableCard-link {
-  color: var(--saltCard-link-color, var(--salt-text-primary-foreground));
+  color: var(--saltCard-link-color, var(--salt-foreground-primary));
   inset: var(--salt-focused-outlineInset);
   outline-color: var(--salt-focused-outlineColor);
   outline-offset: var(--salt-focused-outlineOffset);

@@ -21,7 +21,7 @@
   flex-direction: column;
   width: var(--saltTrackerStep-width, 100%);
   gap: var(--salt-spacing-50);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   padding: 0 var(--salt-spacing-25);

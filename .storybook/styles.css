@@ -6,7 +6,7 @@
 }
 
 .salt-theme .sbdocs.sbdocs-content {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   height: fit-content;
 }
 

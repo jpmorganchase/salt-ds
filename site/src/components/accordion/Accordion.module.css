@@ -11,7 +11,7 @@
 }
 
 .accordion a {
-  text-decoration: var(--salt-text-link-textDecoration);
+  text-decoration: var(--salt-navigable-textDecoration);
 }
 
 .accordion :global(.saltIcon) {

@@ -1,7 +1,7 @@
 /* Vars applied to root NavigationItem component */
 .saltNavigationItem {
-  --navigationItem-color: var(--salt-text-primary-foreground);
-  --navigationItem-fill: var(--salt-text-primary-foreground);
+  --navigationItem-color: var(--salt-foreground-primary);
+  --navigationItem-fill: var(--salt-foreground-primary);
   --navigationItem-bar-inset: var(--salt-spacing-25);
   --navigationItem-bar-size: var(--salt-size-indicator);
   --navigationItem-indicator-background: var(--salt-navigable-indicator-active);
@@ -56,7 +56,8 @@
 /* Styles applied when orientation = "horizontal" */
 .saltNavigationItem-wrapper.saltNavigationItem-horizontal {
   min-height: calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap));
-  padding: calc(var(--navigationItem-gap) + var(--navigationItem-bar-inset)) 0 var(--navigationItem-gap) 0;
+  padding: calc(var(--navigationItem-gap) + var(--navigationItem-bar-inset)) 0
+    var(--navigationItem-gap) 0;
   width: fit-content;
 }
 
