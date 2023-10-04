@@ -5,7 +5,7 @@
 }
 
 .saltText::selection {
-  background: var(--saltText-highlight, var(--salt-text-background-selected));
+  background: var(--saltText-highlight, var(--salt-foreground-text-highlight));
 }
 
 /* Allows truncation */

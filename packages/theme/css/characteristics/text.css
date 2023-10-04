@@ -59,7 +59,7 @@
   --salt-text-display3-fontWeight-small: var(--salt-typography-fontWeight-regular);
 
   /* Colors */
-  --salt-text-background-selected: var(--salt-palette-interact-background-active);
+  --salt-foreground-text-highlight: var(--salt-palette-interact-background-active);
 
   --salt-foreground-primary: var(--salt-palette-neutral-primary-foreground);
   --salt-foreground-primary-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
