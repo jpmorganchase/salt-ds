@@ -1,18 +1,18 @@
 .salt-density-high {
-  --salt-accent-fontSize: 8px;
-  --salt-accent-lineHeight: 11px;
+  --salt-text-notation-fontSize: 8px;
+  --salt-text-notation-lineHeight: 10px;
 }
 .salt-density-medium {
-  --salt-accent-fontSize: 10px;
-  --salt-accent-lineHeight: 13px;
+  --salt-text-notation-fontSize: 10px;
+  --salt-text-notation-lineHeight: 13px;
 }
 .salt-density-low {
-  --salt-accent-fontSize: 12px;
-  --salt-accent-lineHeight: 16px;
+  --salt-text-notation-fontSize: 12px;
+  --salt-text-notation-lineHeight: 16px;
 }
 .salt-density-touch {
-  --salt-accent-fontSize: 14px;
-  --salt-accent-lineHeight: 18px;
+  --salt-text-notation-fontSize: 14px;
+  --salt-text-notation-lineHeight: 18px;
 }
 
 .salt-theme {
@@ -22,5 +22,5 @@
   --salt-accent-borderColor-disabled: var(--salt-palette-accent-border-disabled);
   --salt-accent-foreground: var(--salt-palette-accent-foreground);
   --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
-  --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
 }
