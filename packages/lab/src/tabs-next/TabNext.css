@@ -5,7 +5,7 @@
   appearance: none;
   -webkit-appearance: none;
   display: inline-flex;
-  background: var(--salt-navigable-primary-background);
+  background: transparent;
   border: 0 solid transparent;
   border-radius: 0;
   white-space: pre;
@@ -26,7 +26,7 @@
 
 .saltTabNext:hover {
   cursor: var(--salt-navigable-cursor-hover);
-  background: var(--salt-navigable-primary-background-hover);
+  background: var(--salt-navigable-background-hover);
   color: var(--salt-foreground-primary);
 }
 
@@ -43,7 +43,7 @@
 
 .saltTabNext:focus-visible {
   outline: var(--salt-focused-outline);
-  background: var(--salt-navigable-primary-background-hover);
+  background: var(--salt-navigable-background-hover);
   color: var(--salt-foreground-primary);
 }
 
@@ -64,7 +64,7 @@
 .saltTabNext:disabled {
   cursor: var(--salt-navigable-cursor-disabled);
   color: var(--salt-foreground-primary-disabled);
-  background: var(--salt-navigable-primary-background);
+  background: transparent;
 }
 
 .saltTabNext:disabled:before {
