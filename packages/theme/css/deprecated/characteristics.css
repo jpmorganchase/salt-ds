@@ -100,4 +100,25 @@
   --salt-navigable-tertiary-background-hover: var(--salt-palette-navigate-tertiary-background-hover);
   --salt-navigable-tertiary-background-active: var(--salt-palette-navigate-tertiary-background-active);
   --salt-navigable-indicator-activeDisabled: var(--salt-palette-navigate-indicator-activeDisabled);
+
+  /* Accent */
+  --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use token --salt-text-notation-fontWeight */
+}
+
+/* Accent */
+.salt-density-high {
+  --salt-accent-fontSize: 8px; /* Use --salt-text-notation-fontSize */
+  --salt-accent-lineHeight: 11px; /* Use --salt-text-notation-lineHeight */
+}
+.salt-density-medium {
+  --salt-accent-fontSize: 10px; /* Use --salt-text-notation-fontSize */
+  --salt-accent-lineHeight: 13px; /* Use --salt-text-notation-lineHeight */
+}
+.salt-density-low {
+  --salt-accent-fontSize: 12px; /* Use --salt-text-notation-fontSize */
+  --salt-accent-lineHeight: 16px; /* Use --salt-text-notation-lineHeight */
+}
+.salt-density-touch {
+  --salt-accent-fontSize: 14px; /* Use --salt-text-notation-fontSize */
+  --salt-accent-lineHeight: 18px; /* Use --salt-text-notation-lineHeight */
 }

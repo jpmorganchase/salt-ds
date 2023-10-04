@@ -10,9 +10,9 @@
   /* Should this vary according to touch size */
   padding-left: var(--salt-spacing-50);
   padding-right: var(--salt-spacing-50);
-  line-height: var(--salt-accent-lineHeight);
-  height: var(--salt-accent-lineHeight);
-  min-width: var(--salt-accent-lineHeight);
+  line-height: var(--salt-text-notation-lineHeight);
+  height: var(--salt-text-notation-lineHeight);
+  min-width: var(--salt-text-notation-lineHeight);
   border-radius: 9999px;
   white-space: nowrap;
   z-index: var(--salt-zIndex-notification);
@@ -22,8 +22,8 @@
   display: inline-flex;
   margin: auto;
 
-  font-size: var(--salt-accent-fontSize);
-  font-weight: var(--salt-accent-fontWeight);
+  font-size: var(--salt-text-notation-fontSize);
+  font-weight: var(--salt-text-notation-fontWeight);
   background: var(--salt-accent-background);
   color: var(--salt-accent-foreground);
 
