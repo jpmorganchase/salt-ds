@@ -58,10 +58,10 @@
   --grid-editableCell-borderColor: var(--saltGrid-editableCell-borderColor, var(--salt-editable-borderColor));
   --grid-editableCell-borderColor-hover: var(--saltGrid-editableCell-borderColor-hover, var(--salt-editable-borderColor-hover));
   --grid-editableCell-background-active: var(--saltGrid-editableCell-background-active, var(--salt-editable-primary-background-active));
-  --grid-editableCell-color-active: var(--saltGrid-editableCell-color-active, var(--salt-text-primary-foreground));
+  --grid-editableCell-color-active: var(--saltGrid-editableCell-color-active, var(--salt-foreground-primary));
   --grid-editableCell-cornerTag-size: var(--saltGrid-editableCell-cornerTag-size, var(--grid-cornerTag-size-default));
 
-  --grid-header-color: var(--saltGrid-header-color, var(--salt-text-secondary-foreground));
+  --grid-header-color: var(--saltGrid-header-color, var(--salt-foreground-secondary));
 
   --grid-headerColumnSeparator-color: var(--saltGrid-headerColumnSeparator-color, var(--salt-separable-tertiary-borderColor));
   --grid-headerRowSeparator-color: var(--saltGrid-headerRowSeparator-color, var(--salt-separable-primary-borderColor));
@@ -69,7 +69,7 @@
   --grid-headerRowSeparator-height: var(--saltGrid-headerRowSeparator-height, 1px);
   --grid-groupHeaderRowSeparator-color: var(--saltGrid-groupHeaderRowSeparator-color, var(--salt-separable-tertiary-borderColor));
 
-  --grid-groupHeader-color: var(--saltGrid-groupHeader-color, var(--salt-text-secondary-foreground));
+  --grid-groupHeader-color: var(--saltGrid-groupHeader-color, var(--salt-foreground-secondary));
   --grid-shadow-color: var(--saltGrid-shadow-color, var(--salt-shadow-1-color));
   --grid-columnDropTarget-color: var(--saltGrid-columnDropTarget-color, var(--salt-target-borderColor-hover));
   --grid-cursor-border-style: var(--saltGrid-cursor-borderStyle, var(--salt-focused-outlineStyle));

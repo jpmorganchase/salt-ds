@@ -23,10 +23,10 @@ All text examples are shown using the default `fontWeight` token.
   <Story name="Base">
     <DocGrid>
       <ColorBlock colorVar="--salt-text-background-selected" />
-      <ColorBlock colorVar="--salt-text-primary-foreground" />
-      <ColorBlock colorVar="--salt-text-primary-foreground-disabled" />
-      <ColorBlock colorVar="--salt-text-secondary-foreground" />
-      <ColorBlock colorVar="--salt-text-secondary-foreground-disabled" />
+      <ColorBlock colorVar="--salt-foreground-primary" />
+      <ColorBlock colorVar="--salt-foreground-primary-disabled" />
+      <ColorBlock colorVar="--salt-foreground-secondary" />
+      <ColorBlock colorVar="--salt-foreground-secondary-disabled" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -270,16 +270,16 @@ All text examples are shown using the default `fontWeight` token.
 <Canvas>
   <Story name="Links">
     <TextBlock
-      textDecoration="--salt-text-link-textDecoration"
-      color="--salt-text-link-foreground-hover"
+      textDecoration="--salt-navigable-textDecoration"
+      color="--salt-navigable-foreground-hover"
     />
     <DocGrid textExample={true}>
-      <ColorBlock colorVar="--salt-text-link-foreground-hover" />
-      <ColorBlock colorVar="--salt-text-link-foreground-active" />
-      <ColorBlock colorVar="--salt-text-link-foreground-visited" />
-      <TextDecorationBlock textDecoration="--salt-text-link-textDecoration" />
-      <TextDecorationBlock textDecoration="--salt-text-link-textDecoration-hover" />
-      <TextDecorationBlock textDecoration="--salt-text-link-textDecoration-selected" />
+      <ColorBlock colorVar="--salt-navigable-foreground-hover" />
+      <ColorBlock colorVar="--salt-navigable-foreground-active" />
+      <ColorBlock colorVar="--salt-navigable-foreground-visited" />
+      <TextDecorationBlock textDecoration="--salt-navigable-textDecoration" />
+      <TextDecorationBlock textDecoration="--salt-navigable-textDecoration-hover" />
+      <TextDecorationBlock textDecoration="--salt-navigable-textDecoration-selected" />
     </DocGrid>
   </Story>
 </Canvas>

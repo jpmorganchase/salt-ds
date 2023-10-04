@@ -76,16 +76,16 @@ div[class*="ag-theme-salt"] {
   );
   --agGrid-foreground: var(
     --saltAgGrid-foreground,
-    var(--salt-text-primary-foreground)
+    var(--salt-foreground-primary)
   );
   --agGrid-foreground-disabled: var(
     --saltAgGrid-foreground-disabled,
-    var(--salt-text-primary-foreground-disabled)
+    var(--salt-foreground-primary-disabled)
   );
 
   --agGrid-menu-color: var(
     --saltAgGrid-menu-color,
-    var(--salt-text-primary-foreground)
+    var(--salt-foreground-primary)
   );
 
   --agGrid-row-color-hover: var(
@@ -110,7 +110,7 @@ div[class*="ag-theme-salt"] {
 
   --agGrid-header-foreground: var(
     --saltAgGrid-header-foreground,
-    var(--salt-text-primary-foreground)
+    var(--salt-foreground-primary)
   );
 
   --agGrid-header-fontWeight: var(
@@ -167,7 +167,7 @@ div[class*="ag-theme-salt"] {
 
   --agGrid-button-color: var(
     --saltAgGrid-button-color,
-    var(--salt-text-primary-foreground)
+    var(--salt-foreground-primary)
   );
   --agGrid-button-background-hover: var(
     --saltAgGrid-button-background-hover,
@@ -180,15 +180,15 @@ div[class*="ag-theme-salt"] {
   );
   --agGrid-header-icon-color: var(
     --saltAgGrid-header-icon-color,
-    var(--salt-text-secondary-foreground)
+    var(--salt-foreground-secondary)
   );
   --agGrid-menu-header-icon-color: var(
     --saltAgGrid-menu-header-icon-color,
-    var(--salt-text-secondary-foreground)
+    var(--salt-foreground-secondary)
   );
   --agGrid-icon-color: var(
     --saltAgGrid-icon-color,
-    var(--salt-text-primary-foreground)
+    var(--salt-foreground-primary)
   );
   --agGrid-menu-option-color-hover: var(
     --saltAgGrid-menu-option-color-hover,
@@ -227,7 +227,7 @@ div[class*="ag-theme-salt"] {
 
   --agGrid-placeholder-color: var(
     --saltAgGrid-placeholder-color,
-    var(--salt-text-secondary-foreground)
+    var(--salt-foreground-secondary)
   );
   --agGrid-ghost-icon-color: var(
     --saltAgGrid-ghost-icon-color,

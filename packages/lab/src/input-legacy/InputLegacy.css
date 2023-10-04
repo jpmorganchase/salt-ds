@@ -22,7 +22,7 @@
   background: var(--saltInputLegacy-background, none);
   border: var(--saltInputLegacy-border, none);
   border-radius: var(--saltInputLegacy-borderRadius, 0);
-  color: var(--saltInputLegacy-text-color, var(--salt-text-primary-foreground));
+  color: var(--saltInputLegacy-text-color, var(--salt-foreground-primary));
   cursor: var(--saltInputLegacy-cursor, default);
   display: inline-flex;
   font-family: var(--saltInputLegacy-fontFamily, var(--salt-text-fontFamily));
@@ -75,7 +75,7 @@
 /* Style applied to input if `disabled={true}` */
 .saltInputLegacy-disabled .saltInputLegacy-input {
   cursor: var(--salt-editable-cursor-disabled);
-  color: var(--saltInputLegacy-text-color-disabled, var(--salt-text-primary-foreground-disabled));
+  color: var(--saltInputLegacy-text-color-disabled, var(--salt-foreground-primary-disabled));
 }
 
 /* Style applied to adornment containers */

@@ -4,7 +4,7 @@
   --doc-grid-paddingBlockEnd: var(--salt-size-unit);
 
   --doc-grid-code-fontSize: var(--salt-text-fontSize);
-  --doc-grid-code-text-color: var(--salt-text-primary-foreground);
+  --doc-grid-code-text-color: var(--salt-foreground-primary);
 }
 
 .saltDocGrid {
