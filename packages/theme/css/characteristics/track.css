@@ -4,11 +4,6 @@
   --salt-track-borderStyle-complete: solid;
   --salt-track-borderStyle-incomplete: dotted;
 
-  --salt-track-borderWidth: 2px;
-  --salt-track-borderWidth-active: 2px;
-  --salt-track-borderWidth-complete: 2px;
-  --salt-track-borderWidth-incomplete: 2px;
-
   --salt-track-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-track-textAlign: center;
 
