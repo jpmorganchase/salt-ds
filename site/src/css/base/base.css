@@ -14,5 +14,5 @@
 }
 
 ::selection {
-  background: var(--salt-text-background-selected);
+  background: var(--salt-foreground-text-highlight);
 }

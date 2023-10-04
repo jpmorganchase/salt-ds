@@ -113,7 +113,7 @@
 
 /* Style applied to selected input */
 .saltInput-input::selection {
-  background: var(--salt-text-background-selected);
+  background: var(--salt-foreground-text-highlight);
 }
 
 /* Style applied to placeholder text */

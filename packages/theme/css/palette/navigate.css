@@ -1,10 +1,5 @@
 .salt-theme[data-mode="light"] {
-  --salt-palette-navigate-primary-background: transparent;
-  --salt-palette-navigate-primary-background-active: transparent;
-  --salt-palette-navigate-primary-background-hover: var(--salt-color-gray-20);
-  --salt-palette-navigate-secondary-background: transparent;
-  --salt-palette-navigate-secondary-background-active: transparent;
-  --salt-palette-navigate-secondary-background-hover: var(--salt-color-gray-30);
+  --salt-palette-navigate-background-hover: var(--salt-color-black-fade-background-hover);
   --salt-palette-navigate-tertiary-background: transparent;
   --salt-palette-navigate-tertiary-background-active: transparent;
   --salt-palette-navigate-tertiary-background-hover: var(--salt-color-gray-20);
@@ -17,12 +12,7 @@
 }
 
 .salt-theme[data-mode="dark"] {
-  --salt-palette-navigate-primary-background: transparent;
-  --salt-palette-navigate-primary-background-active: transparent;
-  --salt-palette-navigate-primary-background-hover: var(--salt-color-gray-700);
-  --salt-palette-navigate-secondary-background: transparent;
-  --salt-palette-navigate-secondary-background-active: transparent;
-  --salt-palette-navigate-secondary-background-hover: var(--salt-color-gray-600);
+  --salt-palette-navigate-background-hover: var(--salt-color-white-fade-background-hover);
   --salt-palette-navigate-tertiary-background: transparent;
   --salt-palette-navigate-tertiary-background-active: transparent;
   --salt-palette-navigate-tertiary-background-hover: var(--salt-color-gray-700);

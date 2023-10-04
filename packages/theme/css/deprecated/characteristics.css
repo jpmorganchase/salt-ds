@@ -88,4 +88,15 @@
   --salt-text-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
   --salt-text-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
   --salt-text-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
+
+  /* Navigable */
+  --salt-navigable-primary-background: var(--salt-palette-navigate-primary-background);
+  --salt-navigable-primary-background-hover: var(--salt-palette-navigate-primary-background-hover);
+  --salt-navigable-primary-background-active: var(--salt-palette-navigate-primary-background-active);
+  --salt-navigable-secondary-background: var(--salt-palette-navigate-secondary-background);
+  --salt-navigable-secondary-background-hover: var(--salt-palette-navigate-secondary-background-hover);
+  --salt-navigable-secondary-background-active: var(--salt-palette-navigate-secondary-background-active);
+  --salt-navigable-tertiary-background: var(--salt-palette-navigate-tertiary-background);
+  --salt-navigable-tertiary-background-hover: var(--salt-palette-navigate-tertiary-background-hover);
+  --salt-navigable-tertiary-background-active: var(--salt-palette-navigate-tertiary-background-active);
 }
