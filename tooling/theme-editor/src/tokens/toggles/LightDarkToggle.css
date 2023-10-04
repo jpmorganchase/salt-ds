@@ -2,6 +2,6 @@
   padding: 10px;
   display: flex;
   justify-content: space-between;
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-foreground-secondary);
   font-size: var(--salt-text-fontSize);
 }

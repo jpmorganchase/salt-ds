@@ -13,5 +13,5 @@
 }
 
 .docblock-colorpalette div * {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
 }

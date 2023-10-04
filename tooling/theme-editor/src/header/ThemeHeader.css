@@ -17,7 +17,7 @@
 .ThemeTitle {
   font-weight: 600;
   font-size: var(--salt-text-h3-fontSize);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
 }
 
 .themeSelector {

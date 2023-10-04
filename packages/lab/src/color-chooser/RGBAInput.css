@@ -14,7 +14,7 @@
 .saltColorChooser-rgbaText {
   margin-top: 5px;
   font-size: var(--salt-text-label-fontSize);
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-foreground-secondary);
   padding-top: 4px;
   padding-right: 6px;
   padding-left: 6px;
@@ -29,8 +29,8 @@
 .saltColorChooser-overrideInput {
   min-width: 0em;
   background: transparent !important;
-  color: var(--salt-text-primary-foreground);
-  border-bottom: 1px solid var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
+  border-bottom: 1px solid var(--salt-foreground-primary);
 }
 
 .saltColorChooser-alphaSpacerDiv {
@@ -40,6 +40,6 @@
 .saltColorChooser-textDivOverrides {
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   padding: 0px !important;
 }

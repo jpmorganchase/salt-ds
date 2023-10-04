@@ -1,6 +1,6 @@
 .themeEditorFileHandler {
   background-color: var(--salt-container-primary-background);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   display: flex;
   flex-direction: column;
   height: 100vh;

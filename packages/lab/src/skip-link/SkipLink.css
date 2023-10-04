@@ -3,7 +3,7 @@
   --skipLink-padding: var(--saltSkipLink-padding, var(--salt-size-unit));
   --skipLink-margin: var(--saltSkipLink-margin, var(--salt-size-unit));
   --skipLink-background: var(--saltSkipLink-background, var(--salt-actionable-primary-background));
-  --skipLink-color: var(--saltSkipLink-color, var(--salt-text-primary-foreground));
+  --skipLink-color: var(--saltSkipLink-color, var(--salt-foreground-primary));
 }
 
 /* Overrides */

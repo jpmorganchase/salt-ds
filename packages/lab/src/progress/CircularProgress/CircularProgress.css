@@ -1,12 +1,12 @@
 .saltCircularProgress {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   display: inline-flex;
   position: relative;
 }
 
 .saltCircularProgress-progressValue {
   align-items: center;
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   display: flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-label-fontSize);

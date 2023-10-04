@@ -250,7 +250,7 @@
   /* --- Status bar styles --- */
 
   .ag-status-bar {
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-foreground-secondary);
     height: var(--agGrid-row-height-default);
     font-size: var(--salt-text-fontSize);
     font-weight: var(--salt-text-label-fontWeight);
@@ -260,12 +260,12 @@
 
   .ag-status-panel {
     align-items: center;
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-foreground-secondary);
     padding: var(--salt-spacing-100) 0;
   }
 
   .ag-status-name-value-value {
-    color: var(--salt-text-primary-foreground);
+    color: var(--salt-foreground-primary);
     font-weight: var(--salt-text-fontWeight-strong);
   }
 
@@ -332,7 +332,7 @@
     overflow: unset;
   }
 
-  /** 
+  /**
     Due to having a transparent 2px border to avoid shifting content on focus,
     we have to mimic a RHS border on pinned cells
      */
@@ -734,12 +734,12 @@
   }
 
   .ag-floating-filter-button-button .ag-icon-filter:before {
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-foreground-secondary);
     content: "\e9ac";
   }
 
   .ag-floating-filter-input {
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-foreground-secondary);
     padding-left: var(--salt-spacing-100);
   }
 
@@ -792,7 +792,7 @@
     overflow: unset;
   }
 
-  /* 
+  /*
     * This react-container class is added as a wrapper for custom components.
     * Adding styling for these components added in the status and tool bars.
     */

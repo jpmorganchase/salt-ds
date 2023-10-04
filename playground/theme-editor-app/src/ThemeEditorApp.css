@@ -5,7 +5,7 @@
 }
 
 .saltThemeEditorAppOutput {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-foreground-secondary);
   background-color: var(--salt-container-primary-background);
 }
 

@@ -5,7 +5,7 @@
 
   align-items: center;
   background: var(--saltDropdownNext-background, var(--dropdownNext-background));
-  color: var(--saltDropdownNext-color, var(--salt-text-primary-foreground));
+  color: var(--saltDropdownNext-color, var(--salt-foreground-primary));
   display: flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--saltDropdownNext-fontSize, var(--salt-text-fontSize));
@@ -61,7 +61,7 @@
 
   cursor: var(--salt-selectable-cursor-disabled);
   background: var(--dropdownNext-background-disabled);
-  color: var(--saltDropdownNext-color-disabled, var(--salt-text-primary-foreground-disabled));
+  color: var(--saltDropdownNext-color-disabled, var(--salt-foreground-primary-disabled));
   outline: 0;
 }
 
@@ -86,7 +86,7 @@
 .saltDropdownNext-icon.saltDropdownNext-readOnly,
 .saltDropdownNext-icon.saltDropdownNext-readOnly:hover,
 .saltDropdownNext-icon.saltDropdownNext-readOnly:active {
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-foreground-primary-disabled);
 }
 
 /* Class applied if `variant="primary"` */

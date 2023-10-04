@@ -7,7 +7,7 @@
 }
 
 .saltThemeEditorAppOutputHeader {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   background-color: var(--salt-container-primary-background);
   flex: 240 0;
 }

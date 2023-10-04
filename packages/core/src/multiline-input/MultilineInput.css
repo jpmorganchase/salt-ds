@@ -9,7 +9,7 @@
   align-items: center;
   background: var(--multilineInput-background);
   border: var(--multilineInput-border);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   display: inline-flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
@@ -164,7 +164,7 @@
 
   background: var(--multilineInput-background-disabled);
   cursor: var(--salt-editable-cursor-disabled);
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-foreground-primary-disabled);
 }
 
 /* Style for activation indicator */

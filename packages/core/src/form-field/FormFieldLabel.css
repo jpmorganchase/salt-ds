@@ -18,6 +18,6 @@
 }
 
 .saltFormFieldLabel-sentence.saltText {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   font-size: var(--salt-text-fontSize);
 }

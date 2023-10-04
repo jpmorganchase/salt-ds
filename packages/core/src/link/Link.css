@@ -5,8 +5,8 @@
   /* When focused, we also want hover style */
   --link-color-focus: var(--saltLink-color-focus, var(--link-color-hover));
 
-  --link-textDecoration: var(--salt-text-link-textDecoration);
-  --link-textDecoration-hover: var(--salt-text-link-textDecoration-hover);
+  --link-textDecoration: var(--salt-navigable-textDecoration);
+  --link-textDecoration-hover: var(--salt-navigable-textDecoration-hover);
 
   --link-fontFamily: var(--salt-text-fontFamily);
   --link-focus-outline: var(--salt-focused-outline);
@@ -22,12 +22,12 @@
 
 /* Primary variant */
 .saltText-primary {
-  --link-color: var(--salt-text-primary-foreground);
+  --link-color: var(--salt-foreground-primary);
 }
 
 /* Secondary variant */
 .saltText-secondary {
-  --link-color: var(--salt-text-secondary-foreground);
+  --link-color: var(--salt-foreground-secondary);
 }
 
 /* External link's icon */

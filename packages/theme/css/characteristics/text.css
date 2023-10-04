@@ -61,18 +61,18 @@
   /* Colors */
   --salt-text-background-selected: var(--salt-palette-interact-background-active);
 
-  --salt-text-primary-foreground: var(--salt-palette-neutral-primary-foreground);
-  --salt-text-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
-  --salt-text-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
-  --salt-text-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
+  --salt-foreground-primary: var(--salt-palette-neutral-primary-foreground);
+  --salt-foreground-primary-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
+  --salt-foreground-secondary: var(--salt-palette-neutral-secondary-foreground);
+  --salt-foreground-secondary-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
 
   /* Link */
   --salt-navigable-foreground-hover: var(--salt-palette-navigate-foreground-hover);
   --salt-navigable-foreground-active: var(--salt-palette-navigate-foreground-active);
   --salt-navigable-foreground-visited: var(--salt-palette-navigate-foreground-visited);
-  --salt-text-link-textDecoration: underline;
-  --salt-text-link-textDecoration-hover: none;
-  --salt-text-link-textDecoration-selected: underline;
+  --salt-navigable-textDecoration: underline;
+  --salt-navigable-textDecoration-hover: none;
+  --salt-navigable-textDecoration-selected: underline;
 
   /* Code */
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-code);

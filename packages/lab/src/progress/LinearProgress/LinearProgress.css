@@ -1,6 +1,6 @@
 .saltLinearProgress {
   align-items: center;
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-foreground-primary);
   display: flex;
   min-width: 200px;
   font-size: var(--linearProgress-fontSize);

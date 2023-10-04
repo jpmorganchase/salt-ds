@@ -1,9 +1,9 @@
 .card,
 .inlineCard {
   --card-background: var(--salt-container-primary-background);
-  --card-color: var(--salt-text-primary-foreground);
+  --card-color: var(--salt-foreground-primary);
   --card-icon-background: var(--salt-container-secondary-background);
-  --saltIcon-color: var(---salt-text-primary-foreground);
+  --saltIcon-color: var(---salt-foreground-primary);
 }
 
 .cardTitle h2 {
@@ -73,7 +73,7 @@
 }
 
 .cardDescription {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-foreground-secondary);
 }
 
 .inlineCardContent {

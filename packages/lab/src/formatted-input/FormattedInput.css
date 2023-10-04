@@ -1,7 +1,7 @@
 /* TODO check multiline styles */
 
 .saltFormattedInput {
-  --formattedInput-mask-color: var(--salt-text-secondary-foreground);
+  --formattedInput-mask-color: var(--salt-foreground-secondary);
 }
 
 .saltFormattedInput-inputWrapper {
