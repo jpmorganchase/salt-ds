@@ -18,7 +18,7 @@ export const LAYER_POSITIONS = [
   "bottom",
 ] as const;
 
-export type LayerPositions = (typeof LAYER_POSITIONS)[number];
+export type LayerPositions = typeof LAYER_POSITIONS[number];
 
 export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**

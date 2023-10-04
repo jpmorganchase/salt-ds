@@ -10,7 +10,7 @@ import { useButton } from "./useButton";
 const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
-export type ButtonVariant = (typeof ButtonVariantValues)[number];
+export type ButtonVariant = typeof ButtonVariantValues[number];
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**

@@ -11,7 +11,7 @@ import {
 import styles from "./index.module.css";
 import borderItemAlignmentStyles from "./BorderItemAlignment.module.css";
 
-type BorderItemAlignmentType = (typeof borderItemAlignment)[number];
+type BorderItemAlignmentType = typeof borderItemAlignment[number];
 
 export const BorderItemAlignment = (): ReactElement => {
   const [verticalAlignment, setVerticalAlignment] =
