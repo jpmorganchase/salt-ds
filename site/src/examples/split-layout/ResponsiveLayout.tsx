@@ -37,14 +37,11 @@ const EndItem = ({ direction }: { direction: LayoutDirection }) => (
 
 export const ResponsiveLayout = (): ReactElement => {
   const [viewport, setViewport] = useState<Viewport>("Large");
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
     setViewport(value as Viewport);
   };
-
   const direction = viewport === "Large" ? "row" : "column";
-
   return (
     <div className={responsiveLayoutStyles.container}>
       <div className={responsiveLayoutStyles.radioButtonGroup}>

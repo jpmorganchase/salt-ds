@@ -16,7 +16,6 @@ type FlexAlignment = typeof flexAlignment[number];
 type FlexAlign = FlexAlignment | "stretch" | "baseline";
 
 const FlexAlignmentOptions = [...flexAlignment, "stretch", "baseline"];
-
 const startItem = (
   <FlowLayout>
     {Array.from({ length: 3 }, (_, index) => (
@@ -38,12 +37,10 @@ const endItem = (
 
 export const LayoutAlignment = (): ReactElement => {
   const [align, setAlign] = useState<FlexAlign>("center");
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
     setAlign(value as FlexAlign);
   };
-
   return (
     <div className={layoutAlignmentStyles.container}>
       <SplitLayout
@@ -52,7 +49,6 @@ export const LayoutAlignment = (): ReactElement => {
         align={align}
         className={layoutAlignmentStyles.splitLayout}
       />
-
       <FormField>
         <FormFieldLabel>Align</FormFieldLabel>
         <RadioButtonGroup
