@@ -17,10 +17,7 @@
 
 .salt-theme {
   --salt-accent-background: var(--salt-palette-accent-background);
-  --salt-accent-background-disabled: var(--salt-palette-accent-background-disabled);
   --salt-accent-borderColor: var(--salt-palette-accent-border);
-  --salt-accent-borderColor-disabled: var(--salt-palette-accent-border-disabled);
   --salt-accent-foreground: var(--salt-palette-accent-foreground);
-  --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
   --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
 }

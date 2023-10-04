@@ -64,7 +64,7 @@ a:link .saltInteractableCard * {
 .saltInteractableCard-disabled:focus,
 .saltInteractableCard-disabled:hover,
 .saltInteractableCard-disabled:active {
-  border-color: var(--saltCard-borderColor-disabled, var(--salt-accent-borderColor-disabled));
+  border-color: var(--saltCard-borderColor-disabled, var(--salt-palette-accent-border-disabled));
   box-shadow: var(--saltCard-interactable-shadow, var(--salt-overlayable-shadow));
   background: var(--saltCard-background-disabled, var(--salt-container-primary-background-disabled));
   color: var(--saltCard-color-disabled, var(--salt-foreground-primary-disabled));
