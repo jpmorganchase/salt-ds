@@ -28,19 +28,4 @@
   --salt-selectable-background-blurSelected: var(--salt-palette-interact-background-blurSelected);
   --salt-selectable-background-disabled: var(--salt-palette-interact-background-disabled);
   --salt-selectable-background-selectedDisabled: var(--salt-palette-interact-background-activeDisabled);
-
-  --salt-selectable-primary-background: var(--salt-palette-interact-background);
-  --salt-selectable-primary-background-disabled: var(--salt-palette-interact-background-disabled);
-  --salt-selectable-primary-background-hover: var(--salt-palette-interact-primary-background-hover);
-  --salt-selectable-primary-background-selected: var(--salt-palette-interact-primary-background-active);
-  --salt-selectable-primary-background-selectedDisabled: var(--salt-palette-interact-primary-background-activeDisabled);
-
-  --salt-selectable-secondary-foreground-hover: var(--salt-palette-interact-secondary-foreground-hover);
-  --salt-selectable-secondary-foreground-selected: var(--salt-palette-interact-secondary-foreground-active);
-  --salt-selectable-secondary-foreground-selectedDisabled: var(--salt-palette-interact-secondary-foreground-activeDisabled);
-  --salt-selectable-secondary-background: var(--salt-palette-interact-background);
-  --salt-selectable-secondary-background-disabled: var(--salt-palette-interact-background-disabled);
-  --salt-selectable-secondary-background-hover: var(--salt-palette-interact-secondary-background-hover);
-  --salt-selectable-secondary-background-selected: var(--salt-palette-interact-secondary-background-active);
-  --salt-selectable-secondary-background-selectedDisabled: var(--salt-palette-interact-secondary-background-activeDisabled);
 }
