@@ -20,6 +20,8 @@
   /* Interact */
   --salt-palette-interact-foreground-partial: var(--salt-color-blue-600);
   --salt-palette-interact-foreground-partialDisabled: var(--salt-color-blue-600-fade-foreground);
+  --salt-palette-interact-cta-background-activeDisabled: var(--salt-color-blue-700-fade-background);
+  --salt-palette-interact-cta-foreground-activeDisabled: var(--salt-color-white-fade-foreground);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-500);
@@ -80,6 +82,8 @@
   /* Interact */
   --salt-palette-interact-foreground-partial: var(--salt-color-blue-100);
   --salt-palette-interact-foreground-partialDisabled: var(--salt-color-blue-100-fade-foreground);
+  --salt-palette-interact-cta-background-activeDisabled: var(--salt-color-blue-700-fade-background);
+  --salt-palette-interact-cta-foreground-activeDisabled: var(--salt-color-white-fade-foreground);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-300);
