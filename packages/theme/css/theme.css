@@ -26,7 +26,6 @@
 @import url(palette/opacity.css);
 @import url(palette/positive.css);
 @import url(palette/success.css);
-@import url(palette/track.css);
 @import url(palette/warning.css);
 
 /* Each characteristic file references values from above foundations */
