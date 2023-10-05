@@ -1,5 +1,19 @@
 # @salt-ds/ag-grid-theme
 
+## 1.3.2
+
+### Patch Changes
+
+- d5fba9c0: Fixes alignment of input text in floating filter
+- d0d7db8d: Fixes
+
+  - Status bar value font weight and color
+  - Status bar font size
+  - Cell range selection improvements
+  - Alignment of custom filters in floating filter
+  - Scrollbar showing in header cells on wrap
+  - Indentation on row groups
+
 ## 1.3.1
 
 ### Patch Changes
