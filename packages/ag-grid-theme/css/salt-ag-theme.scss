@@ -579,7 +579,7 @@ $ag-theme-salt-params-touch-dark: map-merge(
   );
   --agGrid-checkbox-foreground-selected: var(
     --saltAgGrid-checkbox-foreground-selected,
-    var(--salt-selectable-primary-foreground-selected)
+    var(--salt-actionable-primary-foreground-active)
   );
   --_agGrid-checkbox-border: 1px var(--salt-selectable-borderStyle)
     var(--salt-selectable-borderColor);

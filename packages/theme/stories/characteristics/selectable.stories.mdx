@@ -1,10 +1,10 @@
-import { Meta, Canvas, Story } from "@storybook/addon-docs";
-import { DocGrid } from "docs/components/DocGrid";
-import { ColorBlock } from "docs/components/ColorBlock";
-import { CursorBlock } from "docs/components/CursorBlock";
-import { CornerBlock } from "docs/components/CornerBlock";
-import { TextAlignBlock } from "docs/components/TextAlignBlock";
-import { LineBlock } from "docs/components/LineBlock";
+import {Meta, Canvas, Story} from "@storybook/addon-docs";
+import {DocGrid} from "docs/components/DocGrid";
+import {ColorBlock} from "docs/components/ColorBlock";
+import {CursorBlock} from "docs/components/CursorBlock";
+import {CornerBlock} from "docs/components/CornerBlock";
+import {TextAlignBlock} from "docs/components/TextAlignBlock";
+import {LineBlock} from "docs/components/LineBlock";
 
 <Meta title="Theme/Characteristics/Selectable" />
 
@@ -71,33 +71,6 @@ trigger actions.
   </Story>
 </Canvas>
 
-### CTA
-
-<Canvas>
-  <Story name="CTA">
-    <DocGrid>
-      <ColorBlock colorVar="--salt-selectable-cta-background" />
-      <ColorBlock colorVar="--salt-selectable-cta-background-hover" />
-      <ColorBlock colorVar="--salt-selectable-cta-background-selected" />
-      <ColorBlock colorVar="--salt-selectable-cta-background-selectedDisabled" />
-      <ColorBlock colorVar="--salt-selectable-cta-background-disabled" />
-      <ColorBlock colorVar="--salt-selectable-cta-foreground-hover" />
-      <ColorBlock colorVar="--salt-selectable-cta-foreground-selected" />
-      <ColorBlock colorVar="--salt-selectable-cta-foreground-selectedDisabled" />
-    </DocGrid>
-    <DocGrid withNotes>
-      <ColorBlock
-        colorVar="--salt-selectable-cta-foreground"
-        replacementToken="--salt-foreground-primary"
-      />
-      <ColorBlock
-        colorVar="--salt-selectable-cta-foreground-disabled"
-        replacementToken="--salt-foreground-primary-disabled"
-      />
-    </DocGrid>
-  </Story>
-</Canvas>
-
 ### Primary
 
 <Canvas>
@@ -108,9 +81,6 @@ trigger actions.
       <ColorBlock colorVar="--salt-selectable-primary-background-selected" />
       <ColorBlock colorVar="--salt-selectable-primary-background-selectedDisabled" />
       <ColorBlock colorVar="--salt-selectable-primary-background-disabled" />
-      <ColorBlock colorVar="--salt-selectable-primary-foreground-hover" />
-      <ColorBlock colorVar="--salt-selectable-primary-foreground-selected" />
-      <ColorBlock colorVar="--salt-selectable-primary-foreground-selectedDisabled" />
     </DocGrid>
     <DocGrid withNotes>
       <ColorBlock
