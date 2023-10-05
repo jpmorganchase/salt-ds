@@ -43,7 +43,6 @@ export const useDropdownNext = ({
   const {
     focusHandler: listFocusHandler,
     keyDownHandler: listKeyDownHandler,
-    blurHandler: listBlurHandler,
     mouseOverHandler: listMouseOverHandler,
     activeDescendant,
     selectedItem,
@@ -105,8 +104,10 @@ export const useDropdownNext = ({
       ],
     });
 
-  const { getFloatingProps } = useInteractions([
-    useDismiss(context),
+  const dismiss = useDismiss(context);
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    dismiss,
     useRole(context, { role: "listbox" }),
   ]);
 
@@ -125,12 +126,6 @@ export const useDropdownNext = ({
     width: elements.floating?.clientWidth,
     height: elements.floating?.clientHeight,
   });
-
-  // HANDLERS
-  const blurHandler = () => {
-    listBlurHandler();
-    setOpen(false);
-  };
 
   // handles focus on mouse and keyboard
   const focusHandler = (event: FocusEvent<HTMLElement>) => {
@@ -190,12 +185,12 @@ export const useDropdownNext = ({
 
   return {
     handlers: {
-      focusHandler,
       keyDownHandler,
-      blurHandler,
+      focusHandler,
       mouseOverHandler,
       mouseDownHandler,
     },
+    getReferenceProps,
     activeDescendant,
     selectedItem,
     setSelectedItem,

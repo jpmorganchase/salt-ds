@@ -163,7 +163,6 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     focusVisibleRef,
     keyDownHandler,
     focusHandler,
-    blurHandler,
     setSelectedItem,
     setHighlightedItem,
     mouseOverHandler,
@@ -236,7 +235,6 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         disabled={disabled}
         endAdornment={adornment}
         onChange={onChange}
-        onBlur={blurHandler}
         inputRef={inputRef as Ref<HTMLInputElement>}
         inputProps={{
           "aria-expanded": open,

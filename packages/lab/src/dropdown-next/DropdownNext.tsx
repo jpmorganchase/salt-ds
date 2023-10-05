@@ -91,7 +91,6 @@ export const DropdownNext = forwardRef(function DropdownNext(
     highlightedItem: highlightedItemControlProp,
     onFocus,
     onKeyDown,
-    onBlur,
     onMouseOver,
     onMouseDown,
     onSelect,
@@ -129,6 +128,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     highlightedItem,
     getListItems,
     portalProps,
+    getReferenceProps,
   } = useDropdownNext({
     listProps,
     placement,
@@ -139,13 +139,8 @@ export const DropdownNext = forwardRef(function DropdownNext(
 
   const { open, floating, reference, getDropdownNextProps, getPosition } =
     portalProps;
-  const {
-    focusHandler,
-    keyDownHandler,
-    blurHandler,
-    mouseOverHandler,
-    mouseDownHandler,
-  } = handlers;
+  const { focusHandler, keyDownHandler, mouseOverHandler, mouseDownHandler } =
+    handlers;
 
   const triggerRef = useForkRef<HTMLButtonElement>(ref, reference);
 
@@ -175,11 +170,6 @@ export const DropdownNext = forwardRef(function DropdownNext(
     onKeyDown?.(event);
   };
 
-  const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
-    blurHandler();
-    onBlur?.(event);
-  };
-
   const handleMouseOver = (event: MouseEvent<HTMLButtonElement>) => {
     mouseOverHandler();
     onMouseOver?.(event);
@@ -200,7 +190,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
         onKeyDown={handleKeyDown}
         onMouseOver={handleMouseOver}
         onMouseDown={handleMouseDown}
-        onBlur={handleBlur}
+        {...getReferenceProps()}
         value={selectedItem}
         className={clsx(
           withBaseName("button"),

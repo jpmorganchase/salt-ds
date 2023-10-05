@@ -17,7 +17,6 @@ interface UseComboBoxProps {
 export const useComboBox = ({
   defaultInputValue,
   onFocus,
-  onBlur,
   onMouseOver,
   onKeyDown,
   inputValue: inputValueProp,
@@ -67,15 +66,6 @@ export const useComboBox = ({
     setOpen(true);
     listFocusHandler(event);
     onFocus?.(event);
-  };
-
-  const blurHandler = (event: FocusEvent<HTMLInputElement>) => {
-    setOpen(false);
-    if (!selectedItem) {
-      setSelected(undefined);
-      setHighlightedItem(undefined);
-    }
-    onBlur?.(event);
   };
 
   const mouseOverHandler = (event: SyntheticEvent<HTMLElement>) => {
@@ -158,7 +148,6 @@ export const useComboBox = ({
     focusVisibleRef,
     keyDownHandler,
     focusHandler,
-    blurHandler,
     mouseOverHandler,
   };
 };
