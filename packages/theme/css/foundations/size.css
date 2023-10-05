@@ -7,7 +7,6 @@
   --salt-size-indicator: 1px;
   --salt-size-selectable: 12px;
   --salt-size-bar-strong: 4px;
-  /* --salt-size-bar-small: 4px; */
 }
 
 .salt-density-medium {
@@ -19,7 +18,6 @@
   --salt-size-indicator: 2px;
   --salt-size-selectable: 14px;
   --salt-size-bar-strong: 8px;
-  /* --salt-size-bar-small: 4px; */
 }
 
 .salt-density-low {
@@ -31,7 +29,6 @@
   --salt-size-indicator: 3px;
   --salt-size-selectable: 16px;
   --salt-size-bar-strong: 12px;
-  /* --salt-size-bar-small: 4px; */
 }
 
 .salt-density-touch {
@@ -43,7 +40,6 @@
   --salt-size-indicator: 4px;
   --salt-size-selectable: 18px;
   --salt-size-bar-strong: 16px;
-  /* --salt-size-bar-small: 4px; */
 }
 
 .salt-density-touch,
@@ -51,4 +47,5 @@
 .salt-density-medium,
 .salt-density-high {
   --salt-size-border-strong: 2px;
+  --salt-size-bar-small: 2px;
 }
