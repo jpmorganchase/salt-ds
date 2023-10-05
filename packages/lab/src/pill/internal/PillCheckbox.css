@@ -10,5 +10,5 @@
   --saltCheckbox-icon-fill: none;
   --saltCheckbox-icon-fill-checked: none;
   --saltCheckbox-icon-borderWidth-checked: var(--salt-size-border);
-  --saltCheckbox-icon-tick-color: var(--salt-taggable-foreground);
+  --saltCheckbox-icon-tick-color: var(--salt-actionable-primary-foreground);
 }
