@@ -122,7 +122,6 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     ListItem = DefaultListItem as unknown as ComboBoxNextProps<T>["ListItem"],
     itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
     onMouseOver,
-    onBlur,
     onFocus,
     onKeyDown,
     onSelect,
@@ -162,15 +161,15 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     activeDescendant,
     focusVisibleRef,
     keyDownHandler,
+    clickHandler,
     focusHandler,
-    blurHandler,
+    selectHandler,
     setSelectedItem,
     setHighlightedItem,
     mouseOverHandler,
   } = useComboBox({
     defaultInputValue,
     inputValue: inputValueProp,
-    onBlur,
     onFocus,
     onMouseOver,
     onKeyDown,
@@ -215,7 +214,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         setHighlightedItem(filteredSource[0] as unknown as string);
       }
     }
-    onInputChange?.(event, { value: inputValue || "" });
+    onInputChange?.(event, { value: inputValue ?? "" });
   };
 
   const adornment = open ? (
@@ -236,13 +235,13 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         disabled={disabled}
         endAdornment={adornment}
         onChange={onChange}
-        onBlur={blurHandler}
         inputRef={inputRef as Ref<HTMLInputElement>}
         inputProps={{
           "aria-expanded": open,
           tabIndex: disabled ? -1 : 0,
           onFocus: focusHandler,
           onKeyDown: keyDownHandler,
+          onClick: clickHandler,
         }}
         role="combobox"
         variant={variant}
@@ -262,6 +261,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
           disableFocus
           highlightedItem={highlightedItem}
           onMouseOver={mouseOverHandler}
+          onSelect={selectHandler}
           selected={selectedItem}
           {...restListProps}
           ref={setListRef}

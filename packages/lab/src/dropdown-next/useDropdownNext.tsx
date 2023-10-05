@@ -2,6 +2,7 @@ import {
   useInteractions,
   useDismiss,
   useRole,
+  useFocus,
   flip,
   shift,
   limitShift,
@@ -43,7 +44,6 @@ export const useDropdownNext = ({
   const {
     focusHandler: listFocusHandler,
     keyDownHandler: listKeyDownHandler,
-    blurHandler: listBlurHandler,
     mouseOverHandler: listMouseOverHandler,
     activeDescendant,
     selectedItem,
@@ -105,10 +105,13 @@ export const useDropdownNext = ({
       ],
     });
 
-  const { getFloatingProps } = useInteractions([
-    useDismiss(context),
-    useRole(context, { role: "listbox" }),
-  ]);
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
+    [
+      useDismiss(context),
+      useFocus(context, { enabled: false }),
+      useRole(context, { role: "listbox" }),
+    ]
+  );
 
   const getDropdownNextProps = (): HTMLProps<HTMLDivElement> => {
     return getFloatingProps({
@@ -126,12 +129,6 @@ export const useDropdownNext = ({
     height: elements.floating?.clientHeight,
   });
 
-  // HANDLERS
-  const blurHandler = () => {
-    listBlurHandler();
-    setOpen(false);
-  };
-
   // handles focus on mouse and keyboard
   const focusHandler = (event: FocusEvent<HTMLElement>) => {
     if (selectedItem) {
@@ -147,6 +144,10 @@ export const useDropdownNext = ({
   // handles mouse hover on dropdown button
   const mouseOverHandler = () => {
     listMouseOverHandler();
+  };
+
+  const selectHandler = () => {
+    setOpen(false);
   };
 
   const keyDownHandler = (event: KeyboardEvent<HTMLElement>) => {
@@ -190,12 +191,15 @@ export const useDropdownNext = ({
 
   return {
     handlers: {
-      focusHandler,
       keyDownHandler,
-      blurHandler,
+      focusHandler,
       mouseOverHandler,
       mouseDownHandler,
+      selectHandler,
     },
+    open,
+    getReferenceProps,
+    getItemProps,
     activeDescendant,
     selectedItem,
     setSelectedItem,
@@ -208,6 +212,7 @@ export const useDropdownNext = ({
       setOpen,
       floating,
       reference,
+      getFloatingProps,
       getDropdownNextProps,
       getPosition,
     },
