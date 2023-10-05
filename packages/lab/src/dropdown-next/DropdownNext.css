@@ -85,7 +85,9 @@
 .saltDropdownNext-icon.saltDropdownNext-disabled:active,
 .saltDropdownNext-icon.saltDropdownNext-readOnly,
 .saltDropdownNext-icon.saltDropdownNext-readOnly:hover,
-.saltDropdownNext-icon.saltDropdownNext-readOnly:active {
+.saltDropdownNext-icon.saltDropdownNext-readOnly:active,
+.saltDropdownNext-icon
+{
   color: var(--salt-text-primary-foreground-disabled);
 }
 

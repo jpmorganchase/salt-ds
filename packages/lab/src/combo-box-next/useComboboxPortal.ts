@@ -23,7 +23,7 @@ export function useComboboxPortal(props?: UseComboBoxPortalProps) {
     open: openProp,
     onOpenChange: onOpenChangeProp,
     placement: placementProp = "bottom",
-  } = props || {};
+  } = props ?? {};
   const [open, setOpen] = useControlled({
     controlled: openProp,
     default: false,

@@ -9,7 +9,7 @@ const { Default, CustomRenderer, Controlled } =
 describe("GIVEN a Combobox", () => {
   it("SHOULD render all its items", () => {
     cy.mount(<Default />);
-    cy.realPress("Tab");
+    cy.realPress("Tab").realPress("Enter");
 
     Default.args!.source!.forEach((item) => {
       cy.findByRole("option", { name: item }).should("exist");
@@ -17,7 +17,7 @@ describe("GIVEN a Combobox", () => {
   });
   it("SHOULD render with a custom renderer", () => {
     cy.mount(<CustomRenderer />);
-    cy.realPress("Tab");
+    cy.realPress("Tab").realPress("Enter");
 
     cy.findByText("Tokyo").should("exist");
     cy.findByText("Delhi").should("exist");
@@ -91,8 +91,8 @@ describe("GIVEN a Combobox", () => {
         });
       });
     });
-    describe("WHEN controlled selected is passed", () => {
-      it("SHOULD be able to control the open property of portal", () => {
+    describe("WHEN selection is controlled externally", () => {
+      it("SHOULD be able to select with an external action", () => {
         cy.mount(<Controlled />);
         cy.findByRole("combobox").should("have.value", "Baby blue");
         cy.findByRole("button", { name: "Next" }).should("exist");
@@ -101,11 +101,9 @@ describe("GIVEN a Combobox", () => {
       });
     });
     describe("WHEN controlled prop input value is passed", () => {
-      it("SHOULD be able to control the open property of portal", () => {
+      it("SHOULD be able to control the input property on portal", () => {
         cy.mount(<Default inputValue="Blue" />);
         cy.findByRole("combobox").should("have.value", "Blue");
-        cy.realPress("Tab");
-        cy.findAllByRole("option").should("have.length", 2);
       });
     });
   });

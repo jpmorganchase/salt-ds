@@ -122,7 +122,6 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     ListItem = DefaultListItem as unknown as ComboBoxNextProps<T>["ListItem"],
     itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
     onMouseOver,
-    onBlur,
     onFocus,
     onKeyDown,
     onSelect,
@@ -163,14 +162,13 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     focusVisibleRef,
     keyDownHandler,
     focusHandler,
-    blurHandler,
     setSelectedItem,
     setHighlightedItem,
+    handleListSelect,
     mouseOverHandler,
   } = useComboBox({
     defaultInputValue,
     inputValue: inputValueProp,
-    onBlur,
     onFocus,
     onMouseOver,
     onKeyDown,
@@ -183,13 +181,13 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     setOpen,
     floating,
     reference,
-    getTriggerProps,
     getPortalProps,
     getPosition,
+    getTriggerProps,
   } = portalProps;
 
   // floating references
-  const triggerRef = useForkRef(ref, reference);
+  const triggerRef = useForkRef<HTMLInputElement>(ref, reference);
   const inputRef = useForkRef(triggerRef, focusVisibleRef);
 
   const { Component: FloatingComponent } = useFloatingComponent();
@@ -215,7 +213,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         setHighlightedItem(filteredSource[0] as unknown as string);
       }
     }
-    onInputChange?.(event, { value: inputValue || "" });
+    onInputChange?.(event, { value: inputValue ?? "" });
   };
 
   const adornment = open ? (
@@ -236,18 +234,17 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         disabled={disabled}
         endAdornment={adornment}
         onChange={onChange}
-        onBlur={blurHandler}
         inputRef={inputRef as Ref<HTMLInputElement>}
         inputProps={{
           "aria-expanded": open,
           tabIndex: disabled ? -1 : 0,
-          onFocus: focusHandler,
           onKeyDown: keyDownHandler,
+          onFocus: focusHandler,
         }}
+        {...getTriggerProps()}
         role="combobox"
         variant={variant}
         value={inputValue}
-        {...getTriggerProps()}
         {...restInputProps}
       />
 
@@ -262,6 +259,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
           disableFocus
           highlightedItem={highlightedItem}
           onMouseOver={mouseOverHandler}
+          onSelect={handleListSelect}
           selected={selectedItem}
           {...restListProps}
           ref={setListRef}
