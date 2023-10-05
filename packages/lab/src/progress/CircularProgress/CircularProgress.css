@@ -24,7 +24,7 @@
   border-style: var(--salt-track-borderStyle);
   border-width: var(--salt-size-border-strong);
   border-radius: var(--salt-size-base);
-  border-color: var(--salt-track-borderColor);
+  border-color: var(--salt-palette-neutral-secondary-border);
 }
 
 .saltCircularProgress-bar {

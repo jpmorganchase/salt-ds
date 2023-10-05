@@ -1,4 +1,4 @@
-import { Meta } from "@storybook/addon-docs";
+import {Meta} from "@storybook/addon-docs";
 
 <Meta title="Theme/About the Salt Theme" />
 
@@ -64,7 +64,7 @@ Foundational tokens are divided into the following groups:
 | --------------------- | ------------------------------------------------------------------- | -------------------------------------- | --------------------------------- |
 | Color                 | The core set of colors that make up the Salt theme                  | `--salt-color-gray-800`                | `rgb(36, 37, 38)`                 |
 | Duration              | Durations between a user action and system feedback                 | `--salt-duration-cutoff`               | `10000`                           |
-| Icon                  | Core set of icons available within the Salt theme                   | `--salt-size-icon`                | `12px`                            |
+| Icon                  | Core set of icons available within the Salt theme                   | `--salt-size-icon`                     | `12px`                            |
 | Opacity               | Opacity percentages for different attributes                        | `--salt-opacity-background`            | `0.7`                             |
 | Shadow                | Shadows used to convey elevation or hierarchy                       | `--salt-shadow-black-4`                | `0 6px 10px 0 rgba(0, 0, 0, 0.2)` |
 | Size                  | Sizes in px used for width, height, border width, etc.              | `--salt-size-basis-unit`               | `4px`                             |
@@ -115,14 +115,14 @@ Characteristics semantically group both palette and foundational tokens to provi
 | Editable                    | Components that have mutable input                                                   | `--salt-editable-borderStyle`                | `solid`                                            |
 | Focused                     | Components that have a focused state                                                 | `--salt-focused-outlineStyle`                | `dotted`                                           |
 | Navigable                   | Components that change data sets or view contexts                                    | `--salt-navigable-cursor-hover`              | `pointer`                                          |
-| Overlayable                 | Components that form hierarchies in layout                                           | `--salt-overlayable-shadow-scroll`           | `--salt-shadow-100`                                  |
+| Overlayable                 | Components that form hierarchies in layout                                           | `--salt-overlayable-shadow-scroll`           | `--salt-shadow-100`                                |
 | Selectable                  | Components that have a selected state or contain elements that can be selected       | `--salt-selectable-cursor-hover`             | `pointer`                                          |
 | Separable                   | Components, or elements within a component that divide content, functions or regions | `--salt-separable-primary-borderColor`       | `--salt-palette-neutral-primary-border`            |
 | Status                      | Components indicating an informational, warning, error or success state              | `--salt-status-info-borderColor`             | `--salt-palette-info-border`                       |
 | Taggable                    | Components that allow data to be organized                                           | `--salt-taggable-background`                 | `--salt-palette-interact-primary-background`       |
 | Target                      | Components that form a target for draggable elements                                 | `--salt-target-borderStyle`                  | `dashed`                                           |
-| Text                        | All text components or HTML elements                                                 | `--salt-foreground-primary`             | `--salt-palette-neutral-primary-foreground`        |
-| Track                       | Components that indicate a changeable value or progression                           | `--salt-track-borderColor`                   | `--salt-palette-track-border`                      |
+| Text                        | All text components or HTML elements                                                 | `--salt-foreground-primary`                  | `--salt-palette-neutral-primary-foreground`        |
+| Track                       | Components that indicate a changeable value or progression                           | `--salt-track-borderStyle`                   | `solid`                                            |
 | Differential **deprecated** | Replaced with Status                                                                 | \*                                           | \*                                                 |
 | Measure **deprecated**      | Replaced with Track                                                                  | \*                                           | \*                                                 |
 
@@ -199,9 +199,7 @@ In the CSS where the theme variables are declared, there are sections declared a
 
 ```css
 .salt-theme {
-  --salt-actionable-primary-foreground: var(
-    --salt-palette-interact-primary-foreground
-  );
+  --salt-actionable-primary-foreground: var(--salt-palette-interact-primary-foreground);
 }
 ```
 
