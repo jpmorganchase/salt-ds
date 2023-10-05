@@ -32,3 +32,5 @@
 -  --salt-taggable-foreground-active: var(--salt-palette-interact-primary-foreground-active);
 -  --salt-taggable-foreground-disabled: var(--salt-palette-interact-primary-foreground-disabled);
 ```
+
+- Updated `taggable` characteristics tokens used in `@salt-ds/lab` Pill component to use `actionable` characteristics tokens
