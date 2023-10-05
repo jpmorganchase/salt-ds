@@ -94,18 +94,26 @@ div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked {
 }
 
 div[class*="ag-theme-salt"] .ag-floating-filter {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  border: var(--salt-size-border) var(--salt-editable-borderStyle)
+    var(--salt-separable-tertiary-borderColor);
   &:focus {
-    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+      var(--salt-focused-outlineColor);
   }
 }
 div[class*="ag-theme-salt"] .ag-keyboard-focus .ag-header-cell:focus:after {
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+    var(--salt-focused-outlineColor);
 }
 
-div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus, 
-div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus {
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+div[class*="ag-theme-salt"]
+  .ag-header-row:not(:first-child)
+  .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
+div[class*="ag-theme-salt"]
+  .ag-header-row:not(:first-child)
+  .ag-header-group-cell.ag-header-group-cell-with-group:focus {
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+    var(--salt-focused-outlineColor);
 }
 
 div[class*="ag-theme-salt"] .ag-floating-filter:after {
@@ -116,9 +124,11 @@ div[class*="ag-theme-salt"] .ag-icon-filter:before {
   color: var(--salt-text-secondary-foreground);
 }
 
-div[class*="ag-theme-salt"] input[class^=ag-][type=text] {
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) transparent;
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+div[class*="ag-theme-salt"] input[class^="ag-"][type="text"] {
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+    transparent;
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle)
+    var(--salt-editable-borderColor);
   padding-bottom: 0;
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   &:focus {
@@ -126,11 +136,13 @@ div[class*="ag-theme-salt"] input[class^=ag-][type=text] {
   }
 }
 
-div[class*="ag-theme-salt"] button[class^=ag-]:focus, input[class^=ag-][type=button]:focus {
+div[class*="ag-theme-salt"] button[class^="ag-"]:focus,
+input[class^="ag-"][type="button"]:focus {
   // width: var(--salt-size-base);
   // height: var(--salt-size-base);
   box-shadow: none;
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+    var(--salt-focused-outlineColor);
 }
 
 div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
@@ -150,7 +162,7 @@ div[class*="ag-theme-salt"] .ag-menu .ag-filter-body-wrapper {
   margin-top: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-simple-filter-body-wrapper>* {
+div[class*="ag-theme-salt"] .ag-simple-filter-body-wrapper > * {
   margin-bottom: var(--salt-spacing-100);
 }
 
@@ -165,7 +177,6 @@ div[class*="ag-theme-salt"] .ag-set-filter-item {
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
 }
-
 
 // Import is here so the custom icons are injected after the default ag-grid icons.
 @import "./salt-ag-theme-icon-font";
