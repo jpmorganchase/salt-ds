@@ -43,9 +43,9 @@
   )
 );
 
-div[class*="ag-theme-salt"] [class*=ag-theme-] {
+div[class*="ag-theme-salt"] [class*="ag-theme-"] {
   font-family: var(--salt-typography-fontFamily);
-  font-size: var(--salt-text-fontSize),
+  font-size: var(--salt-text-fontSize);
 }
 
 div[class*="ag-theme-salt"] .ag-root-wrapper {
@@ -92,7 +92,12 @@ div[class*="ag-theme-salt"] .ag-menu-option-text {
 }
 
 div[class*="ag-theme-salt"] .ag-ltr .ag-cell {
-  line-height: calc(max(var(--ag-internal-calculated-line-height),var(--ag-internal-padded-row-height)) - 2px);
+  line-height: calc(
+    max(
+        var(--ag-internal-calculated-line-height),
+        var(--ag-internal-padded-row-height)
+      ) - 2px
+  );
 }
 
 div[class*="ag-theme-salt"] .ag-cell.editable-cell {
