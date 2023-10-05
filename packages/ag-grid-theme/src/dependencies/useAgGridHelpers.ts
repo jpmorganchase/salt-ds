@@ -90,14 +90,14 @@ export function useAgGridHelpers({
     agGridProps: {
       onGridReady,
       rowHeight,
-      // headerHeight: rowHeight,
+      headerHeight: rowHeight,
       suppressMenuHide: true,
       defaultColDef: {
         filter: true,
         resizable: true,
         sortable: true,
         filterParams: {
-          // cellHeight: listItemHeight,
+          cellHeight: listItemHeight,
         },
       },
     },

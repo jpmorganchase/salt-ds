@@ -10,8 +10,6 @@ const Default = (props: AgGridReactProps) => {
     agThemeName: `ag-theme-${themeName}`,
   });
 
-  console.log("themeName", themeName, containerProps);
-
   return (
     <StackLayout gap={4}>
       {switcher}
