@@ -71,4 +71,8 @@ const columnsWithGrouping = (
   },
 ];
 
+ColumnGroup.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default ColumnGroup;
