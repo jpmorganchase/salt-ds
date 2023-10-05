@@ -12,6 +12,10 @@
   --salt-text-fontWeight-small: var(--salt-typography-fontWeight-light);
   --salt-text-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
+  /* Notation */
+  --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+
   /* H1 */
   --salt-text-h1-fontFamily: var(--salt-typography-fontFamily);
   --salt-text-h1-fontWeight: var(--salt-typography-fontWeight-bold);
