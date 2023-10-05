@@ -68,6 +68,12 @@
   --salt-palette-navigate-tertiary-background-active: transparent;
   --salt-palette-navigate-tertiary-background-hover: var(--salt-color-gray-20);
   --salt-palette-navigate-indicator-activeDisabled: var(--salt-color-orange-600-fade-border);
+
+  /* Track */
+  --salt-palette-track-border: var(--salt-color-gray-90);
+  --salt-palette-track-border-disabled: var(--salt-color-gray-90-fade-border);
+  --salt-palette-track-background: var(--salt-color-gray-60);
+  --salt-palette-track-background-disabled: var(--salt-color-gray-60-fade-background);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -122,4 +128,10 @@
   --salt-palette-navigate-tertiary-background-active: transparent;
   --salt-palette-navigate-tertiary-background-hover: var(--salt-color-gray-700);
   --salt-palette-navigate-indicator-activeDisabled: var(--salt-color-orange-400-fade-border);
+
+  /* Track */
+  --salt-palette-track-border: var(--salt-color-gray-90);
+  --salt-palette-track-border-disabled: var(--salt-color-gray-90-fade-border);
+  --salt-palette-track-background: var(--salt-color-gray-300);
+  --salt-palette-track-background-disabled: var(--salt-color-gray-300-fade-background);
 }

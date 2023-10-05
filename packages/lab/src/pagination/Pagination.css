@@ -44,7 +44,7 @@
 
 .saltPagination-pageButtonSelected {
   background: var(--salt-selectable-background-selected);
-  color: var(--salt-selectable-cta-foreground-selected);
+  color: var(--salt-palette-interact-cta-foreground-active);
 }
 
 .saltPagination-pageButtonFixed {
