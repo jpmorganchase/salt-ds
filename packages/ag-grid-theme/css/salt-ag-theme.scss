@@ -43,6 +43,21 @@
   )
 );
 
+div[class*="ag-theme-salt"] [class*=ag-theme-] {
+  font-family: var(--salt-typography-fontFamily);
+  font-size: var(--salt-text-fontSize),
+}
+
+div[class*="ag-theme-salt"] .ag-root-wrapper {
+  border: none;
+}
+
+div[class*="ag-theme-salt"] .ag-header-row {
+  color: var(--salt-text-primary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  // font-weight: var(--salt-text-fontWeight);
+}
+
 div[class*="ag-theme-salt"] .ag-menu {
   padding: var(--salt-spacing-100);
   border: 1px solid #cacacb;
@@ -74,6 +89,10 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-menu-option-icon {
 
 div[class*="ag-theme-salt"] .ag-menu-option-text {
   padding: 0 var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-cell {
+  line-height: calc(max(var(--ag-internal-calculated-line-height),var(--ag-internal-padded-row-height)) - 2px);
 }
 
 div[class*="ag-theme-salt"] .ag-cell.editable-cell {

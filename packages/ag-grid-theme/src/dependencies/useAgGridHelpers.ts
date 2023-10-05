@@ -80,7 +80,7 @@ export function useAgGridHelpers({
         // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height? Issue 2479
       }
     }, 0);
-  }, [rowHeight, isGridReady, agThemeName, listItemHeight]);
+  }, [rowHeight, isGridReady, listItemHeight]);
 
   return {
     containerProps: {
