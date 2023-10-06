@@ -1,11 +1,11 @@
 ---
 title:
-$ref: ./#/title
+  $ref: ./#/title
 layout: DetailComponent
 sidebar:
-exclude: true
+  exclude: true
 data:
-$ref: ./#/data
+  $ref: ./#/data
 ---
 
 ### How to use
@@ -18,29 +18,25 @@ $ref: ./#/data
 
 #### When not to use Navigation Item
 
-- When you need to show different views of content within the same page, consider using Tabs instead.
+- When you need to show different views of content within the same page, consider using [Tabs](?path=/docs/documentation-lab-tabs--page) instead.
 
-- When your content is very specific. In this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Consider using the [Interactable Card](), or a [Link]() component within the body of the page.
+- When your content is very specific. In this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Consider using the [Interactable Card](?path=/docs/documentation-core-card--page), or a [Link](?path=/docs/documentation-core-link--page) component within the body of the page.
 
 ### Import
 
-To import Badge from the lab Salt package, use:
+To import [Badge](?path=/docs/documentation-lab-badge--page) from the lab Salt package, use:
 
 ```
-import { NavigationItem  } from "@salt-ds/core";
+import { NavigationItem  } from "@salt-ds/lab";
 ```
 
 ### Content
 
-To make the most of screen real estate, oOur recommendation is that all description text should be clearshort and concise.
-
-Always use write descriptions in sentence case in a Navigation Item.
-
-When using a Badge component within a Navigation Item, we recommend using sentence case.
-
-In a Horizontal Navigation Item, do not wrap descriptions, use truncation with Tooltip if necessary.
-
-In a Vertical Navigation Item, descriptions can wrap onto multiple lines if necessary, and is preferred over truncation.
+- To make the most of screen real estate, our recommendation is that all description text should be clear and concise.
+- Always write descriptions in sentence case in a Navigation Item.
+- When using a [Badge](?path=/docs/documentation-lab-badge--page) component within a Navigation Item, we recommend using sentence case.
+- In a Horizontal Navigation Item, do not wrap descriptions, use truncation with Tooltip if necessary.
+- In a Vertical Navigation Item, descriptions can wrap onto multiple lines if necessary, and is preferred over truncation.
 
 ### Props
 
