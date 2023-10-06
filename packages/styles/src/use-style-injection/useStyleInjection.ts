@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useInsertionPoint } from "./InsertionPointProvider";
 
-/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment -- Workaround for https://github.com/webpack/webpack/issues/14814 */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any -- Workaround for https://github.com/webpack/webpack/issues/14814#issuecomment-1536757985 */
 const maybeUseInsertionEffect: typeof React.useLayoutEffect =
-  (React as any)[`${"useInsertionEffect"}${""}`] ?? React.useLayoutEffect;
+  (React as any)["useInsertionEffect".toString()] ?? React.useLayoutEffect;
 /* eslint-enable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
 
 export interface UseComponentCssInjection {
