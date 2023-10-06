@@ -1,0 +1,57 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="link" exampleName="Default">
+
+### Default
+
+By default, a link will only navigate the user within the same tab, replacing the page where the user followed the link.
+
+</LivePreview>
+
+  <LivePreview componentName="link" exampleName="OpenInANewTab">
+
+    ### Open in a new tab
+
+    Use `target=”_blank”` to open the target page in a new tab. A ‘tear-out’ icon that communicates this to the user will display next to the link.
+
+    Use the `IconComponent` prop to customize the icon. You can either provide an alternative icon, or the icon can be disabled by using `IconComponent={null}`. We only recommend disabling the icon when wrapping another component in a link, never for text-based links. This is because the icon helps the user identify when a link will take them to a new tab.
+
+    It is generally considered best practice to almost never open links in new tabs. Opening a link in a new tab is not expected default behavior for web browsers. It makes it harder to return to the previous page, especially for users of screen readers.
+
+    There are a few cases where it’s recommended, like when the link is in the middle of a form or multi-step process. This allows users to complete the action without losing their place on the original page.
+
+    #### Security
+
+    When linking to third party content, we recommended setting `rel=”noopener”` or `rel=”noreferrer”`. Although this is default behaviour in newer browsers, explicitly specifying this helps protect users of legacy browsers. For more information, read “[Links to cross-origin destinations are unsafe](https://web.dev/external-anchors-use-rel-noopener/)”.
+
+  </LivePreview>
+
+  <LivePreview componentName="link" exampleName="Variant">
+
+    ### Variant
+
+    To help create a visual hierarchy using a link, use the `variant` prop.
+
+    The default variant is `primary`.
+
+  </LivePreview>
+
+    <LivePreview componentName="link" exampleName="Visited">
+
+    ### Visited
+
+    Links change color after a user clicks on them. This tells the user which links they have already visited.
+
+  </LivePreview>
+
+</LivePreviewControls>
