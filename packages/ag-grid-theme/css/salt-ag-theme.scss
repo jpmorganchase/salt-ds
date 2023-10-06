@@ -104,6 +104,7 @@ div[class*="ag-theme-salt"] {
   }
 
   .ag-ltr .ag-cell {
+    border-width: 2px;
     line-height: calc(
       max(
           var(--ag-internal-calculated-line-height),
