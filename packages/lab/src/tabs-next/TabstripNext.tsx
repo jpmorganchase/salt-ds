@@ -196,7 +196,7 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
     );
 
     const tabstripStyle = {
-      "--tabstripnext-justifyContent": align,
+      "--tabstripNext-justifyContent": align,
       ...style,
     };
 

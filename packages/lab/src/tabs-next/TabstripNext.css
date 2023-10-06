@@ -2,7 +2,7 @@
 .saltTabstripNext {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: var(--tabstripnext-justifyContent);
+  justify-content: var(--tabstripNext-justifyContent);
   position: relative;
   background: transparent;
   width: 100%;
