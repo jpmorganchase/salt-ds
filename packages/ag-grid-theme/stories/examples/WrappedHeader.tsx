@@ -76,4 +76,8 @@ const WrappedHeader = (props: AgGridReactProps) => {
   );
 };
 
+WrappedHeader.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default WrappedHeader;

@@ -52,4 +52,8 @@ const Pagination = () => (
   </div>
 );
 
+Pagination.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default Pagination;

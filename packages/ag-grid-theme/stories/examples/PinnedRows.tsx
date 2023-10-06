@@ -99,3 +99,7 @@ const PinnedRowsExample = function PinnedRowsExample({
 export default function PinnedRows(props: PinnedRowsExampleProps) {
   return <PinnedRowsExample {...props} />;
 }
+
+PinnedRows.parameters = {
+  chromatic: { disableSnapshot: false },
+};
