@@ -23,9 +23,10 @@ const withBaseName = makePrefixer("saltTabstripNext");
 
 export interface TabstripNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  /* Styling active color variant. Defaults to "primary". */
   activeColor?: "primary" | "secondary";
+  /* Tabs alignment. Defaults to "center" */
   align?: "left" | "center" | "right";
-  disabled?: boolean;
   /* Value for the uncontrolled version. */
   value?: string;
   /* Callback for the controlled version. */
@@ -36,10 +37,10 @@ export interface TabstripNextProps
   variant?: "main" | "inline";
 }
 
-type TabValue = {
+interface TabValue {
   value: string;
   label: ReactNode;
-};
+}
 
 export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
   function TabstripNext(props, ref) {
@@ -48,7 +49,6 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       align = "center",
       children,
       className,
-      disabled,
       value: valueProp,
       defaultValue,
       onChange,
