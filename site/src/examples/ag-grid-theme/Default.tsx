@@ -7,30 +7,30 @@ export const Default = (): ReactElement => {
   const { containerProps, agGridProps } = useAgGridHelpers();
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          columnDefs={[
-            {
-              headerName: "Name",
-              field: "name",
-              filterParams: {
-                buttons: ["reset", "apply"],
-              },
-              editable: false,
+    <div {...containerProps}>
+      <AgGridReact
+        columnDefs={[
+          {
+            headerName: "Name",
+            field: "name",
+            filterParams: {
+              buttons: ["reset", "apply"],
             },
-            {
-              headerName: "Code",
-              field: "code",
-            },
-            {
-              headerName: "Capital",
-              field: "capital",
-            },
-          ]}
-          rowData={defaultData}
-          rowSelection="single"
-          {...agGridProps}
-        />
-      </div>
+            editable: false,
+          },
+          {
+            headerName: "Code",
+            field: "code",
+          },
+          {
+            headerName: "Capital",
+            field: "capital",
+          },
+        ]}
+        rowData={defaultData}
+        rowSelection="single"
+        {...agGridProps}
+      />
+    </div>
   );
 };

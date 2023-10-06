@@ -5,9 +5,9 @@ import "ag-grid-community/dist/styles/ag-theme-material.css";
 import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 
 interface AGThemeProviderProps {
-    children: ReactNode;
-};
+  children: ReactNode;
+}
 
-export const AGThemeProvider: FC<AGThemeProviderProps> = ({children}) => {
-  return (<>{children}</>);
+export const AGThemeProvider: FC<AGThemeProviderProps> = ({ children }) => {
+  return <>{children}</>;
 };

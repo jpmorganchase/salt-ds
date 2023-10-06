@@ -21,7 +21,7 @@ export const Variants = (props: AgGridReactProps) => {
   };
 
   return (
-    <FlexLayout style={{width: "100%"}} direction="column">
+    <FlexLayout style={{ width: "100%" }} direction="column">
       <Banner status="info">
         <BannerContent>Variants are available in Salt theme only</BannerContent>
       </Banner>

@@ -6,15 +6,15 @@ export const DragRowOrder = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-      <div {...containerProps}>
-        <AgGridReact
-          animateRows
-          rowDragManaged
-          {...agGridProps}
-          {...props}
-          columnDefs={rowDragColumns}
-          rowData={defaultData}
-        />
-      </div>
+    <div {...containerProps}>
+      <AgGridReact
+        animateRows
+        rowDragManaged
+        {...agGridProps}
+        {...props}
+        columnDefs={rowDragColumns}
+        rowData={defaultData}
+      />
+    </div>
   );
 };
