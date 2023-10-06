@@ -130,4 +130,8 @@ const NoDataOverlay = (props: AgGridReactProps) => {
   );
 };
 
+NoDataOverlay.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default NoDataOverlay;

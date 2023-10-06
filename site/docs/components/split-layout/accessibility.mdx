@@ -1,0 +1,22 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+When building a sub-section of a page using Split Layout, you should use semantic HTML. This means using the correct HTML elements for their intended purpose as much as possible.
+
+Split Layout supports semantic HTML with the `as` prop. This renders the appropriate HTML instead of a plain `div`.
+
+```tsx
+<SplitLayout
+  as="ul"
+  startItem={<FlexItem as="li">List item</FlexItem>}
+  endItem={<FlexItem as="li">List item</FlexItem>}
+/>
+```
