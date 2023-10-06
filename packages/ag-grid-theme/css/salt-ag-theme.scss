@@ -15,192 +15,247 @@
         foreground-color: #fff,
       ),
     ),
-    grid-size: var(--salt-spacing-100),
+    cell-horizontal-padding: calc(var(--salt-spacing-100) + 2px),
+    checkbox-checked-color: var(--salt-selectable-primary-foreground-selected),
+    checkbox-border-radius: 0,
+    checkbox-indeterminate-color: var(--salt-color-gray-700),
+    checkbox-unchecked-color: var(--salt-text-primary-foreground),
+    data-color: var(--salt-text-primary-foreground),
     font-size: var(--salt-text-fontSize),
     font-family: var(--salt-typography-fontFamily),
+    grid-size: var(--salt-spacing-100),
     header-background-color: var(--salt-container-primary-background),
-    data-color: var(--salt-text-primary-foreground),
-    secondary-foreground-color: var(--salt-text-primary-foreground),
-    header-foreground-color: var(--salt-text-primary-foreground),
     header-cell-hover-background-color: var(--salt-container-primary-background),
-    selected-tab-underline-color: var(--salt-navigable-indicator-active),
+    header-column-separator-color: rgba(0, 0, 0, 0.15),
+    header-column-separator-display: block,
+    header-column-separator-height: var(--salt-text-fontSize),
+    header-column-separator-width: 1px,
+    header-foreground-color: var(--salt-text-primary-foreground),
+    icon-size: var(--salt-icon-size-base),
+    input-focus-box-shadow: none,
+    range-selection-border-color: var(--salt-focused-outlineColor),
+    range-selection-border-style: var(--salt-focused-outlineStyle),
+    range-selection-border-width: var(--salt-focused-outlineWidth),
     row-height: var(--salt-size-base),
     row-hover-color: var(--salt-selectable-background-hover),
+    secondary-foreground-color: var(--salt-text-primary-foreground),
     selected-row-background-color: var(--salt-selectable-background-selected),
-    icon-size: var(--salt-icon-size-base),
-    range-selection-border-color: var(--salt-focused-outlineColor),
-    range-selection-border-width: var(--salt-focused-outlineWidth),
-    range-selection-border-style: var(--salt-focused-outlineStyle),
-    header-column-separator-display: block,
-    header-column-separator-height: var(--salt-text-lineHeight),
-    header-column-separator-width: 1px,
-    header-column-separator-color: rgba(0, 0, 0, 0.15),
-    cell-horizontal-padding: var(--salt-spacing-100),
-    checkbox-border-radius: 0,
-    checkbox-unchecked-color: var(--salt-text-primary-foreground),
-    checkbox-indeterminate-color: var(--salt-color-gray-700),
-    checkbox-checked-color: var(--salt-selectable-primary-foreground-selected),
+    selected-tab-underline-color: var(--salt-navigable-indicator-active),
   )
 );
 
-div[class*="ag-theme-salt"] [class*="ag-theme-"] {
-  font-family: var(--salt-typography-fontFamily);
-  font-size: var(--salt-text-fontSize);
-}
+div[class*="ag-theme-salt"] {
+  [class*="ag-theme-"] {
+    font-family: var(--salt-typography-fontFamily);
+    font-size: var(--salt-text-fontSize);
+  }
 
-div[class*="ag-theme-salt"] .ag-root-wrapper {
-  border: none;
-}
+  .ag-root-wrapper {
+    border: none;
+  }
 
-div[class*="ag-theme-salt"] .ag-header-row {
-  color: var(--salt-text-primary-foreground);
-  font-size: var(--salt-text-label-fontSize);
-  // font-weight: var(--salt-text-fontWeight);
-}
+  .ag-header-row {
+    color: var(--salt-text-primary-foreground);
+    font-size: var(--salt-text-label-fontSize);
+    // font-weight: var(--salt-text-fontWeight);
+  }
 
-div[class*="ag-theme-salt"] .ag-menu {
-  padding: var(--salt-spacing-100);
-  border: 1px solid #cacacb;
-}
+  .ag-pinned-left-header {
+    border: none;
+  }
 
-div[class*="ag-theme-salt"] .ag-menu-header {
-  border-bottom: 1px solid #cacacb;
-}
+  .ag-menu {
+    padding: var(--salt-spacing-100);
+    border: 1px solid #cacacb;
+  }
 
-div[class*="ag-theme-salt"] .ag-menu-separator {
-  height: 1px;
-}
+  .ag-menu-header {
+    border-bottom: 1px solid #cacacb;
+  }
 
-div[class*="ag-theme-salt"] .ag-tabs-body {
-  padding: 0;
-}
+  .ag-menu-separator {
+    height: 1px;
+  }
 
-div[class*="ag-theme-salt"] .ag-menu-list {
-  padding: 0;
-}
+  .ag-tabs-body {
+    padding: 0;
+  }
 
-div[class*="ag-theme-salt"] .ag-menu-option {
-  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-}
+  .ag-menu-list {
+    padding: 0;
+  }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-menu-option-icon {
-  padding: 0 var(--salt-spacing-100);
-}
+  .ag-menu-option {
+    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  }
 
-div[class*="ag-theme-salt"] .ag-menu-option-text {
-  padding: 0 var(--salt-spacing-100);
-}
+  .ag-ltr .ag-menu-option-icon {
+    padding: 0 var(--salt-spacing-100);
+  }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-cell {
-  line-height: calc(
-    max(
-        var(--ag-internal-calculated-line-height),
-        var(--ag-internal-padded-row-height)
-      ) - 2px
-  );
-}
+  .ag-menu-option-text {
+    padding: 0 var(--salt-spacing-100);
+  }
 
-div[class*="ag-theme-salt"] .ag-cell.editable-cell {
-  border: var(--salt-size-border) var(--salt-container-borderStyle)
-    var(--salt-editable-borderColor);
-  text-align: right;
-}
-div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper {
-  border: 1px var(--salt-selectable-borderStyle)
-    var(--salt-selectable-borderColor);
-  height: var(--salt-size-selectable);
-  width: var(--salt-size-selectable);
-}
+  .ag-ltr .ag-cell {
+    line-height: calc(
+      max(
+          var(--ag-internal-calculated-line-height),
+          var(--ag-internal-padded-row-height)
+        ) - 2px
+    );
+  }
 
-div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked {
-  background: var(--salt-selectable-borderColor-selected);
-  border-color: var(--salt-selectable-borderColor-selected);
-}
+  .ag-cell-wrapper {
+    height: 100%;
+  }
+  
+  .ag-cell.editable-cell {
+    border: var(--salt-size-border) var(--salt-container-borderStyle)
+      var(--salt-editable-borderColor);
+    text-align: right;
+  }
+  .ag-checkbox-input-wrapper {
+    border: var(--salt-size-border) var(--salt-selectable-borderStyle)
+      var(--salt-selectable-borderColor);
+    height: var(--salt-size-selectable);
+    width: var(--salt-size-selectable);
+  }
 
-div[class*="ag-theme-salt"] .ag-floating-filter {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle)
-    var(--salt-separable-tertiary-borderColor);
-  &:focus {
+  .ag-checkbox-input-wrapper.ag-checked {
+    background: var(--salt-selectable-borderColor-selected);
+    border-color: var(--salt-selectable-borderColor-selected);
+  }
+
+  .ag-floating-filter {
+    border: var(--salt-size-border) var(--salt-editable-borderStyle)
+      var(--salt-separable-tertiary-borderColor);
+    &:focus {
+      border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+        var(--salt-focused-outlineColor);
+    }
+  }
+  .ag-keyboard-focus .ag-header-cell:focus:after {
     border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
       var(--salt-focused-outlineColor);
   }
-}
-div[class*="ag-theme-salt"] .ag-keyboard-focus .ag-header-cell:focus:after {
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-    var(--salt-focused-outlineColor);
-}
 
-div[class*="ag-theme-salt"]
-  .ag-header-row:not(:first-child)
-  .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
-div[class*="ag-theme-salt"]
-  .ag-header-row:not(:first-child)
-  .ag-header-group-cell.ag-header-group-cell-with-group:focus {
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-    var(--salt-focused-outlineColor);
-}
+  div[class*="ag-theme-salt"]
+    .ag-header-row:not(:first-child)
+    .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
+  div[class*="ag-theme-salt"]
+    .ag-header-row:not(:first-child)
+    .ag-header-group-cell.ag-header-group-cell-with-group:focus {
+    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+      var(--salt-focused-outlineColor);
+  }
 
-div[class*="ag-theme-salt"] .ag-floating-filter:after {
-  width: 0;
-}
+  .ag-floating-filter:after {
+    width: 0;
+  }
 
-div[class*="ag-theme-salt"] .ag-icon-filter:before {
-  color: var(--salt-text-secondary-foreground);
-}
+  .ag-icon-filter:before {
+    color: var(--salt-text-secondary-foreground);
+  }
 
-div[class*="ag-theme-salt"] input[class^="ag-"][type="text"] {
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-    transparent;
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle)
-    var(--salt-editable-borderColor);
-  padding-bottom: 0;
-  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  &:focus {
-    border-color: var(--salt-focused-outlineColor);
+  input[class^="ag-"][type="text"] {
+    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+      transparent;
+    border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle)
+      var(--salt-editable-borderColor);
+    padding-bottom: 0;
+    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+    &:focus {
+      border-color: var(--salt-focused-outlineColor);
+    }
+  }
+
+  button[class^="ag-"]:focus,
+  input[class^="ag-"][type="button"]:focus {
+    // width: var(--salt-size-base);
+    // height: var(--salt-size-base);
+    box-shadow: none;
+    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+      var(--salt-focused-outlineColor);
+  }
+
+  .ag-select .ag-picker-field-wrapper {
+    border: 1px solid #cacacb;
+    border-radius: 0;
+  }
+
+  .ag-select .ag-picker-field-icon {
+    margin-right: var(--salt-spacing-100);
+  }
+
+  .ag-menu .ag-filter-body-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    margin-top: var(--salt-spacing-100);
+  }
+
+  .ag-simple-filter-body-wrapper > * {
+    margin-bottom: var(--salt-spacing-100);
+  }
+
+  .ag-mini-filter {
+    margin: 0;
+    padding-left: var(--salt-spacing-50);
+    padding-right: var(--salt-spacing-50);
+  }
+
+  .ag-set-filter-item {
+    margin: 0;
+    padding-left: var(--salt-spacing-100);
+    padding-right: var(--salt-spacing-100);
   }
 }
-
-div[class*="ag-theme-salt"] button[class^="ag-"]:focus,
-input[class^="ag-"][type="button"]:focus {
-  // width: var(--salt-size-base);
-  // height: var(--salt-size-base);
-  box-shadow: none;
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-    var(--salt-focused-outlineColor);
-}
-
-div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
-  border: 1px solid #cacacb;
-  border-radius: 0;
-}
-
-div[class*="ag-theme-salt"] .ag-select .ag-picker-field-icon {
-  margin-right: var(--salt-spacing-100);
-}
-
-div[class*="ag-theme-salt"] .ag-menu .ag-filter-body-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding: 0;
-  margin-top: var(--salt-spacing-100);
-}
-
-div[class*="ag-theme-salt"] .ag-simple-filter-body-wrapper > * {
-  margin-bottom: var(--salt-spacing-100);
-}
-
-div[class*="ag-theme-salt"] .ag-mini-filter {
-  margin: 0;
-  padding-left: var(--salt-spacing-50);
-  padding-right: var(--salt-spacing-50);
-}
-
-div[class*="ag-theme-salt"] .ag-set-filter-item {
-  margin: 0;
-  padding-left: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-100);
-}
-
 // Import is here so the custom icons are injected after the default ag-grid icons.
 @import "./salt-ag-theme-icon-font";
+
+// div[class*="ag-theme-salt-touch"] {
+//   --ag-list-item-height: 60px;
+//   --agGrid-padding-default: 16px;
+//   --agGrid-cornerTag-size-default: 14px;
+//   --agGrid-column-separator-height: 20px;
+// }
+
+// div[class*="ag-theme-salt-low"] {
+//   --ag-list-item-height: 48px;
+//   --agGrid-padding-default: 12px;
+//   --agGrid-cornerTag-size-default: 12px;
+//   --agGrid-column-separator-height: 16px;
+// }
+
+// div[class*="ag-theme-salt-medium"] {
+//   --ag-list-item-height: 36px;
+//   --agGrid-padding-default: 8px;
+//   --agGrid-cornerTag-size-default: 10px;
+//   --agGrid-column-separator-height: 12px;
+// }
+
+// div[class*="ag-theme-salt-high"] {
+//   --ag-list-item-height: 24px;
+//   --agGrid-padding-default: 8px;
+//   --agGrid-cornerTag-size-default: 8px;
+//   --agGrid-column-separator-height: 8px;
+// }
+
+// div[class*="ag-theme-salt-high-compact"] {
+//   --ag-list-item-height: 20px;
+//   --salt-size-base: 16px;
+//   /**
+//    We have to define this because in deprecated.css size-selectable is defined
+//    as size-base - (1.5 * size-unit) - (0.5 * size-basis-unit))
+//    which doesn't work for HDC- it has to be defined like in size.css
+//    for HD as 12px rather than based on a calculation with the new size-base for HDC
+//    **/
+
+//   --salt-size-selectable: 12px;
+
+//   --agGrid-column-separator-height: 8px;
+//   --agGrid-padding-default: 8px;
+//   --agGrid-cornerTag-size-default: 8px;
+// }

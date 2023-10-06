@@ -79,8 +79,8 @@ export function useAgGridHelpers({
         apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
         // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height? Issue 2479
       }
-    }, 0);
-  }, [rowHeight, isGridReady, listItemHeight]);
+    });
+  }, [rowHeight, isGridReady, apiRef]);
 
   return {
     containerProps: {
