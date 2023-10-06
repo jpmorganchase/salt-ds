@@ -58,6 +58,71 @@ Default.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
+export const SecondaryBackground: TabstripStory = ({
+  width = 600,
+  tabs,
+  ...tabstripProps
+}) => {
+  return (
+    <div
+      style={{
+        width,
+        minWidth: 0,
+        maxWidth: "100%",
+      }}
+      className="container secondary-container"
+    >
+      <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
+        {tabs.map((label) => {
+          return (
+            <TabNext value={label} key={label}>
+              {label}
+            </TabNext>
+          );
+        })}
+      </TabstripNext>
+      <div className="inner-container primary-container"></div>
+    </div>
+  );
+};
+
+SecondaryBackground.args = {
+  tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
+};
+
+export const SecondaryActiveColor: TabstripStory = ({
+  width = 600,
+  tabs,
+  ...tabstripProps
+}) => {
+  return (
+    <div
+      style={{
+        width,
+        minWidth: 0,
+        maxWidth: "100%",
+      }}
+      className="container primary-container"
+    >
+      <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
+        {tabs.map((label) => {
+          return (
+            <TabNext value={label} key={label}>
+              {label}
+            </TabNext>
+          );
+        })}
+      </TabstripNext>
+      <div className="inner-container secondary-container"></div>
+    </div>
+  );
+};
+
+SecondaryActiveColor.args = {
+  tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
+  activeColor: "secondary",
+};
+
 export const Inline = TabstripTemplate.bind({});
 Inline.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
