@@ -63,7 +63,7 @@ describe("Given a Tabstrip", () => {
     describe("WHEN resized such that space is sufficient for only 4 tabs (first tab selected)", () => {
       it("THEN first 4 tabs will be displayed, with overflow indicator", () => {
         cy.mount(<DefaultTabstrip width={400} />);
-        cy.get(".saltTabstripNext").invoke("css", "width", "300px");
+        cy.get(".saltTabstripNext").invoke("css", "width", "350px");
         cy.findAllByRole("tab").should("have.length", 4);
         cy.findByRole("combobox").should("exist").click();
         cy.findByRole("listbox")
