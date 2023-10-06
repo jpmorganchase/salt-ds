@@ -2,35 +2,33 @@
 "@salt-ds/theme": minor
 ---
 
-- New tokens added for `text` characteristics
+- New tokens added to `text` characteristics
 
 ```diff
 + --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
 + --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 ```
 
-- New token added for `size` foundations
+- New token added to `size` foundations
 
 ```diff
 + --salt-size-bar-small: 2px;
 ```
 
-- Deprecated all tokens in `taggable` characteristics
+- Deprecated all tokens in `taggable` characteristics, there's no direct replacement tokens.
 
 ```diff
--  --salt-taggable-cursor-hover: pointer;
--  --salt-taggable-cursor-active: pointer;
--  --salt-taggable-cursor-disabled: not-allowed;
+-  --salt-taggable-cursor-hover
+-  --salt-taggable-cursor-active
+-  --salt-taggable-cursor-disabled
 
--  --salt-taggable-background: var(--salt-palette-interact-primary-background);
--  --salt-taggable-background-hover: var(--salt-palette-interact-primary-background-hover);
--  --salt-taggable-background-active: var(--salt-palette-interact-primary-background-active);
--  --salt-taggable-background-disabled: var(--salt-palette-interact-primary-background-disabled);
+-  --salt-taggable-background
+-  --salt-taggable-background-hover
+-  --salt-taggable-background-active
+-  --salt-taggable-background-disabled
 
--  --salt-taggable-foreground: var(--salt-palette-interact-primary-foreground);
--  --salt-taggable-foreground-hover: var(--salt-palette-interact-primary-foreground-hover);
--  --salt-taggable-foreground-active: var(--salt-palette-interact-primary-foreground-active);
--  --salt-taggable-foreground-disabled: var(--salt-palette-interact-primary-foreground-disabled);
+-  --salt-taggable-foreground
+-  --salt-taggable-foreground-hover
+-  --salt-taggable-foreground-active
+-  --salt-taggable-foreground-disabled
 ```
-
-- Updated `taggable` characteristics tokens used in `@salt-ds/lab` Pill component to use `actionable` characteristics tokens
