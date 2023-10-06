@@ -21,7 +21,7 @@ export const Variants = (props: AgGridReactProps) => {
   };
 
   return (
-    <FlexLayout direction="column">
+    <FlexLayout style={{width: "100%"}} direction="column">
       <Banner status="info">
         <BannerContent>Variants are available in Salt theme only</BannerContent>
       </Banner>
@@ -37,7 +37,7 @@ export const Variants = (props: AgGridReactProps) => {
         </FlexLayout>
       </FlexItem>
       <div
-        style={{ height: 500, width: 800, marginTop: 25 }}
+        style={{ height: 500, marginTop: 25 }}
         {...containerProps}
         className={clsx({
           "ag-theme-salt-variant-secondary": selected === "secondary",

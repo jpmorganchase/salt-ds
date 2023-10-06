@@ -62,7 +62,7 @@ export function useAgGridHelpers(compact = false): {
   return {
     containerProps: {
       className,
-      style: { height: 500, width: 800 },
+      style: { height: 500, width: "100%" },
     },
     agGridProps: {
       onGridReady,

@@ -1,15 +1,14 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultColumns, defaultData } from "./data";
 
-export const CheckboxSelection = (props: AgGridReactProps) => {
+export const CheckboxSelection = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
     <div {...containerProps}>
       <AgGridReact
         {...agGridProps}
-        {...props}
         rowData={defaultData}
         columnDefs={defaultColumns}
         rowSelection="multiple"

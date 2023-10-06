@@ -1,4 +1,3 @@
-import { StackLayout } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultColumns, defaultData } from "./data";
@@ -19,7 +18,7 @@ export const StatusBar = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-    <StackLayout gap={2}>
+    <>
       <p>Select rows to enable status bar display</p>
       <div {...containerProps}>
         <AgGridReact
@@ -32,6 +31,6 @@ export const StatusBar = (props: AgGridReactProps) => {
           {...props}
         />
       </div>
-    </StackLayout>
+    </>
   );
 };

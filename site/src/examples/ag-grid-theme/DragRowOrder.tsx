@@ -1,5 +1,4 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { StackLayout } from "@salt-ds/core";
 import { defaultData, rowDragColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
@@ -7,7 +6,6 @@ export const DragRowOrder = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-    <StackLayout gap={4}>
       <div {...containerProps}>
         <AgGridReact
           animateRows
@@ -18,6 +16,5 @@ export const DragRowOrder = (props: AgGridReactProps) => {
           rowData={defaultData}
         />
       </div>
-    </StackLayout>
   );
 };
