@@ -64,6 +64,12 @@ div[class*="ag-theme-salt"] {
     border: none;
   }
 
+  .ag-advanced-filter-header,
+  .ag-header {
+    border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle)
+      var(--salt-separable-primary-borderColor);
+  }
+
   .ag-menu {
     padding: var(--salt-spacing-100);
     border: 1px solid #cacacb;
