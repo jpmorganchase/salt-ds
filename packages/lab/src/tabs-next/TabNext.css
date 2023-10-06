@@ -13,7 +13,6 @@
   border-radius: 0;
   white-space: pre;
   min-width: 4em;
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
   position: relative;
   flex-shrink: 0;
@@ -42,6 +41,14 @@
   left: calc(var(--salt-size-border) * -1);
   right: calc(var(--salt-size-border) * -1);
   height: var(--salt-size-indicator);
+}
+
+.saltTabNext-main {
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+.saltTabNext-inline {
+  min-height: var(--salt-size-base);
 }
 
 .saltTabNext-main::after {
