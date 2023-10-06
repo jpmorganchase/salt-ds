@@ -87,7 +87,11 @@ export const WithIcon: TabstripStory = ({
         {tabs.map((label) => {
           const Icon = tabToIcon[label];
           return (
-            <TabNext value={label} key={label}>
+            <TabNext
+              value={label}
+              key={label}
+              disabled={label === "Transactions"}
+            >
               <Icon /> {label}
             </TabNext>
           );
