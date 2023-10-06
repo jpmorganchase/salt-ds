@@ -32,4 +32,8 @@ const MasterDetail = (props: AgGridReactProps) => {
   );
 };
 
+MasterDetail.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default MasterDetail;

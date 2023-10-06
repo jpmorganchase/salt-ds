@@ -59,4 +59,8 @@ const LoadingOverlay = (props: AgGridReactProps) => {
   );
 };
 
+LoadingOverlay.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default LoadingOverlay;

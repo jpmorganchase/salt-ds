@@ -72,17 +72,7 @@
 
 /* the close Button on a closeable Tab*/
 .saltTab-close-icon {
-  display: none;
-}
-
-.salt-density-touch .saltTab-close-icon,
-.salt-density-low .saltTab-close-icon {
   display: block;
-}
-
-.salt-density-touch .saltTab-close-icon-small,
-.salt-density-low .saltTab-close-icon-small {
-  display: none;
 }
 
 .saltTab .saltTab-text {
