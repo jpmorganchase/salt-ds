@@ -83,7 +83,6 @@
 
   /* Accent */
   --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
-  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
   --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
 }
 
@@ -154,6 +153,5 @@
 
   /* Accent */
   --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
-  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
   --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
 }
