@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { StackLayout, Link } from "@salt-ds/core";
 import { GithubIcon } from "@salt-ds/icons";
+import styles from "./index.module.css";
 
 export const OpenInANewTab = (): ReactElement => (
   <StackLayout>
@@ -8,8 +9,9 @@ export const OpenInANewTab = (): ReactElement => (
       href="https://www.saltdesignsystem.com"
       target="_blank"
       rel="noopener"
+      className={styles.linkExample}
     >
-      Default icon
+      Link with default icon
     </Link>
 
     <Link
@@ -17,12 +19,19 @@ export const OpenInANewTab = (): ReactElement => (
       target="_blank"
       rel="noopener"
       IconComponent={GithubIcon}
+      className={styles.linkExample}
     >
-      Custom icon
+      Link with custom icon
     </Link>
 
-    <Link href="" target="_blank" rel="noopener" IconComponent={null}>
-      Icon removed
+    <Link
+      href=""
+      target="_blank"
+      rel="noopener"
+      IconComponent={null}
+      className={styles.linkExample}
+    >
+      Link with no icon
     </Link>
   </StackLayout>
 );
