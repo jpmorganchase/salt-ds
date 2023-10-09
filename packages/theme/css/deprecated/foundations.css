@@ -19,11 +19,27 @@
 
   /* Shadow */
   --salt-shadow-0: none;
-  --salt-shadow-1: 0 1px 3px 0 var(--salt-shadow-1-color);
-  --salt-shadow-2: 0 2px 4px 0 var(--salt-shadow-2-color);
-  --salt-shadow-3: 0 4px 8px 0 var(--salt-shadow-3-color);
-  --salt-shadow-4: 0 6px 10px 0 var(--salt-shadow-4-color);
-  --salt-shadow-5: 0 12px 40px 0 var(--salt-shadow-5-color);
+  --salt-shadow-1: 0 1px 3px 0 var(--salt-shadow-1-color); /* Use --salt-shadow-100 */
+  --salt-shadow-2: 0 2px 4px 0 var(--salt-shadow-2-color); /* Use --salt-shadow-200 */
+  --salt-shadow-3: 0 4px 8px 0 var(--salt-shadow-3-color); /* Use --salt-shadow-300 */
+  --salt-shadow-4: 0 6px 10px 0 var(--salt-shadow-4-color); /* Use --salt-shadow-400 */
+  --salt-shadow-5: 0 12px 40px 0 var(--salt-shadow-5-color); /* Use --salt-shadow-500 */
+}
+
+.salt-theme[data-mode="light"] {
+  --salt-shadow-1-color: rgba(0, 0, 0, 0.1); /* Use --salt-shadow-100-color */
+  --salt-shadow-2-color: rgba(0, 0, 0, 0.1); /* Use --salt-shadow-200-color */
+  --salt-shadow-3-color: rgba(0, 0, 0, 0.15); /* Use --salt-shadow-300-color */
+  --salt-shadow-4-color: rgba(0, 0, 0, 0.2); /* Use --salt-shadow-400-color */
+  --salt-shadow-5-color: rgba(0, 0, 0, 0.3); /* Use --salt-shadow-500-color */
+}
+
+.salt-theme[data-mode="dark"] {
+  --salt-shadow-1-color: rgba(0, 0, 0, 0.5); /* Use --salt-shadow-100-color */
+  --salt-shadow-2-color: rgba(0, 0, 0, 0.5); /* Use --salt-shadow-200-color */
+  --salt-shadow-3-color: rgba(0, 0, 0, 0.55); /* Use --salt-shadow-300-color */
+  --salt-shadow-4-color: rgba(0, 0, 0, 0.55); /* Use --salt-shadow-400-color */
+  --salt-shadow-5-color: rgba(0, 0, 0, 0.65); /* Use --salt-shadow-500-color */
 }
 
 .salt-density-touch,
@@ -59,34 +75,30 @@
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 1);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 1.5);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 0.5);
-  /* **Deprecated:** For --salt-icon-size, use values in size.css instead */
-  --salt-icon-size-base: 10px;
-  --salt-icon-size-status-adornment: 6px;
+  --salt-icon-size-base: 10px; /* Use --salt-size-icon */
+  --salt-icon-size-status-adornment: 6px; /* Use --salt-size-adornment */
 }
 
 .salt-density-medium {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 2);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 2);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 1);
-  /* **Deprecated:** For --salt-icon-size, use values in size.css instead */
-  --salt-icon-size-base: 12px;
-  --salt-icon-size-status-adornment: 8px;
+  --salt-icon-size-base: 12px; /* Use --salt-size-icon */
+  --salt-icon-size-status-adornment: 8px; /* Use --salt-size-adornment */
 }
 
 .salt-density-low {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 3);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 2.5);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 1.5);
-  /* **Deprecated:** For --salt-icon-size, use values in size.css instead */
-  --salt-icon-size-base: 14px;
-  --salt-icon-size-status-adornment: 10px;
+  --salt-icon-size-base: 14px; /* Use --salt-size-icon */
+  --salt-icon-size-status-adornment: 10px; /* Use --salt-size-adornment */
 }
 
 .salt-density-touch {
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 4);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 3);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 2);
-  /* **Deprecated:** For --salt-icon-size, use values in size.css instead */
-  --salt-icon-size-base: 16px;
-  --salt-icon-size-status-adornment: 12px;
+  --salt-icon-size-base: 16px; /* Use --salt-size-icon */
+  --salt-icon-size-status-adornment: 12px; /* Use --salt-size-adornment */
 }
