@@ -6,6 +6,12 @@
   --salt-text-textDecoration: none;
   --salt-text-textTransform: none;
 
+  --salt-text-action-letterSpacing: 0.6px;
+  --salt-text-action-textTransform: uppercase;
+  --salt-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
+
+  --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
+
   /* Body text (should be used as default) */
   --salt-text-fontFamily: var(--salt-typography-fontFamily);
   --salt-text-fontWeight: var(--salt-typography-fontWeight-regular);
@@ -66,14 +72,6 @@
   --salt-foreground-secondary: var(--salt-palette-neutral-secondary-foreground);
   --salt-foreground-secondary-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
 
-  /* Link */
-  --salt-navigable-foreground-hover: var(--salt-palette-navigate-foreground-hover);
-  --salt-navigable-foreground-active: var(--salt-palette-navigate-foreground-active);
-  --salt-navigable-foreground-visited: var(--salt-palette-navigate-foreground-visited);
-  --salt-navigable-textDecoration: underline;
-  --salt-navigable-textDecoration-hover: none;
-  --salt-navigable-textDecoration-selected: underline;
-
   /* Code */
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-code);
 }
@@ -107,6 +105,9 @@
 
   --salt-text-display3-fontSize: 42px;
   --salt-text-display3-lineHeight: 54px;
+
+  --salt-text-notation-fontSize: 14px;
+  --salt-text-notation-lineHeight: 18px;
 }
 
 .salt-density-low {
@@ -137,6 +138,9 @@
 
   --salt-text-display3-fontSize: 32px;
   --salt-text-display3-lineHeight: 42px;
+
+  --salt-text-notation-fontSize: 12px;
+  --salt-text-notation-lineHeight: 16px;
 }
 
 .salt-density-medium {
@@ -167,6 +171,9 @@
 
   --salt-text-display3-fontSize: 24px;
   --salt-text-display3-lineHeight: 32px;
+
+  --salt-text-notation-fontSize: 10px;
+  --salt-text-notation-lineHeight: 13px;
 }
 
 .salt-density-high {
@@ -197,4 +204,7 @@
 
   --salt-text-display3-fontSize: 18px;
   --salt-text-display3-lineHeight: 24px;
+
+  --salt-text-notation-fontSize: 8px;
+  --salt-text-notation-lineHeight: 10px;
 }
