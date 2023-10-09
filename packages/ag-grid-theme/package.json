@@ -8,9 +8,8 @@
     "directory": "packages/ag-grid-theme"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
-  "style": "uitk-ag-theme.css",
+  "style": "salt-ag-theme.css",
   "files": [
-    "/uitk-ag-theme.css",
     "/salt-ag-theme.css"
   ],
   "scripts": {
