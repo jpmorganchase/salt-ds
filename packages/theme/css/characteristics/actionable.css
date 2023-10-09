@@ -5,10 +5,6 @@
 
   --salt-actionable-textAlign: center;
 
-  --salt-text-action-letterSpacing: 0.6px;
-  --salt-text-action-textTransform: uppercase;
-  --salt-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
-
   /* Primary variant */
   --salt-actionable-primary-foreground: var(--salt-palette-interact-primary-foreground);
   --salt-actionable-primary-foreground-hover: var(--salt-palette-interact-primary-foreground-hover);
