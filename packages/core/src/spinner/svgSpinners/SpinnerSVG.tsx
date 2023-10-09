@@ -23,8 +23,25 @@ export const SpinnerSVG = (props: {
           <stop className={withBaseName("gradientStop")} offset="0%" />
           <stop className={withBaseName("gradientStop")} offset="100%" />
         </linearGradient>
-        <linearGradient id={`${id}-2`} x1="13%" x2="100%" y1="0%" y2="87%">
-          <stop className={withBaseName("gradientStop")} offset="0%" />
+
+        <linearGradient
+          id={`${id}-2`}
+          gradientUnits="userSpaceOnUse"
+          x1="1"
+          y1="14"
+          x2="27"
+          y2="14"
+        >
+          <stop
+            className={withBaseName("gradientStop")}
+            offset="2%"
+            stopOpacity="0"
+          />
+          <stop
+            className={withBaseName("gradientStop")}
+            offset="50%"
+            stopOpacity="1"
+          />
           <stop
             className={withBaseName("gradientStop")}
             offset="100%"
@@ -34,12 +51,16 @@ export const SpinnerSVG = (props: {
       </defs>
       <g fill="none" fillRule="evenodd">
         <path
-          d="M28 14H24C24 8.47715 19.5228 4 14 4C8.47715 4 4 8.47715 4 14 H 0 C0 6.26801 6.26801 0 14 0C21.732 0 28 6.26801 28 14Z"
-          fill={`url(#${id}-1)`}
+          d="M14,1 a13,13 0 1,1 0,26"
+          stroke={`url(#${id}-1)`}
+          strokeWidth="1.4"
+          fill="none"
         />
         <path
-          d="M4 14 C4 19.5228 8.47715 24 14 24V28C6.26801 28 0 21.732 0 14 Z"
-          fill={`url(#${id}-2)`}
+          d="M1,14 a13,13 0 0,1 26,0"
+          stroke={`url(#${id}-2)`}
+          strokeWidth="1.4"
+          fill="none"
         />
       </g>
     </svg>
