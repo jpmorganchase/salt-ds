@@ -81,4 +81,8 @@ const Variants = (props: AgGridReactProps) => {
   );
 };
 
+Variants.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default Variants;

@@ -39,4 +39,8 @@ const Icons = () => {
   );
 };
 
+Icons.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default Icons;

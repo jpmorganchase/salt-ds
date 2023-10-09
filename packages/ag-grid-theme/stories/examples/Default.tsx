@@ -43,4 +43,8 @@ const Default = (props: AgGridReactProps) => {
   );
 };
 
+Default.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default Default;

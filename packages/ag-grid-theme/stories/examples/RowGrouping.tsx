@@ -26,4 +26,8 @@ const RowGrouping = (props: AgGridReactProps) => {
   );
 };
 
+RowGrouping.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default RowGrouping;
