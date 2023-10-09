@@ -18,6 +18,13 @@
         extend-theme: material,
         font-size: 11px,
       ),
+      ag-theme-salt-compact-dark: (
+        extend-theme: material,
+        font-size: 11px,
+        background-color: #242526,
+        subheader-background-color: #242526,
+        foreground-color: #fff,
+      ),
     ),
     cell-horizontal-padding: calc(var(--salt-spacing-100) + 2px),
     checkbox-checked-color: var(--salt-selectable-primary-foreground-selected),
@@ -40,7 +47,6 @@
     range-selection-border-color: var(--salt-focused-outlineColor),
     range-selection-border-style: var(--salt-focused-outlineStyle),
     range-selection-border-width: var(--salt-focused-outlineWidth),
-    // row-height: var(--salt-size-base),
     row-hover-color: var(--salt-selectable-background-hover),
     secondary-foreground-color: var(--salt-text-primary-foreground),
     selected-row-background-color: var(--salt-selectable-background-selected),
@@ -61,17 +67,27 @@ div[class*="ag-theme-salt"] {
   .ag-header-row {
     color: var(--salt-text-primary-foreground);
     font-size: var(--salt-text-label-fontSize);
-    // font-weight: var(--salt-text-fontWeight);
   }
 
   .ag-pinned-left-header {
     border: none;
+  }
+  .ag-pinned-right-header {
+    border: 0;
   }
 
   .ag-advanced-filter-header,
   .ag-header {
     border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle)
       var(--salt-separable-primary-borderColor);
+  }
+
+  .ag-header-row:not(:first-child)
+    .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
+  .ag-header-row:not(:first-child)
+    .ag-header-group-cell.ag-header-group-cell-with-group:focus {
+    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+      var(--salt-focused-outlineColor);
   }
 
   .ag-menu {
@@ -81,14 +97,11 @@ div[class*="ag-theme-salt"] {
 
   .ag-menu-header {
     border-bottom: 1px solid #cacacb;
+    background-color: var(--salt-container-primary-background);
   }
 
   .ag-menu-separator {
     height: 1px;
-  }
-
-  .ag-tabs-body {
-    padding: 0;
   }
 
   .ag-menu-list {
@@ -105,6 +118,14 @@ div[class*="ag-theme-salt"] {
 
   .ag-menu-option-text {
     padding: 0 var(--salt-spacing-100);
+  }
+
+  .ag-tabs-body {
+    padding: 0;
+  }
+
+  .ag-tab {
+    height: var(--salt-size-stackable);
   }
 
   .ag-row-selected {
@@ -195,17 +216,8 @@ div[class*="ag-theme-salt"] {
         var(--salt-focused-outlineColor);
     }
   }
-  .ag-keyboard-focus .ag-header-cell:focus:after {
-    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-      var(--salt-focused-outlineColor);
-  }
 
-  div[class*="ag-theme-salt"]
-    .ag-header-row:not(:first-child)
-    .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
-  div[class*="ag-theme-salt"]
-    .ag-header-row:not(:first-child)
-    .ag-header-group-cell.ag-header-group-cell-with-group:focus {
+  .ag-keyboard-focus .ag-header-cell:focus:after {
     border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
       var(--salt-focused-outlineColor);
   }
@@ -232,8 +244,6 @@ div[class*="ag-theme-salt"] {
 
   button[class^="ag-"]:focus,
   input[class^="ag-"][type="button"]:focus {
-    // width: var(--salt-size-base);
-    // height: var(--salt-size-base);
     box-shadow: none;
     border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
       var(--salt-focused-outlineColor);
@@ -271,12 +281,20 @@ div[class*="ag-theme-salt"] {
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
   }
+}
 
-  .ag-theme-salt-compact-light .ag-tab {
-    height: var(--salt-size-stackable);
+.ag-theme-salt-variant-secondary {
+  .ag-header {
+    background-color: var(--salt-container-secondary-background);
   }
-  .ag-theme-salt-compact-light .ag-menu-header {
-    background-color: var(--salt-container-primary-background);
+  .ag-row {
+    background-color: var(--salt-container-secondary-background);
+  }
+}
+
+.ag-theme-salt-variant-zebra {
+  .ag-row-even:not(.ag-row-hover, .ag-row-selected) {
+    background-color: var(--salt-container-secondary-background);
   }
 }
 
