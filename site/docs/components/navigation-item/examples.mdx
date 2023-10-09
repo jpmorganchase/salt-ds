@@ -1,4 +1,5 @@
 ---
+# Leave the frontmatter as is
 title:
   $ref: ./#/title
 layout: DetailComponent
@@ -9,6 +10,7 @@ data:
 ---
 
 <LivePreviewControls>
+
 <LivePreview componentName="navigation-item" exampleName="Default">
 
 ### Default (Horizontal)
@@ -18,12 +20,14 @@ By default the Navigation Item is oriented horizontally.
 #### Guidance
 
 A Navigation Item hugs its content by default, but is customisable so that its container can be adjusted to fit any preferred width.
+
 </LivePreview>
 <LivePreview componentName="navigation-item" exampleName="Vertical">
 
 ### Vertical
 
 To change the orientation of the Navigation Item you can use the vertical orientation prop.
+
 </LivePreview>
 <LivePreview componentName="navigation-item" exampleName="WithIcon">
 
@@ -34,6 +38,7 @@ Use an icon to effectively signify the Navigation Itemâ€™s purpose, whether itâ€
 #### Guidance
 
 Ensure that icon descriptors are used consistently across all items within the same hierarchy level. This helps keep them equally weighted.
+
 </LivePreview>
 <LivePreview componentName="navigation-item" exampleName="WithBadge">
 
@@ -44,12 +49,14 @@ You can add a badge to a Navigation Item to serve as a visual cue. A badge can i
 #### Guidance
 
 A badge should only be placed in a Navigation Item that does not include nested items, i.e., it will not have a chevron.
+
 </LivePreview>
 <LivePreview componentName="navigation-item" exampleName="WithNestedItems">
 
 ### With nested items
 
 You can use a Navigation Item as a parent which nests other Navigation Items inside it. Parent Navigation Items are displayed with a chevron on the right-hand side. To set a Navigation Item as a parent use the `Parent` prop.
+
 </LivePreview>
 <LivePreview componentName="navigation-item" exampleName="HorizontalGroup">
 
@@ -60,12 +67,14 @@ Use horizontal Navigation Items within a horizontal group to establish a consist
 #### Guidance
 
 Use a horizontal group of Navigation Items when you have fewer than eight items, otherwise consider a vertical group of items.
+
 </LivePreview>
 <LivePreview componentName="navigation-item" exampleName="VerticalGroup">
 
 ### Vertical group
 
 A vertical navigation group provides a simple, single-level list of links that users can select within an application or website.
+
 </LivePreview>
 <LivePreview componentName="navigation-item" exampleName="VerticalNestedGroup">
 
@@ -78,5 +87,7 @@ When a vertical nested group is collapsed, and there is an active nested item wi
 #### Guidance
 
 If a Navigation Item has nested items within it, it will act as a trigger to show and hide the nested items. A parent item cannot act as a link and navigate to an overview page. If you require an overview page, use the first nested item to achieve this.
+
 </LivePreview>
+
 </LivePreviewControls>
