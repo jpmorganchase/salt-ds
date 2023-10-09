@@ -6,7 +6,7 @@
         extend-theme: material,
         background-color: #fff,
         subheader-background-color: #fff,
-        foreground-color: #161616,
+        foreground-color: #2a2c2f,
       ),
       ag-theme-salt-dark: (
         extend-theme: material,
@@ -80,6 +80,11 @@ div[class*="ag-theme-salt"] {
   .ag-header {
     border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle)
       var(--salt-separable-primary-borderColor);
+  }
+
+  .ag-header-row:not(:first-child)
+    .ag-header-cell:not(.ag-header-span-height.ag-header-span-total) {
+    border-top-color: #cacacb;
   }
 
   .ag-header-row:not(:first-child)
@@ -186,11 +191,16 @@ div[class*="ag-theme-salt"] {
     padding: 0;
   }
 
+  .ag-cell.numeric-cell {
+    text-align: right;
+  }
+
   .ag-cell.editable-cell {
     border: var(--salt-size-border) var(--salt-container-borderStyle)
       var(--salt-editable-borderColor);
     text-align: right;
   }
+
   .ag-checkbox-input-wrapper {
     border: var(--salt-size-border) var(--salt-selectable-borderStyle)
       var(--salt-selectable-borderColor);
