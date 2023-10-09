@@ -1,4 +1,0 @@
----
-"@salt-ds/lab": minor
----
-
