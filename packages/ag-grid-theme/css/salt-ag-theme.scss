@@ -14,6 +14,10 @@
         subheader-background-color: #242526,
         foreground-color: #fff,
       ),
+      ag-theme-salt-compact-light: (
+        extend-theme: material,
+        font-size: 11px,
+      ),
     ),
     cell-horizontal-padding: calc(var(--salt-spacing-100) + 2px),
     checkbox-checked-color: var(--salt-selectable-primary-foreground-selected),
@@ -103,6 +107,24 @@ div[class*="ag-theme-salt"] {
     padding: 0 var(--salt-spacing-100);
   }
 
+  .ag-row-selected {
+    background-color: var(--ag-selected-row-background-color);
+    border-color: var(--salt-selectable-borderColor-selected);
+  }
+
+  .ag-row-selected:before {
+    background-color: var(--salt-selectable-borderColor-selected);
+    background-image: none;
+    height: var(--salt-size-border);
+    top: -1px;
+  }
+
+  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
+      .ag-cell-range-single-cell
+    ) {
+    border-right-color: var(--salt-separable-tertiary-borderColor);
+  }
+
   .ag-ltr .ag-cell {
     border-width: 2px;
     line-height: calc(
@@ -115,8 +137,37 @@ div[class*="ag-theme-salt"] {
     padding-right: var(--salt-spacing-100);
   }
 
+  .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected) {
+    border-width: 2px;
+  }
+
+  .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
+    border-width: 2px;
+    border-color: var(--ag-range-selection-border-color);
+  }
+
+  .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
+    :before {
+      border-bottom: var(--agGrid-editableCell-cornerTag-size) solid transparent;
+      border-left: var(--agGrid-editableCell-cornerTag-size) solid
+        var(--agGrid-focused-borderColor);
+      border-top: 0 solid transparent;
+      content: "";
+      left: -2px;
+      position: absolute;
+      top: -2px;
+      z-index: 2;
+    }
+  }
+
   .ag-cell-wrapper {
     height: 100%;
+  }
+
+  input[class^="ag-"][type="number"],
+  input[class^="ag-"][type="number"]:focus {
+    border: 0;
+    padding: 0;
   }
 
   .ag-cell.editable-cell {
@@ -220,7 +271,15 @@ div[class*="ag-theme-salt"] {
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
   }
+
+  .ag-theme-salt-compact-light .ag-tab {
+    height: var(--salt-size-stackable);
+  }
+  .ag-theme-salt-compact-light .ag-menu-header {
+    background-color: var(--salt-container-primary-background);
 }
+}
+
 // Import is here so the custom icons are injected after the default ag-grid icons.
 @import "./salt-ag-theme-icon-font";
 
