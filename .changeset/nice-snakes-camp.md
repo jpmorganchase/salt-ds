@@ -62,3 +62,11 @@ In `PillCheckbox.css`,
 - --saltCheckbox-icon-tick-color: var(--salt-taggable-foreground);
 + --saltCheckbox-icon-tick-color: var(--salt-actionable-primary-foreground);
 ```
+
+- Updated Interactable Card component CSS token values as per figma design updates, visual changes expected
+
+```diff
+- border-color: var(--saltCard-borderColor-disabled, var(--salt-accent-borderColor-disabled));
++ border-color: var(--saltCard-borderColor-disabled, var(--salt-container-primary-borderColor-disabled));
+
+```
