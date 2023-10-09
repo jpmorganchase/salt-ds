@@ -5,5 +5,11 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["src/**/*", "globals.d.ts"]
+  "include": [
+    "src/**/*",
+    "globals.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
