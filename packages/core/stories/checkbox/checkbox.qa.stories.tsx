@@ -11,7 +11,7 @@ export const AllExamplesGrid: StoryFn<
   QAContainerProps & { className?: string }
 > = ({ className, ...props }) => {
   return (
-    <QAContainer cols={1} height={500} width={1200} {...props}>
+    <QAContainer cols={1} height={1200} {...props}>
       <CheckboxGroup>
         <Checkbox
           className={className}
@@ -37,6 +37,11 @@ export const AllExamplesGrid: StoryFn<
           className={className}
           readOnly
           label="I understand ADA requires Labels on read-only checkboxes"
+        />
+        <Checkbox
+          className={className}
+          readOnly
+          label="Checkboxes allow the user to select multiple options from a set. If you have multiple options appearing in a list, you can preserve space by using checkboxes instead of on/off switches. If you have a single option, avoid using a checkbox and use an on/off switch instead."
         />
       </CheckboxGroup>
     </QAContainer>
