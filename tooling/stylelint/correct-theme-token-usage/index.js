@@ -81,8 +81,6 @@ const allAllowedKeys = [
   "duration", // TODO: to be merged with animation
   "size",
   "spacing",
-  // foundations fade
-  "color",
   // icon size
   "icon-size",
   "zIndex",
