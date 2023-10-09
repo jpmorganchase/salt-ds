@@ -128,9 +128,9 @@ div[class*="ag-theme-salt"] {
     height: var(--salt-size-stackable);
   }
 
-  .ag-row {
-    display: flex;
-  }
+  // .ag-row {
+  //   display: flex;
+  // }
 
   .ag-row-selected {
     background-color: var(--ag-selected-row-background-color);
@@ -152,14 +152,14 @@ div[class*="ag-theme-salt"] {
 
   .ag-ltr .ag-cell {
     border-width: 2px;
-    height: calc(
-      min(
-          var(--ag-internal-calculated-line-height),
-          var(--ag-internal-padded-row-height)
-        ) - 2px
-    );
-    line-height: var(--salt-text-lineHeight);
-    align-self: center;
+    // height: calc(
+    //   min(
+    //       var(--ag-internal-calculated-line-height),
+    //       var(--ag-internal-padded-row-height)
+    //     ) - 2px
+    // );
+    line-height: 34px;
+    // align-self: center;
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
   }
