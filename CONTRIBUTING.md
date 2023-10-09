@@ -61,11 +61,11 @@ In `theme/css/deprecated/characteristics.css`, add these 3 tokens:
     colorVar="--salt-text-token-3"
     replacementToken="--salt-text-token-1"
   />
+  <ColorBlock colorVar="--salt-text-token-4" replacementToken="N/A" />
   <ColorBlock
-    colorVar="--salt-text-token-4"
-    replacementToken="N/A"
+    colorVar="--salt-text-token-5"
+    replacementToken="--salt-text-token-1"
   />
-  <ColorBlock colorVar="--salt-text-token-5" replacementToken="--salt-text-token-1" />
 </DocGrid>
 ```
 

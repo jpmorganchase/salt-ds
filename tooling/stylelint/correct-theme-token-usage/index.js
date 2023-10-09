@@ -65,31 +65,31 @@ const allAllowedKeys = [
   "actionable",
   "container",
   "draggable",
-  "differential", // TODO: **deprecated:** delete here
   "editable",
   "focused",
-  "measured", // TODO: **deprecated:** delete here
   "navigable",
   "overlayable",
   "selectable",
   "separable",
   "status",
-  "taggable",
   "target",
   "text",
   "track",
+  "foreground",
   // additional to decide
   "animation",
-  "delay", // TODO: **deprecated:** delete here
   "duration", // TODO: to be merged with animation
   "size",
   "spacing",
+  // foundations fade
+  "color",
   // icon size
   "icon-size",
   "zIndex",
   // palette
   "palette-opacity",
   "palette-neutral",
+  "palette-interact",
 ];
 
 const regexpPattern = new RegExp(
