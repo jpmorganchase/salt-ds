@@ -15,12 +15,9 @@ import {
 
 # AG Grid theme
 
-AG Grid theme gives you the ability to add our theme styles to AG Grid. The package contains CSS files only, and is applicable for AG Grid versions 25, 26 and 27.
+AG Grid theme gives you the ability to add our theme styles to AG Grid. The package contains CSS files only, and is applicable for AG Grid versions 29 and 30.
 
-The AG Grid theme package provides two different themes for your use case:
-
-- _UITK AG Grid theme_ contains CSS files with a theme that resembles the Toolkit V1 Data Grid component; use this when you would like to keep the Toolkit V1 theme.
-- _Salt AG Grid theme_ contains CSS files with a theme in line with Salt Design System; use this when you would like to go with our latest design (the Salt theme).
+_Salt AG Grid theme_ contains CSS files with a theme in line with Salt Design System; use this when you would like to go with our latest design (the Salt theme).
 
 Consider using the [Salt Design System Grid component](https://saltdesignsystem-storybook.pages.dev/?path=/docs/documentation-data-grid-data-grid--page) built in-house, in alignment with the Salt theme, if you would prefer a component that is not related to AG Grid.
 
@@ -36,37 +33,6 @@ yarn add @salt-ds/ag-grid-theme
 
 ```
 npm install @salt-ds/ag-grid-theme
-```
-
-1. Follow these instructions to [use _UITK AG Grid theme_](#uitk)
-2. Follow these instructions to [use _Salt AG Grid theme_](#salt)
-
-### <a name="uitk"></a>Installing UITK AG Grid theme
-
-To import the UITK AG Grid theme, run the following command:
-
-```
-import '@salt-ds/ag-grid-theme/uitk-ag-theme.css';
-```
-
-#### CSS class names for UITK AG Grid theme
-
-For light mode,
-
-```
-.ag-theme-uitk-high-light
-.ag-theme-uitk-medium-light
-.ag-theme-uitk-low-light
-.ag-theme-uitk-touch-light
-```
-
-For dark mode,
-
-```
-.ag-theme-uitk-high-dark
-.ag-theme-uitk-medium-dark
-.ag-theme-uitk-low-dark
-.ag-theme-uitk-touch-dark
 ```
 
 ### <a name="salt"></a>Installing Salt AG Grid theme
@@ -115,7 +81,7 @@ For editable fields, add this class name to the `cellClass` array in your column
 For fields displaying numeric values add this class name to the `cellClass` array in your column definition:
 
 ```
-.editable-cell
+.numeric-cell
 ```
 
 ## Examples
@@ -130,8 +96,6 @@ Wrap `AgGridReact` component with a `div` and the `className` prop you prefer,
 </div>
 
 ```
-
-Use the 'Salt' or 'UITK' button in each example below to toggle between _Salt AG Grid theme_ and _UITK AG Grid theme_.
 
 #### Basic Grid
 
