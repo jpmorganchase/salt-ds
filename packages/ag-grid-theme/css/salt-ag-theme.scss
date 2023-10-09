@@ -167,22 +167,11 @@ div[class*="ag-theme-salt"] {
     border-color: var(--ag-range-selection-border-color);
   }
 
-  .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
-    :before {
-      border-bottom: var(--agGrid-editableCell-cornerTag-size) solid transparent;
-      border-left: var(--agGrid-editableCell-cornerTag-size) solid
-        var(--agGrid-focused-borderColor);
-      border-top: 0 solid transparent;
-      content: "";
-      left: -2px;
-      position: absolute;
-      top: -2px;
-      z-index: 2;
-    }
-  }
-
   .ag-cell-wrapper {
     height: 100%;
+  }
+  .ag-cell-wrapper.ag-row-group {
+    align-items: center;
   }
 
   input[class^="ag-"][type="number"],
