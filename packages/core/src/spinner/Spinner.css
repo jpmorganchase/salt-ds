@@ -10,14 +10,14 @@
 
 /* Styles applied when `size="default"` */
 .saltSpinner-default {
-  height: var(--salt-size-base);
-  width: var(--salt-size-base);
+  height: calc(var(--salt-size-base) * 4);
+  width: calc(var(--salt-size-base) * 4);
 }
 
-/* Styles applied when `size="large"` */
-.saltSpinner-large {
-  height: calc(var(--salt-size-base) * 2);
-  width: calc(var(--salt-size-base) * 2);
+/* Styles applied when `size="nested"` */
+.saltSpinner-nested {
+  height: var(--salt-size-icon);
+  width: var(--salt-size-icon);
 }
 
 /* Styles applied to the SVG */

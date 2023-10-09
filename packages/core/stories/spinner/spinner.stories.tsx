@@ -32,9 +32,9 @@ export const All: StoryFn = () => {
       <AllRenderer>
         <Spinner />
       </AllRenderer>
-      <H1>Large</H1>
+      <H1>Nested</H1>
       <AllRenderer>
-        <Spinner size="large" />
+        <Spinner size="nested" />
       </AllRenderer>
     </div>
   );
@@ -45,9 +45,9 @@ Default.args = {
   size: "default",
 };
 
-export const Large = Template.bind({});
-Large.args = {
-  size: "large",
+export const Nested = Template.bind({});
+Nested.args = {
+  size: "nested",
 };
 
 type LoadingStatus = "loading" | "loaded" | "idle";
@@ -78,7 +78,7 @@ export const Loading: StoryFn = () => {
         <Spinner
           style={{ margin: "auto" }}
           aria-label="Panel is loading"
-          size="large"
+          size="nested"
         />
       ) : (
         <>

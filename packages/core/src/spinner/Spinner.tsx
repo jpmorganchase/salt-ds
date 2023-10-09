@@ -12,10 +12,10 @@ import { useComponentCssInjection } from "@salt-ds/styles";
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="default | large" />
+ * <Spinner size="default | nested" />
  */
 
-export const SpinnerSizeValues = ["default", "large"] as const;
+export const SpinnerSizeValues = ["default", "nested"] as const;
 export type SpinnerSize = (typeof SpinnerSizeValues)[number];
 const withBaseName = makePrefixer("saltSpinner");
 
@@ -45,7 +45,7 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   role?: string;
   /**
-   * Determines the size of the spinner. Must be one of: 'default', 'large'.
+   * Determines the size of the spinner. Must be one of: 'default', 'nested'.
    */
   size?: SpinnerSize;
   /**
