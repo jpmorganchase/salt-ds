@@ -128,9 +128,10 @@
   --salt-navigable-indicator-activeDisabled: var(--salt-palette-navigate-indicator-activeDisabled);
 
   /* Accent */
-  --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use token --salt-text-notation-fontWeight */
+  --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use --salt-text-notation-fontWeight */
   --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
   --salt-accent-background-disabled: var(--salt-palette-accent-background-disabled);
+  --salt-accent-borderColor-disabled: var(--salt-palette-accent-border-disabled); /* Use --salt-container-primary-borderColor-disabled */
 
   /* Track */
   --salt-track-borderWidth: 2px; /* Use --salt-size-border-strong */

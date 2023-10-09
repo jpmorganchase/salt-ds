@@ -84,6 +84,7 @@
   /* Accent */
   --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
   --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
+  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -154,4 +155,5 @@
   /* Accent */
   --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
   --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
+  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
 }
