@@ -18,7 +18,7 @@ export const BORDER_POSITION = [
   "south",
 ] as const;
 
-export type BorderPosition = typeof BORDER_POSITION[number];
+export type BorderPosition = (typeof BORDER_POSITION)[number];
 
 export type BorderItemProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<

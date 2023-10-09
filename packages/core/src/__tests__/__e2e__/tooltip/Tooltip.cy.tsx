@@ -1,8 +1,10 @@
 import * as tooltipStories from "@stories/tooltip/tooltip.stories";
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import { InfoIcon } from "@salt-ds/icons";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { Tooltip } from "@salt-ds/core";
+
+import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const composedStories = composeStories(tooltipStories);
 
@@ -173,6 +175,20 @@ describe("GIVEN a Tooltip", () => {
         .should("be.visible")
         .should("have.css", "font-size", "12px")
         .should("have.css", "font-weight", "400");
+    });
+  });
+
+  describe("WHEN used with a custom floating component", () => {
+    it("should render the custom floating component", () => {
+      cy.mount(
+        <CustomFloatingComponentProvider>
+          <Tooltip open content="tooltip">
+            <InfoIcon />
+          </Tooltip>
+        </CustomFloatingComponentProvider>
+      );
+
+      cy.findByTestId(FLOATING_TEST_ID).should("exist");
     });
   });
 });

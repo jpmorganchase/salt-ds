@@ -7,7 +7,7 @@ import {
   DialogContent,
   DialogCloseButton,
 } from "@salt-ds/lab";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { StoryFn, Meta } from "@storybook/react";
 import "./dialog.stories.css";
 
 export default {
@@ -17,9 +17,9 @@ export default {
     title: "Congratulations! You have created a Dialog.",
     content: "This is the content of the dialog.",
   },
-} as ComponentMeta<typeof Dialog>;
+} as Meta<typeof Dialog>;
 
-const DialogTemplate: ComponentStory<typeof Dialog> = ({
+const DialogTemplate: StoryFn<typeof Dialog> = ({
   title,
   // @ts-ignore
   accent,
@@ -137,7 +137,7 @@ LongContent.args = {
   ),
 };
 
-const AlertDialogTemplate: ComponentStory<typeof Dialog> = ({
+const AlertDialogTemplate: StoryFn<typeof Dialog> = ({
   open: openProp = true,
   status,
   title,

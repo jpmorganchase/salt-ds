@@ -11,15 +11,15 @@ import {
   Input,
   AccordionGroupProps,
 } from "@salt-ds/core";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "./accordion.stories.css";
 
 export default {
   title: "Core/Accordion",
   component: Accordion,
-} as ComponentMeta<typeof Accordion>;
+} as Meta<typeof Accordion>;
 
-export const Default: Story<AccordionProps> = (props) => (
+export const Default: StoryFn<AccordionProps> = (props) => (
   <div className="story-root">
     <Accordion {...props}>
       <AccordionHeader>Internal form</AccordionHeader>
@@ -48,7 +48,7 @@ Default.args = {
   value: "accordion-1",
 };
 
-export const DefaultGroup: Story<AccordionGroupProps> = (props) => (
+export const DefaultGroup: StoryFn<AccordionGroupProps> = (props) => (
   <div className="story-root">
     <AccordionGroup {...props}>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
@@ -77,7 +77,7 @@ export const DefaultGroup: Story<AccordionGroupProps> = (props) => (
   </div>
 );
 
-export const ExclusiveGroup: Story<AccordionGroupProps> = (props) => {
+export const ExclusiveGroup: StoryFn<AccordionGroupProps> = (props) => {
   const [expanded, setExpanded] = useState<string>("");
 
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -120,7 +120,7 @@ export const ExclusiveGroup: Story<AccordionGroupProps> = (props) => {
   );
 };
 
-export const Disabled: Story<AccordionGroupProps> = (props) => (
+export const Disabled: StoryFn<AccordionGroupProps> = (props) => (
   <div className="story-root">
     <AccordionGroup {...props}>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
@@ -160,7 +160,7 @@ const statuses: AccordionProps["status"][] = [
   "success",
 ];
 
-export const Status: Story<AccordionGroupProps> = (props) => (
+export const Status: StoryFn<AccordionGroupProps> = (props) => (
   <div className="story-root">
     <AccordionGroup {...props}>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (

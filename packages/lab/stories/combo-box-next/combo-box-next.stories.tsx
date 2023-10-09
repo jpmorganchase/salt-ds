@@ -4,7 +4,7 @@ import {
   Highlighter,
   ListItemNext,
 } from "@salt-ds/lab";
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import {
   LargeCity,
   largestCities,
@@ -18,7 +18,7 @@ import { Button, FlexItem, FlexLayout } from "@salt-ds/core";
 export default {
   title: "Lab/Combo Box Next",
   component: ComboBoxNext,
-} as ComponentMeta<typeof ComboBoxNext>;
+} as Meta<typeof ComboBoxNext>;
 
 const CustomListItem = ({
   value,
@@ -52,7 +52,7 @@ const customItemFilter = (source: LargeCity[], filterValue?: string) =>
     !filterValue ? item : customMatchPattern(item, filterValue)
   );
 
-const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = ({
+const ComboBoxTemplate: StoryFn<ComboBoxNextProps<any>> = ({
   onChange,
   ...rest
 }) => {
@@ -75,7 +75,7 @@ const ComboBoxTemplate: Story<ComboBoxNextProps<any>> = ({
   );
 };
 
-export const Controlled: Story<ComboBoxNextProps<any>> = ({
+export const Controlled: StoryFn<ComboBoxNextProps<any>> = ({
   inputValue,
   ...rest
 }) => {

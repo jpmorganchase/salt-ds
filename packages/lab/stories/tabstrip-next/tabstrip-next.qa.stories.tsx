@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { TabstripNextProps, TabstripNext, TabNext } from "@salt-ds/lab";
 import { QAContainer } from "docs/components";
 import "./tabstrip-next.stories.css";
@@ -13,7 +13,7 @@ export default {
   },
 };
 
-type TabstripStory = Story<
+type TabstripStory = StoryFn<
   TabstripNextProps & {
     width?: number;
   }

@@ -12,14 +12,14 @@ import {
   SendIcon,
   UserBadgeIcon,
 } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Multiline Input",
   component: MultilineInput,
-} as ComponentMeta<typeof MultilineInput>;
+} as Meta<typeof MultilineInput>;
 
-export const Default: ComponentStory<typeof MultilineInput> = (args) => {
+export const Default: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <MultilineInput
       defaultValue="Value"
@@ -29,7 +29,7 @@ export const Default: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const Controlled: ComponentStory<typeof MultilineInput> = (args) => {
+export const Controlled: StoryFn<typeof MultilineInput> = (args) => {
   const [value, setValue] = useState("Value");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +47,7 @@ export const Controlled: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const NumberOfRows: ComponentStory<typeof MultilineInput> = (args) => {
+export const NumberOfRows: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <MultilineInput
       rows={5}
@@ -58,7 +58,7 @@ export const NumberOfRows: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const Bordered: ComponentStory<typeof MultilineInput> = (args) => {
+export const Bordered: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput bordered defaultValue="Value" {...args} />
@@ -72,7 +72,7 @@ export const Bordered: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const Variants: ComponentStory<typeof MultilineInput> = (args) => {
+export const Variants: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput defaultValue="Value" {...args} />
@@ -81,7 +81,7 @@ export const Variants: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
+export const Disabled: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput disabled defaultValue="Value" {...args} />
@@ -103,7 +103,7 @@ export const Disabled: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
+export const CharacterCount: StoryFn<typeof MultilineInput> = (args) => {
   const [value, setValue] = useState<string>("Value");
   const [isError, setIsError] = useState<boolean>(false);
   const MAX_CHARS = 10;
@@ -131,7 +131,7 @@ export const CharacterCount: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
+export const Readonly: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput readOnly defaultValue="Value" {...args} />
@@ -153,7 +153,7 @@ export const Readonly: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const Placeholder: ComponentStory<typeof MultilineInput> = (args) => {
+export const Placeholder: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <MultilineInput
       style={{ maxWidth: "266px" }}
@@ -163,9 +163,7 @@ export const Placeholder: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const ValidationStates: ComponentStory<typeof MultilineInput> = (
-  args
-) => {
+export const ValidationStates: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput validationStatus="error" defaultValue="Value" {...args} />
@@ -201,7 +199,7 @@ export const ValidationStates: ComponentStory<typeof MultilineInput> = (
   );
 };
 
-export const Spellcheck: ComponentStory<typeof MultilineInput> = (args) => {
+export const Spellcheck: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <MultilineInput
       defaultValue="This is a coment. It contains several sentences, with words spelt correctly or incorectly. Click to see Spellcheck take effect."
@@ -212,7 +210,7 @@ export const Spellcheck: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
+export const WithAdornments: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput
@@ -269,9 +267,7 @@ export const WithAdornments: ComponentStory<typeof MultilineInput> = (args) => {
   );
 };
 
-export const WithMultipleFeatures: ComponentStory<typeof MultilineInput> = (
-  args
-) => {
+export const WithMultipleFeatures: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput

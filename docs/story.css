@@ -6,9 +6,5 @@ body {
 
 body {
   min-height: 100vh;
-  font-weight: 400;
-  font-family: "Open Sans";
-  font-size: 14px;
-  line-height: 1.85714286em;
   overscroll-behaviour: none;
 }

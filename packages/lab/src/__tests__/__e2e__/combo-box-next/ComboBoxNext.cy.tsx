@@ -1,5 +1,7 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as comboBoxNextStories from "@stories/combo-box-next/combo-box-next.stories";
+
+import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const { Default, CustomRenderer, Controlled } =
   composeStories(comboBoxNextStories);
@@ -105,6 +107,18 @@ describe("GIVEN a Combobox", () => {
         cy.realPress("Tab");
         cy.findAllByRole("option").should("have.length", 2);
       });
+    });
+  });
+
+  describe("When used with a custom floating component", () => {
+    it("should render the custom floating component", () => {
+      cy.mount(
+        <CustomFloatingComponentProvider>
+          <Default PortalProps={{ open: true }} />
+        </CustomFloatingComponentProvider>
+      );
+
+      cy.findByTestId(FLOATING_TEST_ID).should("exist");
     });
   });
   // TODO: check we fix UITK bugs

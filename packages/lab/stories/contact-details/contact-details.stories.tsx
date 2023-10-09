@@ -26,7 +26,7 @@ import {
   ValueComponentProps,
   FormField,
 } from "@salt-ds/lab";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { forwardRef, Fragment, ReactNode } from "react";
 
 import "./contact-details.stories.css";
@@ -132,7 +132,7 @@ const ObscurePhoneNumberRenderer = forwardRef<HTMLElement, ValueComponentProps>(
 const contactToString = (nameEmail: NameEmail) =>
   nameEmail ? nameEmail.name : "";
 
-const DefaultTemplate: Story = () => {
+const DefaultTemplate: StoryFn = () => {
   return (
     <div style={{ width: 390 }}>
       <ContactDetails>
@@ -152,7 +152,7 @@ const DefaultTemplate: Story = () => {
   );
 };
 
-const CompactContactDetailsTemplate: Story = () => {
+const CompactContactDetailsTemplate: StoryFn = () => {
   return (
     <div style={{ width: 400 }}>
       <ContactDetails variant="compact">
@@ -165,7 +165,7 @@ const CompactContactDetailsTemplate: Story = () => {
   );
 };
 
-const MiniContactDetailsTemplate: Story = () => {
+const MiniContactDetailsTemplate: StoryFn = () => {
   return (
     <div style={{ maxWidth: 400 }}>
       <ContactDetails variant="mini">
@@ -176,7 +176,7 @@ const MiniContactDetailsTemplate: Story = () => {
   );
 };
 
-const IconDescriptorsTemplate: Story = () => {
+const IconDescriptorsTemplate: StoryFn = () => {
   return (
     <div style={{ width: 400 }}>
       <ContactDetails>
@@ -201,7 +201,7 @@ const IconDescriptorsTemplate: Story = () => {
   );
 };
 
-const WithoutAvatarTemplate: Story = () => {
+const WithoutAvatarTemplate: StoryFn = () => {
   return (
     <div className={"withoutAvatar"}>
       <div className={"withoutAvatar-container"}>
@@ -239,7 +239,7 @@ const WithoutAvatarTemplate: Story = () => {
   );
 };
 
-const ObscuredDetailsTemplate: Story = () => {
+const ObscuredDetailsTemplate: StoryFn = () => {
   return (
     <div style={{ width: 400 }}>
       <ContactDetails>
@@ -271,7 +271,7 @@ const ObscuredDetailsTemplate: Story = () => {
   );
 };
 
-const FavoriteToggleTemplate: Story = () => {
+const FavoriteToggleTemplate: StoryFn = () => {
   return (
     <div className={"favoriteToggle"}>
       <div className={"favoriteToggle-container"}>
@@ -316,7 +316,7 @@ const FavoriteToggleTemplate: Story = () => {
   );
 };
 
-const FastActionsTemplate: Story = () => {
+const FastActionsTemplate: StoryFn = () => {
   const renderAllButActions = () => {
     return [
       <ContactPrimaryInfo text={personaD.name} />,
@@ -382,7 +382,7 @@ const FastActionsTemplate: Story = () => {
   );
 };
 
-const CollapsibleDetailsTemplate: Story = () => (
+const CollapsibleDetailsTemplate: StoryFn = () => (
   <div className="collapsibleDetails">
     <ContactDetails>
       <ContactFavoriteToggle />
@@ -418,7 +418,7 @@ const CollapsibleDetailsTemplate: Story = () => (
   </div>
 );
 
-const WithinCardTemplate: Story = () => {
+const WithinCardTemplate: StoryFn = () => {
   return (
     <Card className="withinCard">
       <ContactDetails embedded={true}>
@@ -443,7 +443,7 @@ const Tile = (props: { className?: string; children?: ReactNode }) => (
   <div className={props.className}>{props.children}</div>
 );
 
-const WithinTileTemplate: Story = () => {
+const WithinTileTemplate: StoryFn = () => {
   return (
     <>
       {[personaA, personaE, personaF, personaD].map((contact, index) => (
@@ -472,7 +472,7 @@ const WithinTileTemplate: Story = () => {
   );
 };
 
-const WithinOverlayTemplate: Story = () => {
+const WithinOverlayTemplate: StoryFn = () => {
   const { getOverlayProps, getTriggerProps } = useOverlay({
     placement: "bottom",
   });
@@ -577,7 +577,7 @@ const tooltipContacts = [
   personaL,
 ];
 
-const WithinComboBoxTooltip: Story = () => {
+const WithinComboBoxTooltip: StoryFn = () => {
   const handleChange: SelectionChangeHandler<NameEmail> = (_, selectedItem) => {
     console.log("selection changed", selectedItem);
   };
@@ -595,7 +595,7 @@ const WithinComboBoxTooltip: Story = () => {
   );
 };
 
-const ExportToFileTemplate: Story = () => {
+const ExportToFileTemplate: StoryFn = () => {
   const generateVCardData = () =>
     [
       "BEGIN:VCARD",

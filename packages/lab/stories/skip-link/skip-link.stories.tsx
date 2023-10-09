@@ -1,15 +1,15 @@
 import { useRef } from "react";
 import { Button } from "@salt-ds/core";
 import { SkipLink, SkipLinks } from "@salt-ds/lab";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import "./skip-link.stories.css";
 
 export default {
   title: "Lab/Skip Link",
   component: SkipLink,
-} as ComponentMeta<typeof SkipLink>;
+} as Meta<typeof SkipLink>;
 
-export const Default: ComponentStory<typeof SkipLink> = () => {
+export const Default: StoryFn<typeof SkipLink> = () => {
   const articleRef = useRef<HTMLElement>(null);
 
   return (
@@ -68,7 +68,7 @@ export const Default: ComponentStory<typeof SkipLink> = () => {
   );
 };
 
-export const MultipleLinks: ComponentStory<typeof SkipLink> = () => {
+export const MultipleLinks: StoryFn<typeof SkipLink> = () => {
   const sectionRef1 = useRef<HTMLElement>(null);
   const sectionRef2 = useRef<HTMLElement>(null);
 

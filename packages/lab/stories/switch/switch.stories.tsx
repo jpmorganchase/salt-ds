@@ -1,13 +1,13 @@
 import { ChangeEvent, useState } from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { Switch } from "@salt-ds/lab";
 
 export default {
   title: "Lab/Switch",
   component: Switch,
-} as ComponentMeta<typeof Switch>;
+} as Meta<typeof Switch>;
 
-const Template: ComponentStory<typeof Switch> = (args) => {
+const Template: StoryFn<typeof Switch> = (args) => {
   return <Switch {...args} />;
 };
 
@@ -39,7 +39,7 @@ DisabledChecked.args = {
   label: "Disabled + Checked",
 };
 
-export const Controlled: ComponentStory<typeof Switch> = (args) => {
+export const Controlled: StoryFn<typeof Switch> = (args) => {
   const [checked, setChecked] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

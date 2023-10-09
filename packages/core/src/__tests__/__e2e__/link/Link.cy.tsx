@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import { Link } from "@salt-ds/core";
 
 import * as linkStories from "@stories/link/link.stories";

@@ -1,0 +1,14 @@
+.animated-container {
+  animation: slide 4s infinite;
+  animation-direction: alternate;
+  will-change: translate;
+}
+
+@keyframes slide {
+  0% {
+    translate: -200px 0;
+  }
+  100% {
+    translate: 200px 0;
+  }
+}

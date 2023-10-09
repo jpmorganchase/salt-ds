@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import {
   StatusIndicator,
   FlowLayout,
@@ -16,11 +16,9 @@ export default {
   args: {
     size: 1,
   },
-} as ComponentMeta<typeof StatusIndicator>;
+} as Meta<typeof StatusIndicator>;
 
-const AllStatusIndicatorsStory: ComponentStory<typeof StatusIndicator> = (
-  args
-) => {
+const AllStatusIndicatorsStory: StoryFn<typeof StatusIndicator> = (args) => {
   const { size } = args;
 
   return (
@@ -34,7 +32,7 @@ const AllStatusIndicatorsStory: ComponentStory<typeof StatusIndicator> = (
 export const All = AllStatusIndicatorsStory.bind({});
 All.argTypes = { status: { control: false } };
 
-const Template: ComponentStory<typeof StatusIndicator> = (args) => {
+const Template: StoryFn<typeof StatusIndicator> = (args) => {
   return <StatusIndicator {...args} />;
 };
 

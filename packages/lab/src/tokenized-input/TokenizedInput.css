@@ -103,8 +103,10 @@
 }
 
 /* Styles applied to Expand Button  */
-.saltTokenizedInput-expandButton {
+.saltTokenizedInput-expandButton.saltButton {
   padding: 0 calc(var(--tokenizedInput-spacing) / 4);
+  --saltButton-height: calc(var(--tokenizedInput-height) - var(--tokenizedInput-spacing) * 1.5);
+  --saltButton-margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
 }
 
 /* Styles applied to root component and pill container if `expanded={true}` */
@@ -116,7 +118,6 @@
 /* TODO: Adjust specificity of .InputPill depending on styling solution.
   This is an example of internal sub-component naming convension. */
 .saltTokenizedInput .saltInputPill,
-.saltTokenizedInput-expandButton,
 .saltInputLegacy.saltTokenizedInput-input,
 .saltTokenizedInput-inputField.saltTokenizedInput-inputMultiline .saltTokenizedInput-input {
   margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;

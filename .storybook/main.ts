@@ -1,25 +1,19 @@
-import type { StorybookConfig } from "@storybook/react/types";
+import { dirname, join } from "path";
+import type { StorybookConfig } from "@storybook/react-vite";
 import type { UserConfig } from "vite";
 import { mergeConfig } from "vite";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 import { cssInline } from "../tooling/css-inline-plugin";
 
-type ViteFinalOptions = {
-  configType: "DEVELOPMENT" | "PRODUCTION";
-};
-
-interface ExtendedConfig extends StorybookConfig {
-  viteFinal?: (
-    config: UserConfig,
-    options: ViteFinalOptions
-  ) => Promise<UserConfig>;
-}
-
-const config: ExtendedConfig = {
-  framework: "@storybook/react",
+const config: StorybookConfig = {
+  framework: {
+    name: getAbsolutePath("@storybook/react-vite"),
+    options: {},
+  },
   stories: ["../packages/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
   staticDirs: ["../docs/public"],
+
   addons: [
     {
       name: "@storybook/addon-essentials",
@@ -28,23 +22,11 @@ const config: ExtendedConfig = {
         backgrounds: false,
       },
     },
-    "@storybook/addon-links",
-    "@storybook/addon-a11y",
-    "@storybook/addon-storysource",
-    // Keep in mind this is not v1 yet. Might encounter bugs. It's from atlassian labs, so not too much concern.
-    // Temporarily disable this due to run time error "Cannot read property 'context' of undefined" from Topbar
-    // 'storybook-addon-performance/register',
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-a11y"),
+    getAbsolutePath("@storybook/addon-mdx-gfm"),
+    getAbsolutePath("@storybook/addon-storysource"),
   ],
-  core: {
-    builder: "@storybook/builder-vite",
-  },
-  features: {
-    postcss: false,
-    // modernInlineRender: true,
-    storyStoreV7: true,
-    buildStoriesJson: true,
-    // babelModeV7: true,
-  },
   async viteFinal(config, { configType }) {
     // customize the Vite config here
 
@@ -63,3 +45,7 @@ const config: ExtendedConfig = {
 };
 
 module.exports = config;
+
+function getAbsolutePath(value: string): any {
+  return dirname(require.resolve(join(value, "package.json")));
+}

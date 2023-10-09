@@ -86,7 +86,7 @@ export const useDropdownNext = ({
     onOpenChangeProp?.(open);
   };
 
-  const { floating, reference, x, y, strategy, placement, context } =
+  const { floating, reference, x, y, strategy, placement, context, elements } =
     useFloatingUI({
       open,
       onOpenChange,
@@ -115,13 +115,16 @@ export const useDropdownNext = ({
       // @ts-ignore
       "data-placement": placement,
       ref: floating,
-      style: {
-        top: y ?? 0,
-        left: x ?? 0,
-        position: strategy,
-      },
     });
   };
+
+  const getPosition = () => ({
+    top: y ?? 0,
+    left: x ?? 0,
+    position: strategy,
+    width: elements.floating?.clientWidth,
+    height: elements.floating?.clientHeight,
+  });
 
   // HANDLERS
   const blurHandler = () => {
@@ -206,6 +209,7 @@ export const useDropdownNext = ({
       floating,
       reference,
       getDropdownNextProps,
+      getPosition,
     },
   };
 };

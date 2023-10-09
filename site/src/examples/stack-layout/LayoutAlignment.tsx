@@ -11,7 +11,7 @@ import {
 import styles from "./index.module.css";
 import layoutAlignmentStyles from "./LayoutAlignment.module.css";
 
-type FlexAlignment = typeof flexAlignment[number];
+type FlexAlignment = (typeof flexAlignment)[number];
 type FlexAlign = FlexAlignment | "stretch" | "baseline";
 
 const FlexAlignmentOptions = [...flexAlignment, "stretch", "baseline"];

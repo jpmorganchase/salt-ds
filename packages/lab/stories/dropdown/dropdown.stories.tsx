@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 
 import { Button, Tooltip } from "@salt-ds/core";
 import {
@@ -25,7 +25,7 @@ export default {
   component: Dropdown,
 };
 
-export const Default: Story<DropdownProps> = (props) => {
+export const Default: StoryFn<DropdownProps> = (props) => {
   const handleChange: SelectionChangeHandler = (event, selectedItem) => {
     console.log("selection changed", selectedItem);
     props.onSelectionChange?.(event, selectedItem);
@@ -39,7 +39,7 @@ export const Default: Story<DropdownProps> = (props) => {
   );
 };
 
-export const MultiSelect: Story<DropdownProps<string, "multiple">> = (
+export const MultiSelect: StoryFn<DropdownProps<string, "multiple">> = (
   props
 ) => {
   const handleChange: SelectionChangeHandler<string, "multiple"> = (
@@ -72,7 +72,9 @@ const objectOptionsExampleData: objectOptionType[] = [
   { value: 40, text: "D Option", id: 4 },
 ];
 
-export const ItemToString: Story<DropdownProps<objectOptionType>> = (props) => {
+export const ItemToString: StoryFn<DropdownProps<objectOptionType>> = (
+  props
+) => {
   const itemToString = (item: objectOptionType) => {
     return item ? item.text : "";
   };
@@ -86,7 +88,7 @@ export const ItemToString: Story<DropdownProps<objectOptionType>> = (props) => {
   );
 };
 
-export const CustomButton: Story<DropdownProps> = (props) => {
+export const CustomButton: StoryFn<DropdownProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("Arkansas");
   const handleOpenChange = (isOpen: boolean) => {
@@ -118,7 +120,7 @@ export const CustomButton: Story<DropdownProps> = (props) => {
   );
 };
 
-export const CustomWidth: Story<DropdownProps> = () => (
+export const CustomWidth: StoryFn<DropdownProps> = () => (
   <Dropdown
     ListProps={{ width: 300 }}
     defaultSelected={usa_states[0]}
@@ -136,7 +138,7 @@ const ItalicListItem: ListItemType<string> = ({ item, ...props }) => {
   );
 };
 
-export const CustomRowRenderer: Story<DropdownProps> = (props) => (
+export const CustomRowRenderer: StoryFn<DropdownProps> = (props) => (
   <Dropdown
     {...props}
     ListItem={ItalicListItem}
@@ -155,7 +157,7 @@ const ListItemWithTooltip: ListItemType<string> = ({ item, ...props }) => {
   );
 };
 
-export const CustomRowRendererWithTooltip: Story<DropdownProps> = (props) => (
+export const CustomRowRendererWithTooltip: StoryFn<DropdownProps> = (props) => (
   <Dropdown
     {...props}
     ListItem={ListItemWithTooltip}
@@ -164,7 +166,7 @@ export const CustomRowRendererWithTooltip: Story<DropdownProps> = (props) => (
   />
 );
 
-export const WithFormFieldLabelTop: Story<DropdownProps> = () => {
+export const WithFormFieldLabelTop: StoryFn<DropdownProps> = () => {
   return (
     <div style={{ width: 250 }}>
       <FormField helperText="Select a value" label="ADA compliant label">
@@ -174,7 +176,7 @@ export const WithFormFieldLabelTop: Story<DropdownProps> = () => {
   );
 };
 
-export const WithFormFieldLabelLeft: Story<DropdownProps> = () => {
+export const WithFormFieldLabelLeft: StoryFn<DropdownProps> = () => {
   return (
     <div style={{ width: 250 }}>
       <FormField
@@ -190,7 +192,7 @@ export const WithFormFieldLabelLeft: Story<DropdownProps> = () => {
 
 // We supply `height` to the div so that the popper can be captured in visual
 // regression test
-export const InitialIsOpen: Story<DropdownProps> = (props) => {
+export const InitialIsOpen: StoryFn<DropdownProps> = (props) => {
   return (
     <div style={{ width: 250, height: 500 }}>
       <FormField
@@ -211,11 +213,11 @@ export const InitialIsOpen: Story<DropdownProps> = (props) => {
 const constArray = ["A", "B", "C"] as const;
 
 /** Illustration of using readonly source */
-export const ConstReadonlySource: Story<DropdownProps> = (props) => (
+export const ConstReadonlySource: StoryFn<DropdownProps> = (props) => (
   <Dropdown {...props} defaultSelected={constArray[0]} source={constArray} />
 );
 
-export const DisabledList: Story<DropdownProps> = (props) => {
+export const DisabledList: StoryFn<DropdownProps> = (props) => {
   const handleChange: SelectionChangeHandler = (event, selectedItem) => {
     console.log("selection changed", selectedItem);
     props.onSelectionChange?.(event, selectedItem);
@@ -232,7 +234,7 @@ export const DisabledList: Story<DropdownProps> = (props) => {
   );
 };
 
-export const ControlledOpen: Story<DropdownProps> = (props) => {
+export const ControlledOpen: StoryFn<DropdownProps> = (props) => {
   const [isOpen, setIsOpen] = useState(true);
   const handleChange = (open: boolean) => {
     console.log({ openChanged: open });
@@ -260,7 +262,7 @@ export const ControlledOpen: Story<DropdownProps> = (props) => {
   );
 };
 
-export const FullyControlled: Story<DropdownProps> = (props) => {
+export const FullyControlled: StoryFn<DropdownProps> = (props) => {
   const [open, setOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const [selectedItem, setSelectedItem] = useState<string | null>(null);

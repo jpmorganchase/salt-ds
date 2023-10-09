@@ -72,4 +72,8 @@ const infiniteScrollComponents = {
   },
 };
 
+InfiniteScroll.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export default InfiniteScroll;

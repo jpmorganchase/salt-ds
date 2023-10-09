@@ -1,5 +1,19 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.18
+
+### Patch Changes
+
+- 49614c3a: - Fixed Swatch not injecting CSS.
+  - Fixed Swatch not showing a border for gray and white swatches.
+  - Fixed Contact Metadata Item's font color.
+  - Fixed Metric Header subtitle's font color.
+  - Fixed Pill's style issues caused by CSS specificity.
+  - Fixed the margin of Stepper Input's decrement button.
+  - Fixed the size of Tokenized Input's expand button.
+- 9dd3160b: Removes small close icon in closeable Tab
+- 4aa50dd1: Adjust spacing in `NavigationItem`
+
 ## 1.0.0-alpha.17
 
 ### Minor Changes
@@ -174,7 +188,7 @@
   Refactored Switch and updated its change handler.
 
   ```diff
-  - const Controlled: ComponentStory<typeof Switch> = (args) => {
+  - const Controlled: StoryFn<typeof Switch> = (args) => {
   -   const [checked, setChecked] = useState(false);
   -
   -   const handleChange = (
@@ -186,7 +200,7 @@
   -
   -   return <Switch {...args} checked={checked} onChange={handleChange} />;
   - };
-  + const Controlled: ComponentStory<typeof Switch> = (args) => {
+  + const Controlled: StoryFn<typeof Switch> = (args) => {
   +   const [checked, setChecked] = useState(false);
   +
   +   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

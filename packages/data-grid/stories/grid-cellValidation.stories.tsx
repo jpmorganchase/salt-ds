@@ -10,7 +10,7 @@ import {
   GridColumnProps,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import * as yup from "yup";
 import { faker } from "@faker-js/faker";
 import { useCallback, useState } from "react";
@@ -128,7 +128,7 @@ type CreateValueSetter = (
   name: EditableFieldKeys
 ) => GridColumnProps<RowExample>["onChange"];
 
-export const CellValidation: Story = () => {
+export const CellValidation: StoryFn = () => {
   const { rows, setValue } = useExampleDataSource();
   const [validationStatus, setValidationStatus] = useState<
     Array<{
@@ -267,7 +267,7 @@ export const CellValidation: Story = () => {
   );
 };
 
-export const RowValidation: Story = () => {
+export const RowValidation: StoryFn = () => {
   const { rows, setValue } = useExampleDataSource();
 
   const setNumberValue: CreateValueSetter = (name) => (_, index, value) => {
@@ -348,7 +348,7 @@ export const RowValidation: Story = () => {
   );
 };
 
-export const CellAndRowValidation: Story = () => {
+export const CellAndRowValidation: StoryFn = () => {
   const { rows, setValue } = useExampleDataSource();
   const setNumberValue: CreateValueSetter = (name) => (_, index, value) => {
     setValue({ name, rowIndex: index, value: Number.parseFloat(value) });

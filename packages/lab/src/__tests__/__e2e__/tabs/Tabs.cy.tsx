@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/testing-react";
+import { composeStories } from "@storybook/react";
 import * as tabstripStories from "@stories/tabstrip/tabstrip.cypress.stories";
 import * as tabsStories from "@stories/tabs/tabs.stories";
 import { Tabs, TabPanel } from "@salt-ds/lab";

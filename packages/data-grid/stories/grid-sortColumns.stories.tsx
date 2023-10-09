@@ -1,5 +1,5 @@
 import { Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
-import { DecoratorFn } from "@storybook/react";
+import { Decorator } from "@storybook/react";
 import {
   Investor,
   investorKeyGetter,
@@ -179,7 +179,7 @@ ServerSideSort.decorators = [
     <QueryClientProvider client={queryClient}>
       <Story />
     </QueryClientProvider>
-  )) as DecoratorFn,
+  )) as Decorator,
 ];
 
 const dummyInvestors = createDummyInvestors({ limit: 50 });

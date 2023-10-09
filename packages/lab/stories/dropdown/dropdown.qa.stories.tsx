@@ -1,4 +1,4 @@
-import { Story } from "@storybook/react";
+import { StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { Dropdown, FormField } from "@salt-ds/lab";
 
@@ -9,7 +9,7 @@ export default {
   component: Dropdown,
 };
 
-export const AllExamples: Story<QAContainerProps> = ({ imgSrc }) => (
+export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
   <QAContainer
     cols={4}
     height={1200}

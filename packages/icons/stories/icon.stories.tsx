@@ -5,7 +5,7 @@ import {
   Icon,
   IconProps,
 } from "@salt-ds/icons";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { FlexLayout, StackLayout } from "@salt-ds/core";
 import { FormField, Input } from "@salt-ds/lab";
 import { allIcons } from "./icon.all";
@@ -23,7 +23,7 @@ const allIconNames = allIcons.map((iconComponent) => ({
 export default {
   title: "Icons/Icon",
   component: Icon,
-} as ComponentMeta<typeof Icon>;
+} as Meta<typeof Icon>;
 
 const sizes = [1, 2, 3, 4, 5] as const;
 
@@ -48,21 +48,21 @@ const IconGrid = ({
   );
 };
 
-export const SaltIcon: ComponentStory<typeof Icon> = (props) => (
+export const SaltIcon: StoryFn<typeof Icon> = (props) => (
   <AddDocumentIcon {...props} />
 );
-export const SaltIconMultipleSizes: ComponentStory<typeof Icon> = () => (
+export const SaltIconMultipleSizes: StoryFn<typeof Icon> = () => (
   <IconGrid Icon={AddDocumentIcon} />
 );
 
-export const SaltTypes: ComponentStory<typeof Icon> = () => (
+export const SaltTypes: StoryFn<typeof Icon> = () => (
   <FlexLayout wrap gap={2}>
     <AddDocumentIcon size={4} />
     <AddDocumentSolidIcon size={4} />
   </FlexLayout>
 );
 
-export const CustomSVGIcon: ComponentStory<typeof Icon> = () => {
+export const CustomSVGIcon: StoryFn<typeof Icon> = () => {
   const CustomIcon = useMemo(
     () => (props: IconProps) => {
       return (
@@ -78,7 +78,7 @@ export const CustomSVGIcon: ComponentStory<typeof Icon> = () => {
   return <IconGrid Icon={CustomIcon} />;
 };
 
-export const CustomIconFullSVG: ComponentStory<typeof Icon> = () => {
+export const CustomIconFullSVG: StoryFn<typeof Icon> = () => {
   const CustomIcon = useMemo(
     () => (props: IconProps) => {
       return (
@@ -96,7 +96,7 @@ export const CustomIconFullSVG: ComponentStory<typeof Icon> = () => {
   return <IconGrid Icon={CustomIcon} />;
 };
 
-export const AllIcons: ComponentStory<typeof Icon> = () => {
+export const AllIcons: StoryFn<typeof Icon> = () => {
   return (
     <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
       {allIcons.map((iconComponent, i) => {
@@ -106,7 +106,7 @@ export const AllIcons: ComponentStory<typeof Icon> = () => {
   );
 };
 
-export const AllIconsWithSearch: ComponentStory<typeof Icon> = () => {
+export const AllIconsWithSearch: StoryFn<typeof Icon> = () => {
   const [inputText, setInputText] = useState("");
 
   return (

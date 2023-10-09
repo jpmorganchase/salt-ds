@@ -1,0 +1,7 @@
+.linkExample:visited {
+  color: var(--link-color);
+}
+
+.visitedLink {
+  color: var(--link-color-visited);
+}
