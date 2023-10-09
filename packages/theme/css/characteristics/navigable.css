@@ -13,4 +13,12 @@
   --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
 
   --salt-navigable-background-hover: var(--salt-palette-navigate-primary-background-hover);
+
+  /* Link */
+  --salt-navigable-foreground-hover: var(--salt-palette-navigate-foreground-hover);
+  --salt-navigable-foreground-active: var(--salt-palette-navigate-foreground-active);
+  --salt-navigable-foreground-visited: var(--salt-palette-navigate-foreground-visited);
+  --salt-navigable-textDecoration: underline;
+  --salt-navigable-textDecoration-hover: none;
+  --salt-navigable-textDecoration-selected: underline;
 }

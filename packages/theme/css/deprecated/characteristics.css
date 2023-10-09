@@ -129,7 +129,6 @@
 
   /* Accent */
   --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use token --salt-text-notation-fontWeight */
-  --salt-accent-borderColor-disabled: var(--salt-palette-accent-border-disabled);
   --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
   --salt-accent-background-disabled: var(--salt-palette-accent-background-disabled);
 
