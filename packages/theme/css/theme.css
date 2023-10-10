@@ -42,6 +42,7 @@
 @import url(characteristics/separable.css);
 @import url(characteristics/status.css);
 @import url(characteristics/text.css);
+@import url(characteristics/foreground.css);
 @import url(characteristics/track.css);
 
 /* Deprecated */
