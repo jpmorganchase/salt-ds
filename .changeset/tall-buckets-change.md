@@ -241,8 +241,6 @@ In `fade.css` foundations,
 
 ### Palette
 
-- Deprecated tokens in palette, use replacement tokens as listed
-
 - Deprecated tokens with no replacement tokens, use values suggested in comments
 
 ```diff

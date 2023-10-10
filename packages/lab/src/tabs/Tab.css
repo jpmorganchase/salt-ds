@@ -4,6 +4,7 @@
   --saltEditableLabel-height: var(--tabs-tabstrip-height);
   --saltInputLegacy-minWidth: 4em;
 
+  --tabs-tab-background: transparent;
   --tabs-tab-cursor: pointer;
   --tabs-tab-spacing: var(--salt-size-unit);
   --tabs-tab-position: relative;
@@ -12,7 +13,7 @@
 .saltTab {
   align-items: center;
   align-self: stretch;
-  background: var(--saltTabs-tab-background);
+  background: var(--saltTabs-tab-background, var(--tabs-tab-background));
   border: none;
   border-radius: 0;
   color: var(--salt-foreground-primary);

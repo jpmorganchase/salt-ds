@@ -3,11 +3,9 @@ import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { TextBlock } from "docs/components/TextBlock";
 import { TextDecorationBlock } from "docs/components/TextDecorationBlock";
-import { LineBlock } from "docs/components/LineBlock";
 import { BlankBlockCell, BlankBlockCode } from "docs/components/BlankBlock";
-
-import { CornerBlock } from "docs/components/CornerBlock";
-import { TextAlignBlock } from "docs/components/TextAlignBlock";
+import { FontSizeBlock } from "docs/components/FontSizeBlock";
+import { FontWeightBlock } from "docs/components/FontWeightBlock";
 
 <Meta title="Theme/Characteristics/Text" />
 
@@ -22,12 +20,15 @@ All text examples are shown using the default `fontWeight` token.
 <Canvas>
   <Story name="Base">
     <DocGrid>
-      <ColorBlock colorVar="--salt-foreground-text-highlight" />
-      <ColorBlock colorVar="--salt-foreground-primary" />
-      <ColorBlock colorVar="--salt-foreground-primary-disabled" />
-      <ColorBlock colorVar="--salt-foreground-secondary" />
-      <ColorBlock colorVar="--salt-foreground-secondary-disabled" />
+      <FontSizeBlock fontSize="--salt-text-notation-fontSize" />
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-lineHeight</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-action-textTransform</BlankBlockCode>
+      <LetterSpacingBlock letterSpacing="--salt-text-action-letterSpacing" />
+      <FontWeightBlock fontSize="--salt-text-notation-fontWeight" />
     </DocGrid>
+
   </Story>
 </Canvas>
 
@@ -265,25 +266,6 @@ All text examples are shown using the default `fontWeight` token.
       <BlankBlockCode>--salt-text-display3-fontWeight-small</BlankBlockCode>
       <BlankBlockCell />
       <BlankBlockCode>--salt-text-display3-fontWeight-strong</BlankBlockCode>
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Links
-
-<Canvas>
-  <Story name="Links">
-    <TextBlock
-      textDecoration="--salt-navigable-textDecoration"
-      color="--salt-navigable-foreground-hover"
-    />
-    <DocGrid textExample={true}>
-      <ColorBlock colorVar="--salt-navigable-foreground-hover" />
-      <ColorBlock colorVar="--salt-navigable-foreground-active" />
-      <ColorBlock colorVar="--salt-navigable-foreground-visited" />
-      <TextDecorationBlock textDecoration="--salt-navigable-textDecoration" />
-      <TextDecorationBlock textDecoration="--salt-navigable-textDecoration-hover" />
-      <TextDecorationBlock textDecoration="--salt-navigable-textDecoration-selected" />
     </DocGrid>
   </Story>
 </Canvas>
