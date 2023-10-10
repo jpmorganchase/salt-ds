@@ -1,7 +1,3 @@
-.salt-density-touch {
-  --flexLayout-gap-density-multiplier: 2;
-}
-
 /* Default variables applied to the root element */
 .saltFlexLayout {
   --flexLayout-gap-multiplier: var(--flexLayout-gap-density-multiplier, 3);
