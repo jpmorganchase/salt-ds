@@ -313,7 +313,7 @@
 
   .ag-header-cell,
   .ag-header-group-cell {
-    padding: 0px calc(var(--salt-spacing-100) + 2px);
+    padding: 0px calc(var(--salt-spacing-100));
   }
 
   /* --- Pinned column styles --- */
@@ -421,8 +421,8 @@
   .ag-cell.editable-cell.ag-cell-focus:focus:before {
     content: "";
     position: absolute;
-    top: -2px;
-    left: -2px;
+    top: 0;
+    left: 0;
     border-top: 0 solid transparent;
     border-left: var(--agGrid-editableCell-cornerTag-size) solid
       var(--agGrid-focused-borderColor);
@@ -443,8 +443,8 @@
   }
 
   .ag-cell-editor .ag-input-field-input {
-    padding-left: ag-param(cell-horizontal-padding) - 2px;
-    padding-right: ag-param(cell-horizontal-padding) - 2px;
+    padding-left: ag-param(cell-horizontal-padding);
+    padding-right: ag-param(cell-horizontal-padding);
   }
 
   /* --- Cell range --- */
