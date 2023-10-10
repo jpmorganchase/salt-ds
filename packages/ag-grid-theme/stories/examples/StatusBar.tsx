@@ -38,11 +38,11 @@ const StatusBar = (props: AgGridReactProps) => {
             {...agGridProps}
             {...props}
             onFirstDataRendered={(params) => {
-              params.api.forEachNode((node,index) => {
+              params.api.forEachNode((node, index) => {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 if (node.data && index < 3) {
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-                  node.setSelected(true)
+                  node.setSelected(true);
                 }
               });
             }}

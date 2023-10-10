@@ -1,8 +1,4 @@
-import {
-  Banner,
-  BannerContent,
-  FlexLayout,
-} from "@salt-ds/core";
+import { Banner, BannerContent, FlexLayout } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";

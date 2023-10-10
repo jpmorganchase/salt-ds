@@ -1,5 +1,5 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef } from "react";
 import { StackLayout } from "@salt-ds/core";
 import columnDefs from "../dependencies/masterDetailExampleData";
 import rowData from "../dependencies/dataGridExampleData";
@@ -12,7 +12,7 @@ const MasterDetail = (props: AgGridReactProps) => {
     `ag-theme-${themeName}`
   );
 
-  const gridRef = useRef<AgGridReact>(null)
+  const gridRef = useRef<AgGridReact>(null);
 
   const onFirstDataRendered = useCallback(() => {
     requestAnimationFrame(function () {

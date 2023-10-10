@@ -10,7 +10,7 @@ LicenseManager.setLicenseKey("your license key");
 export function useAgGridHelpers(
   agThemeName = "ag-theme-uitk",
   compact = false,
-  mode?:string
+  mode?: string
 ): {
   containerProps: HTMLAttributes<HTMLDivElement>;
   agGridProps: AgGridReactProps;

@@ -1,5 +1,5 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef } from "react";
 import { SaltProvider, StackLayout } from "@salt-ds/core";
 import columnDefs from "../dependencies/masterDetailExampleData";
 import rowData from "../dependencies/dataGridExampleData";
@@ -10,10 +10,12 @@ const MasterDetailDark = (props: AgGridReactProps) => {
   const mode = "dark";
   const { switcher, themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`, false, mode
+    `ag-theme-${themeName}`,
+    false,
+    mode
   );
 
-  const gridRef = useRef<AgGridReact>(null)
+  const gridRef = useRef<AgGridReact>(null);
 
   const onFirstDataRendered = useCallback(() => {
     requestAnimationFrame(function () {
@@ -35,7 +37,8 @@ const MasterDetailDark = (props: AgGridReactProps) => {
             detailCellRendererParams={{
               detailGridOptions: { columnDefs },
               // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
-              getDetailRowData: (params: any) => params.successCallback(rowData),
+              getDetailRowData: (params: any) =>
+                params.successCallback(rowData),
             }}
             masterDetail={true}
             detailRowHeight={300}

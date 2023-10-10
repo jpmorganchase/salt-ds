@@ -1,4 +1,4 @@
-import { SaltProvider,StackLayout } from "@salt-ds/core";
+import { SaltProvider, StackLayout } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
@@ -21,7 +21,9 @@ const StatusBar = (props: AgGridReactProps) => {
   const mode = "dark";
   const { switcher, themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`, false, mode
+    `ag-theme-${themeName}`,
+    false,
+    mode
   );
 
   return (
@@ -44,7 +46,7 @@ const StatusBar = (props: AgGridReactProps) => {
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                   if (node.data && index < 3) {
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-                    node.setSelected(true)
+                    node.setSelected(true);
                   }
                 });
               }}
