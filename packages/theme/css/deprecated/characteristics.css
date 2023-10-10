@@ -99,6 +99,7 @@
   /* Actionable */
   --salt-actionable-letterSpacing: 0.6px;
   --salt-actionable-textTransform: uppercase;
+  --salt-actionable-textAlign: center;
   --salt-actionable-primary-fontWeight: var(--salt-typography-fontWeight-bold);
   --salt-actionable-cta-fontWeight: var(--salt-typography-fontWeight-bold);
   --salt-actionable-secondary-fontWeight: var(--salt-typography-fontWeight-semiBold);

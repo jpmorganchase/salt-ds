@@ -3,8 +3,6 @@
   --salt-actionable-cursor-active: pointer;
   --salt-actionable-cursor-disabled: not-allowed;
 
-  --salt-actionable-textAlign: center;
-
   /* Primary variant */
   --salt-actionable-primary-foreground: var(--salt-palette-interact-primary-foreground);
   --salt-actionable-primary-foreground-hover: var(--salt-palette-interact-primary-foreground-hover);
