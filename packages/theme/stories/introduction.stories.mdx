@@ -64,7 +64,6 @@ Foundational tokens are divided into the following groups:
 | --------------------- | ------------------------------------------------------------------- | -------------------------------------- | --------------------------------- |
 | Color                 | The core set of colors that make up the Salt theme                  | `--salt-color-gray-800`                | `rgb(36, 37, 38)`                 |
 | Duration              | Durations between a user action and system feedback                 | `--salt-duration-cutoff`               | `10000`                           |
-| Icon                  | Core set of icons available within the Salt theme                   | `--salt-size-icon`                     | `12px`                            |
 | Opacity               | Opacity percentages for different attributes                        | `--salt-opacity-background`            | `0.7`                             |
 | Shadow                | Shadows used to convey elevation or hierarchy                       | `--salt-shadow-black-4`                | `0 6px 10px 0 rgba(0, 0, 0, 0.2)` |
 | Size                  | Sizes in px used for width, height, border width, etc.              | `--salt-size-basis-unit`               | `4px`                             |
@@ -72,6 +71,7 @@ Foundational tokens are divided into the following groups:
 | Typography            | Fonts and font weights provided by the theme                        | `--salt-typography-fontWeight-regular` | `400`                             |
 | Z-index               | Number indicating appropriate z-index of components                 | `--salt-zIndex-flyover`                | `1500`                            |
 | **Deprecated:** Delay | Replaced with duration                                              | Replaced with duration                 | Replaced with duration            |
+| **Deprecated:** Icon  | Core set of icons available within the Salt theme                   | Replaced with size                     | Replaced with size                |
 
 ### Palettes
 
@@ -106,24 +106,25 @@ Foundational tokens are divided into the following groups:
 
 Characteristics semantically group both palette and foundational tokens to provide a complete set of attributes for component styling. Because of the semantic nature of the groups there are some direct relationships between the color palettes and characteristics such as accent.
 
-| Characteristic              | Appropriate usage                                                                    | Example token                                | Example value                                      |
-| --------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------- | -------------------------------------------------- |
-| Accent                      | Provides a non-functional brand detail to a component or element                     | `--salt-accent-background`                   | `--salt-palette-accent-background`                 |
-| Actionable                  | Components that enable an action to be performed                                     | `--salt-actionable-primary-background-hover` | `--salt-palette-interact-primary-background-hover` |
-| Container                   | Defines an area that can encapsulate multiple elements or items of content           | `--salt-container-borderStyle`               | `solid`                                            |
-| Draggable                   | Components that can be dragged                                                       | `--salt-draggable-grab-cursor-hover`         | `grab`                                             |
-| Editable                    | Components that have mutable input                                                   | `--salt-editable-borderStyle`                | `solid`                                            |
-| Focused                     | Components that have a focused state                                                 | `--salt-focused-outlineStyle`                | `dotted`                                           |
-| Navigable                   | Components that change data sets or view contexts                                    | `--salt-navigable-cursor-hover`              | `pointer`                                          |
-| Overlayable                 | Components that form hierarchies in layout                                           | `--salt-overlayable-shadow-scroll`           | `--salt-shadow-100`                                |
-| Selectable                  | Components that have a selected state or contain elements that can be selected       | `--salt-selectable-cursor-hover`             | `pointer`                                          |
-| Separable                   | Components, or elements within a component that divide content, functions or regions | `--salt-separable-primary-borderColor`       | `--salt-palette-neutral-primary-border`            |
-| Status                      | Components indicating an informational, warning, error or success state              | `--salt-status-info-borderColor`             | `--salt-palette-info-border`                       |
-| Target                      | Components that form a target for draggable elements                                 | `--salt-target-borderStyle`                  | `dashed`                                           |
-| Text                        | All text components or HTML elements                                                 | `--salt-foreground-primary`                  | `--salt-palette-neutral-primary-foreground`        |
-| Track                       | Components that indicate a changeable value or progression                           | `--salt-track-borderStyle`                   | `solid`                                            |
-| Differential **deprecated** | Replaced with Status                                                                 | \*                                           | \*                                                 |
-| Measure **deprecated**      | Replaced with Track                                                                  | \*                                           | \*                                                 |
+| Characteristic               | Appropriate usage                                                                    | Example token                                | Example value                                      |
+| ---------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------- | -------------------------------------------------- |
+| Accent                       | Provides a non-functional brand detail to a component or element                     | `--salt-accent-background`                   | `--salt-palette-accent-background`                 |
+| Actionable                   | Components that enable an action to be performed                                     | `--salt-actionable-primary-background-hover` | `--salt-palette-interact-primary-background-hover` |
+| Container                    | Defines an area that can encapsulate multiple elements or items of content           | `--salt-container-borderStyle`               | `solid`                                            |
+| Draggable                    | Components that can be dragged                                                       | `--salt-draggable-grab-cursor-hover`         | `grab`                                             |
+| Editable                     | Components that have mutable input                                                   | `--salt-editable-borderStyle`                | `solid`                                            |
+| Focused                      | Components that have a focused state                                                 | `--salt-focused-outlineStyle`                | `dotted`                                           |
+| Navigable                    | Components that change data sets or view contexts                                    | `--salt-navigable-cursor-hover`              | `pointer`                                          |
+| Overlayable                  | Components that form hierarchies in layout                                           | `--salt-overlayable-shadow-scroll`           | `--salt-shadow-100`                                |
+| Selectable                   | Components that have a selected state or contain elements that can be selected       | `--salt-selectable-cursor-hover`             | `pointer`                                          |
+| Separable                    | Components, or elements within a component that divide content, functions or regions | `--salt-separable-primary-borderColor`       | `--salt-palette-neutral-primary-border`            |
+| Status                       | Components indicating an informational, warning, error or success state              | `--salt-status-info-borderColor`             | `--salt-palette-info-border`                       |
+| Target                       | Components that form a target for draggable elements                                 | `--salt-target-borderStyle`                  | `dashed`                                           |
+| Text                         | All text components or HTML elements                                                 | `--salt-text-fontFamily`                     | `--salt-typography-fontFamily`                     |
+| Track                        | Components that indicate a changeable value or progression                           | `--salt-track-borderStyle`                   | `solid`                                            |
+| Foreground                   | INSERT_DESCRIPTION_HERE                                                              | `--salt-foreground-primary`                  | `--salt-palette-neutral-primary-foreground`        |
+| **Deprecated:** Differential | Replaced with Status                                                                 | \*                                           | \*                                                 |
+| **Deprecated:** Measure      | Replaced with Track                                                                  | \*                                           | \*                                                 |
 
 ### Token naming conventions
 

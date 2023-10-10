@@ -1,0 +1,25 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+import { DocGrid } from "docs/components/DocGrid";
+import { ColorBlock } from "docs/components/ColorBlock";
+
+<Meta title="Theme/Characteristics/Foreground" />
+
+# Foreground
+
+DESCRIPTION_PENDING_DESIGN
+
+## Tokens
+
+### Base
+
+<Canvas>
+  <Story name="Base">
+    <DocGrid>
+      <ColorBlock colorVar="--salt-foreground-text-highlight" />
+      <ColorBlock colorVar="--salt-foreground-primary" />
+      <ColorBlock colorVar="--salt-foreground-primary-disabled" />
+      <ColorBlock colorVar="--salt-foreground-secondary" />
+      <ColorBlock colorVar="--salt-foreground-secondary-disabled" />
+    </DocGrid>
+  </Story>
+</Canvas>

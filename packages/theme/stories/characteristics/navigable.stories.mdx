@@ -3,8 +3,6 @@ import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
 import { FontWeightBlock } from "docs/components/FontWeightBlock";
-import { BorderBlock } from "docs/components/BorderBlock";
-import { BlankBlockCode } from "docs/components/BlankBlock";
 
 <Meta title="Theme/Characteristics/Navigable" />
 
@@ -30,6 +28,25 @@ Components that allow a user to navigate across UI sections or data sets and cha
       <ColorBlock colorVar="--salt-navigable-indicator-active" />
       <ColorBlock colorVar="--salt-navigable-indicator-hover" />
       <ColorBlock colorVar="--salt-navigable-background-hover" />
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Links
+
+<Canvas>
+  <Story name="Links">
+    <TextBlock
+      textDecoration="--salt-navigable-textDecoration"
+      color="--salt-navigable-foreground-hover"
+    />
+    <DocGrid textExample={true}>
+      <ColorBlock colorVar="--salt-navigable-foreground-hover" />
+      <ColorBlock colorVar="--salt-navigable-foreground-active" />
+      <ColorBlock colorVar="--salt-navigable-foreground-visited" />
+      <TextDecorationBlock textDecoration="--salt-navigable-textDecoration" />
+      <TextDecorationBlock textDecoration="--salt-navigable-textDecoration-hover" />
+      <TextDecorationBlock textDecoration="--salt-navigable-textDecoration-selected" />
     </DocGrid>
   </Story>
 </Canvas>

@@ -2,10 +2,6 @@ import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
-import { FontWeightBlock } from "docs/components/FontWeightBlock";
-import { LetterSpacingBlock } from "docs/components/LetterSpacingBlock";
-import { BlankBlockCell, BlankBlockCode } from "docs/components/BlankBlock";
-
 import { TextAlignBlock } from "docs/components/TextAlignBlock";
 
 <Meta title="Theme/Characteristics/Actionable" />
@@ -25,10 +21,7 @@ immediately (the component doesn’t stay selected).
       <CursorBlock cursor="--salt-actionable-cursor-hover" />
       <CursorBlock cursor="--salt-actionable-cursor-active" />
       <CursorBlock cursor="--salt-actionable-cursor-disabled" />
-      <LetterSpacingBlock letterSpacing="--salt-text-action-letterSpacing" />
       <TextAlignBlock textAlign="--salt-actionable-textAlign" />
-      <BlankBlockCell />
-      <BlankBlockCode>--salt-text-action-textTransform</BlankBlockCode>
     </DocGrid>
   </Story>
 </Canvas>
@@ -46,7 +39,6 @@ immediately (the component doesn’t stay selected).
       <ColorBlock colorVar="--salt-actionable-cta-background-hover" />
       <ColorBlock colorVar="--salt-actionable-cta-background-active" />
       <ColorBlock colorVar="--salt-actionable-cta-background-disabled" />
-      <FontWeightBlock fontWeight="--salt-text-action-fontWeight" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -64,7 +56,6 @@ immediately (the component doesn’t stay selected).
       <ColorBlock colorVar="--salt-actionable-primary-background-hover" />
       <ColorBlock colorVar="--salt-actionable-primary-background-active" />
       <ColorBlock colorVar="--salt-actionable-primary-background-disabled" />
-      <FontWeightBlock fontWeight="--salt-text-action-fontWeight" />
     </DocGrid>
   </Story>
 </Canvas>
@@ -81,7 +72,6 @@ immediately (the component doesn’t stay selected).
       <ColorBlock colorVar="--salt-actionable-secondary-background-hover" />
       <ColorBlock colorVar="--salt-actionable-secondary-background-active" />
       <ColorBlock colorVar="--salt-actionable-secondary-background-disabled" />
-      <FontWeightBlock fontWeight="--salt-text-action-fontWeight" />
     </DocGrid>
   </Story>
 </Canvas>
