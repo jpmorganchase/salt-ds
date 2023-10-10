@@ -49,7 +49,3 @@ export const MaxValue: StoryFn<typeof LinearProgress> = () => (
     <LinearProgress aria-label="Download" value={250} max={500} />
   </StackLayout>
 );
-
-export const ShowNoInfo: StoryFn<typeof LinearProgress> = () => (
-  <LinearProgress showInfo={false} value={38} />
-);

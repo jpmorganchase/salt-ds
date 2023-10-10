@@ -50,6 +50,3 @@ export const ProgressingValue: StoryFn<typeof CircularProgress> = () => (
   <ProgressWithControls ProgressComponent={CircularProgress} />
 );
 
-export const ShowNoInfo: StoryFn<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" showInfo={false} value={38} />
-);
