@@ -8,9 +8,8 @@
   --navigationItem-gap: var(--salt-spacing-100);
 }
 
-/* Vars applied to NavigationItem component when active or selected */
-.saltNavigationItem-active,
-.saltNavigationItem-blurActive {
+/* Vars applied to NavigationItem component when active */
+.saltNavigationItem-active {
   --navigationItem-color: var(--salt-text-primary-foreground);
   --navigationItem-fill: var(--salt-text-primary-foreground);
 }
@@ -150,13 +149,6 @@
   background: var(--salt-navigable-indicator-hover);
   /* Hover on animation */
   transition: all var(--salt-duration-perceptible) ease-in-out;
-}
-
-/* Styles applied to activation line when item has active children */
-.saltNavigationItem-wrapper.saltNavigationItem-blurActive::after,
-.saltNavigationItem-wrapper.saltNavigationItem-blurActive:hover::after,
-.saltNavigationItem-wrapper.saltNavigationItem-blurActive:focus::after {
-  --navigationItem-indicator-background: none;
 }
 
 /* Styles applied to activation line when item is active */
