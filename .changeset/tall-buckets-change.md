@@ -21,6 +21,9 @@
 - --salt-actionable-textTransform
 + --salt-text-action-textTransform
 
+- --salt-actionable-textAlign
++ --salt-text-action-textAlign
+
 - --salt-text-link-foreground-hover
 - --salt-text-link-foreground-active
 - --salt-text-link-foreground-visited

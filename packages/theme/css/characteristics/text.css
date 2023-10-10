@@ -6,11 +6,11 @@
   --salt-text-textDecoration: none;
   --salt-text-textTransform: none;
 
+  /* Action */
   --salt-text-action-letterSpacing: 0.6px;
   --salt-text-action-textTransform: uppercase;
+  --salt-text-action-textAlign: center;
   --salt-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
-
-  --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
 
   /* Body text (should be used as default) */
   --salt-text-fontFamily: var(--salt-typography-fontFamily);
@@ -19,6 +19,7 @@
   --salt-text-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
   /* Notation */
+  --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
