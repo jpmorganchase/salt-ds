@@ -1,5 +1,11 @@
 # @salt-ds/styles
 
+## 0.1.2
+
+### Patch Changes
+
+- 45eaeeb5: Fix `useInsertionEffect` not found error bundled by Webpack
+
 ## 0.1.1
 
 ### Patch Changes
