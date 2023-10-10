@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.9.1
+
+### Patch Changes
+
+- 45eaeeb5: Fix `useId` not found error bundled by Webpack
+
 ## 1.9.0
 
 ### Minor Changes
