@@ -12,6 +12,7 @@
 .saltNavigationItem-active {
   --navigationItem-color: var(--salt-text-primary-foreground);
   --navigationItem-fill: var(--salt-text-primary-foreground);
+  --navigationItem-font-weight: var(--salt-text-fontWeight-strong);
 }
 
 /* Styles applied to NavigationItem wrapper */
@@ -20,7 +21,7 @@
   align-items: center;
   position: relative;
   gap: var(--navigationItem-gap);
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--navigationItem-font-weight);
   text-decoration: none;
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
@@ -80,7 +81,6 @@
 
 /* Styles applied when level is not 0 */
 .saltNavigationItem-wrapper.saltNavigationItem-nested {
-  font-weight: var(--salt-text-fontWeight);
   padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-400));
 }
 
