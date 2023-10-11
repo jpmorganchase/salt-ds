@@ -3,6 +3,7 @@
   display: flex;
   flex-wrap: nowrap;
   justify-content: var(--tabstripNext-justifyContent);
+  align-items: center;
   position: relative;
   background: transparent;
   width: 100%;
