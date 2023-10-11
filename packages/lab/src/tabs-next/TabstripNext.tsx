@@ -25,7 +25,7 @@ export interface TabstripNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /* Styling active color variant. Defaults to "primary". */
   activeColor?: "primary" | "secondary";
-  /* Tabs alignment. Defaults to "center" */
+  /* Tabs alignment. Defaults to "left" */
   align?: "left" | "center" | "right";
   /* Value for the uncontrolled version. */
   value?: string;
@@ -46,7 +46,7 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
   function TabstripNext(props, ref) {
     const {
       activeColor = "primary",
-      align = "center",
+      align = "left",
       children,
       className,
       value: valueProp,

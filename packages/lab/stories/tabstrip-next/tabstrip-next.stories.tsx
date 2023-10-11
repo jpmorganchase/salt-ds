@@ -53,8 +53,8 @@ const TabstripTemplate: TabstripStory = ({
   );
 };
 
-export const Default = TabstripTemplate.bind({});
-Default.args = {
+export const DefaultLeftAligned = TabstripTemplate.bind({});
+DefaultLeftAligned.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
