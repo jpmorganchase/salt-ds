@@ -9,7 +9,8 @@ LicenseManager.setLicenseKey("your license key");
 // Helps to set className, rowHeight and headerHeight depending on the current density
 export function useAgGridHelpers(
   agThemeName = "ag-theme-uitk",
-  compact = false
+  compact = false,
+  mode?: string
 ): {
   containerProps: HTMLAttributes<HTMLDivElement>;
   agGridProps: AgGridReactProps;
@@ -21,7 +22,7 @@ export function useAgGridHelpers(
   const apiRef = useRef<{ api: GridApi; columnApi: ColumnApi }>();
   const [isGridReady, setGridReady] = useState(false);
   const density = useDensity();
-  const { mode } = useTheme();
+  const { mode: contextMode } = useTheme();
 
   const [rowHeight, listItemHeight] = useMemo(() => {
     switch ([agThemeName, density].join("-")) {
@@ -50,7 +51,7 @@ export function useAgGridHelpers(
 
   const className = `${agThemeName}-${density}${
     compact && density === "high" ? `-compact` : ``
-  }-${mode}`;
+  }-${mode ?? contextMode}`;
 
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
     apiRef.current = { api, columnApi };
@@ -60,14 +61,14 @@ export function useAgGridHelpers(
 
   useEffect(() => {
     // setHeaderHeight doesn't work if not in setTimeout
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       if (isGridReady) {
         apiRef.current!.api.resetRowHeights();
         apiRef.current!.api.setHeaderHeight(rowHeight);
         apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
         // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height? Issue 2479
       }
-    }, 0);
+    });
   }, [rowHeight, isGridReady, agThemeName, listItemHeight]);
 
   return {
