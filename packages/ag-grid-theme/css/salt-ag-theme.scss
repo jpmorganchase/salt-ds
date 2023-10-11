@@ -233,6 +233,25 @@ div[class*="ag-theme-salt"] {
     color: var(--salt-text-secondary-foreground);
   }
 
+  .ag-cell.editable-cell.ag-cell-focus:focus,
+  .editable-numeric-cell.ag-cell-focus:focus {
+    clip-path: inset(0, 0);
+    overflow: visible;
+  }
+
+  .ag-cell.editable-cell.ag-cell-focus:focus:before,
+  .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before {
+    border-bottom: calc(var(--salt-size-adornment) + 4px) solid transparent;
+    border-left: calc(var(--salt-size-adornment) + 4px) solid
+      var(--salt-focused-outlineColor);
+    border-top: 0 solid transparent;
+    content: "";
+    left: -2px;
+    position: absolute;
+    top: -2px;
+    z-index: 2;
+  }
+
   input[class^="ag-"][type="text"] {
     border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
       transparent;
