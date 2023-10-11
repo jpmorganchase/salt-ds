@@ -61,14 +61,14 @@ export function useAgGridHelpers(
 
   useEffect(() => {
     // setHeaderHeight doesn't work if not in setTimeout
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       if (isGridReady) {
         apiRef.current!.api.resetRowHeights();
         apiRef.current!.api.setHeaderHeight(rowHeight);
         apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
         // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height? Issue 2479
       }
-    });
+    }, 0);
   }, [rowHeight, isGridReady, agThemeName, listItemHeight]);
 
   return {
