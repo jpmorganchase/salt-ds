@@ -1,0 +1,7 @@
+.stackLayout {
+  flex: 1;
+}
+
+.active {
+  max-width: 100px;
+}

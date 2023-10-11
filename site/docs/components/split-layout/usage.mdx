@@ -1,0 +1,35 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### How to use the Split Layout component
+
+#### When to use Split Layout
+
+- If you need two defined areas at the opposite horizontal ends of a container, for example if you need two Button Bar components in a header.
+
+#### When not to use Split Layout
+
+- If your layout requires more than two regions. Instead, use [Flow Layout](/salt/components/flow-layout).
+- If you want more complex customization in your layout, consider [Flex Layout](/salt/components/flex-layout).
+
+### Import
+
+{/* Update the text and code snippet below as needed: */}
+
+To import Split Layout from the core Salt package, use:
+
+```js
+import { SplitLayout } from "@salt-ds/core";
+```
+
+### Props
+
+<PropsTable packageName="core" componentName="SplitLayout" />
