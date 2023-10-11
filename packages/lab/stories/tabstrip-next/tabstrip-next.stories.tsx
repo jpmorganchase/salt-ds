@@ -129,6 +129,32 @@ Inline.args = {
   variant: "inline",
 };
 
+export const InlineWithSecondaryBackground: TabstripStory = ({
+  width = 600,
+  tabs,
+  ...tabstripProps
+}) => {
+  return (
+    <div
+      style={{ width, display: "flex", height: 200 }}
+      className="secondary-container"
+    >
+      <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
+        {tabs.map((label) => (
+          <TabNext value={label} key={label}>
+            {label}
+          </TabNext>
+        ))}
+      </TabstripNext>
+    </div>
+  );
+};
+
+InlineWithSecondaryBackground.args = {
+  tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
+  variant: "inline",
+};
+
 export const Centered = TabstripTemplate.bind({});
 Centered.args = {
   align: "center",
