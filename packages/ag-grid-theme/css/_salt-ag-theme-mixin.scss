@@ -17,8 +17,10 @@
     .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
     .ag-cell-range-single-cell,
     .ag-cell-range-single-cell.ag-cell-range-handle {
-      border: var(--agGrid-focused-borderWidth)
-        var(--agGrid-focused-borderStyle) var(--agGrid-focused-borderColor) !important;
+      outline: var(--agGrid-focused-borderWidth)
+        var(--agGrid-focused-borderStyle) var(--agGrid-focused-borderColor);
+      outline-offset: -2px;
+      border: none;
     }
   }
   // Because we are using a different border thickness on focus than default
@@ -42,7 +44,7 @@
         min(
             var(--ag-internal-calculated-line-height),
             var(--ag-internal-padded-row-height)
-          ) - 2px
+          ) + 1px
       );
     }
   }
@@ -165,7 +167,6 @@
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
     font-size: inherit;
-    border: dotted 2px transparent;
 
     &:focus {
       border-color: var(--agGrid-color-focus);
@@ -312,7 +313,7 @@
 
   .ag-header-cell,
   .ag-header-group-cell {
-    padding: 0px calc(var(--salt-spacing-100) + 2px);
+    padding: 0px calc(var(--salt-spacing-100));
   }
 
   /* --- Pinned column styles --- */
@@ -321,105 +322,12 @@
   .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
       .ag-cell-range-single-cell
     ) {
-    border-right: 2px solid transparent;
     overflow: unset;
   }
 
   .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
       .ag-cell-range-single-cell
     ) {
-    border-left: 2px solid transparent;
-    overflow: unset;
-  }
-
-  /** 
-    Due to having a transparent 2px border to avoid shifting content on focus,
-    we have to mimic a RHS border on pinned cells
-     */
-  .ag-row
-    .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
-      .ag-cell-range-single-cell
-    ):after {
-    background-color: var(--salt-separable-tertiary-borderColor);
-    content: "";
-    height: calc(100% + 4px);
-    position: absolute;
-    right: -2px;
-    top: -2px;
-    width: 1px;
-    z-index: 1;
-  }
-
-  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
-      .ag-cell-range-single-cell
-    ):focus:after {
-    background-color: var(--salt-separable-tertiary-borderColor);
-    content: "";
-    height: calc(100% + 4px);
-    position: absolute;
-    right: -1px;
-    top: -2px;
-    width: 1px;
-    z-index: 1;
-  }
-
-  .ag-row
-    .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
-      .ag-cell-range-single-cell
-    ):after {
-    background-color: var(--salt-separable-tertiary-borderColor);
-    content: "";
-    height: calc(100% + 4px);
-    position: absolute;
-    left: -3px;
-    top: -2px;
-    width: 1px;
-    z-index: 1;
-  }
-
-  .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
-      .ag-cell-range-single-cell
-    ):focus:after {
-    background-color: var(--salt-separable-tertiary-borderColor);
-    content: "";
-    height: calc(100% + 4px);
-    position: absolute;
-    left: -2px;
-    top: -2px;
-    width: 1px;
-    z-index: 1;
-  }
-
-  .ag-pinned-right-header .ag-header-row-column:after,
-  .ag-pinned-right-header .ag-header-row-column-group:after {
-    background-color: var(--salt-separable-tertiary-borderColor);
-    content: "";
-    height: var(--agGrid-column-separator-height);
-    top: var(--agGrid-column-separator-top);
-    position: absolute;
-    left: -1px;
-    width: 1px;
-    z-index: 1;
-  }
-
-  .ag-pinned-left-header .ag-header-row:first-child:after {
-    background-color: var(--salt-separable-tertiary-borderColor);
-    content: "";
-    height: var(--agGrid-column-separator-height);
-    top: var(--agGrid-column-separator-top);
-    position: absolute;
-    right: 0px;
-    width: 1px;
-    z-index: 1;
-  }
-
-  .ag-pinned-left-header {
-    border-right: none;
-    overflow: unset;
-  }
-
-  .ag-pinned-right-header {
-    border-left: none;
     overflow: unset;
   }
 
@@ -465,14 +373,10 @@
     z-index: 1;
   }
 
-  .ag-ltr .ag-row-group-leaf-indent {
-    border-left: 2px solid transparent;
-  }
-
   /* --- General cell styles --- */
 
   .ag-cell {
-    border-left: 0;
+    border: 0;
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
   }
@@ -482,12 +386,12 @@
   }
 
   .ag-ltr .ag-cell {
-    border: 2px solid transparent;
+    border: none;
     line-height: calc(
       min(
           var(--ag-internal-calculated-line-height),
           var(--ag-internal-padded-row-height)
-        ) - 2px
+        ) + 1px
     );
   }
 
@@ -517,8 +421,8 @@
   .ag-cell.editable-cell.ag-cell-focus:focus:before {
     content: "";
     position: absolute;
-    top: -2px;
-    left: -2px;
+    top: 0;
+    left: 0;
     border-top: 0 solid transparent;
     border-left: var(--agGrid-editableCell-cornerTag-size) solid
       var(--agGrid-focused-borderColor);
@@ -539,39 +443,75 @@
   }
 
   .ag-cell-editor .ag-input-field-input {
-    padding-left: ag-param(cell-horizontal-padding) - 2px;
-    padding-right: ag-param(cell-horizontal-padding) - 2px;
+    padding-left: ag-param(cell-horizontal-padding);
+    padding-right: ag-param(cell-horizontal-padding);
   }
 
   /* --- Cell range --- */
 
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
-    ).ag-cell-range-left {
-    border-left-color: var(--agGrid-range-selection-borderColor);
-    border-left-style: dotted;
-    border-left-width: 2px;
+    ).ag-cell-range-left:before {
+    border-left: 2px dotted var(--agGrid-range-selection-borderColor);
+    content: "";
+    height: 99%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    z-index: 1;
   }
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
-    ).ag-cell-range-right {
-    border-right-color: var(--agGrid-range-selection-borderColor);
-    border-right-style: dotted;
-    border-right-width: 2px;
+    ).ag-cell-range-right:before {
+    border-right: 2px dotted var(--agGrid-range-selection-borderColor);
+    content: "";
+    height: 99%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2px;
+    z-index: 1;
   }
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
-    ).ag-cell-range-top {
-    border-top-color: var(--agGrid-range-selection-borderColor);
-    border-top-style: dotted;
-    border-top-width: 2px;
+    ).ag-cell-range-left.ag-cell-range-bottom:before,
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-right.ag-cell-range-bottom:before {
+    height: 100%;
   }
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
-    ).ag-cell-range-bottom {
-    border-bottom-color: var(--agGrid-range-selection-borderColor);
-    border-bottom-style: dotted;
-    border-bottom-width: 2px;
+    ).ag-cell-range-top:after {
+    border-top: 2px dotted var(--agGrid-range-selection-borderColor);
+    content: "";
+    width: 99%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 2px;
+    z-index: 1;
+  }
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-bottom:after {
+    border-bottom: 2px dotted var(--agGrid-range-selection-borderColor);
+    content: "";
+    width: 99%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    z-index: 1;
+  }
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-right.ag-cell-range-bottom:before,
+  .ag-cell.ag-cell-range-selected:not(
+      .ag-cell-range-single-cell
+    ).ag-cell-range-right.ag-cell-range-top:before {
+    width: 100%;
   }
   .ag-cell.ag-cell-range-selected-1:not(.ag-cell-focus),
   .ag-root:not(.ag-context-menu-open)
@@ -620,10 +560,9 @@
   }
 
   .ag-ltr .ag-side-bar-right .ag-side-button-button {
-    border-left: 2px solid transparent;
     &:focus-visible {
-      border: 2px dotted var(--salt-focused-outlineColor);
-      outline: none;
+      outline: 2px dotted var(--salt-focused-outlineColor);
+      outline-offset: -2px;
     }
   }
 
@@ -712,8 +651,9 @@
   }
 
   .ag-keyboard-focus .ag-paging-button:focus::after {
-    border: dotted 2px var(--agGrid-color-focus);
-    outline: none;
+    outline: dotted 2px var(--agGrid-color-focus);
+    outline-offset: -2px;
+    border: none;
   }
 
   /* --- Floating filter styles --- */
@@ -752,21 +692,10 @@
     content: none;
   }
 
-  /* Ensures content doesn't shift when focus creates 2px border on parent */
-  .ag-floating-filter-body,
-  .ag-floating-filter-button {
-    border: 1px solid transparent;
-  }
-
-  /* Removes border defined above when focus on parent */
-  .ag-header-cell.ag-floating-filter:focus-within .ag-floating-filter-body,
-  .ag-header-cell.ag-floating-filter:focus-within .ag-floating-filter-button {
-    border: none;
-  }
-
   .ag-header-cell.ag-floating-filter:focus-within {
-    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+    outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
       var(--salt-focused-outlineColor);
+    outline-offset: -2px;
   }
 
   /* We have to fake a border (below) to ensure alignment */
