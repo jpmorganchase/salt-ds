@@ -10,12 +10,15 @@
 
 /* Styles applied when `size="default"` */
 .saltSpinner-default {
+  /* TODO: use bar strong */
+  --spinner-strokeWidth: calc(var(--salt-size-bar) * 2);
   height: calc(var(--salt-size-base) * 4);
   width: calc(var(--salt-size-base) * 4);
 }
-
 /* Styles applied when `size="nested"` */
 .saltSpinner-nested {
+  /* TODO: use bar small */
+  --spinner-strokeWidth: 2px;
   height: var(--salt-size-icon);
   width: var(--salt-size-icon);
 }
@@ -30,11 +33,11 @@
   top: 0;
 }
 
-@keyframes spinner {
+/* @keyframes spinner {
   0% {
     transform: rotate(0);
   }
   100% {
     transform: rotate(360deg);
   }
-}
+} */
