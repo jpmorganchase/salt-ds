@@ -1,0 +1,105 @@
+---
+title: International Phone Number Input
+layout: DetailPattern
+sidebar:
+  label: International Phone Number Input
+aliases:
+  - /salt/patterns/international-phone-number-input
+data:
+  resources:
+    [
+      { href: "https://www.figma.com/file/HkXrrf1rbYATx6ggGG4Pov/(WIP)-International-Phone-Number?node-id=1356%3A3430&mode=design", label: "Templates", internal: true }
+    ]  
+---
+
+International Phone Number Input is a pattern that gives users a set of form fields to input phone number information for specific countries.
+
+## Pattern scope
+
+The pattern is a form that displays a relevant phone number field for a user-selected location. You can use it to provide consistent design when implementing International Phone Number Input interactions across your applications.
+
+We provide design guidance of how you can use Salt form control components to achieve the pattern. Your team may be able to take further steps that fall outside its scope. For example, check with your tech partners if it’s possible to auto-detect user location, with data that can support auto-generate number placeholders, and can save the entered number when user is changing the country.
+
+## When to use it
+
+Use the pattern when your user needs to enter a phone number for a specific country. This could be for contact, access request purposes, such as client detail collection processes or 2-step verification/Multi-factor authentication.
+
+## Pattern content
+
+- The pattern consists a set of 2 form controls, one is a [dropdown](../components/dropdown) that displays country selection (with country symbol component that can be displayed or hidden), the other one is an [input](../components/input) displays phone number.
+- When the country is selected in the dropdown, the text input adornment in the phone number input will be updated with the country code.
+
+<ImageSwitcher
+  images={[
+    { 
+      src: "/img/patterns/international-phone-number-input/pattern_without_country.png", 
+      alt: "Phone number input pattern without selected country"
+    },
+    { 
+      src: "/img/patterns/international-phone-number-input/pattern_with_country.png", 
+      alt: "Phone number input pattern with selected country" 
+    },
+  ]}
+  label="Select United Kingdom"
+/>
+
+## Stack layout: column vs row
+
+The pattern can be displayed in [stack layout](../components/stack-layout) as a column or a row.
+
+#### Column layout
+
+Column layout is having 2 form controls as a vertical column. For a better visibility of the country name and the country code, we suggest using the stack layout.
+
+<Diagrams>
+  <Diagram
+    src="/img/patterns/international-phone-number-input/pattern_with_country_symbol.png"
+    alt="Phone number input pattern with country symbol"
+    contentPosition="top"
+  >
+    #### With country symbol
+  </Diagram>
+  <Diagram
+    src="/img/patterns/international-phone-number-input/pattern_without_country_symbol.png"
+    alt="Phone number input pattern without country symbol"
+    contentPosition="top"
+  >
+    #### Without country symbol
+  </Diagram>
+</Diagrams>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  
+- We suggest using full country name instead of abbreviation because users may filter the selection by typing the country name.
+</ExampleContainer>
+
+### Row layout
+
+Row layout is having 2 form controls as a horizontal row. You can use row layout when there is a need to save some space.
+
+<Diagram
+  src="/img/patterns/international-phone-number-input/pattern_row_layout.png"
+  alt="Pattern row layout"
+  border
+/>
+
+When country name is wider than the input then it will be truncated. In this case, we suggest using column layout.
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/international-phone-number-input/pattern_truncated_row_layout.png", alt: "Truncated row layout" },
+    { src: "/img/patterns/international-phone-number-input/pattern_truncated_column_layout.png", alt: "Column layout" },
+  ]}
+  label="Column layout"
+/>
+
+## Country selection dropdown
+
+The country selection dropdown is using [List](../components/list) component, the country list should be in the alphabetical order.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/international-phone-number-input/country_selection_closed.png", alt: "Country selection dropdown closed" },
+    { src: "/img/patterns/international-phone-number-input/country_selection_open.png", alt: "Country selection dropdown open" },
+  ]}
+  label="Country selection dropdown"
+/>
