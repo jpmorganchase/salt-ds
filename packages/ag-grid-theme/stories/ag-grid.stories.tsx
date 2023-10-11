@@ -22,6 +22,7 @@ export {
   Icons,
   FloatingFilter,
   HDCompact,
+  HDCompactDark,
   InfiniteScroll,
   LoadingOverlay,
   MasterDetail,

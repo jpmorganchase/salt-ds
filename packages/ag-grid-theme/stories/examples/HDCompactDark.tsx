@@ -17,15 +17,17 @@ const statusBar = {
   ],
 };
 
-const HDCompact = (props: AgGridReactProps) => {
+const HDCompactDark = (props: AgGridReactProps) => {
+  const mode = "dark";
   const { switcher, themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers(
     `ag-theme-${themeName}`,
-    true
+    true,
+    mode
   );
 
   return (
-    <SaltProvider density="high">
+    <SaltProvider mode={mode} density="high">
       <StackLayout gap={4}>
         <FlexLayout direction="row">{switcher}</FlexLayout>
         <div {...containerProps}>
@@ -53,8 +55,8 @@ const HDCompact = (props: AgGridReactProps) => {
   );
 };
 
-HDCompact.parameters = {
+HDCompactDark.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export default HDCompact;
+export default HDCompactDark;
