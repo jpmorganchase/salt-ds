@@ -1,6 +1,7 @@
 import {
   Button,
   FLEX_ALIGNMENT_BASE,
+  FlexLayout,
   FlowLayout,
   SplitLayout,
   StackLayout,
@@ -36,7 +37,9 @@ export default {
   },
   decorators: [
     (Story) => (
-      <div style={{ minWidth: "30vw", minHeight: "700px" }}>{Story()}</div>
+      <FlexLayout style={{ minWidth: "30vw", minHeight: "350px" }}>
+        {Story()}
+      </FlexLayout>
     ),
   ],
 } as Meta<typeof SplitLayout>;
@@ -51,7 +54,7 @@ const startItem = (
   </FlowLayout>
 );
 const endItem = (
-  <FlowLayout>
+  <FlowLayout align="baseline">
     <div className="layout-content-right">
       <p>Item 4</p>
     </div>
