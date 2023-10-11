@@ -8,7 +8,6 @@
   width: 100%;
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
-  gap: var(--salt-spacing-100);
 }
 
 .saltTabstripNext-main::before {
@@ -17,4 +16,8 @@
   inset: auto 0 0 0;
   height: var(--salt-size-border);
   border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+}
+
+.saltTabstripNext .saltTabNext-wrapper:not(:last-child) {
+  padding-right: var(--salt-spacing-100);
 }
