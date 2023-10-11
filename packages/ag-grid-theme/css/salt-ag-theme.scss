@@ -82,6 +82,11 @@ div[class*="ag-theme-salt"] {
       var(--salt-separable-primary-borderColor);
   }
 
+  .ag-floating-filter-button-button .ag-icon-filter:before {
+    color: var(--salt-text-secondary-foreground);
+    content: "\e9ac";
+  }
+  
   .ag-header-row:not(:first-child)
     .ag-header-cell:not(.ag-header-span-height.ag-header-span-total) {
     border-top-color: #cacacb;
