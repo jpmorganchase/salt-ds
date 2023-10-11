@@ -1,7 +1,6 @@
 import {
   Button,
   FLEX_ALIGNMENT_BASE,
-  FlexLayout,
   FlowLayout,
   SplitLayout,
   StackLayout,
@@ -37,9 +36,9 @@ export default {
   },
   decorators: [
     (Story) => (
-      <FlexLayout style={{ minWidth: "30vw", minHeight: "350px" }}>
+      <div style={{ minWidth: "30vw", minHeight: "350px", display: "flex" }}>
         {Story()}
-      </FlexLayout>
+      </div>
     ),
   ],
 } as Meta<typeof SplitLayout>;
