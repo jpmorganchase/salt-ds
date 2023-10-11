@@ -95,6 +95,10 @@ div[class*="ag-theme-salt"] {
       var(--salt-focused-outlineColor);
   }
 
+  .ag-right-aligned-header .ag-header-cell-label {
+    flex-direction: row;
+  }
+
   .ag-menu {
     padding: var(--salt-spacing-100);
     border: 1px solid #cacacb;
