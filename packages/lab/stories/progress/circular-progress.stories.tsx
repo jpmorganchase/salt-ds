@@ -49,4 +49,3 @@ export const MaxValue: StoryFn<typeof CircularProgress> = () => (
 export const ProgressingValue: StoryFn<typeof CircularProgress> = () => (
   <ProgressWithControls ProgressComponent={CircularProgress} />
 );
-

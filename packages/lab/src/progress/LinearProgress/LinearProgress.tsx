@@ -21,11 +21,7 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   max?: number;
   /**
-   * If `true`, the info panel will be displayed.
-   */
-  showInfo?: boolean;
-  /**
-   * Default unit is`%`.
+   * Default unit is `%`.
    */
   unit?: string;
   /**
@@ -36,13 +32,10 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * Linear progress bar with an optional Info element, showing the current value
+ * Linear progress bar with an Info element showing the current value
  */
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
-  function LinearProgress(
-    { className, max = 100, showInfo = true, value = 0, ...rest },
-    ref
-  ) {
+  function LinearProgress({ className, max = 100, value = 0, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-linear-progress",
@@ -50,19 +43,15 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       window: targetWindow,
     });
 
-    let progressInfo: ReactNode = null;
-
     const progress = (value / max) * 100;
 
-    if (showInfo) {
-      progressInfo = (
-        <Info
-          unit="%"
-          value={Math.round(progress)}
-          className={withBaseName("progressValue")}
-        />
-      );
-    }
+    const progressInfo = (
+      <Info
+        unit="%"
+        value={Math.round(progress)}
+        className={withBaseName("progressValue")}
+      />
+    );
 
     const barStyle: CSSProperties = {};
     const trackStyle: CSSProperties = {};
