@@ -35,8 +35,6 @@ export const SpinnerSVG = ({
   size,
   density,
 }: SpinnerProps) => {
-  console.log(size);
-  console.log(density);
   const { width, strokeWidth } = sizeAndStrokeWidthMapping[size][density];
   const radius = (width - strokeWidth) / 2;
 
