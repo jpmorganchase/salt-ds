@@ -20,11 +20,10 @@ const statusBar = {
 const StatusBar = (props: AgGridReactProps) => {
   const mode = "dark";
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`,
-    false,
-    mode
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+    mode,
+  });
 
   return (
     <SaltProvider mode={mode}>

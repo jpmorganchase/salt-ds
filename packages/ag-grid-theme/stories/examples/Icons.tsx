@@ -17,7 +17,9 @@ const Icons = () => {
   });
   const { switcher, themeName } = useAgGridThemeSwitcher();
 
-  const { containerProps } = useAgGridHelpers(`ag-theme-${themeName}`);
+  const { containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
   const styles = themeName === "salt" ? saltStyles : uitkStyles;
 
   return (
@@ -29,6 +31,7 @@ const Icons = () => {
             <div
               {...containerProps}
               style={{ "--icon-content": styles[key] } as CSSProperties}
+              key={key}
             >
               {key}
             </div>
