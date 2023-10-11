@@ -19,10 +19,11 @@ const statusBar = {
 
 const HDCompact = (props: AgGridReactProps) => {
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`,
-    true
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+    compact: true,
+    density: "high",
+  });
 
   return (
     <SaltProvider density="high">
