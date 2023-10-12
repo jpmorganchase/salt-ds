@@ -10,6 +10,7 @@
 
 /* Styles applied when `size="default"` */
 .saltSpinner-default {
+  --spinner-strokeWidth: var(--salt-size-bar);
   height: var(--salt-size-base);
   width: var(--salt-size-base);
 }
