@@ -40,7 +40,7 @@ const VariantZebraDark = (props: AgGridReactProps) => {
 };
 
 VariantZebraDark.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default VariantZebraDark;

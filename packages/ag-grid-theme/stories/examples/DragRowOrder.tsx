@@ -29,7 +29,7 @@ const DragRowOrder = (props: AgGridReactProps) => {
 };
 
 DragRowOrder.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default DragRowOrder;

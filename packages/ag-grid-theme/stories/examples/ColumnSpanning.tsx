@@ -27,7 +27,7 @@ const ColumnSpanning = (props: AgGridReactProps) => {
 };
 
 ColumnSpanning.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default ColumnSpanning;

@@ -34,7 +34,7 @@ const VariantSecondary = (props: AgGridReactProps) => {
 };
 
 VariantSecondary.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default VariantSecondary;
