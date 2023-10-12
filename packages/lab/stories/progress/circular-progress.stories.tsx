@@ -7,8 +7,8 @@ import "./progress.stories.css";
 
 export default {
   title: "Lab/Progress/Circular",
-  component: LinearProgress,
-} as Meta<typeof LinearProgress>;
+  component: CircularProgress,
+} as Meta<typeof CircularProgress>;
 
 interface ProgressWithControlsProps {
   ProgressComponent: typeof CircularProgress | typeof LinearProgress;
