@@ -7,9 +7,9 @@ import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const ParentChildRows = (props: AgGridReactProps) => {
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   return (
     <StackLayout gap={4}>
@@ -21,7 +21,9 @@ const ParentChildRows = (props: AgGridReactProps) => {
           {...agGridProps}
           {...props}
           columnDefs={parentChildExampleColumns}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           getDataPath={(data: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
             return data.orgHierarchy;
           }}
           groupDefaultExpanded={-1}

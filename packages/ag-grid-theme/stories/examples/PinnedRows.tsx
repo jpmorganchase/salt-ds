@@ -23,6 +23,7 @@ const fields = function <T>(fieldName: keyof T, rows: T[]) {
   return rows.map((row) => row[fieldName]);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const headerRow: any[] = [
   {
     name: "Top",
@@ -49,9 +50,9 @@ const PinnedRowsExample = function PinnedRowsExample({
   ...rest
 }: PinnedRowsExampleProps) {
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   const getColumnData = () => {
     return fields(aggregateColumn, rowData!).filter(

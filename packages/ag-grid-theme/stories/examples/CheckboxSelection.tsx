@@ -7,9 +7,9 @@ import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const CheckboxSelection = (props: AgGridReactProps) => {
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   return (
     <StackLayout gap={4}>

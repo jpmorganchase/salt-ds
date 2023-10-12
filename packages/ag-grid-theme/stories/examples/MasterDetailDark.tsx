@@ -9,11 +9,10 @@ import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 const MasterDetailDark = (props: AgGridReactProps) => {
   const mode = "dark";
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`,
-    false,
-    mode
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+    mode,
+  });
 
   const gridRef = useRef<AgGridReact>(null);
 
@@ -38,6 +37,7 @@ const MasterDetailDark = (props: AgGridReactProps) => {
               detailGridOptions: { columnDefs },
               // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
               getDetailRowData: (params: any) =>
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
                 params.successCallback(rowData),
             }}
             masterDetail={true}
