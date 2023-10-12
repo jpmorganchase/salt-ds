@@ -19,17 +19,17 @@ const sizeAndStrokeWidthMapping = {
     low: { width: 36, strokeWidth: 6 },
     touch: { width: 44, strokeWidth: 8 },
   },
-  nested: {
-    high: { width: 12, strokeWidth: 2 },
-    medium: { width: 12, strokeWidth: 2 },
-    low: { width: 14, strokeWidth: 2 },
-    touch: { width: 16, strokeWidth: 2 },
-  },
   large: {
     high: { width: 40, strokeWidth: 2 },
     medium: { width: 56, strokeWidth: 4 },
     low: { width: 72, strokeWidth: 6 },
     touch: { width: 88, strokeWidth: 8 },
+  },
+  nested: {
+    high: { width: 12, strokeWidth: 2 },
+    medium: { width: 12, strokeWidth: 2 },
+    low: { width: 14, strokeWidth: 2 },
+    touch: { width: 16, strokeWidth: 2 },
   },
 };
 
