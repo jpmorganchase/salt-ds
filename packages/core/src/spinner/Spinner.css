@@ -24,8 +24,7 @@
 
 /* Styles applied when `size="nested"` */
 .saltSpinner-nested {
-  /* TODO: use bar small */
-  --spinner-strokeWidth: 2px;
+  --spinner-strokeWidth: var(--salt-size-bar-small);
   height: var(--salt-size-icon);
   width: var(--salt-size-icon);
 }
@@ -40,11 +39,11 @@
   top: 0;
 }
 
-/* @keyframes spinner {
+@keyframes spinner {
   0% {
     transform: rotate(0);
   }
   100% {
     transform: rotate(360deg);
   }
-} */
+}
