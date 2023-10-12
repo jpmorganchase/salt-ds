@@ -175,6 +175,11 @@ export const useDropdownNext = ({
       case "Escape":
         setOpen(false);
         break;
+      case "Tab":
+        if (open) {
+          setOpen(false);
+        }
+        break;
       case "PageUp":
       case "PageDown":
       case "Home":

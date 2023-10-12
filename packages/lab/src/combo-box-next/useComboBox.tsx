@@ -122,6 +122,11 @@ export const useComboBox = ({
           }
         }
         break;
+      case "Tab":
+        if (open) {
+          setOpen(false);
+        }
+        break;
       case "Backspace":
         if (!open) {
           setOpen(true);
