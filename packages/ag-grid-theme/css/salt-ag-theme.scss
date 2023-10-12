@@ -17,6 +17,8 @@
       ag-theme-salt-compact-light: (
         extend-theme: material,
         font-size: 11px,
+        subheader-background-color: #fff,
+        foreground-color: #2a2c2f,
       ),
       ag-theme-salt-compact-dark: (
         extend-theme: material,
@@ -302,6 +304,17 @@ div[class*="ag-theme-salt"] {
     margin: 0;
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
+  }
+
+  .ag-status-bar {
+    border: none;
+    border-top: 1px solid #cacacb;
+    color: var(--salt-text-secondary-foreground);
+    font-size: var(--salt-text-fontSize);
+    font-weight: var(--salt-text-label-fontWeight);
+    // height: var(--agGrid-row-height-default);
+    line-height: var(--salt-text-label-lineHeight);
+    padding: 0 var(--salt-spacing-100);
   }
 }
 
