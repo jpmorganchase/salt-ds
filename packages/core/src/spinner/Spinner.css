@@ -10,17 +10,15 @@
 
 /* Styles applied when `size="default"` */
 .saltSpinner-default {
-  --spinner-strokeWidth: var(--salt-size-bar);
-  height: calc(var(--salt-size-base) * 2);
-  width: calc(var(--salt-size-base) * 2);
+  height: var(--salt-size-base);
+  width: var(--salt-size-base);
 }
 
 /* Styles applied when `size="large"` */
 .saltSpinner-large {
-  /* TODO: use bar strong */
-  --spinner-strokeWidth: calc(var(--salt-size-bar) * 2);
-  height: calc(var(--salt-size-base) * 4);
-  width: calc(var(--salt-size-base) * 4);
+  --spinner-strokeWidth: var(--salt-size-bar);
+  height: calc(var(--salt-size-base) * 2);
+  width: calc(var(--salt-size-base) * 2);
 }
 
 /* Styles applied when `size="nested"` */

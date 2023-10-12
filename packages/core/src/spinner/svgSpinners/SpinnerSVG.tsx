@@ -1,11 +1,9 @@
 import { SVGAttributes } from "react";
 import { makePrefixer } from "../../utils";
 import { SpinnerSize } from "../Spinner";
+import { Density } from "../../theme";
 
 const withBaseName = makePrefixer("saltSpinner");
-
-// TODO: import these
-type Density = "high" | "medium" | "low" | "touch";
 
 interface SpinnerProps {
   id?: string;
@@ -16,10 +14,10 @@ interface SpinnerProps {
 
 const sizeAndStrokeWidthMapping = {
   default: {
-    high: { width: 40, strokeWidth: 2 },
-    medium: { width: 56, strokeWidth: 4 },
-    low: { width: 72, strokeWidth: 6 },
-    touch: { width: 88, strokeWidth: 8 },
+    high: { width: 20, strokeWidth: 2 },
+    medium: { width: 28, strokeWidth: 4 },
+    low: { width: 36, strokeWidth: 6 },
+    touch: { width: 44, strokeWidth: 8 },
   },
   nested: {
     high: { width: 12, strokeWidth: 2 },
@@ -28,10 +26,10 @@ const sizeAndStrokeWidthMapping = {
     touch: { width: 16, strokeWidth: 2 },
   },
   large: {
-    high: { width: 80, strokeWidth: 4 },
-    medium: { width: 112, strokeWidth: 8 },
-    low: { width: 144, strokeWidth: 12 },
-    touch: { width: 176, strokeWidth: 16 },
+    high: { width: 40, strokeWidth: 2 },
+    medium: { width: 56, strokeWidth: 4 },
+    low: { width: 72, strokeWidth: 6 },
+    touch: { width: 88, strokeWidth: 8 },
   },
 };
 
@@ -52,7 +50,6 @@ export const SpinnerSVG = ({
       {...rest}
     >
       <defs>
-        {/* why does this need -1? */}
         <linearGradient id={`${id}-1`} x1="0" y1="0" x2="100%" y2="0">
           <stop
             className={withBaseName("gradientStop")}
@@ -66,9 +63,11 @@ export const SpinnerSVG = ({
           />
         </linearGradient>
       </defs>
-      {/* what is evenodd? */}
-      <g fill="none" fillRule="evenodd">
-        {/* This first path draws the top half of the circle no gradient*/}
+      <g fill="none">
+        {/* 
+          This first path draws the top half of the circle without a gradient. 
+          It starts from the right end, moves in a circular arc, and ends at the left end.
+        */}
         <path
           d={`M${width - strokeWidth / 2},${
             width / 2
@@ -77,7 +76,11 @@ export const SpinnerSVG = ({
           strokeWidth="var(--spinner-strokeWidth)"
           fill="none"
         />
-        {/* This second path draws the left half of the circle with a gradient that is opaque on the left and transparent at the end */}
+        {/* 
+          This second path draws the left half of the circle with a gradient that transitions 
+          from opaque on the left to transparent on the right.
+          It starts from the top-center, moves in a circular arc, and ends at the bottom-center.
+        */}
         <path
           d={`M${width / 2},${strokeWidth / 2} a${radius},${radius} 0 1,0 0,${
             width - strokeWidth

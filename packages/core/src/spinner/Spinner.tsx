@@ -46,7 +46,7 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   role?: string;
   /**
-   * Determines the size of the spinner. Must be one of: 'default', 'nested'.
+   * Determines the size of the spinner. Must be one of: 'default', 'large', 'nested'.
    */
   size?: SpinnerSize;
   /**
