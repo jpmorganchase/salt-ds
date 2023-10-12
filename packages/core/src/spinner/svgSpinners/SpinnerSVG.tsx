@@ -45,7 +45,7 @@ export const SpinnerSVG = ({
   return (
     <svg
       className={withBaseName("spinner")}
-      viewBox="0 0 ${width} ${width}"
+      viewBox={`0 0 ${width} ${width}`}
       id={id}
       {...rest}
     >
@@ -53,7 +53,7 @@ export const SpinnerSVG = ({
         <linearGradient id={`${id}-1`} x1="0" y1="0" x2="100%" y2="0">
           <stop
             className={withBaseName("gradientStop")}
-            offset="0%"
+            offset="15%"
             stopOpacity="1"
           />
           <stop
