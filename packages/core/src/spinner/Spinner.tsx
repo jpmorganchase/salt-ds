@@ -13,10 +13,10 @@ import { useDensity } from "@salt-ds/core";
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="default | "large" | "nested" />
+ * <Spinner size="default | "large" | "small" />
  */
 
-export const SpinnerSizeValues = ["default", "large", "nested"] as const;
+export const SpinnerSizeValues = ["default", "large", "small"] as const;
 export type SpinnerSize = (typeof SpinnerSizeValues)[number];
 const withBaseName = makePrefixer("saltSpinner");
 
@@ -46,7 +46,7 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   role?: string;
   /**
-   * Determines the size of the spinner. Must be one of: 'default', 'large', 'nested'.
+   * Determines the size of the spinner. Must be one of: 'default', 'large', 'small'.
    */
   size?: SpinnerSize;
   /**

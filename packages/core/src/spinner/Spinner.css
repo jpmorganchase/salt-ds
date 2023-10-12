@@ -22,8 +22,8 @@
   width: calc(var(--salt-size-base) * 2);
 }
 
-/* Styles applied when `size="nested"` */
-.saltSpinner-nested {
+/* Styles applied when `size="small"` */
+.saltSpinner-small {
   --spinner-strokeWidth: var(--salt-size-bar-small);
   height: var(--salt-size-icon);
   width: var(--salt-size-icon);
