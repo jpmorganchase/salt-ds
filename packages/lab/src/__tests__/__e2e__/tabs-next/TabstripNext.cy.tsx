@@ -2,7 +2,7 @@ import { composeStories } from "@storybook/react";
 import * as tabstripStories from "@stories/tabstrip-next/tabstrip-next.stories";
 import { StackLayout } from "@salt-ds/core";
 
-const { Default: DefaultTabstrip } = composeStories(tabstripStories);
+const { DefaultLeftAligned: DefaultTabstrip } = composeStories(tabstripStories);
 
 describe("Given a Tabstrip", () => {
   describe("WHEN uncontrolled", () => {
