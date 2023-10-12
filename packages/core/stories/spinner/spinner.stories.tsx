@@ -59,7 +59,6 @@ Nested.args = {
   size: "nested",
 };
 
-
 type LoadingStatus = "loading" | "loaded" | "idle";
 
 export const Loading: StoryFn = () => {

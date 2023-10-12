@@ -2,7 +2,7 @@ import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useEffect } from "react";
 import { useAriaAnnouncer } from "../aria-announcer";
 import { makePrefixer, useId } from "../utils";
-import { SpinnerSVG } from "./svgSpinners/SpinnerSVG"
+import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
 
 import spinnerCss from "./Spinner.css";
 import { useWindow } from "@salt-ds/window";
@@ -13,7 +13,7 @@ import { useDensity } from "@salt-ds/core";
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="default | nested" />
+ * <Spinner size="default | "large" | "nested" />
  */
 
 export const SpinnerSizeValues = ["default", "nested", "large"] as const;
@@ -129,7 +129,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         role={role}
         {...rest}
       >
-        <SpinnerSVG size={size} density={density} id={id}/>
+        <SpinnerSVG size={size} density={density} id={id} />
       </div>
     );
   }
