@@ -145,6 +145,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     mouseOverHandler,
     mouseDownHandler,
     selectHandler,
+    blurHandler,
   } = handlers;
 
   const triggerRef = useForkRef<HTMLButtonElement>(ref, reference);
@@ -187,6 +188,10 @@ export const DropdownNext = forwardRef(function DropdownNext(
     onMouseDown?.(event);
   };
 
+  const handleBlur = () => {
+    blurHandler();
+  };
+
   const handleSelect = () => {
     selectHandler();
   };
@@ -198,6 +203,9 @@ export const DropdownNext = forwardRef(function DropdownNext(
         disabled={disabled}
         {...getReferenceProps({
           onFocus: (event: FocusEvent<HTMLButtonElement>) => handleFocus(event),
+          onBlur: () => {
+            handleBlur();
+          },
           onMouseOver: (event: MouseEvent<HTMLButtonElement>) =>
             handleMouseOver(event),
           onMouseDown: (event: MouseEvent<HTMLButtonElement>) =>

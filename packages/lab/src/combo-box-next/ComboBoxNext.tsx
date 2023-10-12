@@ -164,6 +164,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     clickHandler,
     focusHandler,
     selectHandler,
+    blurHandler,
     setSelectedItem,
     setHighlightedItem,
     mouseOverHandler,
@@ -182,7 +183,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     setOpen,
     floating,
     reference,
-    getTriggerProps,
+    getReferenceProps,
     getPortalProps,
     getPosition,
   } = portalProps;
@@ -241,12 +242,16 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
           tabIndex: disabled ? -1 : 0,
           onFocus: focusHandler,
           onKeyDown: keyDownHandler,
-          onClick: clickHandler,
         }}
         role="combobox"
         variant={variant}
         value={inputValue}
-        {...getTriggerProps()}
+        ref={reference}
+        {...getReferenceProps}
+        {...getReferenceProps({
+          onBlur: () => blurHandler(),
+          onClick: () => clickHandler(),
+        })}
         {...restInputProps}
       />
 

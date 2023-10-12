@@ -150,6 +150,10 @@ export const useDropdownNext = ({
     setOpen(false);
   };
 
+  const blurHandler = () => {
+    setOpen(false);
+  };
+
   const keyDownHandler = (event: KeyboardEvent<HTMLElement>) => {
     const { key } = event;
     switch (key) {
@@ -175,11 +179,6 @@ export const useDropdownNext = ({
       case "Escape":
         setOpen(false);
         break;
-      case "Tab":
-        if (open) {
-          setOpen(false);
-        }
-        break;
       case "PageUp":
       case "PageDown":
       case "Home":
@@ -201,6 +200,7 @@ export const useDropdownNext = ({
       mouseOverHandler,
       mouseDownHandler,
       selectHandler,
+      blurHandler,
     },
     open,
     getReferenceProps,

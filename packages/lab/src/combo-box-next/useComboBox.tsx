@@ -36,7 +36,7 @@ export const useComboBox = ({
     floating,
     reference,
     getPortalProps,
-    getTriggerProps,
+    getReferenceProps,
     getPosition,
   } = useComboboxPortal(PortalProps);
 
@@ -77,6 +77,10 @@ export const useComboBox = ({
   };
 
   const selectHandler = () => {
+    setOpen(false);
+  };
+
+  const blurHandler = () => {
     setOpen(false);
   };
 
@@ -122,11 +126,6 @@ export const useComboBox = ({
           }
         }
         break;
-      case "Tab":
-        if (open) {
-          setOpen(false);
-        }
-        break;
       case "Backspace":
         if (!open) {
           setOpen(true);
@@ -147,7 +146,7 @@ export const useComboBox = ({
       setOpen,
       floating,
       reference,
-      getTriggerProps,
+      getReferenceProps,
       getPortalProps,
       getPosition,
     },
@@ -163,5 +162,6 @@ export const useComboBox = ({
     focusHandler,
     selectHandler,
     mouseOverHandler,
+    blurHandler,
   };
 };

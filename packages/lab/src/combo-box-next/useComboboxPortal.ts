@@ -66,11 +66,6 @@ export function useComboboxPortal(props?: UseComboBoxPortalProps) {
     });
   };
 
-  const getTriggerProps = () =>
-    getReferenceProps({
-      ref: reference,
-    });
-
   const getPosition = () => ({
     top: y ?? 0,
     left: x ?? 0,
@@ -85,7 +80,7 @@ export function useComboboxPortal(props?: UseComboBoxPortalProps) {
     floating,
     reference,
     getPortalProps,
-    getTriggerProps,
+    getReferenceProps,
     getPosition,
   };
 }
