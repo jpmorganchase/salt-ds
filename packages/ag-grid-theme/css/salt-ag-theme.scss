@@ -165,19 +165,9 @@ div[class*="ag-theme-salt"] {
   }
 
   .ag-ltr .ag-cell {
-    border-width: 2px;
     line-height: calc(var(--ag-line-height) - 4px);
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
-  }
-
-  .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected) {
-    border-width: 2px;
-  }
-
-  .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
-    border-width: 2px;
-    border-color: var(--ag-range-selection-border-color);
   }
 
   .ag-cell-wrapper {
