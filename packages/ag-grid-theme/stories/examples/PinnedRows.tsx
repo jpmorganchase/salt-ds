@@ -102,5 +102,5 @@ export default function PinnedRows(props: PinnedRowsExampleProps) {
 }
 
 PinnedRows.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };

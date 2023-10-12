@@ -27,7 +27,7 @@ const Coloration = (props: AgGridReactProps) => {
 };
 
 Coloration.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default Coloration;
