@@ -16,7 +16,7 @@ import { useDensity } from "@salt-ds/core";
  * <Spinner size="default | nested" />
  */
 
-export const SpinnerSizeValues = ["default", "nested"] as const;
+export const SpinnerSizeValues = ["default", "nested", "large"] as const;
 export type SpinnerSize = (typeof SpinnerSizeValues)[number];
 const withBaseName = makePrefixer("saltSpinner");
 

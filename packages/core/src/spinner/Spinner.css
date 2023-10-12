@@ -10,10 +10,9 @@
 
 /* Styles applied when `size="default"` */
 .saltSpinner-default {
-  /* TODO: use bar strong */
-  --spinner-strokeWidth: calc(var(--salt-size-bar) * 2);
-  height: calc(var(--salt-size-base) * 4);
-  width: calc(var(--salt-size-base) * 4);
+  --spinner-strokeWidth: var(--salt-size-bar);
+  height: calc(var(--salt-size-base) * 2);
+  width: calc(var(--salt-size-base) * 2);
 }
 /* Styles applied when `size="nested"` */
 .saltSpinner-nested {
@@ -21,6 +20,13 @@
   --spinner-strokeWidth: 2px;
   height: var(--salt-size-icon);
   width: var(--salt-size-icon);
+}
+/* Styles applied when `size="large"` */
+.saltSpinner-large {
+  /* TODO: use bar strong */
+  --spinner-strokeWidth: calc(var(--salt-size-bar) * 2);
+  height: calc(var(--salt-size-base) * 4);
+  width: calc(var(--salt-size-base) * 4);
 }
 
 /* Styles applied to the SVG */
