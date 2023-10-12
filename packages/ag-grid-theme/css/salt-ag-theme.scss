@@ -11,7 +11,7 @@
       ag-theme-salt-dark: (
         extend-theme: material,
         background-color: #242526,
-        border-color: #ffffff26,
+        border-color: rgba(255, 255, 255, 0.15),
         subheader-background-color: #242526,
         foreground-color: #fff,
       ),
@@ -25,7 +25,7 @@
         extend-theme: material,
         font-size: 11px,
         background-color: #242526,
-        border-color: #ffffff26,
+        border-color: rgba(255, 255, 255, 0.15),
         subheader-background-color: #242526,
         foreground-color: #fff,
       ),
@@ -314,7 +314,6 @@ div[class*="ag-theme-salt"] {
     color: var(--salt-text-secondary-foreground);
     font-size: var(--salt-text-fontSize);
     font-weight: var(--salt-text-label-fontWeight);
-    // height: var(--agGrid-row-height-default);
     line-height: var(--salt-text-label-lineHeight);
     padding: 0 var(--salt-spacing-100);
   }
@@ -326,14 +325,14 @@ div[class*="ag-theme-salt"] {
   }
   .ag-row {
     background-color: var(--salt-container-secondary-background);
-    border-color: #00000026;
+    border-color: var(--salt-shadow-3-color);
   }
 }
 
 .ag-theme-salt-variant-zebra {
   .ag-row-even:not(.ag-row-hover, .ag-row-selected) {
     background-color: var(--salt-container-secondary-background);
-    border-color: #00000026;
+    border-color: var(--salt-shadow-3-color);
   }
 }
 
