@@ -58,7 +58,7 @@ const StatusBar = (props: AgGridReactProps) => {
 };
 
 StatusBar.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default StatusBar;
