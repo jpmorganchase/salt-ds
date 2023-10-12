@@ -87,7 +87,7 @@ export const Loading: StoryFn = () => {
         <Spinner
           style={{ margin: "auto" }}
           aria-label="Panel is loading"
-          size="small"
+          size="large"
         />
       ) : (
         <>
