@@ -12,9 +12,9 @@ data:
 
 ### Image
 
-You can pass an image using the `src` property to be used as the Avatar image.
+You can pass an image as the Avatar image using the `src` prop.
 
-A custom image or SVG can also be passed as the child of the component. Note that for images passed as children, you will also need to handle the fallback logic.
+You can also pass a custom image or SVG as the child of the component. Note that for images passed as children, you'll also need to handle the fallback logic.
 
 </LivePreview>
 <LivePreview componentName="avatar" exampleName="Initials" >
@@ -23,23 +23,23 @@ A custom image or SVG can also be passed as the child of the component. Note tha
 
 If a photo is not available, the Avatar will fall back to initials or an icon:
 
-- Initials can be used when a photo is unavailable, but profile information is.
+- You can use initials when a photo is unavailable, but profile information is.
 
-- Icon can be used when neither a photo nor profile information are available.
+- Use an Icon when neither a photo nor profile information is available.
 
 </LivePreview>
 <LivePreview componentName="avatar" exampleName="Sizes" >
 
 ### Sizes
 
-The Avatar size can be increased by modifying the size property. Each Avatar variant has a default size across all four densities, equal to the [Size Foundation](/salt/foundations/size) `size-base`; 20px (HD), 28px (MD), 36px (LD), and 44px (TD). The size property acts as a multiplier of the base size.
+You can use the `size` prop to modify the Avatar size. Each Avatar variant has a default size across all four densities, equal to the [Size Foundation](/salt/foundations/size) `size-base`: 20px (HD), 28px (MD), 36px (LD), and 44px (TD). The size property acts as a multiplier of the base size.
 
 </LivePreview>
 <LivePreview componentName="avatar" exampleName="CustomFallbackIcon" >
 
-### Custom Fallback Icon
+### Custom fallback icon
 
-Avatar renders with an icon defined by `UserSolidIcon` but an alternative icon can be passed as `fallbackIcon`.
+Avatar renders with an icon defined by `UserSolidIcon`, but you can pass an alternative icon as `fallbackIcon`.
 
 </LivePreview>
 </LivePreviewControls>

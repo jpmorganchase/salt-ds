@@ -11,35 +11,35 @@ data:
   <LivePreview componentName="badge" exampleName="Default">
     ### Default (top-right)
 
-    Badge is positioned in the top-right corner when attached to a child component such as an icon.
+    By default, Badge is in the top-right corner when attached to a child component such as an icon.
 
 
     #### Guidance
 
-    - Badge is visually anchored to the attached component. As the number of alphanumeric characters increases, the Badge width expands, but stays in the same place.
-    - Use badge in the top-right corner if you want to provide a summary of the overall state of the content the badge is anchored to. For example, you may want to provide a quick overview of how many new or unread items there are, using numeric values.
+    - Badge visually anchors to the attached component. As the number of alphanumeric characters increases, the Badge width expands, but stays in the same place.
+    - Use Badge in the top-right corner to summarize the overall state of the content the Badge is anchored to. For example, you may want to provide a quick overview of the number of new or unread items, using numeric values.
 
   </LivePreview>
   <LivePreview componentName="badge" exampleName="InlineBadge">
 
     ### Inline Badge
 
-    To place a badge inline, instead of in the top-right corner of an element simply do not pass `children` to Badge.
+    To place a Badge inline instead of in the top-right corner of an element simply don't pass `children` to Badge.
 
     #### Guidance
 
-    Using Badge inline with text makes clear which part of the content the badge relates to and allows specific details to be highlighted within the content to draw the user’s attention. For example, you may use Badge within Tab, inline to the text.
+    Using Badge inline with text clarifies which part of the content the Badge relates to and allows specific details to be highlighted within the content to draw the user’s attention. For example, you may use Badge within Tab, inline with the text.
 
   </LivePreview>
   <LivePreview componentName="badge" exampleName="BadgeWithMaximumDigits">
 
     ### Badge with maximum digits
 
-    Specify the maximum number to be displayed with the `max` property. If `value` exceeds `max`, the value will be clamped and a (`+`) suffix will be appended.
+    Specify the maximum displayed number with the `max` prop. If `value` exceeds `max`, it will clamp the value and append a (`+`) suffix.
 
     #### Guidance
 
-    - In the case that no max value is passed to the component, the value will be limited to 3 digits by default and therefore display 999+ for any values over 999.
+    - When you don't pass a max value to the component, the value will have a limitation of three digits by default, displaying 999+ for any values over 999.
 
   </LivePreview>
   <LivePreview componentName="badge" exampleName="BadgeWithString">

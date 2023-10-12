@@ -8,50 +8,50 @@ data:
   $ref: ./#/data
 ---
 
-- Wrap Multiline Input in a [Form Field](/salt/components/form-field) to make it accessible within a form. This will provide the field with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+- Wrap `MultilineInput` in [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the field with a visible label, help text and a status message for validation feedback. You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
-- Text that extends beyond the visible area of Multiline Input is clipped. This behavior is common to all states, i.e., default, read-only and disabled—whether or not the input has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
+- A multiline input will clip text that extends beyond its visible area. This behavior is common to all states, i.e., default, read-only and disabled—whether or not the input has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
 
 ### Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is above the Multiline Input, Tab key press moves focus onto the Multiline Input. The text will be highlighted. If the Multiline Input area is empty, the text cursor is displayed.
-- If the Multiline Input is disabled, tabbing will skip the Multiline Input.
-- If the Multiline Input has focus, Tab moves focus out of the Multiline Input, to next focusable component in the tab order.
+- If focus is above the multiline input, moves focus onto the multiline input and highlights the text. If the Multiline Input area is empty, it will display the text cursor.
+- If the multiline input is disabled, skips the multiline input.
+- If the multiline input has focus, moves focus out of the multiline input to next focusable component in the tab order.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- If focused, Shift + Tab combo moves focus out of the component to the previous component in the tab order.
+- If focused, moves focus out of the component to the previous component in the tab order.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">
 
-- If an interactive adornment, e.g., a button, has focus, the element is actioned.
+- If an interactive adornment, e.g., a button, has focus, actions the element.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Space">
 
-- When the Multiline Input area has focus, a space character is inserted at the point where the text cursor is positioned.
-- If an interactive adornment, e.g., a button, has focus, the element is actioned.
+- When the multiline input area has focus, inserts a space character at the positon of the text cursor.
+- If an interactive adornment, e.g., a button, has focus, actions the element.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Right Arrow">
 
-When the Multiline Input area has focus:
+When the multiline input area has focus:
 
-- If text is highlighted, the highlight is removed and the text cursor is positioned at the right edge of the highlight.
-- If the text cursor is displayed, it is positioned on the alternative side of the following character. If there is no following character, there is no effect.
+- If text is in a highlighted state, removes the highlight and positions the text cursor at the right edge of the highlight.
+- If the text cursor is visible, positions it on the alternative side of the following character. If there's no following character, there's no effect.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Left Arrow">
 
-When the Multiline Input area has focus:
+When the multiline input area has focus:
 
-- If text is highlighted, the highlight is removed and the text cursor is positioned at the left edge of the highlight.
-- If the text cursor is displayed, it is positioned on the alternative side of the following character. If there is no preceding character, there is no effect.
+- If text is in a highlighted state, removes the highlight and positions the text cursor at the left edge of the highlight.
+- If the text cursor is visible, positions it on the alternative side of the following character. If there's no preceding character, there's no effect.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Left Arrow, Shift + Right Arrow">
@@ -61,18 +61,18 @@ Drags selection over text characters, one at a time.
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Backspace">
 
-When Multiline Input area has focus and:
+When the multiline input area has focus and:
 
-- Text is highlighted, all highlighted characters are removed.
-- The text cursor is positioned to the right of text, the preceding character is removed.
+- Text is highlighted, removes all highlighted characters.
+- The text cursor is to the right of text, removes the preceding character.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Alphanumeric/Special keys">
 
-When the Multiline Input area has focus, the relevant character is inserted at the point where the text cursor is positioned.
+When the multiline input area has focus, the relevant character is inserted at the point where the text cursor is positioned.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Control/Command + A">
+<KeyboardControl keyOrCombos="Control + A or Command + A">
 
 Highlights all strings within the field.
 

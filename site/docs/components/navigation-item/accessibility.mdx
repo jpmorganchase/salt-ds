@@ -10,56 +10,56 @@ data:
 
 ### Keyboard interactions
 
-#### Horizontal Navigation
+#### Horizontal navigation
 
 <KeyboardControls>
-  <KeyboardControl keyOrCombos="Tab">
+  <KeyboardControl keyOrCombos="`Tab`">
   
-  - Moves focus into the first Navigation Item in the group. Focus is set to the entire component.
+  - Moves focus into the first navigation item in the group. Sets focus to the entire component.
   
-  - When the Navigation Item has children, tab again, to move focus on to the arrow icon.
+  - When the navigation item has children, second press moves focus on to the arrow icon.
   
-  - When Navigation Item has focus, moves focus out of Navigation Item to next component in tab order.
-  
-  </KeyboardControl>
-  <KeyboardControl keyOrCombos="Shift + Tab">
-  
-  - When Navigation Item has focus, moves focus out of Navigation Item to previous component in tab order.
+  - When the navigation item has focus, moves focus out of the navigation item to next component in tab order.
   
   </KeyboardControl>
-  <KeyboardControl keyOrCombos="Enter / Space">
+  <KeyboardControl keyOrCombos="`Shift + Tab`">
   
-  - Selects the focused Navigation Item.
+  - When the navigation item has focus, moves focus out of the navigation item to previous component in tab order.
   
-  - Triggers Navigation Item to reveal expanded list or mega-menu.
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="`Enter` or `Space`">
   
-  - Trigger a Nav item with children, or just ‘Enter’ to trigger a Navigation Item without children.
+  - Selects the focused navigation item.
+  
+  - Triggers the navigation item to reveal expanded list or mega-menu.
+  
+  - Triggers a navigation item with children, or just ‘Enter’ to trigger a navigation item without children.
   </KeyboardControl>
 
-#### Vertical Navigation
+#### Vertical navigation
 
-  <KeyboardControl keyOrCombos="Tab">
+  <KeyboardControl keyOrCombos="`Tab`">
   
-  - Moves focus into the first Navigation Item in the vertical group. Focus is set to the entire component.
+  - Moves focus into the first navigation item in the vertical group. Sets focus to the entire component.
   
-  - If a Navigation Item is selected before the Navigation Item receives focus, focus is set on the selected item.
+  - If a navigation item is selected before the navigation item receives focus, sets focus on the selected item.
   
-  - When the Navigation Item has children, tab again, to move focus on to the arrow icon.
+  - When the navigation item has children, second press moves focus on to the arrow icon.
   
-  - When Navigation Item has focus, moves focus out of Navigation Item to next component in tab order.
-  
-  </KeyboardControl>
-  <KeyboardControl keyOrCombos="Shift + Tab">
-  
-  - If focus is below the Navigation Item, moves focus to the currently selected Navigation Item in the Navigation Item component.
-  
-  - If focus is on an item inside the Nav group, moves focus out of the navigation to the previous focusable element in the tab order.
+  - When the navigation item has focus, moves focus out of the navigation item to the next component in tab order.
   
   </KeyboardControl>
-  <KeyboardControl keyOrCombos="Enter / Space">
+  <KeyboardControl keyOrCombos="`Shift + Tab`">
   
-  - Selects the focused Navigation Item.
+  - If focus is below the navigation item, moves focus to the currently selected navigation item in the navigation item component.
   
-  - Triggers Navigation Item to reveal nested levels within the navigation.
+  - If focus is on an item inside the navigation group, moves focus out of the navigation to the previous focusable element in the tab order.
+  
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="`Enter` or `Space`">
+  
+  - Selects the focused navigation item.
+  
+  - Triggers the navigation item to reveal nested levels within the navigation.
   </KeyboardControl>
 </KeyboardControls>

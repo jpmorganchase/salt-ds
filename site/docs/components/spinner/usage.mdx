@@ -7,23 +7,22 @@ data:
   $ref: ./#/data
 ---
 
-### How to use Spinner
+### How to use the `Spinner` component
 
-#### When to use Spinner
+#### When to use `Spinner`
 
 - To indicate that content is loading and reassure the user that the system is still working.
+- For actions that you expect will take 1–9 seconds to load or for processes that will take an indeterminate amount of time to complete.
 
-- For actions that you expect will take either between 1-9 seconds to load, or for processes that are taking an indeterminate amount of time to complete.
+#### When not to use `Spinner`
 
-#### When not to use Spinner
+- For actions that will run for a determinable length of time. Instead, use [`Progress`](/salt/components/progress).
 
-- For actions that will run for a determinable length of time. Instead, use [Progress](/salt/components/progress).
-
-- For a process that is taking longer than 10 seconds to complete, as this is the point at which any attempt for a system to respond should finish, and a status message should be displayed instead. For further guidance, view the [Salt Duration Foundation](/salt/foundations/duration).
+- For a process that is taking longer than 10 seconds to complete, as this is the point at which any attempt for a system to respond should finish, and a status message should display instead. For further guidance, view the [Salt duration foundation](/salt/foundations/duration).
 
 ### Import
 
-To import Spinner from the core Salt package, use:
+To import `Spinner` from the core Salt package, use:
 
 ```js
 import { Spinner } from "@salt-ds/core";

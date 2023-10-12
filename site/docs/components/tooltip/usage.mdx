@@ -9,25 +9,29 @@ data:
   $ref: ./#/data
 ---
 
-### When to use Tooltip
+### Using the `Tooltip` component
+
+#### When to use `Tooltip`
 
 - When you want to display a brief message to the user that provides additional information about a UI element.
 
-### When not to use Tooltip
+### When not to use `Tooltip`
 
-- When the content contains interactive elements, like a link, input, or button. Consider always making this content visible or use an [Overlay](../overlay) or a [Dialog](../dialog) instead.
+- When the content contains interactive elements, such as a link, input or button. Consider always making this content visible or using [`Overlay`](../overlay) or [`Dialog`](../dialog) instead.
 
-- When there is information that the user needs to know to complete a task. Important help text should always be visible and not hidden from the user.
+- When there's information that the user needs to know to complete a task. Important help text should always be visible to the user.
 
 - When the message always needs to be visible. Instead, place the message directly on the page.
 
-- When the message is not about a UI element. Consider adding the message directly on the page or use an [Overlay](../overlay), a [Dialog](../dialog), or a [Banner](../banner) instead.
+- When the message isn't about a UI element. Consider adding the message directly on the page or using [`Overlay`](../overlay), [`Dialog`](../dialog), or [`Banner`](../banner) instead.
 
 ### Content
 
-The Tooltip content will never truncate. It should be short and self-explanatory. If a longer message is needed, consider adding it to the page so it is always visible.
+Tooltip content will never truncate. It should be short and self-explanatory. If a longer message is necessary, consider adding it to the page so it's always visible.
 
 ### Import
+
+To import `Tooltip` from the core Salt package, use:
 
 ```js
 import { Tooltip } from "@salt-ds/core";

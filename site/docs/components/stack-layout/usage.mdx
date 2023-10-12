@@ -9,23 +9,23 @@ data:
   $ref: ./#/data
 ---
 
-### When to use Stack Layout
+### Using the `StackLayout` component
 
-- When you need a layout that is consistently horizontal or vertical. If there is not enough space in the main-axis, scrolling the content is acceptable.
+#### When to use `StackLayout`
 
+- When you need a layout that's consistently horizontal or vertical. If there isn't enough space in the main axis, scrolling the content is acceptable.
 - For small-scale layouts within the application, such as a stack of cards or charts or a vertical side panel with visually distinct sections.
+- To change the layout’s direction depending on breakpoints or add visual separation using the stack layout separators.
 
-- To change the layout’s direction depending on breakpoints, and if visual separation using the Stack Layout separators is desirable.
+#### When not to use `StackLayout`
 
-### When not to use Stack Layout
+- Stack layouts will never wrap. If you want to create a layout in a row that responsively wraps over multiple lines, use [`FlowLayout`](/salt/components/flow-layout) instead.
 
-- Stack Layout will never wrap. If you want to create a layout in a row that responsively wraps over multiple lines, use [Flow Layout](/salt/components/flow-layout) instead.
-
-- You want the layout to have more complex customization. In this case we recommend you having a look at [Flex Layout](/salt/components/flex-layout).
+- If you want the layout to have more complex customization. In this case, consider [`FlexLayout`](/salt/components/flex-layout).
 
 ### Import
 
-To import Stack Layout from the core Salt package, use:
+To import `StackLayout` from the core Salt package, use:
 
 ```js
 import { StackLayout } from "@salt-ds/core";
