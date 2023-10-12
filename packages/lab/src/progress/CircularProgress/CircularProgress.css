@@ -19,20 +19,20 @@
 }
 
 .saltCircularProgress-track {
-  inline-size: calc(var(--salt-size-base) * 2);
-  block-size: calc(var(--salt-size-base) * 2);
+  inline-size: calc(var(--salt-size-base) * 4);
+  block-size: calc(var(--salt-size-base) * 4);
   border-style: var(--salt-track-borderStyle);
-  border-width: var(--salt-track-borderWidth); /* TODO: update token to --salt-size-border-strong post theme1.0updates */
-  border-radius: var(--salt-size-base);
+  border-width: var(--salt-size-bar);
+  border-radius: calc(var(--salt-size-base) * 4);
   border-color: var(--salt-palette-neutral-secondary-border);
 }
 
 .saltCircularProgress-bar {
-  inline-size: calc(var(--salt-size-base) * 2);
-  block-size: calc(var(--salt-size-base) * 2);
+  inline-size: calc(var(--salt-size-base) * 4);
+  block-size: calc(var(--salt-size-base) * 4);
   border-style: var(--salt-track-borderStyle);
-  border-width: calc(var(--salt-size-adornment) * 0.5);
-  border-radius: var(--salt-size-base);
+  border-width: var(--salt-size-bar-strong);
+  border-radius: calc(var(--salt-size-base) * 4);
   border-color: var(--salt-accent-background);
 }
 

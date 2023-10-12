@@ -2,7 +2,7 @@
   align-items: center;
   color: var(--salt-text-primary-foreground); /* TODO: update token to --salt-foreground-primary post theme1.0updates */
   display: flex;
-  min-width: 200px;
+  min-width: 400px;
   font-size: var(--linearProgress-fontSize);
 }
 
@@ -11,7 +11,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  height: var(--salt-size-adornment);
+  height: var(--salt-size-bar-strong);
 }
 
 .saltLinearProgress-bar {
@@ -29,9 +29,9 @@
 .saltLinearProgress-track {
   background: var(--salt-palette-neutral-secondary-border);
   width: 100%;
-  height: var(--salt-track-borderWidth); /* TODO: update token to --salt-size-border-strong post theme1.0updates */
+  height: var(--salt-size-bar);
   position: absolute;
-  top: calc((var(--salt-size-adornment) - var(--salt-track-borderWidth)) / 2); /* TODO: update token to --salt-size-border-strong post theme1.0updates */
+  top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar)) / 2);
   transition: transform 0.2s linear;
   transform-origin: left;
 }
@@ -43,5 +43,5 @@
   font-weight: var(--salt-text-label-fontWeight-strong);
   margin: 0;
   white-space: nowrap;
-  padding-left: var(--salt-spacing-100);
+  padding-left: var(--salt-spacing-200);
 }
