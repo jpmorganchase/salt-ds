@@ -13,6 +13,7 @@ import { useAgGridHelpers } from "./useAgGridHelpers";
 
 export const Variants = (props: AgGridReactProps) => {
   const [selected, setSelected] = useState("primary");
+  // We've created a local custom hook to set the rows and column sizes. For complete example check the `Default` example.
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {

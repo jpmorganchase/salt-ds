@@ -37,7 +37,7 @@ export function useAgGridHelpers(compact = false): {
     }
   }, [density, compact]);
 
-  const className = `ag-theme-salt-${density}${
+  const className = `ag-theme-salt-${
     compact && density === "high" ? `-compact` : ``
   }-${mode}`;
 

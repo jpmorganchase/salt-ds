@@ -5,7 +5,7 @@ import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const buildFolder = path.join(__dirname, "../../../dist/salt-ds-theme");
+const buildFolder = path.join(__dirname, "../../../dist/salt-ds-ag-grid-theme");
 
 deleteSync([buildFolder], { force: true });
 
