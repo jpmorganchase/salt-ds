@@ -7,7 +7,7 @@ import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
 import spinnerCss from "./Spinner.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { useDensity } from "@salt-ds/core";
+import { useDensity } from "../salt-provider";
 
 /**
  * Spinner component, provides an indeterminate loading indicator
