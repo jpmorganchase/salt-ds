@@ -11,6 +11,7 @@
       ag-theme-salt-dark: (
         extend-theme: material,
         background-color: #242526,
+        border-color: #ffffff26,
         subheader-background-color: #242526,
         foreground-color: #fff,
       ),
@@ -24,6 +25,7 @@
         extend-theme: material,
         font-size: 11px,
         background-color: #242526,
+        border-color: #ffffff26,
         subheader-background-color: #242526,
         foreground-color: #fff,
       ),
@@ -324,12 +326,14 @@ div[class*="ag-theme-salt"] {
   }
   .ag-row {
     background-color: var(--salt-container-secondary-background);
+    border-color: #00000026;
   }
 }
 
 .ag-theme-salt-variant-zebra {
   .ag-row-even:not(.ag-row-hover, .ag-row-selected) {
     background-color: var(--salt-container-secondary-background);
+    border-color: #00000026;
   }
 }
 
