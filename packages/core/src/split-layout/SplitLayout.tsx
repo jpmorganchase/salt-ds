@@ -1,6 +1,16 @@
 import { ElementType, forwardRef, ReactElement, ReactNode } from "react";
 import { FlexLayout, FlexLayoutProps } from "../flex-layout";
-import { PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
+import {
+  makePrefixer,
+  PolymorphicComponentPropWithRef,
+  PolymorphicRef,
+} from "../utils";
+import splitLayoutCss from "./SplitLayout.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { clsx } from "clsx";
+
+const withBaseName = makePrefixer("saltSplitLayout");
 
 export type SplitLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -35,12 +45,24 @@ type SplitLayoutComponent = <T extends ElementType = "div">(
 
 export const SplitLayout: SplitLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
-    { endItem, startItem, ...rest }: SplitLayoutProps<T>,
+    { endItem, startItem, className, ...rest }: SplitLayoutProps<T>,
     ref?: PolymorphicRef<T>
   ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-split-layout",
+      css: splitLayoutCss,
+      window: targetWindow,
+    });
+
     const justify = endItem && !startItem ? "end" : "space-between";
     return (
-      <FlexLayout ref={ref} justify={justify} {...rest}>
+      <FlexLayout
+        className={clsx(withBaseName(), className)}
+        ref={ref}
+        justify={justify}
+        {...rest}
+      >
         {startItem}
         {endItem}
       </FlexLayout>

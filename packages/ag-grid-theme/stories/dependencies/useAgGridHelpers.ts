@@ -6,11 +6,20 @@ import { LicenseManager } from "ag-grid-enterprise";
 
 LicenseManager.setLicenseKey("your license key");
 
+interface AgGridHelpersProps {
+  agThemeName: string;
+  compact?: boolean;
+  mode?: string;
+  density?: string;
+}
+
 // Helps to set className, rowHeight and headerHeight depending on the current density
-export function useAgGridHelpers(
+export function useAgGridHelpers({
   agThemeName = "ag-theme-uitk",
-  compact = false
-): {
+  compact = false,
+  mode: modeProp,
+  density: densityProp,
+}: AgGridHelpersProps): {
   containerProps: HTMLAttributes<HTMLDivElement>;
   agGridProps: AgGridReactProps;
   isGridReady: boolean;
@@ -20,8 +29,11 @@ export function useAgGridHelpers(
 } {
   const apiRef = useRef<{ api: GridApi; columnApi: ColumnApi }>();
   const [isGridReady, setGridReady] = useState(false);
-  const density = useDensity();
-  const { mode } = useTheme();
+  const contextDensity = useDensity();
+  const { mode: contextMode } = useTheme();
+
+  const mode = modeProp ?? contextMode;
+  const density = densityProp ?? contextDensity;
 
   const [rowHeight, listItemHeight] = useMemo(() => {
     switch ([agThemeName, density].join("-")) {

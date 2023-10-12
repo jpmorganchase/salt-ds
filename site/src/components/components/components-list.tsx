@@ -169,7 +169,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.NOT_APPLICABLE,
     availableInCodeSince: "1.0.0",
     docsUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-data-grid-ag-grid-theme--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-data-grid-ag-grid-theme--docs",
   },
   {
     name: "Badge",
@@ -179,7 +179,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCodeSince: "1.0.0-alpha.15",
     docsUrl:
-      "https://storybook.saltdesignsystem.com/?path=/story/documentation-lab-badge--page",
+      "https://storybook.saltdesignsystem.com/?path=/story/documentation-lab-badge--docs",
   },
   {
     name: "Banner",
@@ -311,7 +311,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCodeSince: "1.0.0",
     docsUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-data-grid-data-grid--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-data-grid-data-grid--docs",
   },
   {
     name: "Deck Layout",
@@ -444,7 +444,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCodeSince: "1.0.0",
     docsUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-link--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-link--docs",
   },
   {
     name: "List",
@@ -484,7 +484,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCodeSince: "1.0.0-alpha.16",
     docsUrl:
-      "https://storybook.saltdesignsystem.com/?path=/story/documentation-lab-navigation-item--page",
+      "https://storybook.saltdesignsystem.com/?path=/story/documentation-lab-navigation-item--docs",
   },
   {
     name: "Overlay",
@@ -631,7 +631,7 @@ export const componentDetails: ComponentDetails[] = [
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.NOT_APPLICABLE,
     docsUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-split-layout--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-layout-split-layout--docs",
   },
   {
     name: "Stack Layout",
@@ -697,7 +697,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCodeSince: "1.0.0",
     docsUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-text--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-text--docs",
   },
   {
     name: "Theme",
@@ -706,7 +706,7 @@ export const componentDetails: ComponentDetails[] = [
     designStatus: ComponentStatus.READY,
     availableInCodeSince: "1.0.0",
     docsUrl:
-      "https://storybook.saltdesignsystem.com/?path=/docs/theme-about-the-salt-theme--page",
+      "https://storybook.saltdesignsystem.com/?path=/docs/theme-about-the-salt-theme--docs",
   },
   {
     name: "Toast",

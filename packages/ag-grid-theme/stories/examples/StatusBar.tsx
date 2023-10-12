@@ -19,9 +19,9 @@ const statusBar = {
 
 const StatusBar = (props: AgGridReactProps) => {
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   return (
     <StackLayout gap={4}>
@@ -37,6 +37,15 @@ const StatusBar = (props: AgGridReactProps) => {
             rowData={dataGridExampleData}
             {...agGridProps}
             {...props}
+            onFirstDataRendered={(params) => {
+              params.api.forEachNode((node, index) => {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                if (node.data && index < 3) {
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+                  node.setSelected(true);
+                }
+              });
+            }}
           />
         </div>
       </StackLayout>

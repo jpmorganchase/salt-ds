@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Meta, Story, Canvas } from "@storybook/addon-docs";
-import { Link, SaltProvider, Text } from "@salt-ds/core";
-import { EditableLabel, TabPanel, Tabs, Tab, Tabstrip } from "@salt-ds/lab";
+import { SaltProvider, Text } from "@salt-ds/core";
+import { TabPanel, Tabs, Tabstrip } from "@salt-ds/lab";
 
 import {
   Default as DefaultTabstrip,
@@ -93,7 +93,7 @@ Simplest possible `Tabstrip`, uncontrolled tab labels are passed as strings
 ```
 
 <SaltProvider>
-  <DefaultTabstripStrings height={120} />
+  <DefaultTabstrip height={120} />
 </SaltProvider>
 
 <br />

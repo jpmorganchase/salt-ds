@@ -1,7 +1,6 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { Button, Card, H2, StatusIndicator } from "@salt-ds/core";
-import { ErrorIcon, WarningIcon } from "@salt-ds/icons";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
@@ -10,15 +9,15 @@ const NoDataOverlay = (props: AgGridReactProps) => {
   const [showModal, setShowModal] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   useEffect(() => {
     if (isGridReady) {
       api!.sizeColumnsToFit();
     }
-  }, [isGridReady]);
+  }, [api, isGridReady]);
 
   const reloadData = () => {
     setShowModal(false);
