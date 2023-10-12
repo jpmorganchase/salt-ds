@@ -58,7 +58,7 @@ DefaultLeftAligned.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
-export const MainTabBleedingIntoSecondaryBackground: TabstripStory = ({
+export const MainTabBleedingIntoPrimaryBackground: TabstripStory = ({
   width = 600,
   tabs,
   ...tabstripProps
@@ -86,11 +86,11 @@ export const MainTabBleedingIntoSecondaryBackground: TabstripStory = ({
   );
 };
 
-MainTabBleedingIntoSecondaryBackground.args = {
+MainTabBleedingIntoPrimaryBackground.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
-export const MainTabBleedingIntoPrimaryBackground: TabstripStory = ({
+export const MainTabBleedingIntoSecondaryBackground: TabstripStory = ({
   width = 600,
   tabs,
   ...tabstripProps
@@ -118,7 +118,7 @@ export const MainTabBleedingIntoPrimaryBackground: TabstripStory = ({
   );
 };
 
-MainTabBleedingIntoPrimaryBackground.args = {
+MainTabBleedingIntoSecondaryBackground.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
   activeColor: "secondary",
 };
