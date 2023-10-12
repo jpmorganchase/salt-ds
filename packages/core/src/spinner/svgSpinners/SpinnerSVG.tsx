@@ -25,7 +25,7 @@ const sizeAndStrokeWidthMapping = {
     low: { width: 72, strokeWidth: 6 },
     touch: { width: 88, strokeWidth: 8 },
   },
-  nested: {
+  small: {
     high: { width: 12, strokeWidth: 2 },
     medium: { width: 12, strokeWidth: 2 },
     low: { width: 14, strokeWidth: 2 },
