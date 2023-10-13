@@ -41,3 +41,10 @@
   --salt-size-selectable: 18px;
   --salt-size-bar-strong: 16px;
 }
+
+.salt-density-high,
+.salt-density-medium,
+.salt-density-low,
+.salt-density-touch {
+  --salt-size-bar-small: 2px;
+}

@@ -29,9 +29,9 @@
 .saltLinearProgress-track {
   background: var(--salt-palette-neutral-secondary-border);
   width: 100%;
-  height: var(--salt-size-bar);
+  height: var(--salt-size-bar-small);
   position: absolute;
-  top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar)) / 2);
+  top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar-small)) / 2);
   transition: transform 0.2s linear;
   transform-origin: left;
 }

@@ -7,7 +7,7 @@ export interface InfoProps {
 
 export const Info = ({ className, value, unit }: InfoProps) => {
   return (
-    <Text styleAs="display3" className={className}>
+    <Text styleAs="h2" className={className}>
       {value}
       {unit}
     </Text>

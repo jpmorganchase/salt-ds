@@ -19,20 +19,20 @@
 }
 
 .saltCircularProgress-track {
-  inline-size: calc(var(--salt-size-base) * 4);
-  block-size: calc(var(--salt-size-base) * 4);
+  inline-size: calc(var(--salt-size-base) * 3);
+  block-size: calc(var(--salt-size-base) * 3);
   border-style: var(--salt-track-borderStyle);
-  border-width: var(--salt-size-bar);
-  border-radius: calc(var(--salt-size-base) * 4);
+  border-width: var(--salt-size-bar-small);
+  border-radius: calc(var(--salt-size-base) * 3);
   border-color: var(--salt-palette-neutral-secondary-border);
 }
 
 .saltCircularProgress-bar {
-  inline-size: calc(var(--salt-size-base) * 4);
-  block-size: calc(var(--salt-size-base) * 4);
+  inline-size: calc(var(--salt-size-base) * 3);
+  block-size: calc(var(--salt-size-base) * 3);
   border-style: var(--salt-track-borderStyle);
   border-width: var(--salt-size-bar-strong);
-  border-radius: calc(var(--salt-size-base) * 4);
+  border-radius: calc(var(--salt-size-base) * 3);
   border-color: var(--salt-accent-background);
 }
 
