@@ -11,8 +11,12 @@ export default {
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   const { className } = props;
   return (
-    <QAContainer cols={3} {...props}>
-      <LinearProgress className={className} value={38} />
+    <QAContainer cols={2} {...props}>
+      <LinearProgress
+        className={className}
+        value={38}
+        style={{ paddingRight: "50px" }}
+      />
       <CircularProgress aria-label="Download" value={38} />
     </QAContainer>
   );
