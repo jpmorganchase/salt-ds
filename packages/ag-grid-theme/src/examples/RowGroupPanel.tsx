@@ -31,7 +31,7 @@ const RowGroupPanel = (props: AgGridReactProps) => {
 };
 
 RowGroupPanel.parameters = {
-  chromatic: { disableSnapshot: false, delay: 500 },
+  chromatic: { disableSnapshot: false, delay: 1000 },
 };
 
 export default RowGroupPanel;
