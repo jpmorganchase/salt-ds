@@ -209,13 +209,14 @@ div[class*="ag-theme-salt"] {
   }
 
   .ag-floating-filter {
-    border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-separable-tertiary-borderColor);
+    border: var(--salt-size-border) var(--salt-editable-borderStyle)
+      var(--salt-separable-tertiary-borderColor);
     &:focus-within {
       outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
         var(--salt-focused-outlineColor);
       outline-offset: -2px;
     }
-    input[class^=ag-][type=text]:focus {
+    input[class^="ag-"][type="text"]:focus {
       border: none;
     }
   }
