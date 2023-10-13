@@ -162,7 +162,7 @@ div[class*="ag-theme-salt"] {
 
   .ag-ltr .ag-cell {
     border: none;
-    line-height: calc(var(--ag-line-height) - 4px);
+    line-height: var(--ag-line-height);
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
   }
