@@ -1,5 +1,16 @@
 # @salt-ds/core
 
+## 1.10.0
+
+### Minor Changes
+
+- 319140a6: Add `small` size to Spinner
+
+### Patch Changes
+
+- 7b8a169a: Added flex-grow to splitLayout so it takes 100% of the container's direction
+- 7d846f2f: fix gap multiplier for StackLayout and FlexLayout touch
+
 ## 1.9.1
 
 ### Patch Changes
