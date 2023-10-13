@@ -7,9 +7,9 @@ import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const Coloration = (props: AgGridReactProps) => {
   const { themeName, switcher } = useAgGridThemeSwitcher();
-  const { containerProps, agGridProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   return (
     <StackLayout gap={4}>

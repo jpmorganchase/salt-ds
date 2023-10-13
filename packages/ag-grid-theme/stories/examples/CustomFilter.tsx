@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
-import { Switch } from "@salt-ds/lab";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
@@ -12,15 +11,15 @@ const CustomFilter = (props: AgGridReactProps) => {
   const { switcher, themeName } = useAgGridThemeSwitcher();
 
   const [hasSavedState, setHasSavedState] = useState(true);
-  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   useEffect(() => {
     if (isGridReady) {
       api?.sizeColumnsToFit();
     }
-  }, [isGridReady]);
+  }, [api, isGridReady]);
 
   const handlePopMt100kClick = () => {
     const popMt100kComponent = api!.getFilterInstance("population")!;
@@ -63,11 +62,13 @@ const CustomFilter = (props: AgGridReactProps) => {
   };
 
   const saveState = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     (window as any).filterState = api!.getFilterModel();
     setHasSavedState(false);
   };
 
   const restoreState = () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     api!.setFilterModel((window as any).filterState);
     setHasSavedState(true);
   };

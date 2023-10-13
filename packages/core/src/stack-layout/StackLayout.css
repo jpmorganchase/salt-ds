@@ -15,7 +15,7 @@
   background-color: var(--salt-separable-secondary-borderColor);
 }
 
-/* 
+/*
  * Seperator offset based on seperator alignment
  * var(--stackLayout-separator-weight) is used to take into account the thickness of the seperator,so even at higher weights it will be at the start/center/end
 */
