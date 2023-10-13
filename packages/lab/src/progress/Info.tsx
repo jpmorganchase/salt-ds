@@ -1,3 +1,4 @@
+import { Text } from "@salt-ds/core";
 export interface InfoProps {
   className: string;
   unit: string;
@@ -6,9 +7,9 @@ export interface InfoProps {
 
 export const Info = ({ className, value, unit }: InfoProps) => {
   return (
-    <span aria-hidden="true" className={className}>
+    <Text styleAs="h2" className={className}>
       {value}
       {unit}
-    </span>
+    </Text>
   );
 };

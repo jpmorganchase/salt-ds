@@ -7,8 +7,8 @@ import "./progress.stories.css";
 
 export default {
   title: "Lab/Progress/Circular",
-  component: LinearProgress,
-} as Meta<typeof LinearProgress>;
+  component: CircularProgress,
+} as Meta<typeof CircularProgress>;
 
 interface ProgressWithControlsProps {
   ProgressComponent: typeof CircularProgress | typeof LinearProgress;
@@ -48,8 +48,4 @@ export const MaxValue: StoryFn<typeof CircularProgress> = () => (
 
 export const ProgressingValue: StoryFn<typeof CircularProgress> = () => (
   <ProgressWithControls ProgressComponent={CircularProgress} />
-);
-
-export const ShowNoInfo: StoryFn<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" showInfo={false} value={38} />
 );
