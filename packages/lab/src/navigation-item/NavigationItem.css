@@ -10,8 +10,13 @@
 
 /* Vars applied to NavigationItem component when active */
 .saltNavigationItem-active,
-.saltNavigationItem-rootParent {
+.saltNavigationItem-rootItem {
   --navigationItem-font-weight: var(--salt-text-fontWeight-strong);
+}
+
+/* Vars applied to NavigationItem component when  blur active */
+.saltNavigationItem-blurActive {
+  --navigationItem-font-weight: var(--salt-text-fontWeight);
 }
 
 /* Styles applied to NavigationItem wrapper */
