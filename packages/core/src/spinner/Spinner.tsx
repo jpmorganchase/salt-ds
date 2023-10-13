@@ -7,15 +7,16 @@ import { SpinnerSVG } from "./svgSpinners/SpinnerSVG";
 import spinnerCss from "./Spinner.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useDensity } from "../salt-provider";
 
 /**
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="default | large" />
+ * <Spinner size="default | "large" | "small" />
  */
 
-export const SpinnerSizeValues = ["default", "large"] as const;
+export const SpinnerSizeValues = ["default", "large", "small"] as const;
 export type SpinnerSize = (typeof SpinnerSizeValues)[number];
 const withBaseName = makePrefixer("saltSpinner");
 
@@ -45,7 +46,7 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   role?: string;
   /**
-   * Determines the size of the spinner. Must be one of: 'default', 'large'.
+   * Determines the size of the spinner. Must be one of: 'default', 'large', 'small'.
    */
   size?: SpinnerSize;
   /**
@@ -79,6 +80,8 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
     });
 
     const { announce } = useAriaAnnouncer();
+
+    const density = useDensity();
 
     useEffect(() => {
       if (disableAnnouncer) return;
@@ -126,7 +129,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         role={role}
         {...rest}
       >
-        <SpinnerSVG id={id} />
+        <SpinnerSVG size={size} density={density} id={id} />
       </div>
     );
   }

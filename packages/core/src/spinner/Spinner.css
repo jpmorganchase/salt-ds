@@ -10,14 +10,23 @@
 
 /* Styles applied when `size="default"` */
 .saltSpinner-default {
+  --spinner-strokeWidth: var(--salt-size-bar);
   height: var(--salt-size-base);
   width: var(--salt-size-base);
 }
 
 /* Styles applied when `size="large"` */
 .saltSpinner-large {
+  --spinner-strokeWidth: var(--salt-size-bar);
   height: calc(var(--salt-size-base) * 2);
   width: calc(var(--salt-size-base) * 2);
+}
+
+/* Styles applied when `size="small"` */
+.saltSpinner-small {
+  --spinner-strokeWidth: var(--salt-size-bar-small);
+  height: var(--salt-size-icon);
+  width: var(--salt-size-icon);
 }
 
 /* Styles applied to the SVG */

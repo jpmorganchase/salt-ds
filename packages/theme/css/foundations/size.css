@@ -1,6 +1,7 @@
 .salt-density-high {
   --salt-size-adornment: 6px;
   --salt-size-bar: 2px;
+  --salt-size-bar-small: 2px;
   --salt-size-base: 20px;
   --salt-size-border: 1px;
   --salt-size-icon: 12px;
@@ -12,6 +13,7 @@
 .salt-density-medium {
   --salt-size-adornment: 8px;
   --salt-size-bar: 4px;
+  --salt-size-bar-small: 2px;
   --salt-size-base: 28px;
   --salt-size-border: 1px;
   --salt-size-icon: 12px;
@@ -23,6 +25,7 @@
 .salt-density-low {
   --salt-size-adornment: 10px;
   --salt-size-bar: 6px;
+  --salt-size-bar-small: 2px;
   --salt-size-base: 36px;
   --salt-size-border: 1px;
   --salt-size-icon: 14px;
@@ -34,6 +37,7 @@
 .salt-density-touch {
   --salt-size-adornment: 12px;
   --salt-size-bar: 8px;
+  --salt-size-bar-small: 2px;
   --salt-size-base: 44px;
   --salt-size-border: 1px;
   --salt-size-icon: 16px;
