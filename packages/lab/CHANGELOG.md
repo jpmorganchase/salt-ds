@@ -1,5 +1,25 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.19
+
+### Minor Changes
+
+- 01f3a2b3: - Remove `showInfo` prop in both `LinearProgress` and `CircularProgress` components
+  - Update Progress component dimensions, track and bar size, progress value font size
+  - Align Progress CSS tokens with latest design tokens
+
+### Patch Changes
+
+- 7e143979: Tabs Next
+
+  - Add `activeColor`, `isActive`, `activate` and `variant` props to TabNext
+  - Add `activeColor`, `isActive`, `activate` and `variant` values to TabNext context
+  - Update TabNext and TabstripNext styles to match specs
+  - Add `activeColor`, `align`, `value`, `defaultValue` and `variant` props to TabstripNext
+
+- 191f1ff9: - Amend Navigation Item class names
+  - Tweak Navigation item styles to match new specs
+
 ## 1.0.0-alpha.18
 
 ### Patch Changes
