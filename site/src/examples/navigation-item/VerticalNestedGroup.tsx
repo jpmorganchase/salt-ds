@@ -24,7 +24,7 @@ export const VerticalNestedGroup = (): ReactElement => {
 
   return (
     <nav>
-      <StackLayout as="ul" gap={1} style={{ listStyle: "none" }}>
+      <ul style={{ width: 250, listStyle: "none", paddingLeft: 0 }}>
         {multipleLevelNesting.map(({ name, subNav }) => (
           <li key={name}>
             <NavigationItem
@@ -65,7 +65,13 @@ export const VerticalNestedGroup = (): ReactElement => {
               {name}
             </NavigationItem>
             {expanded.includes(name) && (
-              <StackLayout as="ul" gap={1} style={{ listStyle: "none" }}>
+              <ul
+                style={{
+                  width: 250,
+                  listStyle: "none",
+                  paddingLeft: 0,
+                }}
+              >
                 {subNav?.map((item) => {
                   const itemValue = `${name} - ${item.name}`;
 
@@ -112,10 +118,12 @@ export const VerticalNestedGroup = (): ReactElement => {
                       </NavigationItem>
 
                       {expanded.includes(item.name) && (
-                        <StackLayout
-                          as="ul"
-                          gap={1}
-                          style={{ listStyle: "none" }}
+                        <ul
+                          style={{
+                            width: 250,
+                            listStyle: "none",
+                            paddingLeft: 0,
+                          }}
                         >
                           {item.subNav.map((nestedItem) => {
                             const itemValue = `${name} - ${item.name} - ${nestedItem}`;
@@ -138,16 +146,16 @@ export const VerticalNestedGroup = (): ReactElement => {
                               </li>
                             );
                           })}
-                        </StackLayout>
+                        </ul>
                       )}
                     </li>
                   );
                 })}
-              </StackLayout>
+              </ul>
             )}
           </li>
         ))}
-      </StackLayout>
+      </ul>
     </nav>
   );
 };
