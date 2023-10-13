@@ -4,7 +4,7 @@ import { StackLayout } from "@salt-ds/core";
 
 export const InlineBadge = (): ReactElement => (
   <TabstripNext
-    defaultSelected="Home"
+    defaultValue="Home"
     style={{
       maxWidth: 400,
     }}
