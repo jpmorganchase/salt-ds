@@ -9,7 +9,8 @@
 }
 
 /* Vars applied to NavigationItem component when active */
-.saltNavigationItem-active {
+.saltNavigationItem-active,
+.saltNavigationItem-rootParent {
   --navigationItem-font-weight: var(--salt-text-fontWeight-strong);
 }
 
