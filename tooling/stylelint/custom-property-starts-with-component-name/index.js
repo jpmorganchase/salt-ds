@@ -2,9 +2,8 @@
 
 const valueParser = require("postcss-value-parser");
 const stylelint = require("stylelint");
-const fs = require("fs");
 const path = require("path");
-const glob = require("glob-promise");
+const glob = require("fast-glob");
 
 const { report, ruleMessages } = stylelint.utils;
 
@@ -51,26 +50,14 @@ const meta = {
   url: "https://saltdesignsystem-storybook.pages.dev/?path=/story/theme-characteristics-about-characteristics--page",
 };
 
-function capitalize(folderName) {
-  let parts = folderName.split("-");
-
-  return parts.map((value) => value[0].toUpperCase() + value.slice(1)).join("");
-}
-
 const allowedNames = glob
-  .sync("./packages/*/src/**/*.css")
+  // Matches all files in src folders that start with a capital letter which should be all components.
+  .sync("./packages/*/src/**/[A-Z]*.tsx", {
+    // Ignores tests and Use* files which are hooks.
+    ignore: ["**/__tests__/**", "Use[A-Z]*.tsx"],
+  })
   .map((file) => {
-    const fileName = path.basename(file, ".css");
-    const parentFolder = path.basename(path.dirname(file));
-    const component = parentFolder.replace(/(^\w|-\w)/g, (text) =>
-      text.replace(/-/, "").toUpperCase()
-    );
-    if (capitalize(component) === fileName) {
-      // matches folder name to file name
-      return fileName;
-    }
-
-    return null;
+    return path.basename(file, ".tsx");
   })
   .filter(Boolean);
 

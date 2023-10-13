@@ -2,20 +2,23 @@
 .saltTabstripNext {
   display: flex;
   flex-wrap: nowrap;
+  justify-content: var(--tabstripNext-justifyContent);
   align-items: center;
   position: relative;
   background: transparent;
   width: 100%;
+  padding-left: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
 }
 
-.saltTabstripNext::before {
+.saltTabstripNext-main::before {
   content: "";
   position: absolute;
   inset: auto 0 0 0;
   height: var(--salt-size-border);
-  background: var(--salt-container-primary-borderColor);
+  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
 }
 
-.saltTabstripNext .saltTabNext-wrapper {
-  padding-right: var(--salt-spacing-50);
+.saltTabstripNext .saltTabNext-wrapper:not(:last-child) {
+  padding-right: var(--salt-spacing-100);
 }
