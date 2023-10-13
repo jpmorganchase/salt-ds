@@ -15,7 +15,8 @@
 }
 
 /* Vars applied to NavigationItem component when  blur active */
-.saltNavigationItem-blurActive {
+.saltNavigationItem-blurActive,
+.saltNavigationItem-active.saltNavigationItem-nested {
   --navigationItem-font-weight: var(--salt-text-fontWeight);
 }
 
