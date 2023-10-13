@@ -105,6 +105,8 @@
 /* Styles applied to expand icon */
 .saltNavigationItem-wrapper .saltNavigationItem-expandIcon {
   --saltIcon-color: var(--navigationItem-fill);
+
+  top: 0;
 }
 
 /* Styles applied to NavigationItem when focus is visible */
