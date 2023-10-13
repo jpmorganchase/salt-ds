@@ -55,7 +55,7 @@ const HDCompact = (props: AgGridReactProps) => {
 };
 
 HDCompact.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
+  chromatic: { disableSnapshot: false, delay: 500 },
 };
 
 export default HDCompact;

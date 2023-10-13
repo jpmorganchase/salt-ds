@@ -53,7 +53,7 @@ const Pagination = () => (
 );
 
 Pagination.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
+  chromatic: { disableSnapshot: false, delay: 500 },
 };
 
 export default Pagination;

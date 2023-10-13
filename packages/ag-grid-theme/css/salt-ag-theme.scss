@@ -219,8 +219,8 @@ div[class*="ag-theme-salt"] {
     border: none;
     &:focus {
       outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-      var(--salt-focused-outlineColor);
-    outline-offset: -2px;
+        var(--salt-focused-outlineColor);
+      outline-offset: -2px;
     }
   }
 
