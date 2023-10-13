@@ -43,5 +43,5 @@
   font-weight: var(--salt-text-label-fontWeight-strong);
   margin: 0;
   white-space: nowrap;
-  padding-left: var(--salt-spacing-200);
+  padding-left: var(--salt-spacing-100);
 }
