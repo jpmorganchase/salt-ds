@@ -1,10 +1,4 @@
-import {
-  CSSProperties,
-  forwardRef,
-  HTMLAttributes,
-  ReactNode,
-  useEffect,
-} from "react";
+import { CSSProperties, forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { Info } from "../Info";
@@ -31,10 +25,6 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   max?: number;
   /**
-   * If `true`, the info panel will be displayed.
-   */
-  showInfo?: boolean;
-  /**
    * The value of the progress indicator.
    * Value between 0 and max.
    */
@@ -42,20 +32,13 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * Circular progress bar with an optional Info element, showing the current value
+ * Circular progress bar with an Info element showing the current value
  */
 export const CircularProgress = forwardRef<
   HTMLDivElement,
   CircularProgressProps
 >(function CircularProgress(
-  {
-    "aria-label": ariaLabel,
-    className,
-    max = 100,
-    showInfo = true,
-    value = 0,
-    ...rest
-  },
+  { "aria-label": ariaLabel, className, max = 100, value = 0, ...rest },
   ref
 ) {
   const targetWindow = useWindow();
@@ -84,16 +67,13 @@ export const CircularProgress = forwardRef<
     subOverlayLeftStyle.transform = `rotate(${rotationAngle}deg)`;
   }
 
-  let progressInfo: ReactNode = null;
-  if (showInfo) {
-    progressInfo = (
-      <Info
-        className={withBaseName("progressValue")}
-        unit="%"
-        value={Math.round(progress)}
-      />
-    );
-  }
+  const progressInfo = (
+    <Info
+      className={withBaseName("progressValue")}
+      unit="%"
+      value={Math.round(progress)}
+    />
+  );
 
   return (
     <div

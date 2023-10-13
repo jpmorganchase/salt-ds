@@ -1,8 +1,8 @@
 .saltLinearProgress {
   align-items: center;
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-text-primary-foreground); /* TODO: update token to --salt-foreground-primary post theme1.0updates */
   display: flex;
-  min-width: 200px;
+  min-width: 400px;
   font-size: var(--linearProgress-fontSize);
 }
 
@@ -11,7 +11,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  height: var(--salt-size-adornment);
+  height: var(--salt-size-bar-strong);
 }
 
 .saltLinearProgress-bar {
@@ -27,11 +27,11 @@
 }
 
 .saltLinearProgress-track {
-  background: var(--salt-track-borderColor);
+  background: var(--salt-palette-neutral-secondary-border);
   width: 100%;
-  height: var(--salt-track-borderWidth);
+  height: var(--salt-size-bar-small);
   position: absolute;
-  top: calc((var(--salt-size-adornment) - var(--salt-track-borderWidth)) / 2);
+  top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar-small)) / 2);
   transition: transform 0.2s linear;
   transform-origin: left;
 }
