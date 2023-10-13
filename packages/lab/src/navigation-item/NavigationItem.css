@@ -1,7 +1,7 @@
 /* Vars applied to root NavigationItem component */
 .saltNavigationItem {
-  --navigationItem-color: var(--salt-text-secondary-foreground);
-  --navigationItem-fill: var(--salt-text-secondary-foreground);
+  --navigationItem-color: var(--salt-text-primary-foreground);
+  --navigationItem-fill: var(--salt-text-primary-foreground);
   --navigationItem-bar-inset: var(--salt-spacing-25);
   --navigationItem-bar-size: var(--salt-size-indicator);
   --navigationItem-indicator-background: var(--salt-navigable-indicator-active);
@@ -10,8 +10,6 @@
 
 /* Vars applied to NavigationItem component when active */
 .saltNavigationItem-active {
-  --navigationItem-color: var(--salt-text-primary-foreground);
-  --navigationItem-fill: var(--salt-text-primary-foreground);
   --navigationItem-font-weight: var(--salt-text-fontWeight-strong);
 }
 
