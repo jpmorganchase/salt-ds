@@ -152,6 +152,13 @@ div[class*="ag-theme-salt"] {
     top: -1px;
   }
 
+  .ag-pinned-left-header {
+    border-right-color: var(--salt-separable-tertiary-borderColor);
+  }
+  .ag-pinned-right-header {
+    border-left-color: var(--salt-separable-tertiary-borderColor);
+  }
+
   .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
       .ag-cell-range-single-cell
     ) {
