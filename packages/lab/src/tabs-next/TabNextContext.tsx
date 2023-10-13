@@ -7,23 +7,27 @@ type TabValue = {
 };
 
 export interface TabsContextValue {
+  activeColor: "primary" | "secondary";
   disabled?: boolean;
-  select: (event: SyntheticEvent<HTMLButtonElement>) => void;
-  isSelected: (id: string) => boolean;
+  activate: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  isActive: (id: string) => boolean;
   setFocusable: (id: string) => void;
   isFocusable: (id: string) => boolean;
   registerTab: (tab: TabValue) => void;
   unregisterTab: (id: string) => void;
+  variant: "main" | "inline";
 }
 
 export const TabsContext = createContext<TabsContextValue>("TabsContext", {
+  activeColor: "primary",
   disabled: false,
-  select: () => undefined,
-  isSelected: () => false,
+  activate: () => undefined,
+  isActive: () => false,
   setFocusable: () => undefined,
   isFocusable: () => false,
   registerTab: () => undefined,
   unregisterTab: () => undefined,
+  variant: "main",
 });
 
 export function useTabs() {
