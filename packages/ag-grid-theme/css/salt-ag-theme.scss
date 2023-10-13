@@ -68,6 +68,7 @@ div[class*="ag-theme-salt"] {
   .ag-header-row {
     color: var(--salt-text-primary-foreground);
     font-size: var(--salt-text-label-fontSize);
+    font-weight: var(--salt-typography-fontWeight-semiBold);
   }
 
   .ag-advanced-filter-header,
@@ -138,6 +139,10 @@ div[class*="ag-theme-salt"] {
 
   .ag-column-select-virtual-list-item {
     padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  }
+
+  .ag-row {
+    font-size: var(--salt-text-fontSize);
   }
 
   .ag-row-selected {
