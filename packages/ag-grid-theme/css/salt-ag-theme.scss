@@ -3,7 +3,7 @@
   (
     themes: (
       ag-theme-salt-light: (
-        extend-theme: material,
+        extend-theme: alpine,
         background-color: #fff,
         subheader-background-color: #fff,
         foreground-color: #2a2c2f,
@@ -49,7 +49,7 @@
     icon-size: var(--salt-icon-size-base),
     input-focus-box-shadow: none,
     list-item-height: var(--salt-size-base),
-    range-selection-border-color: var(--salt-focused-outlineColor),
+    // range-selection-border-color: var(--salt-focused-outlineColor),
     range-selection-border-style: var(--salt-focused-outlineStyle),
     range-selection-border-width: var(--salt-focused-outlineWidth),
     row-hover-color: var(--salt-selectable-background-hover),
