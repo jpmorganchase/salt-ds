@@ -11,13 +11,13 @@
 /* Vars applied to NavigationItem component when active */
 .saltNavigationItem-active,
 .saltNavigationItem-rootItem {
-  --navigationItem-font-weight: var(--salt-text-fontWeight-strong);
+  --navigationItem-fontWeight: var(--salt-text-fontWeight-strong);
 }
 
 /* Vars applied to NavigationItem component when  blur active */
 .saltNavigationItem-blurActive,
 .saltNavigationItem-active.saltNavigationItem-nested {
-  --navigationItem-font-weight: var(--salt-text-fontWeight);
+  --navigationItem-fontWeight: var(--salt-text-fontWeight);
 }
 
 /* Styles applied to NavigationItem wrapper */
@@ -26,7 +26,7 @@
   align-items: center;
   position: relative;
   gap: var(--navigationItem-gap);
-  font-weight: var(--navigationItem-font-weight);
+  font-weight: var(--navigationItem-fontWeight);
   text-decoration: none;
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
