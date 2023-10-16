@@ -96,7 +96,8 @@ describe("Given Ag Grid Theme", () => {
         it("THEN should match screenshot", () => {
           cy.mount(<CheckboxSelection />);
           cy.wait(500);
-          cy.contains("Population").parent()
+          cy.contains("Population")
+            .parent()
             .prev(".ag-header-cell-menu-button")
             .realClick();
           cy.get('[aria-label="filter"]').realClick();
