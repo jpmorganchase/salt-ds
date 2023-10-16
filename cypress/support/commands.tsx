@@ -7,6 +7,7 @@ import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
 import { ReactNode } from "react";
 import { SaltProvider } from "@salt-ds/core";
 import { AnnouncementListener } from "./AnnouncementListener";
+import "@frsource/cypress-plugin-visual-regression-diff";
 
 const SupportedThemeModeValues = ["light", "dark"] as const;
 type SupportedThemeMode = (typeof SupportedThemeModeValues)[number];
