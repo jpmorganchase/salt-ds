@@ -36,6 +36,10 @@ export const All: StoryFn = () => {
       <AllRenderer>
         <Spinner size="large" />
       </AllRenderer>
+      <H1>Small</H1>
+      <AllRenderer>
+        <Spinner size="small" />
+      </AllRenderer>
     </div>
   );
 };
@@ -48,6 +52,11 @@ Default.args = {
 export const Large = Template.bind({});
 Large.args = {
   size: "large",
+};
+
+export const Small = Template.bind({});
+Small.args = {
+  size: "small",
 };
 
 type LoadingStatus = "loading" | "loaded" | "idle";

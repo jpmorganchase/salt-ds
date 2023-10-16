@@ -8,9 +8,9 @@ import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const LoadingOverlay = (props: AgGridReactProps) => {
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   const getModalStyle: CSSProperties = {
     position: "absolute",

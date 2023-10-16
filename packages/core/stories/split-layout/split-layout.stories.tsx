@@ -36,7 +36,9 @@ export default {
   },
   decorators: [
     (Story) => (
-      <div style={{ minWidth: "30vw", minHeight: "700px" }}>{Story()}</div>
+      <div style={{ minWidth: "30vw", minHeight: "350px", display: "flex" }}>
+        {Story()}
+      </div>
     ),
   ],
 } as Meta<typeof SplitLayout>;
@@ -51,7 +53,7 @@ const startItem = (
   </FlowLayout>
 );
 const endItem = (
-  <FlowLayout>
+  <FlowLayout align="baseline">
     <div className="layout-content-right">
       <p>Item 4</p>
     </div>

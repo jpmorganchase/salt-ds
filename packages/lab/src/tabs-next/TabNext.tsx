@@ -42,20 +42,22 @@ export const TabNext = forwardRef<HTMLButtonElement, TabNextProps>(function Tab(
     window: targetWindow,
   });
   const {
-    isSelected,
-    select,
+    activeColor,
+    isActive,
+    activate,
     isFocusable,
     setFocusable,
     disabled: tabstripDisabled,
     unregisterTab,
     registerTab,
+    variant,
   } = useTabs();
-  const selected = isSelected(value);
+  const active = isActive(value);
   const focusable = isFocusable(value);
   const disabled = tabstripDisabled || disabledProp;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    select(event);
+    activate(event);
     onClick?.(event);
   };
 
@@ -70,12 +72,17 @@ export const TabNext = forwardRef<HTMLButtonElement, TabNextProps>(function Tab(
   }, [children, registerTab, unregisterTab, value]);
 
   return (
-    <OverflowItem id={value} priority={selected ? 2 : 1}>
+    <OverflowItem id={value} priority={active ? 2 : 1}>
       <div className={withBaseName("wrapper")}>
         <button
-          className={clsx(withBaseName(), className)}
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            withBaseName(activeColor),
+            className
+          )}
           data-value={value}
-          aria-selected={selected}
+          aria-selected={active}
           disabled={disabled}
           value={value}
           ref={ref}
@@ -85,7 +92,7 @@ export const TabNext = forwardRef<HTMLButtonElement, TabNextProps>(function Tab(
           tabIndex={focusable && !disabled ? 0 : -1}
           {...rest}
         >
-          <span className={withBaseName("label")}>{children}</span>
+          {children}
         </button>
       </div>
     </OverflowItem>

@@ -17,9 +17,9 @@ const generateData = (states: typeof dataGridExampleData) =>
 
 const PagedGrid = (props: AgGridReactProps) => {
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   return (
     <StackLayout gap={4}>

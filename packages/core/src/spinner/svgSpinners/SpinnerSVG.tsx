@@ -1,30 +1,61 @@
 import { SVGAttributes } from "react";
 import { makePrefixer } from "../../utils";
+import { SpinnerSize } from "../Spinner";
+import { Density } from "../../theme";
 
 const withBaseName = makePrefixer("saltSpinner");
 
-/* SVG based on MD, do not change viewbox attribute */
-export const SpinnerSVG = (props: {
+interface SpinnerProps {
   id?: string;
   rest?: Omit<SVGAttributes<SVGSVGElement>, "id">;
-}) => {
-  const { id: idProp, rest } = props;
-  const id = idProp || "svg-spinner";
+  size: SpinnerSize;
+  density: Density;
+}
+
+const sizeAndStrokeWidthMapping = {
+  default: {
+    high: { width: 20, strokeWidth: 2 },
+    medium: { width: 28, strokeWidth: 4 },
+    low: { width: 36, strokeWidth: 6 },
+    touch: { width: 44, strokeWidth: 8 },
+  },
+  large: {
+    high: { width: 40, strokeWidth: 2 },
+    medium: { width: 56, strokeWidth: 4 },
+    low: { width: 72, strokeWidth: 6 },
+    touch: { width: 88, strokeWidth: 8 },
+  },
+  small: {
+    high: { width: 12, strokeWidth: 2 },
+    medium: { width: 12, strokeWidth: 2 },
+    low: { width: 14, strokeWidth: 2 },
+    touch: { width: 16, strokeWidth: 2 },
+  },
+};
+
+export const SpinnerSVG = ({
+  id = "svg-spinner",
+  rest,
+  size,
+  density,
+}: SpinnerProps) => {
+  const { width, strokeWidth } = sizeAndStrokeWidthMapping[size][density];
+  const radius = (width - strokeWidth) / 2;
 
   return (
     <svg
       className={withBaseName("spinner")}
-      viewBox="0 0 28 28"
+      viewBox={`0 0 ${width} ${width}`}
       id={id}
       {...rest}
     >
       <defs>
-        <linearGradient id={`${id}-1`} x1="100%" x2="0%" y1="78%" y2="78%">
-          <stop className={withBaseName("gradientStop")} offset="0%" />
-          <stop className={withBaseName("gradientStop")} offset="100%" />
-        </linearGradient>
-        <linearGradient id={`${id}-2`} x1="13%" x2="100%" y1="0%" y2="87%">
-          <stop className={withBaseName("gradientStop")} offset="0%" />
+        <linearGradient id={`${id}-1`} x1="0" y1="0" x2="100%" y2="0">
+          <stop
+            className={withBaseName("gradientStop")}
+            offset="15%"
+            stopOpacity="1"
+          />
           <stop
             className={withBaseName("gradientStop")}
             offset="100%"
@@ -32,14 +63,31 @@ export const SpinnerSVG = (props: {
           />
         </linearGradient>
       </defs>
-      <g fill="none" fillRule="evenodd">
+      <g fill="none">
+        {/* 
+          This first path draws the top half of the circle without a gradient. 
+          It starts from the right end, moves in a circular arc, and ends at the left end.
+        */}
         <path
-          d="M28 14H24C24 8.47715 19.5228 4 14 4C8.47715 4 4 8.47715 4 14 H 0 C0 6.26801 6.26801 0 14 0C21.732 0 28 6.26801 28 14Z"
-          fill={`url(#${id}-1)`}
+          d={`M${width - strokeWidth / 2},${
+            width / 2
+          } a${radius},${radius} 0 1,0 -${width - strokeWidth},0`}
+          stroke="var(--saltSpinner-gradient-color, var(--salt-accent-background)"
+          strokeWidth="var(--spinner-strokeWidth)"
+          fill="none"
         />
+        {/* 
+          This second path draws the left half of the circle with a gradient that transitions 
+          from opaque on the left to transparent on the right.
+          It starts from the top-center, moves in a circular arc, and ends at the bottom-center.
+        */}
         <path
-          d="M4 14 C4 19.5228 8.47715 24 14 24V28C6.26801 28 0 21.732 0 14 Z"
-          fill={`url(#${id}-2)`}
+          d={`M${width / 2},${strokeWidth / 2} a${radius},${radius} 0 1,0 0,${
+            width - strokeWidth
+          }`}
+          stroke={`url(#${id}-1)`}
+          strokeWidth="var(--spinner-strokeWidth)"
+          fill="none"
         />
       </g>
     </svg>

@@ -24,9 +24,9 @@ const dataSourceRows = generateData(dataGridExampleData);
 
 const InfiniteScroll = (props: AgGridReactProps) => {
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers(
-    `ag-theme-${themeName}`
-  );
+  const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+  });
 
   useEffect(() => {
     if (isGridReady) {
@@ -43,7 +43,7 @@ const InfiniteScroll = (props: AgGridReactProps) => {
         },
       });
     }
-  }, [isGridReady]);
+  }, [api, isGridReady]);
 
   return (
     <StackLayout gap={4}>
@@ -63,8 +63,11 @@ const InfiniteScroll = (props: AgGridReactProps) => {
 };
 
 const infiniteScrollComponents = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   loadingRenderer(params: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (params.value !== undefined) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
       return params.value;
     } else {
       return <Spinner size="default" />;
