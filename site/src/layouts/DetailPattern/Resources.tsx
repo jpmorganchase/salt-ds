@@ -22,7 +22,7 @@ const LinkWithLogo = ({
           ? `/img/github_logo.svg`
           : `/img/figma_logo.svg`
       }
-      alt={`figma logo`}
+      alt={resourceType === "github" ? `github logo` : `figma logo`}
     />
     <Link href={href} target="_blank">
       {label}
