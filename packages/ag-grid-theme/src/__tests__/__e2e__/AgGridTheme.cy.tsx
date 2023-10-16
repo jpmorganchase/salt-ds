@@ -5,12 +5,11 @@ const { BasicGrid } = composeStories(agGridStories);
 
 describe("Given Ag Grid Theme", () => {
   describe("WHEN the Default dtory is mounted", () => {
+    console.log("agGridStories", agGridStories);
 
-    console.log('agGridStories', agGridStories);
-    
     it("should match screenshot", () => {
       cy.mount(<BasicGrid />);
-      cy.screenshot()
+      cy.screenshot();
     });
   });
 });
