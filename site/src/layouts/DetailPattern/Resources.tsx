@@ -7,7 +7,7 @@ import { Link, Text } from "@salt-ds/core";
 const LinkWithLogo = ({ href, label }: { href: string; label: string }) => (
   <div className={styles.link}>
     {href.includes("figma.com") && (
-      <Image src={`/img/figma_logo.svg`} alt=" figma logo" />
+      <Image src="/img/figma_logo.svg" alt=" figma logo" />
     )}
     {href.includes("github.com") && (
       <Image src="/img/github_logo.svg" alt="github logo" />
