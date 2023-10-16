@@ -4,26 +4,14 @@ import styles from "./Resources.module.css";
 import { Image } from "@jpmorganchase/mosaic-site-components";
 import { Link, Text } from "@salt-ds/core";
 
-type ResourceType = "figma" | "github";
-
-const LinkWithLogo = ({
-  href,
-  label,
-  resourceType,
-}: {
-  href: string;
-  label: string;
-  resourceType?: ResourceType;
-}) => (
+const LinkWithLogo = ({ href, label }: { href: string; label: string }) => (
   <div className={styles.link}>
-    <Image
-      src={
-        resourceType === "github"
-          ? `/img/github_logo.svg`
-          : `/img/figma_logo.svg`
-      }
-      alt={resourceType === "github" ? `github logo` : `figma logo`}
-    />
+    {href.includes("figma.com") && (
+      <Image src={`/img/figma_logo.svg`} alt=" figma logo" />
+    )}
+    {href.includes("github.com") && (
+      <Image src="/img/github_logo.svg" alt="github logo" />
+    )}
     <Link href={href} target="_blank">
       {label}
     </Link>
@@ -35,7 +23,6 @@ type Data = {
     href: string;
     label: string;
     internal?: boolean;
-    resourceType?: ResourceType;
   }>;
 };
 
@@ -57,13 +44,8 @@ export function Resources() {
         <Heading4>{title} resources</Heading4>
         {externalResources.length > 0 && (
           <div className={styles.list}>
-            {externalResources.map(({ href, label, resourceType }) => (
-              <LinkWithLogo
-                key={href}
-                href={href}
-                label={label}
-                resourceType={resourceType}
-              />
+            {externalResources.map(({ href, label }) => (
+              <LinkWithLogo key={href} href={href} label={label} />
             ))}
           </div>
         )}
@@ -73,13 +55,8 @@ export function Resources() {
               JPM employees only:
             </Text>
             <div className={styles.list}>
-              {internalResources.map(({ href, label, resourceType }) => (
-                <LinkWithLogo
-                  key={href}
-                  href={href}
-                  label={label}
-                  resourceType={resourceType}
-                />
+              {internalResources.map(({ href, label }) => (
+                <LinkWithLogo key={href} href={href} label={label} />
               ))}
             </div>
           </>
