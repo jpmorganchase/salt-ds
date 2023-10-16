@@ -20,7 +20,7 @@ const fields = function <T>(fieldName: keyof T, rows: T[]) {
   return rows.map((row) => row[fieldName]);
 };
 
-const headerRow: any[] = [
+const headerRow = [
   {
     name: "Top",
     code: "Top",
@@ -54,7 +54,7 @@ export const PinnedRowsExample = function PinnedRowsExample({
   const getColumnData = () => {
     return fields(aggregateColumn, defaultData).filter(
       (field) => typeof field === "number"
-    );
+    ) as number[];
   };
 
   const footerRow = () => {

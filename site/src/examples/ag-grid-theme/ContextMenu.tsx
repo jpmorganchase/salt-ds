@@ -1,6 +1,5 @@
 import { GetContextMenuItemsParams } from "ag-grid-community";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Image } from "@jpmorganchase/mosaic-site-components";
 import { defaultData, defaultColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
@@ -111,7 +110,7 @@ export const ContextMenu = (props: AgGridReactProps) => {
         action() {
           console.log("Windows Item Selected");
         },
-        icon: <Image src="/img/windows.png" alt="windows logo" />,
+        icon: '<img src="/img/windows.png" alt="windows logo" />',
       },
       {
         name: "Mac",
@@ -119,7 +118,7 @@ export const ContextMenu = (props: AgGridReactProps) => {
         action() {
           console.log("Mac Item Selected");
         },
-        icon: <Image src="/img/mac.png" alt="mac logo" />,
+        icon: '<img src="/img/mac.png" alt="mac logo" />',
       },
       "separator",
       {
@@ -128,7 +127,7 @@ export const ContextMenu = (props: AgGridReactProps) => {
         action() {
           console.log("Checked Selected");
         },
-        icon: `<img src='${windows}' />`,
+        icon: '<img src="/img/windows.png" alt="windows logo" />',
       },
       "copy",
     ];
