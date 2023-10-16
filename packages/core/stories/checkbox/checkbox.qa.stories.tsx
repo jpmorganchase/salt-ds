@@ -11,7 +11,7 @@ export const AllExamplesGrid: StoryFn<
   QAContainerProps & { className?: string }
 > = ({ className, ...props }) => {
   return (
-    <QAContainer cols={1} height={1200} {...props}>
+    <QAContainer cols={1} height={500} width={1200} {...props}>
       <CheckboxGroup>
         <Checkbox
           className={className}
