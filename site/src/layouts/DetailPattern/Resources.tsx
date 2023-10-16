@@ -6,7 +6,12 @@ import { Link, Text } from "@salt-ds/core";
 
 const LinkWithLogo = ({ href, label }: { href: string; label: string }) => (
   <div className={styles.link}>
-    <Image src={`/img/figma_logo.svg`} alt={`figma logo`} />
+    {href.includes("figma.com") && (
+      <Image src="/img/figma_logo.svg" alt=" figma logo" />
+    )}
+    {href.includes("github.com") && (
+      <Image src="/img/github_logo.svg" alt="github logo" />
+    )}
     <Link href={href} target="_blank">
       {label}
     </Link>
@@ -14,7 +19,11 @@ const LinkWithLogo = ({ href, label }: { href: string; label: string }) => (
 );
 
 type Data = {
-  resources: Array<{ href: string; label: string; internal?: boolean }>;
+  resources: Array<{
+    href: string;
+    label: string;
+    internal?: boolean;
+  }>;
 };
 
 type CustomSiteState = SiteState & { data?: Data };
