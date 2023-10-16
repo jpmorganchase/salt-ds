@@ -25,3 +25,4 @@ storybook-static
 # Prettier doesn't support MDX v2 yet
 site/docs/patterns/forms.mdx
 site/docs/patterns/international-address-input.mdx
+site/docs/patterns/navigation.mdx
