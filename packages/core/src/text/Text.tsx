@@ -40,6 +40,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
      * Change text color palette
      */
     variant?: "primary" | "secondary";
+    color?: "primary" | "secondary";
   }
 >;
 
@@ -60,6 +61,7 @@ export const Text: TextComponent = forwardRef(
       style,
       styleAs,
       variant = "primary",
+      color = "primary",
       ...restProps
     }: TextProps<T>,
     ref?: PolymorphicRef<T>
@@ -84,6 +86,7 @@ export const Text: TextComponent = forwardRef(
             [withBaseName("lineClamp")]: maxRows,
             [withBaseName(styleAs || "")]: styleAs,
             [withBaseName(variant)]: variant,
+            [withBaseName(color)]: color,
           },
           className
         )}
