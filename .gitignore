@@ -17,6 +17,7 @@ node_modules
 
 # testing
 /cypress/screenshots
+/packages/ag-grid-theme/src/__tests__/__e2e__/__image_snapshots__/
 /coverage
 .nyc_output
 
