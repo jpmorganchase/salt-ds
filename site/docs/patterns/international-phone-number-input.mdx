@@ -8,8 +8,12 @@ aliases:
 data:
   resources:
     [
-      { href: "https://www.figma.com/file/HkXrrf1rbYATx6ggGG4Pov/(WIP)-International-Phone-Number?node-id=1356%3A3430&mode=design", label: "Templates", internal: true }
-    ]  
+      {
+        href: "https://www.figma.com/file/HkXrrf1rbYATx6ggGG4Pov/(WIP)-International-Phone-Number?node-id=1356%3A3430&mode=design",
+        label: "Templates",
+        internal: true,
+      },
+    ]
 ---
 
 International Phone Number Input is a pattern that gives users a set of form fields to input phone number information for specific countries.
@@ -31,13 +35,13 @@ Use the pattern when your user needs to enter a phone number for a specific coun
 
 <ImageSwitcher
   images={[
-    { 
-      src: "/img/patterns/international-phone-number-input/pattern_without_country.png", 
-      alt: "Phone number input pattern without selected country"
+    {
+      src: "/img/patterns/international-phone-number-input/pattern_without_country.png",
+      alt: "Phone number input pattern without selected country",
     },
-    { 
-      src: "/img/patterns/international-phone-number-input/pattern_with_country.png", 
-      alt: "Phone number input pattern with selected country" 
+    {
+      src: "/img/patterns/international-phone-number-input/pattern_with_country.png",
+      alt: "Phone number input pattern with selected country",
     },
   ]}
   label="Select United Kingdom"
@@ -69,8 +73,8 @@ Column layout is having 2 form controls as a vertical column. For a better visib
 </Diagrams>
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  
-- We suggest using full country name instead of abbreviation because users may filter the selection by typing the country name.
+  - We suggest using full country name instead of abbreviation because users may
+  filter the selection by typing the country name.
 </ExampleContainer>
 
 ### Row layout
@@ -84,10 +88,17 @@ Row layout is having 2 form controls as a horizontal row. You can use row layout
 />
 
 When country name is wider than the input then it will be truncated. In this case, we suggest using column layout.
+
 <ImageSwitcher
   images={[
-    { src: "/img/patterns/international-phone-number-input/pattern_truncated_row_layout.png", alt: "Truncated row layout" },
-    { src: "/img/patterns/international-phone-number-input/pattern_truncated_column_layout.png", alt: "Column layout" },
+    {
+      src: "/img/patterns/international-phone-number-input/pattern_truncated_row_layout.png",
+      alt: "Truncated row layout",
+    },
+    {
+      src: "/img/patterns/international-phone-number-input/pattern_truncated_column_layout.png",
+      alt: "Column layout",
+    },
   ]}
   label="Column layout"
 />
@@ -98,8 +109,14 @@ The country selection dropdown is using [List](../components/list) component, th
 
 <ImageSwitcher
   images={[
-    { src: "/img/patterns/international-phone-number-input/country_selection_closed.png", alt: "Country selection dropdown closed" },
-    { src: "/img/patterns/international-phone-number-input/country_selection_open.png", alt: "Country selection dropdown open" },
+    {
+      src: "/img/patterns/international-phone-number-input/country_selection_closed.png",
+      alt: "Country selection dropdown closed",
+    },
+    {
+      src: "/img/patterns/international-phone-number-input/country_selection_open.png",
+      alt: "Country selection dropdown open",
+    },
   ]}
   label="Country selection dropdown"
 />
