@@ -5,7 +5,11 @@ import { Spinner } from "@salt-ds/core";
 describe("GIVEN a Spinner", () => {
   it("THEN should show on the screen", () => {
     cy.mount(<Spinner />);
-    cy.findByRole("img").should("have.class", "saltSpinner-default");
+    cy.findByRole("img").should("have.class", "saltSpinner-medium");
+  });
+  it("THEN size 'default' should be have 'medium' classname", () => {
+    cy.mount(<Spinner size="default" />);
+    cy.findByRole("img").should("have.class", "saltSpinner-medium");
   });
 
   it("THEN should show a large spinner on the screen", () => {
