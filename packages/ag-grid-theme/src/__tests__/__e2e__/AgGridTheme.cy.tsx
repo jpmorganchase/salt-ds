@@ -184,12 +184,68 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage();
     });
+    describe("WHEN column menu is open", () => {
+      describe("AND general tab is selected", () => {
+        it("THEN should match screenshot", () => {
+          cy.mount(<HDCompact />);
+          cy.wait(500);
+          cy.get(".ag-header-cell-menu-button").realClick();
+          cy.matchImage();
+        });
+      });
+      describe("AND filter tab is selected", () => {
+        it("THEN should match screenshot", () => {
+          cy.mount(<HDCompact />);
+          cy.wait(500);
+          cy.get(".ag-header-cell-menu-button").realClick();
+          cy.get('[aria-label="filter"]').realClick();
+          cy.matchImage();
+        });
+      });
+      describe("AND columns tab is selected", () => {
+        it("THEN should match screenshot", () => {
+          cy.mount(<HDCompact />);
+          cy.wait(500);
+          cy.get(".ag-header-cell-menu-button").realClick();
+          cy.get('[aria-label="columns"]').realClick();
+          cy.matchImage();
+        });
+      });
+    });
   });
   describe("WHEN the HDCompactDark story is mounted", () => {
     it("THEN should match screenshot", () => {
       cy.mount(<HDCompactDark />);
       cy.wait(500);
       cy.matchImage();
+    });
+    describe("WHEN column menu is open", () => {
+      describe("AND general tab is selected", () => {
+        it("THEN should match screenshot", () => {
+          cy.mount(<HDCompactDark />);
+          cy.wait(500);
+          cy.get(".ag-header-cell-menu-button").realClick();
+          cy.matchImage();
+        });
+      });
+      describe("AND filter tab is selected", () => {
+        it("THEN should match screenshot", () => {
+          cy.mount(<HDCompactDark />);
+          cy.wait(500);
+          cy.get(".ag-header-cell-menu-button").realClick();
+          cy.get('[aria-label="filter"]').realClick();
+          cy.matchImage();
+        });
+      });
+      describe("AND columns tab is selected", () => {
+        it("THEN should match screenshot", () => {
+          cy.mount(<HDCompactDark />);
+          cy.wait(500);
+          cy.get(".ag-header-cell-menu-button").realClick();
+          cy.get('[aria-label="columns"]').realClick();
+          cy.matchImage();
+        });
+      });
     });
   });
   describe("WHEN the InfiniteScroll story is mounted", () => {
