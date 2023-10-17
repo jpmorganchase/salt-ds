@@ -7,7 +7,7 @@ describe("GIVEN a Spinner", () => {
     cy.mount(<Spinner />);
     cy.findByRole("img").should("have.class", "saltSpinner-medium");
   });
-  it("THEN size 'default' should be have 'medium' classname", () => {
+  it("THEN size 'default' should have 'medium' classname", () => {
     cy.mount(<Spinner size="default" />);
     cy.findByRole("img").should("have.class", "saltSpinner-medium");
   });
