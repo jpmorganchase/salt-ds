@@ -13,10 +13,19 @@ import { useDensity } from "../salt-provider";
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="default | "large" | "small" />
+ * <Spinner size="default | "large" | "small" | "medium" />
  */
 
-export const SpinnerSizeValues = ["default", "large", "small"] as const;
+export const SpinnerSizeValues = [
+  "default",
+  "large",
+  "small",
+  "medium",
+] as const;
+
+const handleSize = (size: SpinnerSize): SpinnerSize =>
+  size === "default" ? "medium" : size;
+
 export type SpinnerSize = (typeof SpinnerSizeValues)[number];
 const withBaseName = makePrefixer("saltSpinner");
 
@@ -46,7 +55,7 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   role?: string;
   /**
-   * Determines the size of the spinner. Must be one of: 'default', 'large', 'small'.
+   * Determines the size of the spinner. Must be one of: 'default', 'large', 'small', 'medium'.
    */
   size?: SpinnerSize;
   /**
@@ -65,7 +74,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       disableAnnouncer,
       role = "img",
       className,
-      size = "default",
+      size = "medium",
       id: idProp,
       ...rest
     },
@@ -82,6 +91,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
     const { announce } = useAriaAnnouncer();
 
     const density = useDensity();
+    size = handleSize(size);
 
     useEffect(() => {
       if (disableAnnouncer) return;
