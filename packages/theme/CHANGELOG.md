@@ -1,5 +1,22 @@
 # @salt-ds/theme
 
+## 1.9.0
+
+### Minor Changes
+
+- 319140a6: New token added in `size.css` foundations:
+
+  ```diff
+  + --salt-size-bar-small
+  ```
+
+- 01f3a2b3: New token added in `size.css` foundations:
+
+  ```diff
+  + --salt-size-bar-strong
+  + --salt-size-bar-small
+  ```
+
 ## 1.8.0
 
 ### Minor Changes

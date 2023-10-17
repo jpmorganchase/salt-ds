@@ -1,3 +1,22 @@
 #storybook-root {
   min-width: 0;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  justify-content: flex-end;
+}
+
+.primary-container {
+  background: var(--salt-container-primary-background);
+}
+
+.secondary-container {
+  background: var(--salt-container-secondary-background);
+}
+
+.inner-container {
+  height: 100px;
+}

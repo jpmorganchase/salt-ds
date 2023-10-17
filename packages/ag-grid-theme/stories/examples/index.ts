@@ -9,6 +9,7 @@ export { default as Coloration } from "./Coloration";
 export { default as Icons } from "./Icons";
 export { default as FloatingFilter } from "./FloatingFilter";
 export { default as HDCompact } from "./HDCompact";
+export { default as HDCompactDark } from "./HDCompactDark";
 export { default as LoadingOverlay } from "./LoadingOverlay";
 export { default as MasterDetail } from "./MasterDetail";
 export { default as MasterDetailDark } from "./MasterDetailDark";

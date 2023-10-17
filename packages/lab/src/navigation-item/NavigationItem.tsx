@@ -85,9 +85,10 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
           className={clsx(
             withBaseName("wrapper"),
             {
-              [withBaseName("active")]: active,
-              [withBaseName("blurActive")]: blurActive,
+              [withBaseName("active")]: active || blurActive,
+              [withBaseName("blurActive")]: blurActive && level !== 0,
               [withBaseName("nested")]: level !== 0,
+              [withBaseName("rootItem")]: level === 0,
               [withBaseName("expandButton")]: parent,
             },
             withBaseName(orientation)

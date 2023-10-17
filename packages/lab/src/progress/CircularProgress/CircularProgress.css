@@ -1,12 +1,12 @@
 .saltCircularProgress {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-text-primary-foreground); /* TODO: update token to --salt-foreground-primary post theme1.0updates */
   display: inline-flex;
   position: relative;
 }
 
 .saltCircularProgress-progressValue {
   align-items: center;
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-text-primary-foreground); /* TODO: update token to --salt-foreground-primary post theme1.0updates */
   display: flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-label-fontSize);
@@ -19,20 +19,20 @@
 }
 
 .saltCircularProgress-track {
-  inline-size: calc(var(--salt-size-base) * 2);
-  block-size: calc(var(--salt-size-base) * 2);
+  inline-size: calc(var(--salt-size-base) * 3);
+  block-size: calc(var(--salt-size-base) * 3);
   border-style: var(--salt-track-borderStyle);
-  border-width: var(--salt-track-borderWidth);
-  border-radius: var(--salt-size-base);
-  border-color: var(--salt-track-borderColor);
+  border-width: var(--salt-size-bar-small);
+  border-radius: calc(var(--salt-size-base) * 3);
+  border-color: var(--salt-palette-neutral-secondary-border);
 }
 
 .saltCircularProgress-bar {
-  inline-size: calc(var(--salt-size-base) * 2);
-  block-size: calc(var(--salt-size-base) * 2);
+  inline-size: calc(var(--salt-size-base) * 3);
+  block-size: calc(var(--salt-size-base) * 3);
   border-style: var(--salt-track-borderStyle);
-  border-width: calc(var(--salt-size-adornment) * 0.5);
-  border-radius: var(--salt-size-base);
+  border-width: var(--salt-size-bar-strong);
+  border-radius: calc(var(--salt-size-base) * 3);
   border-color: var(--salt-accent-background);
 }
 

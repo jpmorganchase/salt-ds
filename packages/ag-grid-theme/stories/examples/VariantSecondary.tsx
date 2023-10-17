@@ -6,7 +6,9 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 
 const VariantSecondary = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers("ag-theme-salt");
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-salt`,
+  });
   const { className } = containerProps;
 
   return (

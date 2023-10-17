@@ -27,17 +27,17 @@ const statusBar = {
 const WrappedHeader = (props: AgGridReactProps) => {
   const [compact, setCompact] = useState(false);
   const { switcher, themeName } = useAgGridThemeSwitcher();
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers(
-    `ag-theme-${themeName}`,
-    compact
-  );
+  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers({
+    agThemeName: `ag-theme-${themeName}`,
+    compact,
+  });
   const { defaultColDef: propsColDefs, ...restAgGridProps } = agGridProps;
 
   useEffect(() => {
     if (isGridReady) {
       api?.sizeColumnsToFit();
     }
-  }, [isGridReady]);
+  }, [api, isGridReady]);
 
   const density = useDensity();
 

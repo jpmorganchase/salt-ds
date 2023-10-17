@@ -7,11 +7,10 @@ import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 
 const VariantZebraDark = (props: AgGridReactProps) => {
   const mode = "dark";
-  const { agGridProps, containerProps } = useAgGridHelpers(
-    `ag-theme-salt`,
-    false,
-    mode
-  );
+  const { agGridProps, containerProps } = useAgGridHelpers({
+    agThemeName: `ag-theme-salt`,
+    mode,
+  });
   const { className } = containerProps;
 
   return (
