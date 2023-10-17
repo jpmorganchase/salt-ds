@@ -163,6 +163,6 @@ Cypress.on("uncaught:exception", (err) => {
   }
 });
 
-Cypress.Screenshot.defaults({ capture: 'viewport' });
+Cypress.Screenshot.defaults({ capture: "viewport" });
 
 export {};
