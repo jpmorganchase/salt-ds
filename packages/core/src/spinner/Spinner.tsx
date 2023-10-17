@@ -13,7 +13,7 @@ import { useDensity } from "../salt-provider";
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="default | "large" | "small" | "medium" />
+ * <Spinner size="small" | "medium" | "large" />
  */
 
 export const SpinnerSizeValues = [
@@ -23,10 +23,13 @@ export const SpinnerSizeValues = [
   "medium",
 ] as const;
 
-const handleSize = (size: SpinnerSize): SpinnerSize =>
+type SpinnerSize = (typeof SpinnerSizeValues)[number];
+
+export type SpinnerSVGSize = Exclude<SpinnerSize, "default">;
+
+const handleSize = (size: SpinnerSize): SpinnerSVGSize =>
   size === "default" ? "medium" : size;
 
-export type SpinnerSize = (typeof SpinnerSizeValues)[number];
 const withBaseName = makePrefixer("saltSpinner");
 
 export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
