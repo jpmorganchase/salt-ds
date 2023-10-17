@@ -1,18 +1,23 @@
 /* Vars applied to root NavigationItem component */
 .saltNavigationItem {
-  --navigationItem-color: var(--salt-text-secondary-foreground);
-  --navigationItem-fill: var(--salt-text-secondary-foreground);
+  --navigationItem-color: var(--salt-text-primary-foreground);
+  --navigationItem-fill: var(--salt-text-primary-foreground);
   --navigationItem-bar-inset: var(--salt-spacing-25);
   --navigationItem-bar-size: var(--salt-size-indicator);
   --navigationItem-indicator-background: var(--salt-navigable-indicator-active);
   --navigationItem-gap: var(--salt-spacing-100);
 }
 
-/* Vars applied to NavigationItem component when active or selected */
+/* Vars applied to NavigationItem component when active */
 .saltNavigationItem-active,
-.saltNavigationItem-blurActive {
-  --navigationItem-color: var(--salt-text-primary-foreground);
-  --navigationItem-fill: var(--salt-text-primary-foreground);
+.saltNavigationItem-rootItem {
+  --navigationItem-fontWeight: var(--salt-text-fontWeight-strong);
+}
+
+/* Vars applied to NavigationItem component when  blur active */
+.saltNavigationItem-blurActive,
+.saltNavigationItem-active.saltNavigationItem-nested {
+  --navigationItem-fontWeight: var(--salt-text-fontWeight);
 }
 
 /* Styles applied to NavigationItem wrapper */
@@ -21,7 +26,7 @@
   align-items: center;
   position: relative;
   gap: var(--navigationItem-gap);
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--navigationItem-fontWeight);
   text-decoration: none;
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
@@ -81,7 +86,6 @@
 
 /* Styles applied when level is not 0 */
 .saltNavigationItem-wrapper.saltNavigationItem-nested {
-  font-weight: var(--salt-text-fontWeight);
   padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-400));
 }
 
@@ -101,6 +105,8 @@
 /* Styles applied to expand icon */
 .saltNavigationItem-wrapper .saltNavigationItem-expandIcon {
   --saltIcon-color: var(--navigationItem-fill);
+
+  top: 0;
 }
 
 /* Styles applied to NavigationItem when focus is visible */
@@ -144,19 +150,12 @@
   height: calc(100% - var(--salt-spacing-50));
 }
 
-/* Styles applied to activation line on hover and on focus */
+/* Styles applied to activation line on hover  */
 .saltNavigationItem-wrapper:hover::after,
-.saltNavigationItem-wrapper:focus::after {
+.saltNavigationItem-wrapper:focus-visible::after {
   background: var(--salt-navigable-indicator-hover);
   /* Hover on animation */
   transition: all var(--salt-duration-perceptible) ease-in-out;
-}
-
-/* Styles applied to activation line when item has active children */
-.saltNavigationItem-wrapper.saltNavigationItem-blurActive::after,
-.saltNavigationItem-wrapper.saltNavigationItem-blurActive:hover::after,
-.saltNavigationItem-wrapper.saltNavigationItem-blurActive:focus::after {
-  --navigationItem-indicator-background: none;
 }
 
 /* Styles applied to activation line when item is active */
