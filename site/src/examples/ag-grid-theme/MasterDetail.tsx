@@ -10,9 +10,10 @@ export const MasterDetail = (props: AgGridReactProps) => {
       <AgGridReact
         columnDefs={masterDetailColumns}
         detailCellRendererParams={{
-          detailGridOptions: { masterDetailColumns },
-          getDetailRowData: (params: any) =>
-            params.successCallback(defaultData),
+          detailGridOptions: { columnDefs: masterDetailColumns },
+          getDetailRowData: (params: {
+            successCallback: (rowData: typeof defaultData) => void;
+          }) => params.successCallback(defaultData),
         }}
         masterDetail={true}
         detailRowHeight={300}

@@ -42,7 +42,7 @@ type PinnedRowsExampleProps = AgGridReactProps & {
   showHeader: boolean;
 };
 
-export const PinnedRowsExample = function PinnedRowsExample({
+export const PinnedRows = function PinnedRowsExample({
   aggregate = "sum",
   aggregateColumn = "population",
   showFooter = true,
@@ -77,6 +77,8 @@ export const PinnedRowsExample = function PinnedRowsExample({
 
   const pinnedBottomRowData = showFooter ? footerRow() : undefined;
   const pinnedTopRowData = showHeader ? getHeaderRow() : undefined;
+
+  console.log({ pinnedBottomRowData, pinnedTopRowData });
   return (
     <div {...containerProps}>
       <AgGridReact

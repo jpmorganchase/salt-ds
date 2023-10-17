@@ -23,7 +23,7 @@ export const LoadingOverlay = () => {
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", width: "100%" }}>
       <div className="modal" style={getModalStyle}>
         <Card style={{ minHeight: "auto" }}>
           <div>

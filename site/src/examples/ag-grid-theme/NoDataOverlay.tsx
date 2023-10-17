@@ -43,7 +43,7 @@ export const NoDataOverlay = (props: AgGridReactProps) => {
           width: "500px",
           height: "160px",
           position: "relative",
-          padding: 0,
+          padding: `var(--salt-spacing-300)`,
           border: `var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-status-error-borderColor)`,
         }}
       >
@@ -106,7 +106,7 @@ export const NoDataOverlay = (props: AgGridReactProps) => {
 
   return (
     <div
-      style={{ marginTop: 25, position: "relative" }}
+      style={{ marginTop: 25, position: "relative", width: "100%" }}
       ref={containerRef}
       tabIndex={0}
     >

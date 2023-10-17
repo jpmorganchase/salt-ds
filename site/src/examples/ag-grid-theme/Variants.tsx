@@ -1,16 +1,15 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { clsx } from "clsx";
-import { SyntheticEvent, useState } from "react";
 import {
-  Banner,
-  BannerContent,
   FlexItem,
   FlexLayout,
+  StackLayout,
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
-import { useAgGridHelpers } from "./useAgGridHelpers";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { clsx } from "clsx";
+import { SyntheticEvent, useState } from "react";
 import { defaultColumns, defaultData } from "./data";
+import { useAgGridHelpers } from "./useAgGridHelpers";
 
 export const Variants = (props: AgGridReactProps) => {
   const [selected, setSelected] = useState("primary");
@@ -21,10 +20,7 @@ export const Variants = (props: AgGridReactProps) => {
   };
 
   return (
-    <FlexLayout style={{ width: "100%" }} direction="column">
-      <Banner status="info">
-        <BannerContent>Variants are available in Salt theme only</BannerContent>
-      </Banner>
+    <StackLayout style={{ width: "100%" }}>
       <FlexItem>
         <FlexLayout direction="row">
           <FlexItem>
@@ -39,7 +35,7 @@ export const Variants = (props: AgGridReactProps) => {
       <div
         style={{ height: 500, marginTop: 25 }}
         {...containerProps}
-        className={clsx({
+        className={clsx(containerProps.className, {
           "ag-theme-salt-variant-secondary": selected === "secondary",
           "ag-theme-salt-variant-zebra": selected === "zebra",
         })}
@@ -52,6 +48,6 @@ export const Variants = (props: AgGridReactProps) => {
           rowSelection="multiple"
         />
       </div>
-    </FlexLayout>
+    </StackLayout>
   );
 };
