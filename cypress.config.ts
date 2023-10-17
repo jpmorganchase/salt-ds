@@ -61,7 +61,6 @@ export default defineConfig({
   viewportHeight: 1024,
   video: false,
   env: {
-    pluginVisualRegressionUpdateImages: true,
     pluginVisualRegressionDiffConfig: { threshold: 0.1 },
   },
   e2e: {
