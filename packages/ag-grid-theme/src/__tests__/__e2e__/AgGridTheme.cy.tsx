@@ -133,6 +133,14 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage();
     });
+    describe("WHEN cell context menu is open", () => {
+      it("THEN should match screenshot", () => {
+        cy.mount(<ContextMenu />);
+        cy.wait(500);
+        cy.findByText('Alabama').rightclick()
+        cy.matchImage();
+      });
+    })
   });
   describe("WHEN the CustomFilter story is mounted", () => {
     it("THEN should match screenshot", () => {
@@ -140,6 +148,14 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage();
     });
+    describe("WHEN custom filter is focused", () => {
+      it("THEN should match screenshot", () => {
+        cy.mount(<CustomFilter />);
+        cy.wait(500);
+        cy.get('.ag-floating-filter-input').realClick()
+        cy.matchImage();
+      })
+    })
   });
   describe("WHEN the DragRowOrder story is mounted", () => {
     it("THEN should match screenshot", () => {
