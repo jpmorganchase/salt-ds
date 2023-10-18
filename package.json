@@ -139,8 +139,5 @@
   "packageManager": "yarn@4.0.0",
   "msw": {
     "workerDirectory": "docs/public"
-  },
-  "devDependencies": {
-    "@frsource/cypress-plugin-visual-regression-diff": "^3.3.10"
   }
 }
