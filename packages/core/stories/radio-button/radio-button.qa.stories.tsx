@@ -11,7 +11,7 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as Meta<typeof RadioButton>;
 
-const RadioButtonGroups = () => {
+const RadioButtonGroupsVertical = () => {
   return (
     <>
       <RadioButtonGroup defaultValue="option2">
@@ -29,7 +29,18 @@ const RadioButtonGroups = () => {
           label="Radio Option 4 (read-only)"
           value="option4"
         />
+        <RadioButton
+          label="Radio buttons allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side. Radio buttons allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side."
+          value="option5"
+        />
       </RadioButtonGroup>
+    </>
+  );
+};
+
+const RadioButtonGroupsHorizontal = () => {
+  return (
+    <>
       <RadioButtonGroup direction={"horizontal"} defaultValue="option2">
         <RadioButton key="option1" label="Radio Option 1" value="option1" />
         <RadioButton key="option2" label="Radio Option 2" value="option2" />
@@ -57,7 +68,8 @@ const RadioButtonGroups = () => {
 export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={2} itemPadding={6} itemWidthAuto {...props}>
-      <RadioButtonGroups />
+      <RadioButtonGroupsVertical />
+      <RadioButtonGroupsHorizontal />
     </QAContainer>
   );
 };
