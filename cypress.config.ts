@@ -63,6 +63,8 @@ export default defineConfig({
   env: {
     pluginVisualRegressionMaxDiffConfig: { threshold: 0.1 },
     pluginVisualRegressionDiffConfig: { threshold: 0.1 },
+    pluginVisualRegressionCleanupUnusedImages: true,
+    pluginVisualRegressionUpdateImages: true,
   },
   component: {
     setupNodeEvents(on, config) {
