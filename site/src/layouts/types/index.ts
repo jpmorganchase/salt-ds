@@ -13,9 +13,7 @@ export type LayoutProps = {
   ToCProps?: {
     items: any;
   };
-  SidebarProps?: {
-    helpLinks: Pick<FooterProps, "helpLinks">;
-  };
+  SidebarProps?: Pick<FooterProps, "helpLinks">;
   NextPrevLinksProps?: {
     next?: LinkType;
     prev?: LinkType;
