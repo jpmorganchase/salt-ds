@@ -40,7 +40,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
     describe("WHEN column menu is open", () => {
@@ -51,7 +50,6 @@ describe("Given Ag Grid Theme", () => {
           cy.get(".ag-header-cell-menu-button").realClick();
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -63,7 +61,6 @@ describe("Given Ag Grid Theme", () => {
           cy.get('[aria-label="filter"]').realClick();
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -75,7 +72,6 @@ describe("Given Ag Grid Theme", () => {
           cy.get('[aria-label="columns"]').realClick();
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -87,7 +83,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
     describe("WHEN editable-cell is focused", () => {
@@ -97,7 +92,6 @@ describe("Given Ag Grid Theme", () => {
         cy.get(".editable-cell").realClick();
         cy.matchImage({
           maxDiffThreshold: 0.1,
-          updateImages: true,
         });
       });
     });
@@ -108,7 +102,6 @@ describe("Given Ag Grid Theme", () => {
         cy.get(".editable-cell").realClick({ clickCount: 2 });
         cy.matchImage({
           maxDiffThreshold: 0.1,
-          updateImages: true,
         });
       });
     });
@@ -124,7 +117,6 @@ describe("Given Ag Grid Theme", () => {
           cy.get('[aria-label="filter"]').realClick();
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -136,7 +128,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -146,7 +137,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -156,7 +146,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -166,7 +155,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
     describe("WHEN cell context menu is open", () => {
@@ -176,7 +164,6 @@ describe("Given Ag Grid Theme", () => {
         cy.findByText("Alabama").rightclick();
         cy.matchImage({
           maxDiffThreshold: 0.1,
-          updateImages: true,
         });
       });
     });
@@ -187,7 +174,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
     describe("WHEN custom filter is focused", () => {
@@ -197,7 +183,6 @@ describe("Given Ag Grid Theme", () => {
         cy.get(".ag-floating-filter-input").realClick();
         cy.matchImage({
           maxDiffThreshold: 0.1,
-          updateImages: true,
         });
       });
     });
@@ -208,7 +193,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -218,7 +202,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -228,7 +211,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -238,7 +220,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
     describe("WHEN column menu is open", () => {
@@ -249,7 +230,6 @@ describe("Given Ag Grid Theme", () => {
           cy.get(".ag-header-cell-menu-button").realClick();
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -261,7 +241,6 @@ describe("Given Ag Grid Theme", () => {
           cy.get('[aria-label="filter"]').realClick();
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -274,7 +253,6 @@ describe("Given Ag Grid Theme", () => {
           cy.wait(500);
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -286,7 +264,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
     describe("WHEN column menu is open", () => {
@@ -297,7 +274,6 @@ describe("Given Ag Grid Theme", () => {
           cy.get(".ag-header-cell-menu-button").realClick();
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -309,7 +285,6 @@ describe("Given Ag Grid Theme", () => {
           cy.get('[aria-label="filter"]').realClick();
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -321,7 +296,6 @@ describe("Given Ag Grid Theme", () => {
           cy.get('[aria-label="columns"]').realClick();
           cy.matchImage({
             maxDiffThreshold: 0.1,
-            updateImages: true,
           });
         });
       });
@@ -332,7 +306,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<InfiniteScroll />);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -342,7 +315,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -352,7 +324,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -362,7 +333,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -372,7 +342,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -382,7 +351,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -392,7 +360,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -402,7 +369,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -412,7 +378,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -422,7 +387,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -432,7 +396,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -442,7 +405,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -452,7 +414,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -462,7 +423,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -472,7 +432,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -482,7 +441,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
@@ -492,7 +450,6 @@ describe("Given Ag Grid Theme", () => {
       cy.wait(500);
       cy.matchImage({
         maxDiffThreshold: 0.1,
-        updateImages: true,
       });
     });
   });
