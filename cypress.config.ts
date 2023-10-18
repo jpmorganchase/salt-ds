@@ -63,7 +63,6 @@ export default defineConfig({
   env: {
     pluginVisualRegressionDiffConfig: { threshold: 0.1 },
     pluginVisualRegressionCleanupUnusedImages: true,
-    pluginVisualRegressionUpdateImages: true,
   },
   e2e: {
     setupNodeEvents(on, config) {
