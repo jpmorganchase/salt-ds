@@ -168,11 +168,11 @@ Cypress.Screenshot.defaults({
   onBeforeScreenshot($el) {
     // turn off pointer events for everything in the body element
     // to avoid mouse over on ag grid theme screenshots
+    // used suggestion from here https://github.com/cypress-io/cypress/issues/23300
     document.querySelector("body")!.style.pointerEvents = "none";
   },
   onAfterScreenshot($el, props) {
     // restore default pointer event behavior
-    // to avoid mouse over on ag grid theme screenshots
     document.querySelector("body")!.style.pointerEvents = "initial";
   },
 });
