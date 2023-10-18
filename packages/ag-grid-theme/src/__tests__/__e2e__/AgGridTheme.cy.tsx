@@ -39,7 +39,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<BasicGrid />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -78,7 +77,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<CheckboxSelection />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -120,7 +118,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<Coloration />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -131,7 +128,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<ColumnGroup />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -142,7 +138,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<ColumnSpanning />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -153,7 +148,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<ContextMenu />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -172,7 +166,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<CustomFilter />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -193,7 +186,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<DragRowOrder />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -204,7 +196,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<Icons />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -215,7 +206,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<FloatingFilter />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -226,7 +216,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<HDCompact />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -266,7 +255,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<HDCompactDark />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -304,7 +292,6 @@ describe("Given Ag Grid Theme", () => {
     it("THEN should match screenshot", () => {
       cy.mount(<InfiniteScroll />);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -315,7 +302,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<LoadingOverlay />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -326,7 +312,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<MasterDetail />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -337,7 +322,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<MasterDetailDark />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -348,7 +332,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<NoDataOverlay />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -359,7 +342,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<Pagination />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -370,7 +352,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<ParentChildRows />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -381,7 +362,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<RowGrouping />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -392,7 +372,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<RowGroupPanel />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -403,7 +382,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<PinnedRows />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -414,7 +392,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<StatusBar />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -425,7 +402,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<StatusBarDark />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -436,7 +412,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<VariantSecondary />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -447,7 +422,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<VariantSecondaryDark />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -458,7 +432,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<VariantZebra />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -469,7 +442,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<VariantZebraDark />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
@@ -480,7 +452,6 @@ describe("Given Ag Grid Theme", () => {
       cy.mount(<WrappedHeader />);
       cy.wait(500);
       cy.matchImage({
-        forceDeviceScaleFactor: false,
         maxDiffThreshold: 0.1,
         updateImages: true,
       });
