@@ -4652,9 +4652,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mswjs/data@npm:^0.13.0":
-  version: 0.13.0
-  resolution: "@mswjs/data@npm:0.13.0"
+"@mswjs/data@npm:^0.14.0":
+  version: 0.14.0
+  resolution: "@mswjs/data@npm:0.14.0"
   dependencies:
     "@types/lodash": ^4.14.172
     "@types/md5": ^2.3.0
@@ -4673,7 +4673,7 @@ __metadata:
   dependenciesMeta:
     msw:
       optional: true
-  checksum: 924c15cf28c50bca2275a8003f3ce15f18e088fff934ca394e650c097be3090ef31dbf088f5c0c5e357cef7a19d472eef3f141df4e5c3db65ca45a73c1833496
+  checksum: 8a9049059baa3635c5bf3d8ad3380fb3922c4643c6bdc7d60d643d86abc5d92028075d4e5bb41b3891d2606d95ed364c50ea081430af988e9806a8a92ac898c2
   languageName: node
   linkType: hard
 
@@ -5872,7 +5872,7 @@ __metadata:
     "@cypress/code-coverage": ^3.10.0
     "@faker-js/faker": ^8.0.0
     "@fontsource/open-sans": ^4.5.13
-    "@mswjs/data": ^0.13.0
+    "@mswjs/data": ^0.14.0
     "@storybook/addon-a11y": ^7.4.5
     "@storybook/addon-actions": ^7.4.5
     "@storybook/addon-docs": ^7.4.5
