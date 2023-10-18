@@ -208,6 +208,7 @@ describe("Given Ag Grid Theme", () => {
           cy.wait(500);
           cy.get(".ag-header-cell-menu-button").realClick();
           cy.get('[aria-label="columns"]').realClick();
+          cy.wait(500);
           cy.matchImage();
         });
       });
