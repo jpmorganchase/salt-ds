@@ -163,6 +163,18 @@ Cypress.on("uncaught:exception", (err) => {
   }
 });
 
-Cypress.Screenshot.defaults({ capture: "viewport" });
+Cypress.Screenshot.defaults({
+  capture: "viewport",
+  onBeforeScreenshot($el) {
+    // turn off pointer events for everything in the body element
+    // to avoid mouse over on ag grid theme screenshots
+    document.querySelector("body").style.pointerEvents = "none";
+  },
+  onAfterScreenshot($el, props) {
+    // restore default pointer event behavior
+    // to avoid mouse over on ag grid theme screenshots
+    document.querySelector("body").style.pointerEvents = "initial";
+  },
+});
 
-export {};
+export { };
