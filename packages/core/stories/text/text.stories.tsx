@@ -34,6 +34,16 @@ export const Secondary: StoryFn<typeof Text> = () => {
   return <Text variant="secondary">This is a secondary text example</Text>;
 };
 
+
+export const PrimaryColor: StoryFn<typeof Text> = () => {
+  return <Text color="primary">This is a primary text example</Text>;
+};
+
+export const SecondaryColor: StoryFn<typeof Text> = () => {
+  return <Text color="secondary">This is a secondary text example</Text>;
+};
+
+
 export const Disabled: StoryFn<typeof Text> = () => {
   return (
     <div>

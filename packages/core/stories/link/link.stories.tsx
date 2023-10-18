@@ -19,6 +19,19 @@ export const Secondary: StoryFn<typeof Link> = () => {
   );
 };
 
+
+export const PrimaryColor: StoryFn<typeof Link> = () => {
+  return <Link href="https://www.google.com">Link to URL</Link>;
+};
+
+export const SecondaryColor: StoryFn<typeof Link> = () => {
+  return (
+    <Link color="secondary" href="https://www.google.com">
+      Link to URL
+    </Link>
+  );
+};
+
 export const TargetBlank: StoryFn<typeof Link> = () => {
   return (
     <Link href="https://www.google.com" target="_blank">
