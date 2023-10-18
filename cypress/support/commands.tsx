@@ -165,6 +165,7 @@ Cypress.on("uncaught:exception", (err) => {
 
 Cypress.Screenshot.defaults({
   capture: "viewport",
+  overwrite: true,
   onBeforeScreenshot($el) {
     // turn off pointer events for everything in the body element
     // to avoid mouse over on ag grid theme screenshots
