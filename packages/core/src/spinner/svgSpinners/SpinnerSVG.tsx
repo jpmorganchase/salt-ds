@@ -1,6 +1,6 @@
 import { SVGAttributes } from "react";
 import { makePrefixer } from "../../utils";
-import { SpinnerSize } from "../Spinner";
+import { SpinnerSVGSize } from "../Spinner";
 import { Density } from "../../theme";
 
 const withBaseName = makePrefixer("saltSpinner");
@@ -8,12 +8,18 @@ const withBaseName = makePrefixer("saltSpinner");
 interface SpinnerProps {
   id?: string;
   rest?: Omit<SVGAttributes<SVGSVGElement>, "id">;
-  size: SpinnerSize;
+  size: SpinnerSVGSize;
   density: Density;
 }
 
 const sizeAndStrokeWidthMapping = {
-  default: {
+  small: {
+    high: { width: 12, strokeWidth: 2 },
+    medium: { width: 12, strokeWidth: 2 },
+    low: { width: 14, strokeWidth: 2 },
+    touch: { width: 16, strokeWidth: 2 },
+  },
+  medium: {
     high: { width: 20, strokeWidth: 2 },
     medium: { width: 28, strokeWidth: 4 },
     low: { width: 36, strokeWidth: 6 },
@@ -24,12 +30,6 @@ const sizeAndStrokeWidthMapping = {
     medium: { width: 56, strokeWidth: 4 },
     low: { width: 72, strokeWidth: 6 },
     touch: { width: 88, strokeWidth: 8 },
-  },
-  small: {
-    high: { width: 12, strokeWidth: 2 },
-    medium: { width: 12, strokeWidth: 2 },
-    low: { width: 14, strokeWidth: 2 },
-    touch: { width: 16, strokeWidth: 2 },
   },
 };
 
