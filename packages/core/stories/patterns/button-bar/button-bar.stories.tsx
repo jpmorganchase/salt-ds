@@ -1,4 +1,4 @@
-import { Button, FlexItem, StackLayout } from "@salt-ds/core";
+import { Button, FlexItem, FlowLayout, SplitLayout } from "@salt-ds/core";
 import { Meta } from "@storybook/react";
 
 export default {
@@ -7,16 +7,41 @@ export default {
 
 export const ButtonBar = () => {
   return (
-    <StackLayout direction="row">
+    <SplitLayout direction="row">
       <FlexItem>
         <Button variant="cta">Save</Button>
-      </FlexItem>
-      <FlexItem>
         <Button>Cancel</Button>
       </FlexItem>
       <FlexItem>
         <Button variant="secondary">Delete</Button>
       </FlexItem>
-    </StackLayout>
+    </SplitLayout>
+  );
+};
+
+export const WithSecondary = () => {
+  const startItem = (
+    <FlowLayout>
+      <FlexItem>
+        <Button variant="secondary">Start/secondary</Button>
+      </FlexItem>
+    </FlowLayout>
+  );
+
+  const endItem = (
+    <FlowLayout>
+      <FlexItem>
+        <Button>End/primary</Button>
+      </FlexItem>
+    </FlowLayout>
+  );
+
+  return (
+    <SplitLayout
+      startItem={startItem}
+      endItem={endItem}
+      style={{minWidth: '30vw'}}
+      direction={{ xs: "column", sm: "row" }}
+    />
   );
 };
