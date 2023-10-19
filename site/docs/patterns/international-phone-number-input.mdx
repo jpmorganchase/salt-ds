@@ -22,16 +22,16 @@ International Phone Number Input is a pattern that gives users a set of form fie
 
 The pattern is a form that displays a relevant phone number field for a user-selected location. You can use it to provide consistent design when implementing International Phone Number Input interactions across your applications.
 
-We provide design guidance of how you can use Salt form control components to achieve the pattern. Your team may be able to take further steps that fall outside its scope. For example, check with your tech partners if it’s possible to auto-detect user location, with data that can support auto-generate number placeholders, and can save the entered number when user is changing the country.
+We provide design guidance on how you can use Salt form control components to achieve the pattern. Your team can take further steps that fall outside its scope. For example, check with your tech partners if it’s possible to auto-detect user location, using data that can support auto-generating number placeholders, and save the entered number when the user changes the country.
 
 ## When to use it
 
-Use the pattern when your user needs to enter a phone number for a specific country. This could be for contact, access request purposes, such as client detail collection processes or 2-step verification/Multi-factor authentication.
+Use the pattern when your user needs to enter a phone number for a specific country. This could be for contact or access request purposes, such as client detail collection processes or two-step verification/multi-factor authentication.
 
 ## Pattern content
 
-- The pattern consists a set of 2 form controls, one is a [dropdown](../components/dropdown) that displays country selection (with country symbol component that can be displayed or hidden), the other one is an [input](../components/input) displays phone number.
-- When the country is selected in the dropdown, the text input adornment in the phone number input will be updated with the country code.
+- The pattern consists of two form controls: a [dropdown](../components/dropdown) that displays country selection (with a country symbol component thae user can expand or collapse), and an [input](../components/input) that displays the phone number.
+- When the user selects the country, the text input adornment in the phone number input will display the country code.
 
 <ImageSwitcher
   images={[
@@ -47,13 +47,13 @@ Use the pattern when your user needs to enter a phone number for a specific coun
   label="Select United Kingdom"
 />
 
-## Stack layout: column vs row
+## Stack layout: column vs. row
 
-The pattern can be displayed in [stack layout](../components/stack-layout) as a column or a row.
+You can display the pattern in [stack layout](../components/stack-layout) as a column or a row.
 
 #### Column layout
 
-Column layout is having 2 form controls as a vertical column. For a better visibility of the country name and the country code, we suggest using the stack layout.
+Column layout has two form controls as a vertical column. We suggest using the stack layout for better visibility of the country name and the country code.
 
 <Diagrams>
   <Diagram
@@ -75,13 +75,13 @@ Column layout is having 2 form controls as a vertical column. For a better visib
 </Diagrams>
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  - We suggest using full country name instead of abbreviation because users may
-  filter the selection by typing the country name.
+  - We suggest using the full country name instead of the abbreviation because users may
+  filter the selection by the country name.
 </ExampleContainer>
 
 ### Row layout
 
-Row layout is having 2 form controls as a horizontal row. You can use row layout when there is a need to save some space.
+Row layout has two form controls as a horizontal row. You can use the row layout when there's a need to save space.
 
 <Diagram
   src="/img/patterns/international-phone-number-input/pattern_row_layout.png"
@@ -89,7 +89,7 @@ Row layout is having 2 form controls as a horizontal row. You can use row layout
   border
 />
 
-When country name is wider than the input then it will be truncated. In this case, we suggest using column layout.
+When the country name is wider than the input, it will be truncated. In this case, we suggest using the column layout.
 
 <ImageSwitcher
   images={[
@@ -107,7 +107,7 @@ When country name is wider than the input then it will be truncated. In this cas
 
 ## Country selection dropdown
 
-The country selection dropdown is using [List](../components/list) component, the country list should be in the alphabetical order.
+The country selection dropdown uses the [List](../components/list) component and the country list should be in the alphabetical order.
 
 <ImageSwitcher
   images={[
