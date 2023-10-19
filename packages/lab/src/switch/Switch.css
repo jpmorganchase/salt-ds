@@ -24,6 +24,10 @@
   background: var(--salt-container-primary-background);
 }
 
+.saltSwitch-label {
+  padding-top: var(--salt-spacing-25);
+}
+
 /* Styles applied to the icon component if focused */
 .saltSwitch-input:focus-visible + .saltSwitch-track {
   outline-offset: var(--salt-focused-outlineOffset);
