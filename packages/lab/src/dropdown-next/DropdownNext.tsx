@@ -188,7 +188,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     onMouseDown?.(event);
   };
 
-  const handlePortalSelect = () => {
+  const handleListSelect = () => {
     portalSelectHandler();
     (refs.domReference.current as HTMLButtonElement)?.focus();
   };
@@ -243,7 +243,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
           highlightedItem={highlightedItem}
           {...ListProps}
           ref={setListRef}
-          onSelect={handlePortalSelect}
+          onSelect={handleListSelect}
         >
           {getListItems(source)}
         </ListNext>
