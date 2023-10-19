@@ -67,13 +67,13 @@ export const useComboBox = ({
     onFocus?.(event);
   };
 
+  const mouseDownHandler = () => {
+    setOpen(!open);
+  };
+
   const mouseOverHandler = (event: SyntheticEvent<HTMLElement>) => {
     setHighlightedItem(event.currentTarget.dataset.value);
     onMouseOver?.(event);
-  };
-
-  const handleListSelect = () => {
-    setOpen(false);
   };
 
   const keyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -123,9 +123,6 @@ export const useComboBox = ({
           setOpen(true);
         }
         break;
-      case "Tab":
-        setOpen(false);
-        break;
       default:
         break;
     }
@@ -141,8 +138,8 @@ export const useComboBox = ({
       setOpen,
       floating,
       reference,
-      getPortalProps,
       getTriggerProps,
+      getPortalProps,
       getPosition,
     },
     // list
@@ -152,9 +149,9 @@ export const useComboBox = ({
     setHighlightedItem,
     activeDescendant,
     focusVisibleRef,
-    handleListSelect,
     keyDownHandler,
     focusHandler,
     mouseOverHandler,
+    mouseDownHandler,
   };
 };

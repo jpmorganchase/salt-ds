@@ -164,8 +164,8 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     focusHandler,
     setSelectedItem,
     setHighlightedItem,
-    handleListSelect,
     mouseOverHandler,
+    mouseDownHandler,
   } = useComboBox({
     defaultInputValue,
     inputValue: inputValueProp,
@@ -181,13 +181,13 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     setOpen,
     floating,
     reference,
+    getTriggerProps,
     getPortalProps,
     getPosition,
-    getTriggerProps,
   } = portalProps;
 
   // floating references
-  const triggerRef = useForkRef<HTMLInputElement>(ref, reference);
+  const triggerRef = useForkRef(ref, reference);
   const inputRef = useForkRef(triggerRef, focusVisibleRef);
 
   const { Component: FloatingComponent } = useFloatingComponent();
@@ -216,6 +216,10 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     onInputChange?.(event, { value: inputValue ?? "" });
   };
 
+  const listSelectHandler = () => {
+    setOpen(false);
+  };
+
   const adornment = open ? (
     <ChevronUpIcon className={withBaseName("chevron")} />
   ) : (
@@ -234,17 +238,18 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         disabled={disabled}
         endAdornment={adornment}
         onChange={onChange}
+        onMouseDown={mouseDownHandler}
         inputRef={inputRef as Ref<HTMLInputElement>}
         inputProps={{
           "aria-expanded": open,
           tabIndex: disabled ? -1 : 0,
-          onKeyDown: keyDownHandler,
           onFocus: focusHandler,
+          onKeyDown: keyDownHandler,
         }}
-        {...getTriggerProps()}
         role="combobox"
         variant={variant}
         value={inputValue}
+        {...getTriggerProps()}
         {...restInputProps}
       />
 
@@ -259,7 +264,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
           disableFocus
           highlightedItem={highlightedItem}
           onMouseOver={mouseOverHandler}
-          onSelect={handleListSelect}
+          onSelect={listSelectHandler}
           selected={selectedItem}
           {...restListProps}
           ref={setListRef}
