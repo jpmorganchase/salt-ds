@@ -76,6 +76,10 @@ export const useComboBox = ({
     onMouseOver?.(event);
   };
 
+  const listSelectHandler = () => {
+    setOpen(false);
+  };
+
   const keyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     const { key, altKey } = event;
     switch (key) {
@@ -153,5 +157,6 @@ export const useComboBox = ({
     focusHandler,
     mouseOverHandler,
     mouseDownHandler,
+    listSelectHandler,
   };
 };

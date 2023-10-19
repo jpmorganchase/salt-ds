@@ -166,6 +166,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     setHighlightedItem,
     mouseOverHandler,
     mouseDownHandler,
+    listSelectHandler,
   } = useComboBox({
     defaultInputValue,
     inputValue: inputValueProp,
@@ -214,10 +215,6 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
       }
     }
     onInputChange?.(event, { value: inputValue ?? "" });
-  };
-
-  const listSelectHandler = () => {
-    setOpen(false);
   };
 
   const adornment = open ? (
