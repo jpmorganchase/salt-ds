@@ -9,7 +9,7 @@
   "style": "dist/index.css",
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
-    "build": "next build",
+    "build": "yarn workspace @salt-ds/ag-grid-theme build && next build",
     "deploy": "yarn mosaic deploy --out snapshots --name latest --config mosaic.config.js",
     "dev": "next dev",
     "start": "next start",
