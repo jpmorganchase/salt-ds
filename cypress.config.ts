@@ -60,11 +60,6 @@ export default defineConfig({
   viewportWidth: 1280,
   viewportHeight: 1024,
   video: false,
-  e2e: {
-    setupNodeEvents(on, config) {
-      initPlugin(on, config);
-    },
-  },
   component: {
     setupNodeEvents(on, config) {
       initPlugin(on, config);
