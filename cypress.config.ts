@@ -60,10 +60,6 @@ export default defineConfig({
   viewportWidth: 1280,
   viewportHeight: 1024,
   video: false,
-  env: {
-    pluginVisualRegressionMaxDiffConfig: { threshold: 0.1 },
-    pluginVisualRegressionCleanupUnusedImages: true,
-  },
   e2e: {
     setupNodeEvents(on, config) {
       initPlugin(on, config);
@@ -108,8 +104,8 @@ export default defineConfig({
 
           // the browser width and height we want to get
           // our screenshots and videos will be of that resolution
-          const width = 1920;
-          const height = 1080;
+          const width = 1280;
+          const height = 1024;
 
           console.log(
             "setting the browser window size to %d x %d",
