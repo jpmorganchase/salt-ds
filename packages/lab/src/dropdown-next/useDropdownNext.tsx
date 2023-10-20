@@ -149,7 +149,7 @@ export const useDropdownNext = ({
     listMouseOverHandler();
   };
 
-  const portalSelectHandler = () => {
+  const listSelectHandler = () => {
     setOpen(false);
   };
 
@@ -201,7 +201,7 @@ export const useDropdownNext = ({
       focusHandler,
       mouseOverHandler,
       mouseDownHandler,
-      portalSelectHandler,
+      listSelectHandler,
     },
     refs,
     open,

@@ -145,7 +145,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
     keyDownHandler,
     mouseOverHandler,
     mouseDownHandler,
-    portalSelectHandler,
+    listSelectHandler,
   } = handlers;
 
   const triggerRef = useForkRef<HTMLButtonElement>(ref, reference);
@@ -189,7 +189,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
   };
 
   const handleListSelect = () => {
-    portalSelectHandler();
+    listSelectHandler();
     (refs.domReference.current as HTMLButtonElement)?.focus();
   };
 
