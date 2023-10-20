@@ -6,12 +6,9 @@ import {
   forwardRef,
   ReactNode,
 } from "react";
-import {
-  useFormFieldProps,
-  makePrefixer,
-  useControlled,
-  useDensity,
-} from "@salt-ds/core";
+import { useFormFieldProps } from "../form-field-context";
+import { makePrefixer, useControlled } from "../utils";
+import { useDensity } from "../salt-provider";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 

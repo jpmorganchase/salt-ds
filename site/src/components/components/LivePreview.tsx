@@ -1,6 +1,6 @@
 import { FC, ChangeEvent, useState, ReactNode, ReactElement } from "react";
 import clsx from "clsx";
-import { Switch } from "@salt-ds/lab";
+import { Switch } from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
 import { Pre } from "../mdx/pre";
 import { useLivePreviewControls } from "./useLivePreviewControls";
