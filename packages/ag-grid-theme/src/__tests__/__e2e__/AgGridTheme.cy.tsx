@@ -1,6 +1,40 @@
 import { composeStories } from "@storybook/react";
 import * as agGridStories from "@stories/ag-grid-theme.stories";
 
+const logSizes = () => {
+  // let's get the total opened browser dimensions
+  const windowWidth = window.top.innerWidth
+  const windowHeight = window.top.innerHeight
+
+  cy.log(`browser window is: **${windowWidth} x ${windowHeight}**`)
+
+  // part of the browser window is taken up the command log
+  const commandLog = window.top.document.querySelector('.viewport')
+  const commandLogWidth = commandLog.offsetWidth
+  const commandLogHeight = commandLog.offsetHeight
+
+  cy.log(`command log is: **${commandLogWidth} x ${commandLogHeight}**`)
+
+  // the app thinks it has the following dimensions
+  cy.window({ log: false }).then((win) => {
+    // the application is scaled to fit into its iframe
+    // and the iframe's dimensions are
+    const iframe = cy.state('$autIframe')
+    const iframeWidth = Math.round(iframe.width())
+    const iframeHeight = Math.round(iframe.height())
+
+    cy.log(`app iframe real size is: **${iframeWidth} x ${iframeHeight}**`)
+
+    // the application thinks it has the window of the follow size
+    // which is the "viewport" numbers
+    const viewportWidth = win.innerWidth
+    const viewportHeight = win.innerHeight
+
+    cy.log(`app viewport is: **${viewportWidth} x ${viewportHeight}**`)
+  })
+}
+
+
 const {
   BasicGrid,
   CheckboxSelection,
@@ -38,6 +72,7 @@ describe("Given Ag Grid Theme", () => {
     it.skip("THEN should match screenshot", () => {
       cy.mount(<BasicGrid />);
       cy.wait(500);
+      logSizes();
       cy.matchImage();
     });
     describe("WHEN column menu is open", () => {
