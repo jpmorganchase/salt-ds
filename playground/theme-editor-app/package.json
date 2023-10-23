@@ -1,8 +1,0 @@
-{
-  "name": "@salt-ds/theme-editor-app",
-  "version": "0.1.0",
-  "private": true,
-  "modular": {
-    "type": "app"
-  }
-}
