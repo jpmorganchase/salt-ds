@@ -40,4 +40,4 @@ export {
   VariantZebra,
   VariantZebraDark,
   WrappedHeader,
-} from "./examples";
+} from "../src/examples";
