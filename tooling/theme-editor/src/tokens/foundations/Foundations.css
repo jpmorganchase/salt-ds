@@ -1,8 +1,0 @@
-.saltFoundationsView-tabs {
-  background-color: var(--salt-container-primary-background);
-}
-
-.saltFoundationsView-routingError {
-  font-size: var(--salt-text-fontSize);
-  padding: 10px;
-}
