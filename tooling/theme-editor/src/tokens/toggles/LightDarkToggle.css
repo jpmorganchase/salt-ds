@@ -1,7 +1,0 @@
-.saltThemeEditorModeSelector {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  color: var(--salt-text-secondary-foreground);
-  font-size: var(--salt-text-fontSize);
-}

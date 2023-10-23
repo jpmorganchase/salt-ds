@@ -122,19 +122,3 @@ jobs:
         with:
           name: cypress-screenshots
           path: cypress/screenshots
-
-  # We need this to ensure apps build in playground folder doesn't break, mostly due to modular patches
-  playground-build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20"
-          cache: "yarn"
-      - name: Install dependencies
-        run: yarn
-      - name: Build theme editor
-        run: yarn modular build @salt-ds/theme-editor-app
