@@ -89,7 +89,6 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   const {
     checked: checkedProp,
     className,
-    color,
     defaultChecked,
     disabled: disabledProp,
     inputProps = {},
@@ -180,7 +179,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
           {checked && <CheckedIcon className={withBaseName("icon")} />}
         </span>
       </span>
-      {label}
+      <span className={withBaseName("label")}>{label}</span>
     </label>
   );
 });

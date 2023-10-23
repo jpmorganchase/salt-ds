@@ -22,7 +22,6 @@
     "integration/toolkit",
     "docs",
     "tooling",
-    "playground",
     "cypress",
     "./declarations.d.ts"
   ]
