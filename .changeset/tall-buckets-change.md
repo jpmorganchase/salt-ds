@@ -2,6 +2,8 @@
 "@salt-ds/theme": minor
 ---
 
+Any theme customization, the following tokens will be impacted. Update them as per suggestion.
+
 ### Characteristics
 
 - Deprecated tokens in characteristics, use replacement tokens as listed
