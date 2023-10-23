@@ -60,6 +60,10 @@ export default defineConfig({
   viewportWidth: 1280,
   viewportHeight: 1024,
   video: false,
+  env: {
+    pluginVisualRegressionMaxDiffConfig: { threshold: 0.1 },
+    pluginVisualRegressionDiffConfig: { threshold: 0.1 },
+  },
   component: {
     setupNodeEvents(on, config) {
       initPlugin(on, config);
@@ -72,7 +76,7 @@ export default defineConfig({
           return null;
         },
       });
-    
+
       return config;
     },
     devServer: {
