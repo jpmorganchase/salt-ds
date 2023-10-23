@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-- Updated Button component CSS token values, minor visual changes expected for CTA and Primary button variants as fontweight changes from bold to semibold
+- Updated Button component CSS token values, visual changes expected. Font weight for CTA and Primary  variants changes from bold to semibold
 
 ```diff
 - --button-fontWeight: var(--salt-actionable-cta-fontWeight);
@@ -11,16 +11,16 @@
 + --button-fontWeight: var(--salt-text-action-fontWeight);
 ```
 
-- Updated Avatar component CSS token
+- Renamed Avatar component CSS token, no visual changes expected
 
 ```diff
 - --salt-icon-size-base
 + --salt-size-icon
 ```
 
-- Updated Pill component CSS token values as per figma design updates
+- Aligned Pill component CSS token names with figma, no visual changes expected
 
-In `Pill.css`,
+In `Pill.css`, these tokens have been renamed:
 
 ```diff
 -  --pill-background: var(--saltPill-background, var(--salt-taggable-background));
@@ -56,14 +56,14 @@ In `Pill.css`,
 + --saltCheckbox-icon-tick-color: var(--salt-actionable-primary-foreground-disabled);
 ```
 
-In `PillCheckbox.css`,
+In `PillCheckbox.css`, this token has been renamed:
 
 ```diff
 - --saltCheckbox-icon-tick-color: var(--salt-taggable-foreground);
 + --saltCheckbox-icon-tick-color: var(--salt-actionable-primary-foreground);
 ```
 
-- Updated Interactable Card component CSS token values as per figma design updates, visual changes expected
+- Aligned Interactable Card component CSS token value with figma, visual changes expected. Disabled border color updated from blue to grey
 
 ```diff
 - border-color: var(--saltCard-borderColor-disabled, var(--salt-accent-borderColor-disabled));
