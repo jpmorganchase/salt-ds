@@ -4,7 +4,7 @@ import fs from "fs-extra";
 import { fileURLToPath, pathToFileURL } from "url";
 import { createRequire } from "module";
 import { deleteSync } from "del";
-import sass from "sass";
+import * as sass from "sass";
 import postcss from "postcss";
 import cssnano from "cssnano";
 import url from "postcss-url";
