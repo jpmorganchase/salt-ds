@@ -23,7 +23,7 @@ export default {
 
 export const ButtonBar = () => {
   return (
-    <div style={{ width: "75vw" }}>
+    <div style={{ width: "40vw" }}>
       <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
         <FlexItem>
           <Button>Cancel</Button>
@@ -66,7 +66,7 @@ export const WithSecondary = () => {
   );
 
   return (
-    <div style={{ width: "75vw" }}>
+    <div style={{ width: "40vw" }}>
       <SplitLayout
         startItem={startItem}
         endItem={endItem}
@@ -97,7 +97,7 @@ export const FullPage = () => {
   );
 
   return (
-    <div style={{ width: "75vw" }}>
+    <div style={{ width: "40vw" }}>
       <SplitLayout
         startItem={startItem}
         endItem={endItem}
@@ -128,7 +128,7 @@ export const DestructiveActions = () => {
   );
 
   return (
-    <div style={{ width: "75vw" }}>
+    <div style={{ width: "40vw" }}>
       <SplitLayout
         startItem={startItem}
         endItem={endItem}
@@ -185,7 +185,7 @@ export const Stacked = () => {
   );
 
   return (
-    <div style={{ width: "75vw" }}>
+    <div style={{ width: "40vw" }}>
       {direction === "column" ? (
         columnStack
       ) : (
