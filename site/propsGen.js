@@ -2,7 +2,14 @@ const docgen = require("react-docgen-typescript");
 const path = require("path");
 const { writeFile } = require("fs");
 
-const componentPackages = ["lab", "core", "data-grid", "icons", "countries"]; // Adding more packages here will generate additional prop files
+const componentPackages = [
+  "lab",
+  "core",
+  "data-grid",
+  "icons",
+  "countries",
+  "ag-grid-theme",
+]; // Adding more packages here will generate additional prop files
 
 console.log("Generating props in packages:", componentPackages);
 

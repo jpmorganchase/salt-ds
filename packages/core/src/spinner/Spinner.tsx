@@ -13,11 +13,23 @@ import { useDensity } from "../salt-provider";
  * Spinner component, provides an indeterminate loading indicator
  *
  * @example
- * <Spinner size="default | "large" | "small" />
+ * <Spinner size="small" | "medium" | "large" />
  */
 
-export const SpinnerSizeValues = ["default", "large", "small"] as const;
-export type SpinnerSize = (typeof SpinnerSizeValues)[number];
+export const SpinnerSizeValues = [
+  "default",
+  "large",
+  "small",
+  "medium",
+] as const;
+
+type SpinnerSize = (typeof SpinnerSizeValues)[number];
+
+export type SpinnerSVGSize = Exclude<SpinnerSize, "default">;
+
+const handleSize = (size: SpinnerSize): SpinnerSVGSize =>
+  size === "default" ? "medium" : size;
+
 const withBaseName = makePrefixer("saltSpinner");
 
 export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
@@ -46,7 +58,7 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   role?: string;
   /**
-   * Determines the size of the spinner. Must be one of: 'default', 'large', 'small'.
+   * Determines the size of the spinner. Must be one of: 'default', 'large', 'small', 'medium'.
    */
   size?: SpinnerSize;
   /**
@@ -65,7 +77,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       disableAnnouncer,
       role = "img",
       className,
-      size = "default",
+      size = "medium",
       id: idProp,
       ...rest
     },
@@ -82,6 +94,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
     const { announce } = useAriaAnnouncer();
 
     const density = useDensity();
+    size = handleSize(size);
 
     useEffect(() => {
       if (disableAnnouncer) return;
