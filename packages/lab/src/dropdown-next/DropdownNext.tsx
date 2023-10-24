@@ -172,7 +172,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (disabled ?? readOnly) return;
+    if (disabled || readOnly) return;
     keyDownHandler(event);
     onKeyDown?.(event);
   };
@@ -183,7 +183,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
   };
 
   const handleMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
-    if (disabled ?? readOnly) return;
+    if (disabled || readOnly) return;
     mouseDownHandler();
     onMouseDown?.(event);
   };
