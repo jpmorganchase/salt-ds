@@ -67,7 +67,6 @@ export * from "./query-input";
 export * from "./responsive";
 export * from "./scrim";
 export * from "./search-input";
-export * from "./switch";
 export * from "./skip-link";
 export * from "./slider";
 export * from "./stepped-tracker";
