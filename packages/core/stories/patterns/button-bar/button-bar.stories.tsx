@@ -1,4 +1,11 @@
-import { Button, FlexItem, FlexLayout, SplitLayout } from "@salt-ds/core";
+import {
+  Button,
+  FlexItem,
+  FlexLayout,
+  FlexLayoutProps,
+  SplitLayout,
+  useResponsiveProp,
+} from "@salt-ds/core";
 import {
   Dialog,
   DialogActions,
@@ -8,6 +15,7 @@ import {
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 
 import { Meta } from "@storybook/react";
+import { ElementType } from "react";
 
 export default {
   title: "Patterns/Button Bar",
@@ -175,5 +183,68 @@ export const InDialog = () => {
         <Button variant="cta">Ok</Button>
       </DialogActions>
     </Dialog>
+  );
+};
+
+export const StackedTwo = () => {
+  const primary = (
+    <FlexItem>
+      <Button style={{ width: "100%" }}>Primary</Button>
+    </FlexItem>
+  );
+
+  const secondary = (
+    <FlexItem>
+      <Button variant="secondary" style={{ width: "100%" }}>
+        Secondary
+      </Button>
+    </FlexItem>
+  );
+
+  const cta = (
+    <FlexItem>
+      <Button variant="cta" style={{ width: "100%" }}>
+        CTA
+      </Button>
+    </FlexItem>
+  );
+
+  const direction: FlexLayoutProps<ElementType>["direction"] =
+    useResponsiveProp(
+      { xs: "column", sm: "row", md: "row", lg: "row", xl: "row" },
+      "row"
+    );
+
+  const startItem = <FlexLayout gap={1}>{secondary}</FlexLayout>;
+
+  const endItem = (
+    <FlexLayout gap={1}>
+      {primary}
+      {cta}
+    </FlexLayout>
+  );
+
+  const columnStack = (
+    <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
+      {cta}
+      {primary}
+      {secondary}
+    </FlexLayout>
+  );
+
+  return (
+    <div style={{ width: "50vw" }}>
+      {direction === "column" ? (
+        columnStack
+      ) : (
+        <SplitLayout
+          startItem={startItem}
+          endItem={endItem}
+          style={{ width: "100%" }}
+          gap={1}
+          direction={direction}
+        />
+      )}
+    </div>
   );
 };
