@@ -23,7 +23,7 @@ export default {
 
 export const ButtonBar = () => {
   return (
-    <div style={{ width: "50vw" }}>
+    <div style={{ width: "75vw" }}>
       <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
         <FlexItem>
           <Button>Cancel</Button>
@@ -62,7 +62,7 @@ export const WithSecondary = () => {
   );
 
   return (
-    <div style={{ width: "50vw" }}>
+    <div style={{ width: "75vw" }}>
       <SplitLayout
         startItem={startItem}
         endItem={endItem}
@@ -93,7 +93,7 @@ export const FullPage = () => {
   );
 
   return (
-    <div style={{ width: "50vw" }}>
+    <div style={{ width: "75vw" }}>
       <SplitLayout
         startItem={startItem}
         endItem={endItem}
@@ -124,7 +124,7 @@ export const DestructiveActions = () => {
   );
 
   return (
-    <div style={{ width: "50vw" }}>
+    <div style={{ width: "75vw" }}>
       <SplitLayout
         startItem={startItem}
         endItem={endItem}
@@ -134,59 +134,7 @@ export const DestructiveActions = () => {
   );
 };
 
-// stacks the wrong way
 export const Stacked = () => {
-  const startItem = (
-    <FlexLayout gap={1} direction={{ xs: "column", sm: "row" }}>
-      <FlexItem>
-        <Button variant="secondary">Secondary</Button>
-      </FlexItem>
-    </FlexLayout>
-  );
-
-  const endItem = (
-    <FlexLayout gap={1} direction={{ xs: "column", sm: "row" }}>
-      <FlexItem>
-        <Button>Primary</Button>
-      </FlexItem>
-      <FlexItem>
-        <Button variant="cta">CTA</Button>
-      </FlexItem>
-    </FlexLayout>
-  );
-  return (
-    <div style={{ width: "50vw" }}>
-      <SplitLayout
-        startItem={startItem}
-        endItem={endItem}
-        style={{ width: "100%" }}
-        gap={1}
-        // stacks at breakpoint xs
-        direction={{ xs: "column", sm: "row" }}
-      />
-    </div>
-  );
-};
-
-export const InDialog = () => {
-  return (
-    <Dialog
-      style={{
-        width: 500,
-      }}
-      role="alertdialog"
-    >
-      <DialogTitle>Info</DialogTitle>
-      <DialogContent>This is the content of the dialog.</DialogContent>
-      <DialogActions>
-        <Button>Cancel</Button>
-        <Button variant="cta">Ok</Button>
-      </DialogActions>
-    </Dialog>
-  );
-};
-
-export const StackedTwo = () => {
   const primary = (
     <FlexItem>
       <Button style={{ width: "100%" }}>Primary</Button>
@@ -233,7 +181,7 @@ export const StackedTwo = () => {
   );
 
   return (
-    <div style={{ width: "50vw" }}>
+    <div style={{ width: "75vw" }}>
       {direction === "column" ? (
         columnStack
       ) : (
@@ -246,5 +194,23 @@ export const StackedTwo = () => {
         />
       )}
     </div>
+  );
+};
+
+export const InDialog = () => {
+  return (
+    <Dialog
+      style={{
+        width: 500,
+      }}
+      role="alertdialog"
+    >
+      <DialogTitle>Info</DialogTitle>
+      <DialogContent>This is the content of the dialog.</DialogContent>
+      <DialogActions>
+        <Button>Cancel</Button>
+        <Button variant="cta">Ok</Button>
+      </DialogActions>
+    </Dialog>
   );
 };

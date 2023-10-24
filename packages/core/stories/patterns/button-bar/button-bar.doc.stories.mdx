@@ -10,8 +10,48 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
 
 # Button Bar
 
+This pattern displays groups of core and secondary actions.
+
+## Basic Button Bar
+
+A simple bar with a 'Cancel' and a 'Save' button. The buttons in the Button Bar are ordered from right to left, in order of importance. The highest priority action is represented by a CTA button, on the far right.
+
 <Canvas>
   <Story id="patterns-button-bar--button-bar" />
 </Canvas>
+
+## With Secondary Button
+
+You should display lower-priority actions as secondary buttons on the left, set apart from the primary actions.
+
+<Canvas>
+  <Story id="patterns-button-bar--with-secondary" />
+</Canvas>
+
+## Full Page
+
+In a full-page layout, such as a form, users typically scan down the page first and then across. When the Button Bar is integrated into this layout, we recommend left-aligning it.
+
+<Canvas>
+  <Story id="patterns-button-bar--full-page" />
+</Canvas>
+
+## Destructive Actions
+
+To prevent destructive actions being executed accidentally, set them apart from the user’s main focus of attention—ideally, opposite the primary action in the Button Bar.
+
+<Canvas>
+  <Story id="patterns-button-bar--destructive-actions" />
+</Canvas>
+
+## Stacked
+
+For improved usability at smaller screen or app resolutions, the Button Bar can support button stacking when it reaches a specific viewport width or application breakpoint.
+
+<Canvas>
+  <Story id="patterns-button-bar--stacked" />
+</Canvas>
+
+## Help and Support
 
 <HelpAndSupport />
