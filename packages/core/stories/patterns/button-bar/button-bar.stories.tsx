@@ -40,12 +40,16 @@ export const WithSecondary = () => {
   const startItem = (
     <FlexLayout gap={1}>
       <FlexItem>
-        <ExportIcon />
-        <Button variant="secondary">Export</Button>
+        <Button variant="secondary">
+          <ExportIcon />
+          Export
+        </Button>
       </FlexItem>
       <FlexItem>
-        <ImportIcon />
-        <Button variant="secondary">Import</Button>
+        <Button variant="secondary">
+          <ImportIcon />
+          Import
+        </Button>
       </FlexItem>
     </FlexLayout>
   );
