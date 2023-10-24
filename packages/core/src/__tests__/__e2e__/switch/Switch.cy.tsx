@@ -1,4 +1,4 @@
-import { Switch, SwitchProps } from "@salt-ds/lab";
+import { Switch, SwitchProps } from "@salt-ds/core";
 import { useState, ChangeEvent } from "react";
 
 function ControlledSwitch({ onChange, disabled }: SwitchProps) {

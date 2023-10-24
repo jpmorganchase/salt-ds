@@ -1,12 +1,12 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Switch } from "@salt-ds/lab";
+import { Switch } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
 
 <Meta
-  title="Documentation/Lab/Switch"
+  title="Documentation/Core/Switch"
   component={Switch}
   parameters={{
     viewMode: "docs",
@@ -22,7 +22,7 @@ A Switch is a control that behaves like a checkbox but should only be used if th
 By default the Switch will handle the checkbox state automatically. The value can be set using the defaultChecked prop. The checked prop should only be used if you want a controlled Switch that requires some logic for validating value. The `onChange` event can be used to read the value using the second parameter.
 
 <Canvas>
-  <Story id="lab-switch--default" />
+  <Story id="core-switch--default" />
 </Canvas>
 
 ## Checked
@@ -30,7 +30,7 @@ By default the Switch will handle the checkbox state automatically. The value ca
 Using the prop `defaultChecked` a Switch can be set to checked but still be used as an uncontrolled component.
 
 <Canvas>
-  <Story id="lab-switch--checked" />
+  <Story id="core-switch--checked" />
 </Canvas>
 
 ## Controlled
@@ -38,7 +38,7 @@ Using the prop `defaultChecked` a Switch can be set to checked but still be used
 A controlled Switch will rely on the application to manually set the value through the checked prop. The onChange event should be used to read the value and decide what the next value should be. This value is updated by changing the checked prop.
 
 <Canvas>
-  <Story id="lab-switch--controlled" />
+  <Story id="core-switch--controlled" />
 </Canvas>
 
 ## Disabled
@@ -46,13 +46,13 @@ A controlled Switch will rely on the application to manually set the value throu
 Disabled Switches can be either true or false but cannot be changed. Disabled Switches have a 0.4 opacity applied to indicate the restricted state.
 
 <Canvas>
-  <Story id="lab-switch--disabled" />
+  <Story id="core-switch--disabled" />
 </Canvas>
 
 # API
 
 ```
-import { Switch } from "@salt-ds/lab";
+import { Switch } from "@salt-ds/core";
 ```
 
 ## Props
@@ -66,3 +66,5 @@ import { Switch } from "@salt-ds/lab";
 ## Characteristics Used
 
 <CharacteristicUsage of={Switch} />
+
+<HelpAndSupport />
