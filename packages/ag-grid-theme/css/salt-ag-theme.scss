@@ -55,7 +55,7 @@
     material-primary-color: var(--salt-editable-borderColor),
     range-selection-border-style: var(--salt-focused-outlineStyle),
     range-selection-border-width: var(--salt-focused-outlineWidth),
-    row-height: calc(var(--ag-grid-size)*8),
+    row-height: calc(var(--ag-grid-size) * 8),
     row-hover-color: var(--salt-selectable-background-hover),
     secondary-border-color:
       var(--salt-palette-interact-primary-background-hover),
