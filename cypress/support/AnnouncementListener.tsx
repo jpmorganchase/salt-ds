@@ -14,7 +14,7 @@ const walkTheDOM = (node: Element, handler: (node: Element) => void) => {
   if (node.nodeType === 1) {
     handler(node);
     if (node.children.length) {
-      for (let childNode of node.children) {
+      for (let childNode of Array.from(node.children)) {
         walkTheDOM(childNode, handler);
       }
     }

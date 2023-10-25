@@ -1,6 +1,18 @@
 {
-  "extends": "modular-scripts/tsconfig.json",
   "compilerOptions": {
+    "target": "es2021",
+    "downlevelIteration": true,
+    "lib": ["dom", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "noEmit": true,
+    "sourceMap": true,
     "noImplicitAny": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
@@ -17,7 +29,6 @@
     "types": ["cypress", "@testing-library/cypress", "node"]
   },
   "include": [
-    "modular",
     "packages",
     "integration/toolkit",
     "docs",

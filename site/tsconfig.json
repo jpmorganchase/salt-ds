@@ -3,7 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*", "globals.d.ts"],
   "exclude": ["node_modules"]

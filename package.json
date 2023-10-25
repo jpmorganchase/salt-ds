@@ -11,21 +11,9 @@
     "docs",
     "site"
   ],
-  "modular": {
-    "type": "root"
-  },
   "scripts": {
     "start": "yarn storybook",
-    "build": "yarn build:core && yarn build:lab && yarn build:icons && yarn build:countries && yarn build:theme && yarn build:data-grid && yarn build:ag-grid-theme && yarn build:window && yarn build:styles",
-    "build:core": "modular build @salt-ds/core",
-    "build:icons": "modular build @salt-ds/icons",
-    "build:countries": "modular build @salt-ds/countries",
-    "build:lab": "modular build @salt-ds/lab",
-    "build:theme": "yarn workspace @salt-ds/theme build",
-    "build:data-grid": "modular build @salt-ds/data-grid",
-    "build:window": "modular build @salt-ds/window",
-    "build:styles": "modular build @salt-ds/styles",
-    "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
+    "build": "yarn workspaces foreach -t --no-private run build",
     "test": "vitest",
     "test:components": "cypress run --component --browser chrome --headless",
     "test:components:local": "cypress open --component --browser electron",
@@ -92,7 +80,6 @@
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-local-rules": "^2.0.0",
     "eslint-plugin-storybook": "^0.6.14",
-    "modular-scripts": "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch",
     "msw": "^1.2.1",
     "msw-storybook-addon": "^1.8.0",
     "nyse-holidays": "^1.2.0",
@@ -114,27 +101,26 @@
     "yup": "^1.0.2"
   },
   "resolutions": {
-    "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
-    "modular-scripts/rollup": "2.79.1",
     "@salt-ds/lab": "workspace:*"
   },
   "browserslist": {
     "production": [
-      "chrome 79",
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "chrome 86",
+      "firefox 86",
+      "edge 85"
     ],
     "development": [
-      "chrome 79",
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "chrome 86",
+      "firefox 86",
+      "edge 85"
     ]
   },
   "packageManager": "yarn@4.0.0",
   "msw": {
     "workerDirectory": "docs/public"
+  },
+  "devDependencies": {
+    "tsup": "^7.2.0"
   }
 }

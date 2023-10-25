@@ -7,8 +7,26 @@
     "url": "https://github.com/jpmorganchase/salt-ds.git",
     "directory": "packages/styles"
   },
+  "scripts": {
+    "build": "tsup"
+  },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
-  "main": "src/index.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.mjs",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.mts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    },
+    "./styles.css": "./dist/esm/index.css"
+  },
   "sideEffects": false,
   "peerDependencies": {
     "@types/react": ">=16.14.0",
@@ -21,7 +39,9 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-styles",
     "provenance": true
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }

@@ -8,16 +8,31 @@
     "directory": "packages/countries"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
-  "main": "./src/index.ts",
-  "modular": {
-    "type": "package"
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.mjs",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.mts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    },
+    "./styles.css": "./dist/esm/index.css"
   },
   "sideEffects": false,
   "scripts": {
-    "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
+    "build": "tsup",
+    "prepare": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
     "clean": "rimraf ./src/components"
   },
   "dependencies": {
+    "@salt-ds/styles": "workspace:^",
+    "@salt-ds/window": "workspace:^",
     "clsx": "^2.0.0"
   },
   "peerDependencies": {
@@ -37,7 +52,9 @@
     "svgo": "^3.0.0"
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-countries",
     "provenance": true
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }

@@ -18,7 +18,6 @@
     "build-watch": "yarn node ./scripts/build.mjs --watch"
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-ag-grid-theme",
     "provenance": true
   },
   "devDependencies": {
