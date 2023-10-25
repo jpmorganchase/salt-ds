@@ -3,7 +3,12 @@ import {
   FlexItem,
   FlexLayout,
   FlexLayoutProps,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Input,
   SplitLayout,
+  StackLayout,
   useResponsiveProp,
 } from "@salt-ds/core";
 import {
@@ -201,20 +206,105 @@ export const Stacked = () => {
   );
 };
 
-export const InDialog = () => {
+const formFields = (
+  <>
+    <FormField>
+      <FormFieldLabel>Form Field label left</FormFieldLabel>
+      <Input defaultValue="Value" />
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>
+        Form Field label that&apos;s extra long. Showing that labels wrap around
+        to the line.
+      </FormFieldLabel>
+      <Input defaultValue="Primary Input value" />
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Form Field label</FormFieldLabel>
+      <Input defaultValue="Value" />
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Form Field label</FormFieldLabel>
+      <Input defaultValue="Primary Input value" />
+    </FormField>
+  </>
+);
+
+export const SingleStepForm = () => {
   return (
-    <Dialog
-      style={{
-        width: 500,
-      }}
-      role="alertdialog"
-    >
-      <DialogTitle>Info</DialogTitle>
-      <DialogContent>This is the content of the dialog.</DialogContent>
-      <DialogActions>
+    <StackLayout>
+      {formFields}
+      <FlexLayout style={{ width: "100%" }} gap={1}>
+        <FlexItem>
+          <Button variant="cta">Submit</Button>
+        </FlexItem>
+        <FlexItem>
+          <Button>Cancel</Button>
+        </FlexItem>
+      </FlexLayout>
+    </StackLayout>
+  );
+};
+
+export const MultiStepForm = () => {
+  return (
+    <StackLayout>
+      {formFields}
+      <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
+        <FlexItem>
+          <Button variant="secondary">Cancel</Button>
+        </FlexItem>
+        <FlexItem>
+          <Button>Previous</Button>
+        </FlexItem>
+        <FlexItem>
+          <Button variant="cta">Next</Button>
+        </FlexItem>
+      </FlexLayout>
+    </StackLayout>
+  );
+};
+
+export const DialogForm = () => {
+  const startItem = <Button variant="secondary">Save as draft</Button>;
+
+  const endItem = (
+    <FlexLayout gap={1}>
+      <FlexItem>
         <Button>Cancel</Button>
-        <Button variant="cta">Ok</Button>
-      </DialogActions>
-    </Dialog>
+      </FlexItem>
+      <FlexItem>
+        <Button variant="cta">Submit</Button>
+      </FlexItem>
+    </FlexLayout>
+  );
+
+  return (
+    <StackLayout>
+      {formFields}
+      <SplitLayout
+        startItem={startItem}
+        endItem={endItem}
+        style={{ width: "100%" }}
+      />
+    </StackLayout>
+  );
+};
+
+export const SmallViewport = () => {
+  return (
+    <StackLayout>
+      {formFields}
+      <FlexLayout style={{ width: "100%" }} gap={1}>
+        <FlexItem>
+          <Button variant="cta">Submit</Button>
+        </FlexItem>
+        <FlexItem>
+          <Button>Cancel</Button>
+        </FlexItem>
+      </FlexLayout>
+    </StackLayout>
   );
 };
