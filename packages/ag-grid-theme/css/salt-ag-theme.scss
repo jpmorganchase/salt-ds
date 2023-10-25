@@ -55,7 +55,6 @@
     material-primary-color: var(--salt-editable-borderColor),
     range-selection-border-style: var(--salt-focused-outlineStyle),
     range-selection-border-width: var(--salt-focused-outlineWidth),
-    row-height: calc(var(--ag-grid-size) * 8),
     row-hover-color: var(--salt-selectable-background-hover),
     secondary-border-color:
       var(--salt-palette-interact-primary-background-hover),
@@ -394,6 +393,7 @@ div[class*="ag-theme-salt"] {
     font-size: var(--salt-text-fontSize);
     font-weight: var(--salt-text-label-fontWeight);
     line-height: var(--salt-text-label-lineHeight);
+    height: var(--salt-size-base);
     padding: 0 var(--salt-spacing-100);
   }
 }
