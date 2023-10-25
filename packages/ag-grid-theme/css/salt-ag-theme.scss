@@ -51,6 +51,7 @@
     header-foreground-color: var(--salt-text-primary-foreground),
     icon-size: var(--salt-icon-size-base),
     input-focus-box-shadow: none,
+    line-height: var(--salt-text-lineHeight),
     list-item-height: var(--salt-size-base),
     material-primary-color: var(--salt-editable-borderColor),
     // range-selection-border-color: var(--salt-focused-outlineColor),
@@ -251,7 +252,7 @@ div[class*="ag-theme-salt"] {
   }
 
   // INPUT
-  
+
   .ag-filter,
   .ag-column-select {
     input[class^="ag-"][type="text"],
