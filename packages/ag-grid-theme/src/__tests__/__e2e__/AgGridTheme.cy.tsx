@@ -97,11 +97,6 @@ describe("Given Ag Grid Theme", () => {
     });
   });
   describe("WHEN the HDCompact story is mounted", () => {
-    it.skip("THEN should match screenshot", () => {
-      cy.mount(<HDCompact />);
-      cy.wait(500);
-      cy.matchImage();
-    });
     describe("WHEN column menu is open", () => {
       describe("AND general tab is selected", () => {
         it("THEN should match screenshot", () => {
@@ -133,11 +128,6 @@ describe("Given Ag Grid Theme", () => {
     });
   });
   describe("WHEN the HDCompactDark story is mounted", () => {
-    it.skip("THEN should match screenshot", () => {
-      cy.mount(<HDCompactDark />);
-      cy.wait(500);
-      cy.matchImage();
-    });
     describe("WHEN column menu is open", () => {
       describe("AND general tab is selected", () => {
         it("THEN should match screenshot", () => {
