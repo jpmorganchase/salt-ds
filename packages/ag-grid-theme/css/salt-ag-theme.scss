@@ -51,12 +51,11 @@
     header-foreground-color: var(--salt-text-primary-foreground),
     icon-size: var(--salt-icon-size-base),
     input-focus-box-shadow: none,
-    line-height: var(--salt-text-lineHeight),
     list-item-height: var(--salt-size-base),
     material-primary-color: var(--salt-editable-borderColor),
-    // range-selection-border-color: var(--salt-focused-outlineColor),
     range-selection-border-style: var(--salt-focused-outlineStyle),
     range-selection-border-width: var(--salt-focused-outlineWidth),
+    row-height: calc(var(--ag-grid-size)*8),
     row-hover-color: var(--salt-selectable-background-hover),
     secondary-border-color:
       var(--salt-palette-interact-primary-background-hover),
