@@ -217,12 +217,6 @@ div[class*="ag-theme-salt"] {
     align-items: center;
   }
 
-  input[class^="ag-"][type="number"],
-  input[class^="ag-"][type="number"]:focus {
-    border: 0;
-    padding: 0;
-  }
-
   .ag-cell.editable-cell.ag-cell-focus:focus,
   .editable-numeric-cell.ag-cell-focus:focus {
     clip-path: inset(0, 0);
@@ -257,10 +251,11 @@ div[class*="ag-theme-salt"] {
   }
 
   // INPUT
-
+  
   .ag-filter,
   .ag-column-select {
-    input[class^="ag-"][type="text"] {
+    input[class^="ag-"][type="text"],
+    input[class^="ag-"][type="number"] {
       border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle)
         var(--salt-editable-borderColor);
       height: calc(var(--salt-size-base) + var(--salt-spacing-100));
