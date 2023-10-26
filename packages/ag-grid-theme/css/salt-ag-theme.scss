@@ -56,9 +56,9 @@
     material-primary-color: var(--salt-editable-borderColor),
     range-selection-border-style: var(--salt-focused-outlineStyle),
     range-selection-border-width: var(--salt-focused-outlineWidth),
+    // row-group-indent-size
     row-hover-color: var(--salt-selectable-background-hover),
-    secondary-border-color:
-      var(--salt-palette-interact-primary-background-hover),
+    secondary-border-color: var(--salt-palette-neutral-tertiary-separator),
     secondary-foreground-color: var(--salt-text-primary-foreground),
     selected-row-background-color: var(--salt-selectable-background-selected),
     selected-tab-underline-color: var(--salt-navigable-indicator-active),
@@ -321,11 +321,6 @@ div[class*="ag-theme-salt"] {
   }
 
   .ag-floating-filter:after {
-    width: 0;
-  }
-
-  .ag-header-cell:last-child:after,
-  .ag-header-group-cell:last-child:after {
     width: 0;
   }
 
