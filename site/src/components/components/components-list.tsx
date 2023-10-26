@@ -672,7 +672,7 @@ export const componentDetails: ComponentDetails[] = [
       "Allows the user to turn a specific value on or off from two choices—with the action having an immediate impact.",
     devStatus: ComponentStatus.READY,
     designStatus: ComponentStatus.READY,
-    availableInCodeSince: "1.2.0",
+    availableInCodeSince: "1.11.0",
     docsUrl: "./switch",
   },
   {
