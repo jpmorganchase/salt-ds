@@ -2,25 +2,19 @@ import {
   Button,
   FlexItem,
   FlexLayout,
-  FlexLayoutProps,
+  FlowLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   Input,
+  MultilineInput,
   SplitLayout,
   StackLayout,
-  useResponsiveProp,
 } from "@salt-ds/core";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@salt-ds/lab";
+import { DropdownNext as Dropdown } from "@salt-ds/lab";
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 
 import { Meta } from "@storybook/react";
-import { ElementType } from "react";
 
 export default {
   title: "Patterns/Button Bar",
@@ -29,12 +23,12 @@ export default {
 export const ButtonBar = () => {
   return (
     <div style={{ width: "40vw" }}>
-      <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
-        <FlexItem>
-          <Button>Cancel</Button>
-        </FlexItem>
+      <FlexLayout style={{ width: "100%" }} gap={1}>
         <FlexItem>
           <Button variant="cta">Save</Button>
+        </FlexItem>
+        <FlexItem>
+          <Button>Cancel</Button>
         </FlexItem>
       </FlexLayout>
     </div>
@@ -43,6 +37,17 @@ export const ButtonBar = () => {
 
 export const WithSecondary = () => {
   const startItem = (
+    <FlexLayout gap={1}>
+      <FlexItem>
+        <Button variant="cta">Save</Button>
+      </FlexItem>
+      <FlexItem>
+        <Button>Cancel</Button>
+      </FlexItem>
+    </FlexLayout>
+  );
+
+  const endItem = (
     <FlexLayout gap={1}>
       <FlexItem>
         <Button variant="secondary">
@@ -55,48 +60,6 @@ export const WithSecondary = () => {
           <ImportIcon />
           Import
         </Button>
-      </FlexItem>
-    </FlexLayout>
-  );
-
-  const endItem = (
-    <FlexLayout gap={1}>
-      <FlexItem>
-        <Button>Cancel</Button>
-      </FlexItem>
-      <FlexItem>
-        <Button variant="cta">Save</Button>
-      </FlexItem>
-    </FlexLayout>
-  );
-
-  return (
-    <div style={{ width: "40vw" }}>
-      <SplitLayout
-        startItem={startItem}
-        endItem={endItem}
-        style={{ width: "100%" }}
-      />
-    </div>
-  );
-};
-
-export const FullPage = () => {
-  const startItem = (
-    <FlexLayout gap={1}>
-      <FlexItem>
-        <Button>Previous</Button>
-      </FlexItem>
-      <FlexItem>
-        <Button variant="cta">Continue</Button>
-      </FlexItem>
-    </FlexLayout>
-  );
-
-  const endItem = (
-    <FlexLayout gap={1}>
-      <FlexItem>
-        <Button variant="secondary">Upload file</Button>
       </FlexItem>
     </FlexLayout>
   );
@@ -116,7 +79,10 @@ export const DestructiveActions = () => {
   const startItem = (
     <FlexLayout gap={1}>
       <FlexItem>
-        <Button variant="secondary">Delete</Button>
+        <Button variant="cta">Save changes</Button>
+      </FlexItem>
+      <FlexItem>
+        <Button>Cancel</Button>
       </FlexItem>
     </FlexLayout>
   );
@@ -124,10 +90,7 @@ export const DestructiveActions = () => {
   const endItem = (
     <FlexLayout gap={1}>
       <FlexItem>
-        <Button>Cancel</Button>
-      </FlexItem>
-      <FlexItem>
-        <Button variant="cta">Save changes</Button>
+        <Button variant="secondary">Delete</Button>
       </FlexItem>
     </FlexLayout>
   );
@@ -144,92 +107,49 @@ export const DestructiveActions = () => {
 };
 
 export const Stacked = () => {
-  const primary = (
-    <FlexItem>
-      <Button style={{ width: "100%" }}>Primary</Button>
-    </FlexItem>
-  );
-
-  const secondary = (
-    <FlexItem>
-      <Button variant="secondary" style={{ width: "100%" }}>
-        Secondary
-      </Button>
-    </FlexItem>
-  );
-
-  const cta = (
-    <FlexItem>
-      <Button variant="cta" style={{ width: "100%" }}>
-        CTA
-      </Button>
-    </FlexItem>
-  );
-
-  const direction: FlexLayoutProps<ElementType>["direction"] =
-    useResponsiveProp(
-      { xs: "column", sm: "row", md: "row", lg: "row", xl: "row" },
-      "row"
-    );
-
-  const startItem = <FlexLayout gap={1}>{secondary}</FlexLayout>;
-
-  const endItem = (
-    <FlexLayout gap={1}>
-      {primary}
-      {cta}
-    </FlexLayout>
-  );
-
-  const columnStack = (
-    <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
-      {cta}
-      {primary}
-      {secondary}
-    </FlexLayout>
-  );
-
   return (
-    <div style={{ width: "40vw" }}>
-      {direction === "column" ? (
-        columnStack
-      ) : (
-        <SplitLayout
-          startItem={startItem}
-          endItem={endItem}
-          style={{ width: "100%" }}
-          gap={1}
-          direction={direction}
-        />
-      )}
+    <div style={{ width: "20vw" }}>
+      <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
+        <FlexItem>
+          <Button variant="cta" style={{ width: "100%" }}>
+            CTA
+          </Button>
+        </FlexItem>
+        <FlexItem>
+          <Button style={{ width: "100%" }}>Primary</Button>
+        </FlexItem>
+        <FlexItem>
+          <Button variant="secondary" style={{ width: "100%" }}>
+            Secondary
+          </Button>
+        </FlexItem>
+      </FlexLayout>
     </div>
   );
 };
 
 const formFields = (
-  <>
+  <FlowLayout style={{ width: "50vh" }}>
     <FormField>
-      <FormFieldLabel>Form Field label left</FormFieldLabel>
-      <Input defaultValue="Value" />
+      <FormFieldLabel>Field label</FormFieldLabel>
+      <Input defaultValue="Value text" />
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
     <FormField>
-      <FormFieldLabel>
-        Form Field label that&apos;s extra long. Showing that labels wrap around
-        to the line.
-      </FormFieldLabel>
-      <Input defaultValue="Primary Input value" />
-    </FormField>
-    <FormField>
-      <FormFieldLabel>Form Field label</FormFieldLabel>
-      <Input defaultValue="Value" />
+      <FormFieldLabel>Field label</FormFieldLabel>
+      <Dropdown
+        source={["Value"]}
+        defaultSelected="Value"
+        style={{ width: "100%" }}
+      />
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
     <FormField>
-      <FormFieldLabel>Form Field label</FormFieldLabel>
-      <Input defaultValue="Primary Input value" />
+      <FormFieldLabel>Field label</FormFieldLabel>
+      <MultilineInput defaultValue="Value text" />
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
-  </>
+  </FlowLayout>
 );
 
 export const SingleStepForm = () => {
@@ -297,12 +217,14 @@ export const SmallViewport = () => {
   return (
     <StackLayout>
       {formFields}
-      <FlexLayout style={{ width: "100%" }} gap={1}>
+      <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
         <FlexItem>
-          <Button variant="cta">Submit</Button>
+          <Button variant="cta" style={{ width: "100%" }}>
+            Submit
+          </Button>
         </FlexItem>
         <FlexItem>
-          <Button>Cancel</Button>
+          <Button style={{ width: "100%" }}>Cancel</Button>
         </FlexItem>
       </FlexLayout>
     </StackLayout>
