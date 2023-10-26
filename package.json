@@ -118,7 +118,9 @@
     "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
     "modular-scripts/rollup": "2.79.1",
-    "@salt-ds/lab": "workspace:*"
+    "@salt-ds/lab": "workspace:*",
+    "@jpmorganchase/mosaic-components@npm:0.1.0-beta.45": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.45#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.45-af5d49496d.patch",
+    "@jpmorganchase/mosaic-components@npm:^0.1.0-beta.45": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.45#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.45-af5d49496d.patch"
   },
   "browserslist": {
     "production": [

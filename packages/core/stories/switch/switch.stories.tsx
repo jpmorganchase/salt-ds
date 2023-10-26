@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { Switch } from "@salt-ds/lab";
+import { Switch } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Switch",
+  title: "Core/Switch",
   component: Switch,
 } as Meta<typeof Switch>;
 
