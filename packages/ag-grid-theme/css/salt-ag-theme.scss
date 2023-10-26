@@ -323,7 +323,8 @@ div[class*="ag-theme-salt"] {
     width: 0;
   }
 
-  .ag-ltr .ag-header-cell:last-child:after {
+  .ag-header-cell:last-child:after,
+  .ag-header-group-cell:last-child:after {
     width: 0;
   }
 
