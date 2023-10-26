@@ -238,7 +238,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
           id={listId}
           className={clsx(withBaseName("list"), ListProps?.className)}
           disableFocus
-          disabled={disabled ?? ListProps?.disabled}
+          disabled={disabled || ListProps?.disabled}
           selected={selectedItem}
           highlightedItem={highlightedItem}
           {...ListProps}
