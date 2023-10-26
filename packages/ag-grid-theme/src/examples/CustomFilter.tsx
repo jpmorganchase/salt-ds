@@ -108,7 +108,7 @@ const CustomFilter = (props: AgGridReactProps) => {
 };
 
 CustomFilter.parameters = {
-  chromatic: { disableSnapshot: false, delay: 1500 },
+  chromatic: { disableSnapshot: false, delay: 5000 },
 };
 
 export default CustomFilter;

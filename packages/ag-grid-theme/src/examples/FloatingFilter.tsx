@@ -28,7 +28,7 @@ const FloatingFilter = (props: AgGridReactProps) => {
 };
 
 FloatingFilter.parameters = {
-  chromatic: { disableSnapshot: false, delay: 500 },
+  chromatic: { disableSnapshot: false, delay: 5000 },
 };
 
 export default FloatingFilter;
