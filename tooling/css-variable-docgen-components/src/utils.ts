@@ -1,5 +1,23 @@
-import { SALT_CHARACTERISTICS } from "@salt-ds/theme-editor/src/utils/saltValues";
 import { Component } from "@storybook/addon-docs";
+
+const SALT_CHARACTERISTICS = [
+  "accent",
+  "actionable",
+  "container",
+  "delay",
+  "draggable",
+  "target",
+  "editable",
+  "focused",
+  "navigable",
+  "overlayable",
+  "selectable",
+  "separable",
+  "status",
+  "taggable",
+  "text",
+  "track",
+];
 
 export function hasDocgen(component: Component): boolean {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

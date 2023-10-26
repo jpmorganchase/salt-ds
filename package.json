@@ -8,7 +8,6 @@
   "workspaces": [
     "packages/**",
     "tooling/**",
-    "playground/**",
     "docs",
     "site"
   ],
@@ -50,17 +49,17 @@
     "@cypress/code-coverage": "^3.10.0",
     "@faker-js/faker": "^8.0.0",
     "@fontsource/open-sans": "^4.5.13",
-    "@mswjs/data": "^0.13.0",
+    "@mswjs/data": "^0.14.0",
     "@storybook/addon-a11y": "^7.4.5",
     "@storybook/addon-actions": "^7.4.5",
     "@storybook/addon-docs": "^7.4.5",
     "@storybook/addon-essentials": "^7.4.5",
     "@storybook/addon-links": "^7.4.5",
-    "@storybook/addon-mdx-gfm": "7.4.5",
+    "@storybook/addon-mdx-gfm": "7.4.6",
     "@storybook/addon-storysource": "^7.4.5",
     "@storybook/addons": "^7.4.5",
     "@storybook/react": "^7.4.5",
-    "@storybook/react-vite": "7.4.5",
+    "@storybook/react-vite": "7.4.6",
     "@storybook/theming": "^7.4.5",
     "@tanstack/react-query": "^4.28.0",
     "@testing-library/cypress": "^10.0.0",
@@ -102,10 +101,9 @@
     "react": "^18.0.0",
     "react-docgen-typescript": "2.2.2",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.2.1",
     "rifm": "^0.12.0",
     "sass": "^1.52.3",
-    "storybook": "7.4.5",
+    "storybook": "7.4.6",
     "stylelint": "^15.0.0",
     "typescript": "4.6.4",
     "vite": "^4.4.9",
@@ -119,7 +117,9 @@
     "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
     "modular-scripts/rollup": "2.79.1",
-    "@salt-ds/lab": "workspace:*"
+    "@salt-ds/lab": "workspace:*",
+    "@jpmorganchase/mosaic-components@npm:0.1.0-beta.45": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.45#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.45-af5d49496d.patch",
+    "@jpmorganchase/mosaic-components@npm:^0.1.0-beta.45": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.45#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.45-af5d49496d.patch"
   },
   "browserslist": {
     "production": [
@@ -135,7 +135,7 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@4.0.0",
   "msw": {
     "workerDirectory": "docs/public"
   }

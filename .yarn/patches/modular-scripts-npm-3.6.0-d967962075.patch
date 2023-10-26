@@ -34,7 +34,7 @@ index 3173ab0eb0ab508676a4e09c68c6da07f6d54070..60ed60feb3653cf56a1e7890681f187e
 +'esbuild', 'webpack', 'webpack-dev-server']; // We assume that having wrong versions of these
  // in the tree will likely break your setup.
  // This is a relatively low-effort way to find common issues.
- 
+
 diff --git a/dist-cjs/typecheck.js b/dist-cjs/typecheck.js
 index 862bc50e7be846106cd3647be9dd50f747eb2b15..9f78bf7620f32e4044a2d9b58a4f555ba2d23ef0 100644
 --- a/dist-cjs/typecheck.js

@@ -1,0 +1,112 @@
+.saltSwitch {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  position: relative;
+  cursor: var(--salt-selectable-cursor-hover);
+  color: var(--salt-text-primary-foreground);
+}
+
+.saltSwitch-disabled {
+  color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
+}
+
+.saltSwitch-track {
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  --saltIcon-color: currentColor;
+  --saltIcon-size: 100%;
+  display: flex;
+  flex-shrink: 0;
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-border)) * 2);
+  align-items: center;
+  color: var(--salt-selectable-foreground);
+  background: var(--salt-container-primary-background);
+}
+
+.saltSwitch-label {
+  padding-top: var(--salt-spacing-25);
+}
+
+/* Styles applied to the icon component if focused */
+.saltSwitch-input:focus-visible + .saltSwitch-track {
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline: var(--salt-focused-outline);
+  border-color: var(--salt-selectable-borderColor-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+
+.saltSwitch:hover .saltSwitch-track {
+  border-color: var(--salt-selectable-borderColor-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+
+.saltSwitch-checked .saltSwitch-track,
+.saltSwitch-checked:hover .saltSwitch-track {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+
+.saltSwitch-disabled .saltSwitch-track,
+.saltSwitch-disabled:hover .saltSwitch-track {
+  border-color: var(--salt-selectable-borderColor-disabled);
+  color: var(--salt-selectable-foreground-disabled);
+  background: var(--salt-container-primary-background-disabled);
+}
+
+.saltSwitch-checked.saltSwitch-disabled .saltSwitch-track,
+.saltSwitch-checked.saltSwitch-disabled:hover .saltSwitch-track {
+  border-color: var(--salt-selectable-borderColor-selectedDisabled);
+  color: var(--salt-selectable-foreground-selectedDisabled);
+}
+
+.saltSwitch-thumb {
+  display: flex;
+  aspect-ratio: 1;
+  height: var(--salt-size-selectable);
+  background: currentColor;
+  margin: var(--salt-spacing-25);
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  transition: transform var(--salt-duration-perceptible) ease-in-out;
+}
+
+.saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,
+.saltSwitch:hover .saltSwitch-thumb {
+  border-color: var(--salt-selectable-borderColor-hover);
+}
+
+.saltSwitch-checked .saltSwitch-thumb,
+.saltSwitch-checked:hover .saltSwitch-thumb {
+  background: transparent;
+  border-color: var(--salt-selectable-borderColor-selected);
+  transform: translateX(100%);
+}
+
+.saltSwitch-disabled .saltSwitch-thumb,
+.saltSwitch-disabled:hover .saltSwitch-thumb {
+  border: 0;
+}
+
+/* Styles applied to input element */
+.saltSwitch-input {
+  cursor: inherit;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  z-index: var(--salt-zIndex-default);
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-border)) * 2);
+}
+
+@media (prefers-reduced-motion) {
+  .saltSwitch-thumb {
+    transition: none;
+  }
+}
+
+.salt-density-high .saltSwitch-thumb {
+  border: 0;
+}

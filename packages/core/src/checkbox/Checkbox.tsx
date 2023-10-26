@@ -171,7 +171,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
             [withBaseName("disabled")]: disabled,
             [withBaseName("readOnly")]: readOnly,
             [withBaseName("error")]: error /* **Deprecated** */,
-            [withBaseName(validationStatus || "")]: validationStatus,
+            [withBaseName(validationStatus ?? "")]: validationStatus,
           },
           className
         )}

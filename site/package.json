@@ -9,7 +9,7 @@
   "style": "dist/index.css",
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
-    "build": "next build",
+    "build": "yarn workspace @salt-ds/ag-grid-theme build && next build",
     "deploy": "yarn mosaic deploy --out snapshots --name latest --config mosaic.config.js",
     "dev": "next dev",
     "start": "next start",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@jpmorganchase/mosaic-cli": "^0.1.0-beta.45",
-    "@jpmorganchase/mosaic-components": "^0.1.0-beta.45",
+    "@jpmorganchase/mosaic-components": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.45#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.45-af5d49496d.patch",
     "@jpmorganchase/mosaic-content-editor-plugin": "^0.1.0-beta.45",
     "@jpmorganchase/mosaic-layouts": "^0.1.0-beta.45",
     "@jpmorganchase/mosaic-site-components": "^0.1.0-beta.45",

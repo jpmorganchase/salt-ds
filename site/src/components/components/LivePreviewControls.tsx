@@ -7,7 +7,7 @@ import {
   SyntheticEvent,
 } from "react";
 import clsx from "clsx";
-import { Switch } from "@salt-ds/lab";
+import { Switch } from "@salt-ds/core";
 import { LightIcon, DarkIcon } from "@salt-ds/icons";
 import {
   SaltProvider,
