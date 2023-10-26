@@ -47,7 +47,7 @@ const messages = ruleMessages(ruleName, {
 
 const meta = {
   // Point to style documentation
-  url: "https://saltdesignsystem-storybook.pages.dev/?path=/story/theme-characteristics-about-characteristics--page",
+  url: "https://saltdesignsystem-storybook.pages.dev/?path=/story/theme-characteristics-about-characteristics--docs",
 };
 
 const allowedNames = glob
