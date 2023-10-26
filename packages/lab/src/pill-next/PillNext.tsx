@@ -6,7 +6,7 @@ import { makePrefixer, useButton } from "@salt-ds/core";
 import pillCss from "./PillNext.css";
 import { PillNextCloseButton } from "./PillNextCloseButton";
 
-export interface PillNextProps extends ComponentPropsWithoutRef<"div"> {
+export interface PillNextProps extends ComponentPropsWithoutRef<"button"> {
   /* If true the pill will be disabled */
   disabled?: boolean;
   onClose?: () => void;
@@ -16,7 +16,7 @@ export interface PillNextProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltPillNext");
 
-export const PillNext = forwardRef<HTMLDivElement, PillNextProps>(
+export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
   function PillNext(
     { children, className, icon, disabled, onClose, ...restProps },
     ref
@@ -27,7 +27,7 @@ export const PillNext = forwardRef<HTMLDivElement, PillNextProps>(
       css: pillCss,
       window: targetWindow,
     });
-    const { buttonProps, active } = useButton<HTMLDivElement>({
+    const { buttonProps, active } = useButton<HTMLButtonElement>({
       disabled,
       ...restProps,
     });

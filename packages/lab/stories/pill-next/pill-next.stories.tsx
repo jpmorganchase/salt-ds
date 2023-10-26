@@ -39,9 +39,10 @@ export const Closable: StoryFn<typeof PillNext> = () => {
         <div style={{ gridColumn: "1 / span 3" }}>
           <Button onClick={() => setCities(largestCities)}>reset</Button>
         </div>
-        {cities.map((city) => (
+        {cities.map((city, index) => (
           <PillNext
             key={city.name}
+            disabled={index < 3}
             onClick={() => console.log("Click")}
             onClose={() => removeCity(city.name)}
           >
