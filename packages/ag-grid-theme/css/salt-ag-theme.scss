@@ -188,7 +188,7 @@ div[class*="ag-theme-salt"] {
     .editable-numeric-cell {
       border: var(--salt-size-border) var(--salt-container-borderStyle)
         var(--salt-editable-borderColor);
-      text-align: right;
+      justify-content: flex-end;
     }
     .ag-has-focus .ag-cell.editable-cell:focus,
     .ag-has-focus .editable-numeric-cell:focus {
