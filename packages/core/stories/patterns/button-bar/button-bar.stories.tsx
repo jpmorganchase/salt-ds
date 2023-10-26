@@ -146,7 +146,7 @@ const formFields = (
     </FormField>
     <FormField>
       <FormFieldLabel>Field label</FormFieldLabel>
-      <MultilineInput defaultValue="Value text" />
+      <MultilineInput bordered defaultValue="Value text" />
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
   </FlowLayout>
