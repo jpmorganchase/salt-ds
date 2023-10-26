@@ -44,7 +44,7 @@
     grid-size: var(--salt-spacing-50),
     header-background-color: var(--salt-container-primary-background),
     header-cell-hover-background-color: var(--salt-container-primary-background),
-    header-column-separator-color: rgba(0, 0, 0, 0.15),
+    header-column-separator-color: var(--salt-palette-neutral-secondary-separator),
     header-column-separator-display: block,
     header-column-separator-height: var(--salt-text-fontSize),
     header-column-separator-width: 1px,
@@ -80,11 +80,6 @@ div[class*="ag-theme-salt"] {
   .ag-header {
     border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle)
       var(--salt-separable-primary-borderColor);
-  }
-
-  .ag-floating-filter-button-button .ag-icon-filter:before {
-    color: var(--salt-text-secondary-foreground);
-    content: "\e9ac";
   }
 
   .ag-header-row:not(:first-child)
@@ -182,6 +177,8 @@ div[class*="ag-theme-salt"] {
     line-height: calc(var(--ag-line-height) - 1px);
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
+    display: flex;
+    align-items: center;
   }
 
   .ag-ltr,
@@ -209,9 +206,6 @@ div[class*="ag-theme-salt"] {
     }
   }
 
-  .ag-cell-wrapper {
-    height: 100%;
-  }
   .ag-cell-wrapper.ag-row-group {
     align-items: center;
   }
@@ -325,11 +319,6 @@ div[class*="ag-theme-salt"] {
     }
   }
 
-  .ag-keyboard-focus .ag-header-cell:focus:after {
-    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-      var(--salt-focused-outlineColor);
-  }
-
   .ag-floating-filter:after {
     width: 0;
   }
@@ -338,8 +327,23 @@ div[class*="ag-theme-salt"] {
     width: 0;
   }
 
+  .ag-keyboard-focus .ag-header-cell:focus:after {
+    border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+      var(--salt-focused-outlineColor);
+  }
+
+
+  .ag-floating-filter-button-button .ag-icon-filter:before {
+    color: var(--salt-text-secondary-foreground);
+    content: "\e9ac";
+  }
+
   .ag-icon-filter:before {
     color: var(--salt-text-secondary-foreground);
+  }
+
+  .ag-ltr .ag-floating-filter-button {
+    margin-left: var(--salt-spacing-100);
   }
 
   button[class^="ag-"]:focus,
@@ -395,6 +399,14 @@ div[class*="ag-theme-salt"] {
     line-height: var(--salt-text-label-lineHeight);
     height: var(--salt-size-base);
     padding: 0 var(--salt-spacing-100);
+  }
+
+  .ag-column-drop-horizontal {
+    border-bottom: var(--ag-borders-row) var(--ag-row-border-color);
+    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  }
+  .ag-column-drop-cell {
+    background: var(--ag-background-color);
   }
 }
 
