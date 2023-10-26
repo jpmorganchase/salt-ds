@@ -401,6 +401,13 @@ div[class*="ag-theme-salt"] {
     height: var(--salt-size-base);
     padding: 0 var(--salt-spacing-100);
   }
+  .ag-status-name-value {
+    padding: 0;
+    align-items: center;
+  }
+  .ag-status-name-value-value {
+    font-weight: var(--salt-text-fontWeight-strong);
+  }
 
   .ag-column-drop-horizontal {
     border-bottom: var(--ag-borders-row) var(--ag-row-border-color);
