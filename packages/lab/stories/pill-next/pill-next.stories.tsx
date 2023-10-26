@@ -1,6 +1,9 @@
 import { PillNext } from "@salt-ds/lab";
 import { FavoriteIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
+import { largestCities } from "./../assets/exampleData";
+import { Button, GridLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/Pill Next",
@@ -19,6 +22,34 @@ export const Disabled: StoryFn<typeof PillNext> = () => {
     <PillNext disabled onClick={() => console.log("Click")}>
       Disabled Pill
     </PillNext>
+  );
+};
+
+export const Closable: StoryFn<typeof PillNext> = () => {
+  const [cities, setCities] = useState(largestCities);
+
+  const removeCity = (name: string) => {
+    const filteredCities = cities.filter((city) => city.name !== name);
+    console.log(`Closed ${name}`);
+    setCities(filteredCities);
+  };
+  return (
+    <>
+      <GridLayout gap={1} columns={3}>
+        <div style={{ gridColumn: "1 / span 3" }}>
+          <Button onClick={() => setCities(largestCities)}>reset</Button>
+        </div>
+        {cities.map((city) => (
+          <PillNext
+            key={city.name}
+            onClick={() => console.log("Click")}
+            onClose={() => removeCity(city.name)}
+          >
+            {city.name}
+          </PillNext>
+        ))}
+      </GridLayout>
+    </>
   );
 };
 

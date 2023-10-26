@@ -1,24 +1,14 @@
-import {
-  forwardRef,
-  MouseEvent,
-  KeyboardEvent,
-  ComponentPropsWithoutRef, useState,
-} from "react";
+import { forwardRef, ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
-import {useWindow} from "@salt-ds/window";
-import {useComponentCssInjection} from "@salt-ds/styles";
-import {makePrefixer, useButton} from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer, useButton } from "@salt-ds/core";
 import pillCss from "./PillNext.css";
-import {CloseSmallIcon} from "@salt-ds/icons";
+import { PillNextCloseButton } from "./PillNextCloseButton";
 
-export type PillClickEvent =
-  | MouseEvent<Element, globalThis.MouseEvent>
-  | KeyboardEvent<HTMLDivElement>;
-
-export interface PillNextProps extends ComponentPropsWithoutRef<"button"> {
+export interface PillNextProps extends ComponentPropsWithoutRef<"div"> {
   /* If true the pill will be disabled */
   disabled?: boolean;
-  closable?: boolean;
   onClose?: () => void;
   /* Pass an element to render an icon descriptor on the left of the label */
   icon?: React.ReactNode;
@@ -26,9 +16,9 @@ export interface PillNextProps extends ComponentPropsWithoutRef<"button"> {
 
 const withBaseName = makePrefixer("saltPillNext");
 
-export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
+export const PillNext = forwardRef<HTMLDivElement, PillNextProps>(
   function PillNext(
-    {children, className, closable, icon, disabled, ...restProps},
+    { children, className, icon, disabled, onClose, ...restProps },
     ref
   ) {
     const targetWindow = useWindow();
@@ -37,24 +27,19 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
       css: pillCss,
       window: targetWindow,
     });
-    const {buttonProps, active} = useButton<HTMLButtonElement>({
+    const { buttonProps, active } = useButton<HTMLDivElement>({
       disabled,
       ...restProps,
     });
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
-    const {tabIndex, ...restButtonProps} = buttonProps;
-    const [isOpen, setOpen] = useState(true);
-    const onClose = () => {
-      // add onClose that comes from props
-      setOpen(false);
-      return;
-    }
-    return (isOpen && <div style={{ display: 'flex'}}>
+    const { tabIndex, ...restButtonProps } = buttonProps;
+
+    return (
+      <div className={withBaseName("container")}>
         <button
           data-testid="pill"
           ref={ref}
-          type="button"
           className={clsx(
             withBaseName(),
             withBaseName("clickable"),
@@ -70,22 +55,9 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
           {icon}
           <span className={withBaseName("label")}>{children}</span>
         </button>
-        {/*TODO: SWAP {closable && <button>X</button> }*/}
-        {<button data-testid="pill-close-button"
-                 type="button"
-                 className={clsx(
-                   withBaseName("clickable"),
-                   withBaseName("closeButton"),
-                   {
-                     [withBaseName("active")]: active,
-                     [withBaseName("disabled")]: disabled,
-                   },
-                   // {...closeButtonProps}
-                 )}
-                 onClick={onClose}
-        >
-          <CloseSmallIcon/>
-        </button>}
+        {onClose && (
+          <PillNextCloseButton disabled={disabled} onClose={onClose} />
+        )}
       </div>
     );
   }

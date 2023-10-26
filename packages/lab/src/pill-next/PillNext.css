@@ -1,5 +1,5 @@
 /* Styles applied to the root element */
-.saltPillNext, .saltPillNext-closeButton {
+.saltPillNext {
   --pillNext-background: var(--salt-actionable-primary-background);
   --pillNext-background-active: var(--salt-actionable-primary-background-active);
   --pillNext-background-disabled: var(--salt-actionable-primary-background-disabled);
@@ -10,7 +10,7 @@
   --pillNext-text-color-disabled: var(--salt-actionable-primary-foreground-disabled);
 }
 
-.saltPillNext, .saltPillNext-closeButton {
+.saltPillNext {
   appearance: none;
   -webkit-appearance: none;
   display: inline-flex;
@@ -30,9 +30,11 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-label-lineHeight);
-}
-.saltPillNext {
   min-width: 4em;
+}
+
+.saltPillNext-container {
+  display: flex;
 }
 
 .saltPillNext-label {
@@ -76,6 +78,8 @@
 /* Style applied to Pill on focus */
 .saltPillNext:focus-visible {
   outline: var(--salt-focused-outline);
+  /* increase index by one so the focus ring sits on top of the sibling button */
+  z-index: var(--salt-zIndex-default);
 }
 
 /* Style applied to Pill when disabled */
