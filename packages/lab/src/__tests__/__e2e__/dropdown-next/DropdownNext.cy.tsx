@@ -78,6 +78,16 @@ describe("GIVEN an active Dropdown component", () => {
       cy.findByRole("combobox").should("have.focus");
     });
 
+    // TODO: When a List Item can be disabled and the List Container can be mouse clicked without selecting a List Item update to
+    // cy.findByRole("combobox").should("have.attr", "aria-expanded", "true");
+
+    it("THEN it should not blur on List Container mouse click", () => {
+      cy.mount(<DropdownNext source={ListExample} />);
+      cy.findByRole("combobox").realClick();
+      cy.get('[data-test-id="list-container"]').realClick();
+      cy.findByRole("combobox").should("have.attr", "aria-expanded", "false");
+    });
+
     // TODO: update once KeyNav fixed in List
     it("THEN it should update value on different list item selection using keyboard", () => {
       cy.mount(<DropdownNext source={ListExample} />);

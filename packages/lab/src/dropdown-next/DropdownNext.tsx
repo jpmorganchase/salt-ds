@@ -235,6 +235,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
         {...getPosition()}
       >
         <ListNext
+          data-test-id={"list-container"}
           id={listId}
           className={clsx(withBaseName("list"), ListProps?.className)}
           disableFocus
