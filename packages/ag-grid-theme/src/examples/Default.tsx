@@ -31,12 +31,15 @@ const Default = (props: AgGridReactProps) => {
             {
               headerName: "Capital",
               field: "capital",
+              tooltipField: 'capital',
+              headerTooltip: 'Capital'
             },
           ]}
           rowData={dataGridExampleData}
           rowSelection="single"
           {...agGridProps}
           {...props}
+          tooltipShowDelay={0}
         />
       </div>
     </StackLayout>
