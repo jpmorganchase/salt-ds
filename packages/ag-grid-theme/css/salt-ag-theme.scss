@@ -433,14 +433,17 @@ div[class*="ag-theme-salt"] {
   }
   .ag-row {
     background-color: var(--salt-container-secondary-background);
-    border-color: var(--salt-shadow-3-color);
+    border-color: var(--salt-palette-neutral-tertiary-separator);
   }
 }
 
 .ag-theme-salt-variant-zebra {
   .ag-row-even:not(.ag-row-hover, .ag-row-selected) {
     background-color: var(--salt-container-secondary-background);
-    border-color: var(--salt-shadow-3-color);
+  }
+  .ag-row {
+    background-color: var(--salt-container-secondary-background);
+    border-color: var(--salt-palette-neutral-tertiary-separator);
   }
 }
 
