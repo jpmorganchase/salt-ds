@@ -32,8 +32,8 @@ const Default = (props: { defaultTheme: string }) => {
             {
               headerName: "Capital",
               field: "capital",
-              tooltipField: 'capital',
-              headerTooltip: 'Capital'
+              tooltipField: "capital",
+              headerTooltip: "Capital",
             },
           ]}
           rowData={dataGridExampleData}
