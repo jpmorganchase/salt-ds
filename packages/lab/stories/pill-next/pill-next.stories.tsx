@@ -1,9 +1,9 @@
-import { PillNext, Switch } from "@salt-ds/lab";
+import { PillNext } from "@salt-ds/lab";
 import { BuildingsSolidIcon, FavoriteIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 import { largestCities } from "./../assets/exampleData";
-import { Button, FlowLayout } from "@salt-ds/core";
+import { Button, FlowLayout, Switch } from "@salt-ds/core";
 
 export default {
   title: "Lab/Pill Next",
