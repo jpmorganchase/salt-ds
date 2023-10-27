@@ -31,8 +31,8 @@ const Default = (props: AgGridReactProps) => {
             {
               headerName: "Capital",
               field: "capital",
-              tooltipField: 'capital',
-              headerTooltip: 'Capital'
+              tooltipField: "capital",
+              headerTooltip: "Capital",
             },
           ]}
           rowData={dataGridExampleData}
