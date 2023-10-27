@@ -32,12 +32,15 @@ const Default = (props: { defaultTheme: string }) => {
             {
               headerName: "Capital",
               field: "capital",
+              tooltipField: 'capital',
+              headerTooltip: 'Capital'
             },
           ]}
           rowData={dataGridExampleData}
           rowSelection="single"
           enableRangeSelection={true}
           {...agGridProps}
+          tooltipShowDelay={0}
         />
       </div>
     </StackLayout>

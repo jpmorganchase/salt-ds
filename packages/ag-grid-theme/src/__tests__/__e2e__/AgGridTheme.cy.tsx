@@ -40,6 +40,14 @@ describe("Given Ag Grid Theme", () => {
         });
       });
     });
+    describe("AND cell is hovered", () => {
+      it("THEN should show tooltip", () => {
+        cy.mount(<BasicGrid />);
+        cy.wait(500);
+        cy.findByText("Capital").realHover();
+        cy.get(".ag-tooltip").matchImage({ maxDiffThreshold: 0.1 });
+      });
+    });
   });
   describe("WHEN the CheckboxSelection story is mounted", () => {
     describe("WHEN editable-cell is focused", () => {
