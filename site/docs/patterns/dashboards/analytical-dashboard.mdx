@@ -41,16 +41,16 @@ Using an analytical dashboard helps present complex data in a visually organized
 
 Creating an analytical dashboard user interface involves a careful consideration of layout features and components to maintain effective visual hierarchy.
 
-### Layout features:
+### Layout features
 
-- [**Border layout**](../../components/border-layout): Use the border layout component to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
-- [**Flow layout**](../../components/flow-layout): Use for small-scale layouts that require components (such as cards) to be displayed in a responsive row.
-- [**Stack layout**](../../components/stack-layout): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
+- [`BorderLayout`](../../components/border-layout): Use the border layout component to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
+- [`FlowLayout`](../../components/flow-layout): Use for small-scale layouts that require components (such as cards) to be displayed in a responsive row.
+- [`StackLayout`](../../components/stack-layout): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
 - **Tabs**: Organize and categorize dashboard widgets into local groupings.
 
-### Other key features:
+### Other key features
 
-- **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [Card component](../../components/card) and should effectively represent the data and provide users with insights at a glance.
+- **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](../../components/card) and should effectively represent the data and provide users with insights at a glance.
 - **Filters and controls**: Implement filters and controls that allow users to interact with the data and customize their views. Common examples include date range selectors, drop-down menus, checkboxes and search bars.
 - **Metrics**: Highlight important metrics and key performance indicators (KPIs) that users need to monitor regularly. You can display these as numerical values, gauges or progress bars.
 - **Data grid**: Provide tabular views of data for more detailed analysis. Allow users to sort, search and paginate through the data efficiently.
@@ -58,12 +58,12 @@ Creating an analytical dashboard user interface involves a careful consideration
 - **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
 - **Text**: Clearly display information about the data sources, update frequency and any disclaimers related to data accuracy.
 
-## Other dashboard features:
+## Other dashboard features
 
 Below are additional features worth considering depending on the specific use case of the dashboard:
 
 - **Multiple dashboards and tabs**: Organize content into multiple dashboards or tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information at once.
-- **Responsive design**: Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices. Use the [Grid Layout component](../../components/grid-layout) to manage the layout and responsiveness of the main content area in your dashboard.
+- **Responsive design**: Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices. Use the [`GridLayout` component](../../components/grid-layout) to manage the layout and responsiveness of the main content area in your dashboard.
 
 ## Designing a basic dashboard
 
@@ -71,7 +71,7 @@ The following guidance explains how to layout your own dashboard using [Salt fou
 
 ## Layout grid
 
-Salt design system provides layout grids as a starting point for designing any user interface that achieves effective alignment and consistency for your dashboard design. View the [Salt Layout Grid library](<https://www.figma.com/file/Qun1kdSvMhq3gk9Bo6dOrC/Salt%3A-Layout-Grid-(Community)?type=design&node-id=16-3068&mode=design&t=l9ZRR3WVCS4BuHZA-0>) for grid templates across different densities.
+Salt provides layout grids as a starting point for designing any user interface that achieves effective alignment and consistency for your dashboard design. View the [Salt Layout Grid library](<https://www.figma.com/file/Qun1kdSvMhq3gk9Bo6dOrC/Salt%3A-Layout-Grid-(Community)?type=design&node-id=16-3068&mode=design&t=l9ZRR3WVCS4BuHZA-0>) for grid templates across different densities.
 
 The grid you apply on a dashboard should reflect intent for experience and how you expect the application to behave. It’s the designers’ responsibility to decide which regions should align to the grid:
 
@@ -176,17 +176,17 @@ Leverage the F-shaped pattern to guide the user’s focus through the most impor
   border
 />
 
-When considering the visual hierarchy of an analytical dashboard, ensure the most important widgets on the page draw the user's attention. This varies per dashboard but can include:
+When considering the visual hierarchy of an analytical dashboard, ensure the most important widgets on the page draw the user's attention. This varies per dashboard but can include the following:
 
-1. Header.
-2. Key metrics.
-3. Charts and graphs.
-4. Data grids or tables.
+1. Header
+2. Key metrics
+3. Charts and graphs
+4. Data grids or tables
 
 <ExampleContainer type="positive" customPillText="Best practices">
 
-- Use the [Border Layout](../../components/border-layout) component to manage the top-level layout of your dashboard.
-- Use the [Drawer](../../components/drawer) component to display an expandable panel overlaid above a region of your dashboard rather than embedded within the existing layout. Users can view additional content without navigating to a different screen.
+- Use the [`BorderLayout`](../../components/border-layout) component to manage the top-level layout of your dashboard.
+- Use the [`Drawer`](../../components/drawer) component to display an expandable panel overlaid above a region of your dashboard rather than embedded within the existing layout. Users can view additional content without navigating to a different screen.
 - Persistently displayed panels should use the west region of the border layout instead of a drawer, which can hinder the dashboard user experience by hiding key interactive components.
 
 </ExampleContainer>
@@ -203,7 +203,7 @@ The main body region contains dashboard modules/widgets and their content.
 
 ### Content modules
 
-Use the [Card component](../../components/card) as a container or widget type to position and convey forms of data, such as charts and grids, within the main body of the dashboard. You can easily arrange and manipulate Cards—they're a good choice for a responsive design as you can easily scale them.
+Use the [`Card` component](../../components/card) as a container or widget type to position and convey forms of data, such as charts and grids, within the main body of the dashboard. You can easily arrange and manipulate Cards—they're a good choice for a responsive design as you can easily scale them.
 
 <ImageSwitcher
   images={[
@@ -234,8 +234,8 @@ Use the [Card component](../../components/card) as a container or widget type to
 
 #### Styling
 
-- By default, the Salt [Card](../../components/card) is styled using a primary background. Use the `--salt-container-secondary-background` token to achieve visual hierarchy in your design.
-- _(JPM employees only)_ For styling data visualizations such as charts, follow the UITK guidelines on [Data Visualization](https://uitk.gaiacloud.jpmchase.net/design/data-visualization), where you can find further information on presenting data in a visually cohesive manner. We recommend using the [categorical color palette](https://uitk.gaiacloud.jpmchase.net/design/data-visualization/color#color-palettes:categorical-palette) within your dashboard design, as it’s ideal for visualizing distinct groups of items.
+- By default, the Salt [card](../../components/card) is styled using a primary background. Use the `--salt-container-secondary-background` token to achieve visual hierarchy in your design.
+- _(JPM employees only)_ For styling data visualizations such as charts, follow the UITK guidelines on data visualization, where you can find further information on presenting data in a visually cohesive manner. We recommend using the categorical color palette within your dashboard design, as it’s ideal for visualizing distinct groups of items.
 
 </ExampleContainer>
 
@@ -287,7 +287,7 @@ Metric bars should remain clean and concise to provide a higher level oversight 
 
 - Position key metrics in a horizontal layout and apply vertical `--salt-spacing-300` between them to promote readability.
 - Use a horizontal container spanning the width of the main body of the dashboard to evenly space out and position a set number of metrics.
-- Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [split layout](../../components/split-layout) using the remaining number of available columns across the main body of the dashboard. Use the [Stack Layout](../../components/stack-layout) or [Flow Layout](../../components/flow-layout) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
+- Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [`SplitLayout`](../../components/split-layout) using the remaining number of available columns across the main body of the dashboard. Use the [`StackLayout`](../../components/stack-layout) or [`FlowLayout`](../../components/flow-layout) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
 
 </ExampleContainer>
 
