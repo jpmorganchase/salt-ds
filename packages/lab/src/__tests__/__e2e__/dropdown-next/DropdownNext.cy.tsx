@@ -71,6 +71,13 @@ describe("GIVEN an active Dropdown component", () => {
         .should("have.attr", "aria-expanded", "false");
     });
 
+    it("THEN it should return focus to Dropdown onBlur", () => {
+      cy.mount(<DropdownNext source={ListExample} />);
+      cy.findByRole("combobox").realClick();
+      cy.findByRole("option", { name: "Florida" }).trigger("mousemove").click();
+      cy.findByRole("combobox").should("have.focus");
+    });
+
     // TODO: update once KeyNav fixed in List
     it("THEN it should update value on different list item selection using keyboard", () => {
       cy.mount(<DropdownNext source={ListExample} />);
