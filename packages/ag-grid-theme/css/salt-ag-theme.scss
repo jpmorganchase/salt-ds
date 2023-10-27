@@ -186,10 +186,12 @@ div[class*="ag-theme-salt"] {
   .ag-ltr,
   .ag-rtl {
     .ag-cell.editable-cell,
-    .ag-cell.numeric-cell,
     .editable-numeric-cell {
       border: var(--salt-size-border) var(--salt-container-borderStyle)
         var(--salt-editable-borderColor);
+      justify-content: flex-end;
+    }
+    .ag-cell.numeric-cell {
       justify-content: flex-end;
     }
     .ag-has-focus .ag-cell.editable-cell:focus,
