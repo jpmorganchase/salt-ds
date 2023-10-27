@@ -71,7 +71,6 @@ export * from "./skip-link";
 export * from "./slider";
 export * from "./stepped-tracker";
 export * from "./stepper-input";
-export * from "./switch";
 export * from "./tabs";
 export * from "./tabs-next";
 export * from "./toast-group";
