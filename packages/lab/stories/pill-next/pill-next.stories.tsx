@@ -1,9 +1,9 @@
-import { PillNext } from "@salt-ds/lab";
-import { FavoriteIcon } from "@salt-ds/icons";
+import { PillNext, Switch } from "@salt-ds/lab";
+import { BuildingsSolidIcon, FavoriteIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 import { largestCities } from "./../assets/exampleData";
-import { Button, GridLayout } from "@salt-ds/core";
+import { Button, FlowLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/Pill Next",
@@ -27,6 +27,7 @@ export const Disabled: StoryFn<typeof PillNext> = () => {
 
 export const Closable: StoryFn<typeof PillNext> = () => {
   const [cities, setCities] = useState(largestCities);
+  const [showMultiple, setShowMultiple] = useState(true);
 
   const removeCity = (name: string) => {
     const filteredCities = cities.filter((city) => city.name !== name);
@@ -35,21 +36,39 @@ export const Closable: StoryFn<typeof PillNext> = () => {
   };
   return (
     <>
-      <GridLayout gap={1} columns={3}>
-        <div style={{ gridColumn: "1 / span 3" }}>
+      <FlowLayout gap={0.5} style={{ maxWidth: "400px" }}>
+        <FlowLayout
+          gap={1}
+          style={{ flexBasis: "100%", marginBottom: "1.5rem" }}
+          align={"center"}
+          justify={"space-between"}
+        >
           <Button onClick={() => setCities(largestCities)}>reset</Button>
-        </div>
+          <Switch
+            defaultChecked
+            onChange={() => {
+              setShowMultiple(!showMultiple);
+            }}
+            label={"Show multi country location"}
+          />
+        </FlowLayout>
         {cities.map((city, index) => (
           <PillNext
             key={city.name}
             disabled={index < 3}
-            onClick={() => console.log("Click")}
+            onClick={() => console.log(`Clicked ${city.name}`)}
             onClose={() => removeCity(city.name)}
+            icon={
+              showMultiple &&
+              cities.filter(
+                (anotherCity) => anotherCity.countryCode === city.countryCode
+              ).length > 1 && <BuildingsSolidIcon />
+            }
           >
             {city.name}
           </PillNext>
         ))}
-      </GridLayout>
+      </FlowLayout>
     </>
   );
 };

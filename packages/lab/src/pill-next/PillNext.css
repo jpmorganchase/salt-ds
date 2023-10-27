@@ -53,7 +53,8 @@
   cursor: var(--salt-selectable-cursor-hover);
 }
 
-.saltPillNext-clickable:hover {
+.saltPillNext-clickable:hover,
+.saltPillNext-clickable:focus-visible {
   color: var(--pillNext-text-color-hover);
   background: var(--pillNext-background-hover);
 }
@@ -84,8 +85,7 @@
 
 /* Style applied to Pill when disabled */
 .saltPillNext.saltPillNext-disabled,
-.saltPillNext.saltPillNext-disabled:hover,
-.saltPillNext.saltPillNext-disabled:active {
+.saltPillNext.saltPillNext-disabled:hover {
   color: var(--pillNext-text-color-disabled);
   background: var(--pillNext-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);

@@ -14,10 +14,6 @@
   padding-left: var(--salt-spacing-50);
   padding-right: var(--salt-spacing-50);
   color: var(--salt-actionable-primary-foreground);
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-label-lineHeight);
   cursor: var(--salt-selectable-cursor-hover);
 }
 
@@ -25,7 +21,8 @@
   --saltIcon-color: currentColor;
 }
 
-.saltPillNextCloseButton:hover {
+.saltPillNextCloseButton:hover,
+.saltPillNextCloseButton:focus-visible {
   color: var(--salt-actionable-primary-foreground-hover);
   background: var(--salt-actionable-primary-background-hover);
 }
@@ -53,8 +50,7 @@
 }
 
 .saltPillNextCloseButton.saltPillNextCloseButton-disabled,
-.saltPillNextCloseButton.saltPillNextCloseButton-disabled:hover,
-.saltPillNextCloseButton.saltPillNextCloseButton-disabled:active {
+.saltPillNextCloseButton.saltPillNextCloseButton-disabled:hover {
   color: var(--salt-actionable-primary-foreground-disabled);
   background: var(--salt-actionable-primary-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
