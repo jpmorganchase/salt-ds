@@ -186,6 +186,7 @@ div[class*="ag-theme-salt"] {
   .ag-ltr,
   .ag-rtl {
     .ag-cell.editable-cell,
+    .ag-cell.numeric-cell,
     .editable-numeric-cell {
       border: var(--salt-size-border) var(--salt-container-borderStyle)
         var(--salt-editable-borderColor);
