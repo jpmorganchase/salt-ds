@@ -414,13 +414,11 @@ div[class*="ag-theme-salt"] {
     border-color: var(--salt-palette-neutral-primary-border);
   }
 
-  .ag-column-drop-horizontal,
-  .ag-column-drop-wrapper {
+  .ag-column-drop-horizontal {
     border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle)
       var(--salt-palette-neutral-primary-border);
     height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   }
-
   .ag-column-drop-cell {
     border-radius: 0;
     height: var(--salt-size-base);
