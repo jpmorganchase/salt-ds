@@ -1,323 +1,218 @@
-import { useCallback, useState } from "react";
-import { StoryFn } from "@storybook/react";
+import { Dropdown, Option, OptionGroup } from "@salt-ds/lab";
 
-import { Button, Tooltip } from "@salt-ds/core";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  DoubleChevronDownIcon,
-  DoubleChevronUpIcon,
-} from "@salt-ds/icons";
-
+import { Meta, StoryFn } from "@storybook/react";
 import {
   FormField,
-  Dropdown,
-  DropdownButton,
-  DropdownProps,
-  ListItem,
-  ListItemType,
-  SelectionChangeHandler,
-} from "@salt-ds/lab";
-import { usa_states } from "../list/list.data";
+  FormFieldHelperText,
+  FormFieldLabel,
+  StackLayout,
+} from "@salt-ds/core";
+import { countryMetaMap, CountrySymbol, GB, US } from "@salt-ds/countries";
 
 export default {
   title: "Lab/Dropdown",
   component: Dropdown,
-};
+} as Meta<typeof Dropdown>;
 
-export const Default: StoryFn<DropdownProps> = (props) => {
-  const handleChange: SelectionChangeHandler = (event, selectedItem) => {
-    console.log("selection changed", selectedItem);
-    props.onSelectionChange?.(event, selectedItem);
-  };
-  return (
-    <Dropdown
-      defaultSelected={usa_states[0]}
-      onSelectionChange={handleChange}
-      source={usa_states}
-    />
-  );
-};
-
-export const MultiSelect: StoryFn<DropdownProps<string, "multiple">> = (
-  props
-) => {
-  const handleChange: SelectionChangeHandler<string, "multiple"> = (
-    _e,
-    items
-  ) => {
-    console.log({ selected: items });
-    props.onSelectionChange?.(_e, items);
-  };
-  return (
-    <Dropdown
-      {...props}
-      defaultSelected={["California", "Colorado"]}
-      onSelectionChange={handleChange}
-      selectionStrategy="multiple"
-      source={usa_states}
-    />
-  );
-};
-
-interface objectOptionType {
-  value: number;
-  text: string;
-  id: number;
-}
-const objectOptionsExampleData: objectOptionType[] = [
-  { value: 10, text: "A Option", id: 1 },
-  { value: 20, text: "B Option", id: 2 },
-  { value: 30, text: "C Option", id: 3 },
-  { value: 40, text: "D Option", id: 4 },
+const usStates = [
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
 ];
 
-export const ItemToString: StoryFn<DropdownProps<objectOptionType>> = (
-  props
-) => {
-  const itemToString = (item: objectOptionType) => {
-    return item ? item.text : "";
-  };
+const longUsStates = [
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Pennsylvania",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming",
+];
+
+const Template: StoryFn<typeof Dropdown> = (args) => {
   return (
-    <Dropdown<objectOptionType>
-      {...props}
-      defaultSelected={objectOptionsExampleData[0]}
-      itemToString={itemToString}
-      source={objectOptionsExampleData}
-    />
+    <Dropdown {...args}>
+      {usStates.map((state) => (
+        <Option value={state} key={state}>
+          {state}
+        </Option>
+      ))}
+    </Dropdown>
   );
 };
 
-export const CustomButton: StoryFn<DropdownProps> = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("Arkansas");
-  const handleOpenChange = (isOpen: boolean) => {
-    setIsOpen(isOpen);
-    props.onOpenChange?.(isOpen);
-  };
-  const handleChange: SelectionChangeHandler = (event, selectedItem) => {
-    if (selectedItem) {
-      setSelectedValue(selectedItem);
-    }
-    props.onSelectionChange?.(event, selectedItem);
-  };
+export const Default = Template.bind({});
 
+export const Placeholder = Template.bind({});
+Placeholder.args = {
+  placeholder: "Select a state",
+};
+
+export const WithDefaultSelected = Template.bind({});
+WithDefaultSelected.args = {
+  defaultSelected: ["California"],
+  defaultValue: "California",
+};
+
+export const Readonly = Template.bind({});
+Readonly.args = {
+  readOnly: true,
+  defaultSelected: ["California"],
+  defaultValue: "California",
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
+  defaultSelected: ["California"],
+  defaultValue: "California",
+};
+
+export const DisabledOption: StoryFn<typeof Dropdown> = (args) => {
   return (
-    <Dropdown
-      {...props}
-      selected={selectedValue}
-      onOpenChange={handleOpenChange}
-      onSelectionChange={handleChange}
-      placement="bottom-end"
-      source={usa_states}
-      triggerComponent={
-        <DropdownButton
-          IconComponent={isOpen ? DoubleChevronUpIcon : DoubleChevronDownIcon}
-          label={selectedValue}
-        />
-      }
-    ></Dropdown>
+    <Dropdown {...args}>
+      {usStates.map((state) => (
+        <Option value={state} key={state} disabled={state === "California"}>
+          {state}
+        </Option>
+      ))}
+    </Dropdown>
   );
 };
 
-export const CustomWidth: StoryFn<DropdownProps> = () => (
-  <Dropdown
-    ListProps={{ width: 300 }}
-    defaultSelected={usa_states[0]}
-    source={usa_states}
-    width={200}
-  />
-);
-
-const ItalicListItem: ListItemType<string> = ({ item, ...props }) => {
+export const Variants: StoryFn<typeof Dropdown> = () => {
   return (
-    // Make sure to spread the props onto custom item
-    <ListItem {...props}>
-      <i>{item}</i>
-    </ListItem>
+    <StackLayout>
+      <Dropdown>
+        {usStates.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </Dropdown>
+      <Dropdown variant="secondary">
+        {usStates.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </Dropdown>
+    </StackLayout>
   );
 };
 
-export const CustomRowRenderer: StoryFn<DropdownProps> = (props) => (
-  <Dropdown
-    {...props}
-    ListItem={ItalicListItem}
-    defaultSelected={usa_states[0]}
-    source={usa_states}
-  />
-);
+export const MultiSelect = Template.bind({});
+MultiSelect.args = {
+  multiselect: true,
+};
 
-const ListItemWithTooltip: ListItemType<string> = ({ item, ...props }) => {
+export const WithFormField: StoryFn = () => {
   return (
-    <Tooltip content={`I am a tooltip for ${item}`} {...props}>
-      <ListItem>
-        <label style={{ width: "100%" }}>{item}</label>
-      </ListItem>
-    </Tooltip>
+    <FormField>
+      <FormFieldLabel>State</FormFieldLabel>
+      <Dropdown>
+        {usStates.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </Dropdown>
+      <FormFieldHelperText>Pick a US state</FormFieldHelperText>
+    </FormField>
   );
 };
 
-export const CustomRowRendererWithTooltip: StoryFn<DropdownProps> = (props) => (
-  <Dropdown
-    {...props}
-    ListItem={ListItemWithTooltip}
-    source={usa_states}
-    defaultSelected={usa_states[0]}
-  />
-);
-
-export const WithFormFieldLabelTop: StoryFn<DropdownProps> = () => {
+export const Grouped: StoryFn<typeof Dropdown> = (args) => {
   return (
-    <div style={{ width: 250 }}>
-      <FormField helperText="Select a value" label="ADA compliant label">
-        <Dropdown defaultSelected={usa_states[2]} source={usa_states} />
-      </FormField>
-    </div>
+    <Dropdown {...args}>
+      <OptionGroup label="US">
+        <Option value="Chicago">Chicago</Option>
+        <Option value="Miami">Miami</Option>
+        <Option value="New York">New York</Option>
+      </OptionGroup>
+      <OptionGroup label="UK">
+        <Option value="Liverpool">Liverpool</Option>
+        <Option value="London">London</Option>
+        <Option value="Manchester">Manchester</Option>
+      </OptionGroup>
+    </Dropdown>
   );
 };
 
-export const WithFormFieldLabelLeft: StoryFn<DropdownProps> = () => {
+export const ComplexOption: StoryFn<typeof Dropdown> = (args) => {
   return (
-    <div style={{ width: 250 }}>
-      <FormField
-        helperText="This is some help text"
-        label="ADA compliant label"
-        labelPlacement="left"
+    <Dropdown style={{ width: 200 }} {...args}>
+      <Option
+        value="GB"
+        textValue="United Kingdom of Great Britain and Northern Ireland"
       >
-        <Dropdown defaultSelected={usa_states[2]} source={usa_states} />
-      </FormField>
-    </div>
+        <GB /> United Kingdom of Great Britain and Northern Ireland
+      </Option>
+      <Option value="US" textValue="United States of America">
+        <US /> United States of America
+      </Option>
+    </Dropdown>
   );
 };
 
-// We supply `height` to the div so that the popper can be captured in visual
-// regression test
-export const InitialIsOpen: StoryFn<DropdownProps> = (props) => {
+export const LongList: StoryFn<typeof Dropdown> = (args) => {
   return (
-    <div style={{ width: 250, height: 500 }}>
-      <FormField
-        helperText="This is some help text"
-        label="ADA compliant label"
-      >
-        <Dropdown
-          {...props}
-          defaultSelected={usa_states[2]}
-          defaultIsOpen
-          source={usa_states}
-        />
-      </FormField>
-    </div>
-  );
-};
-
-const constArray = ["A", "B", "C"] as const;
-
-/** Illustration of using readonly source */
-export const ConstReadonlySource: StoryFn<DropdownProps> = (props) => (
-  <Dropdown {...props} defaultSelected={constArray[0]} source={constArray} />
-);
-
-export const DisabledList: StoryFn<DropdownProps> = (props) => {
-  const handleChange: SelectionChangeHandler = (event, selectedItem) => {
-    console.log("selection changed", selectedItem);
-    props.onSelectionChange?.(event, selectedItem);
-  };
-  return (
-    <Dropdown
-      {...props}
-      disabled
-      id="test"
-      onSelectionChange={handleChange}
-      source={["Bar", "Foo", "Foo Bar", "Baz"]}
-      style={{ width: 180 }}
-    />
-  );
-};
-
-export const ControlledOpen: StoryFn<DropdownProps> = (props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const handleChange = (open: boolean) => {
-    console.log({ openChanged: open });
-    setIsOpen(open);
-    props.onOpenChange?.(open);
-  };
-  const toggleDropdown = useCallback(() => {
-    console.log(`toggleDropdoen isOpen = ${isOpen}`);
-    setIsOpen((x) => !x);
-  }, [isOpen]);
-  return (
-    <>
-      <Button onClick={toggleDropdown}>
-        {isOpen ? "Hide Dropdown" : "Show Dropdown"}
-      </Button>
-      <Dropdown
-        {...props}
-        isOpen={isOpen}
-        defaultSelected="Alaska"
-        onOpenChange={handleChange}
-        source={usa_states}
-        style={{ width: 180 }}
-      />
-    </>
-  );
-};
-
-export const FullyControlled: StoryFn<DropdownProps> = (props) => {
-  const [open, setOpen] = useState(false);
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
-
-  const handleArrowDown = () => {
-    setHighlightedIndex((prevHighlightedIndex) =>
-      Math.min(usa_states.length - 1, prevHighlightedIndex + 1)
-    );
-  };
-
-  const handleArrowUp = () => {
-    setHighlightedIndex((prevHighlightedIndex) =>
-      Math.max(0, prevHighlightedIndex - 1)
-    );
-  };
-
-  const handleSelect = () => {
-    setSelectedItem(usa_states[highlightedIndex] || null);
-  };
-  const handleOpen = () => {
-    setOpen(!open);
-  };
-
-  return (
-    <div style={{ display: "inline-flex", gap: 16 }}>
-      <Dropdown
-        {...props}
-        ListProps={{
-          highlightedIndex,
-        }}
-        defaultSelected={usa_states[0]}
-        isOpen={open}
-        selected={selectedItem}
-        source={usa_states}
-      />
-      <div style={{ display: "flex", justifyContent: "flex-end", zIndex: 1 }}>
-        <Button onClick={handleOpen} style={{ width: 80 }}>
-          {open ? "Close" : "Open"}
-        </Button>
-        <Button
-          disabled={!open || highlightedIndex === usa_states.length - 1}
-          onClick={handleArrowDown}
-        >
-          <ArrowDownIcon />
-        </Button>
-        <Button
-          disabled={!open || highlightedIndex <= 0}
-          onClick={handleArrowUp}
-        >
-          <ArrowUpIcon />
-        </Button>
-        <Button disabled={!open} onClick={handleSelect}>
-          Select
-        </Button>
-      </div>
-    </div>
+    <Dropdown {...args}>
+      {longUsStates.map((state) => (
+        <Option value={state} key={state}>
+          {state}
+        </Option>
+      ))}
+    </Dropdown>
   );
 };

@@ -5,16 +5,6 @@ export type {
   useCollectionItems,
 } from "./common-hooks";
 
-export type {
-  ListChangeHandler as ListChangeHandlerDeprecated,
-  ListSelectHandler as ListSelectHandlerDeprecated,
-} from "./list-deprecated";
-export {
-  ListItemBase as ListItemBaseDeprecated,
-  useListItem as useListItemDeprecated,
-} from "./list-deprecated";
-
-export * from "./app-header";
 export * from "./badge";
 export * from "./breadcrumbs";
 export * from "./button-bar";
@@ -22,9 +12,7 @@ export * from "./calendar";
 export * from "./carousel";
 export * from "./cascading-menu";
 export * from "./color-chooser";
-export * from "./combo-box";
 export * from "./combo-box-next";
-export * from "./combo-box-deprecated";
 export * from "./contact-details";
 export * from "./content-status";
 export * from "./deck-item";
@@ -55,6 +43,7 @@ export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
 export * from "./navigation-item";
+export * from "./option";
 export * from "./overlay";
 export * from "./pagination";
 export * from "./parent-child-item";
@@ -75,7 +64,6 @@ export * from "./tabs";
 export * from "./tabs-next";
 export * from "./toast-group";
 export * from "./tokenized-input";
-export * from "./toolbar";
 export * from "./tree";
 export * from "./utils";
 export * from "./window";

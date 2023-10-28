@@ -7,7 +7,7 @@ import {
   MessageIcon,
 } from "@salt-ds/icons";
 import {
-  ComboBox,
+  // ComboBox,
   ContactAction,
   ContactActions,
   ContactAvatar,
@@ -576,24 +576,24 @@ const tooltipContacts = [
   personaK,
   personaL,
 ];
-
-const WithinComboBoxTooltip: StoryFn = () => {
-  const handleChange: SelectionChangeHandler<NameEmail> = (_, selectedItem) => {
-    console.log("selection changed", selectedItem);
-  };
-
-  return (
-    <FormField label="Select a person" style={{ maxWidth: 292 }}>
-      <ComboBox
-        ListItem={ItemWithContactDetailsTooltip}
-        itemToString={contactToString}
-        onSelectionChange={handleChange}
-        source={tooltipContacts}
-        width={200}
-      />
-    </FormField>
-  );
-};
+//
+// const WithinComboBoxTooltip: StoryFn = () => {
+//   const handleChange: SelectionChangeHandler<NameEmail> = (_, selectedItem) => {
+//     console.log("selection changed", selectedItem);
+//   };
+//
+//   return (
+//     <FormField label="Select a person" style={{ maxWidth: 292 }}>
+//       <ComboBox
+//         ListItem={ItemWithContactDetailsTooltip}
+//         itemToString={contactToString}
+//         onSelectionChange={handleChange}
+//         source={tooltipContacts}
+//         width={200}
+//       />
+//     </FormField>
+//   );
+// };
 
 const ExportToFileTemplate: StoryFn = () => {
   const generateVCardData = () =>
@@ -671,5 +671,5 @@ export const CollapsibleDetails = CollapsibleDetailsTemplate.bind({});
 export const WithinCard = WithinCardTemplate.bind({});
 export const WithinTile = WithinTileTemplate.bind({});
 export const WithinOverlay = WithinOverlayTemplate.bind({});
-export const WithinComboboxTooltip = WithinComboBoxTooltip.bind({});
+// export const WithinComboboxTooltip = WithinComboBoxTooltip.bind({});
 export const ExportToFile = ExportToFileTemplate.bind({});

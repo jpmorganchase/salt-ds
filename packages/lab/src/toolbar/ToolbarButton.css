@@ -1,9 +1,0 @@
-/* .saltToolbarButton {
-    outline: none !important;
-} */
-
-.saltToolbarButton:not([data-is-inside-panel]) {
-  --saltButton-fontSize: 0;
-  --saltButton-letterSpacing: 0;
-  gap: 0;
-}
