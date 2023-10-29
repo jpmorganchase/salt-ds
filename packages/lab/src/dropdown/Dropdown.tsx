@@ -195,6 +195,10 @@ export const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
       const currentIndex = activeState ? getIndexOfOption(activeState) : -1;
       const count = options.length - 1;
 
+      if (readOnly) {
+        return;
+      }
+
       if (!openState) {
         if (event.key === "ArrowDown" || event.key === "ArrowUp") {
           setOpen(event, true);
