@@ -37,8 +37,8 @@ jobs:
           onlyChanged: true
           externals: |
             - "packages/theme/**/*.css"
-            - "packages/ag-grid-theme/css/**"
-            - "packages/ag-grid-theme/fonts/**"
+            - "*.scss"
+            - "*.woff"
           skip: "changeset-release/*"
           autoAcceptChanges: "main"
           ignoreLastBuildOnBranch: "!(main)**"
