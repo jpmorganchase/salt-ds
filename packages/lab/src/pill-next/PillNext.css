@@ -35,6 +35,7 @@
 
 .saltPillNext-container {
   display: flex;
+  max-width: 100%;
 }
 
 .saltPillNext-label {
