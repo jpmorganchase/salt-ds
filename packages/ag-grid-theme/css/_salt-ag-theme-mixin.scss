@@ -296,11 +296,6 @@
     margin-left: var(--salt-spacing-100);
   }
 
-  .ag-header-cell-auto-height .ag-header-cell-text {
-    overflow: hidden;
-    white-space: pre-wrap;
-  }
-
   .ag-keyboard-focus .ag-header-cell:focus:after {
     height: auto;
     width: auto;
