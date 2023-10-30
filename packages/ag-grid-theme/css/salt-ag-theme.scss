@@ -34,10 +34,12 @@
         subheader-background-color: #242526,
       ),
     ),
+    // background-color:var(--salt-palette-neutral-primary-background),
     borders-secondary: 1px solid,
     cell-horizontal-padding: var(--salt-spacing-100),
     checkbox-checked-color: var(--salt-selectable-primary-foreground-selected),
     checkbox-border-radius: 0,
+    chip-background-color: var(--salt-taggable-background),
     data-color: var(--salt-text-primary-foreground),
     font-size: var(--salt-text-fontSize),
     font-family: var(--salt-typography-fontFamily),
@@ -422,7 +424,6 @@ div[class*="ag-theme-salt"] {
   }
   .ag-column-drop-cell {
     border-radius: 0;
-    height: var(--salt-size-base);
   }
 }
 
