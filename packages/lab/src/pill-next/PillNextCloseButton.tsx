@@ -36,6 +36,7 @@ export const PillNextCloseButton = forwardRef<
   });
   // we do not want to spread tab index in this case because the button element
   // does not require tabindex="0" attribute
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { tabIndex, onKeyUp, onClick, ...restCloseButtonProps } = buttonProps;
 
   const handleKeyUp = (e: KeyboardEvent<HTMLButtonElement>) => {

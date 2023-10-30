@@ -33,6 +33,7 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
     });
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { tabIndex, ...restButtonProps } = buttonProps;
 
     return (
