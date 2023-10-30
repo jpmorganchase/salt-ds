@@ -7,7 +7,7 @@ import {
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer, useButton } from "@salt-ds/core";
+import { Button, makePrefixer, useButton } from "@salt-ds/core";
 import pillCloseButtonCss from "./PillNextCloseButton.css";
 import { CloseSmallIcon } from "@salt-ds/icons";
 
@@ -62,7 +62,7 @@ export const PillNextCloseButton = forwardRef<
   const handleClose = () => onClose?.();
 
   return (
-    <button
+    <Button
       data-testid="pill-close-button"
       ref={ref}
       className={clsx(withButtonBaseName(), {
@@ -73,6 +73,6 @@ export const PillNextCloseButton = forwardRef<
       {...restCloseButtonProps}
     >
       <CloseSmallIcon />
-    </button>
+    </Button>
   );
 });
