@@ -1,5 +1,0 @@
-.cardList {
-  display: grid;
-  gap: calc(var(--salt-size-unit) * 3);
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-}
