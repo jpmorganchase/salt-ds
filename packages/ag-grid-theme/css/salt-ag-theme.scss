@@ -272,7 +272,8 @@ div[class*="ag-theme-salt"] {
   }
 
   .ag-floating-filter-input {
-    input[class^="ag-"][type="text"] {
+    input[class^="ag-"][type="text"],
+    input[class^="ag-"][type="number"] {
       border: none;
     }
   }
