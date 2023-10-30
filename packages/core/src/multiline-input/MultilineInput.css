@@ -109,8 +109,7 @@
   letter-spacing: 0;
   margin: var(--salt-spacing-75) 0;
   min-width: 0;
-  overflow: hidden;
-  resize: none;
+  overflow: auto;
   padding: 0;
 }
 
