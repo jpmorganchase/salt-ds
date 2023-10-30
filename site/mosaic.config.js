@@ -28,17 +28,7 @@ const saltConfig = {
         "./src/mosaic-plugins/LabsComponentPlugin.mjs"
       ),
       options: {
-        componentsList: [
-          "Badge",
-          "Combo Box",
-          "Dialog",
-          "Drawer",
-          "Dropdown",
-          "List",
-          "Pill",
-          "Stepped Tracker",
-          "Switch",
-        ],
+        labPackageName: "@salt-ds/lab",
         statusLabel: "Lab component",
         icon: "🚧",
       },

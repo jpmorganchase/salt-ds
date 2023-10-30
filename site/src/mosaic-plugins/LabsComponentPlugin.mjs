@@ -14,7 +14,7 @@ const LabsComponentPlugin = {
   async $afterSource(
     pages,
     { ignorePages, pageExtensions },
-    { componentsList, statusLabel, icon }
+    { labPackageName, statusLabel, icon }
   ) {
     const isNonHiddenPage = createPageTest(ignorePages, pageExtensions);
 
@@ -23,7 +23,7 @@ const LabsComponentPlugin = {
         continue;
       }
 
-      if (componentsList.findIndex((title) => title === page.title) > 0) {
+      if (page.data?.package?.name === labPackageName) {
         page.status = statusLabel;
         page.sidebar = { label: `${page.title} ${icon}` };
       }
