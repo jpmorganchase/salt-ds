@@ -7,7 +7,7 @@ import {
   FormFieldLabel,
   StackLayout,
 } from "@salt-ds/core";
-import { countryMetaMap, CountrySymbol, GB, US } from "@salt-ds/countries";
+import { GB, US } from "@salt-ds/countries";
 
 export default {
   title: "Lab/Dropdown",

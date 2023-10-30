@@ -42,10 +42,32 @@ const Template: StoryFn<typeof ComboBox> = (args) => {
     setValue(value);
   };
 
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[]
+  ) => {
+    if (args.multiselect) {
+      return;
+    }
+
+    if (newSelected.length === 1) {
+      setValue(newSelected[0]);
+    } else {
+      setValue("");
+    }
+  };
+
   return (
-    <ComboBox onChange={handleChange} value={value} {...args}>
+    <ComboBox
+      {...args}
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+    >
       {usStates
-        .filter((state) => state.toLowerCase().includes(value.toLowerCase()))
+        .filter((state) =>
+          state.toLowerCase().includes(value.trim().toLowerCase())
+        )
         .map((state) => (
           <Option value={state} key={state}>
             {state}
@@ -108,13 +130,15 @@ export const DisabledOption: StoryFn<typeof ComboBox> = (args) => {
 
   return (
     <ComboBox
+      {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
-      {...args}
     >
       {usStates
-        .filter((state) => state.toLowerCase().includes(value.toLowerCase()))
+        .filter((state) =>
+          state.toLowerCase().includes(value.trim().toLowerCase())
+        )
         .map((state) => (
           <Option value={state} key={state} disabled={state === "California"}>
             {state}
@@ -166,7 +190,9 @@ export const WithFormField: StoryFn = () => {
         value={value}
       >
         {usStates
-          .filter((state) => state.toLowerCase().includes(value.toLowerCase()))
+          .filter((state) =>
+            state.toLowerCase().includes(value.trim().toLowerCase())
+          )
           .map((state) => (
             <Option value={state} key={state}>
               {state}
@@ -225,7 +251,9 @@ export const Grouped: StoryFn<typeof ComboBox> = (args) => {
   ];
 
   const groupedOptions = options
-    .filter((city) => city.value.toLowerCase().includes(value.toLowerCase()))
+    .filter((city) =>
+      city.value.trim().toLowerCase().includes(value.trim().toLowerCase())
+    )
     .reduce((acc, option) => {
       const country = option.country;
       if (!acc[country]) {
@@ -237,10 +265,10 @@ export const Grouped: StoryFn<typeof ComboBox> = (args) => {
 
   return (
     <ComboBox
+      {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
-      {...args}
     >
       {Object.entries(groupedOptions).map(([country, options]) => (
         <OptionGroup label={country} key={country}>
@@ -256,24 +284,6 @@ export const Grouped: StoryFn<typeof ComboBox> = (args) => {
 };
 
 export const ComplexOption: StoryFn<typeof ComboBox> = (args) => {
-  const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setValue(value);
-  };
-
-  const handleSelectionChange = (
-    event: SyntheticEvent,
-    newSelected: string[]
-  ) => {
-    if (newSelected.length === 1) {
-      setValue(newSelected[0]);
-    } else {
-      setValue("");
-    }
-  };
-
   const options = [
     {
       value: "GB",
@@ -287,17 +297,38 @@ export const ComplexOption: StoryFn<typeof ComboBox> = (args) => {
     },
   ];
 
+  const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[]
+  ) => {
+    if (newSelected.length === 1) {
+      setValue(
+        options.find((option) => option.value === newSelected[0])?.textValue ??
+          ""
+      );
+    } else {
+      setValue("");
+    }
+  };
+
   return (
     <ComboBox
+      {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: 200 }}
-      {...args}
     >
       {options
         .filter((country) =>
-          country.textValue.toLowerCase().includes(value.toLowerCase())
+          country.textValue.toLowerCase().includes(value.trim().toLowerCase())
         )
         .map((option) => (
           <Option
@@ -325,7 +356,11 @@ export const LongList: StoryFn<typeof ComboBox> = (args) => {
     newSelected: string[]
   ) => {
     if (newSelected.length === 1) {
-      setValue(newSelected[0]);
+      setValue(
+        Object.values(countryMetaMap).find(
+          (country) => country.countryCode === newSelected[0]
+        )?.countryName ?? ""
+      );
     } else {
       setValue("");
     }
@@ -334,7 +369,7 @@ export const LongList: StoryFn<typeof ComboBox> = (args) => {
   const options = Object.values(countryMetaMap)
     .sort((a, b) => a.countryName.localeCompare(b.countryName))
     .filter(({ countryCode, countryName }) => {
-      const searchText = value.toLowerCase();
+      const searchText = value.trim().toLowerCase();
 
       return (
         countryCode.toLowerCase().includes(searchText) ||
@@ -353,10 +388,10 @@ export const LongList: StoryFn<typeof ComboBox> = (args) => {
 
   return (
     <ComboBox
+      {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
-      {...args}
     >
       {Object.entries(groupedOptions).map(([firstLetter, options]) => (
         <OptionGroup label={firstLetter} key={firstLetter}>

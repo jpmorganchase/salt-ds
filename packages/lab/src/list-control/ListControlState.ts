@@ -76,6 +76,7 @@ export function useListControl(props: ListControlProps) {
 
   const select = (event: SyntheticEvent, option: OptionValue) => {
     const { disabled, value } = option;
+
     if (disabled) {
       return;
     }

@@ -97,33 +97,39 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
 
     const { Component: FloatingComponent } = useFloatingComponent();
 
-    const { x, y, strategy, elements, floating, reference } = useFloatingUI({
-      open,
-      placement: "bottom-start",
-      middleware: [
-        offset(0),
-        size({
-          apply({ rects, elements, availableHeight }) {
-            Object.assign(elements.floating.style, {
-              minWidth: `${rects.reference.width}px`,
-              maxHeight: `calc(${availableHeight}px - var(--salt-spacing-100))`,
-            });
-          },
-        }),
-        flip({
-          fallbackStrategy: "initialPlacement",
-        }),
-        shift({ limiter: limitShift() }),
-      ],
-    });
+    const { x, y, strategy, elements, floating, reference, refs } =
+      useFloatingUI({
+        open,
+        placement: "bottom-start",
+        middleware: [
+          offset(0),
+          size({
+            apply({ rects, elements, availableHeight }) {
+              Object.assign(elements.floating.style, {
+                minWidth: `${rects.reference.width}px`,
+                maxHeight: `calc(${availableHeight}px - var(--salt-spacing-100))`,
+              });
+            },
+          }),
+          flip({
+            fallbackStrategy: "initialPlacement",
+          }),
+          shift({ limiter: limitShift() }),
+        ],
+      });
 
     const handleRef = useForkRef<HTMLDivElement>(reference, ref);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
       if (!readOnly) {
         setFocusVisibleState(false);
         setOpen(event, !openState);
       }
+    };
+
+    const handleButtonFocus = () => {
+      inputRef.current?.focus();
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -170,7 +176,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
           newActive = getOptionAtIndex(Math.min(count, currentIndex + 10));
           break;
         case "Enter":
-        case " ":
+          // case " ":
           if (openState && activeState?.disabled) {
             event.preventDefault();
             return;
@@ -240,6 +246,10 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
       ignoreBlur.current = true;
     };
 
+    const handleListClick = () => {
+      inputRef.current?.focus();
+    };
+
     useEffect(() => {
       if (openState && !activeState) {
         if (selectedState.length > 0) {
@@ -270,6 +280,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
                 disabled={disabled}
                 variant="secondary"
                 onClick={handleButtonClick}
+                onFocus={handleButtonFocus}
                 tabIndex={-1}
               >
                 {openState ? (
@@ -296,6 +307,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
           }}
           aria-activedescendant={activeState?.id}
           variant={variant}
+          inputRef={inputRef}
           {...rest}
           ref={handleRef}
         />
@@ -314,6 +326,7 @@ export const ComboBox = forwardRef<HTMLDivElement, ComboBoxProps>(
           })}
           onMouseOver={handleListMouseOver}
           onMouseDown={handleListMouseDown}
+          onClick={handleListClick}
         >
           {children}
         </FloatingComponent>

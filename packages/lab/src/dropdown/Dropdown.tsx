@@ -135,23 +135,24 @@ export const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
 
     const { Component: FloatingComponent } = useFloatingComponent();
 
-    const { x, y, strategy, elements, floating, reference } = useFloatingUI({
-      open,
-      placement: "bottom-start",
-      middleware: [
-        offset(0),
-        size({
-          apply({ rects, elements, availableHeight }) {
-            Object.assign(elements.floating.style, {
-              minWidth: `${rects.reference.width}px`,
-              maxHeight: `${availableHeight}px`,
-            });
-          },
-        }),
-        flip(),
-        shift({ limiter: limitShift() }),
-      ],
-    });
+    const { x, y, strategy, elements, floating, reference, refs } =
+      useFloatingUI({
+        open,
+        placement: "bottom-start",
+        middleware: [
+          offset(0),
+          size({
+            apply({ rects, elements, availableHeight }) {
+              Object.assign(elements.floating.style, {
+                minWidth: `${rects.reference.width}px`,
+                maxHeight: `${availableHeight}px`,
+              });
+            },
+          }),
+          flip(),
+          shift({ limiter: limitShift() }),
+        ],
+      });
 
     const buttonRef = useForkRef<HTMLButtonElement>(reference, ref);
 
@@ -214,6 +215,19 @@ export const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
         setOpen(event, false);
       }
 
+      if (
+        (event.key.length === 1 &&
+          !event.ctrlKey &&
+          !event.metaKey &&
+          !event.altKey) ||
+        (event.key === " " && typeaheadString.current.length > 0)
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        handleTypeahead(event);
+        return;
+      }
+
       let newActive;
       switch (event.key) {
         case "ArrowDown":
@@ -261,16 +275,6 @@ export const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
             select(event, activeState);
           }
           break;
-        default:
-          if (
-            event.key.length === 1 &&
-            !event.ctrlKey &&
-            !event.metaKey &&
-            !event.altKey
-          ) {
-            event.stopPropagation();
-            handleTypeahead(event);
-          }
       }
 
       if (newActive && newActive?.id != activeState?.id) {
@@ -306,6 +310,10 @@ export const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
 
     const handleListMouseDown = () => {
       ignoreBlur.current = true;
+    };
+
+    const handleListClick = () => {
+      refs.reference.current?.focus();
     };
 
     useEffect(() => {
@@ -380,6 +388,7 @@ export const Dropdown = forwardRef<HTMLButtonElement, DropdownProps>(
             })}
             onMouseOver={handleListMouseOver}
             onMouseDown={handleListMouseDown}
+            onClick={handleListClick}
           >
             {children}
           </FloatingComponent>
