@@ -24,7 +24,7 @@ const LabsComponentPlugin = {
       }
 
       if (page.data?.package?.name === labPackageName) {
-        page.status = statusLabel;
+        page.data.status = statusLabel;
         page.sidebar = { label: `${page.title} ${icon}` };
       }
 
