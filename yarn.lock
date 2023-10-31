@@ -31725,19 +31725,22 @@ __metadata:
   linkType: hard
 
 "zustand@npm:^4.1.1":
-  version: 4.3.3
-  resolution: "zustand@npm:4.3.3"
+  version: 4.4.5
+  resolution: "zustand@npm:4.4.5"
   dependencies:
     use-sync-external-store: "npm:1.2.0"
   peerDependencies:
+    "@types/react": ">=16.8"
     immer: ">=9.0"
     react: ">=16.8"
   peerDependenciesMeta:
+    "@types/react":
+      optional: true
     immer:
       optional: true
     react:
       optional: true
-  checksum: 2a12fa2ed5828afde1296803e97172fb82ce9027f15a300b3c94c5007a63a3b9ca367dac66466aa1e4f0b4eafb1106c720936a2fb6a211b290603d44c08f3a51
+  checksum: be814901cfce7893479336c9731fad98ec8b307f18f969ffc26f9803481e10e0d856ab7e1be0e5a5df211c79667dd04e8ecaef5e59d1f98dc3327dc08242e64b
   languageName: node
   linkType: hard
 
