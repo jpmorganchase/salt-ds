@@ -5,11 +5,11 @@ import {
   DocPaginator,
   BackLink,
   Breadcrumbs,
-  PageNavigation,
 } from "@jpmorganchase/mosaic-site-components";
 import { useStore, SiteState } from "@jpmorganchase/mosaic-store";
 import { Footer } from "../../components/footer";
 import { AppHeader } from "../../components/app-header";
+import { PageNavigation } from "../../components";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
 import { StatusPill } from "../../components/status-pill";
 import { LayoutColumns } from "../LayoutColumns/LayoutColumns";
