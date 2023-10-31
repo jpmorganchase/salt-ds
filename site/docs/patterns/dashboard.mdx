@@ -1,8 +1,8 @@
 ---
-title: Analytical Dashboard
+title: Analytical dashboard
 layout: DetailPattern
 sidebar:
-  label: Analytical Dashboard
+  label: Analytical dashboard
 aliases:
   - /salt/patterns/dashboards/analytical-dashboard
 data:
@@ -27,13 +27,16 @@ The mock-ups displayed in this pattern are available as [templates](https://www.
 
 ## Using the analytical dashboard pattern
 
-#### When to use an analytical dashboard
+<ExampleContainer type="positive" customPillText="When to use an analytical dashboard">
 
 •	When you need to visually represent data that provide insights and analysis of key metrics and performance indicators. This is useful where data-driven decision making is crucial, such as in data-intensive environments, performance tracking, risk assessment, investment analysis, and client reporting.
 
-#### When not to use an analytical dashboard
+</ExampleContainer>
+
+<ExampleContainer type="negative" customPillText="When not to use an analytical dashboard">
 
 •	When you need to represent a smaller set of data. In this case, users may find an analytical dashboard is too complex.
+</ExampleContainer>
 ## Best practices
 
 - Creating an analytical dashboard user interface involves a careful consideration of layout features and components to maintain effective visual hierarchy.
@@ -215,8 +218,6 @@ The dashboard header sits at the top of the dashboard body, and its content can 
   label="Content spacing"
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
-
 #### Spacing
 
 - As default, use `--salt-spacing-300` between content modules such as cards to promote readability.
@@ -232,8 +233,6 @@ The dashboard header sits at the top of the dashboard body, and its content can 
 
 - By default, the Salt [card](../../components/card) is styled using a primary background. Use the `--salt-container-secondary-background` token to achieve visual hierarchy in your design.
 - _(JPM employees only)_ For styling data visualizations such as charts, follow the UITK guidelines on data visualization, where you can find further information on presenting data in a visually cohesive manner. We recommend using the categorical color palette within your dashboard design, as it’s ideal for visualizing distinct groups of items.
-
-</ExampleContainer>
 
 #### Alternative card layouts
 
