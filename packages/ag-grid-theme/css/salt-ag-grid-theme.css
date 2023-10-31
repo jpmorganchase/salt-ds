@@ -78,7 +78,7 @@ div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-group-ce
 
 div[class*="ag-theme-salt"] .ag-menu {
   padding: var(--salt-spacing-100);
-  border-color: var(--salt-palette-neutral-primary-border);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-palette-neutral-primary-border);
 }
 
 div[class*="ag-theme-salt"] .ag-menu-header {
@@ -325,8 +325,8 @@ div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
 div[class*="ag-theme-salt"] .ag-select .ag-picker-field-icon {
   margin-right: var(--salt-spacing-100);
 }
-/*
-.ag-menu .ag-filter-body-wrapper {
+
+div[class*="ag-theme-salt"] .ag-menu .ag-filter-body-wrapper {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -334,25 +334,25 @@ div[class*="ag-theme-salt"] .ag-select .ag-picker-field-icon {
   margin-top: var(--salt-spacing-100);
 }
 
-.ag-menu .ag-menu-column-select-wrapper {
+div[class*="ag-theme-salt"] .ag-menu .ag-menu-column-select-wrapper {
   margin-top: var(--salt-spacing-100);
 }
 
-.ag-simple-filter-body-wrapper > * {
+div[class*="ag-theme-salt"] .ag-simple-filter-body-wrapper > * {
   margin-bottom: var(--salt-spacing-100);
 }
 
-.ag-mini-filter {
+div[class*="ag-theme-salt"] .ag-mini-filter {
   margin: 0;
   padding-left: var(--salt-spacing-50);
   padding-right: var(--salt-spacing-50);
 }
 
-.ag-set-filter-item {
+div[class*="ag-theme-salt"] .ag-set-filter-item {
   margin: 0;
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
-} */
+}
 
 div[class*="ag-theme-salt"] .ag-status-bar {
   border: none;
