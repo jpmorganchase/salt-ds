@@ -3,189 +3,227 @@
   src: url(../fonts/salt-icons.woff) format("woff");
 }
 
-[class^="ag-theme-salt"] [class^="ag-icon"]:before {
+[class*="ag-theme-salt"] .ag-icon-aggregation:before {
   font-family: "salt-icons";
-}
-
-[class^="ag-theme-salt"] .ag-icon-aggregation:before {
   content: "\ea2f";
 }
 
-[class^="ag-theme-salt"] .ag-icon-arrows:before {
+[class*="ag-theme-salt"] .ag-icon-arrows:before {
+  font-family: "salt-icons";
   content: "\e9e7";
 }
 
-[class^="ag-theme-salt"] .ag-icon-asc:before {
+[class*="ag-theme-salt"] .ag-icon-asc:before {
+  font-family: "salt-icons";
   content: "\e954";
 }
 
-[class^="ag-theme-salt"] .ag-icon-cancel:before {
+[class*="ag-theme-salt"] .ag-icon-cancel:before {
+  font-family: "salt-icons";
   content: "\e975";
 }
 
-[class^="ag-theme-salt"] .ag-icon-chart:before {
+[class*="ag-theme-salt"] .ag-icon-chart:before {
+  font-family: "salt-icons";
   content: "\e958";
 }
 
-[class^="ag-theme-salt"] .ag-icon-columns:before {
+[class*="ag-theme-salt"] .ag-icon-columns:before {
+  font-family: "salt-icons";
   content: "\e981";
 }
 
-[class^="ag-theme-salt"] .ag-icon-contracted:before {
+[class*="ag-theme-salt"] .ag-icon-contracted:before {
+  font-family: "salt-icons";
   content: "\e96d";
 }
 
-[class^="ag-theme-salt"] .ag-icon-copy:before {
+[class*="ag-theme-salt"] .ag-icon-copy:before {
+  font-family: "salt-icons";
   content: "\e973";
 }
 
-[class^="ag-theme-salt"] .ag-icon-cross:before {
+[class*="ag-theme-salt"] .ag-icon-cross:before {
+  font-family: "salt-icons";
   content: "\e975";
 }
 
-[class^="ag-theme-salt"] .ag-icon-cut:before {
+[class*="ag-theme-salt"] .ag-icon-cut:before {
+  font-family: "salt-icons";
   content: "\e98e";
 }
 
-[class^="ag-theme-salt"] .ag-icon-csv:before {
+[class*="ag-theme-salt"] .ag-icon-csv:before {
+  font-family: "salt-icons";
   content: "\e98d";
 }
 
-[class^="ag-theme-salt"] .ag-icon-desc:before {
+[class*="ag-theme-salt"] .ag-icon-desc:before {
+  font-family: "salt-icons";
   content: "\e951";
 }
 
-[class^="ag-theme-salt"] .ag-icon-excel:before {
+[class*="ag-theme-salt"] .ag-icon-excel:before {
+  font-family: "salt-icons";
   content: "\ea62";
 }
 
-[class^="ag-theme-salt"] .ag-icon-expanded:before {
+[class*="ag-theme-salt"] .ag-icon-expanded:before {
+  font-family: "salt-icons";
   content: "\e96f";
 }
 
-[class^="ag-theme-salt"] .ag-icon-eye-slash:before {
+[class*="ag-theme-salt"] .ag-icon-eye-slash:before {
+  font-family: "salt-icons";
   content: "\e9c1";
 }
 
-[class^="ag-theme-salt"] .ag-icon-eye:before {
+[class*="ag-theme-salt"] .ag-icon-eye:before {
+  font-family: "salt-icons";
   content: "\ea5b";
 }
 
-[class^="ag-theme-salt"] .ag-icon-filter:before {
+[class*="ag-theme-salt"] .ag-icon-filter:before {
+  font-family: "salt-icons";
   content: "\e9ab";
 }
 
-[class^="ag-theme-salt"] .ag-icon-filter-clear:before {
+[class*="ag-theme-salt"] .ag-icon-filter-clear:before {
+  font-family: "salt-icons";
   content: "\e9ac";
 }
 
-[class^="ag-theme-salt"] .ag-icon-first:before {
+[class*="ag-theme-salt"] .ag-icon-first:before {
+  font-family: "salt-icons";
   content: "\e99b";
 }
 
-[class^="ag-theme-salt"] .ag-icon-group:before {
+[class*="ag-theme-salt"] .ag-icon-group:before {
+  font-family: "salt-icons";
   content: "\ea68";
 }
 
-[class^="ag-theme-salt"] .ag-icon-last:before {
+[class*="ag-theme-salt"] .ag-icon-last:before {
+  font-family: "salt-icons";
   content: "\e99c";
 }
 
-[class^="ag-theme-salt"] .ag-icon-left:before {
+[class*="ag-theme-salt"] .ag-icon-left:before {
+  font-family: "salt-icons";
   content: "\e96e";
 }
 
-[class^="ag-theme-salt"] .ag-icon-linked:before {
+[class*="ag-theme-salt"] .ag-icon-linked:before {
+  font-family: "salt-icons";
   content: "\e9da";
 }
 
-[class^="ag-theme-salt"] .ag-icon-loading:before {
+[class*="ag-theme-salt"] .ag-icon-loading:before {
+  font-family: "salt-icons";
   content: "\e9dc";
 }
 
-[class^="ag-theme-salt"] .ag-icon-menu:before {
+[class*="ag-theme-salt"] .ag-icon-menu:before {
+  font-family: "salt-icons";
   content: "\e9e5";
 }
 
-[class^="ag-theme-salt"] .ag-icon-next:before {
+[class*="ag-theme-salt"] .ag-icon-next:before {
+  font-family: "salt-icons";
   content: "\e96f";
 }
 
-[class^="ag-theme-salt"] .ag-icon-none:before {
+[class*="ag-theme-salt"] .ag-icon-none:before {
+  font-family: "salt-icons";
   content: "\e9e9";
 }
 
-[class^="ag-theme-salt"] .ag-icon-not-allowed:before {
+[class*="ag-theme-salt"] .ag-icon-not-allowed:before {
+  font-family: "salt-icons";
   content: "\e975";
 }
 
-[class^="ag-theme-salt"] .ag-icon-paste:before {
+[class*="ag-theme-salt"] .ag-icon-paste:before {
+  font-family: "salt-icons";
   content: "\e9f9";
 }
 
-[class^="ag-theme-salt"] .ag-icon-pin:before {
+[class*="ag-theme-salt"] .ag-icon-pin:before {
+  font-family: "salt-icons";
   content: "\e9f5";
 }
 
-[class^="ag-theme-salt"] .ag-icon-pivot:before {
+[class*="ag-theme-salt"] .ag-icon-pivot:before {
+  font-family: "salt-icons";
   content: "\e9f8";
 }
 
-[class^="ag-theme-salt"] .ag-icon-previous:before {
+[class*="ag-theme-salt"] .ag-icon-previous:before {
+  font-family: "salt-icons";
   content: "\e96e";
 }
 
-[class^="ag-theme-salt"] .ag-icon-right:before {
+[class*="ag-theme-salt"] .ag-icon-right:before {
+  font-family: "salt-icons";
   content: "\e96f";
 }
 
-[class^="ag-theme-salt"] .ag-icon-save:before {
+[class*="ag-theme-salt"] .ag-icon-save:before {
+  font-family: "salt-icons";
   content: "\ea19";
 }
 
-[class^="ag-theme-salt"] .ag-icon-small-down:before {
+[class*="ag-theme-salt"] .ag-icon-small-down:before {
+  font-family: "salt-icons";
   content: "\ea41";
 }
 
-[class^="ag-theme-salt"] .ag-icon-small-left:before {
+[class*="ag-theme-salt"] .ag-icon-small-left:before {
+  font-family: "salt-icons";
   content: "\ea42";
 }
 
-[class^="ag-theme-salt"] .ag-icon-small-right:before {
+[class*="ag-theme-salt"] .ag-icon-small-right:before {
+  font-family: "salt-icons";
   content: "\ea44";
 }
 
-[class^="ag-theme-salt"] .ag-icon-small-up:before {
+[class*="ag-theme-salt"] .ag-icon-small-up:before {
+  font-family: "salt-icons";
   content: "\ea45";
 }
 
-[class^="ag-theme-salt"] .ag-icon-tick:before {
+[class*="ag-theme-salt"] .ag-icon-tick:before {
+  font-family: "salt-icons";
   content: "\ea2e";
 }
 
-[class^="ag-theme-salt"] .ag-icon-tree-closed:before {
+[class*="ag-theme-salt"] .ag-icon-tree-closed:before {
+  font-family: "salt-icons";
   content: "\e96f";
 }
 
-[class^="ag-theme-salt"] .ag-icon-tree-open:before {
+[class*="ag-theme-salt"] .ag-icon-tree-open:before {
+  font-family: "salt-icons";
   content: "\e96d";
 }
 
-[class^="ag-theme-salt"] .ag-icon-unlinked:before {
+[class*="ag-theme-salt"] .ag-icon-unlinked:before {
+  font-family: "salt-icons";
   content: "\ea47";
 }
 
-[class^="ag-theme-salt"] .ag-checkbox-input-wrapper:after {
+[class*="ag-theme-salt"] .ag-checkbox-input-wrapper:after {
   content: "";
   font-family: "salt-icons";
 }
 
-[class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked:after {
+[class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked:after {
   content: "\ea2e";
   font-family: "salt-icons";
 }
 
-[class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-indeterminate:after {
+[class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-indeterminate:after {
   content: "\ea10";
   font-family: "salt-icons";
 }
