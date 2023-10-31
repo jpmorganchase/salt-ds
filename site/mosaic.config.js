@@ -23,6 +23,16 @@ const saltConfig = {
       modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
       disabled: true,
     },
+    {
+      modulePath: require.resolve(
+        "./src/mosaic-plugins/LabsComponentPlugin.mjs"
+      ),
+      options: {
+        labPackageName: "@salt-ds/lab",
+        statusLabel: "Lab component",
+        icon: "🚧",
+      },
+    },
   ],
 };
 

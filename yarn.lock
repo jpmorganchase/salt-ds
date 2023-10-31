@@ -5985,6 +5985,7 @@ __metadata:
     cross-env: "npm:^7.0.3"
     dotenv-load: "npm:^2.0.1"
     eslint-config-next: "npm:^13.5.2"
+    lodash-es: "npm:^4.17.21"
     next: "npm:^13.5.2"
     next-auth: "npm:^4.23.1"
     raw-loader: "npm:^4.0.2"
