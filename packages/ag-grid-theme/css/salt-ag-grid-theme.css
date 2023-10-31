@@ -201,14 +201,16 @@ div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell.ag-cell-focus:focus:b
 
 div[class*="ag-theme-salt"] .editable-cell input,
 div[class*="ag-theme-salt"] .numeric-cell input,
-div[class*="ag-theme-salt"] .editable-numeric-cell input {
+div[class*="ag-theme-salt"] .editable-numeric-cell input,
+div[class*="ag-theme-salt"] input[class^="ag-"][type="number"] {
   border: var(--salt-size-border) var(--salt-editable-borderStyle) transparent;
   padding: 0;
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 div[class*="ag-theme-salt"] .editable-cell input:focus,
 div[class*="ag-theme-salt"] .numeric-cell input:focus,
-div[class*="ag-theme-salt"] .editable-numeric-cell input:focus {
+div[class*="ag-theme-salt"] .editable-numeric-cell input:focus,
+div[class*="ag-theme-salt"] input[class^="ag-"][type="number"]:focus {
   border: none;
 }
 
@@ -365,6 +367,10 @@ div[class*="ag-theme-salt"] .ag-status-name-value {
 div[class*="ag-theme-salt"] .ag-status-name-value-value {
   font-weight: var(--salt-text-fontWeight-strong);
   color: var(--salt-text-primary-foreground);
+}
+
+div[class*="ag-theme-salt"] .ag-paging-panel {
+  border-color: var(--salt-separable-secondary-borderColor);
 }
 
 div[class*="ag-theme-salt"] .ag-floating-bottom {
