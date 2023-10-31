@@ -28,6 +28,7 @@ div[class*="ag-theme-salt"] {
   --ag-secondary-foreground-color: var(--salt-text-primary-foreground);
   --ag-selected-row-background-color: var(--salt-selectable-background-selected);
   --ag-selected-tab-underline-color: var(--salt-navigable-indicator-active);
+  --ag-selected-tab-underline-width: 2px;
   --ag-subheader-background-color: var(--salt-palette-neutral-primary-background);
   --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
 }
@@ -128,17 +129,15 @@ div[class*="ag-theme-salt"] .ag-menu-option-icon {
 
 div[class*="ag-theme-salt"] .ag-tab {
   height: var(--salt-size-stackable);
-  flex: 1;
+  flex: 1 1 auto;
 }
 
 div[class*="ag-theme-salt"] .ag-column-select-header {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  border: 0;
 }
 
-/* .ag-column-select-header {
-  border: none;
-}
-
+/* 
 .ag-column-select-virtual-list-item {
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
 } */
@@ -287,12 +286,13 @@ div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked {
 
 div[class*="ag-theme-salt"] .ag-standard-button {
   background: var(--salt-actionable-secondary-background);
-  /* border: var(--salt-size-border) var(--salt-selectable-borderStyle) transparent; */
+  border: 0;
   color: var(--salt-actionable-secondary-foreground);
   font-size: var(--salt-text-fontSize);
   font-weight: 600;
   height: var(--salt-size-base);
   padding: 0 var(--salt-spacing-100);
+  text-transform: uppercase;
 }
 
 div[class*="ag-theme-salt"] .ag-standard-button:hover {
@@ -303,29 +303,26 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-filter-apply-panel-button {
   margin-left: 8px;
 }
 
-.ag-floating-filter {
+div[class*="ag-theme-salt"] .ag-floating-filter {
   border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
-.ag-floating-filter:focus-within {
+
+div[class*="ag-theme-salt"] .ag-floating-filter:focus-within {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
 }
 
-.ag-floating-filter:after {
+div[class*="ag-theme-salt"] .ag-floating-filter:after {
   width: 0;
 }
 
-.ag-keyboard-focus .ag-header-cell:focus:after {
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+div[class*="ag-theme-salt"] .ag-keyboard-focus .ag-header-cell:focus:after {
+  border: 0;
 }
 
-.ag-floating-filter-button-button .ag-icon-filter:before {
+div[class*="ag-theme-salt"] .ag-floating-filter-button-button .ag-icon-filter:before {
   color: var(--salt-text-secondary-foreground);
   content: "\e9ac";
-}
-
-.ag-icon-filter:before {
-  color: var(--salt-text-secondary-foreground);
 }
 
 .ag-ltr .ag-floating-filter-button {

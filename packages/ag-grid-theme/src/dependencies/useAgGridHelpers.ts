@@ -62,7 +62,7 @@ export function useAgGridHelpers({
 
   const className = `${agThemeName}${
     compact && density === "high" ? `-compact` : ``
-  }-${mode} ag-grid-alpine`;
+  }-${mode}`;
 
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
     apiRef.current = { api, columnApi };
