@@ -18,6 +18,7 @@ div[class*="ag-theme-salt"] {
   --ag-header-column-separator-height: var(--salt-text-fontSize);
   --ag-header-column-separator-width: 1px;
   --ag-header-foreground-color: var(--salt-text-primary-foreground);
+  --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-icon-size: var(--salt-icon-size-base);
   --ag-input-focus-box-shadow: none;
   --ag-list-item-height: var(--salt-size-base);
