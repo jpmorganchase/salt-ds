@@ -1,5 +1,5 @@
 import styles from "./ImageSwitcher.module.css";
-import { Switch } from "@salt-ds/lab";
+import { Switch } from "@salt-ds/core";
 import { ChangeEvent, useState } from "react";
 import { Image } from "@jpmorganchase/mosaic-site-components";
 
