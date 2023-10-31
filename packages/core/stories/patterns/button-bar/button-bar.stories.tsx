@@ -240,15 +240,15 @@ export const DialogForm = () => {
 
 export const SmallViewport = () => {
   return (
-    <StackLayout >
+    <StackLayout>
       {formFields}
-      <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
-        <FlexItem>
+      <FlexLayout gap={1} style={{ width: "100%" }}>
+        <FlexItem basis="50%">
           <Button variant="cta" style={{ width: "100%" }}>
             Submit
           </Button>
         </FlexItem>
-        <FlexItem>
+        <FlexItem basis="50%">
           <Button style={{ width: "100%" }}>Cancel</Button>
         </FlexItem>
       </FlexLayout>
@@ -259,7 +259,7 @@ export const SmallViewport = () => {
 export const FixedPosition = () => {
   return (
     <StackLayout>
-      {formFields}
+      <div style={{ height: "15vh", overflow: "scroll" }}>{formFields}</div>
       <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
         <FlexItem>
           <Button variant="cta" style={{ width: "100%" }}>
