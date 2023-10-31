@@ -33,7 +33,7 @@ jobs:
           exitOnceUploaded: true
           # Turbosnap if this is not the main branch
           onlyChanged: true
-          externals: "[\"packages/theme/**/*.css\", \"*.scss\", \"*.woff\"]"
+          externals: "packages/theme/**/*.css"
           skip: "changeset-release/*"
           autoAcceptChanges: "main"
           ignoreLastBuildOnBranch: "!(main)**"
