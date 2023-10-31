@@ -1,9 +1,8 @@
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import "../css/salt-icons.css";
 import "../css/salt-ag-grid-theme.css";
-// import "../uitk-ag-theme.css";
+import "../css/salt-icons.css";
 
 export default {
   title: "Data Grid/Ag Grid Theme",
