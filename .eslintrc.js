@@ -44,8 +44,12 @@ module.exports = {
         ],
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/no-unsafe-assignment ": "off",
-        // nullish coalescing introduces a lot false negative
-        "@typescript-eslint/prefer-nullish-coalescing": "off",
+        "@typescript-eslint/prefer-nullish-coalescing": [
+          "error",
+          {
+            ignoreConditionalTests: true,
+          },
+        ],
         // TypeScript provides the same checks as part of standard type checking.
         "import/named": "off",
         "import/namespace": "off",
