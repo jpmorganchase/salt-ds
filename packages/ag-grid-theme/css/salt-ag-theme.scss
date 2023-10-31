@@ -402,7 +402,7 @@ div[class*="ag-theme-salt"] {
     font-size: var(--salt-text-fontSize);
     font-weight: var(--salt-text-label-fontWeight);
     line-height: var(--salt-text-label-lineHeight);
-    height: var(--salt-size-base);
+    height: calc(var(--salt-size-base) + var(--salt-spacing-100));
     padding: 0 var(--salt-spacing-100);
   }
   .ag-status-name-value {
@@ -416,6 +416,7 @@ div[class*="ag-theme-salt"] {
 
   .ag-paging-panel {
     height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+    border-top-color: var(--salt-separable-secondary-borderColor);
   }
 
   .ag-floating-bottom {
