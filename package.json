@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "yarn storybook",
-    "build": "yarn build:core && yarn build:lab && yarn build:icons && yarn build:countries && yarn build:theme && yarn build:data-grid && yarn build:ag-grid-theme && yarn build:window && yarn build:styles",
+    "build": "yarn build:core && yarn build:lab && yarn build:icons && yarn build:countries && yarn build:theme && yarn build:data-grid && yarn build:window && yarn build:styles",
     "build:core": "modular build @salt-ds/core",
     "build:icons": "modular build @salt-ds/icons",
     "build:countries": "modular build @salt-ds/countries",
@@ -25,7 +25,6 @@
     "build:data-grid": "modular build @salt-ds/data-grid",
     "build:window": "modular build @salt-ds/window",
     "build:styles": "modular build @salt-ds/styles",
-    "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "test": "vitest",
     "test:components": "cypress run --component --browser chrome --headless",
     "test:components:local": "cypress open --component --browser electron",
@@ -40,7 +39,7 @@
     "lint:style:icon": "yarn stylelint -f verbose \"packages/icons/src/**/*.css\"",
     "lint:style:lab": "yarn stylelint -f verbose \"packages/lab/src/**/*.css\"",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "yarn build:ag-grid-theme && storybook build",
+    "build-storybook": "yarn storybook build",
     "typecheck": "tsc --noEmit",
     "chromatic": "chromatic"
   },
