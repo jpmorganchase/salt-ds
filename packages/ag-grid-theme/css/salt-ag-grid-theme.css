@@ -9,6 +9,7 @@ div[class*="ag-theme-salt"] {
   --ag-data-color: var(--salt-text-primary-foreground);
   --ag-font-size: var(--salt-text-fontSize);
   --ag-font-family: var(--salt-typography-fontFamily);
+  --ag-foreground-color: var(--salt-text-primary-foreground);
   --ag-grid-size: var(--salt-spacing-50);
   --ag-header-background-color: var(--salt-container-primary-background);
   --ag-header-cell-hover-background-color: var(--salt-container-primary-background);
@@ -32,14 +33,6 @@ div[class*="ag-theme-salt"] {
   --ag-selected-tab-underline-width: 2px;
   --ag-subheader-background-color: var(--salt-palette-neutral-primary-background);
   --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
-}
-
-.ag-theme-salt-light {
-  --ag-foreground-color: var(--salt-color-gray-700);
-}
-.ag-theme-salt-dark {
-  /* --ag-checkbox-unchecked-color: var(--salt-text-primary-foreground); */
-  --ag-foreground-color: var(--salt-color-white);
 }
 
 div[class*="ag-theme-salt"] .ag-root-wrapper {
