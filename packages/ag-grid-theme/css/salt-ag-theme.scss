@@ -35,7 +35,7 @@
       ),
     ),
     // background-color:var(--salt-palette-neutral-primary-background),
-    borders-secondary: 1px solid,
+    borders-secondary: var(--salt-size-border) var(--salt-separable-borderStyle),
     cell-horizontal-padding: var(--salt-spacing-100),
     checkbox-checked-color: var(--salt-selectable-primary-foreground-selected),
     checkbox-border-radius: 0,
