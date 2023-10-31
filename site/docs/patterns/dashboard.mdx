@@ -37,11 +37,8 @@ The mock-ups displayed in this pattern are available as [templates](https://www.
 
 •	When you need to represent a smaller set of data. In this case, users may find an analytical dashboard is too complex.
 </ExampleContainer>
-<ExampleContainer type="positive" customPillText="Best practices">
+## Best practices
 
-- Creating an analytical dashboard user interface involves a careful consideration of layout features and components to maintain effective visual hierarchy.
-- Organize content into multiple dashboards or tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information at once.
-- Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices. Use the [`GridLayout` component](../../components/grid-layout) to manage the layout and responsiveness of the main content area in your dashboard.
 - **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](../../components/card) and should effectively represent the data and provide users with insights at a glance.
 - **Filters and controls**: Implement filters and controls that allow users to interact with the data and customize their views. Common examples include date range selectors, drop-down menus, checkboxes and search bars.
 - **Metrics**: Highlight important metrics and key performance indicators (KPIs) that users need to monitor regularly. You can display these as numerical values, gauges or progress bars.
@@ -49,22 +46,21 @@ The mock-ups displayed in this pattern are available as [templates](https://www.
 - **Tooltip**: Offer the ability to drill down into more granular data from summary views and view additional information. Users should have access to specific data points and their underlying details.
 - **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
 - **Text**: Clearly display information about the data sources, update frequency and any disclaimers related to data accuracy.
-</ExampleContainer>
-## Anatomy
 
-### Layout
+## Basic layout
 
-The following guidance explains how to layout your own dashboard using [Salt foundations](/salt/foundations/index). Use this to understand how to apply spacing to create a consistent visual rhythm within your designs.
+Creating an analytical dashboard user interface involves a careful consideration of layout features and components to maintain effective visual hierarchy. Organize content into multiple dashboards or tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information at once.
 
-#### Components
+### Components
 
-- [`BorderLayout`](../../components/border-layout): Use the border layout component to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
+- [`BorderLayout`](../../components/border-layout): Use to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
+- [`GridLayout`](../../components/grid-layout): Use to manage the layout and responsiveness of the main content area in your dashboard. Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices.
 - [`Drawer`](../../components/drawer): Use to display an expandable panel overlaid above a region of your dashboard rather than embedded within the existing layout. Users can view additional content without navigating to a different screen. Persistently displayed panels should use the west region of the border layout instead of a drawer, which can hinder the dashboard user experience by hiding key interactive components.
 - [`FlowLayout`](../../components/flow-layout): Use for small-scale layouts that require components (such as cards) to be displayed in a responsive row.
 - [`StackLayout`](../../components/stack-layout): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
 - `Tabs`: Use to organize and categorize dashboard widgets into local groupings.
 
-#### Layout grid
+### Layout grid
 
 Salt provides layout grids as a starting point for designing any user interface that achieves effective alignment and consistency for your dashboard design. View the [Salt Layout Grid library](<https://www.figma.com/file/Qun1kdSvMhq3gk9Bo6dOrC/Salt%3A-Layout-Grid-(Community)?type=design&node-id=16-3068&mode=design&t=l9ZRR3WVCS4BuHZA-0>) for grid templates across different densities.
 
@@ -136,6 +132,8 @@ In the following example, the panel width aligns to the first two columns of the
   ]}
   label="Layout grid"
 />
+
+## Anatomy
 
 ### Content regions
 
