@@ -13,6 +13,9 @@
     "/uitk-ag-theme.css",
     "/salt-ag-theme.css"
   ],
+  "scripts": {
+    "build": "yarn node ./scripts/build.mjs"
+  },
   "publishConfig": {
     "directory": "../../dist/salt-ds-ag-grid-theme",
     "provenance": true
