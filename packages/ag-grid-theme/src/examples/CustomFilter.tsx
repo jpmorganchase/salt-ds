@@ -3,7 +3,6 @@ import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import "../../uitk-ag-theme.css";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
