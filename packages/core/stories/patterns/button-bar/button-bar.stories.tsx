@@ -11,10 +11,16 @@ import {
   SplitLayout,
   StackLayout,
 } from "@salt-ds/core";
-import { DropdownNext as Dropdown } from "@salt-ds/lab";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DropdownNext as Dropdown,
+} from "@salt-ds/lab";
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 
 import { Meta } from "@storybook/react";
+import { useState } from "react";
 
 export default {
   title: "Patterns/Button Bar",
@@ -129,7 +135,7 @@ export const Stacked = () => {
 };
 
 const formFields = (
-  <FlowLayout style={{ width: "50vh" }}>
+  <FlowLayout style={{ width: "30vh" }}>
     <FormField>
       <FormFieldLabel>Field label</FormFieldLabel>
       <Input defaultValue="Value text" />
@@ -188,6 +194,20 @@ export const MultiStepForm = () => {
 };
 
 export const DialogForm = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const startItem = <Button variant="secondary">Save as draft</Button>;
 
   const endItem = (
@@ -202,18 +222,59 @@ export const DialogForm = () => {
   );
 
   return (
-    <StackLayout>
-      {formFields}
-      <SplitLayout
-        startItem={startItem}
-        endItem={endItem}
-        style={{ width: "100%" }}
-      />
-    </StackLayout>
+    <>
+      <Button onClick={handleRequestOpen}>Open default dialog</Button>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent>{formFields}</DialogContent>
+        <DialogActions>
+          <SplitLayout
+            startItem={startItem}
+            endItem={endItem}
+            style={{ width: "100%" }}
+          />
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
 export const SmallViewport = () => {
+  return (
+    <StackLayout >
+      {formFields}
+      <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
+        <FlexItem>
+          <Button variant="cta" style={{ width: "100%" }}>
+            Submit
+          </Button>
+        </FlexItem>
+        <FlexItem>
+          <Button style={{ width: "100%" }}>Cancel</Button>
+        </FlexItem>
+      </FlexLayout>
+    </StackLayout>
+  );
+};
+
+export const FixedPosition = () => {
+  return (
+    <StackLayout>
+      {formFields}
+      <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
+        <FlexItem>
+          <Button variant="cta" style={{ width: "100%" }}>
+            Submit
+          </Button>
+        </FlexItem>
+        <FlexItem>
+          <Button style={{ width: "100%" }}>Cancel</Button>
+        </FlexItem>
+      </FlexLayout>
+    </StackLayout>
+  );
+};
+
+export const InLinePosition = () => {
   return (
     <StackLayout>
       {formFields}
