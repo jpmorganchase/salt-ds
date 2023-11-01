@@ -1,4 +1,4 @@
-import {forwardRef, ComponentPropsWithoutRef, MouseEvent} from "react";
+import { forwardRef, ComponentPropsWithoutRef, MouseEvent } from "react";
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
