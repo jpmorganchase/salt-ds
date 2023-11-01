@@ -386,9 +386,7 @@ export const FixedPosition = () => {
   return (
     <div style={{ height: "20vh", overflow: "auto" }}>
       <BorderLayout>
-        <BorderItem position="north">
-          {tallForm}
-        </BorderItem>
+        <BorderItem position="north">{tallForm}</BorderItem>
         <BorderItem position="south" sticky>
           <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
             <FlexItem>
