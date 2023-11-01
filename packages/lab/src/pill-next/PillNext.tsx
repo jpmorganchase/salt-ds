@@ -9,7 +9,7 @@ import { PillNextCloseButton } from "./PillNextCloseButton";
 export interface PillNextProps extends ComponentPropsWithoutRef<"button"> {
   /* If true the pill will be disabled */
   disabled?: boolean;
-  onClose: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClose?: (event: MouseEvent<HTMLButtonElement>) => void;
   /* Pass an element to render an icon descriptor on the left of the label */
   icon?: React.ReactNode;
 }
