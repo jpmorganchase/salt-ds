@@ -35,5 +35,5 @@
 }
 
 .saltOption[aria-disabled="true"] {
-  color: vaR(--salt-text-primary-foreground-disabled);
+  color: var(--salt-text-primary-foreground-disabled);
 }
