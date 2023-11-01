@@ -1,7 +1,10 @@
 import {
+  BorderItem,
+  BorderLayout,
   Button,
   FlexItem,
   FlexLayout,
+  FlexLayoutProps,
   FlowLayout,
   FormField,
   FormFieldHelperText,
@@ -9,8 +12,10 @@ import {
   Input,
   Label,
   MultilineInput,
+  Panel,
   SplitLayout,
   StackLayout,
+  useResponsiveProp,
 } from "@salt-ds/core";
 import {
   Dialog,
@@ -21,7 +26,7 @@ import {
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 
 import { Meta } from "@storybook/react";
-import { useState } from "react";
+import { ElementType, useState } from "react";
 
 export default {
   title: "Patterns/Button Bar",
@@ -137,7 +142,7 @@ export const Stacked = () => {
 
 export const Responsive = () => {
   const startItem = (
-    <FlexLayout gap={1} direction={{ xs: "column", md: "row" }}>
+    <FlexLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
         <Button variant="cta" style={{ width: "100%" }}>
           Save
@@ -150,7 +155,7 @@ export const Responsive = () => {
   );
 
   const endItem = (
-    <FlexLayout gap={1} direction={{ xs: "column", md: "row" }}>
+    <FlexLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
         <Button variant="secondary" style={{ width: "100%" }}>
           <ExportIcon />
@@ -172,13 +177,72 @@ export const Responsive = () => {
         gap={1}
         startItem={startItem}
         endItem={endItem}
-        direction={{ xs: "column", md: "row" }}
+        direction={{ xs: "column", sm: "row" }}
         style={{ width: "100%" }}
       />
     </div>
   );
 };
 
+export const ResponsiveReverse = () => {
+  const primary = (
+    <FlexItem>
+      <Button style={{ width: "100%" }}>Primary</Button>
+    </FlexItem>
+  );
+
+  const secondary = (
+    <FlexItem>
+      <Button variant="secondary" style={{ width: "100%" }}>
+        Secondary
+      </Button>
+    </FlexItem>
+  );
+
+  const cta = (
+    <FlexItem>
+      <Button variant="cta" style={{ width: "100%" }}>
+        CTA
+      </Button>
+    </FlexItem>
+  );
+
+  const direction: FlexLayoutProps<ElementType>["direction"] =
+    useResponsiveProp({ xs: "column", sm: "row" }, "row");
+
+  const startItem = <FlexLayout gap={1}>{secondary}</FlexLayout>;
+
+  const endItem = (
+    <FlexLayout gap={1}>
+      {primary}
+      {cta}
+    </FlexLayout>
+  );
+
+  const columnStack = (
+    <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
+      {cta}
+      {primary}
+      {secondary}
+    </FlexLayout>
+  );
+
+  return (
+    <div style={{ width: "50vw" }}>
+      {direction === "column" ? (
+        columnStack
+      ) : (
+        <SplitLayout
+          startItem={startItem}
+          endItem={endItem}
+          style={{ width: "100%" }}
+          gap={1}
+          direction={direction}
+        />
+      )}
+    </div>
+  );
+};
 const formFields = (
   <FlowLayout style={{ width: "30vh" }}>
     <FormField>
@@ -320,25 +384,25 @@ const tallForm = (
 
 export const FixedPosition = () => {
   return (
-    <div style={{ height: "20vh", overflowY: "scroll" }}>
-      <Label>Window</Label>
-      <StackLayout>
-        {tallForm}
-        <FlexLayout
-          direction="column"
-          gap={1}
-          style={{ position: "sticky", bottom: "0", width: "100%" }}
-        >
-          <FlexItem>
-            <Button variant="cta" style={{ width: "100%" }}>
-              Submit
-            </Button>
-          </FlexItem>
-          <FlexItem>
-            <Button style={{ width: "100%" }}>Cancel</Button>
-          </FlexItem>
-        </FlexLayout>
-      </StackLayout>
+    <div style={{ height: "20vh", overflow: "auto" }}>
+      <BorderLayout>
+        <BorderItem position="north">
+          {tallForm}
+        </BorderItem>
+        <BorderItem position="south" sticky>
+          <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
+            <FlexItem>
+              <Button variant="secondary">Cancel</Button>
+            </FlexItem>
+            <FlexItem>
+              <Button>Previous</Button>
+            </FlexItem>
+            <FlexItem>
+              <Button variant="cta">Next</Button>
+            </FlexItem>
+          </FlexLayout>
+        </BorderItem>
+      </BorderLayout>
     </div>
   );
 };
