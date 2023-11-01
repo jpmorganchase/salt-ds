@@ -2,7 +2,7 @@ import { forwardRef, MouseEvent, ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { Button, makePrefixer, useButton } from "@salt-ds/core";
+import { Button, makePrefixer } from "@salt-ds/core";
 import pillCloseButtonCss from "./PillNextCloseButton.css";
 import { CloseSmallIcon } from "@salt-ds/icons";
 
@@ -18,21 +18,17 @@ const withButtonBaseName = makePrefixer("saltPillNextCloseButton");
 export const PillNextCloseButton = forwardRef<
   HTMLButtonElement,
   PillNextCloseButtonProps
->(function PillNextCloseButton({ disabled, onClose, ...rest }, ref) {
+>(function PillNextCloseButton({ disabled, onClose, onClick, ...rest }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-pill-next-close-button",
     css: pillCloseButtonCss,
     window: targetWindow,
   });
-  const { buttonProps } = useButton<HTMLButtonElement>({
-    disabled,
-    ...rest,
-  });
+
   // we do not want to spread tab index in this case because the button element
   // does not require tabindex="0" attribute
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { tabIndex, onClick, ...restCloseButtonProps } = buttonProps;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClose?.(event);
@@ -48,7 +44,7 @@ export const PillNextCloseButton = forwardRef<
       })}
       disabled={disabled}
       onClick={handleClick}
-      {...restCloseButtonProps}
+      {...rest}
     >
       <CloseSmallIcon />
     </Button>
