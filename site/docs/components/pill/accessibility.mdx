@@ -12,16 +12,19 @@ data:
 <KeyboardControls>
   <KeyboardControl keyOrCombos="Enter or Space">
     - When focus is on Pill, it is activated.
+    - When focus is on the close button, close Pill.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Tab">
 
     - Moves focus into Pill. Focus is set to the entire Pill.
 
     - When Pill has focus, move focus out of Pill to next component in tab order.
+    - When Closable Pill has focus, move focus into the close button.
 
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Shift + Tab">
     - When Pill has focus, move focus out of Pill to previous component in tab
     order.
+    - When the close button has focus, move focus back to Pill.
   </KeyboardControl>
 </KeyboardControls>
