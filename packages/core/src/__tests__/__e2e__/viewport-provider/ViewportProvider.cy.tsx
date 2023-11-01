@@ -75,4 +75,16 @@ describe("Given a ViewportProvider", () => {
       cy.get("@resizeObserver").should("have.been.calledOnce");
     });
   });
+
+  describe("WHEN ViewportProvider is initially mounted", () => {
+    it("THEN the viewport width should be set to the body width", () => {
+      cy.stub(document.body, "getBoundingClientRect").returns({ width: 1000 });
+      mount(
+        <ViewportProvider>
+          <TestComponent />
+        </ViewportProvider>
+      );
+      cy.findByText("1000");
+    });
+  });
 });

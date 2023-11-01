@@ -26,6 +26,7 @@ const ViewportProvider = ({ children }: ViewportProviderProps) => {
       );
 
       observer.observe(document.body);
+      setViewport(document.body.getBoundingClientRect().width);
     }
 
     return () => {
