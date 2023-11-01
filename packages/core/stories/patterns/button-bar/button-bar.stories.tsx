@@ -7,6 +7,7 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   Input,
+  Label,
   MultilineInput,
   SplitLayout,
   StackLayout,
@@ -134,6 +135,50 @@ export const Stacked = () => {
   );
 };
 
+export const Responsive = () => {
+  const startItem = (
+    <FlexLayout gap={1} direction={{ xs: "column", md: "row" }}>
+      <FlexItem>
+        <Button variant="cta" style={{ width: "100%" }}>
+          Save
+        </Button>
+      </FlexItem>
+      <FlexItem>
+        <Button style={{ width: "100%" }}>Cancel</Button>
+      </FlexItem>
+    </FlexLayout>
+  );
+
+  const endItem = (
+    <FlexLayout gap={1} direction={{ xs: "column", md: "row" }}>
+      <FlexItem>
+        <Button variant="secondary" style={{ width: "100%" }}>
+          <ExportIcon />
+          Export
+        </Button>
+      </FlexItem>
+      <FlexItem>
+        <Button variant="secondary" style={{ width: "100%" }}>
+          <ImportIcon />
+          Import
+        </Button>
+      </FlexItem>
+    </FlexLayout>
+  );
+
+  return (
+    <div style={{ width: "40vw" }}>
+      <SplitLayout
+        gap={1}
+        startItem={startItem}
+        endItem={endItem}
+        direction={{ xs: "column", md: "row" }}
+        style={{ width: "100%" }}
+      />
+    </div>
+  );
+};
+
 const formFields = (
   <FlowLayout style={{ width: "30vh" }}>
     <FormField>
@@ -208,15 +253,21 @@ export const DialogForm = () => {
     setOpen(false);
   };
 
-  const startItem = <Button variant="secondary">Save as draft</Button>;
+  const startItem = (
+    <Button variant="secondary" onClick={handleClose}>
+      Save as draft
+    </Button>
+  );
 
   const endItem = (
     <FlexLayout gap={1}>
       <FlexItem>
-        <Button>Cancel</Button>
+        <Button onClick={handleClose}>Cancel</Button>
       </FlexItem>
       <FlexItem>
-        <Button variant="cta">Submit</Button>
+        <Button variant="cta" onClick={handleClose}>
+          Submit
+        </Button>
       </FlexItem>
     </FlexLayout>
   );
@@ -256,28 +307,46 @@ export const SmallViewport = () => {
   );
 };
 
+const tallForm = (
+  <FlowLayout style={{ width: "30vh" }}>
+    {Array.from({ length: 6 }, (_, i) => i + 1).map((i) => (
+      <FormField key={i}>
+        <FormFieldLabel>Field label</FormFieldLabel>
+        <Input variant="secondary" defaultValue="Value text" />
+      </FormField>
+    ))}
+  </FlowLayout>
+);
+
 export const FixedPosition = () => {
   return (
-    <StackLayout>
-      <div style={{ height: "15vh", overflow: "scroll" }}>{formFields}</div>
-      <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
-        <FlexItem>
-          <Button variant="cta" style={{ width: "100%" }}>
-            Submit
-          </Button>
-        </FlexItem>
-        <FlexItem>
-          <Button style={{ width: "100%" }}>Cancel</Button>
-        </FlexItem>
-      </FlexLayout>
-    </StackLayout>
+    <div style={{ height: "20vh", overflowY: "scroll" }}>
+      <Label>Window</Label>
+      <StackLayout>
+        {tallForm}
+        <FlexLayout
+          direction="column"
+          gap={1}
+          style={{ position: "sticky", bottom: "0", width: "100%" }}
+        >
+          <FlexItem>
+            <Button variant="cta" style={{ width: "100%" }}>
+              Submit
+            </Button>
+          </FlexItem>
+          <FlexItem>
+            <Button style={{ width: "100%" }}>Cancel</Button>
+          </FlexItem>
+        </FlexLayout>
+      </StackLayout>
+    </div>
   );
 };
 
 export const InLinePosition = () => {
   return (
     <StackLayout>
-      {formFields}
+      {tallForm}
       <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
         <FlexItem>
           <Button variant="cta" style={{ width: "100%" }}>
