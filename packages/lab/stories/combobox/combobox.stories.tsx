@@ -16,7 +16,6 @@ import {
   shortColorData,
   statesData,
 } from "../assets/exampleData";
-import { source } from "axe-core";
 
 export default {
   title: "Lab/Combo Box",
@@ -157,9 +156,9 @@ export const TestSourceDelay = () => {
   );
 };
 
-export const Controlled = (args) => {
+export const Controlled: StoryFn<ComboBoxProps> = (args) => {
   const [inputValue, setInputValue] = useState("");
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
   return (
     <FormField label="Select a large city" style={{ maxWidth: 292 }}>
       <ComboBox
@@ -172,7 +171,7 @@ export const Controlled = (args) => {
         }}
         onSelectionChange={(e, item) => {
           setSelectedItem(item);
-          setInputValue(item);
+          setInputValue(item ?? "");
         }}
       />
     </FormField>
