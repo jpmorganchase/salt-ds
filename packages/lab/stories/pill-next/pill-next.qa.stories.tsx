@@ -23,7 +23,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       <PillNext className={className} icon={<FavoriteIcon />} onClick={noop}>
         With Icon Pill
       </PillNext>
-      <PillNext onClick={noop} className={className}>
+      <PillNext onClose={noop} className={className}>
         Closable Pill
       </PillNext>
       <PillNext onClick={noop} className={className}>
