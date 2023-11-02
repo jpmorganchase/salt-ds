@@ -16,6 +16,7 @@ import {
   shortColorData,
   statesData,
 } from "../assets/exampleData";
+import { source } from "axe-core";
 
 export default {
   title: "Lab/Combo Box",
@@ -152,6 +153,28 @@ export const TestSourceDelay = () => {
   return (
     <FormField label="Select something" style={{ maxWidth: 292 }}>
       <ComboBox source={source} />
+    </FormField>
+  );
+};
+
+export const Controlled = (args) => {
+  const [inputValue, setInputValue] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
+  return (
+    <FormField label="Select a large city" style={{ maxWidth: 292 }}>
+      <ComboBox
+        {...args}
+        onChange={(e, value) => setInputValue(value)}
+        value={inputValue}
+        source={shortColorData}
+        ListProps={{
+          selected: selectedItem,
+        }}
+        onSelectionChange={(e, item) => {
+          setSelectedItem(item);
+          setInputValue(item);
+        }}
+      />
     </FormField>
   );
 };
