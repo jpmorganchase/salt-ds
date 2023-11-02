@@ -82,43 +82,19 @@ describe("GIVEN a Pill", () => {
       cy.get("@clickSpy").should("have.callCount", 0);
       cy.get("@closeSpy").should("have.callCount", 1);
     });
-    it("WHEN interacting via keyboard", () => {
-      it("THEN should close on backspace", () => {
-        const closeSpy = cy.stub().as("closeSpy");
-        cy.mount(<PillNext onClose={closeSpy}>Closable Pill 1</PillNext>);
-        cy.findByRole("button", { name: "Closable Pill" }).focus();
-        cy.realPress("Tab");
-        cy.realPress("Backspace");
-        cy.findByTestId("pill-close-button").should("have.length", 0);
-        cy.get("@closeSpy").should("have.callCount", 1);
-      });
-      it("THEN should close on delete", () => {
-        const closeSpy = cy.stub().as("closeSpy");
-        cy.mount(<PillNext onClose={closeSpy}>Closable Pill 1</PillNext>);
-        cy.findByRole("button", { name: "Closable Pill" }).focus();
-        cy.realPress("Tab");
-        cy.realPress("Delete");
-        cy.findByTestId("pill-close-button").should("have.length", 0);
-        cy.get("@closeSpy").should("have.callCount", 1);
-      });
-      it("THEN should close on enter", () => {
-        const closeSpy = cy.stub().as("closeSpy");
-        cy.mount(<PillNext onClose={closeSpy}>Closable Pill 1</PillNext>);
-        cy.findByRole("button", { name: "Closable Pill" }).focus();
-        cy.realPress("Tab");
-        cy.realPress("Enter");
-        cy.findByTestId("pill-close-button").should("have.length", 0);
-        cy.get("@closeSpy").should("have.callCount", 1);
-      });
-      it("THEN should close on space", () => {
-        const closeSpy = cy.stub().as("closeSpy");
-        cy.mount(<PillNext onClose={closeSpy}>Closable Pill 1</PillNext>);
-        cy.findByRole("button", { name: "Closable Pill" }).focus();
-        cy.realPress("Tab");
-        cy.realPress(" ");
-        cy.findByTestId("pill-close-button").should("have.length", 0);
-        cy.get("@closeSpy").should("have.callCount", 1);
-      });
+    it("THEN should close on enter", () => {
+      const closeSpy = cy.stub().as("closeSpy");
+      cy.mount(<PillNext onClose={closeSpy}>Closable Pill</PillNext>);
+      cy.findByTestId("pill-close-button").focus();
+      cy.realPress("Enter");
+      cy.get("@closeSpy").should("have.callCount", 1);
+    });
+    it("THEN should close on space", () => {
+      const closeSpy = cy.stub().as("closeSpy");
+      cy.mount(<PillNext onClose={closeSpy}>Closable Pill</PillNext>);
+      cy.findByTestId("pill-close-button").focus();
+      cy.realPress(" ");
+      cy.get("@closeSpy").should("have.callCount", 1);
     });
   });
 

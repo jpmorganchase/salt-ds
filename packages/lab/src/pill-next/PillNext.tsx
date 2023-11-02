@@ -2,9 +2,9 @@ import { forwardRef, ComponentPropsWithoutRef, MouseEvent } from "react";
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer, useButton } from "@salt-ds/core";
+import { Button, makePrefixer, useButton, useDensity } from "@salt-ds/core";
 import pillCss from "./PillNext.css";
-import { PillNextCloseButton } from "./PillNextCloseButton";
+import { CloseIcon, CloseSmallIcon } from "@salt-ds/icons";
 
 export interface PillNextProps extends ComponentPropsWithoutRef<"button"> {
   /* If true the pill will be disabled */
@@ -27,6 +27,8 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
       css: pillCss,
       window: targetWindow,
     });
+    const density = useDensity();
+    const closeIcon = density === "high" ? <CloseSmallIcon /> : <CloseIcon />;
     const { buttonProps, active } = useButton<HTMLButtonElement>({
       disabled,
       ...restProps,
@@ -36,13 +38,17 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { tabIndex, ...restButtonProps } = buttonProps;
 
+    const handleClose = (event: MouseEvent<HTMLButtonElement>) => {
+      onClose?.(event);
+    };
+
     return (
-      <div className={withBaseName("container")}>
+      <div className={withBaseName()}>
         <button
           data-testid="pill"
           ref={ref}
           className={clsx(
-            withBaseName(),
+            withBaseName("action"),
             withBaseName("clickable"),
             {
               [withBaseName("active")]: active,
@@ -57,7 +63,14 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
           <span className={withBaseName("label")}>{children}</span>
         </button>
         {onClose && (
-          <PillNextCloseButton disabled={disabled} onClose={onClose} />
+          <Button
+            data-testid="pill-close-button"
+            className={withBaseName("close-button")}
+            disabled={disabled}
+            onClick={handleClose}
+          >
+            {closeIcon}
+          </Button>
         )}
       </div>
     );

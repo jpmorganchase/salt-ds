@@ -1,5 +1,11 @@
 /* Styles applied to the root element */
+
 .saltPillNext {
+  display: flex;
+  max-width: 100%;
+}
+
+.saltPillNext-action {
   --pillNext-background: var(--salt-actionable-primary-background);
   --pillNext-background-active: var(--salt-actionable-primary-background-active);
   --pillNext-background-disabled: var(--salt-actionable-primary-background-disabled);
@@ -10,7 +16,7 @@
   --pillNext-text-color-disabled: var(--salt-actionable-primary-foreground-disabled);
 }
 
-.saltPillNext {
+.saltPillNext-action {
   appearance: none;
   -webkit-appearance: none;
   display: inline-flex;
@@ -29,13 +35,8 @@
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-label-lineHeight);
+  line-height: var(--salt-text-lineHeight);
   min-width: 4em;
-}
-
-.saltPillNext-container {
-  display: flex;
-  max-width: 100%;
 }
 
 .saltPillNext-label {
@@ -45,7 +46,12 @@
   white-space: nowrap;
 }
 
-.saltPillNext .saltIcon {
+.saltPillNext-close-button {
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-padding: var(--salt-spacing-50);
+}
+
+.saltPillNext-action .saltIcon {
   --saltIcon-color: currentColor;
 }
 
@@ -78,15 +84,15 @@
 }
 
 /* Style applied to Pill on focus */
-.saltPillNext:focus-visible {
+.saltPillNext-action:focus-visible {
   outline: var(--salt-focused-outline);
   /* increase index by one so the focus ring sits on top of the sibling button */
   z-index: var(--salt-zIndex-default);
 }
 
 /* Style applied to Pill when disabled */
-.saltPillNext.saltPillNext-disabled,
-.saltPillNext.saltPillNext-disabled:hover {
+.saltPillNext-action.saltPillNext-disabled,
+.saltPillNext-action.saltPillNext-disabled:hover {
   color: var(--pillNext-text-color-disabled);
   background: var(--pillNext-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);

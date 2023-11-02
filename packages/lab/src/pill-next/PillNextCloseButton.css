@@ -1,4 +1,0 @@
-.saltPillNextCloseButton {
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --saltButton-padding: var(--salt-spacing-50);
-}
