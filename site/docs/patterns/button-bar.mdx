@@ -1,0 +1,47 @@
+---
+title: Button Bar
+layout: DetailPattern
+aliases:
+  - /salt/patterns/button-bar
+---
+
+Button Bar is a pattern that displays possible actions related to a task for users to take.
+
+## Pattern scope
+
+The pattern is a set of button groups that displays possible actions when a user reaches the end of a task. You can use it to provide consistent design when implementing actionable interactions within pages or dialogs across your applications.
+
+We provide design guidance of how you can use Salt button and Layout components and Button Bar template to achieve the pattern. Implementation examples can also be seen in the storybook. 
+
+## When to use it
+
+Use the pattern when your user needs to do next actions when reaches the end of a task in a page or a dialog, such as: 
+- navigating to previous or next steps, 
+- submitting a form, 
+- or cancelling changes. 
+
+## What it contains 
+
+The pattern consists a set of multiple buttons that show relevant actions to a task include:
+
+- **Affirmative actions**: The primary action is often affirmative and is displayed as a CTA button, allowing users to proceed with or complete their current task. Examples: Continue, Save, Submit 
+- **Dismissive actions**: This option is displayed as a primary button that’s less prominent than the affirmative action, and returns users to the previous screen. Examples: Cancel, Dismiss 
+- **Secondary actions**: Users can proceed with a related task or function that’s lower in priority. It’s usually displayed as a secondary button. Examples: Import, Export 
+- **Destructive actions**: A permanent loss of data may result from this action, therefore you should ensure it’s confirmed by the user. Examples: Delete, Reset 
+
+## Button options 
+
+There are three button variants to choose from. Choosing the correct button is dependent on the context and is ultimately the choice of the application team. However, we recommend following these guidelines for consistent design:
+
+**Call to Action (CTA)** 
+
+- Use for the most desired path you are intending the user to take. 
+- In almost all cases, your scenario should have no less or no more than one CTA so the desired path is clear.
+
+**Primary**
+- Use for the alternate path you are offering the user. 
+- There can be multiple alternate paths that are equally weighted, resulting in more than one primary button in a scenario.
+
+**Secondary**
+- Use for the tertiary path you are offering the user. 
+- There can be multiple tertiary paths that are equally weighted, resulting in more than one secondary button on a scenario.
