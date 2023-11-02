@@ -91,7 +91,7 @@ export const DestructiveActions = () => {
   const startItem = (
     <FlexLayout gap={1}>
       <FlexItem>
-        <Button variant="cta">Save changes</Button>
+        <Button variant="cta">Save</Button>
       </FlexItem>
       <FlexItem>
         <Button>Cancel</Button>
@@ -243,8 +243,9 @@ export const ResponsiveReverse = () => {
     </div>
   );
 };
+
 const formFields = (
-  <FlowLayout style={{ width: "30vh" }}>
+  <>
     <FormField>
       <FormFieldLabel>Field label</FormFieldLabel>
       <Input defaultValue="Value text" />
@@ -264,12 +265,12 @@ const formFields = (
       <MultilineInput bordered defaultValue="Value text" />
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
-  </FlowLayout>
+  </>
 );
 
 export const SingleStepForm = () => {
   return (
-    <StackLayout>
+    <StackLayout style={{ width: "220px" }}>
       {formFields}
       <FlexLayout style={{ width: "100%" }} gap={1}>
         <FlexItem>
@@ -285,7 +286,7 @@ export const SingleStepForm = () => {
 
 export const MultiStepForm = () => {
   return (
-    <StackLayout>
+    <StackLayout style={{ width: "220px" }}>
       {formFields}
       <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
         <FlexItem>
@@ -319,7 +320,7 @@ export const DialogForm = () => {
 
   const startItem = (
     <Button variant="secondary" onClick={handleClose}>
-      Save as draft
+      Save
     </Button>
   );
 
@@ -339,7 +340,11 @@ export const DialogForm = () => {
   return (
     <>
       <Button onClick={handleRequestOpen}>Open default dialog</Button>
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        style={{ width: "268px" }}
+      >
         <DialogContent>{formFields}</DialogContent>
         <DialogActions>
           <SplitLayout
@@ -350,75 +355,5 @@ export const DialogForm = () => {
         </DialogActions>
       </Dialog>
     </>
-  );
-};
-
-export const SmallViewport = () => {
-  return (
-    <StackLayout>
-      {formFields}
-      <FlexLayout gap={1} style={{ width: "100%" }}>
-        <FlexItem basis="50%">
-          <Button variant="cta" style={{ width: "100%" }}>
-            Submit
-          </Button>
-        </FlexItem>
-        <FlexItem basis="50%">
-          <Button style={{ width: "100%" }}>Cancel</Button>
-        </FlexItem>
-      </FlexLayout>
-    </StackLayout>
-  );
-};
-
-const tallForm = (
-  <FlowLayout style={{ width: "30vh" }}>
-    {Array.from({ length: 6 }, (_, i) => i + 1).map((i) => (
-      <FormField key={i}>
-        <FormFieldLabel>Field label</FormFieldLabel>
-        <Input variant="secondary" defaultValue="Value text" />
-      </FormField>
-    ))}
-  </FlowLayout>
-);
-
-export const FixedPosition = () => {
-  return (
-    <div style={{ height: "20vh", overflow: "auto" }}>
-      <BorderLayout>
-        <BorderItem position="north">{tallForm}</BorderItem>
-        <BorderItem position="south" sticky>
-          <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
-            <FlexItem>
-              <Button variant="secondary">Cancel</Button>
-            </FlexItem>
-            <FlexItem>
-              <Button>Previous</Button>
-            </FlexItem>
-            <FlexItem>
-              <Button variant="cta">Next</Button>
-            </FlexItem>
-          </FlexLayout>
-        </BorderItem>
-      </BorderLayout>
-    </div>
-  );
-};
-
-export const InLinePosition = () => {
-  return (
-    <StackLayout>
-      {tallForm}
-      <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
-        <FlexItem>
-          <Button variant="cta" style={{ width: "100%" }}>
-            Submit
-          </Button>
-        </FlexItem>
-        <FlexItem>
-          <Button style={{ width: "100%" }}>Cancel</Button>
-        </FlexItem>
-      </FlexLayout>
-    </StackLayout>
   );
 };
