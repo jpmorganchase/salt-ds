@@ -337,10 +337,18 @@ export const useCombobox = <
       const newValue = evt.target.value;
       setValue(newValue);
 
-      if (newValue && newValue.trim().length) {
+      if (newValue?.trim().length) {
         setFilterPattern(newValue);
       } else {
         setFilterPattern(undefined);
+        if (selectedRef.current !== null) {
+          onSelectionChange?.(
+            evt,
+            null as Selection extends SingleSelectionStrategy
+              ? Item | null
+              : Item[]
+          );
+        }
         selectedRef.current = null as selectedCollectionType;
       }
 
