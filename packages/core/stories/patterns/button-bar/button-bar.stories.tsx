@@ -158,8 +158,7 @@ export const Responsive = () => {
     <FlexLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
         <Button variant="secondary" style={{ width: "100%" }}>
-          <ImportIcon />
-          Seconday
+          Secondary
         </Button>
       </FlexItem>
     </FlexLayout>
