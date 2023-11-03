@@ -35,7 +35,7 @@ const ParentChildRows = (props: AgGridReactProps) => {
 };
 
 ParentChildRows.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
+  chromatic: { disableSnapshot: false, delay: 1000 },
 };
 
 export default ParentChildRows;
