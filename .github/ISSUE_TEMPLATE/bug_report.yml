@@ -24,6 +24,7 @@ body:
         - "Lab (@salt-ds/lab)"
         - "Data Grid (@salt-ds/data-grid)"
         - "AG Grid Theme (@salt-ds/ag-grid-theme)"
+        - "Website"
     validations:
       required: true
   - type: textarea
