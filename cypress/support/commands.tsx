@@ -163,18 +163,4 @@ Cypress.on("uncaught:exception", (err) => {
   }
 });
 
-Cypress.Screenshot.defaults({
-  capture: "viewport",
-  onBeforeScreenshot($el) {
-    // turn off pointer events for everything in the body element
-    // to avoid mouse over on ag grid theme screenshots
-    // used suggestion from here https://github.com/cypress-io/cypress/issues/23300
-    document.querySelector("body")!.style.pointerEvents = "none";
-  },
-  onAfterScreenshot($el, props) {
-    // restore default pointer event behavior
-    document.querySelector("body")!.style.pointerEvents = "initial";
-  },
-});
-
 export {};

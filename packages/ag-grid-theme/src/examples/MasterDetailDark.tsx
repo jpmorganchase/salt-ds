@@ -68,7 +68,7 @@ const MasterDetailDark = (props: AgGridReactProps) => {
 };
 
 MasterDetailDark.parameters = {
-  chromatic: { disableSnapshot: false, delay: 500 },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default MasterDetailDark;

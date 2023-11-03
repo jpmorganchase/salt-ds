@@ -71,7 +71,7 @@ const columnsWithGrouping = (
 ];
 
 ColumnGroup.parameters = {
-  chromatic: { disableSnapshot: false, delay: 5000 },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default ColumnGroup;

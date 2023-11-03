@@ -162,7 +162,7 @@ const ContextMenu = (props: AgGridReactProps) => {
 };
 
 ContextMenu.parameters = {
-  chromatic: { disableSnapshot: false, delay: 500 },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default ContextMenu;

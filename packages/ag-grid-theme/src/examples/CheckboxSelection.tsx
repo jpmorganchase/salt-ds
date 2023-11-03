@@ -28,7 +28,7 @@ const CheckboxSelection = (props: AgGridReactProps) => {
 };
 
 CheckboxSelection.parameters = {
-  chromatic: { disableSnapshot: false, delay: 1500 },
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default CheckboxSelection;
