@@ -2,9 +2,9 @@ import { forwardRef, ComponentPropsWithoutRef, MouseEvent } from "react";
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { Button, makePrefixer, useButton, useDensity } from "@salt-ds/core";
+import { Button, makePrefixer, useButton } from "@salt-ds/core";
 import pillCss from "./PillNext.css";
-import { CloseIcon, CloseSmallIcon } from "@salt-ds/icons";
+import { CloseIcon } from "@salt-ds/icons";
 
 export interface PillNextProps extends ComponentPropsWithoutRef<"button"> {
   /* If true the pill will be disabled */
@@ -27,8 +27,6 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
       css: pillCss,
       window: targetWindow,
     });
-    const density = useDensity();
-    const closeIcon = density === "high" ? <CloseSmallIcon /> : <CloseIcon />;
     const { buttonProps, active } = useButton<HTMLButtonElement>({
       disabled,
       ...restProps,
@@ -37,10 +35,6 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
     // does not require tabindex="0" attribute
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { tabIndex, ...restButtonProps } = buttonProps;
-
-    const handleClose = (event: MouseEvent<HTMLButtonElement>) => {
-      onClose?.(event);
-    };
 
     return (
       <div className={withBaseName()}>
@@ -67,9 +61,9 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
             data-testid="pill-close-button"
             className={withBaseName("close-button")}
             disabled={disabled}
-            onClick={handleClose}
+            onClick={onClose}
           >
-            {closeIcon}
+            <CloseIcon />
           </Button>
         )}
       </div>
