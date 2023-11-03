@@ -120,7 +120,7 @@ export const DestructiveActions = () => {
 
 export const Stacked = () => {
   return (
-    <div style={{ width: "20vw" }}>
+    <div style={{ width: "200px" }}>
       <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
         <FlexItem>
           <Button variant="cta" style={{ width: "100%" }}>
@@ -270,7 +270,7 @@ const formFields = (
 
 export const SingleStepForm = () => {
   return (
-    <StackLayout style={{ width: "220px" }}>
+    <StackLayout style={{ width: "330px" }}>
       {formFields}
       <FlexLayout style={{ width: "100%" }} gap={1}>
         <FlexItem>
@@ -286,7 +286,7 @@ export const SingleStepForm = () => {
 
 export const MultiStepForm = () => {
   return (
-    <StackLayout style={{ width: "220px" }}>
+    <StackLayout style={{ width: "330px" }}>
       {formFields}
       <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
         <FlexItem>
@@ -343,7 +343,7 @@ export const DialogForm = () => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        style={{ width: "268px" }}
+        style={{ width: "378px" }}
       >
         <DialogContent>{formFields}</DialogContent>
         <DialogActions>
