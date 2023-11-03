@@ -5,13 +5,16 @@ aliases:
   - /salt/patterns/button-bar
 ---
 
-Button Bar is a pattern that displays possible actions related to a task for users to take.
+Button Bar is a pattern that displays possible actions for users to take when they reach the end of a task. You can use it to provide consistent design when implementing actionable interactions within pages or dialogs across your applications.
 
-## Pattern scope
+  <Diagram
+    src="/img/patterns/button-bar/with-secondary.png"
+    alt="Example button bar, with CTA to the left then primary, on the right side there are two secondary buttons"
+    contentPosition="top"
+    border
+  />
 
-The pattern is a set of button groups that displays possible actions when a user reaches the end of a task. You can use it to provide consistent design when implementing actionable interactions within pages or dialogs across your applications.
-
-We provide design guidance of how you can use Salt button and Layout components and Button Bar template to achieve the pattern. Implementation examples can also be seen in the storybook. 
+We provide design guidance of how you can use Salt Button and Layout components and Button Bar template to achieve the pattern. Implementation examples can also be seen in the storybook.
 
 ## When to use it
 
@@ -20,28 +23,119 @@ Use the pattern when your user needs to do next actions when reaches the end of 
 - submitting a form, 
 - or cancelling changes. 
 
-## What it contains 
+## How to build it
 
-The pattern consists a set of multiple buttons that show relevant actions to a task include:
-
-- **Affirmative actions**: The primary action is often affirmative and is displayed as a CTA button, allowing users to proceed with or complete their current task. Examples: Continue, Save, Submit 
-- **Dismissive actions**: This option is displayed as a primary button that’s less prominent than the affirmative action, and returns users to the previous screen. Examples: Cancel, Dismiss 
-- **Secondary actions**: Users can proceed with a related task or function that’s lower in priority. It’s usually displayed as a secondary button. Examples: Import, Export 
-- **Destructive actions**: A permanent loss of data may result from this action, therefore you should ensure it’s confirmed by the user. Examples: Delete, Reset 
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/button-bar/how-to-build.png",
+      alt: "Image of a button bar labelled as a split layout",
+    },
+    {
+      src: "/img/patterns/button-bar/how-to-build-spacing.png",
+      alt: "Image of a button bar labelled as a split layout with spacing shown",
+    },
+  ]}
+  label="Show spacing"
+/>
 
 ## Button options 
 
 There are three button variants to choose from. Choosing the correct button is dependent on the context and is ultimately the choice of the application team. However, we recommend following these guidelines for consistent design:
 
-**Call to Action (CTA)** 
-
-- Use for the most desired path you are intending the user to take. 
+**Call to Action (CTA)**
+- Use for the most desired path you are intending the user to take.
 - In almost all cases, your scenario should have no less or no more than one CTA so the desired path is clear.
+- This is commonly an affirmative action allowing users to proceed or complete the task, such as Continue, Save, Submit.
 
 **Primary**
-- Use for the alternate path you are offering the user. 
+- Use for the alternate path you are offering the user.
 - There can be multiple alternate paths that are equally weighted, resulting in more than one primary button in a scenario.
+- Is also commonly used as a dismissive action alongside the affirmative (CTA) action, such as Cancel, Dismiss.
 
 **Secondary**
-- Use for the tertiary path you are offering the user. 
+- Use for the tertiary path you are offering the user.
 - There can be multiple tertiary paths that are equally weighted, resulting in more than one secondary button on a scenario.
+- Commonly a related task or function that’s lower priority for the task, such as Import, Export.
+- Also used to signify a destructive action which may result in a permanent loss of data, which is commonly followed by user confirmation (e.g., a dialog), such as Delete, Reset.
+
+Remember to use hierarchy when making your button choices, much like you would following a type ramp. In example one below, “Cancel” is the alternate path and uses a primary button because there are only two options. However, in example two, “Cancel” uses the secondary button because there are three actions available to the user, with this one being tertiary and the least desired option.
+
+<Diagrams>
+  <Diagram
+    src="/img/patterns/button-bar/ex-1.png"
+    alt="Example showing button bar with submit button on left as CTA, and cancel as primary to the right of submit"
+    contentPosition="top"
+  >
+    ### Example 1
+    - Primary action “Submit” uses CTA button.
+    - Alternate action “Cancel” uses primary button.
+    </Diagram>
+  <Diagram
+    src="/img/patterns/button-bar/ex-2.png"
+    alt="Example showing button bar with next button on right as CTA, previous as primary to the left of next, and cancel as secondary to the left of cancel"
+    contentPosition="top"
+  >
+    ### Example 2
+    - Primary action “Next” uses CTA button.
+    - Alternate action “Previous” uses primary button (order follows sequential forms).
+    - Tertiary action “Cancel” uses secondary button.
+  </Diagram>
+</Diagrams>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - Provide only one CTA button for a given task—the action that allows the user to complete the task.
+</ExampleContainer>
+
+## Button order
+
+The position of actions (CTA, primary, secondary buttons) is determined by the type of scenarios and the container.
+
+<Diagrams>
+  <Diagram
+    src="/img/patterns/button-bar/default-order.png"
+    alt="Example showing default button bar order, submit CTA on the left and cancel primary to the right of submit"
+    contentPosition="top"
+    border
+  >
+    #### Default/Single-step form
+    - Core actions are grouped on the left.
+    - Follows an F-pattern reading model, to easily scan down the left edge through the content to the actions.
+  </Diagram>
+  <Diagram
+    src="/img/patterns/button-bar/multi-step-form.png"
+    alt="Example showing form with button bar underneath, the core actions are grouped on the right."
+    contentPosition="top"
+    border
+  >
+    #### Multi-step form
+    - Core actions are grouped on the right.
+    - ‘Next’ always positioned right of ‘Previous’ and ‘Cancel’ to reflect the direction of the steps.
+  </Diagram>
+  <Diagram
+    src="/img/patterns/button-bar/dialog.png"
+    alt="Example showing a dialog with a form and button bar underneath, the core actions are grouped on the right."
+    contentPosition="top"
+    border
+  >
+    #### Dialog
+    - Core actions are always displayed on the right.
+    - Follows a Z-pattern reading model, where actions are the last focal point in the dialog.
+  </Diagram>
+  <Diagram
+    src="/img/patterns/button-bar/small-viewport.png"
+    alt="Example showing a form with two buttons that fill the width"
+    contentPosition="top"
+    border
+  >
+    #### Small viewport
+    In a small viewport (below the xs breakpoint), actions can fill the width for a cleaner layout if button width doesn’t need to drastically increase.
+  </Diagram>
+</Diagrams>
+
+<ExampleContainer type="positive">
+  - Core onward actions for the form are grouped together to ensure they remain accessible on browser zoom (e.g., Previous, Next, Cancel, or Submit, Cancel).
+  - Secondary actions which aren’t core to the workflow should be displayed at the opposite end of the button bar.
+</ExampleContainer>
+
+## Button bar position
