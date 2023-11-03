@@ -21,6 +21,7 @@ export { default as Pagination } from "./Pagination";
 export { default as ParentChildRows } from "./ParentChildRows";
 export { default as RowGrouping } from "./RowGrouping";
 export { default as RowGroupPanel } from "./RowGroupPanel";
+export { default as SideBar } from "./SideBar";
 export { default as StatusBar } from "./StatusBar";
 export { default as StatusBarDark } from "./StatusBarDark";
 export { default as VariantSecondary } from "./VariantSecondary";
