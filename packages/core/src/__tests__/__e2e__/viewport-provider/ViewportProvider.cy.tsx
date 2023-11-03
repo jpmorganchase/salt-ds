@@ -78,6 +78,7 @@ describe("Given a ViewportProvider", () => {
 
   describe("WHEN ViewportProvider is initially mounted", () => {
     it("THEN the viewport width should be set to the body width", () => {
+      cy.viewport(1000, 800);
       cy.stub(document.body, "getBoundingClientRect").returns({ width: 1000 });
       mount(
         <ViewportProvider>
