@@ -85,10 +85,12 @@ describe("Given a ViewportProvider", () => {
           <TestComponent />
         </ViewportProvider>
       );
-      cy.get('body').invoke('text').then((text) => {
-        cy.log(`Found text: ${text}`);
-      });
-      
+      cy.get("body")
+        .invoke("text")
+        .then((text) => {
+          cy.log(`Found text: ${text}`);
+        });
+
       cy.findByText("1000");
     });
   });
