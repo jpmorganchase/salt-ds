@@ -145,11 +145,11 @@ export const Responsive = () => {
     <FlexLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
         <Button variant="cta" style={{ width: "100%" }}>
-          Save
+          CTA
         </Button>
       </FlexItem>
       <FlexItem>
-        <Button style={{ width: "100%" }}>Cancel</Button>
+        <Button style={{ width: "100%" }}>Primary</Button>
       </FlexItem>
     </FlexLayout>
   );
@@ -158,14 +158,8 @@ export const Responsive = () => {
     <FlexLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
         <Button variant="secondary" style={{ width: "100%" }}>
-          <ExportIcon />
-          Export
-        </Button>
-      </FlexItem>
-      <FlexItem>
-        <Button variant="secondary" style={{ width: "100%" }}>
           <ImportIcon />
-          Import
+          Seconday
         </Button>
       </FlexItem>
     </FlexLayout>
@@ -228,7 +222,7 @@ export const ResponsiveReverse = () => {
   );
 
   return (
-    <div style={{ width: "50vw" }}>
+    <div style={{ width: "40vw" }}>
       {direction === "column" ? (
         columnStack
       ) : (
