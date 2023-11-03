@@ -147,15 +147,17 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-cell {
   line-height: calc(var(--ag-line-height) - 1px);
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
+  display: flex;
+  align-items: center;
 }
 
 div[class*="ag-theme-salt"] .ag-cell.editable-cell,
 div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell {
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
-  text-align: right;
+  justify-content: flex-end;
 }
 div[class*="ag-theme-salt"] .ag-cell.numeric-cell {
-  text-align: right;
+  justify-content: flex-end;
 }
 div[class*="ag-theme-salt"] .ag-has-focus .ag-cell.editable-cell:focus,
 div[class*="ag-theme-salt"] .ag-has-focus .editable-numeric-cell:focus {
