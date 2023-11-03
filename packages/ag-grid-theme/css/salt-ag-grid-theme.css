@@ -16,7 +16,7 @@ div[class*="ag-theme-salt"] {
   --ag-header-column-separator-color: var(--salt-palette-neutral-secondary-separator);
   --ag-header-column-separator-display: block;
   --ag-header-column-separator-height: var(--salt-text-fontSize);
-  --ag-header-column-separator-width: 1px;
+  --ag-header-column-separator-width: var(--salt-size-border);
   --ag-header-foreground-color: var(--salt-text-primary-foreground);
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-icon-size: var(--salt-icon-size-base);
@@ -147,21 +147,15 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-cell {
   line-height: calc(var(--ag-line-height) - 1px);
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
-  display: flex;
-  align-items: center;
-}
-
-div[class*="ag-theme-salt"] .ag-cell.ag-cell-inline-editing {
-  padding: 0;
 }
 
 div[class*="ag-theme-salt"] .ag-cell.editable-cell,
 div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell {
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
-  justify-content: flex-end;
+  text-align: right;
 }
 div[class*="ag-theme-salt"] .ag-cell.numeric-cell {
-  justify-content: flex-end;
+  text-align: right;
 }
 div[class*="ag-theme-salt"] .ag-has-focus .ag-cell.editable-cell:focus,
 div[class*="ag-theme-salt"] .ag-has-focus .editable-numeric-cell:focus {
@@ -247,7 +241,7 @@ div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="
   border: none;
 }
 
-/* // CHECKBOX */
+/* CHECKBOX */
 
 div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper {
   border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
@@ -260,7 +254,7 @@ div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked {
   border-color: var(--salt-selectable-borderColor-selected);
 }
 
-/* // BUTTON */
+/* BUTTON */
 
 div[class*="ag-theme-salt"] .ag-standard-button {
   background: var(--salt-actionable-secondary-background);
@@ -314,7 +308,7 @@ div[class*="ag-theme-salt"] input[class^="ag-"][type="button"]:focus {
 }
 
 div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
-  border: 1px solid var(--salt-palette-neutral-primary-border);
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-palette-neutral-primary-border);
   border-radius: 0;
 }
 
