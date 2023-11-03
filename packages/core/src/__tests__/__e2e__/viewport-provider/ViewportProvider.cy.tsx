@@ -85,7 +85,6 @@ describe("Given a ViewportProvider", () => {
           <TestComponent />
         </ViewportProvider>
       );
-      
       cy.findByText("1000");
     });
   });
