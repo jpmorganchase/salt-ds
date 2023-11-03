@@ -4,6 +4,11 @@
   gap: var(--salt-spacing-100);
   position: relative;
   cursor: var(--salt-selectable-cursor-hover);
+
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
 }
 
 /* Styles applied to root component if `disabled={true}` */
