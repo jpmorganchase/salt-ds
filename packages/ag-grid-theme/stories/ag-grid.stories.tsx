@@ -33,6 +33,7 @@ export {
   RowGrouping,
   RowGroupPanel,
   PinnedRows,
+  SideBar,
   StatusBar,
   StatusBarDark,
   VariantSecondary,
