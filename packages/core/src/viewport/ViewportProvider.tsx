@@ -19,6 +19,7 @@ const ViewportProvider = ({ children }: ViewportProviderProps) => {
     let observer: ResizeObserver | null = null;
 
     if (noExistingViewport) {
+      setViewport(document.body.getBoundingClientRect().width);
       observer = new ResizeObserver(
         (observerEntries: ResizeObserverEntry[]) => {
           setViewport(observerEntries[0].contentRect.width);
@@ -26,7 +27,6 @@ const ViewportProvider = ({ children }: ViewportProviderProps) => {
       );
 
       observer.observe(document.body);
-      setViewport(document.body.getBoundingClientRect().width);
     }
 
     return () => {
