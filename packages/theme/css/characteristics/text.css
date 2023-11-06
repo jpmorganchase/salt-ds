@@ -19,6 +19,7 @@
   --salt-text-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
   /* Notation */
+  --salt-text-notation-fontFamily: var(--salt-typography-fontFamily);
   --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);

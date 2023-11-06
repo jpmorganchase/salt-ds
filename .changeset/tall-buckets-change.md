@@ -111,6 +111,7 @@ Any theme customization, the following tokens will be impacted. Update them as p
 - New tokens added to `text` characteristics
 
 ```diff
++ --salt-text-notation-fontFamily: var(--salt-typography-fontFamily);
 + --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
 + --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 ```

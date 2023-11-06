@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-- Updated Button component CSS token values, visual changes expected. Font weight for CTA and Primary  variants changes from bold to semibold
+- Updated Button component CSS token values, visual changes expected. Font weight for CTA and Primary variants changes from bold to semibold
 
 ```diff
 - --button-fontWeight: var(--salt-actionable-cta-fontWeight);
@@ -70,3 +70,5 @@ In `PillCheckbox.css`, this token has been renamed:
 + border-color: var(--saltCard-borderColor-disabled, var(--salt-container-primary-borderColor-disabled));
 
 ```
+
+- Added `Action` and `Notation` variant to `Text` component. They can also be referenced in Text's `styleAs` prop
