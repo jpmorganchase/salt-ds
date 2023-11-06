@@ -14,7 +14,8 @@
     "/salt-ag-theme.css"
   ],
   "scripts": {
-    "build": "yarn node ./scripts/build.mjs"
+    "build": "yarn node ./scripts/build.mjs",
+    "build-watch": "yarn node ./scripts/build.mjs --watch"
   },
   "publishConfig": {
     "directory": "../../dist/salt-ds-ag-grid-theme",
