@@ -14,8 +14,6 @@ esbuild
     absWorkingDir: path.resolve(__dirname, ".."),
     entryPoints: [
       "index.css",
-      "css/salt-ag-grid-theme.css",
-      "css/salt-icons.css",
     ],
     assetNames: "[dir]/[name]",
     outdir: buildFolder,
