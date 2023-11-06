@@ -42,6 +42,9 @@
     "provenance": true
   },
   "scripts": {
-    "build:css": "yarn node ./scripts/build.mjs"
-  }
+    "bundle:css": "yarn node ./scripts/build.mjs"
+  },
+  "files": [
+    "css"
+  ]
 }
