@@ -29,13 +29,17 @@
 .saltFormFieldLegacy {
   border: 0;
   display: inline-grid;
-  font-size: var(--saltFormFieldLegacy-fontSize, var(--salt-text-fontSize));
   margin: var(--saltFormFieldLegacy-margin, 0);
   padding: 0;
   position: relative;
   min-width: 0;
   vertical-align: top;
   width: var(--saltFormFieldLegacy-width, auto);
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--saltFormFieldLegacy-fontSize, var(--salt-text-fontSize));
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
 }
 
 /* Class applied to the root element on hover */
