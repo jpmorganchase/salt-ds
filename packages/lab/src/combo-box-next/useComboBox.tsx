@@ -17,7 +17,6 @@ interface UseComboBoxProps {
 export const useComboBox = ({
   defaultInputValue,
   onFocus,
-  onBlur,
   onMouseOver,
   onKeyDown,
   inputValue: inputValueProp,
@@ -64,23 +63,21 @@ export const useComboBox = ({
   }, [selectedItem]);
 
   const focusHandler = (event: FocusEvent<HTMLInputElement>) => {
-    setOpen(true);
     listFocusHandler(event);
     onFocus?.(event);
   };
 
-  const blurHandler = (event: FocusEvent<HTMLInputElement>) => {
-    setOpen(false);
-    if (!selectedItem) {
-      setSelected(undefined);
-      setHighlightedItem(undefined);
-    }
-    onBlur?.(event);
+  const mouseDownHandler = () => {
+    setOpen(!open);
   };
 
   const mouseOverHandler = (event: SyntheticEvent<HTMLElement>) => {
     setHighlightedItem(event.currentTarget.dataset.value);
     onMouseOver?.(event);
+  };
+
+  const listSelectHandler = () => {
+    setOpen(false);
   };
 
   const keyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -125,6 +122,9 @@ export const useComboBox = ({
           }
         }
         break;
+      case "Tab":
+        setOpen(false);
+        break;
       case "Backspace":
         if (!open) {
           setOpen(true);
@@ -158,7 +158,8 @@ export const useComboBox = ({
     focusVisibleRef,
     keyDownHandler,
     focusHandler,
-    blurHandler,
     mouseOverHandler,
+    mouseDownHandler,
+    listSelectHandler,
   };
 };

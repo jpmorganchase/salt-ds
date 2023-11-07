@@ -42,7 +42,7 @@ This custom Floating component will be passed the relevant positioning informati
 
 In a multi-window application this custom Floating Component can be used by consumers as a trigger to spawn/activate another window and render the children of the floating component inside via a portal. Our default floating component uses [Floating Portal](https://floating-ui.com/docs/floatingportal#floatingportal) to do this within the same document.
 
-### Considerations for compoennts
+### Considerations for components
 
 When building a floating component, they key things to think about are as follows:
 
