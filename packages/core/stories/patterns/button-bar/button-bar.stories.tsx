@@ -3,8 +3,7 @@ import {
   BorderLayout,
   Button,
   FlexItem,
-  FlexLayout,
-  FlexLayoutProps,
+  StackLayoutProps,
   FlowLayout,
   FormField,
   FormFieldHelperText,
@@ -35,32 +34,32 @@ export default {
 export const ButtonBar = () => {
   return (
     <div style={{ width: "40vw" }}>
-      <FlexLayout style={{ width: "100%" }} gap={1}>
+      <StackLayout direction={"row"} style={{ width: "100%" }} gap={1}>
         <FlexItem>
           <Button variant="cta">Save</Button>
         </FlexItem>
         <FlexItem>
           <Button>Cancel</Button>
         </FlexItem>
-      </FlexLayout>
+      </StackLayout>
     </div>
   );
 };
 
 export const WithSecondary = () => {
   const startItem = (
-    <FlexLayout gap={1}>
+    <StackLayout direction={"row"} gap={1}>
       <FlexItem>
         <Button variant="cta">Save</Button>
       </FlexItem>
       <FlexItem>
         <Button>Cancel</Button>
       </FlexItem>
-    </FlexLayout>
+    </StackLayout>
   );
 
   const endItem = (
-    <FlexLayout gap={1}>
+    <StackLayout direction={"row"} gap={1}>
       <FlexItem>
         <Button variant="secondary">
           <ExportIcon />
@@ -73,7 +72,7 @@ export const WithSecondary = () => {
           Import
         </Button>
       </FlexItem>
-    </FlexLayout>
+    </StackLayout>
   );
 
   return (
@@ -89,22 +88,22 @@ export const WithSecondary = () => {
 
 export const DestructiveActions = () => {
   const startItem = (
-    <FlexLayout gap={1}>
+    <StackLayout direction={"row"} gap={1}>
       <FlexItem>
         <Button variant="cta">Save</Button>
       </FlexItem>
       <FlexItem>
         <Button>Cancel</Button>
       </FlexItem>
-    </FlexLayout>
+    </StackLayout>
   );
 
   const endItem = (
-    <FlexLayout gap={1}>
+    <StackLayout direction={"row"} gap={1}>
       <FlexItem>
         <Button variant="secondary">Delete</Button>
       </FlexItem>
-    </FlexLayout>
+    </StackLayout>
   );
 
   return (
@@ -121,7 +120,7 @@ export const DestructiveActions = () => {
 export const Stacked = () => {
   return (
     <div style={{ width: "200px" }}>
-      <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
+      <StackLayout direction="column" gap={1} style={{ width: "100%" }}>
         <FlexItem>
           <Button variant="cta" style={{ width: "100%" }}>
             CTA
@@ -135,14 +134,14 @@ export const Stacked = () => {
             Secondary
           </Button>
         </FlexItem>
-      </FlexLayout>
+      </StackLayout>
     </div>
   );
 };
 
 export const Responsive = () => {
   const startItem = (
-    <FlexLayout gap={1} direction={{ xs: "column", sm: "row" }}>
+    <StackLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
         <Button variant="cta" style={{ width: "100%" }}>
           CTA
@@ -151,17 +150,17 @@ export const Responsive = () => {
       <FlexItem>
         <Button style={{ width: "100%" }}>Primary</Button>
       </FlexItem>
-    </FlexLayout>
+    </StackLayout>
   );
 
   const endItem = (
-    <FlexLayout gap={1} direction={{ xs: "column", sm: "row" }}>
+    <StackLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
         <Button variant="secondary" style={{ width: "100%" }}>
           Secondary
         </Button>
       </FlexItem>
-    </FlexLayout>
+    </StackLayout>
   );
 
   return (
@@ -200,24 +199,24 @@ export const ResponsiveReverse = () => {
     </FlexItem>
   );
 
-  const direction: FlexLayoutProps<ElementType>["direction"] =
+  const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp({ xs: "column", sm: "row" }, "row");
 
-  const startItem = <FlexLayout gap={1}>{secondary}</FlexLayout>;
+  const startItem = <StackLayout gap={1}>{secondary}</StackLayout>;
 
   const endItem = (
-    <FlexLayout gap={1}>
+    <StackLayout direction={"row"} gap={1}>
       {primary}
       {cta}
-    </FlexLayout>
+    </StackLayout>
   );
 
   const columnStack = (
-    <FlexLayout direction="column" gap={1} style={{ width: "100%" }}>
+    <StackLayout direction="column" gap={1} style={{ width: "100%" }}>
       {cta}
       {primary}
       {secondary}
-    </FlexLayout>
+    </StackLayout>
   );
 
   return (
@@ -265,14 +264,14 @@ export const SingleStepForm = () => {
   return (
     <StackLayout style={{ width: "330px" }}>
       {formFields}
-      <FlexLayout style={{ width: "100%" }} gap={1}>
+      <StackLayout direction={"row"} style={{ width: "100%" }} gap={1}>
         <FlexItem>
           <Button variant="cta">Submit</Button>
         </FlexItem>
         <FlexItem>
           <Button>Cancel</Button>
         </FlexItem>
-      </FlexLayout>
+      </StackLayout>
     </StackLayout>
   );
 };
@@ -281,17 +280,19 @@ export const MultiStepForm = () => {
   return (
     <StackLayout style={{ width: "330px" }}>
       {formFields}
-      <FlexLayout justify="end" style={{ width: "100%" }} gap={1}>
-        <FlexItem>
-          <Button variant="secondary">Cancel</Button>
-        </FlexItem>
-        <FlexItem>
-          <Button>Previous</Button>
-        </FlexItem>
-        <FlexItem>
-          <Button variant="cta">Next</Button>
-        </FlexItem>
-      </FlexLayout>
+      <FlexItem align={"end"}>
+        <StackLayout direction={"row"} style={{ width: "100%" }} gap={1}>
+          <FlexItem>
+            <Button variant="secondary">Cancel</Button>
+          </FlexItem>
+          <FlexItem>
+            <Button>Previous</Button>
+          </FlexItem>
+          <FlexItem>
+            <Button variant="cta">Next</Button>
+          </FlexItem>
+        </StackLayout>
+      </FlexItem>
     </StackLayout>
   );
 };
@@ -318,7 +319,7 @@ export const DialogForm = () => {
   );
 
   const endItem = (
-    <FlexLayout gap={1}>
+    <StackLayout direction={"row"} gap={1}>
       <FlexItem>
         <Button onClick={handleClose}>Cancel</Button>
       </FlexItem>
@@ -327,7 +328,7 @@ export const DialogForm = () => {
           Submit
         </Button>
       </FlexItem>
-    </FlexLayout>
+    </StackLayout>
   );
 
   return (
