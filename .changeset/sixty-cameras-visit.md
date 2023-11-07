@@ -2,4 +2,4 @@
 "@salt-ds/core": minor
 ---
 
-Added 'medium' size to Spinner component with 'default' size now being an alias for 'medium'. 'Default' is to be deprecated.
+Added `medium` size as an alias for `default` to Spinner component to make it more consistent with other components. `default` will be deprecated and removed in the future.

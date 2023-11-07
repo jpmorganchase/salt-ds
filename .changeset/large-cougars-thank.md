@@ -2,5 +2,5 @@
 "@salt-ds/lab": patch
 ---
 
-Dropdown: focus returns to dropdown after list select
-Combobox: keyboard navigation modified so Tab sets focus on the component and Enter opens the List, aligns to Dropdown
+Fixed Dropdown losing focus when clicking on the scrollbar or when selecting options.
+Focusing the Combo Box will not open the list automatically. This complies with [WCAG SC 3.2.1](https://www.w3.org/WAI/WCAG21/Understanding/on-focus.html).

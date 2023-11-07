@@ -2,4 +2,4 @@
 "@salt-ds/lab": minor
 ---
 
-Move Switch from lab to core
+Removed Switch from Lab and promoted it to Core.

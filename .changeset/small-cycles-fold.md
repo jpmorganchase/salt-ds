@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-ComboBoxNext: Fix missing forwardedRef on `DefaultListItem`
+Fixed Combo Box Next not applying a ref to its `DefaultListItem`.

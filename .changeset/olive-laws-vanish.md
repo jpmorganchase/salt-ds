@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Viewport provider sets initial viewport
+Fixed the Viewport Provider not setting initial viewport measurements.

@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fix RadioButton and Checkbox not using default Salt text properties
+Fixed Radio Button and Checkbox incorrectly inheriting text styles.

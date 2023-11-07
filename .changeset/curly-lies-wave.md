@@ -2,4 +2,4 @@
 "@salt-ds/ag-grid-theme": patch
 ---
 
-Ag Grid Theme - remove override. set config correctly to wrap header text
+Removed custom CSS styling for wrapping text in header cells when `autoHeaderHeight` is enabled. If you want to wrap text you should use `wrapHeaderText`.

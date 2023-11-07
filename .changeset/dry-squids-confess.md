@@ -2,4 +2,4 @@
 "@salt-ds/ag-grid-theme": patch
 ---
 
-[Ag Grid Theme] Set tooltip background color
+Fixed Tooltip missing a background color.
