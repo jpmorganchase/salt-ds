@@ -10,6 +10,7 @@ import {
   ReceiptIcon,
 } from "@salt-ds/icons";
 import "./tabstrip-next.stories.css";
+
 export default {
   title: "Lab/Tabs Next/Tabstrip Next",
   component: TabstripNext,
