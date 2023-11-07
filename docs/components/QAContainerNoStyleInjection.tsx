@@ -1,14 +1,20 @@
 import { useEffect } from "react";
 import { QAContainer, QAContainerProps } from "./QAContainer";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 // eslint-disable-next-line import/no-unresolved
-import coreCss from "../../dist/salt-ds-core/css/salt-core.css?inline";
+import coreCss from "../../packages/core/src/salt-core.css?inline";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 // eslint-disable-next-line import/no-unresolved
 import iconCss from "../../packages/icons/src/icon/Icon.css?inline";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 // eslint-disable-next-line import/no-unresolved
-import labCss from "../../dist/salt-ds-lab/css/salt-lab.css?inline";
+import labCss from "../../packages/lab/src/salt-lab.css?inline";
 
 export const useDynamicStyleSheet = (styleSheet: string, id: string): void => {
   useEffect(() => {
