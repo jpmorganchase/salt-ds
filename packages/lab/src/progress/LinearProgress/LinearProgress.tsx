@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef, HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
@@ -12,6 +12,10 @@ const withBaseName = makePrefixer("saltLinearProgress");
 
 export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
   /**
+   * A label for accessibility
+   */
+  "aria-label"?: string;
+  /**
    * The className(s) of the component.
    */
   className?: string;
@@ -20,10 +24,6 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
    * Default value is 100.
    */
   max?: number;
-  /**
-   * Default unit is `%`.
-   */
-  unit?: string;
   /**
    * The value of the progress indicator.
    * Value between 0 and max.
@@ -35,7 +35,10 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
  * Linear progress bar with an Info element showing the current value
  */
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
-  function LinearProgress({ className, max = 100, value = 0, ...rest }, ref) {
+  function LinearProgress(
+    { "aria-label": ariaLabel, className, max = 100, value = 0, ...rest },
+    ref
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-linear-progress",
@@ -65,6 +68,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         ref={ref}
         data-testid="linear-progress"
         role="progressbar"
+        aria-label={ariaLabel}
         aria-valuemax={max}
         aria-valuemin={0}
         aria-valuenow={Math.round(value)}
