@@ -228,7 +228,6 @@ export const ResponsiveReverse = () => {
           startItem={startItem}
           endItem={endItem}
           style={{ width: "100%" }}
-          gap={1}
           direction={direction}
         />
       )}
