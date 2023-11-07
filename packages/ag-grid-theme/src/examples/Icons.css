@@ -2,6 +2,7 @@ div[class^="ag-icon"]:before {
   margin-right: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-icon-loading {
+div[class*="ag-theme-salt"] .ag-icon-loading,
+div[class*="ag-theme-uitk"] .ag-icon-loading {
   animation: none;
 }

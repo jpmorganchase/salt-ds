@@ -60,7 +60,7 @@ export function useAgGridHelpers({
     }
   }, [density, agThemeName, compact]);
 
-  const className = `ag-theme-material ${agThemeName}${
+  const className = `${agThemeName}${
     compact && density === "high" ? `-compact` : ``
   }-${mode}`;
 
