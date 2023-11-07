@@ -3,7 +3,7 @@ import { Panel } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Panel/QA",
+  title: "Core/Panel/Panel QA",
   component: Panel,
 } as Meta<typeof Panel>;
 
