@@ -1,11 +1,23 @@
 import { ReactElement } from "react";
-import { DropdownNext } from "@salt-ds/lab";
-import { StateNames } from "./exampleData";
+import { DropdownNext, Option } from "@salt-ds/lab";
+import { shortColorData } from "./exampleData";
 import { StackLayout } from "@salt-ds/core";
 
 export const Variants = (): ReactElement => (
   <StackLayout>
-    <DropdownNext source={StateNames} />
-    <DropdownNext source={StateNames} variant="secondary" />
+    <DropdownNext style={{ width: "266px" }}>
+      {shortColorData.map((color) => (
+        <Option value={color} key={color}>
+          {color}
+        </Option>
+      ))}
+    </DropdownNext>
+    <DropdownNext variant="secondary" style={{ width: "266px" }}>
+      {shortColorData.map((color) => (
+        <Option value={color} key={color}>
+          {color}
+        </Option>
+      ))}
+    </DropdownNext>
   </StackLayout>
 );

@@ -1,108 +1,97 @@
-.saltDropdownNext-button {
-  --dropdownNext-borderColor: var(--salt-editable-borderColor);
-  --dropdownNext-borderStyle: var(--salt-editable-borderStyle);
-  --dropdownNext-borderWidth: var(--salt-size-border);
+.saltDropdownNext {
+  --dropdown-next-borderColor: var(--salt-editable-borderColor);
+  --dropdown-next-color: var(--salt-content-primary-foreground);
+  --dropdown-next-cursor: var(--salt-selectable-cursor-hover);
+}
 
-  align-items: center;
-  background: var(--saltDropdownNext-background, var(--dropdownNext-background));
-  color: var(--saltDropdownNext-color, var(--salt-content-primary-foreground));
+.saltDropdownNext {
+  all: unset;
+  box-sizing: border-box;
+  min-width: 4em;
+  width: 100%;
+  background: var(--dropdown-next-background);
+  cursor: var(--dropdown-next-cursor);
+  min-height: var(--salt-size-base);
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--dropdown-next-borderColor);
   display: flex;
+  align-items: center;
+  padding: 0 var(--salt-spacing-100);
+  gap: var(--salt-spacing-100);
+  color: var(--dropdown-next-color);
   font-family: var(--salt-text-fontFamily);
-  font-size: var(--saltDropdownNext-fontSize, var(--salt-text-fontSize));
-  height: var(--saltDropdownNext-height, var(--salt-size-base));
-  line-height: var(--saltDropdownNext-lineHeight, var(--salt-text-lineHeight));
-  min-height: var(--saltDropdownNext-minHeight, var(--salt-size-base));
-  min-width: var(--saltDropdownNext-minWidth, 160px);
-  padding-left: var(--saltDropdownNext-paddingLeft, var(--salt-spacing-100));
-  padding-right: var(--saltDropdownNext-paddingRight, var(--salt-spacing-100));
-  position: relative;
-  border: none;
-  border-bottom: var(--dropdownNext-borderWidth) var(--dropdownNext-borderStyle) var(--dropdownNext-borderColor);
-  justify-content: space-between;
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
 }
 
-.saltDropdownNext-button:hover {
-  --dropdownNext-borderColor: var(--salt-editable-borderColor-hover);
-
-  cursor: var(--salt-selectable-cursor-hover);
+.saltDropdownNext:hover {
+  --dropdown-next-borderColor: var(--salt-editable-borderColor-hover);
 }
 
-.saltDropdownNext-button:focus,
-.saltDropdownNext-button:active {
-  --dropdownNext-borderColor: var(--salt-editable-borderColor-active);
-  --dropdownNext-borderWidth: var(--salt-editable-borderWidth-active);
-
-  outline: var(--saltDropdownNext-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor));
+.saltDropdownNext:focus-visible {
+  outline: var(--salt-focused-outline);
+  --dropdown-next-borderColor: var(--salt-editable-borderColor-hover);
 }
 
-.saltDropdownNext-buttonText {
-  text-align: left;
+.saltDropdownNext-content {
+  flex: 1;
+  max-width: 100%;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
-  padding-right: var(--salt-spacing-100);
-  user-select: text;
+  text-wrap: nowrap;
 }
 
-.saltDropdownNext-list.saltListNext {
-  border-color: var(--salt-selectable-borderColor-selected);
-  box-shadow: var(--salt-overlayable-shadow-popout);
-  max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5);
-  z-index: calc(var(--salt-zIndex-modal) + 1);
+.saltDropdownNext-placeholder {
+  color: var(--salt-content-secondary-foreground);
 }
 
-/* Styling applied to dropdown button if `disabled={true}` */
-.saltDropdownNext-disabled,
-.saltDropdownNext-disabled:hover,
-.saltDropdownNext-disabled:active {
-  --dropdownNext-borderColor: var(--salt-editable-borderColor-disabled);
-  --dropdownNext-borderStyle: var(--salt-editable-borderStyle-disabled);
-  --dropdownNext-borderWidth: var(--salt-size-border);
-
-  cursor: var(--salt-selectable-cursor-disabled);
-  background: var(--dropdownNext-background-disabled);
-  color: var(--saltDropdownNext-color-disabled, var(--salt-content-primary-foreground-disabled));
-  outline: 0;
-}
-
-/* Style applied to dropdown button if `readOnly={true}` */
-.saltDropdownNext-button.saltDropdownNext-readOnly,
-.saltDropdownNext-button.saltDropdownNext-readOnly:hover,
-.saltDropdownNext-button.saltDropdownNext-readOnly:active {
-  --dropdownNext-borderColor: var(--salt-editable-borderColor-readonly);
-  --dropdownNext-borderStyle: var(--salt-editable-borderStyle-readonly);
-  --dropdownNext-borderWidth: var(--salt-size-border);
-
-  cursor: var(--salt-editable-cursor-readonly);
-  background: var(--dropdownNext-background-readonly);
-  /* no padding-right when there's no dropdown button icon */
-  padding-right: 0;
-}
-
-/* Styling applied to dropdown button icon if `disabled={true}` or `readOnly={true}` */
-.saltDropdownNext-icon.saltDropdownNext-disabled,
-.saltDropdownNext-icon.saltDropdownNext-disabled:hover,
-.saltDropdownNext-icon.saltDropdownNext-disabled:active,
-.saltDropdownNext-icon.saltDropdownNext-readOnly,
-.saltDropdownNext-icon.saltDropdownNext-readOnly:hover,
-.saltDropdownNext-icon.saltDropdownNext-readOnly:active {
-  color: var(--salt-content-primary-foreground-disabled);
-}
-
-/* Class applied if `variant="primary"` */
 .saltDropdownNext-primary {
-  --dropdownNext-background: var(--salt-editable-primary-background);
-  --dropdownNext-background-active: var(--salt-editable-primary-background-active);
-  --dropdownNext-background-hover: var(--salt-editable-primary-background-hover);
-  --dropdownNext-background-disabled: var(--salt-editable-primary-background-disabled);
-  --dropdownNext-background-readonly: var(--salt-editable-primary-background-readonly);
+  --dropdown-next-background: var(--salt-editable-primary-background);
 }
 
-/* Class applied if `variant="secondary"` */
 .saltDropdownNext-secondary {
-  --dropdownNext-background: var(--salt-editable-secondary-background);
-  --dropdownNext-background-active: var(--salt-editable-secondary-background-active);
-  --dropdownNext-background-hover: var(--salt-editable-secondary-background-active);
-  --dropdownNext-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --dropdownNext-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --dropdown-next-background: var(--salt-editable-secondary-background);
+}
+
+.saltDropdownNext:disabled {
+  --dropdown-next-background: var(--salt-editable-primary-background-disabled);
+  --dropdown-next-borderColor: var(--salt-editable-borderColor-disabled);
+  --dropdown-next-color: var(--salt-content-primary-foreground-disabled);
+  --dropdown-next-cursor: var(--salt-selectable-cursor-disabled);
+}
+
+.saltDropdownNext[aria-readonly="true"] {
+  --dropdown-next-background: var(--salt-editable-primary-background-readonly);
+  --dropdown-next-borderColor: var(--salt-editable-borderColor-readonly);
+  --dropdown-next-color: var(--salt-content-primary-foreground);
+  --dropdown-next-cursor: var(--salt-selectable-cursor-readonly);
+}
+
+.saltDropdownNext-error {
+  --dropdown-next-background: var(--salt-status-error-background);
+  --dropdown-next-borderColor: var(--salt-status-error-borderColor);
+}
+
+.saltDropdownNext-error .saltDropdownNext:focus-visible {
+  outline-color: var(--salt-status-error-borderColor);
+  --dropdown-next-borderColor: var(--salt-status-error-borderColor);
+}
+
+.saltDropdownNext-warning {
+  --dropdown-next-background: var(--salt-status-warning-background);
+  --dropdown-next-borderColor: var(--salt-status-warning-borderColor);
+}
+
+.saltDropdownNext-warning .saltDropdownNext:focus-visible {
+  outline-color: var(--salt-status-warning-borderColor);
+  --dropdown-next-borderColor: var(--salt-status-warning-borderColor);
+}
+
+.saltDropdownNext-success {
+  --dropdown-next-background: var(--salt-status-success-background);
+  --dropdown-next-borderColor: var(--salt-status-success-borderColor);
+}
+
+.saltDropdownNext-success .saltDropdownNext:focus-visible {
+  outline-color: var(--salt-status-success-borderColor);
+  --dropdown-next-borderColor: var(--salt-status-success-borderColor);
 }

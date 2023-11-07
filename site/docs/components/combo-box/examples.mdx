@@ -1,5 +1,4 @@
 ---
-# Leave the frontmatter as is
 title:
   $ref: ./#/title
 layout: DetailComponent
@@ -12,30 +11,31 @@ data:
 <LivePreviewControls>
 <LivePreview componentName="combo-box" exampleName="Default">
 
-### Default (single select)
+### Default (single-select)
 
 A single item can be selected from the combo box options.
 
 Combo Box contains an input field that opens a list. As users type, the list displays all filtered options based on their input.
 
 </LivePreview>
+  
+<LivePreview componentName="combo-box" exampleName="Multiselect" displayName="Multi-select" >
 
-<LivePreview componentName="combo-box" exampleName="CustomRenderer" >
+### Multi-select
 
-### Custom renderer
+When `multiSelect={true}`, users can select multiple items from the combo box options.
 
-Customize the list item display to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example. Use the `ListItem` prop to customize list items.
+</LivePreview>
+  
+<LivePreview componentName="combo-box" exampleName="Placeholder" >
 
-Guidance:
+### Placeholder
 
-- Users can benefit from seeing a particular visual with list items. Customize the display as you see fit. For example, if displaying a list of contacts, it may help to provide headshots alongside the option text.
-- Place any visual support such as icons, country symbols or avatars to the left of the option text.
+You can use a placeholder to prompt user input if no default value is provided.
 
-Define a filter that only matches the first letter of a word. Use the `itemFilter` prop to customize the filter that applies to the elements.
+- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use helper text beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
 
-Guidance:
-
-- Give users a quicker and easier experience when they’re choosing their options by changing the logic of the component’s typeahead filter.
+More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
 </LivePreview>
 
@@ -43,13 +43,11 @@ Guidance:
 
 ### Variants
 
-Combo Box has two variants: `primary` and `secondary`. The primary variant is set by default. Set to secondary variant with `variant=”secondary”`.
+The component has two variants: `primary` and `secondary`. The primary variant is set by default. Set to secondary with `variant=”secondary”`.
 
-Guidance:
+The choice between primary and secondary variants should be considered alongside the background color it sits upon.
 
-- Use the secondary variant when in a data-dense or compact interface, or for a form with multiple columns or sections.
-- When deciding which variant to use, consider the background color of the application.
-- Tip: The [Forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. Combo Box can be wrapped in a Form Field when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [Form Field](../form-field) guidance.
+Tip: The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. `ComboBoxNext` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
 
@@ -57,12 +55,100 @@ Guidance:
 
 ### Disabled
 
-When `disabled={true}`, users will not be able to interact with Combo Box and it does not receive focus on any interaction.
+You can disable the dropdown if required, for instance if the access to the options needs to be restricted based on the current context.
 
-Guidance:
+Unlike read-only, the disabled state can change for the current user depending on context. Showing it in a disabled state allows the user to be aware of the presence of the control, without enabling access to its functionality temporarily.
 
-- Disable combo box if you need to restrict access to options based on the current context.
-- Showing combo box in a disabled state makes the user aware of the control without enabling access to its functionality.
+When `disabled={true}`, user will not be able to interact with dropdown. It does not receive focus on any interaction.
+
+</LivePreview>
+  
+<LivePreview componentName="combo-box" exampleName="Readonly" displayName="Read-only" >
+
+### Read-only
+
+Set the combo box to read-only to allow values to be displayed that are predefined and not editable, for instance when a user does not have the appropriate permissions to select an option within the combo box.
+
+When `readOnly={true}` users will not be able to interact with combo box apart from focusing on it.
+Use to indicate that the pre-selected value is valid but changes are not permitted.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="DisabledOption" >
+
+### Disabled option
+
+Use the `disabled` prop on the `Option` component to disable an option. Disabled options are not selectable and are visually distinct from selectable options.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="WithFormField" displayName="Form Field support" >
+
+### `FormField` support
+
+Wrap `ComboBoxNext` in a [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the combo box with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="Grouped" >
+
+### Grouped options
+
+Wrap options in a `OptionGroup` component to group them together. Use the `label` prop to provide a label for the group.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="EmptyMessage" >
+
+### Empty message
+
+Use the `Option` component to display a message when there are no options available.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="ComplexOptions" >
+
+### Complex options
+
+Static content can be supplied as children to the `Option` component. This can be used to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example.
+If the children are not plain text, then the `textValue` prop must also be set to a plain text representation.
+
+#### Best practices
+
+- Users can benefit from seeing a particular visual with list items. Customize the display as you see fit. For example, if displaying a list of contacts, it may help to provide headshots alongside the option text.
+- Place any visual support such as icons, country symbols or avatars to the left of the option text.
+- Give users a quicker and easier experience when they’re choosing their options by changing the logic of the component’s typeahead filter.
+
+</LivePreview>
+  
+<LivePreview componentName="combo-box" exampleName="Validation" >
+
+### Validation
+
+Combo Box can show validation states (warning, success, error) with the prop `validationStatus`.
+
+#### Best practices
+
+- Use the error state to alert the user of a critical issue that’s related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
+- Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="CustomFiltering" >
+
+### Custom filtering
+
+Due to Combo Box’s flexible API, you can customize the filtering logic to suit your needs. In this example it displays the entire list of options when the combo box opens due to a mouse click.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="ServerSideData" >
+
+### Server side data
+
+Combo Box can be used to display data from a server. In this example, the data is fetched and filtered on the server side.
+
+Note that the data fetching in this example has been made intentionally show to highlight the loading states.
 
 </LivePreview>
 </LivePreviewControls>

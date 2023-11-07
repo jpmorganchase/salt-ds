@@ -1,5 +1,4 @@
 ---
-# Leave the frontmatter as is
 title:
   $ref: ./#/title
 layout: DetailComponent
@@ -25,23 +24,33 @@ data:
 - To select multiple options from fewer than five. Instead, use [`CheckboxGroup`](../checkbox).
 - To make an instantaneous selection between two binary choices, for example “on” and “off”. Instead, use [`Switch`](../switch).
 
-### Import
+#### Controlled/Uncontrolled
 
-{/* Update the text and code snippet below as needed: */}
+Just like native input elements in React, Combo Box can be controlled or uncontrolled. By default Combo Box is uncontrolled. Use the `defaultValue` and `defaultSelected` props to control the default value of Combo Box.
+If you want to control the value of Combo Box, use the `value` and `selected` props. The `onSelectionChange` prop is required when using the controlled approach.
+
+### Import
 
 To import `ComboBoxNext` from the lab Salt package, use:
 
 ```js
-import { ComboBoxNext } from "@salt-ds/lab";
+import { ComboBoxNext, Option, OptionGroup } from "@salt-ds/lab";
 ```
+
+### Props
+
+#### Combo Box Next
+
+<PropsTable packageName="lab" componentName="ComboBoxNext" />
+
+#### Option
+
+<PropsTable packageName="lab" componentName="Option" />
+
+#### Option Group
+
+<PropsTable packageName="lab" componentName="OptionGroup" />
 
 ### References
 
 - Combo Box pattern (https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) W3C
-
-### Props
-
-{/* Update packageName and componentName below as needed */}
-{/* packageName is optional and defaults to "core" if omitted */}
-
-<PropsTable packageName="lab" componentName="ComboBoxNext" />

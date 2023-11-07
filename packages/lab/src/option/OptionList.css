@@ -1,0 +1,13 @@
+.saltOptionList {
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  overflow: hidden;
+  overflow-y: auto;
+  z-index: var(--salt-zIndex-popout);
+  position: relative;
+  max-height: 100%;
+}
+
+.saltOptionList-collapsed {
+  display: none;
+}

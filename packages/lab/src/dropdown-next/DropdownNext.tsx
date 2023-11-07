@@ -1,253 +1,458 @@
-import { clsx } from "clsx";
-import { ListNext, ListNextProps } from "../list-next";
 import {
-  makePrefixer,
-  useId,
-  useForkRef,
-  useFloatingComponent,
-} from "@salt-ds/core";
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ReactNode,
+  MouseEvent,
+  KeyboardEvent,
+  useEffect,
+  FocusEvent,
+  useRef,
+} from "react";
+import {
+  ListControlProps,
+  useListControl,
+} from "../list-control/ListControlState";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import {
-  useRef,
-  forwardRef,
-  FocusEvent,
-  KeyboardEvent,
-  MouseEvent,
-  Ref,
-  ForwardedRef,
-  SyntheticEvent,
-  ComponentPropsWithoutRef,
-} from "react";
+  makePrefixer,
+  StatusAdornment,
+  useFloatingComponent,
+  useFloatingUI,
+  useForkRef,
+  useFormFieldProps,
+  useId,
+  ValidationStatus,
+} from "@salt-ds/core";
+import { flip, offset, shift, limitShift, size } from "@floating-ui/react";
+import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
-import dropdownNextCss from "./DropdownNext.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { Placement } from "@floating-ui/react";
-import { useDropdownNext } from "./useDropdownNext";
-
-const withBaseName = makePrefixer("saltDropdownNext");
+import dropdownCss from "./DropdownNext.css";
+import { ListControlContext } from "../list-control/ListControlContext";
+import { OptionList } from "../option/OptionList";
 
 export interface DropdownNextProps
-  extends Omit<ComponentPropsWithoutRef<"button">, "onSelect"> {
+  extends Omit<ComponentPropsWithoutRef<"button">, "value" | "defaultValue">,
+    ListControlProps {
   /**
-   * If `true`, dropdown will be disabled.
+   * If `true`, the dropdown will be disabled.
    */
   disabled?: boolean;
   /**
-   * Initially selected value for the dropdown, for use only in uncontrolled component.
-   */
-  defaultSelected?: string;
-  /**
-   * List of options when using a dropdown.
-   */
-  source: string[];
-  /**
-   * If `true`, dropdown is read only.
+   * If `true`, the dropdown will be read-only.
    */
   readOnly?: boolean;
   /**
-   * Background styling variant. Defaults to `primary` .
+   * The options to display in the dropdown.
+   */
+  children?: ReactNode;
+  /**
+   * The marker to use in an empty read only dropdown.
+   * Use `''` to disable this feature. Defaults to '—'.
+   */
+  emptyReadOnlyMarker?: string;
+  /**
+   * If `true`, the dropdown will be multiselect.
+   */
+  multiselect?: boolean;
+  /**
+   * The text shown when the dropdown has no value.
+   */
+  placeholder?: string;
+  /**
+   * If `true`, the dropdown will be required.
+   */
+  required?: boolean;
+  /**
+   * Start adornment component
+   */
+  startAdornment?: ReactNode;
+  /**
+   * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
   /**
-   * Placement of dropdown list. Defaults to `bottom` .
+   * Validation status, one of "error" | "warning" | "success".
    */
-  placement?: Placement;
-  /**
-   * Optional ref for the list component.
-   */
-  listRef?: Ref<HTMLUListElement>;
-  /**
-   * Additional props for dropdown list.
-   */
-  ListProps?: ListNextProps;
-  /* Status open or close for use in controlled component.  */
-  open?: boolean;
-  /**
-   * Callback for list selection event
-   */
-  onSelect?: (event: SyntheticEvent, data: { value: string }) => void;
-  /**
-  /* Selected prop for use in controlled component. */
-  selected?: string;
-  /* Highlighted item prop for use in controlled component. */
-  highlightedItem?: string;
+  validationStatus?: Exclude<ValidationStatus, "info">;
 }
 
-export const DropdownNext = forwardRef(function DropdownNext(
-  props: DropdownNextProps,
-  ref: ForwardedRef<HTMLButtonElement>
-) {
-  const {
-    className,
-    disabled,
-    variant = "primary",
-    id: dropdownIdProp,
-    defaultSelected,
-    readOnly,
-    source,
-    placement = "bottom",
-    open: openControlProp,
-    selected: selectedControlProp,
-    highlightedItem: highlightedItemControlProp,
-    onFocus,
-    onKeyDown,
-    onMouseOver,
-    onMouseDown,
-    onSelect,
-    listRef: listRefProp,
-    ListProps,
-    ...restProps
-  } = props;
+function ExpandIcon({ open }: { open: boolean }) {
+  return open ? <ChevronUpIcon aria-hidden /> : <ChevronDownIcon aria-hidden />;
+}
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-dropdown-next",
-    css: dropdownNextCss,
-    window: targetWindow,
-  });
+const withBaseName = makePrefixer("saltDropdownNext");
 
-  const listId = useId(ListProps?.id);
-  const dropdownId = useId(dropdownIdProp);
-  const listRef = useRef<HTMLUListElement>(null);
+export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
+  function DropdownNext(props, ref) {
+    const {
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
+      children,
+      className,
+      disabled: disabledProp,
+      emptyReadOnlyMarker = "—",
+      readOnly: readOnlyProp,
+      multiselect,
+      onSelectionChange,
+      selected,
+      defaultSelected,
+      defaultOpen,
+      defaultValue: defaultValueProp,
+      value,
+      onOpenChange,
+      open,
+      placeholder,
+      startAdornment,
+      required: requiredProp,
+      variant = "primary",
+      validationStatus: validationStatusProp,
+      onClick,
+      onKeyDown,
+      onFocus,
+      onBlur,
+      ...rest
+    } = props;
 
-  const setListRef = useForkRef(listRefProp, listRef);
-  const listProps = {
-    defaultSelected,
-    disabled,
-    ref: listRef,
-    id: listId,
-    onSelect: onSelect,
-    selected: selectedControlProp,
-    highlightedItem: highlightedItemControlProp,
-  };
-
-  const {
-    handlers,
-    activeDescendant,
-    selectedItem,
-    highlightedItem,
-    getListItems,
-    portalProps,
-    getReferenceProps,
-    refs,
-  } = useDropdownNext({
-    listProps,
-    placement,
-    openControlProp,
-  });
-
-  const { Component: FloatingComponent } = useFloatingComponent();
-
-  const { open, floating, reference, getDropdownNextProps, getPosition } =
-    portalProps;
-  const {
-    focusHandler,
-    keyDownHandler,
-    mouseOverHandler,
-    mouseDownHandler,
-    listSelectHandler,
-  } = handlers;
-
-  const triggerRef = useForkRef<HTMLButtonElement>(ref, reference);
-
-  const getIcon = () => {
-    if (readOnly) return;
-
-    const iconClassName = clsx(withBaseName("icon"), {
-      [withBaseName("disabled")]: disabled,
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-DropdownNext",
+      css: dropdownCss,
+      window: targetWindow,
     });
 
-    return open ? (
-      <ChevronUpIcon className={iconClassName} />
-    ) : (
-      <ChevronDownIcon className={iconClassName} />
-    );
-  };
+    const {
+      a11yProps: {
+        "aria-describedby": formFieldDescribedBy,
+        "aria-labelledby": formFieldLabelledBy,
+      } = {},
+      disabled: formFieldDisabled,
+      readOnly: formFieldReadOnly,
+      necessity: formFieldRequired,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
 
-  const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
-    if (disabled) return;
-    focusHandler(event);
-    onFocus?.(event);
-  };
+    const disabled = Boolean(disabledProp) || formFieldDisabled;
+    const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
+    const validationStatus = validationStatusProp ?? formFieldValidationStatus;
+    const required = formFieldRequired
+      ? ["required", "asterisk"].includes(formFieldRequired)
+      : undefined ?? requiredProp;
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (disabled || readOnly) return;
-    keyDownHandler(event);
-    onKeyDown?.(event);
-  };
+    const isEmptyReadOnly = readOnly && !defaultValueProp && !value;
+    const defaultValue = isEmptyReadOnly
+      ? emptyReadOnlyMarker
+      : defaultValueProp;
 
-  const handleMouseOver = (event: MouseEvent<HTMLButtonElement>) => {
-    mouseOverHandler();
-    onMouseOver?.(event);
-  };
+    const listControl = useListControl({
+      open,
+      defaultOpen,
+      onOpenChange,
+      multiselect,
+      defaultSelected,
+      selected,
+      onSelectionChange,
+      defaultValue,
+      value,
+    });
 
-  const handleMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
-    if (disabled || readOnly) return;
-    mouseDownHandler();
-    onMouseDown?.(event);
-  };
+    const {
+      activeState,
+      setActive,
+      openState,
+      setOpen,
+      openKey,
+      getOptionAtIndex,
+      getIndexOfOption,
+      getOptionsMatching,
+      getOptionFromSearch,
+      options,
+      selectedState,
+      select,
+      valueState,
+      setFocusVisibleState,
+      focusedState,
+      setFocusedState,
+      listRef,
+    } = listControl;
 
-  const handleListSelect = () => {
-    listSelectHandler();
-    (refs.domReference.current as HTMLButtonElement)?.focus();
-  };
+    const { Component: FloatingComponent } = useFloatingComponent();
 
-  return (
-    <div className={clsx(withBaseName())}>
-      <button
-        id={dropdownId}
-        disabled={disabled}
-        {...getReferenceProps({
-          onFocus: handleFocus,
-          onMouseOver: handleMouseOver,
-          onMouseDown: handleMouseDown,
-          onKeyDown: handleKeyDown,
-        })}
-        value={selectedItem}
-        className={clsx(
-          withBaseName("button"),
-          withBaseName(variant),
-          {
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("readOnly")]: readOnly,
+    const { x, y, strategy, elements, floating, reference } = useFloatingUI({
+      open,
+      placement: "bottom-start",
+      middleware: [
+        offset(0),
+        size({
+          apply({ rects, elements, availableHeight }) {
+            Object.assign(elements.floating.style, {
+              minWidth: `${rects.reference.width}px`,
+              height: `calc(${availableHeight}px - var(--salt-spacing-100))`,
+            });
           },
-          className
-        )}
-        role="combobox"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        aria-activedescendant={activeDescendant}
-        tabIndex={disabled ? -1 : 0}
-        aria-owns={listId}
-        aria-controls={listId}
-        aria-disabled={disabled}
-        {...restProps}
-        ref={triggerRef}
-      >
-        <span className={clsx(withBaseName("buttonText"))}>{selectedItem}</span>
-        {getIcon()}
-      </button>
-      <FloatingComponent
-        open={open && !disabled}
-        {...getDropdownNextProps()}
-        {...getPosition()}
-        ref={floating}
-      >
-        <ListNext
-          data-test-id={"list-container"}
-          id={listId}
-          className={clsx(withBaseName("list"), ListProps?.className)}
-          disableFocus
-          disabled={disabled || ListProps?.disabled}
-          selected={selectedItem}
-          highlightedItem={highlightedItem}
-          {...ListProps}
-          ref={setListRef}
-          onSelect={handleListSelect}
-        >
-          {getListItems(source)}
-        </ListNext>
-      </FloatingComponent>
-    </div>
-  );
-});
+        }),
+        flip(),
+        shift({ limiter: limitShift() }),
+      ],
+    });
+
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const handleFloatingRef = useForkRef<HTMLButtonElement>(
+      reference,
+      buttonRef
+    );
+    const handleButtonRef = useForkRef(handleFloatingRef, ref);
+
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      if (!readOnly) {
+        setFocusVisibleState(false);
+        setOpen(event, !openState);
+      }
+      onClick?.(event);
+    };
+
+    const typeaheadString = useRef("");
+    const typeaheadTimeout = useRef<number | undefined>();
+
+    const handleTypeahead = (event: KeyboardEvent<HTMLButtonElement>) => {
+      if (typeaheadTimeout.current) {
+        clearTimeout(typeaheadTimeout.current);
+      }
+      typeaheadString.current += event.key;
+      typeaheadTimeout.current = window.setTimeout(() => {
+        typeaheadString.current = "";
+      }, 500);
+
+      if (!openState) {
+        setOpen(event, true);
+      }
+
+      let newOption = getOptionFromSearch(typeaheadString.current, activeState);
+
+      if (!newOption) {
+        newOption = getOptionFromSearch(typeaheadString.current);
+      }
+
+      if (newOption) {
+        setActive(newOption);
+        setFocusVisibleState(true);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+      const currentIndex = activeState ? getIndexOfOption(activeState) : -1;
+      const count = options.length - 1;
+
+      if (readOnly) {
+        return;
+      }
+
+      if (!openState) {
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+          setOpen(event, true);
+          return;
+        }
+      }
+
+      if (
+        event.key.length === 1 &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.altKey
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        handleTypeahead(event);
+      }
+
+      let newActive;
+      switch (event.key) {
+        case "ArrowDown":
+          newActive = getOptionAtIndex(Math.min(count, currentIndex + 1));
+          break;
+        case "ArrowUp":
+          newActive = getOptionAtIndex(Math.max(0, currentIndex - 1));
+          break;
+        case "Home":
+          newActive = getOptionAtIndex(0);
+          break;
+        case "End":
+          newActive = getOptionAtIndex(count);
+          break;
+        case "PageUp":
+          newActive = getOptionAtIndex(Math.max(0, currentIndex - 10));
+          break;
+        case "PageDown":
+          newActive = getOptionAtIndex(Math.min(count, currentIndex + 10));
+          break;
+        case "Enter":
+        case " ":
+          if (
+            (openState && Boolean(activeState?.disabled)) ||
+            (typeaheadString.current.trim().length > 0 && event.key === " ")
+          ) {
+            event.preventDefault();
+            return;
+          }
+
+          if (!openState || !activeState) {
+            return;
+          }
+
+          select(event, activeState);
+
+          if (!multiselect) {
+            event.preventDefault();
+            setOpen(event, false);
+          }
+
+          break;
+        case "Escape":
+          setOpen(event, false);
+          break;
+        case "Tab":
+          if (!multiselect && activeState) {
+            select(event, activeState);
+          }
+          break;
+      }
+
+      if (newActive && newActive?.id != activeState?.id) {
+        event.preventDefault();
+        setActive(newActive);
+        setFocusVisibleState(true);
+      }
+
+      onKeyDown?.(event);
+    };
+
+    const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
+      setFocusedState(true);
+
+      onFocus?.(event);
+    };
+
+    const ignoreBlur = useRef(false);
+
+    const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
+      if (!ignoreBlur.current) {
+        setOpen(event, false);
+      }
+      ignoreBlur.current = false;
+
+      setFocusedState(false);
+      onBlur?.(event);
+    };
+
+    const handleListMouseOver = () => {
+      setFocusVisibleState(false);
+    };
+
+    const handleListMouseDown = () => {
+      ignoreBlur.current = true;
+    };
+
+    const handleListFocus = () => {
+      buttonRef.current?.focus();
+    };
+    const handleListClick = () => {
+      buttonRef.current?.focus();
+    };
+
+    useEffect(() => {
+      if (openState && !activeState) {
+        if (openKey.current.key === "ArrowDown") {
+          setActive(getOptionAtIndex(0));
+        } else if (openKey.current.key === "ArrowUp") {
+          setActive(getOptionAtIndex(options.length - 1));
+        } else {
+          if (selectedState.length > 0) {
+            const selected = getOptionsMatching(
+              (option) => option.value === selectedState[0]
+            ).pop();
+            if (selected) {
+              setActive(selected);
+            }
+          } else {
+            setActive(getOptionAtIndex(0));
+          }
+        }
+      } else if (!openState) {
+        setActive(undefined);
+      }
+    }, [openState, children]);
+
+    const listId = useId();
+
+    return (
+      <>
+        <ListControlContext.Provider value={listControl}>
+          <button
+            className={clsx(
+              withBaseName(),
+              withBaseName(variant),
+              {
+                [withBaseName("disabled")]: disabled,
+                [withBaseName(validationStatus ?? "")]: validationStatus,
+              },
+              className
+            )}
+            ref={handleButtonRef}
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            role="combobox"
+            type="button"
+            disabled={disabled}
+            aria-readonly={readOnly ? "true" : undefined}
+            aria-required={required ? "true" : undefined}
+            aria-expanded={openState}
+            aria-activedescendant={activeState?.id}
+            aria-labelledby={
+              clsx(formFieldLabelledBy, ariaLabelledBy) || undefined
+            }
+            aria-describedby={
+              clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
+            }
+            aria-multiselectable={multiselect}
+            aria-controls={openState ? listId : undefined}
+            {...rest}
+          >
+            {startAdornment}
+            <span
+              className={clsx(withBaseName("content"), {
+                [withBaseName("placeholder")]: !valueState,
+              })}
+            >
+              {valueState ?? placeholder}
+            </span>
+            {validationStatus && <StatusAdornment status={validationStatus} />}
+            {!readOnly && <ExpandIcon open={openState} />}
+          </button>
+          <FloatingComponent
+            open={(openState || focusedState) && !readOnly}
+            left={x ?? 0}
+            top={y ?? 0}
+            position={strategy}
+            width={elements.floating?.offsetWidth}
+            height={elements.floating?.offsetHeight}
+            ref={floating}
+          >
+            <OptionList
+              id={listId}
+              collapsed={!openState}
+              onMouseOver={handleListMouseOver}
+              onMouseDown={handleListMouseDown}
+              onFocus={handleListFocus}
+              onClick={handleListClick}
+              ref={listRef}
+            >
+              {children}
+            </OptionList>
+          </FloatingComponent>
+        </ListControlContext.Provider>
+      </>
+    );
+  }
+);
