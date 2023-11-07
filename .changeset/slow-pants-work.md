@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-Fixed label alignment for Switch
+Fixed Switch's label being misaligned.
