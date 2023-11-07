@@ -36,10 +36,7 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
  * Linear progress bar with an Info element showing the current value
  */
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
-  function LinearProgress(
-    { "aria-label": ariaLabel, className, max = 100, value = 0, ...rest },
-    ref
-  ) {
+  function LinearProgress({ className, max = 100, value = 0, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-linear-progress",
@@ -69,7 +66,6 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         ref={ref}
         data-testid="linear-progress"
         role="progressbar"
-        aria-label={ariaLabel}
         aria-valuemax={max}
         aria-valuemin={0}
         aria-valuenow={Math.round(value)}
