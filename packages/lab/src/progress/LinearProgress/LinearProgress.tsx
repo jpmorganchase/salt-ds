@@ -12,10 +12,6 @@ const withBaseName = makePrefixer("saltLinearProgress");
 
 export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * A label for accessibility
-   */
-  "aria-label"?: string;
-  /**
    * The className(s) of the component.
    */
   className?: string;
@@ -24,6 +20,11 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
    * Default value is 100.
    */
   max?: number;
+  /**
+   * The unit shown on the progress indicator.
+   * Default unit is `%`.
+   */
+  unit?: string;
   /**
    * The value of the progress indicator.
    * Value between 0 and max.
