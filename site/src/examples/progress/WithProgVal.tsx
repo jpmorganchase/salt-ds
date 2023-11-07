@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState, useEffect, useCallback } from "react";
 import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import {
   Button,
@@ -8,7 +8,58 @@ import {
   RadioButton,
   RadioButtonGroup,
 } from "@salt-ds/core";
-import { useProgressingValue } from "./useProgressingValue";
+
+function useProgressingValue(updateInterval = 100) {
+  const [value, setValue] = useState(0);
+  const [isProgressing, setIsProgressing] = useState(false);
+
+  const handleStop = useCallback(() => {
+    if (isProgressing) {
+      setIsProgressing(false);
+    }
+  }, [isProgressing]);
+
+  const handleStart = () => {
+    if (!isProgressing) {
+      setIsProgressing(true);
+    }
+  };
+
+  const handleReset = () => {
+    setValue(0);
+    handleStop();
+  };
+
+  useEffect(() => {
+    if (isProgressing) {
+      const id = setInterval(() => {
+        setValue((preValue) => preValue + 1);
+      }, updateInterval);
+
+      return () => {
+        clearInterval(id);
+      };
+    }
+    return;
+  }, [isProgressing, updateInterval]);
+
+  useEffect(
+    function stopWhenComplete() {
+      if (value === 100) {
+        handleStop();
+      }
+    },
+    [handleStop, value]
+  );
+
+  return {
+    handleReset,
+    handleStart,
+    handleStop,
+    isProgressing,
+    value,
+  };
+}
 
 export const WithProgVal = (): ReactElement => {
   const { handleReset, handleStart, handleStop, isProgressing, value } =
