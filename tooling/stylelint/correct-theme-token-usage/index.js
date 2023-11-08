@@ -39,8 +39,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 const ruleName = "salt/correct-theme-token-usage";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) =>
-    `No foundation or palette color should be used in component`, // Can encode option in error message if needed
+  expected: (pattern) => `No foundation or palette color should be used in component`, // Can encode option in error message if needed
 });
 
 const meta = {
@@ -75,7 +74,7 @@ const allAllowedKeys = [
   "target",
   "text",
   "track",
-  "foreground",
+  "content",
   // additional to decide
   "animation",
   "duration", // TODO: to be merged with animation
@@ -90,68 +89,58 @@ const allAllowedKeys = [
   "palette-interact",
 ];
 
-const regexpPattern = new RegExp(
-  `--salt(w+)?-(${allAllowedKeys.join("|")})-.+`
-);
+const regexpPattern = new RegExp(`--salt(w+)?-(${allAllowedKeys.join("|")})-.+`);
 
-module.exports = stylelint.createPlugin(
-  ruleName,
-  (primary, secondaryOptionObject, context) => {
-    return (root, result) => {
-      const verboseLog = primary.logLevel === "verbose";
+module.exports = stylelint.createPlugin(ruleName, (primary, secondaryOptionObject, context) => {
+  return (root, result) => {
+    const verboseLog = primary.logLevel === "verbose";
 
-      function check(property) {
-        const checkResult =
-          !isSaltThemeCustomProperty(property) || regexpPattern.test(property);
-        verboseLog && console.log("Checking", checkResult, property);
-        return checkResult;
-      }
+    function check(property) {
+      const checkResult = !isSaltThemeCustomProperty(property) || regexpPattern.test(property);
+      verboseLog && console.log("Checking", checkResult, property);
+      return checkResult;
+    }
 
-      root.walkDecls((decl) => {
-        const { prop, value } = decl;
+    root.walkDecls((decl) => {
+      const { prop, value } = decl;
 
-        const parsedValue = valueParser(value);
+      const parsedValue = valueParser(value);
 
-        parsedValue.walk((node) => {
-          if (!isValueFunction(node)) return;
+      parsedValue.walk((node) => {
+        if (!isValueFunction(node)) return;
 
-          if (node.value.toLowerCase() !== "var") return;
+        if (node.value.toLowerCase() !== "var") return;
 
-          const { nodes } = node;
+        const { nodes } = node;
 
-          const firstNode = nodes[0];
+        const firstNode = nodes[0];
 
-          verboseLog && console.log({ nodes });
+        verboseLog && console.log({ nodes });
 
-          if (!firstNode || check(firstNode.value)) return;
+        if (!firstNode || check(firstNode.value)) return;
 
-          complain(
-            declarationValueIndex(decl) + firstNode.sourceIndex,
-            firstNode.value.length,
-            decl
-          );
-        });
-
-        verboseLog && console.log({ prop });
-
-        if (check(prop)) return;
-
-        complain(0, prop.length, decl);
+        complain(declarationValueIndex(decl) + firstNode.sourceIndex, firstNode.value.length, decl);
       });
 
-      function complain(index, length, decl) {
-        report({
-          result,
-          ruleName,
-          message: messages.expected(primary),
-          node: decl,
-          index,
-          endIndex: index + length,
-        });
-      }
-    };
-  }
-);
+      verboseLog && console.log({ prop });
+
+      if (check(prop)) return;
+
+      complain(0, prop.length, decl);
+    });
+
+    function complain(index, length, decl) {
+      report({
+        result,
+        ruleName,
+        message: messages.expected(primary),
+        node: decl,
+        index,
+        endIndex: index + length,
+      });
+    }
+  };
+});
 
 module.exports.ruleName = ruleName;
 module.exports.messages = messages;
