@@ -11,13 +11,36 @@ export default {
       control: { type: "text" },
     },
     as: {
-      options: ["h1", "h2", "h3", "h4", "p", "div", "span", "label", "code", "blockquote", "i"],
+      options: [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "p",
+        "div",
+        "span",
+        "label",
+        "code",
+        "blockquote",
+        "i",
+      ],
       control: {
         type: "select",
       },
     },
     styleAs: {
-      options: ["h1", "h2", "h3", "h4", "label", "display1", "display2", "display3", "notation", "action"],
+      options: [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "label",
+        "display1",
+        "display2",
+        "display3",
+        "notation",
+        "action",
+      ],
       control: { type: "select" },
     },
     variant: {
