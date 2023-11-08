@@ -9,7 +9,7 @@
   align-items: center;
   background: var(--multilineInput-background);
   border: var(--multilineInput-border);
-  color: var(--salt-foreground-primary);
+  color: var(--salt-content-primary-foreground);
   display: inline-flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
@@ -126,7 +126,7 @@
 
 /* Style applied to selected input */
 .saltMultilineInput-textarea::selection {
-  background: var(--salt-foreground-text-highlight);
+  background: var(--salt-content-foreground-highlight);
 }
 
 /* Styling when focused */
@@ -164,7 +164,7 @@
 
   background: var(--multilineInput-background-disabled);
   cursor: var(--salt-editable-cursor-disabled);
-  color: var(--salt-foreground-primary-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
 }
 
 /* Style for activation indicator */

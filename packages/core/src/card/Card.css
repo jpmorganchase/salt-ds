@@ -47,7 +47,7 @@ a:focus .saltCard-interactable.saltCard-disabled,
 .saltCard-disabled.saltCard-interactable,
 a:focus .saltCard-interactable.saltCard-disabled {
   border-color: var(--salt-container-primary-borderColor-disabled);
-  color: var(--saltCard-color-disabled, var(--salt-foreground-primary-disabled));
+  color: var(--saltCard-color-disabled, var(--salt-content-primary-foreground-disabled));
   cursor: var(--saltCard-cursor-disabled, var(--salt-selectable-cursor-disabled));
   outline: none;
 }

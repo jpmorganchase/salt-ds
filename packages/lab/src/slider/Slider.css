@@ -137,7 +137,7 @@
 }
 
 .saltSliderMarkLabels-label {
-  color: var(--saltSlider-label-text-color, var(--salt-foreground-secondary));
+  color: var(--saltSlider-label-text-color, var(--salt-content-secondary-foreground));
   font-size: var(--slider-label-fontSize);
   margin-top: var(--saltSlider-label-marginTop);
   line-height: var(--saltSlider-label-lineHeight, var(--salt-text-lineHeight));
@@ -189,7 +189,7 @@
 }
 
 .saltSlider-label {
-  color: var(--saltSlider-label-text-color, var(--salt-foreground-secondary));
+  color: var(--saltSlider-label-text-color, var(--salt-content-secondary-foreground));
   font-size: var(--slider-label-fontSize);
   margin-top: var(--saltSlider-label-marginTop);
   line-height: var(--saltSlider-label-lineHeight, var(--salt-text-lineHeight));

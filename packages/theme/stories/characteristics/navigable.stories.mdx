@@ -2,6 +2,7 @@ import { Meta, Canvas, Story } from "@storybook/addon-docs";
 import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { CursorBlock } from "docs/components/CursorBlock";
+import { TextDecorationBlock } from "docs/components/TextDecorationBlock";
 import { FontWeightBlock } from "docs/components/FontWeightBlock";
 
 <Meta title="Theme/Characteristics/Navigable" />
@@ -36,14 +37,7 @@ Components that allow a user to navigate across UI sections or data sets and cha
 
 <Canvas>
   <Story name="Links">
-    <TextBlock
-      textDecoration="--salt-navigable-textDecoration"
-      color="--salt-navigable-foreground-hover"
-    />
     <DocGrid textExample={true}>
-      <ColorBlock colorVar="--salt-navigable-foreground-hover" />
-      <ColorBlock colorVar="--salt-navigable-foreground-active" />
-      <ColorBlock colorVar="--salt-navigable-foreground-visited" />
       <TextDecorationBlock textDecoration="--salt-navigable-textDecoration" />
       <TextDecorationBlock textDecoration="--salt-navigable-textDecoration-hover" />
       <TextDecorationBlock textDecoration="--salt-navigable-textDecoration-selected" />

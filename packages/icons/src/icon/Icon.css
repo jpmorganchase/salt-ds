@@ -23,9 +23,9 @@
 }
 
 .saltIcon-primary {
-  --icon-color: var(--salt-foreground-primary);
+  --icon-color: var(--salt-content-primary-foreground);
 }
 
 .saltIcon-secondary {
-  --icon-color: var(--salt-foreground-secondary);
+  --icon-color: var(--salt-content-secondary-foreground);
 }

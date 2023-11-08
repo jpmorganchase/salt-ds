@@ -9,6 +9,6 @@
 }
 
 .saltLogo svg {
-  fill: var(--salt-foreground-secondary);
+  fill: var(--salt-content-secondary-foreground);
   stroke: none;
 }

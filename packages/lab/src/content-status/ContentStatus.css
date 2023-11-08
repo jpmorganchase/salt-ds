@@ -10,7 +10,7 @@
 
 /* Styles applied to inner content */
 .saltContentStatus-content {
-  color: var(--saltContentStatus-content-color, var(--salt-foreground-primary));
+  color: var(--saltContentStatus-content-color, var(--salt-content-primary-foreground));
   display: flex;
   flex-direction: column;
   gap: var(--salt-size-unit);

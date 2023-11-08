@@ -1,5 +1,5 @@
 /* TODO: get rid of this once Tabs is compatible with dark theme */
 .salt-theme[data-mode="light"] .saltColorChooserDictTabs-text {
   background-color: transparent;
-  color: var(--salt-foreground-primary) !important;
+  color: var(--salt-content-primary-foreground) !important;
 }

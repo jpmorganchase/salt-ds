@@ -1,6 +1,6 @@
 .saltMetricHeader {
-  --metric-title-color: var(--salt-foreground-primary);
-  --metric-subtitle-color: var(--salt-foreground-secondary);
+  --metric-title-color: var(--salt-content-primary-foreground);
+  --metric-subtitle-color: var(--salt-content-secondary-foreground);
 }
 
 .saltMetricHeader {

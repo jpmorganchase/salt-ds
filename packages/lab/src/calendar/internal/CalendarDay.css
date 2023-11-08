@@ -1,40 +1,40 @@
 /* TODO: Design need to align characteristics for CalendarDay */
 .saltCalendarDay {
-  --calendar-day-text-color: var(--salt-foreground-primary);
+  --calendar-day-text-color: var(--salt-content-primary-foreground);
   --calendar-day-background: var(--salt-selectable-background);
   --calendar-day-background-hover: var(--salt-selectable-background-hover);
-  --calendar-day-text-color-hover: var(--salt-foreground-primary);
-  --calendar-day-outOfRange-text-color: var(--salt-foreground-secondary-disabled);
-  --calendar-day-blocked-text-color: var(--salt-foreground-primary);
+  --calendar-day-text-color-hover: var(--salt-content-primary-foreground);
+  --calendar-day-outOfRange-text-color: var(--salt-content-secondary-foreground-disabled);
+  --calendar-day-blocked-text-color: var(--salt-content-primary-foreground);
   --calendar-day-blocked-cursor: var(--salt-selectable-cursor-disabled);
   --calendar-day-blocked-icon-color: var(--salt-status-error-foreground);
   --calendar-day-blocked-background: var(--calendar-day-background);
-  --calendar-day-unselectable-text-color: var(--salt-foreground-secondary-disabled);
+  --calendar-day-unselectable-text-color: var(--salt-content-secondary-foreground-disabled);
   --calendar-day-unselectable-background: var(--calendar-day-background);
   --calendar-day-unselectable-cursor: var(--salt-selectable-cursor-disabled);
 
   --calendar-day-selected-background: var(--salt-selectable-background-selected);
-  --calendar-day-selected-text-color: var(--salt-foreground-primary);
+  --calendar-day-selected-text-color: var(--salt-content-primary-foreground);
   /* --calendar-day-selected-focused-outlineColor: var(--salt-color-white); TODO: Check with design */
 
   --calendar-day-selectedStart-background: var(--salt-selectable-background-selected);
-  --calendar-day-selectedStart-text-color: var(--salt-foreground-primary);
+  --calendar-day-selectedStart-text-color: var(--salt-content-primary-foreground);
   /* --calendar-day-selectedStart-focused-outlineColor: var(--salt-color-white);  TODO: Check with design */
 
   --calendar-day-selectedEnd-background: var(--salt-selectable-background-selected);
-  --calendar-day-selectedEnd-text-color: var(--salt-foreground-primary);
+  --calendar-day-selectedEnd-text-color: var(--salt-content-primary-foreground);
   /* --calendar-day-selectedEnd-focused-outlineColor: var(--salt-color-white);  TODO: Check with design */
 
   --calendar-day-selectedSpan-background: var(--salt-selectable-background-blurSelected);
-  --calendar-day-selectedSpan-text-color: var(--salt-foreground-primary);
+  --calendar-day-selectedSpan-text-color: var(--salt-content-primary-foreground);
 
   --calendar-day-hoveredSpan-background: var(--salt-selectable-background-hover);
-  --calendar-day-hoveredSpan-text-color: var(--salt-foreground-primary);
+  --calendar-day-hoveredSpan-text-color: var(--salt-content-primary-foreground);
 
   --calendar-day-hoveredOffset-background: var(--salt-selectable-background-hover);
-  --calendar-day-hoveredOffset-text-color: var(--salt-foreground-primary);
+  --calendar-day-hoveredOffset-text-color: var(--salt-content-primary-foreground);
 
-  --calendar-day-currentDay-borderColor: var(--salt-foreground-primary); /* TODO should not be foreground color */
+  --calendar-day-currentDay-borderColor: var(--salt-content-primary-foreground); /* TODO should not be foreground color */
 
   /* Focus */
   --calendar-day-focused-outline: var(--salt-focused-outline);

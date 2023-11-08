@@ -7,5 +7,5 @@
 .badgeContainer {
   padding-left: 0.5rem;
   text-decoration: underline;
-  color: var(--salt-navigable-foreground-hover);
+  color: var(--salt-content-foreground-hover);
 }
