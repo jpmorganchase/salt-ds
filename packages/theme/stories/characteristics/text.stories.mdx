@@ -6,6 +6,8 @@ import { TextDecorationBlock } from "docs/components/TextDecorationBlock";
 import { BlankBlockCell, BlankBlockCode } from "docs/components/BlankBlock";
 import { FontSizeBlock } from "docs/components/FontSizeBlock";
 import { FontWeightBlock } from "docs/components/FontWeightBlock";
+import { LetterSpacingBlock } from "docs/components/LetterSpacingBlock";
+import { TextAlignBlock } from "docs/components/TextAlignBlock";
 
 <Meta title="Theme/Characteristics/Text" />
 
@@ -192,6 +194,52 @@ All text examples are shown using the default `fontWeight` token.
       <BlankBlockCode>--salt-text-label-fontWeight-strong</BlankBlockCode>
       <BlankBlockCell />
       <BlankBlockCode>--salt-text-label-fontWeight-small</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Notation
+
+<Canvas>
+  <Story name="Notation">
+    <TextBlock
+      lineHeight="--salt-text-notation-lineHeight"
+      fontSize="--salt-text-notation-fontSize"
+      fontWeight="--salt-text-notation-fontWeight"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-lineHeight</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontSize</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontWeight</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontWeight-strong</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontWeight-small</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Action
+
+<Canvas>
+  <Story name="Action">
+    <TextBlock
+      fontWeight="--salt-text-action-fontWeight"
+      textTransform="--salt-text-action-textTransform"
+      textAlign="--salt-text-action-textAlign"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-action-fontWeight</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-action-letterSpacing</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-action-textTransform</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-action-textAlign</BlankBlockCode>
     </DocGrid>
   </Story>
 </Canvas>
