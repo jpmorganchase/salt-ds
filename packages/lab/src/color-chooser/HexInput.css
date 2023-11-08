@@ -8,7 +8,7 @@
   margin-top: 5px;
   font-size: var(--salt-text-label-fontSize);
   padding-right: 6px;
-  color: var(--salt-foreground-secondary);
+  color: var(--salt-content-secondary-foreground);
   padding-left: 6px;
 }
 

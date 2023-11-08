@@ -132,7 +132,9 @@ export const Headings = HeadingsComponent.bind({});
 const LabelCaptionTextComponent: StoryFn<typeof Text> = () => {
   return (
     <>
-      <LabelText>Label text - label - His seasons Shall without form fourth seed so.</LabelText>
+      <LabelText>
+        Label text - label - His seasons Shall without form fourth seed so.
+      </LabelText>
       <br />
       <LabelText>
         Label text
@@ -154,7 +156,10 @@ export const Label = LabelCaptionTextComponent.bind({});
 const NotationComponent: StoryFn<typeof Text> = () => {
   return (
     <>
-      <NotationText>Notation text - notation - His seasons Shall without form fourth seed so.</NotationText>
+      <NotationText>
+        Notation text - notation - His seasons Shall without form fourth seed
+        so.
+      </NotationText>
       <br />
       <NotationText>
         Notation text
@@ -176,7 +181,9 @@ export const Notation = NotationComponent.bind({});
 const ActionComponent: StoryFn<typeof Text> = () => {
   return (
     <>
-      <ActionText>Action text - action - His seasons Shall without form fourth seed so.</ActionText>
+      <ActionText>
+        Action text - action - His seasons Shall without form fourth seed so.
+      </ActionText>
       <br />
       <ActionText>
         Action text

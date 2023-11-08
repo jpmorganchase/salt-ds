@@ -29,9 +29,9 @@ Any theme customization, the following tokens will be impacted. Update them as p
 - --salt-text-link-foreground-hover
 - --salt-text-link-foreground-active
 - --salt-text-link-foreground-visited
-+ --salt-navigable-foreground-hover
-+ --salt-navigable-foreground-active
-+ --salt-navigable-foreground-visited
++ --salt-content-foreground-hover
++ --salt-content-foreground-active
++ --salt-content-foreground-visited
 
 - --salt-text-link-textDecoration
 - --salt-text-link-textDecoration-hover
@@ -44,13 +44,13 @@ Any theme customization, the following tokens will be impacted. Update them as p
 - --salt-text-primary-foreground-disabled
 - --salt-text-secondary-foreground
 - --salt-text-secondary-foreground-disabled
-+ --salt-foreground-primary
-+ --salt-foreground-primary-disabled
-+ --salt-foreground-secondary
-+ --salt-foreground-secondary-disabled
++ --salt-content-primary-foreground
++ --salt-content-primary-foreground-disabled
++ --salt-content-secondary-foreground
++ --salt-content-secondary-foreground-disabled
 
 - --salt-text-background-selected
-+ --salt-foreground-text-highlight
++ --salt-content-foreground-highlight
 
 - --salt-navigable-primary-background-hover
 + --salt-navigable-background-hover

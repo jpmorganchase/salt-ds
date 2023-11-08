@@ -7,7 +7,7 @@
 .footer {
   background-color: var(--salt-color-gray-900);
   padding: var(--footer-padding-vertical) var(--footer-padding-horizontal);
-  color: var(--salt-foreground-secondary);
+  color: var(--salt-content-secondary-foreground);
 }
 
 .container {
@@ -36,7 +36,7 @@
 }
 
 .linkContainer a {
-  --link-color: var(--salt-foreground-secondary);
+  --link-color: var(--salt-content-secondary-foreground);
 }
 @media screen and (max-width: 1280px) {
   .footer {

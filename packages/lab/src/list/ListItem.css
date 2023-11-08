@@ -1,9 +1,9 @@
 .saltListItem {
   /* Color */
-  --list-item-text-color: var(--salt-foreground-primary);
+  --list-item-text-color: var(--salt-content-primary-foreground);
   --list-item-background: var(--saltList-item-background, var(--salt-selectable-background));
   /* --list-item-selected-focus-outlineColor: var(--salt-color-white);  TODO: Check token with design */
-  --list-item-text-color-active: var(--salt-foreground-primary);
+  --list-item-text-color-active: var(--salt-content-primary-foreground);
   --list-item-background-active: var(--salt-selectable-background-selected);
   --list-item-alignItems: center;
 }
@@ -48,7 +48,7 @@
 
 .saltListItem-checkbox {
   --list-item-background-active: var(--salt-selectable-background);
-  --list-item-text-color-active: var(--salt-foreground-primary);
+  --list-item-text-color-active: var(--salt-content-primary-foreground);
   --list-item-text-padding: 0 0 0 var(--salt-size-unit);
 }
 
@@ -58,7 +58,7 @@
 }
 
 .saltListItem.saltDisabled {
-  --list-item-text-color: var(--salt-foreground-primary-disabled);
+  --list-item-text-color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 

@@ -4,7 +4,7 @@
   margin: var(--salt-size-unit);
   padding: var(--salt-size-unit);
 
-  color: var(--salt-foreground-primary);
+  color: var(--salt-content-primary-foreground);
 
   border-color: var(--salt-container-primary-borderColor);
   border-style: var(--salt-container-borderStyle);

@@ -1,9 +1,0 @@
-.salt-theme {
-  /* Colors */
-  --salt-foreground-text-highlight: var(--salt-palette-interact-background-active);
-
-  --salt-foreground-primary: var(--salt-palette-neutral-primary-foreground);
-  --salt-foreground-primary-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
-  --salt-foreground-secondary: var(--salt-palette-neutral-secondary-foreground);
-  --salt-foreground-secondary-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
-}

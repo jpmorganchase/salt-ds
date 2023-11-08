@@ -1,4 +1,4 @@
 .TextBlock {
-  color: var(--salt-foreground-primary);
+  color: var(--salt-content-primary-foreground);
   text-align: right;
 }

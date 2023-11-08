@@ -16,7 +16,7 @@
   background: var(--saltTabs-tab-background, var(--tabs-tab-background));
   border: none;
   border-radius: 0;
-  color: var(--salt-foreground-primary);
+  color: var(--salt-content-primary-foreground);
   cursor: var(--saltTabs-tab-cursor, var(--tabs-tab-cursor));
   display: var(--tabs-tabstrip-display);
   height: var(--saltTabs-tab-height, var(--tabs-tabstrip-height));
@@ -37,7 +37,7 @@
 }
 
 .saltTab[aria-selected="true"] {
-  color: var(--salt-foreground-primary);
+  color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight-active);
 }
 

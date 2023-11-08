@@ -1,7 +1,7 @@
 .saltLink {
-  --link-color-hover: var(--saltLink-color-hover, var(--salt-navigable-foreground-hover));
-  --link-color-active: var(--saltLink-color-active, var(--salt-navigable-foreground-active));
-  --link-color-visited: var(--saltLink-color-visited, var(--salt-navigable-foreground-visited));
+  --link-color-hover: var(--saltLink-color-hover, var(--salt-content-foreground-hover));
+  --link-color-active: var(--saltLink-color-active, var(--salt-content-foreground-active));
+  --link-color-visited: var(--saltLink-color-visited, var(--salt-content-foreground-visited));
   /* When focused, we also want hover style */
   --link-color-focus: var(--saltLink-color-focus, var(--link-color-hover));
 
@@ -22,12 +22,12 @@
 
 /* Primary variant */
 .saltText-primary {
-  --link-color: var(--salt-foreground-primary);
+  --link-color: var(--salt-content-primary-foreground);
 }
 
 /* Secondary variant */
 .saltText-secondary {
-  --link-color: var(--salt-foreground-secondary);
+  --link-color: var(--salt-content-secondary-foreground);
 }
 
 /* External link's icon */

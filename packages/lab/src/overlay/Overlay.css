@@ -1,6 +1,6 @@
 /* Experimental - Overlay css variable API */
 .saltOverlay {
-  --overlay-text-color: var(--salt-foreground-primary);
+  --overlay-text-color: var(--salt-content-primary-foreground);
   --overlay-spacing: var(--salt-size-unit);
   --overlay-fontSize: var(--salt-text-fontSize);
   --overlay-background: var(--salt-container-primary-background);

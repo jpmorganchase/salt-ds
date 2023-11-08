@@ -251,7 +251,7 @@
   /* --- Status bar styles --- */
 
   .ag-status-bar {
-    color: var(--salt-foreground-secondary);
+    color: var(--salt-content-secondary-foreground);
     height: var(--agGrid-row-height-default);
     font-size: var(--salt-text-fontSize);
     font-weight: var(--salt-text-label-fontWeight);
@@ -261,12 +261,12 @@
 
   .ag-status-panel {
     align-items: center;
-    color: var(--salt-foreground-secondary);
+    color: var(--salt-content-secondary-foreground);
     padding: var(--salt-spacing-100) 0;
   }
 
   .ag-status-name-value-value {
-    color: var(--salt-foreground-primary);
+    color: var(--salt-content-primary-foreground);
     font-weight: var(--salt-text-fontWeight-strong);
   }
 
@@ -669,12 +669,12 @@
   }
 
   .ag-floating-filter-button-button .ag-icon-filter:before {
-    color: var(--salt-foreground-secondary);
+    color: var(--salt-content-secondary-foreground);
     content: "\e9ac";
   }
 
   .ag-floating-filter-input {
-    color: var(--salt-foreground-secondary);
+    color: var(--salt-content-secondary-foreground);
     padding-left: var(--salt-spacing-100);
   }
 

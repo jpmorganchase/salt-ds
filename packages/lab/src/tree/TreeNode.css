@@ -1,6 +1,6 @@
 .saltTreeNode {
   /* Color */
-  --tree-item-text-color: var(--salt-foreground-primary);
+  --tree-item-text-color: var(--salt-content-primary-foreground);
   --tree-item-background: var(--salt-selectable-background);
   --tree-item-background-hover: var(--salt-selectable-background-hover);
 
@@ -23,8 +23,8 @@
 
 .saltTreeNode-item[aria-selected="true"] {
   background: var(--salt-selectable-background-selected);
-  color: var(--salt-foreground-primary);
-  --saltIcon-color: var(--salt-foreground-primary);
+  color: var(--salt-content-primary-foreground);
+  --saltIcon-color: var(--salt-content-primary-foreground);
 }
 
 .saltTreeNode[aria-expanded="true"] {
