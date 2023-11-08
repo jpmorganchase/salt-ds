@@ -12,6 +12,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "yarn clean && yarn node ./scripts/generateIcons.mjs '*.svg'",
+    "copy:css": "yarn node ./scripts/copyCss.mjs",
     "clean": "rimraf ./src/components"
   },
   "dependencies": {
