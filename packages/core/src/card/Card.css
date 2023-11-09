@@ -8,6 +8,11 @@
   padding: var(--saltCard-padding, var(--salt-spacing-300));
 }
 
+.saltCard-secondary {
+  background: var(--salt-container-secondary-background);
+  border-color: var(--salt-container-secondary-borderColor);
+}
+
 /*
  * **Deprecated:** The following styles are deprecated
  *  Use Interactable Card component instead
