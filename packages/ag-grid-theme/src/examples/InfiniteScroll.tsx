@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import { Spinner, StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfiniteScrollExampleColumns";
@@ -22,8 +22,9 @@ const generateData = function generateData<T extends { name: string }>(
 
 const dataSourceRows = generateData(dataGridExampleData);
 
-const InfiniteScroll = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const InfiniteScroll = (props: { defaultTheme: string }) => {
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -51,7 +52,6 @@ const InfiniteScroll = (props: AgGridReactProps) => {
       <div {...containerProps}>
         <AgGridReact
           {...agGridProps}
-          {...props}
           columnDefs={dataGridInfiniteScrollExampleColumns}
           rowModelType="infinite"
           infiniteInitialRowCount={100}

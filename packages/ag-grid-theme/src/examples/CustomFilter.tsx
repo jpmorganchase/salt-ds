@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import "../../uitk-ag-theme.css";
+import { AgGridReact } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
-const CustomFilter = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const CustomFilter = (props: { defaultTheme: string }) => {
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
 
   const [hasSavedState, setHasSavedState] = useState(true);
   const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers({
@@ -100,7 +100,6 @@ const CustomFilter = (props: AgGridReactProps) => {
           columnDefs={customFilterExampleColumns}
           rowData={dataGridExampleData}
           {...agGridProps}
-          {...props}
         />
       </div>
     </StackLayout>

@@ -1,12 +1,13 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import { StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
-const FloatingFilter = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const FloatingFilter = (props: { defaultTheme: string }) => {
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -20,7 +21,6 @@ const FloatingFilter = (props: AgGridReactProps) => {
           columnDefs={customFilterExampleColumns}
           rowData={dataGridExampleData}
           {...agGridProps}
-          {...props}
         />
       </div>
     </StackLayout>

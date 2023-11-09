@@ -1,13 +1,14 @@
 import { CSSProperties } from "react";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import { Card, Spinner, StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
-const LoadingOverlay = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const LoadingOverlay = (props: { defaultTheme: string }) => {
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -49,7 +50,6 @@ const LoadingOverlay = (props: AgGridReactProps) => {
         <div {...containerProps} tabIndex={-1}>
           <AgGridReact
             {...agGridProps}
-            {...props}
             columnDefs={dataGridExampleColumns}
             rowData={dataGridExampleData}
           />

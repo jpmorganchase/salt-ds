@@ -1,12 +1,13 @@
 import { StackLayout } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import parentChildExampleColumns from "../dependencies/parentChildExampleColumns";
 import parentChildExampleData from "../dependencies/parentChildExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
-const ParentChildRows = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const ParentChildRows = (props: { defaultTheme: string }) => {
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -19,7 +20,6 @@ const ParentChildRows = (props: AgGridReactProps) => {
           animateRows
           treeData
           {...agGridProps}
-          {...props}
           columnDefs={parentChildExampleColumns}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           getDataPath={(data: any) => {

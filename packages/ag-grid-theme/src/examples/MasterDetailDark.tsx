@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import { useCallback, useRef } from "react";
 import { SaltProvider, StackLayout } from "@salt-ds/core";
 import columnDefs from "../dependencies/masterDetailExampleData";
@@ -6,9 +6,10 @@ import rowData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
-const MasterDetailDark = (props: AgGridReactProps) => {
-  const mode = "dark";
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const MasterDetailDark = (props: { defaultTheme: string }) => {
+    const mode = "dark";
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
     mode,
@@ -44,7 +45,6 @@ const MasterDetailDark = (props: AgGridReactProps) => {
             detailRowHeight={300}
             rowData={rowData}
             {...agGridProps}
-            {...props}
             onFirstDataRendered={onFirstDataRendered}
           />
         </div>

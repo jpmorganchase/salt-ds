@@ -34,6 +34,7 @@ const headerRow: any[] = [
 ];
 
 type PinnedRowsExampleProps = AgGridReactProps & {
+  defaultTheme?: string;
   aggregateColumn: string;
   aggregate: "sum" | "min" | "max";
   showFooter: boolean;
@@ -41,6 +42,7 @@ type PinnedRowsExampleProps = AgGridReactProps & {
 };
 
 const PinnedRowsExample = function PinnedRowsExample({
+  defaultTheme = "salt",
   aggregate = "sum",
   aggregateColumn = "population",
   columnDefs = dataGridExampleColumns,
@@ -49,7 +51,7 @@ const PinnedRowsExample = function PinnedRowsExample({
   showHeader = true,
   ...rest
 }: PinnedRowsExampleProps) {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });

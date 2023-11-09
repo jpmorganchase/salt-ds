@@ -1,5 +1,5 @@
 import { SaltProvider, StackLayout } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -17,9 +17,10 @@ const statusBar = {
   ],
 };
 
-const StatusBar = (props: AgGridReactProps) => {
-  const mode = "dark";
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const StatusBar = (props: { defaultTheme: string }) => {
+    const mode = "dark";
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
     mode,
@@ -39,7 +40,6 @@ const StatusBar = (props: AgGridReactProps) => {
               columnDefs={dataGridExampleColumns}
               rowData={dataGridExampleData}
               {...agGridProps}
-              {...props}
               onFirstDataRendered={(params) => {
                 params.api.forEachNode((node, index) => {
                   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

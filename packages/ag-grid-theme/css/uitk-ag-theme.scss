@@ -19,7 +19,8 @@ div[class^="ag-theme-uitk"] {
 .ag-theme-uitk-high-light,
 .ag-theme-uitk-medium-light,
 .ag-theme-uitk-low-light,
-.ag-theme-uitk-touch-light {
+.ag-theme-uitk-touch-light,
+.ag-theme-uitk-high-compact-light {
   --agGrid-menu-padding: var(--uitk-container-spacing);
 
   --agGrid-foreground: var(--saltAgGrid-foreground, #2a2c2f);
@@ -121,7 +122,8 @@ div[class^="ag-theme-uitk"] {
 .ag-theme-uitk-high-dark,
 .ag-theme-uitk-medium-dark,
 .ag-theme-uitk-low-dark,
-.ag-theme-uitk-touch-dark {
+.ag-theme-uitk-touch-dark,
+.ag-theme-uitk-high-compact-dark {
   --agGrid-menu-padding: var(--uitk-container-spacing);
 
   --agGrid-foreground: var(--saltAgGrid-foreground, white);
@@ -324,7 +326,8 @@ $ag-theme-uitk-params-touch-dark: map-merge(
 );
 
 .ag-theme-uitk-high-dark,
-.ag-theme-uitk-high-light {
+.ag-theme-uitk-high-light,
+.ag-theme-uitk-high-compact-light {
   --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 14px);
   --agGrid-input-padding: var(--saltAgGrid-input-padding, 4px);
   --agGrid-input-height: var(--saltAgGrid-input-height, 20px);

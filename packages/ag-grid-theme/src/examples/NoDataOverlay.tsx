@@ -1,14 +1,15 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import { Button, Card, H2, StatusIndicator } from "@salt-ds/core";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
-const NoDataOverlay = (props: AgGridReactProps) => {
-  const [showModal, setShowModal] = useState(true);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const NoDataOverlay = (props: { defaultTheme: string }) => {
+    const [showModal, setShowModal] = useState(true);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -120,7 +121,6 @@ const NoDataOverlay = (props: AgGridReactProps) => {
         <div style={{ height: 800, width: 800 }} {...containerProps}>
           <AgGridReact
             {...agGridProps}
-            {...props}
             columnDefs={dataGridExampleColumns}
           />
         </div>

@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import { StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
@@ -15,8 +15,9 @@ const generateData = (states: typeof dataGridExampleData) =>
     return [...result, ...data];
   }, [] as typeof dataGridExampleData);
 
-const PagedGrid = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const PagedGrid = (props: { defaultTheme: string }) => {
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -31,7 +32,6 @@ const PagedGrid = (props: AgGridReactProps) => {
           paginationPageSize={100}
           rowData={generateData(dataGridExampleData)}
           {...agGridProps}
-          {...props}
         />
       </div>
     </StackLayout>

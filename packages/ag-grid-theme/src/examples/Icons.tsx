@@ -8,14 +8,15 @@ import uitkStyles from "../../css/_export-uitk-icons.module.scss";
 import iconCss from "./Icons.css";
 import { CSSProperties } from "react";
 
-const Icons = () => {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-ag-grid-icons",
-    css: iconCss,
-    window: targetWindow,
-  });
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const Icons = (props: { defaultTheme: string }) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-ag-grid-icons",
+      css: iconCss,
+      window: targetWindow,
+    });
+    const { defaultTheme = "salt" } = props
+    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
 
   const { containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,

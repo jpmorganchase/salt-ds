@@ -1,26 +1,31 @@
 import { SyntheticEvent, useState } from "react";
 import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 
-export const useAgGridThemeSwitcher = () => {
-  const [themeName, setThemeName] = useState("salt");
+export const useAgGridThemeSwitcher = (defaultTheme:string) => {
+  const [themeName, setThemeName] = useState(defaultTheme);
 
   return {
-    switcher: <AgGridThemeSwitcher onThemeSelect={setThemeName} />,
+    switcher: <AgGridThemeSwitcher themeName={themeName} onThemeSelect={setThemeName} />,
     themeName,
   };
 };
 
 export const AgGridThemeSwitcher = ({
   onThemeSelect,
+  themeName
 }: {
   onThemeSelect: (themeName: string) => void;
+  themeName:string
 }) => {
-  const [theme, setTheme] = useState("salt");
+  const [theme, setTheme] = useState<string>(themeName);
 
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
     setTheme(event.currentTarget.value);
     onThemeSelect(event.currentTarget.value);
   };
+
+  console.log('theme', theme);
+  
 
   return (
     <div>
