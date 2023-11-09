@@ -1,7 +1,5 @@
 .salt-theme {
   /* Colors */
-  --salt-content-foreground-highlight: var(--salt-palette-interact-background-active);
-
   --salt-content-primary-foreground: var(--salt-palette-neutral-primary-foreground);
   --salt-content-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
   --salt-content-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
@@ -10,4 +8,5 @@
   --salt-content-foreground-hover: var(--salt-palette-navigate-foreground-hover);
   --salt-content-foreground-active: var(--salt-palette-navigate-foreground-active);
   --salt-content-foreground-visited: var(--salt-palette-navigate-foreground-visited);
+  --salt-content-foreground-highlight: var(--salt-palette-interact-background-active);
 }

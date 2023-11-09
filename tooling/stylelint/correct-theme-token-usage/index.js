@@ -65,19 +65,23 @@ const allAllowedKeys = [
   "actionable",
   "container",
   "draggable",
+  "differential", // TODO: **deprecated:** delete here
   "editable",
   "focused",
+  "measured", // TODO: **deprecated:** delete here
   "navigable",
   "overlayable",
   "selectable",
   "separable",
   "status",
+  "taggable", // TODO: **deprecated:** delete here
   "target",
   "text",
   "track",
   "content",
   // additional to decide
   "animation",
+  "delay", // TODO: **deprecated:** delete here
   "duration", // TODO: to be merged with animation
   "size",
   "spacing",

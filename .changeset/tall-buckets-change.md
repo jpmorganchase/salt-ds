@@ -14,7 +14,11 @@
 + --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 ```
 
-- Deprecated tokens in characteristics, use replacement tokens as listed
+- Deprecated tokens in characteristics, use replacement tokens as listed. The change is motivated by several factors including:
+  - reduced number of tokens
+  - easier theming experience
+  - `text.css` updated to `content.css` as tokens are used on more than just texts i.e. icon
+  - consolidating tokens into `text.css` to ensure all text-related tokens are within the same file, aside from text colors, they sit within `content.css`
 
 ```diff
 - --salt-overlayable-shadow-borderRegion
@@ -122,55 +126,49 @@
 - --salt-taggable-cursor-active /* Use `pointer` */
 - --salt-taggable-cursor-disabled /* Use `not-allowed` */
 
-- --salt-taggable-background /* Use --salt-palette-interact-primary-background */
-- --salt-taggable-background-hover /* Use --salt-palette-interact-primary-background-hover */
-- --salt-taggable-background-active /* Use --salt-palette-interact-primary-background-active */
-- --salt-taggable-background-disabled /* Use --salt-palette-interact-primary-background-disabled */
+- --salt-taggable-background /* Use rgb(197, 201, 208) in light mode, rgb(76, 80, 91) in dark mode */
+- --salt-taggable-background-hover /* Use rgb(217, 221, 227) in light mode, rgb(97, 101, 110) in dark mode */
+- --salt-taggable-background-active /* Use --salt-palette-interact-primary-background-active Use rgb(97, 101, 110) in light mode, rgb(180, 183, 190) in dark mode */
+- --salt-taggable-background-disabled /* Use --salt-palette-interact-primary-background-disabled Use rgba(197, 201, 208, 0.4) in light mode, rgba(76, 80, 91, 0.4) in dark mode */
 
-- --salt-taggable-foreground /* Use --salt-palette-interact-primary-foreground */
-- --salt-taggable-foreground-hover /* Use --salt-palette-interact-primary-foreground-hover */
-- --salt-taggable-foreground-active /* Use --salt-palette-interact-primary-foreground-active */
-- --salt-taggable-foreground-disabled /* Use --salt-palette-interact-primary-foreground-disabled */
+- --salt-taggable-foreground /* Use rgb(255, 255, 255) */
+- --salt-taggable-foreground-hover /* Use rgb(255, 255, 255) */
+- --salt-taggable-foreground-active /* Use rgb(22, 22, 22) */
+- --salt-taggable-foreground-disabled /* Use rgba(255, 255, 255, 0.4) */
 
 - --salt-navigable-primary-background /* Use `transparent` */
 - --salt-navigable-primary-background-active /* Use `transparent` */
 - --salt-navigable-secondary-background /* Use `transparent` */
-- --salt-navigable-secondary-background-hover /* Use --salt-color-gray-30 in light mode, --salt-color-gray-600 in dark mode */
+- --salt-navigable-secondary-background-hover /* Use rgb(76, 80, 91) in light mode, rgb(47, 49, 54) in dark mode */
 - --salt-navigable-secondary-background-active /* Use `transparent` */
 - --salt-navigable-tertiary-background /* Use `transparent` */
-- --salt-navigable-tertiary-background-hover /* Use --salt-color-gray-20 in light mode, --salt-color-gray-700 in dark mode */
+- --salt-navigable-tertiary-background-hover /* Use rgb(234, 237, 239) in light mode,  rgb(42, 44, 47) in dark mode */
 - --salt-navigable-tertiary-background-active /* Use `transparent` */
 
-- --salt-navigable-indicator-activeDisabled /* Use --salt-color-orange-600-fade-border in light mode, --salt-color-orange-400-fade-border in dark mode */
+- --salt-navigable-indicator-activeDisabled /* Use rgba(224, 101, 25, 0.4) in light mode, rgba(238, 133, 43, 0.4) in dark mode */
 
-- --salt-accent-foreground-disabled /* Use --salt-palette-accent-foreground-disabled */
-- --salt-accent-background-disabled /* Use --salt-palette-accent-background-disabled */
+- --salt-accent-foreground-disabled /* Use rgba(255, 255, 255, 0.4) */
+- --salt-accent-background-disabled /* Use rgba(38, 112, 169, 0.4) */
 - --salt-accent-borderColor-disabled /* Use --salt-container-primary-borderColor-disabled */
 
 - --salt-track-fontWeight /* Use --salt-typography-fontWeight-semiBold */
 - --salt-track-textAlign /* Use `center` */
 
-- --salt-track-background  /* Use --salt-color-gray-60 in light mode, --salt-color-gray-300 in dark mode */
-- --salt-track-background-disabled /* Use --salt-color-gray-60-fade-background in light mode, --salt-color-gray-300-fade-background in dark mode */
+- --salt-track-background  /* Use rgb(197, 201, 208) in light mode, rgb(76, 80, 91); in dark mode */
+- --salt-track-background-disabled /* Use  rgba(197, 201, 208,0.4) in light mode, rgba(76, 80, 91,0.4) in dark mode */
 
-- --salt-track-borderColor-disabled /* Use --salt-color-gray-90-fade-background in both light and dark modes */
+- --salt-track-borderColor-disabled /* Use rgba(132, 135, 142, 0.4) in both light and dark modes */
 
-- --salt-selectable-cta-foreground-hover /* Use
---salt-palette-interact-cta-foreground-hover */
-- --salt-selectable-cta-foreground-selected /* Use --salt-palette-interact-cta-foreground-active */
-- --salt-selectable-cta-foreground-selectedDisabled /* Use --salt-palette-interact-cta-foreground-activeDisabled */
+- --salt-selectable-cta-foreground-hover /* Use rgb(255, 255, 255) in both light and dark mode */
+- --salt-selectable-cta-foreground-selected /* Use rgb(255, 255, 255) in both light and dark mode */
+- --salt-selectable-cta-foreground-selectedDisabled /* Use rgba(255, 255, 255,0.4) in both light and dark mode  */
 
-- --salt-selectable-cta-background /* Use
---salt-palette-interact-backround */
-- --salt-selectable-cta-background-disabled /* Use
---salt-palette-interact-backround-disabled */
-- --salt-selectable-cta-background-hover /* Use
---salt-palette-interact-cta-background-hover */
-- --salt-selectable-cta-background-selected /* Use --salt-palette-interact-cta-background-active */
-- --salt-selectable-cta-background-selectedDisabled /* Use --salt-palette-interact-cta-background-activeDisabled */
-
-- --salt-selectable-primary-foreground-hover /* Use
---salt-palette-interact-foreground-hover */
+- --salt-selectable-cta-background /* Use `transparent` */
+- --salt-selectable-cta-background-disabled /* Use `transparent` */
+- --salt-selectable-cta-background-hover /* Use rgb(203, 231, 249) in light mode, rgb(39, 60, 77) in dark mode */
+- --salt-selectable-cta-background-selected /* Use rgb(164, 213, 244) in light mode, rgb(0, 71, 123) in dark mode */
+- --salt-selectable-cta-background-selectedDisabled /* Use  rgba(164, 213, 244,0.4) in light mode,rgba(0, 71, 123, 0.4) in dark mode */
+- --salt-selectable-primary-foreground-hover /* Use rgb(38, 112, 169) in both light and dark mode */
 
 ```
 

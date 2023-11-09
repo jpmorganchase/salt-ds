@@ -37,7 +37,7 @@ i.e. In `characteristics/text.css`, 3 tokens are to be fully removed:
   --salt-text-token-6: green;
 
   /* Deprecate all below */
-  --salt-text-token-3: var(--salt-token-2);
+  --salt-text-token-3: var(--salt-text-token-2);
   --salt-text-token-4: purple;
   --salt-text-token-5: pink;
 }
