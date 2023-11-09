@@ -1,5 +1,5 @@
 ---
-title: Button Bar
+title: Button bar
 layout: DetailPattern
 aliases:
   - /salt/patterns/button-bar
@@ -19,7 +19,7 @@ Button bar is a pattern that displays possible actions for users to take when th
     border
   />
 
-We provide design guidance for using Salt button and layout components and the button bar template to achieve the pattern. You can also find implementation examples in the [storybook](https://storybook.saltdesignsystem.com/?path=/story/patterns-button-bar--button-bar).
+We provide design guidance for using Salt [button](/salt/components/button) and layout components ([stack layout](/salt/components/stack-layout) and [split layout](/salt/components/split-layout)) to achieve the pattern. You can also find implementation examples in the [storybook](https://storybook.saltdesignsystem.com/?path=/story/patterns-button-bar--button-bar).
 
 ## When to use it
 
@@ -103,7 +103,7 @@ The container and the type of scenario determine the position of actions (CTA, p
     contentPosition="top"
     border
   >
-    #### Default/Single-step form
+    ### Default/Single-step form
     - Groups core actions on the left.
     - Follows an F-pattern reading model, allowing users to quickly scan down.
   </Diagram>
@@ -113,7 +113,7 @@ The container and the type of scenario determine the position of actions (CTA, p
     contentPosition="top"
     border
   >
-    #### Multi-step form
+    ### Multi-step form
     - Groups core actions on the right
     - Always positions **Next** right of **Previous** and **Cancel** to reflect the direction of the steps
   </Diagram>
@@ -123,7 +123,7 @@ The container and the type of scenario determine the position of actions (CTA, p
     contentPosition="bottom"
     border
   >
-    #### Dialog
+    ### Dialog
     - Always displayes core actions on the right.
     - Follows a Z-pattern reading model, where actions are the last focal point in the dialog.
   </Diagram>
@@ -133,7 +133,7 @@ The container and the type of scenario determine the position of actions (CTA, p
     contentPosition="bottom"
     border
   >
-    #### Small viewport (below the xs breakpoint)
+    ### Small viewport (below the xs breakpoint)
     - Provides the option for actions to fill the width for a cleaner layout if button width doesn’t need to increase drastically.
   </Diagram>
 </Diagrams>
