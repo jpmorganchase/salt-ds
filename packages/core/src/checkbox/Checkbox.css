@@ -9,8 +9,6 @@
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-text-fontWeight);
-
-  --checkbox-icon-marginTop: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
 }
 
 /* Styles applied to root component if `disabled={true}` */
@@ -27,7 +25,7 @@
 
 .saltCheckbox-input,
 .saltCheckboxIcon {
-  margin-top: var(--checkbox-icon-marginTop);
+  margin-top: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
 }
 
 .saltCheckboxIcon > svg {
