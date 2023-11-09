@@ -4,7 +4,7 @@ import { QAContainer, QAContainerProps } from "docs/components";
 import { CloseIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Core/Toast/QA",
+  title: "Core/Toast/Toast QA",
   component: Toast,
 } as Meta<typeof Toast>;
 

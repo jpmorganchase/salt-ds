@@ -1,9 +1,16 @@
 import { useViewport, ViewportContext, ViewportProvider } from "@salt-ds/core";
 import { mount } from "cypress/react18";
+import { useEffect } from "react";
 
-const TestComponent = () => {
+const TestComponent = ({
+  onViewPortWidthChange,
+}: {
+  onViewPortWidthChange?: (width: number) => void;
+}) => {
   const width = useViewport();
-
+  useEffect(() => {
+    onViewPortWidthChange?.(width);
+  }, [width, onViewPortWidthChange]);
   return <div>{width}</div>;
 };
 
@@ -73,6 +80,21 @@ describe("Given a ViewportProvider", () => {
         </ViewportContext.Provider>
       );
       cy.get("@resizeObserver").should("have.been.calledOnce");
+    });
+  });
+
+  describe("WHEN ViewportProvider is initially mounted", () => {
+    it("THEN the viewport width should be set to the body width", () => {
+      const widthChangeSpy = cy.spy().as("widthChange");
+
+      cy.stub(document.body, "getBoundingClientRect").returns({ width: 1000 });
+      mount(
+        <ViewportProvider>
+          <TestComponent onViewPortWidthChange={widthChangeSpy} />
+        </ViewportProvider>
+      );
+
+      cy.get("@widthChange").should("have.been.calledWith", 1000);
     });
   });
 });
