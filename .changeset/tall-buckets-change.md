@@ -2,9 +2,17 @@
 "@salt-ds/theme": minor
 ---
 
-Any theme customization, the following tokens will be impacted. Update them as per suggestion.
+**_Theming and CSS updates_** For teams customizing theme, the following tokens will be impacted. Update them as per suggestion.
 
 ### Characteristics
+
+- New tokens added to `text` characteristics
+
+```diff
++ --salt-text-notation-fontFamily: var(--salt-typography-fontFamily);
++ --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
++ --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+```
 
 - Deprecated tokens in characteristics, use replacement tokens as listed
 
@@ -105,15 +113,6 @@ Any theme customization, the following tokens will be impacted. Update them as p
 + --salt-palette-interact-secondary-background-hover
 + --salt-palette-interact-secondary-background-active
 + --salt-palette-interact-secondary-background-activeDisabled
-
-```
-
-- New tokens added to `text` characteristics
-
-```diff
-+ --salt-text-notation-fontFamily: var(--salt-typography-fontFamily);
-+ --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
-+ --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 ```
 
 - Deprecated tokens with no direct replacement tokens, use values suggested in comments
@@ -177,10 +176,33 @@ Any theme customization, the following tokens will be impacted. Update them as p
 
 ### Foundations
 
+- Updated `neutral` token value in `light` mode
+
+```diff
+- --salt-palette-neutral-backdrop: var(--salt-color-black-fade-backdrop)
++ --salt-palette-neutral-backdrop: var(--salt-color-white-fade-backdrop)
+```
+
+- New tokens added
+
+In `size.css` foundations,
+
+```diff
++ --salt-size-bar-small: 2px; /* for all densities */
++ --salt-size-border-strong: 2px /* for all densities */
++ --salt-size-bar-strong
+```
+
+In `fade.css` foundations,
+
+```diff
++ --salt-color-black-fade-background-hover: rgba(0, 0, 0, var(--salt-opacity-8))
++ --salt-color-white-fade-background-hover: rgba(255, 255, 255, var(--salt-opacity-8))
+```
+
 - Deprecated tokens in foundations, use replacement tokens as listed
 
 ```diff
-
 - --salt-icon-size-base
 - --salt-icon-size-status-adornment
 + --salt-size-icon
@@ -212,31 +234,6 @@ Any theme customization, the following tokens will be impacted. Update them as p
 + --salt-palette-navigate-background-hover: var(--salt-color-black-fade-background-hover)
 - --salt-palette-navigate-primary-background-hover (dark mode)
 + --salt-palette-navigate-background-hover: var(--salt-color-white-fade-background-hover)
-
-```
-
-- Updated `neutral` token value in `light` mode
-
-```diff
-- --salt-palette-neutral-backdrop: var(--salt-color-black-fade-backdrop)
-+ --salt-palette-neutral-backdrop: var(--salt-color-white-fade-backdrop)
-```
-
-- New token added
-
-In `size.css` foundations,
-
-```diff
-+ --salt-size-bar-small: 2px; /* for all densities */
-+ --salt-size-border-strong: 2px /* for all densities */
-+ --salt-size-bar-strong
-```
-
-In `fade.css` foundations,
-
-```diff
-+ --salt-color-black-fade-background-hover: rgba(0, 0, 0, var(--salt-opacity-8))
-+ --salt-color-white-fade-background-hover: rgba(255, 255, 255, var(--salt-opacity-8))
 ```
 
 - Deprecated tokens with no replacement tokens, use values suggested in comments
