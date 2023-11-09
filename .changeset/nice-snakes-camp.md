@@ -2,7 +2,9 @@
 "@salt-ds/core": minor
 ---
 
-- Updated Button component CSS token values, visual changes expected. Font weight for CTA and Primary variants changes from bold to semibold
+**_Theming and CSS updates_** with visual changes to Salt components:
+
+1. Minor changes in `Button` component width. `CTA` and `Primary` button text font weight changed from bold to semibold. Expect components containing Salt `Button` to have similar change.
 
 ```diff
 - --button-fontWeight: var(--salt-actionable-cta-fontWeight);
@@ -11,14 +13,38 @@
 + --button-fontWeight: var(--salt-text-action-fontWeight);
 ```
 
-- Renamed Avatar component CSS token, no visual changes expected
+<!-- INSERT IMAGE SHOWCASING DIFFERENCES HERE -->
+
+2. Disabled `InteractableCard` component has border color updated from blue to grey.
+
+```diff
+- border-color: var(--saltCard-borderColor-disabled, var(--salt-accent-borderColor-disabled));
++ border-color: var(--saltCard-borderColor-disabled, var(--salt-container-primary-borderColor-disabled));
+
+```
+
+<!-- INSERT IMAGE SHOWCASING DIFFERENCES HERE -->
+
+3. `Text` component has two new variants: `Action` and `Notation`. See [storybook](https://storybook.saltdesignsystem.com/?path=/story/core-text-text-qa--all-variants-grid) for more information.
+
+```tsx
+<Text styleAs="notation">Lorem ipsum</Text>
+```
+
+```tsx
+<Notation>Lorem ipsum</Notation>
+```
+
+**_Theming and CSS updates_** with no visual change to Salt components, useful for teams overriding theme locally:
+
+- `Avatar` component CSS token name updated
 
 ```diff
 - --salt-icon-size-base
 + --salt-size-icon
 ```
 
-- Aligned Pill component CSS token names with figma, no visual changes expected
+- `Pill` component CSS token names updated
 
 In `Pill.css`, these tokens have been renamed:
 
@@ -62,13 +88,3 @@ In `PillCheckbox.css`, this token has been renamed:
 - --saltCheckbox-icon-tick-color: var(--salt-taggable-foreground);
 + --saltCheckbox-icon-tick-color: var(--salt-actionable-primary-foreground);
 ```
-
-- Aligned Interactable Card component CSS token value with figma, visual changes expected. Disabled border color updated from blue to grey
-
-```diff
-- border-color: var(--saltCard-borderColor-disabled, var(--salt-accent-borderColor-disabled));
-+ border-color: var(--saltCard-borderColor-disabled, var(--salt-container-primary-borderColor-disabled));
-
-```
-
-- Added `Action` and `Notation` variant to `Text` component. They can also be referenced in Text's `styleAs` prop
