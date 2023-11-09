@@ -91,7 +91,6 @@ export const DropdownNext = forwardRef(function DropdownNext(
     highlightedItem: highlightedItemControlProp,
     onFocus,
     onKeyDown,
-    onBlur,
     onMouseOver,
     onMouseDown,
     onSelect,
@@ -129,6 +128,8 @@ export const DropdownNext = forwardRef(function DropdownNext(
     highlightedItem,
     getListItems,
     portalProps,
+    getReferenceProps,
+    refs,
   } = useDropdownNext({
     listProps,
     placement,
@@ -142,12 +143,13 @@ export const DropdownNext = forwardRef(function DropdownNext(
   const {
     focusHandler,
     keyDownHandler,
-    blurHandler,
     mouseOverHandler,
     mouseDownHandler,
+    listSelectHandler,
   } = handlers;
 
   const triggerRef = useForkRef<HTMLButtonElement>(ref, reference);
+  const portalRef = useForkRef<HTMLButtonElement>(ref, floating);
 
   const getIcon = () => {
     if (readOnly) return;
@@ -175,11 +177,6 @@ export const DropdownNext = forwardRef(function DropdownNext(
     onKeyDown?.(event);
   };
 
-  const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
-    blurHandler();
-    onBlur?.(event);
-  };
-
   const handleMouseOver = (event: MouseEvent<HTMLButtonElement>) => {
     mouseOverHandler();
     onMouseOver?.(event);
@@ -191,16 +188,22 @@ export const DropdownNext = forwardRef(function DropdownNext(
     onMouseDown?.(event);
   };
 
+  const handleListSelect = () => {
+    listSelectHandler();
+    (refs.domReference.current as HTMLButtonElement)?.focus();
+  };
+
   return (
     <div className={clsx(withBaseName())}>
       <button
         id={dropdownId}
         disabled={disabled}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
-        onMouseOver={handleMouseOver}
-        onMouseDown={handleMouseDown}
-        onBlur={handleBlur}
+        {...getReferenceProps({
+          onFocus: handleFocus,
+          onMouseOver: handleMouseOver,
+          onMouseDown: handleMouseDown,
+          onKeyDown: handleKeyDown,
+        })}
         value={selectedItem}
         className={clsx(
           withBaseName("button"),
@@ -227,11 +230,12 @@ export const DropdownNext = forwardRef(function DropdownNext(
       </button>
       <FloatingComponent
         open={open && !disabled}
-        ref={floating}
+        ref={portalRef}
         {...getDropdownNextProps()}
         {...getPosition()}
       >
         <ListNext
+          data-test-id={"list-container"}
           id={listId}
           className={clsx(withBaseName("list"), ListProps?.className)}
           disableFocus
@@ -240,6 +244,7 @@ export const DropdownNext = forwardRef(function DropdownNext(
           highlightedItem={highlightedItem}
           {...ListProps}
           ref={setListRef}
+          onSelect={handleListSelect}
         >
           {getListItems(source)}
         </ListNext>
