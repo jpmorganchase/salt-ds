@@ -1,4 +1,16 @@
-import { Display1, Display2, Display3, H1, H2, H3, H4, Label, Text, Notation, Action } from "@salt-ds/core";
+import {
+  Display1,
+  Display2,
+  Display3,
+  H1,
+  H2,
+  H3,
+  H4,
+  Label,
+  Text,
+  Notation,
+  Action,
+} from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
