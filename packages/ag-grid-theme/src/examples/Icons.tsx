@@ -9,14 +9,14 @@ import iconCss from "./Icons.css";
 import { CSSProperties } from "react";
 
 const Icons = (props: { defaultTheme: string }) => {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-ag-grid-icons",
-      css: iconCss,
-      window: targetWindow,
-    });
-    const { defaultTheme = "salt" } = props
-    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-ag-grid-icons",
+    css: iconCss,
+    window: targetWindow,
+  });
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
 
   const { containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,

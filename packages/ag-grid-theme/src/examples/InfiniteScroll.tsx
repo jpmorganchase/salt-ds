@@ -23,8 +23,8 @@ const generateData = function generateData<T extends { name: string }>(
 const dataSourceRows = generateData(dataGridExampleData);
 
 const InfiniteScroll = (props: { defaultTheme: string }) => {
-    const { defaultTheme = "salt" } = props
-    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });

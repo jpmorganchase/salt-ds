@@ -7,9 +7,9 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const MasterDetailDark = (props: { defaultTheme: string }) => {
-    const mode = "dark";
-    const { defaultTheme = "salt" } = props
-    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
+  const mode = "dark";
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
     mode,

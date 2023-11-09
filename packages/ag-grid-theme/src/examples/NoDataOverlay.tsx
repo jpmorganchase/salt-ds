@@ -6,10 +6,10 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const NoDataOverlay = (props: { defaultTheme: string }) => {
-    const [showModal, setShowModal] = useState(true);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { defaultTheme = "salt" } = props
-    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
+  const [showModal, setShowModal] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -119,10 +119,7 @@ const NoDataOverlay = (props: { defaultTheme: string }) => {
       >
         {modal}
         <div style={{ height: 800, width: 800 }} {...containerProps}>
-          <AgGridReact
-            {...agGridProps}
-            columnDefs={dataGridExampleColumns}
-          />
+          <AgGridReact {...agGridProps} columnDefs={dataGridExampleColumns} />
         </div>
       </div>
     </div>

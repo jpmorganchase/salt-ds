@@ -7,8 +7,8 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const CustomFilter = (props: { defaultTheme: string }) => {
-    const { defaultTheme = "salt" } = props
-    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
 
   const [hasSavedState, setHasSavedState] = useState(true);
   const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers({

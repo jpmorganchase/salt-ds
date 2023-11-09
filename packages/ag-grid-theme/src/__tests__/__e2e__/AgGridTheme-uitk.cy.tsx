@@ -63,7 +63,7 @@ describe("Given Ag Grid Theme - uitk", () => {
   describe("WHEN the CheckboxSelection story is mounted", () => {
     describe("WHEN editable-cell is focused", () => {
       it("THEN should match screenshot", () => {
-        cy.mount(<CheckboxSelection defaultTheme="uitk"/>);
+        cy.mount(<CheckboxSelection defaultTheme="uitk" />);
         cy.wait(500);
         cy.get(".editable-cell").realClick();
         cy.focused().parents(".ag-row").matchImage({ maxDiffThreshold: 0.1 });
@@ -71,7 +71,7 @@ describe("Given Ag Grid Theme - uitk", () => {
     });
     describe("WHEN editable-cell is in edit mode", () => {
       it("THEN should match screenshot", () => {
-        cy.mount(<CheckboxSelection defaultTheme="uitk"/>);
+        cy.mount(<CheckboxSelection defaultTheme="uitk" />);
         cy.wait(500);
         cy.get(".editable-cell").realClick({ clickCount: 2 });
         cy.focused().parents(".ag-row").matchImage({ maxDiffThreshold: 0.1 });
@@ -80,7 +80,7 @@ describe("Given Ag Grid Theme - uitk", () => {
     describe("WHEN number-cell column menu is open", () => {
       describe("AND filter tab is selected", () => {
         it("THEN should match screenshot", () => {
-          cy.mount(<CheckboxSelection defaultTheme="uitk"/>);
+          cy.mount(<CheckboxSelection defaultTheme="uitk" />);
           cy.wait(500);
           cy.contains("Population")
             .parent()

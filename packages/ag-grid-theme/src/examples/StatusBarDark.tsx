@@ -18,9 +18,9 @@ const statusBar = {
 };
 
 const StatusBar = (props: { defaultTheme: string }) => {
-    const mode = "dark";
-    const { defaultTheme = "salt" } = props
-    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
+  const mode = "dark";
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
     mode,

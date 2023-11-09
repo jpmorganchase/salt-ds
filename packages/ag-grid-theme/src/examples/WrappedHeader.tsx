@@ -25,9 +25,9 @@ const statusBar = {
 };
 
 const WrappedHeader = (props: { defaultTheme: string }) => {
-    const [compact, setCompact] = useState(false);
-    const { defaultTheme = "salt" } = props
-    const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
+  const [compact, setCompact] = useState(false);
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
     compact,

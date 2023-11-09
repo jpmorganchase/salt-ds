@@ -9,7 +9,7 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const ContextMenu = (props: { defaultTheme: string }) => {
-  const { defaultTheme = "salt" } = props
+  const { defaultTheme = "salt" } = props;
   const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
