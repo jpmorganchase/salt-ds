@@ -33,8 +33,8 @@ export interface QAContainerNoStyleInjectionProps extends QAContainerProps {
 export const QAContainerNoStyleInjection = (
   props: QAContainerNoStyleInjectionProps
 ) => {
-  useDynamicStyleSheet(String(coreCss), "salt-core-css");
   useDynamicStyleSheet(String(iconCss), "salt-icon-css");
+  useDynamicStyleSheet(String(coreCss), "salt-core-css");
   useDynamicStyleSheet(String(labCss), "salt-lab-css");
 
   return <QAContainer {...props} enableStyleInjection={false} />;

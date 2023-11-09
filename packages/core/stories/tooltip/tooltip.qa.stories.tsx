@@ -1,5 +1,10 @@
 import { Tooltip, TooltipProps } from "@salt-ds/core";
-import { QAContainer, QAContainerProps } from "docs/components";
+import {
+  QAContainer,
+  QAContainerNoStyleInjection,
+  QAContainerNoStyleInjectionProps,
+  QAContainerProps,
+} from "docs/components";
 import { Meta, StoryFn } from "@storybook/react";
 import { InfoSolidIcon } from "@salt-ds/icons";
 
@@ -52,5 +57,36 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
 };
 
 AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
+  props
+) => (
+  <QAContainerNoStyleInjection
+    height={500}
+    itemPadding={45}
+    width={1200}
+    {...props}
+  >
+    <IconWithTooltip content="Hello, World" />
+    <IconWithTooltip status="error" content="Uh oh, world" />
+    <IconWithTooltip
+      content={<div style={{ background: "#ccc", width: 60, height: 20 }} />}
+    />
+    <div
+      style={{
+        width: 10,
+        height: 10,
+        overflow: "hidden",
+        position: "absolute",
+      }}
+    >
+      <IconWithTooltip content="Hidden, World?" />
+    </div>
+  </QAContainerNoStyleInjection>
+);
+
+NoStyleInjectionGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
