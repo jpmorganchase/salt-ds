@@ -1,5 +1,12 @@
 # @salt-ds/ag-grid-theme
 
+## 1.3.4
+
+### Patch Changes
+
+- d200218f: Removed custom CSS styling for wrapping text in header cells when `autoHeaderHeight` is enabled. If you want to wrap text you should use `wrapHeaderText`.
+- 6da4d09c: Fixed Tooltip missing a background color.
+
 ## 1.3.3
 
 ### Patch Changes

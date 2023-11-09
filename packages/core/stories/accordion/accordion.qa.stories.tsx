@@ -12,7 +12,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Accordion/QA",
+  title: "Core/Accordion/Accordion QA",
   component: Accordion,
 } as Meta<typeof Accordion>;
 

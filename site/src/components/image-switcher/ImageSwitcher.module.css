@@ -14,10 +14,6 @@
   }
 }
 
-.container .switch {
-  --saltSwitch-height: var(--salt-switch-height);
-}
-
 .header {
   width: 100%;
   display: flex;

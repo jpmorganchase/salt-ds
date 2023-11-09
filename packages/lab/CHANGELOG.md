@@ -1,5 +1,27 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.20
+
+### Minor Changes
+
+- 363a00a4: Removed Switch from Lab and promoted it to Core.
+- bbd411a7: Added support for closable pills. Pills can now contain a close button that when triggered will call a function passed to the `onClose` prop.
+
+  ```
+  const handleClose = () => {
+    console.log("closed");
+  };
+
+  <PillNext onClose={handleClose}>Closable Pill</PillNext>
+  ```
+
+### Patch Changes
+
+- c9ee2c5d: Fixed Dropdown losing focus when clicking on the scrollbar or when selecting options.
+  Focusing the Combo Box will not open the list automatically. This complies with [WCAG SC 3.2.1](https://www.w3.org/WAI/WCAG21/Understanding/on-focus.html).
+- 0b8bfac6: Fixed Switch's label being misaligned.
+- dba77589: Fixed Combo Box Next not applying a ref to its `DefaultListItem`.
+
 ## 1.0.0-alpha.19
 
 ### Minor Changes
