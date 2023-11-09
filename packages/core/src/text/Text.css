@@ -48,7 +48,6 @@
 }
 
 /* Notation */
-notation.saltText,
 .saltText-notation.saltText {
   font-family: var(--salt-text-notation-fontFamily);
   font-size: var(--salt-text-notation-fontSize);
@@ -57,20 +56,17 @@ notation.saltText,
 }
 
 /* Notation emphasis strong */
-notation.saltText strong,
 .saltText-notation.saltText strong {
   font-weight: var(--salt-text-notation-fontWeight-strong);
 }
 
 /* Notation emphasis small */
-notation.saltText small,
 .saltText-notation.saltText small {
   font-size: inherit;
   font-weight: var(--salt-text-notation-fontWeight-small);
 }
 
 /* Action */
-action.saltText,
 .saltText-action.saltText {
   letter-spacing: var(--salt-text-action-letterSpacing);
   text-transform: var(--salt-text-action-textTransform);
