@@ -1,17 +1,12 @@
 import {
-  BorderItem,
-  BorderLayout,
   Button,
   FlexItem,
   StackLayoutProps,
-  FlowLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   Input,
-  Label,
   MultilineInput,
-  Panel,
   SplitLayout,
   StackLayout,
   useResponsiveProp,
@@ -34,12 +29,18 @@ export default {
 export const ButtonBar = () => {
   return (
     <div style={{ width: "40vw" }}>
-      <StackLayout direction={"row"} style={{ width: "100%" }} gap={1}>
+      <StackLayout
+        direction={{ xs: "column", sm: "row" }}
+        style={{ width: "100%" }}
+        gap={1}
+      >
         <FlexItem>
-          <Button variant="cta">Save</Button>
+          <Button variant="cta" style={{ width: "100%" }}>
+            Save
+          </Button>
         </FlexItem>
         <FlexItem>
-          <Button>Cancel</Button>
+          <Button style={{ width: "100%" }}>Cancel</Button>
         </FlexItem>
       </StackLayout>
     </div>
@@ -48,26 +49,28 @@ export const ButtonBar = () => {
 
 export const WithSecondary = () => {
   const startItem = (
-    <StackLayout direction={"row"} gap={1}>
+    <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
-        <Button variant="cta">Save</Button>
+        <Button variant="cta" style={{ width: "100%" }}>
+          Save
+        </Button>
       </FlexItem>
       <FlexItem>
-        <Button>Cancel</Button>
+        <Button style={{ width: "100%" }}>Cancel</Button>
       </FlexItem>
     </StackLayout>
   );
 
   const endItem = (
-    <StackLayout direction={"row"} gap={1}>
+    <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
-        <Button variant="secondary">
+        <Button variant="secondary" style={{ width: "100%" }}>
           <ExportIcon />
           Export
         </Button>
       </FlexItem>
       <FlexItem>
-        <Button variant="secondary">
+        <Button variant="secondary" style={{ width: "100%" }}>
           <ImportIcon />
           Import
         </Button>
@@ -80,6 +83,8 @@ export const WithSecondary = () => {
       <SplitLayout
         startItem={startItem}
         endItem={endItem}
+        gap={1}
+        direction={{ xs: "column", sm: "row" }}
         style={{ width: "100%" }}
       />
     </div>
@@ -88,20 +93,24 @@ export const WithSecondary = () => {
 
 export const DestructiveActions = () => {
   const startItem = (
-    <StackLayout direction={"row"} gap={1}>
+    <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
-        <Button variant="cta">Save</Button>
+        <Button variant="cta" style={{ width: "100%" }}>
+          Save
+        </Button>
       </FlexItem>
       <FlexItem>
-        <Button>Cancel</Button>
+        <Button style={{ width: "100%" }}>Cancel</Button>
       </FlexItem>
     </StackLayout>
   );
 
   const endItem = (
-    <StackLayout direction={"row"} gap={1}>
+    <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
-        <Button variant="secondary">Delete</Button>
+        <Button variant="secondary" style={{ width: "100%" }}>
+          Delete
+        </Button>
       </FlexItem>
     </StackLayout>
   );
@@ -111,30 +120,10 @@ export const DestructiveActions = () => {
       <SplitLayout
         startItem={startItem}
         endItem={endItem}
+        direction={{ xs: "column", sm: "row" }}
+        gap={1}
         style={{ width: "100%" }}
       />
-    </div>
-  );
-};
-
-export const Stacked = () => {
-  return (
-    <div style={{ width: "200px" }}>
-      <StackLayout direction="column" gap={1} style={{ width: "100%" }}>
-        <FlexItem>
-          <Button variant="cta" style={{ width: "100%" }}>
-            CTA
-          </Button>
-        </FlexItem>
-        <FlexItem>
-          <Button style={{ width: "100%" }}>Primary</Button>
-        </FlexItem>
-        <FlexItem>
-          <Button variant="secondary" style={{ width: "100%" }}>
-            Secondary
-          </Button>
-        </FlexItem>
-      </StackLayout>
     </div>
   );
 };
@@ -263,12 +252,18 @@ export const SingleStepForm = () => {
   return (
     <StackLayout style={{ width: "330px" }}>
       {formFields}
-      <StackLayout direction={"row"} style={{ width: "100%" }} gap={1}>
+      <StackLayout
+        direction={{ xs: "column", sm: "row" }}
+        style={{ width: "100%" }}
+        gap={1}
+      >
         <FlexItem>
-          <Button variant="cta">Submit</Button>
+          <Button variant="cta" style={{ width: "100%" }}>
+            Submit
+          </Button>
         </FlexItem>
         <FlexItem>
-          <Button>Cancel</Button>
+          <Button style={{ width: "100%" }}>Cancel</Button>
         </FlexItem>
       </StackLayout>
     </StackLayout>
@@ -276,22 +271,49 @@ export const SingleStepForm = () => {
 };
 
 export const MultiStepForm = () => {
+  const previous = (
+    <FlexItem>
+      <Button style={{ width: "100%" }}>Previous</Button>
+    </FlexItem>
+  );
+
+  const cancel = (
+    <FlexItem>
+      <Button variant="secondary" style={{ width: "100%" }}>
+        Cancel
+      </Button>
+    </FlexItem>
+  );
+
+  const next = (
+    <FlexItem>
+      <Button variant="cta" style={{ width: "100%" }}>
+        Next
+      </Button>
+    </FlexItem>
+  );
+
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp({ xs: "column", sm: "row" }, "row");
+
   return (
     <StackLayout style={{ width: "330px" }}>
       {formFields}
-      <FlexItem align={"end"}>
-        <StackLayout direction={"row"} style={{ width: "100%" }} gap={1}>
-          <FlexItem>
-            <Button variant="secondary">Cancel</Button>
-          </FlexItem>
-          <FlexItem>
-            <Button>Previous</Button>
-          </FlexItem>
-          <FlexItem>
-            <Button variant="cta">Next</Button>
-          </FlexItem>
+      {direction === "column" ? (
+        <StackLayout direction={"column"} style={{ width: "100%" }} gap={1}>
+          {next}
+          {previous}
+          {cancel}
         </StackLayout>
-      </FlexItem>
+      ) : (
+        <FlexItem align={"end"}>
+          <StackLayout direction={"row"} style={{ width: "100%" }} gap={1}>
+            {cancel}
+            {previous}
+            {next}
+          </StackLayout>
+        </FlexItem>
+      )}
     </StackLayout>
   );
 };
@@ -311,22 +333,40 @@ export const DialogForm = () => {
     setOpen(false);
   };
 
-  const startItem = (
-    <Button variant="secondary" onClick={handleClose}>
-      Save
-    </Button>
+  const direction: StackLayoutProps<ElementType>["direction"] =
+    useResponsiveProp({ xs: "column", sm: "row" }, "row");
+
+  const save = (
+    <FlexItem>
+      <Button
+        variant="secondary"
+        onClick={handleClose}
+        style={{ width: "100%" }}
+      >
+        Save
+      </Button>
+    </FlexItem>
+  );
+  const cancel = (
+    <FlexItem>
+      <Button onClick={handleClose} style={{ width: "100%" }}>
+        Cancel
+      </Button>
+    </FlexItem>
+  );
+
+  const submit = (
+    <FlexItem>
+      <Button variant="cta" onClick={handleClose} style={{ width: "100%" }}>
+        Submit
+      </Button>
+    </FlexItem>
   );
 
   const endItem = (
-    <StackLayout direction={"row"} gap={1}>
-      <FlexItem>
-        <Button onClick={handleClose}>Cancel</Button>
-      </FlexItem>
-      <FlexItem>
-        <Button variant="cta" onClick={handleClose}>
-          Submit
-        </Button>
-      </FlexItem>
+    <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
+      {cancel}
+      {submit}
     </StackLayout>
   );
 
@@ -340,11 +380,20 @@ export const DialogForm = () => {
       >
         <DialogContent>{formFields}</DialogContent>
         <DialogActions>
-          <SplitLayout
-            startItem={startItem}
-            endItem={endItem}
-            style={{ width: "100%" }}
-          />
+          {direction === "column" ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {submit}
+              {cancel}
+              {save}
+            </StackLayout>
+          ) : (
+            <SplitLayout
+              direction={"row"}
+              startItem={save}
+              endItem={endItem}
+              style={{ width: "100%" }}
+            />
+          )}
         </DialogActions>
       </Dialog>
     </>
