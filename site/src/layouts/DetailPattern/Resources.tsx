@@ -13,7 +13,7 @@ const LinkWithLogo = ({ href, label }: { href: string; label: string }) => (
       <Image src="/img/github_logo.svg" alt="github logo" />
     )}
     {href.includes("storybook") && (
-      <Image src="/img/storybook_logo.svg" alt="github logo" />
+      <Image src="/img/storybook_logo.svg" alt="storybook logo" />
     )}
     <Link href={href} target="_blank">
       {label}
