@@ -3,7 +3,7 @@ import { Checkbox, CheckboxGroup, CheckboxGroupProps } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Checkbox/QA",
+  title: "Core/Checkbox/Checkbox QA",
   component: Checkbox,
 } as Meta<typeof Checkbox>;
 
