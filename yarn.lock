@@ -5832,6 +5832,8 @@ __metadata:
 "@salt-ds/ag-grid-theme@workspace:packages/ag-grid-theme":
   version: 0.0.0-use.local
   resolution: "@salt-ds/ag-grid-theme@workspace:packages/ag-grid-theme"
+  dependencies:
+    del: "npm:^7.0.0"
   languageName: unknown
   linkType: soft
 

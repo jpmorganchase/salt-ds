@@ -20,5 +20,8 @@
   "publishConfig": {
     "directory": "../../dist/salt-ds-ag-grid-theme",
     "provenance": true
+  },
+  "devDependencies": {
+    "del": "^7.0.0"
   }
 }
