@@ -11,6 +11,11 @@ import {
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { CloseIcon } from "@salt-ds/icons";
+import {
+  QAContainer,
+  QAContainerNoStyleInjection,
+  QAContainerNoStyleInjectionProps,
+} from "docs/components";
 
 export default {
   title: "Core/Banner/Banner QA",
@@ -37,31 +42,36 @@ const ErrorBanner = () => <BasicBannerExample status={"error"} />;
 const WarningBanner = () => <BasicBannerExample status={"warning"} />;
 const SuccessBanner = () => <BasicBannerExample status={"success"} />;
 
-export const ExamplesGrid: StoryFn = () => (
-  <StackLayout gap={2}>
-    <SaltProvider applyClassesTo={"child"} density={"high"} mode={"light"}>
-      <div style={{ width: "60vw" }}>
-        <InfoBanner />
-      </div>
-    </SaltProvider>
-    <SaltProvider applyClassesTo={"child"} density={"medium"} mode={"dark"}>
-      <div style={{ width: "60vw" }}>
-        <ErrorBanner />
-      </div>
-    </SaltProvider>
-    <SaltProvider applyClassesTo={"child"} density={"low"} mode={"light"}>
-      <div style={{ width: "60vw" }}>
-        <WarningBanner />
-      </div>
-    </SaltProvider>
-    <SaltProvider applyClassesTo={"child"} density={"touch"} mode={"dark"}>
-      <div style={{ width: "60vw" }}>
-        <SuccessBanner />
-      </div>
-    </SaltProvider>
-  </StackLayout>
+export const ExamplesGrid: StoryFn = (props) => (
+  <QAContainer cols={1} itemPadding={10} height={600} width={1000} {...props}>
+    <InfoBanner />
+    <ErrorBanner />
+    <WarningBanner />
+    <SuccessBanner />
+  </QAContainer>
 );
 
 ExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
+  props
+) => (
+  <QAContainerNoStyleInjection
+    cols={1}
+    itemPadding={10}
+    height={600}
+    width={1000}
+    {...props}
+  >
+    <InfoBanner />
+    <ErrorBanner />
+    <WarningBanner />
+    <SuccessBanner />
+  </QAContainerNoStyleInjection>
+);
+
+NoStyleInjectionGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
