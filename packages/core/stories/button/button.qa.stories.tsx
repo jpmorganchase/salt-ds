@@ -4,7 +4,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Button/QA",
+  title: "Core/Button/Button QA",
   component: Button,
   // Manually specify onClick action to test Actions panel
   // react-docgen-typescript-loader doesn't support detecting interface extension

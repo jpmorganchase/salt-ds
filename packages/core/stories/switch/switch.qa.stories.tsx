@@ -3,7 +3,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Switch/QA",
+  title: "Core/Switch/Switch QA",
   component: Switch,
 } as Meta<typeof Switch>;
 
