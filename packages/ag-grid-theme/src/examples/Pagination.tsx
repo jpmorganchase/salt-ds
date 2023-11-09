@@ -38,19 +38,22 @@ const PagedGrid = (props: { defaultTheme: string }) => {
   );
 };
 
-const Pagination = () => (
-  <div
-    style={{
-      marginTop: "-150px",
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-    }}
-  >
-    <PagedGrid />
-  </div>
-);
+const Pagination = (props: { defaultTheme: string }) => {
+  const { defaultTheme = "salt" } = props;
+  return (
+    <div
+      style={{
+        marginTop: "-150px",
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <PagedGrid defaultTheme={defaultTheme} />
+    </div>
+  );
+};
 
 Pagination.parameters = {
   chromatic: { disableSnapshot: false, delay: 200 },
