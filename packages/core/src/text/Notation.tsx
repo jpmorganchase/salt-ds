@@ -1,9 +1,5 @@
 import { forwardRef } from "react";
-import { makePrefixer } from "../utils";
-import { clsx } from "clsx";
 import { Text, TextProps } from "./Text";
-
-const withBaseName = makePrefixer("saltText");
 
 export const Notation = forwardRef<
   HTMLSpanElement,
@@ -12,7 +8,7 @@ export const Notation = forwardRef<
   return (
     <Text
       as="span"
-      className={clsx(className, withBaseName("notation"))}
+      styleAs="notation"
       ref={ref}
       {...rest}
     >
