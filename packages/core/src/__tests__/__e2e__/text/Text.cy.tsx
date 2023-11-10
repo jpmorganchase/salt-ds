@@ -117,7 +117,9 @@ describe("GIVEN Text component with styleAs=h1", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h1">{textExample}</Component>);
-      cy.get(".saltText").should("have.class", "saltText-h1").and("have.css", "font-size", "24px");
+      cy.get(".saltText")
+        .should("have.class", "saltText-h1")
+        .and("have.css", "font-size", "24px");
     });
   });
 });
@@ -134,7 +136,9 @@ describe("GIVEN Text component with styleAs=h2", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h2">{textExample}</Component>);
-      cy.get(".saltText").should("have.class", "saltText-h2").and("have.css", "font-size", "18px");
+      cy.get(".saltText")
+        .should("have.class", "saltText-h2")
+        .and("have.css", "font-size", "18px");
     });
   });
 });
@@ -151,7 +155,9 @@ describe("GIVEN Text component with styleAs=h3", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h3">{textExample}</Component>);
-      cy.get(".saltText").should("have.class", "saltText-h3").and("have.css", "font-size", "14px");
+      cy.get(".saltText")
+        .should("have.class", "saltText-h3")
+        .and("have.css", "font-size", "14px");
     });
   });
 });
@@ -168,7 +174,9 @@ describe("GIVEN Text component with styleAs=h4", () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h4">{textExample}</Component>);
-      cy.get(".saltText").should("have.class", "saltText-h4").and("have.css", "font-size", "12px");
+      cy.get(".saltText")
+        .should("have.class", "saltText-h4")
+        .and("have.css", "font-size", "12px");
     });
   });
 });
@@ -305,6 +313,8 @@ describe("GIVEN Text component within font family CSS var override", () => {
         <Text>{textExample}</Text>
       </div>
     );
-    cy.get(".saltText").should("have.class", "saltText").and("have.css", "font-family", "Lato");
+    cy.get(".saltText")
+      .should("have.class", "saltText")
+      .and("have.css", "font-family", "Lato");
   });
 });
