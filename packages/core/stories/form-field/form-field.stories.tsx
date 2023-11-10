@@ -131,6 +131,46 @@ export const LabelLeft: StoryFn<typeof FormField> = (props) => {
         </FormLabel>
         <Input defaultValue="Primary Input value" />
       </FormField>
+    </FlowLayout>
+  );
+};
+
+export const LabelLeftWithControls: StoryFn<typeof FormField> = (props) => {
+  const [isRadioError, setIsRadioError] = useState(true);
+
+  const [radioGroupValue, setRadioGroupValue] = useState("");
+  const [checkboxGroupValue, setCheckboxGroupValue] = useState<string[]>([]);
+
+  const handleRadioChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { value } = event.target;
+    setRadioGroupValue(value);
+    props.onChange?.(event);
+    isRadioError && setIsRadioError(false);
+  };
+
+  const handleCheckboxChange: ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    const { value } = event.target;
+    if (checkboxGroupValue.indexOf(value) === -1) {
+      setCheckboxGroupValue((prevControlledValues) => [
+        ...prevControlledValues,
+        value,
+      ]);
+    } else {
+      setCheckboxGroupValue((prevControlledValues) =>
+        prevControlledValues.filter(
+          (controlledValue) => controlledValue !== value
+        )
+      );
+    }
+    props.onChange?.(event);
+  };
+
+  const isCheckboxError = checkboxGroupValue.length === 0;
+
+  return (
+    <FlowLayout style={{ width: "466px" }}>
       <FormField labelPlacement="left" {...props}>
         <FormLabel>Client directed request</FormLabel>
         <RadioButtonGroup direction="horizontal">
@@ -148,6 +188,45 @@ export const LabelLeft: StoryFn<typeof FormField> = (props) => {
           <Checkbox label="Restructuring of debt securities of the Counterparty or the Company" />
         </CheckboxGroup>
         <FormHelperText>Select all appropriate</FormHelperText>
+      </FormField>
+      <FormField
+        labelPlacement="left"
+        validationStatus={isRadioError ? "error" : undefined}
+        {...props}
+      >
+        <FormLabel>Deal owner</FormLabel>
+        <RadioButtonGroup onChange={handleRadioChange} value={radioGroupValue}>
+          {radioData.map((radio) => {
+            return (
+              <RadioButton
+                key={radio.label}
+                label={radio.label}
+                value={radio.value}
+              />
+            );
+          })}
+        </RadioButtonGroup>
+        <FormHelperText>{`${
+          isRadioError ? "Must select one option. " : ""
+        }Is this deal for the ultimate parent or a subsidiary?`}</FormHelperText>
+      </FormField>
+      <FormField
+        labelPlacement="left"
+        validationStatus={isCheckboxError ? "error" : undefined}
+        {...props}
+      >
+        <FormLabel>Fee type</FormLabel>
+        <CheckboxGroup
+          checkedValues={checkboxGroupValue}
+          onChange={handleCheckboxChange}
+        >
+          {checkboxesData.map((data) => (
+            <Checkbox key={data.value} {...data} />
+          ))}
+        </CheckboxGroup>
+        <FormHelperText>{`${
+          isCheckboxError ? "Must select at least one option. " : ""
+        }`}</FormHelperText>
       </FormField>
     </FlowLayout>
   );
