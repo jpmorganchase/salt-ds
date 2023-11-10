@@ -6,12 +6,7 @@ export const Notation = forwardRef<
   Omit<TextProps<"span">, "as">
 >(function Notation({ children, className, ...rest }, ref) {
   return (
-    <Text
-      as="span"
-      styleAs="notation"
-      ref={ref}
-      {...rest}
-    >
+    <Text as="span" styleAs="notation" ref={ref} {...rest}>
       {children}
     </Text>
   );
