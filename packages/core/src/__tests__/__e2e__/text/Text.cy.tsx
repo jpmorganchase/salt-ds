@@ -1,16 +1,4 @@
-import {
-  Text,
-  Display1,
-  Display2,
-  Display3,
-  H1,
-  H2,
-  H3,
-  H4,
-  Label,
-  Notation,
-  Action,
-} from "../../../text";
+import { Text, Display1, Display2, Display3, H1, H2, H3, H4, Label } from "../../../text";
 
 const textExample = `Far far away, behind the word mountains, far from the countries Vokalia
 and Consonantia, there live the blind texts. Separated they live in
@@ -39,8 +27,6 @@ const componentsArray = [
   { component: H3, name: "H3", tag: "h3" },
   { component: H4, name: "H4", tag: "h4" },
   { component: Label, name: "Label", tag: "label" },
-  { component: Notation, name: "Notation", tag: "span" },
-  { component: Action, name: "Action", tag: "span" },
 ];
 
 // Render correctly
@@ -111,15 +97,12 @@ describe("GIVEN Text component with styleAs=h1", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as h1`, () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h1">{textExample}</Component>);
-      cy.get(".saltText")
-        .should("have.class", "saltText-h1")
-        .and("have.css", "font-size", "24px");
+      cy.get(".saltText").should("have.class", "saltText-h1").and("have.css", "font-size", "24px");
     });
   });
 });
@@ -130,15 +113,12 @@ describe("GIVEN Text component with styleAs=h2", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as h2`, () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h2">{textExample}</Component>);
-      cy.get(".saltText")
-        .should("have.class", "saltText-h2")
-        .and("have.css", "font-size", "18px");
+      cy.get(".saltText").should("have.class", "saltText-h2").and("have.css", "font-size", "18px");
     });
   });
 });
@@ -149,15 +129,12 @@ describe("GIVEN Text component with styleAs=h3", () => {
     { component: H2, name: "H2", tag: "h2" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as h3`, () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h3">{textExample}</Component>);
-      cy.get(".saltText")
-        .should("have.class", "saltText-h3")
-        .and("have.css", "font-size", "14px");
+      cy.get(".saltText").should("have.class", "saltText-h3").and("have.css", "font-size", "14px");
     });
   });
 });
@@ -168,15 +145,12 @@ describe("GIVEN Text component with styleAs=h4", () => {
     { component: H2, name: "H2", tag: "h2" },
     { component: H3, name: "H3", tag: "h3" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as h4`, () => {
       const Component = component;
 
       cy.mount(<Component styleAs="h4">{textExample}</Component>);
-      cy.get(".saltText")
-        .should("have.class", "saltText-h4")
-        .and("have.css", "font-size", "12px");
+      cy.get(".saltText").should("have.class", "saltText-h4").and("have.css", "font-size", "12px");
     });
   });
 });
@@ -187,7 +161,6 @@ describe("GIVEN Text component with styleAs=label", () => {
     { component: H2, name: "H2", tag: "h2" },
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
-    { component: Notation, name: "Notation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as label`, () => {
       const Component = component;
@@ -200,50 +173,6 @@ describe("GIVEN Text component with styleAs=label", () => {
   });
 });
 
-describe("GIVEN Text component with styleAs=notation", () => {
-  [
-    { component: Text, name: "Text", tag: "div" },
-    { component: H1, name: "H1", tag: "h1" },
-    { component: H2, name: "H2", tag: "h2" },
-    { component: H3, name: "H3", tag: "h3" },
-    { component: H4, name: "H4", tag: "h4" },
-    { component: Label, name: "Label", tag: "label" },
-  ].forEach(({ component, name }) => {
-    it(`${name} should be styled as notation`, () => {
-      const Component = component;
-
-      cy.mount(<Component styleAs="notation">{textExample}</Component>);
-      cy.get(".saltText")
-        .should("have.class", "saltText-notation")
-        .and("have.css", "font-size", "10px");
-    });
-  });
-});
-
-describe.only("GIVEN Text component with styleAs=action", () => {
-  [
-    { component: Text, name: "Text", tag: "div" },
-    { component: H1, name: "H1", tag: "h1" },
-    { component: H2, name: "H2", tag: "h2" },
-    { component: H3, name: "H3", tag: "h3" },
-    { component: H4, name: "H4", tag: "h4" },
-    { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
-  ].forEach(({ component, name }) => {
-    it(`${name} should be styled as action`, () => {
-      const Component = component;
-
-      cy.mount(<Component styleAs="action">{textExample}</Component>);
-      cy.get(".saltText")
-        .should("have.class", "saltText-action")
-        .and("have.css", "letter-spacing", "0.6px")
-        .and("have.css", "text-transform", "uppercase")
-        .and("have.css", "text-align", "center")
-        .and("have.css", "font-weight", "600");
-    });
-  });
-});
-
 describe("GIVEN Text component with styleAs=display1", () => {
   [
     { component: Text, name: "Text", tag: "div" },
@@ -252,7 +181,6 @@ describe("GIVEN Text component with styleAs=display1", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as display1`, () => {
       const Component = component;
@@ -273,7 +201,6 @@ describe("GIVEN Text component with styleAs=display2", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as display2`, () => {
       const Component = component;
@@ -294,7 +221,6 @@ describe("GIVEN Text component with styleAs=display3", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as display3`, () => {
       const Component = component;
@@ -314,8 +240,6 @@ describe("GIVEN Text component within font family CSS var override", () => {
         <Text>{textExample}</Text>
       </div>
     );
-    cy.get(".saltText")
-      .should("have.class", "saltText")
-      .and("have.css", "font-family", "Lato");
+    cy.get(".saltText").should("have.class", "saltText").and("have.css", "font-family", "Lato");
   });
 });
