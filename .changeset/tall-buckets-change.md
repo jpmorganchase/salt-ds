@@ -17,13 +17,35 @@
 - Deprecated tokens in characteristics, use replacement tokens as listed. The change is motivated by several factors including:
   - reduced number of tokens
   - easier theming experience
-  - `text.css` updated to `content.css` as tokens are used on more than just texts i.e. icon
+  - `text.css` updated to `content.css` as tokens are used for more than just texts i.e. icon
   - consolidating tokens into `text.css` to ensure all text-related tokens are within the same file, aside from text colors, they sit within `content.css`
 
-```diff
-- --salt-overlayable-shadow-borderRegion
-+ --salt-overlayable-shadow-region
+#### `text-*` to `content`
 
+```diff
+- --salt-text-link-foreground-hover
+- --salt-text-link-foreground-active
+- --salt-text-link-foreground-visited
++ --salt-content-foreground-hover
++ --salt-content-foreground-active
++ --salt-content-foreground-visited
+
+- --salt-text-primary-foreground
+- --salt-text-primary-foreground-disabled
+- --salt-text-secondary-foreground
+- --salt-text-secondary-foreground-disabled
++ --salt-content-primary-foreground
++ --salt-content-primary-foreground-disabled
++ --salt-content-secondary-foreground
++ --salt-content-secondary-foreground-disabled
+
+- --salt-text-background-selected
++ --salt-content-foreground-highlight
+```
+
+#### `actionable` to `text-action`
+
+```diff
 - --salt-actionable-primary-fontWeight
 - --salt-actionable-secondary-fontWeight
 - --salt-actionable-cta-fontWeight
@@ -37,51 +59,11 @@
 
 - --salt-actionable-textAlign
 + --salt-text-action-textAlign
+```
 
-- --salt-text-link-foreground-hover
-- --salt-text-link-foreground-active
-- --salt-text-link-foreground-visited
-+ --salt-content-foreground-hover
-+ --salt-content-foreground-active
-+ --salt-content-foreground-visited
+#### `selectable` to various others
 
-- --salt-text-link-textDecoration
-- --salt-text-link-textDecoration-hover
-- --salt-text-link-textDecoration-selected
-+ --salt-navigable-textDecoration
-+ --salt-navigable-textDecoration-hover
-+ --salt-navigable-textDecoration-selected
-
-- --salt-text-primary-foreground
-- --salt-text-primary-foreground-disabled
-- --salt-text-secondary-foreground
-- --salt-text-secondary-foreground-disabled
-+ --salt-content-primary-foreground
-+ --salt-content-primary-foreground-disabled
-+ --salt-content-secondary-foreground
-+ --salt-content-secondary-foreground-disabled
-
-- --salt-text-background-selected
-+ --salt-content-foreground-highlight
-
-- --salt-navigable-primary-background-hover
-+ --salt-navigable-background-hover
-
-- --salt-accent-fontWeight
-- --salt-accent-fontSize
-- --salt-accent-lineHeight
-+ --salt-text-notation-fontWeight
-+ --salt-text-notation-fontSize
-+ --salt-text-notation-lineHeight: 10px; /* Value previously 11px */
-
-- --salt-track-borderWidth
-- --salt-track-borderWidth-active
-- --salt-track-borderWidth-complete
-- --salt-track-borderWidth-incomplete
-+ --salt-size-border-strong
-
-- --salt-track-borderColor
-+ --salt-palette-neutral-secondary-border
+```diff
 
 - --salt-selectable-primary-foreground-selected
 + --salt-actionable-primary-foreground-active
@@ -117,6 +99,45 @@
 + --salt-palette-interact-secondary-background-hover
 + --salt-palette-interact-secondary-background-active
 + --salt-palette-interact-secondary-background-activeDisabled
+
+```
+
+#### `track` to various others
+
+```diff
+- --salt-track-borderWidth
+- --salt-track-borderWidth-active
+- --salt-track-borderWidth-complete
+- --salt-track-borderWidth-incomplete
++ --salt-size-border-strong
+
+- --salt-track-borderColor
++ --salt-palette-neutral-secondary-border
+```
+
+#### Miscellaneous
+
+```diff
+- --salt-overlayable-shadow-borderRegion
++ --salt-overlayable-shadow-region
+
+- --salt-text-link-textDecoration
+- --salt-text-link-textDecoration-hover
+- --salt-text-link-textDecoration-selected
++ --salt-navigable-textDecoration
++ --salt-navigable-textDecoration-hover
++ --salt-navigable-textDecoration-selected
+
+- --salt-navigable-primary-background-hover
++ --salt-navigable-background-hover
+
+- --salt-accent-fontWeight
+- --salt-accent-fontSize
+- --salt-accent-lineHeight
++ --salt-text-notation-fontWeight
++ --salt-text-notation-fontSize
++ --salt-text-notation-lineHeight: 10px; /* Value previously 11px in HD */
+
 ```
 
 - Deprecated tokens with no direct replacement tokens, use values suggested in comments
