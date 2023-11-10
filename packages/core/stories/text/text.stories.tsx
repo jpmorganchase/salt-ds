@@ -10,8 +10,6 @@ import {
   H3,
   H4,
   Label as LabelText,
-  Action as ActionText,
-  Notation as NotationText,
 } from "@salt-ds/core";
 
 export default {
@@ -150,52 +148,3 @@ const LabelCaptionTextComponent: StoryFn<typeof Text> = () => {
 };
 
 export const Label = LabelCaptionTextComponent.bind({});
-
-//********** Notation ***********/
-
-const NotationComponent: StoryFn<typeof Text> = () => {
-  return (
-    <>
-      <NotationText>
-        Notation text - notation - His seasons Shall without form fourth seed
-        so.
-      </NotationText>
-      <br />
-      <NotationText>
-        Notation text
-        <strong> emphasis high</strong>
-      </NotationText>
-      <br />
-      <NotationText>
-        Notation text
-        <small> emphasis low</small>
-      </NotationText>
-    </>
-  );
-};
-
-export const Notation = NotationComponent.bind({});
-
-//********** Action ***********/
-
-const ActionComponent: StoryFn<typeof Text> = () => {
-  return (
-    <>
-      <ActionText>
-        Action text - action - His seasons Shall without form fourth seed so.
-      </ActionText>
-      <br />
-      <ActionText>
-        Action text
-        <strong> emphasis high</strong>
-      </ActionText>
-      <br />
-      <ActionText>
-        Action text
-        <small> emphasis low</small>
-      </ActionText>
-    </>
-  );
-};
-
-export const Action = ActionComponent.bind({});
