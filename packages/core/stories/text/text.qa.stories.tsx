@@ -8,6 +8,8 @@ import {
   H4,
   Label,
   Text,
+  Notation,
+  Action,
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import {
@@ -61,6 +63,12 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Label>
       Label <strong>strong</strong> and <small>small</small> text
     </Label>
+    <Notation>
+      Notation <strong>strong</strong> and <small>small</small> text
+    </Notation>
+    <Action>
+      Action <strong>strong</strong> and <small>small</small> text
+    </Action>
   </QAContainer>
 );
 
