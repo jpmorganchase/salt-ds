@@ -12,7 +12,7 @@ export const Display1 = forwardRef<
   return (
     <Text
       as="span"
-      className={clsx(className, withBaseName(`display1`))}
+      className={clsx(className, withBaseName("display1"))}
       ref={ref}
       {...rest}
     >
@@ -28,7 +28,7 @@ export const Display2 = forwardRef<
   return (
     <Text
       as="span"
-      className={clsx(className, withBaseName(`display2`))}
+      className={clsx(className, withBaseName("display2"))}
       ref={ref}
       {...rest}
     >
@@ -44,7 +44,7 @@ export const Display3 = forwardRef<
   return (
     <Text
       as="span"
-      className={clsx(className, withBaseName(`display3`))}
+      className={clsx(className, withBaseName("display3"))}
       ref={ref}
       {...rest}
     >

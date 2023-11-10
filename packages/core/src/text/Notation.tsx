@@ -12,7 +12,7 @@ export const Notation = forwardRef<
   return (
     <Text
       as="span"
-      className={clsx(className, withBaseName(`notation`))}
+      className={clsx(className, withBaseName("notation"))}
       ref={ref}
       {...rest}
     >
