@@ -11,7 +11,7 @@ try {
   await mkdir(cssFolder, { recursive: true });
   await copyFile(
     path.join(srcFolder, "/icon/Icon.css"),
-    path.join(cssFolder, "/Icon.css")
+    path.join(cssFolder, "/salt-icon.css")
   );
   console.log(`Icon.css copied to: ${cssFolder} `);
 } catch (err) {

@@ -29,7 +29,6 @@
     "bundle:css": "yarn bundle:core:css && yarn bundle:lab:css && yarn copy:icon:css",
     "bundle:core:css": "yarn workspace @salt-ds/core bundle:css",
     "bundle:lab:css": "yarn workspace @salt-ds/lab bundle:css",
-    "bundle:css:create": "yarn bundle:core:css --create-entry && yarn bundle:lab:css --create-entry",
     "copy:icon:css": "yarn workspace @salt-ds/icons copy:css",
     "test": "vitest",
     "test:components": "cypress run --component --browser chrome --headless",
