@@ -49,7 +49,7 @@
     "@cypress/code-coverage": "^3.10.0",
     "@faker-js/faker": "^8.0.0",
     "@fontsource/open-sans": "^4.5.13",
-    "@mswjs/data": "^0.14.0",
+    "@mswjs/data": "^0.15.0",
     "@storybook/addon-a11y": "^7.4.5",
     "@storybook/addon-actions": "^7.4.5",
     "@storybook/addon-docs": "^7.4.5",
