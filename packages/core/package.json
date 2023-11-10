@@ -11,7 +11,7 @@
   "main": "src/index.ts",
   "sideEffects": false,
   "dependencies": {
-    "@floating-ui/react": "^0.23.0",
+    "@floating-ui/react": "^0.26.0",
     "clsx": "^2.0.0"
   },
   "peerDependencies": {
