@@ -12,7 +12,7 @@ export const Action = forwardRef<
   return (
     <Text
       as="span"
-      className={clsx(className, withBaseName(`action`))}
+      className={clsx(className, withBaseName("action"))}
       ref={ref}
       {...rest}
     >

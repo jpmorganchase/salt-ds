@@ -6,8 +6,10 @@
 
 ```tsx
 <Text styleAs="notation">Lorem ipsum</Text>
+<Text styleAs="action">Lorem ipsum</Text>
 ```
 
 ```tsx
 <Notation>Lorem ipsum</Notation>
+<Action>Lorem ipsum</Action>
 ```
