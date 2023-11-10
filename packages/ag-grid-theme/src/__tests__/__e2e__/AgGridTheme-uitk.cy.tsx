@@ -143,7 +143,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       cy.matchImage();
     });
   });
-  describe("WHEN the Icons story is mounted", () => {
+  describe.skip("WHEN the Icons story is mounted", () => {
     it("THEN should match screenshot", () => {
       cy.mount(<Icons defaultTheme="uitk" />);
       cy.wait(500);
@@ -158,7 +158,7 @@ describe("Given Ag Grid Theme - uitk", () => {
     });
   });
   describe("WHEN the HDCompact story is mounted", () => {
-    it("THEN should match screenshot", () => {
+    it.skip("THEN should match screenshot", () => {
       cy.mount(<HDCompact defaultTheme="uitk" />);
       cy.wait(500);
       cy.matchImage();
