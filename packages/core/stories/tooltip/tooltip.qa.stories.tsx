@@ -27,7 +27,15 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       <IconWithTooltip content="Hello, World" />
       <IconWithTooltip status="error" content="Uh oh, world" />
       <IconWithTooltip
-        content={<div style={{ background: "#ccc", width: 60, height: 20 }} />}
+        content={
+          <div
+            style={{
+              background: "var(--salt-text-secondary-foreground)",
+              width: 60,
+              height: "var(--salt-text-lineHeight)",
+            }}
+          />
+        }
       />
       <div
         style={{
