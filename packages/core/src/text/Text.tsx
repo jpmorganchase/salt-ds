@@ -1,8 +1,4 @@
-import {
-  makePrefixer,
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
-} from "../utils";
+import { makePrefixer, PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
 import { clsx } from "clsx";
 import { ElementType, forwardRef, ReactElement } from "react";
 
@@ -40,9 +36,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   }
 >;
 
-type TextComponent = <T extends ElementType = "div">(
-  props: TextProps<T>
-) => ReactElement | null;
+type TextComponent = <T extends ElementType = "div">(props: TextProps<T>) => ReactElement | null;
 
 const withBaseName = makePrefixer("saltText");
 
