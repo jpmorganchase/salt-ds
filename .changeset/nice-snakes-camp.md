@@ -13,7 +13,7 @@
 + --salt-text-action-fontWeight
 ```
 
-<!-- INSERT IMAGE SHOWCASING DIFFERENCES HERE -->
+![Button before and after](packages/core/stories/assets/buttonsOldAndNew.png)
 
 2. Disabled `InteractableCard` component has default border color updated from blue to grey.
 
@@ -22,19 +22,9 @@
 + --salt-container-primary-borderColor-disabled
 ```
 
-<!-- INSERT IMAGE SHOWCASING DIFFERENCES HERE -->
+![Interactable Card before and after](packages/core/stories/assets/cardOldAndNew.png)
 
 3. `Avatar` component line height in HD updated from `11px` to `10px`.
-
-4. `Text` component has two new variants: `Action` and `Notation`. See [storybook](https://storybook.saltdesignsystem.com/?path=/story/core-text-text-qa--all-variants-grid) for more information.
-
-```tsx
-<Text styleAs="notation">Lorem ipsum</Text>
-```
-
-```tsx
-<Notation>Lorem ipsum</Notation>
-```
 
 **_Theming and CSS updates_** with no visual change to Salt components, useful for teams overriding theme locally:
 
