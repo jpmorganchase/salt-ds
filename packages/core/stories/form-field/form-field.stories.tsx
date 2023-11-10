@@ -131,6 +131,24 @@ export const LabelLeft: StoryFn<typeof FormField> = (props) => {
         </FormLabel>
         <Input defaultValue="Primary Input value" />
       </FormField>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>Client directed request</FormLabel>
+        <RadioButtonGroup direction="horizontal">
+          <RadioButton key="option1" label="Yes" value="yes" />
+          <RadioButton key="option2" label="No" value="no" />
+        </RadioButtonGroup>
+      </FormField>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>Assignment</FormLabel>
+        <CheckboxGroup>
+          <Checkbox label="Private placement of equity or debt securities" />
+          <Checkbox defaultChecked label="Syndicated credit facility or loan" />
+          <Checkbox label="Interest rate, foreign exchange or commodity hedging or equity derivative" />
+          <Checkbox label="Escrow arrangement" />
+          <Checkbox label="Restructuring of debt securities of the Counterparty or the Company" />
+        </CheckboxGroup>
+        <FormHelperText>Select all appropriate</FormHelperText>
+      </FormField>
     </FlowLayout>
   );
 };
