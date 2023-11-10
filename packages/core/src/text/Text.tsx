@@ -28,7 +28,9 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
       | "label"
       | "display1"
       | "display2"
-      | "display3";
+      | "display3"
+      | "notation"
+      | "action";
     /**
      * Change text color palette
      */
