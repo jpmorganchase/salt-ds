@@ -1,5 +1,3 @@
-import clsx from "clsx";
-import { ChangeEvent, useState } from "react";
 import { Button, FlowLayout, Label, MultilineInput, Text } from "@salt-ds/core";
 import {
   BankCheckSolidIcon,
@@ -13,6 +11,7 @@ import {
   UserBadgeIcon,
 } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
+import { ChangeEvent, useState } from "react";
 
 export default {
   title: "Core/Multiline Input",

@@ -7,7 +7,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Radio Button/QA",
+  title: "Core/Radio Button/Radio Button QA",
   component: RadioButton,
 } as Meta<typeof RadioButton>;
 
