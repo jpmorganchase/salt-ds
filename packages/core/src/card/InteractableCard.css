@@ -11,9 +11,6 @@
   padding: var(--saltCard-padding, var(--salt-spacing-300));
 }
 
-.saltInteractableCard-secondary {
-  background: var(--salt-container-secondary-background);
-}
 /* Styles applied to InteractableCard if `accentPlacement="bottom"` (default) */
 .saltInteractableCard-accentBottom {
   --card-borderWidth: 0 0 var(--salt-size-accent) 0;
