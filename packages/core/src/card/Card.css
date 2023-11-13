@@ -1,11 +1,14 @@
 /* Styles applied to the root element */
 .saltCard {
-  background: var(--saltCard-background, var(--salt-container-primary-background));
   box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
   border-width: var(--salt-size-border);
   border-style: var(--salt-container-borderStyle);
-  border-color: var(--salt-container-primary-borderColor);
   padding: var(--saltCard-padding, var(--salt-spacing-300));
+}
+
+.saltCard-primary {
+  background: var(--saltCard-background, var(--salt-container-primary-background));
+  border-color: var(--salt-container-primary-borderColor);
 }
 
 .saltCard-secondary {
