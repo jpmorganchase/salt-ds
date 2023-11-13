@@ -8,14 +8,14 @@ data:
   $ref: ./#/data
 ---
 
-### Using the `SteppedTracker` component
+### Using the components
 
-#### When to use `SteppedTracker`
+#### When to use
 
 - When there are separate steps within a process, such as a wizard or a multistep form.
 - When you want to split a process into distinct, bite-sized sections that are less daunting than lengthy forms.
 
-#### When not to use `SteppedTracker`
+#### When not to use
 
 - When there are fewer than three steps in a process.
 - As navigation; users cannot interact with the steps.
@@ -26,7 +26,7 @@ Stepped tracker labels never truncate, only wrap. Therefore, ensure they're shor
 
 ### Import
 
-To import `SteppedTracker` from the lab Salt package, use:
+To import `SteppedTracker` and related components from the lab Salt package, use:
 
 ```
 import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
