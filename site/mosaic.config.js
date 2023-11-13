@@ -33,6 +33,11 @@ const saltConfig = {
         icon: "🚧",
       },
     },
+    {
+      modulePath: require.resolve(
+        "./src/mosaic-plugins/ChildrenDocPaginatorPlugin.mjs"
+      ),
+    },
   ],
 };
 

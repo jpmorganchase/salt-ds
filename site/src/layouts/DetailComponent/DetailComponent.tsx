@@ -28,17 +28,17 @@ const tabs = [
 
 export type Relationship = "similarTo" | "contains";
 
-type RelatedComponent = {
+interface RelatedComponent {
   name: string;
   relationship: Relationship;
-};
+}
 
-type ComponentNpmInfo = {
+interface ComponentNpmInfo {
   name: string;
   initialRelease?: string;
-};
+}
 
-export type Data = {
+export interface Data {
   description: string;
   alsoKnownAs: string[];
   relatedComponents: RelatedComponent[];
@@ -48,7 +48,7 @@ export type Data = {
   bugReport?: string;
   featureRequest?: string;
   askQuestion?: string;
-};
+}
 
 type CustomSiteState = SiteState & { data?: Data };
 
@@ -73,11 +73,12 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     return state.data ? { ...defaultData, ...state.data } : undefined;
   });
 
-  const { description } = useData || {};
+  const { description } = useData ?? {};
 
   const currentTab = tabs.find(({ name }) => route?.includes(name));
 
   useEffect(() => {
+    // Default to first tab, "Examples"
     if (!currentTab) {
       push(`${newRoute}${tabs[0].name}`);
     }
@@ -125,6 +126,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
             />
           ) : undefined
         }
+        isMobileView={isMobileView}
       >
         {isMobileView && (
           <MobileDrawer
