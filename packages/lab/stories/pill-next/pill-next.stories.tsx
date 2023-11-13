@@ -88,23 +88,14 @@ export const Truncated: StoryFn<typeof PillNext> = () => {
           setMaxWidth(event.target.value)
         }
       />
-      {isEllipsisActive ? (
-        <Tooltip content={content}>
-          <PillNext
-            ref={pillRef as Ref<HTMLButtonElement>}
-            style={{ maxWidth: `${maxWidth}px` }}
-          >
-            {content}
-          </PillNext>
-        </Tooltip>
-      ) : (
+      <Tooltip content={content} disabled={!isEllipsisActive}>
         <PillNext
           ref={pillRef as Ref<HTMLButtonElement>}
           style={{ maxWidth: `${maxWidth}px` }}
         >
           {content}
         </PillNext>
-      )}
+      </Tooltip>
     </StackLayout>
   );
 };
