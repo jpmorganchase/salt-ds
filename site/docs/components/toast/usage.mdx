@@ -8,7 +8,7 @@ data:
   $ref: ./#/data
 ---
 
-### Using the `Toast` component
+### Using the components
 
 #### Positioning
 
@@ -20,7 +20,7 @@ Stack toasts in chronological order if multiple toasts need to appear on screen 
 
 When you stack toasts from the top, the newest one should be first. When you stack them from the bottom, the newest toast should be at the bottom.
 
-#### When to use `Toast`
+#### When to use
 
 - To notify users of an event that’s occurred in a peripheral application or workflow. The user should notice the toasts without disrupting their experience or requiring immediate action.
 
@@ -30,7 +30,7 @@ When you stack toasts from the top, the newest one should be first. When you sta
 
 - To show system-generated alerts, independent of the user’s actions. These toasts are persistent and must allow the user to either take action or dismiss them. Toasts can contain customizable content, such as actionable buttons.
 
-#### When not to use Toast
+#### When not to use
 
 - To show a notification that applies to the user’s current task. Instead, use [`Banner`](../banner). `Banner` sits either on the top of a page or component or inline and usually addresses issues inside the user’s current content area.
 
@@ -38,7 +38,7 @@ When you stack toasts from the top, the newest one should be first. When you sta
 
 ### Import
 
-To import `Toast` from the core Salt package, use:
+To import `Toast` and `ToastContent` from the core Salt package, use:
 
 ```js
 import { Toast, ToastContent } from "@salt-ds/core";
@@ -52,15 +52,15 @@ import { ToastGroup } from "@salt-ds/lab";
 
 ### Props
 
-#### Toast
+#### `Toast`
 
 <PropsTable componentName="Toast" />
 
-#### Toast Group
+#### `ToastGroup`
 
 <PropsTable packageName="lab" componentName="ToastGroup" />
 
-#### Toast Content
+#### `ToastContent`
 
 <PropsTable componentName="ToastContent" />
 
