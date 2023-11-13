@@ -7,25 +7,27 @@ data:
   $ref: ./#/data
 ---
 
-### Using the Badge component
+### Using the component
 
 If a numeric annotation exceeds the max value passed as a prop, there will be a plus (`+`) after the max value stated. If you don't pass a max value to the component, it will truncate the value after three digits displaying 999+ for any values over 999.
 
-#### When to use Badge
+We recommend that you avoid using a badge with more than four to six characters. If needed, truncate strings exceeding this count with an ellipsis (…).
 
-- Use a Badge to communicate a noninteractive, system-driven change to the underlying component it anchors to, such as in tabs, pages and containers.
+#### When to use
 
-- Typically, if you use a badge to indicate an unread notification, you'd hide the badge once the user addresses the notification. However, Badges can remain persistent depending on the context.
+- To communicate a noninteractive, system-driven change to the underlying component it anchors to, such as in tabs, pages and containers.
 
-#### When not to use Badge
+- Typically, if you use a badge to indicate an unread notification, you'd hide the badge once the user addresses the notification. However, badges can remain persistent depending on the context.
 
-- Avoid using Badges to organize content within categories, trigger an immediate action, or enable an action that may change depending on context. Instead, use [Pill](../pill).
+#### When not to use
 
-- Don't use Badge to communicate status through color, such as Red/Amber/Green statuses. Instead, use Pill. Badges are independent of user action so you shouldn't use them to communicate something the user can directly influence through a task.
+- Avoid using badges to organize content within categories, trigger an immediate action, or enable an action that may change depending on context. Instead, use [`Pill`](../pill).
+
+- Don't use a badge to communicate status through color, such as red/amber/green statuses. Instead, use `Pill`. Badges are independent of user action, so you shouldn't use them to communicate something the user can directly influence through a task.
 
 ### Import
 
-To import Badge from the lab Salt package, use:
+To import `Badge` from the lab Salt package, use:
 
 ```
 import { Badge } from "@salt-ds/lab";
@@ -35,4 +37,4 @@ import { Badge } from "@salt-ds/lab";
 
 <PropsTable componentName="Badge" packageName="lab" />
 
-We recommend that you avoid using a Badge with more than four to six characters. If needed, truncate strings exceeding this count with an ellipsis (…).
+
