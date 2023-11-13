@@ -47,9 +47,4 @@ Default.parameters = {
   chromatic: { disableSnapshot: false, delay: 200 },
 };
 
-export const DefaultUitk = Default.bind({ defaultTheme: "uitk" });
-DefaultUitk.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
-};
-
 export default Default;

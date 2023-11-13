@@ -58,3 +58,11 @@ MasterDetailDark.parameters = {
 };
 
 export default MasterDetailDark;
+
+export const MasterDetailDarkUITK = () => (
+  <MasterDetailDark defaultTheme="uitk" />
+);
+
+MasterDetailDarkUITK.parameters = {
+  chromatic: { disableSnapshot: false, delay: 200 },
+};

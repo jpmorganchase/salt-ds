@@ -61,3 +61,9 @@ HDCompactDark.parameters = {
 };
 
 export default HDCompactDark;
+
+export const HDCompactDarkUitk = () => <HDCompactDark defaultTheme="uitk" />;
+
+HDCompactDarkUitk.parameters = {
+  chromatic: { disableSnapshot: false, delay: 200 },
+};

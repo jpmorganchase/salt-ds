@@ -52,3 +52,9 @@ MasterDetail.parameters = {
 };
 
 export default MasterDetail;
+
+export const MasterDetailUITK = () => <MasterDetail defaultTheme="uitk" />;
+
+MasterDetailUITK.parameters = {
+  chromatic: { disableSnapshot: false, delay: 200 },
+};
