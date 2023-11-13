@@ -327,7 +327,8 @@ $ag-theme-uitk-params-touch-dark: map-merge(
 
 .ag-theme-uitk-high-dark,
 .ag-theme-uitk-high-light,
-.ag-theme-uitk-high-compact-light {
+.ag-theme-uitk-high-compact-light,
+.ag-theme-uitk-high-compact-dark {
   --agGrid-checkbox-size: var(--saltAgGrid-checkbox-size, 14px);
   --agGrid-input-padding: var(--saltAgGrid-input-padding, 4px);
   --agGrid-input-height: var(--saltAgGrid-input-height, 20px);
@@ -353,6 +354,14 @@ $ag-theme-uitk-params-touch-dark: map-merge(
 }
 
 .ag-theme-uitk-high-light {
+  @include ag-theme-uitk($ag-theme-uitk-params-high-light);
+}
+
+.ag-theme-uitk-high-conpact-dark {
+  @include ag-theme-uitk($ag-theme-uitk-params-high-dark);
+}
+
+.ag-theme-uitk-high-compact-light {
   @include ag-theme-uitk($ag-theme-uitk-params-high-light);
 }
 
