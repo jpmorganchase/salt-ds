@@ -55,6 +55,40 @@ export const Default = Template.bind({});
 
 Default.args = {
   compact: false,
+  count: 5,
+  siblingCount: 2,
+  boundaryCount: 1,
+  showPreviousNext: true,
+};
+
+Default.argTypes = {
+  goToPosition: {
+    options: ["none", "left", "right"],
+    control: { type: "radio" },
+  },
+};
+
+export const WithTruncation = Template.bind({});
+
+WithTruncation.args = {
+  compact: false,
+  count: 25,
+  siblingCount: 2,
+  boundaryCount: 1,
+  showPreviousNext: true,
+};
+
+WithTruncation.argTypes = {
+  goToPosition: {
+    options: ["none", "left", "right"],
+    control: { type: "radio" },
+  },
+};
+
+export const WithInput = Template.bind({});
+
+WithInput.args = {
+  compact: false,
   count: 25,
   siblingCount: 2,
   boundaryCount: 1,
@@ -62,7 +96,25 @@ Default.args = {
   goToPosition: "left",
 };
 
-Default.argTypes = {
+WithInput.argTypes = {
+  goToPosition: {
+    options: ["none", "left", "right"],
+    control: { type: "radio" },
+  },
+};
+
+export const Compact = Template.bind({});
+
+Compact.args = {
+  compact: true,
+  count: 25,
+  siblingCount: 2,
+  boundaryCount: 1,
+  showPreviousNext: true,
+  goToPosition: "left",
+};
+
+Compact.argTypes = {
   goToPosition: {
     options: ["none", "left", "right"],
     control: { type: "radio" },
