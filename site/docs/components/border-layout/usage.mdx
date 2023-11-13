@@ -8,21 +8,23 @@ data:
   $ref: ./#/data
 ---
 
-### When to use Border Layout
+### Using the component
+
+### When to use
 
 - To manage the top-level layout of your application, or page, with at least one additional region alongside the main content area (e.g., for navigation or a footer).
 
-### When not to use Border Layout
+### When not to use
 
-- When you're not managing the top-level layout of your application, but the layout inside one of the five Border Layout regions.
+- When you're not managing the top-level layout of your application, but the layout inside one of the five border layout regions.
 
-- For a customized layout that you can control in both row and column dimensions (for example, a Dashboard). Instead, use Grid Layout.
+- For a customized layout that you can control in both row and column dimensions (for example, a dashboard). Instead, use [`GridLayout`](../components/grid-layout).
 
-- For a side panel that temporarily reveals relevant content. Consider using a Drawer component instead of a Border Layout region.
+- For a side panel that temporarily reveals relevant content. Instead, use [`Drawer`](../components/drawer).
 
 ### Import
 
-To import Border Layout from the core Salt package, use:
+To import `BorderLayout` and `BorderItem` from the core Salt package, use:
 
 ```
 import { BorderItem, BorderLayout } from "@salt-ds/core";
@@ -30,10 +32,10 @@ import { BorderItem, BorderLayout } from "@salt-ds/core";
 
 ### Props
 
-#### Border Layout
+#### `BorderLayout`
 
 <PropsTable componentName="BorderLayout" />
 
-#### Border Item
+#### `BorderItem`
 
 <PropsTable componentName="BorderItem" />
