@@ -23,8 +23,8 @@ export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   FormFieldProps?: Partial<FormFieldProps>;
 }
 
-export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(function GoToInput
-  (
+export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
+  function GoToInput(
     {
       className,
       id: idProp,
@@ -35,102 +35,102 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(function Go
 
     forwardedRef
   ) {
-  const { compact, count, onPageChange, paginatorElement } =
-    usePaginationContext();
+    const { compact, count, onPageChange, paginatorElement } =
+      usePaginationContext();
 
-  const id = useId(idProp);
+    const id = useId(idProp);
 
-  const rootRef = useRef<HTMLSpanElement>(null);
-  const forkedRef = useForkRef(rootRef, forwardedRef);
+    const rootRef = useRef<HTMLSpanElement>(null);
+    const forkedRef = useForkRef(rootRef, forwardedRef);
 
-  const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState("");
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (event) => {
-      setInputValue(event.target.value);
-    },
-    [setInputValue]
-  );
+    const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+      (event) => {
+        setInputValue(event.target.value);
+      },
+      [setInputValue]
+    );
 
-  const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
-    if (event.key === "Enter") {
-      const pageValue = Number(inputValue);
-      if (
-        !inputValue.startsWith("0") &&
-        !isNaN(pageValue) &&
-        pageValue > 0 &&
-        pageValue <= count
-      ) {
-        onPageChange(pageValue);
+    const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+      if (event.key === "Enter") {
+        const pageValue = Number(inputValue);
+        if (
+          !inputValue.startsWith("0") &&
+          !isNaN(pageValue) &&
+          pageValue > 0 &&
+          pageValue <= count
+        ) {
+          onPageChange(pageValue);
+        }
+        setInputValue("");
       }
+    };
+
+    const onBlur = useCallback(() => {
       setInputValue("");
-    }
-  };
+    }, [setInputValue]);
 
-  const onBlur = useCallback(() => {
-    setInputValue("");
-  }, [setInputValue]);
+    useEffect(() => {
+      if (compact) {
+        setInputValue("");
+      }
+    }, [compact]);
 
-  useEffect(() => {
+    const [position, setPosition] = useState<"left" | "right">();
+
+    useIsomorphicLayoutEffect(() => {
+      if (paginatorElement && !compact && rootRef.current) {
+        setPosition(
+          rootRef.current.compareDocumentPosition(paginatorElement) ===
+            Node.DOCUMENT_POSITION_PRECEDING
+            ? "right"
+            : "left"
+        );
+      }
+    }, [paginatorElement, compact, rootRef.current]);
+
     if (compact) {
-      setInputValue("");
+      return null;
     }
-  }, [compact]);
 
-  const [position, setPosition] = useState<"left" | "right">();
+    const widthCh = `${`${count}`.length}ch`;
 
-  useIsomorphicLayoutEffect(() => {
-    if (paginatorElement && !compact && rootRef.current) {
-      setPosition(
-        rootRef.current.compareDocumentPosition(paginatorElement) ===
-          Node.DOCUMENT_POSITION_PRECEDING
-          ? "right"
-          : "left"
-      );
-    }
-  }, [paginatorElement, compact, rootRef.current]);
-
-  if (compact) {
-    return null;
-  }
-
-  const widthCh = `${`${count}`.length}ch`;
-
-  return (
-    <span
-      className={clsx(
-        withBaseName("goToInputWrapper"),
-        { [withBaseName(`${position!}GoToInput`)]: position },
-        className
-      )}
-      ref={forkedRef}
-      {...restProps}
-    >
-      <FormField
-        className={withBaseName("goToInputField")}
-        fullWidth={false}
-        label={label}
-        labelPlacement="left"
-        {...restFormFieldLegacyProps}
+    return (
+      <span
+        className={clsx(
+          withBaseName("goToInputWrapper"),
+          { [withBaseName(`${position!}GoToInput`)]: position },
+          className
+        )}
+        ref={forkedRef}
+        {...restProps}
       >
-        <Input
-          className={clsx(withBaseName("goToInput"), {
-            [withBaseName("goToInputFixed")]: count < 100,
-          })}
-          id={id}
-          inputProps={{
-            "aria-labelledby": id,
-            "aria-label": `Page, ${count} total`,
-            style: { width: widthCh },
-          }}
-          onBlur={onBlur}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          value={inputValue}
-          textAlign={"center"}
-        />
-      </FormField>
-    </span>
-  );
-}
+        <FormField
+          className={withBaseName("goToInputField")}
+          fullWidth={false}
+          label={label}
+          labelPlacement="left"
+          {...restFormFieldLegacyProps}
+        >
+          <Input
+            className={clsx(withBaseName("goToInput"), {
+              [withBaseName("goToInputFixed")]: count < 100,
+            })}
+            id={id}
+            inputProps={{
+              "aria-labelledby": id,
+              "aria-label": `Page, ${count} total`,
+              style: { width: widthCh },
+            }}
+            onBlur={onBlur}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            value={inputValue}
+            textAlign={"center"}
+          />
+        </FormField>
+      </span>
+    );
+  }
 );
