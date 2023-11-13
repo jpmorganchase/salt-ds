@@ -1,0 +1,49 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Using the Tabs component
+
+#### When to use Tabs
+
+- Use tabs to organize logically related but mutually exclusive content on a single page.
+- Use tabstrips to prevent users from navigating to another page to complete a task.
+
+#### When not to use Tabs
+
+- Don’t use tabstrips when users need to compare information between views.
+- Don’t use tabstrips to communicate progress. Instead, use [`Stepped Tracker`](/salt/components/stepped-tracker).
+- Don’t use tabstrips for primary navigation, taking the user off the current page. Instead, use [`Navigation Item`](/salt/components/navigation-item).
+
+### Content
+
+- All labels should be short and concise.
+- Labels should clearly communicate the underlying view.
+- Always use sentence case in labels.
+- Always use sentence case for badge labels when nesting in a tab.
+- Do not wrap labels. Use truncation with `Tooltip` if necessary.
+- Icon and text should match each other semantically.
+
+### Import
+
+To import Tabs from the lab Salt package, use:
+
+```js
+import { TabNext, TabstripNext } from "@salt-ds/lab";
+```
+
+### Props
+
+#### TabNext
+
+<PropsTable packageName="lab" componentName="TabNext" />
+
+#### TabstripNext
+
+<PropsTable packageName="lab" componentName="TabstripNext" />

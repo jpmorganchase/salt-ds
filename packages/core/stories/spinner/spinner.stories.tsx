@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react";
-import {
-  Button,
-  Card,
-  GridItem,
-  FlexLayout,
-  GridLayout,
-  H1,
-  Spinner,
-} from "@salt-ds/core";
+import { Button, Card, GridItem, GridLayout, H1, Spinner } from "@salt-ds/core";
 import { CoffeeIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
+import { useEffect, useState } from "react";
 
 export default {
   title: "Core/Spinner",

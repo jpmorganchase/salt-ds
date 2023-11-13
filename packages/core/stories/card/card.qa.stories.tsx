@@ -3,7 +3,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Card/QA",
+  title: "Core/Card/Card QA",
   component: Card,
 } as Meta<typeof Card>;
 
