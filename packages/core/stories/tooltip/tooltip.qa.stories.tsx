@@ -4,7 +4,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { InfoSolidIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Core/Tooltip/QA",
+  title: "Core/Tooltip/Tooltip QA",
   component: Tooltip,
 } as Meta<typeof Tooltip>;
 
@@ -27,7 +27,15 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       <IconWithTooltip content="Hello, World" />
       <IconWithTooltip status="error" content="Uh oh, world" />
       <IconWithTooltip
-        content={<div style={{ background: "#ccc", width: 60, height: 20 }} />}
+        content={
+          <div
+            style={{
+              background: "var(--salt-text-secondary-foreground)",
+              width: 60,
+              height: "var(--salt-text-lineHeight)",
+            }}
+          />
+        }
       />
       <div
         style={{

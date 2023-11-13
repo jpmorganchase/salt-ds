@@ -196,7 +196,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   const getFilteredSource = () => {
     if (!source) return null;
     if (selectedItem && inputValue === selectedItem) return source;
-    return itemFilter && itemFilter(source, inputValue);
+    return itemFilter?.(source, inputValue);
   };
   const filteredSource = getFilteredSource();
 
@@ -214,7 +214,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         setHighlightedItem(filteredSource[0] as unknown as string);
       }
     }
-    onInputChange?.(event, { value: inputValue ?? "" });
+    onInputChange?.(event, { value: value ?? "" });
   };
 
   const adornment = open ? (

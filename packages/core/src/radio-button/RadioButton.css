@@ -4,6 +4,11 @@
   gap: var(--salt-spacing-100);
   cursor: var(--salt-selectable-cursor-hover);
   position: relative;
+
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
 }
 
 /* Styles applied when RadioButton is disabled */
