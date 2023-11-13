@@ -1,4 +1,5 @@
 export { default as Default } from "./Default";
+export { DefaultUitk } from "./Default";
 export { default as DragRowOrder } from "./DragRowOrder";
 export { default as ColumnGroup } from "./ColumnGroup";
 export { default as ColumnSpanning } from "./ColumnSpanning";
