@@ -26,8 +26,6 @@ export const AgGridThemeSwitcher = ({
     onThemeSelect(event.currentTarget.value);
   };
 
-  console.log("theme", theme);
-
   return (
     <div>
       <ToggleButtonGroup
