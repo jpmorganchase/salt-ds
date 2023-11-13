@@ -19,6 +19,7 @@
   - easier theming experience
   - `text.css` updated to `content.css` as tokens are used for more than just texts i.e. icon
   - consolidating tokens into `text.css` to ensure all text-related tokens are within the same file, aside from text colors, they sit within `content.css`
+  - tidying tokens: `container` no longer has a `tertiary` variant
 
 #### `text-*` to `content`
 
@@ -191,6 +192,10 @@
 - --salt-selectable-cta-background-selectedDisabled /* Use  rgba(164, 213, 244,0.4) in light mode,rgba(0, 71, 123, 0.4) in dark mode */
 - --salt-selectable-primary-foreground-hover /* Use rgb(38, 112, 169) in both light and dark mode */
 
+- --salt-container-tertiary-background /* Use `transparent` */
+- --salt-container-tertiary-background-disabled /* Use `transparent` */
+- --salt-container-tertiary-borderColor /* Use `transparent` */
+- --salt-container-tertiary-borderColor-disabled /* Use `transparent` */
 ```
 
 ### Foundations

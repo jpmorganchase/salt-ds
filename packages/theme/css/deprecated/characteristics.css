@@ -160,6 +160,12 @@
   --salt-taggable-foreground-hover: var(--salt-palette-interact-primary-foreground-hover);
   --salt-taggable-foreground-active: var(--salt-palette-interact-primary-foreground-active);
   --salt-taggable-foreground-disabled: var(--salt-palette-interact-primary-foreground-disabled);
+
+  /* Container */
+  --salt-container-tertiary-background: transparent;
+  --salt-container-tertiary-background-disabled: transparent;
+  --salt-container-tertiary-borderColor: transparent;
+  --salt-container-tertiary-borderColor-disabled: transparent;
 }
 
 /* Accent */

@@ -10,9 +10,4 @@
   --salt-container-secondary-background-disabled: var(--salt-palette-neutral-secondary-background-disabled);
   --salt-container-secondary-borderColor: var(--salt-palette-neutral-secondary-border);
   --salt-container-secondary-borderColor-disabled: var(--salt-palette-neutral-secondary-border-disabled);
-
-  --salt-container-tertiary-background: transparent;
-  --salt-container-tertiary-background-disabled: transparent;
-  --salt-container-tertiary-borderColor: transparent;
-  --salt-container-tertiary-borderColor-disabled: transparent;
 }
