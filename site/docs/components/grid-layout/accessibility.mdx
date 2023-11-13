@@ -9,11 +9,9 @@ data:
   $ref: ./#/data
 ---
 
-### Best practices
+When building a page layout, it's important to make sure you apply semantic HTML by using the correct HTML elements for their intended purpose as much as possible.
 
-When building a page layout, it is important to make sure you use semantic HTML, which means using the correct HTML elements for their intended purpose as much as possible.
-
-The Grid Layout and Grid Item components support this behavior by allowing access to a prop called `as` that allows you to render the appropriate HTML instead of a plain `div`.
+The `GridLayout` and `GridItem` components support this behavior by allowing access to a prop called `as` that allows you to render the appropriate HTML instead of a plain `div`.
 
 ```tsx
 <GridLayout as="footer">
