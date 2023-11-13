@@ -1,9 +1,9 @@
 import { PillNext } from "@salt-ds/lab";
 import { FavoriteIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
+import { ChangeEvent, Ref, useEffect, useRef, useState } from "react";
 import { shortColorData } from "./../assets/exampleData";
-import { Button, FlowLayout } from "@salt-ds/core";
+import { Button, FlowLayout, Input, StackLayout, Tooltip } from "@salt-ds/core";
 
 export default {
   title: "Lab/Pill Next",
@@ -63,5 +63,39 @@ export const Icon: StoryFn<typeof PillNext> = () => {
     <PillNext icon={<FavoriteIcon />} onClick={() => console.log("Clicked.")}>
       Pill with Icon
     </PillNext>
+  );
+};
+
+export const Truncated: StoryFn<typeof PillNext> = () => {
+  const pillRef = useRef<HTMLButtonElement | null>(null);
+  const [maxWidth, setMaxWidth] = useState<string>("150");
+  const [isEllipsisActive, setEllipsisActive] = useState(false);
+
+  useEffect(() => {
+    const text = pillRef?.current?.firstElementChild as HTMLElement;
+    setEllipsisActive(text?.offsetWidth < text?.scrollWidth);
+  }, [maxWidth]);
+
+  const content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+
+  return (
+    <StackLayout direction={"column"}>
+      <Input
+        inputProps={{ type: "number", step: 50 }}
+        style={{ maxWidth: "150px" }}
+        defaultValue={maxWidth}
+        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+          setMaxWidth(event.target.value)
+        }
+      />
+      <Tooltip content={content} disabled={!isEllipsisActive}>
+        <PillNext
+          ref={pillRef as Ref<HTMLButtonElement>}
+          style={{ maxWidth: `${maxWidth}px` }}
+        >
+          {content}
+        </PillNext>
+      </Tooltip>
+    </StackLayout>
   );
 };
