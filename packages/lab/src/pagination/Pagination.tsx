@@ -23,98 +23,97 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
   compact?: boolean;
 }
 
-export const Pagination = forwardRef<HTMLElement, PaginationProps>(
-  (
-    {
-      className,
-      count,
-      children,
-      initialPage = 1,
-      page: pageProp,
-      onPageChange: onPageChangeProp,
-      compact = false,
-      ...restProps
+export const Pagination = forwardRef<HTMLElement, PaginationProps>(function Pagination(
+  {
+    className,
+    count,
+    children,
+    initialPage = 1,
+    page: pageProp,
+    onPageChange: onPageChangeProp,
+    compact = false,
+    ...restProps
+  },
+  ref
+) {
+  const [pageState, setPageState] = useControlled({
+    controlled: pageProp,
+    default: initialPage,
+    name: "Paginator",
+    state: "page",
+  });
+
+  const [paginatorElement, setPaginatorElement] = useState<HTMLDivElement>();
+
+  const onPageChange = useCallback(
+    (page: number) => {
+      setPageState(page);
+      onPageChangeProp && onPageChangeProp(page);
     },
-    ref
-  ) => {
-    const [pageState, setPageState] = useControlled({
-      controlled: pageProp,
-      default: initialPage,
-      name: "Paginator",
-      state: "page",
-    });
+    [onPageChangeProp, setPageState]
+  );
 
-    const [paginatorElement, setPaginatorElement] = useState<HTMLDivElement>();
+  const contextValue: PaginationContext = useMemo(
+    () => ({
+      page: pageState,
+      count,
+      compact,
+      onPageChange,
+      paginatorElement,
+      setPaginatorElement,
+    }),
+    [pageState, compact, count, onPageChange, paginatorElement]
+  );
 
-    const onPageChange = useCallback(
-      (page: number) => {
-        setPageState(page);
-        onPageChangeProp && onPageChangeProp(page);
-      },
-      [onPageChangeProp, setPageState]
-    );
-
-    const contextValue: PaginationContext = useMemo(
-      () => ({
-        page: pageState,
-        count,
-        compact,
-        onPageChange,
-        paginatorElement,
-        setPaginatorElement,
-      }),
-      [pageState, count, onPageChange]
-    );
-
-    const onKeyDown: KeyboardEventHandler = useCallback(
-      ({ altKey, key }) => {
-        if (altKey) {
-          switch (key) {
-            case "PageDown":
-              onPageChange(Math.min(pageState + 1, count));
-              break;
-            case "PageUp":
-              onPageChange(Math.max(pageState - 1, 1));
-              break;
-            default:
-          }
+  const onKeyDown: KeyboardEventHandler = useCallback(
+    ({ altKey, key }) => {
+      if (altKey) {
+        switch (key) {
+          case "PageDown":
+            onPageChange(Math.min(pageState + 1, count));
+            break;
+          case "PageUp":
+            onPageChange(Math.max(pageState - 1, 1));
+            break;
+          default:
         }
-      },
-      [onPageChange]
-    );
-
-    const { announce } = useAriaAnnouncer();
-    const mounted = useRef<boolean>(false);
-
-    useEffect(() => {
-      if (mounted.current) {
-        announce(`Page ${pageState}`);
-      } else {
-        mounted.current = true;
       }
-    }, [announce, pageState]);
+    },
+    [count, onPageChange, pageState]
+  );
 
-    useEffect(() => {
-      if (count < pageState) {
-        onPageChange(1);
-      }
-    }, [count, pageState, onPageChange]);
+  const { announce } = useAriaAnnouncer();
+  const mounted = useRef<boolean>(false);
 
-    if (count < 2) {
-      return null;
+  useEffect(() => {
+    if (mounted.current) {
+      announce(`Page ${pageState}`);
+    } else {
+      mounted.current = true;
     }
+  }, [announce, pageState]);
 
-    return (
-      <Provider value={contextValue}>
-        <nav
-          className={clsx(withBaseName(), className)}
-          onKeyDown={onKeyDown}
-          ref={ref}
-          {...restProps}
-        >
-          {children}
-        </nav>
-      </Provider>
-    );
+  useEffect(() => {
+    if (count < pageState) {
+      onPageChange(1);
+    }
+  }, [count, pageState, onPageChange]);
+
+  if (count < 2) {
+    return null;
   }
+
+  return (
+    <Provider value={contextValue}>
+      <nav
+        className={clsx(withBaseName(), className)}
+        onKeyDown={onKeyDown}
+        ref={ref}
+        {...restProps}
+      >
+        {children}
+      </nav>
+    </Provider>
+  );
+}
 );
