@@ -4,7 +4,7 @@
 
 **_Theming and CSS updates_** with visual changes to Salt components:
 
-1. Minor changes in `Button` component width. `CTA` and `Primary` button text font weight changed from bold to semibold. Expect components containing Salt `Button` to have similar change.
+1. Minor changes in `Button` component width as font weight gets updated. Font weight for two button variants,`CTA` and `Primary` changed from bold to semibold. Expect components containing Salt `Button` to have similar change.
 
 ```diff
 - --salt-actionable-cta-fontWeight
