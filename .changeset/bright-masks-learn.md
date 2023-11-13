@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-Fixed Badge occupying space by changing from relative to absolute positioning
+Fixed Badge occupying space when it is anchored to a child component.
