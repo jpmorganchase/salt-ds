@@ -8,6 +8,7 @@ export interface CompactControlsProps {
   page: number;
   onPageChange: (page: number) => void;
   FormFieldProps?: Partial<FormFieldProps>;
+  withInput?: boolean;
 }
 
 export const CompactControls = ({
@@ -15,15 +16,24 @@ export const CompactControls = ({
   count,
   onPageChange,
   FormFieldProps,
+  withInput = false,
 }: CompactControlsProps) => {
   return (
     <>
-      <CompactInput
-        page={page}
-        count={count}
-        onPageChange={onPageChange}
-        FormFieldProps={FormFieldProps}
-      />
+      {withInput ? (
+        <CompactInput
+          page={page}
+          count={count}
+          onPageChange={onPageChange}
+          FormFieldProps={FormFieldProps}
+        />
+      ) : (
+        <PageButton
+          page={page}
+          onPageChange={onPageChange}
+          disabled={page === count}
+        />
+      )}
       <span className={withBaseName("compactSeparator")}>of</span>
       <PageButton
         page={count}

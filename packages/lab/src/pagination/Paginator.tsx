@@ -21,8 +21,8 @@ export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   FormFieldProps?: Partial<FormFieldProps>;
 }
 
-export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(function Paginator
-  (
+export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
+  function Paginator(
     {
       className,
       boundaryCount,
@@ -33,66 +33,73 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(function Pag
     },
     forwardedRef
   ) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-pagination",
-    css: paginationCss,
-    window: targetWindow,
-  });
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-pagination",
+      css: paginationCss,
+      window: targetWindow,
+    });
 
-  const { count, page, onPageChange, compact, setPaginatorElement } =
-    usePaginationContext();
+    const {
+      count,
+      page,
+      onPageChange,
+      compact,
+      setPaginatorElement,
+      withInput,
+    } = usePaginationContext();
 
-  const ref = useForkRef(setPaginatorElement, forwardedRef);
+    const ref = useForkRef(setPaginatorElement, forwardedRef);
 
-  const onPreviousPage = useCallback(() => {
-    onPageChange(Math.max(1, page - 1));
-  }, [page, onPageChange]);
+    const onPreviousPage = useCallback(() => {
+      onPageChange(Math.max(1, page - 1));
+    }, [page, onPageChange]);
 
-  const onNextPage = useCallback(() => {
-    onPageChange(Math.min(page + 1, count));
-  }, [page, onPageChange, count]);
+    const onNextPage = useCallback(() => {
+      onPageChange(Math.min(page + 1, count));
+    }, [page, onPageChange, count]);
 
-  const isOnFirstPage = page === 1;
-  const isOnLastPage = page === count;
+    const isOnFirstPage = page === 1;
+    const isOnLastPage = page === count;
 
-  return (
-    <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
-      {showPreviousNext && (
-        <ArrowButton
-          arrowButtonType="previous"
-          onPress={onPreviousPage}
-          disabled={isOnFirstPage}
-        >
-          <ChevronLeftIcon />
-        </ArrowButton>
-      )}
-      {compact ? (
-        <CompactControls
-          count={count}
-          page={page}
-          onPageChange={onPageChange}
-          FormFieldProps={FormFieldProps}
-        />
-      ) : (
-        <RegularControls
-          count={count}
-          page={page}
-          onPageChange={onPageChange}
-          siblingCount={siblingCount}
-          boundaryCount={boundaryCount}
-        />
-      )}
-      {showPreviousNext && (
-        <ArrowButton
-          arrowButtonType="next"
-          onPress={onNextPage}
-          disabled={isOnLastPage}
-        >
-          <ChevronRightIcon />
-        </ArrowButton>
-      )}
-    </div>
-  );
-}
+    return (
+      <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
+        {showPreviousNext && (
+          <ArrowButton
+            arrowButtonType="previous"
+            onPress={onPreviousPage}
+            disabled={isOnFirstPage}
+          >
+            <ChevronLeftIcon />
+          </ArrowButton>
+        )}
+        {compact ? (
+          <CompactControls
+            count={count}
+            page={page}
+            withInput={withInput}
+            onPageChange={onPageChange}
+            FormFieldProps={FormFieldProps}
+          />
+        ) : (
+          <RegularControls
+            count={count}
+            page={page}
+            onPageChange={onPageChange}
+            siblingCount={siblingCount}
+            boundaryCount={boundaryCount}
+          />
+        )}
+        {showPreviousNext && (
+          <ArrowButton
+            arrowButtonType="next"
+            onPress={onNextPage}
+            disabled={isOnLastPage}
+          >
+            <ChevronRightIcon />
+          </ArrowButton>
+        )}
+      </div>
+    );
+  }
 );
