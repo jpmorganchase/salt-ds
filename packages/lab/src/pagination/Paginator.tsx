@@ -7,7 +7,6 @@ import { CompactControls } from "./CompactControls";
 import { RegularControls } from "./RegularControls";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
-import { FormFieldLegacyProps as FormFieldProps } from "../form-field-legacy";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -18,7 +17,6 @@ export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   boundaryCount?: number;
   siblingCount?: number;
   showPreviousNext?: boolean;
-  FormFieldProps?: Partial<FormFieldProps>;
 }
 
 export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
@@ -28,7 +26,6 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
       boundaryCount,
       siblingCount,
       showPreviousNext = true,
-      FormFieldProps,
       ...restProps
     },
     forwardedRef
@@ -73,7 +70,6 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
             page={page}
             withInput={compact === "goto"}
             onPageChange={onPageChange}
-            FormFieldProps={FormFieldProps}
           />
         ) : (
           <RegularControls

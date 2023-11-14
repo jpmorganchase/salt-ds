@@ -26,9 +26,14 @@
   --saltButton-fontWeight: var(--salt-text-fontWeight);
 }
 
+.saltPagination-pageButton:hover {
+  --saltButton-background-hover: var(--salt-selectable-background-hover);
+  --saltButton-text-color-hover: var(--salt-selectable-foreground);
+}
+
 .saltPagination-pageButtonSelected {
-  background: var(--salt-selectable-background-selected);
-  color: var(--salt-selectable-cta-foreground-selected);
+  --saltButton-background: var(--salt-selectable-background-selected);
+  --saltButton-text-color: var(--salt-selectable-foreground);
 }
 
 .saltPagination-pageButtonFixed {
@@ -39,6 +44,7 @@
   width: var(--pagination-button-size);
   height: var(--pagination-button-size);
   text-align: center;
+  line-height: var(--pagination-button-size);
 }
 
 .saltPagination-accessibleText {
@@ -88,10 +94,6 @@
   margin-left: var(--salt-spacing-100);
   min-width: unset;
 }
-
-/* .saltPagination-goToInputField {
-  --formField-label-width: calc(var(--salt-spacing-100) + 26px);
-} */
 
 .saltPagination-goToInput {
   height: var(--pagination-button-size);

@@ -338,7 +338,7 @@ describe("GIVEN an Pagination", () => {
         cy.findByRole("textbox").should("have.value", "3");
         cy.findByRole("textbox").focus();
         cy.realType("4");
-        cy.findByRole("textbox").should("have.value", "4");
+        cy.findByRole("textbox").should("have.value", "34");
         cy.findByRole("textbox").blur();
         cy.findByRole("textbox").should("have.value", "3");
         cy.get("@pageChangeSpy").should("not.have.been.called");
@@ -359,6 +359,7 @@ describe("GIVEN an Pagination", () => {
 
         cy.findByRole("textbox").should("have.value", "3");
         cy.findByRole("textbox").focus();
+        cy.realPress("Backspace");
         cy.realType("4");
         cy.findByRole("textbox").should("have.value", "4");
         cy.realPress("Enter");
