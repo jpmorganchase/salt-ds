@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import { FlexLayout, SaltProvider, StackLayout } from "@salt-ds/core";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
@@ -17,9 +17,10 @@ const statusBar = {
   ],
 };
 
-const HDCompactDark = (props: AgGridReactProps) => {
+const HDCompactDark = (props: { defaultTheme: string }) => {
   const mode = "dark";
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
     compact: true,
@@ -38,7 +39,6 @@ const HDCompactDark = (props: AgGridReactProps) => {
             statusBar={statusBar}
             rowSelection="multiple"
             {...agGridProps}
-            {...props}
             enableRangeSelection={true}
             onFirstDataRendered={(params) => {
               params.api.forEachNode((node, index) => {
@@ -61,3 +61,9 @@ HDCompactDark.parameters = {
 };
 
 export default HDCompactDark;
+
+export const HDCompactDarkUitk = () => <HDCompactDark defaultTheme="uitk" />;
+
+HDCompactDarkUitk.parameters = {
+  chromatic: { disableSnapshot: false, delay: 200 },
+};
