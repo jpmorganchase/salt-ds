@@ -387,6 +387,6 @@ div[class*="ag-theme-uitk"] .ag-column-drop-cell {
 /* HD Compact */
 
 div[class*="ag-theme-uitk-compact-light"] .ag-row,
-div[class*="ag-theme-uitk-compact-dark"] .ag-row{
+div[class*="ag-theme-uitk-compact-dark"] .ag-row {
   font-size: 10px;
 }
