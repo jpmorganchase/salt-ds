@@ -7,7 +7,7 @@ div[class*="ag-theme-uitk"] {
   --ag-checkbox-border-radius: 0;
   --ag-checkbox-indeterminate-color: var(--salt-text-primary-foreground);
   --ag-chip-background-color: var(--salt-taggable-background);
-  --ag-data-color: rgb(42, 44, 47);
+  --ag-data-color: var(--salt-text-primary-foreground);
   --ag-font-size: var(--salt-text-fontSize);
   --ag-font-family: var(--salt-typography-fontFamily);
   --ag-foreground-color: var(--salt-text-primary-foreground);
@@ -18,7 +18,7 @@ div[class*="ag-theme-uitk"] {
   --ag-header-column-separator-display: block;
   --ag-header-column-separator-height: var(--salt-text-fontSize);
   --ag-header-column-separator-width: var(--salt-size-border);
-  --ag-header-foreground-color: rgb(97, 101, 110);
+  --ag-header-foreground-color: var(--salt-text-primary-foreground);
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-icon-size: var(--salt-icon-size-base);
   --ag-input-focus-box-shadow: none;
