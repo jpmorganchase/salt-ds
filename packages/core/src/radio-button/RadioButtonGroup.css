@@ -26,3 +26,9 @@
 .saltRadioButtonGroup-noWrap .saltRadioButton {
   white-space: break-spaces;
 }
+
+/* Styles applied when radio button group is inside a form field with label left or right */
+.saltFormField-labelLeft .saltRadioButtonGroup,
+.saltFormField-labelRight .saltRadioButtonGroup {
+  padding-top: var(--salt-spacing-100);
+}

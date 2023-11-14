@@ -9,6 +9,8 @@
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-text-fontWeight);
+
+  --radioButton-icon-marginTop: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
 }
 
 /* Styles applied when RadioButton is disabled */
@@ -29,12 +31,14 @@
   position: absolute;
   height: var(--salt-size-selectable);
   opacity: 0;
-  top: 0;
-  left: 0;
-  margin: 0;
+  margin: var(--radioButton-icon-marginTop) 0 0 0;
   padding: 0;
   width: var(--salt-size-selectable);
   z-index: var(--salt-zIndex-default);
+}
+
+.saltRadioButtonIcon {
+  margin-top: var(--radioButton-icon-marginTop);
 }
 
 .saltRadioButtonIcon > svg {

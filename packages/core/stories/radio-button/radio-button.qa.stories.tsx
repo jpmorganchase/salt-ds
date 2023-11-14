@@ -1,4 +1,6 @@
 import {
+  FormField,
+  FormFieldLabel,
   RadioButton,
   RadioButtonGroup,
   RadioButtonGroupProps,
@@ -38,11 +40,27 @@ const RadioButtonGroupExample = ({
   );
 };
 
+const RadioButtonInFormFieldExample = () => {
+  return (
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Assignment</FormFieldLabel>
+      <RadioButtonGroup>
+        <RadioButton label="Private placement of equity or debt securities" />
+        <RadioButton label="Syndicated credit facility or loan" />
+        <RadioButton label="Interest rate, foreign exchange or commodity hedging or equity derivative" />
+        <RadioButton label="Escrow arrangement" />
+        <RadioButton label="Restructuring of debt securities of the Counterparty or the Company" />
+      </RadioButtonGroup>
+    </FormField>
+  );
+};
+
 export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={1} itemPadding={8} {...props}>
       <RadioButtonGroupExample direction="vertical" />
       <RadioButtonGroupExample direction="horizontal" />
+      <RadioButtonInFormFieldExample />
     </QAContainer>
   );
 };
