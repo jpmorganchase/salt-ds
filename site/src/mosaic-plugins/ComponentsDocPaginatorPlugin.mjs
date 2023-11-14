@@ -35,7 +35,7 @@ function buildRouteNavigationData(pages) {
   return pageIndexToNavigation;
 }
 
-const ChildrenDocPaginatorPlugin = {
+const ComponentsDocPaginatorPlugin = {
   async $afterSource(pages) {
     const componentRouteToName = buildRouteNavigationData(pages);
 
@@ -60,4 +60,4 @@ const ChildrenDocPaginatorPlugin = {
   },
 };
 
-export default ChildrenDocPaginatorPlugin;
+export default ComponentsDocPaginatorPlugin;

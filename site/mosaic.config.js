@@ -35,7 +35,7 @@ const saltConfig = {
     },
     {
       modulePath: require.resolve(
-        "./src/mosaic-plugins/ChildrenDocPaginatorPlugin.mjs"
+        "./src/mosaic-plugins/ComponentsDocPaginatorPlugin.mjs"
       ),
     },
   ],
