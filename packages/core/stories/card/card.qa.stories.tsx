@@ -21,11 +21,11 @@ export const AllExamplesUsingText: StoryFn<
         <Text>Content</Text>
       </Card>
       <InteractableCard>
-        <H1>Interctable card with density</H1>
+        <H1>Interactable card with density</H1>
         <Text>Content</Text>
       </InteractableCard>
       <InteractableCard variant="secondary">
-        <H1>Secondary interctable with density</H1>
+        <H1>Secondary interactable with density</H1>
         <Text>Content</Text>
       </InteractableCard>
     </QAContainer>
