@@ -27,7 +27,6 @@ const Template = (
     siblingCount,
     showPreviousNext,
     compact,
-    withInput,
     goToPosition,
   } = args;
   const [page, setPage] = useState<number>(1);
@@ -41,7 +40,6 @@ const Template = (
       onPageChange={onPageChange}
       count={count}
       compact={compact}
-      withInput={withInput}
     >
       {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}
       <Paginator
@@ -61,18 +59,17 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       vertical
       transposeDensity
       height={1400}
+      width={2500}
       className="saltMetricQA"
       imgSrc={props.imgSrc}
     >
       <Template
-        compact={false}
         count={5}
         siblingCount={2}
         boundaryCount={1}
         showPreviousNext={true}
       />
       <Template
-        compact={false}
         count={25}
         siblingCount={2}
         boundaryCount={1}
@@ -80,7 +77,14 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         goToPosition="left"
       />
       <Template
-        compact={true}
+        compact="default"
+        count={25}
+        siblingCount={2}
+        boundaryCount={1}
+        showPreviousNext={true}
+      />
+      <Template
+        compact="goto"
         count={25}
         siblingCount={2}
         boundaryCount={1}

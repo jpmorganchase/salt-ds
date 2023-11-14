@@ -5,25 +5,19 @@ import {
   useEffect,
   useState,
 } from "react";
-import {
-  FormFieldLegacy as FormField,
-  FormFieldLegacyProps as FormFieldProps,
-} from "../form-field-legacy";
-import { InputLegacy as Input } from "../input-legacy";
+import { Input } from "@salt-ds/core";
 import { withBaseName } from "./utils";
 
 export interface CompactInputProps {
   count: number;
   page: number;
   onPageChange: (page: number) => void;
-  FormFieldProps?: Partial<FormFieldProps>;
 }
 
 export const CompactInput = ({
   page,
   count,
   onPageChange,
-  FormFieldProps: { className, ...restFormFieldLegacyProps } = {},
 }: CompactInputProps) => {
   const [inputValue, setInputValue] = useState(`${page}`);
 
@@ -51,29 +45,22 @@ export const CompactInput = ({
   };
 
   return (
-    <span>
-      <FormField
-        className={clsx(withBaseName("compactInputField"), className)}
-        fullWidth={false}
-        {...restFormFieldLegacyProps}
-      >
-        <Input
-          className={clsx(withBaseName("compactInput"), {
-            [withBaseName("compactInputFixed")]: count < 100,
-          })}
-          highlightOnFocus
-          inputProps={{
-            "aria-label": `Go to page, ${count} total`,
-            style: { width: `${`${count}`.length}ch` },
-            role: "textbox",
-          }}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          value={inputValue}
-          textAlign={"center"}
-        />
-      </FormField>
+    <span className={clsx(withBaseName("compactInputField"))}>
+      <Input
+        className={clsx(withBaseName("compactInput"), {
+          [withBaseName("compactInputFixed")]: count < 100,
+        })}
+        inputProps={{
+          "aria-label": `Go to page, ${count} total`,
+          style: { width: `${`${count}`.length}ch` },
+          role: "textbox",
+        }}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        value={inputValue}
+        textAlign={"center"}
+      />
     </span>
   );
 };

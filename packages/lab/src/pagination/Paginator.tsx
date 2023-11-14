@@ -40,14 +40,8 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
       window: targetWindow,
     });
 
-    const {
-      count,
-      page,
-      onPageChange,
-      compact,
-      setPaginatorElement,
-      withInput,
-    } = usePaginationContext();
+    const { count, page, onPageChange, compact, setPaginatorElement } =
+      usePaginationContext();
 
     const ref = useForkRef(setPaginatorElement, forwardedRef);
 
@@ -77,7 +71,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
           <CompactControls
             count={count}
             page={page}
-            withInput={withInput}
+            withInput={compact === "goto"}
             onPageChange={onPageChange}
             FormFieldProps={FormFieldProps}
           />

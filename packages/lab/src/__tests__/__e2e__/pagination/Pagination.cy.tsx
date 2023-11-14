@@ -194,7 +194,7 @@ describe("GIVEN an Pagination", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
             <Pagination
-              compact={true}
+              compact="goto"
               count={10}
               initialPage={3}
               onPageChange={pageChangeSpy}
@@ -215,7 +215,7 @@ describe("GIVEN an Pagination", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
             <Pagination
-              compact
+              compact="goto"
               count={10}
               initialPage={3}
               onPageChange={pageChangeSpy}
@@ -236,7 +236,7 @@ describe("GIVEN an Pagination", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
             <Pagination
-              compact
+              compact="goto"
               count={10}
               initialPage={3}
               onPageChange={pageChangeSpy}
@@ -259,7 +259,7 @@ describe("GIVEN an Pagination", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
             <Pagination
-              compact
+              compact="goto"
               count={10}
               initialPage={3}
               onPageChange={pageChangeSpy}
@@ -281,7 +281,7 @@ describe("GIVEN an Pagination", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
             <Pagination
-              compact
+              compact="goto"
               count={10}
               initialPage={3}
               onPageChange={pageChangeSpy}
@@ -303,7 +303,7 @@ describe("GIVEN an Pagination", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
             <Pagination
-              compact
+              compact="goto"
               count={10}
               initialPage={3}
               onPageChange={pageChangeSpy}
@@ -326,7 +326,7 @@ describe("GIVEN an Pagination", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
           <Pagination
-            compact
+            compact="goto"
             count={10}
             initialPage={3}
             onPageChange={pageChangeSpy}
@@ -348,7 +348,7 @@ describe("GIVEN an Pagination", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
           <Pagination
-            compact
+            compact="goto"
             count={10}
             initialPage={3}
             onPageChange={pageChangeSpy}
@@ -600,7 +600,7 @@ describe("GIVEN an Pagination", () => {
     describe("AND pagination is in compact mode", () => {
       it("SHOULD then be hidden", () => {
         cy.mount(
-          <Pagination compact count={10} initialPage={3}>
+          <Pagination compact="goto" count={10} initialPage={3}>
             <GoToInput />
             <Paginator />
           </Pagination>

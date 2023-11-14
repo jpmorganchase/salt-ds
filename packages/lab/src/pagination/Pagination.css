@@ -9,14 +9,15 @@
 .saltPagination-arrowButton {
   width: var(--pagination-button-size);
   height: var(--pagination-button-size);
+  padding: 0 var(--salt-spacing-100);
 }
 
 .saltPagination-previousButton {
-  margin-right: var(--salt-size-unit);
+  margin-right: var(--salt-spacing-100);
 }
 
 .saltPagination-nextButton {
-  margin-left: var(--salt-size-unit);
+  margin-left: var(--salt-spacing-100);
 }
 
 .saltPagination-pageButton {
@@ -51,8 +52,8 @@
   opacity: 0;
 }
 
-.saltPagination-compactInputField {
-}
+/* .saltPagination-compactInputField {
+} */
 
 .saltPagination-compactInput {
   height: var(--pagination-button-size);
@@ -73,19 +74,24 @@
 }
 
 .saltPagination-goToInputWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-100);
+  align-items: baseline;
 }
 
 .saltPagination-leftGoToInput {
-  margin-right: var(--salt-size-unit);
+  margin-right: var(--salt-spacing-100);
 }
 
 .saltPagination-rightGoToInput {
-  margin-left: var(--salt-size-unit);
+  margin-left: var(--salt-spacing-100);
   min-width: unset;
 }
 
-.saltPagination-goToInputField {
-}
+/* .saltPagination-goToInputField {
+  --formField-label-width: calc(var(--salt-spacing-100) + 26px);
+} */
 
 .saltPagination-goToInput {
   height: var(--pagination-button-size);
@@ -94,5 +100,6 @@
 
 .saltPagination-goToInputFixed {
   min-width: var(--pagination-button-size);
+  max-width: var(--pagination-button-size);
   width: var(--pagination-button-size);
 }
