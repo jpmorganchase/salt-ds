@@ -1,5 +1,12 @@
 import { Meta, StoryFn } from "@storybook/react";
-import { Checkbox, CheckboxGroup, CheckboxGroupProps } from "@salt-ds/core";
+import {
+  Checkbox,
+  CheckboxGroup,
+  CheckboxGroupProps,
+  FormField,
+  FormFieldLabel,
+  FormFieldHelperText,
+} from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
@@ -38,11 +45,28 @@ const CheckboxGroupExample = ({
   );
 };
 
+const CheckboxInFormFieldExample = () => {
+  return (
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Assignment</FormFieldLabel>
+      <CheckboxGroup>
+        <Checkbox label="Private placement of equity or debt securities" />
+        <Checkbox defaultChecked label="Syndicated credit facility or loan" />
+        <Checkbox label="Interest rate, foreign exchange or commodity hedging or equity derivative" />
+        <Checkbox label="Escrow arrangement" />
+        <Checkbox label="Restructuring of debt securities of the Counterparty or the Company" />
+      </CheckboxGroup>
+      <FormFieldHelperText>Select all appropriate</FormFieldHelperText>
+    </FormField>
+  );
+};
+
 export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={1} itemPadding={8} {...props}>
       <CheckboxGroupExample direction="vertical" />
       <CheckboxGroupExample direction="horizontal" />
+      <CheckboxInFormFieldExample />
     </QAContainer>
   );
 };
