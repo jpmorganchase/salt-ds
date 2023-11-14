@@ -1,7 +1,7 @@
 import { useState, ComponentType } from "react";
 import { StoryFn } from "@storybook/react";
-import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
-import { TabstripNextProps, TabstripNext, TabNext, Badge } from "@salt-ds/lab";
+import { Button, FlexLayout, StackLayout, Badge } from "@salt-ds/core";
+import { TabstripNextProps, TabstripNext, TabNext } from "@salt-ds/lab";
 import {
   BankCheckIcon,
   CreditCardIcon,

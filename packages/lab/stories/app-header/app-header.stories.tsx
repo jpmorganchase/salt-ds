@@ -2,7 +2,6 @@ import { useState } from "react";
 import { AdjustableFlexbox as Flexbox } from "../components";
 import {
   AppHeader,
-  Badge,
   Logo,
   LogoImage,
   Tab,
@@ -10,7 +9,7 @@ import {
   TabstripProps,
   Tooltray /*, Toolbar */,
 } from "@salt-ds/lab";
-import { Button, Text } from "@salt-ds/core";
+import { Badge, Button, Text } from "@salt-ds/core";
 import {
   FilterIcon,
   MessageIcon,
