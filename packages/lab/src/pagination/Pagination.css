@@ -7,23 +7,24 @@
 }
 
 .saltPagination-arrowButton {
-  width: var(--pagination-button-size);
-  height: var(--pagination-button-size);
-  padding: 0 var(--salt-spacing-100);
+  --saltButton-width: var(--pagination-button-size);
+  --saltButton-height: var(--pagination-button-size);
+  --saltButton-padding: var(--salt-spacing-100);
+  --saltButton-margin: 0;
 }
 
 .saltPagination-previousButton {
-  margin-right: var(--salt-spacing-100);
+  --saltButton-margin: 0 var(--salt-spacing-100) 0 0;
 }
 
 .saltPagination-nextButton {
-  margin-left: var(--salt-spacing-100);
+  --saltButton-margin: 0 0 0 var(--salt-spacing-100);
 }
 
 .saltPagination-pageButton {
-  min-width: var(--pagination-button-size);
-  height: var(--pagination-button-size);
+  --saltButton-minWidth: var(--pagination-button-size);
   --saltButton-fontWeight: var(--salt-text-fontWeight);
+  --saltButton-height: var(--pagination-button-size);
 }
 
 .saltPagination-pageButton:hover {
@@ -62,12 +63,14 @@
 } */
 
 .saltPagination-compactInput {
+  --saltInput-minWidth: unset;
+  --saltInput-paddingLeft: 0;
+  --saltInput-paddingRight: 0;
   height: var(--pagination-button-size);
-  min-width: unset;
 }
 
 .saltPagination-compactInputFixed {
-  min-width: var(--pagination-button-size);
+  --saltInput-minWidth: var(--pagination-button-size);
   width: var(--pagination-button-size);
 }
 
@@ -92,16 +95,15 @@
 
 .saltPagination-rightGoToInput {
   margin-left: var(--salt-spacing-100);
-  min-width: unset;
 }
 
 .saltPagination-goToInput {
   height: var(--pagination-button-size);
-  min-width: unset;
+  --saltInput-minWidth: unset;
 }
 
 .saltPagination-goToInputFixed {
-  min-width: var(--pagination-button-size);
+  --saltInput-minWidth: var(--pagination-button-size);
   max-width: var(--pagination-button-size);
   width: var(--pagination-button-size);
 }
