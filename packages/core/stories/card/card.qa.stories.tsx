@@ -1,4 +1,4 @@
-import { Card, H1, Text } from "@salt-ds/core";
+import { Card, H1, InteractableCard, Text } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
@@ -16,6 +16,18 @@ export const AllExamplesUsingText: StoryFn<
         <H1>Card with density</H1>
         <Text>Content</Text>
       </Card>
+      <Card variant="secondary">
+        <H1>Secondary card with density</H1>
+        <Text>Content</Text>
+      </Card>
+      <InteractableCard>
+        <H1>Interctable card with density</H1>
+        <Text>Content</Text>
+      </InteractableCard>
+      <InteractableCard variant="secondary">
+        <H1>Secondary interctable with density</H1>
+        <Text>Content</Text>
+      </InteractableCard>
     </QAContainer>
   );
 };
