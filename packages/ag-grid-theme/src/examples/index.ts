@@ -8,11 +8,14 @@ export { default as CustomFilter } from "./CustomFilter";
 export { default as Coloration } from "./Coloration";
 export { default as Icons } from "./Icons";
 export { default as FloatingFilter } from "./FloatingFilter";
-export { default as HDCompact } from "./HDCompact";
-export { default as HDCompactDark } from "./HDCompactDark";
+export { default as HDCompact, HDCompactUITK } from "./HDCompact";
+export { default as HDCompactDark, HDCompactDarkUitk } from "./HDCompactDark";
 export { default as LoadingOverlay } from "./LoadingOverlay";
-export { default as MasterDetail } from "./MasterDetail";
-export { default as MasterDetailDark } from "./MasterDetailDark";
+export { default as MasterDetail, MasterDetailUITK } from "./MasterDetail";
+export {
+  default as MasterDetailDark,
+  MasterDetailDarkUITK,
+} from "./MasterDetailDark";
 export { default as NoDataOverlay } from "./NoDataOverlay";
 export { default as InfiniteScroll } from "./InfiniteScroll";
 export { default as PinnedRows } from "./PinnedRows";

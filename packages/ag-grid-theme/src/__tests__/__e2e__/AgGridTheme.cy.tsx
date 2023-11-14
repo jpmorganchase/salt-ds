@@ -73,7 +73,6 @@ describe("Given Ag Grid Theme", () => {
       });
     });
   });
-
   describe("WHEN the ContextMenu story is mounted", () => {
     describe("WHEN cell context menu is open", () => {
       it("THEN should match screenshot", () => {

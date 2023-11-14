@@ -1,12 +1,13 @@
 import { StackLayout } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleRowGroupPanel from "../dependencies/dataGridExampleRowGroupPanel";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
-const RowGroupPanel = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+const RowGroupPanel = (props: { defaultTheme: string }) => {
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -23,7 +24,6 @@ const RowGroupPanel = (props: AgGridReactProps) => {
           rowData={dataGridExampleData}
           rowGroupPanelShow="always"
           {...agGridProps}
-          {...props}
         />
       </div>
     </StackLayout>

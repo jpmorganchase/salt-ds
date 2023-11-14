@@ -5,14 +5,15 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 import iconCss from "./Icons.css";
 
-const Icons = () => {
+const Icons = (props: { defaultTheme: string }) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-ag-grid-icons",
     css: iconCss,
     window: targetWindow,
   });
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
 
   const {
     containerProps: { className },
