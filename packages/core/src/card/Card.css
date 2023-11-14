@@ -12,7 +12,7 @@
 }
 
 .saltCard-secondary {
-  background: var(--salt-container-secondary-background);
+  background: var(--saltCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
 }
 
