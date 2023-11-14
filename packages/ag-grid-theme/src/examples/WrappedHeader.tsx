@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import {
   StackLayout,
   FlexItem,
@@ -24,9 +24,10 @@ const statusBar = {
   ],
 };
 
-const WrappedHeader = (props: AgGridReactProps) => {
+const WrappedHeader = (props: { defaultTheme: string }) => {
   const [compact, setCompact] = useState(false);
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
     compact,
@@ -70,7 +71,6 @@ const WrappedHeader = (props: AgGridReactProps) => {
             wrapHeaderText: true,
           }}
           {...restAgGridProps}
-          {...props}
         />
       </div>
     </StackLayout>

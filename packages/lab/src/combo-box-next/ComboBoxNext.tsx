@@ -122,7 +122,6 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     ListItem = DefaultListItem as unknown as ComboBoxNextProps<T>["ListItem"],
     itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
     onMouseOver,
-    onBlur,
     onFocus,
     onKeyDown,
     onSelect,
@@ -163,14 +162,14 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
     focusVisibleRef,
     keyDownHandler,
     focusHandler,
-    blurHandler,
     setSelectedItem,
     setHighlightedItem,
     mouseOverHandler,
+    mouseDownHandler,
+    listSelectHandler,
   } = useComboBox({
     defaultInputValue,
     inputValue: inputValueProp,
-    onBlur,
     onFocus,
     onMouseOver,
     onKeyDown,
@@ -197,7 +196,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
   const getFilteredSource = () => {
     if (!source) return null;
     if (selectedItem && inputValue === selectedItem) return source;
-    return itemFilter && itemFilter(source, inputValue);
+    return itemFilter?.(source, inputValue);
   };
   const filteredSource = getFilteredSource();
 
@@ -215,7 +214,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         setHighlightedItem(filteredSource[0] as unknown as string);
       }
     }
-    onInputChange?.(event, { value: inputValue || "" });
+    onInputChange?.(event, { value: value ?? "" });
   };
 
   const adornment = open ? (
@@ -236,7 +235,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
         disabled={disabled}
         endAdornment={adornment}
         onChange={onChange}
-        onBlur={blurHandler}
+        onMouseDown={mouseDownHandler}
         inputRef={inputRef as Ref<HTMLInputElement>}
         inputProps={{
           "aria-expanded": open,
@@ -262,6 +261,7 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
           disableFocus
           highlightedItem={highlightedItem}
           onMouseOver={mouseOverHandler}
+          onSelect={listSelectHandler}
           selected={selectedItem}
           {...restListProps}
           ref={setListRef}

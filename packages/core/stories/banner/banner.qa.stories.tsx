@@ -13,7 +13,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { CloseIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Core/Banner/QA",
+  title: "Core/Banner/Banner QA",
   component: Banner,
 } as Meta<typeof Banner>;
 

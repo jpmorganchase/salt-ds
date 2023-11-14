@@ -1,5 +1,37 @@
 # @salt-ds/core
 
+## 1.11.1
+
+### Patch Changes
+
+- 1ae74f49: Fix Tooltip status icon alignment
+
+## 1.11.0
+
+### Minor Changes
+
+- 90fa68a1: Added Switch.
+
+  Switch is a binary control used to toggle between two different states. When interacted with, the thumb of the switch travels along the track to indicate state. Switch is used to control settings, preferences, or actions within an application or system.
+
+  ```tsx
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+    onChange?.(event);
+  };
+
+  return <Switch checked={checked} onChange={handleChange} />;
+  ```
+
+- 90abd261: Added `medium` size as an alias for `default` to Spinner component to make it more consistent with other components. `default` will be deprecated and removed in the future.
+
+### Patch Changes
+
+- 4f95aa96: Fixed the Viewport Provider not setting initial viewport measurements.
+- e7cdafa4: Fixed Radio Button and Checkbox incorrectly inheriting text styles.
+
 ## 1.10.0
 
 ### Minor Changes

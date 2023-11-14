@@ -1,12 +1,13 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import { StackLayout } from "@salt-ds/core";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import columnSpanningExampleColumns from "../dependencies/columnSpanningExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
-const ColumnSpanning = (props: AgGridReactProps) => {
-  const { themeName, switcher } = useAgGridThemeSwitcher();
+const ColumnSpanning = (props: { defaultTheme: string }) => {
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -17,7 +18,6 @@ const ColumnSpanning = (props: AgGridReactProps) => {
       <div {...containerProps}>
         <AgGridReact
           {...agGridProps}
-          {...props}
           columnDefs={columnSpanningExampleColumns}
           rowData={dataGridExampleData}
         />

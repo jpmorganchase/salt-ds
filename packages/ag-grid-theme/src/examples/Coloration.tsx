@@ -1,12 +1,13 @@
 import { StackLayout } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumnsColoration from "../dependencies/dataGridExampleColumnsColoration";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
-const Coloration = (props: AgGridReactProps) => {
-  const { themeName, switcher } = useAgGridThemeSwitcher();
+const Coloration = (props: { defaultTheme: string }) => {
+  const { defaultTheme = "salt" } = props;
+  const { themeName, switcher } = useAgGridThemeSwitcher(defaultTheme);
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -17,7 +18,6 @@ const Coloration = (props: AgGridReactProps) => {
       <div {...containerProps}>
         <AgGridReact
           {...agGridProps}
-          {...props}
           columnDefs={dataGridExampleColumnsColoration}
           rowData={dataGridExampleData}
         />
