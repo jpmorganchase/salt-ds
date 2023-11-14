@@ -55,7 +55,7 @@ type CustomSiteState = SiteState & { data?: Data };
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const { push } = useRouter();
+  const { replace, push } = useRouter();
   const { route } = useRoute();
 
   const [allExamplesView, setAllExamplesView] = useState(false);
@@ -80,9 +80,9 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   useEffect(() => {
     // Default to first tab, "Examples"
     if (!currentTab) {
-      push(`${newRoute}${tabs[0].name}`);
+      replace(`${newRoute}${tabs[0].name}`);
     }
-  }, [route]);
+  }, [currentTab, newRoute, replace, route]);
 
   const isMobileView = useIsMobileView();
 
