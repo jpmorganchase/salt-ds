@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef, HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
@@ -21,6 +21,7 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
    */
   max?: number;
   /**
+   * The unit shown on the progress indicator.
    * Default unit is `%`.
    */
   unit?: string;

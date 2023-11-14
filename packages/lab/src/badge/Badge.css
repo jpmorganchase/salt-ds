@@ -32,7 +32,7 @@
 }
 
 .saltBadge-topRight {
-  position: relative;
-  top: calc(-1 * var(--salt-spacing-100));
+  position: absolute;
   right: var(--salt-spacing-100);
+  transform: translateX(100%);
 }

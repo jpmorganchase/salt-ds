@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.11.1
+
+### Patch Changes
+
+- 1ae74f49: Fix Tooltip status icon alignment
+
 ## 1.11.0
 
 ### Minor Changes
