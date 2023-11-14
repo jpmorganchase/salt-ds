@@ -12,44 +12,44 @@ data:
 
 #### Focus
 
-The Dialog component will trap focus within the Dialog when open. This means that the user will not be able to tab out of the Dialog and focus will be set to the first focusable element within the Dialog. When the Dialog is closed, focus will be returned to the element that was focused before the Dialog was opened.
+The dialog component will trap focus within the dialog when open. This means that the user will not be able to tab out of the dialog and focus will be set to the first focusable element within the dialog. When the dialog is closed, focus will be returned to the element that was focused before the dialog was opened.
 
 #### Initial focus
 
-You can control which element receives focus when the Dialog is opened by passing an `initialFocus` prop to the Dialog component. This prop accepts a number, which indicates the index of the tabbable element within the Dialog that should receive focus. If no element is found, focus will be set to the first focusable element within the Dialog. The `initialFocus` can also be a ref to an element within the Dialog.
+You can control which element receives focus when the dialog is opened by passing an `initialFocus` prop to the dialog component. This prop accepts a number, which indicates the index of the tabbable element within the dialog that should receive focus. If no element is found, focus will be set to the first focusable element within the Dialog. The `initialFocus` can also be a ref to an element within the dialog.
 
 #### Focus sequence
 
-- For Dialogs that prompt for user confirmation, the CTA button takes focus first.
+- For dialogs that prompt for user confirmation, the CTA button takes focus first.
 
-- For Dialogs with destructive interactions, the CANCEL button takes focus first.
+- For dialogs with destructive interactions, the cancel button takes focus first.
 
 ### Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- When the Dialog is opened, sets focus to the first focusable component in the Dialog.
-- If focus is in the Dialog, sets focus to the next focusable component in the tab order.
-- If the last element in the Dialog has focus, wraps to the first focusable element in the Dialog.
+- When the dialog is opened, Tab sets focus to the first focusable component in the dialog.
+- If focus is in the dialog, Tab sets focus to the next focusable component in the tab order.
+- If the last element in the dialog has focus, Tab wraps to the first focusable element in the dialog.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- If focus is in the Dialog, sets focus to the previous focusable component in the tab order.
+- If focus is in the dialog, this action sets focus to the previous focusable component in the tab order.
 
-- If the first element in the Dialog has focus, wraps to the last focusable element in the Dialog.
+- If the first element in the dialog has focus, this action wraps to the last focusable element in the dialog.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Escape">
 
-- If focus is in the Dialog, closes the Dialog and returns focus to the triggering element.
+- If focus is in the dialog, Escape closes the dialog and returns focus to the triggering element.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Enter / Space">
+<KeyboardControl keyOrCombos="Enter, Space">
 
-- If focus is on a button in the Dialog button bar, activates the button.
-- If focus is on the close button, activates the close button, closes the Dialog and returns focus to the triggering element.
+- If focus is on a button in the dialog button bar, this action activates the button.
+- If focus is on the close button, this action activates the close button, closes the dialog and returns focus to the triggering element.
 
 </KeyboardControl>
 </KeyboardControls>
