@@ -12,7 +12,7 @@ deleteSync([buildFolder], { force: true });
 esbuild
   .build({
     absWorkingDir: path.resolve(__dirname, ".."),
-    entryPoints: ["index.css"],
+    entryPoints: ["salt.css", "uitk.css"],
     assetNames: "[dir]/[name]",
     outdir: buildFolder,
     loader: {
