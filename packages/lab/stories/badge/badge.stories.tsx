@@ -1,10 +1,12 @@
-import { Badge, Tabstrip, List, ListItem } from "@salt-ds/lab";
-import { Button } from "@salt-ds/core";
+import { Badge, List, ListItem } from "@salt-ds/lab";
+import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
 
 import {
   SettingsSolidIcon,
   MessageIcon,
   NotificationIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
 } from "@salt-ds/icons";
 
 import { Meta, StoryFn } from "@storybook/react";
@@ -72,5 +74,30 @@ export const ListStory: StoryFn<typeof Badge> = () => {
         Level 4<Badge value={"NEW"} />{" "}
       </ListItem>
     </List>
+  );
+};
+
+export const MultipleButtons: StoryFn<typeof Badge> = () => {
+  return (
+    <StackLayout>
+      <FlexLayout>
+        <Badge value={20}>
+          <Button>
+            <ThumbsUpIcon />
+          </Button>
+        </Badge>
+        <Button>
+          <ThumbsDownIcon />
+        </Button>
+      </FlexLayout>
+      <FlexLayout>
+        <Button>
+          <ThumbsUpIcon />
+        </Button>
+        <Button>
+          <ThumbsDownIcon />
+        </Button>
+      </FlexLayout>
+    </StackLayout>
   );
 };

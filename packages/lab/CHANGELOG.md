@@ -1,5 +1,13 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.21
+
+### Patch Changes
+
+- f3143bb9: Fixed Badge occupying space when it is anchored to a child component.
+- c5aede9b: Fix Combo Box Next `onChange` using stale values
+- 26cc1b2a: Aligned height of inline tab to design
+
 ## 1.0.0-alpha.20
 
 ### Minor Changes
