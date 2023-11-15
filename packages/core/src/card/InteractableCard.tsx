@@ -20,6 +20,10 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    * If `true`, the card will be disabled.
    */
   disabled?: boolean;
+  /**
+   * Styling variant; defaults to "primary".
+   */
+  variant?: "primary" | "secondary";
 }
 
 export const InteractableCard = forwardRef<
@@ -30,6 +34,7 @@ export const InteractableCard = forwardRef<
     accentPlacement = "bottom",
     children,
     className,
+    variant = "primary",
     disabled,
     onBlur,
     onClick,
@@ -60,6 +65,7 @@ export const InteractableCard = forwardRef<
       {...restCardProps}
       className={clsx(
         withBaseName(),
+        withBaseName(variant),
         withBaseName(`accent${capitalize(accentPlacement)}`),
         {
           [withBaseName("disabled")]: disabled,
