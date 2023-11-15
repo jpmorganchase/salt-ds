@@ -3,7 +3,7 @@
   --salt-size-bar: 2px;
   --salt-size-base: 20px;
   --salt-size-border: 1px;
-  --salt-size-icon: 12px; /* intentionally set the same as in MD, icons no smaller than 12px */
+  --salt-size-icon: 12px;
   --salt-size-indicator: 1px;
   --salt-size-selectable: 12px;
   --salt-size-bar-strong: 4px;
@@ -14,7 +14,7 @@
   --salt-size-bar: 4px;
   --salt-size-base: 28px;
   --salt-size-border: 1px;
-  --salt-size-icon: 12px; /* same as in HD */
+  --salt-size-icon: 12px; 
   --salt-size-indicator: 2px;
   --salt-size-selectable: 14px;
   --salt-size-bar-strong: 8px;
