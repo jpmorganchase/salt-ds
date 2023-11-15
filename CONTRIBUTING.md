@@ -25,8 +25,8 @@ If tokens are for some reason removed from the theme, this is a breaking change 
 
 1. Move the token and its value to the respective `theme/css/deprecated/<characteristics | fade | foundations | palette>` file.
 2. Remove the token from its original file.
-3. [Optional]: If the token has just been renamed with the value the same, point the token to the renamed
-4. [Optional]: If the token is to be fully removed but there is a token with a different value that should be used as a replacement, note this in deprecation comment.
+3. [Optional]: If you have renamed the token but kept the value the same, point the token to the renamed.
+4. [Optional]: If you want to fully remove the token, but there is a token with a different value that should be used as a replacement, note this in the deprecation comments.
 
 i.e. In `characteristics/text.css`, 3 tokens are to be fully removed:
 
