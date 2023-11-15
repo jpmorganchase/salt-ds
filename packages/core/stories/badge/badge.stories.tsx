@@ -1,5 +1,5 @@
-import { Badge, List, ListItem } from "@salt-ds/lab";
-import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
+import { List, ListItem } from "@salt-ds/lab";
+import { Badge, Button, FlexLayout, StackLayout } from "@salt-ds/core";
 
 import {
   SettingsSolidIcon,
@@ -12,7 +12,7 @@ import {
 import { Meta, StoryFn } from "@storybook/react";
 
 export default {
-  title: "Lab/Badge",
+  title: "Core/Badge",
   component: Badge,
 } as Meta<typeof Badge>;
 
