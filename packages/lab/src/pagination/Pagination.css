@@ -27,14 +27,24 @@
   --saltButton-height: var(--pagination-button-size);
 }
 
-.saltPagination-pageButton:hover {
+.saltPagination-pageButton:hover,
+.saltPagination-pageButton:focus-visible {
   --saltButton-background-hover: var(--salt-selectable-background-hover);
   --saltButton-text-color-hover: var(--salt-selectable-foreground);
+}
+
+.saltPagination-pageButton.saltPagination-readonly {
+  --saltButton-text-color-disabled: var(--salt-selectable-foreground);
+  --saltButton-cursor-disabled: var(--salt-editable-cursor-readonly);
 }
 
 .saltPagination-pageButtonSelected {
   --saltButton-background: var(--salt-selectable-background-selected);
   --saltButton-text-color: var(--salt-selectable-foreground);
+}
+.saltPagination-pageButtonSelected:focus-visible {
+  --saltButton-background-hover: var(--salt-selectable-background-selected);
+  --saltButton-text-color-hover: var(--salt-selectable-foreground);
 }
 
 .saltPagination-pageButtonFixed {

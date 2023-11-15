@@ -20,11 +20,7 @@ export const CompactControls = ({
       {withInput ? (
         <CompactInput page={page} count={count} onPageChange={onPageChange} />
       ) : (
-        <PageButton
-          page={page}
-          onPageChange={onPageChange}
-          disabled={page === count}
-        />
+        <PageButton page={page} onPageChange={onPageChange} disabled />
       )}
       <span className={withBaseName("compactSeparator")}>of</span>
       <PageButton
