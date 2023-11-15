@@ -78,7 +78,7 @@
     "ag-grid-enterprise": "^28.2.1",
     "ag-grid-react": "^28.2.1",
     "axe-core": "^4.4.3",
-    "chromatic": "^7.0.0",
+    "chromatic": "^9.0.0",
     "ci-info": "^3.3.1",
     "clsx": "^2.0.0",
     "cypress": "^13.0.0",
