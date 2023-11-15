@@ -1,50 +1,68 @@
-import { Button, makePrefixer, UseFloatingUIProps, useId } from "@salt-ds/core";
+import {
+  Button,
+  makePrefixer,
+  mergeProps,
+  StatusIndicator,
+  useFloatingComponent,
+  UseFloatingUIProps,
+  useForkRef,
+} from "@salt-ds/core";
+import {
+  forwardRef,
+  ComponentPropsWithoutRef,
+  ReactNode,
+  Ref,
+  isValidElement,
+  cloneElement,
+  useState,
+  useEffect,
+  HTMLAttributes,
+} from "react";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
-import { Portal } from "../portal";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import { useWindow as usePortalWindow } from "../window";
-
 import overlayCSS from "./Overlay.css";
-
-interface ADAExceptions {
-  showClose?: boolean;
-}
+import { useOverlay } from "./useOverlay";
+import {
+  FloatingArrow,
+  FloatingArrowProps,
+  useTransitionStyles,
+} from "@floating-ui/react";
 
 export interface OverlayProps
-  extends ComponentPropsWithoutRef<"div">,
-    Partial<Pick<UseFloatingUIProps, "onOpenChange" | "open">> {
+  extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
+    Omit<HTMLAttributes<HTMLDivElement>, "content"> {
   /**
-   * object that houses ada related props.
-   * adaExceptions.showClose defaults to true. It can be removed at the risk of ADA compliance
+   * The children will be the Overlay's trigger.
    */
-  adaExceptions?: ADAExceptions;
-  arrowProps?: ComponentProps<"div">;
-  variant?: "primary" | "secondary";
+  children: ReactNode;
+  /**
+   * Content displayed inside the Overlay. Can be a string or a React component.
+   */
+  content: ReactNode;
+  /*
+   * Set the placement of the Overlay component relative to the anchor element. Defaults to `top`.
+   */
+  placement?: "bottom" | "top" | "left" | "right";
 }
 
 const withBaseName = makePrefixer("saltOverlay");
 
 export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
-  (
-    {
-      adaExceptions: { showClose } = {
-        showClose: true,
-      },
-      arrowProps,
+  function Overlay(props, ref) {
+    const {
       children,
       className,
-      open,
-      onOpenChange,
-      variant = "primary",
+      open: openProp,
+      onOpenChange: onOpenChangeProp,
+      content,
+      placement = "top",
       ...rest
-    },
-    ref
-  ) => {
+    } = props;
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-overlay",
@@ -52,49 +70,77 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       window: targetWindow,
     });
 
-    // Will need to figure out a better way to assign popper id's for the electron windows
-    const id = useId();
-    const Window = usePortalWindow();
+    const { Component: FloatingComponent } = useFloatingComponent();
+
+    const {
+      arrowProps,
+      open,
+      onOpenChange,
+      floating,
+      reference,
+      getTriggerProps,
+      getOverlayProps,
+      getOverlayPosition,
+    } = useOverlay({
+      open: openProp,
+      placement,
+      onOpenChange: onOpenChangeProp,
+    });
+
+    const triggerRef = useForkRef(
+      // @ts-ignore
+      isValidElement(children) ? children.ref : null,
+      reference
+    );
+
+    const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
     const handleCloseButton = () => {
-      onOpenChange?.(false);
+      console.log("close ovl");
+      onOpenChange(false);
     };
 
-    if (!open) {
-      return null;
-    }
-
     return (
-      <Portal>
-        <Window
-          className={clsx(withBaseName(), className, {
-            [withBaseName(variant)]: variant === "secondary",
+      <>
+        {isValidElement(children) &&
+          cloneElement(children, {
+            ...mergeProps(getTriggerProps(), children.props),
+            ref: triggerRef,
           })}
-          id={id}
-          ref={ref}
+
+        <FloatingComponent
+          className={clsx(withBaseName(), className)}
+          open={open}
+          ref={floatingRef}
+          {...getOverlayProps()}
+          {...getOverlayPosition()}
           {...rest}
         >
-          <div
-            className={clsx(withBaseName("content"))}
-            data-testid="overlay-content"
-          >
-            {showClose && (
-              <Button
-                onClick={handleCloseButton}
-                className={withBaseName("close")}
-                variant="secondary"
-              >
-                <CloseIcon
-                  accessible-text="close overlay"
-                  className={withBaseName("closeIcon")}
-                />
-              </Button>
-            )}
-            {children}
-            <div className={withBaseName("arrow")} {...arrowProps} />
+          <div className={withBaseName("container")}>
+            <div className={withBaseName("content")}>{content}</div>
+            <Button
+              onClick={handleCloseButton}
+              className={withBaseName("close")}
+              variant="secondary"
+              // tabIndex={1}
+            >
+              <CloseIcon
+                accessible-text="close overlay"
+                className={withBaseName("closeIcon")}
+              />
+            </Button>
           </div>
-        </Window>
-      </Portal>
+          <FloatingArrow
+            {...(arrowProps as FloatingArrowProps)}
+            className={withBaseName("arrow")}
+            strokeWidth={1}
+            fill="var(--overlay-background)"
+            stroke="var(--overlay-borderColor)"
+            height={8}
+            width={14}
+          />
+        </FloatingComponent>
+      </>
     );
   }
 );
