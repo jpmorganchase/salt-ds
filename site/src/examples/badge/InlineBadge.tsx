@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
-import { Badge, TabstripNext, TabNext } from "@salt-ds/lab";
-import { StackLayout } from "@salt-ds/core";
+import { TabstripNext, TabNext } from "@salt-ds/lab";
+import { Badge, StackLayout } from "@salt-ds/core";
 
 export const InlineBadge = (): ReactElement => (
   <TabstripNext
