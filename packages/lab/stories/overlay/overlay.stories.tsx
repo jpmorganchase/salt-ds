@@ -1,10 +1,6 @@
-import { Button } from "@salt-ds/core";
-import {
-  Overlay,
-  OverlayProps,
-  useOverlay,
-  UseOverlayProps,
-} from "@salt-ds/lab";
+import { Button, Tooltip } from "@salt-ds/core";
+import { CheckboxGroupExample } from "@salt-ds/core/stories/checkbox/checkbox.qa.stories";
+import { Overlay } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 
 import "./overlay.stories.css";
@@ -14,52 +10,24 @@ export default {
   component: Overlay,
 } as Meta<typeof Overlay>;
 
-const OverlayTemplate: StoryFn<OverlayProps & UseOverlayProps> = (props) => {
-  const { placement, open, ...rest } = props;
-  const { getTriggerProps, getOverlayProps } = useOverlay({ placement, open });
-
-  return (
+const OverlayTemplate: StoryFn<typeof Overlay> = (props) => {
+  const OverlayContent = () => (
     <>
-      <Button {...getTriggerProps<typeof Button>()}>Toggle Overlay</Button>
-
-      <Overlay {...getOverlayProps(rest)}>
-        <div>
-          <h3 className="content-heading">Title</h3>
-          <div className="content-body">Content of Overlay</div>
-        </div>
-      </Overlay>
+      <h3 className="content-heading">Title</h3>
+      <div className="content-body">Content of Overlay</div>
+      {/* <CheckboxGroupExample /> */}
+      <br />
+      <Tooltip content={"im a tooltip"}>
+        <Button>button w/ tooltip</Button>
+      </Tooltip>
     </>
   );
-};
-
-export const FeatureOverlay: StoryFn<OverlayProps & UseOverlayProps> = (
-  props
-) => {
-  const { placement, open, ...rest } = props;
-  const { getTriggerProps, getOverlayProps } = useOverlay({ placement, open });
 
   return (
-    <>
-      <div {...getTriggerProps()}>Overlay Anchor</div>
-
-      <Overlay {...getOverlayProps(rest)}>
-        <div>
-          <h3 className="content-heading">Title</h3>
-          <div className="content-body">Content of Overlay</div>
-        </div>
-      </Overlay>
-    </>
+    <Overlay {...props} content={<OverlayContent />}>
+      <Button>open overlay</Button>
+    </Overlay>
   );
-};
-FeatureOverlay.args = {
-  placement: "top",
-  open: true,
-};
-
-FeatureOverlay.parameters = {
-  axe: {
-    skip: true,
-  },
 };
 
 export const OverlayTop = OverlayTemplate.bind({});

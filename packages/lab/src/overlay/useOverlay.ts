@@ -4,35 +4,31 @@ import {
   limitShift,
   offset,
   shift,
-  useClick,
   useDismiss,
+  useClick,
   useInteractions,
   useRole,
 } from "@floating-ui/react";
 import {
-  margin,
   useControlled,
   useFloatingUI,
   UseFloatingUIProps,
 } from "@salt-ds/core";
-import {
-  ComponentPropsWithoutRef,
-  ComponentPropsWithRef,
-  JSXElementConstructor,
-  useCallback,
-  useRef,
-} from "react";
-import { OverlayProps } from "./Overlay";
-import { isDesktop } from "../window";
+import { HTMLProps, useRef, KeyboardEvent, HTMLAttributes } from "react";
 
-export type UseOverlayProps = Partial<
-  Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
->;
+export interface UseOverlayProps
+  extends Partial<
+    Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
+  > {}
 
-export function useOverlay(props: UseOverlayProps) {
-  const { open: openProp, placement = "right", onOpenChange } = props;
+export function useOverlay(props?: UseOverlayProps) {
+  const {
+    open: openProp,
+    placement: placementProp,
+    onOpenChange: onOpenChangeProp,
+  } = props || {};
 
-  const arrowRef = useRef<HTMLDivElement | null>(null);
+  const arrowRef = useRef<SVGSVGElement | null>(null);
 
   const [open, setOpen] = useControlled({
     controlled: openProp,
@@ -40,18 +36,12 @@ export function useOverlay(props: UseOverlayProps) {
     name: "Overlay",
     state: "open",
   });
+
   const handleOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
-    onOpenChange?.(newOpen);
+    onOpenChangeProp?.(newOpen);
   };
-  const middleware = isDesktop
-    ? [margin(24), arrow({ element: arrowRef })]
-    : [
-        offset(24),
-        flip(),
-        shift({ limiter: limitShift() }),
-        arrow({ element: arrowRef }),
-      ];
+
   const {
     reference,
     floating,
@@ -59,73 +49,73 @@ export function useOverlay(props: UseOverlayProps) {
     y,
     strategy,
     context,
-    middlewareData,
-    update,
+    elements,
+    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
+    placement,
   } = useFloatingUI({
     open,
     onOpenChange: handleOpenChange,
-    placement,
-    middleware,
+    placement: placementProp,
+    middleware: [
+      offset(10),
+      flip(),
+      shift({ limiter: limitShift() }),
+      arrow({ element: arrowRef }),
+    ],
   });
 
-  const handleArrowRef = useCallback(
-    (node: HTMLDivElement) => {
-      arrowRef.current = node;
-      update();
-    },
-    [update]
-  );
-
   const { getFloatingProps, getReferenceProps } = useInteractions([
-    useDismiss(context),
     useRole(context, { role: "dialog" }),
     useClick(context),
+    useDismiss(context, {
+      outsidePressEvent: "pointerdown",
+      referencePress: true,
+    }),
   ]);
 
-  const getTriggerProps = <
-    Element extends
-      | keyof JSX.IntrinsicElements
-      | JSXElementConstructor<any> = "div"
-  >(
-    userProps?: ComponentPropsWithoutRef<Element>
-  ) => {
-    return getReferenceProps({
-      ...userProps,
+  const arrowProps = {
+    ref: arrowRef,
+    context,
+    style: {
+      position: strategy,
+      left: arrowX ?? 0,
+      top: arrowY ?? 0,
+    },
+  };
+
+  const getOverlayProps = (): HTMLProps<HTMLDivElement> => {
+    return getFloatingProps({
+      // @ts-ignore
+      "data-placement": placement,
+      ref: floating,
+    });
+  };
+
+  const getTriggerProps = () =>
+    getReferenceProps({
       ref: reference,
-    }) as ComponentPropsWithRef<Element>;
-  };
-
-  const getOverlayProps = (userProps?: OverlayProps) => {
-    const arrowProps = {
-      ref: handleArrowRef,
-      style: {
-        position: strategy,
-        left: middlewareData.arrow?.x ?? 0,
-        top: middlewareData.arrow?.y ?? 0,
+      onKeyDown: (event: KeyboardEvent<HTMLElement>) => {
+        if (event.key === "Enter" || event.key === " ")
+          return handleOpenChange(false);
       },
-    };
+    });
 
-    return {
-      arrowProps,
-      open,
-      onOpenChange: handleOpenChange,
-      ...getFloatingProps({
-        // @ts-ignore
-        "data-placement": placement,
-        ...userProps,
-        style: {
-          top: y ?? 0,
-          left: x ?? 0,
-          position: strategy,
-          ...(userProps?.style || {}),
-        },
-        ref: floating,
-      }),
-    } as OverlayProps;
-  };
+  const getOverlayPosition = () => ({
+    top: y ?? 0,
+    left: x ?? 0,
+    position: strategy,
+    width: elements.floating?.offsetWidth,
+    height: elements.floating?.offsetHeight,
+  });
 
   return {
-    getTriggerProps,
+    arrowProps,
+    open,
+    onOpenChange: handleOpenChange,
+    floating,
+    reference,
     getOverlayProps,
+    getTriggerProps,
+    getOverlayPosition,
   };
 }

@@ -1,87 +1,60 @@
-/* Experimental - Overlay css variable API */
 .saltOverlay {
-  --overlay-text-color: var(--salt-content-primary-foreground);
-  --overlay-spacing: var(--salt-size-unit);
-  --overlay-fontSize: var(--salt-text-fontSize);
-  --overlay-background: var(--salt-container-primary-background);
-  --overlay-borderColor: var(--salt-container-primary-borderColor);
-  /* TODO: z-index audit, provide z index here or rely on popper */
-  --overlay-zindex: var(--salt-zIndex-flyover);
+  --overlay-borderColor: var(
+    --saltOverlay-borderColor,
+    var(--salt-container-primary-borderColor)
+  );
+  --overlay-background: var(
+    --saltOverlay-background,
+    var(--salt-container-primary-background)
+  );
+  --overlay-zindex: var(--saltOverlay-zIndex, var(--salt-zIndex-flyover));
 }
 
-.saltOverlay-secondary.saltOverlay {
-  --overlay-background: var(--salt-container-secondary-background);
-  --overlay-borderColor: var(--salt-container-secondary-borderColor);
+.saltOverlay {
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--saltOverlay-fontSize, var(--salt-text-fontSize));
+  font-weight: var(--saltOverlay-fontWeight, var(--salt-text-fontWeight));
+  line-height: var(--saltOverlay-lineHeight, var(--salt-text-lineHeight));
+
+  border-color: var(--overlay-borderColor);
+  border-style: var(
+    --saltOverlay-borderStyle,
+    var(--salt-container-borderStyle)
+  );
+  border-width: var(--saltOverlay-borderWidth, var(--salt-size-border));
+
+  background: var(--overlay-background);
+  box-shadow: var(
+    --saltOverlay-boxShadow,
+    var(--salt-overlayable-shadow-popout)
+  );
+
+  color: var(--saltOverlay-text-color, var(--salt-text-primary-foreground));
+  z-index: var(--overlay-zindex);
+  position: relative;
+  /* overflow: hidden;  */
+  /* align-items: flex-start; */
+  /* flex-shrink: 0; */
+}
+
+.saltOverlay-container {
+  display: flex;
+  animation: fade-in var(--salt-duration-perceptible) ease-in-out;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .saltOverlay-content {
-  display: flex;
-  padding: calc(var(--overlay-spacing) * 2);
-  font-size: var(--overlay-fontSize);
-
-  border: 1px solid var(--overlay-borderColor);
-  box-shadow: var(--salt-overlayable-shadow-popout);
-  line-height: var(--salt-text-lineHeight);
-  background: var(--overlay-background);
-  color: var(--overlay-text-color);
-  position: relative;
-  opacity: 1;
-  overflow: visible;
-  z-index: var(--overlay-zindex);
-}
-
-.saltOverlay-arrow,
-.saltOverlay-arrow::after {
-  border: 8px solid transparent;
-  position: absolute;
-}
-
-.saltOverlay-arrow::after {
-  content: "";
-}
-
-.saltOverlay[data-placement^="top"] .saltOverlay-arrow {
-  border-top-color: var(--overlay-borderColor);
-  bottom: -17px;
-}
-
-.saltOverlay[data-placement^="bottom"] .saltOverlay-arrow {
-  border-bottom-color: var(--overlay-borderColor);
-  top: -17px;
-}
-
-.saltOverlay[data-placement^="left"] .saltOverlay-arrow {
-  border-left-color: var(--overlay-borderColor);
-  right: -17px;
-}
-
-.saltOverlay[data-placement^="right"] .saltOverlay-arrow {
-  border-right-color: var(--overlay-borderColor);
-  left: -17px;
-}
-
-.saltOverlay[data-placement^="top"] .saltOverlay-arrow::after {
-  border-top-color: var(--overlay-background);
-  bottom: -7px;
-  left: calc(100% - 8px);
-}
-
-.saltOverlay[data-placement^="bottom"] .saltOverlay-arrow::after {
-  border-bottom-color: var(--overlay-background);
-  top: -7px;
-  left: calc(100% - 8px);
-}
-
-.saltOverlay[data-placement^="left"] .saltOverlay-arrow::after {
-  border-left-color: var(--overlay-background);
-  right: -7px;
-  top: calc(100% - 8px);
-}
-
-.saltOverlay[data-placement^="right"] .saltOverlay-arrow::after {
-  border-right-color: var(--overlay-background);
-  left: -7px;
-  top: calc(100% - 8px);
+  padding: var(--salt-spacing-100) 0 var(--salt-spacing-100)
+    var(--salt-spacing-100);
+  /* order: 2; */
 }
 
 /* Close Button */
@@ -89,5 +62,6 @@
   position: absolute;
   right: 0;
   top: 0;
-  z-index: var(--salt-zIndex-default);
+  z-index: var(--overlay-zindex);
+  /* order: 1; */
 }
