@@ -8,6 +8,7 @@ const {
   // MultiSelect,
   ItemRenderer,
   WithCustomizedFilter,
+  Controlled,
 } = composeStories(comboBoxStories);
 
 describe("A combo box", () => {
@@ -101,7 +102,8 @@ describe("A combo box", () => {
 
   describe("when start typing in the input", () => {
     it("should filter items", () => {
-      cy.mount(<Default />);
+      const changeSpy = cy.stub().as("changeSpy");
+      cy.mount(<Default onChange={changeSpy} />);
 
       cy.findByRole("combobox").realClick();
 
@@ -116,6 +118,13 @@ describe("A combo box", () => {
         "have.length",
         Default.args!.source!.length
       );
+
+      // change callback invoked
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        "ska"
+      );
     });
 
     it("should highlight matching text", () => {
@@ -129,6 +138,16 @@ describe("A combo box", () => {
 
       cy.findByText("Connec").should("have.class", "saltHighlighter-highlight");
     });
+  });
+
+  it("should work when controlled", () => {
+    cy.mount(<Controlled />);
+
+    cy.realPress("Tab");
+    cy.realType("Baby bl");
+    cy.realPress("Enter");
+
+    cy.findByRole("combobox").should("have.value", "Baby blue");
   });
 });
 

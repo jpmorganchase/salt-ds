@@ -155,3 +155,25 @@ export const TestSourceDelay = () => {
     </FormField>
   );
 };
+
+export const Controlled: StoryFn<ComboBoxProps> = (args) => {
+  const [inputValue, setInputValue] = useState("");
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  return (
+    <FormField label="Select a large city" style={{ maxWidth: 292 }}>
+      <ComboBox
+        {...args}
+        onChange={(e, value) => setInputValue(value)}
+        value={inputValue}
+        source={shortColorData}
+        ListProps={{
+          selected: selectedItem,
+        }}
+        onSelectionChange={(e, item) => {
+          setSelectedItem(item);
+          setInputValue(item ?? "");
+        }}
+      />
+    </FormField>
+  );
+};
