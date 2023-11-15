@@ -21,7 +21,7 @@ Additions and updates to the theme come from our designers. Any changes to the t
 
 #### How to remove/deprecate tokens
 
-If tokens are for some reason removed from the theme, this is a breaking change and they must be added to the `deprecated` folder.
+If tokens are for some reason removed from the theme, this is a breaking change and you must add them to the `deprecated` folder.
 
 1. Move the token and its value to the respective `theme/css/deprecated/<characteristics | fade | foundations | palette>` file.
 2. Remove the token from its original file.
