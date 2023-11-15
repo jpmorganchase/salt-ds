@@ -1,5 +1,5 @@
-import { NavigationItem, NavigationItemProps, Badge } from "@salt-ds/lab";
-import { FlexLayout } from "@salt-ds/core";
+import { NavigationItem, NavigationItemProps } from "@salt-ds/lab";
+import { Badge, FlexLayout } from "@salt-ds/core";
 import { StoryFn } from "@storybook/react";
 import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";

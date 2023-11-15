@@ -1,12 +1,12 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Badge } from "@salt-ds/lab";
+import { Badge } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
 
 <Meta
-  title="Documentation/Lab/Badge"
+  title="Documentation/Core/Badge"
   component={Badge}
   parameters={{
     viewMode: "docs",
@@ -22,31 +22,31 @@ Badge is used to reflect a change of state and should therefore be used in conju
 ## Icon Badge
 
 <Canvas>
-  <Story id="lab-badge--icon" />
+  <Story id="core-badge--icon" />
 </Canvas>
 
 Specify the maximum number to be displayed with `max`. If `value` exceeds `max`, suffix `+` will be appended.
 
 <Canvas>
-  <Story id="lab-badge--max-number" />
+  <Story id="core-badge--max-number" />
 </Canvas>
 
 ## Badge with string
 
 <Canvas>
-  <Story id="lab-badge--string" />
+  <Story id="core-badge--string" />
 </Canvas>
 
 ## Badge Inline
 
 <Canvas>
-  <Story id="lab-badge--list-story" />
+  <Story id="core-badge--list-story" />
 </Canvas>
 
 # API
 
 ```
-import { Badge } from "@salt-ds/lab";
+import { Badge } from "@salt-ds/core";
 ```
 
 ## Props

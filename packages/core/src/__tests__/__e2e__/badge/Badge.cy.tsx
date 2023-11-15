@@ -1,4 +1,4 @@
-import { Badge } from "@salt-ds/lab";
+import { Badge } from "@salt-ds/core";
 
 describe("GIVEN a Badge", () => {
   it("THEN can render a Badge with badge number larger than max", () => {
