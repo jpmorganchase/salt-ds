@@ -75,7 +75,7 @@
   --salt-size-unit: calc(var(--salt-size-basis-unit) * 1);
   --salt-size-compact: calc(var(--salt-size-basis-unit) * 1.5);
   --salt-size-accent: calc(var(--salt-size-basis-unit) * 0.5);
-  --salt-icon-size-base: 10px; /* Use --salt-size-icon, new value is 12px */
+  --salt-icon-size-base: 10px; /* Use --salt-size-icon */
   --salt-icon-size-status-adornment: 6px; /* Use --salt-size-adornment */
 }
 
