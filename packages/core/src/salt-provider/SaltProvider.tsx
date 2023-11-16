@@ -15,7 +15,10 @@ import { useIsomorphicLayoutEffect } from "../utils";
 
 import saltProviderCss from "./SaltProvider.css";
 import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  StyleInjectionProvider,
+} from "@salt-ds/styles";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -94,6 +97,7 @@ type SaltProviderBaseProps = {
   theme?: ThemeName;
   mode?: Mode;
   breakpoints?: Breakpoints;
+  enableStyleInjection?: boolean;
 };
 
 interface SaltProviderThatAppliesClassesToChild extends SaltProviderBaseProps {
@@ -115,7 +119,7 @@ type SaltProviderProps =
   | SaltProviderThatInjectsThemeElement
   | SaltProviderThatClassesToRoot;
 
-export function SaltProvider({
+function InternalSaltProvider({
   applyClassesTo: applyClassesToProp,
   children,
   density: densityProp,
@@ -202,6 +206,17 @@ export function SaltProvider({
   } else {
     return saltProvider;
   }
+}
+
+export function SaltProvider({
+  enableStyleInjection = true,
+  ...restProps
+}: SaltProviderProps) {
+  return (
+    <StyleInjectionProvider value={enableStyleInjection}>
+      <InternalSaltProvider {...restProps} />
+    </StyleInjectionProvider>
+  );
 }
 
 export const useTheme = (): ThemeContextProps => {
