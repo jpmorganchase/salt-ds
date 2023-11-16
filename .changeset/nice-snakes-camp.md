@@ -26,8 +26,6 @@
 
 3. `Avatar` component line height in HD updated from `11px` to `10px`.
 
-4. `Icon` component size in High Density (HD) updated from `10px` to `12px`. Expect components containing Salt `Icon` to have changes, i.e. `StatusIndicator`.
-
 **_Theming and CSS updates_** with no visual change to Salt components, useful for teams overriding theme locally:
 
 - `Avatar` component CSS token name updated
