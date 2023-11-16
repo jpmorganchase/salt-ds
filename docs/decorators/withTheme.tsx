@@ -64,7 +64,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
 }
 
 export const withTheme: Decorator = (StoryFn, context) => {
-  const { density, mode } = context.globals;
+  const { density, mode, styleInjection } = context.globals;
 
   if (mode === "side-by-side" || mode === "stacked") {
     const isStacked = mode === "stacked";
@@ -88,7 +88,8 @@ export const withTheme: Decorator = (StoryFn, context) => {
             applyClassesTo={"child"}
             density={density}
             mode={mode}
-            key={mode}
+            key={`${mode}-${styleInjection}`}
+            enableStyleInjection={styleInjection === "enable"}
           >
             <Panel>
               <StoryFn />
@@ -100,7 +101,12 @@ export const withTheme: Decorator = (StoryFn, context) => {
   }
 
   return (
-    <SaltProvider density={density} mode={mode}>
+    <SaltProvider
+      density={density}
+      mode={mode}
+      key={`${mode}-${styleInjection}`}
+      enableStyleInjection={styleInjection === "enable"}
+    >
       <SetBackground viewMode={context.viewMode} id={context.id} />
       <StoryFn />
     </SaltProvider>

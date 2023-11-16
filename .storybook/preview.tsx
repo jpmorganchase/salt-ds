@@ -106,6 +106,15 @@ export const globalTypes: GlobalTypes = {
       title: "Scaffold",
     },
   },
+  styleInjection: {
+    name: "Component Style Injection",
+    description: "Turn on/off component style injection",
+    defaultValue: "enable",
+    toolbar: {
+      items: ["disable", "enable"],
+      title: "Component Style Injection",
+    },
+  },
 };
 
 export const argTypes: ArgTypes = {
@@ -144,8 +153,14 @@ export const parameters: Parameters = {
       ...rest
     }: ComponentProps<typeof DocsContainer>) => (
       <DocsContainer context={context} {...rest}>
-        {/* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */}
-        <SaltProvider mode={context.store.globals.globals?.mode}>
+        <SaltProvider
+          /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+          mode={context.store.globals.globals?.mode}
+          enableStyleInjection={
+            /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+            context.store.globals.globals?.styleInjection === "enable"
+          }
+        >
           {children}
         </SaltProvider>
       </DocsContainer>

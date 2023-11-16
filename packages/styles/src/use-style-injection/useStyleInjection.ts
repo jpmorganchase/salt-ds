@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useInsertionPoint } from "./InsertionPointProvider";
+import { useStyleInjection } from "../style-injection-provider";
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any -- Workaround for https://github.com/webpack/webpack/issues/14814#issuecomment-1536757985 */
 const maybeUseInsertionEffect: typeof React.useLayoutEffect =
@@ -26,10 +27,11 @@ export function useComponentCssInjection({
   css,
   window: targetWindow,
 }: UseComponentCssInjection): void {
+  const styleInjectionEnabled = useStyleInjection();
   const insertionPoint = useInsertionPoint();
 
   maybeUseInsertionEffect(() => {
-    if (!targetWindow) {
+    if (!targetWindow || !styleInjectionEnabled) {
       return;
     }
 
