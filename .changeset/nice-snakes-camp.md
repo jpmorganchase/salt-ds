@@ -26,6 +26,8 @@
 
 3. `Avatar` component line height in HD updated from `11px` to `10px`.
 
+4. Small `Spinner` component size in HD updated from `12px` to `10px`.
+
 **_Theming and CSS updates_** with no visual change to Salt components, useful for teams overriding theme locally:
 
 - `Avatar` component CSS token name updated

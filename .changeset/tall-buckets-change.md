@@ -207,6 +207,13 @@
 + --salt-palette-neutral-backdrop: var(--salt-color-white-fade-backdrop)
 ```
 
+- Updated `size` token value for HD. Expect components using this token to have visual changes. This change would not affect `Icon` component as the smallest icon size remains as `12px`, like in UITK.
+
+```diff
+- --salt-size-icon: 12px;
++ --salt-size-icon: 10px;
+```
+
 - New tokens added
 
 In `size.css` foundations,
