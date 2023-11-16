@@ -1,5 +1,5 @@
 .salt-theme[data-mode="light"] {
-  --salt-palette-info-background: var(--salt-color-blue-10);
+  --salt-palette-info-background: var(--salt-color-blue-100);
   --salt-palette-info-border: var(--salt-color-blue-500);
   --salt-palette-info-foreground: var(--salt-color-blue-500);
 }

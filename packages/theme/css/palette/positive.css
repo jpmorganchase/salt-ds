@@ -1,7 +1,11 @@
 .salt-theme[data-mode="light"] {
-  --salt-palette-positive-foreground: var(--salt-color-green-700);
+  --salt-palette-positive-background: var(--salt-color-green-100);
+  --salt-palette-positive-border: var(--salt-color-green-500);
+  --salt-palette-positive-foreground: var(--salt-color-green-500);
 }
 
 .salt-theme[data-mode="dark"] {
-  --salt-palette-positive-foreground: var(--salt-color-green-300);
+  --salt-palette-positive-background: var(--salt-color-green-900);
+  --salt-palette-positive-border: var(--salt-color-green-500);
+  --salt-palette-positive-foreground: var(--salt-color-green-500);
 }
