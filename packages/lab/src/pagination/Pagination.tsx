@@ -20,7 +20,8 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
   page?: number;
   initialPage?: number;
   onPageChange?: (page: number) => void;
-  compact?: "default" | "goto";
+  compact?: boolean;
+  compactWithInput?: boolean;
 }
 
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(
@@ -33,6 +34,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       page: pageProp,
       onPageChange: onPageChangeProp,
       compact,
+      compactWithInput,
       ...restProps
     },
     ref
@@ -59,11 +61,19 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         page: pageState,
         count,
         compact,
+        compactWithInput,
         onPageChange,
         paginatorElement,
         setPaginatorElement,
       }),
-      [pageState, compact, count, onPageChange, paginatorElement]
+      [
+        pageState,
+        compact,
+        compactWithInput,
+        count,
+        onPageChange,
+        paginatorElement,
+      ]
     );
 
     const onKeyDown: KeyboardEventHandler = useCallback(

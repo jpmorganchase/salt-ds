@@ -2,6 +2,7 @@ import { withBaseName } from "./utils";
 import { PageRange, usePagination } from "./usePagination";
 import { ReactElement } from "react";
 import { PageButton } from "./PageButton";
+// import { usePaginationContext } from "./usePaginationContext";
 
 export interface RegularControlsProps {
   count: number;
@@ -30,6 +31,9 @@ export function RegularControls({
   siblingCount = 2,
   boundaryCount = 1,
 }: RegularControlsProps) {
+  // const { count, page, onPageChange, compactWithInput } =
+  // usePaginationContext();
+
   const renderPages = (range?: PageRange, selectedPage?: number) => {
     if (!range) {
       return null;

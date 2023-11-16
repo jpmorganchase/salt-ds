@@ -7,6 +7,7 @@ import {
 } from "react";
 import { Input } from "@salt-ds/core";
 import { withBaseName } from "./utils";
+import { usePaginationContext } from "./usePaginationContext";
 
 export interface CompactInputProps {
   count: number;
@@ -14,11 +15,9 @@ export interface CompactInputProps {
   onPageChange: (page: number) => void;
 }
 
-export const CompactInput = ({
-  page,
-  count,
-  onPageChange,
-}: CompactInputProps) => {
+export const CompactInput = () => {
+  const { count, page, onPageChange } = usePaginationContext();
+
   const [inputValue, setInputValue] = useState(`${page}`);
 
   useEffect(() => {

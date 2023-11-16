@@ -3,6 +3,7 @@ import { Meta, StoryFn } from "@storybook/react";
 
 import {
   GoToInput,
+  CompactPaginator,
   Pagination,
   Paginator,
   PaginationProps,
@@ -27,6 +28,7 @@ const Template = (
     siblingCount,
     showPreviousNext,
     compact,
+    compactWithInput,
     goToPosition,
   } = args;
   const [page, setPage] = useState<number>(1);
@@ -40,13 +42,18 @@ const Template = (
       onPageChange={onPageChange}
       count={count}
       compact={compact}
+      compactWithInput={compactWithInput}
     >
       {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}
-      <Paginator
-        boundaryCount={boundaryCount}
-        siblingCount={siblingCount}
-        showPreviousNext={showPreviousNext}
-      />
+      {compact ?? compactWithInput ? (
+        <CompactPaginator withInput={compactWithInput} />
+      ) : (
+        <Paginator
+          boundaryCount={boundaryCount}
+          siblingCount={siblingCount}
+          showPreviousNext={showPreviousNext}
+        />
+      )}
       {goToPosition === "right" ? <GoToInput label={"Go to"} /> : null}
     </Pagination>
   );
@@ -77,14 +84,14 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         goToPosition="left"
       />
       <Template
-        compact="default"
+        compact
         count={25}
         siblingCount={2}
         boundaryCount={1}
         showPreviousNext={true}
       />
       <Template
-        compact="goto"
+        compactWithInput
         count={25}
         siblingCount={2}
         boundaryCount={1}

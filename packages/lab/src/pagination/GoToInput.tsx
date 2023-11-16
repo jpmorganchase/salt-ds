@@ -5,7 +5,6 @@ import {
   HTMLAttributes,
   KeyboardEventHandler,
   useCallback,
-  useEffect,
   useRef,
   useState,
 } from "react";
@@ -29,8 +28,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
 
     forwardedRef
   ) {
-    const { compact, count, onPageChange, paginatorElement } =
-      usePaginationContext();
+    const { count, onPageChange, paginatorElement } = usePaginationContext();
 
     const id = useId(idProp);
 
@@ -65,16 +63,10 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
       setInputValue("");
     }, [setInputValue]);
 
-    useEffect(() => {
-      if (compact) {
-        setInputValue("");
-      }
-    }, [compact]);
-
     const [position, setPosition] = useState<"left" | "right">();
 
     useIsomorphicLayoutEffect(() => {
-      if (paginatorElement && !compact && rootRef.current) {
+      if (paginatorElement && rootRef.current) {
         setPosition(
           rootRef.current.compareDocumentPosition(paginatorElement) ===
             Node.DOCUMENT_POSITION_PRECEDING
@@ -82,11 +74,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
             : "left"
         );
       }
-    }, [paginatorElement, compact, rootRef]);
-
-    if (compact) {
-      return null;
-    }
+    }, [paginatorElement, rootRef]);
 
     const widthCh = `${`${count}`.length}ch`;
 

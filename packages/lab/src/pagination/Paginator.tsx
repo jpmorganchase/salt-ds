@@ -3,7 +3,6 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useCallback } from "react";
 import { ArrowButton } from "./ArrowButton";
-import { CompactControls } from "./CompactControls";
 import { RegularControls } from "./RegularControls";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
@@ -37,7 +36,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
       window: targetWindow,
     });
 
-    const { count, page, onPageChange, compact, setPaginatorElement } =
+    const { count, page, onPageChange, setPaginatorElement } =
       usePaginationContext();
 
     const ref = useForkRef(setPaginatorElement, forwardedRef);
@@ -64,22 +63,13 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
             <ChevronLeftIcon />
           </ArrowButton>
         )}
-        {compact ? (
-          <CompactControls
-            count={count}
-            page={page}
-            withInput={compact === "goto"}
-            onPageChange={onPageChange}
-          />
-        ) : (
-          <RegularControls
-            count={count}
-            page={page}
-            onPageChange={onPageChange}
-            siblingCount={siblingCount}
-            boundaryCount={boundaryCount}
-          />
-        )}
+        <RegularControls
+          count={count}
+          page={page}
+          onPageChange={onPageChange}
+          siblingCount={siblingCount}
+          boundaryCount={boundaryCount}
+        />
         {showPreviousNext && (
           <ArrowButton
             arrowButtonType="next"

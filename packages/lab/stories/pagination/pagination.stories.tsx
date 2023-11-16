@@ -1,5 +1,6 @@
 import {
   GoToInput,
+  CompactPaginator,
   Pagination,
   PaginationProps,
   Paginator,
@@ -26,6 +27,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
     siblingCount,
     showPreviousNext,
     compact,
+    compactWithInput,
     goToPosition,
   } = args;
   const [page, setPage] = useState<number>(1);
@@ -39,13 +41,18 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
       onPageChange={onPageChange}
       count={count}
       compact={compact}
+      compactWithInput={compactWithInput}
     >
       {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}
-      <Paginator
-        boundaryCount={boundaryCount}
-        siblingCount={siblingCount}
-        showPreviousNext={showPreviousNext}
-      />
+      {compact ?? compactWithInput ? (
+        <CompactPaginator withInput={compactWithInput} />
+      ) : (
+        <Paginator
+          boundaryCount={boundaryCount}
+          siblingCount={siblingCount}
+          showPreviousNext={showPreviousNext}
+        />
+      )}
       {goToPosition === "right" ? <GoToInput label={"Go to"} /> : null}
     </Pagination>
   );
@@ -103,12 +110,11 @@ WithInput.argTypes = {
 export const Compact = Template.bind({});
 
 Compact.args = {
-  compact: "default",
+  compact: true,
   count: 25,
   siblingCount: 2,
   boundaryCount: 1,
   showPreviousNext: true,
-  goToPosition: "left",
 };
 
 Compact.argTypes = {
@@ -121,12 +127,9 @@ Compact.argTypes = {
 export const CompactWithInput = Template.bind({});
 
 CompactWithInput.args = {
-  compact: "goto",
+  compactWithInput: true,
   count: 25,
-  siblingCount: 2,
-  boundaryCount: 1,
   showPreviousNext: true,
-  goToPosition: "left",
 };
 
 CompactWithInput.argTypes = {

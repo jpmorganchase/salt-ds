@@ -1,4 +1,9 @@
-import { Pagination, Paginator, GoToInput } from "@salt-ds/lab";
+import {
+  Pagination,
+  Paginator,
+  GoToInput,
+  CompactPaginator,
+} from "@salt-ds/lab";
 
 describe("GIVEN an Pagination", () => {
   describe("WHEN navigation using the mouse", () => {
@@ -193,13 +198,8 @@ describe("GIVEN an Pagination", () => {
         it("THEN should move to the next page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
-            <Pagination
-              compact="goto"
-              count={10}
-              initialPage={3}
-              onPageChange={pageChangeSpy}
-            >
-              <Paginator />
+            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+              <CompactPaginator withInput />
             </Pagination>
           );
 
@@ -214,13 +214,8 @@ describe("GIVEN an Pagination", () => {
         it("THEN should move to the previous page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
-            <Pagination
-              compact="goto"
-              count={10}
-              initialPage={3}
-              onPageChange={pageChangeSpy}
-            >
-              <Paginator />
+            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+              <CompactPaginator withInput />
             </Pagination>
           );
 
@@ -235,13 +230,8 @@ describe("GIVEN an Pagination", () => {
         it("THEN should move to the last page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
-            <Pagination
-              compact="goto"
-              count={10}
-              initialPage={3}
-              onPageChange={pageChangeSpy}
-            >
-              <Paginator />
+            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+              <CompactPaginator withInput />
             </Pagination>
           );
 
@@ -258,13 +248,8 @@ describe("GIVEN an Pagination", () => {
         it("THEN should move to the next page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
-            <Pagination
-              compact="goto"
-              count={10}
-              initialPage={3}
-              onPageChange={pageChangeSpy}
-            >
-              <Paginator />
+            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+              <CompactPaginator withInput />
             </Pagination>
           );
 
@@ -280,13 +265,8 @@ describe("GIVEN an Pagination", () => {
         it("THEN should move to the previous page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
-            <Pagination
-              compact="goto"
-              count={10}
-              initialPage={3}
-              onPageChange={pageChangeSpy}
-            >
-              <Paginator />
+            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+              <CompactPaginator withInput />
             </Pagination>
           );
 
@@ -302,13 +282,8 @@ describe("GIVEN an Pagination", () => {
         it("THEN should move to the last page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
-            <Pagination
-              compact="goto"
-              count={10}
-              initialPage={3}
-              onPageChange={pageChangeSpy}
-            >
-              <Paginator />
+            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+              <CompactPaginator withInput />
             </Pagination>
           );
 
@@ -325,13 +300,8 @@ describe("GIVEN an Pagination", () => {
       it("SHOULD then reset to the current page on blur", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
-          <Pagination
-            compact="goto"
-            count={10}
-            initialPage={3}
-            onPageChange={pageChangeSpy}
-          >
-            <Paginator />
+          <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+            <CompactPaginator withInput />
           </Pagination>
         );
 
@@ -347,13 +317,8 @@ describe("GIVEN an Pagination", () => {
       it("SHOULD go to the page entered when enter is pressed", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
-          <Pagination
-            compact="goto"
-            count={10}
-            initialPage={3}
-            onPageChange={pageChangeSpy}
-          >
-            <Paginator />
+          <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+            <CompactPaginator withInput />
           </Pagination>
         );
 
@@ -598,18 +563,18 @@ describe("GIVEN an Pagination", () => {
       });
     });
 
-    describe("AND pagination is in compact mode", () => {
-      it("SHOULD then be hidden", () => {
-        cy.mount(
-          <Pagination compact="goto" count={10} initialPage={3}>
-            <GoToInput />
-            <Paginator />
-          </Pagination>
-        );
+    // describe("AND pagination is in compact mode", () => {
+    //   it("SHOULD then be hidden", () => {
+    //     cy.mount(
+    //       <Pagination compactWithInput count={10} initialPage={3}>
+    //         <GoToInput />
+    //         <Paginator />
+    //       </Pagination>
+    //     );
 
-        cy.findAllByRole("textbox").should("have.length", 1);
-      });
-    });
+    //     cy.findAllByRole("textbox").should("have.length", 1);
+    //   });
+    // });
   });
 
   describe("WHEN the count is 1", () => {
