@@ -16,6 +16,7 @@ const withBaseName = makePrefixer("saltQAContainer");
 export interface QAContainerProps extends HTMLAttributes<HTMLDivElement> {
   cols?: number;
   height?: number;
+  enableStyleInjection?: boolean;
   imgSrc?: string;
   itemPadding?: number;
   itemWidthAuto?: boolean;
@@ -65,6 +66,7 @@ export const QAContainer = ({
   children,
   className,
   cols = 3,
+  enableStyleInjection = true,
   height,
   itemPadding,
   itemWidthAuto,
@@ -107,10 +109,18 @@ export const QAContainer = ({
       ) : (
         DensityValues.map((d, i) => (
           <Fragment key={i}>
-            <SaltProvider mode="light" density={d}>
+            <SaltProvider
+              mode="light"
+              density={d}
+              enableStyleInjection={enableStyleInjection}
+            >
               <BackgroundBlock background="white">{children}</BackgroundBlock>
             </SaltProvider>
-            <SaltProvider mode="dark" density={d}>
+            <SaltProvider
+              mode="dark"
+              density={d}
+              enableStyleInjection={enableStyleInjection}
+            >
               <BackgroundBlock>{children}</BackgroundBlock>
             </SaltProvider>
           </Fragment>

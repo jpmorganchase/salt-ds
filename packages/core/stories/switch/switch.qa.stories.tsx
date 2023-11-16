@@ -1,6 +1,11 @@
 import { Switch } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import {
+  QAContainer,
+  QAContainerNoStyleInjection,
+  QAContainerNoStyleInjectionProps,
+  QAContainerProps,
+} from "docs/components";
 
 export default {
   title: "Core/Switch/Switch QA",
@@ -27,5 +32,20 @@ export const AllExamplesGrid: StoryFn<
 };
 
 AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const NoStyleInjectionGrid: StoryFn<
+  QAContainerNoStyleInjectionProps
+> = ({ className, ...restProps }) => (
+  <QAContainerNoStyleInjection cols={4} {...restProps}>
+    <Switch className={className} label="Default" />
+    <Switch className={className} checked label="Checked" />
+    <Switch className={className} disabled label="Disabled" />
+    <Switch className={className} checked disabled label="Checked + Disabled" />
+  </QAContainerNoStyleInjection>
+);
+
+NoStyleInjectionGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
