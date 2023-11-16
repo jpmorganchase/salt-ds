@@ -90,8 +90,6 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
 
     const widthCh = `${`${count}`.length}ch`;
 
-    console.log("count", count, widthCh);
-
     return (
       <span
         className={clsx(
