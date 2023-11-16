@@ -40,5 +40,11 @@
   "publishConfig": {
     "directory": "../../dist/salt-ds-lab",
     "provenance": true
-  }
+  },
+  "scripts": {
+    "bundle:css": "yarn node ./scripts/build.mjs"
+  },
+  "files": [
+    "css"
+  ]
 }
