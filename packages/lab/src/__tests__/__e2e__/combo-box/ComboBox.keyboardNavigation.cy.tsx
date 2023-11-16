@@ -136,7 +136,7 @@ describe("A combo box", () => {
     describe("when the 'Space' key is pressed", () => {
       it("should not select the highlighted item", () => {
         const changeSpy = cy.stub().as("changeSpy");
-        cy.mount(<Default onChange={changeSpy} />);
+        cy.mount(<Default onSelectionChange={changeSpy} />);
 
         cy.realPress("Tab");
 
@@ -229,7 +229,7 @@ describe("A combo box that allows free text", () => {
   describe("with nothing selected", () => {
     it("should not modify input value when blurred", () => {
       const changeSpy = cy.stub().as("changeSpy");
-      cy.mount(<WithFreeText onChange={changeSpy} />);
+      cy.mount(<WithFreeText onSelectionChange={changeSpy} />);
 
       cy.realPress("Tab");
 
