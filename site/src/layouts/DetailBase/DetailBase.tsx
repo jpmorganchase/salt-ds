@@ -1,43 +1,49 @@
-import React, { FC, ReactElement } from "react";
-import clsx from "clsx";
 import { HelpLinks } from "@jpmorganchase/mosaic-components";
+import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
 import {
-  DocPaginator,
   BackLink,
   Breadcrumbs,
+  DocPaginator,
   PageNavigation,
 } from "@jpmorganchase/mosaic-site-components";
-import { useStore, SiteState } from "@jpmorganchase/mosaic-store";
-import { Footer } from "../../components/footer";
+import { SiteState, useMeta, useStore } from "@jpmorganchase/mosaic-store";
+import { SaltProvider, FlexLayout } from "@salt-ds/core";
+import clsx from "clsx";
+import { FC, ReactElement } from "react";
 import { AppHeader } from "../../components/app-header";
-import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
+import { Footer } from "../../components/footer";
 import { StatusPill } from "../../components/status-pill";
 import { LayoutColumns } from "../LayoutColumns/LayoutColumns";
-import { SaltProvider } from "@salt-ds/core";
-import { useMeta } from "@jpmorganchase/mosaic-store";
-import { LayoutProps } from "../types/index";
 import layoutStyles from "../index.module.css";
+import { LayoutProps } from "../types/index";
 import styles from "./DetailBase.module.css";
 
-type Data = {
+interface Data {
   status: string;
-};
+}
 
 type CustomSiteState = SiteState & { data?: Data };
 
-type PageHeadingWithPillProps = {
+interface PageHeadingWithPillProps {
   title?: string | ReactElement;
   pageStatus: string;
-};
+  isMobileView?: boolean;
+}
 
 const PageHeadingWithPill: FC<PageHeadingWithPillProps> = ({
   title,
   pageStatus,
+  isMobileView,
 }) => (
-  <div className={styles.headingContainer}>
+  <FlexLayout
+    className={styles.headingContainer}
+    direction={isMobileView ? "column" : "row"}
+    align={isMobileView ? "start" : "center"}
+    gap={isMobileView ? 0 : 1}
+  >
     <h1>{title}</h1>
     {pageStatus && <StatusPill label={pageStatus} />}
-  </div>
+  </FlexLayout>
 );
 
 export const DetailBase: FC<LayoutProps> = ({
@@ -47,6 +53,7 @@ export const DetailBase: FC<LayoutProps> = ({
   children,
   sidebar,
   pageTitle: titleProp,
+  isMobileView,
 }) => {
   const Header = <AppHeader />;
 
@@ -80,7 +87,11 @@ export const DetailBase: FC<LayoutProps> = ({
         <LayoutColumns PrimarySidebar={PrimarySidebar}>
           <Breadcrumbs />
           {pageStatus ? (
-            <PageHeadingWithPill title={pageTitle} pageStatus={pageStatus} />
+            <PageHeadingWithPill
+              title={pageTitle}
+              pageStatus={pageStatus}
+              isMobileView={isMobileView}
+            />
           ) : (
             <h1 className={layoutStyles.title}>{pageTitle}</h1>
           )}
