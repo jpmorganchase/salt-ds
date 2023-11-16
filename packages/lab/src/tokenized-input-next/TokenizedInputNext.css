@@ -1,0 +1,19 @@
+
+.saltTokenizedInputNext {
+  --saltMultilineInput-rows: 1;
+}
+.saltTokenizedInputNext-pill {
+  max-width: 100%;
+}
+.saltTokenizedInputNext .saltMultilineInput-startAdornmentContainer {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* TODO: should we move this classes to multiline input if we stick to start adornment? */
+.saltTokenizedInputNext-expanded .saltMultilineInput-startAdornmentContainer {
+  flex-flow: wrap;
+}
+.saltTokenizedInputNext.saltMultilineInput-withAdornmentRow .saltMultilineInput-suffixAdornments {
+  flex-basis: 0;
+}
