@@ -460,6 +460,7 @@ export function useTokenizedInput<Item>(
     [key: string]: KeyboardEventHandler<HTMLInputElement>;
   } = {
     ArrowLeft: (event) => {
+      console.log('arrow left');
       event.preventDefault();
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
@@ -514,6 +515,7 @@ export function useTokenizedInput<Item>(
     [key: string]: KeyboardEventHandler<HTMLInputElement>;
   } = {
     ArrowLeft: (event) => {
+      console.log('arrow left', cursorAtInputStart());
       if (cursorAtInputStart()) {
         event.preventDefault();
         setHighlightedIndex(selectedItems.length - 1);
@@ -611,6 +613,7 @@ export function useTokenizedInput<Item>(
   const handleKeyDown: InputHTMLAttributes<HTMLInputElement>["onKeyDown"] = (
     event
   ) => {
+    console.log(event.key);
     if (onKeyDown) {
       onKeyDown(event);
     }
@@ -625,7 +628,7 @@ export function useTokenizedInput<Item>(
       handleCtrlModifierKeyDown(event);
     } else {
       let handler;
-
+      console.log('here', highlightedIndex)
       if (highlightedIndex == null) {
         handler = inputKeyDownHandlers[event.key];
         setActiveIndices([]);

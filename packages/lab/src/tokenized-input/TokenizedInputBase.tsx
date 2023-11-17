@@ -20,7 +20,7 @@ import {
 import {
   Button,
   ButtonProps,
-  makePrefixer,
+  makePrefixer, MultilineInput,
   useDensity,
   useForkRef,
   useId,
@@ -285,11 +285,12 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
 
   const mergedInputProps = deepmerge(
     {
-      inputProps: {
-        style: {
-          width: inputWidth,
-          minWidth: inputWidth,
-        },
+      style: {
+        width: inputWidth,
+        minWidth: inputWidth,
+      },
+      textAreaProps: {
+        // TODO: styles moved up, do we need to move some of these too?
         "aria-label": [ariaLabel, getItemsAriaLabel(selectedItems.length)]
           .filter(Boolean)
           .join(" "),
@@ -303,6 +304,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     InputProps
   );
 
+  console.log(mergedInputProps)
   const {
     accessibleText: expandButtonAccessibleText,
     ...restExpandButtonProps
@@ -376,25 +378,20 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
             }
           />
         </Button>
-        <Input
+        {!showExpandButton && <MultilineInput
+          rows={1}
           {...mergedInputProps}
-          className={clsx(withBaseName("input"), withBaseName("inputField"), {
-            [withBaseName("hidden")]: showExpandButton,
-          })}
-          disabled={disabled}
           id={inputId}
-          // TODO: Use multi line input when available
-          // multiline
-          onBlur={onInputBlur}
+          disabled={disabled}
           onChange={onInputChange}
-          onFocus={onInputFocus}
           onKeyDown={onKeyDown}
-          onKeyUp={handleInputKeyUp}
+          onBlur={onInputBlur}
+          onFocus={onInputFocus}
           onSelect={onInputSelect}
-          renderSuffix={() => <InputRuler ref={inputRulerRef} value={value} />}
           value={value}
-          ref={inputRef}
-        />
+          textAreaRef={inputRef}
+          className={ clsx(withBaseName("input"), withBaseName("inputField"))}
+          />}
       </div>
       <Button
         className={clsx(withBaseName("clearButton"), {
