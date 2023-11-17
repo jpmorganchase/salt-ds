@@ -100,7 +100,7 @@
   --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
   --tabs-tabstrip-dragging-display: block;
 
-  --tabs-tab-background: var(--salt-navigable-primary-background-hover);
+  --tabs-tab-background: var(--salt-navigable-background-hover);
   --tabs-tab-before-content: "";
   --tabs-tab-before-background: var(--salt-navigable-indicator-hover);
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);

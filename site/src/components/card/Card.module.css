@@ -1,9 +1,9 @@
 .card,
 .inlineCard {
   --card-background: var(--salt-container-primary-background);
-  --card-color: var(--salt-text-primary-foreground);
+  --card-color: var(--salt-content-primary-foreground);
   --card-icon-background: var(--salt-container-secondary-background);
-  --saltIcon-color: var(---salt-text-primary-foreground);
+  --saltIcon-color: var(---salt-content-primary-foreground);
 }
 
 .cardTitle h2 {
@@ -27,7 +27,7 @@
 
 .card:hover,
 .inlineCardContent:hover {
-  box-shadow: var(--salt-overlayable-shadow-borderRegion);
+  box-shadow: var(--salt-overlayable-shadow-region);
 }
 
 .card:hover .icon,
@@ -73,7 +73,7 @@
 }
 
 .cardDescription {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
 }
 
 .inlineCardContent {
@@ -120,7 +120,7 @@
 }
 
 .cardFooter:hover {
-  color: var(--salt-text-link-foreground-hover);
+  color: var(--salt-content-foreground-hover);
 }
 
 .keyline {

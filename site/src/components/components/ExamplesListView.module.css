@@ -4,7 +4,7 @@
 }
 
 .label {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
   padding: var(--salt-size-unit);
   font-size: var(--salt-text-label-fontSize);
   border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);

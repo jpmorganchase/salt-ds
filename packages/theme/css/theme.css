@@ -8,7 +8,6 @@
 @import url(foundations/color.css);
 @import url(foundations/duration.css);
 @import url(foundations/fade.css);
-@import url(foundations/icon.css);
 @import url(foundations/opacity.css);
 @import url(foundations/shadow.css);
 @import url(foundations/size.css);
@@ -27,7 +26,6 @@
 @import url(palette/opacity.css);
 @import url(palette/positive.css);
 @import url(palette/success.css);
-@import url(palette/track.css);
 @import url(palette/warning.css);
 
 /* Each characteristic file references values from above foundations */
@@ -43,8 +41,8 @@
 @import url(characteristics/selectable.css);
 @import url(characteristics/separable.css);
 @import url(characteristics/status.css);
-@import url(characteristics/taggable.css);
 @import url(characteristics/text.css);
+@import url(characteristics/content.css);
 @import url(characteristics/track.css);
 
 /* Deprecated */
