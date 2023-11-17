@@ -10,9 +10,4 @@
   --salt-container-secondary-background-disabled: var(--salt-palette-neutral-secondary-background-disabled);
   --salt-container-secondary-borderColor: var(--salt-palette-neutral-secondary-border);
   --salt-container-secondary-borderColor-disabled: var(--salt-palette-neutral-secondary-border-disabled);
-
-  --salt-container-tertiary-background: var(--salt-palette-neutral-tertiary-background);
-  --salt-container-tertiary-background-disabled: var(--salt-palette-neutral-tertiary-background-disabled);
-  --salt-container-tertiary-borderColor: var(--salt-palette-neutral-tertiary-border);
-  --salt-container-tertiary-borderColor-disabled: var(--salt-palette-neutral-tertiary-border-disabled);
 }

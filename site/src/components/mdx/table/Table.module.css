@@ -40,7 +40,7 @@
 }
 
 .table th {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
   font-weight: var(--salt-text-h4-fontWeight);
 }
 

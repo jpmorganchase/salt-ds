@@ -10,7 +10,7 @@
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-text-fontWeight-strong);
   --saltIcon-color: currentcolor;
   text-align: left;
@@ -24,8 +24,8 @@
 
 .saltAccordionHeader:disabled {
   background: var(--salt-actionable-secondary-background);
-  color: var(--salt-text-primary-foreground-disabled);
-  --saltIcon-fill: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
+  --saltIcon-fill: var(--salt-content-primary-foreground-disabled);
 }
 
 .saltAccordionHeader-icon {

@@ -7,7 +7,7 @@
 
   align-items: center;
   background: var(--saltInput-background, var(--input-background));
-  color: var(--saltInput-color, var(--salt-text-primary-foreground));
+  color: var(--saltInput-color, var(--salt-content-primary-foreground));
   display: inline-flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--saltInput-fontSize, var(--salt-text-fontSize));
@@ -113,7 +113,7 @@
 
 /* Style applied to selected input */
 .saltInput-input::selection {
-  background: var(--salt-text-background-selected);
+  background: var(--salt-content-foreground-highlight);
 }
 
 /* Style applied to placeholder text */
@@ -165,7 +165,7 @@
 
   background: var(--input-background-disabled);
   cursor: var(--salt-editable-cursor-disabled);
-  color: var(--saltInput-color-disabled, var(--salt-text-primary-foreground-disabled));
+  color: var(--saltInput-color-disabled, var(--salt-content-primary-foreground-disabled));
 }
 
 .saltInput-activationIndicator {

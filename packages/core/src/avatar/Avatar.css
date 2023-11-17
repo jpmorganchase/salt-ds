@@ -3,17 +3,17 @@
   --avatar-foreground: var(--saltAvatar-foreground, var(--salt-accent-foreground));
   --avatar-size-multiplier: var(--saltAvatar-size-multiplier, 1);
   --avatar-base-size: var(--salt-size-base, 12px);
-  --avatar-base-fontSize: var(--saltAvatar-fontSize, var(--salt-accent-fontSize));
+  --avatar-base-fontSize: var(--saltAvatar-fontSize, var(--salt-text-notation-fontSize));
   --avatar-container-size: calc(var(--avatar-base-size) * var(--avatar-size-multiplier));
   --avatar-fontSize: calc(var(--avatar-base-fontSize) * var(--avatar-size-multiplier));
   /* Icon styling */
   --saltIcon-color: var(--avatar-foreground);
-  --salt-icon-size-base: calc(var(--avatar-container-size) / 2);
+  --salt-size-icon: calc(var(--avatar-container-size) / 2);
 }
 
 /* Style applied to the root element */
 .saltAvatar {
-  line-height: var(--saltAvatar-lineHeight, var(--salt-accent-lineHeight));
+  line-height: var(--saltAvatar-lineHeight, var(--salt-text-notation-lineHeight));
   display: flex;
   justify-content: center;
   align-items: center;

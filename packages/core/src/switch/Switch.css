@@ -3,11 +3,11 @@
   gap: var(--salt-spacing-100);
   position: relative;
   cursor: var(--salt-selectable-cursor-hover);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
 }
 
 .saltSwitch-disabled {
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 

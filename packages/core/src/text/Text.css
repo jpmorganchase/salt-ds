@@ -5,7 +5,7 @@
 }
 
 .saltText::selection {
-  background: var(--saltText-highlight, var(--salt-text-background-selected));
+  background: var(--saltText-highlight, var(--salt-content-foreground-highlight));
 }
 
 /* Allows truncation */
@@ -19,22 +19,22 @@
 
 /* Primary variant */
 .saltText-primary {
-  --text-color: var(--salt-text-primary-foreground);
+  --text-color: var(--salt-content-primary-foreground);
 }
 
 /* Disabled primary variant */
 .saltText-primary.saltText-disabled {
-  --text-color: var(--salt-text-primary-foreground-disabled);
+  --text-color: var(--salt-content-primary-foreground-disabled);
 }
 
 /* Secondary variant */
 .saltText-secondary {
-  --text-color: var(--salt-text-secondary-foreground);
+  --text-color: var(--salt-content-secondary-foreground);
 }
 
 /* Disabled secondary variant */
 .saltText-secondary.saltText-disabled {
-  --text-color: var(--salt-text-secondary-foreground-disabled);
+  --text-color: var(--salt-content-secondary-foreground-disabled);
 }
 
 /* Body emphasis strong */
