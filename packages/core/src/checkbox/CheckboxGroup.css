@@ -27,3 +27,9 @@
 .saltCheckboxGroup-noWrap .saltCheckbox {
   white-space: break-spaces;
 }
+
+/* Styles applied when checkbox button group is inside a form field with label left or right */
+.saltFormField-labelLeft .saltCheckboxGroup,
+.saltFormField-labelRight .saltCheckboxGroup {
+  padding-top: var(--salt-spacing-100);
+}

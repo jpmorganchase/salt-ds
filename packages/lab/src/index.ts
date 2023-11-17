@@ -15,7 +15,6 @@ export {
 } from "./list-deprecated";
 
 export * from "./app-header";
-export * from "./badge";
 export * from "./breadcrumbs";
 export * from "./button-bar";
 export * from "./calendar";

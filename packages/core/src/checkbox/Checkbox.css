@@ -23,6 +23,11 @@
   cursor: var(--salt-selectable-cursor-readonly);
 }
 
+.saltCheckbox-input,
+.saltCheckboxIcon {
+  margin-top: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
+}
+
 .saltCheckboxIcon > svg {
   /* ensures svg is centered in all browsers */
   transform: translate(0px, 0px);
@@ -55,11 +60,9 @@
 /* Styles applied to input element */
 .saltCheckbox-input {
   cursor: inherit;
-  left: 0;
   margin: 0;
   opacity: 0;
   padding: 0;
   position: absolute;
-  top: 0;
   z-index: var(--salt-zIndex-default);
 }

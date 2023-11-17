@@ -3,13 +3,13 @@ import {
   Accordion,
   AccordionHeader,
   AccordionPanel,
+  Badge,
   FlexLayout,
   FlowLayout,
   FormField,
   FormFieldLabel as FormLabel,
   Input,
 } from "@salt-ds/core";
-import { Badge } from "@salt-ds/lab";
 
 export const InlineBadge = (): ReactElement => (
   <FlexLayout style={{ width: "80%", height: "100%" }}>

@@ -1,6 +1,7 @@
 export * from "./accordion";
 export * from "./aria-announcer";
 export * from "./avatar";
+export * from "./badge";
 export * from "./banner";
 export * from "./border-item";
 export * from "./border-layout";
