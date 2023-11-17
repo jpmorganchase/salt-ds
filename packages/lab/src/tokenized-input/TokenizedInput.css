@@ -52,6 +52,8 @@
   flex-wrap: wrap;
   min-height: var(--tokenizedInput-height);
   padding: var(--tokenizedInput-pill-group-y-padding) var(--tokenizedInput-spacing);
+  overflow: hidden;
+  max-width: 100%;
 }
 
 /* Styles applied to root component if `disabled={true}` */
