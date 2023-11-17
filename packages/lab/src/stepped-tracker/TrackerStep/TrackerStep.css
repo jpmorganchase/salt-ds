@@ -6,7 +6,7 @@
 
   --saltIcon-color: var(--trackerStep-icon-color);
   /* We redefine Icon Size so we can use it in calc functions in the trackerConnector */
-  --saltIcon-size: var(--saltTrackerStep-icon-size, max(var(--salt-icon-size-base), 12px));
+  --saltIcon-size: var(--saltTrackerStep-icon-size, max(var(--salt-size-icon), 12px));
 }
 
 .saltTrackerStep {
@@ -21,7 +21,7 @@
   flex-direction: column;
   width: var(--saltTrackerStep-width, 100%);
   gap: var(--salt-spacing-50);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   padding: 0 var(--salt-spacing-25);

@@ -6,11 +6,23 @@
   --salt-text-textDecoration: none;
   --salt-text-textTransform: none;
 
+  /* Action */
+  --salt-text-action-letterSpacing: 0.6px;
+  --salt-text-action-textTransform: uppercase;
+  --salt-text-action-textAlign: center;
+  --salt-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
+
   /* Body text (should be used as default) */
   --salt-text-fontFamily: var(--salt-typography-fontFamily);
   --salt-text-fontWeight: var(--salt-typography-fontWeight-regular);
   --salt-text-fontWeight-small: var(--salt-typography-fontWeight-light);
   --salt-text-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+
+  /* Notation */
+  --salt-text-notation-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   /* H1 */
   --salt-text-h1-fontFamily: var(--salt-typography-fontFamily);
@@ -58,22 +70,6 @@
   --salt-text-display3-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-text-display3-fontWeight-small: var(--salt-typography-fontWeight-regular);
 
-  /* Colors */
-  --salt-text-background-selected: var(--salt-palette-interact-background-active);
-
-  --salt-text-primary-foreground: var(--salt-palette-neutral-primary-foreground);
-  --salt-text-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
-  --salt-text-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
-  --salt-text-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
-
-  /* Link */
-  --salt-text-link-foreground-hover: var(--salt-palette-navigate-foreground-hover);
-  --salt-text-link-foreground-active: var(--salt-palette-navigate-foreground-active);
-  --salt-text-link-foreground-visited: var(--salt-palette-navigate-foreground-visited);
-  --salt-text-link-textDecoration: underline;
-  --salt-text-link-textDecoration-hover: none;
-  --salt-text-link-textDecoration-selected: underline;
-
   /* Code */
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-code);
 }
@@ -107,6 +103,9 @@
 
   --salt-text-display3-fontSize: 42px;
   --salt-text-display3-lineHeight: 54px;
+
+  --salt-text-notation-fontSize: 14px;
+  --salt-text-notation-lineHeight: 18px;
 }
 
 .salt-density-low {
@@ -137,6 +136,9 @@
 
   --salt-text-display3-fontSize: 32px;
   --salt-text-display3-lineHeight: 42px;
+
+  --salt-text-notation-fontSize: 12px;
+  --salt-text-notation-lineHeight: 16px;
 }
 
 .salt-density-medium {
@@ -167,6 +169,9 @@
 
   --salt-text-display3-fontSize: 24px;
   --salt-text-display3-lineHeight: 32px;
+
+  --salt-text-notation-fontSize: 10px;
+  --salt-text-notation-lineHeight: 13px;
 }
 
 .salt-density-high {
@@ -197,4 +202,7 @@
 
   --salt-text-display3-fontSize: 18px;
   --salt-text-display3-lineHeight: 24px;
+
+  --salt-text-notation-fontSize: 8px;
+  --salt-text-notation-lineHeight: 10px;
 }

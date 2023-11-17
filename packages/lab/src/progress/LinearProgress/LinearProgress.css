@@ -1,6 +1,6 @@
 .saltLinearProgress {
   align-items: center;
-  color: var(--salt-text-primary-foreground); /* TODO: update token to --salt-foreground-primary post theme1.0updates */
+  color: var(--salt-content-primary-foreground);
   display: flex;
   min-width: 400px;
   font-size: var(--linearProgress-fontSize);

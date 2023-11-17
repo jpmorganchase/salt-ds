@@ -2,7 +2,7 @@
 .saltIcon {
   --icon-color: currentColor;
   --icon-size-multiplier: var(--saltIcon-size-multiplier, 1);
-  --icon-base-size: var(--salt-icon-size-base, 12px);
+  --icon-base-size: var(--salt-size-icon, 12px);
   /**
    * Icon size will be the multiplier (an integer from the size prop) * the base size (set by the theme per density)
    * Icons should never be smaller than 12px for readability so we've added a max() to enforce this
@@ -23,9 +23,9 @@
 }
 
 .saltIcon-primary {
-  --icon-color: var(--salt-text-primary-foreground);
+  --icon-color: var(--salt-content-primary-foreground);
 }
 
 .saltIcon-secondary {
-  --icon-color: var(--salt-text-secondary-foreground);
+  --icon-color: var(--salt-content-secondary-foreground);
 }

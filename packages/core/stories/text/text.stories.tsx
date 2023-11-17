@@ -90,7 +90,7 @@ const FigureTextComponent: StoryFn<typeof Text> = () => {
 
 export const Display = FigureTextComponent.bind({});
 
-//********** Headings H1, H2, H3 and  H4 ***********/
+//********** Headings H1, H2, H3 and H4 ***********/
 
 const HeadingsComponent: StoryFn<typeof Text> = () => (
   <>

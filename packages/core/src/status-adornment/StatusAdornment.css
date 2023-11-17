@@ -2,8 +2,8 @@
   align-self: center;
   display: inline-block;
   fill: var(--saltStatusAdornment-color, var(--statusAdornment-color));
-  height: var(--salt-icon-size-status-adornment);
-  min-height: var(--salt-icon-size-status-adornment);
+  height: var(--salt-size-adornment);
+  min-height: var(--salt-size-adornment);
   padding-left: var(--salt-spacing-100);
   position: relative;
 }
