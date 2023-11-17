@@ -15,6 +15,11 @@ export default [
       "Group of components used to contain and separate different types of content and allow hierarchical organization.",
   },
   {
+    key: "content",
+    value:
+      "Color used for components, like texts and icons, in the foreground, See 'Text' for more text related attributes.",
+  },
+  {
     key: "draggable",
     value:
       "Components that can be grabbed and moved to a target area (related to Target).",
@@ -53,17 +58,14 @@ export default [
       "Components which have attributes that denote status and the severity of that status.",
   },
   {
-    key: "taggable",
-    value: "Components allowing for individual items or data to be organized.",
-  },
-  {
     key: "target",
     value:
       "Components which indicate a target area where a draggable item can be dropped (related to 'Draggable').",
   },
   {
     key: "text",
-    value: "All text examples are shown using the default fontWeight token.",
+    value:
+      "All text examples are shown using the default fontWeight token. See 'Content' for colors.",
   },
   {
     key: "track",

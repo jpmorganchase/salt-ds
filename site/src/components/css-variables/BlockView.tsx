@@ -10,26 +10,26 @@ import {
   ShadowBlockCell,
 } from "docs/components";
 
-const color: string[] = new Array(
+const color: string[] = [
   "background",
   "foreground",
   "color",
   "palette",
   "borderColor",
   "outlineColor",
-  "indicator"
-);
+  "indicator",
+];
 
-const fontSize: string[] = new Array("fontSize", "minHeight");
+const fontSize: string[] = ["fontSize", "minHeight"];
 const fontWeight: string[] = new Array("fontWeight");
 const cursor: string[] = new Array("cursor");
 const letters: string[] = new Array("letterSpacing");
-const border: string[] = new Array(
+const border: string[] = [
   "borderStyle",
   "borderWidth",
   "outlineWidth",
-  "outlineStyle"
-);
+  "outlineStyle",
+];
 const text: string[] = new Array("fontStyle");
 const outline: string[] = new Array("outline");
 const shadow: string[] = new Array("shadow");

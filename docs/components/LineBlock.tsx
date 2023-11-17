@@ -38,7 +38,7 @@ export const LineBlock = ({
             d="M 0,8 L 16,8"
             vectorEffect="non-scaling-stroke"
             strokeWidth={lineWidth ? `var(${lineWidth})` : "1px"}
-            stroke-dasharray={
+            strokeDasharray={
               lineStyle === "dashed"
                 ? "10,10"
                 : lineStyle === "dotted"

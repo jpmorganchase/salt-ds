@@ -13,9 +13,7 @@ import { tokenDescriptions, groupByType } from "./utils";
 
 import styles from "./CSSVariables.module.css";
 
-export type CSSVariableData = {
-  [key: string]: string;
-};
+export type CSSVariableData = Record<string, string>;
 
 export const CSSVariables: React.FC<{
   value: "characteristics" | "deprecated" | "foundations" | "palette";
@@ -25,7 +23,8 @@ export const CSSVariables: React.FC<{
   useEffect(() => {
     const fetchJsonData = async () => {
       try {
-        const data = require(`./json/${value}Variables.json`);
+        const data =
+          (await require(`./json/${value}Variables.json`)) as CSSVariableData;
         setTokenData(data);
       } catch (err) {
         <Banner>
@@ -35,7 +34,7 @@ export const CSSVariables: React.FC<{
     };
 
     fetchJsonData();
-  }, []);
+  }, [value]);
 
   if (!tokenData) {
     return (
