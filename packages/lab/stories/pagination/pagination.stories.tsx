@@ -7,7 +7,8 @@ import {
   PaginatorProps,
 } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
+import { StackLayout } from "@salt-ds/core";
+import { ChangeEvent, useState } from "react";
 
 export default {
   title: "Lab/Pagination",
@@ -23,6 +24,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
 ) => {
   const {
     count,
+    page: pageProp = 1,
     boundaryCount,
     siblingCount,
     showPreviousNext,
@@ -30,7 +32,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
     compactWithInput,
     goToPosition,
   } = args;
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(pageProp);
   const onPageChange = (page: number) => {
     setPage(page);
   };
@@ -101,6 +103,88 @@ WithInput.args = {
 };
 
 WithInput.argTypes = {
+  goToPosition: {
+    options: ["none", "left", "right"],
+    control: { type: "radio" },
+  },
+};
+
+export const SiblingCount = (
+  props: PaginationProps & PaginatorProps & StoryProps
+) => {
+  const { siblingCount: siblingCountProp, ...restProps } = props;
+  const [siblingCount, setSiblingCount] = useState(siblingCountProp);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+    setSiblingCount(value);
+  };
+
+  return (
+    <>
+      <StackLayout>
+        <input
+          type="number"
+          value={siblingCount?.toString()}
+          onChange={handleChange}
+          style={{ width: 50 }}
+        />
+        <Template siblingCount={siblingCount} {...restProps} />
+      </StackLayout>
+    </>
+  );
+};
+
+SiblingCount.args = {
+  count: 25,
+  page: 13,
+  siblingCount: 2,
+  boundaryCount: 1,
+  showPreviousNext: true,
+};
+
+SiblingCount.argTypes = {
+  goToPosition: {
+    options: ["none", "left", "right"],
+    control: { type: "radio" },
+  },
+};
+
+export const BoundaryCount = (
+  props: PaginationProps & PaginatorProps & StoryProps
+) => {
+  const { boundaryCount: boundaryCountProp, ...restProps } = props;
+  const [boundaryCount, setBoundaryCount] = useState(boundaryCountProp);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+    setBoundaryCount(value);
+  };
+
+  return (
+    <>
+      <StackLayout>
+        <input
+          type="number"
+          value={boundaryCount?.toString()}
+          onChange={handleChange}
+          style={{ width: 50 }}
+        />
+        <Template boundaryCount={boundaryCount} {...restProps} />
+      </StackLayout>
+    </>
+  );
+};
+
+BoundaryCount.args = {
+  count: 25,
+  page: 13,
+  siblingCount: 2,
+  boundaryCount: 1,
+  showPreviousNext: true,
+};
+
+BoundaryCount.argTypes = {
   goToPosition: {
     options: ["none", "left", "right"],
     control: { type: "radio" },
