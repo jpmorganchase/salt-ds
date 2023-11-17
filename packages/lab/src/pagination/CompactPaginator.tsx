@@ -52,7 +52,11 @@ export const CompactPaginator = forwardRef<
       {withInput ? (
         <CompactInput />
       ) : (
-        <PageButton page={page} onPageChange={onPageChange} disabled={isOnFirstPage} />
+        <PageButton
+          page={page}
+          onPageChange={onPageChange}
+          disabled={isOnFirstPage}
+        />
       )}
       <span className={withBaseName("compactSeparator")}>of</span>
       <PageButton
