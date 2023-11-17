@@ -2,7 +2,7 @@
   --site-navigation-padding-vertical: 0;
   --site-navigation-padding-horizontal: calc(var(--salt-size-unit) * 3);
   --mosaic-border-width-thin: 0;
-  --mosaic-shadow-dark-elevation2: var(--salt-shadow-1-color);
+  --mosaic-shadow-dark-elevation2: var(--salt-shadow-100-color);
   --mosaic-color-dark-neutral-background-regular: var(--salt-color-gray-900);
   --mosaic-color-dark-neutral-background-emphasis: transparent;
   --mosaic-color-dark-actionable-secondary-hover: transparent;

@@ -3,7 +3,7 @@
   height: var(--salt-size-base);
   justify-self: end;
 
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   overflow: hidden;
 
   border-color: var(--salt-container-primary-borderColor);

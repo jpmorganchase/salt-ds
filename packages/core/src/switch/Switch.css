@@ -3,11 +3,11 @@
   gap: var(--salt-spacing-100);
   position: relative;
   cursor: var(--salt-selectable-cursor-hover);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
 }
 
 .saltSwitch-disabled {
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
@@ -67,12 +67,12 @@
   background: currentColor;
   margin: var(--salt-spacing-25);
   border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
-  transition: transform var(--salt-duration-perceptible) ease-in-out;
 }
 
 .saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,
 .saltSwitch:hover .saltSwitch-thumb {
   border-color: var(--salt-selectable-borderColor-hover);
+  transition: transform var(--salt-duration-perceptible) ease-in-out;
 }
 
 .saltSwitch-checked .saltSwitch-thumb,
@@ -102,7 +102,8 @@
 }
 
 @media (prefers-reduced-motion) {
-  .saltSwitch-thumb {
+  .saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,
+  .saltSwitch:hover .saltSwitch-thumb {
     transition: none;
   }
 }

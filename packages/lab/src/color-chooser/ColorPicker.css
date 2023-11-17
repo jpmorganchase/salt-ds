@@ -18,7 +18,7 @@
 .saltColorChooserPicker-textDivOverrides {
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   padding: 0px !important;
 }
 

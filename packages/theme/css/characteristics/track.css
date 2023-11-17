@@ -3,17 +3,4 @@
   --salt-track-borderStyle-active: solid;
   --salt-track-borderStyle-complete: solid;
   --salt-track-borderStyle-incomplete: dotted;
-
-  --salt-track-borderWidth: 2px;
-  --salt-track-borderWidth-active: 2px;
-  --salt-track-borderWidth-complete: 2px;
-  --salt-track-borderWidth-incomplete: 2px;
-
-  --salt-track-fontWeight: var(--salt-typography-fontWeight-semiBold);
-  --salt-track-textAlign: center;
-
-  --salt-track-background: var(--salt-palette-track-background);
-  --salt-track-background-disabled: var(--salt-palette-track-background-disabled);
-  --salt-track-borderColor: var(--salt-palette-track-border);
-  --salt-track-borderColor-disabled: var(--salt-palette-track-border-disabled);
 }

@@ -28,7 +28,7 @@
 
 .saltSlider {
   --slider-rail-height: var(--saltSlider-rail-height, 8px);
-  --slider-rail-color: var(--saltSlider-rail-color, var(--salt-track-borderColor));
+  --slider-rail-color: var(--saltSlider-rail-color, var(--salt-palette-neutral-secondary-border));
 
   --slider-rail-mark-height: var(--saltSlider-rail-mark-height, 7px);
   --slider-rail-mark-color: var(--saltSlider-rail-mark-color, var(--slider-rail-color));
@@ -137,7 +137,7 @@
 }
 
 .saltSliderMarkLabels-label {
-  color: var(--saltSlider-label-text-color, var(--salt-text-secondary-foreground));
+  color: var(--saltSlider-label-text-color, var(--salt-content-secondary-foreground));
   font-size: var(--slider-label-fontSize);
   margin-top: var(--saltSlider-label-marginTop);
   line-height: var(--saltSlider-label-lineHeight, var(--salt-text-lineHeight));
@@ -189,7 +189,7 @@
 }
 
 .saltSlider-label {
-  color: var(--saltSlider-label-text-color, var(--salt-text-secondary-foreground));
+  color: var(--saltSlider-label-text-color, var(--salt-content-secondary-foreground));
   font-size: var(--slider-label-fontSize);
   margin-top: var(--saltSlider-label-marginTop);
   line-height: var(--saltSlider-label-lineHeight, var(--salt-text-lineHeight));

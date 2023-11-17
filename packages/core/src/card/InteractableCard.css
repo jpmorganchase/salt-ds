@@ -1,6 +1,5 @@
 /* Styles applied to InteractableCard */
 .saltInteractableCard {
-  background: var(--saltCard-background, var(--salt-container-primary-background));
   box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
   border-width: var(--saltCard-borderWidth, var(--card-borderWidth));
   border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
@@ -9,6 +8,16 @@
   display: block;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
   padding: var(--saltCard-padding, var(--salt-spacing-300));
+}
+
+/* Styles applied to InteractableCard when variant="primary" */
+.saltInteractableCard-primary {
+  background: var(--saltCard-background, var(--salt-container-primary-background));
+}
+
+/* Styles applied to InteractableCard when variant="secondary" */
+.saltInteractableCard-secondary {
+  background: var(--saltCard-background, var(--salt-container-secondary-background));
 }
 
 /* Styles applied to InteractableCard if `accentPlacement="bottom"` (default) */
@@ -36,7 +45,7 @@ a:focus-visible .saltInteractableCard,
 .saltInteractableCard:focus-visible {
   cursor: var(--saltCard-interactable-cursor-focus, var(--salt-selectable-cursor-hover));
   box-shadow: var(--saltCard-interactable-shadow-focus, var(--salt-overlayable-shadow-hover));
-  color: var(--saltCard-color-focus, var(--salt-text-primary-foreground));
+  color: var(--saltCard-color-focus, var(--salt-content-primary-foreground));
   outline-color: var(--salt-focused-outlineColor);
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
@@ -64,12 +73,28 @@ a:link .saltInteractableCard * {
 .saltInteractableCard-disabled:focus,
 .saltInteractableCard-disabled:hover,
 .saltInteractableCard-disabled:active {
-  border-color: var(--saltCard-borderColor-disabled, var(--salt-accent-borderColor-disabled));
   box-shadow: var(--saltCard-interactable-shadow, var(--salt-overlayable-shadow));
-  background: var(--saltCard-background-disabled, var(--salt-container-primary-background-disabled));
-  color: var(--saltCard-color-disabled, var(--salt-text-primary-foreground-disabled));
+  color: var(--saltCard-color-disabled, var(--salt-content-primary-foreground-disabled));
   cursor: var(--saltCard-interactable-cursor-disabled, var(--salt-selectable-cursor-disabled));
   outline: none;
+}
+
+/* Styles applied to InteractableCard primary variant if `disabled={true}` */
+.saltInteractableCard-primary.saltInteractableCard-disabled,
+.saltInteractableCard-primary.saltInteractableCard-disabled:focus,
+.saltInteractableCard-primary.saltInteractableCard-disabled:hover,
+.saltInteractableCard-primary.saltInteractableCard-disabled:active {
+  border-color: var(--saltCard-borderColor-disabled, var(--salt-container-primary-borderColor-disabled));
+  background: var(--saltCard-background-disabled, var(--salt-container-primary-background-disabled));
+}
+
+/* Styles applied to InteractableCard secondary variant if `disabled={true}` */
+.saltInteractableCard-secondary.saltInteractableCard-disabled,
+.saltInteractableCard-secondary.saltInteractableCard-disabled:focus,
+.saltInteractableCard-secondary.saltInteractableCard-disabled:hover,
+.saltInteractableCard-secondary.saltInteractableCard-disabled:active {
+  border-color: var(--saltCard-borderColor-disabled, var(--salt-container-secondary-borderColor-disabled));
+  background: var(--saltCard-background-disabled, var(--salt-container-secondary-background));
 }
 
 /* Styles applied to nested divs in InteractableCard if `disabled={true}` */
@@ -79,7 +104,7 @@ a:link .saltInteractableCard * {
 
 /* Class that can be used for anchor tags wrapping InteractableCard */
 .saltInteractableCard-link {
-  color: var(--saltCard-link-color, var(--salt-text-primary-foreground));
+  color: var(--saltCard-link-color, var(--salt-content-primary-foreground));
   inset: var(--salt-focused-outlineInset);
   outline-color: var(--salt-focused-outlineColor);
   outline-offset: var(--salt-focused-outlineOffset);

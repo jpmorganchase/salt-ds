@@ -27,5 +27,11 @@
   "publishConfig": {
     "directory": "../../dist/salt-ds-core",
     "provenance": true
-  }
+  },
+  "scripts": {
+    "bundle:css": "yarn node ./scripts/build.mjs"
+  },
+  "files": [
+    "css"
+  ]
 }

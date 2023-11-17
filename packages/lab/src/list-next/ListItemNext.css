@@ -1,6 +1,6 @@
 /* Default variables applied to the root element */
 .saltListItemNext {
-  --listNext-item-text-color: var(--salt-text-primary-foreground);
+  --listNext-item-text-color: var(--salt-content-primary-foreground);
   --listNext-item-background: none;
 }
 
@@ -39,7 +39,7 @@
 
 /* Style applied to disabled items */
 .saltListItemNext[aria-disabled="true"] {
-  --listNext-item-text-color: var(--salt-text-primary-foreground-disabled);
+  --listNext-item-text-color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 .saltListItemNext[aria-disabled="true"] .saltText {

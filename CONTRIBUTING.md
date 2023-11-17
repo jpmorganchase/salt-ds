@@ -21,25 +21,35 @@ Additions and updates to the theme come from our designers. Any changes to the t
 
 #### How to remove/deprecate tokens
 
-If tokens are for some reason removed from the theme, this is a breaking change and they must first be deprecated.
+If tokens are for some reason removed from the theme, this is a breaking change and you must add them to the `deprecated` folder.
 
-1. Move the token to the bottom of its scope in the tokens `.css` file. See below code for example.
-2. Comment above the token in its `.css` file with `**Deprecated:** <Reason for deprecation>`.
-3. [Optional]: If the token has just been renamed with the value the same, point the token to the renamed
-4. [Optional]: If the token is to be fully removed but there is a token with a different value that should be used as a replacement, note this in deprecation comment.
+1. Move the token and its value to the respective `theme/css/deprecated/<characteristics | fade | foundations | palette>` file.
+2. Remove the token from its original file.
+3. [Optional]: If you have renamed the token but kept the value the same, point the token to the renamed.
+4. [Optional]: If you want to fully remove the token, but there is a token with a different value that should be used as a replacement, note this in the deprecation comments.
+
+i.e. In `characteristics/text.css`, 3 tokens are to be fully removed:
 
 ```css
 .salt-theme {
-  --salt-token-1: red;
-  --salt-token-2: blue;
-  --salt-token-6: green;
+  --salt-text-token-1: red;
+  --salt-text-token-2: blue;
+  --salt-text-token-6: green;
 
-  /* **Deprecated:** Use replacement token as defined */
-  --salt-token-3: var(--salt-token-2);
-  /* **Deprecated:** --salt-token-6 should be used instead */
-  --salt-token-4: purple;
-  /* **Deprecated:** This token has been deprecated */
-  --salt-token-5: pink;
+  /* Deprecate all below */
+  --salt-text-token-3: var(--salt-text-token-2);
+  --salt-text-token-4: purple;
+  --salt-text-token-5: pink;
+}
+```
+
+In `theme/css/deprecated/characteristics.css`, add these 3 tokens:
+
+```css
+.salt-theme {
+  --salt-text-token-3: var(--salt-text-token-2); /* Use --salt-text-token-1 */
+  --salt-text-token-4: purple;
+  --salt-text-token-5: pink; /* Use --salt-text-token-1 */
 }
 ```
 
@@ -47,23 +57,16 @@ If tokens are for some reason removed from the theme, this is a breaking change 
 
 ```jsx
 <DocGrid withNotes>
-  <ColorBlock colorVar="--salt-token-3" replacementToken="--salt-token-2" />
-  <ColorBlock colorVar="--salt-token-4" replacementToken="--salt-token-6" />
-  <ColorBlock colorVar="--salt-token-5" replacementToken="N/A" />
+  <ColorBlock
+    colorVar="--salt-text-token-3"
+    replacementToken="--salt-text-token-1"
+  />
+  <ColorBlock colorVar="--salt-text-token-4" replacementToken="N/A" />
+  <ColorBlock
+    colorVar="--salt-text-token-5"
+    replacementToken="--salt-text-token-1"
+  />
 </DocGrid>
-```
-
-Or, if it is a palette token being removed, add the comment as follows:
-
-```jsx
-<ColorItem
-  title="Background"
-  subtitle="--salt-palette-neutral-tertiary-background"
-  colors={{
-    "**Deprecated:** --salt-palette-neutral-tertiary-background-readonly":
-      "var(--salt-palette-neutral-tertiary-background-readonly)",
-  }}
-/>
 ```
 
 6. Add a changeset with the appropriate information.

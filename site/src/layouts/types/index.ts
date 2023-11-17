@@ -29,4 +29,5 @@ export type LayoutProps = {
   frontmatter?: {
     [key: string]: any;
   };
+  isMobileView?: boolean;
 };

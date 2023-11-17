@@ -19,7 +19,7 @@
   flex-shrink: 0;
 
   cursor: var(--salt-navigable-cursor-hover);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight);
   font-family: var(--salt-text-fontFamily);
   text-align: var(--salt-text-textAlign);
@@ -78,5 +78,5 @@
 
 .saltTabNext:disabled {
   cursor: var(--salt-navigable-cursor-disabled);
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
 }

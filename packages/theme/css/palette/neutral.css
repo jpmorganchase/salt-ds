@@ -14,12 +14,8 @@
   --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-90-fade-border);
   --salt-palette-neutral-secondary-foreground: var(--salt-color-gray-200);
   --salt-palette-neutral-secondary-foreground-disabled: var(--salt-color-gray-200-fade-foreground);
-  --salt-palette-neutral-backdrop: var(--salt-color-black-fade-backdrop);
+  --salt-palette-neutral-backdrop: var(--salt-color-white-fade-backdrop);
   --salt-palette-neutral-secondary-separator: var(--salt-color-black-fade-separatorOpacity-secondary);
-  --salt-palette-neutral-tertiary-background: transparent;
-  --salt-palette-neutral-tertiary-background-disabled: transparent;
-  --salt-palette-neutral-tertiary-border: transparent;
-  --salt-palette-neutral-tertiary-border-disabled: transparent;
   --salt-palette-neutral-tertiary-separator: var(--salt-color-black-fade-separatorOpacity-tertiary);
 }
 
@@ -41,9 +37,5 @@
   --salt-palette-neutral-secondary-foreground-disabled: var(--salt-color-gray-70-fade-foreground);
   --salt-palette-neutral-backdrop: var(--salt-color-black-fade-backdrop);
   --salt-palette-neutral-secondary-separator: var(--salt-color-white-fade-separatorOpacity-secondary);
-  --salt-palette-neutral-tertiary-background: transparent;
-  --salt-palette-neutral-tertiary-background-disabled: transparent;
-  --salt-palette-neutral-tertiary-border: transparent;
-  --salt-palette-neutral-tertiary-border-disabled: transparent;
   --salt-palette-neutral-tertiary-separator: var(--salt-color-white-fade-separatorOpacity-tertiary);
 }

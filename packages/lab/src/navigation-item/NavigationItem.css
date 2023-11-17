@@ -1,7 +1,7 @@
 /* Vars applied to root NavigationItem component */
 .saltNavigationItem {
-  --navigationItem-color: var(--salt-text-primary-foreground);
-  --navigationItem-fill: var(--salt-text-primary-foreground);
+  --navigationItem-color: var(--salt-content-primary-foreground);
+  --navigationItem-fill: var(--salt-content-primary-foreground);
   --navigationItem-bar-inset: var(--salt-spacing-25);
   --navigationItem-bar-size: var(--salt-size-indicator);
   --navigationItem-indicator-background: var(--salt-navigable-indicator-active);

@@ -232,6 +232,14 @@ export const useCombobox = <
     [allowFreeText, applySelection, indexPositions, quickSelection]
   );
 
+  const {
+    onKeyDown: inputOnKeyDown,
+    onFocus: inputOnFocus,
+    onChange: inputOnChange,
+    onBlur: inputOnBlur,
+    onSelect: inputOnSelect,
+  } = inputProps;
+
   const handleInputKeyDown = useCallback(
     (evt: KeyboardEvent) => {
       if ("Escape" === evt.key) {
@@ -248,11 +256,15 @@ export const useCombobox = <
 
       handleFirstItemSelection(evt);
 
-      // if (inputProps.onKeyDown) {
-      //   inputProps.onKeyDown(event as KeyboardEvent<HTMLInputElement>);
-      // }
+      inputOnKeyDown?.(evt as KeyboardEvent<HTMLInputElement>);
     },
-    [allowFreeText, handleFirstItemSelection, reconcileInput, setTextValue]
+    [
+      allowFreeText,
+      handleFirstItemSelection,
+      inputOnKeyDown,
+      reconcileInput,
+      setTextValue,
+    ]
   );
 
   const handleKeyboardNavigation = useCallback(() => {
@@ -325,31 +337,30 @@ export const useCombobox = <
       const newValue = evt.target.value;
       setValue(newValue);
 
-      if (newValue && newValue.trim().length) {
+      if (newValue?.trim().length) {
         setFilterPattern(newValue);
       } else {
         setFilterPattern(undefined);
+        if (selectedRef.current !== null) {
+          onSelectionChange?.(
+            evt,
+            null as Selection extends SingleSelectionStrategy
+              ? Item | null
+              : Item[]
+          );
+        }
         selectedRef.current = null as selectedCollectionType;
-        onSelectionChange?.(
-          evt,
-          null as Selection extends SingleSelectionStrategy
-            ? Item | null
-            : Item[]
-        );
       }
 
       setIsOpen(true);
 
       setQuickSelection(newValue.length > 0 && !allowFreeText);
 
-      // if (inputProps.onChange) {
-      //   inputProps.onChange(event, "");
-      // }
+      inputOnChange?.(evt, newValue);
     },
-    [allowFreeText, onSelectionChange, setFilterPattern, setIsOpen, setValue]
+    [allowFreeText, inputOnChange, setFilterPattern, setIsOpen, setValue]
   );
 
-  const { onFocus: inputOnFocus } = inputProps;
   const { onFocus: listOnFocus } = listControlProps;
   const handleInputFocus = useCallback(
     (evt: FocusEvent<HTMLInputElement>) => {
@@ -402,7 +413,6 @@ export const useCombobox = <
     [onSelectionChange, selected, stringToItem, stringToCollectionItem, value]
   );
 
-  const { onBlur: inputOnBlur } = inputProps;
   const { onBlur: listOnBlur } = listControlProps;
   const handleInputBlur = useCallback(
     (evt: FocusEvent<HTMLInputElement>) => {
@@ -430,7 +440,6 @@ export const useCombobox = <
     ]
   );
 
-  const { onSelect: inputOnSelect } = inputProps;
   const handleInputSelect = useCallback(
     (event: SyntheticEvent<HTMLDivElement>) => {
       if (ignoreSelectOnFocus.current) {

@@ -74,10 +74,11 @@ const allAllowedKeys = [
   "selectable",
   "separable",
   "status",
-  "taggable",
+  "taggable", // TODO: **deprecated:** delete here
   "target",
   "text",
   "track",
+  "content",
   // additional to decide
   "animation",
   "delay", // TODO: **deprecated:** delete here
@@ -90,6 +91,7 @@ const allAllowedKeys = [
   // palette
   "palette-opacity",
   "palette-neutral",
+  "palette-interact",
 ];
 
 const regexpPattern = new RegExp(
