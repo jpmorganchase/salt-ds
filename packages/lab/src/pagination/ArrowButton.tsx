@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon, IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { ComponentType, KeyboardEventHandler, MouseEventHandler } from "react";
+import { ComponentType, KeyboardEventHandler } from "react";
 import { withBaseName } from "./utils";
 
 export type ArrowButtonType = "previous" | "next";
@@ -39,8 +39,6 @@ const contentByType = new Map<ArrowButtonType, ButtonContent>([
 export const ArrowButton = ({
   arrowButtonType,
   onPress,
-  onKeyDown: onKeyDownProp,
-  onClick: onClickProp,
   ...restProps
 }: ArrowButtonProps) => {
   const { icon: Icon, name, className } = contentByType.get(arrowButtonType)!;
@@ -50,12 +48,6 @@ export const ArrowButton = ({
       event.preventDefault();
       onPress();
     }
-    onKeyDownProp && onKeyDownProp(event);
-  };
-
-  const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    onPress();
-    onClickProp && onClickProp(event);
   };
 
   return (
@@ -67,7 +59,7 @@ export const ArrowButton = ({
       name={name}
       aria-label={name}
       onKeyDown={onKeyDown}
-      onClick={onClick}
+      onClick={onPress}
     >
       <Icon aria-label={name} />
     </Button>
