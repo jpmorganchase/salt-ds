@@ -1,15 +1,12 @@
 import { clsx } from "clsx";
-import { memo, MutableRefObject, useRef } from "react";
-import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import {memo, MutableRefObject, useRef, useState} from "react";
+import {makePrefixer, Tooltip, useIsomorphicLayoutEffect} from "@salt-ds/core";
 import { getWidth } from "./useWidth";
-import { Pill, PillProps } from "../../pill";
+import {PillNext, PillNextProps} from "../../pill-next";
 
 const withBaseName = makePrefixer("saltInputPill");
 
-export type InputPillProps = Omit<
-  PillProps<"basic" | "closable">,
-  "variant" | "onDelete" | "clickable"
-> & {
+export type InputPillProps = PillNextProps & {
   /**
    * An ref object holds pills index map to width.
    */
@@ -23,6 +20,10 @@ export type InputPillProps = Omit<
    */
   lastVisible?: boolean;
   /**
+   * Pill label.
+   */
+  label?: string;
+  /**
    * Whether the pill is highlighted.
    */
   highlighted?: boolean;
@@ -33,33 +34,35 @@ export type InputPillProps = Omit<
   /**
    * Callback when pill is deleted.
    */
-  onDelete?: (index: number) => void;
+  onClose?: (index: number) => void;
 };
 
 export const InputPill = memo(function InputPill(props: InputPillProps) {
   const {
     active,
     className,
-    disabled,
     hidden,
     highlighted,
     index,
     lastVisible,
-    onDelete,
+    label,
+    onClose,
     pillsRef,
-    tabIndex: tabIndexProp,
-    ...restProps
+    ...rest
   } = props;
 
-  const ref = useRef<HTMLDivElement | null>(null);
-  const isRemovable = Boolean(onDelete);
+  const ref = useRef<HTMLButtonElement | null>(null);
+  const [isEllipsisActive, setEllipsisActive] = useState(false);
+  const isRemovable = Boolean(onClose);
 
   // useLayoutEffect to match the calcFirstHiddenIndex in TokenizedInputBase
   // We need to collect widths before the calculation
   useIsomorphicLayoutEffect(() => {
+    const text = ref?.current?.firstElementChild as HTMLElement;
     if (!isRemovable && pillsRef.current) {
       pillsRef.current[index] = getWidth(ref.current);
     }
+    setEllipsisActive(text?.offsetWidth < text?.scrollWidth);
   }, [pillsRef, index, isRemovable, lastVisible]);
 
   useIsomorphicLayoutEffect(
@@ -69,29 +72,28 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     [pillsRef, index]
   );
 
-  const handleDelete = () => {
-    onDelete?.(index);
+  const handleClose = () => {
+    onClose?.(index);
   };
 
-  return (
-    <Pill
+  return (<Tooltip content={label} disabled={!isEllipsisActive}>
+    <PillNext
       className={clsx(
         withBaseName(),
         {
           [withBaseName("pillActive")]: active || highlighted,
+          // TODO: can this be avoid by passing the close button to end adornment?
           [withBaseName("pillLastVisible")]: lastVisible,
           [withBaseName("hidden")]: hidden,
         },
         className
       )}
-      disabled={disabled}
-      onDelete={isRemovable ? handleDelete : undefined}
+      onClose={isRemovable ? handleClose : undefined}
       ref={ref}
       role="option"
-      //  style={useMemo(() => ({ maxWidth }), [maxWidth])}
-      tabIndex={undefined}
-      variant={isRemovable ? "closable" : "basic"}
-      {...restProps}
-    />
+      {...rest}
+    >{label}</PillNext>
+    </Tooltip>
+
   );
 });

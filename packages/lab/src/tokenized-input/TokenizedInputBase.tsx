@@ -346,7 +346,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
               lastVisible={
                 !showExpandButton && index === selectedItems.length - 1
               }
-              onDelete={expanded ? onRemoveItem : undefined}
+              onClose={expanded ? onRemoveItem : undefined}
               pillsRef={pillsRef}
             />
           );

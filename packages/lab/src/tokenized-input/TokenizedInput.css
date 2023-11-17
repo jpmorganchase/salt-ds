@@ -126,13 +126,7 @@
 
 /* Styles applied to inner Pills */
 .saltTokenizedInput .saltInputPill {
-  min-width: 0;
   margin-right: var(--tokenizedInput-gutter-size);
-  --saltPill-maxWidth: 100px;
-}
-
-.saltTokenizedInput .saltInputPill > * {
-  min-width: 0;
 }
 
 /* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
@@ -147,16 +141,15 @@
 
 /* Styles applied to a Pill when active */
 .saltTokenizedInput .saltInputPill-pillActive {
-  background: var(--saltTokenizedInput-pill-background-active, var(--salt-selectable-background-hover));
+  --saltButton-text-color: var(--saltTokenizedInput-pill-delete-button-color-active, var(--salt-actionable-cta-foreground-hover));
+  --saltButton-background: var(--saltTokenizedInput-pill-delete-button-background-active, var(--salt-actionable-cta-background-hover));
+}
+
+.saltTokenizedInput .saltInputPill-pillActive .saltPillNext-action {
+  --pillNext-background: var(--saltTokenizedInput-pill-background-active, var(--salt-selectable-background-hover));
 }
 
 /* Styles applied to a Pills delete icon */
-.saltTokenizedInput .saltInputPill-pillActive .saltPill-deleteIcon {
-  color: var(--saltTokenizedInput-pill-delete-icon-color, var(--salt-actionable-cta-foreground-hover));
-}
-
-/* Styles applied to a Pills delete button */
-.saltTokenizedInput .saltInputPill-pillActive .saltPill-deleteButton {
-  color: var(--saltTokenizedInput-pill-delete-button-color-active, var(--salt-actionable-cta-foreground-hover));
-  background: var(--saltTokenizedInput-pill-delete-button-background-active, var(--salt-actionable-cta-background-hover));
+.saltTokenizedInput .saltInputPill-pillActive .saltIcon {
+  --saltIcon-color: var(--saltTokenizedInput-pill-delete-icon-color, var(--salt-actionable-cta-foreground-hover));
 }
