@@ -29,7 +29,10 @@ function createCssEntryFile(callback) {
 
   cssFiles.forEach((cssFile, index) => {
     writeLine(
-      `@import "${path.relative(path.dirname(entryFile), cssFile)}";`,
+      `@import "${path.posix.relative(
+        path.posix.dirname(entryFile),
+        cssFile
+      )}";`,
       index
     );
   });
@@ -61,7 +64,8 @@ function runBuild() {
         path.join(buildFolder, outfileName),
         path.join(cssFolder, outfileName)
       );
-
+    })
+    .finally(() => {
       //delete generated entry file
       deleteSync([entryFile], { force: true });
     });
