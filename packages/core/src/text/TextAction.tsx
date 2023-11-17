@@ -1,12 +1,12 @@
 import { forwardRef } from "react";
 import { Text, TextProps } from "./Text";
 
-export const Notation = forwardRef<
+export const TextAction = forwardRef<
   HTMLSpanElement,
   Omit<TextProps<"span">, "as">
->(function Notation({ children, className, ...rest }, ref) {
+>(function TextAction({ children, className, ...rest }, ref) {
   return (
-    <Text as="span" styleAs="notation" ref={ref} {...rest}>
+    <Text as="span" styleAs="action" ref={ref} {...rest}>
       {children}
     </Text>
   );

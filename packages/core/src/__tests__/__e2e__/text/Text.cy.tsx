@@ -8,8 +8,8 @@ import {
   H3,
   H4,
   Label,
-  Notation,
-  Action,
+  TextNotation,
+  TextAction,
 } from "../../../text";
 
 const textExample = `Far far away, behind the word mountains, far from the countries Vokalia
@@ -39,8 +39,8 @@ const componentsArray = [
   { component: H3, name: "H3", tag: "h3" },
   { component: H4, name: "H4", tag: "h4" },
   { component: Label, name: "Label", tag: "label" },
-  { component: Notation, name: "Notation", tag: "span" },
-  { component: Action, name: "Action", tag: "span" },
+  { component: TextNotation, name: "TextNotation", tag: "span" },
+  { component: TextAction, name: "TextAction", tag: "span" },
 ];
 
 // Render correctly
@@ -111,7 +111,7 @@ describe("GIVEN Text component with styleAs=h1", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
+    { component: TextNotation, name: "TextNotation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as h1`, () => {
       const Component = component;
@@ -130,7 +130,7 @@ describe("GIVEN Text component with styleAs=h2", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
+    { component: TextNotation, name: "TextNotation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as h2`, () => {
       const Component = component;
@@ -149,7 +149,7 @@ describe("GIVEN Text component with styleAs=h3", () => {
     { component: H2, name: "H2", tag: "h2" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
+    { component: TextNotation, name: "TextNotation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as h3`, () => {
       const Component = component;
@@ -168,7 +168,7 @@ describe("GIVEN Text component with styleAs=h4", () => {
     { component: H2, name: "H2", tag: "h2" },
     { component: H3, name: "H3", tag: "h3" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
+    { component: TextNotation, name: "TextNotation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as h4`, () => {
       const Component = component;
@@ -187,7 +187,7 @@ describe("GIVEN Text component with styleAs=label", () => {
     { component: H2, name: "H2", tag: "h2" },
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
-    { component: Notation, name: "Notation", tag: "span" },
+    { component: TextNotation, name: "TextNotation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as label`, () => {
       const Component = component;
@@ -228,7 +228,7 @@ describe("GIVEN Text component with styleAs=action", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
+    { component: TextNotation, name: "TextNotation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as action`, () => {
       const Component = component;
@@ -251,7 +251,7 @@ describe("GIVEN Text component with styleAs=display1", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
+    { component: TextNotation, name: "TextNotation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as display1`, () => {
       const Component = component;
@@ -272,7 +272,7 @@ describe("GIVEN Text component with styleAs=display2", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
+    { component: TextNotation, name: "TextNotation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as display2`, () => {
       const Component = component;
@@ -293,7 +293,7 @@ describe("GIVEN Text component with styleAs=display3", () => {
     { component: H3, name: "H3", tag: "h3" },
     { component: H4, name: "H4", tag: "h4" },
     { component: Label, name: "Label", tag: "label" },
-    { component: Notation, name: "Notation", tag: "span" },
+    { component: TextNotation, name: "TextNotation", tag: "span" },
   ].forEach(({ component, name }) => {
     it(`${name} should be styled as display3`, () => {
       const Component = component;
