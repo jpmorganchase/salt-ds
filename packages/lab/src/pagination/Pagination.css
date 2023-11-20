@@ -4,7 +4,7 @@
 
   display: flex;
   flex-direction: row;
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
 }
 
 .saltPagination-arrowButton {
@@ -26,27 +26,27 @@
   --saltButton-minWidth: var(--pagination-button-size);
   --saltButton-fontWeight: var(--salt-text-fontWeight);
   --saltButton-height: var(--pagination-button-size);
-  --saltButton-text-color: var(--salt-text-primary-foreground);
+  --saltButton-text-color: var(--salt-content-primary-foreground);
 }
 
 .saltPagination-pageButton:hover,
 .saltPagination-pageButton:focus-visible {
   --saltButton-background-hover: var(--salt-selectable-background-hover);
-  --saltButton-text-color-hover: var(--salt-text-secondary-foreground);
+  --saltButton-text-color-hover: var(--salt-content-secondary-foreground);
 }
 
 .saltPagination-pageButton.saltPagination-readonly {
-  --saltButton-text-color-disabled: var(--salt-text-secondary-foreground);
+  --saltButton-text-color-disabled: var(--salt-content-secondary-foreground);
   --saltButton-cursor-disabled: var(--salt-editable-cursor-readonly);
 }
 
 .saltPagination-pageButtonSelected {
   --saltButton-background: var(--salt-selectable-background-selected);
-  --saltButton-text-color: var(--salt-text-secondary-foreground);
+  --saltButton-text-color: var(--salt-content-secondary-foreground);
 }
 .saltPagination-pageButtonSelected:focus-visible {
   --saltButton-background-hover: var(--salt-selectable-background-selected);
-  --saltButton-text-color-hover: var(--salt-text-secondary-foreground);
+  --saltButton-text-color-hover: var(--salt-content-secondary-foreground);
 }
 
 .saltPagination-pageButtonFixed {
