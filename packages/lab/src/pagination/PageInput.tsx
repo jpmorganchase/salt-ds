@@ -28,7 +28,8 @@ export const PageInput = forwardRef<HTMLSpanElement, GoToInputProps>(
 
     forwardedRef
   ) {
-    const { count, onPageChange, page, paginatorElement } = usePaginationContext();
+    const { count, onPageChange, page, paginatorElement } =
+      usePaginationContext();
 
     const id = useId(idProp);
 
