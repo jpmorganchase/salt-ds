@@ -7,6 +7,7 @@ import {
   BorderLayout,
   BorderItem,
   useResponsiveProp,
+  Text,
 } from "@salt-ds/core";
 import { Drawer, NavigationItem } from "@salt-ds/lab";
 import {
@@ -25,12 +26,16 @@ export default {
 export const AppHeaderInPage = () => {
   interface AppHeaderProps extends HTMLAttributes<HTMLElement> {
     /**
-     * Items included in the App Header
+     * Items included in the App Header navigation
      */
     items?: string[];
+    /**
+     * Utilities included in the App Header
+     */
+    utilities?: JSX.Element[];
   }
 
-  const AppHeader: FC<AppHeaderProps> = ({ items }) => {
+  const AppHeader: FC<AppHeaderProps> = ({ items, utilities }) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [active, setActive] = useState(items?.[0]);
     const isMobile = useResponsiveProp({ xs: true, sm: false }, false);
@@ -100,6 +105,24 @@ export const AppHeaderInPage = () => {
                   ))}
                 </ul>
               </nav>
+              <StackLayout
+                align="start"
+                direction="column"
+                gap={1}
+                style={{ paddingLeft: "26px" }}
+              >
+                {utilities?.map((utility, index) => (
+                  <StackLayout
+                    gap={1}
+                    align="center"
+                    key={index}
+                    direction="row"
+                  >
+                    {utility}
+                    <Text>{utility.key}</Text>
+                  </StackLayout>
+                ))}
+              </StackLayout>
             </Drawer>
           </FlexLayout>
         ) : (
@@ -127,15 +150,7 @@ export const AppHeaderInPage = () => {
             </nav>
             <FlexItem align="center">
               <StackLayout direction="row" gap={1}>
-                <Button variant="secondary">
-                  <SymphonyIcon />
-                </Button>
-                <Button variant="secondary">
-                  <StackoverflowIcon />
-                </Button>
-                <Button variant="secondary">
-                  <GithubIcon />
-                </Button>
+                {utilities}
               </StackLayout>
             </FlexItem>
           </FlexLayout>
@@ -145,11 +160,22 @@ export const AppHeaderInPage = () => {
   };
 
   const items = ["Home", "About", "Services", "Contact", "Blog"];
+  const utilities = [
+    <Button key="Symphony" variant="secondary">
+      <SymphonyIcon />
+    </Button>,
+    <Button key="Stack Overflow" variant="secondary">
+      <StackoverflowIcon />
+    </Button>,
+    <Button key="GitHub" variant="secondary">
+      <GithubIcon />
+    </Button>,
+  ];
 
   return (
     <BorderLayout style={{ height: "100vh" }}>
       <BorderItem position="north">
-        <AppHeader items={items} />
+        <AppHeader items={items} utilities={utilities} />
       </BorderItem>
       <BorderItem
         style={{
