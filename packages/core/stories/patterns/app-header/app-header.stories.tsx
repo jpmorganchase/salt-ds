@@ -20,7 +20,6 @@ import { Meta } from "@storybook/react";
 
 export default {
   title: "Patterns/App Header",
-  layout: "fullscreen",
 } as Meta;
 
 export const AppHeader = () => {
