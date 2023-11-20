@@ -2,4 +2,9 @@
 "@salt-ds/core": minor
 ---
 
-Add secondary variant to `Card` and `InteractableCard` via `variant` prop.
+Added a secondary variant to `Card` and `InteractableCard` via their `variant` prop.
+
+```tsx
+<Card variant="secondary" />
+<InteractableCard variant="secondary" />
+```
