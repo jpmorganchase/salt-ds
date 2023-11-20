@@ -94,27 +94,27 @@
   line-height: var(--pagination-button-size);
 }
 
-.saltPagination-goToInputWrapper {
+.saltPagination-pageInputWrapper {
   display: flex;
   flex-direction: row;
   gap: var(--salt-spacing-100);
   align-items: baseline;
 }
 
-.saltPagination-leftGoToInput {
+.saltPagination-leftPageInput {
   margin-right: var(--salt-spacing-100);
 }
 
-.saltPagination-rightGoToInput {
+.saltPagination-rightPageInput {
   margin-left: var(--salt-spacing-100);
 }
 
-.saltPagination-goToInput {
+.saltPagination-pageInput {
   height: var(--pagination-button-size);
   --saltInput-minWidth: unset;
 }
 
-.saltPagination-goToInputFixed {
+.saltPagination-pageInputFixed {
   --saltInput-minWidth: var(--pagination-button-size);
   max-width: var(--pagination-button-size);
   width: var(--pagination-button-size);

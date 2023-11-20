@@ -22,20 +22,20 @@ export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   label?: string;
 }
 
-export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
-  function GoToInput(
-    { className, id: idProp, label = "Go to", ...restProps },
+export const PageInput = forwardRef<HTMLSpanElement, GoToInputProps>(
+  function PageInput(
+    { className, id: idProp, label, ...restProps },
 
     forwardedRef
   ) {
-    const { count, onPageChange, paginatorElement } = usePaginationContext();
+    const { count, onPageChange, page, paginatorElement } = usePaginationContext();
 
     const id = useId(idProp);
 
     const rootRef = useRef<HTMLSpanElement>(null);
     const forkedRef = useForkRef(rootRef, forwardedRef);
 
-    const [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState(`${page}`);
 
     const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
       (event) => {
@@ -81,17 +81,17 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
     return (
       <span
         className={clsx(
-          withBaseName("goToInputWrapper"),
-          { [withBaseName(`${position!}GoToInput`)]: position },
+          withBaseName("pageInputWrapper"),
+          { [withBaseName(`${position!}PageInput`)]: position },
           className
         )}
         ref={forkedRef}
         {...restProps}
       >
-        <FormFieldLabel>{label}</FormFieldLabel>
+        {label && <FormFieldLabel>{label}</FormFieldLabel>}
         <Input
-          className={clsx(withBaseName("goToInput"), {
-            [withBaseName("goToInputFixed")]: count < 100,
+          className={clsx(withBaseName("pageInput"), {
+            [withBaseName("pageInputFixed")]: count < 100,
           })}
           id={id}
           inputProps={{

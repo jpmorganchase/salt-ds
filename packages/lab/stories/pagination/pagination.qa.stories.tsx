@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 
 import {
-  GoToInput,
+  PageInput,
   CompactPaginator,
   Pagination,
   Paginator,
@@ -44,7 +44,7 @@ const Template = (
       compact={compact}
       compactWithInput={compactWithInput}
     >
-      {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}
+      {goToPosition === "left" ? <PageInput label={"Go to"} /> : null}
       {compact ?? compactWithInput ? (
         <CompactPaginator withInput={compactWithInput} />
       ) : (
@@ -54,7 +54,7 @@ const Template = (
           showPreviousNext={showPreviousNext}
         />
       )}
-      {goToPosition === "right" ? <GoToInput label={"Go to"} /> : null}
+      {goToPosition === "right" ? <PageInput label={"Go to"} /> : null}
     </Pagination>
   );
 };

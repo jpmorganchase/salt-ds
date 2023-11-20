@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, forwardRef, useCallback } from "react";
 import { clsx } from "clsx";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { ArrowButton } from "./ArrowButton";
-import { CompactInput } from "./CompactInput";
+import { PageInput } from "./PageInput";
 import { PageButton } from "./PageButton";
 import { withBaseName } from "./utils";
 import { usePaginationContext } from "./usePaginationContext";
@@ -50,7 +50,7 @@ export const CompactPaginator = forwardRef<
         <ChevronLeftIcon />
       </ArrowButton>
       {withInput ? (
-        <CompactInput />
+        <PageInput />
       ) : (
         <PageButton
           page={page}

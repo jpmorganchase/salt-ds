@@ -1,7 +1,7 @@
 import {
   Pagination,
   Paginator,
-  GoToInput,
+  PageInput,
   CompactPaginator,
 } from "@salt-ds/lab";
 
@@ -440,12 +440,12 @@ describe("GIVEN an Pagination", () => {
     //   });
   });
 
-  describe("WHEN using the GoToInput", () => {
+  describe("WHEN using the PageInput", () => {
     describe("AND changing the order of the components", () => {
-      it("SHOULD then render on the left if GoToInput is before Paginator", () => {
+      it("SHOULD then render on the left if PageInput is before Paginator", () => {
         cy.mount(
           <Pagination count={10} initialPage={3}>
-            <GoToInput />
+            <PageInput />
             <Paginator data-testid="paginator" />
           </Pagination>
         );
@@ -460,11 +460,11 @@ describe("GIVEN an Pagination", () => {
         });
       });
 
-      it("SHOULD then render on the right if GoToInput is after Paginator", () => {
+      it("SHOULD then render on the right if PageInput is after Paginator", () => {
         cy.mount(
           <Pagination count={10} initialPage={3}>
             <Paginator data-testid="paginator" />
-            <GoToInput />
+            <PageInput />
           </Pagination>
         );
 
@@ -483,7 +483,7 @@ describe("GIVEN an Pagination", () => {
       it("SHOULD accept any value", () => {
         cy.mount(
           <Pagination count={10} initialPage={3}>
-            <GoToInput />
+            <PageInput />
             <Paginator />
           </Pagination>
         );
@@ -502,7 +502,7 @@ describe("GIVEN an Pagination", () => {
       it("SHOULD not change page when the value is invalid", () => {
         cy.mount(
           <Pagination count={10} initialPage={3}>
-            <GoToInput />
+            <PageInput />
             <Paginator />
           </Pagination>
         );
@@ -526,7 +526,7 @@ describe("GIVEN an Pagination", () => {
       it("SHOULD change page when the value is valid", () => {
         cy.mount(
           <Pagination count={10} initialPage={3}>
-            <GoToInput />
+            <PageInput />
             <Paginator />
           </Pagination>
         );
@@ -550,7 +550,7 @@ describe("GIVEN an Pagination", () => {
       it("SHOULD clear on blur", () => {
         cy.mount(
           <Pagination count={10} initialPage={3}>
-            <GoToInput />
+            <PageInput />
             <Paginator />
           </Pagination>
         );
@@ -567,7 +567,7 @@ describe("GIVEN an Pagination", () => {
     //   it("SHOULD then be hidden", () => {
     //     cy.mount(
     //       <Pagination compactWithInput count={10} initialPage={3}>
-    //         <GoToInput />
+    //         <PageInput />
     //         <Paginator />
     //       </Pagination>
     //     );
