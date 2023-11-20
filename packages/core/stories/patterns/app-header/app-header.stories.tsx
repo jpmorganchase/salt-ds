@@ -49,7 +49,10 @@ export const AppHeaderInPage = () => {
         {isMobile ? (
           // Mobile Header
           <FlexLayout
-            style={{ height: "44px" }}
+            style={{
+              height: "44px",
+              backgroundColor: "var(--salt-container-primary-background)",
+            }}
             justify="space-between"
             gap={3}
           >
@@ -128,7 +131,12 @@ export const AppHeaderInPage = () => {
         ) : (
           // Desktop Header
           <FlexLayout
-            style={{ height: "44px", paddingLeft: "1em", paddingRight: "1em" }}
+            style={{
+              height: "44px",
+              paddingLeft: "1em",
+              paddingRight: "1em",
+              backgroundColor: "var(--salt-container-primary-background)",
+            }}
             justify="space-between"
             gap={3}
           >
@@ -173,14 +181,15 @@ export const AppHeaderInPage = () => {
   ];
 
   return (
-    <BorderLayout style={{ height: "100vh" }}>
-      <BorderItem position="north">
+    <BorderLayout>
+      <BorderItem style={{}} position="north" sticky>
         <AppHeader items={items} utilities={utilities} />
       </BorderItem>
       <BorderItem
         style={{
           backgroundColor: "var(--salt-color-purple-30)",
           padding: "1em",
+          height: "120vh",
         }}
         position="center"
       >
