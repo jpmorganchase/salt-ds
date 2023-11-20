@@ -20,7 +20,7 @@ import {
 import {
   Button,
   ButtonProps,
-  makePrefixer, MultilineInput,
+  makePrefixer, MultilineInput, MultilineInputProps,
   useDensity,
   useForkRef,
   useId,
@@ -30,17 +30,12 @@ import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { InputPill } from "./internal/InputPill";
-import { InputRuler } from "./internal/InputRuler";
 import { useResizeObserver } from "./internal/useResizeObserver";
 import { useWidth } from "./internal/useWidth";
 import {
   TokenizedInputHelpers,
   TokenizedInputState,
 } from "./useTokenizedInput";
-import {
-  InputLegacy as Input,
-  InputLegacyProps as InputProps,
-} from "../input-legacy";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -60,7 +55,7 @@ export interface TokenizedInputBaseProps<Item>
       "onFocus" | "onBlur" | "onChange" | "onKeyUp" | "onKeyDown"
     > {
   ExpandButtonProps?: ExpandButtonProps;
-  InputProps?: Pick<InputProps, "aria-describedby" | "inputProps">;
+  InputProps?: Pick<MultilineInputProps, "aria-describedby" | "textAreaProps">;
   disabled?: boolean;
   expandButtonRef?: Ref<HTMLButtonElement>;
   helpers: TokenizedInputHelpers<Item>;
@@ -153,15 +148,12 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   // getComputedStyle(document.documentElement)
   // .getPropertyValue('--my-variable-name'); // #999999
   const pillGroupPadding = 16;
-  const lastVisiblePillMargin = 4;
 
-  const pillsRef = useRef<{ [index: number]: number | undefined }>({});
-  const inputRulerRef = useRef<HTMLSpanElement | null>(null);
+  const pillsRef = useRef<Record<number, number | undefined>>({});
   const keydownExpandButton = useRef(false);
 
   const [expandButtonRef, expandButtonWidth] = useWidth(density);
   const [clearButtonRef, clearButtonWidth] = useWidth(density);
-  const [inputWidth, setInputWidth] = useState(INITIAL_INPUT_WIDTH);
   const [pillGroupWidth, setPillGroupWidth] = useState<number | null>(null);
   const [firstHiddenIndex, setFirstHiddenIndex] = useState<number | null>(null);
 
@@ -210,13 +202,6 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     // Additional dependency on selectedItems is for the controlled version
     [expanded, pillGroupWidth, selectedItems]
   );
-
-  useIsomorphicLayoutEffect(() => {
-    if (expanded && inputRulerRef.current) {
-      const newInputWidth = inputRulerRef.current.scrollWidth;
-      setInputWidth(Math.min(newInputWidth, pillGroupWidth || 0));
-    }
-  }, [expanded, pillGroupWidth, value]);
 
   const handleExpandButtonKeyDown = (
     event: KeyboardEvent<HTMLButtonElement>
@@ -285,12 +270,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
 
   const mergedInputProps = deepmerge(
     {
-      style: {
-        width: inputWidth,
-        minWidth: inputWidth,
-      },
       textAreaProps: {
-        // TODO: styles moved up, do we need to move some of these too?
         "aria-label": [ariaLabel, getItemsAriaLabel(selectedItems.length)]
           .filter(Boolean)
           .join(" "),
@@ -372,9 +352,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
         >
           <OverflowMenuIcon
             aria-label={
-              expandButtonAccessibleText === undefined
-                ? "expand edit"
-                : expandButtonAccessibleText
+              expandButtonAccessibleText ?? "expand edit"
             }
           />
         </Button>
