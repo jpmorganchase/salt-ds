@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Button,
   FlexItem,
@@ -6,7 +6,7 @@ import {
   BorderItem,
   BorderLayout,
   StackLayout,
-  GridLayout,
+  useResponsiveProp,
 } from "@salt-ds/core";
 import { Drawer, NavigationItem } from "@salt-ds/lab"; // Assuming you're using Material-UI for UI components
 import {
@@ -28,22 +28,7 @@ export const AppHeader = () => {
   const items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
   const [active, setActive] = useState(items[0]);
 
-  const useMobileBreakpoint = () => {
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-    useEffect(() => {
-      const handleResize = () => {
-        setIsMobile(window.innerWidth < 768);
-      };
-
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    return isMobile;
-  };
-
-  const isMobile = useMobileBreakpoint();
+  const isMobile = useResponsiveProp({ xs: true, sm: false }, false);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
