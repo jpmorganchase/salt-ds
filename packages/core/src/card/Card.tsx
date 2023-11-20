@@ -22,13 +22,24 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    * on the page.
    */
   interactable?: boolean;
+  /**
+   * Styling variant; defaults to "primary".
+   */
+  variant?: "primary" | "secondary";
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   props,
   ref
 ) {
-  const { className, disabled, interactable, children, ...rest } = props;
+  const {
+    className,
+    disabled,
+    interactable,
+    children,
+    variant = "primary",
+    ...rest
+  } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -41,6 +52,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     <div
       className={clsx(
         withBaseName(),
+        withBaseName(variant),
         {
           /* **Deprecated:** InteractableCard should be used instead for these features */
           [withBaseName("disabled")]: disabled,

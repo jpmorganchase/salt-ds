@@ -10,7 +10,7 @@
 .sidebar li {
   --mosaic-color-dark-navigable-selectableLink-selected: var(--salt-navigable-indicator-active);
   --mosaic-color-dark-navigable-selectableLink-unselected: transparent;
-  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
+  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-content-secondary-foreground);
   --mosaic-color-dark-neutral-background-emphasis: transparent;
   --mosaic-color-dark-navigable-selectableLink-hover: transparent;
   --mosaic-border-width-medium: 3px;
@@ -19,7 +19,7 @@
 .primarySidebar :global(.ps-menu-button),
 .primarySidebar :global(.ps-menuitem-root) {
   --mosaic-color-dark-neutral-background-emphasis: var(--salt-palette-navigate-primary-background-hover);
-  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-text-secondary-foreground);
+  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-content-secondary-foreground);
 }
 
 .primarySidebar :global(.ps-active) {
@@ -27,7 +27,7 @@
 }
 
 .primarySidebar :global(a.ps-menu-button) {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
 }
 
 .primarySidebar :global(.ps-menu-label) {
@@ -43,7 +43,7 @@
 .primarySidebar :global(.ps-menu-button.ps-active) {
   border-left: 4px solid var(--site-tertiary-accent-orange);
   background-color: var(--color-dark-neutral-background-emphasis);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight);
 }
 
@@ -85,12 +85,12 @@
 }
 
 .sidebar li:hover {
-  color: var(--salt-text-link-foreground-hover);
+  color: var(--salt-content-foreground-hover);
   text-decoration: underline;
 }
 
 .sidebar li[aria-checked="true"] {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight-active);
 }
 
@@ -138,16 +138,7 @@
 }
 
 .headingContainer {
-  display: flex;
-  align-items: center;
-  gap: var(--salt-size-unit);
-  /*
-    Mosaic's still using Salt 1.1, so --salt-spacing-100 etc is not available yet.
-
-    TODO: Replace line below with the commented-out one underneath once we upgrade Mosaic
-  */
-  margin: calc(var(--salt-size-unit) * 8) calc(3 * var(--salt-size-unit)) calc(var(--salt-size-unit) * 2) calc(3 * var(--salt-size-unit));
-  /* margin: var(--salt-spacing-800) var(--salt-spacing-300) var(--salt-spacing-200) var(--salt-spacing-300); */
+  margin: calc(var(--salt-spacing-100) * 8) var(--salt-spacing-300) var(--salt-spacing-200) var(--salt-spacing-300);
 }
 
 .headingContainer h1 {

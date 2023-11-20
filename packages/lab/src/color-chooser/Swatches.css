@@ -7,7 +7,7 @@
 .saltColorChooserSwatches-colorNameTextDiv,
 .saltColorChooserSwatches-colorTextDiv,
 .saltColorChooserSwatches-alphaTextDiv {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
 }
 
 .saltColorChooserSwatches-colorTextDiv {

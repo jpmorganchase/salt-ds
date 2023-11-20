@@ -7,7 +7,12 @@ import {
   FormFieldLabel,
   FormFieldHelperText,
 } from "@salt-ds/core";
-import { QAContainer, QAContainerProps } from "docs/components";
+import {
+  QAContainer,
+  QAContainerNoStyleInjection,
+  QAContainerNoStyleInjectionProps,
+  QAContainerProps,
+} from "docs/components";
 
 export default {
   title: "Core/Checkbox/Checkbox QA",
@@ -72,5 +77,19 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
 };
 
 AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
+  props
+) => (
+  <QAContainerNoStyleInjection cols={1} itemPadding={8} {...props}>
+    <CheckboxGroupExample direction="vertical" />
+    <CheckboxGroupExample direction="horizontal" />
+    <CheckboxInFormFieldExample />
+  </QAContainerNoStyleInjection>
+);
+
+NoStyleInjectionGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
